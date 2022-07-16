@@ -25,6 +25,7 @@ from .iconsetpanel import IconsetPanel
 from .tagspanel import TagsPanel
 from .attachpanel import AttachPanel
 from .colorspanel import ColorsPanel
+from .formatspanel import FormatsPanel
 
 logger = logging.getLogger('prefcontroller')
 
@@ -124,6 +125,7 @@ class PrefController(object):
         hotkeysPage = HotKeysPanel(self._dialog.treeBook, self._application)
         tagsPage = TagsPanel(self._dialog.treeBook, self._application)
         attachPage = AttachPanel(self._dialog.treeBook, self._application)
+        formatsPage = FormatsPanel(self._dialog.treeBook, self._application)
 
         interfacePanelsList = [
             PreferencePanelInfo(generalPage, _("General")),
@@ -134,6 +136,7 @@ class PrefController(object):
             PreferencePanelInfo(tagsPage, _("Tags cloud")),
             PreferencePanelInfo(attachPage, _("Attachments")),
             PreferencePanelInfo(hotkeysPage, _("Hotkeys")),
+            PreferencePanelInfo(formatsPage, _("Formats")),
         ]
 
         self._dialog.appendPreferenceGroup(_("Interface"),

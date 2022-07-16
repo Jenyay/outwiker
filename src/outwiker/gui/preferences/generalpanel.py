@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import os
-
 import wx
 
 from . import configelements
 import outwiker.core.i18n
 from outwiker.core.defines import URL_TRANSLATE
-from outwiker.core.system import getBuiltinImagePath
+# from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
-from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
+# from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 from outwiker.gui.theme import get_theme
@@ -17,7 +15,7 @@ from outwiker.gui.theme import get_theme
 
 class GeneralPanel(BasePrefPanel):
     def __init__(self, parent, application):
-        super(GeneralPanel, self).__init__(parent)
+        super().__init__(parent)
 
         self.generalConfig = GeneralGuiConfig(application.config)
         self.mainWindowConfig = MainWindowConfig(application.config)
@@ -62,8 +60,8 @@ class GeneralPanel(BasePrefPanel):
         self._addStaticLine(main_sizer)
         self._createHistoryGui(main_sizer, self.generalConfig)
         self._addStaticLine(main_sizer)
-        self._createTemplatesGui(main_sizer, self.generalConfig)
-        self._addStaticLine(main_sizer)
+        # self._createTemplatesGui(main_sizer, self.generalConfig)
+        # self._addStaticLine(main_sizer)
         self._createToasterDelayGui(main_sizer, self.generalConfig)
         self._createOpenPageTabGui(main_sizer)
         self._createLanguageGui(main_sizer)
@@ -94,7 +92,6 @@ class GeneralPanel(BasePrefPanel):
             max=self.MAX_AUTOSAVE_INTERVAL,
             style=wx.SP_ARROW_KEYS,
         )
-        self.autosaveSpin.SetMinSize((self._theme.minWidthForSpinCtrl, -1))
 
         autosaveSizer = wx.FlexGridSizer(cols=2)
         autosaveSizer.AddGrowableRow(0)
@@ -117,7 +114,6 @@ class GeneralPanel(BasePrefPanel):
             max=self.MAX_TOASTER_DELAY,
             style=wx.SP_ARROW_KEYS,
         )
-        self.toasterDelaySpin.SetMinSize((self._theme.minWidthForSpinCtrl, -1))
 
         toasterDelaySizer = wx.FlexGridSizer(cols=2)
         toasterDelaySizer.AddGrowableRow(0)
@@ -134,45 +130,49 @@ class GeneralPanel(BasePrefPanel):
 
         main_sizer.Add(toasterDelaySizer, 1, wx.EXPAND, 0)
 
-    def _createTemplatesGui(self, main_sizer, generalConfig):
-        """
-        Create GUI for selection date and time format
-        and new page title template
-        """
-        # Config values
-        initial_date_format = generalConfig.dateTimeFormat.value
-        initial_page_title = generalConfig.pageTitleTemplate.value
+    # def _createTemplatesGui(self, main_sizer, generalConfig):
+    #     """
+    #     Create GUI for selection date and time format
+    #     and new page title template
+    #     """
+    #     # Config values
+    #     initial_date_format = generalConfig.dateTimeFormat.value
+    #     initial_page_title = generalConfig.pageTitleTemplate.value
 
-        # Create labels
-        dateTimeLabel = wx.StaticText(self, label=_("Date and time format"))
-        pageTitleTemplateLabel = wx.StaticText(self, label=_("New page title template"))
+    #     # Create labels
+    #     dateTimeLabel = wx.StaticText(self, label=_("Date and time format"))
+    #     pageTitleTemplateLabel = wx.StaticText(self, label=_("New page title template"))
 
-        hintBitmap = wx.Bitmap(getBuiltinImagePath("wand.png"))
+    #     hintBitmap = wx.Bitmap(getBuiltinImagePath("wand.png"))
 
-        # Create main controls
-        self.dateTimeFormatCtrl = DateTimeFormatCtrl(
-            self, hintBitmap, initial_date_format
-        )
+    #     # Create main controls
+    #     self.dateTimeFormatCtrl = DateTimeFormatCtrl(
+    #         self, hintBitmap, initial_date_format
+    #     )
 
-        self.pageTitleTemplateCtrl = DateTimeFormatCtrl(
-            self, hintBitmap, initial_page_title
-        )
+    #     self.pageTitleTemplateCtrl = DateTimeFormatCtrl(
+    #         self, hintBitmap, initial_page_title
+    #     )
 
-        # Create common sizer
-        templateSizer = wx.FlexGridSizer(cols=2)
-        templateSizer.AddGrowableCol(1)
+    #     # Create common sizer
+    #     templateSizer = wx.FlexGridSizer(cols=2)
+    #     templateSizer.AddGrowableCol(1)
 
-        templateSizer.Add(
-            dateTimeLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-        )
-        templateSizer.Add(self.dateTimeFormatCtrl, flag=wx.TOP | wx.BOTTOM | wx.EXPAND, border=2)
+    #     templateSizer.Add(
+    #         dateTimeLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+    #     )
+    #     templateSizer.Add(
+    #         self.dateTimeFormatCtrl, flag=wx.TOP | wx.BOTTOM | wx.EXPAND, border=2
+    #     )
 
-        templateSizer.Add(
-            pageTitleTemplateLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-        )
-        templateSizer.Add(self.pageTitleTemplateCtrl, flag=wx.TOP | wx.BOTTOM | wx.EXPAND, border=2)
+    #     templateSizer.Add(
+    #         pageTitleTemplateLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+    #     )
+    #     templateSizer.Add(
+    #         self.pageTitleTemplateCtrl, flag=wx.TOP | wx.BOTTOM | wx.EXPAND, border=2
+    #     )
 
-        main_sizer.Add(templateSizer, flag=wx.EXPAND)
+    #     main_sizer.Add(templateSizer, flag=wx.EXPAND)
 
     def _createMiscGui(self, main_sizer):
         """
@@ -202,7 +202,6 @@ class GeneralPanel(BasePrefPanel):
             max=self.MAX_ICON_HISTORY_LENGTH,
             style=wx.SP_ARROW_KEYS,
         )
-        self.iconsHistoryLengthSpin.SetMinSize((self._theme.minWidthForSpinCtrl, -1))
 
         # Recently opened files
         history_label = wx.StaticText(
@@ -217,7 +216,6 @@ class GeneralPanel(BasePrefPanel):
             max=self.MAX_HISTORY_LENGTH,
             style=wx.SP_ARROW_KEYS,
         )
-        self.historySpin.SetMinSize((self._theme.minWidthForSpinCtrl, -1))
 
         self.autoopenCheckBox = wx.CheckBox(
             self, -1, _("Automatically open the recent file")
@@ -227,13 +225,21 @@ class GeneralPanel(BasePrefPanel):
         historySizer.AddGrowableCol(0)
         historySizer.AddGrowableCol(1)
 
-        historySizer.Add(recentIconsLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        historySizer.Add(self.iconsHistoryLengthSpin, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
-        historySizer.Add(history_label, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        historySizer.Add(
+            recentIconsLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        historySizer.Add(
+            self.iconsHistoryLengthSpin, flag=wx.ALL | wx.ALIGN_RIGHT, border=2
+        )
+        historySizer.Add(
+            history_label, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
         historySizer.Add(self.historySpin, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
 
         main_sizer.Add(historySizer, flag=wx.EXPAND)
-        main_sizer.Add(self.autoopenCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        main_sizer.Add(
+            self.autoopenCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
 
     def _createLanguageGui(self, main_sizer):
         """
@@ -252,8 +258,11 @@ class GeneralPanel(BasePrefPanel):
         self.helpTranslateHyperLink = HyperLinkCtrl(
             self, label=_("Help with translation"), URL=URL_TRANSLATE
         )
-        normal_color, visited_color, rollover_color = self.helpTranslateHyperLink.GetColours()
-        self.helpTranslateHyperLink.SetColours(normal_color, normal_color, normal_color)
+        self.helpTranslateHyperLink.SetColours(
+            self._theme.colorHyperlink,
+            self._theme.colorHyperlink,
+            self._theme.colorHyperlink,
+        )
 
         main_sizer.Add(languageSizer, flag=wx.EXPAND)
         main_sizer.Add(
@@ -338,13 +347,13 @@ class GeneralPanel(BasePrefPanel):
             self.generalConfig.askBeforeExit, self.askBeforeExitCheckBox
         )
 
-        self.dateTimeFormat = configelements.StringElement(
-            self.generalConfig.dateTimeFormat, self.dateTimeFormatCtrl
-        )
+        # self.dateTimeFormat = configelements.StringElement(
+        #     self.generalConfig.dateTimeFormat, self.dateTimeFormatCtrl
+        # )
 
-        self.pageTitleTemplate = configelements.StringElement(
-            self.generalConfig.pageTitleTemplate, self.pageTitleTemplateCtrl
-        )
+        # self.pageTitleTemplate = configelements.StringElement(
+        #     self.generalConfig.pageTitleTemplate, self.pageTitleTemplateCtrl
+        # )
 
         # Автосохранение
         self.autosaveInterval = configelements.IntegerElement(
@@ -385,8 +394,8 @@ class GeneralPanel(BasePrefPanel):
         self.iconsHistoryLength.save()
         self.autoopen.save()
         self.autosaveInterval.save()
-        self.dateTimeFormat.save()
-        self.pageTitleTemplate.save()
+        # self.dateTimeFormat.save()
+        # self.pageTitleTemplate.save()
         self._saveLanguage()
         self._savePageTab()
         self.generalConfig.toasterDelay.value = self.toasterDelaySpin.GetValue() * 1000

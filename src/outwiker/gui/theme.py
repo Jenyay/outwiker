@@ -20,8 +20,8 @@ class Theme:
         self.colorInfoBackground = wx.Colour("#1989FF")
         self.colorInfoForeground = wx.Colour("#E3E3E3")
         self.colorToasterBackground = wx.Colour(255, 255, 255)
+        self.colorHyperlink = wx.Colour(0, 0, 255)
         self.roundRadius = 0
-        self.minWidthForSpinCtrl = 100
 
 
 def get_theme(application: ApplicationParams) -> Theme:
