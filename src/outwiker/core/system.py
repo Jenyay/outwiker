@@ -25,20 +25,13 @@ from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    SPELL_FOLDER_NAME,
                                    STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
+                                   DEFAULT_CONFIG_DIR,
+                                   DEFAULT_CONFIG_NAME,
                                    )
 
 
-# Имя файла настроек по умолчанию
-DEFAULT_CONFIG_NAME = u"outwiker.ini"
-
 # Имя по умолчанию для папки с настройками в профиле пользователя (устарело)
-DEFAULT_OLD_CONFIG_DIR = u".outwiker"
-
-# Новая местоположение конфигурационной директории
-# По стандарту, если переменная XDG_CONFIG_HOME не задана в окружении,
-# то берется значение по умолчанию т.е. ~/.config
-# http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-DEFAULT_CONFIG_DIR = u"outwiker"
+DEFAULT_OLD_CONFIG_DIR = ".outwiker"
 
 logger = logging.getLogger('outwiker.core.system')
 
@@ -63,7 +56,7 @@ class System(object):
 class Windows(System):
     @property
     def name(self):
-        return u'windows'
+        return 'windows'
 
     @property
     def python(self):
@@ -132,7 +125,7 @@ class Windows(System):
 class Unix(System):
     @property
     def name(self):
-        return u'unix'
+        return 'unix'
 
     @property
     def python(self):
@@ -142,7 +135,7 @@ class Unix(System):
         """
         Запустить программу по умолчанию для path
         """
-        subprocess.Popen([u'xdg-open', path])
+        subprocess.Popen(['xdg-open', path])
 
     @property
     def settingsDir(self):

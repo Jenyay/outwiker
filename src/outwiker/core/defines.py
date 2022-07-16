@@ -72,6 +72,15 @@ REGISTRY_PAGE_CURSOR_POSITION = 'cursorposition'
 
 URL_TRANSLATE = 'https://crowdin.com/project/outwiker'
 
+# Местоположение конфигурационной директории
+# По стандарту, если переменная XDG_CONFIG_HOME не задана в окружении,
+# то берется значение по умолчанию т.е. ~/.config
+# http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+DEFAULT_CONFIG_DIR = "outwiker"
+
+# Имя файла настроек по умолчанию
+DEFAULT_CONFIG_NAME = "outwiker.ini"
+
 
 # To translate this words with xgettext
 if __name__ == '__main__':
