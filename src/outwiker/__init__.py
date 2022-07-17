@@ -1,5 +1,5 @@
-__version__ = (3, 2, 0, 907)
-__status__ = 'dev'
+__version__ = (3, 2, 0, 908)
+__status__ = 'beta'
 __api_version__ = (3, 906)
 
 

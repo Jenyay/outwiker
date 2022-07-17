@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.2.0.907" status="dev">
+    <version number="3.2.0.908" status="beta" date="2022-07-17">
         <changes>
+            <change>Added the support of nested subfolders for the [=(:include:)=] wiki command.</change>
+            <change>Added the support of nested subfolders in the dialog for the [=(:include:)=] wiki command.</change>
+            <change>Added the support of nested subfolders in the dialog for thumbnails creation with the [=%thumb%=] wiki command.</change>
+            <change>Small GUI improvements.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлена поддержка вложенных папок в викикоманде [=(:include:)=].</change>
+            <change>Добавлена поддержка вложенных папок в диалоге для вставки викикоманды [=(:include:)=].</change>
+            <change>Добавлена поддержка вложенных папок в диалоге для вставки миниатюры с помощью викикоманды [=%thumb%=].</change>
+            <change>Мелкие улучшения в интерфейсе.</change>
         </changes>
     </version>
 
@@ -27,7 +35,7 @@
         </changes>
 
         <changes lang="ru">
-            <change>Добавлена поддержка вложенных папок в викикоманду [=%thumb%=].</change>
+            <change>Добавлена поддержка вложенных папок в викикоманде [=%thumb%=].</change>
             <change>Реализована подсветка викикоманды [=%thumb%=] в редакторе.</change>
             <change>Изменен дизайн диалога с информацией о перезаписи прикрепленных файлов.</change>
             <change>Мелкие исправления в интерфейсе.</change>
