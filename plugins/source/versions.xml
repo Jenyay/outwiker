@@ -7,11 +7,13 @@
 			</requirements>
 		</download>
 		<changes>
-			<change></change>
+			<change>Added the ability to select attachments in nested folders with the dialog.</change>
+			<change>Update Pygments library.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change></change>
+			<change>Добавлена поддержка вложенных папок, прикрепленных к заметкам.</change>
+			<change>Обновление библиотеки Pygments.</change>
 		</changes>
 	</version>
 
