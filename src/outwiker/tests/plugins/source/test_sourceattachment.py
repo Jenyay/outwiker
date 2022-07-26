@@ -237,3 +237,31 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(
             result, ('(:source file="Attach:source_cp1251.cs" lang="csharp" tabwidth="10":)', '(:sourceend:)'))
+
+    def testAttachment_subdir(self):
+        subdir = 'subdir 1/subdir 2/'
+
+        # Путь, где лежат примеры исходников в разных кодировках
+        self.samplefilesPath = "testdata/samplefiles/sources"
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+
+        files_src = [os.path.join(self.samplefilesPath, fname)
+                     for fname
+                     in ["source_utf8.py", "source_cp1251.cs"]]
+
+        attach.attach(files_src, subdir=subdir)
+
+        Tester.dialogTester.appendOk()
+        self.controller.showDialog()
+
+        self.dialog.fileCheckBox.SetValue(True)
+        self.controller.updateFileChecked()
+
+        self.dialog.attachmentComboBox.SetValue(subdir + "source_cp1251.cs")
+        self.dialog.encodingComboBox.SetSelection(0)
+
+        result = self.controller.getCommandStrings()
+
+        self.assertEqual(
+            result, ('(:source file="Attach:subdir 1/subdir 2/source_cp1251.cs":)', '(:sourceend:)'))
