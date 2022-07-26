@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import html
-import os.path
 import re
 from pathlib import Path
 
@@ -133,5 +132,5 @@ class IncludeCommand(Command):
             return (None, params_str)
 
         fname = match.group("fname").replace("\\", "/")
-        tail = params_str[match.end() :]
+        tail = params_str[match.end():]
         return (fname, tail)
