@@ -3,6 +3,7 @@
 import wx
 
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
 
 from .i18n import get_
 from .misc import getImagePath
@@ -243,9 +244,7 @@ class InsertDialog(TestedDialog):
         self.attachButton.SetToolTip(_("Attach new files"))
 
         # Список для выбора прикрепленных файлов
-        self.attachmentComboBox = wx.ComboBox(
-            parent, style=wx.CB_DROPDOWN | wx.CB_READONLY
-        )
+        self.attachmentComboBox = FilesTreeComboBox(parent)
 
         fileSizer = wx.FlexGridSizer(cols=2)
         fileSizer.AddGrowableCol(0)

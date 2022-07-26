@@ -7,9 +7,9 @@ import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.attachment import Attachment
+from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
-from .sourcefakedialog import FakeInsertDialog
 
 
 class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
@@ -35,15 +35,18 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self._clearConfig(self.config)
 
         from source.insertdialogcontroller import InsertDialogController
-        self.dialog = FakeInsertDialog()
+        from source.insertdialog import InsertDialog
+        self.dialog = InsertDialog(self.application.mainWindow)
         self.controller = InsertDialogController(
             self.testPage, self.dialog, self.config)
+        Tester.dialogTester.clear()
 
     def tearDown(self):
         self._clearConfig(self.config)
         self.loader.clear()
         self.destroyApplication()
         self.destroyWiki(self.wikiroot)
+        Tester.dialogTester.clear()
 
     def _clearConfig(self, config):
         self.application.config.remove_section(self.config.section)
@@ -52,7 +55,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        self.dialog.SetReturnCode(wx.ID_CANCEL)
+        Tester.dialogTester.appendCancel()
         result = self.controller.showDialog()
 
         self.assertEqual(result, wx.ID_CANCEL)
@@ -61,7 +64,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        self.dialog.SetReturnCode(wx.ID_OK)
+        Tester.dialogTester.appendOk()
         result = self.controller.showDialog()
 
         self.assertEqual(result, wx.ID_OK)
@@ -73,7 +76,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
-        self.dialog.SetReturnCode(wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.tabWidthSpin.SetValue(4)
@@ -88,7 +91,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         """
         self.config.defaultLanguage.value = "python"
 
-        self.dialog.SetReturnCode(wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.tabWidthSpin.SetValue(8)
@@ -104,7 +107,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
-        self.dialog.SetReturnCode(wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.tabWidthSpin.SetValue(4)
@@ -120,7 +123,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
-        self.dialog.SetReturnCode(wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.tabWidthSpin.SetValue(0)
@@ -136,7 +139,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
-        self.dialog.SetReturnCode(wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.languageComboBox.SetSelection(0)
@@ -153,7 +156,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
-        self.dialog.SetReturnCode(wx.ID_OK)
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.languageComboBox.SetSelection(1)
@@ -181,6 +184,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "haskell"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.languageComboBox.GetItems(),
@@ -195,6 +199,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = []
         self.config.defaultLanguage.value = "haskell"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.languageComboBox.GetItems(),
@@ -207,6 +212,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "c"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.languageComboBox.GetItems(), [
@@ -219,6 +225,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "   haskell   "
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.languageComboBox.GetItems(),
@@ -233,6 +240,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "python"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.styleComboBox.GetCount(),
@@ -246,6 +254,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testDialogStyleValues2(self):
         self.config.defaultStyle.value = "blablabla"
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.styleComboBox.GetCount(),
@@ -254,6 +263,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testDialogStyleValues3(self):
         self.config.defaultStyle.value = ""
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.styleComboBox.GetCount(),
@@ -262,6 +272,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testDialogStyleValues4(self):
         self.config.defaultStyle.value = "vim"
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.styleComboBox.GetCount(),
@@ -270,6 +281,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testDialogStyleValues5(self):
         self.config.defaultStyle.value = "emacs"
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.styleComboBox.GetCount(),
@@ -282,6 +294,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.defaultStyle.value = "vim"
         self.config.style.value = "vim"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.styleComboBox.GetCount(),
@@ -299,6 +312,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.defaultStyle.value = "vim"
         self.config.style.value = "default"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.styleComboBox.GetCount(),
@@ -314,6 +328,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "python"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.dialog.styleComboBox.SetSelection(0)
 
@@ -335,11 +350,12 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "python"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
         self.dialog.styleComboBox.SetSelection(0)
-        self.dialog.attachmentComboBox.SetSelection(0)
+        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
 
         self.assertEqual(self.dialog.styleComboBox.GetValue(), "abap")
         self.assertEqual(self.dialog.style, "abap")
@@ -359,11 +375,12 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "python"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
         self.dialog.styleComboBox.SetSelection(0)
-        self.dialog.attachmentComboBox.SetSelection(0)
+        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
         self.dialog.languageComboBox.SetSelection(0)
 
         self.assertEqual(self.dialog.styleComboBox.GetValue(), "abap")
@@ -378,6 +395,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "python"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.dialog.styleComboBox.SetSelection(0)
         self.dialog.tabWidthSpin.SetValue(5)
@@ -393,75 +411,88 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
     def testStyleConfig1(self):
         self.config.style.value = "default"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.assertEqual(self.dialog.style, "default")
 
     def testStyleConfig2(self):
         self.config.style.value = "vim"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.assertEqual(self.dialog.style, "vim")
 
     def testStyleConfig3(self):
         self.config.style.value = "  vim   "
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.assertEqual(self.dialog.style, "vim")
 
     def testStyleConfig4(self):
         self.config.style.value = "invalid_style"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.assertEqual(self.dialog.style, "default")
 
     def testStyleConfig5(self):
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.assertEqual(self.dialog.style, "default")
 
     def testParentBgConfig1(self):
         self.config.parentbg.value = "  False  "
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.parentbg, False)
 
     def testParentBgConfig2(self):
         self.config.parentbg.value = "  True  "
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.parentbg, True)
 
     def testParentBgConfig3(self):
         self.config.parentbg.value = "  блаблабла  "
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.parentbg, False)
 
     def testParentBgConfig4(self):
         # Если нет вообще записей в файле настроек
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.parentbg, False)
 
     def testLineNumConfig1(self):
         # Если нет вообще записей в файле настроек
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.lineNum, False)
 
     def testLineNumConfig2(self):
         self.config.lineNum.value = "  False  "
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.lineNum, False)
 
     def testLineNumConfig3(self):
         self.config.lineNum.value = "  блаблабла  "
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.lineNum, False)
 
     def testLineNumConfig4(self):
         self.config.lineNum.value = "True"
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.lineNum, True)
@@ -470,6 +501,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "python"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.dialog.parentBgCheckBox.SetValue(True)
 
@@ -482,6 +514,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "python"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.dialog.lineNumCheckBox.SetValue(True)
 
@@ -494,6 +527,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "python"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.dialog.parentBgCheckBox.SetValue(True)
         self.dialog.lineNumCheckBox.SetValue(True)
@@ -507,6 +541,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.languageList.value = ["python", "cpp", "haskell"]
         self.config.defaultLanguage.value = "python"
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
         self.dialog.tabWidthSpin.SetValue(10)
 

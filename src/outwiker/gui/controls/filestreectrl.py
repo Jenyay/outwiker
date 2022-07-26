@@ -74,7 +74,7 @@ class FilesTreeCtrl(wx.Panel):
         self._root_dir = Path(root_dir)
         self.Update()
 
-    def GetRootDir(self) -> Union[Path, str]:
+    def GetRootDir(self) -> Optional[Union[Path, str]]:
         return self._root_dir
 
     def Update(self):
@@ -137,6 +137,9 @@ class FilesTreeCtrl(wx.Panel):
             self._tree_ctrl.SelectItem(item)
 
         return item is not None
+
+    def GetCount(self) -> int:
+        return self._tree_ctrl.GetCount()
 
     def _getCheckedChildren(self, parent_item: GenericTreeItem, checked_list: List):
         if parent_item is not None:

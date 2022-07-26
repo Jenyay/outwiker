@@ -50,6 +50,9 @@ class FilesTreeComboBox(wx.Panel):
     def GetFilesListFull(self):
         return self._combo_popup.GetFilesListFull()
 
+    def GetCount(self):
+        return self._combo_popup.GetCount()
+
 
 class FilesTreeComboPopup(wx.ComboPopup):
     def __init__(self):
@@ -80,6 +83,9 @@ class FilesTreeComboPopup(wx.ComboPopup):
 
     def GetFilesListFull(self):
         return self._tree_ctrl.GetFilesListFull()
+
+    def GetCount(self) -> int:
+        return self._tree_ctrl.GetCount()
 
     # The following methods are those that are overridable from the
     # ComboPopup base class.

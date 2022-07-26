@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+from pathlib import Path
 
 import wx
 
@@ -109,12 +110,11 @@ class InsertDialogController(object):
             files = sorted(dlg.GetPaths())
             attachFiles(self._dialog, self._page, files)
 
-            self._loadAttachmentState()
+            self._updateFilesList()
 
             # Выберем только что добавленный файл
             newfile = os.path.basename(files[0])
-            if newfile in self._dialog.attachmentComboBox.GetItems():
-                self._dialog.attachmentComboBox.SetStringSelection(newfile)
+            self._dialog.attachmentComboBox.SetValue(newfile)
 
             self._dialog.fileCheckBox.SetValue(True)
             self.updateFileChecked()
@@ -254,7 +254,7 @@ class InsertDialogController(object):
         self._loadTabWidthState()
         self.loadLanguagesState()
         self._loadEncodingState()
-        self._loadAttachmentState()
+        self._updateFilesList()
         self._loadStyleState()
 
         self._dialog.parentBgCheckBox.SetValue(self._config.parentbg.value)
@@ -275,15 +275,12 @@ class InsertDialogController(object):
 
         self._dialog.SetClientSize(dialogWidth, dialogHeight)
 
-    def _loadAttachmentState(self):
+    def _updateFilesList(self):
         attach = Attachment(self._page)
-        files = sorted(attach.getAttachRelative())
-
+        attach_path = Path(attach.getAttachPath(create=False))
         self._dialog.attachmentComboBox.Clear()
-        self._dialog.attachmentComboBox.AppendItems(files)
-
-        if len(files) > 0:
-            self._dialog.attachmentComboBox.SetSelection(0)
+        if attach_path.exists():
+             self._dialog.attachmentComboBox.SetRootDir(attach_path)
 
     def _loadStyleState(self):
         fillStyleComboBox(self._config,

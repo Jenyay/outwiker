@@ -5,9 +5,9 @@ import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.attachment import Attachment
+from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
-from .sourcefakedialog import FakeInsertDialog
 
 
 class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
@@ -32,7 +32,8 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.config.remove_section(self.config.section)
 
         from source.insertdialogcontroller import InsertDialogController
-        self.dialog = FakeInsertDialog()
+        from source.insertdialog import InsertDialog
+        self.dialog = InsertDialog(self.application.mainWindow)
         self.controller = InsertDialogController(
             self.testPage, self.dialog, self.config)
 
@@ -43,6 +44,7 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyWiki(self.wikiroot)
 
     def testAttachment1(self):
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.attachmentComboBox.GetCount(), 0)
@@ -55,11 +57,11 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         Attachment(self.testPage).attach(
             [os.path.join(self.samplefilesPath, "source_cp1251.cs")])
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
-        self.assertEqual(self.dialog.attachmentComboBox.GetSelection(), 0)
-        self.assertEqual(self.dialog.attachmentComboBox.GetCount(), 2)
-        self.assertEqual(self.dialog.attachmentComboBox.GetItems(),
+        self.assertEqual(self.dialog.attachmentComboBox.GetCount(), 3)
+        self.assertEqual(self.dialog.attachmentComboBox.GetFilesListRelative(),
                          ["source_cp1251.cs", "source_utf8.py"])
 
     def testAttachment3(self):
@@ -70,12 +72,13 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         Attachment(self.testPage).attach(
             [os.path.join(self.samplefilesPath, "source_cp1251.cs")])
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
         self.controller.updateFileChecked()
 
-        self.dialog.attachmentComboBox.SetSelection(0)
+        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
         self.dialog.encodingComboBox.SetSelection(0)
 
         result = self.controller.getCommandStrings()
@@ -91,12 +94,13 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         Attachment(self.testPage).attach(
             [os.path.join(self.samplefilesPath, "source_cp1251.cs")])
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
         self.controller.updateFileChecked()
 
-        self.dialog.attachmentComboBox.SetSelection(1)
+        self.dialog.attachmentComboBox.SetValue("source_utf8.py")
         self.dialog.encodingComboBox.SetSelection(0)
 
         result = self.controller.getCommandStrings()
@@ -112,12 +116,13 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         Attachment(self.testPage).attach(
             [os.path.join(self.samplefilesPath, "source_cp1251.cs")])
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
         self.controller.updateFileChecked()
 
-        self.dialog.attachmentComboBox.SetSelection(0)
+        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
         self.dialog.encodingComboBox.SetSelection(2)
 
         result = self.controller.getCommandStrings()
@@ -135,6 +140,7 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.config.languageList.value = ["cpp", "csharp", "haskell"]
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
@@ -143,7 +149,7 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         # Вручную обновим список языков
         self.controller.loadLanguagesState()
 
-        self.dialog.attachmentComboBox.SetSelection(0)
+        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
         self.dialog.encodingComboBox.SetSelection(2)
         self.dialog.languageComboBox.SetSelection(3)
 
@@ -162,10 +168,11 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.config.languageList.value = ["cpp", "haskell", "csharp"]
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
-        self.dialog.attachmentComboBox.SetSelection(0)
+        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
         self.dialog.encodingComboBox.SetSelection(2)
         self.dialog.languageComboBox.SetSelection(0)
 
@@ -184,6 +191,7 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.config.languageList.value = ["cpp", "csharp", "haskell"]
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
@@ -192,7 +200,7 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         # Вручную обновим список языков
         self.controller.loadLanguagesState()
 
-        self.dialog.attachmentComboBox.SetSelection(0)
+        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
         self.dialog.encodingComboBox.SetSelection(0)
         self.dialog.languageComboBox.SetSelection(1)
 
@@ -211,6 +219,7 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.config.languageList.value = ["cpp", "csharp", "haskell"]
 
+        Tester.dialogTester.appendOk()
         self.controller.showDialog()
 
         self.dialog.fileCheckBox.SetValue(True)
@@ -219,7 +228,7 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         # Вручную обновим список языков
         self.controller.loadLanguagesState()
 
-        self.dialog.attachmentComboBox.SetSelection(0)
+        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
         self.dialog.encodingComboBox.SetSelection(0)
         self.dialog.languageComboBox.SetSelection(1)
         self.dialog.tabWidthSpin.SetValue(10)
