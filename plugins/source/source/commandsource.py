@@ -6,43 +6,44 @@ from outwiker.core.attachment import Attachment
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
-from .params import (FILE_PARAM_NAME,
-                     ENCODING_PARAM_NAME,
-                     ENCODING_DEFAULT,
-                     TAB_WIDTH_PARAM_NAME,
-                     HIGHLIGHT_STYLE,
-                     TAB_WIDTH_DEFAULT,
-                     STYLE_PARAM_NAME,
-                     PARENT_BACKGROUND_PARAM_NAME,
-                     LINE_NUM_PARAM_NAME,
-                     CUSTOM_STYLES
-                     )
+from .params import (
+    FILE_PARAM_NAME,
+    ENCODING_PARAM_NAME,
+    ENCODING_DEFAULT,
+    TAB_WIDTH_PARAM_NAME,
+    HIGHLIGHT_STYLE,
+    TAB_WIDTH_DEFAULT,
+    STYLE_PARAM_NAME,
+    PARENT_BACKGROUND_PARAM_NAME,
+    LINE_NUM_PARAM_NAME,
+    CUSTOM_STYLES,
+)
 from .misc import getFileName, getDefaultStyle
 
 
 class CommandSource(Command):
     """
-    Команда source для оформления исходных текстов программ
-    Использование:
+     Команда source для оформления исходных текстов программ
+     Использование:
 
-   (:source params)
-    Текст программы
-   (:sourceend:)
+    (:source params)
+     Текст программы
+    (:sourceend:)
 
-    Параметры:
-    tabwidth - размер табуляции
-    lang - язык программирования(пока не используется)
-    file - имя прикрепленного файла(с приставкой Attach: или без нее)
-    encoding - кодировка для прикрепленного файла
-        (используется вместе с параметром file).
-        Если кодировка не указана, используется UTF-8
+     Параметры:
+     tabwidth - размер табуляции
+     lang - язык программирования(пока не используется)
+     file - имя прикрепленного файла(с приставкой Attach: или без нее)
+     encoding - кодировка для прикрепленного файла
+         (используется вместе с параметром file).
+         Если кодировка не указана, используется UTF-8
     """
 
     def __init__(self, parser, config):
         """
         parser - экземпляр парсера
         """
-        Command.__init__(self, parser)
+        super().__init__(parser)
         self.__config = SourceConfig(config)
 
         # Стили CSS, добавленные в заголовок
@@ -56,7 +57,7 @@ class CommandSource(Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"source"
+        return "source"
 
     def execute(self, params, content):
         """
@@ -70,13 +71,13 @@ class CommandSource(Command):
         except KeyError:
             sourceText = content
         except IOError:
-            return _(u"<B>Source plugin: File '{0}' not found</B>").format(
+            return _("<b>Source plugin: File '{0}' not found</b>").format(
                 getFileName(params_dict[FILE_PARAM_NAME])
             )
         except UnicodeDecodeError:
-            return _(u"<B>Source plugin: Encoding error</B>")
+            return _("<b>Source plugin: Encoding error</b>")
         except LookupError:
-            return _(u"<B>Source plugin: Unknown encoding</B>")
+            return _("<b>Source plugin: Unknown encoding</b>")
 
         tabwidth = self.__getTabWidth(params_dict)
 
@@ -109,6 +110,7 @@ class CommandSource(Command):
         В начале значения параметра может стоять строка Attach:
         """
         fname = getFileName(params_dict[FILE_PARAM_NAME])
+        fname = fname.replace("\\", "/")
         encoding = self.__getEncoding(params_dict)
 
         # Полный путь до прикрепленного файла
@@ -133,14 +135,17 @@ class CommandSource(Command):
 
     def __getStyle(self, params_dict):
         from .pygments.styles import STYLE_MAP
-        if (STYLE_PARAM_NAME not in params_dict or
-                params_dict[STYLE_PARAM_NAME] not in STYLE_MAP):
+
+        if (
+            STYLE_PARAM_NAME not in params_dict
+            or params_dict[STYLE_PARAM_NAME] not in STYLE_MAP
+        ):
             return getDefaultStyle(self.__config)
 
         return params_dict[STYLE_PARAM_NAME]
 
     def __getCssClass(self, style, parentBg=False):
-        result = u"highlight-" + style
+        result = "highlight-" + style
         if parentBg:
             result += "-parentbg"
 
@@ -163,9 +168,7 @@ class CommandSource(Command):
         style = self.__getStyle(params_dict)
         cssclass = self.__getCssClass(style, parentbg)
 
-        formatter = HtmlFormatter(linenos=linenum,
-                                  cssclass=cssclass,
-                                  style=style)
+        formatter = HtmlFormatter(linenos=linenum, cssclass=cssclass, style=style)
 
         if cssclass not in self.__appendCssClasses:
             sourceStyle = formatter.get_style_defs()
@@ -174,22 +177,23 @@ class CommandSource(Command):
             sourceStyle += CUSTOM_STYLES.format(name=cssclass)
 
             if parentbg:
-                sourceStyle += u"\n.{name} {{color: inherit; background-color: inherit }}".format(
-                    name=cssclass)
+                sourceStyle += (
+                    "\n.{name} {{color: inherit; background-color: inherit }}".format(
+                        name=cssclass
+                    )
+                )
 
-            styleTemplate = u"<STYLE>{0}</STYLE>"
+            styleTemplate = "<style>{0}</style>"
             self.parser.appendToHead(styleTemplate.format(sourceStyle))
-            self.parser.appendToHead(styleTemplate.format(
-                "".join(["div.", cssclass, HIGHLIGHT_STYLE]))
+            self.parser.appendToHead(
+                styleTemplate.format("".join(["div.", cssclass, HIGHLIGHT_STYLE]))
             )
 
             self.__appendCssClasses.append(cssclass)
 
         content = highlight(content, lexer, formatter)
 
-        result = u"".join([u'<div class="source-block">',
-                           content.strip(),
-                           u'</div>'])
+        result = "".join(['<div class="source-block">', content.strip(), "</div>"])
         result = result.replace("\n</td>", "</td>")
 
         return result
