@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.23" date="2022-07-26">
+		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.23.zip">
+			<requirements>
+				<api>3.906</api>
+			</requirements>
+		</download>
+		<changes>
+			<change></change>
+		</changes>
+
+		<changes lang="ru">
+			<change></change>
+		</changes>
+	</version>
+
 	<version number="1.22" date="2022-02-19">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.22.zip">
 			<requirements>
