@@ -240,7 +240,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_invalid_file_1(self):
         text = """бла-бла-бла(:include Attach:text_utf8_1.txt :)"""
 
-        result_right = """бла-бла-бла<div class="ow-wiki ow-error ow-wiki-include">Can't open file 'text_utf8_1.txt'</div>"""
+        result_right = """бла-бла-бла<div class="ow-wiki ow-wiki-include ow-error">Can't open file 'text_utf8_1.txt'</div>"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -248,7 +248,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_invalid_file_2(self):
         text = """бла-бла-бла(:include Attach:filename.tmp :)"""
 
-        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-error ow-wiki-include">Encoding error in file 'filename.tmp'</div>"""
+        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-wiki-include ow-error">Encoding error in file 'filename.tmp'</div>"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -256,7 +256,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_invalid_file_with_encoding(self):
         text = """бла-бла-бла(:include Attach:filename.tmp encoding=base64 :)"""
 
-        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-error ow-wiki-include">Encoding error in file 'filename.tmp'</div>"""
+        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-wiki-include ow-error">Encoding error in file 'filename.tmp'</div>"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -329,7 +329,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_images_no_quotes_png(self):
         text = """бла-бла-бла (:include Attach:image.png:)"""
 
-        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.png" />"""
+        result_right = """бла-бла-бла <img class="ow-wiki ow-wiki-include ow-image" src="__attach/image.png" />"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -337,7 +337,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_images_no_quotes_jpg(self):
         text = """бла-бла-бла (:include Attach:image.jpg:)"""
 
-        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.jpg" />"""
+        result_right = """бла-бла-бла <img class="ow-wiki ow-wiki-include ow-image" src="__attach/image.jpg" />"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -345,7 +345,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_images_no_quotes_jpeg(self):
         text = """бла-бла-бла (:include Attach:image.jpeg:)"""
 
-        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.jpeg" />"""
+        result_right = """бла-бла-бла <img class="ow-wiki ow-wiki-include ow-image" src="__attach/image.jpeg" />"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -353,7 +353,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_images_no_quotes_gif(self):
         text = """бла-бла-бла (:include Attach:image.gif:)"""
 
-        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.gif" />"""
+        result_right = """бла-бла-бла <img class="ow-wiki ow-wiki-include ow-image" src="__attach/image.gif" />"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -361,7 +361,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_images_single_quotes_png(self):
         text = """бла-бла-бла (:include Attach:'image.png':)"""
 
-        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.png" />"""
+        result_right = """бла-бла-бла <img class="ow-wiki ow-wiki-include ow-image" src="__attach/image.png" />"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -369,7 +369,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_images_double_quotes_png(self):
         text = """бла-бла-бла (:include Attach:"image.png":)"""
 
-        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.png" />"""
+        result_right = """бла-бла-бла <img class="ow-wiki ow-wiki-include ow-image" src="__attach/image.png" />"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -383,7 +383,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
 
         text = """бла-бла-бла (:include Attach:"subdir/image.png":)"""
 
-        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/subdir/image.png" />"""
+        result_right = """бла-бла-бла <img class="ow-wiki ow-wiki-include ow-image" src="__attach/subdir/image.png" />"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -397,7 +397,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
 
         text = """бла-бла-бла (:include Attach:"subdir\\image.png":)"""
 
-        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/subdir/image.png" />"""
+        result_right = """бла-бла-бла <img class="ow-wiki ow-wiki-include ow-image" src="__attach/subdir/image.png" />"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
