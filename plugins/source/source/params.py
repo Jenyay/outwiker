@@ -66,14 +66,17 @@ LANGUAGE_LIST_DEFAULT = [
     u"vb.net"
 ]
 
+CSS_SOURCE_PLUGIN = 'ow-plugin-source'
+CSS_SOURCE_BLOCK = 'ow-plugin-source-block'
 
-CUSTOM_STYLES = u"""
+
+CUSTOM_STYLES = """
 .{name} pre {{padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }}
 .{name} table {{padding: 0px; border: none;}}
 .{name}table td {{border-width:0; vertical-align: baseline; }}
 .{name}table tr {{vertical-align: baseline; }}
 .{name}table tbody {{vertical-align: baseline; }}
 .{name}table td.code {{width:100%; }}
-.source-block pre {{padding: 0px; border: none; color: inherit; background-color: inherit; }}
+.ow-plugin-source-block pre {{padding: 0px; border: none; color: inherit; background-color: inherit; }}
 .linenodiv pre {{padding: 0px; border: none; color: inherit; background-color: inherit; }}
-div.source-block {{border-style: solid; border-color: gray; border-width: 1px; }}"""
+div.ow-plugin-source-block {{border-style: solid; border-color: gray; border-width: 1px; }}"""

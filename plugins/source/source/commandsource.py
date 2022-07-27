@@ -4,7 +4,6 @@ from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
 from outwiker.core.htmlformatter import HtmlFormatter
 
-from .defines import CSS_SOURCE_PLUGIN, CSS_SOURCE_BLOCK
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
@@ -19,6 +18,8 @@ from .params import (
     PARENT_BACKGROUND_PARAM_NAME,
     LINE_NUM_PARAM_NAME,
     CUSTOM_STYLES,
+    CSS_SOURCE_PLUGIN,
+    CSS_SOURCE_BLOCK,
 )
 from .misc import getFileName, getDefaultStyle
 
