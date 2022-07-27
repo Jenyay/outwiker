@@ -2,7 +2,9 @@
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
+from outwiker.core.htmlformatter import HtmlFormatter
 
+from .defines import CSS_SOURCE_PLUGIN, CSS_SOURCE_BLOCK
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
@@ -44,13 +46,15 @@ class CommandSource(Command):
         parser - экземпляр парсера
         """
         super().__init__(parser)
-        self.__config = SourceConfig(config)
+        self._config = SourceConfig(config)
+        self._html_formatter = HtmlFormatter([CSS_SOURCE_PLUGIN])
 
         # Стили CSS, добавленные в заголовок
         self.__appendCssClasses = []
 
         global _
         _ = get_()
+
 
     @property
     def name(self):
@@ -67,30 +71,31 @@ class CommandSource(Command):
         params_dict = Command.parseParams(params)
 
         try:
-            sourceText = self.__getContentFromFile(params_dict)
+            sourceText = self._getContentFromFile(params_dict)
         except KeyError:
             sourceText = content
         except IOError:
-            return _("<b>Source plugin: File '{0}' not found</b>").format(
-                getFileName(params_dict[FILE_PARAM_NAME])
-            )
+            content = _("Source plugin: File '{}' not found").format(getFileName(params_dict[FILE_PARAM_NAME]))
+            return self._html_formatter.error(content)
         except UnicodeDecodeError:
-            return _("<b>Source plugin: Encoding error</b>")
+            content = _("Source plugin: Encoding error")
+            return self._html_formatter.error(content)
         except LookupError:
-            return _("<b>Source plugin: Unknown encoding</b>")
+            content = _("Source plugin: Unknown encoding")
+            return self._html_formatter.error(content)
 
-        tabwidth = self.__getTabWidth(params_dict)
+        tabwidth = self._getTabWidth(params_dict)
 
         newcontent = sourceText.replace("\t", " " * tabwidth)
-        colortext = self.__colorize(params_dict, newcontent)
+        colortext = self._colorize(params_dict, newcontent)
 
         return colortext
 
-    def __getTabWidth(self, params_dict):
+    def _getTabWidth(self, params_dict):
         """
         Получить размер табуляции в зависимости от параметров
         """
-        tabwidth = self.__config.tabWidth.value
+        tabwidth = self._config.tabWidth.value
 
         try:
             if TAB_WIDTH_PARAM_NAME in params_dict:
@@ -103,7 +108,7 @@ class CommandSource(Command):
 
         return tabwidth
 
-    def __getContentFromFile(self, params_dict):
+    def _getContentFromFile(self, params_dict):
         """
         Попытаться прочитать исходник из файла,
         заданный в параметре FILE_PARAM_NAME
@@ -111,7 +116,7 @@ class CommandSource(Command):
         """
         fname = getFileName(params_dict[FILE_PARAM_NAME])
         fname = fname.replace("\\", "/")
-        encoding = self.__getEncoding(params_dict)
+        encoding = self._getEncoding(params_dict)
 
         # Полный путь до прикрепленного файла
         attachPath = Attachment(self.parser.page).getFullPath(fname)
@@ -122,7 +127,7 @@ class CommandSource(Command):
 
         return sourceTextStr
 
-    def __getEncoding(self, params_dict):
+    def _getEncoding(self, params_dict):
         """
         Выберем кодировку в соответствии с параметрами
         """
@@ -133,25 +138,25 @@ class CommandSource(Command):
 
         return encoding
 
-    def __getStyle(self, params_dict):
+    def _getStyle(self, params_dict):
         from .pygments.styles import STYLE_MAP
 
         if (
             STYLE_PARAM_NAME not in params_dict
             or params_dict[STYLE_PARAM_NAME] not in STYLE_MAP
         ):
-            return getDefaultStyle(self.__config)
+            return getDefaultStyle(self._config)
 
         return params_dict[STYLE_PARAM_NAME]
 
-    def __getCssClass(self, style, parentBg=False):
+    def _getCssClass(self, style, parentBg=False):
         result = "highlight-" + style
         if parentBg:
             result += "-parentbg"
 
         return result
 
-    def __colorize(self, params_dict, content):
+    def _colorize(self, params_dict, content):
         """
         Раскраска исходников. Возвращает получившийся HTML и добавляет
         нужные стили в заголовок страницы
@@ -165,8 +170,8 @@ class CommandSource(Command):
         linenum = LINE_NUM_PARAM_NAME in params_dict
         parentbg = PARENT_BACKGROUND_PARAM_NAME in params_dict
 
-        style = self.__getStyle(params_dict)
-        cssclass = self.__getCssClass(style, parentbg)
+        style = self._getStyle(params_dict)
+        cssclass = self._getCssClass(style, parentbg)
 
         formatter = HtmlFormatter(linenos=linenum, cssclass=cssclass, style=style)
 
@@ -193,7 +198,7 @@ class CommandSource(Command):
 
         content = highlight(content, lexer, formatter)
 
-        result = "".join(['<div class="source-block">', content.strip(), "</div>"])
+        result = self._html_formatter.block(content.strip(), [CSS_SOURCE_BLOCK])
         result = result.replace("\n</td>", "</td>")
 
         return result
