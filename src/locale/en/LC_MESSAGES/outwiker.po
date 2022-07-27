@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-16 17:54+0300\n"
+"POT-Creation-Date: 2022-07-27 15:13+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -2564,7 +2564,7 @@ msgid "Insert (:include:) command"
 msgstr "Insert (:include:) command"
 
 #: outwiker/pages/wiki/actions/include.py:44
-#: outwiker/pages/wiki/thumbdialogcontroller.py:89
+#: outwiker/pages/wiki/thumbdialogcontroller.py:90
 msgid "Current page does not have any attachments"
 msgstr "Current page does not have any attachments"
 
@@ -2692,6 +2692,16 @@ msgstr "Text background"
 msgid "Custom CSS"
 msgstr "Custom CSS"
 
+#: outwiker/pages/wiki/parser/commands/include.py:83
+#| msgid "Can't open folder '{}'"
+msgid "Can't open file '{}'"
+msgstr "Can't open file '{}'"
+
+#: outwiker/pages/wiki/parser/commands/include.py:86
+#| msgid "<b>Encoding error in file %s</b>"
+msgid "Encoding error in file '{}'"
+msgstr "Encoding error in file '{}'"
+
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:71
 msgid "<b>Can't create thumbnail for \"{}\"</b>"
 msgstr "<b>Can't create thumbnail for \"{}\"</b>"
@@ -2781,10 +2791,6 @@ msgstr "[[link | comment]]"
 #, python-format
 #~ msgid "<b>Can't open file %s</b>"
 #~ msgstr "<b>Can't open file %s</b>"
-
-#, python-format
-#~ msgid "<b>Encoding error in file %s</b>"
-#~ msgstr "<b>Encoding error in file %s</b>"
 
 #~ msgid "File '{}' exists already"
 #~ msgstr "File '{}' exists already"

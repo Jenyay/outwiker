@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SourcePlugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-16 21:52+0300\n"
-"PO-Revision-Date: 2018-11-16 21:53+0300\n"
+"POT-Creation-Date: 2022-07-27 15:23+0300\n"
+"PO-Revision-Date: 2022-07-27 15:24+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,59 +16,94 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: actions.py:29
+msgid "Source Code (:source ...:)"
+msgstr "Текст программы (:source ...:)"
+
+#: actions.py:34
+msgid ""
+"Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr ""
+"Плагин Source. Вставка команды (:source... :), предназначенной для раскраски "
+"исходного кода"
+
+#: commandsource.py:78
+msgid "Source plugin: File '{}' not found"
+msgstr "Плагин Source: Файл '{}' не найден"
+
+#: commandsource.py:81
+msgid "Source plugin: Encoding error"
+msgstr "Плагин Source: Ошибка кодировки"
+
+#: commandsource.py:84
+msgid "Source plugin: Unknown encoding"
+msgstr "Плагин Source: Неизвестная кодировка"
 
 #: controller.py:87
 msgid "Source [Plugin]"
 msgstr "Source [Плагин]"
 
-#: insertdialog.py:21
+#: insertdialog.py:24
 msgid "Source code"
 msgstr "Текст программы"
 
-#: insertdialog.py:88
+#: insertdialog.py:87
 msgid "General"
 msgstr "Общее"
 
-#: insertdialog.py:89
+#: insertdialog.py:88
 msgid "Appearance"
 msgstr "Внешний вид"
 
-#: insertdialog.py:137
+#: insertdialog.py:135
 msgid "Use the page background for the code block"
 msgstr "Использовать фон страницы для блока кода"
 
-#: insertdialog.py:151
+#: insertdialog.py:149
 msgid "Enable line numbers"
 msgstr "Включить нумерацию строк"
 
-#: insertdialog.py:167
-msgid "Language"
-msgstr "Язык"
-
-#: insertdialog.py:203
+#: insertdialog.py:165
 msgid "Tab Width (0 - Default Value)"
 msgstr "Размер табуляции (0 - значение по умолчанию)"
 
-#: insertdialog.py:238
+#: insertdialog.py:197
 msgid "Style"
 msgstr "Стиль"
 
-#: insertdialog.py:271
+#: insertdialog.py:224
 msgid "Insert source from file"
 msgstr "Вставить текст программы из файла"
 
-#: insertdialog.py:284
+#: insertdialog.py:225
 msgid "Attached file"
 msgstr "Прикрепленный файл"
 
-#: insertdialog.py:303
+#: insertdialog.py:244
 msgid "Attach new files"
 msgstr "Прикрепить новые файлы"
 
-#: insertdialog.py:320
+#: insertdialog.py:265
 msgid "File encoding"
 msgstr "Кодировка файла"
+
+#: insertdialog.py:288
+msgid "Language"
+msgstr "Язык"
+
+#: insertdialogcontroller.py:43
+msgid "Auto"
+msgstr "Авто"
+
+#: insertdialogcontroller.py:69
+msgid "Add other language"
+msgstr "Добавить другой язык"
+
+#: insertdialogcontroller.py:309
+msgid "Other..."
+msgstr "Другой..."
 
 #: lang_translate.py:4
 msgid "1S"
@@ -77,31 +112,6 @@ msgstr "1С"
 #: lang_translate.py:5
 msgid "Text only"
 msgstr "Только текст"
-
-#: commandsource.py:73
-#, python-brace-format
-msgid "<B>Source plugin: File '{0}' not found</B>"
-msgstr "<B>Плагин Source: Файл '{0}' не найден</B>"
-
-#: commandsource.py:77
-msgid "<B>Source plugin: Encoding error</B>"
-msgstr "<B>Плагин Source: Ошибка кодировки</B>"
-
-#: commandsource.py:79
-msgid "<B>Source plugin: Unknown encoding</B>"
-msgstr "<B>Плагин Source: Неизвестная кодировка</B>"
-
-#: insertdialogcontroller.py:42
-msgid "Auto"
-msgstr "Авто"
-
-#: insertdialogcontroller.py:67
-msgid "Add other language"
-msgstr "Добавить другой язык"
-
-#: insertdialogcontroller.py:310
-msgid "Other..."
-msgstr "Другой..."
 
 #: plugin.py:47
 msgid ""
@@ -240,17 +250,6 @@ msgstr ""
 #: plugin.py:127
 msgid "https://jenyay.net/Outwiker/SourcePluginEn"
 msgstr "https://jenyay.net/Outwiker/SourcePlugin"
-
-#: actions.py:29
-msgid "Source Code (:source ...:)"
-msgstr "Текст программы (:source ...:)"
-
-#: actions.py:34
-msgid ""
-"Source plugin. Insert (: source... :) command for source code highlighting"
-msgstr ""
-"Плагин Source. Вставка команды (:source... :), предназначенной для раскраски "
-"исходного кода"
 
 #: preferencepanel.py:54
 msgid "Default Tab Width"

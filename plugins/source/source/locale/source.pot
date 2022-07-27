@@ -6,67 +6,103 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Source plug-in\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-16 21:52+0300\n"
+"POT-Creation-Date: 2022-07-27 15:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.1.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: actions.py:29
+msgid "Source Code (:source ...:)"
+msgstr ""
+
+#: actions.py:34
+msgid ""
+"Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr ""
+
+#: commandsource.py:78
+msgid "Source plugin: File '{}' not found"
+msgstr ""
+
+#: commandsource.py:81
+msgid "Source plugin: Encoding error"
+msgstr ""
+
+#: commandsource.py:84
+msgid "Source plugin: Unknown encoding"
+msgstr ""
 
 #: controller.py:87
 msgid "Source [Plugin]"
 msgstr ""
 
-#: insertdialog.py:21
+#: insertdialog.py:24
 msgid "Source code"
 msgstr ""
 
-#: insertdialog.py:88
+#: insertdialog.py:87
 msgid "General"
 msgstr ""
 
-#: insertdialog.py:89
+#: insertdialog.py:88
 msgid "Appearance"
 msgstr ""
 
-#: insertdialog.py:137
+#: insertdialog.py:135
 msgid "Use the page background for the code block"
 msgstr ""
 
-#: insertdialog.py:151
+#: insertdialog.py:149
 msgid "Enable line numbers"
 msgstr ""
 
-#: insertdialog.py:167
-msgid "Language"
-msgstr ""
-
-#: insertdialog.py:203
+#: insertdialog.py:165
 msgid "Tab Width (0 - Default Value)"
 msgstr ""
 
-#: insertdialog.py:238
+#: insertdialog.py:197
 msgid "Style"
 msgstr ""
 
-#: insertdialog.py:271
+#: insertdialog.py:224
 msgid "Insert source from file"
 msgstr ""
 
-#: insertdialog.py:284
+#: insertdialog.py:225
 msgid "Attached file"
 msgstr ""
 
-#: insertdialog.py:303
+#: insertdialog.py:244
 msgid "Attach new files"
 msgstr ""
 
-#: insertdialog.py:320
+#: insertdialog.py:265
 msgid "File encoding"
+msgstr ""
+
+#: insertdialog.py:288
+msgid "Language"
+msgstr ""
+
+#: insertdialogcontroller.py:43
+msgid "Auto"
+msgstr ""
+
+#: insertdialogcontroller.py:69
+msgid "Add other language"
+msgstr ""
+
+#: insertdialogcontroller.py:309
+msgid "Other..."
 msgstr ""
 
 #: lang_translate.py:4
@@ -75,31 +111,6 @@ msgstr ""
 
 #: lang_translate.py:5
 msgid "Text only"
-msgstr ""
-
-#: commandsource.py:73
-#, python-brace-format
-msgid "<B>Source plugin: File '{0}' not found</B>"
-msgstr ""
-
-#: commandsource.py:77
-msgid "<B>Source plugin: Encoding error</B>"
-msgstr ""
-
-#: commandsource.py:79
-msgid "<B>Source plugin: Unknown encoding</B>"
-msgstr ""
-
-#: insertdialogcontroller.py:42
-msgid "Auto"
-msgstr ""
-
-#: insertdialogcontroller.py:67
-msgid "Add other language"
-msgstr ""
-
-#: insertdialogcontroller.py:310
-msgid "Other..."
 msgstr ""
 
 #: plugin.py:47
@@ -187,15 +198,6 @@ msgstr ""
 
 #: plugin.py:127
 msgid "https://jenyay.net/Outwiker/SourcePluginEn"
-msgstr ""
-
-#: actions.py:29
-msgid "Source Code (:source ...:)"
-msgstr ""
-
-#: actions.py:34
-msgid ""
-"Source plugin. Insert (: source... :) command for source code highlighting"
 msgstr ""
 
 #: preferencepanel.py:54
