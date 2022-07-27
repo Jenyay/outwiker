@@ -16,7 +16,7 @@ from .i18n import get_
 from .gui.filterlistdialog import FilterListDialog
 
 
-class InsertDialogController(object):
+class InsertDialogController:
     """
     Класс для управления диалогом InsertDialog
     """
@@ -40,7 +40,7 @@ class InsertDialogController(object):
         self.MIN_TAB_WIDTH = 0
         self.MAX_TAB_WIDTH = 50
 
-        self.AUTO_LANGUAGE = _(u"Auto")
+        self.AUTO_LANGUAGE = _("Auto")
 
     def _bindEvents(self):
         self._dialog.fileCheckBox.Bind(wx.EVT_CHECKBOX,
@@ -242,7 +242,7 @@ class InsertDialogController(object):
 
         # Если не выбран ни один из языков, добавляем "text"
         if len(languages) == 0:
-            languages = [u"text"]
+            languages = ["text"]
 
         languages.sort()
         return languages

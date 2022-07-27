@@ -15,7 +15,7 @@ from .preferencepanel import PreferencePanel
 from .actions import InsertSourceAction
 
 
-class Controller(object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
@@ -84,6 +84,6 @@ class Controller(object):
         """
         prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
 
-        panelName = _(u"Source [Plugin]")
+        panelName = _("Source [Plugin]")
         panelsList = [PreferencePanelInfo(prefPanel, panelName)]
         dialog.appendPreferenceGroup(panelName, panelsList)

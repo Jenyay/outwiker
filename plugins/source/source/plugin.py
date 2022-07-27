@@ -39,19 +39,19 @@ class PluginSource(Plugin):
 
     @property
     def name(self):
-        return u"Source"
+        return "Source"
 
     @property
     def description(self):
         description = _(
-            u"Add command (:source:) in wiki parser. This command highlight your source code.")
+            "Add command (:source:) in wiki parser. This command highlight your source code.")
 
-        usage = _(u"""<B>Usage:</B>:
+        usage = _("""<B>Usage:</B>:
 (:source params... :)
 source code
 (:sourceend:)""")
 
-        params = _(u"""<B>Params:</B>
+        params = _("""<B>Params:</B>
 <U>lang</U> - programming language
 
 <U>tabwidth</U> - tab size
@@ -66,7 +66,7 @@ source code
 
 <U>linenum</U> - enable line numbers""")
 
-        example1 = _(u"""<B>Example 1:</B>
+        example1 = _("""<B>Example 1:</B>
 <PRE>(:source lang="python" tabwidth=4:)
 import os
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 (:sourceend:)
 </PRE>""")
 
-        example2 = _(u"""<B>Example 2:</B>
+        example2 = _("""<B>Example 2:</B>
 <PRE>(:source lang="python" style="autumn":)
 import os
 
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 (:sourceend:)
 </PRE>""")
 
-        example3 = _(u"""<B>Example 3:</B>
+        example3 = _("""<B>Example 3:</B>
 <PRE>(:source lang="python" tabwidth=4 parentbg linenum:)
 import os
 
@@ -93,13 +93,13 @@ if __name__ == "__main__":
 (:sourceend:)
 </PRE>""")
 
-        example4 = _(u"""<B>Example 4:</B>
+        example4 = _("""<B>Example 4:</B>
 <PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>""")
 
-        example5 = _(u"""<B>Example 5:</B>
+        example5 = _("""<B>Example 5:</B>
 <PRE>(:source file="Attach:example.txt" lang="python":)(:sourceend:)</PRE>""")
 
-        return u"""{description}
+        return """{description}
 
 {usage}
 
@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/SourcePluginEn")
+        return _("https://jenyay.net/Outwiker/SourcePluginEn")
 
     def destroy(self):
         """

@@ -51,7 +51,7 @@ class PreferencePanel(BasePrefPanel):
         tabSizer = wx.FlexGridSizer(0, 2, 0, 0)
         tabSizer.AddGrowableCol(1)
 
-        tabWidthLabel = wx.StaticText(self, -1, _(u"Default Tab Width"))
+        tabWidthLabel = wx.StaticText(self, -1, _("Default Tab Width"))
 
         self.tabWidthSpin = wx.SpinCtrl(
             self,
@@ -86,7 +86,7 @@ class PreferencePanel(BasePrefPanel):
         styleSizer = wx.FlexGridSizer(0, 2, 0, 0)
         styleSizer.AddGrowableCol(1)
 
-        styleLabel = wx.StaticText(self, -1, _(u"Default Style"))
+        styleLabel = wx.StaticText(self, -1, _("Default Style"))
 
         self.styleComboBox = wx.ComboBox(self,
                                          -1,
@@ -118,7 +118,7 @@ class PreferencePanel(BasePrefPanel):
         Создание элементов управления, связанных с выбором используемых языков
         """
         # Метка с комментарием о том, что это за языки в списке
-        languageLabel = wx.StaticText(self, -1, _(u"Used Languages"))
+        languageLabel = wx.StaticText(self, -1, _("Used Languages"))
         mainSizer.Add(
             languageLabel,
             proportion=1,
@@ -139,8 +139,8 @@ class PreferencePanel(BasePrefPanel):
 
         # Кнопки
         buttonsSizer = wx.BoxSizer(wx.VERTICAL)
-        self.selectAllButton = wx.Button(self, label=_(u"Select All"))
-        self.clearButton = wx.Button(self, label=_(u"Clear"))
+        self.selectAllButton = wx.Button(self, label=_("Select All"))
+        self.clearButton = wx.Button(self, label=_("Clear"))
 
         buttonsSizer.Add(
             self.selectAllButton,

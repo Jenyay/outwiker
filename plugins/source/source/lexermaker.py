@@ -5,7 +5,7 @@ from .params import FILE_PARAM_NAME, LANGUAGE_PARAM_NAME, LANGUAGE_DEFAULT
 from .misc import getFileName
 
 
-class LexerMaker(object):
+class LexerMaker:
     """
     Класс для создания нужного лексера
     """

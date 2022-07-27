@@ -16,7 +16,7 @@ class InsertSourceAction(BaseAction):
     """
     Вызвать диалог для вставки команды (:source:)
     """
-    stringId = u"Source_InsertSource"
+    stringId = "Source_InsertSource"
 
     def __init__(self, application):
         self._application = application
@@ -26,12 +26,12 @@ class InsertSourceAction(BaseAction):
 
     @property
     def title(self):
-        return _(u"Source Code (:source ...:)")
+        return _("Source Code (:source ...:)")
 
     @property
     def description(self):
         return _(
-            u"Source plugin. Insert (: source... :) command for source code highlighting")
+            "Source plugin. Insert (: source... :) command for source code highlighting")
 
     def run(self, params):
         self._insertCommand()

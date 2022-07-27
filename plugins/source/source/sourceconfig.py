@@ -1,18 +1,18 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.config import StringOption, IntegerOption, ListOption, BooleanOption
 
 from .params import LANGUAGE_DEFAULT, TAB_WIDTH_DEFAULT, STYLE_DEFAULT, LANGUAGE_LIST_DEFAULT
 
 
-class SourceConfig (object):
+class SourceConfig:
     def __init__(self, config):
         self.__config = config
 
-        self.section = u"SourcePlugin"
+        self.section = "SourcePlugin"
 
         # Размер табуляции по умолчанию
-        tabWidthOption = u"TabWidth"
+        tabWidthOption = "TabWidth"
 
         self.__tabWidth = IntegerOption(self.__config,
                                         self.section,
@@ -20,7 +20,7 @@ class SourceConfig (object):
                                         TAB_WIDTH_DEFAULT)
 
         # Язык программирования по умолчанию
-        defaultLanguageOption = u"DefaultLanguage"
+        defaultLanguageOption = "DefaultLanguage"
 
         self.__defaultLanguage = StringOption(self.__config,
                                               self.section,
@@ -28,7 +28,7 @@ class SourceConfig (object):
                                               LANGUAGE_DEFAULT)
 
         # Список выбранных языков программирования
-        languageListOption = u"LanguageList"
+        languageListOption = "LanguageList"
 
         self.__languageList = ListOption(self.__config,
                                          self.section,
@@ -36,7 +36,7 @@ class SourceConfig (object):
                                          LANGUAGE_LIST_DEFAULT)
 
         # Стиль, используемый по умолчанию (если стиль не указан явно)
-        defaultStyleOption = u"DefaultStyle"
+        defaultStyleOption = "DefaultStyle"
 
         self.__defaultStyle = StringOption(self.__config,
                                            self.section,
@@ -47,8 +47,8 @@ class SourceConfig (object):
         self.DEFAULT_DIALOG_WIDTH = -1
         self.DEFAULT_DIALOG_HEIGHT = -1
 
-        dialogWidthOption = u"DialogWidth"
-        dialogHeightOption = u"DialogHeight"
+        dialogWidthOption = "DialogWidth"
+        dialogHeightOption = "DialogHeight"
 
         self.__dialogWidth = IntegerOption(self.__config,
                                            self.section,
@@ -62,7 +62,7 @@ class SourceConfig (object):
 
         # Настройка "Использовать фон страницы в блоке кода"
         self.DEFAULT_PARENT_BACKGROUND = False
-        parentBgOption = u"ParentBg"
+        parentBgOption = "ParentBg"
 
         self.__parentBg = BooleanOption(self.__config,
                                         self.section,
@@ -71,7 +71,7 @@ class SourceConfig (object):
 
         # Настройка для добавления нумерации строк
         self.DEFAULT_LINE_NUM = False
-        lineNumOption = u"LineNum"
+        lineNumOption = "LineNum"
 
         self.__lineNum = BooleanOption(self.__config,
                                        self.section,
@@ -100,7 +100,7 @@ class SourceConfig (object):
 
     @property
     def style(self):
-        styleOption = u"Style"
+        styleOption = "Style"
 
         # Стиль, выбранный в диалоге по умолчанию
         # Переменная, отвечающая за параметр создается здесь,
