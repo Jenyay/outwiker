@@ -7,21 +7,21 @@ name = "pypi"
 
 [packages]
 wxPython = "==4.1.1"
-Pillow = "==9.1.1"
+Pillow = "==9.2.0"
 cacheman = {version = "==2.1.0.post1", path = "depends/cacheman"}
 cyhunspell = {version = "==2.0.2.post1", path = "depends/cyhunspell"}
 idna = ">=2.10"
 pyparsing = "==3.0.9"
-psutil = "==5.9.0"
+psutil = "==5.9.1"
 
 [dev-packages]
 invoke = "==1.7.1"
-cx-freeze = "==6.11.0"
+cx-freeze = "==6.11.1"
 pympler = "==1.0.1"
 pytest = ">=7.1"
 coverage = ">=6.4"
 jinja2 = ">=3.1"
 colorama = "==0.4.5"
-sphinx = ">=5.0"
+sphinx = ">=5.1"
 buildtools = {editable = true, path = "./buildtools"}
 outwiker = {editable = true, path = "."}
