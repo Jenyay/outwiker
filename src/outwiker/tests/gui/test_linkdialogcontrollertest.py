@@ -556,9 +556,9 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                               selectedString)
         controller.showDialog()
 
-        self.assertIn('Attach:accept.png', parent.linkText.GetItems())
-        self.assertIn('Attach:add.png', parent.linkText.GetItems())
-        self.assertIn('Attach:html.txt', parent.linkText.GetItems())
+        self.assertIn('accept.png', parent.linkText.GetItems())
+        self.assertIn('add.png', parent.linkText.GetItems())
+        self.assertIn('html.txt', parent.linkText.GetItems())
 
     def testAttach_html(self):
         Attachment(self._testpage).attach(self.files)
@@ -571,12 +571,9 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                               selectedString)
         controller.showDialog()
 
-        self.assertIn('{}/accept.png'.format(PAGE_ATTACH_DIR),
-                      parent.linkText.GetItems())
-        self.assertIn('{}/add.png'.format(PAGE_ATTACH_DIR),
-                      parent.linkText.GetItems())
-        self.assertIn('{}/html.txt'.format(PAGE_ATTACH_DIR),
-                      parent.linkText.GetItems())
+        self.assertIn('accept.png', parent.linkText.GetItems())
+        self.assertIn('add.png', parent.linkText.GetItems())
+        self.assertIn('html.txt', parent.linkText.GetItems())
 
     def testSelectedAttach_wiki(self):
         Attachment(self._testpage).attach(self.files)
@@ -590,15 +587,15 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                               selectedString)
         controller.showDialog()
 
-        self.assertIn('Attach:accept.png', parent.linkText.GetItems())
-        self.assertIn('Attach:add.png', parent.linkText.GetItems())
-        self.assertIn('Attach:html.txt', parent.linkText.GetItems())
+        self.assertIn('accept.png', parent.linkText.GetItems())
+        self.assertIn('add.png', parent.linkText.GetItems())
+        self.assertIn('html.txt', parent.linkText.GetItems())
 
         self.assertEqual(controller.link, 'Attach:add.png')
         self.assertEqual(controller.comment, 'Attach:add.png')
         self.assertEqual(controller.linkResult, '[[Attach:add.png]]')
 
-        self.assertEqual(parent.linkText.GetValue(), 'Attach:add.png')
+        self.assertEqual(parent.linkText.GetValue(), 'add.png')
 
     def testSelectedAttach_html(self):
         Attachment(self._testpage).attach(self.files)
@@ -611,12 +608,9 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                               selectedString)
         controller.showDialog()
 
-        self.assertIn('{}/accept.png'.format(PAGE_ATTACH_DIR),
-                      parent.linkText.GetItems())
-        self.assertIn('{}/add.png'.format(PAGE_ATTACH_DIR),
-                      parent.linkText.GetItems())
-        self.assertIn('{}/html.txt'.format(PAGE_ATTACH_DIR),
-                      parent.linkText.GetItems())
+        self.assertIn('accept.png', parent.linkText.GetItems())
+        self.assertIn('add.png', parent.linkText.GetItems())
+        self.assertIn('html.txt', parent.linkText.GetItems())
 
         self.assertEqual(controller.link,
                          '{}/add.png'.format(PAGE_ATTACH_DIR))
@@ -625,8 +619,7 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.linkResult,
                          '<a href="{attach}/add.png">{attach}/add.png</a>'.format(attach=PAGE_ATTACH_DIR))
 
-        self.assertEqual(parent.linkText.GetValue(),
-                         '{}/add.png'.format(PAGE_ATTACH_DIR))
+        self.assertEqual(parent.linkText.GetValue(), 'add.png')
 
     def testLinkStyle_01(self):
         self._config.linkStyleOptions.value = 0

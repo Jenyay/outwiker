@@ -1,31 +1,27 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 
-class LinkCreator (object):
+class LinkCreator:
     def __init__ (self, config):
         """
         config - экземпляр класса WikiConfig
         """
-        self.__config = config
-
+        self._config = config
 
     def create (self, link, comment):
         if len (comment.strip()) == 0 or link.strip() == comment.strip():
-            return self.__createCompactStyle (link)
+            return self._createCompactStyle (link)
 
-        if self.__config.linkStyleOptions.value == 1:
-            return self.__createForStyle1 (link, comment)
+        if self._config.linkStyleOptions.value == 1:
+            return self._createForStyle1 (link, comment)
 
-        return self.__createForStyle0 (link, comment)
+        return self._createForStyle0 (link, comment)
 
+    def _createCompactStyle (self, link):
+        return "[[{link}]]".format (link=link)
 
-    def __createCompactStyle (self, link):
-        return u"[[{link}]]".format (link=link)
+    def _createForStyle0 (self, link, comment):
+        return "[[{comment} -> {link}]]".format (comment=comment, link=link)
 
-
-    def __createForStyle0 (self, link, comment):
-        return u"[[{comment} -> {link}]]".format (comment=comment, link=link)
-
-
-    def __createForStyle1 (self, link, comment):
-        return u"[[{link} | {comment}]]".format (comment=comment, link=link)
+    def _createForStyle1 (self, link, comment):
+        return "[[{link} | {comment}]]".format (comment=comment, link=link)

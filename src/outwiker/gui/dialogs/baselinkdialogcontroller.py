@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractproperty, abstractmethod
-import os.path
+from pathlib import Path
 
 import wx
 
@@ -10,7 +10,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.pageuiddepot import PageUidDepot
 
 
-class BaseLinkDialogController(object, metaclass=ABCMeta):
+class BaseLinkDialogController(metaclass=ABCMeta):
     """
     Базовый класс контроллера для управления классом LinkDialog
     """
@@ -29,8 +29,16 @@ class BaseLinkDialogController(object, metaclass=ABCMeta):
         self._dlg = dialog
         self._selectedString = selectedString
 
-        self.link = u''
-        self.comment = u''
+        self._link = ''
+        self._comment = ''
+
+    @property
+    def link(self):
+        return self._link
+
+    @property
+    def comment(self):
+        return self._comment
 
     def showDialog(self):
         self._prepareDialog()
@@ -38,39 +46,40 @@ class BaseLinkDialogController(object, metaclass=ABCMeta):
         result = self._dlg.ShowModal()
 
         if result == wx.ID_OK:
-            self.link = self._dlg.link
-            self.comment = self._dlg.comment
+            self._link = self._dlg.link
+            if self._isLinkToAttach(self._link):
+                self._link = self.createFileLink(self._link)
 
-            if len(self.comment) == 0:
-                self.comment = self.link
+            self._comment = self._dlg.comment
+
+            if len(self._comment) == 0:
+                self._comment = self._link
 
         return result
 
-    @abstractmethod
-    def createFileLink(self, fname):
-        """
-        Создать ссылку на прикрепленный файл
-        """
-
     @abstractproperty
-    def linkResult(self):
+    def linkResult(self) -> str:
         """
         Возвращает строку, представляющую собой оформленную ссылку
-        в нужном представлении(HTML, wiki и т.п.)
+        в нужном представлении (HTML, wiki и т.п.)
         """
         pass
 
+    @abstractmethod
+    def createFileLink(self, fname: str) -> str:
+        """
+        Создать ссылку на прикрепленный файл
+        """
+        pass
+
+    def prepareAttachLink(self, text: str) -> str:
+        return text
+
     def _prepareDialog(self):
         attach = Attachment(self._page)
-
-        attachList = [self.createFileLink(fname)
-                      for fname
-                      in attach.getAttachRelative()
-                      if (not fname.startswith(u'__') or
-                          os.path.isfile(attach.getFullPath(fname)))]
-
-        attachList.sort()
-        self._dlg.linkText.AppendItems(attachList)
+        attach_path = Path(attach.getAttachPath(create=False))
+        if attach_path.exists():
+            self._dlg.linkText.SetRootDir(attach_path)
 
         if not self._dlg.comment:
             self._dlg.comment = self._selectedString
@@ -89,24 +98,34 @@ class BaseLinkDialogController(object, metaclass=ABCMeta):
         """
         Попытаться найти ссылку или в выделенном тексте, или в буфере обмена
         """
-        if self._isLink(self._selectedString):
-            return self._selectedString
+        text = self.prepareAttachLink(self._selectedString)
+
+        if self._isLink(text):
+            return text
 
         clipboardText = getClipboardText()
         if clipboardText is not None and self._isLink(clipboardText):
             return clipboardText
 
-        return u''
+        return ''
+
+    def _isLinkToAttach(self, text):
+        attach = Attachment(self._page)
+        path = Path(attach.getAttachPath(create=False), text)
+        try:
+            return path.exists()
+        except OSError:
+            return False
 
     def _isLink(self, text):
         lowerString = text.lower()
-        return (lowerString.startswith(u'http://') or
-                lowerString.startswith(u'https://') or
-                lowerString.startswith(u'ftp://') or
-                lowerString.startswith(u'page://') or
-                text.startswith(u'#') or
-                text.strip() in self._dlg.linkText.GetItems())
+        return (lowerString.startswith('http://') or
+                lowerString.startswith('https://') or
+                lowerString.startswith('ftp://') or
+                lowerString.startswith('page://') or
+                text.startswith('#') or
+                self._isLinkToAttach(text))
 
     def _isPageLink(self, text):
         lowerString = text.lower()
-        return lowerString.startswith(u'page://')
+        return lowerString.startswith('page://')

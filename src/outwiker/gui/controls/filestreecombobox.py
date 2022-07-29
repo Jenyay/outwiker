@@ -47,6 +47,9 @@ class FilesTreeComboBox(wx.Panel):
     def GetFilesListRelative(self):
         return self._combo_popup.GetFilesListRelative()
 
+    def GetItems(self):
+        return self.GetFilesListRelative()
+
     def GetFilesListFull(self):
         return self._combo_popup.GetFilesListFull()
 
