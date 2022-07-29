@@ -35,7 +35,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyWiki(self.wikiroot)
         copyTextToClipboard('')
 
-    def testEmpty_wiki(self):
+    def testEmpty(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -50,7 +50,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, '')
         self.assertEqual(controller.linkResult, '[[]]')
 
-    def testSelectedHttpLink_wiki(self):
+    def testSelectedHttpLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'https://jenyay.net'
@@ -65,7 +65,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, selectedString)
         self.assertEqual(controller.linkResult, '[[https://jenyay.net]]')
 
-    def testSelectedPageLink_wiki(self):
+    def testSelectedPageLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'page://__adsfadfasdf'
@@ -80,7 +80,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, selectedString)
         self.assertEqual(controller.linkResult, '[[page://__adsfadfasdf]]')
 
-    def testSelectedHttpsLink_wiki(self):
+    def testSelectedHttpsLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'https://jenyay.net'
@@ -95,7 +95,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, selectedString)
         self.assertEqual(controller.linkResult, '[[https://jenyay.net]]')
 
-    def testSelectedftpLink_wiki(self):
+    def testSelectedftpLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'ftp://jenyay.net'
@@ -110,7 +110,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, selectedString)
         self.assertEqual(controller.linkResult, '[[ftp://jenyay.net]]')
 
-    def testSelectedHttpLink2_wiki(self):
+    def testSelectedHttpLink2(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'HTTPS://jenyay.net'
@@ -125,7 +125,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, selectedString)
         self.assertEqual(controller.linkResult, '[[HTTPS://jenyay.net]]')
 
-    def testSelectedText_wiki(self):
+    def testSelectedText(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'бла-бла-бла'
@@ -140,7 +140,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, selectedString)
         self.assertEqual(controller.linkResult, '[[бла-бла-бла -> ]]')
 
-    def testClipboardHttpLink_wiki(self):
+    def testClipboardHttpLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -157,7 +157,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, clipboardText)
         self.assertEqual(controller.linkResult, '[[https://jenyay.net]]')
 
-    def testClipboardHttpLink2_wiki(self):
+    def testClipboardHttpLink2(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -174,7 +174,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, clipboardText)
         self.assertEqual(controller.linkResult, '[[HTTPS://jenyay.net]]')
 
-    def testClipboardHttpsLink_wiki(self):
+    def testClipboardHttpsLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -191,7 +191,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, clipboardText)
         self.assertEqual(controller.linkResult, '[[https://jenyay.net]]')
 
-    def testClipboardFtpLink_wiki(self):
+    def testClipboardFtpLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -208,7 +208,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, clipboardText)
         self.assertEqual(controller.linkResult, '[[ftp://jenyay.net]]')
 
-    def testClipboardPageLink_wiki(self):
+    def testClipboardPageLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -225,7 +225,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, clipboardText)
         self.assertEqual(controller.linkResult, '[[page://_asdfasdfasdf]]')
 
-    def testClipboardExitedPageLink_wiki(self):
+    def testClipboardExitedPageLink(self):
         page_uid = PageUidDepot().createUid(self._testpage)
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
@@ -245,7 +245,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
                          '[[{title} -> page://{uid}]]'.format(title=self._testpage.display_title,
                                                               uid=page_uid))
 
-    def testClipboardExitedPageAliasLink_wiki(self):
+    def testClipboardExitedPageAliasLink(self):
         self._testpage.alias = 'A page with an alias'
         page_uid = PageUidDepot().createUid(self._testpage)
         parent = LinkDialog(self.mainWindow)
@@ -266,7 +266,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
                          '[[{title} -> page://{uid}]]'.format(title=self._testpage.display_title,
                                                               uid=page_uid))
 
-    def testClipboardAnchor_wiki(self):
+    def testClipboardAnchor(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -283,7 +283,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, clipboardText)
         self.assertEqual(controller.linkResult, '[[#anchor]]')
 
-    def testAttach_wiki(self):
+    def testAttach(self):
         Attachment(self._testpage).attach(self.files)
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
@@ -299,7 +299,35 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertIn('add.png', parent.linkText.GetItems())
         self.assertIn('html.txt', parent.linkText.GetItems())
 
-    def testSelectedAttach_wiki(self):
+    def testAttach_subdir(self):
+        subdir = 'subdir 1/subdir 2'
+
+        attach = Attachment(self._testpage)
+        attach.createSubdir(subdir)
+
+        attach.attach(self.files)
+        attach.attach(self.files, subdir)
+
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = ''
+
+        controller = WikiLinkDialogController(self.application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+        dialog_files = [fname.replace('\\', '/')
+                        for fname in parent.linkText.GetItems()]
+
+        self.assertIn('subdir 1/subdir 2/accept.png', dialog_files)
+        self.assertIn('subdir 1/subdir 2/add.png', dialog_files)
+        self.assertIn('subdir 1/subdir 2/html.txt', dialog_files)
+        self.assertIn('subdir 1/subdir 2/accept.png', dialog_files)
+        self.assertIn('subdir 1/subdir 2/add.png', dialog_files)
+        self.assertIn('subdir 1/subdir 2/html.txt', dialog_files)
+
+    def testSelectedAttach(self):
         Attachment(self._testpage).attach(self.files)
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
@@ -311,15 +339,69 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                               selectedString)
         controller.showDialog()
 
-        self.assertIn('accept.png', parent.linkText.GetItems())
-        self.assertIn('add.png', parent.linkText.GetItems())
-        self.assertIn('html.txt', parent.linkText.GetItems())
-
         self.assertEqual(controller.link, 'Attach:add.png')
         self.assertEqual(controller.comment, 'Attach:add.png')
         self.assertEqual(controller.linkResult, '[[Attach:add.png]]')
 
         self.assertEqual(parent.linkText.GetValue(), 'add.png')
+
+    def testSelectedAttach_subdir_back_slash(self):
+        subdir = 'subdir 1/subdir 2'
+
+        attach = Attachment(self._testpage)
+        attach.createSubdir(subdir)
+        attach.attach(self.files, subdir)
+
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = 'Attach:subdir 1\\subdir 2\\add.png'
+
+        controller = WikiLinkDialogController(self.application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link.replace('\\', '/'),
+                         'Attach:subdir 1/subdir 2/add.png')
+
+        self.assertEqual(controller.comment.replace('\\', '/'),
+                         'Attach:subdir 1/subdir 2/add.png')
+
+        self.assertEqual(controller.linkResult.replace('\\', '/'),
+                         '[[Attach:subdir 1/subdir 2/add.png]]')
+
+        self.assertEqual(parent.linkText.GetValue().replace('\\', '/'),
+                         'subdir 1/subdir 2/add.png')
+
+    def testSelectedAttach_subdir_forward_slash(self):
+        subdir = 'subdir 1/subdir 2'
+
+        attach = Attachment(self._testpage)
+        attach.createSubdir(subdir)
+        attach.attach(self.files, subdir)
+
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = 'Attach:subdir 1/subdir 2/add.png'
+
+        controller = WikiLinkDialogController(self.application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link.replace('\\', '/'),
+                         'Attach:subdir 1/subdir 2/add.png')
+
+        self.assertEqual(controller.comment.replace('\\', '/'),
+                         'Attach:subdir 1/subdir 2/add.png')
+
+        self.assertEqual(controller.linkResult.replace('\\', '/'),
+                         '[[Attach:subdir 1/subdir 2/add.png]]')
+
+        self.assertEqual(parent.linkText.GetValue().replace('\\', '/'),
+                         'subdir 1/subdir 2/add.png')
 
     def testLinkStyle_01(self):
         self._config.linkStyleOptions.value = 0

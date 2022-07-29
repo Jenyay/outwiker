@@ -36,7 +36,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyWiki(self.wikiroot)
         copyTextToClipboard('')
 
-    def testEmpty_html(self):
+    def testEmpty(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -51,7 +51,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, '')
         self.assertEqual(controller.linkResult, '<a href=""></a>')
 
-    def testSelectedHttpLink_html(self):
+    def testSelectedHttpLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'https://jenyay.net'
@@ -68,7 +68,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="https://jenyay.net">https://jenyay.net</a>')
 
-    def testSelectedPageLink_html(self):
+    def testSelectedPageLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'page://__adsfadfasdf'
@@ -84,7 +84,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="page://__adsfadfasdf">page://__adsfadfasdf</a>')
 
-    def testSelectedHttpsLink_html(self):
+    def testSelectedHttpsLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'https://jenyay.net'
@@ -100,7 +100,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="https://jenyay.net">https://jenyay.net</a>')
 
-    def testSelectedftpLink_html(self):
+    def testSelectedftpLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'ftp://jenyay.net'
@@ -116,7 +116,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="ftp://jenyay.net">ftp://jenyay.net</a>')
 
-    def testSelectedHttpLink2_html(self):
+    def testSelectedHttpLink2(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'HTTPS://jenyay.net'
@@ -132,7 +132,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="HTTPS://jenyay.net">HTTPS://jenyay.net</a>')
 
-    def testSelectedText_html(self):
+    def testSelectedText(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'бла-бла-бла'
@@ -146,7 +146,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, selectedString)
         self.assertEqual(controller.linkResult, '<a href="">бла-бла-бла</a>')
 
-    def testClipboardHttpLink_html(self):
+    def testClipboardHttpLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -164,7 +164,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="https://jenyay.net">https://jenyay.net</a>')
 
-    def testClipboardHttpLink2_html(self):
+    def testClipboardHttpLink2(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -182,7 +182,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="HTTPS://jenyay.net">HTTPS://jenyay.net</a>')
 
-    def testClipboardHttpsLink_html(self):
+    def testClipboardHttpsLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -200,7 +200,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="https://jenyay.net">https://jenyay.net</a>')
 
-    def testClipboardFtpLink_html(self):
+    def testClipboardFtpLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -218,7 +218,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="ftp://jenyay.net">ftp://jenyay.net</a>')
 
-    def testClipboardPageLink_html(self):
+    def testClipboardPageLink(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -236,7 +236,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="page://_asdfasdfasdf">page://_asdfasdfasdf</a>')
 
-    def testClipboardExitedPageLink_html(self):
+    def testClipboardExitedPageLink(self):
         page_uid = PageUidDepot().createUid(self._testpage)
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
@@ -256,7 +256,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             '<a href="page://{uid}">{title}</a>'.format(uid=page_uid,
                                                         title=self._testpage.display_title))
 
-    def testClipboardExitedWithAliasPageLink_html(self):
+    def testClipboardExitedWithAliasPageLink(self):
         self._testpage.alias = 'Tha page with an alias'
         page_uid = PageUidDepot().createUid(self._testpage)
         parent = LinkDialog(self.mainWindow)
@@ -277,7 +277,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             '<a href="page://{uid}">{title}</a>'.format(uid=page_uid,
                                                         title=self._testpage.display_title))
 
-    def testClipboardAnchor_html(self):
+    def testClipboardAnchor(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -295,7 +295,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             controller.linkResult,
             '<a href="#anchor">#anchor</a>')
 
-    def testAttach_html(self):
+    def testAttach(self):
         Attachment(self._testpage).attach(self.files)
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
@@ -310,7 +310,34 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertIn('add.png', parent.linkText.GetItems())
         self.assertIn('html.txt', parent.linkText.GetItems())
 
-    def testSelectedAttach_html(self):
+    def testAttach_subdir(self):
+        subdir = 'subdir 1/subdir 2'
+
+        attach = Attachment(self._testpage)
+        attach.createSubdir(subdir)
+
+        attach.attach(self.files)
+        attach.attach(self.files, subdir)
+
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = ''
+
+        controller = HtmlLinkDialogController(self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+        dialog_files = [fname.replace('\\', '/')
+                        for fname in parent.linkText.GetItems()]
+
+        self.assertIn('subdir 1/subdir 2/accept.png', dialog_files)
+        self.assertIn('subdir 1/subdir 2/add.png', dialog_files)
+        self.assertIn('subdir 1/subdir 2/html.txt', dialog_files)
+        self.assertIn('subdir 1/subdir 2/accept.png', dialog_files)
+        self.assertIn('subdir 1/subdir 2/add.png', dialog_files)
+        self.assertIn('subdir 1/subdir 2/html.txt', dialog_files)
+
+    def testSelectedAttach(self):
         Attachment(self._testpage).attach(self.files)
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
@@ -333,3 +360,57 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
                          '<a href="{attach}/add.png">{attach}/add.png</a>'.format(attach=PAGE_ATTACH_DIR))
 
         self.assertEqual(parent.linkText.GetValue(), 'add.png')
+
+    def testSelectedAttach_subdir_back_slash(self):
+        subdir = 'subdir 1/subdir 2'
+
+        attach = Attachment(self._testpage)
+        attach.createSubdir(subdir)
+
+        attach.attach(self.files, subdir)
+
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = '{}\\subdir 1\\subdir 2\\add.png'.format(PAGE_ATTACH_DIR)
+
+        controller = HtmlLinkDialogController(self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link.replace('\\', '/'),
+                         '{}/subdir 1/subdir 2/add.png'.format(PAGE_ATTACH_DIR))
+        self.assertEqual(controller.comment.replace('\\', '/'),
+                         '{}/subdir 1/subdir 2/add.png'.format(PAGE_ATTACH_DIR))
+        self.assertEqual(controller.linkResult,
+                         '<a href="{attach}/subdir 1/subdir 2/add.png">{attach}\\subdir 1\\subdir 2\\add.png</a>'.format(attach=PAGE_ATTACH_DIR))
+
+        self.assertEqual(parent.linkText.GetValue().replace('\\', '/'),
+                         'subdir 1/subdir 2/add.png')
+
+    def testSelectedAttach_subdir_forward_slash(self):
+        subdir = 'subdir 1/subdir 2'
+
+        attach = Attachment(self._testpage)
+        attach.createSubdir(subdir)
+
+        attach.attach(self.files, subdir)
+
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = '{}/subdir 1/subdir 2/add.png'.format(PAGE_ATTACH_DIR)
+
+        controller = HtmlLinkDialogController(self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link.replace('\\', '/'),
+                         '{}/subdir 1/subdir 2/add.png'.format(PAGE_ATTACH_DIR))
+        self.assertEqual(controller.comment.replace('\\', '/'),
+                         '{}/subdir 1/subdir 2/add.png'.format(PAGE_ATTACH_DIR))
+        self.assertEqual(controller.linkResult,
+                         '<a href="{attach}/subdir 1/subdir 2/add.png">{attach}/subdir 1/subdir 2/add.png</a>'.format(attach=PAGE_ATTACH_DIR))
+
+        self.assertEqual(parent.linkText.GetValue().replace('\\', '/'),
+                         'subdir 1/subdir 2/add.png')
