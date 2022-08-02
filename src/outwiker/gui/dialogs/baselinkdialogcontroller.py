@@ -5,6 +5,7 @@ from pathlib import Path
 
 import wx
 
+from outwiker.core.attachfilters import getHiddenFilter, notFilter
 from outwiker.core.commands import getClipboardText
 from outwiker.core.attachment import Attachment
 from outwiker.core.pageuiddepot import PageUidDepot
@@ -79,6 +80,8 @@ class BaseLinkDialogController(metaclass=ABCMeta):
         attach = Attachment(self._page)
         attach_path = Path(attach.getAttachPath(create=False))
         if attach_path.exists():
+            files_filter = notFilter(getHiddenFilter(self._page))
+            self._dlg.linkText.SetFilterFunc(files_filter)
             self._dlg.linkText.SetRootDir(attach_path)
 
         if not self._dlg.comment:
@@ -111,7 +114,7 @@ class BaseLinkDialogController(metaclass=ABCMeta):
 
     def _isLinkToAttach(self, text):
         attach = Attachment(self._page)
-        path = Path(attach.getAttachPath(create=False), text)
+        path = Path(attach.getAttachPath(create=False), text.replace('\\', '/'))
         try:
             return path.exists()
         except OSError:

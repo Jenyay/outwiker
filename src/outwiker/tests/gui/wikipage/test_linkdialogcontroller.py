@@ -327,6 +327,24 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertIn('subdir 1/subdir 2/add.png', dialog_files)
         self.assertIn('subdir 1/subdir 2/html.txt', dialog_files)
 
+    def testAttach_hidden_subdir(self):
+        hidden_subdir = '__thumb'
+        attach = Attachment(self._testpage)
+        attach.attach(self.files)
+        attach.createSubdir(hidden_subdir)
+
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = ''
+
+        controller = WikiLinkDialogController(self.application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertNotIn(hidden_subdir, parent.linkText.GetItems())
+
     def testSelectedAttach(self):
         Attachment(self._testpage).attach(self.files)
         parent = LinkDialog(self.mainWindow)
@@ -345,7 +363,43 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(parent.linkText.GetValue(), 'add.png')
 
-    def testSelectedAttach_subdir_back_slash(self):
+    def testSelectedAttachSingleQuotes(self):
+        Attachment(self._testpage).attach(self.files)
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = "Attach:'add.png'"
+
+        controller = WikiLinkDialogController(self.application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link, "Attach:'add.png'")
+        self.assertEqual(controller.comment, "Attach:'add.png'")
+        self.assertEqual(controller.linkResult, "[[Attach:'add.png']]")
+
+        self.assertEqual(parent.linkText.GetValue(), 'add.png')
+
+    def testSelectedAttachDoubleQuotes(self):
+        Attachment(self._testpage).attach(self.files)
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = 'Attach:"add.png"'
+
+        controller = WikiLinkDialogController(self.application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link, 'Attach:"add.png"')
+        self.assertEqual(controller.comment, 'Attach:"add.png"')
+        self.assertEqual(controller.linkResult, '[[Attach:"add.png"]]')
+
+        self.assertEqual(parent.linkText.GetValue(), 'add.png')
+
+    def testSelectedAttach_subdir_back_slash_sigle_quotes(self):
         subdir = 'subdir 1/subdir 2'
 
         attach = Attachment(self._testpage)
@@ -354,7 +408,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
-        selectedString = 'Attach:subdir 1\\subdir 2\\add.png'
+        selectedString = "Attach:'subdir 1\\subdir 2\\add.png'"
 
         controller = WikiLinkDialogController(self.application,
                                               self._testpage,
@@ -363,13 +417,42 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller.showDialog()
 
         self.assertEqual(controller.link.replace('\\', '/'),
-                         'Attach:subdir 1/subdir 2/add.png')
+                        "Attach:'subdir 1/subdir 2/add.png'")
 
         self.assertEqual(controller.comment.replace('\\', '/'),
-                         'Attach:subdir 1/subdir 2/add.png')
+                         "Attach:'subdir 1/subdir 2/add.png'")
 
         self.assertEqual(controller.linkResult.replace('\\', '/'),
-                         '[[Attach:subdir 1/subdir 2/add.png]]')
+                         "[[Attach:'subdir 1/subdir 2/add.png']]")
+
+        self.assertEqual(parent.linkText.GetValue().replace('\\', '/'),
+                         'subdir 1/subdir 2/add.png')
+
+    def testSelectedAttach_subdir_back_slash_double_quotes(self):
+        subdir = 'subdir 1/subdir 2'
+
+        attach = Attachment(self._testpage)
+        attach.createSubdir(subdir)
+        attach.attach(self.files, subdir)
+
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = 'Attach:"subdir 1\\subdir 2\\add.png"'
+
+        controller = WikiLinkDialogController(self.application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link.replace('\\', '/'),
+                        'Attach:"subdir 1/subdir 2/add.png"')
+
+        self.assertEqual(controller.comment.replace('\\', '/'),
+                         'Attach:"subdir 1/subdir 2/add.png"')
+
+        self.assertEqual(controller.linkResult.replace('\\', '/'),
+                         '[[Attach:"subdir 1/subdir 2/add.png"]]')
 
         self.assertEqual(parent.linkText.GetValue().replace('\\', '/'),
                          'subdir 1/subdir 2/add.png')
@@ -383,7 +466,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
-        selectedString = 'Attach:subdir 1/subdir 2/add.png'
+        selectedString = 'Attach:"subdir 1/subdir 2/add.png"'
 
         controller = WikiLinkDialogController(self.application,
                                               self._testpage,
@@ -392,13 +475,13 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller.showDialog()
 
         self.assertEqual(controller.link.replace('\\', '/'),
-                         'Attach:subdir 1/subdir 2/add.png')
+                         'Attach:"subdir 1/subdir 2/add.png"')
 
         self.assertEqual(controller.comment.replace('\\', '/'),
-                         'Attach:subdir 1/subdir 2/add.png')
+                         'Attach:"subdir 1/subdir 2/add.png"')
 
         self.assertEqual(controller.linkResult.replace('\\', '/'),
-                         '[[Attach:subdir 1/subdir 2/add.png]]')
+                         '[[Attach:"subdir 1/subdir 2/add.png"]]')
 
         self.assertEqual(parent.linkText.GetValue().replace('\\', '/'),
                          'subdir 1/subdir 2/add.png')

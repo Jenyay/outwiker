@@ -10,11 +10,19 @@ class WikiLinkDialogController(BaseLinkDialogController):
     def __init__(self, application, page, dialog, selectedString):
         super().__init__(page, dialog, selectedString)
         self._application = application
+        self._quotes = None
 
     def prepareAttachLink(self, text: str) -> str:
         if text.startswith(AttachToken.attachString):
             text = text[len(AttachToken.attachString):]
-            # text = text.replace('\\', '/')
+
+            if text.startswith('"') and text.endswith('"'):
+                self._quotes = '"'
+                return text[1:-1]
+
+            if text.startswith("'") and text.endswith("'"):
+                self._quotes = "'"
+                return text[1:-1]
 
         return text
 
@@ -31,4 +39,10 @@ class WikiLinkDialogController(BaseLinkDialogController):
         """
         Создать ссылку на прикрепленный файл
         """
-        return 'Attach:' + fname
+        # Add quotes for path with spaces and slashes and if user add quotes to comment
+        if ((' ' in fname or '\\' in fname or '/' in fname) or
+                self._quotes is not None):
+            quotes = self._quotes if self._quotes is not None else '"'
+            return 'Attach:{quotes}{fname}{quotes}'.format(fname=fname, quotes=quotes)
+
+        return 'Attach:{fname}'.format(fname=fname)

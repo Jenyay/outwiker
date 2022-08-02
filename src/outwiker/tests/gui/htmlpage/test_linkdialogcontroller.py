@@ -337,6 +337,23 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertIn('subdir 1/subdir 2/add.png', dialog_files)
         self.assertIn('subdir 1/subdir 2/html.txt', dialog_files)
 
+    def testAttach_hidden_subdir(self):
+        hidden_subdir = '__thumb'
+        attach = Attachment(self._testpage)
+        attach.attach(self.files)
+        attach.createSubdir(hidden_subdir)
+
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = ''
+
+        controller = HtmlLinkDialogController(self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertNotIn(hidden_subdir, parent.linkText.GetItems())
+
     def testSelectedAttach(self):
         Attachment(self._testpage).attach(self.files)
         parent = LinkDialog(self.mainWindow)
@@ -380,8 +397,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(controller.link.replace('\\', '/'),
                          '{}/subdir 1/subdir 2/add.png'.format(PAGE_ATTACH_DIR))
-        self.assertEqual(controller.comment.replace('\\', '/'),
-                         '{}/subdir 1/subdir 2/add.png'.format(PAGE_ATTACH_DIR))
+        self.assertEqual(controller.comment, selectedString)
         self.assertEqual(controller.linkResult,
                          '<a href="{attach}/subdir 1/subdir 2/add.png">{attach}\\subdir 1\\subdir 2\\add.png</a>'.format(attach=PAGE_ATTACH_DIR))
 
