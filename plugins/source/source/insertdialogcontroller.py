@@ -7,6 +7,7 @@ import wx
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import attachFiles, testreadonly
+from outwiker.core.attachfilters import getHiddenFilter, notFilter
 import outwiker.core.exceptions
 
 from .misc import getDefaultStyle, fillStyleComboBox
@@ -280,7 +281,9 @@ class InsertDialogController:
         attach_path = Path(attach.getAttachPath(create=False))
         self._dialog.attachmentComboBox.Clear()
         if attach_path.exists():
-             self._dialog.attachmentComboBox.SetRootDir(attach_path)
+            files_filter = notFilter(getHiddenFilter(self._page))
+            self._dialog.attachmentComboBox.SetRootDir(attach_path)
+            self._dialog.attachmentComboBox.SetFilterFunc(files_filter)
 
     def _loadStyleState(self):
         fillStyleComboBox(self._config,

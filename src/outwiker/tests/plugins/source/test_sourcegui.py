@@ -26,6 +26,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
                                                  [])
 
         dirlist = ["plugins/source"]
+        self.samplefilesPath = "testdata/samplefiles/sources"
         self._stylesCount = 44
 
         self.loader = PluginsLoader(self.application)
@@ -341,7 +342,6 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             result, ('(:source lang="python" style="abap":)\n', '\n(:sourceend:)'))
 
     def testDialogStyleFile(self):
-        self.samplefilesPath = "testdata/samplefiles/sources"
         Attachment(self.testPage).attach(
             [os.path.join(self.samplefilesPath, "source_utf8.py")])
         Attachment(self.testPage).attach(
@@ -366,7 +366,6 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             result, ('(:source file="Attach:source_cp1251.cs" lang="python" style="abap":)', '(:sourceend:)'))
 
     def testDialogStyleFile2(self):
-        self.samplefilesPath = "testdata/samplefiles/sources"
         Attachment(self.testPage).attach(
             [os.path.join(self.samplefilesPath, "source_utf8.py")])
         Attachment(self.testPage).attach(
@@ -549,3 +548,41 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(
             result, ('(:source lang="python" tabwidth="10":)\n', '\n(:sourceend:)'))
+
+    def testDialogAttachList_empty(self):
+        Tester.dialogTester.appendOk()
+        self.controller.showDialog()
+
+        self.assertEqual(0, len(self.dialog.attachmentComboBox.GetItems()))
+
+    def testDialogAttachList_single(self):
+        attach = Attachment(self.testPage)
+        attach.attach([os.path.join(self.samplefilesPath, "source_utf8.py")])
+
+        Tester.dialogTester.appendOk()
+        self.controller.showDialog()
+
+        self.assertEqual(1, len(self.dialog.attachmentComboBox.GetItems()))
+
+    def testDialogAttachList_single_subdir(self):
+        subdir = 'subdir'
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach([os.path.join(self.samplefilesPath, "source_utf8.py")], subdir)
+
+        Tester.dialogTester.appendOk()
+        self.controller.showDialog()
+
+        self.assertEqual(2, len(self.dialog.attachmentComboBox.GetItems()))
+
+    def testDialogAttachList_single_hidden_subdir(self):
+        subdir = 'subdir'
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.createSubdir('__thumb')
+        attach.attach([os.path.join(self.samplefilesPath, "source_utf8.py")], subdir)
+
+        Tester.dialogTester.appendOk()
+        self.controller.showDialog()
+
+        self.assertEqual(2, len(self.dialog.attachmentComboBox.GetItems()))
