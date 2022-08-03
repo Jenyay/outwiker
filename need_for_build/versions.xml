@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.2.0.909" status="dev">
+    <version number="3.2.0.910" status="beta" date="2022-08-03">
         <changes>
+            <change>Added the support of nested subfolders in the dialog for link creation.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлена поддержка вложенных папок в диалоге для вставки ссылок.</change>
         </changes>
     </version>
 
