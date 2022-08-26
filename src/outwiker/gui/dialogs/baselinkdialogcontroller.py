@@ -113,6 +113,9 @@ class BaseLinkDialogController(metaclass=ABCMeta):
         return ''
 
     def _isLinkToAttach(self, text):
+        if not text.strip():
+            return False
+
         attach = Attachment(self._page)
         path = Path(attach.getAttachPath(create=False), text.replace('\\', '/'))
         try:
