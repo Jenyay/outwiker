@@ -25,7 +25,6 @@ class TextEditorBase(wx.Panel):
         self._searchPanelController = SearchReplaceController(
             self._searchPanel,
             self)
-        self._searchPanel.setController(self._searchPanelController)
 
         self._do_layout()
 

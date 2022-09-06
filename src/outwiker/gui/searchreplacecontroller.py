@@ -3,13 +3,13 @@
 import wx
 
 
-class SearchReplaceController (object):
+class SearchReplaceController:
     _recentSearch = ''
 
     def __init__(self, searchPanel, editor):
         """
         searchPanel - панель со строкой поиска
-        editor - текстовый редактор (экземпляр класса textEditor)
+        editor - текстовый редактор (экземпляр класса TextEditor)
         """
         # Панель со строкой поиска
         self.panel = searchPanel
@@ -18,9 +18,44 @@ class SearchReplaceController (object):
         self._searcher = LocalSearcher()
 
         self.setSearchPhrase(SearchReplaceController._recentSearch)
-        self.panel.Bind(wx.EVT_CLOSE, self.__onClose)
+        self._bindGui(self.panel)
 
-    def __onClose(self, _event):
+    def _bindGui(self, panel):
+        panel.Bind(wx.EVT_CLOSE, self._onClose)
+        panel.Bind(wx.EVT_TEXT_ENTER, self._onEnterPress, panel.getSearchTextCtrl())
+        panel.Bind(wx.EVT_TEXT_ENTER, self._onEnterPress, panel.getReplaceTextCtrl())
+        panel.Bind(wx.EVT_TEXT, self._onSearchTextChange, panel.getSearchTextCtrl())
+        panel.Bind(wx.EVT_BUTTON, self._onNextSearch, panel.getNextSearchBtn())
+        panel.Bind(wx.EVT_BUTTON, self._onPrevSearch, panel.getPrevSearchBtn())
+        panel.Bind(wx.EVT_BUTTON, self._onReplace, panel.getReplaceBtn())
+        panel.Bind(wx.EVT_BUTTON, self._onReplaceAll, panel.getReplaceAllBtn())
+        panel.Bind(wx.EVT_BUTTON, self._onCloseClick, panel.getCloseBtn())
+
+    def _onEnterPress(self, _event):
+        if self.panel.getReplaceTextCtrl.IsShown():
+            self.replace()
+        else:
+            self.nextSearch()
+
+    def _onReplaceAll(self, _event):
+        self.replaceAll()
+
+    def _onReplace(self, _event):
+        self.replace()
+
+    def _onPrevSearch(self, _event):
+        self.prevSearch()
+
+    def _onNextSearch(self, _event):
+        self.nextSearch()
+
+    def _onSearchTextChange(self, _event):
+        self.enterSearchPhrase()
+
+    def _onCloseClick(self, _event):
+        self.panel.Close()
+
+    def _onClose(self, _event):
         self.editor.SetFocus()
         self.panel.Hide()
         self.panel.GetParent().Layout()

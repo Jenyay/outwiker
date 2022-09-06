@@ -10,7 +10,6 @@ class SearchReplacePanel (wx.Panel):
             parent,
             style=wx.TAB_TRAVERSAL | wx.RAISED_BORDER)
 
-        self._controller = None
         self._mainSizer = None
 
         self._createGui()
@@ -24,9 +23,6 @@ class SearchReplacePanel (wx.Panel):
                             ]
 
         self.setReplaceGuiVisible(False)
-
-    def setController(self, controller):
-        self._controller = controller
 
     @property
     def searchTextCtrl(self):
@@ -50,50 +46,60 @@ class SearchReplacePanel (wx.Panel):
         self.Layout()
 
     def _bindEvents(self):
-        self.Bind(wx.EVT_TEXT_ENTER, self.__onEnterPress, self._searchText)
-        self.Bind(wx.EVT_TEXT_ENTER, self.__onEnterPress, self._replaceText)
-
-        self.Bind(wx.EVT_TEXT, self.__onSearchTextChange, self._searchText)
-        self.Bind(wx.EVT_BUTTON, self.__onNextSearch, self._nextSearchBtn)
-        self.Bind(wx.EVT_BUTTON, self.__onPrevSearch, self._prevSearchBtn)
-
-        self.Bind(wx.EVT_BUTTON, self.__onReplace, self._replaceBtn)
-        self.Bind(wx.EVT_BUTTON, self.__onReplaceAll, self._replaceAllBtn)
-        self.Bind(wx.EVT_BUTTON, self.__onCloseClick, self._closeBtn)
-
         for child in self.GetChildren():
-            child.Bind(wx.EVT_KEY_DOWN, self.__onKeyPressed)
+            child.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
+
+    def getSearchTextCtrl(self):
+        return self._searchText
+
+    def getReplaceTextCtrl(self):
+        return self._replaceText
+
+    def getNextSearchBtn(self):
+        return self._nextSearchBtn
+
+    def getPrevSearchBtn(self):
+        return self._prevSearchBtn
+
+    def getReplaceBtn(self):
+        return self._replaceBtn
+
+    def getReplaceAllBtn(self):
+        return self._replaceAllBtn
+
+    def getCloseBtn(self):
+        return self._closeBtn
 
     def _createGui(self):
         # Поле для ввода искомой фразы
-        self._searchText = wx.TextCtrl(self, -1, u"",
+        self._searchText = wx.TextCtrl(self, -1, "",
                                        style=wx.TE_PROCESS_ENTER)
 
         # Текст для замены
-        self._replaceText = wx.TextCtrl(self, -1, u"",
+        self._replaceText = wx.TextCtrl(self, -1, "",
                                         style=wx.TE_PROCESS_ENTER)
 
         # Элементы интерфейса, связанные с поиском
-        self._findLabel = wx.StaticText(self, -1, _(u"Find what: "))
+        self._findLabel = wx.StaticText(self, -1, _("Find what: "))
 
         # Кнопка "Найти далее"
-        self._nextSearchBtn = wx.Button(self, -1, _(u"Next"))
+        self._nextSearchBtn = wx.Button(self, -1, _("Next"))
 
         # Кнопка "Найти выше"
-        self._prevSearchBtn = wx.Button(self, -1, _(u"Prev"))
+        self._prevSearchBtn = wx.Button(self, -1, _("Prev"))
 
         # Метка с результатом поиска
         self._resultLabel = wx.StaticText(self, -1, "")
         self._resultLabel.SetMinSize((150, -1))
 
         # Элементы интерфейса, связанные с заменой
-        self._replaceLabel = wx.StaticText(self, -1, _(u"Replace with: "))
+        self._replaceLabel = wx.StaticText(self, -1, _("Replace with: "))
 
         # Кнопка "Заменить"
-        self._replaceBtn = wx.Button(self, -1, _(u"Replace"))
+        self._replaceBtn = wx.Button(self, -1, _("Replace"))
 
         # Кнопка "Заменить все"
-        self._replaceAllBtn = wx.Button(self, -1, _(u"Replace All"))
+        self._replaceAllBtn = wx.Button(self, -1, _("Replace All"))
 
         self._closeBtn = wx.BitmapButton(
             self,
@@ -130,48 +136,14 @@ class SearchReplacePanel (wx.Panel):
                             wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=1)
         self._mainSizer.Add(self._replaceAllBtn, 0, wx.ALL |
                             wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=1)
-        # self._mainSizer.AddStretchSpacer()
-        # self._mainSizer.AddStretchSpacer()
 
         self.SetSizer(self._mainSizer)
         self.Layout()
 
-    def __onNextSearch(self, _event):
-        if self._controller is not None:
-            self._controller.nextSearch()
-
-    def __onPrevSearch(self, _event):
-        if self._controller is not None:
-            self._controller.prevSearch()
-
-    def __onReplace(self, _event):
-        if self._controller is not None:
-            self._controller.replace()
-
-    def __onReplaceAll(self, _event):
-        if self._controller is not None:
-            self._controller.replaceAll()
-
-    def __onSearchTextChange(self, _event):
-        if self._controller is not None:
-            self._controller.enterSearchPhrase()
-
-    def __onKeyPressed(self, event):
+    def _onKeyPressed(self, event):
         key = event.GetKeyCode()
 
         if key == wx.WXK_ESCAPE:
             self.Close()
 
         event.Skip()
-
-    def __onEnterPress(self, _event):
-        if self._controller is None:
-            return
-
-        if self._replaceText.IsShown():
-            self._controller.replace()
-        else:
-            self._controller.nextSearch()
-
-    def __onCloseClick(self, _event):
-        self.Close()
