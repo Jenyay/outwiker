@@ -2,11 +2,13 @@
 
 import wx
 
+from outwiker.gui.searchreplacepanel import SearchReplacePanel
+
 
 class SearchReplaceController:
     _recentSearch = ''
 
-    def __init__(self, searchPanel, editor):
+    def __init__(self, searchPanel: SearchReplacePanel, editor):
         """
         searchPanel - панель со строкой поиска
         editor - текстовый редактор (экземпляр класса TextEditor)
@@ -108,7 +110,7 @@ class SearchReplaceController:
 
         replace = self.getReplacePhrase()
 
-        newtext = u""
+        newtext = ""
         position = 0
 
         for currResult in self._searcher.result:
@@ -136,8 +138,8 @@ class SearchReplaceController:
             self.setSearchPhrase(phrase)
 
         self.setSearchPhrase(phrase)
-        self.panel.searchTextCtrl.SetSelection(-1, -1)
-        self.panel.searchTextCtrl.SetFocus()
+        self.panel.getSearchTextCtrl().SetSelection(-1, -1)
+        self.panel.getSearchTextCtrl().SetFocus()
 
     def enterSearchPhrase(self):
         self._searchTo(self._findNextOnEnter)
@@ -153,19 +155,19 @@ class SearchReplaceController:
         В панели поиска установить искомую фразу.
         При этом сразу начинается поиск
         """
-        self.panel.searchTextCtrl.SetValue(phrase)
+        self.panel.getSearchTextCtrl().SetValue(phrase)
 
     def getSearchPhrase(self):
         """
         Возвращает искомую фразу из панели
         """
-        return self.panel.searchTextCtrl.GetValue()
+        return self.panel.getSearchTextCtrl().GetValue()
 
     def setReplacePhrase(self, phrase):
-        self.panel.replaceTextCtrl.SetValue(phrase)
+        self.panel.getReplaceTextCtrl().SetValue(phrase)
 
     def getReplacePhrase(self):
-        return self.panel.replaceTextCtrl.GetValue()
+        return self.panel.getReplaceTextCtrl().GetValue()
 
     def switchToSearchMode(self):
         """
@@ -191,7 +193,7 @@ class SearchReplaceController:
         direction - функция, которая ищет текст в нужном направлении
             (_findNext / _findPrev)
         """
-        self.panel.searchTextCtrl.SetFocus()
+        self.panel.getSearchTextCtrl().SetFocus()
         phrase = self.getSearchPhrase()
 
         SearchReplaceController._recentSearch = phrase
@@ -202,12 +204,12 @@ class SearchReplaceController:
         text = self.editor.GetText()
         result = direction(text, phrase)
         if result is not None:
-            self.panel.resultLabel.SetLabel(u"")
+            self.panel.getResultLabel().SetLabel("")
             self.editor.GotoPos(result.position)
             self.editor.SetSelection(result.position,
                                      result.position + len(result.phrase))
         else:
-            self.panel.resultLabel.SetLabel(_(u"Not found"))
+            self.panel.getResultLabel().SetLabel(_("Not found"))
 
         self.panel.Layout()
 

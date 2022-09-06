@@ -4,7 +4,7 @@ import wx
 from outwiker.core.system import getBuiltinImagePath
 
 
-class SearchReplacePanel (wx.Panel):
+class SearchReplacePanel(wx.Panel):
     def __init__(self, parent):
         super(SearchReplacePanel, self).__init__(
             parent,
@@ -24,18 +24,6 @@ class SearchReplacePanel (wx.Panel):
 
         self.setReplaceGuiVisible(False)
 
-    @property
-    def searchTextCtrl(self):
-        return self._searchText
-
-    @property
-    def replaceTextCtrl(self):
-        return self._replaceText
-
-    @property
-    def resultLabel(self):
-        return self._resultLabel
-
     def setReplaceGuiVisible(self, visible):
         """
         Установить, нужно ли показывать элементы GUI для замены
@@ -48,6 +36,9 @@ class SearchReplacePanel (wx.Panel):
     def _bindEvents(self):
         for child in self.GetChildren():
             child.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
+
+    def getResultLabel(self):
+        return self._resultLabel
 
     def getSearchTextCtrl(self):
         return self._searchText

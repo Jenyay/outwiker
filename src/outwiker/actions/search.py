@@ -3,7 +3,7 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class BaseSearchAction (BaseAction):
+class BaseSearchAction(BaseAction):
     """
     Базовый класс для actions поиска по странице
     """
@@ -18,19 +18,19 @@ class BaseSearchAction (BaseAction):
         return self._getPageView().GetSearchPanel()
 
 
-class SearchAction (BaseSearchAction):
+class SearchAction(BaseSearchAction):
     """
     Начать поиск на странице
     """
-    stringId = u"Search"
+    stringId = "Search"
 
     @property
     def title(self):
-        return _(u"Search")
+        return _("Search")
 
     @property
     def description(self):
-        return _(u"Find on page")
+        return _("Find on page")
 
     def run(self, params):
         searchPanel = self._getSearchPanel()
@@ -41,19 +41,19 @@ class SearchAction (BaseSearchAction):
             searchPanel.startSearch()
 
 
-class SearchNextAction (BaseSearchAction):
+class SearchNextAction(BaseSearchAction):
     """
     Найти следующее вхождение на странице
     """
-    stringId = u"SearchNext"
+    stringId = "SearchNext"
 
     @property
     def title(self):
-        return _(u"Find next")
+        return _("Find next")
 
     @property
     def description(self):
-        return _(u"Find next on page")
+        return _("Find next on page")
 
     def run(self, params):
         searchPanel = self._getSearchPanel()
@@ -63,19 +63,19 @@ class SearchNextAction (BaseSearchAction):
             searchPanel.nextSearch()
 
 
-class SearchPrevAction (BaseSearchAction):
+class SearchPrevAction(BaseSearchAction):
     """
     Найти предыдущее вхождение на странице
     """
-    stringId = u"SearchPrev"
+    stringId = "SearchPrev"
 
     @property
     def title(self):
-        return _(u"Find previous")
+        return _("Find previous")
 
     @property
     def description(self):
-        return _(u"Find previous on page")
+        return _("Find previous on page")
 
     def run(self, params):
         searchPanel = self._getSearchPanel()
@@ -85,19 +85,19 @@ class SearchPrevAction (BaseSearchAction):
             searchPanel.prevSearch()
 
 
-class SearchAndReplaceAction (BaseSearchAction):
+class SearchAndReplaceAction(BaseSearchAction):
     """
     Начать поиск и замену на странице
     """
-    stringId = u"SearchReplace"
+    stringId = "SearchReplace"
 
     @property
     def title(self):
-        return _(u"Search and Replace")
+        return _("Search and Replace")
 
     @property
     def description(self):
-        return _(u"Begin search and replace on page")
+        return _("Begin search and replace on page")
 
     def run(self, params):
         searchPanel = self._getSearchPanel()
