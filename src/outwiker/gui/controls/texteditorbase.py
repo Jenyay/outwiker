@@ -7,8 +7,8 @@ import wx.lib.newevent
 from wx.stc import StyledTextCtrl
 
 from outwiker.core.textprinter import TextPrinter
-from outwiker.gui.searchreplacecontroller import SearchReplaceController
-from outwiker.gui.searchreplacepanel import SearchReplacePanel
+from outwiker.gui.controls.searchreplacepanelcontroller import SearchReplacePanelController
+from outwiker.gui.controls.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.texteditorhelper import TextEditorHelper
 
 
@@ -22,7 +22,7 @@ class TextEditorBase(wx.Panel):
 
         # Создание панели поиска и ее контроллера
         self._searchPanel = SearchReplacePanel(self)
-        self._searchPanelController = SearchReplaceController(
+        self._searchPanelController = SearchReplacePanelController(
             self._searchPanel,
             self)
 

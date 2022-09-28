@@ -204,6 +204,8 @@ class BaseWikiPageView (BaseHtmlPanel):
     def GetSearchPanel(self):
         if self._selectedPageIndex == self.CODE_PAGE_INDEX:
             return self.codeEditor.searchPanel
+        elif self._selectedPageIndex == self.RESULT_PAGE_INDEX:
+            return self.htmlWindow.searchPanel
         elif self._selectedPageIndex == self.htmlcodePageIndex:
             return self.htmlCodeWindow.searchPanel
 

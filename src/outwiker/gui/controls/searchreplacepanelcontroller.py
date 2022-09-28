@@ -2,10 +2,10 @@
 
 import wx
 
-from outwiker.gui.searchreplacepanel import SearchReplacePanel
+from outwiker.gui.controls.searchreplacepanel import SearchReplacePanel
 
 
-class SearchReplaceController:
+class SearchReplacePanelController:
     _recentSearch = ''
 
     def __init__(self, searchPanel: SearchReplacePanel, editor):
@@ -19,7 +19,7 @@ class SearchReplaceController:
 
         self._searcher = LocalSearcher()
 
-        self.setSearchPhrase(SearchReplaceController._recentSearch)
+        self.setSearchPhrase(SearchReplacePanelController._recentSearch)
         self._bindGui(self.panel)
 
     def _bindGui(self, panel):
@@ -134,7 +134,7 @@ class SearchReplaceController:
         phrase = self.editor.GetSelectedText()
 
         if len(phrase) == 0:
-            phrase = SearchReplaceController._recentSearch
+            phrase = SearchReplacePanelController._recentSearch
             self.setSearchPhrase(phrase)
 
         self.setSearchPhrase(phrase)
@@ -196,7 +196,7 @@ class SearchReplaceController:
         self.panel.getSearchTextCtrl().SetFocus()
         phrase = self.getSearchPhrase()
 
-        SearchReplaceController._recentSearch = phrase
+        SearchReplacePanelController._recentSearch = phrase
 
         if len(phrase) == 0:
             return

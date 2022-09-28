@@ -342,7 +342,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
         # Отдельно проверим возможность работы поиска по странице
         # Поиск не должен работать только на странице просмотра
-        searchEnabled = self.GetPageMode() != PAGE_MODE_PREVIEW
+        searchEnabled = True
 
         actionController = self._application.actionController
 
@@ -369,8 +369,11 @@ class BaseHtmlPanel(BaseTextPanel):
         return enabled
 
     def GetSearchPanel(self):
-        if self.GetPageMode() == PAGE_MODE_TEXT:
+        pageMode = self.GetPageMode()
+        if pageMode == PAGE_MODE_TEXT:
             return self.codeEditor.searchPanel
+        elif pageMode == PAGE_MODE_PREVIEW:
+            return self.htmlWindow.searchPanel
 
         return None
 
