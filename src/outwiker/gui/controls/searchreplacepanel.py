@@ -33,6 +33,14 @@ class SearchReplacePanel(wx.Panel):
 
         self.Layout()
 
+    def setPrevButtonVisible(self, visible):
+        self._prevSearchBtn.Show(visible)
+        self.Layout()
+
+    def setResultLabelVisible(self, visible):
+        self._resultLabel.Show(visible)
+        self.Layout()
+
     def _bindEvents(self):
         for child in self.GetChildren():
             child.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)

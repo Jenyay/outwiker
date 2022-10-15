@@ -6,8 +6,6 @@ from outwiker.gui.controls.searchreplacepanel import SearchReplacePanel
 
 
 class HtmlSearchPanelController:
-    _recentSearch = ''
-
     def __init__(self, searchPanel: SearchReplacePanel, htmlRender):
         """
         searchPanel - панель со строкой поиска
@@ -17,8 +15,10 @@ class HtmlSearchPanelController:
         self.panel = searchPanel
         self.htmlRender = htmlRender
 
-        self.setSearchPhrase(HtmlSearchPanelController._recentSearch)
+        self.setSearchPhrase('')
         self.panel.setReplaceGuiVisible(False)
+        self.panel.setPrevButtonVisible(False)
+        self.panel.setResultLabelVisible(False)
         self.hidePanel()
         self._bindGui(self.panel)
 
@@ -27,14 +27,10 @@ class HtmlSearchPanelController:
         panel.Bind(wx.EVT_TEXT_ENTER, self._onEnterPress, panel.getSearchTextCtrl())
         panel.Bind(wx.EVT_TEXT, self._onSearchTextChange, panel.getSearchTextCtrl())
         panel.Bind(wx.EVT_BUTTON, self._onNextSearch, panel.getNextSearchBtn())
-        panel.Bind(wx.EVT_BUTTON, self._onPrevSearch, panel.getPrevSearchBtn())
         panel.Bind(wx.EVT_BUTTON, self._onCloseClick, panel.getCloseBtn())
 
     def _onEnterPress(self, _event):
         self.nextSearch()
-
-    def _onPrevSearch(self, _event):
-        pass
 
     def _onNextSearch(self, _event):
         self.nextSearch()
@@ -60,21 +56,20 @@ class HtmlSearchPanelController:
         """
         Искать следующее вхождение фразы
         """
-        self._search()
+        self._search(False)
 
     def startSearch(self):
         """
         Начать поиск
         """
-        phrase = HtmlSearchPanelController._recentSearch
-        self.setSearchPhrase(phrase)
+        self.setSearchPhrase(self.getSearchPhrase())
         self.htmlRender.Find('')
-        self._search()
-        # self.panel.getSearchTextCtrl().SetSelection(-1, -1)
-        # self.panel.getSearchTextCtrl().SetFocus()
+        self.panel.getSearchTextCtrl().SetSelection(-1, -1)
+        self.panel.getSearchTextCtrl().SetFocus()
+        self._search(True)
 
     def enterSearchPhrase(self):
-        self._search()
+        self._search(True)
 
     def show(self):
         if not self.panel.IsShown():
@@ -95,21 +90,15 @@ class HtmlSearchPanelController:
         """
         return self.panel.getSearchTextCtrl().GetValue()
 
-    def _search(self):
+    def _search(self, newSearch: bool):
         """
         Поиск фразы в нужном направлении (вперед / назад)
         """
-        self.panel.getSearchTextCtrl().SetFocus()
         phrase = self.getSearchPhrase()
-
-        HtmlSearchPanelController._recentSearch = phrase
 
         if len(phrase) == 0:
             return
 
         result = self.htmlRender.Find(phrase)
-        print(result)
-        if result == 0:
-            self.htmlRender.Find('')
+        if newSearch and result:
             self.htmlRender.Find(phrase)
-        # self.panel.Layout()
