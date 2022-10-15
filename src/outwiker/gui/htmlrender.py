@@ -7,7 +7,7 @@ import wx
 import outwiker.core
 from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams
-from outwiker.gui.controls.htmlsearchpanelcontroller import HtmlSearchPanelController
+from outwiker.core.system import getOS
 from outwiker.gui.controls.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.defines import ID_KEY_CTRL, ID_KEY_SHIFT
 
@@ -22,7 +22,7 @@ class HtmlRenderBase(wx.Panel):
 
         self._render = self._createRender()
         self._searchPanel = SearchReplacePanel(self)
-        self._searchPanelController = HtmlSearchPanelController(self._searchPanel, self)
+        self._searchPanelController = getOS().getHtmlRenderSearchController(self._searchPanel, self)
         sizer = wx.FlexGridSizer(cols=1)
         sizer.AddGrowableCol(0)
         sizer.AddGrowableRow(0)

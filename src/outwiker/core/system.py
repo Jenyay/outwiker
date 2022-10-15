@@ -36,7 +36,7 @@ DEFAULT_OLD_CONFIG_DIR = ".outwiker"
 logger = logging.getLogger('outwiker.core.system')
 
 
-class System(object):
+class System:
     def migrateConfig(self,
                       oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
                       newConfDirName=DEFAULT_CONFIG_DIR):
@@ -110,6 +110,10 @@ class Windows(System):
         else:
             from outwiker.gui.htmlrenderie import HtmlRenderIEForPage
             return HtmlRenderIEForPage(parent)
+
+    def getHtmlRenderSearchController(self, searchPanel, htmlRender):
+        from outwiker.gui.controls.htmlsearchpanelcontrollerwindows import HtmlSearchPanelControllerWindows
+        return HtmlSearchPanelControllerWindows(searchPanel, htmlRender)
 
     def getSpellChecker(self, langlist, folders):
         """
@@ -194,6 +198,10 @@ class Unix(System):
     @property
     def windowIconFile(self) -> str:
         return getBuiltinImagePath("outwiker.ico")
+
+    def getHtmlRenderSearchController(self, searchPanel, htmlRender):
+        from outwiker.gui.controls.htmlsearchpanelcontrollerunix import HtmlSearchPanelControllerUnix
+        return HtmlSearchPanelControllerUnix(searchPanel, htmlRender)
 
 
 def getOS():
