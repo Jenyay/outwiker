@@ -39,14 +39,13 @@ setup(
         'Topic :: Text Editors',
         'Topic :: Text Processing :: Markup',
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     install_requires=[
         'wxPython==4.1.1',
-        'Pillow>=9.0',
+        'Pillow==9.2.0',
         'idna>=2.10',
-        'pyparsing==2.4.7',
-        'psutil>=5.9.0',
-        'comtypes>=1.1.7;platform_system=="Windows"',
+        'pyparsing==3.0.9',
+        'psutil>=5.9.1',
     ],
     project_urls={
         'Documentation': 'https://outwiker.readthedocs.io/',
