@@ -6,7 +6,7 @@ name = "pypi"
 [requires]
 
 [packages]
-wxPython = "==4.1.1"
+wxPython = "==4.2.0"
 Pillow = "==9.2.0"
 cacheman = {version = "==2.1.0.post1", path = "depends/cacheman"}
 cyhunspell = {version = "==2.0.2.post1", path = "depends/cyhunspell"}
