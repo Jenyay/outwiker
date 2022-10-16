@@ -35,3 +35,8 @@ class HtmlSearchPanelControllerWindows(BaseHtmlSearchPanelController):
         result = self.htmlRender.Find(phrase)
         if newSearch and result:
             self.htmlRender.Find(phrase)
+
+        if not newSearch and result == -1:
+            self.htmlRender.Find('')
+            self.htmlRender.Find(phrase)
+            self.htmlRender.Find(phrase)
