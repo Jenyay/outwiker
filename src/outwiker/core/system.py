@@ -3,6 +3,7 @@
 Действия, которые зависят от ОС, на которой запущена программа
 """
 
+import ctypes
 import locale
 import os
 import os.path as op
@@ -11,6 +12,7 @@ import sys
 import subprocess
 import logging
 from pathlib import Path
+from uuid import UUID
 
 import wx
 
@@ -97,7 +99,40 @@ class Windows(System):
 
     @property
     def documentsDir(self):
-        return op.expanduser("~")
+        # Get from https://gist.github.com/mkropat/7550097#file-knownpaths-py
+        from ctypes import windll, wintypes
+
+        class GUID(ctypes.Structure):
+            _fields_ = [
+                ("Data1", wintypes.DWORD),
+                ("Data2", wintypes.WORD),
+                ("Data3", wintypes.WORD),
+                ("Data4", wintypes.BYTE * 8)
+            ] 
+
+            def __init__(self, uuid):
+                ctypes.Structure.__init__(self)
+                self.Data1, self.Data2, self.Data3, self.Data4[0], self.Data4[1], rest = UUID(uuid).fields
+                for i in range(2, 8):
+                    self.Data4[i] = rest>>(8 - i - 1)*8 & 0xff
+
+        documents_uuid = GUID('{FDD39AD0-238F-46AF-ADB4-6C85480369C7}')
+        S_OK = 0
+        p_path = ctypes.c_wchar_p()
+        result = windll.shell32.SHGetKnownFolderPath(
+                ctypes.byref(documents_uuid), 
+                0, 
+                wintypes.HANDLE(0),
+                ctypes.byref(p_path))
+
+        if result != S_OK:
+            logger.error("Can't get documents directory")
+            windll.ole32.CoTaskMemFree(p_path)
+            return
+
+        path = p_path.value
+        windll.ole32.CoTaskMemFree(p_path)
+        return path
 
     def getHtmlRender(self, parent):
         if wx.GetApp().use_fake_html_render:
