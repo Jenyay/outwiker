@@ -402,30 +402,29 @@ def createNewWiki(parentwnd):
     Создать новую вики
     parentwnd - окно-владелец диалога выбора файла
     """
-    dlg = TestedFileDialog(parentwnd, style=wx.FD_SAVE)
-
     newPageTitle = _("First Wiki Page")
     newPageContent = _("""!! First Wiki Page
 
 This is the first page. You can use a text formatting: '''bold''', ''italic'', {+underlined text+}, [[https://jenyay.net | link]] and others.""")
 
-    if dlg.ShowModal() == wx.ID_OK:
-        try:
-            from outwiker.pages.wiki.wikipage import WikiPageFactory
+    with TestedFileDialog(parentwnd, style=wx.FD_SAVE) as dlg:
+        dlg.SetDirectory(getOS().documentsDir)
 
-            newwiki = WikiDocument.create(dlg.GetPath())
-            WikiPageFactory().create(newwiki, newPageTitle, [_("test")])
-            firstPage = newwiki[newPageTitle]
-            firstPage.content = newPageContent
+        if dlg.ShowModal() == wx.ID_OK:
+            try:
+                from outwiker.pages.wiki.wikipage import WikiPageFactory
 
-            Application.wikiroot = newwiki
-            Application.wikiroot.selectedPage = firstPage
-        except (IOError, OSError) as e:
-            # TODO: проверить под Windows
-            showError(Application.mainWindow, _(
-                "Can't create wiki\n") + e.filename)
+                newwiki = WikiDocument.create(dlg.GetPath())
+                WikiPageFactory().create(newwiki, newPageTitle, [_("test")])
+                firstPage = newwiki[newPageTitle]
+                firstPage.content = newPageContent
 
-    dlg.Destroy()
+                Application.wikiroot = newwiki
+                Application.wikiroot.selectedPage = firstPage
+            except (IOError, OSError) as e:
+                # TODO: проверить под Windows
+                showError(Application.mainWindow, _(
+                    "Can't create wiki\n") + e.filename)
 
 
 def copyTextToClipboard(text: str) -> bool:

@@ -95,6 +95,10 @@ class Windows(System):
                    else homeDir)
         return appdata
 
+    @property
+    def documentsDir(self):
+        return op.expanduser("~")
+
     def getHtmlRender(self, parent):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
@@ -155,6 +159,10 @@ class Unix(System):
             settingsDir = op.join(homeDir, settingsDir)
 
         return settingsDir
+
+    @property
+    def documentsDir(self):
+        return op.expanduser("~")
 
     @property
     def inputEncoding(self):
