@@ -433,7 +433,7 @@ class PluginsLoader:
         if pluginname in self.loadedPlugins:
             module = self.loadedPlugins[pluginname].__class__.__module__
         else:
-            module = ''
+            return None
 
         xml_content = pkgutil.get_data(module, PLUGIN_INFO_FILE_NAME)
         if xml_content:
