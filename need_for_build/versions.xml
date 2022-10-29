@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.2.0.911" status="dev">
+    <version number="3.2.0.912" status="beta" date="2022-10-29">
         <changes>
+            <change>Added page search in preview mode.</change>
+            <change>Small GUI improvements.</change>
+            <change>Bug fixes.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлен поиск по странице в режиме просмотра.</change>
+            <change>Мелкие улучшения в интерфейсе.</change>
+            <change>Исправления ошибок.</change>
         </changes>
     </version>
 
