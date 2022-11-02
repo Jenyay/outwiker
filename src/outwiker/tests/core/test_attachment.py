@@ -509,14 +509,13 @@ class AttachmentTest(unittest.TestCase):
 
         self.assertEqual(len(attach.getAttachFull(subdir)), 5)
 
-    def testAttachInvalidSubdir(self):
-        subdir = 'invalid'
+    def testAttachNewSubdir(self):
+        subdir = 'new_subdir'
         attach = Attachment(self.page)
-        attach.attach(self.fullFilesPath)
 
         new_file = os.path.join(self.filesPath, 'dir.png')
-
-        self.assertRaises(IOError, attach.attach, [new_file], subdir)
+        attach.attach([new_file], subdir=subdir)
+        self.assertTrue(Path(attach.getAttachPath(), subdir).exists())
 
     def testFixSubdirRootNotExists(self):
         attach = Attachment(self.page)
@@ -668,3 +667,15 @@ class AttachmentTest(unittest.TestCase):
         attach = Attachment(self.page)
 
         self.assertRaises(ReadonlyException, attach.createSubdir, subdir)
+
+    def testCreateSubdirWithParentPath_01(self):
+        subdir = '../subdir'
+        attach = Attachment(self.page)
+
+        self.assertRaises(OSError, attach.createSubdir, subdir)
+
+    def testCreateSubdirWithParentPath_02(self):
+        subdir = '..'
+        attach = Attachment(self.page)
+
+        self.assertRaises(OSError, attach.createSubdir, subdir)
