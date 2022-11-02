@@ -4,6 +4,7 @@ import os
 import os.path
 import unittest
 from tempfile import mkdtemp
+from typing import List
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
@@ -52,14 +53,17 @@ class WikiAttachListCommandTest (unittest.TestCase):
     def tearDown(self):
         removeDir(self.path)
 
-    def _compareResult(self, titles, names, result):
+    def _compareResult(self, titles: List[str], names: List[str], result: str):
         attachdir = "__attach"
-        template = '<a href="{path}">{title}</a>\n'
+        template = '<a class="ow-attach" href="{path}">{title}</a>'
 
-        result_right = "".join([template.format(path=os.path.join(attachdir, name).replace("\\", "/"), title=title)
-                                for (name, title) in zip(names, titles)]).rstrip()
+        # result_right = "".join([template.format(path=os.path.join(attachdir, name).replace("\\", "/"), title=title)
+        #                         for (name, title) in zip(names, titles)]).rstrip()
 
-        self.assertEqual(result_right, result)
+        # self.assertEqual(result_right, result)
+        for name, title in zip(names, titles):
+            item = template.format(path=os.path.join(attachdir, name).replace("\\", "/"), title=title)
+            self.assertIn(item, result)
 
     def testCommand1(self):
         self._attachFiles()

@@ -1,34 +1,48 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
-from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.pages.wiki.parser.command import Command
+from outwiker.gui.cssclasses import CSS_ATTACH, CSS_ATTACH_LIST
 
 
-class SimpleView (object):
+class SimpleView:
     """
     Класс для простого представления списка прикрепленных файлов - каждая страница на отдельной строке
     """
-    @staticmethod
-    def make(fnames, attachdir):
+    def __init__(self):
+        self._item_template = '<a class="{css_class}" href="{link}">{title}</a>\n'    
+        self._list_template = '<div class="{css_class}">{content}</div>'
+
+    def make(self, fnames, attach_dir):
         """
         fnames - имена файлов, которые нужно вывести (относительный путь)
-        attachdir - путь до прикрепленных файлов (полный, а не относительный)
+        attach_dir - путь до прикрепленных файлов (полный)
         """
-        template = u'<a href="{link}">{title}</a>\n'
+        content = ''.join([self._get_link(fname, attach_dir) for fname in fnames]).rstrip()
+        return self._list_template.format(css_class=CSS_ATTACH_LIST, content=content)
 
-        titles = [u"[%s]" % (name) if os.path.isdir(
-            os.path.join(attachdir, name)) else name for name in fnames]
+    def _get_link(self, fname: str, attach_dir: str) -> str:
+        if os.path.isdir(os.path.join(attach_dir, fname)):
+            title = self._get_dir_item(fname)
+        else:
+            title = self._get_file_item(fname) 
 
-        result = u"".join([template.format(link=os.path.join(PAGE_ATTACH_DIR, name).replace("\\", "/"), title=title)
-                           for (name, title) in zip(fnames, titles)]).rstrip()
+        return self._item_template.format(link=self._get_attach_path(fname), title=title, css_class=CSS_ATTACH)
 
-        return result
+    def _get_dir_item(self, dirname: str) -> str:
+        return "[{}]".format(dirname)
+
+    def _get_file_item(self, fname: str) -> str:
+        return fname
+
+    def _get_attach_path(self, fname: str) -> str:
+        return os.path.join(PAGE_ATTACH_DIR, fname).replace("\\", "/")
 
 
-class AttachListCommand (Command):
+class AttachListCommand(Command):
     """
     Команда для вставки списка дочерних команд.
     Синтсаксис: (:attachlist [params...]:)
@@ -40,13 +54,9 @@ class AttachListCommand (Command):
         sort=size - сортировка по размеру
         sort=descendsize - сортировка по размеру в обратном направлении
     """
-
-    def __init__(self, parser):
-        Command.__init__(self, parser)
-
     @property
     def name(self):
-        return u"attachlist"
+        return "attachlist"
 
     def execute(self, params, content):
         params_dict = Command.parseParams(params)
@@ -60,7 +70,8 @@ class AttachListCommand (Command):
         self._sortFiles(dirs, params_dict)
         self._sortFiles(files, params_dict)
 
-        return SimpleView.make(dirs + files, attachpath)
+        view = SimpleView()
+        return view.make(dirs + files, attachpath)
 
     def separateDirFiles(self, attachlist, attachpath):
         """
@@ -79,27 +90,27 @@ class AttachListCommand (Command):
         """
         attach = Attachment(self.parser.page)
 
-        if u"sort" not in params_dict:
+        if "sort" not in params_dict:
             names.sort(key=str.lower)
             return
 
         sort = params_dict["sort"].lower()
 
-        if sort == u"name":
+        if sort == "name":
             names.sort(key=str.lower)
-        elif sort == u"descendname":
+        elif sort == "descendname":
             names.sort(key=str.lower, reverse=True)
-        elif sort == u"ext":
+        elif sort == "ext":
             names.sort(key=Attachment.sortByExt)
-        elif sort == u"descendext":
+        elif sort == "descendext":
             names.sort(key=Attachment.sortByExt, reverse=True)
-        elif sort == u"size":
+        elif sort == "size":
             names.sort(key=attach.sortBySizeRelative)
-        elif sort == u"descendsize":
+        elif sort == "descendsize":
             names.sort(key=attach.sortBySizeRelative, reverse=True)
-        elif sort == u"date":
+        elif sort == "date":
             names.sort(key=attach.sortByDateRelative)
-        elif sort == u"descenddate":
+        elif sort == "descenddate":
             names.sort(key=attach.sortByDateRelative, reverse=True)
         else:
             names.sort(key=str.lower)
