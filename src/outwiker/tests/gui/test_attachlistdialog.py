@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+from pathlib import Path
 
 from outwiker.pages.wiki.actions.attachlist import (AttachListDialog,
                                                     AttachListDialogController)
 from outwiker.gui.tester import Tester
+from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
@@ -15,11 +17,21 @@ class AttachListDialogTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def setUp(self):
         self.initApplication()
-        self._dialog = AttachListDialog(self.application.mainWindow)
+        self.files_path = Path('testdata/samplefiles/')
+
+        self.wikiroot = self.createWiki()
+        factory = TextPageFactory()
+        self.page = factory.create(self.wikiroot, 'Страница 1', [])
+
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.page
+
+        self._dialog = AttachListDialog(self.application.mainWindow, self.page)
         Tester.dialogTester.clear()
 
     def tearDown(self):
         self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def testCancel(self):
         controller = AttachListDialogController(self._dialog)
