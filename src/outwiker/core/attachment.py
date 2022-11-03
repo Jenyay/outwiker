@@ -22,7 +22,7 @@ class Attachment:
         """
         self.page = page
 
-    def getAttachPath(self, create=False):
+    def getAttachPath(self, create: bool = False) -> str:
         """
         Возвращает путь до папки с прикрепленными файлами
         create - создать папку для прикрепленных файлов,
@@ -36,14 +36,14 @@ class Attachment:
         return path
 
     @property
-    def attachmentFull(self):
+    def attachmentFull(self) -> List[str]:
         """
         Возвращает список прикрепленных файлов.
         Пути до файлов полные
         """
         return self.getAttachFull()
 
-    def getAttachFull(self, subdir="."):
+    def getAttachFull(self, subdir: str = ".") -> List[str]:
         """
         Возвращает список прикрепленных файлов.
         Пути до файлов полные

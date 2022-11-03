@@ -3,6 +3,7 @@
 import os
 import os.path
 import unittest
+from pathlib import Path
 from tempfile import mkdtemp
 from typing import List
 
@@ -39,9 +40,9 @@ class WikiAttachListCommandTest (unittest.TestCase):
                 filesPath,
                 fname) for fname in self.files]
 
-    def _attachFiles(self):
+    def _attachFiles(self, subdir: str = '.'):
         attach = Attachment(self.testPage)
-        attach.attach(self.fullFilesPath)
+        attach.attach(self.fullFilesPath, subdir)
 
     def __createWiki(self):
         # Здесь будет создаваться вики
@@ -54,21 +55,19 @@ class WikiAttachListCommandTest (unittest.TestCase):
         removeDir(self.path)
 
     def _compareResult(self, titles: List[str], names: List[str], result: str):
-        attachdir = "__attach"
+        attachdir = Path("__attach")
+
         template = '<a class="ow-attach" href="{path}">{title}</a>'
 
-        # result_right = "".join([template.format(path=os.path.join(attachdir, name).replace("\\", "/"), title=title)
-        #                         for (name, title) in zip(names, titles)]).rstrip()
-
-        # self.assertEqual(result_right, result)
         for name, title in zip(names, titles):
-            item = template.format(path=os.path.join(attachdir, name).replace("\\", "/"), title=title)
+            path = str(attachdir / name).replace("\\", "/")
+            item = template.format(path=path, title=title)
             self.assertIn(item, result)
 
     def testCommand1(self):
         self._attachFiles()
         cmd = AttachListCommand(self.parser)
-        result = cmd.execute("", "")
+        result = cmd.execute('', '')
 
         titles = [
             "[dir]",
@@ -84,6 +83,54 @@ class WikiAttachListCommandTest (unittest.TestCase):
             "anchor.png",
             "image.jpg",
             "файл с пробелами.tmp"]
+
+        self._compareResult(titles, names, result)
+
+    def test_subdir_double_quotes(self):
+        subdir = 'test_subdir'
+        self._attachFiles(subdir)
+        cmd = AttachListCommand(self.parser)
+        params = 'subdir="{}"'.format(subdir)
+        result = cmd.execute(params, '')
+
+        titles = [
+            "[dir]",
+            "[for_sort]",
+            "add.png",
+            "anchor.png",
+            "image.jpg",
+            "файл с пробелами.tmp"]
+        names = [
+            "test_subdir/dir",
+            "test_subdir/for_sort",
+            "test_subdir/add.png",
+            "test_subdir/anchor.png",
+            "test_subdir/image.jpg",
+            "test_subdir/файл с пробелами.tmp"]
+
+        self._compareResult(titles, names, result)
+
+    def test_subdir_single_quotes(self):
+        subdir = 'test_subdir'
+        self._attachFiles(subdir)
+        cmd = AttachListCommand(self.parser)
+        params = "subdir='{}'".format(subdir)
+        result = cmd.execute(params, '')
+
+        titles = [
+            "[dir]",
+            "[for_sort]",
+            "add.png",
+            "anchor.png",
+            "image.jpg",
+            "файл с пробелами.tmp"]
+        names = [
+            "test_subdir/dir",
+            "test_subdir/for_sort",
+            "test_subdir/add.png",
+            "test_subdir/anchor.png",
+            "test_subdir/image.jpg",
+            "test_subdir/файл с пробелами.tmp"]
 
         self._compareResult(titles, names, result)
 
