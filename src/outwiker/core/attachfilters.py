@@ -61,3 +61,8 @@ def getImageRecursiveFilter() -> Callable[[Path], bool]:
 def getNotHiddenImageRecursiveFilter(page):
     return andFilter(getImageRecursiveFilter(),
                      notFilter(getHiddenFilter(page)))
+
+
+def getNotHiddenDirOnlyFilter(page):
+    return andFilter(getDirOnlyFilter(),
+                     notFilter(getHiddenFilter(page)))
