@@ -128,3 +128,54 @@ class AttachListDialogTest (unittest.TestCase, BaseOutWikerGUIMixin):
         result = controller.getDialogResult()
 
         self.assertEqual(result, "(:attachlist sort=descenddate:)")
+
+    def testSortByNameSubdirDot(self):
+        controller = AttachListDialogController(self._dialog)
+
+        Tester.dialogTester.appendOk()
+        self._dialog.selectedSort = 0
+        self._dialog.isDescend = False
+        self._dialog.subdir = '.'
+
+        result = controller.getDialogResult()
+
+        self.assertEqual(result, "(:attachlist sort=name:)")
+
+    def testSortByNameSubdir_01(self):
+        controller = AttachListDialogController(self._dialog)
+        subdir = 'subdir_1'
+
+        Tester.dialogTester.appendOk()
+        self._dialog.selectedSort = 0
+        self._dialog.isDescend = False
+        self._dialog.subdir = subdir
+
+        result = controller.getDialogResult()
+
+        self.assertEqual(result, '(:attachlist sort=name subdir="subdir_1":)')
+
+    def testSortByNameSubdir_02(self):
+        controller = AttachListDialogController(self._dialog)
+        subdir = 'subdir_1/subdir_2'
+
+        Tester.dialogTester.appendOk()
+        self._dialog.selectedSort = 0
+        self._dialog.isDescend = False
+        self._dialog.subdir = subdir
+
+        result = controller.getDialogResult()
+
+        self.assertEqual(result, '(:attachlist sort=name subdir="subdir_1/subdir_2":)')
+
+    def testSortByNameSubdir_03(self):
+        controller = AttachListDialogController(self._dialog)
+        subdir = 'subdir_1\\subdir_2'
+
+        Tester.dialogTester.appendOk()
+        self._dialog.selectedSort = 0
+        self._dialog.isDescend = False
+        self._dialog.subdir = subdir
+
+        result = controller.getDialogResult()
+
+        self.assertEqual(result, '(:attachlist sort=name subdir="subdir_1\\subdir_2":)')

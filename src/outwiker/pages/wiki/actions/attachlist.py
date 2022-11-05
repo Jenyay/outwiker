@@ -166,3 +166,7 @@ class AttachListDialog(TestedDialog):
     @property
     def subdir(self):
         return self._subdirCtrl.GetValue()
+
+    @subdir.setter
+    def subdir(self, value):
+        self._subdirCtrl.SetValue(value)

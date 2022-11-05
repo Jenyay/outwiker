@@ -110,6 +110,54 @@ class WikiAttachListCommandTest (unittest.TestCase):
 
         self._compareResult(titles, names, result)
 
+    def test_subsubdir_forward_slashes(self):
+        subdir = 'subdir_1/subdir_2'
+        self._attachFiles(subdir)
+        cmd = AttachListCommand(self.parser)
+        params = 'subdir="{}"'.format(subdir)
+        result = cmd.execute(params, '')
+
+        titles = [
+            "[dir]",
+            "[for_sort]",
+            "add.png",
+            "anchor.png",
+            "image.jpg",
+            "файл с пробелами.tmp"]
+        names = [
+            "subdir_1/subdir_2/dir",
+            "subdir_1/subdir_2/for_sort",
+            "subdir_1/subdir_2/add.png",
+            "subdir_1/subdir_2/anchor.png",
+            "subdir_1/subdir_2/image.jpg",
+            "subdir_1/subdir_2/файл с пробелами.tmp"]
+
+        self._compareResult(titles, names, result)
+
+    def test_subsubdir_back_slashes(self):
+        subdir = 'subdir_1\\subdir_2'
+        self._attachFiles(subdir)
+        cmd = AttachListCommand(self.parser)
+        params = 'subdir="{}"'.format(subdir)
+        result = cmd.execute(params, '')
+
+        titles = [
+            "[dir]",
+            "[for_sort]",
+            "add.png",
+            "anchor.png",
+            "image.jpg",
+            "файл с пробелами.tmp"]
+        names = [
+            "subdir_1/subdir_2/dir",
+            "subdir_1/subdir_2/for_sort",
+            "subdir_1/subdir_2/add.png",
+            "subdir_1/subdir_2/anchor.png",
+            "subdir_1/subdir_2/image.jpg",
+            "subdir_1/subdir_2/файл с пробелами.tmp"]
+
+        self._compareResult(titles, names, result)
+
     def test_subdir_single_quotes(self):
         subdir = 'test_subdir'
         self._attachFiles(subdir)
