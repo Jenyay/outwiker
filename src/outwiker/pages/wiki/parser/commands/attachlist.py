@@ -80,7 +80,7 @@ class SimpleView:
   font-style: normal;
 }
 
-.ow-attach-list li:before {
+.ow-attach-list a.$css_attach:before {
   margin-right: 5px;
   content: "";
   height: 20px;
@@ -89,20 +89,20 @@ class SimpleView:
   background-repeat: no-repeat;
   display: inline-block;
   /* file icon by default */
-  background-image: url("data:image/svg+xml;utf8,$svg_file");
+  background-image: url("data:image/svg+xml;base64,$svg_file");
   background-position: center 2px;
   background-size: 60% auto;
 }
 
-.ow-attach-list li.$css_attach_dir:before {
+.ow-attach-list a.$css_attach_dir:before {
   /* folder icon if folder class is specified */
-  background-image: url("data:image/svg+xml;utf8,$svg_dir");
+  background-image: url("data:image/svg+xml;base64,$svg_dir");
   background-position: center top;
   background-size: 75% auto;
 }
 </style>'''
         tpl = Template(template)
-        return tpl.safe_substitute(svg_file=svg.SVG_FILE, svg_dir=svg.SVG_DIRECTORY, css_attach_dir=css.CSS_ATTACH_DIR)
+        return tpl.safe_substitute(svg_file=svg.SVG_FILE, svg_dir=svg.SVG_DIRECTORY, css_attach_dir=css.CSS_ATTACH_DIR, css_attach=css.CSS_ATTACH)
 
 
 class AttachListCommand(Command):
