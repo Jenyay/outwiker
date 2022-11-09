@@ -8,7 +8,6 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.commands import isImage
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.core.htmlformatter import HtmlFormatter
-from outwiker.gui.cssclasses import CSS_ERROR, CSS_IMAGE
 from outwiker.pages.wiki.cssclasses import CSS_WIKI, CSS_WIKI_INCLUDE
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.parser.attachregex import (

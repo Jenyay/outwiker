@@ -2,7 +2,7 @@
 
 from typing import List, Optional
 
-from outwiker.gui.cssclasses import CSS_ERROR, CSS_IMAGE
+from outwiker.core.cssclasses import CSS_ERROR, CSS_IMAGE
 
 
 class HtmlFormatter:

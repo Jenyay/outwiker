@@ -7,7 +7,7 @@ from typing import List, Tuple
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.pages.wiki.parser.command import Command
-import outwiker.gui.cssclasses as css
+import outwiker.core.cssclasses as css
 
 
 class SimpleView:
