@@ -386,7 +386,7 @@ class ParserLinkTest(unittest.TestCase):
     def testUrlImage3(self):
         text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             self.urlimage, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><img src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a href="{}"><img class="ow-image" src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, self.urlimage)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -394,7 +394,7 @@ class ParserLinkTest(unittest.TestCase):
     def testUrlImage4(self):
         text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, self.urlimage)
-        result = 'бла-бла-бла \n<a href="{}"><img src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a href="{}"><img class="ow-image" src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, self.urlimage)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -796,7 +796,7 @@ class ParserLinkTest(unittest.TestCase):
         text = "бла-бла-бла \n[[Attach:{filename} -> Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
@@ -807,7 +807,7 @@ class ParserLinkTest(unittest.TestCase):
         text = "бла-бла-бла \n[[Attach:'{filename}' -> Attach:'{filename}']] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
@@ -818,7 +818,7 @@ class ParserLinkTest(unittest.TestCase):
         text = 'бла-бла-бла \n[[Attach:"{filename}" -> Attach:"{filename}"]] бла-бла-бла\nбла-бла-бла'.format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
@@ -829,7 +829,7 @@ class ParserLinkTest(unittest.TestCase):
         text = "бла-бла-бла \n[[Attach:{filename} | Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
@@ -840,7 +840,7 @@ class ParserLinkTest(unittest.TestCase):
         text = "бла-бла-бла \n[[Attach:'{filename}' | Attach:'{filename}']] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
@@ -851,7 +851,7 @@ class ParserLinkTest(unittest.TestCase):
         text = 'бла-бла-бла \n[[Attach:"{filename}" | Attach:"{filename}"]] бла-бла-бла\nбла-бла-бла'.format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)

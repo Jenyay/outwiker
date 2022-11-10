@@ -107,7 +107,7 @@ class AttachImagesToken(AttachToken):
 
     def _convertToLink(self, s, l, t):
         fname = t[1]
-        return '<img src="%s/%s"/>' % (PAGE_ATTACH_DIR, fname.replace('\\', '/'))
+        return '<img class="{css_class}" src="{dirname}/{fname}"/>'.format(dirname=PAGE_ATTACH_DIR, fname=fname.replace('\\', '/'), css_class=css.CSS_IMAGE)
 
     def _getTokenName(self):
         return 'attachImage'

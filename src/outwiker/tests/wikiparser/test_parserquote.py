@@ -153,7 +153,7 @@ class ParserQuoteTest(unittest.TestCase):
 
     def testNested_06_url(self):
         text = "[>Проверка [>http://jenyay.net/image.png<] 1-2-3<]"
-        result = '<blockquote>Проверка <blockquote><img src="http://jenyay.net/image.png"/></blockquote> 1-2-3</blockquote>'
+        result = '<blockquote>Проверка <blockquote><img class="ow-image" src="http://jenyay.net/image.png"/></blockquote> 1-2-3</blockquote>'
 
         self.assertEqual(self.parser.toHtml(text),
                          result)

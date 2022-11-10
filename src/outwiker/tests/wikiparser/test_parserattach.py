@@ -77,7 +77,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_png_simple(self):
         fname = "accept.png"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -85,7 +85,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_png_single_quotes(self):
         fname = "accept.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -93,7 +93,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_png_double_quotes(self):
         fname = "accept.png"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -101,7 +101,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_webp(self):
         fname = "image.webp"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -155,7 +155,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "картинка с пробелами.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -208,7 +208,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_jpg(self):
         fname = "image_01.JPG"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -286,7 +286,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_subfolder_forward_slash(self):
         fname = "dir/subdir/subdir2/image.png"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -294,7 +294,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_subfolder_forward_slash_single_quotes(self):
         fname = "dir/subdir/subdir2/image.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -302,7 +302,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_subfolder_forward_slash_double_quotes(self):
         fname = "dir/subdir/subdir2/image.png"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -310,7 +310,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_subfolder_backslash(self):
         fname = "dir\\subdir\\subdir2\\image.png"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
                 fname.replace('\\', '/'))
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -318,7 +318,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_subfolder_backslash_single_quotes(self):
         fname = "dir\\subdir\\subdir2\\image.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname.replace('\\', '/'))
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -326,7 +326,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_subfolder_backslash_double_quotes(self):
         fname = "dir\\subdir\\subdir2\\image.png"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname.replace('\\', '/'))
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -350,7 +350,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_with_spaces_subfolder_forward_slash_single_quotes(self):
         fname = "dir/subdir/subdir2/картинка с пробелами.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -358,7 +358,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_with_spaces_subfolder_forward_slash_double_quotes(self):
         fname = "dir/subdir/subdir2/картинка с пробелами.png"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)

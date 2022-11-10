@@ -97,7 +97,7 @@ class ParserAlignTest (unittest.TestCase):
 
     def testCenter5(self):
         text = "бла-бла-бла \n\n% center %Attach:accept.png\n\nбла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n\n<div align="center"><img src="__attach/accept.png"/></div>\n\nбла-бла-бла\nбла-бла-бла'
+        result = 'бла-бла-бла \n\n<div align="center"><img class="ow-image" src="__attach/accept.png"/></div>\n\nбла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
