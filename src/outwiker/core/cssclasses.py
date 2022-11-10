@@ -2,6 +2,8 @@
 
 CSS_ERROR = 'ow-error'
 CSS_IMAGE = 'ow-image'
+CSS_LINK = 'ow-link'
+CSS_LINK_PAGE = 'ow-link-page'
 CSS_ATTACH = 'ow-attach'
 CSS_ATTACH_FILE = 'ow-attach-file'
 CSS_ATTACH_IMAGE = 'ow-attach-image'
@@ -25,6 +27,19 @@ def getDefaultStyles() -> str:
 		a.ow-attach:hover {
 		  border-color: #eee;
 		  color: #000;
+		}
+
+		a.ow-link-page:before {
+		  margin-right: 0px;
+		  content: "";
+		  height: 20px;
+		  vertical-align: middle;
+		  width: 20px;
+		  background-repeat: no-repeat;
+		  display: inline-block;
+		  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IklDT04iIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojYjBjYmUwO30uY2xzLTEsLmNscy0ye3N0cm9rZTojNjY2NjdlO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6MTVweDt9LmNscy0ye2ZpbGw6IzVmOWNjYjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zOTEsMTU4LjV2MjY1YTI1LDI1LDAsMCwxLTI1LDI1SDE0NmEyNSwyNSwwLDAsMS0yNS0yNVY4OC41YTI1LDI1LDAsMCwxLDI1LTI1SDI5NloiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zOTEsMTU4LjVIMzIxYTI1LDI1LDAsMCwxLTI1LTI1di03MFoiLz48L3N2Zz4=");
+		  background-position: center 2px;
+		  background-size: 75% auto;
 		}
 
 		a.ow-attach:before {

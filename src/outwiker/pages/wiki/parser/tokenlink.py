@@ -106,7 +106,14 @@ class LinkToken(object):
         if url.startswith(PAGE_ATTACH_DIR + '/') and not self._isHasImage(comment):
             return self._getAttachLink(url, comment)
 
+        if url.startswith('page://'):
+            return self._getPageLink(url, comment)
+
         return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
+
+    def _getPageLink(self, url: str, comment: str) -> str:
+        css_class = '{} {}'.format(css.CSS_LINK, css.CSS_LINK_PAGE)
+        return '<a class="{css_class}" href="{url}">{comment}</a>'.format(url=url, comment=comment, css_class=css_class)
 
     def _getAttachLink(self, url: str, comment: str) -> str:
         css_class = '{} {}'.format(css.CSS_ATTACH, css.CSS_ATTACH_FILE)

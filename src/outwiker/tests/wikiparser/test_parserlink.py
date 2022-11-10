@@ -126,7 +126,7 @@ class ParserLinkTest(unittest.TestCase):
 
     def testLink8(self):
         text = "[[\\t]]"
-        result = '<a href="page://\\t">\\t</a>'
+        result = '<a class="ow-link ow-link-page" href="page://\\t">\\t</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -211,7 +211,7 @@ class ParserLinkTest(unittest.TestCase):
     def testPageLinks(self):
         for link in self.pagelinks:
             text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(link)
-            result = 'бла-бла-бла \n<a href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            result = 'бла-бла-бла \n<a class="ow-link ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
                 link, link)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -238,7 +238,7 @@ class ParserLinkTest(unittest.TestCase):
         for link in self.pagelinks:
             text = "бла-бла-бла \n[[{} | [='''ля-ля-ля'''=] ]] бла-бла-бла\nбла-бла-бла".format(
                 link)
-            result = "бла-бла-бла \n<a href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
+            result = "бла-бла-бла \n<a class=\"ow-link ow-link-page\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
                 link)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -247,7 +247,7 @@ class ParserLinkTest(unittest.TestCase):
         for link in self.pagelinks:
             text = "бла-бла-бла \n[[[='''ля-ля-ля'''=] -> {}]] бла-бла-бла\nбла-бла-бла".format(
                 link)
-            result = "бла-бла-бла \n<a href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
+            result = "бла-бла-бла \n<a class=\"ow-link ow-link-page\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
                 link)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -259,7 +259,7 @@ class ParserLinkTest(unittest.TestCase):
 
             text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
                 link, comment)
-            result = 'бла-бла-бла \n<a href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            result = 'бла-бла-бла \n<a class="ow-link ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
                 link, comment)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -271,7 +271,7 @@ class ParserLinkTest(unittest.TestCase):
 
             text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
                 comment, link)
-            result = 'бла-бла-бла \n<a href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            result = 'бла-бла-бла \n<a class="ow-link ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
                 link, comment)
 
             self.assertEqual(self.parser.toHtml(text), result)
