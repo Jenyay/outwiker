@@ -173,7 +173,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "accept.png"
         text = "бла-бла-бла \n[[Attach:{} | Комментарий]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -182,7 +182,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "файл с пробелами.tmp"
         text = "бла-бла-бла \n[[Attach:{} | Комментарий]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -191,7 +191,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "accept.png"
         text = "бла-бла-бла \n[[Комментарий -> Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -200,7 +200,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "файл с пробелами.tmp"
         text = "бла-бла-бла \n[[Комментарий -> Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)

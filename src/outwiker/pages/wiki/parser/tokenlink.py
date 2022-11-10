@@ -30,6 +30,9 @@ class LinkToken(object):
                             multiline=False,
                             convertWhitespaceEscapes=False).setParseAction(self._convertToLink)("link")
 
+    def _isHasImage(self, text: str) -> bool:
+        return '<img' in text.lower()
+
     def _convertToLink(self, _s, _l, t):
         """
         Преобразовать ссылку
@@ -95,11 +98,13 @@ class LinkToken(object):
 
     def _generateHtmlTag(self, url, comment):
         if (not is_url(url) and
-                not url.startswith(AttachToken.attachString) and
                 not url.startswith(PAGE_ATTACH_DIR + '/') and
                 not url.startswith('#') and
                 not url.startswith('mailto:')):
             url = 'page://' + url
+
+        if url.startswith(PAGE_ATTACH_DIR + '/') and not self._isHasImage(comment):
+            return self._getAttachLink(url, comment)
 
         return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
 

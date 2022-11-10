@@ -653,7 +653,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[{comment} -> Attach:{filename}]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -664,7 +664,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[{comment} -> Attach:"{filename}"]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -675,7 +675,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = "[[{comment} -> Attach:'{filename}']]".format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -686,7 +686,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = "[[{comment} -> Attach:'{filename}']]".format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -697,7 +697,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[{comment} -> Attach:"{filename}"]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -708,7 +708,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[Attach:{filename} | {comment}]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -719,7 +719,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[Attach:"{filename}" | {comment}]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -730,7 +730,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = "[[Attach:'{filename}' | {comment}]]".format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -741,7 +741,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = "[[Attach:'{filename}' | {comment}]]".format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -752,7 +752,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[Attach:"{filename}" | {comment}]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
