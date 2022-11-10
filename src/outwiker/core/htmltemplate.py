@@ -5,6 +5,7 @@ from string import Template
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import HtmlRenderConfig
+import outwiker.core.cssclasses as css
 
 
 class MyTemplate (Template):
@@ -47,14 +48,16 @@ class HtmlTemplate(object):
     def substitute(self, content, **kwargs):
         """
         In outwiker.core 1.5 'userhead' parameter will be replaced to **kwargs
+        TODO: Remove the legacy code
         """
         if 'userhead' not in kwargs:
-            kwargs['userhead'] = u''
+            kwargs['userhead'] = ''
         if 'title' not in kwargs:
-            kwargs['title'] = u''
+            kwargs['title'] = ''
 
         return self.template.safe_substitute(content=content,
                                              fontsize=self.fontsize,
                                              fontfamily=self.fontfamily,
                                              userstyle=self.userStyle,
+                                             defaultstyle=css.getDefaultStyles(),
                                              **kwargs)
