@@ -216,7 +216,7 @@ sdfsdf || centered || right aligned||
 """
 
         result = '''бла-бла-бла
-<table border=1><tr><td align="center">Ячейка 1</td><td align="left">Ячейка 2</td><td align="right">Ячейка 3</td></tr><tr><td>Ячейка 4</td><td><blockquote>Ячейка 5</blockquote></td><td>Ячейка 6</td></tr></table>'''
+<table border=1><tr><td align="center">Ячейка 1</td><td align="left">Ячейка 2</td><td align="right">Ячейка 3</td></tr><tr><td>Ячейка 4</td><td><blockquote class="ow-quote">Ячейка 5</blockquote></td><td>Ячейка 6</td></tr></table>'''
 
         self.assertEqual(self.parser.toHtml(text), result,
                          self.parser.toHtml(text).encode(self.encoding))

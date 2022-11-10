@@ -17,7 +17,7 @@ from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 from outwiker.tests.utils import removeDir
-import outwiker.gui.cssclasses as css
+import outwiker.core.cssclasses as css
 
 
 class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):

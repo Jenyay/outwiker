@@ -5,9 +5,8 @@ from abc import ABCMeta, abstractmethod
 
 from pyparsing import Literal, Regex
 
-from outwiker.core.attachment import Attachment
-from outwiker.core.commands import isImage
 from outwiker.core.defines import PAGE_ATTACH_DIR, IMAGES_EXTENSIONS
+import outwiker.core.cssclasses as css
 
 from .utils import concatenate
 from .attachregex import attach_regex_no_spaces, attach_regex_with_spaces
@@ -71,7 +70,6 @@ class AttachToken(metaclass=ABCMeta):
         pass
 
 
-
 class AttachAllToken(AttachToken):
     def _getRegex(self):
         return Regex(attach_regex_no_spaces, re.I)
@@ -81,7 +79,12 @@ class AttachAllToken(AttachToken):
 
     def _convertToLink(self, s, l, t):
         fname = t[1]
-        return '<a href="%s/%s">%s</a>' % (PAGE_ATTACH_DIR, fname.replace('\\', '/'), fname)
+        css_class = '{} {}'.format(css.CSS_ATTACH, css.CSS_ATTACH_FILE)
+        return '<a class="{css_class}" href="{dirname}/{fname}">{title}</a>'.format(
+                dirname=PAGE_ATTACH_DIR,
+                fname=fname.replace('\\', '/'),
+                title=fname,
+                css_class=css_class)
 
     def _getTokenName(self):
         return 'attach'
@@ -104,7 +107,7 @@ class AttachImagesToken(AttachToken):
 
     def _convertToLink(self, s, l, t):
         fname = t[1]
-        return '<img src="%s/%s"/>' % (PAGE_ATTACH_DIR, fname.replace('\\', '/'))
+        return '<img class="{css_class}" src="{dirname}/{fname}"/>'.format(dirname=PAGE_ATTACH_DIR, fname=fname.replace('\\', '/'), css_class=css.CSS_IMAGE)
 
     def _getTokenName(self):
         return 'attachImage'

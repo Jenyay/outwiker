@@ -304,24 +304,24 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse28(self):
         text = "page://__adsfasdfaf"
-        result = '<a href="page://__adsfasdfaf">page://__adsfasdfaf</a>'
+        result = '<a class="ow-link ow-link-page" href="page://__adsfasdfaf">page://__adsfasdfaf</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlParse29(self):
         text = "page://__абырвалг-ффф"
-        result = '<a href="page://__абырвалг-ффф">page://__абырвалг-ффф</a>'
+        result = '<a class="ow-link ow-link-page" href="page://__абырвалг-ффф">page://__абырвалг-ффф</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlParse30(self):
         text = "page://__adsfasdfaf/"
-        result = '<a href="page://__adsfasdfaf/">page://__adsfasdfaf/</a>'
+        result = '<a class="ow-link ow-link-page" href="page://__adsfasdfaf/">page://__adsfasdfaf/</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlParse31(self):
         text = "page://__абырвалг-ффф/"
-        result = '<a href="page://__абырвалг-ффф/">page://__абырвалг-ффф/</a>'
+        result = '<a class="ow-link ow-link-page" href="page://__абырвалг-ффф/">page://__абырвалг-ффф/</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
