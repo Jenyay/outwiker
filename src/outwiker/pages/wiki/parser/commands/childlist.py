@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
+import outwiker.core.cssclasses as css
 
 
-class SimpleView (object):
+class SimpleView:
     """
     Класс для простого представления списка дочерних страниц - каждая страница
     на отдельной строке
@@ -13,9 +14,10 @@ class SimpleView (object):
         """
         children - список упорядоченных дочерних страниц
         """
-        template = '<a href="page://{link}">{text}</a>\n'
+        css_classes = '{} {}'.format(css.CSS_LINK, css.CSS_LINK_PAGE)
+        template = '<a class="{css_classes}" href="page://{link}">{text}</a>\n'
         result = ''.join(
-            [template.format(link=page.title, text=page.display_title)
+            [template.format(link=page.title, text=page.display_title, css_classes=css_classes)
                 for page in children])
 
         # Выкинем последний перевод строки
@@ -75,14 +77,14 @@ class ChildListCommand (Command):
         # Ключ - название сортировки,
         # значение - кортеж из (функция ключа сортировки, reverse)
         sortdict = {
-            u"name":             (self._sortByNameKey, False),
-            u"descendname":      (self._sortByNameKey, True),
-            u"order":            (self._sortByOrder, False),
-            u"descendorder":     (self._sortByOrder, True),
-            u"edit":             (self._sortByEditDate, False),
-            u"descendedit":      (self._sortByEditDate, True),
-            u"creation":         (self._sortByCreationDate, False),
-            u"descendcreation":  (self._sortByCreationDate, True),
+            "name":             (self._sortByNameKey, False),
+            "descendname":      (self._sortByNameKey, True),
+            "order":            (self._sortByOrder, False),
+            "descendorder":     (self._sortByOrder, True),
+            "edit":             (self._sortByEditDate, False),
+            "descendedit":      (self._sortByEditDate, True),
+            "creation":         (self._sortByCreationDate, False),
+            "descendcreation":  (self._sortByCreationDate, True),
         }
 
         if sort in sortdict:
