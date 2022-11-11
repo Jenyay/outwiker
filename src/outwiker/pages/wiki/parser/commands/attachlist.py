@@ -17,7 +17,7 @@ class SimpleView:
     """
     def __init__(self):
         self._list_template = '<ul class="ow-attach-list">{title}<ul class="ow-attach-list">{content}</ul></ul>'
-        self._item_template = '<li class="{css_class}"><a class="ow-attach {css_class}" href="{link}">{title}</a></li>'    
+        self._item_template = '<li class="{css_class}"><a class="ow-link-attach {css_class}" href="{link}">{title}</a></li>'    
 
     def make(self, dirnames, fnames,  subdir):
         """

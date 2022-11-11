@@ -53,7 +53,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_simple(self):
         fname = "filename.tmp"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -61,7 +61,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_simple_single_quotes(self):
         fname = "filename.tmp"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -69,7 +69,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_simple_double_quotes(self):
         fname = "filename.tmp"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -110,7 +110,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "filename.tmp"
         text = "бла-бла-бла \n[[Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -119,7 +119,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "filename.tmp"
         text = "бла-бла-бла \n[[Attach:'{}']] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -128,7 +128,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "filename.tmp"
         text = 'бла-бла-бла \n[[Attach:"{}"]] бла-бла-бла\nбла-бла-бла'.format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -137,7 +137,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "файл с пробелами.tmp"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -146,7 +146,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "файл с пробелами.tmp"
         text = "бла-бла-бла \n[[Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -164,7 +164,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "accept.png"
         text = "бла-бла-бла \n[[Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -173,7 +173,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "accept.png"
         text = "бла-бла-бла \n[[Attach:{} | Комментарий]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -182,7 +182,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "файл с пробелами.tmp"
         text = "бла-бла-бла \n[[Attach:{} | Комментарий]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -191,7 +191,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "accept.png"
         text = "бла-бла-бла \n[[Комментарий -> Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -200,7 +200,7 @@ class ParserAttachTest(unittest.TestCase):
         fname = "файл с пробелами.tmp"
         text = "бла-бла-бла \n[[Комментарий -> Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -216,7 +216,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_13(self):
         fname = "dir.xxx"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -224,7 +224,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_folder(self):
         fname = "dir"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -232,7 +232,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_file_in_folder_forward_slash(self):
         fname = "dir/subdir/subdir2/application.py"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -240,7 +240,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_file_in_folder_forward_slash_single_quotes(self):
         fname = "dir/subdir/subdir2/application.py"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -248,7 +248,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_file_in_folder_forward_slash_duoble_quotes(self):
         fname = "dir/subdir/subdir2/application.py"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -258,7 +258,7 @@ class ParserAttachTest(unittest.TestCase):
         fname_result = fname.replace('\\', '/')
 
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname_result, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -268,7 +268,7 @@ class ParserAttachTest(unittest.TestCase):
         fname_result = fname.replace('\\', '/')
 
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname_result, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -278,7 +278,7 @@ class ParserAttachTest(unittest.TestCase):
         fname_result = fname.replace('\\', '/')
 
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname_result, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -334,7 +334,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_file_with_spaces_in_folder_forward_slash_single_quotes(self):
         fname = "dir/subdir/subdir2/файл с пробелами.tmp"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -342,7 +342,7 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_file_with_spaces_in_folder_forward_slash_double_quotes(self):
         fname = "dir/subdir/subdir2/файл с пробелами.tmp"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<a class="ow-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-link-attach ow-attach-file" href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)

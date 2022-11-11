@@ -4,7 +4,7 @@ CSS_ERROR = 'ow-error'
 CSS_IMAGE = 'ow-image'
 CSS_LINK = 'ow-link'
 CSS_LINK_PAGE = 'ow-link-page'
-CSS_ATTACH = 'ow-attach'
+CSS_LINK_ATTACH = 'ow-link-attach'
 CSS_ATTACH_FILE = 'ow-attach-file'
 CSS_ATTACH_IMAGE = 'ow-attach-image'
 CSS_ATTACH_DIR = 'ow-attach-dir'
@@ -18,13 +18,13 @@ def getDefaultStyles() -> str:
 		img{border:none}
 
 		/* Attachment link */
-		a.ow-attach {
+		a.ow-link-attach {
 		  border-bottom: 1px solid transparent;
 		  text-decoration: none;
 		  font-style: italic;
 		}
 
-		a.ow-attach:hover {
+		a.ow-link-attach:hover {
 		  border-color: #eee;
 		  color: #000;
 		}
@@ -42,7 +42,7 @@ def getDefaultStyles() -> str:
 		  background-size: 75% auto;
 		}
 
-		a.ow-attach:before {
+		a.ow-link-attach:before {
 		  margin-right: 0px;
 		  content: "";
 		  height: 20px;

@@ -10,6 +10,7 @@ import outwiker.core.cssclasses as css
 
 from .utils import concatenate
 from .attachregex import attach_regex_no_spaces, attach_regex_with_spaces
+from .htmlelements import create_link_to_attached_file, create_image
 
 
 class AttachFactory:
@@ -79,12 +80,10 @@ class AttachAllToken(AttachToken):
 
     def _convertToLink(self, s, l, t):
         fname = t[1]
-        css_class = '{} {}'.format(css.CSS_ATTACH, css.CSS_ATTACH_FILE)
-        return '<a class="{css_class}" href="{dirname}/{fname}">{title}</a>'.format(
-                dirname=PAGE_ATTACH_DIR,
-                fname=fname.replace('\\', '/'),
-                title=fname,
-                css_class=css_class)
+        href = '{dirname}/{fname}'.format(dirname=PAGE_ATTACH_DIR,
+                                          fname=fname.replace('\\', '/'))
+        text = fname
+        return create_link_to_attached_file(href, text)
 
     def _getTokenName(self):
         return 'attach'
@@ -107,7 +106,8 @@ class AttachImagesToken(AttachToken):
 
     def _convertToLink(self, s, l, t):
         fname = t[1]
-        return '<img class="{css_class}" src="{dirname}/{fname}"/>'.format(dirname=PAGE_ATTACH_DIR, fname=fname.replace('\\', '/'), css_class=css.CSS_IMAGE)
+        src = '{dirname}/{fname}'.format(dirname=PAGE_ATTACH_DIR, fname=fname.replace('\\', '/'))
+        return create_image(src, [css.CSS_IMAGE])
 
     def _getTokenName(self):
         return 'attachImage'

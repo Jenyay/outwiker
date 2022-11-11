@@ -44,7 +44,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 filesPath,
                 fname) for fname in self.files]
 
-        self.template = '<a class="ow-attach {css_class}" href="{link}">{title}</a>'
+        self.template = '<a class="ow-link-attach {css_class}" href="{link}">{title}</a>'
 
     def tearDown(self):
         self.destroyApplication()

@@ -43,7 +43,7 @@ class ChildListCommand (Command):
 
     @property
     def name(self):
-        return u"childlist"
+        return "childlist"
 
     def execute(self, params, content):
         params_dict = Command.parseParams(params)

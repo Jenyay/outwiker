@@ -4,10 +4,14 @@ import html
 
 from pyparsing import QuotedString
 
-from .tokenattach import AttachToken
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.utilites.urls import is_url
-import outwiker.core.cssclasses as css
+
+from .tokenattach import AttachToken
+from .htmlelements import (create_anchor,
+                           create_link,
+                           create_link_to_page,
+                           create_link_to_attached_file)
 
 
 class LinkFactory(object):
@@ -104,21 +108,12 @@ class LinkToken(object):
             url = 'page://' + url
 
         if url.startswith(PAGE_ATTACH_DIR + '/') and not self._isHasImage(comment):
-            return self._getAttachLink(url, comment)
+            return create_link_to_attached_file(url, comment)
 
         if url.startswith('page://'):
-            return self._getPageLink(url, comment)
+            return create_link_to_page(url, comment)
 
-        return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
-
-    def _getPageLink(self, url: str, comment: str) -> str:
-        css_class = '{} {}'.format(css.CSS_LINK, css.CSS_LINK_PAGE)
-        return '<a class="{css_class}" href="{url}">{comment}</a>'.format(url=url, comment=comment, css_class=css_class)
-
-    def _getAttachLink(self, url: str, comment: str) -> str:
-        css_class = '{} {}'.format(css.CSS_ATTACH, css.CSS_ATTACH_FILE)
-        return '<a class="{css_class}" href="{url}">{comment}</a>'.format(
-                css_class=css_class, url=url, comment=comment)
+        return create_link(url, comment)
 
     def _convertEmptyLink(self, text):
         """
@@ -133,13 +128,13 @@ class LinkToken(object):
 
             url = '{}/{}'.format(PAGE_ATTACH_DIR, attach_name)
             comment = attach_name
-            return self._getAttachLink(url, comment)
+            return create_link_to_attached_file(url, comment)
         elif (textStrip.startswith("#") and
                 self.parser.page is not None and
                 self.parser.page[textStrip] is None):
             # Ссылка начинается на #, но вложенных страниц с таким именем нет,
             # значит это якорь
-            return '<a id="{anchor}"></a>'.format(anchor=textStrip[1:])
+            return create_anchor(textStrip[1:])
 
         # Ссылка не на прикрепление
         url = text.strip()
