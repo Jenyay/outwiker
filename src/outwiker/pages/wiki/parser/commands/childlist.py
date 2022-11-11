@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
-import outwiker.core.cssclasses as css
+from outwiker.pages.wiki.parser.htmlelements import create_link_to_page
 
 
 class SimpleView:
@@ -14,14 +14,12 @@ class SimpleView:
         """
         children - список упорядоченных дочерних страниц
         """
-        css_classes = '{} {}'.format(css.CSS_LINK, css.CSS_LINK_PAGE)
-        template = '<a class="{css_classes}" href="page://{link}">{text}</a>\n'
-        result = ''.join(
-            [template.format(link=page.title, text=page.display_title, css_classes=css_classes)
-                for page in children])
+        links = [create_link_to_page('page://{}'.format(page.title),
+                                     page.display_title)
+                for page in children]
+        result = '\n'.join(links)
 
-        # Выкинем последний перевод строки
-        return result[: -1]
+        return result
 
 
 class ChildListCommand (Command):
