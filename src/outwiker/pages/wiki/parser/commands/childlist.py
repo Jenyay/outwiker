@@ -2,6 +2,7 @@
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.parser.htmlelements import create_link_to_page
+import outwiker.core.cssclasses as css
 
 
 class SimpleView:
@@ -10,19 +11,22 @@ class SimpleView:
     на отдельной строке
     """
     @staticmethod
-    def make(children, parser, params):
+    def make(title, children, parser, params) -> str:
         """
         children - список упорядоченных дочерних страниц
         """
         links = [create_link_to_page('page://{}'.format(page.title),
                                      page.display_title)
                 for page in children]
-        result = '\n'.join(links)
+        items = ['<li class="{css_class}">{link}</li>'.format(css_class=css.CSS_ATTACH_LIST_ITEM, link=link)
+                 for link in links]
+        all_items_str = ''.join(items)
+        result = '<ul class={css_class}><span class="{css_title}">{title}</span><ul class={css_class}>{items}</ul></ul>'.format(css_class=css.CSS_CHILD_LIST, items=all_items_str, title=title, css_title=css.CSS_CHILD_LIST_TITLE)
 
         return result
 
 
-class ChildListCommand (Command):
+class ChildListCommand(Command):
     """
     Команда для вставки списка дочерних команд.
     Синтсаксис: (:childlist [params...]:)
@@ -47,9 +51,10 @@ class ChildListCommand (Command):
         params_dict = Command.parseParams(params)
 
         children = self.parser.page.children
+        title = self.parser.page.display_title
         self._sortChildren(children, params_dict)
 
-        return SimpleView.make(children, self.parser, params)
+        return SimpleView.make(title, children, self.parser, params)
 
     def _sortByNameKey(self, page):
         return page.display_title.lower()

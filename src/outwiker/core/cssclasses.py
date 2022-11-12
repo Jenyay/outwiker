@@ -9,7 +9,9 @@ CSS_ATTACH_FILE = 'ow-attach-file'
 CSS_ATTACH_IMAGE = 'ow-attach-image'
 CSS_ATTACH_DIR = 'ow-attach-dir'
 CSS_ATTACH_LIST = 'ow-attach-list'
+CSS_ATTACH_LIST_ITEM = 'ow-attach-list-item'
 CSS_CHILD_LIST = 'ow-child-list'
+CSS_CHILD_LIST_TITLE = 'ow-child-list-title'
 CSS_IMAGE = 'ow-image'
 CSS_QUOTE = 'ow-quote'
 
@@ -17,6 +19,40 @@ CSS_QUOTE = 'ow-quote'
 def getDefaultStyles() -> str:
     return '''
 		img{border:none}
+
+        /* Child list */
+        span.ow-child-list-title:before {
+		  margin-right: 0px;
+		  content: "";
+		  height: 20px;
+		  vertical-align: middle;
+		  width: 20px;
+		  background-repeat: no-repeat;
+		  display: inline-block;
+		  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IklDT04iIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojYjBjYmUwO30uY2xzLTEsLmNscy0ye3N0cm9rZTojNjY2NjdlO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6MTVweDt9LmNscy0ye2ZpbGw6IzVmOWNjYjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zOTEsMTU4LjV2MjY1YTI1LDI1LDAsMCwxLTI1LDI1SDE0NmEyNSwyNSwwLDAsMS0yNS0yNVY4OC41YTI1LDI1LDAsMCwxLDI1LTI1SDI5NloiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zOTEsMTU4LjVIMzIxYTI1LDI1LDAsMCwxLTI1LTI1di03MFoiLz48L3N2Zz4=");
+		  background-position: center 2px;
+		  background-size: 75% auto;
+		}
+
+		ul.ow-child-list {
+		  margin-left: 0px;
+		  padding-left: 0px;
+		}
+
+		.ow-child-list ul {
+		  margin-left: 15px;
+		  padding-left: 10px;
+		  border-left: 1px dashed #ddd;
+		}
+
+		.ow-child-list li {
+		  list-style: none;
+		  font-weight: normal;
+		}
+
+        span.ow-child-list-title {
+		  font-weight: bold;
+        }
 
 		/* Attachment link */
 		a.ow-link-attach {
@@ -72,6 +108,11 @@ def getDefaultStyles() -> str:
 		}
 
 		/* Attachments list - (:attachlist:) wiki command */
+		ul.ow-attach-list {
+		  margin-left: 0px;
+		  padding-left: 0px;
+		}
+
 		.ow-attach-list ul {
 		  margin-left: 15px;
 		  padding-left: 10px;
