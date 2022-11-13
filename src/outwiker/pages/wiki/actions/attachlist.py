@@ -102,7 +102,7 @@ class AttachListDialog(TestedDialog):
         self._sortComboBox.AppendItems(sortStrings)
 
     def __createGui(self):
-        self._subdirLabel = wx.StaticText(self, label=_('Directory'))
+        self._subdirLabel = wx.StaticText(self, label=_('Folder'))
 
         self._subdirCtrl = FilesTreeComboBox(self)
         attach_dir = Attachment(self._page).getAttachPath(create=True)

@@ -9,7 +9,7 @@ class EmptyContent:
     """
     def __init__ (self, config):
         self.config = config
-        self.contentDefault = _('(:attachlist:)\n----\n!!! Child pages\n(:childlist:)')
+        self.contentDefault = _('(:attachlist:)\n----\n(:childlist:)')
         self.configSecton = 'Wiki'
         self.configParam = 'EmptyContent'
         self.option = StringOption (self.config, self.configSecton, self.configParam, self.contentDefault)

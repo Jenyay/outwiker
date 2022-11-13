@@ -15,6 +15,9 @@ class SimpleView:
         """
         children - список упорядоченных дочерних страниц
         """
+        if not children:
+            return ''
+
         links = [create_link_to_page('page://{}'.format(page.title),
                                      page.display_title)
                 for page in children]
