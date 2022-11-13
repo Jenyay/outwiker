@@ -66,7 +66,7 @@ class ParserLineBreakTest (unittest.TestCase):
 # Третий элемент списка [[<<]][[<<]] Вторая строка третьего элемента списка после двух отступов.
 # Четвертый элемент списка."""
 
-        result_right = f"""<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Первый элемент списка.</li><li class="{css.CSS_LIST_ITEM}">Второй элемент списка <br/>Вторая строка второго элемента списка.</li><li class="{css.CSS_LIST_ITEM}">Третий элемент списка <br/><br/> Вторая строка третьего элемента списка после двух отступов.</li><li class="{css.CSS_LIST_ITEM}">Четвертый элемент списка.</li></ol>"""
+        result_right = f"""<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Первый элемент списка.</li><li class="{css.CSS_WIKI}">Второй элемент списка <br/>Вторая строка второго элемента списка.</li><li class="{css.CSS_WIKI}">Третий элемент списка <br/><br/> Вторая строка третьего элемента списка после двух отступов.</li><li class="{css.CSS_WIKI}">Четвертый элемент списка.</li></ol>"""
         result = self.parser.toHtml(text)
 
         self.assertEqual(result, result_right, result)

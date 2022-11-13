@@ -2,7 +2,6 @@
 
 CSS_ERROR = 'ow-error'
 CSS_IMAGE = 'ow-image'
-CSS_LINK = 'ow-link'
 CSS_LINK_PAGE = 'ow-link-page'
 CSS_LINK_ATTACH = 'ow-link-attach'
 CSS_ATTACH_FILE = 'ow-attach-file'
@@ -12,11 +11,8 @@ CSS_ATTACH_LIST = 'ow-attach-list'
 CSS_ATTACH_LIST_ITEM = 'ow-attach-list-item'
 CSS_CHILD_LIST = 'ow-child-list'
 CSS_CHILD_LIST_TITLE = 'ow-child-list-title'
-CSS_IMAGE = 'ow-image'
-CSS_QUOTE = 'ow-quote'
-CSS_LIST = 'ow-list'
-CSS_LIST_ITEM = 'ow-list-item'
-CSS_HEADING = 'ow-heading'
+CSS_WIKI = 'ow-wiki'
+CSS_WIKI_INCLUDE = 'ow-wiki-include'
 
 
 def getDefaultStyles() -> str:

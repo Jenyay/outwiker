@@ -103,12 +103,12 @@ class ParserFormatTest(unittest.TestCase):
 
     def test_comments_05(self):
         text = '* Текст<!-- Комментарий -->'
-        result = f'<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Текст</li></ul>'
+        result = f'<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Текст</li></ul>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_comments_06(self):
         text = '!! Текст<!-- Комментарий -->'
-        result = f'<h1 class="{css.CSS_HEADING}">Текст</h1>'
+        result = f'<h1 class="{css.CSS_WIKI}">Текст</h1>'
 
         self.assertEqual(self.parser.toHtml(text), result)

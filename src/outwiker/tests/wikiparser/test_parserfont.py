@@ -271,7 +271,7 @@ class ParserFontTest (unittest.TestCase):
 
     def testSmallLink(self):
         text = "бла-бла-бла \nкхм [-[[мелкий шрифт -> http://jenyay.net]]-] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \nкхм <span style="font-size:80%"><a href="http://jenyay.net">мелкий шрифт</a></span> бла-бла-бла\nбла-бла-бла'
+        result = f'бла-бла-бла \nкхм <span style="font-size:80%"><a class="{css.CSS_WIKI}" href="http://jenyay.net">мелкий шрифт</a></span> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -281,7 +281,7 @@ class ParserFontTest (unittest.TestCase):
 
     def testSmallHeading(self):
         text = "бла-бла-бла \n!! Кхм [-мелкий шрифт-] бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h1 class="{css.CSS_HEADING}">Кхм <span style="font-size:80%">мелкий шрифт</span> бла-бла-бла</h1>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h1 class="{css.CSS_WIKI}">Кхм <span style="font-size:80%">мелкий шрифт</span> бла-бла-бла</h1>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -371,7 +371,7 @@ class ParserFontTest (unittest.TestCase):
 
     def testBigLink(self):
         text = "бла-бла-бла \nкхм [+[[крупный шрифт -> http://jenyay.net]]+] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \nкхм <span style="font-size:120%"><a href="http://jenyay.net">крупный шрифт</a></span> бла-бла-бла\nбла-бла-бла'
+        result = f'бла-бла-бла \nкхм <span style="font-size:120%"><a class="{css.CSS_WIKI}" href="http://jenyay.net">крупный шрифт</a></span> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -381,7 +381,7 @@ class ParserFontTest (unittest.TestCase):
 
     def testBigHeading(self):
         text = "бла-бла-бла \n!! Кхм [+крупный шрифт+] бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h1 class="{css.CSS_HEADING}">Кхм <span style="font-size:120%">крупный шрифт</span> бла-бла-бла</h1>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h1 class="{css.CSS_WIKI}">Кхм <span style="font-size:120%">крупный шрифт</span> бла-бла-бла</h1>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),

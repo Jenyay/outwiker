@@ -35,8 +35,8 @@ class ListToken:
 
     def __init__(self, parser):
         self.allListsParams = [
-            ListParams(ListToken.unorderList, f'<ul class="{css.CSS_LIST}">', '</ul>'),
-            ListParams(ListToken.orderList, f'<ol class="{css.CSS_LIST}">', '</ol>'),
+            ListParams(ListToken.unorderList, f'<ul class="{css.CSS_WIKI}">', '</ul>'),
+            ListParams(ListToken.orderList, f'<ol class="{css.CSS_WIKI}">', '</ol>'),
         ]
 
         self.parser = parser
@@ -172,7 +172,7 @@ class ListToken:
         text = (item[level:]).strip()
         itemText = self.parser.parseListItemMarkup(text)
 
-        return '<li class="{css_class}">{text}</li>'.format(text=itemText, css_class=css.CSS_LIST_ITEM)
+        return '<li class="{css_class}">{text}</li>'.format(text=itemText, css_class=css.CSS_WIKI)
 
     def __getStartListTag(self, symbol, params):
         """

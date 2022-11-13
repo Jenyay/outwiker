@@ -15,12 +15,12 @@ def create_link(href: str, text: str, css_classes: Optional[List[str]] = None) -
 
 
 def create_link_to_page(href: str, text: str) -> str:
-    css_classes = [css.CSS_LINK, css.CSS_LINK_PAGE]
+    css_classes = [css.CSS_WIKI, css.CSS_LINK_PAGE]
     return create_link(href, text, css_classes)
 
 
 def create_link_to_attached_file(href: str, text: str) -> str:
-    css_classes = [css.CSS_LINK_ATTACH, css.CSS_ATTACH_FILE]
+    css_classes = [css.CSS_WIKI, css.CSS_LINK_ATTACH, css.CSS_ATTACH_FILE]
     return create_link(href, text, css_classes)
 
 

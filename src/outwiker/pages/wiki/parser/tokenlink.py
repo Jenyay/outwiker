@@ -12,6 +12,7 @@ from .htmlelements import (create_anchor,
                            create_link,
                            create_link_to_page,
                            create_link_to_attached_file)
+import outwiker.core.cssclasses as css
 
 
 class LinkFactory(object):
@@ -113,7 +114,7 @@ class LinkToken(object):
         if url.startswith('page://'):
             return create_link_to_page(url, comment)
 
-        return create_link(url, comment)
+        return create_link(url, comment, [css.CSS_WIKI])
 
     def _convertEmptyLink(self, text):
         """

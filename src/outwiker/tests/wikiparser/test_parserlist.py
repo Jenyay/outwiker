@@ -35,7 +35,7 @@ class ParserListTest (unittest.TestCase):
 
     def testUnorderList1(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n* Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -45,7 +45,7 @@ class ParserListTest (unittest.TestCase):
 
     def testUnorderList2(self):
         text = "бла-бла-бла \n\n*'''Строка 1'''\n* ''Строка 2''\n* Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}"><b>Строка 1</b></li><li class="{css.CSS_LIST_ITEM}"><i>Строка 2</i></li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><b>Строка 1</b></li><li class="{css.CSS_WIKI}"><i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -59,7 +59,7 @@ class ParserListTest (unittest.TestCase):
 
         result = f'''бла-бла-бла
 
-<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'''
+<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -71,7 +71,7 @@ class ParserListTest (unittest.TestCase):
 бла-бла-бла'''
 
         result = f'''бла-бла-бла
-<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'''
+<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -92,13 +92,13 @@ class ParserListTest (unittest.TestCase):
 
         result = f'''бла-бла-бла
 
-<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1
+<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1
 
 
-тест</li><li class="{css.CSS_LIST_ITEM}">блабла
+тест</li><li class="{css.CSS_WIKI}">блабла
 
 
-<i>Строка 2</i></li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'''
+<i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -113,9 +113,9 @@ class ParserListTest (unittest.TestCase):
 бла-бла-бла'''
 
         result = f'''бла-бла-бла
-<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}"><i>Строка 1</i></li><li class="{css.CSS_LIST_ITEM}"><a href="https://jenyay.net">https://jenyay.net</a>
+<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><i>Строка 1</i></li><li class="{css.CSS_WIKI}"><a class="{css.CSS_WIKI}" href="https://jenyay.net">https://jenyay.net</a>
 
-<strike>Строка 2</strike></li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'''
+<strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -127,7 +127,7 @@ class ParserListTest (unittest.TestCase):
 бла-бла-бла'''
 
         result = f'''бла-бла-бла
-<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol>бла-бла-бла'''
+<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'''
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -148,13 +148,13 @@ class ParserListTest (unittest.TestCase):
 
         result = f'''бла-бла-бла
 
-<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1
+<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1
 
 
-тест</li><li class="{css.CSS_LIST_ITEM}">блабла
+тест</li><li class="{css.CSS_WIKI}">блабла
 
 
-<i>Строка 2</i></li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol>бла-бла-бла'''
+<i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'''
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -169,9 +169,9 @@ class ParserListTest (unittest.TestCase):
 бла-бла-бла'''
 
         result = f'''бла-бла-бла
-<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}"><i>Строка 1</i></li><li class="{css.CSS_LIST_ITEM}"><a href="https://jenyay.net">https://jenyay.net</a>
+<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><i>Строка 1</i></li><li class="{css.CSS_WIKI}"><a class="{css.CSS_WIKI}" href="https://jenyay.net">https://jenyay.net</a>
 
-<strike>Строка 2</strike></li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol>бла-бла-бла'''
+<strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'''
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -182,7 +182,7 @@ class ParserListTest (unittest.TestCase):
 * Строка 3
 бла-бла-бла'''
         result = f'''бла-бла-бла
-<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}"><strike>Строка 1</strike></li><li class="{css.CSS_LIST_ITEM}"><strike>Строка 2</strike></li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'''
+<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><strike>Строка 1</strike></li><li class="{css.CSS_WIKI}"><strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -192,7 +192,7 @@ class ParserListTest (unittest.TestCase):
 
     def testOrderList1(self):
         text = "бла-бла-бла \n\n#Строка 1\n# Строка 2\n# Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -202,7 +202,7 @@ class ParserListTest (unittest.TestCase):
 
     def testOrderList2(self):
         text = "бла-бла-бла \n\n#'''Строка 1'''\n# ''Строка 2''\n# Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}"><b>Строка 1</b></li><li class="{css.CSS_LIST_ITEM}"><i>Строка 2</i></li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><b>Строка 1</b></li><li class="{css.CSS_WIKI}"><i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -212,7 +212,7 @@ class ParserListTest (unittest.TestCase):
 
     def testOrderListStrike(self):
         text = "бла-бла-бла \n\n#{-Строка 1-}\n# {-Строка 2-}\n# Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}"><strike>Строка 1</strike></li><li class="{css.CSS_LIST_ITEM}"><strike>Строка 2</strike></li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><strike>Строка 1</strike></li><li class="{css.CSS_WIKI}"><strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -222,7 +222,7 @@ class ParserListTest (unittest.TestCase):
 
     def testEnclosureUnorderList1(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n** Вложенная строка 1\n**Вложенная строка 2\n* Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Вложенная строка 1</li><li class="{css.CSS_LIST_ITEM}">Вложенная строка 2</li></ul><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Вложенная строка 1</li><li class="{css.CSS_WIKI}">Вложенная строка 2</li></ul><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -232,7 +232,7 @@ class ParserListTest (unittest.TestCase):
 
     def testEnclosureOrderList1(self):
         text = "бла-бла-бла \n\n#Строка 1\n# Строка 2\n## Вложенная строка 1\n##Вложенная строка 2\n# Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Вложенная строка 1</li><li class="{css.CSS_LIST_ITEM}">Вложенная строка 2</li></ol><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Вложенная строка 1</li><li class="{css.CSS_WIKI}">Вложенная строка 2</li></ol><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -253,7 +253,7 @@ class ParserListTest (unittest.TestCase):
 ## Вложенный сортированный список. Элемент 5
 ** Вложенный несортированный список. Элемент 1"""
 
-        result = f'<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Несортированный список. Элемент 1</li><li class="{css.CSS_LIST_ITEM}">Несортированный список. Элемент 2</li><li class="{css.CSS_LIST_ITEM}">Несортированный список. Элемент 3</li><ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 1</li><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 2</li><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 3</li><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 4</li><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Совсем вложенный сортированный список. Элемент 1</li><li class="{css.CSS_LIST_ITEM}">Совсем вложенный сортированный список. Элемент 2</li></ul><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 5</li></ol><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Вложенный несортированный список. Элемент 1</li></ul></ul>'
+        result = f'<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Несортированный список. Элемент 1</li><li class="{css.CSS_WIKI}">Несортированный список. Элемент 2</li><li class="{css.CSS_WIKI}">Несортированный список. Элемент 3</li><ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 1</li><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 2</li><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 3</li><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 4</li><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Совсем вложенный сортированный список. Элемент 1</li><li class="{css.CSS_WIKI}">Совсем вложенный сортированный список. Элемент 2</li></ul><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 5</li></ol><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Вложенный несортированный список. Элемент 1</li></ul></ul>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -270,7 +270,7 @@ class ParserListTest (unittest.TestCase):
 # Строка 6
 # Строка 7"""
 
-        result = f'<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul></ul><ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 4</li><li class="{css.CSS_LIST_ITEM}">Строка 5</li><li class="{css.CSS_LIST_ITEM}">Строка 6</li><li class="{css.CSS_LIST_ITEM}">Строка 7</li></ol>'
+        result = f'<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 3</li></ul></ul><ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 4</li><li class="{css.CSS_WIKI}">Строка 5</li><li class="{css.CSS_WIKI}">Строка 6</li><li class="{css.CSS_WIKI}">Строка 7</li></ol>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -290,7 +290,7 @@ class ParserListTest (unittest.TestCase):
 бла-бла-бла"""
         result = f"""бла-бла-бла
 
-<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li></ul>\n<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла"""
+<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li></ul>\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла"""
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -309,7 +309,7 @@ class ParserListTest (unittest.TestCase):
 бла-бла-бла"""
         result = f"""бла-бла-бла
 
-<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li></ol>\n<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol>бла-бла-бла"""
+<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li></ol>\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла"""
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -318,7 +318,7 @@ class ParserListTest (unittest.TestCase):
 
     def testManyUnorderList2(self):
         text = "бла-бла-бла \n\n*Строка 1\n\n* Строка 2\n\n\n** Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li></ul>\n<ul class="{css.CSS_LIST}"><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul></ul>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li></ul>\n<ul class="{css.CSS_WIKI}"><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 3</li></ul></ul>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -328,7 +328,7 @@ class ParserListTest (unittest.TestCase):
 
     def testManyOrderList2(self):
         text = "бла-бла-бла \n\n#Строка 1\n\n# Строка 2\n\n\n## Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li></ol>\n<ol class="{css.CSS_LIST}"><ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol></ol>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li></ol>\n<ol class="{css.CSS_WIKI}"><ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 3</li></ol></ol>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -338,7 +338,7 @@ class ParserListTest (unittest.TestCase):
 
     def testManyList1(self):
         text = "бла-бла-бла \n\n#Строка 1\n\n# Строка 2\n\n\n** Строка 3\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li></ol>\n<ul class="{css.CSS_LIST}"><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul></ul>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li></ol>\n<ul class="{css.CSS_WIKI}"><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 3</li></ul></ul>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -346,7 +346,7 @@ class ParserListTest (unittest.TestCase):
 
     def testSpaces1(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n* Строка 3\n\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'
+        result = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -356,7 +356,7 @@ class ParserListTest (unittest.TestCase):
 
     def testSpaces2(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n* Строка 3\n\n\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>\nбла-бла-бла'
+        result = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -366,7 +366,7 @@ class ParserListTest (unittest.TestCase):
 
     def testSpaces3(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n* Строка 3\n\n\n\nбла-бла-бла"
-        result = f'бла-бла-бла \n\n<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>\n\nбла-бла-бла'
+        result = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>\n\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -382,7 +382,7 @@ class ParserListTest (unittest.TestCase):
 * Строка 2
 * Строка 3
 бла-бла-бла"""
-        result = f'бла-бла-бла\n\n<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1 вторая строка</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ul>бла-бла-бла'
+        result = f'бла-бла-бла\n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1 вторая строка</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -394,7 +394,7 @@ class ParserListTest (unittest.TestCase):
 # Строка 2
 # Строка 3
 бла-бла-бла"""
-        result = f'бла-бла-бла\n\n<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Строка 1 вторая строка</li><li class="{css.CSS_LIST_ITEM}">Строка 2</li><li class="{css.CSS_LIST_ITEM}">Строка 3</li></ol>бла-бла-бла'
+        result = f'бла-бла-бла\n\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1 вторая строка</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -420,7 +420,7 @@ class ParserListTest (unittest.TestCase):
 ## Вложенный сортированный список. Элемент 5
 ** Вложенный несортированный список. Элемент 1"""
 
-        result = f'<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Несортированный список. Элемент 1</li><li class="{css.CSS_LIST_ITEM}">Несортированный список. Элемент 2</li><li class="{css.CSS_LIST_ITEM}">Несортированный список. Элемент 3</li><ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 1</li><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 2</li><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 3</li><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 4</li><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Совсем вложенный сортированный список. Элемент 1</li><li class="{css.CSS_LIST_ITEM}">Совсем вложенный сортированный список. Элемент 2</li></ul><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 5</li></ol><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Вложенный несортированный список. Элемент 1</li></ul></ul>'
+        result = f'<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Несортированный список. Элемент 1</li><li class="{css.CSS_WIKI}">Несортированный список. Элемент 2</li><li class="{css.CSS_WIKI}">Несортированный список. Элемент 3</li><ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 1</li><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 2</li><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 3</li><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 4</li><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Совсем вложенный сортированный список. Элемент 1</li><li class="{css.CSS_WIKI}">Совсем вложенный сортированный список. Элемент 2</li></ul><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 5</li></ol><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Вложенный несортированный список. Элемент 1</li></ul></ul>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -451,7 +451,7 @@ class ParserListTest (unittest.TestCase):
 ## Вложенный сортированный список. Элемент 5
 ** Вложенный несортированный список. Элемент 1"""
 
-        result = f'<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Несортированный список. Элемент 1</li><li class="{css.CSS_LIST_ITEM}">Несортированный список. Элемент 2</li><li class="{css.CSS_LIST_ITEM}">Несортированный список. Элемент 3</li><ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 1</li><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 2</li><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 3</li><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 4</li><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Совсем вложенный сортированный список. Элемент 1</li><li class="{css.CSS_LIST_ITEM}">Совсем вложенный сортированный список. Элемент 2</li></ul><li class="{css.CSS_LIST_ITEM}">Вложенный сортированный список. Элемент 5</li></ol><ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Вложенный несортированный список. Элемент 1</li></ul></ul>'
+        result = f'<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Несортированный список. Элемент 1</li><li class="{css.CSS_WIKI}">Несортированный список. Элемент 2</li><li class="{css.CSS_WIKI}">Несортированный список. Элемент 3</li><ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 1</li><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 2</li><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 3</li><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 4</li><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Совсем вложенный сортированный список. Элемент 1</li><li class="{css.CSS_WIKI}">Совсем вложенный сортированный список. Элемент 2</li></ul><li class="{css.CSS_WIKI}">Вложенный сортированный список. Элемент 5</li></ol><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Вложенный несортированный список. Элемент 1</li></ul></ul>'
 
         self.assertEqual(
             self.parser.toHtml(text),

@@ -41,7 +41,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeader1(self):
         text = "бла-бла-бла \n!! Заголовок бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h1 class="{css.CSS_HEADING}">Заголовок бла-бла-бла</h1>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h1 class="{css.CSS_WIKI}">Заголовок бла-бла-бла</h1>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -51,7 +51,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeader2(self):
         text = "бла-бла-бла \n!!! Заголовок бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок бла-бла-бла</h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок бла-бла-бла</h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -61,7 +61,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeader3(self):
         text = "бла-бла-бла \n!!!! Заголовок бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h3 class="{css.CSS_HEADING}">Заголовок бла-бла-бла</h3>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h3 class="{css.CSS_WIKI}">Заголовок бла-бла-бла</h3>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -71,7 +71,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeader4(self):
         text = "бла-бла-бла \n!!!!! Заголовок бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h4 class="{css.CSS_HEADING}">Заголовок бла-бла-бла</h4>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h4 class="{css.CSS_WIKI}">Заголовок бла-бла-бла</h4>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -81,7 +81,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeader5(self):
         text = "бла-бла-бла \n!!!!!! Заголовок бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h5 class="{css.CSS_HEADING}">Заголовок бла-бла-бла</h5>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h5 class="{css.CSS_WIKI}">Заголовок бла-бла-бла</h5>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -91,7 +91,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeader6(self):
         text = "бла-бла-бла \n!!!!!!! Заголовок бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h6 class="{css.CSS_HEADING}">Заголовок бла-бла-бла</h6>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h6 class="{css.CSS_WIKI}">Заголовок бла-бла-бла</h6>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -161,7 +161,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderItalic1(self):
         text = "бла-бла-бла \n!! Заголовок ''бла-бла-бла''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h1 class="{css.CSS_HEADING}">Заголовок <i>бла-бла-бла</i></h1>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h1 class="{css.CSS_WIKI}">Заголовок <i>бла-бла-бла</i></h1>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -171,7 +171,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderItalic2(self):
         text = "бла-бла-бла \n!!! Заголовок ''бла-бла-бла''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <i>бла-бла-бла</i></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <i>бла-бла-бла</i></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -181,7 +181,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderBold1(self):
         text = "бла-бла-бла \n!! Заголовок '''бла-бла-бла'''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h1 class="{css.CSS_HEADING}">Заголовок <b>бла-бла-бла</b></h1>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h1 class="{css.CSS_WIKI}">Заголовок <b>бла-бла-бла</b></h1>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -191,7 +191,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderBold2(self):
         text = "бла-бла-бла \n!!! Заголовок '''бла-бла-бла'''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <b>бла-бла-бла</b></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <b>бла-бла-бла</b></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -201,7 +201,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderBoldSubscript(self):
         text = "бла-бла-бла \n!!! Заголовок ''''_бла-бла-бла_''''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <b><sub>бла-бла-бла</sub></b></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <b><sub>бла-бла-бла</sub></b></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -211,7 +211,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderBoldSuperscript(self):
         text = "бла-бла-бла \n!!! Заголовок ''''^бла-бла-бла^''''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <b><sup>бла-бла-бла</sup></b></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <b><sup>бла-бла-бла</sup></b></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -221,7 +221,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderItalicSubscript(self):
         text = "бла-бла-бла \n!!! Заголовок '''_бла-бла-бла_'''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <i><sub>бла-бла-бла</sub></i></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <i><sub>бла-бла-бла</sub></i></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -231,7 +231,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderItalicSuperscript(self):
         text = "бла-бла-бла \n!!! Заголовок '''^бла-бла-бла^'''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <i><sup>бла-бла-бла</sup></i></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <i><sup>бла-бла-бла</sup></i></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -241,7 +241,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderBoldItalicSubscript(self):
         text = "бла-бла-бла \n!!! Заголовок '''''_бла-бла-бла_'''''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <b><i><sub>бла-бла-бла</sub></i></b></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <b><i><sub>бла-бла-бла</sub></i></b></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -251,7 +251,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderBoldItalicSuperscript(self):
         text = "бла-бла-бла \n!!! Заголовок '''''^бла-бла-бла^'''''\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <b><i><sup>бла-бла-бла</sup></i></b></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <b><i><sup>бла-бла-бла</sup></i></b></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -261,7 +261,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderSubscript(self):
         text = "бла-бла-бла \n!!! Заголовок '_бла-бла-бла_'\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <sub>бла-бла-бла</sub></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <sub>бла-бла-бла</sub></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -271,7 +271,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderSuperscript(self):
         text = "бла-бла-бла \n!!! Заголовок '^бла-бла-бла^'\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <sup>бла-бла-бла</sup></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <sup>бла-бла-бла</sup></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -281,7 +281,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderUnderline(self):
         text = "бла-бла-бла \n!!! Заголовок {+бла-бла-бла+}\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <u>бла-бла-бла</u></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <u>бла-бла-бла</u></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -291,7 +291,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderStrike(self):
         text = "бла-бла-бла \n!!! Заголовок {-бла-бла-бла-}\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <strike>бла-бла-бла</strike></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <strike>бла-бла-бла</strike></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -301,7 +301,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderNoFormat(self):
         text = "бла-бла-бла \n!!! Заголовок [={+бла-бла-бла+}=]\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок {{+бла-бла-бла+}}</h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок {{+бла-бла-бла+}}</h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -311,7 +311,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderLink1(self):
         text = "бла-бла-бла \n!!! Заголовок [[бла-бла-бла -> http://jenyay.net]]\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <a href="http://jenyay.net">бла-бла-бла</a></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <a class="{css.CSS_WIKI}" href="http://jenyay.net">бла-бла-бла</a></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -321,7 +321,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderLink2(self):
         text = "бла-бла-бла \n!!! Заголовок [[http://jenyay.net | бла-бла-бла]]\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок <a href="http://jenyay.net">бла-бла-бла</a></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок <a class="{css.CSS_WIKI}" href="http://jenyay.net">бла-бла-бла</a></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -331,7 +331,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderLink3(self):
         text = "бла-бла-бла \n!!! [[Заголовок бла-бла-бла -> http://jenyay.net]]\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}"><a href="http://jenyay.net">Заголовок бла-бла-бла</a></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}"><a class="{css.CSS_WIKI}" href="http://jenyay.net">Заголовок бла-бла-бла</a></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -341,7 +341,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderLink4(self):
         text = "бла-бла-бла \n!!! [[http://jenyay.net | Заголовок бла-бла-бла]]\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}"><a href="http://jenyay.net">Заголовок бла-бла-бла</a></h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}"><a class="{css.CSS_WIKI}" href="http://jenyay.net">Заголовок бла-бла-бла</a></h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -351,7 +351,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderAnchor(self):
         text = "бла-бла-бла \n!!! [[#anchor]] Заголовок бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}"><a id="anchor"></a> Заголовок бла-бла-бла</h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}"><a id="anchor"></a> Заголовок бла-бла-бла</h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -361,7 +361,7 @@ class ParserHeadingTest (unittest.TestCase):
 
     def testHeaderLinebreak(self):
         text = "бла-бла-бла \n!!! Заголовок[[<<]] бла-бла-бла\nбла-бла-бла"
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок<br/> бла-бла-бла</h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок<br/> бла-бла-бла</h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -372,7 +372,7 @@ class ParserHeadingTest (unittest.TestCase):
     def testLineJoin1(self):
         text = """бла-бла-бла \n!!! Заголовок \\
 бла-бла-бла бла-бла-бла"""
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок бла-бла-бла бла-бла-бла</h2>'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок бла-бла-бла бла-бла-бла</h2>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -384,7 +384,7 @@ class ParserHeadingTest (unittest.TestCase):
         text = """бла-бла-бла \n!!! Заголовок \\
 бла-бла-бла
 бла-бла-бла"""
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок бла-бла-бла</h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок бла-бла-бла</h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -398,7 +398,7 @@ class ParserHeadingTest (unittest.TestCase):
 \\
 бла-бла-бла
 бла-бла-бла"""
-        result = f'бла-бла-бла \n<h2 class="{css.CSS_HEADING}">Заголовок бла-бла-бла</h2>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h2 class="{css.CSS_WIKI}">Заголовок бла-бла-бла</h2>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),

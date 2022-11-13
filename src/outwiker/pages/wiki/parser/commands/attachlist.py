@@ -16,8 +16,8 @@ class SimpleView:
     CSS styles taken from https://codemyui.com/directory-list-with-collapsible-nested-folders-and-files/
     """
     def __init__(self):
-        self._list_template = '<ul class="ow-attach-list">{title}<ul class="ow-attach-list">{content}</ul></ul>'
-        self._item_template = '<li class="{css_class}"><a class="ow-link-attach {css_class}" href="{link}">{title}</a></li>'    
+        self._list_template = '<ul class="ow-wiki ow-attach-list">{title}<ul class="ow-wiki ow-attach-list">{content}</ul></ul>'
+        self._item_template = '<li class="ow-wiki {css_class}"><a class="ow-wiki ow-link-attach {css_class}" href="{link}">{title}</a></li>'    
 
     def make(self, dirnames, fnames,  subdir):
         """

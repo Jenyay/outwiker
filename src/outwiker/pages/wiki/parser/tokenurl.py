@@ -36,7 +36,6 @@ class UrlToken (object):
 
     def __getUrlTag(self, url, comment):
         if url.startswith('page://'):
-            css_class = '{} {}'.format(css.CSS_LINK, css.CSS_LINK_PAGE)
-            return '<a class="{css_class}" href="{url}">{comment}</a>'.format(url=url, comment=comment, css_class=css_class)
+            return f'<a class="{css.CSS_WIKI} {css.CSS_LINK_PAGE}" href="{url}">{comment}</a>'
 
-        return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
+        return f'<a class="{css.CSS_WIKI}" href="{url}">{comment}</a>'

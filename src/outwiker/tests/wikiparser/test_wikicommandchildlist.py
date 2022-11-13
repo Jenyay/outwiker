@@ -58,9 +58,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = command.execute("", "")
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
             ])
 
     def test2(self):
@@ -68,9 +68,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
             ])
 
     def test3(self):
@@ -79,9 +79,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
             ])
 
     def test4(self):
@@ -90,9 +90,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
             ])
 
     def test5(self):
@@ -101,9 +101,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
             ])
 
     def test6(self):
@@ -112,9 +112,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
             ])
 
     def testSortCreation_01(self):
@@ -122,9 +122,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
             ])
 
     def testSortCreation_02(self):
@@ -132,9 +132,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
             ])
 
     def testSortEdit_01(self):
@@ -149,9 +149,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
             ])
 
     def testSortEdit_02(self):
@@ -166,9 +166,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
             ])
 
     def testSortEdit_03(self):
@@ -183,9 +183,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
             ])
 
     def testAlias_01(self):
@@ -200,9 +200,9 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 4">Абырвалг</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Абырвалг</a>',
             ])
 
     def testAlias_sort(self):
@@ -219,7 +219,7 @@ class WikiChildListCommandTest (unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self._check_items_order(result, [
-            '<a class="ow-link ow-link-page" href="page://Страница 4">AAAA</a>',
-            '<a class="ow-link ow-link-page" href="page://Страница 2">BBBB</a>',
-            '<a class="ow-link ow-link-page" href="page://СТРАНИЦА 3">CCCC</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 4">AAAA</a>',
+            '<a class="ow-wiki ow-link-page" href="page://Страница 2">BBBB</a>',
+            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">CCCC</a>',
             ])

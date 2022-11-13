@@ -27,4 +27,4 @@ class HeadingToken:
     def convertToHeading(self, s, l, t):
         level = len(t["header"]) - 1
         content = self.parser.parseHeadingMarkup(t["title"])
-        return '<h{level} class="{css_class}">{content}</h{level}>'.format(level=level, content=content, css_class=css.CSS_HEADING)
+        return '<h{level} class="{css_class}">{content}</h{level}>'.format(level=level, content=content, css_class=css.CSS_WIKI)
