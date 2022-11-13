@@ -109,6 +109,6 @@ class ParserFormatTest(unittest.TestCase):
 
     def test_comments_06(self):
         text = '!! Текст<!-- Комментарий -->'
-        result = '<h1>Текст</h1>'
+        result = f'<h1 class="{css.CSS_HEADING}">Текст</h1>'
 
         self.assertEqual(self.parser.toHtml(text), result)

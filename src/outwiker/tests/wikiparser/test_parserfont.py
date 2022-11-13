@@ -8,6 +8,7 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
+import outwiker.core.cssclasses as css
 
 
 class ParserFontTest (unittest.TestCase):
@@ -280,7 +281,7 @@ class ParserFontTest (unittest.TestCase):
 
     def testSmallHeading(self):
         text = "бла-бла-бла \n!! Кхм [-мелкий шрифт-] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n<h1>Кхм <span style="font-size:80%">мелкий шрифт</span> бла-бла-бла</h1>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h1 class="{css.CSS_HEADING}">Кхм <span style="font-size:80%">мелкий шрифт</span> бла-бла-бла</h1>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -380,7 +381,7 @@ class ParserFontTest (unittest.TestCase):
 
     def testBigHeading(self):
         text = "бла-бла-бла \n!! Кхм [+крупный шрифт+] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n<h1>Кхм <span style="font-size:120%">крупный шрифт</span> бла-бла-бла</h1>\nбла-бла-бла'
+        result = f'бла-бла-бла \n<h1 class="{css.CSS_HEADING}">Кхм <span style="font-size:120%">крупный шрифт</span> бла-бла-бла</h1>\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
