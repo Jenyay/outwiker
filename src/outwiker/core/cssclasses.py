@@ -14,6 +14,8 @@ CSS_CHILD_LIST = 'ow-child-list'
 CSS_CHILD_LIST_TITLE = 'ow-child-list-title'
 CSS_IMAGE = 'ow-image'
 CSS_QUOTE = 'ow-quote'
+CSS_LIST = 'ow-list'
+CSS_LIST_ITEM = 'ow-list-item'
 
 
 def getDefaultStyles() -> str:

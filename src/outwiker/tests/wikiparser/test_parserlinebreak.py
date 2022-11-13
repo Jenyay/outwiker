@@ -8,6 +8,7 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
+import outwiker.core.cssclasses as css
 
 
 class ParserLineBreakTest (unittest.TestCase):
@@ -65,7 +66,7 @@ class ParserLineBreakTest (unittest.TestCase):
 # Третий элемент списка [[<<]][[<<]] Вторая строка третьего элемента списка после двух отступов.
 # Четвертый элемент списка."""
 
-        result_right = r"""<ol><li>Первый элемент списка.</li><li>Второй элемент списка <br/>Вторая строка второго элемента списка.</li><li>Третий элемент списка <br/><br/> Вторая строка третьего элемента списка после двух отступов.</li><li>Четвертый элемент списка.</li></ol>"""
+        result_right = f"""<ol class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Первый элемент списка.</li><li class="{css.CSS_LIST_ITEM}">Второй элемент списка <br/>Вторая строка второго элемента списка.</li><li class="{css.CSS_LIST_ITEM}">Третий элемент списка <br/><br/> Вторая строка третьего элемента списка после двух отступов.</li><li class="{css.CSS_LIST_ITEM}">Четвертый элемент списка.</li></ol>"""
         result = self.parser.toHtml(text)
 
         self.assertEqual(result, result_right, result)

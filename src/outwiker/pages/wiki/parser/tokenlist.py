@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 
+import re
+
 from pyparsing import Regex, OneOrMore, Combine
 
 from outwiker.pages.wiki.parser.utils import noConvert
 from outwiker.pages.wiki.parser.tokenmultilineblock import MultilineBlockFactory
-import re
+import outwiker.core.cssclasses as css
 
 
-class ListFactory(object):
+class ListFactory:
     @staticmethod
     def make(parser):
         return ListToken(parser).getToken()
 
 
-class ListParams(object):
+class ListParams:
     """
     Параметры списков в парсере
     """
@@ -24,7 +26,7 @@ class ListParams(object):
         self.endTag = endTag
 
 
-class ListToken(object):
+class ListToken:
     """
     Класс для разбора списков
     """
@@ -33,8 +35,8 @@ class ListToken(object):
 
     def __init__(self, parser):
         self.allListsParams = [
-            ListParams(ListToken.unorderList, u"<ul>", u"</ul>"),
-            ListParams(ListToken.orderList, u"<ol>", u"</ol>"),
+            ListParams(ListToken.unorderList, f'<ul class="{css.CSS_LIST}">', '</ul>'),
+            ListParams(ListToken.orderList, f'<ol class="{css.CSS_LIST}">', '</ol>'),
         ]
 
         self.parser = parser
@@ -50,7 +52,7 @@ class ListToken(object):
         currItem - список вложенных списков
             (их первых символов для определения типа)
         """
-        result = u""
+        result = ''
         for _ in range(depth):
             result += self.__getStartListTag(item[0], self.allListsParams)
             currItem.append(item[0])
@@ -62,7 +64,7 @@ class ListToken(object):
         Закрыть один или несколько уровней списков(перейти выше)
         depth - разность между текущим уровнем и новым урвонем
         """
-        result = u""
+        result = ''
         for _ in range(depth):
             result += self.__getEndListTag(currItem[-1], self.allListsParams)
             del currItem[-1]
@@ -70,7 +72,7 @@ class ListToken(object):
         return result
 
     def __closeListStartList(self, level, item, currItem):
-        result = u""
+        result = ''
 
         result += self.__closeLists(1, currItem)
         result += self.__getStartListTag(item[0], self.allListsParams)
@@ -84,7 +86,7 @@ class ListToken(object):
         currLevel = 0
         currItem = []
 
-        result = u""
+        result = ''
 
         for item in items:
             if len(item.strip()) == 0:
@@ -170,7 +172,7 @@ class ListToken(object):
         text = (item[level:]).strip()
         itemText = self.parser.parseListItemMarkup(text)
 
-        return u"<li>%s</li>" % (itemText)
+        return '<li class="{css_class}">{text}</li>'.format(text=itemText, css_class=css.CSS_LIST_ITEM)
 
     def __getStartListTag(self, symbol, params):
         """

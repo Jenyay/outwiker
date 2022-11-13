@@ -8,6 +8,7 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
+import outwiker.core.cssclasses as css
 
 
 class ParserFormatTest(unittest.TestCase):
@@ -102,7 +103,7 @@ class ParserFormatTest(unittest.TestCase):
 
     def test_comments_05(self):
         text = '* Текст<!-- Комментарий -->'
-        result = '<ul><li>Текст</li></ul>'
+        result = f'<ul class="{css.CSS_LIST}"><li class="{css.CSS_LIST_ITEM}">Текст</li></ul>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
