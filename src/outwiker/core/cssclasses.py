@@ -19,6 +19,15 @@ def getDefaultStyles() -> str:
     return '''
 		img{border:none}
 
+        /* Error message */
+        div.ow-error {
+          color: #cc0033;
+          background-color: #FFBABA;
+          border: 1px solid;
+		  margin: 1em 0px;
+		  padding: 1em;
+        }
+
         /* Child list */
         span.ow-child-list-title:before {
 		  margin-right: 0px;
