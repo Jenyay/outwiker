@@ -5,23 +5,21 @@ import html
 from pyparsing import QuotedString
 
 from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.core.htmlformatter import HtmlFormatter
 from outwiker.utilites.urls import is_url
 
 from .tokenattach import AttachToken
-from .htmlelements import (create_anchor,
-                           create_link,
-                           create_link_to_page,
-                           create_link_to_attached_file)
+from .htmlelements import create_link_to_page, create_link_to_attached_file
 import outwiker.core.cssclasses as css
 
 
-class LinkFactory(object):
+class LinkFactory:
     @staticmethod
     def make(parser):
         return LinkToken(parser).getToken()
 
 
-class LinkToken(object):
+class LinkToken:
     linkStart = "[["
     linkEnd = "]]"
     attachString = "Attach:"
@@ -114,7 +112,7 @@ class LinkToken(object):
         if url.startswith('page://'):
             return create_link_to_page(url, comment)
 
-        return create_link(url, comment, [css.CSS_WIKI])
+        return HtmlFormatter().link(url, comment, [css.CSS_WIKI])
 
     def _convertEmptyLink(self, text):
         """
@@ -135,7 +133,7 @@ class LinkToken(object):
                 self.parser.page[textStrip] is None):
             # Ссылка начинается на #, но вложенных страниц с таким именем нет,
             # значит это якорь
-            return create_anchor(textStrip[1:])
+            return HtmlFormatter().anchor(textStrip[1:])
 
         # Ссылка не на прикрепление
         url = text.strip()
