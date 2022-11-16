@@ -8,6 +8,7 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
+import outwiker.core.cssclasses as css
 
 
 class ParserTableTest (unittest.TestCase):
@@ -57,7 +58,7 @@ class ParserTableTest (unittest.TestCase):
 ||[@[[http://example.com | Пример ссылки]]@]||[[http://example.com | Пример ссылки]]||Ссылка на адрес в интернете с заданным текстом||
 """
 
-        result = '''<table border=1><tr><td align="center"><b>Синтаксис</b></td><td align="center"><b>Результат</b></td><td align="center"><b>Комментарий</b></td></tr><tr><td><pre>http://example.com</pre></td><td><a href="http://example.com">http://example.com</a></td><td>Ссылка на адрес в интернете</td></tr><tr><td><pre>[[http://example.com]]</pre></td><td><a href="http://example.com">http://example.com</a></td><td>Ссылка на адрес в интернете</td></tr><tr><td><pre>[[Пример ссылки -&gt; http://example.com]]</pre></td><td><a href="http://example.com">Пример ссылки</a></td><td>Ссылка на адрес в интернете с заданным текстом</td></tr><tr><td><pre>[[http://example.com | Пример ссылки]]</pre></td><td><a href="http://example.com">Пример ссылки</a></td><td>Ссылка на адрес в интернете с заданным текстом</td></tr></table>'''
+        result = f'''<table border=1><tr><td align="center"><b>Синтаксис</b></td><td align="center"><b>Результат</b></td><td align="center"><b>Комментарий</b></td></tr><tr><td><pre>http://example.com</pre></td><td><a class="{css.CSS_WIKI}" href="http://example.com">http://example.com</a></td><td>Ссылка на адрес в интернете</td></tr><tr><td><pre>[[http://example.com]]</pre></td><td><a class="{css.CSS_WIKI}" href="http://example.com">http://example.com</a></td><td>Ссылка на адрес в интернете</td></tr><tr><td><pre>[[Пример ссылки -&gt; http://example.com]]</pre></td><td><a class="{css.CSS_WIKI}" href="http://example.com">Пример ссылки</a></td><td>Ссылка на адрес в интернете с заданным текстом</td></tr><tr><td><pre>[[http://example.com | Пример ссылки]]</pre></td><td><a class="{css.CSS_WIKI}" href="http://example.com">Пример ссылки</a></td><td>Ссылка на адрес в интернете с заданным текстом</td></tr></table>'''
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -215,8 +216,8 @@ sdfsdf || centered || right aligned||
 ||Ячейка 4||[>Ячейка 5<]||Ячейка 6||
 """
 
-        result = '''бла-бла-бла
-<table border=1><tr><td align="center">Ячейка 1</td><td align="left">Ячейка 2</td><td align="right">Ячейка 3</td></tr><tr><td>Ячейка 4</td><td><blockquote class="ow-quote">Ячейка 5</blockquote></td><td>Ячейка 6</td></tr></table>'''
+        result = f'''бла-бла-бла
+<table border=1><tr><td align="center">Ячейка 1</td><td align="left">Ячейка 2</td><td align="right">Ячейка 3</td></tr><tr><td>Ячейка 4</td><td><blockquote class="{css.CSS_WIKI}">Ячейка 5</blockquote></td><td>Ячейка 6</td></tr></table>'''
 
         self.assertEqual(self.parser.toHtml(text), result,
                          self.parser.toHtml(text).encode(self.encoding))

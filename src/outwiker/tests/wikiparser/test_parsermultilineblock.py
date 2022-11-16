@@ -8,6 +8,7 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
+import outwiker.core.cssclasses as css
 
 
 class ParserMultilineBlockTest(unittest.TestCase):
@@ -53,14 +54,14 @@ class ParserMultilineBlockTest(unittest.TestCase):
 
     def testMultilineBlockFormat_01(self):
         text = "Блаблабла [{Цитата '''полужирный шрифт''' [[Ссылка -> http://jenyay.net]] }] блабла"
-        result = 'Блаблабла Цитата <b>полужирный шрифт</b> <a href="http://jenyay.net">Ссылка</a>  блабла'
+        result = f'Блаблабла Цитата <b>полужирный шрифт</b> <a class="{css.CSS_WIKI}" href="http://jenyay.net">Ссылка</a>  блабла'
 
         self.assertEqual(self.parser.toHtml(text),
                          result)
 
     def testMultilineBlockFormat_02(self):
         text = "[{[[Ссылка -> http://jenyay.net]]}]"
-        result = '<a href="http://jenyay.net">Ссылка</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://jenyay.net">Ссылка</a>'
 
         self.assertEqual(self.parser.toHtml(text),
                          result)

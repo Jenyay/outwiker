@@ -17,7 +17,7 @@ class QuoteFactory:
 class QuoteToken(SimpleNestedBlock):
     start = '[>'
     end = '<]'
-    start_html = '<blockquote class="{css_class}">'.format(css_class=css.CSS_QUOTE)
+    start_html = '<blockquote class="{css_class}">'.format(css_class=css.CSS_WIKI)
     end_html = '</blockquote>'
     name = 'quote'
     ignore = LineBreakToken().getToken()

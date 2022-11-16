@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from ctypes import resize
 import os
 import os.path
 import unittest
@@ -44,7 +43,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 filesPath,
                 fname) for fname in self.files]
 
-        self.template = '<a class="ow-attach {css_class}" href="{link}">{title}</a>'
+        self.template = '<a class="ow-wiki ow-link-attach {css_class}" href="{link}">{title}</a>'
 
     def tearDown(self):
         self.destroyApplication()
@@ -61,7 +60,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
         self.wikiroot = WikiDocument.create(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
-    def _compare_result(self, result: str, items: List[str]):
+    def _check_items_order(self, result: str, items: List[str]):
         pos = -1
         for item in items:
             next_pos = result.find(item)
@@ -99,7 +98,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_subdir_double_quotes(self):
         subdir = 'test_subdir'
@@ -117,7 +116,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items(subdir, expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_subdir_single_quotes(self):
         subdir = 'test_subdir'
@@ -135,7 +134,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items(subdir, expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_subsubdir_forward_slashes(self):
         subdir = 'subdir_1/subdir_2'
@@ -153,7 +152,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items(subdir, expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_subsubdir_back_slashes(self):
         subdir = 'subdir_1\\subdir_2'
@@ -171,7 +170,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items(subdir, expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing_no_params(self):
         self._attach_files()
@@ -187,7 +186,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing_ignore_thumbs(self):
         self._attach_files()
@@ -214,7 +213,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing_sort_by_name(self):
         self._attach_files()
@@ -230,7 +229,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_command_sort_descend_name(self):
         self._attach_files()
@@ -246,7 +245,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing_sort_descend_name(self):
         self._attach_files()
@@ -262,7 +261,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing_sort_by_ext(self):
         self._attach_files()
@@ -278,7 +277,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing_sort_descend_ext(self):
         self._attach_files()
@@ -294,7 +293,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing_sort_by_size(self):
         self._attach_files()
@@ -310,7 +309,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing__sort_descend_size(self):
         self._attach_files()
@@ -326,7 +325,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing_sort_by_date(self):
         files = ["add.png", "Anchor.png",
@@ -365,7 +364,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
 
     def test_parsing_sort_descend_date(self):
         files = ["add.png", "Anchor.png",
@@ -404,4 +403,4 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
                 ]
 
         items = self._create_items('', expected_dirs, expected_files)
-        self._compare_result(result, items)
+        self._check_items_order(result, items)
