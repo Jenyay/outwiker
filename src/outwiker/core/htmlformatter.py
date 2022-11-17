@@ -20,15 +20,21 @@ class HtmlFormatter:
     def _format(self,
                 content: str,
                 template: str,
-                main_classes: List[str]) -> str:
-        classes = ' '.join(self._common_classes + main_classes)
+                css_classes: List[str]) -> str:
+        classes = ' '.join(self._common_classes + css_classes)
         return template.format(classes=classes, content=content)
 
-    def error(self, content: str) -> str:
-        return self._format(content, self._error_template, self._error_classes)
+    def error(self, content: str, css_classes: Optional[List[str]] = None) -> str:
+        if css_classes is None:
+            css_classes = []
 
-    def image(self, content: str) -> str:
-        return self._format(content, self._image_template, self._image_classes)
+        return self._format(content, self._error_template, self._error_classes + css_classes)
+
+    def image(self, content: str, css_classes: Optional[List[str]] = None) -> str:
+        if css_classes is None:
+            css_classes = []
+
+        return self._format(content, self._image_template, self._image_classes + css_classes)
 
     def block(self, content: str, other_classes: Optional[List[str]] = None) -> str:
         if other_classes is None:

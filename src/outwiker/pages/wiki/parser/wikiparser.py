@@ -2,6 +2,9 @@
 
 import traceback
 
+from outwiker.core.htmlformatter import HtmlFormatter
+import outwiker.core.cssclasses as css
+
 from .markup import Markup
 from .tokenfonts import FontsFactory
 from .tokennoformat import NoFormatFactory
@@ -33,7 +36,7 @@ class Parser(object):
     def __init__(self, page, config):
         self.page = page
         self.config = config
-        self.error_template = u"<b>{error}</b>"
+        self._html_formatter = HtmlFormatter([css.CSS_WIKI])
 
         # Dictionary with nonstandard parameters (for plugins for example)
         self.customProps = {}
@@ -264,29 +267,18 @@ class Parser(object):
     def headItems(self):
         '''
         Return list of the strings for the <head> HTML tag.
-
-        Added in outwiker.core 1.3
         '''
         return self.__headers
 
     @property
     def footer(self):
-        '''
-        Added in outwiker.core 1.3
-        '''
         return u''.join(self.__footers)
 
     @property
     def footerItems(self):
-        '''
-        Added in outwiker.core 1.3
-        '''
         return self.__footers
 
     def appendToFooter(self, footer):
-        """
-        Added in outwiker.core 1.3
-        """
         self.__footers.append(footer)
 
     def toHtml(self, text):
@@ -298,55 +290,30 @@ class Parser(object):
 
         return self.parseWikiMarkup(text)
 
-    def parseWikiMarkup(self, text):
-        if self._wikiMarkup is None:
-            self._wikiMarkup = self._createMarkup(self.wikiTokens)
+    def _parseMarkup(self, markup, tokens, text) -> str:
+        if markup is None:
+            markup = self._createMarkup(tokens)
 
         try:
-            return self._wikiMarkup.transformString(text)
+            return markup.transformString(text)
         except Exception:
             error = traceback.format_exc()
-            return self.error_template.format(error=error)
+            return self._html_formatter.error(error)
 
-    def parseListItemMarkup(self, text):
-        if self._listItemMarkup is None:
-            self._listItemMarkup = self._createMarkup(self.listItemsTokens)
+    def parseWikiMarkup(self, text: str) -> str:
+        return self._parseMarkup(self._wikiMarkup, self.wikiTokens, text)
 
-        try:
-            return self._listItemMarkup.transformString(text)
-        except Exception:
-            error = traceback.format_exc()
-            return self.error_template.format(error=error)
+    def parseListItemMarkup(self, text: str) -> str:
+        return self._parseMarkup(self._listItemMarkup, self.listItemsTokens, text)
 
-    def parseLinkMarkup(self, text):
-        if self._linkMarkup is None:
-            self._linkMarkup = self._createMarkup(self.linkTokens)
+    def parseLinkMarkup(self, text: str) -> str:
+        return self._parseMarkup(self._linkMarkup, self.linkTokens, text)
 
-        try:
-            return self._linkMarkup.transformString(text)
-        except Exception:
-            error = traceback.format_exc()
-            return self.error_template.format(error=error)
-
-    def parseHeadingMarkup(self, text):
-        if self._headingMarkup is None:
-            self._headingMarkup = self._createMarkup(self.headingTokens)
-
-        try:
-            return self._headingMarkup.transformString(text)
-        except Exception:
-            error = traceback.format_exc()
-            return self.error_template.format(error=error)
+    def parseHeadingMarkup(self, text: str) -> str:
+        return self._parseMarkup(self._headingMarkup, self.headingTokens, text)
 
     def parseTextLevelMarkup(self, text):
-        if self._textLevelMarkup is None:
-            self._textLevelMarkup = self._createMarkup(self.textLevelTokens)
-
-        try:
-            return self._textLevelMarkup.transformString(text)
-        except Exception:
-            error = traceback.format_exc()
-            return self.error_template.format(error=error)
+        return self._parseMarkup(self._textLevelMarkup, self.textLevelTokens, text)
 
     def addCommand(self, command):
         self.commands[command.name] = command
