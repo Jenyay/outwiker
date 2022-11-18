@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='outwiker',
-    version='3.0.0',
+    version='3.2.0',
     description='A cross-platform software for keeping your notes in a tree',
     author='Eugene Ilin (aka Jenyay)',
     author_email='jenyay.ilin@gmail.com',
