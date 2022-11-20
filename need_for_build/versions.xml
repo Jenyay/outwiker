@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.2.0.913" status="dev">
+    <version number="3.2.0.914" status="beta" date="2022-11-20">
         <changes>
+            <change>Improved design of links to attached files and other pages.</change>
+            <change>Added a new subdir parameter to [=(:attachlist:)=] wiki command.</change>
+            <change>Improved [=(:childlist:)=] and [=(:attachlist:)=] wiki commands result design.</change>
+            <change>Added new CSS classes to generated HTML code.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Улучшен дизайн ссылок на прикрепленные файлы и на другие страницы.</change>
+            <change>Добавлен параметр subdir для викикоманды [=(:attachlist:)=].</change>
+            <change>Улучшен дизайн результата работы викикоманд [=(:childlist:)=] и [=(:attachlist:)=].</change>
+            <change>В создаваемый код HTML добавлены новые CSS-классы.</change>
         </changes>
     </version>
 
