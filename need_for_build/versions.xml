@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="3.2.0.915" status="dev" date="2022-11-21">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="3.2.0.914" status="beta" date="2022-11-20">
         <changes>
             <change>Improved design of links to attached files and other pages.</change>
