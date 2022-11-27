@@ -74,10 +74,11 @@ class OutWikerApplication(wx.App):
         config = TrayConfig(self._application.config)
         if config.startIconized.value and allowMinimizingMainWindow:
             self.mainWnd.Iconize(True)
+            self.mainWnd.showTrayIcon()
         else:
             self.mainWnd.Show()
 
-        self.mainWnd.taskBarIconController.updateTrayIcon()
+        self.mainWnd.updateTrayIcon()
 
     def initLogger(self, debugMode=False):
         level = logging.DEBUG if debugMode else logging.WARNING

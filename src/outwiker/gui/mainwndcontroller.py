@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 import wx
 
 import outwiker.core.commands
@@ -42,7 +41,7 @@ from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.actions.applystyle import SetStyleToBranchAction
 
 
-class MainWndController(object):
+class MainWndController:
     """
     Контроллер для управления главным окном
     """
@@ -54,6 +53,7 @@ class MainWndController(object):
         """
         self._mainWindow = parent
         self._application = application
+        self._tray_config = TrayConfig(self._application.config)
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить,
         # если не открыта вики
@@ -108,12 +108,12 @@ class MainWndController(object):
         self._recentId = {}
 
         self.bookmarks = BookmarksController(self, self._application)
-        self.__autosaveTimer = AutosaveTimer(self._application)
+        self._autosaveTimer = AutosaveTimer(self._application)
 
         self.init()
-        self.__createAcceleratorTable()
+        self._createAcceleratorTable()
 
-    def __createAcceleratorTable(self):
+    def _createAcceleratorTable(self):
         """
         Создать горячие клавиши, которые не попали в меню
         """
@@ -127,21 +127,28 @@ class MainWndController(object):
         """
         Начальные установки для главного окна
         """
-        self.__bindAppEvents()
-        self.mainWindow.Bind(wx.EVT_CLOSE, self.__onClose)
+        self._bindAppEvents()
+        self.mainWindow.Bind(wx.EVT_CLOSE, handler=self._onClose)
+        self.mainWindow.Bind(wx.EVT_ICONIZE, handler=self._onIconize)
 
-    def __onClose(self, event):
+    def _onClose(self, event):
         event.Veto()
-        if TrayConfig(self._application.config).minimizeOnClose.value:
+        if self._tray_config.minimizeOnClose.value:
             self._mainWindow.Iconize(True)
         else:
             self._application.actionController.getAction(ExitAction.stringId).run(None)
 
+    def _onIconize(self, event):
+        if event.IsIconized() and self._tray_config.minimizeToTray.value == 1:
+            # Окно свернули
+            self.mainWindow.hideToTray()
+
     def destroy(self):
-        self.__unbindAppEvents()
-        self.__autosaveTimer.Destroy()
-        self.__autosaveTimer = None
-        self._mainWindow.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
+        self._unbindAppEvents()
+        self._autosaveTimer.Destroy()
+        self._autosaveTimer = None
+        self._mainWindow.Unbind(wx.EVT_CLOSE, handler=self._onClose)
+        self._mainWindow.Unbind(wx.EVT_ICONIZE, handler=self._onIconize)
         self._mainWindow = None
         self._application = None
 
@@ -161,38 +168,38 @@ class MainWndController(object):
             menu.Delete(key)
             self.mainWindow.Unbind(wx.EVT_MENU, id=key)
 
-    def __bindAppEvents(self):
-        self._application.onPageSelect += self.__onPageSelect
-        self._application.onPreferencesDialogClose += self.__onPreferencesDialogClose
-        self._application.onBookmarksChanged += self.__onBookmarksChanged
-        self._application.onTreeUpdate += self.__onTreeUpdate
-        self._application.onWikiOpen += self.__onWikiOpen
-        self._application.onPageUpdate += self.__onPageUpdate
+    def _bindAppEvents(self):
+        self._application.onPageSelect += self._onPageSelect
+        self._application.onPreferencesDialogClose += self._onPreferencesDialogClose
+        self._application.onBookmarksChanged += self._onBookmarksChanged
+        self._application.onTreeUpdate += self._onTreeUpdate
+        self._application.onWikiOpen += self._onWikiOpen
+        self._application.onPageUpdate += self._onPageUpdate
 
-    def __unbindAppEvents(self):
-        self._application.onPageSelect -= self.__onPageSelect
-        self._application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
-        self._application.onBookmarksChanged -= self.__onBookmarksChanged
-        self._application.onTreeUpdate -= self.__onTreeUpdate
-        self._application.onWikiOpen -= self.__onWikiOpen
-        self._application.onPageUpdate -= self.__onPageUpdate
+    def _unbindAppEvents(self):
+        self._application.onPageSelect -= self._onPageSelect
+        self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
+        self._application.onBookmarksChanged -= self._onBookmarksChanged
+        self._application.onTreeUpdate -= self._onTreeUpdate
+        self._application.onWikiOpen -= self._onWikiOpen
+        self._application.onPageUpdate -= self._onPageUpdate
 
-    def __onBookmarksChanged(self, event):
+    def _onBookmarksChanged(self, event):
         self.bookmarks.updateBookmarks()
 
-    def __onTreeUpdate(self, sender):
+    def _onTreeUpdate(self, sender):
         """
         Событие при обновлении дерева
         """
         self.bookmarks.updateBookmarks()
         self.updateTitle()
 
-    def __onPageUpdate(self, page, **kwargs):
+    def _onPageUpdate(self, page, **kwargs):
         if kwargs['change'] & PAGE_UPDATE_TITLE:
             self.updateTitle()
             self.bookmarks.updateBookmarks()
 
-    def __onWikiOpen(self, wikiroot):
+    def _onWikiOpen(self, wikiroot):
         """
         Обновить окно после того как загрузили вики
         """
@@ -212,7 +219,7 @@ class MainWndController(object):
     ###################################################
     # Обработка событий
     #
-    def __onPageSelect(self, newpage):
+    def _onPageSelect(self, newpage):
         """
         Обработчик события выбора страницы в дереве
         """
@@ -225,14 +232,12 @@ class MainWndController(object):
             self._application.selectedPage is not None
         )
 
-    def __onPreferencesDialogClose(self, prefDialog):
+    def _onPreferencesDialogClose(self, prefDialog):
         """
         Обработчик события изменения настроек главного окна
         """
         self.updateTitle()
         self.updateColors()
-    #
-    ###################################################
 
     ###################################################
     # Активировать/дизактивировать интерфейс
@@ -243,13 +248,13 @@ class MainWndController(object):
         """
         enabled = self._application.wikiroot is not None
 
-        self.__enableTools(enabled)
+        self._enableTools(enabled)
         self.mainWindow.treePanel.panel.Enable(enabled)
         self.mainWindow.attachPanel.panel.Enable(enabled)
 
         self._updateBookmarksState()
 
-    def __enableTools(self, enabled):
+    def _enableTools(self, enabled):
         toolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
 
         for toolId in self.disabledTools:
@@ -261,9 +266,6 @@ class MainWndController(object):
 
         [self._application.actionController.enableTools(action.stringId, enabled)
          for action in self._disabledActions]
-
-    #
-    ###################################################
 
     def updateTitle(self):
         """
@@ -328,13 +330,10 @@ class MainWndController(object):
 
             menu_file.Append(id, title, "", wx.ITEM_NORMAL)
 
-            self.mainWindow.Bind(wx.EVT_MENU, self.__onRecent, id=id)
+            self.mainWindow.Bind(wx.EVT_MENU, self._onRecent, id=id)
 
-    def __onRecent(self, event):
+    def _onRecent(self, event):
         """
         Выбор пункта меню с недавно открытыми файлами
         """
         outwiker.core.commands.openWiki(self._recentId[event.Id])
-
-    #
-    ###################################################

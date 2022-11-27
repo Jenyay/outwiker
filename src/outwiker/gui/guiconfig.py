@@ -264,6 +264,9 @@ class TrayConfig(object):
     MINIMIZE_TO_TRAY_PARAM = "MinimizeToTray"
     MINIMIZE_TO_TRAY_DEFAULT = 0
 
+    CLOSE_BUTTON_ACTION_PARAM = "CloseButtonAction"
+    CLOSE_BUTTON_ACTION_DEFAULT = 0
+
     START_ICONIZED_PARAM = "StartIconized"
     START_ICONIZED_DEFAULT = False
 
@@ -276,7 +279,7 @@ class TrayConfig(object):
     def __init__(self, config):
         self.config = config
 
-        # Сворачивать в трей?
+        # Minimize button action
         self.minimizeToTray = IntegerOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
@@ -284,7 +287,15 @@ class TrayConfig(object):
             TrayConfig.MINIMIZE_TO_TRAY_DEFAULT,
         )
 
-        # Запускаться свернутым?
+        # Close button action
+        self.closeButtonAction = IntegerOption(
+            self.config,
+            GeneralGuiConfig.GENERAL_SECTION,
+            TrayConfig.CLOSE_BUTTON_ACTION_PARAM,
+            TrayConfig.CLOSE_BUTTON_ACTION_DEFAULT,
+        )
+
+        # Execute minimized?
         self.startIconized = BooleanOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,

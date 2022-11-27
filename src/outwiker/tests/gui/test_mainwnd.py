@@ -31,7 +31,6 @@ class MainWndTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertNotEqual(None, self.mainWindow.attachPanel)
         self.assertNotEqual(None, self.mainWindow.toolbars)
         self.assertNotEqual(None, self.mainWindow.statusbar)
-        self.assertNotEqual(None, self.mainWindow.taskBarIconController)
         self.assertNotEqual(None, self.mainWindow.mainWindowConfig)
 
     def testTitle_01(self):

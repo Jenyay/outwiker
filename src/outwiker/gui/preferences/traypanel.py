@@ -10,7 +10,8 @@ from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 class TrayPanel(BasePrefPanel):
     def __init__(self, parent, application):
         super(TrayPanel, self).__init__(parent)
-        self._minimize_items = [_('Minimize window'), _('Hide to tray') ]
+        self._minimize_button_actions = [_('Minimize window'), _('Hide to tray') ]
+        self._close_button_actions = [_('Close window'), _('Minimize window'), _('Hide to tray') ]
 
         self.trayConfig = TrayConfig(application.config)
         self._createTrayGui()
@@ -38,12 +39,19 @@ class TrayPanel(BasePrefPanel):
         self._buttons_sizer = wx.FlexGridSizer(cols=2)
         self._buttons_sizer.AddGrowableCol(1)
 
-        # Minimize button
+        # Minimize button actions
         minimizeButtonLabel = wx.StaticText(self, label=_('Minimize window button'))
         self.minimizeComboBox = wx.ComboBox(self, style=wx.CB_READONLY)
 
         self._buttons_sizer.Add(minimizeButtonLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
         self._buttons_sizer.Add(self.minimizeComboBox, flag=wx.ALIGN_RIGHT | wx.ALL, border=2)
+
+        # Close button actions
+        closeButtonLabel = wx.StaticText(self, label=_('Close window button'))
+        self.closeComboBox = wx.ComboBox(self, style=wx.CB_READONLY)
+
+        self._buttons_sizer.Add(closeButtonLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
+        self._buttons_sizer.Add(self.closeComboBox, flag=wx.ALIGN_RIGHT | wx.ALL, border=2)
 
     def _createTrayGui(self):
         """
@@ -61,10 +69,10 @@ class TrayPanel(BasePrefPanel):
             -1,
             _("Always show tray icon"))
 
-        self.minimizeOnCloseCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _("Minimize on close window"))
+        # self.minimizeOnCloseCheckBox = wx.CheckBox(
+        #     self,
+        #     -1,
+        #     _("Minimize on close window"))
 
     def _layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)
@@ -73,7 +81,7 @@ class TrayPanel(BasePrefPanel):
 
         main_sizer.Add(self.startIconizedCheckBox, 0, wx.ALL, 2)
         main_sizer.Add(self.alwaysInTrayCheckBox, 0, wx.ALL, 2)
-        main_sizer.Add(self.minimizeOnCloseCheckBox, 0, wx.ALL, 2)
+        # main_sizer.Add(self.minimizeOnCloseCheckBox, 0, wx.ALL, 2)
 
         self.SetSizer(main_sizer)
 
@@ -81,11 +89,18 @@ class TrayPanel(BasePrefPanel):
         """
         Загрузить состояние страницы из конфига
         """
-        # Сворачивать в трей?
-        self.minimizeToTray = configelements.ComboBoxListElement(
+        # Action for the minimize button
+        self.minimizeButtonActions = configelements.ComboBoxListElement(
                 self.trayConfig.minimizeToTray,
                 self.minimizeComboBox,
-                self._minimize_items
+                self._minimize_button_actions
+                )
+
+        # Action for the close button
+        self.closeButtonActions = configelements.ComboBoxListElement(
+                self.trayConfig.closeButtonAction,
+                self.closeComboBox,
+                self._close_button_actions
                 )
 
         # Всегда показывать иконку в трее
@@ -95,10 +110,10 @@ class TrayPanel(BasePrefPanel):
         )
 
         # Сворачивать при закрытии
-        self.minimizeOnClose = configelements.BooleanElement(
-            self.trayConfig.minimizeOnClose,
-            self.minimizeOnCloseCheckBox
-        )
+        # self.minimizeOnClose = configelements.BooleanElement(
+        #     self.trayConfig.minimizeOnClose,
+        #     self.minimizeOnCloseCheckBox
+        # )
 
         # Запускаться свернутым?
         self.startIconized = configelements.BooleanElement(
@@ -111,8 +126,9 @@ class TrayPanel(BasePrefPanel):
         Сохранить состояние страницы в конфиг
         """
         self.startIconized.save()
-        self.minimizeToTray.save()
-        self.minimizeOnClose.save()
+        self.minimizeButtonActions.save()
+        self.closeButtonActions.save()
+        # self.minimizeOnClose.save()
         self.alwaysInTray.save()
 
     def onMinimizeToTray(self, event):
