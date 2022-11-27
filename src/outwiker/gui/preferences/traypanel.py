@@ -69,11 +69,6 @@ class TrayPanel(BasePrefPanel):
             -1,
             _("Always show tray icon"))
 
-        # self.minimizeOnCloseCheckBox = wx.CheckBox(
-        #     self,
-        #     -1,
-        #     _("Minimize on close window"))
-
     def _layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
@@ -81,7 +76,6 @@ class TrayPanel(BasePrefPanel):
 
         main_sizer.Add(self.startIconizedCheckBox, 0, wx.ALL, 2)
         main_sizer.Add(self.alwaysInTrayCheckBox, 0, wx.ALL, 2)
-        # main_sizer.Add(self.minimizeOnCloseCheckBox, 0, wx.ALL, 2)
 
         self.SetSizer(main_sizer)
 
@@ -109,12 +103,6 @@ class TrayPanel(BasePrefPanel):
             self.alwaysInTrayCheckBox
         )
 
-        # Сворачивать при закрытии
-        # self.minimizeOnClose = configelements.BooleanElement(
-        #     self.trayConfig.minimizeOnClose,
-        #     self.minimizeOnCloseCheckBox
-        # )
-
         # Запускаться свернутым?
         self.startIconized = configelements.BooleanElement(
             self.trayConfig.startIconized,
@@ -128,7 +116,6 @@ class TrayPanel(BasePrefPanel):
         self.startIconized.save()
         self.minimizeButtonActions.save()
         self.closeButtonActions.save()
-        # self.minimizeOnClose.save()
         self.alwaysInTray.save()
 
     def onMinimizeToTray(self, event):

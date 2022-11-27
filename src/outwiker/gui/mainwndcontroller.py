@@ -8,7 +8,12 @@ from outwiker.core.events import PAGE_UPDATE_TITLE
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
 from .guiconfig import TrayConfig
-from .defines import MENU_FILE, TOOLBAR_GENERAL
+from .defines import (MENU_FILE,
+                      TOOLBAR_GENERAL,
+                      CLOSE_BUTTON_ACTION_CLOSE,
+                      CLOSE_BUTTON_ACTION_MINIMIZE,
+                      CLOSE_BUTTON_ACTION_HIDE_TO_TRAY,
+                      )
 
 from outwiker.actions.save import SaveAction
 from outwiker.actions.close import CloseAction
@@ -128,20 +133,27 @@ class MainWndController:
         Начальные установки для главного окна
         """
         self._bindAppEvents()
-        self.mainWindow.Bind(wx.EVT_CLOSE, handler=self._onClose)
-        self.mainWindow.Bind(wx.EVT_ICONIZE, handler=self._onIconize)
+        self._mainWindow.Bind(wx.EVT_CLOSE, handler=self._onClose)
+        self._mainWindow.Bind(wx.EVT_ICONIZE, handler=self._onIconize)
 
     def _onClose(self, event):
         event.Veto()
-        if self._tray_config.minimizeOnClose.value:
-            self._mainWindow.Iconize(True)
-        else:
+        action = self._tray_config.closeButtonAction.value
+
+        if action == CLOSE_BUTTON_ACTION_CLOSE:
             self._application.actionController.getAction(ExitAction.stringId).run(None)
+        elif action == CLOSE_BUTTON_ACTION_MINIMIZE:
+            self._mainWindow.Unbind(wx.EVT_ICONIZE, handler=self._onIconize)
+            self._mainWindow.Iconize(True)
+            wx.SafeYield()
+            self._mainWindow.Bind(wx.EVT_ICONIZE, handler=self._onIconize)
+        elif action == CLOSE_BUTTON_ACTION_HIDE_TO_TRAY:
+            self._mainWindow.hideToTray()
 
     def _onIconize(self, event):
         if event.IsIconized() and self._tray_config.minimizeToTray.value == 1:
             # Окно свернули
-            self.mainWindow.hideToTray()
+            self._mainWindow.hideToTray()
 
     def destroy(self):
         self._unbindAppEvents()
@@ -158,7 +170,7 @@ class MainWndController:
 
     @property
     def mainMenu(self):
-        return self.mainWindow.menuController.getRootMenu()
+        return self._mainWindow.menuController.getRootMenu()
 
     def removeMenuItemsById(self, menu, keys):
         """
@@ -166,7 +178,7 @@ class MainWndController:
         """
         for key in keys:
             menu.Delete(key)
-            self.mainWindow.Unbind(wx.EVT_MENU, id=key)
+            self._mainWindow.Unbind(wx.EVT_MENU, id=key)
 
     def _bindAppEvents(self):
         self._application.onPageSelect += self._onPageSelect
@@ -249,13 +261,13 @@ class MainWndController:
         enabled = self._application.wikiroot is not None
 
         self._enableTools(enabled)
-        self.mainWindow.treePanel.panel.Enable(enabled)
-        self.mainWindow.attachPanel.panel.Enable(enabled)
+        self._mainWindow.treePanel.panel.Enable(enabled)
+        self._mainWindow.attachPanel.panel.Enable(enabled)
 
         self._updateBookmarksState()
 
     def _enableTools(self, enabled):
-        toolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
+        toolbar = self._mainWindow.toolbars[TOOLBAR_GENERAL]
 
         for toolId in self.disabledTools:
             if toolbar.FindById(toolId) is not None:
@@ -272,41 +284,41 @@ class MainWndController:
         Обновить заголовок главного окна в зависимости от шаблона
             и текущей страницы
         """
-        self.mainWindow.SetTitle(getMainWindowTitle(self._application))
+        self._mainWindow.SetTitle(getMainWindowTitle(self._application))
 
     def loadMainWindowParams(self):
         """
         Загрузить параметры из конфига
         """
-        self.mainWindow.Freeze()
+        self._mainWindow.Freeze()
 
-        width = self.mainWindow.mainWindowConfig.width.value
-        height = self.mainWindow.mainWindowConfig.height.value
+        width = self._mainWindow.mainWindowConfig.width.value
+        height = self._mainWindow.mainWindowConfig.height.value
 
-        xpos = self.mainWindow.mainWindowConfig.xPos.value
-        ypos = self.mainWindow.mainWindowConfig.yPos.value
+        xpos = self._mainWindow.mainWindowConfig.xPos.value
+        ypos = self._mainWindow.mainWindowConfig.yPos.value
 
-        self.mainWindow.SetSize(
+        self._mainWindow.SetSize(
             xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
         self.updateColors()
-        self.mainWindow.Layout()
-        self.mainWindow.Thaw()
+        self._mainWindow.Layout()
+        self._mainWindow.Thaw()
 
     def updateColors(self):
-        config = self.mainWindow.mainWindowConfig
+        config = self._mainWindow.mainWindowConfig
         panels = [
-            self.mainWindow.treePanel,
-            self.mainWindow.attachPanel,
-            self.mainWindow.tagsCloudPanel,
-            # self.mainWindow.pagePanel,
+            self._mainWindow.treePanel,
+            self._mainWindow.attachPanel,
+            self._mainWindow.tagsCloudPanel,
+            # self._mainWindow.pagePanel,
         ]
 
         for panel in panels:
             panel.setBackgroundColour(config.mainPanesBackgroundColor.value)
             panel.setForegroundColour(config.mainPanesTextColor.value)
 
-        self.mainWindow.Refresh()
+        self._mainWindow.Refresh()
 
     ###################################################
     # Список последних открытых вики
@@ -315,7 +327,7 @@ class MainWndController:
         """
         Обновление меню со списком последних открытых вики
         """
-        menu_file = self.mainWindow.menuController[MENU_FILE]
+        menu_file = self._mainWindow.menuController[MENU_FILE]
         self.removeMenuItemsById(menu_file,
                                  list(self._recentId.keys()))
         self._recentId = {}
@@ -330,7 +342,7 @@ class MainWndController:
 
             menu_file.Append(id, title, "", wx.ITEM_NORMAL)
 
-            self.mainWindow.Bind(wx.EVT_MENU, self._onRecent, id=id)
+            self._mainWindow.Bind(wx.EVT_MENU, self._onRecent, id=id)
 
     def _onRecent(self, event):
         """

@@ -104,7 +104,8 @@ class MainWindow(wx.Frame):
         self.trayController.removeTrayIcon()
 
     def hideToTray(self):
-        self.trayController.hideToTray()
+        self.Hide()
+        self.showTrayIcon()
 
     def _createMenu(self):
         logger.debug(u'MainWindow. Create the main menu')

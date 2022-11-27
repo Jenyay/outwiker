@@ -50,8 +50,7 @@ class TrayIconController(wx.EvtHandler):
         self._trayIcon.removeTrayIcon()
 
     def hideToTray(self):
-        self.mainWnd.Hide()
-        self.showTrayIcon()
+        self.mainWnd.hideToTray()
 
     def restoreWindow(self):
         if not self.config.alwaysShowTrayIcon.value:
