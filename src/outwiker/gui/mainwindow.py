@@ -104,6 +104,7 @@ class MainWindow(wx.Frame):
         self.trayController.removeTrayIcon()
 
     def hideToTray(self):
+        self.Iconize()
         self.Hide()
         self.showTrayIcon()
 

@@ -90,14 +90,13 @@ class TrayIconController(wx.EvtHandler):
         """
         Показать или скрыть иконку в трее в зависимости от настроек
         """
-        self._trayIcon.update()
-
-    def _onPreferencesDialogClose(self, _prefDialog):
         if self.config.alwaysShowTrayIcon.value or not self.mainWnd.IsShown():
             self.showTrayIcon()
-            self.updateTrayIcon()
         else:
             self.removeTrayIcon()
+
+    def _onPreferencesDialogClose(self, _prefDialog):
+        self.updateTrayIcon()
 
     def _onTaskBarUpdate(self, _page):
         self.updateTrayIcon()

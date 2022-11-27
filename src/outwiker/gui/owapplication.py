@@ -77,7 +77,8 @@ class OutWikerApplication(wx.App):
             self.mainWnd.hideToTray()
         else:
             self.mainWnd.Show()
-            self.mainWnd.updateTrayIcon()
+
+        self.mainWnd.updateTrayIcon()
 
     def initLogger(self, debugMode=False):
         level = logging.DEBUG if debugMode else logging.WARNING
