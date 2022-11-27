@@ -691,7 +691,7 @@ class TrayConfigTest(unittest.TestCase):
             os.remove(self.path)
 
     def testDefault(self):
-        self.assertEqual(self.trayConfig.minimizeToTray.value, True)
+        self.assertEqual(self.trayConfig.minimizeToTray.value, 0)
         self.assertEqual(self.trayConfig.startIconized.value, False)
         self.assertEqual(self.trayConfig.alwaysShowTrayIcon.value, False)
 

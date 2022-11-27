@@ -262,7 +262,7 @@ class TrayConfig(object):
     """
 
     MINIMIZE_TO_TRAY_PARAM = "MinimizeToTray"
-    MINIMIZE_TO_TRAY_DEFAULT = True
+    MINIMIZE_TO_TRAY_DEFAULT = 0
 
     START_ICONIZED_PARAM = "StartIconized"
     START_ICONIZED_DEFAULT = False
@@ -277,7 +277,7 @@ class TrayConfig(object):
         self.config = config
 
         # Сворачивать в трей?
-        self.minimizeToTray = BooleanOption(
+        self.minimizeToTray = IntegerOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
             TrayConfig.MINIMIZE_TO_TRAY_PARAM,

@@ -10,22 +10,23 @@ from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 class TrayPanel(BasePrefPanel):
     def __init__(self, parent, application):
         super(TrayPanel, self).__init__(parent)
+        self._minimize_items = [_('Minimize window'), _('Hide to tray') ]
 
         self.trayConfig = TrayConfig(application.config)
-        self.__createTrayGui()
+        self._createTrayGui()
 
-        self.__set_properties()
-        self.__do_layout()
+        self._set_properties()
+        self._layout()
 
-        self.Bind(wx.EVT_CHECKBOX,
+        self.Bind(wx.EVT_COMBOBOX,
                   self.onMinimizeToTray,
-                  self.minimizeCheckBox)
+                  self.minimizeComboBox)
 
         self.LoadState()
         self.updateCheckState()
         self.SetupScrolling()
 
-    def __set_properties(self):
+    def _set_properties(self):
         DEFAULT_WIDTH = 520
         DEFAULT_HEIGHT = 420
 
@@ -33,14 +34,22 @@ class TrayPanel(BasePrefPanel):
         self.SetFocus()
         self.SetScrollRate(0, 0)
 
-    def __createTrayGui(self):
+    def _createMainWindowButtonsGui(self) -> None:
+        self._buttons_sizer = wx.FlexGridSizer(cols=2)
+        self._buttons_sizer.AddGrowableCol(1)
+
+        # Minimize button
+        minimizeButtonLabel = wx.StaticText(self, label=_('Minimize window button'))
+        self.minimizeComboBox = wx.ComboBox(self, style=wx.CB_READONLY)
+
+        self._buttons_sizer.Add(minimizeButtonLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
+        self._buttons_sizer.Add(self.minimizeComboBox, flag=wx.ALIGN_RIGHT | wx.ALL, border=2)
+
+    def _createTrayGui(self):
         """
         Создать элементы интерфейса, связанные с треем
         """
-        self.minimizeCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _("Minimize to tray"))
+        self._createMainWindowButtonsGui()
 
         self.startIconizedCheckBox = wx.CheckBox(
             self,
@@ -57,18 +66,10 @@ class TrayPanel(BasePrefPanel):
             -1,
             _("Minimize on close window"))
 
-    def __addStaticLine(self, main_sizer):
-        static_line = wx.StaticLine(self, -1)
-        main_sizer.Add(static_line, 0, wx.EXPAND, 0)
-
-    def __do_layout(self):
+    def _layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
-
-        main_sizer.Add(self.minimizeCheckBox,
-                       0,
-                       wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       2)
+        main_sizer.Add(self._buttons_sizer, flag=wx.EXPAND | wx.ALL, border=2)
 
         main_sizer.Add(self.startIconizedCheckBox, 0, wx.ALL, 2)
         main_sizer.Add(self.alwaysInTrayCheckBox, 0, wx.ALL, 2)
@@ -81,10 +82,11 @@ class TrayPanel(BasePrefPanel):
         Загрузить состояние страницы из конфига
         """
         # Сворачивать в трей?
-        self.minimizeToTray = configelements.BooleanElement(
-            self.trayConfig.minimizeToTray,
-            self.minimizeCheckBox
-        )
+        self.minimizeToTray = configelements.ComboBoxListElement(
+                self.trayConfig.minimizeToTray,
+                self.minimizeComboBox,
+                self._minimize_items
+                )
 
         # Всегда показывать иконку в трее
         self.alwaysInTray = configelements.BooleanElement(
@@ -118,9 +120,9 @@ class TrayPanel(BasePrefPanel):
 
     def updateCheckState(self):
         """
-        Обновить стостояния чекбоксов
+        Обновить состояния чекбоксов
         """
-        if not self.minimizeCheckBox.IsChecked():
+        if self.minimizeComboBox.GetSelection() == 0:
             self.startIconizedCheckBox.SetValue(False)
             self.startIconizedCheckBox.Disable()
         else:
