@@ -19,12 +19,7 @@ class TrayPanel(BasePrefPanel):
         self._set_properties()
         self._layout()
 
-        self.Bind(wx.EVT_COMBOBOX,
-                  self.onMinimizeToTray,
-                  self.minimizeComboBox)
-
         self.LoadState()
-        self.updateCheckState()
         self.SetupScrolling()
 
     def _set_properties(self):
@@ -117,16 +112,3 @@ class TrayPanel(BasePrefPanel):
         self.minimizeButtonActions.save()
         self.closeButtonActions.save()
         self.alwaysInTray.save()
-
-    def onMinimizeToTray(self, event):
-        self.updateCheckState()
-
-    def updateCheckState(self):
-        """
-        Обновить состояния чекбоксов
-        """
-        if self.minimizeComboBox.GetSelection() == 0:
-            self.startIconizedCheckBox.SetValue(False)
-            self.startIconizedCheckBox.Disable()
-        else:
-            self.startIconizedCheckBox.Enable()
