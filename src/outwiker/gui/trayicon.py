@@ -15,7 +15,7 @@ from outwiker.gui.guiconfig import TrayConfig
 logger = logging.getLogger('outwiker.gui.trayicon')
 
 
-def getTrayIconController(application, parentWnd):
+def getTrayIconController(application, parentWnd) -> 'TrayIconController':
     if os.name == "nt":
         fname = 'outwiker_16x16.png'
     else:
@@ -33,11 +33,8 @@ class TrayIconController(wx.EvtHandler):
         self._application = application
         self._iconFileName = iconFileName
         self.config = TrayConfig(self._application.config)
-        self._trayIcon = self._createTrayIcon()
+        self._trayIcon = TrayIcon(self._application, self.mainWnd, self._iconFileName)
         self._bind()
-
-    def _createTrayIcon(self):
-        return TrayIcon(self._application, self.mainWnd, self._iconFileName)
 
     def destroy(self):
         self._trayIcon.removeTrayIcon()
@@ -45,6 +42,15 @@ class TrayIconController(wx.EvtHandler):
         self._trayIcon.Destroy()
         self._application = None
         self._trayIcon = None
+
+    def showTrayIcon(self):
+        self._trayIcon.showTrayIcon()
+
+    def removeTrayIcon(self):
+        self._trayIcon.removeTrayIcon()
+
+    def hideToTray(self):
+        self.mainWnd.hideToTray()
 
     def restoreWindow(self):
         if not self.config.alwaysShowTrayIcon.value:
@@ -59,62 +65,49 @@ class TrayIconController(wx.EvtHandler):
         self.mainWnd.SetFocus()
 
     def _bind(self):
-        self.mainWnd.Bind(wx.EVT_ICONIZE, self.__onIconize)
-
         self._trayIcon.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN,
-                            self.__OnTrayLeftClick)
+                            self._onTrayLeftClick)
 
-        self._trayIcon.Bind(wx.EVT_MENU, self.__onPopupMenu)
+        self._trayIcon.Bind(wx.EVT_MENU, self._onPopupMenu)
 
-        self._application.onPreferencesDialogClose += self.__onPreferencesDialogClose
-        self._application.onPageSelect += self.__OnTaskBarUpdate
-        self._application.onTreeUpdate += self.__OnTaskBarUpdate
-        self._application.onEndTreeUpdate += self.__OnTaskBarUpdate
+        self._application.onPreferencesDialogClose += self._onPreferencesDialogClose
+        self._application.onPageSelect += self._onTaskBarUpdate
+        self._application.onTreeUpdate += self._onTaskBarUpdate
+        self._application.onEndTreeUpdate += self._onTaskBarUpdate
 
     def _unbind(self):
-        self.mainWnd.Unbind(wx.EVT_ICONIZE, handler=self.__onIconize)
-
         self._trayIcon.Unbind(wx.adv.EVT_TASKBAR_LEFT_DOWN,
-                              handler=self.__OnTrayLeftClick)
+                              handler=self._onTrayLeftClick)
 
-        self._trayIcon.Unbind(wx.EVT_MENU, handler=self.__onPopupMenu)
+        self._trayIcon.Unbind(wx.EVT_MENU, handler=self._onPopupMenu)
 
-        self._application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
-        self._application.onPageSelect -= self.__OnTaskBarUpdate
-        self._application.onTreeUpdate -= self.__OnTaskBarUpdate
-        self._application.onEndTreeUpdate -= self.__OnTaskBarUpdate
+        self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
+        self._application.onPageSelect -= self._onTaskBarUpdate
+        self._application.onTreeUpdate -= self._onTaskBarUpdate
+        self._application.onEndTreeUpdate -= self._onTaskBarUpdate
 
     def updateTrayIcon(self):
         """
         Показать или скрыть иконку в трее в зависимости от настроек
         """
-        if (self.config.alwaysShowTrayIcon.value or
-                (self.config.minimizeToTray.value and
-                 (self.mainWnd.IsIconized() or
-                  not self.mainWnd.IsShown()))):
-            self._trayIcon.showTrayIcon()
+        if self.config.alwaysShowTrayIcon.value or not self.mainWnd.IsShown():
+            self.showTrayIcon()
         else:
-            self._trayIcon.removeTrayIcon()
+            self.removeTrayIcon()
 
-    def __onPreferencesDialogClose(self, _prefDialog):
+    def _onPreferencesDialogClose(self, _prefDialog):
         self.updateTrayIcon()
 
-    def __onIconize(self, event):
-        if event.IsIconized() and self.config.minimizeToTray.value:
-            # Окно свернули
-            self.mainWnd.Hide()
+    def _onTaskBarUpdate(self, _page):
         self.updateTrayIcon()
 
-    def __OnTaskBarUpdate(self, _page):
-        self.updateTrayIcon()
-
-    def __OnTrayLeftClick(self, _event):
+    def _onTrayLeftClick(self, _event):
         if self.mainWnd.IsIconized():
             self.restoreWindow()
         else:
             self.mainWnd.Iconize()
 
-    def __onPopupMenu(self, event):
+    def _onPopupMenu(self, event):
         if event.GetId() == self._trayIcon.ID_RESTORE:
             self.restoreWindow()
         elif event.GetId() == self._trayIcon.ID_EXIT:
@@ -128,7 +121,7 @@ class TrayIcon(wx.adv.TaskBarIcon):
         self.mainWnd = mainWnd
         self._iconFileName = iconFileName
 
-        logger.debug(u'Tray icon available: {}'.format(self.IsAvailable()))
+        logger.debug('Tray icon available: {}'.format(self.IsAvailable()))
 
         self.ID_RESTORE = None
         self.ID_EXIT = None
@@ -136,13 +129,19 @@ class TrayIcon(wx.adv.TaskBarIcon):
 
     def CreatePopupMenu(self):
         trayMenu = wx.Menu()
-        self.ID_RESTORE = trayMenu.Append(wx.ID_ANY, _(u"Restore")).GetId()
-        self.ID_EXIT = trayMenu.Append(wx.ID_ANY, _(u"Exit")).GetId()
+        self.ID_RESTORE = trayMenu.Append(wx.ID_ANY, _("Restore")).GetId()
+        self.ID_EXIT = trayMenu.Append(wx.ID_ANY, _("Exit")).GetId()
         return trayMenu
 
+    def update(self):
+        if self.IsIconInstalled():
+            tooltip = outwiker.core.commands.getMainWindowTitle(self._application)
+            self.SetIcon(self.icon, tooltip)
+
     def showTrayIcon(self):
-        tooltip = outwiker.core.commands.getMainWindowTitle(self._application)
-        self.SetIcon(self.icon, tooltip)
+        if not self.IsIconInstalled():
+            tooltip = outwiker.core.commands.getMainWindowTitle(self._application)
+            self.SetIcon(self.icon, tooltip)
 
     def removeTrayIcon(self):
         if self.IsIconInstalled():

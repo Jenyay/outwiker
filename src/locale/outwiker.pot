@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-13 19:09+0300\n"
+"POT-Creation-Date: 2022-11-27 23:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -264,7 +264,7 @@ msgstr ""
 msgid "Really exit?"
 msgstr ""
 
-#: outwiker/actions/exit.py:40 outwiker/gui/trayicon.py:140
+#: outwiker/actions/exit.py:40 outwiker/gui/trayicon.py:136
 msgid "Exit"
 msgstr ""
 
@@ -366,7 +366,7 @@ msgstr ""
 msgid "Open tree notes"
 msgstr ""
 
-#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:123
+#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:136
 msgid "Help"
 msgstr ""
 
@@ -1293,7 +1293,7 @@ msgstr ""
 msgid "Remove files?"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:139
+#: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:152
 #: outwiker/gui/preferences/prefcontroller.py:131
 #: outwiker/gui/preferences/prefcontroller.py:157
 #: outwiker/pages/wiki/wikipagecontroller.py:84
@@ -1606,75 +1606,75 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:104
+#: outwiker/gui/mainwindow.py:117
 msgid "File"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:107 outwiker/gui/preferences/generalpanel.py:43
+#: outwiker/gui/mainwindow.py:120 outwiker/gui/preferences/generalpanel.py:43
 msgid "Edit"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:110
+#: outwiker/gui/mainwindow.py:123
 msgid "Tree"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:113
+#: outwiker/gui/mainwindow.py:126
 msgid "Tools"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:116 outwiker/gui/rootpagepanel.py:167
+#: outwiker/gui/mainwindow.py:129 outwiker/gui/rootpagepanel.py:167
 msgid "Bookmarks"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:118
+#: outwiker/gui/mainwindow.py:131
 msgid "View"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:120
+#: outwiker/gui/mainwindow.py:133
 msgid "Go to"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:128
+#: outwiker/gui/mainwindow.py:141
 msgid "Toolbars"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:145
+#: outwiker/gui/mainwindow.py:158
 #: outwiker/gui/preferences/prefcontroller.py:167
 msgid "Plugins"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:261 outwiker/gui/texteditormenu.py:12
+#: outwiker/gui/mainwindow.py:274 outwiker/gui/texteditormenu.py:12
 msgid "Undo"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:266 outwiker/gui/texteditormenu.py:13
+#: outwiker/gui/mainwindow.py:279 outwiker/gui/texteditormenu.py:13
 msgid "Redo"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:273 outwiker/gui/texteditormenu.py:15
+#: outwiker/gui/mainwindow.py:286 outwiker/gui/texteditormenu.py:15
 msgid "Cut"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:278 outwiker/gui/texteditormenu.py:16
+#: outwiker/gui/mainwindow.py:291 outwiker/gui/texteditormenu.py:16
 msgid "Copy"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:283 outwiker/gui/texteditormenu.py:17
+#: outwiker/gui/mainwindow.py:296 outwiker/gui/texteditormenu.py:17
 msgid "Paste"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:290 outwiker/gui/texteditormenu.py:19
+#: outwiker/gui/mainwindow.py:303 outwiker/gui/texteditormenu.py:19
 msgid "Select All"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:602
+#: outwiker/gui/mainwindow.py:615
 #, python-format
 msgid ""
 "Can't save config\n"
 "%s"
 msgstr ""
 
-#: outwiker/gui/mainwndcontroller.py:206
+#: outwiker/gui/mainwndcontroller.py:225
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -2172,20 +2172,34 @@ msgstr ""
 msgid "Page Options..."
 msgstr ""
 
-#: outwiker/gui/preferences/traypanel.py:43
-msgid "Minimize to tray"
+#: outwiker/gui/preferences/traypanel.py:13
+#: outwiker/gui/preferences/traypanel.py:14
+msgid "Minimize window"
 msgstr ""
 
-#: outwiker/gui/preferences/traypanel.py:48
+#: outwiker/gui/preferences/traypanel.py:13
+#: outwiker/gui/preferences/traypanel.py:14
+msgid "Hide to tray"
+msgstr ""
+
+#: outwiker/gui/preferences/traypanel.py:14
+msgid "Close window"
+msgstr ""
+
+#: outwiker/gui/preferences/traypanel.py:43
+msgid "Minimize window button"
+msgstr ""
+
+#: outwiker/gui/preferences/traypanel.py:50
+msgid "Close window button"
+msgstr ""
+
+#: outwiker/gui/preferences/traypanel.py:65
 msgid "Start iconized"
 msgstr ""
 
-#: outwiker/gui/preferences/traypanel.py:53
+#: outwiker/gui/preferences/traypanel.py:70
 msgid "Always show tray icon"
-msgstr ""
-
-#: outwiker/gui/preferences/traypanel.py:58
-msgid "Minimize on close window"
 msgstr ""
 
 #: outwiker/gui/preferences/wikieditorpanel.py:34
@@ -2265,7 +2279,7 @@ msgstr ""
 msgid "Spell"
 msgstr ""
 
-#: outwiker/gui/trayicon.py:139
+#: outwiker/gui/trayicon.py:135
 msgid "Restore"
 msgstr ""
 

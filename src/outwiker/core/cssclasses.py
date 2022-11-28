@@ -17,7 +17,10 @@ CSS_WIKI_INCLUDE = 'ow-wiki-include'
 
 def getDefaultStyles() -> str:
     return '''
-		img{border:none}
+		img {
+            border:none;
+            vertical-align:middle;
+        }
 
         /* Error message */
         div.ow-error {
