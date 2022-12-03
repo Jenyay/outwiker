@@ -1,5 +1,86 @@
-import katex from '../katex.mjs';
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("katex"));
+	else if(typeof define === 'function' && define.amd)
+		define(["katex"], factory);
+	else {
+		var a = typeof exports === 'object' ? factory(require("katex")) : factory(root["katex"]);
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})((typeof self !== 'undefined' ? self : this), function(__WEBPACK_EXTERNAL_MODULE__771__) {
+return /******/ (function() { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
 
+/***/ 771:
+/***/ (function(module) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__771__;
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+!function() {
+/* harmony import */ var katex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(771);
+/* harmony import */ var katex__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(katex__WEBPACK_IMPORTED_MODULE_0__);
 /* eslint-disable */
 
 /* -*- Mode: Javascript; indent-tabs-mode:nil; js-indent-level: 2 -*- */
@@ -52,18 +133,20 @@ import katex from '../katex.mjs';
 //   - use "" for strings that need to stay untouched
 // version: "3.3.0" for MathJax and KaTeX
 // Add \ce, \pu, and \tripledash to the KaTeX macros.
-katex.__defineMacro("\\ce", function (context) {
+katex__WEBPACK_IMPORTED_MODULE_0___default().__defineMacro("\\ce", function (context) {
   return chemParse(context.consumeArgs(1)[0], "ce");
 });
 
-katex.__defineMacro("\\pu", function (context) {
+katex__WEBPACK_IMPORTED_MODULE_0___default().__defineMacro("\\pu", function (context) {
   return chemParse(context.consumeArgs(1)[0], "pu");
 }); //  Needed for \bond for the ~ forms
 //  Raise by 2.56mu, not 2mu. We're raising a hyphen-minus, U+002D, not 
 //  a mathematical minus, U+2212. So we need that extra 0.56.
 
 
-katex.__defineMacro("\\tripledash", "{\\vphantom{-}\\raisebox{2.56mu}{$\\mkern2mu" + "\\tiny\\text{-}\\mkern1mu\\text{-}\\mkern1mu\\text{-}\\mkern2mu$}}");
+katex__WEBPACK_IMPORTED_MODULE_0___default().__defineMacro("\\tripledash", "{\\vphantom{-}\\raisebox{2.56mu}{$\\mkern2mu" + "\\tiny\\text{-}\\mkern1mu\\text{-}\\mkern1mu\\text{-}\\mkern2mu$}}");
+
+ //
 //  This is the main function for handing the \ce and \pu commands.
 //  It takes the argument to \ce or \pu and returns the corresponding TeX string.
 //
@@ -71,7 +154,7 @@ katex.__defineMacro("\\tripledash", "{\\vphantom{-}\\raisebox{2.56mu}{$\\mkern2m
 var chemParse = function chemParse(tokens, stateMachine) {
   // Recreate the argument string from KaTeX's array of tokens.
   var str = "";
-  var expectedLoc = tokens[tokens.length - 1].loc.start;
+  var expectedLoc = tokens.length && tokens[tokens.length - 1].loc.start;
 
   for (var i = tokens.length - 1; i >= 0; i--) {
     if (tokens[i].loc.start > expectedLoc) {
@@ -407,10 +490,10 @@ var mhchemParser = {
       '\\overset{(...)}': function overset(input) {
         return mhchemParser.patterns.findObserveGroups(input, "\\overset{", "", "", "}", "{", "", "", "}");
       },
-      '\\underset{(...)}': function underset(input) {
+      "\\underset{(...)}": function underset(input) {
         return mhchemParser.patterns.findObserveGroups(input, "\\underset{", "", "", "}", "{", "", "", "}");
       },
-      '\\underbrace{(...)}': function underbrace(input) {
+      "\\underbrace{(...)}": function underbrace(input) {
         return mhchemParser.patterns.findObserveGroups(input, "\\underbrace{", "", "", "}_", "{", "", "", "}");
       },
       '\\color{(...)}0': function color0(input) {
@@ -1375,7 +1458,7 @@ mhchemParser.stateMachines = {
           nextState: '3'
         }
       },
-      '\\underset{(...)}': {
+      "\\underset{(...)}": {
         '*': {
           action_: [{
             type_: 'output',
@@ -1384,7 +1467,7 @@ mhchemParser.stateMachines = {
           nextState: '3'
         }
       },
-      '\\underbrace{(...)}': {
+      "\\underbrace{(...)}": {
         '*': {
           action_: [{
             type_: 'output',
@@ -1590,7 +1673,8 @@ mhchemParser.stateMachines = {
         if (!buffer.r) {
           ret = [];
 
-          if (!buffer.a && !buffer.b && !buffer.p && !buffer.o && !buffer.q && !buffer.d && !entityFollows) ; else {
+          if (!buffer.a && !buffer.b && !buffer.p && !buffer.o && !buffer.q && !buffer.d && !entityFollows) {//ret = [];
+          } else {
             if (buffer.sb) {
               ret.push({
                 type_: 'entitySkip'
@@ -2960,9 +3044,12 @@ var texify = {
         break;
 
       default:
+        assertNever(buf);
         throw ["MhchemBugT", "mhchem bug T. Please report."];
       // Missing texify rule or unknown MhchemParser output
     }
+
+    assertString(res);
     return res;
   },
   _getArrow: function _getArrow(a) {
@@ -2998,6 +3085,7 @@ var texify = {
         return "leftequilibrium";
 
       default:
+        assertNever(a);
         throw ["MhchemBugT", "mhchem bug T. Please report."];
     }
   },
@@ -3055,6 +3143,7 @@ var texify = {
         return "{>}";
 
       default:
+        assertNever(a);
         throw ["MhchemBugT", "mhchem bug T. Please report."];
     }
   },
@@ -3103,7 +3192,25 @@ var texify = {
         return " \\uparrow{} ";
 
       default:
+        assertNever(a);
         throw ["MhchemBugT", "mhchem bug T. Please report."];
     }
   }
 }; //
+// Helpers for code anaylsis
+// Will show type error at calling position
+//
+
+/** @param {number} a */
+
+function assertNever(a) {}
+/** @param {string} a */
+
+
+function assertString(a) {}
+}();
+__webpack_exports__ = __webpack_exports__["default"];
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
+});
