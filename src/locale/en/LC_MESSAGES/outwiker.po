@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 23:23+0300\n"
+"POT-Creation-Date: 2022-12-04 22:17+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -261,7 +261,7 @@ msgstr "Close OutWiker"
 msgid "Really exit?"
 msgstr "Really exit?"
 
-#: outwiker/actions/exit.py:40 outwiker/gui/trayicon.py:136
+#: outwiker/actions/exit.py:40 outwiker/gui/trayicon.py:133
 msgid "Exit"
 msgstr "Exit"
 
@@ -363,7 +363,7 @@ msgstr "Open…"
 msgid "Open tree notes"
 msgstr "Open tree notes"
 
-#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:136
+#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:137
 msgid "Help"
 msgstr "Help"
 
@@ -1315,7 +1315,7 @@ msgstr "Switch to preview tab for some page types"
 msgid "Remove files?"
 msgstr "Remove files?"
 
-#: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:152
+#: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:153
 #: outwiker/gui/preferences/prefcontroller.py:131
 #: outwiker/gui/preferences/prefcontroller.py:157
 #: outwiker/pages/wiki/wikipagecontroller.py:84
@@ -1628,68 +1628,68 @@ msgstr "Note"
 msgid "Notes"
 msgstr "Notes"
 
-#: outwiker/gui/mainwindow.py:117
+#: outwiker/gui/mainwindow.py:118
 msgid "File"
 msgstr "File"
 
-#: outwiker/gui/mainwindow.py:120 outwiker/gui/preferences/generalpanel.py:43
+#: outwiker/gui/mainwindow.py:121 outwiker/gui/preferences/generalpanel.py:43
 msgid "Edit"
 msgstr "Edit"
 
-#: outwiker/gui/mainwindow.py:123
+#: outwiker/gui/mainwindow.py:124
 msgid "Tree"
 msgstr "Tree"
 
-#: outwiker/gui/mainwindow.py:126
+#: outwiker/gui/mainwindow.py:127
 msgid "Tools"
 msgstr "Tools"
 
-#: outwiker/gui/mainwindow.py:129 outwiker/gui/rootpagepanel.py:167
+#: outwiker/gui/mainwindow.py:130 outwiker/gui/rootpagepanel.py:167
 msgid "Bookmarks"
 msgstr "Bookmarks"
 
-#: outwiker/gui/mainwindow.py:131
+#: outwiker/gui/mainwindow.py:132
 msgid "View"
 msgstr "View"
 
-#: outwiker/gui/mainwindow.py:133
+#: outwiker/gui/mainwindow.py:134
 msgid "Go to"
 msgstr "Go to"
 
-#: outwiker/gui/mainwindow.py:141
+#: outwiker/gui/mainwindow.py:142
 msgid "Toolbars"
 msgstr "Toolbars"
 
-#: outwiker/gui/mainwindow.py:158
+#: outwiker/gui/mainwindow.py:159
 #: outwiker/gui/preferences/prefcontroller.py:167
 msgid "Plugins"
 msgstr "Plugins"
 
-#: outwiker/gui/mainwindow.py:274 outwiker/gui/texteditormenu.py:12
+#: outwiker/gui/mainwindow.py:275 outwiker/gui/texteditormenu.py:12
 msgid "Undo"
 msgstr "Undo"
 
-#: outwiker/gui/mainwindow.py:279 outwiker/gui/texteditormenu.py:13
+#: outwiker/gui/mainwindow.py:280 outwiker/gui/texteditormenu.py:13
 msgid "Redo"
 msgstr "Redo"
 
-#: outwiker/gui/mainwindow.py:286 outwiker/gui/texteditormenu.py:15
+#: outwiker/gui/mainwindow.py:287 outwiker/gui/texteditormenu.py:15
 msgid "Cut"
 msgstr "Cut"
 
-#: outwiker/gui/mainwindow.py:291 outwiker/gui/texteditormenu.py:16
+#: outwiker/gui/mainwindow.py:292 outwiker/gui/texteditormenu.py:16
 msgid "Copy"
 msgstr "Copy"
 
-#: outwiker/gui/mainwindow.py:296 outwiker/gui/texteditormenu.py:17
+#: outwiker/gui/mainwindow.py:297 outwiker/gui/texteditormenu.py:17
 msgid "Paste"
 msgstr "Paste"
 
-#: outwiker/gui/mainwindow.py:303 outwiker/gui/texteditormenu.py:19
+#: outwiker/gui/mainwindow.py:304 outwiker/gui/texteditormenu.py:19
 msgid "Select All"
 msgstr "Select All"
 
-#: outwiker/gui/mainwindow.py:615
+#: outwiker/gui/mainwindow.py:616
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -2222,19 +2222,19 @@ msgstr "Hide to tray"
 msgid "Close window"
 msgstr "Close window"
 
-#: outwiker/gui/preferences/traypanel.py:43
+#: outwiker/gui/preferences/traypanel.py:38
 msgid "Minimize window button"
 msgstr "Minimize window button"
 
-#: outwiker/gui/preferences/traypanel.py:50
+#: outwiker/gui/preferences/traypanel.py:45
 msgid "Close window button"
 msgstr "Close window button"
 
-#: outwiker/gui/preferences/traypanel.py:65
+#: outwiker/gui/preferences/traypanel.py:60
 msgid "Start iconized"
 msgstr "Start iconized"
 
-#: outwiker/gui/preferences/traypanel.py:70
+#: outwiker/gui/preferences/traypanel.py:65
 msgid "Always show tray icon"
 msgstr "Always show tray icon"
 
@@ -2315,7 +2315,7 @@ msgstr "Add \"{}\" to dictionary"
 msgid "Spell"
 msgstr "Spell"
 
-#: outwiker/gui/trayicon.py:135
+#: outwiker/gui/trayicon.py:132
 msgid "Restore"
 msgstr "Restore"
 
@@ -2715,9 +2715,9 @@ msgstr "Can't open file '{}'"
 msgid "Encoding error in file '{}'"
 msgstr "Encoding error in file '{}'"
 
-#: outwiker/pages/wiki/parser/tokenthumbnail.py:71
-msgid "<b>Can't create thumbnail for \"{}\"</b>"
-msgstr "<b>Can't create thumbnail for \"{}\"</b>"
+#: outwiker/pages/wiki/parser/tokenthumbnail.py:74
+msgid "Can't create thumbnail for <b>\"{}\"</b>"
+msgstr "Can't create thumbnail for <b>\"{}\"</b>"
 
 #: outwiker/pages/wiki/thumbdialog.py:27
 msgid "Thumbnails"
@@ -2797,6 +2797,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "<b>Can't create thumbnail for \"{}\"</b>"
+#~ msgstr "<b>Can't create thumbnail for \"{}\"</b>"
 
 #~ msgid "Minimize to tray"
 #~ msgstr "Minimize to tray"
