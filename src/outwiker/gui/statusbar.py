@@ -9,16 +9,21 @@ from outwiker.core.application import ApplicationParams
 from .guiconfig import MainWindowConfig, GeneralGuiConfig
 
 
-class StatusBarController(object):
+class StatusBarController:
     def __init__(self,
                  statusbar: wx.StatusBar,
                  application: ApplicationParams):
         self._statusbar = statusbar
         self._application = application
-        self._items_count = 2
 
         self._mainWindowConfig = MainWindowConfig(self._application.config)
         self._generalConfig = GeneralGuiConfig(self._application.config)
+        datetime_width = self._mainWindowConfig.datetimeStatusWidth.value
+
+        self._ATTACH_INFO_STATUS_ITEM = 1
+        self._DATETIME_STATUS_ITEM = 2
+        self._status_items_width = [-1, -1, datetime_width]
+        self._items_count = len(self._status_items_width)
 
         self._bindEvents()
         self._initStatusBar()
@@ -41,28 +46,25 @@ class StatusBarController(object):
         self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
 
     def _initStatusBar(self):
-        datetime_width = self._mainWindowConfig.datetimeStatusWidth.value
         self._statusbar.SetFieldsCount(self._items_count)
-        self._statusbar.SetStatusWidths([-1, datetime_width])
+        self._statusbar.SetStatusWidths(self._status_items_width)
         self.updateStatusBar()
 
     def _onTreeUpdate(self, _sender):
-        self.updatePageDateTime()
+        self._updatePageDateTime()
 
     def _onPageUpdate(self, _page, **_kwargs):
-        self.updatePageDateTime()
+        self._updatePageDateTime()
 
     def _onWikiOpen(self, _wikiroot):
-        self.updatePageDateTime()
+        self._updatePageDateTime()
 
     def _onPageSelect(self, _newpage):
-        self.updatePageDateTime()
+        self._updatePageDateTime()
 
-    def updatePageDateTime(self):
-        statusbar_item = 1
-
+    def _updatePageDateTime(self):
         dateFormat = self._generalConfig.dateTimeFormat.value
-        text = u""
+        text = ''
 
         if(self._application.selectedPage is not None and
                 self._application.selectedPage.datetime is not None):
@@ -70,13 +72,13 @@ class StatusBarController(object):
                 self._application.selectedPage.datetime,
                 dateFormat)
 
-        setStatusText(text, statusbar_item)
+        setStatusText(text, self._DATETIME_STATUS_ITEM)
 
     def _onPreferencesDialogClose(self, _prefDialog):
         """
         Обработчик события изменения настроек главного окна
         """
-        self.updatePageDateTime()
+        self._updatePageDateTime()
         self.updateStatusBar()
 
     def updateStatusBar(self):

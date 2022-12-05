@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from dataclasses import dataclass
-from typing import Optional
+from dataclasses import dataclass, field
+from typing import List, Optional
 
 from outwiker.gui.defines import ID_MOUSE_LEFT
 
@@ -381,3 +381,12 @@ class BeginAttachRenamingParams:
     # Name of renamed attached file or directory.
     # Rename selected item if renamed_item is None.
     renamed_item: Optional[str] = None
+
+
+@dataclass(frozen=True)
+class AttachSelectionChangedParams:
+    """
+    Parameters for onAttachSelectionChanged
+    """
+    # Current selected attachments
+    selection: List[str] = field(default_factory=list)

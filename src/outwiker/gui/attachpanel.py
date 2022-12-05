@@ -17,7 +17,8 @@ from outwiker.actions.attachselectall import AttachSelectAllAction
 from outwiker.actions.clipboard import CopyAttachPathAction
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import MessageBox, attachFiles, renameAttach, showError
-from outwiker.core.events import BeginAttachRenamingParams
+from outwiker.core.events import (BeginAttachRenamingParams,
+                                  AttachSelectionChangedParams)
 from outwiker.core.system import getBuiltinImagePath, getOS
 
 from .dropfiles import BaseDropFilesTarget
@@ -94,6 +95,14 @@ class AttachPanel(wx.Panel):
                   self._onEndLabelEdit,
                   self.__attachList)
 
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED,
+                  self._onAttachSelected,
+                  self.__attachList)
+
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED,
+                  self._onAttachSelected,
+                  self.__attachList)
+
     def _unbindGuiEvents(self):
         self.Unbind(wx.EVT_LIST_BEGIN_DRAG,
                     handler=self._onBeginDrag,
@@ -112,6 +121,14 @@ class AttachPanel(wx.Panel):
                     source=self.__attachList)
 
         self.Unbind(wx.EVT_CLOSE, handler=self._onClose)
+
+        self.Unbind(wx.EVT_LIST_ITEM_SELECTED,
+                    handler=self._onAttachSelected,
+                    source=self.__attachList)
+
+        self.Unbind(wx.EVT_LIST_ITEM_DESELECTED,
+                    handler=self._onAttachSelected,
+                    source=self.__attachList)
 
     @property
     def attachList(self):
@@ -315,6 +332,7 @@ class AttachPanel(wx.Panel):
                     self.__attachList.Select(index)
 
         self.__attachList.Thaw()
+        self._sendAttachSelectedEvent()
 
     def _selectFile(self, fname):
         if fname is None:
@@ -492,6 +510,16 @@ class AttachPanel(wx.Panel):
 
     def _onPreferencesDialogClose(self, dialog):
         self.updateAttachments()
+
+    def _onAttachSelected(self, event):
+        self._sendAttachSelectedEvent()
+
+    def _sendAttachSelectedEvent(self):
+        page = self._application.selectedPage
+        if page is not None:
+            files = self.getSelectedFiles()
+            params = AttachSelectionChangedParams(files)
+            self._application.onAttachSelectionChanged(page, params)
 
 
 class DropAttachFilesTarget(BaseDropFilesTarget):
