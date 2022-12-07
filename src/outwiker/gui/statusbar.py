@@ -1,12 +1,22 @@
 # -*- coding: utf-8 -*-
 
+from dataclasses import dataclass
+from typing import List, Optional
 import datetime
 
 import wx
 
-from outwiker.core.commands import setStatusText
 from outwiker.core.application import ApplicationParams
+from outwiker.gui.defines import (STATUSBAR_MESSAGE_ITEM,
+                                  STATUSBAR_PAGE_DATETIME_ITEM)
 from .guiconfig import MainWindowConfig, GeneralGuiConfig
+
+
+@dataclass(slots=True)
+class StatusBarItemInfo:
+    name: str
+    position: int
+    width: int
 
 
 class StatusBarController:
@@ -20,13 +30,35 @@ class StatusBarController:
         self._generalConfig = GeneralGuiConfig(self._application.config)
         datetime_width = self._mainWindowConfig.datetimeStatusWidth.value
 
-        self._ATTACH_INFO_STATUS_ITEM = 1
-        self._DATETIME_STATUS_ITEM = 2
-        self._status_items_width = [-1, -1, datetime_width]
-        self._items_count = len(self._status_items_width)
+        self._statusbar_items: List[StatusBarItemInfo] = []
+
+        self.addItem(STATUSBAR_MESSAGE_ITEM)
+        self.addItem(STATUSBAR_PAGE_DATETIME_ITEM, datetime_width)
 
         self._bindEvents()
+
+    def addItem(self, name: str, width: int = -1, position: Optional[int] = None) -> None:
+        if position:
+            item = StatusBarItemInfo(name, position, width)
+            self._statusbar_items.insert(position, item)
+        else:
+            item = StatusBarItemInfo(name, len(self._statusbar_items), width)
+            self._statusbar_items.append(item)
+
+        for n, item in enumerate(self._statusbar_items):
+            item.position = n
+
         self._initStatusBar()
+
+    def setStatusText(self, name: str, text: str) -> None:
+        position = None
+        for item in self._statusbar_items:
+            if item.name == name:
+                position = item.position
+                break
+
+        if position is not None:
+            self._statusbar.SetStatusText(text, position)
 
     def destroy(self):
         self._unbindEvents()
@@ -46,8 +78,8 @@ class StatusBarController:
         self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
 
     def _initStatusBar(self):
-        self._statusbar.SetFieldsCount(self._items_count)
-        self._statusbar.SetStatusWidths(self._status_items_width)
+        widths = [item.width for item in self._statusbar_items]
+        self._statusbar.SetFieldsCount(len(widths), widths)
         self.updateStatusBar()
 
     def _onTreeUpdate(self, _sender):
@@ -72,7 +104,7 @@ class StatusBarController:
                 self._application.selectedPage.datetime,
                 dateFormat)
 
-        setStatusText(text, self._DATETIME_STATUS_ITEM)
+        self.setStatusText(STATUSBAR_PAGE_DATETIME_ITEM, text)
 
     def _onPreferencesDialogClose(self, _prefDialog):
         """

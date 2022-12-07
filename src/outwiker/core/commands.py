@@ -531,13 +531,14 @@ def movePage(page, newParent):
             u"Can't move page: {}".format(page.display_title)))
 
 
-def setStatusText(text, index=0):
+def setStatusText(item_name: str, text: str) -> None:
     """
     Установить текст статусбара.
     text - текст
     index - номер ячейки статусбара
     """
-    Application.mainWindow.statusbar.SetStatusText(text, index)
+    if Application.mainWindow:
+        Application.mainWindow.statusbar.setStatusText(item_name, text)
 
 
 @testreadonly
