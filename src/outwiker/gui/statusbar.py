@@ -10,7 +10,7 @@ from outwiker.gui.defines import STATUSBAR_MESSAGE_ITEM
 from outwiker.gui.guiconfig import MainWindowConfig
 
 
-@dataclass(slots=True)
+@dataclass
 class StatusBarItemInfo:
     name: str
     position: int
