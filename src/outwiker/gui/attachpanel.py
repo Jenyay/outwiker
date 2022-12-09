@@ -28,7 +28,7 @@ from outwiker.core.events import (BeginAttachRenamingParams,
 from outwiker.core.system import getBuiltinImagePath, getOS
 
 from .dropfiles import BaseDropFilesTarget
-from .guiconfig import AttachConfig
+from .guiconfig import AttachConfig, GeneralGuiConfig
 
 
 logger = logging.getLogger('outwiker.gui.attachpanel')
@@ -38,7 +38,8 @@ class AttachPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
-        self._config = AttachConfig(self._application.config)
+        self._attach_config = AttachConfig(self._application.config)
+        self._general_config = GeneralGuiConfig(self._application.config)
         self.GO_TO_PARENT_ITEM_NAME = '..'
         self._ATTACH_STATUS_ITEM = 'STATUSBAR_ATTACH'
 
@@ -287,7 +288,7 @@ class AttachPanel(wx.Panel):
         """
         Обновить список прикрепленных файлов
         """
-        showHiddenDirs = self._config.showHiddenDirs.value
+        showHiddenDirs = self._attach_config.showHiddenDirs.value
 
         self.__attachList.Freeze()
         page = self._application.selectedPage
@@ -541,7 +542,8 @@ class AttachPanel(wx.Panel):
         tpl = _('{name}   -   {size} KB   -   {date}')
         name = os.path.relpath(fname_full, root_path)
         size = ('{:,.2f}'.format(os.path.getsize(fname_full) / 1024)).replace(',', ' ')
-        date = datetime.fromtimestamp(os.path.getmtime(fname_full)).strftime('%c')
+        datetime_format = self._general_config.dateTimeFormat.value
+        date = datetime.fromtimestamp(os.path.getmtime(fname_full)).strftime(datetime_format)
 
         return tpl.format(name=name, size=size, date=date)
 
