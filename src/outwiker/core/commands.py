@@ -531,6 +531,11 @@ def movePage(page, newParent):
             u"Can't move page: {}".format(page.display_title)))
 
 
+def addStatusBarItem(name: str, width: int = -1, position: Optional[int] = None) -> None:
+    if Application.mainWindow:
+        Application.mainWindow.statusbar.addItem(name, width, position)
+
+
 def setStatusText(item_name: str, text: str) -> None:
     """
     Установить текст статусбара.

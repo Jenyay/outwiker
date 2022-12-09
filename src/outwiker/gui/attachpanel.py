@@ -3,6 +3,7 @@
 import logging
 import os.path
 from typing import List
+from datetime import datetime
 
 import wx
 
@@ -16,7 +17,12 @@ from outwiker.actions.attachrename import RenameAttachActionForAttachPanel
 from outwiker.actions.attachselectall import AttachSelectAllAction
 from outwiker.actions.clipboard import CopyAttachPathAction
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import MessageBox, attachFiles, renameAttach, showError
+from outwiker.core.commands import (MessageBox,
+                                    attachFiles,
+                                    renameAttach,
+                                    addStatusBarItem,
+                                    setStatusText,
+                                    showError)
 from outwiker.core.events import (BeginAttachRenamingParams,
                                   AttachSelectionChangedParams)
 from outwiker.core.system import getBuiltinImagePath, getOS
@@ -34,6 +40,7 @@ class AttachPanel(wx.Panel):
         self._application = application
         self._config = AttachConfig(self._application.config)
         self.GO_TO_PARENT_ITEM_NAME = '..'
+        self._ATTACH_STATUS_ITEM = 'STATUSBAR_ATTACH'
 
         # Store old file name before renaming
         self._oldEditedAttachName = None
@@ -63,6 +70,7 @@ class AttachPanel(wx.Panel):
 
         self._bindGuiEvents()
         self._bindAppEvents()
+        addStatusBarItem(self._ATTACH_STATUS_ITEM, position=1)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -512,7 +520,41 @@ class AttachPanel(wx.Panel):
         self.updateAttachments()
 
     def _onAttachSelected(self, event):
+        text = ''
+        page = self._application.selectedPage
+        if page is not None:
+            files = self.getSelectedFiles()
+            attach = Attachment(page)
+            root = attach.getAttachPath()
+            full_path = [os.path.join(root, fname)
+                         for fname in files
+                         if os.path.isfile(os.path.join(root, fname))]
+            if len(full_path) == 1:
+                text = self._getStatusTextForSingleFile(full_path[0], root)
+            elif len(full_path) > 0:
+                text = self._getStatusTextForManyFiles(full_path)
+
+        setStatusText(self._ATTACH_STATUS_ITEM, text)
         self._sendAttachSelectedEvent()
+
+    def _getStatusTextForSingleFile(self, fname_full: str, root_path: str) -> str:
+        tpl = _('{name}   -   {size} KB   -   {date}')
+        name = os.path.relpath(fname_full, root_path)
+        size = ('{:,.2f}'.format(os.path.getsize(fname_full) / 1024)).replace(',', ' ')
+        date = datetime.fromtimestamp(os.path.getmtime(fname_full)).strftime('%c')
+
+        return tpl.format(name=name, size=size, date=date)
+
+    def _getStatusTextForManyFiles(self, fname_full) -> str:
+        tpl = _('{count} file(s)  -  {size} KB')
+        count = len(fname_full)
+        size = 0.0
+        for fname in fname_full:
+            size += os.path.getsize(fname)
+
+        size /= 1024
+        size_str = ('{:,.2f}'.format(size)).replace(',', ' ')
+        return tpl.format(count=count, size=size_str)
 
     def _sendAttachSelectedEvent(self):
         page = self._application.selectedPage

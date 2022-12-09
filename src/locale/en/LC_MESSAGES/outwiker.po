@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-04 22:17+0300\n"
+"POT-Creation-Date: 2022-12-09 17:20+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -152,11 +152,11 @@ msgstr "Remove attached files"
 msgid "Remove attached files. Action for attach panel"
 msgstr "Remove attached files. Action for attach panel"
 
-#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:363
+#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:389
 msgid "You did not select any file to remove"
 msgstr "You did not select any file to remove"
 
-#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:366
+#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:392
 msgid "Remove selected files?"
 msgstr "Remove selected files?"
 
@@ -742,19 +742,19 @@ msgstr "Can't move page when page with that title already exists"
 msgid "Can't move page: {}"
 msgstr "Can't move page: {}"
 
-#: outwiker/core/commands.py:547 outwiker/gui/notestree.py:211
+#: outwiker/core/commands.py:553 outwiker/gui/notestree.py:211
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
-#: outwiker/core/commands.py:565
+#: outwiker/core/commands.py:571
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Can't rename page \"{}\" to \"{}\""
 
-#: outwiker/core/commands.py:584
+#: outwiker/core/commands.py:590
 msgid "Invalid page title"
 msgstr "Invalid page title"
 
-#: outwiker/core/commands.py:589
+#: outwiker/core/commands.py:595
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -763,15 +763,15 @@ msgstr ""
 "{0}\n"
 "Continue?"
 
-#: outwiker/core/commands.py:592
+#: outwiker/core/commands.py:598
 msgid "The page title"
 msgstr "The page title"
 
-#: outwiker/core/commands.py:644
+#: outwiker/core/commands.py:650
 msgid "Enter format of the date"
 msgstr "Enter format of the date"
 
-#: outwiker/core/commands.py:645 outwiker/pages/wiki/actions/dates.py:25
+#: outwiker/core/commands.py:651 outwiker/pages/wiki/actions/dates.py:25
 msgid "Date format"
 msgstr "Date format"
 
@@ -910,7 +910,7 @@ msgstr "Printing error"
 #: outwiker/gui/preferences/iconsetpanel.py:280
 #: outwiker/gui/preferences/iconsetpanel.py:320
 #: outwiker/gui/renametagdialog.py:77 outwiker/gui/renametagdialog.py:82
-#: outwiker/pages/html/basehtmlpanel.py:331
+#: outwiker/pages/html/basehtmlpanel.py:330
 msgid "Error"
 msgstr "Error"
 
@@ -1311,9 +1311,19 @@ msgstr "Switch to preview tab"
 msgid "Switch to preview tab for some page types"
 msgstr "Switch to preview tab for some page types"
 
-#: outwiker/gui/attachpanel.py:367
+#: outwiker/gui/attachpanel.py:393
 msgid "Remove files?"
 msgstr "Remove files?"
+
+#: outwiker/gui/attachpanel.py:541
+#, python-brace-format
+msgid "{name}   -   {size} KB   -   {date}"
+msgstr "{name}   -   {size} KB   -   {date}"
+
+#: outwiker/gui/attachpanel.py:549
+#, python-brace-format
+msgid "{count} file(s)  -  {size} KB"
+msgstr "{count} file(s)  -  {size} KB"
 
 #: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:153
 #: outwiker/gui/preferences/prefcontroller.py:131
@@ -1698,7 +1708,7 @@ msgstr ""
 "Can't save config\n"
 "%s"
 
-#: outwiker/gui/mainwndcontroller.py:225
+#: outwiker/gui/mainwndcontroller.py:235
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1901,7 +1911,7 @@ msgstr "Recent used"
 
 #: outwiker/gui/preferences/generalpanel.py:42
 #: outwiker/gui/preferences/prefcontroller.py:135
-#: outwiker/pages/html/basehtmlpanel.py:210
+#: outwiker/pages/html/basehtmlpanel.py:209
 msgid "Preview"
 msgstr "Preview"
 
@@ -2347,22 +2357,22 @@ msgstr "Code / Preview"
 msgid "Switch Code <--> Preview for HTML and wiki pages"
 msgstr "Switch Code <--> Preview for HTML and wiki pages"
 
-#: outwiker/pages/html/basehtmlpanel.py:209
+#: outwiker/pages/html/basehtmlpanel.py:208
 #: outwiker/pages/html/htmlpageview.py:33
 #: outwiker/pages/html/htmlpageview.py:36
 #: outwiker/pages/wiki/basewikipageview.py:195
 msgid "HTML"
 msgstr "HTML"
 
-#: outwiker/pages/html/basehtmlpanel.py:296
+#: outwiker/pages/html/basehtmlpanel.py:295
 msgid "Page rendered. Please wait…"
 msgstr "Page rendered. Please wait…"
 
-#: outwiker/pages/html/basehtmlpanel.py:313
+#: outwiker/pages/html/basehtmlpanel.py:312
 msgid "Page loading. Please wait…"
 msgstr "Page loading. Please wait…"
 
-#: outwiker/pages/html/basehtmlpanel.py:329
+#: outwiker/pages/html/basehtmlpanel.py:328
 msgid "Page loading error: {}"
 msgstr "Page loading error: {}"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-04 22:17+0300\n"
+"POT-Creation-Date: 2022-12-09 17:20+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.2.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -152,11 +152,11 @@ msgstr "Удалить выбранные файлы"
 msgid "Remove attached files. Action for attach panel"
 msgstr "Удалить прикрепленные файлы. Действие для панели прикрепленных файлов"
 
-#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:363
+#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:389
 msgid "You did not select any file to remove"
 msgstr "Вы не выбрали файл(ы) для удаления"
 
-#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:366
+#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:392
 msgid "Remove selected files?"
 msgstr "Удалить выбранные файлы?"
 
@@ -749,19 +749,19 @@ msgstr ""
 msgid "Can't move page: {}"
 msgstr "Невозможно переместить страницу: {}"
 
-#: outwiker/core/commands.py:547 outwiker/gui/notestree.py:211
+#: outwiker/core/commands.py:553 outwiker/gui/notestree.py:211
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
-#: outwiker/core/commands.py:565
+#: outwiker/core/commands.py:571
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Невозможно переименовать страницу \"{}\" в \"{}\""
 
-#: outwiker/core/commands.py:584
+#: outwiker/core/commands.py:590
 msgid "Invalid page title"
 msgstr "Неправильный заголовок страницы"
 
-#: outwiker/core/commands.py:589
+#: outwiker/core/commands.py:595
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -770,15 +770,15 @@ msgstr ""
 "{0}\n"
 "Продолжить?"
 
-#: outwiker/core/commands.py:592
+#: outwiker/core/commands.py:598
 msgid "The page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/core/commands.py:644
+#: outwiker/core/commands.py:650
 msgid "Enter format of the date"
 msgstr "Введите формат даты"
 
-#: outwiker/core/commands.py:645 outwiker/pages/wiki/actions/dates.py:25
+#: outwiker/core/commands.py:651 outwiker/pages/wiki/actions/dates.py:25
 msgid "Date format"
 msgstr "Формат даты"
 
@@ -915,7 +915,7 @@ msgstr "Ошибка печати"
 #: outwiker/gui/preferences/iconsetpanel.py:280
 #: outwiker/gui/preferences/iconsetpanel.py:320
 #: outwiker/gui/renametagdialog.py:77 outwiker/gui/renametagdialog.py:82
-#: outwiker/pages/html/basehtmlpanel.py:331
+#: outwiker/pages/html/basehtmlpanel.py:330
 msgid "Error"
 msgstr "Ошибка"
 
@@ -1316,9 +1316,19 @@ msgstr "Переключиться на вкладку просмотра"
 msgid "Switch to preview tab for some page types"
 msgstr "Переключиться на вкладку просмотра для некоторых типов страниц"
 
-#: outwiker/gui/attachpanel.py:367
+#: outwiker/gui/attachpanel.py:393
 msgid "Remove files?"
 msgstr "Удалить файлы?"
+
+#: outwiker/gui/attachpanel.py:541
+#, python-brace-format
+msgid "{name}   -   {size} KB   -   {date}"
+msgstr "{name}   -   {size} КБ   -   {date}"
+
+#: outwiker/gui/attachpanel.py:549
+#, python-brace-format
+msgid "{count} file(s)  -  {size} KB"
+msgstr "{count} файл(ов)  -  {size} КБ"
 
 #: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:153
 #: outwiker/gui/preferences/prefcontroller.py:131
@@ -1710,7 +1720,7 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: outwiker/gui/mainwndcontroller.py:225
+#: outwiker/gui/mainwndcontroller.py:235
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1913,7 +1923,7 @@ msgstr "Последний используемый"
 
 #: outwiker/gui/preferences/generalpanel.py:42
 #: outwiker/gui/preferences/prefcontroller.py:135
-#: outwiker/pages/html/basehtmlpanel.py:210
+#: outwiker/pages/html/basehtmlpanel.py:209
 msgid "Preview"
 msgstr "Просмотр"
 
@@ -2359,22 +2369,22 @@ msgstr "Код / Просмотр"
 msgid "Switch Code <--> Preview for HTML and wiki pages"
 msgstr "Переключение Код <--> Просмотр для HTML- и викистраниц"
 
-#: outwiker/pages/html/basehtmlpanel.py:209
+#: outwiker/pages/html/basehtmlpanel.py:208
 #: outwiker/pages/html/htmlpageview.py:33
 #: outwiker/pages/html/htmlpageview.py:36
 #: outwiker/pages/wiki/basewikipageview.py:195
 msgid "HTML"
 msgstr "HTML"
 
-#: outwiker/pages/html/basehtmlpanel.py:296
+#: outwiker/pages/html/basehtmlpanel.py:295
 msgid "Page rendered. Please wait…"
 msgstr "Страница подготавливается. Пожалуйста, подождите…"
 
-#: outwiker/pages/html/basehtmlpanel.py:313
+#: outwiker/pages/html/basehtmlpanel.py:312
 msgid "Page loading. Please wait…"
 msgstr "Загрузка страницы. Пожалуйста, подождите…"
 
-#: outwiker/pages/html/basehtmlpanel.py:329
+#: outwiker/pages/html/basehtmlpanel.py:328
 msgid "Page loading error: {}"
 msgstr "Ошибка загрузки страницы: {}"
 
