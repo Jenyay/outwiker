@@ -2,6 +2,7 @@
 
 """WebPage page class"""
 
+import logging
 import os.path
 import shutil
 from shutil import copytree
@@ -17,6 +18,8 @@ from .gui.webpageview import WebPageView
 
 # Directory for images, scripts, css etc.
 STATIC_DIR_NAME = '__download'
+
+logger = logging.getLogger('webpage')
 
 
 class WebNotePage(WikiPage):
@@ -47,7 +50,7 @@ class WebNotePage(WikiPage):
     @staticmethod
     def getTypeString():
         """Return page string identifier."""
-        return u"web"
+        return "web"
 
     def getHtmlPath(self):
         """
@@ -154,7 +157,7 @@ class WebPageFactory(PageFactory):
         try:
             copytree(tmpStaticDir, staticDir)
         except shutil.Error as e:
-            raise IOError(e.message)
+            logger.error(str(e))
 
         return page
 
@@ -164,8 +167,7 @@ class WebPageFactory(PageFactory):
         if title is None or len(title.strip()) == 0:
             title = defaultTitle
         else:
-            title = WindowsPageTitleTester().replaceDangerousSymbols(title,
-                                                                     '_')
+            title = WindowsPageTitleTester().replaceDangerousSymbols(title, '_')
 
         index = 1
         newTitle = title

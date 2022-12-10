@@ -8,7 +8,7 @@ from codecs import register_error, xmlcharrefreplace_errors
 from .constants import voidElements, booleanAttributes, spaceCharacters
 from .constants import rcdataElements, entities, xmlEntities
 from . import treewalkers, _utils
-from xml.sax.saxutils import escape
+from webpage_xml.sax.saxutils import escape
 
 _quoteAttributeSpecChars = "".join(spaceCharacters) + "\"'=<>`"
 _quoteAttributeSpec = re.compile("[" + _quoteAttributeSpecChars + "]")

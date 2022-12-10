@@ -10,7 +10,7 @@ from __future__ import absolute_import, division, unicode_literals
 
 import re
 import warnings
-from xml.sax.saxutils import escape, unescape
+from webpage_xml.sax.saxutils import escape, unescape
 
 from six.moves import urllib_parse as urlparse
 
