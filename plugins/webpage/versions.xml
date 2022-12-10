@@ -7,10 +7,12 @@
 			</requirements>
 		</download>
 		<changes>
+			<change>Fix errors.</change>
 			<change>Update libraries.</change>
 		</changes>
 
 		<changes lang="ru">
+			<change>Исправление ошибок.</change>
 			<change>Обновление используемых библиотек.</change>
 		</changes>
 	</version>
