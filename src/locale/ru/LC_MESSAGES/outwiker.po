@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -1323,7 +1323,7 @@ msgstr "Удалить файлы?"
 #: outwiker/gui/attachpanel.py:541
 #, python-brace-format
 msgid "{name}   -   {size} KB   -   {date}"
-msgstr "{name}   -   {size} КБ   -   {date}"
+msgstr "{name}   -   {size} Кбайт   -   {date}"
 
 #: outwiker/gui/attachpanel.py:549
 #, python-brace-format
