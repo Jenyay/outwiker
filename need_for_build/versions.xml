@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.2.0.915" status="dev" date="2022-11-21">
+    <version number="3.2.0.916" status="beta" date="2022-12-11">
         <changes>
+            <change>Added settings for the Minimize and Close buttons.</change>
+            <change>Added information about selected attachments to the status bar.</change>
+            <change>Changed the design of links to other pages.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлены настройки поведения кнопок "Свернуть" и "Закрыть".</change>
+            <change>Добавлена информация о выбранных прикрепленных файлах на статусную панель.</change>
+            <change>Изменен дизайн ссылок на другие страницы.</change>
         </changes>
     </version>
 
