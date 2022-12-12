@@ -52,21 +52,19 @@ class ListToken:
         currItem - список вложенных списков
             (их первых символов для определения типа)
         """
-        result = ''
+        result = self._getStartListTag(item[0], self.allListsParams) * depth
         for _ in range(depth):
-            result += self._getStartListTag(item[0], self.allListsParams)
             currItem.append(item[0])
 
         return result
 
     def _closeLists(self, depth, currItem):
         """
-        Закрыть один или несколько уровней списков(перейти выше)
+        Закрыть один или несколько уровней списков (перейти выше)
         depth - разность между текущим уровнем и новым урвонем
         """
-        result = ''
+        result = self._getEndListTag(currItem[-1], self.allListsParams) * depth
         for _ in range(depth):
-            result += self._getEndListTag(currItem[-1], self.allListsParams)
             del currItem[-1]
 
         return result
