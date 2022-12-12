@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="3.2.0.917" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="3.2.0.916" status="beta" date="2022-12-11">
         <changes>
             <change>Added settings for the Minimize and Close buttons.</change>
