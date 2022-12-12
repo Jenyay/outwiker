@@ -44,7 +44,7 @@ class ListToken:
         self._blockToken = MultilineBlockFactory.make(
             self.parser).setParseAction(noConvert)
 
-    def __addDeeperLevel(self, depth, item, currItem):
+    def _addDeeperLevel(self, depth, item, currItem):
         """
         Создать список более глубокого уровня
         depth - разница между новым уровнем и текущим
@@ -54,35 +54,35 @@ class ListToken:
         """
         result = ''
         for _ in range(depth):
-            result += self.__getStartListTag(item[0], self.allListsParams)
+            result += self._getStartListTag(item[0], self.allListsParams)
             currItem.append(item[0])
 
         return result
 
-    def __closeLists(self, depth, currItem):
+    def _closeLists(self, depth, currItem):
         """
         Закрыть один или несколько уровней списков(перейти выше)
         depth - разность между текущим уровнем и новым урвонем
         """
         result = ''
         for _ in range(depth):
-            result += self.__getEndListTag(currItem[-1], self.allListsParams)
+            result += self._getEndListTag(currItem[-1], self.allListsParams)
             del currItem[-1]
 
         return result
 
-    def __closeListStartList(self, level, item, currItem):
+    def _closeListStartList(self, level, item, currItem):
         result = ''
 
-        result += self.__closeLists(1, currItem)
-        result += self.__getStartListTag(item[0], self.allListsParams)
+        result += self._closeLists(1, currItem)
+        result += self._getStartListTag(item[0], self.allListsParams)
         currItem.append(item[0])
 
-        result += self.__getListItemTag(item, level)
+        result += self._getListItemTag(item, level)
 
         return result
 
-    def __generateListForItems(self, items):
+    def _generateListForItems(self, items):
         currLevel = 0
         currItem = []
 
@@ -92,7 +92,7 @@ class ListToken:
             if len(item.strip()) == 0:
                 continue
 
-            level = self.__getListLevel(item, self.allListsParams)
+            level = self._getListLevel(item, self.allListsParams)
             if level > self._maxDepthLevel:
                 level = self._maxDepthLevel
 
@@ -100,33 +100,33 @@ class ListToken:
                     len(currItem) > 0 and
                     item[0] == currItem[-1]):
                 # Новый элемент в текущем списке
-                result += self.__getListItemTag(item, level)
+                result += self._getListItemTag(item, level)
 
             elif level > currLevel:
                 # Более глубокий уровень
-                result += self.__addDeeperLevel(level -
+                result += self._addDeeperLevel(level -
                                                 currLevel, item, currItem)
-                result += self.__getListItemTag(item, level)
+                result += self._getListItemTag(item, level)
 
             elif level < currLevel:
                 # Более высокий уровень, но тот же тип списка
-                result += self.__closeLists(currLevel - level, currItem)
+                result += self._closeLists(currLevel - level, currItem)
 
                 if item[0] == currItem[-1]:
-                    result += self.__getListItemTag(item, level)
+                    result += self._getListItemTag(item, level)
                 else:
-                    result += self.__closeListStartList(level, item, currItem)
+                    result += self._closeListStartList(level, item, currItem)
 
             elif level == currLevel and len(currItem) > 0 and item[0] != currItem[-1]:
                 # Тот же уровень, но другой список
-                result += self.__closeListStartList(level, item, currItem)
+                result += self._closeListStartList(level, item, currItem)
 
             else:
                 assert False
 
             currLevel = level
 
-        result += self.__closeLists(currLevel, currItem)
+        result += self._closeLists(currLevel, currItem)
 
         return result
 
@@ -137,18 +137,18 @@ class ListToken:
         item = Combine(Regex(r'^(?:(?:\*+)|(?:#+))\s*', re.MULTILINE) +
                        (self._blockToken | text) +
                        line_break).leaveWhitespace()
-        fullList = OneOrMore(item).setParseAction(self.__convertList).ignoreWhitespace(False)("list")
+        fullList = OneOrMore(item).setParseAction(self._convertList).ignoreWhitespace(False)("list")
 
         return fullList
 
-    def __convertList(self, s, loc, tokens):
+    def _convertList(self, s, loc, tokens):
         """
         Преобразовать список элементов списка в HTML-список
         (возможно, вложенный)
         """
-        return self.__generateListForItems(tokens)
+        return self._generateListForItems(tokens)
 
-    def __getListLevel(self, item, params):
+    def _getListLevel(self, item, params):
         """
         Получить уровень списка по его элементу
         (количество символов # и * в начале строки)
@@ -168,13 +168,13 @@ class ListToken:
 
         return level
 
-    def __getListItemTag(self, item, level):
+    def _getListItemTag(self, item, level):
         text = (item[level:]).strip()
         itemText = self.parser.parseListItemMarkup(text)
 
         return '<li class="{css_class}">{text}</li>'.format(text=itemText, css_class=css.CSS_WIKI)
 
-    def __getStartListTag(self, symbol, params):
+    def _getStartListTag(self, symbol, params):
         """
         Получить открывающийся тег для элемента
         """
@@ -182,7 +182,7 @@ class ListToken:
             if listparam.symbol == symbol:
                 return listparam.startTag
 
-    def __getEndListTag(self, symbol, params):
+    def _getEndListTag(self, symbol, params):
         """
         Получить закрывающийся тег для элемента
         """
