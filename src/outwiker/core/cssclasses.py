@@ -1,5 +1,6 @@
 # -*- coding=utf-8 -*-
 
+CSS_WIKI = 'ow-wiki'
 CSS_ERROR = 'ow-error'
 CSS_IMAGE = 'ow-image'
 CSS_LINK_PAGE = 'ow-link-page'
@@ -11,8 +12,16 @@ CSS_ATTACH_LIST = 'ow-attach-list'
 CSS_ATTACH_LIST_ITEM = 'ow-attach-list-item'
 CSS_CHILD_LIST = 'ow-child-list'
 CSS_CHILD_LIST_TITLE = 'ow-child-list-title'
-CSS_WIKI = 'ow-wiki'
 CSS_WIKI_INCLUDE = 'ow-wiki-include'
+CSS_LIST_ITEM_EMPTY = 'ow-li-empty'
+CSS_LIST_ITEM_TODO = 'ow-li-todo'
+CSS_LIST_ITEM_INCOMPLETE = 'ow-li-incomplete'
+CSS_LIST_ITEM_COMPLETE = 'ow-li-complete'
+CSS_LIST_ITEM_STAR = 'ow-li-star'
+CSS_LIST_ITEM_PLUS = 'ow-li-plus'
+CSS_LIST_ITEM_MINUS = 'ow-li-minus'
+CSS_LIST_ITEM_CIRCLE = 'ow-li-circle'
+CSS_LIST_ITEM_CHECK = 'ow-li-check'
 
 
 def getDefaultStyles() -> str:
