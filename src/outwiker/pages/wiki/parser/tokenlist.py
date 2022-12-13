@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+from typing import List, Tuple
 
 from pyparsing import Regex, OneOrMore, Combine
 
@@ -32,6 +33,22 @@ class ListToken:
     """
     unorderList = "*"
     orderList = "#"
+
+    unorderListCSS = [
+            ('[]', css.CSS_LIST_ITEM_EMPTY),
+            ('[ ]', css.CSS_LIST_ITEM_TODO),
+            ('[/]', css.CSS_LIST_ITEM_INCOMPLETE),
+            ('[\\]', css.CSS_LIST_ITEM_INCOMPLETE),
+            ('[x]', css.CSS_LIST_ITEM_COMPLETE),
+            ('[X]', css.CSS_LIST_ITEM_COMPLETE),
+            ('[*]', css.CSS_LIST_ITEM_STAR),
+            ('[+]', css.CSS_LIST_ITEM_PLUS),
+            ('[-]', css.CSS_LIST_ITEM_MINUS),
+            ('[o]', css.CSS_LIST_ITEM_CIRCLE),
+            ('[O]', css.CSS_LIST_ITEM_CIRCLE),
+            ('[v]', css.CSS_LIST_ITEM_CHECK),
+            ('[V]', css.CSS_LIST_ITEM_CHECK),
+            ]
 
     def __init__(self, parser):
         self.allListsParams = [
@@ -166,11 +183,29 @@ class ListToken:
 
         return level
 
-    def _getListItemTag(self, item, level):
+    def _getListItemTag(self, item: str, level: int) -> str:
         text = (item[level:]).strip()
-        itemText = self.parser.parseListItemMarkup(text)
+        css_classes = [css.CSS_WIKI]
 
-        return '<li class="{css_class}">{text}</li>'.format(text=itemText, css_class=css.CSS_WIKI)
+        if item[level - 1] == self.unorderList:
+            # Find classes for unorder lists
+            text, other_css = self._processUnorderClasses(text)
+            css_classes += other_css
+
+        itemText = self.parser.parseListItemMarkup(text)
+        return '<li class="{css_class}">{text}</li>'.format(text=itemText, css_class=' '.join(css_classes))
+
+    def _processUnorderClasses(self, text) -> Tuple[str, List[str]]:
+        result_text = text
+        classes: List[str] = []
+
+        for prefix, css_class in self.unorderListCSS:
+            if text.startswith(prefix):
+                result_text = text[len(prefix):].strip()
+                classes.append(css_class)
+                break
+
+        return (result_text, classes)
 
     def _getStartListTag(self, symbol, params):
         """

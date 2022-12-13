@@ -43,6 +43,30 @@ class ParserListTest (unittest.TestCase):
             self.parser.toHtml(text).encode(
                 self.encoding))
 
+    def testUnorderClasses(self):
+        unorderListCSS = [
+            ('[]', css.CSS_LIST_ITEM_EMPTY),
+            ('[ ]', css.CSS_LIST_ITEM_TODO),
+            ('[/]', css.CSS_LIST_ITEM_INCOMPLETE),
+            ('[\\]', css.CSS_LIST_ITEM_INCOMPLETE),
+            ('[x]', css.CSS_LIST_ITEM_COMPLETE),
+            ('[X]', css.CSS_LIST_ITEM_COMPLETE),
+            ('[*]', css.CSS_LIST_ITEM_STAR),
+            ('[+]', css.CSS_LIST_ITEM_PLUS),
+            ('[-]', css.CSS_LIST_ITEM_MINUS),
+            ('[o]', css.CSS_LIST_ITEM_CIRCLE),
+            ('[O]', css.CSS_LIST_ITEM_CIRCLE),
+            ('[v]', css.CSS_LIST_ITEM_CHECK),
+            ('[V]', css.CSS_LIST_ITEM_CHECK),
+            ]
+
+        for prefix, other_css in unorderListCSS:
+            text = f"бла-бла-бла \n\n* {prefix} Строка 1\nбла-бла-бла"
+            result_expected = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI} {other_css}">Строка 1</li></ul>бла-бла-бла'
+
+            result = self.parser.toHtml(text)
+            self.assertEqual(result, result_expected, result)
+
     def testUnorderList2(self):
         text = "бла-бла-бла \n\n*'''Строка 1'''\n* ''Строка 2''\n* Строка 3\nбла-бла-бла"
         result = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><b>Строка 1</b></li><li class="{css.CSS_WIKI}"><i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'
