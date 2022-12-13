@@ -13,6 +13,7 @@ cyhunspell = {version = "==2.0.2.post1", path = "depends/cyhunspell"}
 idna = ">=2.10"
 pyparsing = "==3.0.9"
 psutil = "==5.9.2"
+rcssmin = "==1.1.1"
 
 [dev-packages]
 invoke = "==1.7.1"

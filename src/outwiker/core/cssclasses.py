@@ -1,5 +1,8 @@
 # -*- coding=utf-8 -*-
 
+import rcssmin
+
+CSS_WIKI = 'ow-wiki'
 CSS_ERROR = 'ow-error'
 CSS_IMAGE = 'ow-image'
 CSS_LINK_PAGE = 'ow-link-page'
@@ -11,12 +14,11 @@ CSS_ATTACH_LIST = 'ow-attach-list'
 CSS_ATTACH_LIST_ITEM = 'ow-attach-list-item'
 CSS_CHILD_LIST = 'ow-child-list'
 CSS_CHILD_LIST_TITLE = 'ow-child-list-title'
-CSS_WIKI = 'ow-wiki'
 CSS_WIKI_INCLUDE = 'ow-wiki-include'
 
 
 def getDefaultStyles() -> str:
-    return '''
+    css = '''
 		img {
             border:none;
             vertical-align:middle;
@@ -155,3 +157,5 @@ def getDefaultStyles() -> str:
 		  transition: all 0.2s ease;
 		}
     '''
+
+    return rcssmin.cssmin(css)
