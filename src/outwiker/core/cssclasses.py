@@ -53,6 +53,11 @@ def getDefaultStyles() -> str:
             border-bottom: 0.1em dashed;
         }
 
+        /* Unorder list items */
+        ul.ow-wiki li.ow-li-empty {
+            list-style: none;
+        }
+
         /* Child list */
 
 		ul.ow-child-list {
