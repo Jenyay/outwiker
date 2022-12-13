@@ -46,6 +46,7 @@ setup(
         'idna>=2.10',
         'pyparsing==3.0.9',
         'psutil>=5.9.1',
+        'rcssmin>=1.1'
     ],
     project_urls={
         'Documentation': 'https://outwiker.readthedocs.io/',

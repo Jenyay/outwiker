@@ -1,5 +1,7 @@
 # -*- coding=utf-8 -*-
 
+import rcssmin
+
 CSS_WIKI = 'ow-wiki'
 CSS_ERROR = 'ow-error'
 CSS_IMAGE = 'ow-image'
@@ -25,7 +27,7 @@ CSS_LIST_ITEM_CHECK = 'ow-li-check'
 
 
 def getDefaultStyles() -> str:
-    return '''
+    css = '''
 		img {
             border:none;
             vertical-align:middle;
@@ -169,3 +171,5 @@ def getDefaultStyles() -> str:
 		  transition: all 0.2s ease;
 		}
     '''
+
+    return rcssmin.cssmin(css)
