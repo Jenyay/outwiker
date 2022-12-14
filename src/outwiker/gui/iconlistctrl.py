@@ -73,8 +73,8 @@ class IconButton:
                          self._width,
                          self._height)
 
-        posx = self._x + (self._width - self._image.GetWidth()) / 2
-        posy = self._y + (self._height - self._image.GetHeight()) / 2
+        posx = self._x + (self._width - self._image.GetWidth()) // 2
+        posy = self._y + (self._height - self._image.GetHeight()) // 2
 
         dc.DrawBitmap(self._image, posx, posy, True)
 
