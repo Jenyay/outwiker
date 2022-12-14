@@ -266,7 +266,7 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
         if self.align == wx.ALIGN_LEFT:
             pos_x = self.padding + dx
         elif self.align == wx.ALIGN_CENTER:
-            pos_x = (width - contentWidth - self.toggleShiftX) / 2 + dx
+            pos_x = (width - contentWidth - self.toggleShiftX) // 2 + dx
         else:
             assert False
 
@@ -275,9 +275,9 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
 
         if bmp is not None:
             # draw bitmap if available
-            dc.DrawBitmap(bmp, pos_x, (height - bh) / 2 + dy, hasMask)
+            dc.DrawBitmap(bmp, pos_x, (height - bh) // 2 + dy, hasMask)
 
-        dc.DrawText(label, pos_x + bw + self.marginImage, (height-th)/2+dy)
+        dc.DrawText(label, pos_x + bw + self.marginImage, (height-th)//2+dy)
 
 
 class MyTestFrame(wx.Frame):
