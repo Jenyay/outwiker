@@ -24,9 +24,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="26.910887"
-     inkscape:cx="9.475719"
-     inkscape:cy="-0.87325254"
+     inkscape:zoom="38.057741"
+     inkscape:cx="6.6740692"
+     inkscape:cy="0.85396555"
      inkscape:window-width="1920"
      inkscape:window-height="1092"
      inkscape:window-x="0"
@@ -49,17 +49,17 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-12.32224,-13.06713)">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.46255px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.111564"
-       x="11.765028"
-       y="16.382341"
-       id="text3454"
-       transform="scale(1.0175843,0.98271958)"><tspan
-         sodipodi:role="line"
-         id="tspan3452"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri;stroke-width:0.111564"
-         x="11.765028"
-         y="16.382341">*</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
+       d="m 13.120803,13.164066 c 0,1.381525 0,1.381525 0,1.381525"
+       id="path908" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 13.719021,13.509447 C 12.522585,14.20021 12.522585,14.20021 12.522585,14.20021"
+       id="path937" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 13.719021,14.20021 C 12.522585,13.509447 12.522585,13.509447 12.522585,13.509447"
+       id="path939" />
   </g>
 </svg>
