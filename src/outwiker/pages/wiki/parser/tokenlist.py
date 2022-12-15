@@ -48,6 +48,8 @@ class ListToken:
             ('[O]', css.CSS_LIST_ITEM_CIRCLE),
             ('[v]', css.CSS_LIST_ITEM_CHECK),
             ('[V]', css.CSS_LIST_ITEM_CHECK),
+            ('[<]', css.CSS_LIST_ITEM_LT),
+            ('[>]', css.CSS_LIST_ITEM_GT),
             ]
 
     def __init__(self, parser):
