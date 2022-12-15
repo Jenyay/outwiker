@@ -1,52 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="2.5400188mm"
-   height="2.550158mm"
-   viewBox="0 0 2.5400188 2.550158"
-   version="1.1"
-   id="svg5"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
-   sodipodi:docname="cross.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview7"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     showgrid="false"
-     inkscape:zoom="26.910887"
-     inkscape:cx="9.475719"
-     inkscape:cy="10.869207"
-     inkscape:window-width="1920"
-     inkscape:window-height="1092"
-     inkscape:window-x="0"
-     inkscape:window-y="40"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs2" />
-  <g
-     inkscape:label="Слой 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-12.3127,-13.033516)">
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 12.402741,13.125775 c 2.364297,2.361571 2.364297,2.361571 2.364297,2.361571"
-       id="path1164" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 14.758956,13.126842 c -2.352494,2.363507 -2.352494,2.363507 -2.352494,2.363507"
-       id="path1166" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2.54mm" height="2.5502mm" version="1.1" viewBox="0 0 2.54 2.5502" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(-12.313 -13.034)" fill="none" stroke="#000" stroke-width=".26458px">
+<path d="m12.403 13.126 2.3643 2.3616"/>
+<path d="m14.759 13.127c-2.3525 2.3635-2.3525 2.3635-2.3525 2.3635"/>
+</g>
 </svg>
+

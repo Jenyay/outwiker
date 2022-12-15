@@ -1,65 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="1.5433854mm"
-   height="1.6017118mm"
-   viewBox="0 0 1.5433854 1.6017118"
-   version="1.1"
-   id="svg5"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
-   sodipodi:docname="star.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview7"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     showgrid="false"
-     inkscape:zoom="38.057741"
-     inkscape:cx="6.6740692"
-     inkscape:cy="0.85396555"
-     inkscape:window-width="1920"
-     inkscape:window-height="1092"
-     inkscape:window-x="0"
-     inkscape:window-y="40"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs2">
-    <linearGradient
-       id="linearGradient3266"
-       inkscape:swatch="solid">
-      <stop
-         style="stop-color:#000000;stop-opacity:1;"
-         offset="0"
-         id="stop3264" />
-    </linearGradient>
-  </defs>
-  <g
-     inkscape:label="Слой 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-12.32224,-13.06713)">
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
-       d="m 13.120803,13.164066 c 0,1.381525 0,1.381525 0,1.381525"
-       id="path908" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="M 13.719021,13.509447 C 12.522585,14.20021 12.522585,14.20021 12.522585,14.20021"
-       id="path937" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="M 13.719021,14.20021 C 12.522585,13.509447 12.522585,13.509447 12.522585,13.509447"
-       id="path939" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1.5434mm" height="1.6017mm" version="1.1" viewBox="0 0 1.5434 1.6017" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(-12.322 -13.067)" fill="none" stroke="#000" stroke-width=".2">
+<path d="m13.121 13.164v1.3815"/>
+<path d="m13.719 13.509-1.1964 0.69076"/>
+<path d="m13.719 14.2-1.1964-0.69076"/>
+</g>
 </svg>
+

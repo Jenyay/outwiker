@@ -1,65 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="2.0000007mm"
-   height="2.000001mm"
-   viewBox="0 0 2.0000007 2.000001"
-   version="1.1"
-   id="svg5"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
-   sodipodi:docname="plus.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview7"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     showgrid="false"
-     inkscape:zoom="26.910887"
-     inkscape:cx="8.2122898"
-     inkscape:cy="-0.9475719"
-     inkscape:window-width="1920"
-     inkscape:window-height="1092"
-     inkscape:window-x="0"
-     inkscape:window-y="40"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs2">
-    <linearGradient
-       id="linearGradient3266"
-       inkscape:swatch="solid">
-      <stop
-         style="stop-color:#000000;stop-opacity:1;"
-         offset="0"
-         id="stop3264" />
-    </linearGradient>
-  </defs>
-  <g
-     inkscape:label="Слой 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-12.422483,-12.68125)">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:3.19252px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0798133"
-       x="12.074534"
-       y="14.692698"
-       id="text3540"
-       transform="scale(1.0007797,0.99922093)"><tspan
-         sodipodi:role="line"
-         id="tspan3538"
-         style="stroke-width:0.0798133"
-         x="12.074534"
-         y="14.692698">+</tspan></text>
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2mm" height="2mm" version="1.1" viewBox="0 0 2 2" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(-12.422 -12.681)">
+<text transform="scale(1.0008 .99922)" x="12.074534" y="14.692698" fill="#000000" font-family="sans-serif" font-size="3.1925px" stroke-width=".079813" style="line-height:1.25" xml:space="preserve"><tspan x="12.074534" y="14.692698" stroke-width=".079813">+</tspan></text>
+</g>
 </svg>
+

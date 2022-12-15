@@ -1,57 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="2mm"
-   height="2mm"
-   viewBox="0 0 2 2.0000001"
-   version="1.1"
-   id="svg5"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
-   sodipodi:docname="check.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview7"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     showgrid="false"
-     inkscape:zoom="26.910887"
-     inkscape:cx="7.9150124"
-     inkscape:cy="-4.0689852"
-     inkscape:window-width="1920"
-     inkscape:window-height="1092"
-     inkscape:window-x="0"
-     inkscape:window-y="40"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs2">
-    <linearGradient
-       id="linearGradient3266"
-       inkscape:swatch="solid">
-      <stop
-         style="stop-color:#000000;stop-opacity:1;"
-         offset="0"
-         id="stop3264" />
-    </linearGradient>
-  </defs>
-  <g
-     inkscape:label="Слой 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-12.468735,-12.664082)">
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.255004px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 12.617066,13.404839 0.598774,1.023368 1.122551,-1.693155"
-       id="path3606" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2mm" height="2mm" version="1.1" viewBox="0 0 2 2" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(-12.469 -12.664)">
+<path d="m12.617 13.405 0.59877 1.0234 1.1226-1.6932" fill="none" stroke="#000" stroke-width=".255px"/>
+</g>
 </svg>
