@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="1.9857mm" height="1.9857mm" version="1.1" viewBox="0 0 1.9857 1.9857" xmlns="http://www.w3.org/2000/svg">
-<g transform="translate(-12.103 -12.837)">
-<path d="m12.313 14.46 1.3754-0.55672-1.3769-0.65129" fill="none" stroke="#000" stroke-width=".17947px"/>
+<svg width="2mm" height="2mm" version="1.1" viewBox="0 0 2 2" xmlns="http://www.w3.org/2000/svg">
+<g transform="matrix(-.73217 0 0 -.65063 10.584 10.032)">
+<path d="m13.869 13.284-1.3754 0.55672 1.3769 0.65129" fill="none" stroke="#000" stroke-width=".17947px"/>
 </g>
 </svg>
-
