@@ -150,6 +150,7 @@ class Parser(object):
 
         # Tokens for using inside headings
         self.headingTokens = [
+            self.attachImages,
             self.attaches,
             self.urlImage,
             self.url,
@@ -180,6 +181,7 @@ class Parser(object):
 
         # Tokens for using inside text
         self.textLevelTokens = [
+            self.attachImages,
             self.attaches,
             self.urlImage,
             self.url,
@@ -211,6 +213,7 @@ class Parser(object):
 
         # Tokens for using inside list items (bullets and numeric)
         self.listItemsTokens = [
+            self.attachImages,
             self.attaches,
             self.urlImage,
             self.url,
