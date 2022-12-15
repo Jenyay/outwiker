@@ -65,9 +65,9 @@ def getDefaultStyles() -> str:
 
         ul.ow-wiki > li.ow-wiki {
           padding-left: 1.5rem;
-          background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMi44MTltbSIgaGVpZ2h0PSIyLjgxOW1tIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyLjgxOSAyLjgxOSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEyLjE3MiAtMTIuODg5KSI+CjxjaXJjbGUgY3g9IjEzLjU4MSIgY3k9IjE0LjI5OSIgcj0iMSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii44MTkiLz4KPC9nPgo8L3N2Zz4K");
-          background-position: 0.35rem 0.35rem;
-          background-size: 0.3rem 0.3rem;
+          background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");
+          background-position: 0.0rem 0.0rem;
+          background-size: 1.0rem 1.0rem;
           background-repeat: no-repeat;
         }
 
@@ -94,15 +94,15 @@ def getDefaultStyles() -> str:
         }
 
         ul.ow-wiki li.ow-li-todo {
-            background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4yMDMiIHk9IjEyLjkzNyIgd2lkdGg9IjEuNzg1NyIgaGVpZ2h0PSIxLjc4NTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMiIvPgo8L2c+Cjwvc3ZnPgoK");
-            background-position: 0.1rem 0.1rem;
-            background-size: 0.8rem 0.8rem;
+            background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+Cjwvc3ZnPgoK");
+            background-position: 0.0rem 0.0rem;
+            background-size: 1.0rem 1.0rem;
         }
 
         ul.ow-wiki li.ow-li-star {
-            background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS41NDM0bW0iIGhlaWdodD0iMS42MDE3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuNTQzNCAxLjYwMTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4zMjIgLTEzLjA2NykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMiI+CjxwYXRoIGQ9Im0xMy4xMjEgMTMuMTY0djEuMzgxNSIvPgo8cGF0aCBkPSJtMTMuNzE5IDEzLjUwOS0xLjE5NjQgMC42OTA3NiIvPgo8cGF0aCBkPSJtMTMuNzE5IDE0LjItMS4xOTY0LTAuNjkwNzYiLz4KPC9nPgo8L3N2Zz4KCg==");
-            background-position: 0.2rem 0.2rem;
-            background-size: 0.6rem 0.6rem;
+            background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwNTMgMCAwIC45NDEwMSAtMTIuMTg5IC0xMi4wMzcpIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjIiPgo8cGF0aCBkPSJtMTMuMTIxIDEzLjE2NHYxLjM4MTUiLz4KPHBhdGggZD0ibTEzLjcxOSAxMy41MDktMS4xOTY0IDAuNjkwNzYiLz4KPHBhdGggZD0ibTEzLjcxOSAxNC4yLTEuMTk2NC0wLjY5MDc2Ii8+CjwvZz4KPC9zdmc+Cgo=");
+            background-position: 0.0rem 0.0rem;
+            background-size: 1.0rem 1.0rem;
         }
 
         ul.ow-wiki li.ow-li-plus {

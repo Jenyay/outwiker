@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="2.819mm" height="2.819mm" version="1.1" viewBox="0 0 2.819 2.819" xmlns="http://www.w3.org/2000/svg">
-<g transform="translate(-12.172 -12.889)">
+<svg width="2mm" height="2mm" version="1.1" viewBox="0 0 2 2" xmlns="http://www.w3.org/2000/svg">
+<g transform="matrix(.24822 0 0 .24808 -2.3713 -2.5476)">
 <circle cx="13.581" cy="14.299" r="1" stroke="#000" stroke-width=".819"/>
 </g>
 </svg>
+
