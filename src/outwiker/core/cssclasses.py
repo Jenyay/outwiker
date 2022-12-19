@@ -132,7 +132,7 @@ def getDefaultStyles() -> str:
 		  border-left: 1px dashed #ddd;
 		}
 
-		ul.ow-wiki.ow-child-list li {
+		ul.ow-child-list li {
 		  list-style: none;
 		  font-weight: normal;
           background-image: none;
@@ -221,7 +221,7 @@ def getDefaultStyles() -> str:
 		  border-left: 1px dashed #ddd;
 		}
 
-		ul.ow-wiki.ow-attach-list li {
+		ul.ow-attach-list li {
 		  list-style: none;
 		  font-weight: normal;
           background-image: none;

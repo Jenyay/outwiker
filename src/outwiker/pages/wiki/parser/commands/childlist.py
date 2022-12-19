@@ -21,10 +21,10 @@ class SimpleView:
         links = [create_link_to_page('page://{}'.format(page.title),
                                      page.display_title)
                 for page in children]
-        items = [f'<li class="{css.CSS_WIKI} {css.CSS_ATTACH_LIST_ITEM}">{link}</li>'
+        items = [f'<li class="{css.CSS_ATTACH_LIST_ITEM}">{link}</li>'
                  for link in links]
         all_items_str = ''.join(items)
-        result = f'<ul class="{css.CSS_WIKI} {css.CSS_CHILD_LIST}"><span class="{css.CSS_WIKI} {css.CSS_CHILD_LIST_TITLE}">{title}</span><ul class="{css.CSS_WIKI} {css.CSS_CHILD_LIST}">{all_items_str}</ul></ul>'
+        result = f'<ul class="{css.CSS_CHILD_LIST}"><span class="{css.CSS_CHILD_LIST_TITLE}">{title}</span><ul class="{css.CSS_CHILD_LIST}">{all_items_str}</ul></ul>'
 
         return result
 
