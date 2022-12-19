@@ -122,8 +122,8 @@ def getDefaultStyles() -> str:
 
         /* Child list */
 		ul.ow-child-list {
-		  margin-left: 0px;
-		  padding-left: 0px;
+		  padding-left: 1rem;
+          list-style-type: none;
 		}
 
 		ul.ow-child-list ul {
@@ -133,10 +133,11 @@ def getDefaultStyles() -> str:
 		}
 
 		ul.ow-child-list li {
-		  list-style: none;
-		  font-weight: normal;
-          background-image: none;
-          padding-left: 1.0rem;
+		  padding-left: 1.5rem;
+          background-position: 0.0rem 0.0rem;
+          background-size: 1.0rem 1.0rem;
+          background-repeat: no-repeat;
+          background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IklDT04iIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojYjBjYmUwO30uY2xzLTEsLmNscy0ye3N0cm9rZTojNjY2NjdlO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6MTVweDt9LmNscy0ye2ZpbGw6IzVmOWNjYjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zOTEsMTU4LjV2MjY1YTI1LDI1LDAsMCwxLTI1LDI1SDE0NmEyNSwyNSwwLDAsMS0yNS0yNVY4OC41YTI1LDI1LDAsMCwxLDI1LTI1SDI5NloiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zOTEsMTU4LjVIMzIxYTI1LDI1LDAsMCwxLTI1LTI1di03MFoiLz48L3N2Zz4=");
 		}
 
         span.ow-child-list-title {
@@ -144,19 +145,6 @@ def getDefaultStyles() -> str:
         }
 
         span.ow-child-list-title:before {
-		  margin-right: 0px;
-		  content: "";
-		  height: 1.8em;
-		  vertical-align: middle;
-		  width: 1.5em;
-		  background-repeat: no-repeat;
-		  display: inline-block;
-		  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IklDT04iIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojYjBjYmUwO30uY2xzLTEsLmNscy0ye3N0cm9rZTojNjY2NjdlO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6MTVweDt9LmNscy0ye2ZpbGw6IzVmOWNjYjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zOTEsMTU4LjV2MjY1YTI1LDI1LDAsMCwxLTI1LDI1SDE0NmEyNSwyNSwwLDAsMS0yNS0yNVY4OC41YTI1LDI1LDAsMCwxLDI1LTI1SDI5NloiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zOTEsMTU4LjVIMzIxYTI1LDI1LDAsMCwxLTI1LTI1di03MFoiLz48L3N2Zz4=");
-		  background-position: center 0px;
-		  background-size: 75% auto;
-		}
-
-		ul.ow-child-list a.ow-link-page:before {
 		  margin-right: 0px;
 		  content: "";
 		  height: 1.8em;
