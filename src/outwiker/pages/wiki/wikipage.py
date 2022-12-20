@@ -23,6 +23,7 @@ from .actions.openhtmlcode import WikiOpenHtmlCodeAction
 from .actions.thumb import WikiThumbAction
 from .actions.updatehtml import WikiUpdateHtmlAction
 from .actions.wikistyle import WikiStyleAdvancedAction, WikiStyleOnlyAction
+from .actions.listitemstyle import ListItemStyleAction
 from .wikipageview import WikiPageView
 
 
@@ -41,6 +42,7 @@ wiki_actions = [
     ActionInfo(WikiStyleOnlyAction, None),
     ActionInfo(WikiStyleAdvancedAction, None),
     ActionInfo(MultilineBlockAction, None),
+    ActionInfo(ListItemStyleAction, None),
 ]
 
 
