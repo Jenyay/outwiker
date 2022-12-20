@@ -4,7 +4,6 @@ from pathlib import Path
 from typing import Optional
 
 import wx
-from wx.svg import SVGimage
 
 from outwiker.core.system import getImagesDir
 from outwiker.gui.testeddialog import TestedDialog
