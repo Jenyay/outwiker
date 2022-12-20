@@ -19,6 +19,10 @@ class ListItemStyleDialog(TestedDialog):
         self._create_gui()
         self.SetSize((200, 300))
 
+    def ShowModal(self):
+        self._styles_list.SetFocus()
+        return super().ShowModal()
+
     def SetImageList(self, image_list):
         self._styles_list.SetImageList(image_list, wx.IMAGE_LIST_SMALL)
 
