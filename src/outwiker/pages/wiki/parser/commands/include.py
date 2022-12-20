@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import isImage
+from outwiker.core.images import isImage
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.core.htmlformatter import HtmlFormatter
 from outwiker.core.cssclasses import CSS_WIKI, CSS_WIKI_INCLUDE
