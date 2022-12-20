@@ -4,7 +4,7 @@ import os
 import os.path
 import shutil
 
-from outwiker.core.commands import isImage
+from outwiker.core.images import isImage
 from outwiker.core.iconmaker import IconMaker
 
 

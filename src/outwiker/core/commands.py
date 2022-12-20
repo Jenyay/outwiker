@@ -17,8 +17,8 @@ import wx
 import outwiker.core.exceptions
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.core.defines import IMAGES_EXTENSIONS
 from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
+from outwiker.core.images import isImage as _isImage
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
@@ -658,14 +658,9 @@ def insertCurrentDate(parent, editor):
 
 def isImage(fname: Union[Path, str]) -> bool:
     """
-    If fname is image then the function return True. Otherwise - False.
+    Depricated. Use outwiker.core.images.isImage()
     """
-    fnameLower = str(fname).lower()
-    for extension in IMAGES_EXTENSIONS:
-        if fnameLower.endswith('.' + extension):
-            return True
-
-    return False
+    return _isImage(fname)
 
 
 def dictToStr(paramsDict):
