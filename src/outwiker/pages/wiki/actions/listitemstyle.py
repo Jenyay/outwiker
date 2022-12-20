@@ -3,7 +3,7 @@
 import wx
 
 from outwiker.gui.baseaction import BaseAction
-import outwiker.pages.wiki.gui.bulletstyledialog as bsd
+import outwiker.pages.wiki.gui.listitemstyledialog as lis
 
 
 class ListItemStyleAction(BaseAction):
@@ -28,7 +28,7 @@ class ListItemStyleAction(BaseAction):
         assert self._application.mainWindow.pagePanel is not None
         assert self._application.selectedPage is not None
 
-        with bsd.BulletStyleDialog(self._application.mainWindow) as dlg:
-            controller = bsd.BulletStyleDialogController(dlg)
+        with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
+            controller = lis.ListItemStyleDialogController(dlg)
             if controller.ShowModal() == wx.ID_OK:
                 editor = self._application.mainWindow.pagePanel.pageView.codeEditor

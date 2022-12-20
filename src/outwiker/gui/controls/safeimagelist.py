@@ -29,6 +29,7 @@ class SafeImageList(wx.ImageList):
         return super().Add(bitmap_corrected)
 
     def AddFromFile(self, fname: Union[str, Path]) -> int:
+        fname = str(fname)
         if isImage(fname):
             bitmap = wx.Bitmap(fname)
         elif isSVG(fname):
