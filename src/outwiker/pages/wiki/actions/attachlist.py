@@ -1,33 +1,39 @@
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 import wx
 
+from outwiker.core.attachment import Attachment
+from outwiker.core.attachfilters import getNotHiddenDirOnlyFilter
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
 
 
-class WikiAttachListAction (BaseAction):
+class WikiAttachListAction(BaseAction):
     """
     Вставка команды для показа списка прикрепленных файлов
     """
-    stringId = u"WikiAttachList"
+    stringId = "WikiAttachList"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Attachment (:attachlist:)")
+        return _("Attachment (:attachlist:)")
 
     @property
     def description(self):
-        return _(u"Insert (:attachlist:) command")
+        return _("Insert (:attachlist:) command")
 
     def run(self, params):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
+        assert self._application.selectedPage is not None
 
-        with AttachListDialog(self._application.mainWindow) as dlg:
+        with AttachListDialog(self._application.mainWindow, self._application.selectedPage) as dlg:
             controller = AttachListDialogController(dlg)
 
             text = controller.getDialogResult()
@@ -36,23 +42,24 @@ class WikiAttachListAction (BaseAction):
                     text)
 
 
-class AttachListDialogController (object):
-    def __init__(self, dialog):
+class AttachListDialogController:
+    def __init__(self, dialog: 'AttachListDialog'):
         self._sortStringsDialog = [
-            _(u"Name"),
-            _(u"Extension"),
-            _(u"Size"),
-            _(u"Date"),
+            _("Name"),
+            _("Extension"),
+            _("Size"),
+            _("Date"),
         ]
 
         self._sortStrings = [
-            u"name",
-            u"ext",
-            u"size",
-            u"date",
+            "name",
+            "ext",
+            "size",
+            "date",
         ]
 
         self._dialog = dialog
+
         self._dialog.setSortStrings(self._sortStringsDialog)
         self._dialog.selectedSort = 0
 
@@ -61,24 +68,31 @@ class AttachListDialogController (object):
             return self._getCommand()
 
     def _getCommand(self):
-        return u"(:attachlist {}:)".format(self._getParams())
+        return "(:attachlist {}:)".format(self._getParams())
 
-    def _getParams(self):
+    def _getParams(self) -> str:
         """
         Возвращает строку, описывающую параметры согласно настройкам в диалоге
         """
+        params: List[str] = []
         sortname = self._sortStrings[self._dialog.selectedSort]
         if self._dialog.isDescend:
             sortname = "descend" + sortname
 
-        return u"sort={}".format(sortname)
+        params.append("sort={}".format(sortname))
+
+        if self._dialog.subdir != '.':
+            params.append('subdir="{}"'.format(self._dialog.subdir))
+
+        return ' '.join(params)
 
 
-class AttachListDialog (TestedDialog):
-    def __init__(self, parent):
+class AttachListDialog(TestedDialog):
+    def __init__(self, parent, page):
         super(AttachListDialog, self).__init__(parent)
+        self._page = page
 
-        self.SetTitle(_(u"Insert (:attachlist:) command"))
+        self.SetTitle(_('Insert (:attachlist:) command'))
 
         self.__createGui()
         self.__layout()
@@ -88,31 +102,46 @@ class AttachListDialog (TestedDialog):
         self._sortComboBox.AppendItems(sortStrings)
 
     def __createGui(self):
-        self._sortLabel = wx.StaticText(self, label=_(u"Sort by"))
+        self._subdirLabel = wx.StaticText(self, label=_('Folder'))
+
+        self._subdirCtrl = FilesTreeComboBox(self)
+        attach_dir = Attachment(self._page).getAttachPath(create=True)
+        self._subdirCtrl.SetRootDir(attach_dir)
+        self._subdirCtrl.SetFilterFunc(getNotHiddenDirOnlyFilter(self._page))
+        self._subdirCtrl.SetValue('.')
+
+        self._sortLabel = wx.StaticText(self, label=_('Sort by'))
 
         self._sortComboBox = wx.ComboBox(
             self, style=wx.CB_DROPDOWN | wx.CB_READONLY)
 
-        self._descendCheckBox = wx.CheckBox(self, label=_("Descending sort"))
+        self._descendCheckBox = wx.CheckBox(self, label=_('Descending sort'))
         self._buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
     def __layout(self):
-        mainSizer = wx.FlexGridSizer(cols=2)
-        mainSizer.AddGrowableCol(0)
-        mainSizer.AddGrowableCol(1)
+        main_sizer = wx.FlexGridSizer(cols=1)
+        main_sizer.AddGrowableCol(0)
 
-        mainSizer.Add(self._sortLabel, 0, flag=wx.ALL |
+        main_sizer.Add(self._subdirLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        main_sizer.Add(self._subdirCtrl, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
+
+        sort_sizer = wx.FlexGridSizer(cols=2)
+        sort_sizer.AddGrowableCol(0)
+        sort_sizer.AddGrowableCol(1)
+
+        sort_sizer.Add(self._sortLabel, 0, flag=wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, border=2)
-        mainSizer.Add(self._sortComboBox, 0, flag=wx.EXPAND |
+        sort_sizer.Add(self._sortComboBox, 0, flag=wx.EXPAND |
                       wx.ALL, border=2)
-        mainSizer.Add(self._descendCheckBox, 0, flag=wx.ALL |
+        sort_sizer.Add(self._descendCheckBox, 0, flag=wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, border=2)
-        mainSizer.AddStretchSpacer()
-        mainSizer.AddStretchSpacer()
-        mainSizer.Add(self._buttonsSizer, 0, flag=wx.ALL |
+        sort_sizer.AddStretchSpacer()
+        sort_sizer.AddStretchSpacer()
+        sort_sizer.Add(self._buttonsSizer, 0, flag=wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, border=2)
 
-        self.SetSizer(mainSizer)
+        main_sizer.Add(sort_sizer, flag=wx.ALL | wx.EXPAND, border=2)
+        self.SetSizer(main_sizer)
         self.Fit()
 
     @property
@@ -133,3 +162,11 @@ class AttachListDialog (TestedDialog):
     @isDescend.setter
     def isDescend(self, value):
         self._descendCheckBox.SetValue(value)
+
+    @property
+    def subdir(self):
+        return self._subdirCtrl.GetValue()
+
+    @subdir.setter
+    def subdir(self, value):
+        self._subdirCtrl.SetValue(value)

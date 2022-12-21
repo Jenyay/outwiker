@@ -5,18 +5,23 @@ from abc import abstractmethod, ABCMeta
 
 import wx
 
+from outwiker.gui.controls.safeimagelist import SafeImageList
 
-class BaseFileIcons(object, metaclass=ABCMeta):
+
+class BaseFileIcons(metaclass=ABCMeta):
     """
     Базовый класс для получения иконок прикрепленных файлов
     """
 
-    def __init__(self):
+    def __init__(self, scale: int = 1):
         self.DEFAULT_FILE_ICON = 0
         self.FOLDER_ICON = 1
         self.GO_TO_PARENT_ICON = 2
 
-        self._imageList = wx.ImageList(16, 16)
+        self._width = 16 * scale
+        self._height = 16 * scale
+
+        self._imageList = SafeImageList(self._width, self._height)
 
         # Ключ - расширение файла, значение - номер иконки в self._imageList
         self._iconsDict = {}
@@ -129,14 +134,14 @@ class WindowsFileIcons(BaseFileIcons):
         """
         Возвращает картинку exe-шника
         """
-        icon = wx.Icon(filepath, wx.BITMAP_TYPE_ICO, 16, 16)
+        icon = wx.Icon(filepath, wx.BITMAP_TYPE_ICO, self._width, self._height)
         if not icon.IsOk():
             return None
 
-        bmp = wx.Bitmap(16, 16)
+        bmp = wx.Bitmap(self._width, self._height)
         bmp.CopyFromIcon(icon)
         bmp = bmp.ConvertToImage()
-        bmp.Rescale(16, 16)
+        bmp.Rescale(self._width, self._height)
         bmp = wx.Bitmap(bmp)
 
         return bmp
@@ -158,13 +163,13 @@ class WindowsFileIcons(BaseFileIcons):
         if not icon.IsOk():
             return None
 
-        bmp = wx.Bitmap(16, 16)
+        bmp = wx.Bitmap(self._width, self._height)
         bmp.CopyFromIcon(icon)
         try:
             bmp = bmp.ConvertToImage()
         except Exception:
             return None
-        bmp.Rescale(16, 16)
+        bmp.Rescale(self._width, self._height)
         bmp = wx.Bitmap(bmp)
         return bmp
 

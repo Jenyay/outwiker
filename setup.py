@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='outwiker',
-    version='3.0.0',
+    version='3.2.0',
     description='A cross-platform software for keeping your notes in a tree',
     author='Eugene Ilin (aka Jenyay)',
     author_email='jenyay.ilin@gmail.com',
@@ -42,10 +42,11 @@ setup(
     python_requires='>=3.8',
     install_requires=[
         'wxPython==4.2.0',
-        'Pillow==9.2.0',
+        'Pillow==9.3.0',
         'idna>=2.10',
         'pyparsing==3.0.9',
         'psutil>=5.9.1',
+        'rcssmin>=1.1'
     ],
     project_urls={
         'Documentation': 'https://outwiker.readthedocs.io/',

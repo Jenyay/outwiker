@@ -1,38 +1,59 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
+from pathlib import Path
+from typing import List, Tuple
 
-from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.pages.wiki.parser.command import Command
+import outwiker.core.cssclasses as css
 
 
-class SimpleView (object):
+class SimpleView:
     """
     Класс для простого представления списка прикрепленных файлов - каждая страница на отдельной строке
+    CSS styles taken from https://codemyui.com/directory-list-with-collapsible-nested-folders-and-files/
     """
-    @staticmethod
-    def make(fnames, attachdir):
+    def __init__(self):
+        self._list_template = '<ul class="ow-wiki ow-attach-list">{title}<ul class="ow-wiki ow-attach-list">{content}</ul></ul>'
+        self._item_template = '<li class="ow-wiki {css_class}"><a class="ow-wiki ow-link-attach {css_class}" href="{link}">{title}</a></li>'    
+
+    def make(self, dirnames, fnames,  subdir):
         """
         fnames - имена файлов, которые нужно вывести (относительный путь)
-        attachdir - путь до прикрепленных файлов (полный, а не относительный)
+        attach_path - путь до прикрепленных файлов (полный)
         """
-        template = u'<a href="{link}">{title}</a>\n'
+        content_items = [self._get_item_dir(subdir, name, name) for name in dirnames]
+        content_items += [self._get_item_file(subdir, name, name) for name in fnames]
+        content = ''.join(content_items)
+        title = self._get_title(subdir)
 
-        titles = [u"[%s]" % (name) if os.path.isdir(
-            os.path.join(attachdir, name)) else name for name in fnames]
+        return self._list_template.format(content=content, title=title)
 
-        result = u"".join([template.format(link=os.path.join(PAGE_ATTACH_DIR, name).replace("\\", "/"), title=title)
-                           for (name, title) in zip(fnames, titles)]).rstrip()
-
+    def _get_title(self, subdir: str) -> str:
+        title = subdir if subdir else _('Attachments')
+        result = self._get_item_dir(subdir, '', title)
         return result
 
+    def _get_item_dir(self, subdir: str, dirname: str, title: str) -> str:
+        link = self._get_attach_path(subdir, dirname)
+        return self._item_template.format(link=link, title=title, css_class=css.CSS_ATTACH_DIR)
 
-class AttachListCommand (Command):
+    def _get_item_file(self, subdir: str, name: str, title: str) -> str:
+        link = self._get_attach_path(subdir, name)
+        return self._item_template.format(link=link, title=title, css_class=css.CSS_ATTACH_FILE)
+
+    def _get_attach_path(self, subdir: str, fname: str) -> str:
+        return os.path.join(PAGE_ATTACH_DIR, subdir, fname).replace("\\", "/")
+
+
+class AttachListCommand(Command):
     """
     Команда для вставки списка дочерних команд.
     Синтсаксис: (:attachlist [params...]:)
     Параметры:
+        subdir="dir_name" - вывести список прикрепленных файлов в поддиректории
         sort=name - сортировка по имени
         sort=descendname - сортировка по имени в обратном направлении
         sort=ext - сортировка по расширению
@@ -40,36 +61,42 @@ class AttachListCommand (Command):
         sort=size - сортировка по размеру
         sort=descendsize - сортировка по размеру в обратном направлении
     """
-
     def __init__(self, parser):
-        Command.__init__(self, parser)
+        super().__init__(parser)
+        self.PARAM_SORT = 'sort'
+        self.PARAM_SUBDIR = 'subdir'
 
     @property
     def name(self):
-        return u"attachlist"
+        return "attachlist"
 
     def execute(self, params, content):
         params_dict = Command.parseParams(params)
         attach = Attachment(self.parser.page)
 
-        attachlist = attach.getAttachRelative()
-        attachpath = attach.getAttachPath()
+        # For empty attach list
+        if not attach.getAttachFull():
+            return ''
 
-        (dirs, files) = self.separateDirFiles(attachlist, attachpath)
+        subdir = params_dict.get(self.PARAM_SUBDIR, '')
+
+        attachlist = attach.getAttachRelative(subdir)
+        attachpath = Path(attach.getAttachPath())
+
+        (dirs, files) = self.separateDirFiles(attachlist, attachpath / subdir)
 
         self._sortFiles(dirs, params_dict)
         self._sortFiles(files, params_dict)
 
-        return SimpleView.make(dirs + files, attachpath)
+        view = SimpleView()
+        return view.make(dirs, files, subdir)
 
-    def separateDirFiles(self, attachlist, attachpath):
+    def separateDirFiles(self, attachlist: List[str], attachpath: Path) -> Tuple[List[str], List[str]]:
         """
         Разделить файлы и директории, заодно отбросить директории, начинающиеся с "__"
         """
-        dirs = [name for name in attachlist if os.path.isdir(
-            os.path.join(attachpath, name)) and not name.startswith("__")]
-        files = [name for name in attachlist if not os.path.isdir(
-            os.path.join(attachpath, name))]
+        dirs = list(filter(lambda name: Path(attachpath, name).is_dir() and not name.startswith('__'), attachlist))
+        files = list(filter(lambda name: not Path(attachpath, name).is_dir(), attachlist))
 
         return (dirs, files)
 
@@ -79,27 +106,27 @@ class AttachListCommand (Command):
         """
         attach = Attachment(self.parser.page)
 
-        if u"sort" not in params_dict:
+        if self.PARAM_SORT not in params_dict:
             names.sort(key=str.lower)
             return
 
-        sort = params_dict["sort"].lower()
+        sort = params_dict[self.PARAM_SORT].lower()
 
-        if sort == u"name":
+        if sort == "name":
             names.sort(key=str.lower)
-        elif sort == u"descendname":
+        elif sort == "descendname":
             names.sort(key=str.lower, reverse=True)
-        elif sort == u"ext":
+        elif sort == "ext":
             names.sort(key=Attachment.sortByExt)
-        elif sort == u"descendext":
+        elif sort == "descendext":
             names.sort(key=Attachment.sortByExt, reverse=True)
-        elif sort == u"size":
+        elif sort == "size":
             names.sort(key=attach.sortBySizeRelative)
-        elif sort == u"descendsize":
+        elif sort == "descendsize":
             names.sort(key=attach.sortBySizeRelative, reverse=True)
-        elif sort == u"date":
+        elif sort == "date":
             names.sort(key=attach.sortByDateRelative)
-        elif sort == u"descenddate":
+        elif sort == "descenddate":
             names.sort(key=attach.sortByDateRelative, reverse=True)
         else:
             names.sort(key=str.lower)

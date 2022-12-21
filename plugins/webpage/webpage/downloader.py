@@ -425,7 +425,7 @@ class DownloadController(BaseDownloadController):
 
         if fullUrl not in self._staticFiles:
             self._staticFiles[fullUrl] = relativeDownloadPath
-            self.log(_('Download: {}\n').format(fullUrl))
+            self.log(_('Download: {}').format(fullUrl))
             try:
                 obj = self.download(fullUrl)
                 data = obj.read()

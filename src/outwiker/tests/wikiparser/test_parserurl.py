@@ -8,6 +8,7 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
+import outwiker.core.cssclasses as css
 
 
 class ParserUrlTest (unittest.TestCase):
@@ -34,7 +35,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse1(self):
         text = "http://example.com/,"
-        result = '<a href="http://example.com/">http://example.com/</a>,'
+        result = f'<a class="{css.CSS_WIKI}" href="http://example.com/">http://example.com/</a>,'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -44,7 +45,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse2(self):
         text = "http://example.com/."
-        result = '<a href="http://example.com/">http://example.com/</a>.'
+        result = f'<a class="{css.CSS_WIKI}" href="http://example.com/">http://example.com/</a>.'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -54,7 +55,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse3(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz),"
-        result = '<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</a>,'
+        result = f'<a class="{css.CSS_WIKI}" href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</a>,'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -64,7 +65,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse4(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)."
-        result = '<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</a>.'
+        result = f'<a class="{css.CSS_WIKI}" href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)</a>.'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -74,7 +75,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse5(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/,"
-        result = '<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>,'
+        result = f'<a class="{css.CSS_WIKI}" href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>,'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -84,7 +85,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse6(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/."
-        result = '<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>.'
+        result = f'<a class="{css.CSS_WIKI}" href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>.'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -94,7 +95,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse7(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/"
-        result = '<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -104,7 +105,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse8(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/"
-        result = '<a href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/">http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/</a>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -114,7 +115,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse9(self):
         text = "www.jenyay.net"
-        result = '<a href="http://www.jenyay.net">www.jenyay.net</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://www.jenyay.net">www.jenyay.net</a>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -124,7 +125,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse10(self):
         text = "www.jenyay.net,"
-        result = '<a href="http://www.jenyay.net">www.jenyay.net</a>,'
+        result = f'<a class="{css.CSS_WIKI}" href="http://www.jenyay.net">www.jenyay.net</a>,'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -134,7 +135,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse11(self):
         text = "www.jenyay.net."
-        result = '<a href="http://www.jenyay.net">www.jenyay.net</a>.'
+        result = f'<a class="{css.CSS_WIKI}" href="http://www.jenyay.net">www.jenyay.net</a>.'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -144,7 +145,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse12(self):
         text = "www.jenyay.net/"
-        result = '<a href="http://www.jenyay.net/">www.jenyay.net/</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://www.jenyay.net/">www.jenyay.net/</a>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -154,7 +155,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse13(self):
         text = "ftp.jenyay.net"
-        result = '<a href="http://ftp.jenyay.net">ftp.jenyay.net</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://ftp.jenyay.net">ftp.jenyay.net</a>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -164,7 +165,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse14(self):
         text = "http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431"
-        result = '<a href="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431</a>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -174,7 +175,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse15(self):
         text = "бла-бла-бла http://IP-адрес-apt-proxy:9999/ubuntu/ бла-бла"
-        result = 'бла-бла-бла <a href="http://IP-адрес-apt-proxy:9999/ubuntu/">http://IP-адрес-apt-proxy:9999/ubuntu/</a> бла-бла'
+        result = f'бла-бла-бла <a class="{css.CSS_WIKI}" href="http://IP-адрес-apt-proxy:9999/ubuntu/">http://IP-адрес-apt-proxy:9999/ubuntu/</a> бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -184,7 +185,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse16(self):
         text = "192.168.1.1"
-        result = '<a href="http://192.168.1.1">192.168.1.1</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://192.168.1.1">192.168.1.1</a>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -194,7 +195,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse17(self):
         text = "192.168.100.100"
-        result = '<a href="http://192.168.100.100">192.168.100.100</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://192.168.100.100">192.168.100.100</a>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -224,7 +225,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse20(self):
         text = "Бла бла 192.168.1.1 бла"
-        result = 'Бла бла <a href="http://192.168.1.1">192.168.1.1</a> бла'
+        result = f'Бла бла <a class="{css.CSS_WIKI}" href="http://192.168.1.1">192.168.1.1</a> бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -264,7 +265,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse24(self):
         text = "092.168.10.10"
-        result = '<a href="http://092.168.10.10">092.168.10.10</a>'
+        result = f'<a class="{css.CSS_WIKI}" href="http://092.168.10.10">092.168.10.10</a>'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -304,24 +305,24 @@ class ParserUrlTest (unittest.TestCase):
 
     def testUrlParse28(self):
         text = "page://__adsfasdfaf"
-        result = '<a href="page://__adsfasdfaf">page://__adsfasdfaf</a>'
+        result = '<a class="ow-wiki ow-link-page" href="page://__adsfasdfaf">page://__adsfasdfaf</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlParse29(self):
         text = "page://__абырвалг-ффф"
-        result = '<a href="page://__абырвалг-ффф">page://__абырвалг-ффф</a>'
+        result = '<a class="ow-wiki ow-link-page" href="page://__абырвалг-ффф">page://__абырвалг-ффф</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlParse30(self):
         text = "page://__adsfasdfaf/"
-        result = '<a href="page://__adsfasdfaf/">page://__adsfasdfaf/</a>'
+        result = '<a class="ow-wiki ow-link-page" href="page://__adsfasdfaf/">page://__adsfasdfaf/</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlParse31(self):
         text = "page://__абырвалг-ффф/"
-        result = '<a href="page://__абырвалг-ффф/">page://__абырвалг-ффф/</a>'
+        result = '<a class="ow-wiki ow-link-page" href="page://__абырвалг-ффф/">page://__абырвалг-ффф/</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)

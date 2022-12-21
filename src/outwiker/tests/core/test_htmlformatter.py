@@ -1,9 +1,7 @@
 # -*- coding=utf-8 -*-
 
-import pytest
-
 from outwiker.core.htmlformatter import HtmlFormatter
-from outwiker.gui.cssclasses import CSS_ERROR, CSS_IMAGE
+from outwiker.core.cssclasses import CSS_ERROR, CSS_IMAGE
 
 
 def test_image_no_common_classes():

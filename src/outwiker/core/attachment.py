@@ -22,7 +22,7 @@ class Attachment:
         """
         self.page = page
 
-    def getAttachPath(self, create=False):
+    def getAttachPath(self, create: bool = False) -> str:
         """
         Возвращает путь до папки с прикрепленными файлами
         create - создать папку для прикрепленных файлов,
@@ -36,14 +36,14 @@ class Attachment:
         return path
 
     @property
-    def attachmentFull(self):
+    def attachmentFull(self) -> List[str]:
         """
         Возвращает список прикрепленных файлов.
         Пути до файлов полные
         """
         return self.getAttachFull()
 
-    def getAttachFull(self, subdir="."):
+    def getAttachFull(self, subdir: str = ".") -> List[str]:
         """
         Возвращает список прикрепленных файлов.
         Пути до файлов полные
@@ -56,8 +56,14 @@ class Attachment:
         if self.page.readonly:
             raise ReadonlyException
 
-        root = self.getAttachPath(create=True)
-        subdir_path = Path(root, subdir)
+        root = Path(self.getAttachPath(create=True)).resolve()
+        subdir_path = (root / subdir).resolve()
+        if root == subdir_path:
+            return root
+
+        if root not in subdir_path.parents:
+            raise OSError
+
         subdir_path.mkdir(parents=True, exist_ok=True)
         return subdir_path
 
@@ -77,7 +83,7 @@ class Attachment:
 
         return os.listdir(fullpath)
 
-    def attach(self, files, subdir='.'):
+    def attach(self, files: List[Union[Path, str]], subdir: Union[Path, str] = '.') -> None:
         """
         Прикрепить файлы к странице
         files -- список файлов (или папок), которые надо прикрепить
@@ -86,17 +92,18 @@ class Attachment:
         if self.page.readonly:
             raise ReadonlyException
 
-        attachPath = os.path.join(self.getAttachPath(True), subdir)
+        subdir_path = self.createSubdir(subdir)
 
-        if not os.path.exists(attachPath) or not os.path.isdir(attachPath):
-            raise IOError
+        if not subdir_path.exists() or not subdir_path.is_dir():
+            raise OSError
 
         for name in files:
-            if os.path.isdir(name):
-                basename = os.path.basename(name)
-                shutil.copytree(name, os.path.join(attachPath, basename))
+            name_path = Path(name)
+            if name_path.is_dir():
+                basename = name_path.name
+                shutil.copytree(name, subdir_path / basename)
             else:
-                shutil.copy(name, attachPath)
+                shutil.copy(name, subdir_path)
 
         self.page.updateDateTime()
         self.page.root.onAttachListChanged(self.page,

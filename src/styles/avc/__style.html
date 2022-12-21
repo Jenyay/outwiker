@@ -6,6 +6,13 @@
 	<title>$title</title>
 
 <style type="text/css">
+	body, div, p, table {
+		font-size:${fontsize}pt;
+		font-family:$fontfamily;
+	}
+
+	$defaultstyle
+
 	body {
 		margin:10px;
 		color:#00262F; 
@@ -32,7 +39,7 @@
 		white-space: -o-pre-wrap;    /* Opera 7 */
 		word-wrap: break-word;       /* Internet Explorer 5.5+ */
 		}
-		}
+		
 	hr {
 		background-color:#215069;
 		color:#215069;
@@ -40,16 +47,9 @@
 		border-top: 5px outset  #658DA2;
 		height: 4px;
 	}
-</style>
-	<style type="text/css">
-		body, div, p, table {
-			font-size:${fontsize}pt;
-			font-family:$fontfamily;
-		}
 
-		img{border:none}
-		$userstyle
-	</style>
+	$userstyle
+</style>
 	$userhead
 </head>
 <body>

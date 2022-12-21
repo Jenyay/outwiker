@@ -94,6 +94,20 @@ class MainWindow(wx.Frame):
 
         logger.debug(u'MainWindow initializing end')
 
+    def updateTrayIcon(self):
+        self.trayController.updateTrayIcon()
+
+    def showTrayIcon(self):
+        self.trayController.showTrayIcon()
+
+    def removeTrayIcon(self):
+        self.trayController.removeTrayIcon()
+
+    def hideToTray(self):
+        self.Iconize()
+        self.Hide()
+        self.showTrayIcon()
+
     def _createMenu(self):
         logger.debug(u'MainWindow. Create the main menu')
         self._mainMenu = wx.MenuBar()
@@ -158,10 +172,10 @@ class MainWindow(wx.Frame):
         """
         Создать пункты меню, кнопки на панелях инструментов и т.п.
         """
-        logger.debug(u'MainWindow createGui started')
-        logger.debug(u'MainWindow. Setup icon')
+        logger.debug('MainWindow createGui started')
+        logger.debug('MainWindow. Setup icon')
         self._setIcon()
-        self.SetTitle(u"OutWiker")
+        self.SetTitle("OutWiker")
         self._createMenu()
         self._createStatusBar()
 
@@ -178,7 +192,7 @@ class MainWindow(wx.Frame):
         self._mainSizer.Add(self._mainContentPanel, flag=wx.EXPAND)
         self.SetSizer(self._mainSizer)
 
-        logger.debug(u'MainWindow. Create the AuiManager')
+        logger.debug('MainWindow. Create the AuiManager')
 
         self.auiManager = wx.aui.AuiManager(
             self._mainContentPanel,
@@ -189,16 +203,16 @@ class MainWindow(wx.Frame):
         self._createAuiPanes()
         self._createToolbars()
 
-        logger.debug(u'MainWindow. Create the MainWndController')
+        logger.debug('MainWindow. Create the MainWndController')
         self.controller = MainWndController(self, self._application)
         self.controller.loadMainWindowParams()
 
-        logger.debug(u'MainWindow. Create the MainPanesController')
+        logger.debug('MainWindow. Create the MainPanesController')
         self.__panesController = MainPanesController(self._application, self)
 
         self._bindGuiEvents()
 
-        logger.debug(u'MainWindow. Create the TabsController')
+        logger.debug('MainWindow. Create the TabsController')
         self.tabsController = TabsController(self.pagePanel.panel.tabsCtrl,
                                              self._application)
 
@@ -214,11 +228,11 @@ class MainWindow(wx.Frame):
             self.attachWatcher,
         ]
 
-        logger.debug(u'MainWindow. Initialize the core controllers')
+        logger.debug('MainWindow. Initialize the core controllers')
         self._initCoreControllers()
 
-        logger.debug(u'MainWindow. Create the tray icon')
-        self.taskBarIconController = getTrayIconController(self._application,
+        logger.debug('MainWindow. Create the tray icon')
+        self.trayController = getTrayIconController(self._application,
                                                            self)
 
         self.__panesController.loadPanesSize()
@@ -559,9 +573,9 @@ class MainWindow(wx.Frame):
         """
         Создание статусной панели
         """
-        self.statusbar = wx.StatusBar(self, -1)
-        self.SetStatusBar(self.statusbar)
-        self._statusBarController = StatusBarController(self.statusbar,
+        self._statusbar = wx.StatusBar(self, -1)
+        self.SetStatusBar(self._statusbar)
+        self._statusBarController = StatusBarController(self._statusbar,
                                                         self._application)
 
     def _bindGuiEvents(self):
@@ -631,7 +645,7 @@ class MainWindow(wx.Frame):
 
         self._destroyCoreControllers()
 
-        self.taskBarIconController.destroy()
+        self.trayController.destroy()
         self.controller.destroy()
 
         self.auiManager.UnInit()
@@ -717,3 +731,7 @@ class MainWindow(wx.Frame):
     @property
     def pageView(self):
         return self.pagePanel.pageView
+
+    @property
+    def statusbar(self) -> StatusBarController:
+        return self._statusBarController

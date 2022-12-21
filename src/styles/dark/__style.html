@@ -4,7 +4,13 @@
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 	<title>$title</title>
 
-	<style>
+	<style type="text/css">
+		body, div, p, table {
+			font-size:${fontsize}pt;
+			font-family:$fontfamily;
+		}
+		$defaultstyle
+
 		body {margin:0; padding:10px; line-height:1.4; color:#E3E3E3; background:#151821;}
 		a, a:hover {color:#E4431D;}
 		blockquote {padding:0 10px; border:solid #404F6E; border-width:1px 1px 1px 5px;}
@@ -19,15 +25,7 @@
 		td {vertical-align:top;}
 		table th, table td {padding:3px 5px; border:1px solid #E3E3E3;}
 		table th {background:#404F6E;}
-	</style>
 
-	<style type="text/css">
-		body, div, p, table {
-			font-size:${fontsize}pt;
-			font-family:$fontfamily;
-		}
-
-		img{border:none}
 		$userstyle
 	</style>
 	$userhead

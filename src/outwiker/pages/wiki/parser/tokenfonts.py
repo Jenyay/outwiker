@@ -7,7 +7,7 @@ from pyparsing import QuotedString, Regex
 from .tokenblock import TextBlockToken
 
 
-class FontsFactory(object):
+class FontsFactory:
     """
     Фабрика для создания шрифтовых / блочных токенов
     """

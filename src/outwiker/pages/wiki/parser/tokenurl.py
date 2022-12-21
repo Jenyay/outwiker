@@ -5,6 +5,7 @@ import re
 from pyparsing import Regex
 
 from outwiker.utilites.urls import is_url
+import outwiker.core.cssclasses as css
 
 
 class UrlFactory (object):
@@ -34,4 +35,7 @@ class UrlToken (object):
         return self.__getUrlTag(t[0], t[0])
 
     def __getUrlTag(self, url, comment):
-        return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
+        if url.startswith('page://'):
+            return f'<a class="{css.CSS_WIKI} {css.CSS_LINK_PAGE}" href="{url}">{comment}</a>'
+
+        return f'<a class="{css.CSS_WIKI}" href="{url}">{comment}</a>'

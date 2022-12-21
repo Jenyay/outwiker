@@ -63,9 +63,9 @@ if __name__ == "__main__":
     if starter.pluginsEnabled:
         outwiker_app.loadPlugins()
 
-    outwiker_app.showMainWindow(starter.allowMinimizingMainWindow)
     outwiker_app.bindActivateApp()
     starter.processGUI()
+    outwiker_app.showMainWindow(starter.allowMinimizingMainWindow)
     outwiker_app.MainLoop()
 
     logger.debug('Exit')

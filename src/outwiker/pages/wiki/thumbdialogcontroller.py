@@ -6,7 +6,8 @@ from typing import Optional
 import wx
 
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import isImage, showError
+from outwiker.core.commands import showError
+from outwiker.core.images import isImage
 from outwiker.gui.windowssizesaver import WindowSizeSaver
 
 from .thumbdialog import ThumbDialog

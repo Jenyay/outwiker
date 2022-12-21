@@ -3,6 +3,7 @@
 import logging
 import os.path
 from typing import List
+from datetime import datetime
 
 import wx
 
@@ -16,12 +17,18 @@ from outwiker.actions.attachrename import RenameAttachActionForAttachPanel
 from outwiker.actions.attachselectall import AttachSelectAllAction
 from outwiker.actions.clipboard import CopyAttachPathAction
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import MessageBox, attachFiles, renameAttach, showError
-from outwiker.core.events import BeginAttachRenamingParams
+from outwiker.core.commands import (MessageBox,
+                                    attachFiles,
+                                    renameAttach,
+                                    addStatusBarItem,
+                                    setStatusText,
+                                    showError)
+from outwiker.core.events import (BeginAttachRenamingParams,
+                                  AttachSelectionChangedParams)
 from outwiker.core.system import getBuiltinImagePath, getOS
 
 from .dropfiles import BaseDropFilesTarget
-from .guiconfig import AttachConfig
+from .guiconfig import AttachConfig, GeneralGuiConfig
 
 
 logger = logging.getLogger('outwiker.gui.attachpanel')
@@ -31,8 +38,10 @@ class AttachPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
-        self._config = AttachConfig(self._application.config)
+        self._attach_config = AttachConfig(self._application.config)
+        self._general_config = GeneralGuiConfig(self._application.config)
         self.GO_TO_PARENT_ITEM_NAME = '..'
+        self._ATTACH_STATUS_ITEM = 'STATUSBAR_ATTACH'
 
         # Store old file name before renaming
         self._oldEditedAttachName = None
@@ -62,6 +71,7 @@ class AttachPanel(wx.Panel):
 
         self._bindGuiEvents()
         self._bindAppEvents()
+        addStatusBarItem(self._ATTACH_STATUS_ITEM, position=1)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -94,6 +104,14 @@ class AttachPanel(wx.Panel):
                   self._onEndLabelEdit,
                   self.__attachList)
 
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED,
+                  self._onAttachSelected,
+                  self.__attachList)
+
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED,
+                  self._onAttachSelected,
+                  self.__attachList)
+
     def _unbindGuiEvents(self):
         self.Unbind(wx.EVT_LIST_BEGIN_DRAG,
                     handler=self._onBeginDrag,
@@ -112,6 +130,14 @@ class AttachPanel(wx.Panel):
                     source=self.__attachList)
 
         self.Unbind(wx.EVT_CLOSE, handler=self._onClose)
+
+        self.Unbind(wx.EVT_LIST_ITEM_SELECTED,
+                    handler=self._onAttachSelected,
+                    source=self.__attachList)
+
+        self.Unbind(wx.EVT_LIST_ITEM_DESELECTED,
+                    handler=self._onAttachSelected,
+                    source=self.__attachList)
 
     @property
     def attachList(self):
@@ -262,7 +288,7 @@ class AttachPanel(wx.Panel):
         """
         Обновить список прикрепленных файлов
         """
-        showHiddenDirs = self._config.showHiddenDirs.value
+        showHiddenDirs = self._attach_config.showHiddenDirs.value
 
         self.__attachList.Freeze()
         page = self._application.selectedPage
@@ -315,6 +341,7 @@ class AttachPanel(wx.Panel):
                     self.__attachList.Select(index)
 
         self.__attachList.Thaw()
+        self._sendAttachSelectedEvent()
 
     def _selectFile(self, fname):
         if fname is None:
@@ -492,6 +519,51 @@ class AttachPanel(wx.Panel):
 
     def _onPreferencesDialogClose(self, dialog):
         self.updateAttachments()
+
+    def _onAttachSelected(self, event):
+        text = ''
+        page = self._application.selectedPage
+        if page is not None:
+            files = self.getSelectedFiles()
+            attach = Attachment(page)
+            root = attach.getAttachPath()
+            full_path = [os.path.join(root, fname)
+                         for fname in files
+                         if os.path.isfile(os.path.join(root, fname))]
+            if len(full_path) == 1:
+                text = self._getStatusTextForSingleFile(full_path[0], root)
+            elif len(full_path) > 0:
+                text = self._getStatusTextForManyFiles(full_path)
+
+        setStatusText(self._ATTACH_STATUS_ITEM, text)
+        self._sendAttachSelectedEvent()
+
+    def _getStatusTextForSingleFile(self, fname_full: str, root_path: str) -> str:
+        tpl = _('{name}   -   {size} KB   -   {date}')
+        name = os.path.relpath(fname_full, root_path)
+        size = ('{:,.2f}'.format(os.path.getsize(fname_full) / 1024)).replace(',', ' ')
+        datetime_format = self._general_config.dateTimeFormat.value
+        date = datetime.fromtimestamp(os.path.getmtime(fname_full)).strftime(datetime_format)
+
+        return tpl.format(name=name, size=size, date=date)
+
+    def _getStatusTextForManyFiles(self, fname_full) -> str:
+        tpl = _('{count} file(s)  -  {size} KB')
+        count = len(fname_full)
+        size = 0.0
+        for fname in fname_full:
+            size += os.path.getsize(fname)
+
+        size /= 1024
+        size_str = ('{:,.2f}'.format(size)).replace(',', ' ')
+        return tpl.format(count=count, size=size_str)
+
+    def _sendAttachSelectedEvent(self):
+        page = self._application.selectedPage
+        if page is not None:
+            files = self.getSelectedFiles()
+            params = AttachSelectionChangedParams(files)
+            self._application.onAttachSelectionChanged(page, params)
 
 
 class DropAttachFilesTarget(BaseDropFilesTarget):

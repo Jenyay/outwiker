@@ -19,6 +19,7 @@ from outwiker.core.defines import (PAGE_MODE_TEXT,
 from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams
 from outwiker.core.system import getImagesDir
 from outwiker.gui.basetextpanel import BaseTextPanel
+from outwiker.gui.defines import STATUSBAR_MESSAGE_ITEM
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.utilites.textfile import readTextFile
 
@@ -44,8 +45,6 @@ class BaseHtmlPanel(BaseTextPanel):
 
         # Где хранить параметы текущей страницы страницы (код, просмотр и т.д.)
         self.tabParamName = "PageIndex"
-
-        self._statusbar_item = 0
 
         self.imagesDir = getImagesDir()
 
@@ -293,14 +292,14 @@ class BaseHtmlPanel(BaseTextPanel):
     def _updatePage(self):
         assert self._currentpage is not None
 
-        setStatusText(_(u"Page rendered. Please wait…"), self._statusbar_item)
+        setStatusText(STATUSBAR_MESSAGE_ITEM, _("Page rendered. Please wait…"))
         self._application.onHtmlRenderingBegin(self._currentpage,
                                                self.htmlWindow)
 
         self._application.onPageUpdateNeeded(self._currentpage,
                                              PageUpdateNeededParams(True))
 
-        setStatusText(u"", self._statusbar_item)
+        setStatusText(STATUSBAR_MESSAGE_ITEM, "")
         self._application.onHtmlRenderingEnd(self._currentpage,
                                              self.htmlWindow)
 
@@ -310,7 +309,7 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         assert self._currentpage is not None
 
-        setStatusText(_(u"Page loading. Please wait…"), self._statusbar_item)
+        setStatusText(STATUSBAR_MESSAGE_ITEM, _("Page loading. Please wait…"))
 
         try:
             path = self._currentpage.getHtmlPath()
@@ -330,7 +329,7 @@ class BaseHtmlPanel(BaseTextPanel):
                 self._currentpage.title),
                 _(u'Error'), wx.ICON_ERROR | wx.OK)
 
-        setStatusText(u"", self._statusbar_item)
+        setStatusText(STATUSBAR_MESSAGE_ITEM, "")
 
     def _enableAllTools(self):
         """

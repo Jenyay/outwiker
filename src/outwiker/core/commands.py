@@ -17,8 +17,8 @@ import wx
 import outwiker.core.exceptions
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.core.defines import IMAGES_EXTENSIONS
 from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
+from outwiker.core.images import isImage as _isImage
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
@@ -402,30 +402,29 @@ def createNewWiki(parentwnd):
     Создать новую вики
     parentwnd - окно-владелец диалога выбора файла
     """
-    dlg = TestedFileDialog(parentwnd, style=wx.FD_SAVE)
-
     newPageTitle = _("First Wiki Page")
     newPageContent = _("""!! First Wiki Page
 
 This is the first page. You can use a text formatting: '''bold''', ''italic'', {+underlined text+}, [[https://jenyay.net | link]] and others.""")
 
-    if dlg.ShowModal() == wx.ID_OK:
-        try:
-            from outwiker.pages.wiki.wikipage import WikiPageFactory
+    with TestedFileDialog(parentwnd, style=wx.FD_SAVE) as dlg:
+        dlg.SetDirectory(getOS().documentsDir)
 
-            newwiki = WikiDocument.create(dlg.GetPath())
-            WikiPageFactory().create(newwiki, newPageTitle, [_("test")])
-            firstPage = newwiki[newPageTitle]
-            firstPage.content = newPageContent
+        if dlg.ShowModal() == wx.ID_OK:
+            try:
+                from outwiker.pages.wiki.wikipage import WikiPageFactory
 
-            Application.wikiroot = newwiki
-            Application.wikiroot.selectedPage = firstPage
-        except (IOError, OSError) as e:
-            # TODO: проверить под Windows
-            showError(Application.mainWindow, _(
-                "Can't create wiki\n") + e.filename)
+                newwiki = WikiDocument.create(dlg.GetPath())
+                WikiPageFactory().create(newwiki, newPageTitle, [_("test")])
+                firstPage = newwiki[newPageTitle]
+                firstPage.content = newPageContent
 
-    dlg.Destroy()
+                Application.wikiroot = newwiki
+                Application.wikiroot.selectedPage = firstPage
+            except (IOError, OSError) as e:
+                # TODO: проверить под Windows
+                showError(Application.mainWindow, _(
+                    "Can't create wiki\n") + e.filename)
 
 
 def copyTextToClipboard(text: str) -> bool:
@@ -532,13 +531,19 @@ def movePage(page, newParent):
             u"Can't move page: {}".format(page.display_title)))
 
 
-def setStatusText(text, index=0):
+def addStatusBarItem(name: str, width: int = -1, position: Optional[int] = None) -> None:
+    if Application.mainWindow:
+        Application.mainWindow.statusbar.addItem(name, width, position)
+
+
+def setStatusText(item_name: str, text: str) -> None:
     """
     Установить текст статусбара.
     text - текст
     index - номер ячейки статусбара
     """
-    Application.mainWindow.statusbar.SetStatusText(text, index)
+    if Application.mainWindow:
+        Application.mainWindow.statusbar.setStatusText(item_name, text)
 
 
 @testreadonly
@@ -653,14 +658,9 @@ def insertCurrentDate(parent, editor):
 
 def isImage(fname: Union[Path, str]) -> bool:
     """
-    If fname is image then the function return True. Otherwise - False.
+    Depricated. Use outwiker.core.images.isImage()
     """
-    fnameLower = str(fname).lower()
-    for extension in IMAGES_EXTENSIONS:
-        if fnameLower.endswith('.' + extension):
-            return True
-
-    return False
+    return _isImage(fname)
 
 
 def dictToStr(paramsDict):

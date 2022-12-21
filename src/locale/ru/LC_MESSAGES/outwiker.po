@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-27 15:13+0300\n"
+"POT-Creation-Date: 2022-12-09 17:20+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -104,7 +104,7 @@ msgstr "Запустить выбранные прикрепленные фай�
 msgid "You did not select a file to execute"
 msgstr "Вы не выбрали файл(ы) для запуска"
 
-#: outwiker/actions/attachexecute.py:44 outwiker/gui/htmlrender.py:63
+#: outwiker/actions/attachexecute.py:44 outwiker/gui/htmlrender.py:79
 #: outwiker/gui/htmlrenderie.py:255 outwiker/gui/htmlrenderie.py:337
 #: outwiker/gui/htmlrenderwebkit.py:261 outwiker/gui/htmlrenderwebkit.py:343
 #, python-format
@@ -152,11 +152,11 @@ msgstr "Удалить выбранные файлы"
 msgid "Remove attached files. Action for attach panel"
 msgstr "Удалить прикрепленные файлы. Действие для панели прикрепленных файлов"
 
-#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:363
+#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:389
 msgid "You did not select any file to remove"
 msgstr "Вы не выбрали файл(ы) для удаления"
 
-#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:366
+#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:392
 msgid "Remove selected files?"
 msgstr "Удалить выбранные файлы?"
 
@@ -265,7 +265,7 @@ msgstr "Закрыть OutWiker"
 msgid "Really exit?"
 msgstr "Действительно выйти?"
 
-#: outwiker/actions/exit.py:40 outwiker/gui/trayicon.py:140
+#: outwiker/actions/exit.py:40 outwiker/gui/trayicon.py:133
 msgid "Exit"
 msgstr "Выход"
 
@@ -367,7 +367,7 @@ msgstr "Открыть…"
 msgid "Open tree notes"
 msgstr "Открыть дерево заметок"
 
-#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:123
+#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:137
 msgid "Help"
 msgstr "Справка"
 
@@ -490,6 +490,7 @@ msgstr "Начать поиск и замену по странице"
 #: outwiker/gui/mainpanes/attachmainpane.py:40
 #: outwiker/gui/preferences/prefcontroller.py:137
 #: outwiker/gui/preferences/wikieditorpanel.py:37
+#: outwiker/pages/wiki/parser/commands/attachlist.py:35
 msgid "Attachments"
 msgstr "Прикрепленные файлы"
 
@@ -705,11 +706,11 @@ msgstr ""
 msgid "__page.opt error"
 msgstr "Ошибка файла __page.opt"
 
-#: outwiker/core/commands.py:407
+#: outwiker/core/commands.py:405
 msgid "First Wiki Page"
 msgstr "Первая викистраница"
 
-#: outwiker/core/commands.py:408
+#: outwiker/core/commands.py:406
 msgid ""
 "!! First Wiki Page\n"
 "\n"
@@ -722,45 +723,45 @@ msgstr ""
 "например: '''полужирный шрифт''', ''курсив'', {+подчеркнутый текст+}, "
 "[[https://jenyay.net | ссылки]] и другое."
 
-#: outwiker/core/commands.py:417
+#: outwiker/core/commands.py:418
 msgid "test"
 msgstr "проверка"
 
-#: outwiker/core/commands.py:426
+#: outwiker/core/commands.py:427
 msgid "Can't create wiki\n"
 msgstr "Невозможно создать вики\n"
 
-#: outwiker/core/commands.py:433 outwiker/core/commands.py:450
+#: outwiker/core/commands.py:432 outwiker/core/commands.py:449
 msgid "Can't open clipboard"
 msgstr "Невозможно открыть буфер обмена"
 
-#: outwiker/core/commands.py:440
+#: outwiker/core/commands.py:439
 msgid "Can't copy text to clipboard"
 msgstr "Ошибка копирования текста в буфер обмена"
 
-#: outwiker/core/commands.py:528
+#: outwiker/core/commands.py:527
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 "Невозможно переместить страницу, так как страница с таким именем уже "
 "существует"
 
-#: outwiker/core/commands.py:532
+#: outwiker/core/commands.py:531
 msgid "Can't move page: {}"
 msgstr "Невозможно переместить страницу: {}"
 
-#: outwiker/core/commands.py:548 outwiker/gui/notestree.py:211
+#: outwiker/core/commands.py:553 outwiker/gui/notestree.py:211
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
-#: outwiker/core/commands.py:566
+#: outwiker/core/commands.py:571
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Невозможно переименовать страницу \"{}\" в \"{}\""
 
-#: outwiker/core/commands.py:585
+#: outwiker/core/commands.py:590
 msgid "Invalid page title"
 msgstr "Неправильный заголовок страницы"
 
-#: outwiker/core/commands.py:590
+#: outwiker/core/commands.py:595
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -769,15 +770,15 @@ msgstr ""
 "{0}\n"
 "Продолжить?"
 
-#: outwiker/core/commands.py:593
+#: outwiker/core/commands.py:598
 msgid "The page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/core/commands.py:645
+#: outwiker/core/commands.py:650
 msgid "Enter format of the date"
 msgstr "Введите формат даты"
 
-#: outwiker/core/commands.py:646 outwiker/pages/wiki/actions/dates.py:25
+#: outwiker/core/commands.py:651 outwiker/pages/wiki/actions/dates.py:25
 msgid "Date format"
 msgstr "Формат даты"
 
@@ -914,7 +915,7 @@ msgstr "Ошибка печати"
 #: outwiker/gui/preferences/iconsetpanel.py:280
 #: outwiker/gui/preferences/iconsetpanel.py:320
 #: outwiker/gui/renametagdialog.py:77 outwiker/gui/renametagdialog.py:82
-#: outwiker/pages/html/basehtmlpanel.py:331
+#: outwiker/pages/html/basehtmlpanel.py:330
 msgid "Error"
 msgstr "Ошибка"
 
@@ -1014,7 +1015,7 @@ msgid "Horizontal rule"
 msgstr "Горизонтальная линия"
 
 #: outwiker/gui/actionslist.py:277 outwiker/gui/dialogs/linkdialog.py:20
-#: outwiker/gui/dialogs/linkdialog.py:34
+#: outwiker/gui/dialogs/linkdialog.py:35
 #: outwiker/gui/preferences/wikieditorpanel.py:33
 msgid "Link"
 msgstr "Ссылка"
@@ -1289,7 +1290,7 @@ msgstr "Цвет фона текста..."
 msgid "Set text background color"
 msgstr "Установить цвет фона текста"
 
-#: outwiker/gui/actionslist.py:418 outwiker/gui/dialogs/linkdialog.py:46
+#: outwiker/gui/actionslist.py:418 outwiker/gui/dialogs/linkdialog.py:45
 #: outwiker/gui/preferences/htmleditorpanel.py:53
 #: outwiker/gui/preferences/wikieditorpanel.py:36
 msgid "Comment"
@@ -1315,11 +1316,21 @@ msgstr "Переключиться на вкладку просмотра"
 msgid "Switch to preview tab for some page types"
 msgstr "Переключиться на вкладку просмотра для некоторых типов страниц"
 
-#: outwiker/gui/attachpanel.py:367
+#: outwiker/gui/attachpanel.py:393
 msgid "Remove files?"
 msgstr "Удалить файлы?"
 
-#: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:139
+#: outwiker/gui/attachpanel.py:541
+#, python-brace-format
+msgid "{name}   -   {size} KB   -   {date}"
+msgstr "{name}   -   {size} Кбайт   -   {date}"
+
+#: outwiker/gui/attachpanel.py:549
+#, python-brace-format
+msgid "{count} file(s)  -  {size} KB"
+msgstr "{count} файл(ов)  -  {size} КБ"
+
+#: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:153
 #: outwiker/gui/preferences/prefcontroller.py:131
 #: outwiker/gui/preferences/prefcontroller.py:157
 #: outwiker/pages/wiki/wikipagecontroller.py:84
@@ -1439,6 +1450,34 @@ msgstr "Родитель"
 #: outwiker/gui/controls/pagelist_columns.py:239
 msgid "Modify date"
 msgstr "Дата изменения"
+
+#: outwiker/gui/controls/searchreplacepanel.py:82
+msgid "Find what: "
+msgstr "Найти: "
+
+#: outwiker/gui/controls/searchreplacepanel.py:85
+msgid "Next"
+msgstr "Далее"
+
+#: outwiker/gui/controls/searchreplacepanel.py:88
+msgid "Prev"
+msgstr "Назад"
+
+#: outwiker/gui/controls/searchreplacepanel.py:95
+msgid "Replace with: "
+msgstr "Заменить: "
+
+#: outwiker/gui/controls/searchreplacepanel.py:98
+msgid "Replace"
+msgstr "Заменить"
+
+#: outwiker/gui/controls/searchreplacepanel.py:101
+msgid "Replace All"
+msgstr "Заменить все"
+
+#: outwiker/gui/controls/searchreplacepanelcontroller.py:212
+msgid "Not found"
+msgstr "Не найдено"
 
 #: outwiker/gui/controls/validators/selectedfilevalidator.py:28
 msgid "Select file"
@@ -1611,68 +1650,68 @@ msgstr "Заметка"
 msgid "Notes"
 msgstr "Заметки"
 
-#: outwiker/gui/mainwindow.py:104
+#: outwiker/gui/mainwindow.py:118
 msgid "File"
 msgstr "Файл"
 
-#: outwiker/gui/mainwindow.py:107 outwiker/gui/preferences/generalpanel.py:43
+#: outwiker/gui/mainwindow.py:121 outwiker/gui/preferences/generalpanel.py:43
 msgid "Edit"
 msgstr "Правка"
 
-#: outwiker/gui/mainwindow.py:110
+#: outwiker/gui/mainwindow.py:124
 msgid "Tree"
 msgstr "Дерево"
 
-#: outwiker/gui/mainwindow.py:113
+#: outwiker/gui/mainwindow.py:127
 msgid "Tools"
 msgstr "Инструменты"
 
-#: outwiker/gui/mainwindow.py:116 outwiker/gui/rootpagepanel.py:167
+#: outwiker/gui/mainwindow.py:130 outwiker/gui/rootpagepanel.py:167
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: outwiker/gui/mainwindow.py:118
+#: outwiker/gui/mainwindow.py:132
 msgid "View"
 msgstr "Вид"
 
-#: outwiker/gui/mainwindow.py:120
+#: outwiker/gui/mainwindow.py:134
 msgid "Go to"
 msgstr "Перейти к"
 
-#: outwiker/gui/mainwindow.py:128
+#: outwiker/gui/mainwindow.py:142
 msgid "Toolbars"
 msgstr "Панели инструментов"
 
-#: outwiker/gui/mainwindow.py:145
+#: outwiker/gui/mainwindow.py:159
 #: outwiker/gui/preferences/prefcontroller.py:167
 msgid "Plugins"
 msgstr "Плагины"
 
-#: outwiker/gui/mainwindow.py:261 outwiker/gui/texteditormenu.py:12
+#: outwiker/gui/mainwindow.py:275 outwiker/gui/texteditormenu.py:12
 msgid "Undo"
 msgstr "Отменить"
 
-#: outwiker/gui/mainwindow.py:266 outwiker/gui/texteditormenu.py:13
+#: outwiker/gui/mainwindow.py:280 outwiker/gui/texteditormenu.py:13
 msgid "Redo"
 msgstr "Вернуть"
 
-#: outwiker/gui/mainwindow.py:273 outwiker/gui/texteditormenu.py:15
+#: outwiker/gui/mainwindow.py:287 outwiker/gui/texteditormenu.py:15
 msgid "Cut"
 msgstr "Вырезать"
 
-#: outwiker/gui/mainwindow.py:278 outwiker/gui/texteditormenu.py:16
+#: outwiker/gui/mainwindow.py:292 outwiker/gui/texteditormenu.py:16
 msgid "Copy"
 msgstr "Копировать"
 
-#: outwiker/gui/mainwindow.py:283 outwiker/gui/texteditormenu.py:17
+#: outwiker/gui/mainwindow.py:297 outwiker/gui/texteditormenu.py:17
 msgid "Paste"
 msgstr "Вставить"
 
-#: outwiker/gui/mainwindow.py:290 outwiker/gui/texteditormenu.py:19
+#: outwiker/gui/mainwindow.py:304 outwiker/gui/texteditormenu.py:19
 msgid "Select All"
 msgstr "Выделить всё"
 
-#: outwiker/gui/mainwindow.py:602
+#: outwiker/gui/mainwindow.py:616
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -1681,7 +1720,7 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: outwiker/gui/mainwndcontroller.py:206
+#: outwiker/gui/mainwndcontroller.py:235
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1884,7 +1923,7 @@ msgstr "Последний используемый"
 
 #: outwiker/gui/preferences/generalpanel.py:42
 #: outwiker/gui/preferences/prefcontroller.py:135
-#: outwiker/pages/html/basehtmlpanel.py:210
+#: outwiker/pages/html/basehtmlpanel.py:209
 msgid "Preview"
 msgstr "Просмотр"
 
@@ -2191,21 +2230,35 @@ msgstr "Эти настройки предназначены только для
 msgid "Page Options..."
 msgstr "Настройки страницы..."
 
-#: outwiker/gui/preferences/traypanel.py:43
-msgid "Minimize to tray"
-msgstr "Сворачивать в трей"
+#: outwiker/gui/preferences/traypanel.py:13
+#: outwiker/gui/preferences/traypanel.py:14
+msgid "Minimize window"
+msgstr "Свернуть окно"
 
-#: outwiker/gui/preferences/traypanel.py:48
+#: outwiker/gui/preferences/traypanel.py:13
+#: outwiker/gui/preferences/traypanel.py:14
+msgid "Hide to tray"
+msgstr "Свернуть в трей"
+
+#: outwiker/gui/preferences/traypanel.py:14
+msgid "Close window"
+msgstr "Закрыть окно"
+
+#: outwiker/gui/preferences/traypanel.py:38
+msgid "Minimize window button"
+msgstr "Кнопка сворачивания окна"
+
+#: outwiker/gui/preferences/traypanel.py:45
+msgid "Close window button"
+msgstr "Кнопка закрытия окна"
+
+#: outwiker/gui/preferences/traypanel.py:60
 msgid "Start iconized"
 msgstr "Запускаться свернутым в трей"
 
-#: outwiker/gui/preferences/traypanel.py:53
+#: outwiker/gui/preferences/traypanel.py:65
 msgid "Always show tray icon"
 msgstr "Всегда показывать значок в трее"
-
-#: outwiker/gui/preferences/traypanel.py:58
-msgid "Minimize on close window"
-msgstr "Сворачивать при закрытии окна"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:34
 #: outwiker/pages/html/htmlpageview.py:37
@@ -2243,34 +2296,6 @@ msgstr "Создать новую страницу..."
 #: outwiker/gui/rootpagepanel.py:105
 msgid "Path to current notes tree"
 msgstr "Путь до дерева заметок"
-
-#: outwiker/gui/searchreplacecontroller.py:175
-msgid "Not found"
-msgstr "Не найдено"
-
-#: outwiker/gui/searchreplacepanel.py:77
-msgid "Find what: "
-msgstr "Найти: "
-
-#: outwiker/gui/searchreplacepanel.py:80
-msgid "Next"
-msgstr "Далее"
-
-#: outwiker/gui/searchreplacepanel.py:83
-msgid "Prev"
-msgstr "Назад"
-
-#: outwiker/gui/searchreplacepanel.py:90
-msgid "Replace with: "
-msgstr "Заменить: "
-
-#: outwiker/gui/searchreplacepanel.py:93
-msgid "Replace"
-msgstr "Заменить"
-
-#: outwiker/gui/searchreplacepanel.py:96
-msgid "Replace All"
-msgstr "Заменить все"
 
 #: outwiker/gui/tabledialog.py:14
 msgid "Insert table"
@@ -2312,7 +2337,7 @@ msgstr "Добавить \"{}\" в словарь"
 msgid "Spell"
 msgstr "Орфография"
 
-#: outwiker/gui/trayicon.py:139
+#: outwiker/gui/trayicon.py:132
 msgid "Restore"
 msgstr "Восстановить"
 
@@ -2344,22 +2369,22 @@ msgstr "Код / Просмотр"
 msgid "Switch Code <--> Preview for HTML and wiki pages"
 msgstr "Переключение Код <--> Просмотр для HTML- и викистраниц"
 
-#: outwiker/pages/html/basehtmlpanel.py:209
+#: outwiker/pages/html/basehtmlpanel.py:208
 #: outwiker/pages/html/htmlpageview.py:33
 #: outwiker/pages/html/htmlpageview.py:36
 #: outwiker/pages/wiki/basewikipageview.py:195
 msgid "HTML"
 msgstr "HTML"
 
-#: outwiker/pages/html/basehtmlpanel.py:296
+#: outwiker/pages/html/basehtmlpanel.py:295
 msgid "Page rendered. Please wait…"
 msgstr "Страница подготавливается. Пожалуйста, подождите…"
 
-#: outwiker/pages/html/basehtmlpanel.py:313
+#: outwiker/pages/html/basehtmlpanel.py:312
 msgid "Page loading. Please wait…"
 msgstr "Загрузка страницы. Пожалуйста, подождите…"
 
-#: outwiker/pages/html/basehtmlpanel.py:329
+#: outwiker/pages/html/basehtmlpanel.py:328
 msgid "Page loading error: {}"
 msgstr "Ошибка загрузки страницы: {}"
 
@@ -2467,36 +2492,40 @@ msgstr "Дата создания (старые сверху)"
 msgid "Text Page"
 msgstr "Текстовая страница"
 
-#: outwiker/pages/wiki/actions/attachlist.py:20
+#: outwiker/pages/wiki/actions/attachlist.py:25
 msgid "Attachment (:attachlist:)"
 msgstr "Прикрепленные файлы (:attachlist:)"
 
-#: outwiker/pages/wiki/actions/attachlist.py:24
-#: outwiker/pages/wiki/actions/attachlist.py:81
+#: outwiker/pages/wiki/actions/attachlist.py:29
+#: outwiker/pages/wiki/actions/attachlist.py:95
 msgid "Insert (:attachlist:) command"
 msgstr "Вставить команду (:attachlist:)"
 
-#: outwiker/pages/wiki/actions/attachlist.py:42
+#: outwiker/pages/wiki/actions/attachlist.py:48
 msgid "Name"
 msgstr "Имени"
 
-#: outwiker/pages/wiki/actions/attachlist.py:43
+#: outwiker/pages/wiki/actions/attachlist.py:49
 msgid "Extension"
 msgstr "Расширению"
 
-#: outwiker/pages/wiki/actions/attachlist.py:44
+#: outwiker/pages/wiki/actions/attachlist.py:50
 msgid "Size"
 msgstr "Размеру"
 
-#: outwiker/pages/wiki/actions/attachlist.py:45
+#: outwiker/pages/wiki/actions/attachlist.py:51
 msgid "Date"
 msgstr "Дате"
 
-#: outwiker/pages/wiki/actions/attachlist.py:91
+#: outwiker/pages/wiki/actions/attachlist.py:105
+msgid "Folder"
+msgstr "Папка"
+
+#: outwiker/pages/wiki/actions/attachlist.py:113
 msgid "Sort by"
 msgstr "Сортировать по"
 
-#: outwiker/pages/wiki/actions/attachlist.py:96
+#: outwiker/pages/wiki/actions/attachlist.py:118
 #: outwiker/pages/wiki/actions/childlist.py:107
 msgid "Descending sort"
 msgstr "Сортировать по убыванию"
@@ -2657,23 +2686,19 @@ msgstr "Расширенный стиль..."
 msgid "Show dialog for advanced text style settings"
 msgstr "Показать диалог для расширенных настроек стиля текста"
 
-#: outwiker/pages/wiki/basewikipageview.py:259
+#: outwiker/pages/wiki/basewikipageview.py:261
 #, python-format
 msgid "Can't load file %s"
 msgstr "Ошибка чтения файла %s"
 
 #: outwiker/pages/wiki/emptycontent.py:12
 msgid ""
-"!!! Attachment\n"
 "(:attachlist:)\n"
 "----\n"
-"!!! Child pages\n"
 "(:childlist:)"
 msgstr ""
-"!!! Прикрепленные файлы\n"
 "(:attachlist:)\n"
 "----\n"
-"!!! Дочерние страницы\n"
 "(:childlist:)"
 
 #: outwiker/pages/wiki/fontsizeselector.py:34
@@ -2704,17 +2729,17 @@ msgstr "Фон текста"
 msgid "Custom CSS"
 msgstr "Дополнительные стили CSS"
 
-#: outwiker/pages/wiki/parser/commands/include.py:83
+#: outwiker/pages/wiki/parser/commands/include.py:82
 msgid "Can't open file '{}'"
 msgstr "Ошибка открытия файла '{}'"
 
-#: outwiker/pages/wiki/parser/commands/include.py:86
+#: outwiker/pages/wiki/parser/commands/include.py:85
 msgid "Encoding error in file '{}'"
 msgstr "Ошибка кодировки файла '{}'"
 
-#: outwiker/pages/wiki/parser/tokenthumbnail.py:71
-msgid "<b>Can't create thumbnail for \"{}\"</b>"
-msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
+#: outwiker/pages/wiki/parser/tokenthumbnail.py:74
+msgid "Can't create thumbnail for <b>\"{}\"</b>"
+msgstr "Ошибка создания миниатюры для <b>\"{}\"</b>"
 
 #: outwiker/pages/wiki/thumbdialog.py:27
 msgid "Thumbnails"
@@ -2794,6 +2819,28 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "<b>Can't create thumbnail for \"{}\"</b>"
+#~ msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
+
+#~ msgid "Minimize to tray"
+#~ msgstr "Сворачивать в трей"
+
+#~ msgid "Minimize on close window"
+#~ msgstr "Сворачивать при закрытии окна"
+
+#~ msgid ""
+#~ "!!! Attachment\n"
+#~ "(:attachlist:)\n"
+#~ "----\n"
+#~ "!!! Child pages\n"
+#~ "(:childlist:)"
+#~ msgstr ""
+#~ "!!! Прикрепленные файлы\n"
+#~ "(:attachlist:)\n"
+#~ "----\n"
+#~ "!!! Дочерние страницы\n"
+#~ "(:childlist:)"
 
 #~ msgid "File name"
 #~ msgstr "Имя файла"

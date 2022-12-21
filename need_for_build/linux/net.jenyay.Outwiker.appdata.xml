@@ -34,7 +34,10 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="3.2.0.911" date="2022-08-04" />
+    <release version="3.2.0.917" date="2022-12-12" />
+    <release version="3.2.0.916" date="2022-12-11" />
+    <release version="3.2.0.914" date="2022-11-20" />
+    <release version="3.2.0.912" date="2022-10-29" />
     <release version="3.2.0.910" date="2022-08-03" />
     <release version="3.2.0.908" date="2022-07-17" />
     <release version="3.2.0.906" date="2022-06-26" />

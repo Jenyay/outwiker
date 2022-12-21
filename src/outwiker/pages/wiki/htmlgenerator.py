@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.htmltemplate import HtmlTemplate
@@ -15,7 +15,7 @@ from .wikiconfig import WikiConfig
 from .emptycontent import EmptyContent
 
 
-class HtmlGenerator(object):
+class HtmlGenerator:
     """
     Class creates HTML file for wiki page taking into account caching
     """

@@ -500,5 +500,5 @@ class PluginsLoaderImportTest(unittest.TestCase):
 
         self.assertEqual(len(loader), 1)
 
-        plugInfo = loader.getInfo("Wring_module")
+        plugInfo = loader.getInfo("Wrong_module")
         self.assertIs(plugInfo, None)

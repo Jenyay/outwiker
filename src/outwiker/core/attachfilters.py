@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Callable
 
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import isImage
+from outwiker.core.images import isImage
 
 
 def getImagesOnlyFilter() -> Callable[[Path], bool]:
@@ -60,4 +60,9 @@ def getImageRecursiveFilter() -> Callable[[Path], bool]:
 
 def getNotHiddenImageRecursiveFilter(page):
     return andFilter(getImageRecursiveFilter(),
+                     notFilter(getHiddenFilter(page)))
+
+
+def getNotHiddenDirOnlyFilter(page):
+    return andFilter(getDirOnlyFilter(),
                      notFilter(getHiddenFilter(page)))
