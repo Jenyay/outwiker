@@ -50,7 +50,7 @@ class HtmlRenderIEBase(HtmlRenderBase):
     def _createRender(self):
         import wx.html2
         wx.html2.WebView.MSWSetEmulationLevel()
-        return wx.html2.WebView.New(self)
+        return wx.html2.WebView.New(self, backend=wx.html2.WebViewBackendIE)
 
     def getBasePath(self) -> str:
         return self._basepath
