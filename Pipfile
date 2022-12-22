@@ -6,7 +6,7 @@ name = "pypi"
 [requires]
 
 [packages]
-attrdict = "==2.0.1"
+attrdict3 = "==2.0.1"
 wxPython = "==4.2.0"
 Pillow = "==9.3.0"
 cacheman = {version = "==2.1.0.post1", path = "depends/cacheman"}
