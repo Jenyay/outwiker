@@ -16,7 +16,7 @@ class ListItemStyleDialog(TestedDialog):
         super().__init__(parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER, title=title)
         self._styles_list = None
         self._create_gui()
-        self.SetSize((200, 300))
+        self.SetSize((300, 300))
 
     def ShowModal(self):
         self._styles_list.SetFocus()
