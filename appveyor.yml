@@ -3,7 +3,7 @@ image:
     - Visual Studio 2019
     - Ubuntu1804
 environment:
-    PY_PYTHON: 3.8-32
+    PY_PYTHON: 3.8
     PY_DIR: C:\Python38
     PYTHONIOENCODING: utf_8
     PIPENV_IGNORE_VIRTUALENVS: 1
