@@ -15,9 +15,9 @@ class SafeImageList(wx.ImageList):
     ImageList which can accept any bitmap size.
     """
 
-    def __init__(self, width: int, height: int, scale: int = 1):
-        self._width = width * scale
-        self._height = height * scale
+    def __init__(self, width: int, height: int, scale: float = 1):
+        self._width = int(width * scale)
+        self._height = int(height * scale)
         super().__init__(self._width, self._height)
 
     def Add(self, bitmap) -> int:
