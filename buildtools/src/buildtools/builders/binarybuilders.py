@@ -88,11 +88,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
                 'styles', 'textstyles', 'plugins']
 
     def get_additional_files(self):
-        # Add the standard wxPython locales
-        wx_locales_path = os.path.join(os.path.dirname(wx.__file__), 'locale')
-        languages = ['ru', 'de', 'sv', 'uk']
-        return [(os.path.join(wx_locales_path, lang, 'LC_MESSAGES', 'wxstd.mo'),
-                 os.path.join('locale', lang, 'LC_MESSAGES')) for lang in languages]
+        return []
 
     def _copy_additional_files(self):
         root_dir = os.path.join(self._dist_dir, u'outwiker')
