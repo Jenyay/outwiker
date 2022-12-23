@@ -99,7 +99,7 @@ class UnixFileIcons(BaseFileIcons):
         if ext in self._iconsDict:
             return self._iconsDict[ext]
 
-        bmp = self.__getSystemIcon(ext)
+        bmp = self._getSystemIcon(ext)
 
         if bmp is None:
             return self.DEFAULT_FILE_ICON
@@ -109,7 +109,7 @@ class UnixFileIcons(BaseFileIcons):
 
         return index
 
-    def __getSystemIcon(self, ext):
+    def _getSystemIcon(self, ext):
         """
         Получить картинку по расширению или None, если такой картинки нет
         """
@@ -130,7 +130,7 @@ class WindowsFileIcons(BaseFileIcons):
     Класс для получения иконок прикрепленных файлов под Windows
     """
 
-    def __getExeIcon(self, filepath):
+    def _loadFromResource(self, filepath):
         """
         Возвращает картинку exe-шника
         """
@@ -146,7 +146,7 @@ class WindowsFileIcons(BaseFileIcons):
 
         return bmp
 
-    def __getSystemIcon(self, ext):
+    def _getSystemIcon(self, ext):
         """
         Возвращает картинку, связанную  расширением ext в системе.
         Если с расширением не связана картинка, возвращется None
@@ -159,20 +159,9 @@ class WindowsFileIcons(BaseFileIcons):
         if nntype is None:
             return None
 
-        return self.__getExeIcon(nntype[1])
-        # icon = nntype[0]
-        # if not icon.IsOk():
-        #     return None
-
-        # bmp = wx.Bitmap(self._width, self._height)
-        # bmp.CopyFromIcon(icon)
-        # try:
-        #     bmp = bmp.ConvertToImage()
-        # except Exception:
-        #     return None
-        # bmp.Rescale(self._width, self._height)
-        # bmp = wx.Bitmap(bmp)
-        # return bmp
+        fname = nntype[1]
+        index = nntype[2]
+        return self._loadFromResource('{};{}'.format(fname, index))
 
     def _getFileImage(self, filepath):
         """
@@ -199,9 +188,9 @@ class WindowsFileIcons(BaseFileIcons):
             return self._iconsDict[filepath]
 
         if ext.lower() == "exe":
-            bmp = self.__getExeIcon(filepath)
+            bmp = self._loadFromResource(filepath)
         else:
-            bmp = self.__getSystemIcon(ext)
+            bmp = self._getSystemIcon(ext)
 
         if bmp is None:
             return self.DEFAULT_FILE_ICON
