@@ -51,6 +51,18 @@ parts:
             - python3.9-dev
             - python3.9-distutils
             - wget
+            - libwebkit2gtk-4.0-dev
+            - freeglut3-dev
+            - libgl1-mesa-dev
+            - libglu1-mesa-dev
+            - libgstreamer-plugins-base1.0-dev
+            - libjpeg-dev
+            - libnotify-dev
+            - libpng-dev
+            - libsdl2-dev
+            - libsm-dev
+            - libtiff-dev
+            - libxtst-dev
         stage-packages:
             - python3.9
             - python3.9-venv
@@ -70,7 +82,9 @@ parts:
         override-build: |
             wget -O $SNAPCRAFT_PART_INSTALL/usr/bin/get-pip.py https://bootstrap.pypa.io/get-pip.py
             python3.9 $SNAPCRAFT_PART_INSTALL/usr/bin/get-pip.py
-            python3.9 -m pip install https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.1.1-cp39-cp39-linux_x86_64.whl Pillow==9.1.1 cyhunspell==2.0.2 idna==2.10 pyparsing==3.0.9 rcssmin==1.1.1
+            python3.9 -m pip install attrdict3
+            python3.9 -m pip install wxpython==4.2.0 -v
+            python3.9 -m pip install Pillow==9.3.0 cyhunspell==2.0.2 idna==2.10 pyparsing==3.0.9 rcssmin==1.1.1
             cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
             chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
 
