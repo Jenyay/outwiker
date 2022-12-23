@@ -159,19 +159,20 @@ class WindowsFileIcons(BaseFileIcons):
         if nntype is None:
             return None
 
-        icon = nntype[0]
-        if not icon.IsOk():
-            return None
+        return self.__getExeIcon(nntype[1])
+        # icon = nntype[0]
+        # if not icon.IsOk():
+        #     return None
 
-        bmp = wx.Bitmap(self._width, self._height)
-        bmp.CopyFromIcon(icon)
-        try:
-            bmp = bmp.ConvertToImage()
-        except Exception:
-            return None
-        bmp.Rescale(self._width, self._height)
-        bmp = wx.Bitmap(bmp)
-        return bmp
+        # bmp = wx.Bitmap(self._width, self._height)
+        # bmp.CopyFromIcon(icon)
+        # try:
+        #     bmp = bmp.ConvertToImage()
+        # except Exception:
+        #     return None
+        # bmp.Rescale(self._width, self._height)
+        # bmp = wx.Bitmap(bmp)
+        # return bmp
 
     def _getFileImage(self, filepath):
         """
