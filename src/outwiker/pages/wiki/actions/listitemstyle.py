@@ -43,8 +43,11 @@ class ListItemStyleAction(BaseAction):
             else:
                 break
 
+        prefix = ''
+        suffix = ''
         if list_token_end == 0:
-            return
+            prefix = ListToken.unorderList
+            suffix = ' '
 
         insert_pos = list_token_end
 
@@ -53,7 +56,7 @@ class ListItemStyleAction(BaseAction):
             if controller.ShowModal() == wx.ID_OK:
                 style_str = controller.GetStyle()
                 if style_str is not None:
-                    insert_str = ' ' + style_str
+                    insert_str = '{prefix} {style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
                     new_line_str = line_str[: list_token_end] + insert_str + line_str[list_token_end:]
                     new_position = cursor_position + len(insert_str)
                     editor.SetLine(line_number, new_line_str)

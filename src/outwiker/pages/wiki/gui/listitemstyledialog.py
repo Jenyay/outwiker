@@ -18,6 +18,8 @@ class ListItemStyleDialog(TestedDialog):
         self._create_gui()
         self.SetSize((300, 300))
 
+        self._styles_list.Bind(wx.EVT_LIST_ITEM_ACTIVATED, handler=self._onItemActivated)
+
     def ShowModal(self):
         self._styles_list.SetFocus()
         return super().ShowModal()
@@ -37,6 +39,9 @@ class ListItemStyleDialog(TestedDialog):
 
     def GetSelection(self) -> int:
         return self._styles_list.GetFirstSelected()
+
+    def _onItemActivated(self, event):
+        self.EndModal(wx.ID_OK)
 
     def _create_gui(self):
         main_sizer = wx.FlexGridSizer(cols=1)
