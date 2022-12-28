@@ -35,6 +35,9 @@ class ListItemStyleDialog(TestedDialog):
     def SetSelection(self, index):
         self._styles_list.Select(index)
 
+    def GetSelection(self) -> int:
+        return self._styles_list.GetFirstSelected()
+
     def _create_gui(self):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
@@ -63,7 +66,7 @@ class ListItemStyleDialogController:
         bullets_dir = 'bullets'
 
         self._styles = [
-            ('', 'bullet.svg', _('Default')),
+            (None, 'bullet.svg', _('Default')),
             ('[ ]', 'todo.svg', _('List item')),
             ('[/]', 'incomplete.svg', _('List item')),
             ('[x]', 'complete.svg', _('List item')),
@@ -93,3 +96,7 @@ class ListItemStyleDialogController:
         result = self._dialog.ShowModal()
         self._isOk = (result == wx.ID_OK)
         return result
+
+    def GetStyle(self) -> Optional[str]:
+        if self._isOk:
+            return self._styles[self._dialog.GetSelection()][0]

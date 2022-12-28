@@ -3,6 +3,7 @@
 import wx
 
 from outwiker.gui.baseaction import BaseAction
+from outwiker.pages.wiki.parser.tokenlist import ListToken
 import outwiker.pages.wiki.gui.listitemstyledialog as lis
 
 
@@ -10,25 +11,50 @@ class ListItemStyleAction(BaseAction):
     """
     Show dialog to select list item style (bullet)
     """
-    stringId = "ListItemStyle"
+    stringId = 'ListItemStyle'
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _("List item style...")
+        return _('List item style...')
 
     @property
     def description(self):
-        return _("Select list item style (bullet)")
+        return _('Select list item style (bullet)')
 
     def run(self, params):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
         assert self._application.selectedPage is not None
 
+        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        line_number = editor.GetCurrentLine()
+        line_str = editor.GetLine(line_number)
+        cursor_position = editor.GetCurrentPosition()
+
+        # Find end of list markers
+        list_token_end = 0
+        while list_token_end < len(line_str):
+            substr = line_str[list_token_end:]
+            if substr.startswith(ListToken.unorderList):
+                list_token_end += len(ListToken.unorderList)
+            else:
+                break
+
+        if list_token_end == 0:
+            return
+
+        insert_pos = list_token_end
+
         with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
             controller = lis.ListItemStyleDialogController(dlg)
             if controller.ShowModal() == wx.ID_OK:
-                editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+                style_str = controller.GetStyle()
+                if style_str is not None:
+                    insert_str = ' ' + style_str
+                    new_line_str = line_str[: list_token_end] + insert_str + line_str[list_token_end:]
+                    new_position = cursor_position + len(insert_str)
+                    editor.SetLine(line_number, new_line_str)
+                    editor.SetCurrentPosition(new_position)

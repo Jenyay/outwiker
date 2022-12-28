@@ -346,11 +346,14 @@ class TextEditorBase(wx.Panel):
         pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
         self.textCtrl.GotoPos(pos_bytes)
 
-    def GetCurrentPosition(self):
+    def GetCurrentPosition(self) -> int:
         """
-        Возвращает номер символа(а не байта), перед которых находится курсор
+        Возвращает номер символа (а не байта), перед которым находится курсор
         """
         return self._calcCharPos(self.textCtrl.GetCurrentPos())
+
+    def SetCurrentPosition(self, pos: int):
+        self.SetSelection(pos, pos)
 
     def GetSelectionStart(self):
         """
@@ -548,6 +551,10 @@ class TextEditorBase(wx.Panel):
         (wx.stc.STC_INVALID_POSITION if no selection on this line).
         '''
         return self.textCtrl.GetLineSelEndPosition(line)
+
+    def InsertText(self, pos, text):
+        pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
+        self.textCtrl.InsertText(pos_bytes, text)
 
     def _calcCharPos(self, pos_bytes):
         """
