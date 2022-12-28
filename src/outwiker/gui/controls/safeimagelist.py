@@ -33,7 +33,9 @@ class SafeImageList(wx.ImageList):
         if isImage(fname):
             bitmap = wx.Bitmap(fname)
         elif isSVG(fname):
-            svg = SVGimage.CreateFromFile(fname)
+            with open(fname, 'rb') as fp:
+                data = fp.read()
+                svg = SVGimage.CreateFromBytes(data)
             bitmap = svg.ConvertToScaledBitmap((self._width, self._height))
         else:
             raise InvalidImageFormat(fname)
