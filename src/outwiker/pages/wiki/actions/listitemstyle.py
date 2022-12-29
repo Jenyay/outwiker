@@ -43,21 +43,24 @@ class ListItemStyleAction(BaseAction):
             else:
                 break
 
-        prefix = ''
+        prefix = ' '
         suffix = ''
         if list_token_end == 0:
-            prefix = ListToken.unorderList
-            suffix = ' '
-
-        insert_pos = list_token_end
+            prefix = ListToken.unorderList + ' '
 
         with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
             controller = lis.ListItemStyleDialogController(dlg)
             if controller.ShowModal() == wx.ID_OK:
                 style_str = controller.GetStyle()
-                if style_str is not None:
-                    insert_str = '{prefix} {style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
-                    new_line_str = line_str[: list_token_end] + insert_str + line_str[list_token_end:]
-                    new_position = cursor_position + len(insert_str)
-                    editor.SetLine(line_number, new_line_str)
-                    editor.SetCurrentPosition(new_position)
+                if not list_token_end and style_str:
+                    suffix = ' '
+
+                if list_token_end and not style_str and not suffix:
+                    prefix = ''
+
+                insert_str = '{prefix}{style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
+
+                new_line_str = line_str[: list_token_end] + insert_str + line_str[list_token_end:]
+                new_position = cursor_position + len(insert_str)
+                editor.SetLine(line_number, new_line_str)
+                editor.SetCurrentPosition(new_position)

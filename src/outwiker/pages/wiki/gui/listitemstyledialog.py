@@ -71,7 +71,7 @@ class ListItemStyleDialogController:
         bullets_dir = 'bullets'
 
         self._styles = [
-            (None, 'bullet.svg', _('Default')),
+            ('', 'bullet.svg', _('Default')),
             ('[ ]', 'todo.svg', _('List item')),
             ('[/]', 'incomplete.svg', _('List item')),
             ('[x]', 'complete.svg', _('List item')),
@@ -102,6 +102,5 @@ class ListItemStyleDialogController:
         self._isOk = (result == wx.ID_OK)
         return result
 
-    def GetStyle(self) -> Optional[str]:
-        if self._isOk:
-            return self._styles[self._dialog.GetSelection()][0]
+    def GetStyle(self) -> str:
+        return self._styles[self._dialog.GetSelection()][0]
