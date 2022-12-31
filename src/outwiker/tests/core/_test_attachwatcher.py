@@ -36,6 +36,19 @@ class AttachWatcherTest(BaseWxTestCase):
                                                 "Страница 2",
                                                 [])
 
+    def myYield(self, eventsToProcess=wx.EVT_CATEGORY_ALL):
+        """
+        Since the tests are usually run before MainLoop is called then we
+        need to make our own EventLoop for Yield to actually do anything
+        useful.
+
+        The method taken from wxPython tests.
+        """
+        evtLoop = self._wxapp.GetTraits().CreateEventLoop()
+        activator = wx.EventLoopActivator(evtLoop)
+        evtLoop.YieldFor(eventsToProcess)
+
+
     def tearDown(self):
         super().tearDown()
         self._application.onAttachListChanged -= self._onAttachListChanged
