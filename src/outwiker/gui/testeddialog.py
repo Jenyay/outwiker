@@ -12,7 +12,7 @@ class TestedDialog(wx.Dialog):
     будущего вызова метода ShowModal
     """
     def __init__(self, *args, **kwargs):
-        super(TestedDialog, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def ShowModal(self):
         result = Tester.dialogTester.runNext(self)
