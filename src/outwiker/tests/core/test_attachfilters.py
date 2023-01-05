@@ -9,7 +9,8 @@ from outwiker.core.attachfilters import (getImagesOnlyFilter,
                                          getHiddenFilter,
                                          andFilter,
                                          orFilter,
-                                         notFilter)
+                                         notFilter,
+                                         getImageRecursiveFilter)
 from outwiker.core.attachment import Attachment
 from outwiker.tests.fixtures import wikipage
 
@@ -44,6 +45,49 @@ def test_images_dir_filter(wikipage):
 
     filter_func = getImagesOnlyFilter()
     assert not filter_func(Path(attach_dir, dir_name))
+
+
+@pytest.mark.parametrize('fname,expected',
+                         [
+                             ('image.png', True),
+                             ('image.jpg', True),
+                             ('file.txt', False),
+                             ('subdir_1', True),
+                             ('subdir_1/image.png', True),
+                             ('subdir_1/image.jpg', True),
+                             ('subdir_1/file.txt', False),
+                             ('subdir_1/subdir_2', True),
+                             ('subdir_1/subdir_2/image.png', True),
+                             ('subdir_1/subdir_2/image.jpg', True),
+                             ('subdir_1/subdir_2/file.txt', False),
+                         ])
+def test_images_recursive_filter(wikipage, fname, expected):
+    attach = Attachment(wikipage)
+    attach_dir = attach.getAttachPath(create=True)
+
+    # Root attach dir
+    for attach_fname in ['image.png', 'image.jpg', 'file.txt']:
+        with open(Path(attach_dir, attach_fname), 'w'):
+            pass
+
+    # Subdir
+    dir_name_1 = 'subdir_1'
+    attach.createSubdir(dir_name_1)
+
+    for attach_fname in ['image_1.png', 'image_1.jpg', 'file_1.txt']:
+        with open(Path(attach_dir, dir_name_1, attach_fname), 'w'):
+            pass
+
+    # Sub-subdir
+    dir_name_2 = Path('subdir_1', 'subdir_2')
+    attach.createSubdir(dir_name_2)
+
+    for attach_fname in ['image_1.png', 'image_1.jpg', 'file_1.txt']:
+        with open(Path(attach_dir, dir_name_2, attach_fname), 'w'):
+            pass
+
+    filter_func = getImageRecursiveFilter()
+    assert filter_func(Path(attach_dir, fname)) == expected
 
 
 @pytest.mark.parametrize('directory',
