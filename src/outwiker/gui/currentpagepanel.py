@@ -225,7 +225,7 @@ class CurrentPagePanel(wx.Panel):
                 self._application.onPageViewDestroy(self.__currentPage)
 
             # self.contentSizer.Detach(self.__pageView)
-            # wx.SafeYield(self.__pageView)
+            wx.SafeYield(self.__pageView)
             self.__pageView.Close()
             self.__pageView = None
             self.__currentPage = None
