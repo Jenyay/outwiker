@@ -135,7 +135,6 @@ class BookmarksPanel(wx.Panel):
         self._updateBookmarks()
 
     def clear(self):
-        # wx.SafeYield()
         self._pageList.updateColumnsWidth()
         columns_string = ColumnsFactory.toString(self._pageList.getColumns())
         self._config.bookmarksHeaders.value = columns_string
