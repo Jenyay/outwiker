@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="3.2.0.919" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="3.2.0.918" status="beta" date="2023-01-07">
         <changes>
             <change>Added the ability to set the style of list item bullets on a wiki page.</change>
