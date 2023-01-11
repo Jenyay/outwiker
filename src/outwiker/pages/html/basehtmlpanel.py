@@ -34,6 +34,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
     def __init__(self, parent: 'outwiker.gui.currentpagepanel.CurrentPagePanel',
                  application):
+        logger.debug('BaseHtmlPanel creation started')
         super().__init__(parent, application)
 
         # Предыдущее содержимое результирующего HTML, чтобы не переписывать
@@ -62,6 +63,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self.Bind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
         self._application.onPageUpdate += self._onPageUpdate
         self._bindHotkeys()
+        logger.debug('BaseHtmlPanel creation ended')
 
     def _bindHotkeys(self):
         actionController = self._application.actionController

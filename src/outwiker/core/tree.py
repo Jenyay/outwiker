@@ -395,14 +395,18 @@ class WikiDocument(RootWikiPage):
         Загрузить корневую страницу вики.
         Использовать этот метод вместо конструктора
         """
+        logger.debug('Wiki document loading started')
         try:
             root = WikiDocument(path, readonly)
         except configparser.Error:
             raise RootFormatError
 
+        logger.debug('Children notes loading started')
         root.loadChildren()
+        logger.debug('Children notes loading ended')
 
         root.onTreeUpdate(root)
+        logger.debug('Wiki document loading ended')
         return root
 
     def save(self):

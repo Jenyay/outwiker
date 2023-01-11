@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import wx
 
 from outwiker.core.commands import showError
@@ -17,10 +18,14 @@ from outwiker.core.defines import (PAGE_MODE_TEXT,
 from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 
 
+logger = logging.getLogger('outwiker.pages.wiki.basewikipageview')
+
+
 class BaseWikiPageView (BaseHtmlPanel):
     HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
 
     def __init__(self, parent, application):
+        logger.debug('BaseWikiPageView creation started')
         super(BaseWikiPageView, self).__init__(parent, application)
 
         # Редактор с просмотром получившегося HTML (если есть)
@@ -53,8 +58,10 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         self._wikiMenu = wx.Menu()
 
+        logger.debug('Wiki page GUI creation started')
         self._createCommonTools()
         self._createWikiTools()
+        logger.debug('Wiki page GUI creation ended')
 
         self.mainWindow.UpdateAuiManager()
 
@@ -64,6 +71,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.Layout()
 
         self._application.onPageModeChange += self.onTabChanged
+        logger.debug('BaseWikiPageView creation ended')
 
     # Методы, которые необходимо переопределить в производном классе
     def _createWikiTools(self):
@@ -141,6 +149,7 @@ class BaseWikiPageView (BaseHtmlPanel):
             raise ValueError()
 
     def Clear(self):
+        logger.debug('GUI destroying started')
         self._removeActionTools()
         self._application.onPageModeChange -= self.onTabChanged
 
@@ -148,6 +157,7 @@ class BaseWikiPageView (BaseHtmlPanel):
             self.mainWindow.toolbars.destroyToolBar(toolbar_info[0])
 
         super().Clear()
+        logger.debug('GUI destroying ended')
 
     def onPreferencesDialogClose(self, prefDialog):
         super(BaseWikiPageView, self).onPreferencesDialogClose(prefDialog)

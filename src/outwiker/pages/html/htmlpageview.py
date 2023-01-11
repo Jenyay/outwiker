@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os
 
 import wx
@@ -25,8 +26,12 @@ from .actions.switchcoderesult import SwitchCodeResultAction
 from . import defines
 
 
+logger = logging.getLogger('outwiker.pages.html.htmlpageview')
+
+
 class HtmlPageView(BaseHtmlPanel):
     def __init__(self, parent, application):
+        logger.debug('HtmlPageView creation started')
         super().__init__(parent, application)
 
         self.__HTML_MENU_INDEX = 7
@@ -93,6 +98,7 @@ class HtmlPageView(BaseHtmlPanel):
         self.mainWindow.UpdateAuiManager()
 
         self._application.onPageModeChange += self.onTabChanged
+        logger.debug('HtmlPageView creation ended')
 
     def getTextEditor(self):
         return HtmlTextEditor
