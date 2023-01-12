@@ -3,7 +3,7 @@
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.tests.utils import removeDir
@@ -14,7 +14,7 @@ class BookmarksTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
@@ -47,7 +47,7 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.wikiroot.bookmarks[0].title, "Страница 1")
 
         # Проверим, что закладки сохраняются в конфиг
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
 
         self.assertEqual(len(wiki.bookmarks), 1)
         self.assertEqual(wiki.bookmarks[0].title, "Страница 1")

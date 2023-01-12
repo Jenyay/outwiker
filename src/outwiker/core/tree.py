@@ -376,7 +376,7 @@ class WikiDocument(RootWikiPage):
         """
         Очистить файл __page.opt.
         Используется в случае, если файл __page.opt испорчен
-        path - путь до вики(или до директории с файлом __page.opt,
+        path - путь до вики (или до директории с файлом __page.opt,
         или включая этот файл)
         """
         if path.endswith(PAGE_OPT_FILE):

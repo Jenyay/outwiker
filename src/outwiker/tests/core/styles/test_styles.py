@@ -5,8 +5,8 @@ import os.path
 import shutil
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.style import Style
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
@@ -26,7 +26,7 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         self.path = mkdtemp(prefix='Абырвалг абыр')
         self.eventcount = 0
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Викистраница 1", [])
         HtmlPageFactory().create(self.wikiroot, "Html-страница 2", [])
 
