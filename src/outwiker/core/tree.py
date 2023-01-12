@@ -16,7 +16,10 @@ from .exceptions import (ClearConfigError, RootFormatError, DuplicateTitle,
                          ReadonlyException, TreeException)
 from .tagscommands import parseTagsList
 from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
-from .defines import PAGE_CONTENT_FILE, PAGE_OPT_FILE, REGISTRY_FILE
+from .defines import (PAGE_CONTENT_FILE,
+                      PAGE_OPT_FILE,
+                      REGISTRY_FILE,
+                      CONFIG_GENERAL_SECTION)
 from .iconcontroller import IconController
 from .system import getIconsDirList
 from .registrynotestree import NotesTreeRegistry, PickleSaver
@@ -32,8 +35,6 @@ class RootWikiPage:
     Класс для корня вики
     """
     contentFile = PAGE_CONTENT_FILE
-
-    sectionGeneral = u"General"
 
     def __init__(self, path, readonly=False):
         """
@@ -775,7 +776,7 @@ class WikiPage(RootWikiPage):
 
         # Удалим начальные ", "
         tags = tags[2:]
-        self._params.set(RootWikiPage.sectionGeneral, WikiPage.paramTags, tags)
+        self._params.set(CONFIG_GENERAL_SECTION, WikiPage.paramTags, tags)
 
     def initAfterCreating(self, tags):
         """
@@ -794,7 +795,7 @@ class WikiPage(RootWikiPage):
         Выделить теги из строки конфигурационного файла
         """
         try:
-            tagsString = configParser.get(RootWikiPage.sectionGeneral,
+            tagsString = configParser.get(CONFIG_GENERAL_SECTION,
                                           WikiPage.paramTags)
         except configparser.NoOptionError:
             return []

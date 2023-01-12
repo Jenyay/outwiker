@@ -5,12 +5,12 @@ import os.path
 import outwiker.gui.controls.flatnotebook as fnb
 
 from outwiker.core.config import StringListSection, IntegerOption
-from outwiker.core.tree import RootWikiPage
 from outwiker.core.commands import showError
+from outwiker.core.defines import CONFIG_GENERAL_SECTION
 from .pagepopupmenu import PagePopupMenu
 
 
-class TabsController (object):
+class TabsController:
     def __init__(self, tabsCtrl, application):
         """
         tabsCtrl - экземпляр класса TabsCtrl
@@ -19,11 +19,11 @@ class TabsController (object):
         self._tabsCtrl = tabsCtrl
         self._application = application
 
-        self._tabsSection = u"Tabs"
-        self._tabsParamName = u"tab_"
+        self._tabsSection = "Tabs"
+        self._tabsParamName = "tab_"
 
-        self._tabSelectedSection = RootWikiPage.sectionGeneral
-        self._tabSelectedOption = u"selectedtab"
+        self._tabSelectedSection = CONFIG_GENERAL_SECTION
+        self._tabSelectedOption = "selectedtab"
 
         self.__bindEvents()
 
