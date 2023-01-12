@@ -2,9 +2,12 @@
     pygments.plugin
     ~~~~~~~~~~~~~~~
 
-    Pygments setuptools plugin interface. The methods defined
-    here also work if setuptools isn't installed but they just
-    return nothing.
+    Pygments plugin interface. By default, this tries to use
+    ``importlib.metadata``, which is in the Python standard
+    library since Python 3.8, or its ``importlib_metadata``
+    backport for earlier versions of Python. It falls back on
+    ``pkg_resources`` if not found. Finally, if ``pkg_resources``
+    is not found either, no plugins are loaded at all.
 
     lexer plugins::
 
@@ -31,9 +34,10 @@
         yourfilter = yourfilter:YourFilter
 
 
-    :copyright: Copyright 2006-2021 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2022 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
+
 LEXER_ENTRY_POINT = 'pygments.lexers'
 FORMATTER_ENTRY_POINT = 'pygments.formatters'
 STYLE_ENTRY_POINT = 'pygments.styles'

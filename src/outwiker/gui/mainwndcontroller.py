@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+
 import wx
 
 import outwiker.core.commands
-from outwiker.core.commands import getMainWindowTitle
+from outwiker.core.commands import getMainWindowTitle, setStatusText
 from outwiker.core.events import PAGE_UPDATE_TITLE
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
-from .guiconfig import TrayConfig
+from .guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
 from .defines import (MENU_FILE,
                       TOOLBAR_GENERAL,
                       CLOSE_BUTTON_ACTION_CLOSE,
                       CLOSE_BUTTON_ACTION_MINIMIZE,
                       CLOSE_BUTTON_ACTION_HIDE_TO_TRAY,
+                      STATUSBAR_PAGE_DATETIME_ITEM,
                       )
 
 from outwiker.actions.save import SaveAction
@@ -59,6 +62,8 @@ class MainWndController:
         self._mainWindow = parent
         self._application = application
         self._tray_config = TrayConfig(self._application.config)
+        self._generalConfig = GeneralGuiConfig(self._application.config)
+        self._mainWindowConfig = MainWindowConfig(self._application.config)
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить,
         # если не открыта вики
@@ -114,6 +119,9 @@ class MainWndController:
 
         self.bookmarks = BookmarksController(self, self._application)
         self._autosaveTimer = AutosaveTimer(self._application)
+
+        datetime_width = self._mainWindowConfig.datetimeStatusWidth.value
+        self._mainWindow.statusbar.addItem(STATUSBAR_PAGE_DATETIME_ITEM, datetime_width)
 
         self.init()
         self._createAcceleratorTable()
@@ -205,10 +213,12 @@ class MainWndController:
         """
         self.bookmarks.updateBookmarks()
         self.updateTitle()
+        self.updateStatusBar()
 
     def _onPageUpdate(self, page, **kwargs):
         if kwargs['change'] & PAGE_UPDATE_TITLE:
             self.updateTitle()
+            self.updateStatusBar()
             self.bookmarks.updateBookmarks()
 
     def _onWikiOpen(self, wikiroot):
@@ -227,6 +237,7 @@ class MainWndController:
         self.enableGui()
         self.bookmarks.updateBookmarks()
         self.updateTitle()
+        self.updateStatusBar()
 
     ###################################################
     # Обработка событий
@@ -236,6 +247,7 @@ class MainWndController:
         Обработчик события выбора страницы в дереве
         """
         self.updateTitle()
+        self.updateStatusBar()
         self._updateBookmarksState()
 
     def _updateBookmarksState(self):
@@ -249,6 +261,7 @@ class MainWndController:
         Обработчик события изменения настроек главного окна
         """
         self.updateTitle()
+        self.updateStatusBar()
         self.updateColors()
 
     ###################################################
@@ -285,6 +298,18 @@ class MainWndController:
             и текущей страницы
         """
         self._mainWindow.SetTitle(getMainWindowTitle(self._application))
+
+    def updateStatusBar(self):
+        dateFormat = self._generalConfig.dateTimeFormat.value
+        text = ''
+
+        if(self._application.selectedPage is not None and
+                self._application.selectedPage.datetime is not None):
+            text = datetime.datetime.strftime(
+                self._application.selectedPage.datetime,
+                dateFormat)
+
+        setStatusText(STATUSBAR_PAGE_DATETIME_ITEM, text)
 
     def loadMainWindowParams(self):
         """

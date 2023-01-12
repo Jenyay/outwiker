@@ -32,6 +32,7 @@ from .actions.include import WikiIncludeAction
 from .actions.dates import WikiDateCreationAction, WikiDateEditionAction
 from .actions.wikistyle import WikiStyleOnlyAction, WikiStyleAdvancedAction
 from .actions.multilineblock import MultilineBlockAction
+from .actions.listitemstyle import ListItemStyleAction
 
 
 class WikiPageView(BaseWikiPageView):
@@ -140,6 +141,7 @@ class WikiPageView(BaseWikiPageView):
             WikiStyleOnlyAction,
             WikiStyleAdvancedAction,
             MultilineBlockAction,
+            ListItemStyleAction,
         ]
 
     def _createWikiTools(self):
@@ -493,6 +495,9 @@ class WikiPageView(BaseWikiPageView):
             lambda param: self._decreaseNestingListItems())
 
         actionController.appendMenuItem(LIST_DECREASE_LEVEL_STR_ID, menu)
+
+        # List item style (bullet)
+        actionController.appendMenuItem(ListItemStyleAction.stringId, menu)
 
     def __addFormatTools(self):
         menu = self._formatMenu

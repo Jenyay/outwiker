@@ -17,8 +17,8 @@ import wx
 import outwiker.core.exceptions
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.core.defines import IMAGES_EXTENSIONS
 from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
+from outwiker.core.images import isImage as _isImage
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
@@ -531,13 +531,19 @@ def movePage(page, newParent):
             u"Can't move page: {}".format(page.display_title)))
 
 
-def setStatusText(text, index=0):
+def addStatusBarItem(name: str, width: int = -1, position: Optional[int] = None) -> None:
+    if Application.mainWindow:
+        Application.mainWindow.statusbar.addItem(name, width, position)
+
+
+def setStatusText(item_name: str, text: str) -> None:
     """
     Установить текст статусбара.
     text - текст
     index - номер ячейки статусбара
     """
-    Application.mainWindow.statusbar.SetStatusText(text, index)
+    if Application.mainWindow:
+        Application.mainWindow.statusbar.setStatusText(item_name, text)
 
 
 @testreadonly
@@ -652,14 +658,9 @@ def insertCurrentDate(parent, editor):
 
 def isImage(fname: Union[Path, str]) -> bool:
     """
-    If fname is image then the function return True. Otherwise - False.
+    Depricated. Use outwiker.core.images.isImage()
     """
-    fnameLower = str(fname).lower()
-    for extension in IMAGES_EXTENSIONS:
-        if fnameLower.endswith('.' + extension):
-            return True
-
-    return False
+    return _isImage(fname)
 
 
 def dictToStr(paramsDict):

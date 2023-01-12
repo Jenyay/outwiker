@@ -573,9 +573,9 @@ class MainWindow(wx.Frame):
         """
         Создание статусной панели
         """
-        self.statusbar = wx.StatusBar(self, -1)
-        self.SetStatusBar(self.statusbar)
-        self._statusBarController = StatusBarController(self.statusbar,
+        self._statusbar = wx.StatusBar(self, -1)
+        self.SetStatusBar(self._statusbar)
+        self._statusBarController = StatusBarController(self._statusbar,
                                                         self._application)
 
     def _bindGuiEvents(self):
@@ -731,3 +731,7 @@ class MainWindow(wx.Frame):
     @property
     def pageView(self):
         return self.pagePanel.pageView
+
+    @property
+    def statusbar(self) -> StatusBarController:
+        return self._statusBarController

@@ -27,19 +27,17 @@ from .utils import removeDir
 NullTranslations().install()
 
 
+class WikiTestMixin:
+    def createWiki(self) -> WikiDocument:
+        wikipath = mkdtemp(
+            prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
+        return WikiDocument.create(wikipath)
+
+    def destroyWiki(self, wikiroot):
+        removeDir(wikiroot.path)
+
+
 class BaseWxTestCase(unittest.TestCase):
-    def myYield(self, eventsToProcess=wx.EVT_CATEGORY_ALL):
-        """
-        Since the tests are usually run before MainLoop is called then we
-        need to make our own EventLoop for Yield to actually do anything
-        useful.
-
-        The method taken from wxPython tests.
-        """
-        evtLoop = self._wxapp.GetTraits().CreateEventLoop()
-        activator = wx.EventLoopActivator(evtLoop)
-        evtLoop.YieldFor(eventsToProcess)
-
     def setUp(self):
         self._wxapp = wx.App()
         locale.setlocale(locale.LC_ALL, '')
@@ -56,16 +54,6 @@ class BaseWxTestCase(unittest.TestCase):
         self.mainWindow = wx.Frame(None)
         self._wxapp.SetTopWindow(self.mainWindow)
         return self.mainWindow
-
-
-class WikiTestMixin(object):
-    def createWiki(self):
-        wikipath = mkdtemp(
-            prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
-        return WikiDocument.create(wikipath)
-
-    def destroyWiki(self, wikiroot):
-        removeDir(wikiroot.path)
 
 
 class BaseOutWikerMixin(WikiTestMixin):

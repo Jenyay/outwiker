@@ -41,11 +41,12 @@ setup(
     ],
     python_requires='>=3.8',
     install_requires=[
-        'wxPython==4.1.1',
+        'wxPython==4.2.0',
         'Pillow==9.3.0',
         'idna>=2.10',
         'pyparsing==3.0.9',
         'psutil>=5.9.1',
+        'rcssmin>=1.1'
     ],
     project_urls={
         'Documentation': 'https://outwiker.readthedocs.io/',
