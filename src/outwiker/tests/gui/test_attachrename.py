@@ -6,7 +6,6 @@ import unittest
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import renameAttach
-from outwiker.core.tree import WikiDocument
 from outwiker.gui.tester import Tester, getButtonId
 from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.pages.text.textpage import TextPageFactory

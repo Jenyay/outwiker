@@ -9,6 +9,7 @@ from tempfile import NamedTemporaryFile, mkdtemp
 
 import wx
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
 from outwiker.core.pluginsloader import PluginsLoader
@@ -31,7 +32,7 @@ class WikiTestMixin:
     def createWiki(self) -> WikiDocument:
         wikipath = mkdtemp(
             prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
-        return WikiDocument.create(wikipath)
+        return createNotesTree(wikipath)
 
     def destroyWiki(self, wikiroot):
         removeDir(wikiroot.path)

@@ -7,9 +7,9 @@ import os.path
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.exceptions import DuplicateTitle, TreeException
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 
 from outwiker.pages.text.textpage import TextPageFactory
@@ -29,7 +29,7 @@ class MoveTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wiki = WikiDocument.create(self.path)
+        self.wiki = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wiki, "Страница 1", [])

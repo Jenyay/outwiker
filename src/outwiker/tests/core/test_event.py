@@ -7,7 +7,7 @@
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.event import Event, CustomEvents
 from outwiker.core.application import Application
 from outwiker.core.events import (PAGE_UPDATE_CONTENT,
@@ -302,7 +302,7 @@ class EventsTest(unittest.TestCase):
         Application.onTreeUpdate += self._onTreeUpdate
 
         self.assertFalse(self.isTreeUpdate)
-        WikiDocument.load(path)
+        loadNotesTree(path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertEqual(self.treeUpdateSender, None)
@@ -321,7 +321,7 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageCreate)
 
         # Создаем вики
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertEqual(self.treeUpdateSender, None)
@@ -370,7 +370,7 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageCreate)
 
         # Создаем вики
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
 
         self.assertFalse(self.isTreeUpdate)
         self.assertEqual(self.treeUpdateSender, None)
@@ -397,7 +397,7 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageCreate)
 
         # Создаем вики
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         TextPageFactory().create(rootwiki, "Страница 1", [])
 
         Application.wikiroot = rootwiki
@@ -425,7 +425,7 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageCreate)
 
         # Создаем вики
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         TextPageFactory().create(rootwiki, "Страница 1", [])
 
         # Изменим содержимое страницы
@@ -449,7 +449,7 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageCreate)
 
         # Создаем вики
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         TextPageFactory().create(rootwiki, "Страница 1", [])
 
         Application.wikiroot = rootwiki
@@ -476,7 +476,7 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageCreate)
 
         # Создаем вики
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         TextPageFactory().create(rootwiki, "Страница 1", [])
 
         # Изменим содержимое страницы
@@ -501,7 +501,7 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageCreate)
 
         # Создаем вики
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         TextPageFactory().create(rootwiki, "Страница 1", [])
 
         Application.wikiroot = rootwiki
@@ -535,7 +535,7 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageCreate)
 
         # Создаем вики
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         TextPageFactory().create(rootwiki, "Страница 1", [])
 
         Application.wikiroot = rootwiki
@@ -556,7 +556,7 @@ class EventsTest(unittest.TestCase):
 
         removeDir(self.path)
 
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         TextPageFactory().create(rootwiki, "Страница 1", [])
         TextPageFactory().create(rootwiki, "Страница 2", [])
         TextPageFactory().create(rootwiki["Страница 2"], "Страница 3", [])
@@ -588,7 +588,7 @@ class EventsTest(unittest.TestCase):
 
         removeDir(self.path)
 
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         TextPageFactory().create(rootwiki, "Страница 1", [])
         TextPageFactory().create(rootwiki, "Страница 2", [])
         TextPageFactory().create(rootwiki["Страница 2"], "Страница 3", [])
@@ -607,12 +607,12 @@ class EventsTest(unittest.TestCase):
 
         removeDir(self.path)
 
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         TextPageFactory().create(rootwiki, "Страница 1", [])
         TextPageFactory().create(rootwiki, "Страница 2", [])
         TextPageFactory().create(rootwiki["Страница 2"], "Страница 3", [])
 
-        document = WikiDocument.load(self.path)
+        document = loadNotesTree(self.path)
         Application.wikiroot = document
 
         self.assertEqual(document.selectedPage, None)
@@ -639,7 +639,7 @@ class EventsTest(unittest.TestCase):
         Application.onAttachSubdirChanged += self.pageAttachChangeSubdir
         removeDir(self.path)
 
-        rootwiki = WikiDocument.create(self.path)
+        rootwiki = createNotesTree(self.path)
         page = TextPageFactory().create(rootwiki, "Страница 1", [])
         Application.wikiroot = rootwiki
 

@@ -5,12 +5,12 @@ import os
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.defines import (ICONS_STD_PREFIX,
                                    PAGE_ICON_NAME,
                                    ICONS_EXTENSIONS)
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.iconcontroller import IconController
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 
 from outwiker.tests.utils import removeDir
@@ -21,7 +21,7 @@ class IconControllerTest(unittest.TestCase):
         self.path = mkdtemp(prefix='Абырвалг абыр')
         self.eventcount = 0
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         self._page = factory.create(self.wikiroot, "Страница 1", [])

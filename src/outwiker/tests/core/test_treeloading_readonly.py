@@ -4,7 +4,7 @@ import os.path
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.attachment import Attachment
 from outwiker.core.style import Style
@@ -25,7 +25,7 @@ class ReadonlyLoadTest (unittest.TestCase):
 
     def setUp(self):
         self.path = "testdata/samplewiki"
-        self.root = WikiDocument.load(self.path, readonly=True)
+        self.root = loadNotesTree(self.path, readonly=True)
 
     def testLoadWiki(self):
         self.assertEqual(len(self.root), 6)
@@ -168,7 +168,7 @@ class ReadonlyChangeTest (unittest.TestCase):
         self._exampleStyleDir = "../styles/example_jblog"
         self._exampleStyleDir2 = "../styles/example_jnet"
 
-        wiki = WikiDocument.create (self.path)
+        wiki = createNotesTree (self.path)
 
         factory = TextPageFactory()
         factory.create (wiki, "Страница 1", [])
@@ -186,7 +186,7 @@ class ReadonlyChangeTest (unittest.TestCase):
         Attachment (wiki["Страница 4"]).attach (fullFilesPath)
         Attachment (wiki["Страница 1/Страница 5"]).attach (fullFilesPath)
 
-        self.wiki = WikiDocument.load (self.path, readonly=True)
+        self.wiki = loadNotesTree (self.path, readonly=True)
 
 
     def tearDown(self):

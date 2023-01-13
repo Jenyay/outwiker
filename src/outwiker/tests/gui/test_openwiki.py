@@ -6,7 +6,7 @@ import unittest
 
 import wx
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.commands import openWikiWithDialog, openWiki, findPage
 from outwiker.gui.tester import Tester
 from outwiker.pages.text.textpage import TextPageFactory
@@ -60,7 +60,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertFalse(self.application.wikiroot["Страница 1"].readonly)
 
     def test_Open_02(self):
-        wikiroot2 = WikiDocument.create(self.path2)
+        wikiroot2 = createNotesTree(self.path2)
         factory = TextPageFactory()
         factory.create(wikiroot2, "Страница 1_2", [])
         factory.create(wikiroot2, "Страница 2_2", [])

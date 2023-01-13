@@ -5,9 +5,9 @@ import os
 import os.path
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.tests.utils import removeDir
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.application import Application
@@ -24,7 +24,7 @@ class ThumbnailsTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]
 

@@ -4,7 +4,7 @@ from tempfile import mkdtemp
 
 import pytest
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
@@ -13,7 +13,7 @@ from outwiker.tests.utils import removeDir
 def wikipage():
     path = mkdtemp(prefix='outwiker_wiki')
     factory = TextPageFactory()
-    wikiroot = WikiDocument.create(path)
+    wikiroot = createNotesTree(path)
     page = factory.create(wikiroot, "Страница 1", [])
 
     yield page

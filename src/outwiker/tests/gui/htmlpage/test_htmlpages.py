@@ -3,7 +3,7 @@
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.tests.utils import removeDir
 
@@ -20,7 +20,7 @@ class HtmlPagesTest(unittest.TestCase):
         self.__eventcount = 0
         self.__eventSender = None
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = HtmlPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
@@ -50,7 +50,7 @@ class HtmlPagesTest(unittest.TestCase):
         self.wikiroot["Страница 1"].autoLineWrap = False
         self.assertFalse (self.wikiroot["Страница 1"].autoLineWrap)
 
-        wiki = WikiDocument.load (self.path)
+        wiki = loadNotesTree (self.path)
         self.assertFalse (wiki["Страница 1"].autoLineWrap)
 
 
@@ -59,7 +59,7 @@ class HtmlPagesTest(unittest.TestCase):
         self.wikiroot["Страница 1"].title = "Страница 666"
         self.assertFalse (self.wikiroot["Страница 666"].autoLineWrap)
 
-        wiki = WikiDocument.load (self.path)
+        wiki = loadNotesTree (self.path)
         self.assertFalse (wiki["Страница 666"].autoLineWrap)
 
 

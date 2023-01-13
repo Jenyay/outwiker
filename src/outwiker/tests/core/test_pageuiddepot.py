@@ -3,9 +3,9 @@
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.pageuiddepot import PageUidDepot
 from outwiker.core.commands import generateLink
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.pages.text.textpage import TextPageFactory
@@ -19,7 +19,7 @@ class PageUidDepotTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])

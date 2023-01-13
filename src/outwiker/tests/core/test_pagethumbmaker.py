@@ -4,8 +4,8 @@ import os
 import os.path
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
 from outwiker.pages.text.textpage import TextPageFactory
 
@@ -21,7 +21,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])

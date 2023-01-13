@@ -10,8 +10,8 @@ import shutil
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
@@ -29,7 +29,7 @@ class InvalidWikiTest(unittest.TestCase):
             # Здесь будет создаваться вики
             path = mkdtemp(prefix='Абырвалг абыр')
 
-            rootwiki = WikiDocument.create(path)
+            rootwiki = createNotesTree(path)
 
             factory = TextPageFactory()
             factory.create(rootwiki, "Страница 1", [])
@@ -42,7 +42,7 @@ class InvalidWikiTest(unittest.TestCase):
             return path
 
         path = __createInvalidWiki1()
-        WikiDocument.load(path)
+        loadNotesTree(path)
 
         removeDir(path)
 
@@ -55,7 +55,7 @@ class InvalidWikiTest(unittest.TestCase):
             path = mkdtemp(prefix='Абырвалг абыр')
             removeDir(path)
 
-            rootwiki = WikiDocument.create(path)
+            rootwiki = createNotesTree(path)
 
             factory = TextPageFactory()
             factory.create(rootwiki, "Страница 1", [])
@@ -69,7 +69,7 @@ class InvalidWikiTest(unittest.TestCase):
             return path
 
         path = __createInvalidWiki2()
-        WikiDocument.load(path)
+        loadNotesTree(path)
 
         removeDir(path)
 
@@ -77,7 +77,7 @@ class InvalidWikiTest(unittest.TestCase):
         """
         Тест папок, которые не являются страницами
         """
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         page = wiki["Просто папка"]
         self.assertEqual(page, None)
 
@@ -85,7 +85,7 @@ class InvalidWikiTest(unittest.TestCase):
         """
         Тест страницы без папки с аттачами
         """
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         page = wiki["Страница без аттачей"]
         self.assertEqual(len(Attachment(page).attachmentFull), 0)
         page.datetime = self.defaultdate
@@ -98,7 +98,7 @@ class InvalidWikiTest(unittest.TestCase):
         files = ["accept.png", "add.png", "anchor.png"]
         attaches = [os.path.join(filesPath, fname) for fname in files]
 
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         Attachment(wiki["Страница без аттачей"]).attach(attaches)
 
         self.assertEqual(
@@ -115,7 +115,7 @@ class InvalidWikiTest(unittest.TestCase):
         """
         Тест страницы без файла контента
         """
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         page = wiki["Страница без контента"]
         self.assertEqual(page.content, "")
 
@@ -123,7 +123,7 @@ class InvalidWikiTest(unittest.TestCase):
         """
         Тест страницы с испорченным контентом
         """
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         page = wiki["Испорченный content"]
         self.assertEqual(page.content, "")
 
@@ -132,4 +132,4 @@ class InvalidWikiTest(unittest.TestCase):
         Тест попытки открытия несуществующей вики
         """
         invalidpath = "../testsss/invalidwiki"
-        self.assertRaises(IOError, WikiDocument.load, invalidpath)
+        self.assertRaises(IOError, loadNotesTree, invalidpath)
