@@ -4,7 +4,7 @@ import os
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikistyleutils import (getCustomStylesNames,
                                                 loadCustomStyles,
@@ -19,7 +19,7 @@ class WikiStyleUtilsTest(unittest.TestCase):
         self._tmp_dirs = []
 
         self.path = mkdtemp(prefix='WikiStyleUtilsTest_')
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница", [])
 
     def tearDown(self):

@@ -13,11 +13,7 @@ from pathlib import Path
 
 from invoke import task
 
-from buildtools.utilites import (getPython,
-                                 print_info,
-                                 windows_only,
-                                 linux_only
-                                 )
+from buildtools.utilites import getPython, print_info
 from buildtools.defines import DEB_BINARY_BUILD_DIR, COVERAGE_PARAMS
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,

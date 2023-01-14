@@ -3,7 +3,7 @@
 import os.path
 import unittest
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import loadNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.utilites.textfile import readTextFile
@@ -20,7 +20,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.pluginname = "Export2Html"
 
         self.path = "testdata/samplewiki"
-        self.root = WikiDocument.load(self.path)
+        self.root = loadNotesTree(self.path)
 
         dirlist = ["plugins/export2html"]
 

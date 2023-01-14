@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -29,7 +29,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 

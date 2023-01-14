@@ -4,9 +4,9 @@ import unittest
 import os.path
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -37,7 +37,7 @@ class CommandExecParserTest (unittest.TestCase):
     def __createWiki(self):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, 'Страница 1', [])
 
     def tearDown(self):

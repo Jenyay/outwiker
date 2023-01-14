@@ -4,6 +4,7 @@ import os
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.pages.wiki.parser.tokenfonts import FontsFactory
 from outwiker.pages.wiki.parser.tokenquote import QuoteFactory
 from outwiker.pages.wiki.parser.tokennoformat import NoFormatFactory
@@ -24,7 +25,6 @@ from outwiker.pages.wiki.parser.tokenlinebreak import LineBreakFactory
 from outwiker.pages.wiki.parser.tokenlinejoin import LineJoinFactory
 from outwiker.pages.wiki.parser.tokencommand import CommandFactory
 
-from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -32,7 +32,7 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
 
 
-class FakeParser(object):
+class FakeParser:
     """
     Фальшивый парсер-заглушка
     """
@@ -62,7 +62,7 @@ class TokenNamesTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.filesPath = "testdata/samplefiles/"
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]
 

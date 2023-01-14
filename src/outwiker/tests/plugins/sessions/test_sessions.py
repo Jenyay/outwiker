@@ -4,8 +4,8 @@ import os.path
 from tempfile import mkdtemp
 import unittest
 
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
@@ -47,7 +47,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def __createWiki2(self):
         # Здесь будет создаваться вики
-        wiki2 = WikiDocument.create(self.path2)
+        wiki2 = createNotesTree(self.path2)
         TextPageFactory().create(wiki2, "Page 1", [])
         TextPageFactory().create(wiki2, "Page 2", [])
 
@@ -290,7 +290,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         uid1 = self._getPageLink(self.wikiroot["Страница 1"])
         uid2 = self._getPageLink(self.wikiroot["Страница 2"])
 
-        wiki = WikiDocument.load(self.wikiroot.path, True)
+        wiki = loadNotesTree(self.wikiroot.path, True)
         self.application.wikiroot = wiki
 
         self.application.selectedPage = wiki["Страница 1"]
@@ -326,7 +326,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._getPageLink(self.wikiroot["Страница 1"])
         self._getPageLink(self.wikiroot["Страница 2"])
 
-        wiki = WikiDocument.load(self.wikiroot.path, True)
+        wiki = loadNotesTree(self.wikiroot.path, True)
         self.application.wikiroot = wiki
 
         self.application.selectedPage = wiki["Страница 1"]
@@ -795,7 +795,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testRestore_03(self):
         from sessions.sessioncontroller import SessionController
 
-        wiki = WikiDocument.load(self.wikiroot.path, readonly=False)
+        wiki = loadNotesTree(self.wikiroot.path, readonly=False)
         self.application.wikiroot = wiki
         self.application.selectedPage = wiki["Страница 1"]
 
@@ -832,7 +832,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from sessions.sessioncontroller import SessionController
 
         self.__createWiki2()
-        wiki2 = WikiDocument.load(self.path2, False)
+        wiki2 = loadNotesTree(self.path2, False)
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Страница 1"]
@@ -864,7 +864,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from sessions.sessioncontroller import SessionController
 
         self.__createWiki2()
-        wiki2 = WikiDocument.load(self.path2, True)
+        wiki2 = loadNotesTree(self.path2, True)
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Страница 1"]
@@ -895,7 +895,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testRestoreReadonly_01(self):
         from sessions.sessioncontroller import SessionController
 
-        wiki = WikiDocument.load(self.wikiroot.path, readonly=True)
+        wiki = loadNotesTree(self.wikiroot.path, readonly=True)
         self.application.wikiroot = wiki
         self.application.selectedPage = wiki["Страница 1"]
 
@@ -930,7 +930,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testRestoreReadonly_02(self):
         from sessions.sessioncontroller import SessionController
 
-        wiki = WikiDocument.load(self.wikiroot.path, readonly=True)
+        wiki = loadNotesTree(self.wikiroot.path, readonly=True)
         self.application.wikiroot = wiki
         self.application.selectedPage = wiki["Страница 1"]
 

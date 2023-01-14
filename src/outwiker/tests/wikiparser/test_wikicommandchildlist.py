@@ -5,7 +5,7 @@ import unittest
 from tempfile import mkdtemp
 from typing import List
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.application import Application
 from outwiker.pages.wiki.parser.commands.childlist import ChildListCommand
@@ -24,7 +24,7 @@ class WikiChildListCommandTest (unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = WikiPageFactory()
         self.page_1 = factory.create(self.wikiroot, "Страница 1", [])
