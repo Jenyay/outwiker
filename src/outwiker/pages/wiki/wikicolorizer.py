@@ -3,6 +3,7 @@
 import wx
 
 from .parser.tokenfonts import FontsFactory, BoldToken, ItalicToken, BoldItalicToken, UnderlineToken
+from .parser.tokenadhoc import AdHocFactory
 from .parser.tokenheading import HeadingFactory
 from .parser.tokencommand import CommandFactory
 from .parser.tokenlink import LinkFactory
@@ -27,6 +28,8 @@ class WikiColorizer:
         self._runEvent = runEvent
 
         self.text = TextFactory.make(None)
+        self.empty_bold_italic = AdHocFactory.makeEmptyBoldItalic(None).setParseAction(lambda s, l, t: None)
+        self.empty_bold = AdHocFactory.makeEmptyBold(None).setParseAction(lambda s, l, t: None)
         self.bold = FontsFactory.makeBold(
             None).setParseAction(lambda s, l, t: None)
         self.italic = FontsFactory.makeItalic(
@@ -66,6 +69,8 @@ class WikiColorizer:
                 self.preformat |
                 self.comment |
                 self.command |
+                self.empty_bold_italic |
+                self.empty_bold |
                 self.bold_italic |
                 self.bold |
                 self.italic |
@@ -82,6 +87,8 @@ class WikiColorizer:
                 self.noformat |
                 self.preformat |
                 self.comment |
+                self.empty_bold_italic |
+                self.empty_bold |
                 self.bold_italic |
                 self.bold |
                 self.italic |
