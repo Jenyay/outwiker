@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from pyparsing import Regex
+from pyparsing import Regex, Literal
 
 from .tokenfonts import SubscriptToken, SuperscriptToken, BoldToken, ItalicToken, BoldItalicToken
 from .utils import escapeTextForRE
 
 
-class AdHocFactory(object):
+class AdHocFactory:
     @staticmethod
     def makeBoldSubscript(parser):
         return BoldSubscriptToken(parser).getToken()
@@ -32,8 +32,18 @@ class AdHocFactory(object):
         return BoldItalicSuperscriptToken(parser).getToken()
 
     @staticmethod
+    def makeEmptyBold(parser):
+        return EmptyBoldToken().getToken()
+
+    @staticmethod
+    def makeEmptyBoldItalic(parser):
+        return EmptyBoldItalicToken().getToken()
+
+    @staticmethod
     def make(parser):
-        return(AdHocFactory.makeBoldItalicSubscript(parser) |
+        return(AdHocFactory.makeEmptyBoldItalic(parser) |
+               AdHocFactory.makeEmptyBold(parser) |
+               AdHocFactory.makeBoldItalicSubscript(parser) |
                AdHocFactory.makeBoldItalicSuperscript(parser) |
                AdHocFactory.makeBoldSubscript(parser) |
                AdHocFactory.makeBoldSuperscript(parser) |
@@ -42,7 +52,7 @@ class AdHocFactory(object):
                )
 
 
-class AdHocToken(object):
+class AdHocToken:
     """
     Базовый класс для отдельных проблемных случаев при разборе вики-нотации
     """
@@ -68,9 +78,6 @@ class BoldSubscriptToken(AdHocToken):
     """
     Токен для полужирного нижнего индекса
     """
-    def __init__(self, parser):
-        AdHocToken.__init__(self, parser)
-
     def getToken(self):
         token = self.getDefaultToken(
                     BoldToken.start, BoldToken.end,
@@ -83,9 +90,6 @@ class BoldSuperscriptToken(AdHocToken):
     """
     Токен для полужирного верхнего индекса
     """
-    def __init__(self, parser):
-        AdHocToken.__init__(self, parser)
-
     def getToken(self):
         token = self.getDefaultToken(
                     BoldToken.start, BoldToken.end,
@@ -99,9 +103,6 @@ class ItalicSubscriptToken(AdHocToken):
     """
     Токен для курсивного нижнего индекса
     """
-    def __init__(self, parser):
-        AdHocToken.__init__(self, parser)
-
     def getToken(self):
         token = self.getDefaultToken(
                     ItalicToken.start, ItalicToken.end,
@@ -115,9 +116,6 @@ class ItalicSuperscriptToken(AdHocToken):
     """
     Токен для курсивного верхнего индекса
     """
-    def __init__(self, parser):
-        AdHocToken.__init__(self, parser)
-
     def getToken(self):
         token = self.getDefaultToken(
                     ItalicToken.start, ItalicToken.end,
@@ -131,9 +129,6 @@ class BoldItalicSubscriptToken(AdHocToken):
     """
     Токен для полужирного курсивного нижнего индекса
     """
-    def __init__(self, parser):
-        AdHocToken.__init__(self, parser)
-
     def getToken(self):
         token = self.getDefaultToken(
                     BoldItalicToken.start, BoldItalicToken.end,
@@ -147,9 +142,6 @@ class BoldItalicSuperscriptToken(AdHocToken):
     """
     Токен для полужирного курсивного нижнего индекса
     """
-    def __init__(self, parser):
-        AdHocToken.__init__(self, parser)
-
     def getToken(self):
         token = self.getDefaultToken(
                     BoldItalicToken.start, BoldItalicToken.end,
@@ -157,3 +149,13 @@ class BoldItalicSuperscriptToken(AdHocToken):
 
         token.setParseAction(self.getAction(u'<b><i>', u'</i></b>'))
         return token
+
+
+class EmptyBoldToken:
+    def getToken(self):
+        return Literal("''''''").setParseAction(lambda s, l, t: "<b></b>")("bold")
+
+
+class EmptyBoldItalicToken:
+    def getToken(self):
+        return Literal("''''''''").setParseAction(lambda s, l, t: "<b><i></i></b>")("bold_italic")

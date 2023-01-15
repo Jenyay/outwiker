@@ -3,13 +3,13 @@
 from pyparsing import Regex
 
 
-class HorLineFactory (object):
+class HorLineFactory:
     @staticmethod
     def make(parser):
         return HorLineToken().getToken()
 
 
-class HorLineToken (object):
+class HorLineToken:
     """
     Токен для горизонтальной линии
     """

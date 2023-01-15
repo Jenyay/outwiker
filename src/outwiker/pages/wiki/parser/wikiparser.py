@@ -32,7 +32,7 @@ from .tokenmultilineblock import MultilineBlockFactory
 from ..thumbnails import Thumbnails
 
 
-class Parser(object):
+class Parser:
     def __init__(self, page, config):
         self.page = page
         self.config = config

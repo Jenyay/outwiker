@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import time
 import unittest
 from tempfile import mkdtemp
 
@@ -408,3 +409,25 @@ class ParserFontTest (unittest.TestCase):
             result,
             self.parser.toHtml(text).encode(
                 self.encoding))
+
+    def testManyBold_01(self):
+        text = "'''''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111'''"
+        expected = "<b></b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b>"
+
+        begin = time.perf_counter()
+        result = self.parser.toHtml(text)
+        end = time.perf_counter()
+
+        self.assertLess(end - begin, 1)
+        self.assertEqual(result, expected)
+
+    def testManyBoldItalic01(self):
+        text = "'''''''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111'''"
+        expected = "<b><i></i></b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b>"
+
+        begin = time.perf_counter()
+        result = self.parser.toHtml(text)
+        end = time.perf_counter()
+
+        self.assertLess(end - begin, 1)
+        self.assertEqual(result, expected)
