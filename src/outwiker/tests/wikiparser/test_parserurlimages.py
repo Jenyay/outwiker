@@ -3,6 +3,7 @@
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
