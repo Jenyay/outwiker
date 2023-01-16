@@ -2,7 +2,7 @@
 
 import re
 
-from pyparsing import QuotedString, Regex
+from pyparsing import QuotedString, Regex, Literal
 
 from .tokenblock import TextBlockToken
 
@@ -159,46 +159,55 @@ class StrikeToken(TextBlockToken):
                             convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<strike>", "</strike>"))("strike")
 
 
-class ItalicToken(TextBlockToken):
+class ItalicToken:
     """
     Токен для курсива
     """
     start = "''"
     end = "''"
 
+    def __init__(self, parser):
+        self.parser = parser
+
     def getToken(self):
-        return QuotedString(ItalicToken.start,
-                            endQuoteChar=ItalicToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<i>", "</i>"))("italic")
+        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(self._parseAction)("italic")
+
+    def _parseAction(self, s, l, t):
+        return '<i>{}</i>'.format(self.parser.parseTextLevelMarkup(t[0][len(self.start):-len(self.end)]))
 
 
-class BoldToken(TextBlockToken):
+class BoldToken:
     """
     Токен для полужирного шрифта
     """
     start = "'''"
     end = "'''"
 
+    def __init__(self, parser):
+        self.parser = parser
+
     def getToken(self):
-        return QuotedString(BoldToken.start,
-                            endQuoteChar=BoldToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<b>", "</b>"))("bold")
+        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(self._parseAction)("bold")
+
+    def _parseAction(self, s, l, t):
+        return '<b>{}</b>'.format(self.parser.parseTextLevelMarkup(t[0][len(self.start):-len(self.end)]))
 
 
-class BoldItalicToken(TextBlockToken):
+class BoldItalicToken:
     """
     Токен для полужирного курсивного шрифта
     """
     start = "''''"
     end = "''''"
 
+    def __init__(self, parser):
+        self.parser = parser
+
     def getToken(self):
-        return QuotedString(BoldItalicToken.start,
-                            endQuoteChar=BoldItalicToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<b><i>", "</i></b>"))("bold_italic")
+        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(self._parseAction)("bold_italic")
+
+    def _parseAction(self, s, l, t):
+        return '<b><i>{}</i></b>'.format(self.parser.parseTextLevelMarkup(t[0][len(self.start):-len(self.end)]))
 
 
 class SmallFontToken(TextBlockToken):

@@ -410,7 +410,7 @@ class ParserFontTest (unittest.TestCase):
             self.parser.toHtml(text).encode(
                 self.encoding))
 
-    def testManyBold_01(self):
+    def testManyBold(self):
         text = "'''''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111'''"
         expected = "<b></b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b>"
 
@@ -421,9 +421,20 @@ class ParserFontTest (unittest.TestCase):
         self.assertLess(end - begin, 1)
         self.assertEqual(result, expected)
 
-    def testManyBoldItalic01(self):
+    def testManyBoldItalic(self):
         text = "'''''''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111'''"
         expected = "<b><i></i></b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b>"
+
+        begin = time.perf_counter()
+        result = self.parser.toHtml(text)
+        end = time.perf_counter()
+
+        self.assertLess(end - begin, 1)
+        self.assertEqual(result, expected)
+
+    def testInvalidBoldItalic(self):
+        text = "''''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111'''"
+        expected = "<b>'111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b>"
 
         begin = time.perf_counter()
         result = self.parser.toHtml(text)
