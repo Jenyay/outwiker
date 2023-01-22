@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -23,7 +23,7 @@ import outwiker.core.tree
 import outwiker.core.events
 
 
-class WikiPageController(object):
+class WikiPageController:
     """GUI controller for wiki page"""
     def __init__(self, application):
         self._application = application

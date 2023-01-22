@@ -7,7 +7,7 @@ from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 
-class FactorySelector(object):
+class FactorySelector:
     """
     Класс, который выбирает нужную фабрику для каждой страницы
     """

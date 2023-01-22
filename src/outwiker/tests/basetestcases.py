@@ -10,12 +10,12 @@ from tempfile import NamedTemporaryFile, mkdtemp
 import wx
 
 from outwiker.api.core.tree import createNotesTree
+from outwiker.app.owapplication import OutWikerApplication
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from outwiker.gui.owapplication import OutWikerApplication
 from outwiker.gui.tester import Tester
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.pages.html.htmlpage import HtmlPageFactory
@@ -48,6 +48,7 @@ class BaseWxTestCase(unittest.TestCase):
         if self.mainWindow is not None:
             self.mainWindow.Close()
 
+        wx.SafeYield()
         self._wxapp.MainLoop()
         del self._wxapp
 

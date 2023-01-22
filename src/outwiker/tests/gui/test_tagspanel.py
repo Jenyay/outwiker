@@ -4,9 +4,9 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
+from outwiker.app.gui.tagspanelcontroller import TagsPanelController
 from outwiker.core.application import ApplicationParams
 from outwiker.core.tagslist import TagsList
-from outwiker.gui.tagspanelcontroller import TagsPanelController
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 

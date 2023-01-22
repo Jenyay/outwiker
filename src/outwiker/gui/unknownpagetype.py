@@ -5,7 +5,7 @@ import wx
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
 
-from .basepagepanel import BasePagePanel
+from outwiker.gui.basepagepanel import BasePagePanel
 
 
 class UnknownPageTypePanel(BasePagePanel):

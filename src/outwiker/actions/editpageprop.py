@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.app.gui.pagedialog import editPage
 from outwiker.gui.baseaction import BaseAction
-from outwiker.gui.pagedialog import editPage
 
 
-class EditPagePropertiesAction (BaseAction):
+class EditPagePropertiesAction(BaseAction):
     """
-    Добавить страницу того же уровня, что и выбранная
+    Редактировать свойства текущей страницы
     """
-    stringId = u"EditPageProperties"
+    stringId = "EditPageProperties"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Page Properties…")
+        return _("Page Properties…")
 
     @property
     def description(self):
-        return _(u"Edit page properties")
+        return _("Edit page properties")
 
     def run(self, params):
         if self._application.selectedPage is not None:

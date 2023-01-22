@@ -50,14 +50,14 @@ def MessageBox(*args, **kwargs):
     return result
 
 
-def showError(mainWindow: "outwiker.gui.mainwindow.MainWindow", message: str):
+def showError(mainWindow: "outwiker.app.gui.mainwindow.MainWindow", message: str):
     '''
     Show error message with Toaster
     '''
     mainWindow.toaster.showError(message)
 
 
-def showInfo(mainWindow: "outwiker.gui.mainwindow.MainWindow",
+def showInfo(mainWindow: "outwiker.app.gui.mainwindow.MainWindow",
              title: str,
              message: str):
     '''

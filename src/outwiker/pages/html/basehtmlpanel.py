@@ -32,7 +32,7 @@ class BaseHtmlPanel(BaseTextPanel):
     CODE_PAGE_INDEX = 0
     RESULT_PAGE_INDEX = 1
 
-    def __init__(self, parent: 'outwiker.gui.currentpagepanel.CurrentPagePanel',
+    def __init__(self, parent: 'outwiker.app.gui.currentpagepanel.CurrentPagePanel',
                  application):
         logger.debug('BaseHtmlPanel creation started')
         super().__init__(parent, application)

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.pagedialogpanels.appearancepanel import (
-    AppearancePanel,
-    AppearanceController)
 
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.event import pagetype
@@ -14,12 +11,15 @@ from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.gui.simplespellcontroller import SimpleSpellController
+from outwiker.gui.pagedialogpanels.appearancepanel import (
+    AppearancePanel,
+    AppearanceController)
 from outwiker.utilites.textfile import writeTextFile, readTextFile
 
 from .htmlpage import HtmlWikiPage, HtmlPageFactory
 
 
-class HtmlPageController(object):
+class HtmlPageController:
     """GUI controller for HTML page"""
 
     def __init__(self, application):

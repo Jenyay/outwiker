@@ -4,8 +4,8 @@ import unittest
 
 import wx
 
+from outwiker.app.gui.toolbarscontroller import ToolBarsController
 from outwiker.gui.controls.toolbar2 import ToolBar2Container
-from outwiker.gui.toolbarscontroller import ToolBarsController
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 

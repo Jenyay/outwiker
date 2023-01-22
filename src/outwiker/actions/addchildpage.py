@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.app.gui.pagedialog import createChildPage
 from outwiker.gui.baseaction import BaseAction
-from outwiker.gui.pagedialog import createChildPage
 
 
-class AddChildPageAction (BaseAction):
-    """Добавить страницу того же уровня, что и выбранная."""
+class AddChildPageAction(BaseAction):
+    """Добавить дочернюю страницу по отношению к текущей"""
 
     stringId = 'AddChildPage'
 
