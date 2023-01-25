@@ -37,7 +37,6 @@ import outwiker.actions.sortsiblingsalpha
 import outwiker.actions.switchto
 import outwiker.actions.tabs
 import outwiker.actions.tags
-from outwiker.gui.actioninfo import ActionInfo, PolyactionInfo
 from outwiker.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
 from outwiker.actions.attachopenfolder import (OpenAttachFolderAction,
@@ -48,10 +47,10 @@ from outwiker.actions.attachrename import RenameAttachActionForAttachPanel
 from outwiker.actions.attachselectall import AttachSelectAllAction
 from outwiker.actions.attachcreatesubdir import (AttachCreateSubdirAction,
                                                  AttachCreateSubdirActionForAttachPanel)
+
+from outwiker.gui.actioninfo import ActionInfo, PolyactionInfo
 from outwiker.gui.hotkey import HotKey
-
-
-ATTACH_ACTIONS_AREA = 'attach_panel'
+from outwiker.gui.defines import ATTACH_ACTIONS_AREA
 
 
 actionsList = [

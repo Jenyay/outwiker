@@ -128,7 +128,7 @@ class OutWikerApplication(wx.App):
         WikiPageFactory.registerActions(application)
 
         actionController = application.actionController
-        from outwiker.gui.actionslist import actionsList, polyactionsList
+        from outwiker.app.gui.actionslist import actionsList, polyactionsList
 
         # Register the normal actions
         [actionController.register(item.action_type(application),
