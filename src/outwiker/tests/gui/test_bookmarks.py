@@ -10,7 +10,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=True)
         self.wikiroot = self.createWiki()
 
         factory = TextPageFactory()

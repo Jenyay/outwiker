@@ -84,11 +84,12 @@ class BaseOutWikerMixin(WikiTestMixin):
 
 
 class BaseOutWikerGUIMixin(BaseOutWikerMixin):
-    def initApplication(self, lang='en'):
+    def initApplication(self, lang='en', enableActionsGui=False):
         super().initApplication(lang)
 
         self.outwiker_app = OutWikerApplication(self.application)
         self.outwiker_app.use_fake_html_render = True
+        self.outwiker_app.enableActionsGui = enableActionsGui
         self.outwiker_app.initMainWindow()
         self.mainWindow = self.outwiker_app.mainWnd
 
@@ -124,8 +125,11 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         """
         pass
 
+    def isEnabledActionsGui(self) -> bool:
+        return False
+
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=self.isEnabledActionsGui())
         self.wikiroot = self.createWiki()
         self.__createWiki()
 

@@ -12,7 +12,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class MainPanesTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=True)
 
         self.attachAction = self.application.actionController.getAction(
             ShowHideAttachesAction.stringId)

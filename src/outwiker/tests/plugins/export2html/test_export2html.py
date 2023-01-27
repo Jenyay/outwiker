@@ -15,7 +15,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=True)
         self.outputdir = "testdata/temp"
         self.pluginname = "Export2Html"
 

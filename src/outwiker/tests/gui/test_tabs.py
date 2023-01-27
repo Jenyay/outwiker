@@ -11,7 +11,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=True)
         self.wikiroot = self.createWiki()
 
         factory = TextPageFactory()

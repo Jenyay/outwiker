@@ -12,7 +12,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class FullScreenTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=True)
 
     def testFullScreenStart(self):
         fullScreenActionInfo = self.application.actionController.getActionInfo(

@@ -29,6 +29,7 @@ class OutWikerApplication(wx.App):
         self.logFileName = 'outwiker.log'
         self._application = application
         self.use_fake_html_render = False
+        self.enableActionsGui = True
 
         self._locale = initLocale(self._application.config)
         self._initLocale()
@@ -57,6 +58,7 @@ class OutWikerApplication(wx.App):
         self._application.mainWindow = self.mainWnd
         self._application.actionController = ActionController(
             self.mainWnd, self._application.config)
+        self._application.actionController.enableGui(self.enableActionsGui)
 
         self._registerActions(self._application)
         self.mainWnd.createGui()
