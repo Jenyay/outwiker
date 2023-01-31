@@ -52,7 +52,8 @@ class WikiPageController:
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
         self._application.onTextEditorKeyDown -= self.__onTextEditorKeyDown
-        self._colorizerController.clear()
+        if not self._application.testMode:
+            self._colorizerController.clear()
 
     def _addTab(self, dialog):
         if self._appearancePanel is None:
@@ -87,12 +88,14 @@ class WikiPageController:
 
     @pagetype(WikiWikiPage)
     def __onPageViewCreate(self, page):
-        self._colorizerController.initialize(page)
+        if not self._application.testMode:
+            self._colorizerController.initialize(page)
         self._application.mainWindow.pagePanel.pageView.SetFocus()
 
     @pagetype(WikiWikiPage)
     def __onPageViewDestroy(self, page):
-        self._colorizerController.clear()
+        if not self._application.testMode:
+            self._colorizerController.clear()
 
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(WikiPageFactory())

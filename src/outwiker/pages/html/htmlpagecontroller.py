@@ -46,7 +46,8 @@ class HtmlPageController:
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
-        self._spellController.clear()
+        if not self._application.testMode:
+            self._spellController.clear()
 
     def _addTab(self, dialog):
         if self._appearancePanel is None:
@@ -76,12 +77,14 @@ class HtmlPageController:
     @pagetype(HtmlWikiPage)
     def __onPageViewCreate(self, page):
         assert page is not None
-        self._spellController.initialize(page)
+        if not self._application.testMode:
+            self._spellController.initialize(page)
 
     @pagetype(HtmlWikiPage)
     def __onPageViewDestroy(self, page):
         assert page is not None
-        self._spellController.clear()
+        if not self._application.testMode:
+            self._spellController.clear()
 
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(HtmlPageFactory())
