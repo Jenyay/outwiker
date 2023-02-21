@@ -1,3 +1,46 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta:__legacy__"
+requires = ["pdm-pep517>=1.0.0"]
+build-backend = "pdm.pep517.api"
+
+
+[tool.pdm]
+[[tool.pdm.source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "invoke==1.7.1",
+    "cx-freeze==6.12.0",
+    "pympler==1.0.1",
+    "pytest>=7.1",
+    "coverage>=6.4",
+    "jinja2>=3.1",
+    "colorama==0.4.5",
+    "sphinx>=5.3",
+]
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Eugene Ilin", email = "jenyay.ilin@gmail.com"},
+]
+dependencies = [
+    "attrdict3>=2.0.2",
+    #"wxPython==4.2.0",
+    "Pillow==9.3.0",
+    "idna>=2.10",
+    "pyparsing==3.0.9",
+    "psutil==5.9.2",
+    "rcssmin==1.1.1",
+]
+requires-python = ">=3.8"
+license = {text = "GPL3"}
+
+[project.optional-dependencies]
+wxpython = [
+    "wxpython==4.2.0",
+]

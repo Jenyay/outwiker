@@ -53,3 +53,5 @@ Pipfile.lock
 __cache.tmp
 .mypy_cache
 .flatpak-builder
+.pdm.toml
+.venv
