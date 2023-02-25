@@ -4,9 +4,10 @@ import wx
 
 import outwiker.core.commands
 
+from outwiker.api.services.messages import showError
 from outwiker.app.gui.basepagedialog import BasePageDialog
 from outwiker.core.application import Application
-from outwiker.core.commands import pageExists, showError, renamePage
+from outwiker.core.commands import pageExists, renamePage
 
 
 @outwiker.core.commands.testreadonly

@@ -7,6 +7,7 @@ import wx
 from outwiker.app.gui.bookmarkscontroller import BookmarksController
 
 import outwiker.core.commands
+from outwiker.api.services.messages import showError
 from outwiker.core.commands import getMainWindowTitle, setStatusText
 from outwiker.core.events import PAGE_UPDATE_TITLE
 
@@ -232,9 +233,8 @@ class MainWndController:
                 self._application.recentWiki.add(wikiroot.path)
                 self.updateRecentMenu()
             except IOError as e:
-                outwiker.core.commands.showError(
-                    self._application.mainWindow,
-                    _(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (str(e)))
+                showError(self._application.mainWindow,
+                    _("Can't add wiki to recent list.\nCan't save config.\n%s") % (str(e)))
 
         self.enableGui()
         self.bookmarks.updateBookmarks()

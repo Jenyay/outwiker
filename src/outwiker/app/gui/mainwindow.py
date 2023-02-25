@@ -17,7 +17,7 @@ from outwiker.app.gui.tabscontroller import TabsController
 from outwiker.app.gui.toolbarscontroller import ToolBarsController
 
 from outwiker.core.attachwatcher import AttachWatcher
-from outwiker.core.commands import showError
+from outwiker.api.services.messages import showError
 from outwiker.core.system import getOS, getBuiltinImagePath
 
 from outwiker.gui import defines as guidefines

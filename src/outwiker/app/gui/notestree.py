@@ -14,10 +14,12 @@ from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.moving import GoToParentAction
 
+from outwiker.api.services.messages import showError
+
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
-from outwiker.core.commands import (MessageBox, attachFiles, showError,
+from outwiker.core.commands import (MessageBox, attachFiles,
                                     renamePage, movePage)
 from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
 from outwiker.core.system import getBuiltinImagePath

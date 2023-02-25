@@ -2,8 +2,9 @@
 
 import wx
 
+from outwiker.api.services.messages import showError
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import MessageBox, showError
+from outwiker.core.commands import MessageBox
 from outwiker.gui.baseaction import BaseAction
 
 

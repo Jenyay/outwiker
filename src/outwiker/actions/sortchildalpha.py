@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.api.services.messages import showError
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import testreadonly, showError
+from outwiker.core.commands import testreadonly
 
 
-class SortChildAlphabeticalAction (BaseAction):
+class SortChildAlphabeticalAction(BaseAction):
     """
     Отсортировать дочерние страницы по алфавиту
     """
-    stringId = u"SortChildAlphabetically"
+    stringId = "SortChildAlphabetically"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Sort Children Pages Alphabetically")
+        return _("Sort Children Pages Alphabetically")
 
     @property
     def description(self):
-        return _(u"Sort children pages alphabetically")
+        return _("Sort children pages alphabetically")
 
     def run(self, params):
         self.sortChildren()
@@ -27,7 +28,7 @@ class SortChildAlphabeticalAction (BaseAction):
     @testreadonly
     def sortChildren(self):
         if self._application.wikiroot is None:
-            showError(self._application.mainWindow, _(u"Wiki is not open"))
+            showError(self._application.mainWindow, _("Wiki is not open"))
             return
 
         if self._application.wikiroot.selectedPage is not None:

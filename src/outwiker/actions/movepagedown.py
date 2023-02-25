@@ -2,26 +2,27 @@
 
 import wx
 
+from outwiker.api.services.messages import showError
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import testreadonly, showError
+from outwiker.core.commands import testreadonly
 
 
-class MovePageDownAction (BaseAction):
+class MovePageDownAction(BaseAction):
     """
     Переместить страницу на одну позицию вниз
     """
-    stringId = u"MovePageDown"
+    stringId = "MovePageDown"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Move Page Down")
+        return _("Move Page Down")
 
     @property
     def description(self):
-        return _(u"Move page down")
+        return _("Move page down")
 
     def run(self, params):
         self.moveCurrentPageDown()
@@ -32,7 +33,7 @@ class MovePageDownAction (BaseAction):
         Переместить текущую страницу на одну позицию вниз
         """
         if self._application.wikiroot is None:
-            showError(self._application.mainWindow, _(u"Wiki is not open"))
+            showError(self._application.mainWindow, _("Wiki is not open"))
             return
 
         if self._application.wikiroot.selectedPage is not None:

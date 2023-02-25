@@ -3,10 +3,11 @@
 import wx
 from functools import cmp_to_key
 
+from outwiker.api.services.messages import showError
+
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
-from outwiker.core.commands import showError
 
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
 from outwiker.gui.guiconfig import TagsConfig

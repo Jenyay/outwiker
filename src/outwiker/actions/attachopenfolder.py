@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.api.services.messages import showError
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import showError
 from outwiker.core.attachment import Attachment
 from outwiker.core.system import getOS
 

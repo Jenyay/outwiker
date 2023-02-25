@@ -2,12 +2,12 @@
 
 import os.path
 
-import outwiker.gui.controls.flatnotebook as fnb
-
+from outwiker.api.services.messages import showError
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 from outwiker.core.config import StringListSection, IntegerOption
-from outwiker.core.commands import showError
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
+
+import outwiker.gui.controls.flatnotebook as fnb
 
 
 class TabsController:

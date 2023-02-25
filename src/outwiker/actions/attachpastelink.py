@@ -1,6 +1,6 @@
 # -*- coding=utf-8 -*-
 
-from outwiker.core.commands import showError
+from outwiker.api.services.messages import showError
 from outwiker.gui.baseaction import BaseAction
 
 

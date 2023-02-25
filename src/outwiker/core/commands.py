@@ -15,6 +15,7 @@ from typing import List, Optional, Union, Iterable
 import wx
 
 import outwiker.core.exceptions
+from outwiker.api.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
@@ -48,22 +49,6 @@ def MessageBox(*args, **kwargs):
     wx.GetApp().bindActivateApp()
 
     return result
-
-
-def showError(mainWindow: "outwiker.app.gui.mainwindow.MainWindow", message: str):
-    '''
-    Show error message with Toaster
-    '''
-    mainWindow.toaster.showError(message)
-
-
-def showInfo(mainWindow: "outwiker.app.gui.mainwindow.MainWindow",
-             title: str,
-             message: str):
-    '''
-    Show info message with Toaster
-    '''
-    mainWindow.toaster.showInfo(title, message)
 
 
 def testreadonly(func):
