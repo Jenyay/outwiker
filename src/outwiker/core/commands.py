@@ -272,7 +272,7 @@ def findPage(application, page_id):
     if application.wikiroot is None or page_id is None:
         return None
 
-    prefix = u'page://'
+    prefix = 'page://'
 
     if page_id.startswith(prefix):
         page_id = page_id[len(prefix):]
@@ -292,7 +292,7 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
 
     logger.debug('Opening notes tree from: {}'.format(path))
     if not os.path.exists(path):
-        __canNotLoadWikiMessage(path)
+        _canNotLoadWikiMessage(path)
         return None
 
     preWikiOpenParams = PreWikiOpenParams(path, readonly)
@@ -319,10 +319,10 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
 
     success = False
     if isinstance(result, outwiker.core.exceptions.RootFormatError):
-        __rootFormatErrorHandle(path, readonly)
+        _rootFormatErrorHandle(path, readonly)
     elif isinstance(result, Exception):
         logger.error(result)
-        __canNotLoadWikiMessage(path)
+        _canNotLoadWikiMessage(path)
     else:
         Application.wikiroot = result
         success = True
@@ -334,16 +334,16 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
     return Application.wikiroot
 
 
-def __rootFormatErrorHandle(path, readonly):
+def _rootFormatErrorHandle(path, readonly):
     """
     Обработчик исключения outwiker.core.exceptions.RootFormatError
     """
     if readonly:
         # Если вики открыт только для чтения, то нельзя изменять файлы
-        __canNotLoadWikiMessage(path)
+        _canNotLoadWikiMessage(path)
         return
 
-    if (__wantClearWikiOptions(path) != wx.YES):
+    if (_wantClearWikiOptions(path) != wx.YES):
         return
 
     # Обнулим файл __page.opt
@@ -355,16 +355,16 @@ def __rootFormatErrorHandle(path, readonly):
         wikiroot = WikiDocument.load(os.path.realpath(path), readonly)
         Application.wikiroot = wikiroot
     except IOError:
-        __canNotLoadWikiMessage(path)
+        _canNotLoadWikiMessage(path)
 
     except outwiker.core.exceptions.RootFormatError:
-        __canNotLoadWikiMessage(path)
+        _canNotLoadWikiMessage(path)
 
     finally:
         pass
 
 
-def __canNotLoadWikiMessage(path):
+def _canNotLoadWikiMessage(path):
     """
     Вывести сообщение о том, что невоможно открыть вики
     """
@@ -373,7 +373,7 @@ def __canNotLoadWikiMessage(path):
     showError(Application.mainWindow, text)
 
 
-def __wantClearWikiOptions(path):
+def _wantClearWikiOptions(path):
     """
     Сообщение о том, хочет ли пользователь сбросить файл __page.opt
     """
