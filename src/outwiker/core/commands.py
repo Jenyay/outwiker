@@ -235,16 +235,16 @@ def removePage(page: 'outwiker.core.tree.WikiPage'):
 
     if page.parent is None:
         showError(Application.mainWindow, _(
-            u"You can't remove the root element"))
+            "You can't remove the root element"))
         return
 
-    if (MessageBox(_(u'Remove page "{}" and all subpages?\nAll attached files will also be deleted.').format(page.title),
-                   _(u"Remove page?"),
+    if (MessageBox(_('Remove page "{}" and all subpages?\nAll attached files will also be deleted.').format(page.title),
+                   _("Remove page?"),
                    wx.YES_NO | wx.ICON_QUESTION) == wx.YES):
         try:
             page.remove()
         except IOError:
-            showError(Application.mainWindow, _(u"Can't remove page"))
+            showError(Application.mainWindow, _("Can't remove page"))
 
 
 def openWikiWithDialog(parent, readonly=False):
@@ -646,34 +646,3 @@ def isImage(fname: Union[Path, str]) -> bool:
     Depricated. Use outwiker.core.images.isImage()
     """
     return _isImage(fname)
-
-
-def dictToStr(paramsDict):
-    """
-    Return string like param_1="value1" param_2='value "" with double quotes'...
-    """
-    items = []
-    for name, value in paramsDict.items():
-        valueStr = str(value)
-
-        hasSingleQuote = u"'" in valueStr
-        hasDoubleQuote = u'"' in valueStr
-
-        if hasSingleQuote and hasDoubleQuote:
-            valueStr = valueStr.replace(u'"', u'\\"')
-            quote = u'"'
-        elif hasDoubleQuote:
-            quote = u"'"
-        else:
-            quote = u'"'
-
-        paramStr = u'{name}={quote}{value}{quote}'.format(
-            name=name,
-            quote=quote,
-            value=valueStr
-        )
-
-        items.append(paramStr)
-
-    items.sort()
-    return u', '.join(items)
