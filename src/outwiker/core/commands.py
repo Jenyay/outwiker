@@ -15,11 +15,11 @@ from typing import List, Optional, Union, Iterable
 import wx
 
 import outwiker.core.exceptions
+from outwiker.api.core.images import isImage as _isImage
 from outwiker.api.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
-from outwiker.core.images import isImage as _isImage
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
@@ -466,15 +466,6 @@ def copyAttachPathToClipboard(page, is_current_page: bool = False) -> bool:
     return copyTextToClipboard(path)
 
 
-@testreadonly
-def generateLink(application, page):
-    """
-    Создать ссылку на страницу по UID
-    """
-    uid = application.pageUidDepot.createUid(page)
-    return "page://{}".format(uid)
-
-
 def copyLinkToClipboard(page) -> bool:
     """
     Копировать ссылку на страницу в буфер обмена
@@ -494,6 +485,15 @@ def copyTitleToClipboard(page):
     """
     assert page is not None
     return copyTextToClipboard(page.display_title)
+
+
+@testreadonly
+def generateLink(application, page):
+    """
+    Создать ссылку на страницу по UID
+    """
+    uid = application.pageUidDepot.createUid(page)
+    return "page://{}".format(uid)
 
 
 @testreadonly
@@ -553,7 +553,7 @@ def renamePage(page, newtitle):
         page.title = real_title
     except OSError:
         showError(Application.mainWindow,
-                  _(u'Can\'t rename page "{}" to "{}"').format(page.display_title, newtitle))
+                  _('Can\'t rename page "{}" to "{}"').format(page.display_title, newtitle))
 
     if real_title != newtitle:
         page.alias = newtitle
@@ -572,15 +572,15 @@ def testPageTitle(title):
 
     except PageTitleError as error:
         MessageBox(str(error),
-                   _(u"Invalid page title"),
+                   _("Invalid page title"),
                    wx.OK | wx.ICON_ERROR)
         return False
 
     except PageTitleWarning as warning:
-        text = _(u"{0}\nContinue?").format(str(warning))
+        text = _("{0}\nContinue?").format(str(warning))
 
         if (MessageBox(text,
-                       _(u"The page title"),
+                       _("The page title"),
                        wx.YES_NO | wx.ICON_QUESTION) == wx.YES):
             return True
         else:
@@ -589,22 +589,11 @@ def testPageTitle(title):
     return True
 
 
-def pageExists(page):
-    """
-    Проверка на то, что страница была удалена сторонними средствами
-    """
-    return page is not None and os.path.exists(page.path)
-
-
-def closeWiki(application):
-    application.wikiroot = None
-
-
 def getMainWindowTitle(application):
     template = application.mainWindow.mainWindowConfig.titleFormat.value
 
     if application.wikiroot is None:
-        result = u"OutWiker"
+        result = "OutWiker"
     else:
         page = application.wikiroot.selectedPage
 
@@ -632,8 +621,8 @@ def insertCurrentDate(parent, editor):
     initial = config.recentDateTimeFormat.value
 
     with DateFormatDialog(parent,
-                          _(u"Enter format of the date"),
-                          _(u"Date format"),
+                          _("Enter format of the date"),
+                          _("Date format"),
                           initial) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             dateStr = datetime.now().strftime(dlg.Value)

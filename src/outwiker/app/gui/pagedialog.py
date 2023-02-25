@@ -2,15 +2,15 @@
 
 import wx
 
-import outwiker.core.commands
-
+from outwiker.api.core.tree import pageExists
 from outwiker.api.services.messages import showError
 from outwiker.app.gui.basepagedialog import BasePageDialog
 from outwiker.core.application import Application
-from outwiker.core.commands import pageExists, renamePage
+from outwiker.core.commands import renamePage, testreadonly
+from outwiker.core.exceptions import ReadonlyException
 
 
-@outwiker.core.commands.testreadonly
+@testreadonly
 def editPage(parentWnd, currentPage):
     """
     Вызвать диалог для редактирования страницы
@@ -18,7 +18,7 @@ def editPage(parentWnd, currentPage):
     currentPage - страница для редактирования
     """
     if currentPage.readonly:
-        raise outwiker.core.exceptions.ReadonlyException
+        raise ReadonlyException
 
     if not pageExists(currentPage):
         showError(Application.mainWindow,
@@ -32,7 +32,7 @@ def editPage(parentWnd, currentPage):
                 return None
 
 
-@outwiker.core.commands.testreadonly
+@testreadonly
 def createPageWithDialog(parentwnd, parentpage):
     """
     Показать диалог настроек и создать страницу
@@ -40,7 +40,7 @@ def createPageWithDialog(parentwnd, parentpage):
     assert parentpage is not None
 
     if parentpage.readonly:
-        raise outwiker.core.exceptions.ReadonlyException
+        raise ReadonlyException
 
     page = None
 
@@ -55,7 +55,7 @@ def createPageWithDialog(parentwnd, parentpage):
                 page = factory.create(
                     parentpage, alias, tags, order_calculator)
             except OSError:
-                showError(Application.mainWindow, _(u"Can't create page"))
+                showError(Application.mainWindow, _("Can't create page"))
                 return None
 
             assert page is not None
@@ -98,7 +98,7 @@ def createChildPage(parentwnd, page):
 class CreatePageDialog(BasePageDialog):
     def __init__(self, parentWnd, parentPage, application):
         super().__init__(parentWnd, None, parentPage, application)
-        self.SetTitle(_(u"Create Page"))
+        self.SetTitle(_("Create Page"))
 
     def _validate(self):
         for controller in self._controllers:
@@ -118,7 +118,7 @@ class EditPageDialog(BasePageDialog):
         super().__init__(parentWnd, currentPage, currentPage.parent,
                          application)
 
-        self.SetTitle(_(u"Edit page properties"))
+        self.SetTitle(_("Edit page properties"))
 
     def _initController(self, controller):
         controller.initBeforeEditing(self.currentPage)
