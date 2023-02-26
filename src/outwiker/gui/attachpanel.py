@@ -16,11 +16,10 @@ from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
 from outwiker.actions.attachrename import RenameAttachActionForAttachPanel
 from outwiker.actions.attachselectall import AttachSelectAllAction
 from outwiker.actions.clipboard import CopyAttachPathAction
+from outwiker.api.services.attachment import attachFiles, renameAttach
 from outwiker.api.services.messages import showError
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import (MessageBox,
-                                    attachFiles,
-                                    renameAttach,
                                     addStatusBarItem,
                                     setStatusText)
 from outwiker.core.events import (BeginAttachRenamingParams,

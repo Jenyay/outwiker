@@ -7,32 +7,29 @@
 import logging
 import os
 import os.path
-import shutil
 from datetime import datetime
-from pathlib import Path
-from typing import List, Optional, Union, Iterable
+from typing import Optional
 
 import wx
 
 import outwiker.core.exceptions
-from outwiker.api.core.images import isImage as _isImage
 from outwiker.api.services.messages import showError
 from outwiker.core.application import Application
-from outwiker.core.attachment import Attachment
 from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
 from outwiker.core.tree_commands import getAlternativeTitle
 from outwiker.gui.dateformatdialog import DateFormatDialog
-from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.gui.tester import Tester
 
 # TODO: Remove in next version
+from outwiker.api.core.images import isImage
 from outwiker.api.core.tree import testreadonly
+from outwiker.api.services.attachment import attachFiles
 from outwiker.api.services.clipboard import copyTextToClipboard
 
 
@@ -53,166 +50,6 @@ def MessageBox(*args, **kwargs):
     wx.GetApp().bindActivateApp()
 
     return result
-
-
-@testreadonly
-def renameAttach(parent: wx.Window,
-                 page: 'outwiker.core.tree.WikiPage',
-                 fname_src: str,
-                 fname_dest: str) -> bool:
-    """
-    Rename attached file. Show overwrite dialog if necessary
-    parent - parent for dialog window
-    page - page to attach
-    fname_src - source file name (relative path)
-    fname_dest - new file name (relative path)
-
-    Returns True if file renamed
-    """
-    if page.readonly:
-        raise outwiker.core.exceptions.ReadonlyException
-
-    attachRoot = Attachment(page).getAttachPath()
-    fname_src_full = os.path.join(attachRoot, fname_src)
-    fname_dest_full = os.path.join(attachRoot, fname_dest)
-
-    if fname_src_full == fname_dest_full:
-        return False
-
-    if os.path.exists(fname_dest_full):
-        with OverwriteDialog(parent) as overwriteDialog:
-            overwriteDialog.setVisibleOverwriteAllButton(False)
-            overwriteDialog.setVisibleSkipButton(False)
-            overwriteDialog.setVisibleSkipAllButton(False)
-
-            text = os.path.basename(fname_dest)
-            try:
-                src_file_stat = os.stat(fname_src_full)
-                dest_file_stat = os.stat(fname_dest_full)
-            except FileNotFoundError:
-                return False
-            result = overwriteDialog.ShowDialog(text,
-                                                src_file_stat,
-                                                dest_file_stat)
-
-            if result == overwriteDialog.ID_SKIP or result == wx.ID_CANCEL:
-                return False
-
-    try:
-        os.replace(fname_src_full, fname_dest_full)
-    except (IOError, shutil.Error) as e:
-        text = _('Error renaming file\n{} -> {}\n{}').format(fname_src, fname_dest, str(e))
-        logger.error(text)
-        showError(Application.mainWindow, text)
-        return False
-
-    return True
-
-
-@testreadonly
-def attachFiles(parent: wx.Window,
-                page: 'outwiker.core.tree.WikiPage',
-                files: List[str],
-                subdir: str = '.'):
-    """
-    Attach files to page. Show overwrite dialog if necessary
-    parent - parent for dialog window
-    page - page to attach
-    files - list of the files to attach
-    subdir - subdirectory relative __attach directory
-    """
-    if page.readonly:
-        raise outwiker.core.exceptions.ReadonlyException
-
-    if not files:
-        return
-
-    def _expandFiles(files: Iterable[Union[str, Path]]) -> Iterable[Path]:
-        """
-        Returns list of all files (not directories) in subdirectories including
-        """
-        result = []
-        for fname in files:
-            item = Path(fname)
-            if not item.exists():
-                text = _('File not exists\n{0}').format(item)
-                logger.error(text)
-                showError(Application.mainWindow, text)
-                return []
-
-            if item.is_file():
-                result.append(item)
-            elif item.is_dir():
-                files_inside = item.iterdir()
-                result += _expandFiles(files_inside)
-
-        return result
-
-    def _getRelativeSubdirs(root: Path, expanded_files: Iterable[Union[str, Path]]) -> List[Path]:
-        result = []
-        for fname in expanded_files:
-            path = Path(fname)
-            parent = path.relative_to(root).parent
-            if str(parent) != '.' and str(parent) != '/':
-                result.append(parent)
-
-        # Remove duplicates and sort directories alphabetically
-        return sorted({item for item in result})
-
-    attach = Attachment(page)
-    attach_root = attach.getAttachPath(create=True)
-
-    source_root_dir = Path(files[0]).parent
-    expanded_files = _expandFiles(files)
-    relative_source_files = [fname.relative_to(source_root_dir)
-                             for fname in expanded_files]
-
-    new_relative_attaches = []
-    with OverwriteDialog(parent) as overwriteDialog:
-        for fname_new in relative_source_files:
-            old_path = Path(attach_root, subdir, fname_new)
-            source_path = Path(source_root_dir, fname_new)
-
-            if old_path == source_path:
-                continue
-
-            if old_path.exists():
-                text = str(fname_new)
-                old_file_stat = old_path.stat()
-                new_file_stat = source_path.stat()
-
-                result = overwriteDialog.ShowDialog(text,
-                                                    old_file_stat,
-                                                    new_file_stat)
-
-                if result == overwriteDialog.ID_SKIP:
-                    continue
-                elif result == wx.ID_CANCEL:
-                    return
-
-            new_relative_attaches.append(fname_new)
-
-    new_relative_subdirs = _getRelativeSubdirs(source_root_dir, expanded_files)
-
-    for current_subdir in new_relative_subdirs:
-        try:
-            Path(attach_root, subdir, current_subdir).mkdir(parents=True, exist_ok=True)
-        except IOError:
-            text = _("Can't create directory: {}").format(current_subdir)
-            logger.error(text)
-            showError(Application.mainWindow, text)
-            return
-
-    for fname_relative in new_relative_attaches:
-        source_full = Path(source_root_dir, fname_relative)
-        attach_subdir = Path(attach_root, subdir, fname_relative.parent)
-        try:
-            Attachment(page).attach([source_full], attach_subdir)
-        except (IOError, shutil.Error) as e:
-            text = _('Error copying files\n{0}').format(str(e))
-            logger.error(text)
-            showError(Application.mainWindow, text)
-            return
 
 
 @testreadonly
@@ -302,8 +139,8 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
 
     runner = LongProcessRunner(threadFunc,
                                Application.mainWindow,
-                               _(u"Loading"),
-                               _(u"Opening notes tree..."))
+                               _("Loading"),
+                               _("Opening notes tree..."))
     result = runner.run(os.path.realpath(path), readonly)
 
     success = False
@@ -414,11 +251,11 @@ def movePage(page, newParent):
     except outwiker.core.exceptions.DuplicateTitle:
         # Невозможно переместить из-за дублирования имен
         showError(Application.mainWindow, _(
-            u"Can't move page when page with that title already exists"))
+            "Can't move page when page with that title already exists"))
     except outwiker.core.exceptions.TreeException:
         # Невозможно переместить по другой причине
         showError(Application.mainWindow, _(
-            u"Can't move page: {}".format(page.display_title)))
+            "Can't move page: {}".format(page.display_title)))
 
 
 def addStatusBarItem(name: str, width: int = -1, position: Optional[int] = None) -> None:
@@ -440,7 +277,7 @@ def setStatusText(item_name: str, text: str) -> None:
 def renamePage(page, newtitle):
     if page.parent is None:
         showError(Application.mainWindow, _(
-            u"You can't rename the root element"))
+            "You can't rename the root element"))
         return
 
     newtitle = newtitle.strip()
@@ -502,8 +339,8 @@ def getMainWindowTitle(application):
     else:
         page = application.wikiroot.selectedPage
 
-        pageTitle = u"" if page is None else page.display_title
-        subpath = u"" if page is None else page.display_subpath
+        pageTitle = "" if page is None else page.display_title
+        subpath = "" if page is None else page.display_subpath
         filename = os.path.basename(application.wikiroot.path)
 
         result = (template
@@ -533,11 +370,3 @@ def insertCurrentDate(parent, editor):
             dateStr = datetime.now().strftime(dlg.Value)
             editor.replaceText(dateStr)
             config.recentDateTimeFormat.value = dlg.Value
-
-
-# TODO: Remove in next version
-def isImage(fname: Union[Path, str]) -> bool:
-    """
-    Depricated. Use outwiker.core.images.isImage()
-    """
-    return _isImage(fname)
