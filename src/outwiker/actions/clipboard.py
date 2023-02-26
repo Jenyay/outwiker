@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.api.services.clipboard import (copyTitleToClipboard,
+                                             copyLinkToClipboard,
+                                             copyPathToClipboard,
+                                             copyAttachPathToClipboard)
 from outwiker.api.services.messages import showInfo
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import (copyTitleToClipboard,
-                                    copyLinkToClipboard,
-                                    copyPathToClipboard,
-                                    copyAttachPathToClipboard)
 
 
 class CopyPageTitleAction(BaseAction):

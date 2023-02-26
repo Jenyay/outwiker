@@ -5,8 +5,8 @@ from pathlib import Path
 
 import wx
 
+from outwiker.api.services.clipboard import getClipboardText
 from outwiker.core.attachfilters import getHiddenFilter, notFilter
-from outwiker.core.commands import getClipboardText
 from outwiker.core.attachment import Attachment
 from outwiker.core.pageuiddepot import PageUidDepot
 

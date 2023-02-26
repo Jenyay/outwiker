@@ -3,9 +3,8 @@
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.api.core.tree import createNotesTree
+from outwiker.api.core.tree import createNotesTree, generateLink
 from outwiker.core.pageuiddepot import PageUidDepot
-from outwiker.core.commands import generateLink
 from outwiker.core.application import Application
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.pages.text.textpage import TextPageFactory

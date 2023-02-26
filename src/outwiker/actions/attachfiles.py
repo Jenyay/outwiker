@@ -2,7 +2,8 @@
 
 import wx
 
-from outwiker.core.commands import attachFiles, testreadonly
+from outwiker.api.core.tree import testreadonly
+from outwiker.core.commands import attachFiles
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.gui.baseaction import BaseAction
 

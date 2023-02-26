@@ -2,8 +2,8 @@
 
 import wx
 
+from outwiker.api.core.tree import testreadonly
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import testreadonly
 from outwiker.core.tagscommands import (tagBranch,
                                         removeTagsFromBranch,
                                         renameTag)
@@ -12,22 +12,22 @@ from outwiker.gui.renametagdialog import RenameTagDialog
 from outwiker.core.tagslist import TagsList
 
 
-class AddTagsToBranchAction (BaseAction):
+class AddTagsToBranchAction(BaseAction):
     """
     Добавить теги к ветке
     """
-    stringId = u"AddTagsToBranch"
+    stringId = "AddTagsToBranch"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Add Tags to Branch…")
+        return _("Add Tags to Branch…")
 
     @property
     def description(self):
-        return _(u"Add tags to branch")
+        return _("Add tags to branch")
 
     def run(self, params):
         assert self._application.mainWindow is not None
@@ -49,7 +49,7 @@ class AddTagsToBranchAction (BaseAction):
         Теги к самой странице page тоже добавляются
         """
         dlg = TagsDialog(parent, self._application)
-        dlg.SetTitle(_(u"Add Tags to Branch"))
+        dlg.SetTitle(_("Add Tags to Branch"))
 
         if dlg.ShowModal() == wx.ID_OK:
             self._application.onStartTreeUpdate(page.root)
@@ -66,18 +66,18 @@ class RemoveTagsFromBranchAction (BaseAction):
     """
     Удалить теги из ветки
     """
-    stringId = u"RemoveTagsFromBranch"
+    stringId = "RemoveTagsFromBranch"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Remove Tags from Branch…")
+        return _("Remove Tags from Branch…")
 
     @property
     def description(self):
-        return _(u"Remove tags from branch")
+        return _("Remove tags from branch")
 
     def run(self, params):
         assert self._application.mainWindow is not None
@@ -100,7 +100,7 @@ class RemoveTagsFromBranchAction (BaseAction):
         Удалить теги из ветки, начинающейся со страницы page
         """
         dlg = TagsDialog(parent, self._application)
-        dlg.SetTitle(_(u"Remove Tags from Branch"))
+        dlg.SetTitle(_("Remove Tags from Branch"))
 
         if dlg.ShowModal() == wx.ID_OK:
             self._application.onStartTreeUpdate(page.root)
@@ -117,18 +117,18 @@ class RenameTagAction (BaseAction):
     """
     Переименовать тег
     """
-    stringId = u"RenameTag"
+    stringId = "RenameTag"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Rename Tag…")
+        return _("Rename Tag…")
 
     @property
     def description(self):
-        return _(u"Rename tag")
+        return _("Rename tag")
 
     def run(self, params):
         assert self._application.mainWindow is not None

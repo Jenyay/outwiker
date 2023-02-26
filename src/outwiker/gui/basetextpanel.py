@@ -31,9 +31,9 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             CLIPBOARD_CUT_WORD,
                                             )
 from outwiker.api.core.tree import pageExists
+from outwiker.api.services.clipboard import copyTextToClipboard
 from outwiker.api.services.messages import showError
 from outwiker.core.system import getBuiltinImagePath
-from outwiker.core.commands import copyTextToClipboard
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from .basepagepanel import BasePagePanel
 from .dialogs.buttonsdialog import ButtonsDialog

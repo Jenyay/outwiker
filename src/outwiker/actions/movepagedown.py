@@ -2,9 +2,9 @@
 
 import wx
 
+from outwiker.api.core.tree import testreadonly
 from outwiker.api.services.messages import showError
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import testreadonly
 
 
 class MovePageDownAction(BaseAction):

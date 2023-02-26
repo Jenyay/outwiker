@@ -31,6 +31,10 @@ from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.gui.tester import Tester
 
+# TODO: Remove in next version
+from outwiker.api.core.tree import testreadonly
+from outwiker.api.services.clipboard import copyTextToClipboard
+
 
 logger = logging.getLogger('outwiker.core.commands')
 
@@ -49,21 +53,6 @@ def MessageBox(*args, **kwargs):
     wx.GetApp().bindActivateApp()
 
     return result
-
-
-def testreadonly(func):
-    """
-    Декоратор для отлавливания исключения
-        outwiker.core.exceptions.ReadonlyException
-    """
-    def readOnlyWrap(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except outwiker.core.exceptions.ReadonlyException:
-            showError(Application.mainWindow,
-                      _("Page is opened as read-only"))
-
-    return readOnlyWrap
 
 
 @testreadonly
@@ -412,90 +401,6 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
                     "Can't create wiki\n") + e.filename)
 
 
-def copyTextToClipboard(text: str) -> bool:
-    if not wx.TheClipboard.Open():
-        showError(Application.mainWindow, _("Can't open clipboard"))
-        return False
-
-    data = wx.TextDataObject(text)
-
-    result = True
-    if not wx.TheClipboard.SetData(data):
-        showError(Application.mainWindow, _("Can't copy text to clipboard"))
-        result = False
-
-    wx.TheClipboard.Flush()
-    wx.TheClipboard.Close()
-    return result
-
-
-def getClipboardText():
-    if not wx.TheClipboard.Open():
-        showError(Application.mainWindow, _("Can't open clipboard"))
-        return
-
-    data = wx.TextDataObject()
-    getDataResult = wx.TheClipboard.GetData(data)
-
-    wx.TheClipboard.Close()
-
-    if not getDataResult:
-        return
-
-    return data.GetText()
-
-
-def copyPathToClipboard(page) -> bool:
-    """
-    Копировать путь до страницы в буфер обмена
-    """
-    assert page is not None
-    return copyTextToClipboard(page.path)
-
-
-# TODO: Сделать тест
-def copyAttachPathToClipboard(page, is_current_page: bool = False) -> bool:
-    """
-    Копировать путь до папки с прикрепленными файлами в буфер обмена
-    """
-    assert page is not None
-    path = Attachment(page).getAttachPath(create=True)
-    if is_current_page:
-        path = os.path.join(path, page.currentAttachSubdir)
-
-    return copyTextToClipboard(path)
-
-
-def copyLinkToClipboard(page) -> bool:
-    """
-    Копировать ссылку на страницу в буфер обмена
-    """
-    assert page is not None
-
-    link = generateLink(Application, page)
-    if link is not None:
-        return copyTextToClipboard(link)
-
-    return False
-
-
-def copyTitleToClipboard(page):
-    """
-    Копировать заголовок страницы в буфер обмена
-    """
-    assert page is not None
-    return copyTextToClipboard(page.display_title)
-
-
-@testreadonly
-def generateLink(application, page):
-    """
-    Создать ссылку на страницу по UID
-    """
-    uid = application.pageUidDepot.createUid(page)
-    return "page://{}".format(uid)
-
-
 @testreadonly
 def movePage(page, newParent):
     """
@@ -630,6 +535,7 @@ def insertCurrentDate(parent, editor):
             config.recentDateTimeFormat.value = dlg.Value
 
 
+# TODO: Remove in next version
 def isImage(fname: Union[Path, str]) -> bool:
     """
     Depricated. Use outwiker.core.images.isImage()

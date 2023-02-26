@@ -3,9 +3,9 @@
 import logging
 from pathlib import Path
 
+from outwiker.api.core.tree import testreadonly
 from outwiker.api.services.messages import showError
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import testreadonly
 from outwiker.core.events import BeginAttachRenamingParams
 from outwiker.gui.baseaction import BaseAction
 
