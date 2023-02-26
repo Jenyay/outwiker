@@ -11,8 +11,9 @@ from outwiker.actions.search import (SearchAction,
                                      SearchPrevAction,
                                      SearchAndReplaceAction)
 import outwiker.actions.polyactionsid as polyactions
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import MessageBox, setStatusText
+from outwiker.core.commands import setStatusText
 from outwiker.core.defines import (PAGE_MODE_TEXT,
                                    PAGE_MODE_PREVIEW,
                                    REGISTRY_PAGE_CURSOR_POSITION)

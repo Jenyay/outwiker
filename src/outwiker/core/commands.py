@@ -24,32 +24,16 @@ from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.testeddialog import TestedFileDialog
-from outwiker.gui.tester import Tester
 
 # TODO: Remove in next version
 from outwiker.api.core.images import isImage
 from outwiker.api.core.tree import testreadonly
 from outwiker.api.services.attachment import attachFiles
 from outwiker.api.services.clipboard import copyTextToClipboard
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 
 
 logger = logging.getLogger('outwiker.core.commands')
-
-
-def MessageBox(*args, **kwargs):
-    """
-    Замена стандартного MessageBox. Перед показом диалога отключает
-    приложение от события EVT_ACTIVATE_APP.
-    """
-    result = Tester.dialogTester.runNext(None)
-    if result is not None:
-        return result
-
-    wx.GetApp().unbindActivateApp()
-    result = wx.MessageBox(*args, **kwargs)
-    wx.GetApp().bindActivateApp()
-
-    return result
 
 
 @testreadonly

@@ -2,31 +2,32 @@
 
 import wx
 
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import MessageBox, openWiki
+from outwiker.core.commands import openWiki
 
 
 class ReloadWikiAction (BaseAction):
     """
     Перезагрузка wiki
     """
-    stringId = u"ReloadWiki"
+    stringId = "ReloadWiki"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Reload Wiki…")
+        return _("Reload Wiki…")
 
     @property
     def description(self):
-        return _(u"Reload wiki")
+        return _("Reload wiki")
 
     def run(self, params):
         if self._application.wikiroot is not None:
-            result = (MessageBox(_(u"Save current page before reload?"),
-                                 _(u"Save?"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION))
+            result = (MessageBox(_("Save current page before reload?"),
+                                 _("Save?"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION))
 
             if result == wx.CANCEL:
                 return

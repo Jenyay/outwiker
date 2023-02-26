@@ -2,27 +2,27 @@
 
 import wx
 
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from outwiker.core.commands import MessageBox
 
 
 class ExitAction (BaseAction):
     """
     Закрытие дерева заметок
     """
-    stringId = u"Exit"
+    stringId = "Exit"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Exit…")
+        return _("Exit…")
 
     @property
     def description(self):
-        return _(u"Close OutWiker")
+        return _("Close OutWiker")
 
     def run(self, params):
         if (self.__allowExit()):
@@ -36,6 +36,6 @@ class ExitAction (BaseAction):
         askBeforeExit = generalConfig.askBeforeExit.value
 
         return (not askBeforeExit or
-                MessageBox(_(u"Really exit?"),
-                           _(u"Exit"),
+                MessageBox(_("Really exit?"),
+                           _("Exit"),
                            wx.YES_NO | wx.ICON_QUESTION) == wx.YES)

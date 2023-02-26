@@ -10,6 +10,7 @@ import wx
 
 import outwiker.core.factory as ocf
 
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.app.gui.pagedialogpanels.iconslistpopup import IconsListPopup
 
 from outwiker.core.tagslist import TagsList
@@ -26,7 +27,6 @@ from outwiker.core.system import getIconsDirList, getBuiltinImagePath
 from outwiker.core.iconscollection import IconsCollection
 from outwiker.core.recenticonslist import RecentIconsList
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT, ICON_DEFAULT
-from outwiker.core.commands import MessageBox
 from outwiker.core.events import (PageDialogPageIconChangedParams,
                                   IconsGroupsListInitParams)
 from outwiker.gui.controls.switchthemed import EVT_SWITCH
