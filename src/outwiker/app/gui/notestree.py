@@ -17,11 +17,11 @@ from outwiker.actions.moving import GoToParentAction
 from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.api.services.attachment import attachFiles
 from outwiker.api.services.messages import showError
+from outwiker.api.services.tree import renamePage, movePage
 
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
-from outwiker.core.commands import renamePage, movePage
 from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
 from outwiker.core.system import getBuiltinImagePath
 

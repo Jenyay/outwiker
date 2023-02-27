@@ -11,8 +11,12 @@ from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.api.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
-from outwiker.core.exceptions import ReadonlyException, RootFormatError
+from outwiker.core.exceptions import (ReadonlyException, RootFormatError,
+                                      DuplicateTitle, TreeException)
+from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
+from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
+from outwiker.core.tree_commands import getAlternativeTitle
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.testeddialog import TestedFileDialog
 
@@ -142,7 +146,7 @@ def _rootFormatErrorHandle(path, readonly):
     except IOError:
         _canNotLoadWikiMessage(path)
 
-    except outwiker.core.exceptions.RootFormatError:
+    except RootFormatError:
         _canNotLoadWikiMessage(path)
 
     finally:
@@ -156,3 +160,106 @@ def _wantClearWikiOptions(path):
     return MessageBox(_("Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path,
                       _("__page.opt error"),
                       wx.ICON_ERROR | wx.YES_NO)
+
+
+def testPageTitle(title):
+    """
+    Возвращает True, если можно создавать страницу с таким заголовком
+    """
+    tester = getOS().pageTitleTester
+
+    try:
+        tester.test(title)
+    except PageTitleError as error:
+        MessageBox(str(error),
+                   _("Invalid page title"),
+                   wx.OK | wx.ICON_ERROR)
+        return False
+    except PageTitleWarning as warning:
+        text = _("{0}\nContinue?").format(str(warning))
+
+        return MessageBox(text,
+                          _("The page title"),
+                          wx.YES_NO | wx.ICON_QUESTION) == wx.YES
+
+    return True
+
+
+@testreadonly
+def renamePage(page, newtitle):
+    if page.parent is None:
+        showError(Application.mainWindow, _(
+            "You can't rename the root element"))
+        return
+
+    newtitle = newtitle.strip()
+
+    if newtitle == page.display_title:
+        return
+
+    siblings = [child.title
+                for child in page.parent.children
+                if child != page]
+
+    real_title = getAlternativeTitle(newtitle, siblings)
+
+    try:
+        page.title = real_title
+    except OSError:
+        showError(Application.mainWindow,
+                  _('Can\'t rename page "{}" to "{}"').format(page.display_title, newtitle))
+
+    if real_title != newtitle:
+        page.alias = newtitle
+    else:
+        page.alias = None
+
+
+@testreadonly
+def movePage(page, newParent):
+    """
+    Сделать страницу page ребенком newParent
+    """
+    assert page is not None
+    assert newParent is not None
+
+    try:
+        page.moveTo(newParent)
+    except DuplicateTitle:
+        # Невозможно переместить из-за дублирования имен
+        showError(Application.mainWindow, _(
+            "Can't move page when page with that title already exists"))
+    except TreeException:
+        # Невозможно переместить по другой причине
+        showError(Application.mainWindow, _(
+            "Can't move page: {}".format(page.display_title)))
+
+
+def createNewWiki(parentwnd):
+    """
+    Создать новую вики
+    parentwnd - окно-владелец диалога выбора файла
+    """
+    newPageTitle = _("First Wiki Page")
+    newPageContent = _("""!! First Wiki Page
+
+This is the first page. You can use a text formatting: '''bold''', ''italic'', {+underlined text+}, [[https://jenyay.net | link]] and others.""")
+
+    with TestedFileDialog(parentwnd, style=wx.FD_SAVE) as dlg:
+        dlg.SetDirectory(getOS().documentsDir)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            try:
+                from outwiker.pages.wiki.wikipage import WikiPageFactory
+
+                newwiki = WikiDocument.create(dlg.GetPath())
+                WikiPageFactory().create(newwiki, newPageTitle, [_("test")])
+                firstPage = newwiki[newPageTitle]
+                firstPage.content = newPageContent
+
+                Application.wikiroot = newwiki
+                Application.wikiroot.selectedPage = firstPage
+            except (IOError, OSError) as e:
+                # TODO: проверить под Windows
+                showError(Application.mainWindow, _(
+                    "Can't create wiki\n") + e.filename)

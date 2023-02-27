@@ -2,7 +2,7 @@
 
 import wx
 
-import outwiker.core.commands
+from outwiker.api.services.tree import removePage
 from outwiker.app.gui.pagedialog import (createSiblingPage,
                                          createChildPage,
                                          editPage)
@@ -129,7 +129,7 @@ class PagePopupMenu:
         """
         assert self.popupPage is not None
         if self.popupPage is not None:
-            outwiker.core.commands.removePage(self.popupPage)
+            removePage(self.popupPage)
 
     def __onRename(self, _event):
         """

@@ -8,7 +8,7 @@ import wx
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.api.services.tree import openWikiWithDialog, openWiki
-from outwiker.core.commands import findPage
+from outwiker.api.core.tree import findPage
 from outwiker.gui.tester import Tester
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir

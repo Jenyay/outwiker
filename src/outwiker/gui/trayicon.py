@@ -6,8 +6,8 @@ import logging
 import wx
 import wx.adv
 
-import outwiker.core.commands
 from outwiker.actions.exit import ExitAction
+from outwiker.api.gui.mainwindow import getMainWindowTitle
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import TrayConfig
 
@@ -135,12 +135,12 @@ class TrayIcon(wx.adv.TaskBarIcon):
 
     def update(self):
         if self.IsIconInstalled():
-            tooltip = outwiker.core.commands.getMainWindowTitle(self._application)
+            tooltip = getMainWindowTitle(self._application)
             self.SetIcon(self.icon, tooltip)
 
     def showTrayIcon(self):
         if not self.IsIconInstalled():
-            tooltip = outwiker.core.commands.getMainWindowTitle(self._application)
+            tooltip = getMainWindowTitle(self._application)
             self.SetIcon(self.icon, tooltip)
 
     def removeTrayIcon(self):

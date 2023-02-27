@@ -53,3 +53,21 @@ def generateLink(application, page):
     """
     uid = application.pageUidDepot.createUid(page)
     return "page://{}".format(uid)
+
+
+def findPage(application, page_id):
+    """
+    page_id - subpath of page or page UID.
+    """
+    if application.wikiroot is None or page_id is None:
+        return None
+
+    prefix = 'page://'
+
+    if page_id.startswith(prefix):
+        page_id = page_id[len(prefix):]
+        return application.pageUidDepot[page_id]
+    elif application.wikiroot[page_id] is not None:
+        return application.wikiroot[page_id]
+    else:
+        return application.pageUidDepot[page_id]

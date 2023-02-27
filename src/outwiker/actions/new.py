@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.api.services.tree import createNewWiki
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import createNewWiki
 
 
 class NewAction(BaseAction):

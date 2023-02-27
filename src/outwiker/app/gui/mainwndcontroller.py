@@ -6,9 +6,9 @@ import wx
 
 from outwiker.app.gui.bookmarkscontroller import BookmarksController
 
+from outwiker.api.gui.mainwindow import getMainWindowTitle, setStatusText
 from outwiker.api.services.messages import showError
 from outwiker.api.services.tree import openWiki
-from outwiker.core.commands import getMainWindowTitle, setStatusText
 from outwiker.core.events import PAGE_UPDATE_TITLE
 
 from outwiker.gui.autosavetimer import AutosaveTimer
