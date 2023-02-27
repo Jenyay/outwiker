@@ -6,7 +6,7 @@ import os
 import wx
 
 from outwiker.actions.polyactionsid import *
-from outwiker.core.commands import insertCurrentDate
+from outwiker.api.services.texteditor import insertCurrentDate
 from outwiker.core.defines import (PAGE_MODE_TEXT,
                                    PAGE_MODE_PREVIEW,
                                    PAGE_ATTACH_DIR)
@@ -35,14 +35,14 @@ class HtmlPageView(BaseHtmlPanel):
         super().__init__(parent, application)
 
         self.__HTML_MENU_INDEX = 7
-        self._menuName = _(u"HTML")
+        self._menuName = _("HTML")
 
         self._toolbars = [
-            (defines.TOOLBAR_HTML_GENERAL, _(u"HTML")),
-            (defines.TOOLBAR_HTML_HEADING, _(u"Heading")),
-            (defines.TOOLBAR_HTML_FONT, _(u"Font")),
-            (defines.TOOLBAR_HTML_ALIGN, _(u"Align")),
-            (defines.TOOLBAR_HTML_TABLE, _(u"Table")),
+            (defines.TOOLBAR_HTML_GENERAL, _("HTML")),
+            (defines.TOOLBAR_HTML_HEADING, _("Heading")),
+            (defines.TOOLBAR_HTML_FONT, _("Font")),
+            (defines.TOOLBAR_HTML_ALIGN, _("Align")),
+            (defines.TOOLBAR_HTML_TABLE, _("Table")),
         ]
         for toolbar_id, title in self._toolbars:
             self.mainWindow.toolbars.createToolBar(toolbar_id,

@@ -7,7 +7,6 @@
 import logging
 import os
 import os.path
-from datetime import datetime
 from typing import Optional
 
 import wx
@@ -19,8 +18,6 @@ from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
 from outwiker.core.tree_commands import getAlternativeTitle
-from outwiker.gui.dateformatdialog import DateFormatDialog
-from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.testeddialog import TestedFileDialog
 
 # TODO: Remove in next version
@@ -28,6 +25,7 @@ from outwiker.api.core.images import isImage
 from outwiker.api.core.tree import testreadonly
 from outwiker.api.services.attachment import attachFiles
 from outwiker.api.services.clipboard import copyTextToClipboard
+from outwiker.api.services.texteditor import insertCurrentDate
 from outwiker.api.services.tree import openWiki
 from outwiker.api.gui.dialogs.messagebox import MessageBox
 
@@ -195,23 +193,3 @@ def getMainWindowTitle(application):
                   )
 
     return result
-
-
-def insertCurrentDate(parent, editor):
-    """
-    Вызвать диалог для выбора формата даты и вставить в редактор текущую дату согласно выбранному формату.
-
-    parent - родительское окно для диалога
-    editor - текстовое поле ввода, куда надо вставить дату (экземпляр класса TextEditor)
-    """
-    config = GeneralGuiConfig(Application.config)
-    initial = config.recentDateTimeFormat.value
-
-    with DateFormatDialog(parent,
-                          _("Enter format of the date"),
-                          _("Date format"),
-                          initial) as dlg:
-        if dlg.ShowModal() == wx.ID_OK:
-            dateStr = datetime.now().strftime(dlg.Value)
-            editor.replaceText(dateStr)
-            config.recentDateTimeFormat.value = dlg.Value
