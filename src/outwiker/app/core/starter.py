@@ -4,7 +4,8 @@ import logging
 import sys
 
 import outwiker
-from outwiker.core.commands import openWiki, findPage
+from outwiker.api.services.tree import openWiki
+from outwiker.core.commands import findPage
 from outwiker.core.commandline import CommandLine, CommandLineException
 from outwiker.gui.guiconfig import GeneralGuiConfig
 

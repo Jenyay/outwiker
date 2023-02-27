@@ -2,10 +2,11 @@
 
 import wx
 
-from .basepagepanel import BasePagePanel
+from outwiker.api.services.tree import openWiki
 from outwiker.actions.open import OpenAction
 from outwiker.actions.new import NewAction
-from outwiker.core.commands import openWiki
+
+from .basepagepanel import BasePagePanel
 
 
 class ClosedTreePanel(BasePagePanel):

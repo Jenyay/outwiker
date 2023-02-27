@@ -4,10 +4,10 @@ import wx
 
 from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import openWiki
+from outwiker.api.services.tree import openWiki
 
 
-class ReloadWikiAction (BaseAction):
+class ReloadWikiAction(BaseAction):
     """
     Перезагрузка wiki
     """
