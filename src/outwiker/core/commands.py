@@ -36,27 +36,6 @@ from outwiker.api.gui.dialogs.messagebox import MessageBox
 logger = logging.getLogger('outwiker.core.commands')
 
 
-@testreadonly
-def removePage(page: 'outwiker.core.tree.WikiPage'):
-    assert page is not None
-
-    if page.readonly:
-        raise outwiker.core.exceptions.ReadonlyException
-
-    if page.parent is None:
-        showError(Application.mainWindow, _(
-            "You can't remove the root element"))
-        return
-
-    if (MessageBox(_('Remove page "{}" and all subpages?\nAll attached files will also be deleted.').format(page.title),
-                   _("Remove page?"),
-                   wx.YES_NO | wx.ICON_QUESTION) == wx.YES):
-        try:
-            page.remove()
-        except IOError:
-            showError(Application.mainWindow, _("Can't remove page"))
-
-
 def openWikiWithDialog(parent, readonly=False):
     """
     Показать диалог открытия вики и вернуть открытую wiki
