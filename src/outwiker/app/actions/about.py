@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import outwiker
+from outwiker.app.gui.dialogs.about import AboutDialog
 from outwiker.gui.baseaction import BaseAction
-from outwiker.gui.dialogs.about import AboutDialog
 
 
 class AboutAction(BaseAction):

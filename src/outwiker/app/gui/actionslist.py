@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import outwiker.actions.about
 import outwiker.actions.addbookmark
 import outwiker.actions.addchildpage
 import outwiker.actions.addsiblingpage
@@ -37,6 +36,7 @@ import outwiker.actions.sortsiblingsalpha
 import outwiker.actions.switchto
 import outwiker.actions.tabs
 import outwiker.actions.tags
+from outwiker.app.actions.about import AboutAction
 from outwiker.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
 from outwiker.actions.attachopenfolder import (OpenAttachFolderAction,
@@ -135,7 +135,7 @@ actionsList = [
                HotKey("D", ctrl=True)),
     ActionInfo(outwiker.actions.reloadwiki.ReloadWikiAction, None),
     ActionInfo(outwiker.actions.openhelp.OpenHelpAction, HotKey("F1")),
-    ActionInfo(outwiker.actions.about.AboutAction, HotKey("F1", ctrl=True)),
+    ActionInfo(AboutAction, HotKey("F1", ctrl=True)),
     ActionInfo(outwiker.actions.applystyle.SetStyleToBranchAction, None),
     ActionInfo(outwiker.actions.openpluginsfolder.OpenPluginsFolderAction, None),
 

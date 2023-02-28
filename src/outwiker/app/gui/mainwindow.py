@@ -5,6 +5,7 @@ import logging
 import wx
 import wx.aui
 
+from outwiker.app.actions.about import AboutAction
 from outwiker.app.gui.mainwndcontroller import MainWndController
 from outwiker.app.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.app.gui.mainpanes.attachmainpane import AttachMainPane
@@ -56,7 +57,6 @@ import outwiker.actions.tags as tags
 import outwiker.actions.switchto as switchto
 from outwiker.actions.reloadwiki import ReloadWikiAction
 from outwiker.actions.openhelp import OpenHelpAction
-from outwiker.actions.about import AboutAction
 from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.actions.applystyle import SetStyleToBranchAction
