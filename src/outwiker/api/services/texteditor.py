@@ -2,6 +2,8 @@
 
 from datetime import datetime
 
+import wx
+
 from outwiker.core.application import Application
 from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
