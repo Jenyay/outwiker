@@ -59,6 +59,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             'outwiker.gui.controls.popupbutton',
             'outwiker.gui.controls.filestreectrl',
             'outwiker.core.attachfilters',
+            'outwiker.core.commands',
             'outwiker.utilites.actionsguicontroller',
             'outwiker.utilites.text',
             'PIL.Image',
