@@ -7,26 +7,29 @@ from datetime import datetime
 
 import wx
 
-from outwiker.actions.attachcreatesubdir import AttachCreateSubdirActionForAttachPanel
-from outwiker.actions.attachexecute import AttachExecuteFilesAction
-from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
-from outwiker.actions.attachopenfolder import OpenAttachFolderActionForAttachPanel
-from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
-from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
-from outwiker.actions.attachrename import RenameAttachActionForAttachPanel
-from outwiker.actions.attachselectall import AttachSelectAllAction
-from outwiker.actions.clipboard import CopyAttachPathAction
+from outwiker.app.actions.clipboard import CopyAttachPathAction
+
 from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.api.gui.mainwindow import addStatusBarItem, setStatusText
 from outwiker.api.services.attachment import attachFiles, renameAttach
 from outwiker.api.services.messages import showError
+
+from outwiker.app.actions.attachcreatesubdir import AttachCreateSubdirActionForAttachPanel
+from outwiker.app.actions.attachexecute import AttachExecuteFilesAction
+from outwiker.app.actions.attachfiles import AttachFilesActionForAttachPanel
+from outwiker.app.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
+from outwiker.app.actions.attachselectall import AttachSelectAllAction
+from outwiker.app.actions.attachopenfolder import OpenAttachFolderActionForAttachPanel
+from outwiker.app.actions.attachrename import RenameAttachActionForAttachPanel
+from outwiker.app.actions.attachremove import RemoveAttachesActionForAttachPanel
+
 from outwiker.core.attachment import Attachment
 from outwiker.core.events import (BeginAttachRenamingParams,
                                   AttachSelectionChangedParams)
 from outwiker.core.system import getBuiltinImagePath, getOS
 
-from .dropfiles import BaseDropFilesTarget
-from .guiconfig import AttachConfig, GeneralGuiConfig
+from outwiker.gui.dropfiles import BaseDropFilesTarget
+from outwiker.gui.guiconfig import AttachConfig, GeneralGuiConfig
 
 
 logger = logging.getLogger('outwiker.gui.attachpanel')

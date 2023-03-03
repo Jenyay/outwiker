@@ -6,8 +6,8 @@ import logging
 import wx
 import wx.adv
 
-from outwiker.actions.exit import ExitAction
 from outwiker.api.gui.mainwindow import getMainWindowTitle
+from outwiker.api.services.application import exit
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import TrayConfig
 
@@ -111,7 +111,7 @@ class TrayIconController(wx.EvtHandler):
         if event.GetId() == self._trayIcon.ID_RESTORE:
             self.restoreWindow()
         elif event.GetId() == self._trayIcon.ID_EXIT:
-            self._application.actionController.getAction(ExitAction.stringId).run(None)
+            exit(self._application)
 
 
 class TrayIcon(wx.adv.TaskBarIcon):

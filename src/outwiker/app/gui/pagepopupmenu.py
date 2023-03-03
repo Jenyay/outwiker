@@ -6,19 +6,19 @@ from outwiker.api.services.tree import removePage
 
 from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
+from outwiker.app.actions.attachopenfolder import OpenAttachFolderAction
+from outwiker.app.actions.clipboard import (CopyPageTitleAction,
+                                            CopyPagePathAction,
+                                            CopyAttachPathAction,
+                                            CopyPageLinkAction)
+from outwiker.app.actions.editpageprop import EditPagePropertiesAction
 
 from outwiker.app.gui.pagedialog import (createSiblingPage,
                                          createChildPage,
                                          editPage)
 
-from outwiker.actions.clipboard import (CopyPageTitleAction,
-                                        CopyPagePathAction,
-                                        CopyAttachPathAction,
-                                        CopyPageLinkAction)
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.renamepage import RenamePageAction
-from outwiker.actions.editpageprop import EditPagePropertiesAction
-from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 
 
 class PagePopupMenu:

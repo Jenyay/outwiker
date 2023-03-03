@@ -10,6 +10,16 @@ from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
+from outwiker.app.actions.attachcreatesubdir import AttachCreateSubdirAction
+from outwiker.app.actions.attachfiles import AttachFilesAction
+from outwiker.app.actions.attachopenfolder import OpenAttachFolderAction
+from outwiker.app.actions.close import CloseAction
+from outwiker.app.actions.clipboard import (CopyAttachPathAction,
+                                            CopyPageLinkAction,
+                                            CopyPagePathAction,
+                                            CopyPageTitleAction)
+from outwiker.app.actions.editpageprop import EditPagePropertiesAction
+from outwiker.app.actions.exit import ExitAction
 
 from outwiker.app.gui.mainwndcontroller import MainWndController
 from outwiker.app.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
@@ -34,14 +44,11 @@ from outwiker.gui.controls.toolbar2 import ToolBar2Container
 from outwiker.gui.controls.toastercontroller import ToasterController
 from outwiker.gui.statusbar import StatusBarController
 
-from outwiker.actions.attachcreatesubdir import AttachCreateSubdirAction
 from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
 from outwiker.actions.openreadonly import OpenReadOnlyAction
-from outwiker.actions.close import CloseAction
 from outwiker.actions.save import SaveAction
 from outwiker.actions.printaction import PrintAction
-from outwiker.actions.exit import ExitAction
 from outwiker.actions.fullscreen import FullScreenAction
 from outwiker.actions.preferences import PreferencesAction
 from outwiker.actions.movepageup import MovePageUpAction
@@ -50,17 +57,13 @@ from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
 from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.removepage import RemovePageAction
-from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.tabs import (AddTabAction, CloseTabAction,
                                    PreviousTabAction, NextTabAction)
 from outwiker.actions.globalsearch import GlobalSearchAction
-from outwiker.actions.attachfiles import AttachFilesAction
-import outwiker.actions.clipboard as clipboard
 import outwiker.actions.tags as tags
 import outwiker.actions.switchto as switchto
 from outwiker.actions.reloadwiki import ReloadWikiAction
 from outwiker.actions.openhelp import OpenHelpAction
-from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction
 from outwiker.actions.moving import (GoToParentAction,
@@ -469,24 +472,13 @@ class MainWindow(wx.Frame):
         menu.AppendSeparator()
 
         actionController.appendMenuItem(
-            clipboard.CopyPageTitleAction.stringId,
+            CopyPageTitleAction.stringId,
             menu)
 
-        actionController.appendMenuItem(
-            clipboard.CopyPagePathAction.stringId,
-            menu)
-
-        actionController.appendMenuItem(
-            clipboard.CopyAttachPathAction.stringId,
-            menu)
-
-        actionController.appendMenuItem(
-            clipboard.CopyPageLinkAction.stringId,
-            menu)
-
-        actionController.appendMenuItem(
-            OpenAttachFolderAction.stringId,
-            menu)
+        actionController.appendMenuItem(CopyPagePathAction.stringId, menu)
+        actionController.appendMenuItem(CopyAttachPathAction.stringId, menu)
+        actionController.appendMenuItem(CopyPageLinkAction.stringId, menu)
+        actionController.appendMenuItem(OpenAttachFolderAction.stringId, menu)
 
         menu.AppendSeparator()
 

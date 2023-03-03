@@ -2,7 +2,7 @@
 
 import wx.aui
 
-from outwiker.gui.attachpanel import AttachPanel
+from outwiker.app.gui.attachpanel import AttachPanel
 from outwiker.gui.guiconfig import AttachConfig
 from outwiker.gui.mainpanes.mainpane import MainPane
 

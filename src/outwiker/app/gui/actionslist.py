@@ -4,11 +4,13 @@ from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
-import outwiker.actions.attachfiles
-import outwiker.actions.clipboard
-import outwiker.actions.close
-import outwiker.actions.editpageprop
-import outwiker.actions.exit
+from outwiker.app.actions.clipboard import (CopyAttachPathAction, 
+                                            CopyPageLinkAction, 
+                                            CopyPagePathAction, 
+                                            CopyPageTitleAction)
+from outwiker.actions.close import CloseAction
+from outwiker.app.actions.editpageprop import EditPagePropertiesAction
+from outwiker.app.actions.exit import ExitAction
 import outwiker.actions.fullscreen
 import outwiker.actions.globalsearch
 import outwiker.actions.history
@@ -37,16 +39,16 @@ import outwiker.actions.switchto
 import outwiker.actions.tabs
 import outwiker.actions.tags
 from outwiker.app.actions.about import AboutAction
-from outwiker.actions.attachexecute import AttachExecuteFilesAction
-from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
-from outwiker.actions.attachopenfolder import (OpenAttachFolderAction,
-                                               OpenAttachFolderActionForAttachPanel)
-from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
-from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
-from outwiker.actions.attachrename import RenameAttachActionForAttachPanel
-from outwiker.actions.attachselectall import AttachSelectAllAction
-from outwiker.actions.attachcreatesubdir import (AttachCreateSubdirAction,
-                                                 AttachCreateSubdirActionForAttachPanel)
+from outwiker.app.actions.attachexecute import AttachExecuteFilesAction
+from outwiker.app.actions.attachfiles import AttachFilesAction, AttachFilesActionForAttachPanel
+from outwiker.app.actions.attachopenfolder import (OpenAttachFolderAction,
+                                                   OpenAttachFolderActionForAttachPanel)
+from outwiker.app.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
+from outwiker.app.actions.attachremove import RemoveAttachesActionForAttachPanel
+from outwiker.app.actions.attachrename import RenameAttachActionForAttachPanel
+from outwiker.app.actions.attachselectall import AttachSelectAllAction
+from outwiker.app.actions.attachcreatesubdir import (AttachCreateSubdirAction,
+                                                     AttachCreateSubdirActionForAttachPanel)
 
 from outwiker.gui.actioninfo import ActionInfo, PolyactionInfo
 from outwiker.gui.hotkey import HotKey
@@ -57,10 +59,9 @@ actionsList = [
     ActionInfo(outwiker.actions.open.OpenAction, HotKey("O", ctrl=True)),
     ActionInfo(outwiker.actions.new.NewAction, HotKey("N", ctrl=True)),
     ActionInfo(outwiker.actions.openreadonly.OpenReadOnlyAction, None),
-    ActionInfo(outwiker.actions.close.CloseAction,
-               HotKey("W", ctrl=True, shift=True)),
+    ActionInfo(CloseAction, HotKey("W", ctrl=True, shift=True)),
     ActionInfo(outwiker.actions.save.SaveAction, HotKey("S", ctrl=True)),
-    ActionInfo(outwiker.actions.exit.ExitAction, HotKey("F4", alt=True)),
+    ActionInfo(ExitAction, HotKey("F4", alt=True)),
 
     ActionInfo(outwiker.actions.showhideattaches.ShowHideAttachesAction, None),
     ActionInfo(outwiker.actions.showhidetree.ShowHideTreeAction, None),
@@ -98,13 +99,12 @@ actionsList = [
 
     ActionInfo(outwiker.actions.globalsearch.GlobalSearchAction,
                HotKey("F", ctrl=True, shift=True)),
-    ActionInfo(outwiker.actions.attachfiles.AttachFilesAction,
-               HotKey("A", ctrl=True, shift=True)),
+    ActionInfo(AttachFilesAction, HotKey("A", ctrl=True, shift=True)),
 
-    ActionInfo(outwiker.actions.clipboard.CopyPageTitleAction, None),
-    ActionInfo(outwiker.actions.clipboard.CopyPagePathAction, None),
-    ActionInfo(outwiker.actions.clipboard.CopyAttachPathAction, None),
-    ActionInfo(outwiker.actions.clipboard.CopyPageLinkAction, None),
+    ActionInfo(CopyPageTitleAction, None),
+    ActionInfo(CopyPagePathAction, None),
+    ActionInfo(CopyAttachPathAction, None),
+    ActionInfo(CopyPageLinkAction, None),
 
     ActionInfo(outwiker.actions.tags.AddTagsToBranchAction, None),
     ActionInfo(outwiker.actions.tags.RemoveTagsFromBranchAction, None),
@@ -127,8 +127,7 @@ actionsList = [
     ActionInfo(outwiker.actions.fullscreen.FullScreenAction, HotKey("F11")),
     ActionInfo(outwiker.actions.preferences.PreferencesAction,
                HotKey("F8", ctrl=True)),
-    ActionInfo(outwiker.actions.editpageprop.EditPagePropertiesAction,
-               HotKey("E", ctrl=True)),
+    ActionInfo(EditPagePropertiesAction, HotKey("E", ctrl=True)),
     ActionInfo(AddBookmarkAction, HotKey("D", ctrl=True)),
     ActionInfo(outwiker.actions.reloadwiki.ReloadWikiAction, None),
     ActionInfo(outwiker.actions.openhelp.OpenHelpAction, HotKey("F1")),

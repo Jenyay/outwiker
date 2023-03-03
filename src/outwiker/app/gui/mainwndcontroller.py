@@ -7,7 +7,12 @@ import wx
 from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
+from outwiker.app.actions.attachfiles import AttachFilesAction
+from outwiker.app.actions.close import CloseAction
+from outwiker.app.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
+from outwiker.app.actions.editpageprop import EditPagePropertiesAction
+from outwiker.app.actions.exit import ExitAction
 
 from outwiker.app.gui.bookmarkscontroller import BookmarksController
 
@@ -28,7 +33,6 @@ from outwiker.gui.defines import (MENU_FILE,
                                   )
 
 from outwiker.actions.save import SaveAction
-from outwiker.actions.close import CloseAction
 from outwiker.actions.printaction import PrintAction
 from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
@@ -36,22 +40,18 @@ from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
 from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.removepage import RemovePageAction
-from outwiker.actions.editpageprop import EditPagePropertiesAction
-from outwiker.actions.exit import ExitAction
 from outwiker.actions.tabs import (AddTabAction,
                                    CloseTabAction,
                                    PreviousTabAction,
                                    NextTabAction)
 from outwiker.actions.globalsearch import GlobalSearchAction
-from outwiker.actions.attachfiles import AttachFilesAction
-import outwiker.actions.clipboard as clipboard
+import outwiker.app.actions.clipboard as clipboard
 import outwiker.actions.tags as tags
 from outwiker.actions.reloadwiki import ReloadWikiAction
 from outwiker.actions.moving import (GoToParentAction,
                                      GoToFirstChildAction,
                                      GoToNextSiblingAction,
                                      GoToPrevSiblingAction)
-from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 
 
 class MainWndController:

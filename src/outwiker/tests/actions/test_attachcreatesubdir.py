@@ -3,11 +3,8 @@
 import unittest
 from pathlib import Path
 
-import wx
-
+from outwiker.app.actions.attachcreatesubdir import AttachCreateSubdirAction
 from outwiker.core.attachment import Attachment
-from outwiker.core.exceptions import ReadonlyException
-from outwiker.actions.attachcreatesubdir import AttachCreateSubdirAction
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 

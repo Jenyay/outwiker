@@ -56,6 +56,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
         return [
             'importlib',
             'urllib',
+            'outwiker.actions.close',
             'outwiker.gui.controls.popupbutton',
             'outwiker.gui.controls.filestreectrl',
             'outwiker.core.attachfilters',
