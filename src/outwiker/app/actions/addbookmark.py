@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.api.services.bookmarks import toggleBookmarkForCurrentPage
 from outwiker.gui.baseaction import BaseAction
 
 
@@ -20,11 +21,4 @@ class AddBookmarkAction (BaseAction):
         return _('Add/Remove Bookmark')
 
     def run(self, params):
-        if self._application.selectedPage is not None:
-            wikiroot = self._application.wikiroot
-            selected_page = wikiroot.selectedPage
-
-            if wikiroot.bookmarks.pageMarked(selected_page):
-                wikiroot.bookmarks.remove(selected_page)
-            else:
-                wikiroot.bookmarks.add(selected_page)
+        toggleBookmarkForCurrentPage(self._application)

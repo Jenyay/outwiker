@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import outwiker.actions.addbookmark
-import outwiker.actions.addchildpage
-import outwiker.actions.addsiblingpage
-import outwiker.actions.applystyle
+from outwiker.app.actions.addbookmark import AddBookmarkAction
+from outwiker.app.actions.addchildpage import AddChildPageAction
+from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
+from outwiker.app.actions.applystyle import SetStyleToBranchAction
 import outwiker.actions.attachfiles
 import outwiker.actions.clipboard
 import outwiker.actions.close
@@ -73,10 +73,8 @@ actionsList = [
     ActionInfo(outwiker.actions.search.SearchAndReplaceAction,
                HotKey("F3", ctrl=True)),
 
-    ActionInfo(outwiker.actions.addsiblingpage.AddSiblingPageAction,
-               HotKey("Y", ctrl=True, shift=True)),
-    ActionInfo(outwiker.actions.addchildpage.AddChildPageAction,
-               HotKey("P", ctrl=True, shift=True)),
+    ActionInfo(AddSiblingPageAction, HotKey("Y", ctrl=True, shift=True)),
+    ActionInfo(AddChildPageAction, HotKey("P", ctrl=True, shift=True)),
     ActionInfo(outwiker.actions.movepageup.MovePageUpAction,
                HotKey("Up", ctrl=True, shift=True)),
     ActionInfo(outwiker.actions.movepagedown.MovePageDownAction,
@@ -131,12 +129,11 @@ actionsList = [
                HotKey("F8", ctrl=True)),
     ActionInfo(outwiker.actions.editpageprop.EditPagePropertiesAction,
                HotKey("E", ctrl=True)),
-    ActionInfo(outwiker.actions.addbookmark.AddBookmarkAction,
-               HotKey("D", ctrl=True)),
+    ActionInfo(AddBookmarkAction, HotKey("D", ctrl=True)),
     ActionInfo(outwiker.actions.reloadwiki.ReloadWikiAction, None),
     ActionInfo(outwiker.actions.openhelp.OpenHelpAction, HotKey("F1")),
     ActionInfo(AboutAction, HotKey("F1", ctrl=True)),
-    ActionInfo(outwiker.actions.applystyle.SetStyleToBranchAction, None),
+    ActionInfo(SetStyleToBranchAction, None),
     ActionInfo(outwiker.actions.openpluginsfolder.OpenPluginsFolderAction, None),
 
     ActionInfo(outwiker.actions.switchto.SwitchToMainPanelAction, None),

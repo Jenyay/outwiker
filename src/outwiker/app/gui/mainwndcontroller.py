@@ -4,11 +4,17 @@ import datetime
 
 import wx
 
+from outwiker.app.actions.addbookmark import AddBookmarkAction
+from outwiker.app.actions.addchildpage import AddChildPageAction
+from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
+from outwiker.app.actions.applystyle import SetStyleToBranchAction
+
 from outwiker.app.gui.bookmarkscontroller import BookmarksController
 
 from outwiker.api.gui.mainwindow import getMainWindowTitle, setStatusText
 from outwiker.api.services.messages import showError
 from outwiker.api.services.tree import openWiki
+
 from outwiker.core.events import PAGE_UPDATE_TITLE
 
 from outwiker.gui.autosavetimer import AutosaveTimer
@@ -24,8 +30,6 @@ from outwiker.gui.defines import (MENU_FILE,
 from outwiker.actions.save import SaveAction
 from outwiker.actions.close import CloseAction
 from outwiker.actions.printaction import PrintAction
-from outwiker.actions.addsiblingpage import AddSiblingPageAction
-from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
@@ -34,7 +38,6 @@ from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.exit import ExitAction
-from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.actions.tabs import (AddTabAction,
                                    CloseTabAction,
                                    PreviousTabAction,
@@ -49,7 +52,6 @@ from outwiker.actions.moving import (GoToParentAction,
                                      GoToNextSiblingAction,
                                      GoToPrevSiblingAction)
 from outwiker.actions.attachopenfolder import OpenAttachFolderAction
-from outwiker.actions.applystyle import SetStyleToBranchAction
 
 
 class MainWndController:

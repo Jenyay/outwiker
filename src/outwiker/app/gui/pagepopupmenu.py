@@ -3,11 +3,14 @@
 import wx
 
 from outwiker.api.services.tree import removePage
+
+from outwiker.app.actions.addchildpage import AddChildPageAction
+from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
+
 from outwiker.app.gui.pagedialog import (createSiblingPage,
                                          createChildPage,
                                          editPage)
-from outwiker.actions.addchildpage import AddChildPageAction
-from outwiker.actions.addsiblingpage import AddSiblingPageAction
+
 from outwiker.actions.clipboard import (CopyPageTitleAction,
                                         CopyPagePathAction,
                                         CopyAttachPathAction,

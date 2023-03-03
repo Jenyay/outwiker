@@ -6,6 +6,11 @@ import wx
 import wx.aui
 
 from outwiker.app.actions.about import AboutAction
+from outwiker.app.actions.addbookmark import AddBookmarkAction
+from outwiker.app.actions.addchildpage import AddChildPageAction
+from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
+from outwiker.app.actions.applystyle import SetStyleToBranchAction
+
 from outwiker.app.gui.mainwndcontroller import MainWndController
 from outwiker.app.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.app.gui.mainpanes.attachmainpane import AttachMainPane
@@ -17,8 +22,9 @@ from outwiker.app.gui.preferences.prefcontroller import PrefController
 from outwiker.app.gui.tabscontroller import TabsController
 from outwiker.app.gui.toolbarscontroller import ToolBarsController
 
-from outwiker.core.attachwatcher import AttachWatcher
 from outwiker.api.services.messages import showError
+
+from outwiker.core.attachwatcher import AttachWatcher
 from outwiker.core.system import getOS, getBuiltinImagePath
 
 from outwiker.gui import defines as guidefines
@@ -38,8 +44,6 @@ from outwiker.actions.printaction import PrintAction
 from outwiker.actions.exit import ExitAction
 from outwiker.actions.fullscreen import FullScreenAction
 from outwiker.actions.preferences import PreferencesAction
-from outwiker.actions.addsiblingpage import AddSiblingPageAction
-from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
@@ -47,7 +51,6 @@ from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
-from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.actions.tabs import (AddTabAction, CloseTabAction,
                                    PreviousTabAction, NextTabAction)
 from outwiker.actions.globalsearch import GlobalSearchAction
@@ -59,7 +62,6 @@ from outwiker.actions.reloadwiki import ReloadWikiAction
 from outwiker.actions.openhelp import OpenHelpAction
 from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
-from outwiker.actions.applystyle import SetStyleToBranchAction
 from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction
 from outwiker.actions.moving import (GoToParentAction,
                                      GoToFirstChildAction,

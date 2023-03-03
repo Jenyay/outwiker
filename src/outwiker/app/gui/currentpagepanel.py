@@ -2,10 +2,10 @@
 
 import wx
 
-from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.api.core.tree import pageExists
 from outwiker.api.services.messages import showError
 from outwiker.api.services.tree import openWiki
+from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.system import getOS, getBuiltinImagePath
 from outwiker.gui.tabsctrl import TabsCtrl

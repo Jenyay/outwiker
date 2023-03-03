@@ -6,18 +6,20 @@ from typing import Optional
 
 import wx
 
-from outwiker.actions.addsiblingpage import AddSiblingPageAction
-from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.moving import GoToParentAction
 
+from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
+
 from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.api.services.attachment import attachFiles
 from outwiker.api.services.messages import showError
 from outwiker.api.services.tree import renamePage, movePage
+
+from outwiker.app.actions.addchildpage import AddChildPageAction
 
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu

@@ -12,6 +12,7 @@ import wx
 from outwiker.api.core.tree import testreadonly
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
+from outwiker.core.events import BeginAttachRenamingParams
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.api.services.messages import showError
@@ -178,3 +179,27 @@ def attachFiles(parent: wx.Window,
             logger.error(text)
             showError(Application.mainWindow, text)
             return
+
+
+@testreadonly
+def createSubdir(page, application):
+    default_subdir_name = _('New folder')
+
+    if page is not None:
+        attach = Attachment(page)
+        root = Path(attach.getAttachPath(create=True), page.currentAttachSubdir)
+
+        dirname = default_subdir_name
+        index = 1
+
+        while (root / dirname).exists():
+            dirname = '{name} ({index})'.format(name=default_subdir_name, index=index)
+            index += 1
+
+        try:
+            attach.createSubdir(Path(page.currentAttachSubdir, dirname))
+            application.onBeginAttachRenaming(page, BeginAttachRenamingParams(str(dirname)))
+        except IOError as e:
+            message = _("Can't create folder {} for attachments").format(dirname)
+            showError(application.mainWindow, message)
+            logger.error("Can't create attachments subdir %s for the page '%s'. Error: %s", dirname, page.subpath, str(e))
