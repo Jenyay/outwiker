@@ -181,9 +181,13 @@ def attachFiles(parent: wx.Window,
             return
 
 
+def getDefaultSubdirName():
+    return _('New folder')
+
+
 @testreadonly
 def createSubdir(page, application):
-    default_subdir_name = _('New folder')
+    default_subdir_name = getDefaultSubdirName()
 
     if page is not None:
         attach = Attachment(page)
