@@ -4,8 +4,8 @@ from os.path import basename
 import unittest
 
 from outwiker.api.core.tree import loadNotesTree
+from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 

@@ -20,6 +20,32 @@ from outwiker.app.actions.clipboard import (CopyAttachPathAction,
                                             CopyPageTitleAction)
 from outwiker.app.actions.editpageprop import EditPagePropertiesAction
 from outwiker.app.actions.exit import ExitAction
+from outwiker.app.actions.fullscreen import FullScreenAction
+from outwiker.app.actions.globalsearch import GlobalSearchAction
+from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
+from outwiker.app.actions.movepagedown import MovePageDownAction
+from outwiker.app.actions.movepageup import MovePageUpAction
+from outwiker.app.actions.moving import (GoToParentAction,
+                                         GoToFirstChildAction,
+                                         GoToNextSiblingAction,
+                                         GoToPrevSiblingAction)
+from outwiker.app.actions.new import NewAction
+from outwiker.app.actions.open import OpenAction
+from outwiker.app.actions.openhelp import OpenHelpAction
+from outwiker.app.actions.openpluginsfolder import OpenPluginsFolderAction
+from outwiker.app.actions.openreadonly import OpenReadOnlyAction
+from outwiker.app.actions.preferences import PreferencesAction
+from outwiker.app.actions.printaction import PrintAction
+from outwiker.app.actions.reloadwiki import ReloadWikiAction
+from outwiker.app.actions.removepage import RemovePageAction
+from outwiker.app.actions.renamepage import RenamePageAction
+from outwiker.app.actions.save import SaveAction
+from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
+from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.app.actions.tabs import (AddTabAction, CloseTabAction,
+                                       PreviousTabAction, NextTabAction)
+import outwiker.app.actions.switchto as switchto
+import outwiker.app.actions.tags as tags
 
 from outwiker.app.gui.mainwndcontroller import MainWndController
 from outwiker.app.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
@@ -43,33 +69,6 @@ from outwiker.gui.trayicon import getTrayIconController
 from outwiker.gui.controls.toolbar2 import ToolBar2Container
 from outwiker.gui.controls.toastercontroller import ToasterController
 from outwiker.gui.statusbar import StatusBarController
-
-from outwiker.actions.new import NewAction
-from outwiker.actions.open import OpenAction
-from outwiker.actions.openreadonly import OpenReadOnlyAction
-from outwiker.actions.save import SaveAction
-from outwiker.actions.printaction import PrintAction
-from outwiker.actions.fullscreen import FullScreenAction
-from outwiker.actions.preferences import PreferencesAction
-from outwiker.actions.movepageup import MovePageUpAction
-from outwiker.actions.movepagedown import MovePageDownAction
-from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
-from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
-from outwiker.actions.renamepage import RenamePageAction
-from outwiker.actions.removepage import RemovePageAction
-from outwiker.actions.tabs import (AddTabAction, CloseTabAction,
-                                   PreviousTabAction, NextTabAction)
-from outwiker.actions.globalsearch import GlobalSearchAction
-import outwiker.actions.tags as tags
-import outwiker.actions.switchto as switchto
-from outwiker.actions.reloadwiki import ReloadWikiAction
-from outwiker.actions.openhelp import OpenHelpAction
-from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
-from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction
-from outwiker.actions.moving import (GoToParentAction,
-                                     GoToFirstChildAction,
-                                     GoToNextSiblingAction,
-                                     GoToPrevSiblingAction)
 
 from outwiker.pages.wiki.wikipagecontroller import WikiPageController
 from outwiker.pages.html.htmlpagecontroller import HtmlPageController

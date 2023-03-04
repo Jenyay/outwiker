@@ -2,10 +2,10 @@
 
 import unittest
 
-from outwiker.actions.showhidetree import ShowHideTreeAction
-from outwiker.actions.showhideattaches import ShowHideAttachesAction
-from outwiker.actions.showhidetags import ShowHideTagsAction
-from outwiker.actions.fullscreen import FullScreenAction
+from outwiker.app.actions.showhidetree import ShowHideTreeAction
+from outwiker.app.actions.showhideattaches import ShowHideAttachesAction
+from outwiker.app.actions.showhidetags import ShowHideTagsAction
+from outwiker.app.actions.fullscreen import FullScreenAction
 from outwiker.core.system import getOS
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 

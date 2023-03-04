@@ -5,10 +5,10 @@ import logging
 import wx
 import wx.lib.newevent
 
-from outwiker.actions.search import (SearchAction,
-                                     SearchNextAction,
-                                     SearchPrevAction,
-                                     SearchAndReplaceAction)
+from outwiker.app.actions.search import (SearchAction,
+                                         SearchNextAction,
+                                         SearchPrevAction,
+                                         SearchAndReplaceAction)
 from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             LINE_DUPLICATE_ID,
                                             MOVE_SELECTED_LINES_UP_ID,

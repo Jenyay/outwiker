@@ -3,22 +3,22 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class GoToParentAction (BaseAction):
+class GoToParentAction(BaseAction):
     """
     Go to the parent page action
     """
-    stringId = u"GoToParent"
+    stringId = "GoToParent"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Go to parent page")
+        return _("Go to parent page")
 
     @property
     def description(self):
-        return _(u'Open parent page')
+        return _('Open parent page')
 
     def run(self, params):
         if (self._application.wikiroot is not None and
@@ -27,22 +27,22 @@ class GoToParentAction (BaseAction):
             self._application.selectedPage = self._application.selectedPage.parent
 
 
-class GoToFirstChildAction (BaseAction):
+class GoToFirstChildAction(BaseAction):
     """
     Go to the first child page action
     """
-    stringId = u"GoToFirstChild"
+    stringId = "GoToFirstChild"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Go to first child page")
+        return _("Go to first child page")
 
     @property
     def description(self):
-        return _(u'Open first child page')
+        return _('Open first child page')
 
     def run(self, params):
         if self._application.wikiroot is None:
@@ -55,22 +55,22 @@ class GoToFirstChildAction (BaseAction):
             self._application.selectedPage = self._application.wikiroot.children[0]
 
 
-class GoToNextSiblingAction (BaseAction):
+class GoToNextSiblingAction(BaseAction):
     """
     Go to next sibling page action
     """
-    stringId = u"GoToNextSibling"
+    stringId = "GoToNextSibling"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Go to next page")
+        return _("Go to next page")
 
     @property
     def description(self):
-        return _(u'Open next page')
+        return _('Open next page')
 
     def run(self, params):
         if (self._application.wikiroot is None or
@@ -85,22 +85,22 @@ class GoToNextSiblingAction (BaseAction):
             self._application.selectedPage = siblings[self_pos + 1]
 
 
-class GoToPrevSiblingAction (BaseAction):
+class GoToPrevSiblingAction(BaseAction):
     """
     Go to previous sibling page action
     """
-    stringId = u"GoToPrevSibling"
+    stringId = "GoToPrevSibling"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Go to previous page")
+        return _("Go to previous page")
 
     @property
     def description(self):
-        return _(u'Open previous page')
+        return _('Open previous page')
 
     def run(self, params):
         if (self._application.wikiroot is None or

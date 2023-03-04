@@ -6,43 +6,43 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class HistoryBackAction (BaseAction):
+class HistoryBackAction(BaseAction):
     """
     Назад
     """
-    stringId = u"HistoryBack"
+    stringId = "HistoryBack"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Back")
+        return _("Back")
 
     @property
     def description(self):
-        return _(u"Open previous page")
+        return _("Open previous page")
 
     def run(self, params):
         self._application.mainWindow.tabsController.historyBack()
 
 
-class HistoryForwardAction (BaseAction):
+class HistoryForwardAction(BaseAction):
     """
     Вперед
     """
-    stringId = u"HistoryForward"
+    stringId = "HistoryForward"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Forward")
+        return _("Forward")
 
     @property
     def description(self):
-        return _(u"Open next page")
+        return _("Open next page")
 
     def run(self, params):
         self._application.mainWindow.tabsController.historyForward()

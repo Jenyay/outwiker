@@ -23,3 +23,5 @@ def exit(application):
         application.mainWindow.Destroy()
 
 
+def printCurrentPage(application):
+    application.mainWindow.pagePanel.panel.Print()

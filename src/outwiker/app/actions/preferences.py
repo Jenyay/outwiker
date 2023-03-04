@@ -8,18 +8,18 @@ class PreferencesAction(BaseAction):
     """
     Вызов диалога настроек
     """
-    stringId = u"Preferences"
+    stringId = "Preferences"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Preferences…")
+        return _("Preferences…")
 
     @property
     def description(self):
-        return _(u"Open the preferences dialog")
+        return _("Open the preferences dialog")
 
     def run(self, params):
         dlg = PrefDialog(self._application.mainWindow, self._application)

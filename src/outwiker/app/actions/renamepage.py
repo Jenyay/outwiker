@@ -3,7 +3,7 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class RenamePageAction (BaseAction):
+class RenamePageAction(BaseAction):
     """
     Переименование страницы
     """

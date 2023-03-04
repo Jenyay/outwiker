@@ -12,13 +12,12 @@ from outwiker.app.actions.clipboard import (CopyPageTitleAction,
                                             CopyAttachPathAction,
                                             CopyPageLinkAction)
 from outwiker.app.actions.editpageprop import EditPagePropertiesAction
+from outwiker.app.actions.removepage import RemovePageAction
+from outwiker.app.actions.renamepage import RenamePageAction
 
 from outwiker.app.gui.pagedialog import (createSiblingPage,
                                          createChildPage,
                                          editPage)
-
-from outwiker.actions.removepage import RemovePageAction
-from outwiker.actions.renamepage import RenamePageAction
 
 
 class PagePopupMenu:

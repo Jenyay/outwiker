@@ -2,9 +2,9 @@
 
 import wx
 
-from outwiker.api.services.tree import openWiki
-from outwiker.actions.open import OpenAction
-from outwiker.actions.new import NewAction
+from outwiker.api.services.tree import (openWiki,
+                                        createNewWiki,
+                                        openWikiWithDialog)
 
 from .basepagepanel import BasePagePanel
 
@@ -90,12 +90,10 @@ class ClosedTreePanel(BasePagePanel):
             self._recentlySizer.ShowItems(False)
 
     def _onCreateNotes(self, _event):
-        actionController = self._application.actionController
-        actionController.getAction(NewAction.stringId).run(None)
+        createNewWiki(self._application.mainWindow)
 
     def _onOpenNotes(self, _event):
-        actionController = self._application.actionController
-        actionController.getAction(OpenAction.stringId).run(None)
+        openWikiWithDialog(self._application.mainWindow, False)
 
     def _onOpenSelectedNotesTree(self, _event):
         openWiki(self._recentlyListBox.GetStringSelection())

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import wx
-import outwiker.gui.controls.flatnotebook as fnb
 
+from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.core.application import Application
 from outwiker.core.history import History
-from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
+
+import outwiker.gui.controls.flatnotebook as fnb
 
 
 class TabsCtrl(wx.Panel):

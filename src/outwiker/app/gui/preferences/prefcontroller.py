@@ -3,7 +3,7 @@
 import wx
 import logging
 
-from outwiker.actions.openhelp import OpenHelpAction, OpenHelpParams
+from outwiker.app.actions.openhelp import OpenHelpAction, OpenHelpParams
 
 from outwiker.app.gui.preferences.generalpanel import GeneralPanel
 from outwiker.app.gui.preferences.mainwindowpanel import MainWindowPanel

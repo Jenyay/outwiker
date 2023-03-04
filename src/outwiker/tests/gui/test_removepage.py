@@ -4,7 +4,7 @@ import unittest
 
 import wx
 
-from outwiker.actions.removepage import RemovePageAction
+from outwiker.app.actions.removepage import RemovePageAction
 from outwiker.api.services.tree import removePage
 from outwiker.gui.tester import Tester
 from outwiker.pages.text.textpage import TextPageFactory

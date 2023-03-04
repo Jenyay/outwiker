@@ -6,10 +6,10 @@ import os
 import wx
 import wx.aui
 
-from outwiker.actions.search import (SearchAction,
-                                     SearchNextAction,
-                                     SearchPrevAction,
-                                     SearchAndReplaceAction)
+from outwiker.app.actions.search import (SearchAction,
+                                         SearchNextAction,
+                                         SearchPrevAction,
+                                         SearchAndReplaceAction)
 import outwiker.actions.polyactionsid as polyactions
 from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.api.gui.mainwindow import setStatusText

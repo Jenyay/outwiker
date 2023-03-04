@@ -2,7 +2,7 @@
 
 import unittest
 
-from outwiker.actions.globalsearch import GlobalSearchAction
+from outwiker.app.actions.globalsearch import GlobalSearchAction
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 

@@ -11,33 +11,48 @@ from outwiker.app.actions.clipboard import (CopyAttachPathAction,
 from outwiker.actions.close import CloseAction
 from outwiker.app.actions.editpageprop import EditPagePropertiesAction
 from outwiker.app.actions.exit import ExitAction
-import outwiker.actions.fullscreen
-import outwiker.actions.globalsearch
-import outwiker.actions.history
-import outwiker.actions.movepagedown
-import outwiker.actions.movepageup
-import outwiker.actions.moving
-import outwiker.actions.new
-import outwiker.actions.open
-import outwiker.actions.openhelp
-import outwiker.actions.openpluginsfolder
-import outwiker.actions.openreadonly
+from outwiker.app.actions.fullscreen import FullScreenAction
+from outwiker.app.actions.globalsearch import GlobalSearchAction
+from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
+from outwiker.app.actions.movepagedown import MovePageDownAction
+from outwiker.app.actions.movepageup import MovePageUpAction
+from outwiker.app.actions.moving import (GoToFirstChildAction,
+                                         GoToNextSiblingAction,
+                                         GoToParentAction,
+                                         GoToPrevSiblingAction)
+from outwiker.app.actions.new import NewAction
+from outwiker.app.actions.open import OpenAction
+from outwiker.app.actions.openhelp import OpenHelpAction
+from outwiker.app.actions.openpluginsfolder import OpenPluginsFolderAction
+from outwiker.app.actions.openreadonly import OpenReadOnlyAction
+from outwiker.app.actions.preferences import PreferencesAction
+from outwiker.app.actions.printaction import PrintAction
+from outwiker.app.actions.reloadwiki import ReloadWikiAction
+from outwiker.app.actions.removepage import RemovePageAction
+from outwiker.app.actions.renamepage import RenamePageAction
+from outwiker.app.actions.save import SaveAction
+from outwiker.app.actions.search import (SearchAction,
+                                         SearchAndReplaceAction,
+                                         SearchNextAction,
+                                         SearchPrevAction)
+from outwiker.app.actions.showhideattaches import ShowHideAttachesAction
+from outwiker.app.actions.showhidetags import ShowHideTagsAction
+from outwiker.app.actions.showhidetree import ShowHideTreeAction
+from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
+from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.app.actions.switchto import (SwitchToAttachmentsAction,
+                                           SwitchToMainPanelAction,
+                                           SwitchToTagsCloudAction,
+                                           SwitchToTreeAction)
+from outwiker.app.actions.tabs import (AddTabAction,
+                                       CloseTabAction,
+                                       NextTabAction,
+                                       PreviousTabAction)
+from outwiker.app.actions.tags import (AddTagsToBranchAction,
+                                       RemoveTagsFromBranchAction,
+                                       RenameTagAction)
 import outwiker.actions.polyactionsid as polyactions
-import outwiker.actions.preferences
-import outwiker.actions.printaction
-import outwiker.actions.reloadwiki
-import outwiker.actions.removepage
-import outwiker.actions.renamepage
-import outwiker.actions.save
-import outwiker.actions.search
-import outwiker.actions.showhideattaches
-import outwiker.actions.showhidetags
-import outwiker.actions.showhidetree
-import outwiker.actions.sortchildalpha
-import outwiker.actions.sortsiblingsalpha
-import outwiker.actions.switchto
-import outwiker.actions.tabs
-import outwiker.actions.tags
+
 from outwiker.app.actions.about import AboutAction
 from outwiker.app.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.app.actions.attachfiles import AttachFilesAction, AttachFilesActionForAttachPanel
@@ -56,49 +71,39 @@ from outwiker.gui.defines import ATTACH_ACTIONS_AREA
 
 
 actionsList = [
-    ActionInfo(outwiker.actions.open.OpenAction, HotKey("O", ctrl=True)),
-    ActionInfo(outwiker.actions.new.NewAction, HotKey("N", ctrl=True)),
-    ActionInfo(outwiker.actions.openreadonly.OpenReadOnlyAction, None),
+    ActionInfo(OpenAction, HotKey("O", ctrl=True)),
+    ActionInfo(NewAction, HotKey("N", ctrl=True)),
+    ActionInfo(OpenReadOnlyAction, None),
     ActionInfo(CloseAction, HotKey("W", ctrl=True, shift=True)),
-    ActionInfo(outwiker.actions.save.SaveAction, HotKey("S", ctrl=True)),
+    ActionInfo(SaveAction, HotKey("S", ctrl=True)),
     ActionInfo(ExitAction, HotKey("F4", alt=True)),
 
-    ActionInfo(outwiker.actions.showhideattaches.ShowHideAttachesAction, None),
-    ActionInfo(outwiker.actions.showhidetree.ShowHideTreeAction, None),
-    ActionInfo(outwiker.actions.showhidetags.ShowHideTagsAction, None),
+    ActionInfo(ShowHideAttachesAction, None),
+    ActionInfo(ShowHideTreeAction, None),
+    ActionInfo(ShowHideTagsAction, None),
 
-    ActionInfo(outwiker.actions.search.SearchAction, HotKey("F", ctrl=True)),
-    ActionInfo(outwiker.actions.search.SearchNextAction, HotKey("F3")),
-    ActionInfo(outwiker.actions.search.SearchPrevAction,
-               HotKey("F3", shift=True)),
-    ActionInfo(outwiker.actions.search.SearchAndReplaceAction,
-               HotKey("F3", ctrl=True)),
+    ActionInfo(SearchAction, HotKey("F", ctrl=True)),
+    ActionInfo(SearchNextAction, HotKey("F3")),
+    ActionInfo(SearchPrevAction, HotKey("F3", shift=True)),
+    ActionInfo(SearchAndReplaceAction, HotKey("F3", ctrl=True)),
 
     ActionInfo(AddSiblingPageAction, HotKey("Y", ctrl=True, shift=True)),
     ActionInfo(AddChildPageAction, HotKey("P", ctrl=True, shift=True)),
-    ActionInfo(outwiker.actions.movepageup.MovePageUpAction,
-               HotKey("Up", ctrl=True, shift=True)),
-    ActionInfo(outwiker.actions.movepagedown.MovePageDownAction,
-               HotKey("Down", ctrl=True, shift=True)),
+    ActionInfo(MovePageUpAction, HotKey("Up", ctrl=True, shift=True)),
+    ActionInfo(MovePageDownAction, HotKey("Down", ctrl=True, shift=True)),
 
-    ActionInfo(outwiker.actions.renamepage.RenamePageAction, HotKey("F2")),
-    ActionInfo(outwiker.actions.removepage.RemovePageAction,
-               HotKey("F8", ctrl=True, shift=True)),
+    ActionInfo(RenamePageAction, HotKey("F2")),
+    ActionInfo(RemovePageAction, HotKey("F8", ctrl=True, shift=True)),
 
-    ActionInfo(outwiker.actions.sortchildalpha.SortChildAlphabeticalAction,
-               None),
-    ActionInfo(
-        outwiker.actions.sortsiblingsalpha.SortSiblingsAlphabeticalAction, None),
+    ActionInfo(SortChildAlphabeticalAction, None),
+    ActionInfo(SortSiblingsAlphabeticalAction, None),
 
-    ActionInfo(outwiker.actions.tabs.AddTabAction, HotKey("T", ctrl=True)),
-    ActionInfo(outwiker.actions.tabs.CloseTabAction, HotKey("W", ctrl=True)),
-    ActionInfo(outwiker.actions.tabs.PreviousTabAction,
-               HotKey("PageUp", ctrl=True, shift=True)),
-    ActionInfo(outwiker.actions.tabs.NextTabAction, HotKey(
-        "PageDown", ctrl=True, shift=True)),
+    ActionInfo(AddTabAction, HotKey("T", ctrl=True)),
+    ActionInfo(CloseTabAction, HotKey("W", ctrl=True)),
+    ActionInfo(PreviousTabAction, HotKey("PageUp", ctrl=True, shift=True)),
+    ActionInfo(NextTabAction, HotKey("PageDown", ctrl=True, shift=True)),
 
-    ActionInfo(outwiker.actions.globalsearch.GlobalSearchAction,
-               HotKey("F", ctrl=True, shift=True)),
+    ActionInfo(GlobalSearchAction, HotKey("F", ctrl=True, shift=True)),
     ActionInfo(AttachFilesAction, HotKey("A", ctrl=True, shift=True)),
 
     ActionInfo(CopyPageTitleAction, None),
@@ -106,39 +111,33 @@ actionsList = [
     ActionInfo(CopyAttachPathAction, None),
     ActionInfo(CopyPageLinkAction, None),
 
-    ActionInfo(outwiker.actions.tags.AddTagsToBranchAction, None),
-    ActionInfo(outwiker.actions.tags.RemoveTagsFromBranchAction, None),
-    ActionInfo(outwiker.actions.tags.RenameTagAction, None),
+    ActionInfo(AddTagsToBranchAction, None),
+    ActionInfo(RemoveTagsFromBranchAction, None),
+    ActionInfo(RenameTagAction, None),
 
-    ActionInfo(outwiker.actions.history.HistoryBackAction,
-               HotKey("Left", ctrl=True, alt=True)),
-    ActionInfo(outwiker.actions.history.HistoryForwardAction,
-               HotKey("Right", ctrl=True, alt=True)),
+    ActionInfo(HistoryBackAction, HotKey("Left", ctrl=True, alt=True)),
+    ActionInfo(HistoryForwardAction, HotKey("Right", ctrl=True, alt=True)),
 
-    ActionInfo(outwiker.actions.moving.GoToParentAction, None),
-    ActionInfo(outwiker.actions.moving.GoToFirstChildAction, None),
-    ActionInfo(outwiker.actions.moving.GoToNextSiblingAction,
-               HotKey("Down", ctrl=True)),
-    ActionInfo(outwiker.actions.moving.GoToPrevSiblingAction,
-               HotKey("Up", ctrl=True)),
+    ActionInfo(GoToParentAction, None),
+    ActionInfo(GoToFirstChildAction, None),
+    ActionInfo(GoToNextSiblingAction, HotKey("Down", ctrl=True)),
+    ActionInfo(GoToPrevSiblingAction, HotKey("Up", ctrl=True)),
 
-    ActionInfo(outwiker.actions.printaction.PrintAction,
-               HotKey("P", ctrl=True)),
-    ActionInfo(outwiker.actions.fullscreen.FullScreenAction, HotKey("F11")),
-    ActionInfo(outwiker.actions.preferences.PreferencesAction,
-               HotKey("F8", ctrl=True)),
+    ActionInfo(PrintAction, HotKey("P", ctrl=True)),
+    ActionInfo(FullScreenAction, HotKey("F11")),
+    ActionInfo(PreferencesAction, HotKey("F8", ctrl=True)),
     ActionInfo(EditPagePropertiesAction, HotKey("E", ctrl=True)),
     ActionInfo(AddBookmarkAction, HotKey("D", ctrl=True)),
-    ActionInfo(outwiker.actions.reloadwiki.ReloadWikiAction, None),
-    ActionInfo(outwiker.actions.openhelp.OpenHelpAction, HotKey("F1")),
+    ActionInfo(ReloadWikiAction, None),
+    ActionInfo(OpenHelpAction, HotKey("F1")),
     ActionInfo(AboutAction, HotKey("F1", ctrl=True)),
     ActionInfo(SetStyleToBranchAction, None),
-    ActionInfo(outwiker.actions.openpluginsfolder.OpenPluginsFolderAction, None),
+    ActionInfo(OpenPluginsFolderAction, None),
 
-    ActionInfo(outwiker.actions.switchto.SwitchToMainPanelAction, None),
-    ActionInfo(outwiker.actions.switchto.SwitchToTreeAction, None),
-    ActionInfo(outwiker.actions.switchto.SwitchToAttachmentsAction, None),
-    ActionInfo(outwiker.actions.switchto.SwitchToTagsCloudAction, None),
+    ActionInfo(SwitchToMainPanelAction, None),
+    ActionInfo(SwitchToTreeAction, None),
+    ActionInfo(SwitchToAttachmentsAction, None),
+    ActionInfo(SwitchToTagsCloudAction, None),
 
     ActionInfo(OpenAttachFolderAction, None),
     ActionInfo(RemoveAttachesActionForAttachPanel,
