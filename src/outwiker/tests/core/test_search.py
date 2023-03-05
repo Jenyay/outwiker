@@ -4,13 +4,13 @@ import unittest
 import os.path
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.search import (Searcher,
                                   AllTagsSearchStrategy,
                                   AnyTagSearchStrategy)
 from outwiker.pages.search.searchpage import GlobalSearch
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 from outwiker.tests.utils import removeDir
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.attachment import Attachment
 
@@ -21,7 +21,7 @@ class SearcherTest(BaseOutWikerMixin, unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "page 1", ["метка 1", "Метка 2"])
@@ -283,7 +283,7 @@ class SearchPageTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "page 1", ["Метка 1", "Метка 2"])
@@ -365,7 +365,7 @@ class SearchPageTest(unittest.TestCase):
                                       strategy=AllTagsSearchStrategy)
         search_title = newpage.title
 
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         page = wiki[search_title]
 
         self.assertNotEqual(page, None)
@@ -384,7 +384,7 @@ class SearchPageTest(unittest.TestCase):
                                        strategy=AllTagsSearchStrategy)
         search_title = new_page.title
 
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         page = wiki[search_title]
 
         self.assertEqual(wiki[search_title + " 2"], None)
@@ -403,7 +403,7 @@ class SearchPageTest(unittest.TestCase):
                             tags=["Метка 1", "Метка 2"],
                             strategy=AllTagsSearchStrategy)
 
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         page = wiki['_ Search' + " (1)"]
 
         self.assertNotEqual(page, None)
@@ -425,7 +425,7 @@ class SearchPageTest(unittest.TestCase):
                             tags=["Метка 1", "Метка 2"],
                             strategy=AllTagsSearchStrategy)
 
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         page = wiki['_ Search' + " (4)"]
 
         self.assertNotEqual(page, None)
@@ -450,7 +450,7 @@ class SearchPageTest(unittest.TestCase):
         self.assertEqual(page.phrase, "Абырвалг")
 
         # Загрузим вики и прочитаем установленные параметры
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         searchPage = wiki[search_title]
 
         self.assertNotEqual(searchPage, None)
@@ -471,7 +471,7 @@ class SearchPageTest(unittest.TestCase):
         self.assertEqual(page.searchTags, ["тег1", "тег2"])
 
         # Загрузим вики и прочитаем установленные параметры
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         searchPage = wiki[search_title]
 
         self.assertNotEqual(searchPage, None)
@@ -492,7 +492,7 @@ class SearchPageTest(unittest.TestCase):
         self.assertEqual(page.strategy, AllTagsSearchStrategy)
 
         # Загрузим вики и прочитаем установленные параметры
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         searchPage = wiki[search_title]
 
         self.assertNotEqual(searchPage, None)
@@ -513,7 +513,7 @@ class SearchPageTest(unittest.TestCase):
         self.assertEqual(page.strategy, AnyTagSearchStrategy)
 
         # Загрузим вики и прочитаем установленные параметры
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         searchPage = wiki[search_title]
 
         self.assertNotEqual(searchPage, None)

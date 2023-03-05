@@ -8,7 +8,7 @@ import stat
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_OPT_FILE
@@ -29,7 +29,7 @@ class TextPageCreationTest(unittest.TestCase):
         self.path = mkdtemp(prefix='Абырвалг абыр')
         self.eventcount = 0
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
@@ -183,13 +183,13 @@ class TextPageCreationTest(unittest.TestCase):
         self.assertEqual(SearchWikiPage, type(searchPage))
 
     def testIcon(self):
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         self.assertEqual(os.path.basename(
             wiki["Страница 2/Страница 3/Страница 4"].icon),
             "__icon.gif")
 
     def testReplaceIcon(self):
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
 
         wiki["Страница 1"].icon = self.icons[3]
         self.assertEqual(os.path.basename(wiki["Страница 1"].icon),
@@ -220,7 +220,7 @@ class TextPageCreationTest(unittest.TestCase):
                          "__icon.png")
 
     def testTags(self):
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         self.assertTrue("метка 1" in wiki["Страница 1"].tags)
         self.assertEqual(len(wiki["Страница 1"].tags), 1)
 
@@ -255,13 +255,13 @@ class TextPageCreationTest(unittest.TestCase):
         self.assertEqual(len(self.wikiroot.children), children)
 
     def testPageCreate(self):
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         self.assertEqual(wiki["Страница 1"].title, "Страница 1")
         self.assertEqual(wiki["Страница 2"].title, "Страница 2")
         self.assertEqual(wiki["Страница 2/Страница 3"].title, "Страница 3")
 
     def testCreateTextContent(self):
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         self.assertEqual(wiki["Страница 1"].content, "1234567")
         self.assertEqual(wiki["Страница 2/Страница 3"].content, "Абырвалг")
         self.assertEqual(wiki["Страница 2/Страница 3/Страница 4"].content,
@@ -275,7 +275,7 @@ class TextPageCreationTest(unittest.TestCase):
 
     def testSelection3(self):
         self.wikiroot.selectedPage = None
-        wiki2 = WikiDocument.load(self.path)
+        wiki2 = loadNotesTree(self.path)
 
         self.assertEqual(wiki2.selectedPage, None)
 
@@ -283,7 +283,7 @@ class TextPageCreationTest(unittest.TestCase):
         self.wikiroot.selectedPage = self.wikiroot["Страница 2/Страница 3"]
         self.wikiroot["Страница 2"].remove()
 
-        wiki2 = WikiDocument.load(self.path)
+        wiki2 = loadNotesTree(self.path)
 
         self.assertEqual(wiki2.selectedPage, None)
 
@@ -291,7 +291,7 @@ class TextPageCreationTest(unittest.TestCase):
         os.chmod(self._getConfigPath(self.wikiroot["Страница 1"]),
                  stat.S_IRUSR | stat.S_IXUSR)
 
-        wiki2 = WikiDocument.load(self.path)
+        wiki2 = loadNotesTree(self.path)
         self.assertTrue(wiki2["Страница 1"].readonly)
         self.assertFalse(wiki2["Страница 1/Страница 5"].readonly)
         self.assertFalse(wiki2["Страница 2"].readonly)
@@ -300,7 +300,7 @@ class TextPageCreationTest(unittest.TestCase):
         os.chmod(self._getConfigPath(self.wikiroot),
                  stat.S_IRUSR | stat.S_IXUSR)
 
-        wiki2 = WikiDocument.load(self.path)
+        wiki2 = loadNotesTree(self.path)
         self.assertTrue(wiki2["Страница 1"].readonly)
         self.assertTrue(wiki2["Страница 1/Страница 5"].readonly)
         self.assertTrue(wiki2["Страница 2"].readonly)
@@ -309,7 +309,7 @@ class TextPageCreationTest(unittest.TestCase):
         os.chmod(self._getConfigPath(self.wikiroot["Страница 2"]),
                  stat.S_IRUSR | stat.S_IXUSR)
 
-        wiki2 = WikiDocument.load(self.path)
+        wiki2 = loadNotesTree(self.path)
         self.assertTrue(wiki2["Страница 2"].readonly)
         self.assertFalse(wiki2["Страница 2/Страница 3"].readonly)
         self.assertFalse(wiki2["Страница 2/Страница 3/Страница 4"].readonly)

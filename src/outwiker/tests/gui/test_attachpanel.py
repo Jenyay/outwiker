@@ -4,8 +4,8 @@ import os.path
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
@@ -153,7 +153,7 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         # Создадим другую независимую вики
         newpath = mkdtemp(prefix='Абыр Абырвалг')
-        newwikiroot = WikiDocument.create(newpath)
+        newwikiroot = createNotesTree(newpath)
 
         TextPageFactory().create(newwikiroot, "Новая страница 1", [])
         TextPageFactory().create(newwikiroot, "Новая страница 2", [])

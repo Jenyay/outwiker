@@ -2,11 +2,11 @@
 
 import wx
 
+from outwiker.api.core.tree import pageExists
 from outwiker.core.search import (Searcher,
                                   AllTagsSearchStrategy,
                                   AnyTagSearchStrategy)
 from outwiker.core.tagslist import TagsList
-from outwiker.core.commands import pageExists
 from outwiker.core.config import IntegerOption
 from outwiker.gui.basepagepanel import BasePagePanel
 from outwiker.gui.tagscloud import TagsCloud
@@ -26,10 +26,10 @@ class SearchPanel(BasePagePanel):
         self._currentResultPages = []
 
         # Секция для хранения найденных результатов (кэш)
-        self._resultsSection = u"SearchResults"
-        self.sortStrategySection = u"Sort"
+        self._resultsSection = "SearchResults"
+        self.sortStrategySection = "Sort"
 
-        self._resultOptionTemplate = u"page_%d"
+        self._resultOptionTemplate = "page_%d"
 
         self._strategyList = [AnyTagSearchStrategy, AllTagsSearchStrategy]
         self._sortStrategies = getSortStrategies()
@@ -41,21 +41,21 @@ class SearchPanel(BasePagePanel):
         self.tagsList = TagsCloud(self)
         self.tagsList.SetMinSize((250, 150))
 
-        strategies = [_(u"Any tag"), _(u"All tags")]
+        strategies = [_("Any tag"), _("All tags")]
         self.tagsStrategy = wx.RadioBox(self,
                                         -1,
-                                        _(u"Tags"),
+                                        _("Tags"),
                                         choices=strategies,
                                         majorDimension=0,
                                         style=wx.RA_SPECIFY_ROWS)
         self.tagsStrategy.SetSelection(0)
 
-        self.clearTagsBtn = wx.Button(self, -1, _(u"Clear all tags"))
-        self.searchBtn = wx.Button(self, -1, _(u"Find"))
+        self.clearTagsBtn = wx.Button(self, -1, _("Clear all tags"))
+        self.searchBtn = wx.Button(self, -1, _("Find"))
         self.resultWindow = parent.borrowHtmlRender(self)
         self.resultWindow.Show()
 
-        self.sortLabel = wx.StaticText(self, -1, _(u"Sort by "))
+        self.sortLabel = wx.StaticText(self, -1, _("Sort by "))
         self.sortStrategy = wx.ComboBox(self,
                                         style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self.sortStrategy.SetMinSize((200, -1))

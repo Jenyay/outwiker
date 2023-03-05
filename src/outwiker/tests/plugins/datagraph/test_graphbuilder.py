@@ -4,10 +4,10 @@ import unittest
 from tempfile import mkdtemp, NamedTemporaryFile
 import os.path
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.utils import removeDir
 
@@ -23,7 +23,7 @@ class GraphBuilderTest(unittest.TestCase):
         self._defaultHeight = '300'
 
         self.path = mkdtemp(prefix='Абырвалг абыр')
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         self.page = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         Application.wikiroot = None
 

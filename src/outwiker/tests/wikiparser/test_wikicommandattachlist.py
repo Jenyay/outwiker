@@ -7,7 +7,7 @@ from pathlib import Path
 from tempfile import mkdtemp
 from typing import List
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.parser.commands.attachlist import AttachListCommand
@@ -57,7 +57,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
     def _check_items_order(self, result: str, items: List[str]):

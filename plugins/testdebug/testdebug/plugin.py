@@ -7,12 +7,12 @@ import time
 
 import wx
 
+from outwiker.app.gui.pagedialogpanels.generalpanel import IconsGroupInfo
 from outwiker.core.commands import MessageBox
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getImagesDir
 from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
 from outwiker.gui.hotkey import HotKey
-from outwiker.gui.pagedialogpanels.generalpanel import IconsGroupInfo
 from outwiker.gui.defines import TOOLBAR_PLUGINS
 from outwiker.utilites.text import positionInside
 

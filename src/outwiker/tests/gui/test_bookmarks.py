@@ -2,7 +2,7 @@
 
 import unittest
 
-from outwiker.actions.addbookmark import AddBookmarkAction
+from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.gui.defines import MENU_BOOKMARKS
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
@@ -10,7 +10,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=True)
         self.wikiroot = self.createWiki()
 
         factory = TextPageFactory()

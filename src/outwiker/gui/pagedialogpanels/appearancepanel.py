@@ -5,17 +5,17 @@ import os.path
 
 import wx
 
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
-from outwiker.core.commands import MessageBox
 from outwiker.core.events import PageDialogPageStyleChangedParams
 from outwiker.gui.guiconfig import PageDialogConfig
 
-from .basecontroller import BasePageDialogController
+from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 
 
-class AppearancePanel (wx.Panel):
+class AppearancePanel(wx.Panel):
     def __init__(self, parent):
         super(AppearancePanel, self).__init__(parent)
 
@@ -39,7 +39,7 @@ class AppearancePanel (wx.Panel):
         self.Layout()
 
 
-class AppearanceController (BasePageDialogController):
+class AppearanceController(BasePageDialogController):
     def __init__(self, appearancePanel, application, dialog):
         super(AppearanceController, self).__init__(application)
         self._dialog = dialog

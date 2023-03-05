@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -23,7 +23,7 @@ import outwiker.core.tree
 import outwiker.core.events
 
 
-class WikiPageController(object):
+class WikiPageController:
     """GUI controller for wiki page"""
     def __init__(self, application):
         self._application = application
@@ -52,7 +52,8 @@ class WikiPageController(object):
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
         self._application.onTextEditorKeyDown -= self.__onTextEditorKeyDown
-        self._colorizerController.clear()
+        if not self._application.testMode:
+            self._colorizerController.clear()
 
     def _addTab(self, dialog):
         if self._appearancePanel is None:
@@ -87,12 +88,14 @@ class WikiPageController(object):
 
     @pagetype(WikiWikiPage)
     def __onPageViewCreate(self, page):
-        self._colorizerController.initialize(page)
+        if not self._application.testMode:
+            self._colorizerController.initialize(page)
         self._application.mainWindow.pagePanel.pageView.SetFocus()
 
     @pagetype(WikiWikiPage)
     def __onPageViewDestroy(self, page):
-        self._colorizerController.clear()
+        if not self._application.testMode:
+            self._colorizerController.clear()
 
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(WikiPageFactory())

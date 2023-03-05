@@ -6,8 +6,8 @@ from tempfile import mkdtemp
 
 import wx
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.core.attachwatcher import AttachWatcher
@@ -28,7 +28,7 @@ class AttachWatcherTest(BaseWxTestCase):
 
         # Path to wiki
         self.path = mkdtemp(prefix='OutWiker AttachWatcherTest Тесты')
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         self.page_01 = TextPageFactory().create(self.wikiroot,
                                                 "Страница 1",
                                                 [])

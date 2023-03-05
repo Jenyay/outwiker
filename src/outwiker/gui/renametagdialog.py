@@ -2,6 +2,7 @@
 
 import wx
 
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 from .singletagselector import SingleTagSelector
 
 
@@ -17,7 +18,7 @@ class RenameTagDialog(wx.Dialog):
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
-        self.SetTitle(_(u"Rename tag"))
+        self.SetTitle(_("Rename tag"))
 
         self.__createControls(tagsList)
         self.__layout()
@@ -31,8 +32,8 @@ class RenameTagDialog(wx.Dialog):
         self.__tagSelector.setTags(tagsList)
 
         self.__selectTagLabel = wx.StaticText(
-            self, -1, _(u"Select tag for rename"))
-        self.__newTagLabel = wx.StaticText(self, -1, _(u"New tag name"))
+            self, -1, _("Select tag for rename"))
+        self.__newTagLabel = wx.StaticText(self, -1, _("New tag name"))
 
         self.__newTagName = wx.TextCtrl(self, -1)
 
@@ -70,16 +71,14 @@ class RenameTagDialog(wx.Dialog):
         return self.__newTagName.GetValue().strip()
 
     def __onOk(self, _event):
-        from outwiker.core.commands import MessageBox
-
         if self.oldTagName is None:
-            MessageBox(_(u"Select tag for rename"), _(
-                u"Error"), wx.ICON_ERROR | wx.OK)
+            MessageBox(_("Select tag for rename"), _(
+                "Error"), wx.ICON_ERROR | wx.OK)
             return
 
         if len(self.newTagName) == 0:
-            MessageBox(_(u"Enter new tag name"), _(
-                u"Error"), wx.ICON_ERROR | wx.OK)
+            MessageBox(_("Enter new tag name"), _(
+                "Error"), wx.ICON_ERROR | wx.OK)
             return
 
         self.EndModal(wx.ID_OK)

@@ -5,6 +5,7 @@ import idna
 import wx
 
 import outwiker.core
+from outwiker.api.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams
 from outwiker.core.system import getOS
@@ -77,7 +78,7 @@ class HtmlRenderBase(wx.Panel):
             outwiker.core.system.getOS().startFile(href)
         except OSError:
             text = _(u"Can't execute file '%s'") % (href)
-            outwiker.core.commands.showError(Application.mainWindow, text)
+            showError(Application.mainWindow, text)
 
     def _getLinkProtocol(self, link):
         """

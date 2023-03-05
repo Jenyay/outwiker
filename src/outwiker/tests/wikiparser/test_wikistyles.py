@@ -3,8 +3,8 @@
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -16,7 +16,7 @@ class WikiStylesBlockTest(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
         self.path = mkdtemp(prefix='Абырвалг абыр')
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница", [])
         factory = ParserFactory()
         self.parser = factory.make(self.testPage, Application.config)
@@ -202,7 +202,7 @@ class WikiStylesInlineTest(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
         self.path = mkdtemp(prefix='Абырвалг абыр')
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница", [])
         factory = ParserFactory()
         self.parser = factory.make(self.testPage, Application.config)

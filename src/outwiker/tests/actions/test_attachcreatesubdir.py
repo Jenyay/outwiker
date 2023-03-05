@@ -3,11 +3,9 @@
 import unittest
 from pathlib import Path
 
-import wx
-
+from outwiker.app.actions.attachcreatesubdir import AttachCreateSubdirAction
+from outwiker.api.services.attachment import getDefaultSubdirName
 from outwiker.core.attachment import Attachment
-from outwiker.core.exceptions import ReadonlyException
-from outwiker.actions.attachcreatesubdir import AttachCreateSubdirAction
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
@@ -40,7 +38,7 @@ class AttachCreateSubdirTest(unittest.TestCase, BaseOutWikerGUIMixin):
         action.run(None)
 
         root = Path(attach.getAttachPath(create=False))
-        new_subdir = root / action.default_subdir_name
+        new_subdir = root / getDefaultSubdirName()
 
         self.assertTrue(root.exists())
         self.assertTrue(new_subdir.exists())
@@ -56,7 +54,7 @@ class AttachCreateSubdirTest(unittest.TestCase, BaseOutWikerGUIMixin):
         action.run(None)
 
         root = Path(attach.getAttachPath(create=False))
-        new_subdir = root / subdir / action.default_subdir_name
+        new_subdir = root / subdir / getDefaultSubdirName()
 
         self.assertTrue(new_subdir.exists())
         self.assertTrue(new_subdir.is_dir())
@@ -70,9 +68,9 @@ class AttachCreateSubdirTest(unittest.TestCase, BaseOutWikerGUIMixin):
         action.run(None)
 
         root = Path(attach.getAttachPath(create=False))
-        new_subdir_1 = root / action.default_subdir_name
-        new_subdir_2 = root / (action.default_subdir_name + ' (1)')
-        new_subdir_3 = root / (action.default_subdir_name + ' (2)')
+        new_subdir_1 = root / getDefaultSubdirName()
+        new_subdir_2 = root / (getDefaultSubdirName() + ' (1)')
+        new_subdir_3 = root / (getDefaultSubdirName() + ' (2)')
 
         self.assertTrue(root.exists())
         self.assertTrue(new_subdir_1.exists())
@@ -90,13 +88,13 @@ class AttachCreateSubdirTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.page)
 
         root = Path(attach.getAttachPath(create=True))
-        fname = root / action.default_subdir_name
+        fname = root / getDefaultSubdirName()
         with open(fname, 'w'):
             pass
 
         action.run(None)
 
-        new_subdir = root / (action.default_subdir_name + ' (1)')
+        new_subdir = root / (getDefaultSubdirName() + ' (1)')
 
         self.assertTrue(new_subdir.exists())
         self.assertTrue(new_subdir.is_dir())

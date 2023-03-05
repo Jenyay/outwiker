@@ -6,13 +6,14 @@ import os
 import wx
 import wx.aui
 
-from outwiker.actions.search import (SearchAction,
-                                     SearchNextAction,
-                                     SearchPrevAction,
-                                     SearchAndReplaceAction)
+from outwiker.app.actions.search import (SearchAction,
+                                         SearchNextAction,
+                                         SearchPrevAction,
+                                         SearchAndReplaceAction)
 import outwiker.actions.polyactionsid as polyactions
+from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.mainwindow import setStatusText
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.defines import (PAGE_MODE_TEXT,
                                    PAGE_MODE_PREVIEW,
                                    REGISTRY_PAGE_CURSOR_POSITION)
@@ -32,7 +33,7 @@ class BaseHtmlPanel(BaseTextPanel):
     CODE_PAGE_INDEX = 0
     RESULT_PAGE_INDEX = 1
 
-    def __init__(self, parent: 'outwiker.gui.currentpagepanel.CurrentPagePanel',
+    def __init__(self, parent: 'outwiker.app.gui.currentpagepanel.CurrentPagePanel',
                  application):
         logger.debug('BaseHtmlPanel creation started')
         super().__init__(parent, application)

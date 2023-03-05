@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.pagedialogpanels.appearancepanel import (
-    AppearancePanel,
-    AppearanceController)
 
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.event import pagetype
@@ -14,12 +11,15 @@ from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.gui.simplespellcontroller import SimpleSpellController
+from outwiker.gui.pagedialogpanels.appearancepanel import (
+    AppearancePanel,
+    AppearanceController)
 from outwiker.utilites.textfile import writeTextFile, readTextFile
 
 from .htmlpage import HtmlWikiPage, HtmlPageFactory
 
 
-class HtmlPageController(object):
+class HtmlPageController:
     """GUI controller for HTML page"""
 
     def __init__(self, application):
@@ -46,7 +46,8 @@ class HtmlPageController(object):
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
-        self._spellController.clear()
+        if not self._application.testMode:
+            self._spellController.clear()
 
     def _addTab(self, dialog):
         if self._appearancePanel is None:
@@ -76,12 +77,14 @@ class HtmlPageController(object):
     @pagetype(HtmlWikiPage)
     def __onPageViewCreate(self, page):
         assert page is not None
-        self._spellController.initialize(page)
+        if not self._application.testMode:
+            self._spellController.initialize(page)
 
     @pagetype(HtmlWikiPage)
     def __onPageViewDestroy(self, page):
         assert page is not None
-        self._spellController.clear()
+        if not self._application.testMode:
+            self._spellController.clear()
 
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(HtmlPageFactory())

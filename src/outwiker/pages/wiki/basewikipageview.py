@@ -3,19 +3,18 @@
 import logging
 import wx
 
-from outwiker.core.commands import showError
-
+from outwiker.api.services.messages import showError
+from outwiker.core.defines import (PAGE_MODE_TEXT,
+                                   PAGE_MODE_PREVIEW,
+                                   PAGE_MODE_HTML)
 from outwiker.gui.htmltexteditor import HtmlTextEditor
+from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
+from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 from outwiker.utilites.textfile import readTextFile
 
 from .actions.openhtmlcode import WikiOpenHtmlCodeAction
 from .actions.updatehtml import WikiUpdateHtmlAction
-from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
-from outwiker.core.defines import (PAGE_MODE_TEXT,
-                                   PAGE_MODE_PREVIEW,
-                                   PAGE_MODE_HTML)
-from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 
 
 logger = logging.getLogger('outwiker.pages.wiki.basewikipageview')

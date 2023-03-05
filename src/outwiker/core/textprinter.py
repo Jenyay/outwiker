@@ -5,8 +5,8 @@ import html
 import wx
 import wx.html
 
-from .commands import MessageBox
 from .application import Application
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.guiconfig import TextPrintConfig
 
 

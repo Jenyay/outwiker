@@ -3,9 +3,9 @@
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.application import Application
 from outwiker.core.exceptions import ReadonlyException
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
@@ -22,7 +22,7 @@ class PageAliasTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         self.page = TextPageFactory().create(self.wikiroot, 'Страница 1', [])
         Application.wikiroot = self.wikiroot
 
@@ -71,7 +71,7 @@ class PageAliasTest(unittest.TestCase):
 
     def test_alias_02(self):
         self.page.alias = 'Псевдоним'
-        newwiki = WikiDocument.load(self.path)
+        newwiki = loadNotesTree(self.path)
         page = newwiki['Страница 1']
 
         self.assertEqual(page.alias, 'Псевдоним')
@@ -83,7 +83,7 @@ class PageAliasTest(unittest.TestCase):
         Application.wikiroot = None
         Application.wikiroot = self.wikiroot
 
-        newwiki = WikiDocument.load(self.path)
+        newwiki = loadNotesTree(self.path)
         page = newwiki['Страница 1']
 
         self.assertEqual(page.alias, 'Псевдоним')
@@ -96,7 +96,7 @@ class PageAliasTest(unittest.TestCase):
         Application.wikiroot = None
         Application.wikiroot = self.wikiroot
 
-        newwiki = WikiDocument.load(self.path)
+        newwiki = loadNotesTree(self.path)
         page = newwiki['Страница 1']
 
         self.assertEqual(page.alias, 'Псевдоним')
@@ -104,7 +104,7 @@ class PageAliasTest(unittest.TestCase):
         self.assertEqual(page.display_title, 'Псевдоним')
 
     def test_alias_readonly_01(self):
-        newwiki = WikiDocument.load(self.path, readonly=True)
+        newwiki = loadNotesTree(self.path, readonly=True)
         page = newwiki['Страница 1']
 
         self.assertRaises(ReadonlyException,
@@ -114,7 +114,7 @@ class PageAliasTest(unittest.TestCase):
     def test_alias_readonly_02(self):
         self.page.alias = 'Псевдоним'
 
-        newwiki = WikiDocument.load(self.path, readonly=True)
+        newwiki = loadNotesTree(self.path, readonly=True)
         page = newwiki['Страница 1']
 
         self.assertRaises(ReadonlyException,
@@ -124,7 +124,7 @@ class PageAliasTest(unittest.TestCase):
     def test_alias_readonly_03(self):
         self.page.alias = 'Псевдоним'
 
-        newwiki = WikiDocument.load(self.path, readonly=True)
+        newwiki = loadNotesTree(self.path, readonly=True)
         page = newwiki['Страница 1']
 
         self.assertRaises(ReadonlyException,
@@ -134,7 +134,7 @@ class PageAliasTest(unittest.TestCase):
     def test_alias_readonly_04(self):
         self.page.alias = 'Псевдоним'
 
-        newwiki = WikiDocument.load(self.path, readonly=True)
+        newwiki = loadNotesTree(self.path, readonly=True)
         page = newwiki['Страница 1']
 
         self.assertRaises(ReadonlyException,

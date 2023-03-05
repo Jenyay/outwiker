@@ -5,7 +5,7 @@ import os
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
@@ -19,7 +19,7 @@ class ManualEditTest (unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
@@ -79,7 +79,7 @@ class ManualEditTest (unittest.TestCase):
         os.renames(page.path, newpath)
 
         # Заново загрузим вики
-        newroot = WikiDocument.load(self.path)
+        newroot = loadNotesTree(self.path)
 
         self.assertEqual(newroot["Страница 1"], None)
         self.assertNotEqual(newroot[newtitle], None)

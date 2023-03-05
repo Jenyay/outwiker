@@ -4,7 +4,7 @@ import unittest
 
 import wx
 
-from outwiker.core.commands import createNewWiki
+from outwiker.api.services.tree import createNewWiki
 from outwiker.gui.tester import Tester
 from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin

@@ -18,3 +18,6 @@ class Export2HtmlLoadingTest(PluginLoadingMixin, unittest.TestCase):
         по которому его можно найти в PluginsLoader
         """
         return "Export2Html"
+
+    def isEnabledActionsGui(self) -> bool:
+        return True

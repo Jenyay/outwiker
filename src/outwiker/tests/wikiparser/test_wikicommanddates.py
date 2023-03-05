@@ -4,7 +4,7 @@ from datetime import datetime
 from tempfile import mkdtemp
 from unittest import TestCase
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parser.commands.dates import (CommandDateCreation,
                                                        CommandDateEdition)
@@ -35,7 +35,7 @@ class WikiCommandDatesTest (BaseOutWikerMixin, TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = WikiPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])

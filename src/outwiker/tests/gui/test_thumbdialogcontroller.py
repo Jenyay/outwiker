@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.thumbdialogcontroller import ThumbDialogController
@@ -20,7 +20,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.initApplication()
         self.path = mkdtemp(prefix="Абырвалг абыр")
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         self.testPage = self.wikiroot["Страница 1"]

@@ -5,7 +5,7 @@ import datetime
 import time
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.config import PageConfig
 from outwiker.core.style import Style
 from outwiker.core.attachment import Attachment
@@ -22,7 +22,7 @@ class PageDateTimeTest(unittest.TestCase):
         # Максимальная погрешность при расчете времени
         self._maxDelta = datetime.timedelta(seconds=5)
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
     def tearDown(self):
         removeDir(self.path)
@@ -33,7 +33,7 @@ class PageDateTimeTest(unittest.TestCase):
             PageConfig.sectionName,
             PageConfig.datetimeParamName
         )
-        self.wikiroot = WikiDocument.load(self.path)
+        self.wikiroot = loadNotesTree(self.path)
         self.assertEqual(self.wikiroot["Страница 1"].datetime, None)
 
     def testCreateDate_01(self):
@@ -41,8 +41,7 @@ class PageDateTimeTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 1", [])
 
         self.assertNotEqual(self.wikiroot["Страница 1"].datetime, None)
-        self.assertNotEqual(self.wikiroot["Страница 1"].creationdatetime,
-                            None)
+        self.assertNotEqual(self.wikiroot["Страница 1"].creationdatetime, None)
 
         delta = now - self.wikiroot["Страница 1"].datetime
         self.assertLess(delta, self._maxDelta)
@@ -64,7 +63,7 @@ class PageDateTimeTest(unittest.TestCase):
 
         time.sleep(0.1)
 
-        newwiki = WikiDocument.load(self.path, False)
+        newwiki = loadNotesTree(self.path, False)
         self.assertEqual(creationDateTime,
                          newwiki["Страница 1"].creationdatetime)
 
@@ -74,7 +73,7 @@ class PageDateTimeTest(unittest.TestCase):
 
         time.sleep(0.1)
 
-        newwiki = WikiDocument.load(self.path, False)
+        newwiki = loadNotesTree(self.path, False)
         newwiki["Страница 1"].content = "Абырвалг"
 
         self.assertEqual(creationDateTime,
@@ -87,7 +86,7 @@ class PageDateTimeTest(unittest.TestCase):
         time.sleep(0.1)
         page.content = "111"
 
-        newwiki = WikiDocument.load(self.path, False)
+        newwiki = loadNotesTree(self.path, False)
         newwiki["Страница 1"].content = "Абырвалг"
 
         self.assertEqual(creationDateTime,
@@ -99,7 +98,7 @@ class PageDateTimeTest(unittest.TestCase):
 
         date = page.datetime
 
-        newwiki = WikiDocument.load(self.path, False)
+        newwiki = loadNotesTree(self.path, False)
         self.assertEqual(newwiki["Страница 1"].creationdatetime, date)
         self.assertEqual(
             newwiki["Страница 1"].params.creationDatetimeOption.value, date
@@ -111,7 +110,7 @@ class PageDateTimeTest(unittest.TestCase):
 
         date = page.datetime
 
-        newwiki = WikiDocument.load(self.path, True)
+        newwiki = loadNotesTree(self.path, True)
         self.assertEqual(newwiki["Страница 1"].creationdatetime, date)
         self.assertEqual(
             newwiki["Страница 1"].params.creationDatetimeOption.value,
@@ -141,7 +140,7 @@ class PageDateTimeTest(unittest.TestCase):
         newdate = datetime.datetime(2012, 8, 24)
         self.wikiroot["Страница 1"].datetime = newdate
 
-        newroot = WikiDocument.load(self.path)
+        newroot = loadNotesTree(self.path)
         self.assertEqual(newroot["Страница 1"].datetime, newdate)
 
     def testOldContent(self):
