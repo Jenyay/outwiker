@@ -19,6 +19,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.tree_commands import getAlternativeTitle
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.testeddialog import TestedFileDialog
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 
 logger = logging.getLogger('outwiker.api.services.tree')
@@ -250,8 +251,6 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
 
         if dlg.ShowModal() == wx.ID_OK:
             try:
-                from outwiker.pages.wiki.wikipage import WikiPageFactory
-
                 newwiki = WikiDocument.create(dlg.GetPath())
                 WikiPageFactory().create(newwiki, newPageTitle, [_("test")])
                 firstPage = newwiki[newPageTitle]
