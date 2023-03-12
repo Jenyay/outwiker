@@ -1,10 +1,5 @@
 # -*- coding=utf-8 -*-
 
-from pathlib import Path
-from typing import List
-
-import pytest
-
 from outwiker.core.attachment import Attachment
 from outwiker.tests.fixtures import wikipage
 from outwiker.tests.utils import attach_files
