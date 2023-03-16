@@ -10,7 +10,6 @@ from typing import Iterable, List, Union
 import wx
 
 from outwiker.api.core.tree import testreadonly
-from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.events import BeginAttachRenamingParams
 from outwiker.core.exceptions import ReadonlyException
@@ -69,7 +68,7 @@ def renameAttach(parent: wx.Window,
     except (IOError, shutil.Error) as e:
         text = _('Error renaming file\n{} -> {}\n{}').format(fname_src, fname_dest, str(e))
         logger.error(text)
-        showError(Application.mainWindow, text)
+        showError(parent, text)
         return False
 
     return True
@@ -103,7 +102,7 @@ def attachFiles(parent: wx.Window,
             if not item.exists():
                 text = _('File not exists\n{0}').format(item)
                 logger.error(text)
-                showError(Application.mainWindow, text)
+                showError(parent, text)
                 return []
 
             if item.is_file():
@@ -166,7 +165,7 @@ def attachFiles(parent: wx.Window,
         except IOError:
             text = _("Can't create directory: {}").format(current_subdir)
             logger.error(text)
-            showError(Application.mainWindow, text)
+            showError(parent, text)
             return
 
     for fname_relative in new_relative_attaches:
@@ -177,7 +176,7 @@ def attachFiles(parent: wx.Window,
         except (IOError, shutil.Error) as e:
             text = _('Error copying files\n{0}').format(str(e))
             logger.error(text)
-            showError(Application.mainWindow, text)
+            showError(parent, text)
             return
 
 
