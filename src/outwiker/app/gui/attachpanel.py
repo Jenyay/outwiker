@@ -23,12 +23,13 @@ from outwiker.app.actions.attachopenfolder import OpenAttachFolderActionForAttac
 from outwiker.app.actions.attachrename import RenameAttachActionForAttachPanel
 from outwiker.app.actions.attachremove import RemoveAttachesActionForAttachPanel
 
+from outwiker.app.gui.dropfiles import BaseDropFilesTarget
+
 from outwiker.core.attachment import Attachment
 from outwiker.core.events import (BeginAttachRenamingParams,
                                   AttachSelectionChangedParams)
 from outwiker.core.system import getBuiltinImagePath, getOS
 
-from outwiker.gui.dropfiles import BaseDropFilesTarget
 from outwiker.gui.guiconfig import AttachConfig, GeneralGuiConfig
 
 

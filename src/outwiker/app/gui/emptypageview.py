@@ -6,7 +6,7 @@ from outwiker.api.services.tree import (openWiki,
                                         createNewWiki,
                                         openWikiWithDialog)
 
-from .basepagepanel import BasePagePanel
+from outwiker.gui.basepagepanel import BasePagePanel
 
 
 class ClosedTreePanel(BasePagePanel):

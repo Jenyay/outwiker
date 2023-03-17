@@ -57,6 +57,7 @@ from outwiker.app.gui.menucontroller import MenuController
 from outwiker.app.gui.preferences.prefcontroller import PrefController
 from outwiker.app.gui.tabscontroller import TabsController
 from outwiker.app.gui.toolbarscontroller import ToolBarsController
+from outwiker.app.gui.trayicon import getTrayIconController
 
 from outwiker.api.services.messages import showError
 
@@ -65,7 +66,6 @@ from outwiker.core.system import getOS, getBuiltinImagePath
 
 from outwiker.gui import defines as guidefines
 from outwiker.gui.guiconfig import MainWindowConfig
-from outwiker.gui.trayicon import getTrayIconController
 from outwiker.gui.controls.toolbar2 import ToolBar2Container
 from outwiker.gui.controls.toastercontroller import ToasterController
 from outwiker.gui.statusbar import StatusBarController

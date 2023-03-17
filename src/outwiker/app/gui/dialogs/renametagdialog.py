@@ -3,7 +3,7 @@
 import wx
 
 from outwiker.api.gui.dialogs.messagebox import MessageBox
-from .singletagselector import SingleTagSelector
+from outwiker.gui.singletagselector import SingleTagSelector
 
 
 class RenameTagDialog(wx.Dialog):

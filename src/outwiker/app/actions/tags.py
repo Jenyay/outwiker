@@ -3,13 +3,13 @@
 import wx
 
 from outwiker.api.core.tree import testreadonly
-from outwiker.gui.baseaction import BaseAction
+from outwiker.app.gui.dialogs.renametagdialog import RenameTagDialog
 from outwiker.core.tagscommands import (tagBranch,
                                         removeTagsFromBranch,
                                         renameTag)
-from outwiker.gui.tagsdialog import TagsDialog
-from outwiker.gui.renametagdialog import RenameTagDialog
 from outwiker.core.tagslist import TagsList
+from outwiker.gui.baseaction import BaseAction
+from outwiker.gui.tagsdialog import TagsDialog
 
 
 class AddTagsToBranchAction(BaseAction):

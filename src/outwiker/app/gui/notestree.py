@@ -20,6 +20,7 @@ from outwiker.api.services.tree import renamePage, movePage
 
 from outwiker.app.actions.addchildpage import AddChildPageAction
 
+from outwiker.app.gui.dropfiles import BaseDropFilesTarget
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
@@ -27,7 +28,6 @@ from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
 from outwiker.core.system import getBuiltinImagePath
 
 from outwiker.gui.controls.notestreectrl import NotesTreeCtrl
-from outwiker.gui.dropfiles import BaseDropFilesTarget
 
 
 class NotesTree(wx.Panel):

@@ -6,8 +6,8 @@ import wx
 
 from outwiker.core.system import getOS
 import outwiker.gui.controls.ultimatelistctrl as ULC
-from .controls.pagelist import PageList, BaseColumn
-from .controls.popupwindow import ResizablePopupWindow
+from outwiker.gui.controls.pagelist import PageList, BaseColumn
+from outwiker.gui.controls.popupwindow import ResizablePopupWindow
 
 
 class PageListPopup(ResizablePopupWindow):

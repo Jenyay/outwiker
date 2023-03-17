@@ -5,10 +5,10 @@ from typing import List
 import wx
 
 from outwiker.app.gui.tagspanelcontroller import TagsPanelController
+from outwiker.app.gui.pagelistpopup import PageListPopup
 
 from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.tagscloud import TagsCloud
-from outwiker.gui.pagelistpopup import PageListPopup
 from outwiker.gui.controls.pagelist_columns import BaseColumn, ColumnsFactory
 
 
