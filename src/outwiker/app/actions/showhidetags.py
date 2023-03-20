@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 
-from .showhidebase import ShowHideBaseAction
+from outwiker.api.gui.mainwindow import showHideTagsPanel
+from outwiker.gui.baseaction import BaseAction
 
 
-class ShowHideTagsAction (ShowHideBaseAction):
+class ShowHideTagsAction(BaseAction):
     """
     Показать / скрыть панель с тегами
     """
-    stringId = u"ShowHideTags"
+    stringId = "ShowHideTags"
 
     def __init__(self, application):
-        super(ShowHideTagsAction, self).__init__(application)
+        self._application = application
 
     @property
     def title(self):
-        return _(u"Tags")
+        return _("Tags")
 
     @property
     def description(self):
-        return _(u"Show / hide a tags panel")
+        return _("Show / hide a tags panel")
 
-    def getPanel(self):
-        return self._application.mainWindow.tagsCloudPanel
+    def run(self, params):
+        showHideTagsPanel(self._application, params)

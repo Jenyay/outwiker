@@ -1,5 +1,7 @@
 def test_old_plugins_imports():
+    # Don't used in the last version
     from outwiker.actions.close import CloseAction
+
     from outwiker.actions.showhideattaches import ShowHideAttachesAction
     from outwiker.actions.showhidetree import ShowHideTreeAction
     from outwiker.core.attachfilters import (getImagesOnlyFilter, getHiddenFilter, getDirOnlyFilter, andFilter, orFilter, notFilter)

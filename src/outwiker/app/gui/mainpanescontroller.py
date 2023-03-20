@@ -9,7 +9,7 @@ from outwiker.app.actions.showhidetags import ShowHideTagsAction
 from outwiker.gui.defines import MENU_VIEW
 
 
-class MainPanesController(object):
+class MainPanesController:
     def __init__(self, application, mainWindow):
         self.__application = application
         self.__mainWindow = mainWindow
@@ -18,6 +18,10 @@ class MainPanesController(object):
         self.__actions = [ShowHideTreeAction,
                           ShowHideTagsAction,
                           ShowHideAttachesAction]
+
+        self._panels = [self.__application.mainWindow.treePanel,
+                        self.__application.mainWindow.tagsCloudPanel,
+                        self.__application.mainWindow.attachPanel]
 
         self.auiManager.SetDockSizeConstraint(0.8, 0.8)
         self.auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
@@ -33,9 +37,8 @@ class MainPanesController(object):
         paneName = event.GetPane().name
         actionController = self.__application.actionController
 
-        for action in self.__getAllActions():
-            panel = action.getPanel().panel
-            if paneName == self.auiManager.GetPane(panel).name:
+        for action, panel in zip(self.__getAllActions(), self._panels):
+            if paneName == self.auiManager.GetPane(panel.panel).name:
                 actionController.check(action.stringId, False)
 
         event.Skip()
@@ -52,8 +55,7 @@ class MainPanesController(object):
         """
         Показать все панели
         """
-        for action in self.__getAllActions():
-            panel = action.getPanel()
+        for panel in self._panels:
             if panel in self._fullscreenHidden:
                 panel.show()
 
@@ -66,8 +68,7 @@ class MainPanesController(object):
         Скрыть все панели
         """
         self._fullscreenHidden = []
-        for action in self.__getAllActions():
-            panel = action.getPanel()
+        for panel in self._panels:
             if panel.isShown():
                 panel.hide()
                 self._fullscreenHidden.append(panel)
@@ -78,15 +79,15 @@ class MainPanesController(object):
         """
         Закрыть все панели
         """
-        for action in self.__getAllActions():
-            action.getPanel().close()
+        for panel in self._panels:
+            panel.close()
 
     def loadPanesSize(self):
         """
         Загрузить размеры всех панелей
         """
-        for action in self.__getAllActions():
-            action.getPanel().loadPaneSize()
+        for panel in self._panels:
+            panel.loadPaneSize()
 
         self.auiManager.Update()
 
@@ -94,8 +95,8 @@ class MainPanesController(object):
         """
         Сохранить размеры всех панелей
         """
-        for action in self.__getAllActions():
-            action.getPanel().saveParams()
+        for panel in self._panels:
+            panel.saveParams()
 
     def updateViewMenu(self):
         """

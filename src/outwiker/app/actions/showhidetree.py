@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 
-from .showhidebase import ShowHideBaseAction
+from outwiker.api.gui.mainwindow import showHideNotesTreePanel
+from outwiker.gui.baseaction import BaseAction
 
 
-class ShowHideTreeAction (ShowHideBaseAction):
+class ShowHideTreeAction(BaseAction):
     """
     Показать / скрыть панель с деревом заметок
     """
-    stringId = u"ShowHideTree"
+    stringId = "ShowHideTree"
 
     def __init__(self, application):
-        super(ShowHideTreeAction, self).__init__(application)
+        self._application = application
 
     @property
     def title(self):
-        return _(u"Notes Tree")
+        return _("Notes Tree")
 
     @property
     def description(self):
-        return _(u"Show / hide a notes tree panel")
+        return _("Show / hide a notes tree panel")
 
-    def getPanel(self):
-        return self._application.mainWindow.treePanel
+    def run(self, params):
+        showHideNotesTreePanel(self._application, params)

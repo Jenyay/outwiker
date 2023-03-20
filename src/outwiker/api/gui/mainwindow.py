@@ -40,3 +40,24 @@ def setStatusText(item_name: str, text: str) -> None:
     """
     if Application.mainWindow:
         Application.mainWindow.statusbar.setStatusText(item_name, text)
+
+
+def _showHideMainPanel(application, panel, visible):
+    if visible:
+        panel.pane.Show()
+    else:
+        panel.pane.Hide()
+
+    application.mainWindow.auiManager.Update()
+
+
+def showHideAttachPanel(application, visible):
+    _showHideMainPanel(application, application.mainWindow.attachPanel, visible)
+
+
+def showHideTagsPanel(application, visible):
+    _showHideMainPanel(application, application.mainWindow.tagsCloudPanel, visible)
+
+
+def showHideNotesTreePanel(application, visible):
+    _showHideMainPanel(application, application.mainWindow.treePanel, visible)
