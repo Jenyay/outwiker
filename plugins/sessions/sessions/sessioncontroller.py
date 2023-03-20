@@ -2,8 +2,8 @@
 
 import os.path
 
+from outwiker.api.core.tree import closeWiki
 from outwiker.core.exceptions import ReadonlyException
-from outwiker.actions.close import CloseAction
 from outwiker.core.commands import openWiki
 
 from .sessionstorage import SessionInfo
@@ -60,8 +60,7 @@ class SessionController:
         # Закрыть вики
         if (self._application.wikiroot is not None and
                 os.path.abspath(self._application.wikiroot.path) != os.path.abspath(session.path)):
-            self._application.actionController.getAction(
-                CloseAction.stringId).run(None)
+            closeWiki(self._application)
 
         # Открыть новую вики
         wiki = openWiki(os.path.abspath(session.path), session.readonly)
