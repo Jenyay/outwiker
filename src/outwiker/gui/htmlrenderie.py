@@ -11,7 +11,7 @@ import wx
 
 import outwiker.core.system
 
-from outwiker.api.services.messages import showError
+from outwiker.app.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR
 from outwiker.gui.defines import ID_KEY_CTRL, ID_MOUSE_LEFT

@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 from outwiker.gui.controls.hotkeyctrl import HotkeyCtrl, EVT_HOTKEY_EDIT
 

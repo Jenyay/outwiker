@@ -5,7 +5,7 @@ import idna
 import wx
 
 import outwiker.core
-from outwiker.api.services.messages import showError
+from outwiker.app.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams
 from outwiker.core.system import getOS

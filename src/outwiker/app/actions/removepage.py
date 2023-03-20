@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.services.tree import removePage
+from outwiker.app.services.tree import removePage
 from outwiker.gui.baseaction import BaseAction
 
 

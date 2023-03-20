@@ -1,7 +1,7 @@
 # -*- coding=utf-8 -*-
 
-from outwiker.api.core.tree import testreadonly
-from outwiker.api.services.attachment import createSubdir
+from outwiker.app.services.attachment import createSubdir
+from outwiker.core.treetools import testreadonly
 from outwiker.gui.baseaction import BaseAction
 
 

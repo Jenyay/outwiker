@@ -4,10 +4,10 @@ import os.path
 
 import wx
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from outwiker.core.system import getBuiltinImagePath, getIconsDirList
 from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
+from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.gui.iconlistctrl import IconListCtrl
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel

@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.api.core.text import dictToStr
+from outwiker.core.text import dictToStr
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 

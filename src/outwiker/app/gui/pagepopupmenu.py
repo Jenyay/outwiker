@@ -2,8 +2,6 @@
 
 import wx
 
-from outwiker.api.services.tree import removePage
-
 from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.app.actions.attachopenfolder import OpenAttachFolderAction
@@ -18,6 +16,8 @@ from outwiker.app.actions.renamepage import RenamePageAction
 from outwiker.app.gui.pagedialog import (createSiblingPage,
                                          createChildPage,
                                          editPage)
+
+from outwiker.app.services.tree import removePage
 
 
 class PagePopupMenu:

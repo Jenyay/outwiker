@@ -13,10 +13,9 @@ from outwiker.app.actions.movepageup import MovePageUpAction
 from outwiker.app.actions.moving import GoToParentAction
 from outwiker.app.actions.removepage import RemovePageAction
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
-from outwiker.api.services.attachment import attachFiles
-from outwiker.api.services.messages import showError
-from outwiker.api.services.tree import renamePage, movePage
+from outwiker.app.services.attachment import attachFiles
+from outwiker.app.services.messages import showError
+from outwiker.app.services.tree import renamePage, movePage
 
 from outwiker.app.actions.addchildpage import AddChildPageAction
 
@@ -28,6 +27,7 @@ from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
 from outwiker.core.system import getBuiltinImagePath
 
 from outwiker.gui.controls.notestreectrl import NotesTreeCtrl
+from outwiker.gui.dialogs.messagebox import MessageBox
 
 
 class NotesTree(wx.Panel):

@@ -56,6 +56,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
         return [
             'importlib',
             'urllib',
+            'outwiker.api',
             'outwiker.actions.close',
             'outwiker.actions.showhideattaches',
             'outwiker.actions.showhidetags',

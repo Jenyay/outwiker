@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.gui.mainwindow import showHideNotesTreePanel
+from outwiker.app.gui.mainwindowtools import showHideNotesTreePanel
 from outwiker.gui.baseaction import BaseAction
 
 

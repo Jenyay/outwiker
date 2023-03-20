@@ -4,7 +4,7 @@ import html
 import re
 from pathlib import Path
 
-from outwiker.api.core.images import isImage
+from outwiker.core.images import isImage
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.core.htmlformatter import HtmlFormatter

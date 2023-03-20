@@ -3,7 +3,7 @@
 import logging
 import wx
 
-from outwiker.api.services.messages import showError
+from outwiker.app.services.messages import showError
 from outwiker.core.defines import (PAGE_MODE_TEXT,
                                    PAGE_MODE_PREVIEW,
                                    PAGE_MODE_HTML)

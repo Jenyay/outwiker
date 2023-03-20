@@ -2,14 +2,14 @@
 
 import wx
 
-from outwiker.api.core.tree import pageExists
-from outwiker.api.services.messages import showError
-from outwiker.api.services.tree import openWiki
+from outwiker.app.services.messages import showError
+from outwiker.app.services.tree import openWiki
 from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.app.gui.emptypageview import ClosedTreePanel
 from outwiker.app.gui.tabsctrl import TabsCtrl
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.system import getOS, getBuiltinImagePath
+from outwiker.core.treetools import pageExists
 from outwiker.gui.rootpagepanel import RootPagePanel
 
 

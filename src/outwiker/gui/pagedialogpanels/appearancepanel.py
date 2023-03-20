@@ -5,7 +5,7 @@ import os.path
 
 import wx
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList

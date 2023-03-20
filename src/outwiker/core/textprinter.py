@@ -6,11 +6,11 @@ import wx
 import wx.html
 
 from .application import Application
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.guiconfig import TextPrintConfig
 
 
-class TextPrinter(object):
+class TextPrinter:
     """
     Интерфейс для печати текстовых страниц
     """

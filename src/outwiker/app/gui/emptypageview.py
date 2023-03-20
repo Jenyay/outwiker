@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.api.services.tree import (openWiki,
+from outwiker.app.services.tree import (openWiki,
                                         createNewWiki,
                                         openWikiWithDialog)
 

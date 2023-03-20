@@ -3,7 +3,7 @@
 import wx
 from functools import cmp_to_key
 
-from outwiker.api.services.messages import showError
+from outwiker.app.services.messages import showError
 
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag

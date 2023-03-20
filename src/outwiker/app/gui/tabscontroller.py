@@ -2,8 +2,8 @@
 
 import os.path
 
-from outwiker.api.services.messages import showError
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
+from outwiker.app.services.messages import showError
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
 

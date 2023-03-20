@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.gui.mainwindow import showHideTagsPanel
+from outwiker.app.gui.mainwindowtools import showHideTagsPanel
 from outwiker.gui.baseaction import BaseAction
 
 

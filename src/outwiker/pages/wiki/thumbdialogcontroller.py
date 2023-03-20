@@ -5,8 +5,8 @@ from typing import Optional
 
 import wx
 
-from outwiker.api.core.images import isImage
-from outwiker.api.services.messages import showError
+from outwiker.core.images import isImage
+from outwiker.app.services.messages import showError
 from outwiker.core.attachment import Attachment
 from outwiker.gui.windowssizesaver import WindowSizeSaver
 

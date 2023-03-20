@@ -35,10 +35,10 @@ import outwiker.app.actions.clipboard as clipboard
 import outwiker.app.actions.tags as tags
 
 from outwiker.app.gui.bookmarkscontroller import BookmarksController
+from outwiker.app.gui.mainwindowtools import getMainWindowTitle, setStatusText
 
-from outwiker.api.gui.mainwindow import getMainWindowTitle, setStatusText
-from outwiker.api.services.messages import showError
-from outwiker.api.services.tree import openWiki
+from outwiker.app.services.messages import showError
+from outwiker.app.services.tree import openWiki
 
 from outwiker.core.events import PAGE_UPDATE_TITLE
 

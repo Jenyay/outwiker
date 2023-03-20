@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.gui.mainwindow import showHideAttachPanel
+from outwiker.app.gui.mainwindowtools import showHideAttachPanel
 from outwiker.gui.baseaction import BaseAction
 
 

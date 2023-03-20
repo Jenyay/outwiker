@@ -9,11 +9,6 @@ import wx
 
 from outwiker.app.actions.clipboard import CopyAttachPathAction
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
-from outwiker.api.gui.mainwindow import addStatusBarItem, setStatusText
-from outwiker.api.services.attachment import attachFiles, renameAttach
-from outwiker.api.services.messages import showError
-
 from outwiker.app.actions.attachcreatesubdir import AttachCreateSubdirActionForAttachPanel
 from outwiker.app.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.app.actions.attachfiles import AttachFilesActionForAttachPanel
@@ -24,12 +19,17 @@ from outwiker.app.actions.attachrename import RenameAttachActionForAttachPanel
 from outwiker.app.actions.attachremove import RemoveAttachesActionForAttachPanel
 
 from outwiker.app.gui.dropfiles import BaseDropFilesTarget
+from outwiker.app.gui.mainwindowtools import addStatusBarItem, setStatusText
+
+from outwiker.app.services.attachment import attachFiles, renameAttach
+from outwiker.app.services.messages import showError
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.events import (BeginAttachRenamingParams,
                                   AttachSelectionChangedParams)
 from outwiker.core.system import getBuiltinImagePath, getOS
 
+from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.guiconfig import AttachConfig, GeneralGuiConfig
 
 

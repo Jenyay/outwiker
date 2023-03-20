@@ -2,9 +2,9 @@
 
 import wx
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.baseaction import BaseAction
-from outwiker.api.services.tree import openWiki
+from outwiker.app.services.tree import openWiki
 
 
 class ReloadWikiAction(BaseAction):

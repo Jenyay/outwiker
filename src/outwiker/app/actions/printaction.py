@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.services.application import printCurrentPage
+from outwiker.app.services.application import printCurrentPage
 from outwiker.gui.baseaction import BaseAction
 
 

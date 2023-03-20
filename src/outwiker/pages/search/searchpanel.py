@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.api.core.tree import pageExists
+from outwiker.core.treetools import pageExists
 from outwiker.core.search import (Searcher,
                                   AllTagsSearchStrategy,
                                   AnyTagSearchStrategy)

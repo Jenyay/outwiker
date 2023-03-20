@@ -4,8 +4,8 @@ import os
 import os.path
 import shutil
 
-from outwiker.api.core.images import isImage
 from outwiker.core.iconmaker import IconMaker
+from outwiker.core.images import isImage
 
 
 class DuplicateGroupError(BaseException):

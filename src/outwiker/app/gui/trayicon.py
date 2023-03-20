@@ -6,8 +6,8 @@ import logging
 import wx
 import wx.adv
 
-from outwiker.api.gui.mainwindow import getMainWindowTitle
-from outwiker.api.services.application import exit
+from outwiker.app.gui.mainwindowtools import getMainWindowTitle
+from outwiker.app.services.application import exit
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import TrayConfig
 

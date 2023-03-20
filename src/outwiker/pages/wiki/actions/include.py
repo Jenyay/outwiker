@@ -5,7 +5,7 @@ from typing import Callable, Optional, Union
 
 import wx
 
-from outwiker.api.services.messages import showError
+from outwiker.app.services.messages import showError
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox

@@ -6,7 +6,7 @@ import os
 import wx
 
 from outwiker.actions.polyactionsid import *
-from outwiker.api.services.texteditor import insertCurrentDate
+from outwiker.app.services.texteditor import insertCurrentDate
 from outwiker.core.defines import (PAGE_MODE_TEXT,
                                    PAGE_MODE_PREVIEW,
                                    PAGE_ATTACH_DIR)
@@ -15,10 +15,8 @@ from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
-from outwiker.pages.html.tabledialogcontroller import (
-    TableDialogController,
-    TableRowsDialogController
-)
+from outwiker.pages.html.tabledialogcontroller import (TableDialogController,
+                                                       TableRowsDialogController)
 
 from .actions.autolinewrap import HtmlAutoLineWrap
 from .actions.link import insertLink

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.core.tree import testreadonly
-from outwiker.api.services.messages import showError
+from outwiker.app.services.messages import showError
+from outwiker.core.treetools import testreadonly
 from outwiker.gui.baseaction import BaseAction
 from outwiker.pages.search.searchpage import GlobalSearch
 

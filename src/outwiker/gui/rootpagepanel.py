@@ -6,7 +6,7 @@ from .basepagepanel import BasePagePanel
 from .controls.pagelist import PageList, EVT_PAGE_CLICK
 from .controls.pagelist_columns import ColumnsFactory
 
-from outwiker.api.services.bookmarks import toggleBookmarkForCurrentPage
+from outwiker.app.services.bookmarks import toggleBookmarkForCurrentPage
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 

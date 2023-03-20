@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.core.tree import closeWiki
+from outwiker.core.treetools import closeWiki
 from outwiker.gui.baseaction import BaseAction
 
 

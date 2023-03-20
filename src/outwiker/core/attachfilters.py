@@ -3,7 +3,7 @@
 from pathlib import Path
 from typing import Callable
 
-from outwiker.api.core.images import isImage
+from outwiker.core.images import isImage
 from outwiker.core.attachment import Attachment
 
 

@@ -10,7 +10,6 @@ import wx
 
 import outwiker.core.factory as ocf
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.app.gui.pagedialogpanels.iconslistpopup import IconsListPopup
 
 from outwiker.core.tagslist import TagsList
@@ -31,6 +30,7 @@ from outwiker.core.events import (PageDialogPageIconChangedParams,
                                   IconsGroupsListInitParams)
 from outwiker.gui.controls.switchthemed import EVT_SWITCH
 from outwiker.gui.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
+from outwiker.gui.dialogs.messagebox import MessageBox
 
 
 class IconsGroupInfo:

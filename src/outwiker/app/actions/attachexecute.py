@@ -2,7 +2,7 @@
 
 import os.path
 
-from outwiker.api.services.messages import showError
+from outwiker.app.services.messages import showError
 from outwiker.core.attachment import Attachment
 from outwiker.core.system import getOS
 from outwiker.gui.baseaction import BaseAction

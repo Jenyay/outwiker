@@ -2,12 +2,12 @@
 
 import wx
 
-from outwiker.api.core.tree import pageExists, testreadonly
-from outwiker.api.services.messages import showError
-from outwiker.api.services.tree import renamePage
+from outwiker.app.services.messages import showError
+from outwiker.app.services.tree import renamePage
 from outwiker.app.gui.basepagedialog import BasePageDialog
 from outwiker.core.application import Application
 from outwiker.core.exceptions import ReadonlyException
+from outwiker.core.treetools import pageExists, testreadonly
 
 
 @testreadonly

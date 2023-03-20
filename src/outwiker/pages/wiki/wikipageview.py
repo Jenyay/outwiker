@@ -6,7 +6,7 @@ import re
 from io import StringIO
 
 from outwiker.actions.polyactionsid import *
-from outwiker.api.services.texteditor import insertCurrentDate
+from outwiker.app.services.texteditor import insertCurrentDate
 from outwiker.core.standardcolors import StandardColors
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.defines import RECENT_COLORS_COUNT
