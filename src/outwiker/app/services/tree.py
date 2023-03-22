@@ -163,7 +163,7 @@ def _wantClearWikiOptions(path):
                       wx.ICON_ERROR | wx.YES_NO)
 
 
-def testPageTitle(title):
+def testPageTitle(title) -> bool:
     """
     Возвращает True, если можно создавать страницу с таким заголовком
     """

@@ -9,7 +9,7 @@ from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
-def insertCurrentDate(parent, editor):
+def insertCurrentDate(parent, editor) -> None:
     """
     Вызвать диалог для выбора формата даты и вставить в редактор текущую дату согласно выбранному формату.
 

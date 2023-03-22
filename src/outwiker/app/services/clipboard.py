@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+from typing import Optional
 
 import wx
 
@@ -28,7 +29,7 @@ def copyTextToClipboard(text: str) -> bool:
     return result
 
 
-def getClipboardText():
+def getClipboardText() -> Optional[str]:
     if not wx.TheClipboard.Open():
         showError(Application.mainWindow, _("Can't open clipboard"))
         return
@@ -78,7 +79,7 @@ def copyLinkToClipboard(page) -> bool:
     return False
 
 
-def copyTitleToClipboard(page):
+def copyTitleToClipboard(page) -> bool:
     """
     Копировать заголовок страницы в буфер обмена
     """

@@ -180,7 +180,7 @@ def attachFiles(parent: wx.Window,
             return
 
 
-def getDefaultSubdirName():
+def getDefaultSubdirName() -> str:
     return _('New folder')
 
 

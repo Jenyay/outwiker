@@ -1,1 +1,15 @@
-from outwiker.core.images import isImage, isSVG
+from pathlib import Path
+from typing import Union
+
+import outwiker.core.images as _images
+
+
+def isImage(fname: Union[Path, str]) -> bool:
+    """
+    If fname is image then the function return True. Otherwise - False.
+    """
+    return _images.isImage(fname)
+
+
+def isSVG(fname: Union[Path, str]) -> bool:
+    return _images.isSVG(fname)
