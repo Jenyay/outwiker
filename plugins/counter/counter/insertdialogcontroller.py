@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -8,25 +8,25 @@ from .config import CounterConfig
 from .nameharvester import NameHarvester
 
 
-class InsertDialogController (object):
+class InsertDialogController:
     """
     Класс для управления диалогом InsertDialog
     """
-    def __init__ (self, dialog, config, page):
+
+    def __init__(self, dialog, config, page):
         """
         dialog - экземпляр класса InsertDialog, который надо будет показать пользователю.
         config - экземпляр класса Config
         page - текущая страница, для которой показывается диалог
         """
         self._dialog = dialog
-        self._config = CounterConfig (config)
+        self._config = CounterConfig(config)
         self._page = page
 
-        countersList = self._getCountersList (self._page)
+        countersList = self._getCountersList(self._page)
         self._dialog.countersList = countersList
 
-
-    def showDialog (self):
+    def showDialog(self):
         """
         Метод показывает диалог и возвращает результат работы диалога (как ShowModal).
         """
@@ -38,18 +38,16 @@ class InsertDialogController (object):
 
         return result
 
+    def _getCountersList(self, page):
+        parser = ParserFactory().make(page, self._config)
+        parser.addCommand(NameHarvester(parser))
+        parser.toHtml(page.content)
 
-    def _getCountersList (self, page):
-        parser = ParserFactory().make (page, self._config)
-        parser.addCommand (NameHarvester (parser))
-        parser.toHtml (page.content)
-
-        result = [u""] + sorted(list (NameHarvester.counters))
+        result = [""] + sorted(list(NameHarvester.counters))
 
         return result
 
-
-    def getCommandString (self):
+    def getCommandString(self):
         """
         Возвращает строку, соответствующую выбранным настройкам в диалоге
         """
@@ -57,84 +55,75 @@ class InsertDialogController (object):
         parent = self._getParentParam()
 
         # Если не установлен родительский счетчик, нет смысла устанавливать разделитель
-        separator = self._getSeparatorParam() if len (parent) != 0 else u""
+        separator = self._getSeparatorParam() if len(parent) != 0 else ""
 
         start = self._getStartParam()
         step = self._getStepParam()
         hide = self._getHideParam()
 
-        result = u"(:counter{name}{parent}{separator}{start}{step}{hide}:)".format (
-            name = name,
-            parent = parent,
-            separator = separator,
-            start = start,
-            step = step,
-            hide = hide
+        result = "(:counter{name}{parent}{separator}{start}{step}{hide}:)".format(
+            name=name,
+            parent=parent,
+            separator=separator,
+            start=start,
+            step=step,
+            hide=hide,
         )
 
         return result
 
-
-    def _getHideParam (self):
-        result = u' hide' if self._dialog.hide else u''
+    def _getHideParam(self):
+        result = " hide" if self._dialog.hide else ""
         return result
 
-
-    def _getStepParam (self):
+    def _getStepParam(self):
         step = self._dialog.step
-        result = u' step={}'.format (step) if step != 1 else u''
+        result = " step={}".format(step) if step != 1 else ""
 
         return result
 
-
-    def _getStartParam (self):
+    def _getStartParam(self):
         """
         Возвращает параметр команды (:counter:), соответствующий тому, нужно ли счетчик сбрасывать к какому-то значению
         """
-        result = u' start={}'.format (self._dialog.start) if self._dialog.reset else u''
+        result = " start={}".format(self._dialog.start) if self._dialog.reset else ""
 
         return result
 
-
-    def _getNameParam (self):
+    def _getNameParam(self):
         """
         Возвращает параметр команды (:counter:), соответствующий введенному имени счетчика в диалоге
         """
         name = self._dialog.counterName.strip()
-        result = u' name="{}"'.format (name) if len (name) != 0 else u''
+        result = ' name="{}"'.format(name) if len(name) != 0 else ""
 
         return result
 
-
-    def _getParentParam (self):
+    def _getParentParam(self):
         """
         Возвращает параметр команды (:counter:), соответствующий введенному имени родительского счетчика в диалоге
         """
         parent = self._dialog.parentName.strip()
-        result = u' parent="{}"'.format (parent) if len (parent) != 0 else u''
+        result = ' parent="{}"'.format(parent) if len(parent) != 0 else ""
 
         return result
 
-
-    def _getSeparatorParam (self):
+    def _getSeparatorParam(self):
         """
         Возвращает параметр команды (:counter:), соответствующий введенному разделителю родительского и текущего счетчиков в диалоге
         """
         separator = self._dialog.separator
-        result = u' separator="{}"'.format (separator) if separator != u"." else u''
+        result = ' separator="{}"'.format(separator) if separator != "." else ""
 
         return result
 
-
-
-    def loadState (self):
+    def loadState(self):
         """
         Загрузить настройки и установить их в диалоге
         """
         self._updateDialogSize()
 
-
-    def _updateDialogSize (self):
+    def _updateDialogSize(self):
         """
         Изменение размера диалога
         """
@@ -144,8 +133,7 @@ class InsertDialogController (object):
 
         self._dialog.SetSize(dialogWidth, dialogHeight)
 
-
-    def saveState (self):
+    def saveState(self):
         """
         Сохранить настройки диалога
         """

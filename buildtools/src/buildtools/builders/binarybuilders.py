@@ -6,8 +6,6 @@ import os.path
 from pathlib import Path
 import shutil
 
-import wx
-
 from invoke import Context
 from buildtools.utilites import remove, print_info
 
@@ -58,12 +56,16 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             'urllib',
             'outwiker.api',
             'outwiker.api.core',
+            'outwiker.api.core.config',
+            'outwiker.api.core.defines',
             'outwiker.api.core.images',
             'outwiker.api.core.text',
             'outwiker.api.core.tree',
             'outwiker.api.gui',
+            'outwiker.api.gui.defines',
             'outwiker.api.gui.dialogs',
             'outwiker.api.gui.dialogs.messagebox',
+            'outwiker.api.gui.dialogs.testeddialog',
             'outwiker.api.gui.mainwindow',
             'outwiker.api.services',
             'outwiker.api.services.application',

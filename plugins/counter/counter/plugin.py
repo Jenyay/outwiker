@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api import Plugin
 
 from .i18n import set_
 from .controller import Controller
 
 
-class PluginCounter (Plugin):
+class PluginCounter(Plugin):
     """
     Плагин, добавляющий обработку команды (:counter:) в википарсер
     """
@@ -23,13 +23,13 @@ class PluginCounter (Plugin):
 
     @property
     def name(self):
-        return u"Counter"
+        return "Counter"
 
     @property
     def description(self):
-        description = _(u'''Plugin adds wiki-command (:counter:), allowing the automatic numbering anything on the page.''')
+        description = _('''Plugin adds wiki-command (:counter:), allowing the automatic numbering anything on the page.''')
 
-        usage = _(u'''<b>Usage:</b>
+        usage = _('''<b>Usage:</b>
 (:counter parameters... :)''')
 
         params = _(u'''<b>Parameters:</b>
@@ -52,7 +52,7 @@ All parameters are optional.
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/CounterEn")
+        return _("https://jenyay.net/Outwiker/CounterEn")
 
     def initialize(self):
         set_(self.gettext)

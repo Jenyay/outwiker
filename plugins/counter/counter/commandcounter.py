@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
 from .params import *
 
 
-class CommandCounter (Command):
+class CommandCounter(Command):
     """
     Викикоманда, которая вместо себя вставляет последовательное число 1, 2,...
     Параметры команды:
@@ -22,7 +22,7 @@ class CommandCounter (Command):
 
     separator - разделитель между данным счетчиком и родительским (по умолчанию - ".")
     """
-    def __init__ (self, parser):
+    def __init__(self, parser):
         """
         parser - экземпляр парсера
         """
@@ -32,16 +32,14 @@ class CommandCounter (Command):
         # Ключ - имя счетчика, значение - экземпляр класса _Counter
         self._counters = {}
 
-    
     @property
-    def name (self):
+    def name(self):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"counter"
+        return "counter"
 
-
-    def execute (self, params, content):
+    def execute(self, params, content):
         """
         Запустить команду на выполнение. 
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
@@ -65,26 +63,22 @@ class CommandCounter (Command):
         else:
             counter.next(step, parent, separator)
 
-        return u"" if hide else counter.toString() 
+        return "" if hide else counter.toString() 
 
-
-    def _getNameParam (self, params_dict):
+    def _getNameParam(self, params_dict):
         name = params_dict[NAME_PARAM_NAME].strip() if NAME_PARAM_NAME in params_dict else u""
         return name
 
-
-    def _getSeparatorParam (self, params_dict):
+    def _getSeparatorParam(self, params_dict):
         return params_dict[SEPARATOR_PARAM_NAME].strip() if SEPARATOR_PARAM_NAME in params_dict else u"."
 
-
-    def _getStartParam (self, params_dict):
+    def _getStartParam(self, params_dict):
         """
         Возвращает значение параметра start (в виде целого числа) или None, если он не задан
         """
         return self._getIntParam (params_dict, START_PARAM_NAME)
 
-
-    def _getStepParam (self, params_dict):
+    def _getStepParam(self, params_dict):
         """
         Возвращает значение параметра step (в виде целого числа) или None, если он не задан
         """
@@ -94,8 +88,7 @@ class CommandCounter (Command):
 
         return step
 
-
-    def _getIntParam (self, params_dict, param_name):
+    def _getIntParam(self, params_dict, param_name):
         """
         Метод, возвращающий целочисленное значение параметра с именем param_name или None, если он не задан
         """
@@ -109,8 +102,7 @@ class CommandCounter (Command):
 
         return value
 
-
-    def _getParentParam (self, params_dict):
+    def _getParentParam(self, params_dict):
         """
         Возвращает родительский счетчик (экземпляр класса _Counter), если установлен соответствующий параметр, или None, если параметр не установлен или желаемого счетчика нет.
         """
@@ -123,16 +115,15 @@ class CommandCounter (Command):
 
         return parent
 
-
-    def _getHideParam (self, params_dict):
+    def _getHideParam(self, params_dict):
         return HIDE_PARAM_NAME in params_dict
 
 
-class _Counter (object):
+class _Counter:
     """
     Хранит информацию об одном счетчике (с определенным именем)
     """
-    def __init__ (self):
+    def __init__(self):
         self._counter = 0
         self._string = None
 
@@ -143,11 +134,11 @@ class _Counter (object):
         self._createString (None)
 
 
-    def toString (self):
+    def toString(self):
         return self._string
 
 
-    def next (self, step, parent, separator):
+    def next(self, step, parent, separator):
         """
         Установить следующее значение счетчика
         """
@@ -155,7 +146,7 @@ class _Counter (object):
         self._createString (parent, startval=step, separator=separator)
 
 
-    def reset (self, startval, parent, separator):
+    def reset(self, startval, parent, separator):
         """
         Установить счетчик в значение startval
         """
@@ -163,11 +154,11 @@ class _Counter (object):
         self._createString (parent, startval, separator=separator)
 
 
-    def _getMyString (self):
+    def _getMyString(self):
         return str(self._counter)
 
 
-    def _createString (self, parent, startval=1, separator=u"."):
+    def _createString(self, parent, startval=1, separator=u"."):
         myString = self._getMyString()
 
         if parent == None:

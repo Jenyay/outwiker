@@ -4,14 +4,15 @@ import os.path
 
 import wx
 
-import outwiker.core.exceptions
-from outwiker.core.commands import testreadonly
+from outwiker.api.core.exceptions import ReadonlyException
+from outwiker.api.core.tree import testreadonly
+from outwiker.api.gui.defines import TOOLBAR_PLUGINS
+
 from outwiker.pages.wiki.wikipage import WikiWikiPage
+from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
 from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
                                                     ActionGUIInfo,
                                                     ButtonInfo)
-from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
-from outwiker.gui.defines import TOOLBAR_PLUGINS
 
 from .i18n import get_
 from .commandcounter import CommandCounter
@@ -20,11 +21,10 @@ from .insertdialogcontroller import InsertDialogController
 from .actions import InsertCounterAction
 
 
-class Controller(object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
-
     def __init__(self, plugin, application):
         """
         plugin - Владелец контроллера(экземпляр класса PluginSource)
@@ -86,7 +86,7 @@ class Controller(object):
         Вставка команды (:counter:) в редактор
         """
         if self._application.selectedPage.readonly:
-            raise outwiker.core.exceptions.ReadonlyException
+            raise ReadonlyException
 
         dlg = InsertDialog(self._application.mainWindow)
 
