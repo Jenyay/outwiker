@@ -15,7 +15,7 @@ from datagraph import defines
 from datagraph.i18n import get_
 
 
-class HighChartsRender(object):
+class HighChartsRender:
     """ Class for the graph creation with HighCharts library
     """
     def __init__(self, wikiparser):
@@ -25,11 +25,11 @@ class HighChartsRender(object):
         self._count = 0
 
         self._headers = [
-           (u'excanvas.min.js', u'<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/excanvas.min.js"></script><![endif]-->'),
+           ('excanvas.min.js', '<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/excanvas.min.js"></script><![endif]-->'),
 
-           (u'jquery.min.js', u'<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/jquery.min.js"></script>'),
+           ('jquery.min.js', '<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/jquery.min.js"></script>'),
 
-           (u'highcharts.js', u'<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script>'),
+           ('highcharts.js', '<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script>'),
         ]
 
         global _
@@ -44,13 +44,13 @@ class HighChartsRender(object):
         height = graph.getProperty(defines.GRAPH_HEIGHT_NAME, defines.GRAPH_HEIGHT)
 
         if width[-1].isdigit():
-            width += u'px'
+            width += 'px'
 
         if height[-1].isdigit():
-            height += u'px'
+            height += 'px'
 
-        name = u'graph-{}'.format(self._count)
-        result = u'<div id="{name}" style="width:{width}; height:{height};"></div>'.format(
+        name = 'graph-{}'.format(self._count)
+        result = '<div id="{name}" style="width:{width}; height:{height};"></div>'.format(
             name=name, width=width, height=height)
 
         if self._count == 0:
@@ -73,7 +73,7 @@ class HighChartsRender(object):
     def _getGraphScript(self, graph, graphname):
         properties = self._getJsonResult(graph)
 
-        result = u'''<script>
+        result = '''<script>
 $(function() {{ $('#{name}').highcharts({prop}); }});
 </script>'''.format(name=graphname, prop=properties)
 
@@ -85,19 +85,20 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         """
         # Get path to JS files inside the plugin
         dirname = os.path.dirname(os.path.abspath(__file__))
-        libpath = os.path.join(dirname, u'js', libname)
+        libpath = os.path.join(dirname, 'js', libname)
 
         # Get destination path fo JS files
-        jsdir = self._getJsDir()
+        jsdir = self._createJsDir()
+        shutil.copy(libpath, jsdir)
+
+    def _createJsDir(self):
+        attachdir = Attachment(self._wikiparser.page).getAttachPath(create=True)
+        jsdir = os.path.join(attachdir, '__thumb', '__js')
 
         if not os.path.exists(jsdir):
             os.makedirs(jsdir)
 
-        shutil.copy(libpath, jsdir)
-
-    def _getJsDir(self):
-        attachdir = Attachment(self._wikiparser.page).getAttachPath(create=True)
-        return os.path.join(attachdir, u'__thumb', u'__js')
+        return jsdir
 
     def _getJsonResult(self, graph):
         chartDict = self._buildChartDict(graph)
@@ -110,16 +111,16 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
 
         series = self._getSeries(graph)
         if series:
-            chartDict[u'series'] = series
+            chartDict['series'] = series
 
-        chartDict[u'tooltip'] = self._getTooltip(graph)
-        chartDict[u'chart'] = self._getChart(graph)
-        chartDict[u'credits'] = self._getCredits(graph)
-        chartDict[u'xAxis'] = self._getXAxis(graph)
-        chartDict[u'yAxis'] = self._getYAxis(graph)
-        chartDict[u'title'] = self._getTitle(graph)
-        chartDict[u'legend'] = self._getLegend(graph)
-        chartDict[u'plotOptions'] = self._getPlotOptions(graph)
+        chartDict['tooltip'] = self._getTooltip(graph)
+        chartDict['chart'] = self._getChart(graph)
+        chartDict['credits'] = self._getCredits(graph)
+        chartDict['xAxis'] = self._getXAxis(graph)
+        chartDict['yAxis'] = self._getYAxis(graph)
+        chartDict['title'] = self._getTitle(graph)
+        chartDict['legend'] = self._getLegend(graph)
+        chartDict['plotOptions'] = self._getPlotOptions(graph)
 
         return chartDict
 
@@ -141,8 +142,8 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         enabled = (graph.getProperty(defines.GRAPH_LEGEND_NAME, '0') != '0')
 
         legend = {
-            u'enabled': enabled,
-            u'symbolWidth': 60,
+            'enabled': enabled,
+            'symbolWidth': 60,
         }
 
         return legend
@@ -165,12 +166,12 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         text = axis.getProperty(defines.AXIS_TITLE_NAME, None)
 
         title = {
-            u'text': text,
+            'text': text,
         }
 
         result = {
-            u'gridLineWidth': 1,
-            u'title': title,
+            'gridLineWidth': 1,
+            'title': title,
         }
 
         # Min / Max values
@@ -178,12 +179,12 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         maxVal = axis.getProperty(defines.AXIS_MAX_NAME, None)
 
         try:
-            result[u'min'] = self._convertMinMaxAxisValue(minVal, axis)
+            result['min'] = self._convertMinMaxAxisValue(minVal, axis)
         except ValueError:
             pass
 
         try:
-            result[u'max'] = self._convertMinMaxAxisValue(maxVal, axis)
+            result['max'] = self._convertMinMaxAxisValue(maxVal, axis)
         except ValueError:
             pass
 
@@ -192,7 +193,7 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         try:
             interval = self._convertIntervalAxisValue(majorTickInterval, axis)
             if interval > 0:
-                result[u'tickInterval'] = interval
+                result['tickInterval'] = interval
         except ValueError:
             pass
 
@@ -200,8 +201,8 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         axisType = axis.getProperty(defines.AXIS_TYPE_NAME, None)
 
         if axisType == defines.AXIS_TYPE_DATE:
-            result[u'type'] = u'datetime'
-            result[u'labels'] = {u'format': u'{value:%d.%m.%Y}'}
+            result['type'] = 'datetime'
+            result['labels'] = {'format': '{value:%d.%m.%Y}'}
 
         return result
 
@@ -209,22 +210,22 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         enabled = (graph.getProperty(defines.GRAPH_TOOLTIP_NAME, '0') != '0')
 
         tooltip = {
-            u'enabled': enabled,
+            'enabled': enabled,
         }
 
         return tooltip
 
     def _getCredits(self, graph):
         credits = {
-            u'enabled': False,
+            'enabled': False,
         }
 
         return credits
 
     def _getChart(self, graph):
         chart = {
-            u'plotBorderWidth': 1,
-            u'animation': False,
+            'plotBorderWidth': 1,
+            'animation': False,
         }
 
         return chart
@@ -233,31 +234,31 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         series = []
         for n, curve in enumerate(graph.getCurves()):
             data = self._getData(curve)
-            hide = curve.getProperty(defines.CURVE_HIDE_NAME, u'0')
-            if not data or hide != u'0':
+            hide = curve.getProperty(defines.CURVE_HIDE_NAME, '0')
+            if not data or hide != '0':
                 continue
 
             singleSeries = {
-                u'data': data,
-                u'animation': False,
-                u'states': {u'hover': {u'enabled': False}},
-                u'marker': self._getMarker(curve, n),
-                u'dashStyle': self._getCurveStyle(curve, n),
+                'data': data,
+                'animation': False,
+                'states': {'hover': {'enabled': False}},
+                'marker': self._getMarker(curve, n),
+                'dashStyle': self._getCurveStyle(curve, n),
             }
 
             # Curve's color
             color = curve.getProperty(defines.CURVE_COLOR_NAME, None)
             if color is not None:
-                singleSeries[u'color'] = color
+                singleSeries['color'] = color
             else:
-                singleSeries[u'color'] = defines.CURVE_COLORS[n % len(defines.CURVE_COLORS)]
+                singleSeries['color'] = defines.CURVE_COLORS[n % len(defines.CURVE_COLORS)]
 
             # Curve's title
             title = curve.getProperty(defines.CURVE_TITLE_NAME, None)
             if title is None:
-                title = _(u'Curve {}').format(n + 1)
+                title = _('Curve {}').format(n + 1)
 
-            singleSeries[u'name'] = title
+            singleSeries['name'] = title
 
             series.append(singleSeries)
 
@@ -280,8 +281,8 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
 
     def _getMarker(self, curve, n):
         marker = {
-            u'symbol': defines.CURVE_SYMBOLS[n % len(defines.CURVE_SYMBOLS)],
-            u'enabled': False,
+            'symbol': defines.CURVE_SYMBOLS[n % len(defines.CURVE_SYMBOLS)],
+            'enabled': False,
         }
 
         return marker
@@ -311,13 +312,13 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
 
                 if xcol is not None:
                     xColFormat = data.getProperty(
-                        u'{}{}'.format(defines.DATA_FORMAT_COL, xcol),
+                        '{}{}'.format(defines.DATA_FORMAT_COL, xcol),
                         None
                     )
 
                 if ycol is not None:
                     yColFormat = data.getProperty(
-                        u'{}{}'.format(defines.DATA_FORMAT_COL, ycol),
+                        '{}{}'.format(defines.DATA_FORMAT_COL, ycol),
                         None
                     )
 

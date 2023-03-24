@@ -2,8 +2,8 @@
 
 import os.path
 
-from outwiker.gui.baseaction import BaseAction
-from outwiker.core.system import openInNewWindow
+from outwiker.api.gui.actions import BaseAction
+from outwiker.api.services.application import openInNewWindow
 
 from .i18n import get_
 
@@ -18,19 +18,19 @@ class PlotAction(BaseAction):
         global _
         _ = get_()
 
-    stringId = u"DataGraph_Plot"
+    stringId = "DataGraph_Plot"
 
     @property
     def title(self):
-        return _(u"Plot graph (:plot:)")
+        return _("Plot graph (:plot:)")
 
     @property
     def description(self):
-        return _(u"[DataGraph] Insert (:plot:) command for graph plotting")
+        return _("[DataGraph] Insert (:plot:) command for graph plotting")
 
     def run(self, params):
-        startCommand = u'(:plot:)'
-        endCommand = u'(:plotend:)'
+        startCommand = '(:plot:)'
+        endCommand = '(:plotend:)'
 
         pageView = self._getPageView()
         pageView.codeEditor.turnText(startCommand, endCommand)
@@ -46,24 +46,24 @@ class OpenHelpAction(BaseAction):
     """
     Open DataGraph help action
     """
-    stringId = u"DataGraph_Help"
+    stringId = "DataGraph_Help"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Open help")
+        return _("Open help")
 
     @property
     def description(self):
         return _(u"[DataGraph] Open help in the new OutWiker window")
 
     def run(self, params):
-        helpDirName = u"help"
+        helpDirName = "help"
 
         currentdir = os.path.dirname(__file__)
         helpPath = os.path.join(currentdir, helpDirName, _("datagraph_eng"))
 
-        args = [u'--normal', u'--readonly']
+        args = ['--normal', '--readonly']
         openInNewWindow(helpPath, args)
