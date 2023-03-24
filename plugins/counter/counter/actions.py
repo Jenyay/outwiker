@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.gui import BaseAction
+from outwiker.api.gui.actions import BaseAction
 from .i18n import get_
 
 

@@ -1,7 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.parser.command import Command
 from .params import *
 
 

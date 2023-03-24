@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 from .controller import Controller

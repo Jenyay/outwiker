@@ -6,13 +6,11 @@ import wx
 
 from outwiker.api.core.exceptions import ReadonlyException
 from outwiker.api.core.tree import testreadonly
+from outwiker.api.gui.actions import (ActionsGUIController, ActionGUIInfo,
+                                      ButtonInfo)
 from outwiker.api.gui.defines import TOOLBAR_PLUGINS
-
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo,
-                                                    ButtonInfo)
+from outwiker.api.pages.wiki import WikiWikiPage
+from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS
 
 from .i18n import get_
 from .commandcounter import CommandCounter

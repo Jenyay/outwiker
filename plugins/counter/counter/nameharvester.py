@@ -2,7 +2,7 @@
 
 from typing import Set
 
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.parser.command import Command
 from .params import NAME_PARAM_NAME
 
 
