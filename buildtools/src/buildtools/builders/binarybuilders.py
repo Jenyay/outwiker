@@ -58,6 +58,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             'outwiker.api.core',
             'outwiker.api.core.config',
             'outwiker.api.core.defines',
+            'outwiker.api.core.exceptions',
             'outwiker.api.core.images',
             'outwiker.api.core.text',
             'outwiker.api.core.tree',
