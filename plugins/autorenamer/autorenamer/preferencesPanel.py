@@ -8,7 +8,7 @@ from .preferencesController import PreferencesController
 
 class PreferencesPanel(wx.Panel):
     def __init__(self, parent, config):
-        wx.Panel.__init__(self, parent, style=wx.TAB_TRAVERSAL)
+        super().__init__(parent, style=wx.TAB_TRAVERSAL)
 
         global _
         _ = get_()
@@ -22,20 +22,25 @@ class PreferencesPanel(wx.Panel):
 
         self.autoRenameAllPagesCheckBox = wx.CheckBox(
             self,
-            label=_(u"Automatically rename all pages according to their first line")
+            label=_("Automatically rename all pages according to their first line"),
         )
-        mainSizer.Add(self.autoRenameAllPagesCheckBox,
-                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                      border=4)
+        mainSizer.Add(
+            self.autoRenameAllPagesCheckBox,
+            flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+            border=4,
+        )
 
         self.autoAddFirstLineCheckBox = wx.CheckBox(
             self,
             label=_(
-                u"Automatically set first line of the page be the name of this page on page create")
+                "Automatically set first line of the page be the name of this page on page create"
+            ),
         )
-        mainSizer.Add(self.autoAddFirstLineCheckBox,
-                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                      border=4)
+        mainSizer.Add(
+            self.autoAddFirstLineCheckBox,
+            flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+            border=4,
+        )
 
         self.SetSizer(mainSizer)
         self.Layout()

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.commands import testPageTitle, renamePage
+from outwiker.api.services.tree import testPageTitle, renamePage
 from .config import PluginConfig
 
 
-class Renamer(object):
+class Renamer:
     def __init__(self, application):
         self._application = application
 
@@ -24,7 +24,7 @@ class Renamer(object):
                 currentPage.content = currentPage.title
 
     def getValidName(self, name):
-        name = "".join(char for char in name if char not in "\/:*?<>|!")
+        name = "".join(char for char in name if char not in r"\/:*?<>|!")
         while name[-1] in " .":
             name = name[0:len(name)-1]
         return name

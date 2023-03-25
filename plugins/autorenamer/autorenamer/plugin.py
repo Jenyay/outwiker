@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 
@@ -14,18 +14,21 @@ class PluginAutoRenamer(Plugin):
 
     @property
     def name(self):
-        return u"AutoRenamer"
+        return "AutoRenamer"
 
     @property
     def description(self):
         description = _(
-            u'''Plugin allows to rename all pages automatically using the first line of the page or automatically rename just those pages where you place (:autorename:) mark''')
-        author = _(u'''<b>Author:</b> Vitalii Koshura (delionkur-lestat@mail.ru)''')
-        return u"""{description}\n\n{author}""".format(description=description, author=author)
+            """Plugin allows to rename all pages automatically using the first line of the page or automatically rename just those pages where you place (:autorename:) mark"""
+        )
+        author = _("""<b>Author:</b> Vitalii Koshura (delionkur-lestat@mail.ru)""")
+        return """{description}\n\n{author}""".format(
+            description=description, author=author
+        )
 
     @property
     def url(self):
-        return u"https://github.com/AenBleidd/OutwikerPlugin"
+        return "https://github.com/AenBleidd/OutwikerPlugin"
 
     def initialize(self):
         set_(self.gettext)

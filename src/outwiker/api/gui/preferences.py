@@ -1,0 +1,1 @@
+from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo

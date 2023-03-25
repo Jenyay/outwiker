@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.parser.command import Command
 from .renamer import Renamer
 
 
 class AutoRenameTagCommand(Command):
     def __init__(self, application, parser):
-        Command.__init__(self, parser)
+        super().__init__(parser)
         self._application = application
         self._renamer = Renamer(application)
 
     @property
     def name(self):
-        return u"autorename"
+        return "autorename"
 
     def execute(self, params, content):
         self._renamer.RenamePage(True)
-        return u""
+        return ""
