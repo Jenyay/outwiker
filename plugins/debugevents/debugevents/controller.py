@@ -1,25 +1,25 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import logging
 
-from outwiker.core.event import Event
+from outwiker.api.core.events import Event
 
 
-logger = logging.getLogger('DebugEventsPlugin')
+logger = logging.getLogger("DebugEventsPlugin")
 
 
-class Controller(object):
+class Controller:
     def __init__(self, application):
         self._application = application
         self._events = []
 
     def initialize(self):
-        logger.info(u'Initialize.')
+        logger.info("Initialize.")
 
         for member_name in sorted(dir(self._application)):
             member = getattr(self._application, member_name)
             if isinstance(member, Event):
-                logger.info(u'Subscribe to event: {}'.format(member_name))
+                logger.info("Subscribe to event: {}".format(member_name))
                 handler = self.getHandler(member_name)
                 self._events.append((member, handler))
                 member += handler
@@ -35,4 +35,4 @@ class Controller(object):
             event -= handler
 
         self._events = []
-        logger.info(u'Destroy.')
+        logger.info("Destroy.")
