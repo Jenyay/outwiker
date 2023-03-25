@@ -56,7 +56,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             'urllib',
             'outwiker.api',
             'outwiker.api.core',
-            'outwiker.api.core.app',
+            'outwiker.api.core.attachment',
             'outwiker.api.core.config',
             'outwiker.api.core.defines',
             'outwiker.api.core.exceptions',

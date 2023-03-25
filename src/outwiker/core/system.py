@@ -12,6 +12,7 @@ import sys
 import subprocess
 import logging
 from pathlib import Path
+from typing import Union
 from uuid import UUID
 
 import wx
@@ -64,7 +65,7 @@ class Windows(System):
     def python(self):
         return 'python'
 
-    def startFile(self, path):
+    def startFile(self, path: Union[str, Path]):
         """
         Запустить программу по умолчанию для path
         """
@@ -174,11 +175,11 @@ class Unix(System):
     def python(self):
         return 'python3'
 
-    def startFile(self, path):
+    def startFile(self, path: Union[str, Path]):
         """
         Запустить программу по умолчанию для path
         """
-        subprocess.Popen(['xdg-open', path])
+        subprocess.Popen(['xdg-open', str(path)])
 
     @property
     def settingsDir(self):
