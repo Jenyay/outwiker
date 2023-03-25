@@ -8,7 +8,7 @@ import os
 import os.path
 import shutil
 
-from outwiker.core.attachment import Attachment
+from outwiker.api.core.attachment import Attachment
 
 from datagraph.libs.dateutil.parser import parser
 from datagraph import defines

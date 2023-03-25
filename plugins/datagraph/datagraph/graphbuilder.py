@@ -2,7 +2,7 @@
 
 import re
 
-from outwiker.core.attachment import Attachment
+from outwiker.api.core.attachment import Attachment
 
 from .graphelements import Graph, Curve
 from .datasources import StringSource, FileSource
