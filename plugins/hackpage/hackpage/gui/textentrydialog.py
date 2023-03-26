@@ -2,21 +2,19 @@
 
 import wx
 
-from outwiker.gui.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs.testeddialog import TestedDialog
 
 
 class TextEntryDialog(TestedDialog):
     """
     The dialog to enter text value with optional prefix
     """
-    def __init__(self, parent,
-                 title=u'', message=u'', prefix=u'',
-                 value=u'',
-                 validator=None):
+
+    def __init__(
+        self, parent, title="", message="", prefix="", value="", validator=None
+    ):
         super().__init__(
-            parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
-            title=title
+            parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER, title=title
         )
 
         # Функция для проверки правильности введенного идентификатора
@@ -39,10 +37,7 @@ class TextEntryDialog(TestedDialog):
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(2)
 
-        self.messageLabel = wx.StaticText(
-            self,
-            label=message
-        )
+        self.messageLabel = wx.StaticText(self, label=message)
 
         newUidSizer = wx.FlexGridSizer(cols=2)
         newUidSizer.AddGrowableCol(1)
@@ -51,9 +46,9 @@ class TextEntryDialog(TestedDialog):
         self.valueTextCtrl = wx.TextCtrl(self, value=value)
         self.valueTextCtrl.SetMinSize((400, -1))
 
-        newUidSizer.Add(self.prefixLabel,
-                        flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                        border=2)
+        newUidSizer.Add(
+            self.prefixLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
         newUidSizer.Add(self.valueTextCtrl, flag=wx.ALL | wx.EXPAND, border=2)
 
         mainSizer.Add(self.messageLabel, flag=wx.ALL, border=8)
@@ -67,9 +62,7 @@ class TextEntryDialog(TestedDialog):
     def _createOkCancelButtons(self, mainSizer):
         okCancel = self.CreateButtonSizer(wx.OK | wx.CANCEL)
         mainSizer.Add(
-            okCancel,
-            flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-            border=8
+            okCancel, flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM, border=8
         )
 
     def SetPrefix(self, prefix):
