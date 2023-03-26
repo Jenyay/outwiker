@@ -20,6 +20,7 @@ class ExportMenuFactory:
         self.EXPORT_ID = -1
 
         from .i18n import _
+
         global _
 
     def __getFileMenu(self):
@@ -72,9 +73,11 @@ class ExportMenuFactory:
             return
 
         exportmenu = wx.Menu()
-        menu.Insert(pos=self.__exportMenuPosition,
-                         id=self.EXPORT_ID,
-                         text=_("Export"),
-                         submenu=exportmenu,
-                         help="")
+        menu.Insert(
+            pos=self.__exportMenuPosition,
+            id=self.EXPORT_ID,
+            text=_("Export"),
+            submenu=exportmenu,
+            help="",
+        )
         return exportmenu

@@ -5,21 +5,18 @@ import os.path
 import shutil
 from abc import ABCMeta, abstractmethod
 
-from outwiker.core.attachment import Attachment
-from outwiker.utilites.textfile import writeTextFile
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.text import writeTextFile
 
 from .exceptions import FileAlreadyExists, FolderNotExists
 
 
-class BaseExporter:
+class BaseExporter(metaclass=ABCMeta):
     """
     Базовый класс для экспорта разных типов страниц
     """
-    __meta__ = ABCMeta
-
     def __init__(self, page):
         self._page = page
-
         from .i18n import _
         global _
 
@@ -31,13 +28,9 @@ class BaseExporter:
     def export(self, outdir, exportname, imagesonly, alwaisOverwrite):
         pass
 
-    def _exportContent(self,
-                       page,
-                       content,
-                       exportname,
-                       outdir,
-                       imagesonly,
-                       alwaisOverwrite):
+    def _exportContent(
+        self, page, content, exportname, outdir, imagesonly, alwaisOverwrite
+    ):
         """
         Экспортировать обработанное содержимое и вложения
         """
@@ -45,8 +38,7 @@ class BaseExporter:
         exportdir = os.path.join(outdir, exportname)
 
         if not alwaisOverwrite and os.path.exists(exportfile):
-            raise FileAlreadyExists(
-                _("File {0} already exists").format(exportfile))
+            raise FileAlreadyExists(_("File {0} already exists").format(exportfile))
 
         if not os.path.exists(outdir):
             raise FolderNotExists(_("Folder {0} not exists").format(outdir))
@@ -71,54 +63,54 @@ class BaseExporter:
                 self.__checkForExists(newpath, alwaisOverwrite)
                 self.__copy(fname, newpath)
 
-    def __exportIcon (self, page, exportdir, alwaisOverwrite):
-        assert os.path.exists (exportdir)
+    def __exportIcon(self, page, exportdir, alwaisOverwrite):
+        assert os.path.exists(exportdir)
 
         if page.icon is None:
             return
 
-        newIconPath = os.path.join (exportdir, os.path.basename (page.icon))
-        self.__checkForExists (newIconPath, alwaisOverwrite)
-        self.__copy (page.icon, newIconPath)
+        newIconPath = os.path.join(exportdir, os.path.basename(page.icon))
+        self.__checkForExists(newIconPath, alwaisOverwrite)
+        self.__copy(page.icon, newIconPath)
 
-    def __delete (self, path):
+    def __delete(self, path):
         """
         Удалить файл или директорию
         """
-        if os.path.isdir (path):
-            shutil.rmtree (path)
+        if os.path.isdir(path):
+            shutil.rmtree(path)
         else:
-            os.remove (path)
+            os.remove(path)
 
-    def __copy (self, src, dsc):
+    def __copy(self, src, dsc):
         """
         Скопировать файл или директорию
         """
-        if os.path.isdir (src):
-            shutil.copytree (src, dsc)
+        if os.path.isdir(src):
+            shutil.copytree(src, dsc)
         else:
-            shutil.copy (src, dsc)
+            shutil.copy(src, dsc)
 
-    def __checkForExists (self, path, alwaisOverwrite):
+    def __checkForExists(self, path, alwaisOverwrite):
         """
         Проверка на то, что файл существует.
         Если alwaisOverwrite == True, то существующий файл удаляется, иначе бросается исключение
         """
-        if os.path.exists (path):
+        if os.path.exists(path):
             if not alwaisOverwrite:
-                raise FileAlreadyExists (_("File {0} already exists").format (path))
+                raise FileAlreadyExists(_("File {0} already exists").format(path))
             else:
-                self.__delete (path)
+                self.__delete(path)
 
-    def __isImage (self, fname):
+    def __isImage(self, fname):
         images = [".gif", ".png", ".jpeg", ".jpg", ".tif", ".tiff"]
         isimage = False
         for extension in images:
-            if fname.endswith (extension):
+            if fname.endswith(extension):
                 isimage = True
                 break
 
-        if os.path.basename (fname).lower() == "__thumb":
+        if os.path.basename(fname).lower() == "__thumb":
             isimage = True
 
         return isimage

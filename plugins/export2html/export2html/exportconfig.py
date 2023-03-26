@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.config import BooleanOption
+from outwiker.api.core.config import BooleanOption
 
 
-class ExportConfig (object):
+class ExportConfig:
     def __init__(self, config):
         self.__config = config
 
@@ -12,28 +12,23 @@ class ExportConfig (object):
         # Перезаписывать существующие файлы?
         overwriteOption = "Overwrite"
 
-        self.__overwrite = BooleanOption(self.__config,
-                                         self.section,
-                                         overwriteOption,
-                                         False)
-
+        self.__overwrite = BooleanOption(
+            self.__config, self.section, overwriteOption, False
+        )
 
         # Прикрепленные файлы. Сохранять только картинки
-        imagesOnlyOption = u"ImagesOnly"
+        imagesOnlyOption = "ImagesOnly"
 
-        self.__imagesOnly = BooleanOption(self.__config,
-                                          self.section,
-                                          imagesOnlyOption,
-                                          False)
-
+        self.__imagesOnly = BooleanOption(
+            self.__config, self.section, imagesOnlyOption, False
+        )
 
         # Создавать файлы с длинными именами (включать заголовки родителей)
-        longNamesOption = u"LongNames"
+        longNamesOption = "LongNames"
 
-        self.__longNames = BooleanOption(self.__config,
-                                         self.section,
-                                         longNamesOption,
-                                         False)
+        self.__longNames = BooleanOption(
+            self.__config, self.section, longNamesOption, False
+        )
 
     @property
     def overwrite(self):

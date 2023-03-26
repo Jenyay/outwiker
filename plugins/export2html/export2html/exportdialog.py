@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from abc import abstractmethod, ABCMeta
-
 import wx
 
-from outwiker.core.commands import MessageBox
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 
 from .exportconfig import ExportConfig
 
 
-class ExportDialog (wx.Dialog):
+class ExportDialog(wx.Dialog):
     def __init__(self, parent, config):
         from .i18n import _
+
         global _
 
         self._config = ExportConfig(config)
 
-        wx.Dialog.__init__(self, parent, title=_("Export"),
-                           style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Dialog.__init__(
+            self, parent, title=_("Export"), style=wx.DEFAULT_DIALOG_STYLE
+        )
 
         self.__folderLabel = wx.StaticText(self, -1, _("Folder for Export:"))
         self.__folderTextCtrl = wx.TextCtrl(self)
@@ -25,15 +25,14 @@ class ExportDialog (wx.Dialog):
         textBoxWidth = 350
         self.__folderTextCtrl.SetMinSize((textBoxWidth, -1))
 
-        self.__selFolderButton = wx.Button(self,
-                                           wx.ID_ANY,
-                                           label="...",
-                                           style=wx.BU_EXACTFIT)
+        self.__selFolderButton = wx.Button(
+            self, wx.ID_ANY, label="...", style=wx.BU_EXACTFIT
+        )
 
-        self.__overwriteCheckBox = wx.CheckBox(
-            self, -1, _("Overwrite Existing Files"))
+        self.__overwriteCheckBox = wx.CheckBox(self, -1, _("Overwrite Existing Files"))
         self.__imagesOnlyCheckBox = wx.CheckBox(
-            self, -1, _("Attaches. Save Only Images"))
+            self, -1, _("Attaches. Save Only Images")
+        )
         self.__buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
         self.__layout()
@@ -92,9 +91,9 @@ class ExportDialog (wx.Dialog):
 
     def __onOkPressed(self, event):
         if len(self.path) == 0:
-            MessageBox(_("Please, select folder for export"),
-                       _("Error"),
-                       wx.OK | wx.ICON_ERROR)
+            MessageBox(
+                _("Please, select folder for export"), _("Error"), wx.OK | wx.ICON_ERROR
+            )
             self._setFocusDefault()
             return
 
@@ -108,20 +107,32 @@ class ExportDialog (wx.Dialog):
         if dlg.ShowModal() == wx.ID_OK:
             self.__folderTextCtrl.SetValue(dlg.GetPath())
 
-    def __layout (self):
-        folderSizer = wx.FlexGridSizer (cols=2)
-        folderSizer.AddGrowableCol (0)
-        folderSizer.Add (self.__folderTextCtrl, flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
-        folderSizer.Add (self.__selFolderButton, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT)
+    def __layout(self):
+        folderSizer = wx.FlexGridSizer(cols=2)
+        folderSizer.AddGrowableCol(0)
+        folderSizer.Add(
+            self.__folderTextCtrl, flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL
+        )
+        folderSizer.Add(
+            self.__selFolderButton, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT
+        )
 
-        self._mainSizer = wx.FlexGridSizer (cols=1)
-        self._mainSizer.AddGrowableCol (0)
-        self._mainSizer.Add (self.__folderLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        self._mainSizer.Add (folderSizer, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
-        self._mainSizer.Add (self.__overwriteCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        self._mainSizer.Add (self.__imagesOnlyCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        self._mainSizer.Add (self.__buttonsSizer, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
+        self._mainSizer = wx.FlexGridSizer(cols=1)
+        self._mainSizer.AddGrowableCol(0)
+        self._mainSizer.Add(
+            self.__folderLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        self._mainSizer.Add(
+            folderSizer, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2
+        )
+        self._mainSizer.Add(
+            self.__overwriteCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        self._mainSizer.Add(
+            self.__imagesOnlyCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        self._mainSizer.Add(self.__buttonsSizer, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
 
-        self.SetSizer (self._mainSizer)
+        self.SetSizer(self._mainSizer)
         self.Fit()
         self.Layout()
