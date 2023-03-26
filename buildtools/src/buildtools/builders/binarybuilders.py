@@ -71,6 +71,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             'outwiker.api.gui.dialogs',
             'outwiker.api.gui.dialogs.messagebox',
             'outwiker.api.gui.dialogs.testeddialog',
+            'outwiker.api.gui.longprocessrunner',
             'outwiker.api.gui.mainwindow',
             'outwiker.api.gui.preferences',
             'outwiker.api.services',

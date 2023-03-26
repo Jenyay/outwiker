@@ -6,14 +6,14 @@ from io import StringIO
 
 import wx
 
-from outwiker.core.commands import MessageBox
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 
 from .commandparams import EXEC_BEGIN, PROTO_COMMAND
 from ..config import ExternalToolsConfig
 from ..i18n import get_
 
 
-class CommandController(object):
+class CommandController:
     def __init__(self, application):
         self._application = application
 
@@ -35,6 +35,7 @@ class CommandController(object):
         Teh event occures before parsing. Add the (:exec:) command
         """
         from externaltools.commandexec.commandexec import CommandExec
+
         parser.addCommand(CommandExec(parser))
 
     def _getParams(self, url):
@@ -43,17 +44,17 @@ class CommandController(object):
         Every value in dictionary is list
         """
         if isinstance(url, bytes):
-            url = url.decode('utf8')
+            url = url.decode("utf8")
 
         if url is None or not url.startswith(EXEC_BEGIN):
             return {}
 
-        startpos = url.find(u'?')
+        startpos = url.find("?")
 
         if startpos == -1 or startpos == len(url) - 1:
             return {}
 
-        params = url[startpos + 1:]
+        params = url[startpos + 1 :]
 
         try:
             paramsDict = urllib.parse.parse_qs(params)
@@ -82,15 +83,15 @@ class CommandController(object):
         assert commands
 
         buf = StringIO()
-        buf.write(u'>>> ')
+        buf.write(">>> ")
         buf.write(self._getParamText(commands[0].command))
 
         for param in commands[0].params:
-            buf.write(u' ')
+            buf.write(" ")
             buf.write(self._getParamText(param))
 
         if len(commands) > 1:
-            buf.write(u' ...')
+            buf.write(" ...")
 
         return buf.getvalue()
 
@@ -98,7 +99,7 @@ class CommandController(object):
         """
         Quote param if it contain a space
         """
-        return u'"{}"'.format(param) if u' ' in param else param
+        return '"{}"'.format(param) if " " in param else param
 
     def onLinkClick(self, page, params):
         """
@@ -117,16 +118,19 @@ class CommandController(object):
         config = ExternalToolsConfig(self._application.config)
 
         if len(commands) > 1:
-            message = _(u'Run applications by ExternalTools plugin?\nIt may be unsafe.')
+            message = _("Run applications by ExternalTools plugin?\nIt may be unsafe.")
         else:
-            message = _(u'Run application by ExternalTools plugin?\nIt may be unsafe.')
+            message = _("Run application by ExternalTools plugin?\nIt may be unsafe.")
 
-        if(config.execWarning and
-                MessageBox(
-                    message,
-                    _(u'ExternalTools'),
-                    wx.YES_NO | wx.ICON_QUESTION | wx.NO_DEFAULT
-                ) != wx.YES):
+        if (
+            config.execWarning
+            and MessageBox(
+                message,
+                _("ExternalTools"),
+                wx.YES_NO | wx.ICON_QUESTION | wx.NO_DEFAULT,
+            )
+            != wx.YES
+        ):
             return
 
         for command in commands:
@@ -158,5 +162,5 @@ class CommandController(object):
     def _execute(self, command, params):
         try:
             subprocess.Popen([command] + params)
-        except(OSError, subprocess.CalledProcessError):
+        except (OSError, subprocess.CalledProcessError):
             pass
