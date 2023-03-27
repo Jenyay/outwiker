@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractproperty
-from outwiker.pages.wiki.parser.command import Command
+
+from outwiker.api.pages.wiki.parser.command import Command
 
 
 class LjCommand(Command, metaclass=ABCMeta):
     def __init__(self, parser):
-        Command.__init__(self, parser)
+        super().__init__(parser)
 
     @abstractproperty
     def template(self):
@@ -14,8 +15,7 @@ class LjCommand(Command, metaclass=ABCMeta):
 
     def execute(self, params, content):
         name = params
-        return self.template.format(name=name,
-                                    name_correct=name.replace("_", "-"))
+        return self.template.format(name=name, name_correct=name.replace("_", "-"))
 
 
 class LjUserCommand(LjCommand):
@@ -23,6 +23,7 @@ class LjUserCommand(LjCommand):
     Команда для вставки ссылки на пользователя ЖЖ
     Синтсаксис: (:ljuser name:)
     """
+
     def __init__(self, parser):
         super().__init__(parser)
 
@@ -40,6 +41,7 @@ class LjCommunityCommand(LjCommand):
     Команда для вставки ссылки на пользователя ЖЖ
     Синтсаксис: (:ljcomm name:)
     """
+
     def __init__(self, parser):
         super().__init__(parser)
 

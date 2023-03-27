@@ -2,11 +2,9 @@
 
 import os.path
 
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo,
-                                                    ButtonInfo)
+from outwiker.api.pages.wiki import WikiWikiPage
+from outwiker.api.pages.wiki.defines import MENU_WIKI
+from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo, ButtonInfo
 
 from .i18n import get_
 from .ljcommand import LjUserCommand, LjCommunityCommand
@@ -14,7 +12,7 @@ from .actions import LJUserAction, LJCommAction
 from . import defines
 
 
-class Controller(object):
+class Controller:
     def __init__(self, plugin, application):
         self._plugin = plugin
         self._application = application
@@ -35,28 +33,31 @@ class Controller(object):
         self._initialize_guicontroller()
 
     def _initialize_guicontroller(self):
-        imagesPath = os.path.join(self._plugin.pluginPath, 'images')
+        imagesPath = os.path.join(self._plugin.pluginPath, "images")
 
         action_gui_info = [
-            ActionGUIInfo(LJUserAction(self._application),
-                          defines.MENU_LIVEJOURNAL,
-                          ButtonInfo(defines.TOOLBAR_LIVEJOURNAL,
-                                     os.path.join(imagesPath, 'ljuser.gif'))
-                          ),
-            ActionGUIInfo(LJCommAction(self._application),
-                          defines.MENU_LIVEJOURNAL,
-                          ButtonInfo(defines.TOOLBAR_LIVEJOURNAL,
-                                     os.path.join(imagesPath, 'ljcommunity.gif'))
-                          ),
+            ActionGUIInfo(
+                LJUserAction(self._application),
+                defines.MENU_LIVEJOURNAL,
+                ButtonInfo(
+                    defines.TOOLBAR_LIVEJOURNAL, os.path.join(imagesPath, "ljuser.gif")
+                ),
+            ),
+            ActionGUIInfo(
+                LJCommAction(self._application),
+                defines.MENU_LIVEJOURNAL,
+                ButtonInfo(
+                    defines.TOOLBAR_LIVEJOURNAL,
+                    os.path.join(imagesPath, "ljcommunity.gif"),
+                ),
+            ),
         ]
 
-        new_toolbars = [(defines.TOOLBAR_LIVEJOURNAL, _('LiveJournal'))]
-        new_menus = [(defines.MENU_LIVEJOURNAL, _('LiveJournal'), MENU_WIKI)]
+        new_toolbars = [(defines.TOOLBAR_LIVEJOURNAL, _("LiveJournal"))]
+        new_menus = [(defines.MENU_LIVEJOURNAL, _("LiveJournal"), MENU_WIKI)]
 
         if self._application.mainWindow is not None:
-            self._GUIController.initialize(action_gui_info,
-                                           new_toolbars,
-                                           new_menus)
+            self._GUIController.initialize(action_gui_info, new_toolbars, new_menus)
 
     def destroy(self):
         """
