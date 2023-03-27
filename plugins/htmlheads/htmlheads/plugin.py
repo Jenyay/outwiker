@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 from .controller import Controller
@@ -24,13 +24,16 @@ class PluginHtmlHeads(Plugin):
 
     @property
     def name(self):
-        return u"HtmlHeads"
+        return "HtmlHeads"
 
     @property
     def description(self):
-        description = _(u'''Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)''')
+        description = _(
+            """Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)"""
+        )
 
-        usage = _(u'''<b>Usage:</b>
+        usage = _(
+            """<b>Usage:</b>
 (:title Page title:)
 
 (:description Page description:)
@@ -42,16 +45,19 @@ class PluginHtmlHeads(Plugin):
 
 &lt;meta name='robots' content='index,follow' /&gt;
 (:htmlheadend:)
-''')
+"""
+        )
 
-        return u"""{description}
+        return """{description}
 
 {usage}
-""".format(description=description, usage=usage)
+""".format(
+            description=description, usage=usage
+        )
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/HtmlHeadsEn")
+        return _("https://jenyay.net/Outwiker/HtmlHeadsEn")
 
     def initialize(self):
         set_(self.gettext)
