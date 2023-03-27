@@ -3,8 +3,8 @@
 import os.path
 import shutil
 
-from outwiker.pages.wiki.parser.command import Command
-from outwiker.pages.wiki.thumbnails import Thumbnails
+from outwiker.api.pages.wiki.parser.command import Command
+from outwiker.api.core.attachment import Thumbnails
 
 
 class LightboxCommand(Command):
@@ -13,6 +13,7 @@ class LightboxCommand(Command):
     при клике на превьюшки начинают показываться в окне программы
     с помощью JavaScript
     """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
@@ -25,7 +26,7 @@ class LightboxCommand(Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"lightbox"
+        return "lightbox"
 
     def _copyScriptFiles(self):
         """
@@ -35,13 +36,14 @@ class LightboxCommand(Command):
         scriptdir = os.path.join(os.path.dirname(__file__), "scripts")
         thumbDir = Thumbnails(self.parser.page).getThumbPath(True)
 
-        files = ["jquery.fancybox.css",
-                 "blank.gif",
-                 "fancybox_loading.gif",
-                 "jquery-1.7.2.min.js",
-                 "jquery.fancybox.pack.js",
-                 "fancybox_sprite.png"
-                 ]
+        files = [
+            "jquery.fancybox.css",
+            "blank.gif",
+            "fancybox_loading.gif",
+            "jquery-1.7.2.min.js",
+            "jquery.fancybox.pack.js",
+            "fancybox_sprite.png",
+        ]
 
         for fname in files:
             srcPath = os.path.join(scriptdir, fname)
@@ -57,7 +59,7 @@ class LightboxCommand(Command):
         if not self.__scriptAppend:
             self.__scriptAppend = True
 
-            header = u"""<script type="text/javascript" src="./__attach/__thumb/jquery-1.7.2.min.js"></script>
+            header = """<script type="text/javascript" src="./__attach/__thumb/jquery-1.7.2.min.js"></script>
 <link rel="stylesheet" href="./__attach/__thumb/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="./__attach/__thumb/jquery.fancybox.pack.js"></script>"""
 
@@ -66,6 +68,6 @@ class LightboxCommand(Command):
             try:
                 self._copyScriptFiles()
             except IOError as e:
-                return _(u"<B>Can't copy script files</B>\n{0}").format(e)
+                return _("<B>Can't copy script files</B>\n{0}").format(e)
 
-        return u"""<script>  $(document).ready(function() {    $("a[href$='.jpg'],a[href$='.jpeg'],a[href$='.JPG'],a[href$='.JPEG'],a[href$='.png'],a[href$='.PNG'],a[href$='.gif'],a[href$='.GIF'],a[href$='.bmp'],a[href$='.BMP'],a[href$='.tif'],a[href$='.TIF'],a[href$='.tiff'],a[href$='.TIFF']").attr('rel', 'gallery').fancybox();  });</script>"""
+        return """<script>  $(document).ready(function() {    $("a[href$='.jpg'],a[href$='.jpeg'],a[href$='.JPG'],a[href$='.JPEG'],a[href$='.png'],a[href$='.PNG'],a[href$='.gif'],a[href$='.GIF'],a[href$='.bmp'],a[href$='.BMP'],a[href$='.tif'],a[href$='.TIF'],a[href$='.tiff'],a[href$='.TIFF']").attr('rel', 'gallery').fancybox();  });</script>"""

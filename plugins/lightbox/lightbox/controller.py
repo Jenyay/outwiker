@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo)
+from outwiker.api.pages.wiki import WikiWikiPage
+from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo
 
 from .lightboxcommand import LightboxCommand
 from .actions import LightboxAction
 
 
-class Controller(object):
+class Controller:
     def __init__(self, application):
         self._application = application
 
@@ -24,9 +23,7 @@ class Controller(object):
 
     def _initialize_guicontroller(self):
         action_gui_info = [
-            ActionGUIInfo(LightboxAction(self._application),
-                          MENU_WIKI_COMMANDS
-                          ),
+            ActionGUIInfo(LightboxAction(self._application), MENU_WIKI_COMMANDS),
         ]
 
         if self._application.mainWindow is not None:

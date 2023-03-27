@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 from .i18n import get_
 
 
@@ -8,24 +8,27 @@ class LightboxAction(BaseAction):
     """
     Описание действия
     """
+
     def __init__(self, application):
         self._application = application
 
         global _
         _ = get_()
 
-    stringId = u"Lightbox_Lightbox"
+    stringId = "Lightbox_Lightbox"
 
     @property
     def title(self):
-        return _(u"(:lightbox:) command")
+        return _("(:lightbox:) command")
 
     @property
     def description(self):
-        return _(u"Insert (:lightbox:) wiki command to show attached images inside OutWiker.")
+        return _(
+            "Insert (:lightbox:) wiki command to show attached images inside OutWiker."
+        )
 
     def run(self, params):
-        command = u'(:lightbox:)'
+        command = "(:lightbox:)"
 
         pageView = self._getPageView()
         pageView.codeEditor.replaceText(command)
