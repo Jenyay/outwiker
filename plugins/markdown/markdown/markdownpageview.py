@@ -5,8 +5,8 @@ import re
 
 import wx
 
+from outwiker.api.core.attachment import Attachment
 from outwiker.actions.polyactionsid import *
-from outwiker.core.attachment import Attachment
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import insertCurrentDate
 from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
@@ -22,7 +22,7 @@ from .defines import MENU_MARKDOWN, TOOLBAR_MARKDOWN_GENERAL
 
 class MarkdownPageView(BaseWikiPageView):
     def __init__(self, parent, application):
-        super(MarkdownPageView, self).__init__(parent, application)
+        super().__init__(parent, application)
         self.imagesDir = getImagesDir()
 
     def _isHtmlCodeShown(self):

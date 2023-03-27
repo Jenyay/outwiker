@@ -1,15 +1,13 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.gui.dialogs.baselinkdialogcontroller import BaseLinkDialogController
+from outwiker.api.gui.dialogs.baselinkdialogcontroller import BaseLinkDialogController
 
 from .linkcreator import LinkCreator
 
 
 class LinkDialogController(BaseLinkDialogController):
     def __init__(self, application, page, dialog, selectedString):
-        super(LinkDialogController, self).__init__(page,
-                                                   dialog,
-                                                   selectedString)
+        super().__init__(page, dialog, selectedString)
         self._application = application
 
     @property
@@ -24,4 +22,4 @@ class LinkDialogController(BaseLinkDialogController):
         """
         Return link to attached file
         """
-        return u'__attach/{}'.format(fname)
+        return "__attach/{}".format(fname)

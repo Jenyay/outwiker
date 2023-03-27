@@ -5,10 +5,12 @@ import os
 from outwiker.core.event import pagetype
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.style import Style
-from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
-                                                           AppearanceController)
+from outwiker.gui.pagedialogpanels.appearancepanel import (
+    AppearancePanel,
+    AppearanceController,
+)
 from outwiker.pages.wiki.htmlcache import HtmlCache
-from outwiker.utilites.textfile import writeTextFile
+from outwiker.api.core.text import writeTextFile
 
 from .colorizercontroller import ColorizerController
 from .markdownhtmlgenerator import MarkdownHtmlGenerator
@@ -16,13 +18,13 @@ from .markdownpage import MarkdownPageFactory, MarkdownPage
 from .i18n import get_
 
 
-class Controller(object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
+
     def __init__(self, plugin, application):
-        """
-        """
+        """ """
         self._plugin = plugin
         self._application = application
 
@@ -30,8 +32,8 @@ class Controller(object):
         self._appearanceController = None
 
         self._colorizerController = ColorizerController(
-            self._application,
-            MarkdownPage.getTypeString())
+            self._application, MarkdownPage.getTypeString()
+        )
 
     def initialize(self):
         """
@@ -42,10 +44,14 @@ class Controller(object):
         _ = get_()
 
         FactorySelector.addFactory(MarkdownPageFactory())
-        self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageDialogPageFactoriesNeeded += (
+            self.__onPageDialogPageFactoriesNeeded
+        )
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
-        self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
+        self._application.onPageDialogPageTypeChanged += (
+            self.__onPageDialogPageTypeChanged
+        )
         self._application.onPageDialogDestroy += self.__onPageDialogDestroy
         self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
 
@@ -54,10 +60,14 @@ class Controller(object):
         Вызывается при отключении плагина
         """
         FactorySelector.removeFactory(MarkdownPageFactory().getTypeString())
-        self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageDialogPageFactoriesNeeded -= (
+            self.__onPageDialogPageFactoriesNeeded
+        )
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
-        self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
+        self._application.onPageDialogPageTypeChanged -= (
+            self.__onPageDialogPageTypeChanged
+        )
         self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
@@ -84,12 +94,11 @@ class Controller(object):
     def _addTab(self, dialog):
         if self._appearancePanel is None:
             self._appearancePanel = AppearancePanel(dialog.getPanelsParent())
-            dialog.addPanel(self._appearancePanel, _(u'Appearance'))
+            dialog.addPanel(self._appearancePanel, _("Appearance"))
 
             self._appearanceController = AppearanceController(
-                self._appearancePanel,
-                self._application,
-                dialog)
+                self._appearancePanel, self._application, dialog
+            )
 
             dialog.addController(self._appearanceController)
 

@@ -3,10 +3,11 @@
 from pyparsing import QuotedString
 
 
-class FontsFactory(object):
+class FontsFactory:
     """
     Фабрика для создания шрифтовых / блочных токенов
     """
+
     @staticmethod
     def makeItalic():
         """
@@ -43,13 +44,13 @@ class FontsFactory(object):
         return CommentToken().getToken()
 
 
-class BlockToken(object):
+class BlockToken:
     def checkBreaks(self, s, loc, toks):
-        text = toks[0].replace(u'\r\n', u'\n')
-        return text.find(u'\n\n') == -1
+        text = toks[0].replace("\r\n", "\n")
+        return text.find("\n\n") == -1
 
 
-class ItalicToken (BlockToken):
+class ItalicToken(BlockToken):
     start_1 = "*"
     end_1 = "*"
 
@@ -57,14 +58,20 @@ class ItalicToken (BlockToken):
     end_2 = "_"
 
     def getToken(self):
-        return (QuotedString(ItalicToken.start_1,
-                             endQuoteChar=ItalicToken.end_1,
-                             multiline=True,
-                             convertWhitespaceEscapes=False) |
-                QuotedString(ItalicToken.start_2,
-                             endQuoteChar=ItalicToken.end_2,
-                             multiline=True,
-                             convertWhitespaceEscapes=False)).addCondition(self.checkBreaks)("italic")
+        return (
+            QuotedString(
+                ItalicToken.start_1,
+                endQuoteChar=ItalicToken.end_1,
+                multiline=True,
+                convertWhitespaceEscapes=False,
+            )
+            | QuotedString(
+                ItalicToken.start_2,
+                endQuoteChar=ItalicToken.end_2,
+                multiline=True,
+                convertWhitespaceEscapes=False,
+            )
+        ).addCondition(self.checkBreaks)("italic")
 
 
 class BoldToken(BlockToken):
@@ -75,14 +82,20 @@ class BoldToken(BlockToken):
     end_2 = "__"
 
     def getToken(self):
-        return (QuotedString(BoldToken.start_1,
-                             endQuoteChar=BoldToken.end_1,
-                             multiline=True,
-                             convertWhitespaceEscapes=False) |
-                QuotedString(BoldToken.start_2,
-                             endQuoteChar=BoldToken.end_2,
-                             multiline=True,
-                             convertWhitespaceEscapes=False)).addCondition(self.checkBreaks)("bold")
+        return (
+            QuotedString(
+                BoldToken.start_1,
+                endQuoteChar=BoldToken.end_1,
+                multiline=True,
+                convertWhitespaceEscapes=False,
+            )
+            | QuotedString(
+                BoldToken.start_2,
+                endQuoteChar=BoldToken.end_2,
+                multiline=True,
+                convertWhitespaceEscapes=False,
+            )
+        ).addCondition(self.checkBreaks)("bold")
 
 
 class BoldItalicToken(BlockToken):
@@ -90,10 +103,12 @@ class BoldItalicToken(BlockToken):
     end = "_**"
 
     def getToken(self):
-        return QuotedString(BoldItalicToken.start,
-                            endQuoteChar=BoldItalicToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).addCondition(self.checkBreaks)("bold_italic")
+        return QuotedString(
+            BoldItalicToken.start,
+            endQuoteChar=BoldItalicToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).addCondition(self.checkBreaks)("bold_italic")
 
 
 class CodeToken(BlockToken):
@@ -101,10 +116,12 @@ class CodeToken(BlockToken):
     end = "```"
 
     def getToken(self):
-        return QuotedString(CodeToken.start,
-                            endQuoteChar=CodeToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False)("code")
+        return QuotedString(
+            CodeToken.start,
+            endQuoteChar=CodeToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        )("code")
 
 
 class CommentToken(BlockToken):
@@ -112,7 +129,9 @@ class CommentToken(BlockToken):
     end = "-->"
 
     def getToken(self):
-        return QuotedString(CommentToken.start,
-                            endQuoteChar=CommentToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False)("comment")
+        return QuotedString(
+            CommentToken.start,
+            endQuoteChar=CommentToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        )("comment")

@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
-from outwiker.core.defines import PAGE_RESULT_HTML
+from outwiker.api.core.defines import PAGE_RESULT_HTML
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
 

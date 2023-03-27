@@ -1,0 +1,1 @@
+from outwiker.gui.dialogs.baselinkdialogcontroller import BaseLinkDialogController

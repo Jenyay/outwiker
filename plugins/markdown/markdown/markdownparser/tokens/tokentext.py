@@ -1,22 +1,23 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
 from pyparsing import Regex
 
 
-class TextFactory(object):
+class TextFactory:
     @staticmethod
     def make():
         return TextToken().getToken()
 
 
-class TextToken(object):
-    '''
+class TextToken:
+    """
     Token for simple text
-    '''
+    """
+
     def getToken(self):
-        textRegex = r'(?:(?:[^\W_]-[^\W_])|[^\W_])+'
-        token = Regex(textRegex, re.UNICODE)('text')
+        textRegex = r"(?:(?:[^\W_]-[^\W_])|[^\W_])+"
+        token = Regex(textRegex, re.UNICODE)("text")
         token.leaveWhitespace()
         return token
