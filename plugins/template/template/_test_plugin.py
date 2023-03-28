@@ -15,7 +15,7 @@ class PluginNameTest(unittest.TestCase):
     def setUp(self):
         self.__createWiki()
 
-        dirlist = [u"../plugins/pluginname"]
+        dirlist = ["../plugins/pluginname"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
@@ -26,13 +26,13 @@ class PluginNameTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = u"../test/testwiki"
+        self.path = "../test/testwiki"
         removeDir(self.path)
 
         self.rootwiki = WikiDocument.create(self.path)
 
-        WikiPageFactory().create(self.rootwiki, u"Страница 1", [])
-        self.testPage = self.rootwiki[u"Страница 1"]
+        WikiPageFactory().create(self.rootwiki, "Страница 1", [])
+        self.testPage = self.rootwiki["Страница 1"]
 
     def testPluginLoad(self):
         self.assertEqual(len(self.loader), 1)

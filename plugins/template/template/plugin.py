@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .controller import Controller
 from .i18n import set_
@@ -12,7 +12,7 @@ class PluginName(Plugin):
         application - Instance of the
             core.application.ApplicationParams class
         """
-        super(PluginName, self).__init__(application)
+        super().__init__(application)
         self.__controller = Controller(self, application)
 
     @property
@@ -25,15 +25,15 @@ class PluginName(Plugin):
 
     @property
     def name(self):
-        return u"PluginName"
+        return "PluginName"
 
     @property
     def description(self):
-        return _(u"Plugin description")
+        return _("Plugin description")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net")
+        return _("https://jenyay.net")
 
     def initialize(self):
         set_(self.gettext)
