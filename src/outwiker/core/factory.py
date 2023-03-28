@@ -11,24 +11,20 @@ from .tree_commands import getAlternativeTitle
 # Functions to calculate new page order
 
 
-def orderCalculatorTop(_parent: RootWikiPage,
-                       _alias: str,
-                       _tags: List[str]) -> int:
-    """Add a page to top of the siblings."""
+def orderCalculatorTop(_parent: RootWikiPage, _alias: str, _tags: List[str]) -> int:
+    """Add a page to top of the siblings"""
     return 0
 
 
-def orderCalculatorBottom(parent: RootWikiPage,
-                          _alias: str,
-                          _tags: List[str]) -> int:
-    """Add a page to bottom of the siblings."""
+def orderCalculatorBottom(parent: RootWikiPage, _alias: str, _tags: List[str]) -> int:
+    """Add a page to bottom of the siblings"""
     return len(parent.children)
 
 
-def orderCalculatorAlphabetically(parent: RootWikiPage,
-                                  alias: str,
-                                  _tags: List[str]) -> int:
-    """Sort a page alias alphabetically."""
+def orderCalculatorAlphabetically(
+    parent: RootWikiPage, alias: str, _tags: List[str]
+) -> int:
+    """Sort a page alias alphabetically"""
     order = len(parent.children)
     alias_lower = alias.lower()
     for n, page in enumerate(parent.children):
@@ -44,12 +40,15 @@ class PageFactory(metaclass=ABCMeta):
     Класс для создания страниц
     """
 
-    def create(self,
-               parent: RootWikiPage,
-               alias: str,
-               tags: List[str],
-               order_calculator: Callable[[RootWikiPage, str, List[str]], int] = orderCalculatorBottom
-               ) -> WikiPage:
+    def create(
+        self,
+        parent: RootWikiPage,
+        alias: str,
+        tags: List[str],
+        order_calculator: Callable[
+            [RootWikiPage, str, List[str]], int
+        ] = orderCalculatorBottom,
+    ) -> WikiPage:
         """
         Создать страницу. Вызывать этот метод вместо конструктора
         """

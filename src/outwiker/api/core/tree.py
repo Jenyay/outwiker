@@ -1,7 +1,8 @@
 from pathlib import Path
 from typing import Union
 
-from outwiker.core.tree import WikiDocument
+from outwiker.core.tree import WikiDocument, WikiPage
+from outwiker.core.factory import PageFactory
 
 import outwiker.core.treetools as _treetools
 

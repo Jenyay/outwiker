@@ -2,15 +2,16 @@
 
 import os
 
-from outwiker.core.event import pagetype
+from outwiker.api.core.events import pagetype
+from outwiker.api.core.text import writeTextFile
+from outwiker.api.core.pagestyle import getPageStyle
+
 from outwiker.core.factoryselector import FactorySelector
-from outwiker.core.style import Style
 from outwiker.gui.pagedialogpanels.appearancepanel import (
     AppearancePanel,
     AppearanceController,
 )
 from outwiker.pages.wiki.htmlcache import HtmlCache
-from outwiker.api.core.text import writeTextFile
 
 from .colorizercontroller import ColorizerController
 from .markdownhtmlgenerator import MarkdownHtmlGenerator
@@ -123,8 +124,7 @@ class Controller:
         if cache.canReadFromCache() and os.path.exists(path):
             return
 
-        style = Style()
-        stylepath = style.getPageStyle(page)
+        stylepath = getPageStyle(page)
         generator = MarkdownHtmlGenerator(page)
 
         html = generator.makeHtml(stylepath)

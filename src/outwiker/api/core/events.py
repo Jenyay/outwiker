@@ -1,4 +1,4 @@
-from outwiker.core.event import (Event, EVENT_PRIORITY_DEFAULT,
+from outwiker.core.event import (Event, pagetype, EVENT_PRIORITY_DEFAULT,
                                  EVENT_PRIORITY_MAX_CORE,
                                  EVENT_PRIORITY_MIN_CORE)
 from outwiker.core.events import (PAGE_UPDATE_CONTENT, PAGE_UPDATE_ICON,

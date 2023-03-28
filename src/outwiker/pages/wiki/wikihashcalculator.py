@@ -14,7 +14,7 @@ from .wikiconfig import WikiConfig
 from .emptycontent import EmptyContent
 
 
-class WikiHashCalculator (object):
+class WikiHashCalculator:
     """
     Класс для расчета контрольной суммы викистраницы
     """
@@ -49,8 +49,7 @@ class WikiHashCalculator (object):
         content.write(self.__getStyleContent(page))
 
         # Настройки, касающиеся вида вики-страницы
-        content.write(
-            str(self._wikiConfig.showAttachInsteadBlankOptions.value))
+        content.write(str(self._wikiConfig.showAttachInsteadBlankOptions.value))
         content.write(str(self._wikiConfig.thumbSizeOptions.value))
 
         # Настройки отображения HTML-страницы
@@ -72,7 +71,7 @@ class WikiHashCalculator (object):
         result = content.getvalue()
         content.close()
 
-        return result.encode('utf-8', errors='ignore')
+        return result.encode("utf-8", errors="ignore")
 
     def __getStyleContent(self, page):
         """
@@ -93,10 +92,11 @@ class WikiHashCalculator (object):
         Возвращает строку
         """
         if len(self._application.plugins) == 0:
-            return u""
+            return ""
 
-        plugins = sorted([plugin.name + str(plugin.version)
-                          for plugin in self._application.plugins])
+        plugins = sorted(
+            [plugin.name + str(plugin.version) for plugin in self._application.plugins]
+        )
         result = reduce(lambda x, y: x + y, plugins)
         return result
 
@@ -123,8 +123,8 @@ class WikiHashCalculator (object):
 
                     if os.path.isdir(fullpath):
                         self.__getDirContent(
-                            page, filescontent, os.path.join(
-                                dirname, fname))
+                            page, filescontent, os.path.join(dirname, fname)
+                        )
                 except OSError:
                     # Если есть проблемы с доступом к файлу, то здесь на это не
                     # будем обращать внимания

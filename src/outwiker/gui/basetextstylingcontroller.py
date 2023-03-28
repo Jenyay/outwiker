@@ -20,17 +20,11 @@ class BaseTextStylingController(metaclass=ABCMeta):
         pass
 
     def _onEditorStyleNeeded(self, page, params):
-        if (page is None or
-                (not page.getTypeString() == self._pageTypeString)):
+        if page is None or (not page.getTypeString() == self._pageTypeString):
             return
 
-        if (self._colorizingThread is None or
-                not self._colorizingThread.is_alive()):
-
-            thread = self.getColorizingThread(
-                page,
-                params,
-                self._runColorizingEvent)
+        if self._colorizingThread is None or not self._colorizingThread.is_alive():
+            thread = self.getColorizingThread(page, params, self._runColorizingEvent)
 
             if thread is not None:
                 self._colorizingThread = thread
@@ -62,10 +56,7 @@ class BaseTextStylingController(metaclass=ABCMeta):
             self._colorizingThread.join()
             self._colorizingThread = None
 
-    def updateStyles(self,
-                     editor,
-                     text,
-                     styleBytes):
+    def updateStyles(self, editor, text, styleBytes):
         event = ApplyStyleEvent(text=text, styleBytes=styleBytes)
         wx.PostEvent(editor, event)
 

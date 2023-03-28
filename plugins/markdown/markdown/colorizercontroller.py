@@ -2,7 +2,7 @@
 
 import threading
 
-from outwiker.gui.basetextstylingcontroller import BaseTextStylingController
+from outwiker.api.gui.basetextstylingcontroller import BaseTextStylingController
 from outwiker.pages.wiki.wikieditor import WikiEditor
 
 from .colorizer import MarkdownColorizer

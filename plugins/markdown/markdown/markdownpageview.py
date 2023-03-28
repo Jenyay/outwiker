@@ -6,12 +6,13 @@ import re
 import wx
 
 from outwiker.api.core.attachment import Attachment
-from outwiker.actions.polyactionsid import *
+from outwiker.api.services.texteditor import insertCurrentDate
 from outwiker.core.system import getImagesDir
-from outwiker.core.commands import insertCurrentDate
 from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.wikieditor import WikiEditor
+
+from outwiker.actions.polyactionsid import *
 
 from .links.linkdialog import LinkDialog
 from .links.linkdialogcontroller import LinkDialogController
@@ -32,16 +33,16 @@ class MarkdownPageView(BaseWikiPageView):
         return WikiEditor
 
     def _getPageTitle(self):
-        return _(u"Markdown")
+        return _("Markdown")
 
     def _getMenuTitle(self):
-        return _(u"Markdown")
+        return _("Markdown")
 
     def _getMenuId(self):
         return MENU_MARKDOWN
 
     def _getToolbarsInfo(self, mainWindow):
-        return [(TOOLBAR_MARKDOWN_GENERAL, _('Markdown'))]
+        return [(TOOLBAR_MARKDOWN_GENERAL, _("Markdown"))]
 
     def _getPolyActions(self):
         return [
@@ -54,13 +55,10 @@ class MarkdownPageView(BaseWikiPageView):
             HEADING_4_STR_ID,
             HEADING_5_STR_ID,
             HEADING_6_STR_ID,
-            # PREFORMAT_STR_ID,
             CODE_STR_ID,
             HORLINE_STR_ID,
             LINK_STR_ID,
             IMAGE_STR_ID,
-            # LIST_BULLETS_STR_ID,
-            # LIST_NUMBERS_STR_ID,
             HTML_ESCAPE_STR_ID,
             CURRENT_DATE,
             COMMENT_STR_ID,
@@ -101,7 +99,7 @@ class MarkdownPageView(BaseWikiPageView):
 
     def _addFontTools(self):
         self._fontMenu = wx.Menu()
-        self.toolsMenu.AppendSubMenu(self._fontMenu, _(u"Font"))
+        self.toolsMenu.AppendSubMenu(self._fontMenu, _("Font"))
 
         toolbar = self._application.mainWindow.toolbars[TOOLBAR_MARKDOWN_GENERAL]
         menu = self._fontMenu
@@ -109,119 +107,136 @@ class MarkdownPageView(BaseWikiPageView):
 
         # Bold
         actionController.getAction(BOLD_STR_ID).setFunc(
-            lambda param: self.turnText(u"**", u"**"))
+            lambda param: self.turnText("**", "**")
+        )
 
         actionController.appendMenuItem(BOLD_STR_ID, menu)
         actionController.appendToolbarButton(
             BOLD_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_bold.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Italic
         actionController.getAction(ITALIC_STR_ID).setFunc(
-            lambda param: self.turnText(u"*", u"*"))
+            lambda param: self.turnText("*", "*")
+        )
 
         actionController.appendMenuItem(ITALIC_STR_ID, menu)
         actionController.appendToolbarButton(
             ITALIC_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_italic.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Bold italic
-        bold_italic_action = actionController.getAction(
-            BOLD_ITALIC_STR_ID)
-        bold_italic_action.setFunc(lambda param: self.turnText(u"**_", u"_**"))
+        bold_italic_action = actionController.getAction(BOLD_ITALIC_STR_ID)
+        bold_italic_action.setFunc(lambda param: self.turnText("**_", "_**"))
 
         actionController.appendMenuItem(BOLD_ITALIC_STR_ID, menu)
         actionController.appendToolbarButton(
             BOLD_ITALIC_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_bold_italic.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Comment
         actionController.getAction(COMMENT_STR_ID).setFunc(
-            lambda param: self.turnText(u"<!--", u"-->"))
+            lambda param: self.turnText("<!--", "-->")
+        )
         actionController.appendMenuItem(COMMENT_STR_ID, menu)
         actionController.appendToolbarButton(
             COMMENT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "comment.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
     def _addHeadingTools(self):
         """
         Added headings buttons
         """
         self._headingMenu = wx.Menu()
-        self.toolsMenu.AppendSubMenu(self._headingMenu, _(u"Heading"))
+        self.toolsMenu.AppendSubMenu(self._headingMenu, _("Heading"))
 
         toolbar = self._application.mainWindow.toolbars[TOOLBAR_MARKDOWN_GENERAL]
         menu = self._headingMenu
         actionController = self._application.actionController
 
         actionController.getAction(HEADING_1_STR_ID).setFunc(
-            lambda param: self._setHeading(u"# "))
+            lambda param: self._setHeading("# ")
+        )
 
         actionController.getAction(HEADING_2_STR_ID).setFunc(
-            lambda param: self._setHeading(u"## "))
+            lambda param: self._setHeading("## ")
+        )
 
         actionController.getAction(HEADING_3_STR_ID).setFunc(
-            lambda param: self._setHeading(u"### "))
+            lambda param: self._setHeading("### ")
+        )
 
         actionController.getAction(HEADING_4_STR_ID).setFunc(
-            lambda param: self._setHeading(u"#### "))
+            lambda param: self._setHeading("#### ")
+        )
 
         actionController.getAction(HEADING_5_STR_ID).setFunc(
-            lambda param: self._setHeading(u"##### "))
+            lambda param: self._setHeading("##### ")
+        )
 
         actionController.getAction(HEADING_6_STR_ID).setFunc(
-            lambda param: self._setHeading(u"###### "))
+            lambda param: self._setHeading("###### ")
+        )
 
-        actionController.appendMenuItem(HEADING_1_STR_ID,
-                                        menu)
+        actionController.appendMenuItem(HEADING_1_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_1_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_1.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_2_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_2_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_2.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_3_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_3_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_3.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_4_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_4_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_4.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_5_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_5_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_5.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_6_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_6_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_6.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
     def _addOtherTools(self):
         toolbar = self._application.mainWindow.toolbars[TOOLBAR_MARKDOWN_GENERAL]
@@ -236,7 +251,8 @@ class MarkdownPageView(BaseWikiPageView):
             LINK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "link.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Image
         actionController.getAction(IMAGE_STR_ID).setFunc(self._insertImage)
@@ -246,47 +262,54 @@ class MarkdownPageView(BaseWikiPageView):
             IMAGE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "image.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Horizontal line
         actionController.getAction(HORLINE_STR_ID).setFunc(
-            lambda param: self.replaceText(u"----"))
+            lambda param: self.replaceText("----")
+        )
 
         actionController.appendMenuItem(HORLINE_STR_ID, menu)
         actionController.appendToolbarButton(
             HORLINE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_horizontalrule.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Текущая дата
         actionController.getAction(CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow,
-                                            self.codeEditor))
+            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
+        )
 
         actionController.appendMenuItem(CURRENT_DATE, menu)
         actionController.appendToolbarButton(
             CURRENT_DATE,
             toolbar,
             os.path.join(self.imagesDir, "date.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Code block
         actionController.getAction(CODE_STR_ID).setFunc(
-            lambda param: self.turnText(u"```\n", u"\n```"))
+            lambda param: self.turnText("```\n", "\n```")
+        )
 
         actionController.appendMenuItem(CODE_STR_ID, menu)
         actionController.appendToolbarButton(
             CODE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "code.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         self.toolsMenu.AppendSeparator()
 
         # Преобразовать некоторые символы в и их HTML-представление
         actionController.getAction(HTML_ESCAPE_STR_ID).setFunc(
-            lambda param: self.escapeHtml())
+            lambda param: self.escapeHtml()
+        )
         actionController.appendMenuItem(HTML_ESCAPE_STR_ID, menu)
 
     def _addToolbarSeparator(self):
@@ -300,14 +323,14 @@ class MarkdownPageView(BaseWikiPageView):
         old_sel_end = editor.GetSelectionEnd()
         first_line, last_line = editor.GetSelectionLines()
 
-        prefix_regex = re.compile('^(#+\\s+)*', re.U | re.M)
+        prefix_regex = re.compile("^(#+\\s+)*", re.U | re.M)
 
         editor.BeginUndoAction()
 
         for n in range(first_line, last_line + 1):
             line = editor.GetLine(n)
             if line.startswith(prefix):
-                newline = line[len(prefix):]
+                newline = line[len(prefix) :]
             else:
                 newline = prefix_regex.sub(prefix, line, 1)
             editor.SetLine(n, newline)
@@ -329,10 +352,8 @@ class MarkdownPageView(BaseWikiPageView):
 
         with LinkDialog(self._application.mainWindow) as dlg:
             linkController = LinkDialogController(
-                self._application,
-                page,
-                dlg,
-                codeEditor.GetSelectedText())
+                self._application, page, dlg, codeEditor.GetSelectedText()
+            )
 
             if linkController.showDialog() == wx.ID_OK:
                 link_text, reference = linkController.linkResult
@@ -345,8 +366,8 @@ class MarkdownPageView(BaseWikiPageView):
 
         with ImageDialog(self._application.mainWindow) as dlg:
             attachList = Attachment(page).getAttachRelative()
-            controller = ImageDialogController(dlg,
-                                               attachList,
-                                               codeEditor.GetSelectedText())
+            controller = ImageDialogController(
+                dlg, attachList, codeEditor.GetSelectedText()
+            )
             if controller.showDialog() == wx.ID_OK:
                 codeEditor.replaceText(controller.result)
