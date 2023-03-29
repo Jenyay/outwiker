@@ -19,9 +19,9 @@ class SnippetEditor(TextEditorBase):
         self.textCtrl.StyleSetSpec(self.STYLE_COMMENT, "fore:#10a526")
         self.textCtrl.StyleSetSpec(self.STYLE_STATEMENT, "fore:#c409bb")
 
-        self._variable_re = re.compile(r'{{.*?}}', re.U | re.M)
-        self._comment_re = re.compile(r'{#.*?#}', re.U | re.M)
-        self._statement_re = re.compile(r'{%.*?%}', re.U | re.M)
+        self._variable_re = re.compile(r"{{.*?}}", re.U | re.M)
+        self._comment_re = re.compile(r"{#.*?#}", re.U | re.M)
+        self._statement_re = re.compile(r"{%.*?%}", re.U | re.M)
 
         self.textCtrl.SetMarginWidth(0, 35)
         self.textCtrl.SetMarginWidth(1, 5)
@@ -33,20 +33,9 @@ class SnippetEditor(TextEditorBase):
         textlength = self._helper.calcByteLen(fulltext)
         stylelist = [0] * textlength
 
-        self._colorize(stylelist,
-                       fulltext,
-                       self._variable_re,
-                       self.STYLE_VARIABLE)
-
-        self._colorize(stylelist,
-                       fulltext,
-                       self._statement_re,
-                       self.STYLE_STATEMENT)
-
-        self._colorize(stylelist,
-                       fulltext,
-                       self._comment_re,
-                       self.STYLE_COMMENT)
+        self._colorize(stylelist, fulltext, self._variable_re, self.STYLE_VARIABLE)
+        self._colorize(stylelist, fulltext, self._statement_re, self.STYLE_STATEMENT)
+        self._colorize(stylelist, fulltext, self._comment_re, self.STYLE_COMMENT)
 
     def _colorize(self, stylelist, fulltext, regexp, style):
         matches = regexp.finditer(fulltext)

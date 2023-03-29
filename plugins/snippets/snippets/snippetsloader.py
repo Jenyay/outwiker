@@ -3,7 +3,7 @@
 import os
 
 
-class SnippetsCollection(object):
+class SnippetsCollection:
     def __init__(self, path):
         # List of SnippetsCollection
         self._dirs = []
@@ -38,7 +38,7 @@ class SnippetsCollection(object):
         return len(self._dirs) + len(self._snippets)
 
 
-class SnippetsLoader(object):
+class SnippetsLoader:
     def __init__(self, dirname):
         self._snippets = SnippetsCollection(dirname)
         self._findSnippets(self._snippets, dirname)

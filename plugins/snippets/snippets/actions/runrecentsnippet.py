@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from snippets.config import SnippetsConfig
 from snippets.defines import EVENT_RUN_SNIPPET
@@ -10,8 +10,8 @@ from snippets.events import RunSnippetParams
 from snippets.i18n import get_
 
 
-class RunRecentSnippet (BaseAction):
-    stringId = u"snippets_recend_used_snippet"
+class RunRecentSnippet(BaseAction):
+    stringId = "snippets_recend_used_snippet"
 
     def __init__(self, application):
         super(RunRecentSnippet, self).__init__()
@@ -27,8 +27,8 @@ class RunRecentSnippet (BaseAction):
 
     @property
     def title(self):
-        return _(u"Run recent used snippet...")
+        return _("Run recent used snippet...")
 
     @property
     def description(self):
-        return _(u'Snippets. Run recent used snippet.')
+        return _("Snippets. Run recent used snippet.")

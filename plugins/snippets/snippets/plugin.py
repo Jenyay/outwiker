@@ -3,12 +3,12 @@
 import os.path
 import sys
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 
 
-class PluginSnippets (Plugin):
+class PluginSnippets(Plugin):
     def __init__(self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
@@ -28,15 +28,15 @@ class PluginSnippets (Plugin):
 
     @property
     def name(self):
-        return u"Snippets"
+        return "Snippets"
 
     @property
     def description(self):
-        return _(u"Plugin to store text snippets")
+        return _("Plugin to store text snippets")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/SnippetsEn")
+        return _("https://jenyay.net/Outwiker/SnippetsEn")
 
     def initialize(self):
         set_(self.gettext)
@@ -54,6 +54,6 @@ class PluginSnippets (Plugin):
     #############################################
 
     def _correctSysPath(self):
-        libspath = os.path.join(self._pluginPath, u'libs')
+        libspath = os.path.join(self._pluginPath, "libs")
         if libspath not in sys.path:
             sys.path.insert(0, libspath)

@@ -1,26 +1,26 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-SNIPPETS_DIR = u'snippets'
+SNIPPETS_DIR = "snippets"
 
-VAR_SEL_TEXT = u'__text'
-VAR_TITLE = u'__title'
-VAR_SUBPATH = u'__subpath'
-VAR_ATTACH = u'__attach'
-VAR_FOLDER = u'__folder'
-VAR_PAGE_ID = u'__pageid'
-VAR_DATE = u'__date'
-VAR_DATE_CREATING = u'__crdate'
-VAR_DATE_EDITIND = u'__eddate'
-VAR_TAGS = u'__tags'
-VAR_PAGE_TYPE = u'__type'
+VAR_SEL_TEXT = "__text"
+VAR_TITLE = "__title"
+VAR_SUBPATH = "__subpath"
+VAR_ATTACH = "__attach"
+VAR_FOLDER = "__folder"
+VAR_PAGE_ID = "__pageid"
+VAR_DATE = "__date"
+VAR_DATE_CREATING = "__crdate"
+VAR_DATE_EDITIND = "__eddate"
+VAR_TAGS = "__tags"
+VAR_PAGE_TYPE = "__type"
 
-VAR_CHILDLIST = u'__childlist'
-VAR_ATTACHLIST = u'__attachlist'
+VAR_CHILDLIST = "__childlist"
+VAR_ATTACHLIST = "__attachlist"
 
-NEW_DIR_NAME = _(u'snippets')
-NEW_SNIPPET_NAME = _(u'snippet')
+NEW_DIR_NAME = _("snippets")
+NEW_SNIPPET_NAME = _("snippet")
 
-EVENT_UPDATE_MENU = u'Snippets_UpdateMenu'
-EVENT_RUN_SNIPPET = u'Snippets_RunSnippet'
+EVENT_UPDATE_MENU = "Snippets_UpdateMenu"
+EVENT_RUN_SNIPPET = "Snippets_RunSnippet"
 
-WIKI_COMMAND_PARAM_FILE = u'file'
+WIKI_COMMAND_PARAM_FILE = "file"
