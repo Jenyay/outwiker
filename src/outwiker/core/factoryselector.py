@@ -7,6 +7,14 @@ from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 
+def addPageFactory(new_factory) -> None:
+    FactorySelector.addFactory(new_factory)
+
+
+def removePageFactory(pageTypeString: str) -> None:
+    FactorySelector.removeFactory(pageTypeString)
+
+
 class FactorySelector:
     """
     Класс, который выбирает нужную фабрику для каждой страницы

@@ -5,8 +5,8 @@ import os
 from outwiker.api.core.events import pagetype
 from outwiker.api.core.text import writeTextFile
 from outwiker.api.core.pagestyle import getPageStyle
+from outwiker.api.core.tree import addPageFactory, removePageFactory
 
-from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.pagedialogpanels.appearancepanel import (
     AppearancePanel,
     AppearanceController,
@@ -44,7 +44,7 @@ class Controller:
         global _
         _ = get_()
 
-        FactorySelector.addFactory(MarkdownPageFactory())
+        addPageFactory(MarkdownPageFactory())
         self._application.onPageDialogPageFactoriesNeeded += (
             self.__onPageDialogPageFactoriesNeeded
         )
@@ -60,7 +60,7 @@ class Controller:
         """
         Вызывается при отключении плагина
         """
-        FactorySelector.removeFactory(MarkdownPageFactory().getTypeString())
+        removePageFactory(MarkdownPageFactory().getTypeString())
         self._application.onPageDialogPageFactoriesNeeded -= (
             self.__onPageDialogPageFactoriesNeeded
         )

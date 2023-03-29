@@ -5,6 +5,7 @@ from outwiker.core.tree import WikiDocument, WikiPage
 from outwiker.core.factory import PageFactory
 
 import outwiker.core.treetools as _treetools
+import outwiker.core.factoryselector as _fselector
 
 
 def loadNotesTree(path: Union[str, Path], readonly: bool = False) -> WikiDocument:
@@ -46,3 +47,11 @@ def findPage(application, page_id):
     page_id - subpath of page or page UID
     """
     return _treetools.findPage(application, page_id)
+
+
+def addPageFactory(new_factory) -> None:
+    return _fselector.addPageFactory(new_factory)
+
+
+def removePageFactory(pageTypeString: str) -> None:
+    return _fselector.removePageFactory(pageTypeString)
