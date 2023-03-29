@@ -2,8 +2,7 @@
 
 import os.path
 
-from outwiker.gui.defines import MENU_VIEW
-from outwiker.gui.defines import TOOLBAR_PLUGINS
+from outwiker.api.gui.defines import MENU_VIEW, TOOLBAR_PLUGINS
 
 from .i18n import get_
 
@@ -11,7 +10,7 @@ from .i18n import get_
 from .actions import ReadingModeAction
 
 
-class Controller (object):
+class Controller:
     def __init__(self, application):
         self._application = application
 
@@ -24,26 +23,23 @@ class Controller (object):
         """
         # Регистрируем ReadingModeAction
         self._application.actionController.register(
-            ReadingModeAction(self._application),
-            None)
+            ReadingModeAction(self._application), None
+        )
 
         mainWindow = self._application.mainWindow
         # Проверяем, что главное окно и панель инструментов созданы
-        if (mainWindow is not None and
-                TOOLBAR_PLUGINS in mainWindow.toolbars):
-
+        if mainWindow is not None and TOOLBAR_PLUGINS in mainWindow.toolbars:
             viewMenu = self._application.mainWindow.menuController[MENU_VIEW]
             # Добавляем пункт меню с флажком в меню "Вид"
             self._application.actionController.appendMenuCheckItem(
-                ReadingModeAction.stringId,
-                viewMenu)
+                ReadingModeAction.stringId, viewMenu
+            )
 
             image = self.getImagePath("book-open.png")
             # Добавляем кнопку-переключатель на панель инструментов
             self._application.actionController.appendToolbarCheckButton(
-                ReadingModeAction.stringId,
-                mainWindow.toolbars[TOOLBAR_PLUGINS],
-                image)
+                ReadingModeAction.stringId, mainWindow.toolbars[TOOLBAR_PLUGINS], image
+            )
 
     def getImagePath(self, imageName):
         """
@@ -60,17 +56,16 @@ class Controller (object):
         """
         mainWindow = self._application.mainWindow
         # Проверяем, что главное окно и панель инструментов созданы
-        if (mainWindow is not None and
-                TOOLBAR_PLUGINS in mainWindow.toolbars):
-
+        if mainWindow is not None and TOOLBAR_PLUGINS in mainWindow.toolbars:
             # Удаляем добавленный пункт меню
             self._application.actionController.removeMenuItem(
-                ReadingModeAction.stringId)
+                ReadingModeAction.stringId
+            )
 
             # Удаляем добавленную кнопку
             self._application.actionController.removeToolbarButton(
-                ReadingModeAction.stringId)
+                ReadingModeAction.stringId
+            )
 
         # Удаляем зарегистрированный action
-        self._application.actionController.removeAction(
-            ReadingModeAction.stringId)
+        self._application.actionController.removeAction(ReadingModeAction.stringId)
