@@ -17,11 +17,13 @@ class TextPageController:
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
 
     def clear(self):
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
 
         if not self._application.testMode:
             self._spellController.clear()
@@ -40,3 +42,7 @@ class TextPageController:
 
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory (TextPageFactory())
+
+    def __onPageDialogPageTypeChanged(self, page, params):
+        if params.pageType == TextWikiPage.getTypeString():
+            params.dialog.hideAppearancePanel()

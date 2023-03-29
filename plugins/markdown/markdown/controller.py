@@ -7,10 +7,6 @@ from outwiker.api.core.text import writeTextFile
 from outwiker.api.core.pagestyle import getPageStyle
 from outwiker.api.core.tree import addPageFactory, removePageFactory
 
-from outwiker.gui.pagedialogpanels.appearancepanel import (
-    AppearancePanel,
-    AppearanceController,
-)
 from outwiker.pages.wiki.htmlcache import HtmlCache
 
 from .colorizercontroller import ColorizerController
@@ -28,9 +24,6 @@ class Controller:
         """ """
         self._plugin = plugin
         self._application = application
-
-        self._appearancePanel = None
-        self._appearanceController = None
 
         self._colorizerController = ColorizerController(
             self._application, MarkdownPage.getTypeString()
@@ -53,7 +46,6 @@ class Controller:
         self._application.onPageDialogPageTypeChanged += (
             self.__onPageDialogPageTypeChanged
         )
-        self._application.onPageDialogDestroy += self.__onPageDialogDestroy
         self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
 
     def clear(self):
@@ -69,7 +61,6 @@ class Controller:
         self._application.onPageDialogPageTypeChanged -= (
             self.__onPageDialogPageTypeChanged
         )
-        self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
     def __onPageDialogPageFactoriesNeeded(self, page, params):
@@ -85,27 +76,7 @@ class Controller:
 
     def __onPageDialogPageTypeChanged(self, page, params):
         if params.pageType == MarkdownPage.getTypeString():
-            self._addTab(params.dialog)
-        elif self._appearancePanel is not None:
-            params.dialog.removeController(self._appearanceController)
-            params.dialog.removePanel(self._appearancePanel)
-            self._appearancePanel = None
-            self._appearanceController = None
-
-    def _addTab(self, dialog):
-        if self._appearancePanel is None:
-            self._appearancePanel = AppearancePanel(dialog.getPanelsParent())
-            dialog.addPanel(self._appearancePanel, _("Appearance"))
-
-            self._appearanceController = AppearanceController(
-                self._appearancePanel, self._application, dialog
-            )
-
-            dialog.addController(self._appearanceController)
-
-    def __onPageDialogDestroy(self, page, params):
-        self._appearancePanel = None
-        self._appearanceController = None
+            params.dialog.showAppearancePanel()
 
     @pagetype(MarkdownPage)
     def __onPageUpdateNeeded(self, page, params):

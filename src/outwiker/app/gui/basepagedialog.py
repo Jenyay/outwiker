@@ -2,10 +2,15 @@
 
 import wx
 
-from outwiker.app.gui.pagedialogpanels.generalpanel import (GeneralPanel,
-                                                        GeneralController)
-from outwiker.core.events import (PageDialogInitParams,
-                                  PageDialogDestroyParams)
+from outwiker.app.gui.pagedialogpanels.generalpanel import (
+    GeneralPanel,
+    GeneralController,
+)
+from outwiker.gui.pagedialogpanels.appearancepanel import (
+    AppearancePanel,
+    AppearanceController,
+)
+from outwiker.core.events import PageDialogInitParams, PageDialogDestroyParams
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.testeddialog import TestedDialog
 
@@ -13,8 +18,7 @@ from outwiker.gui.testeddialog import TestedDialog
 class BasePageDialog(TestedDialog):
     def __init__(self, parentWnd, currentPage, parentPage, application):
         super(BasePageDialog, self).__init__(
-            parent=parentWnd,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+            parent=parentWnd, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         )
 
         self._parentPage = parentPage
@@ -27,12 +31,15 @@ class BasePageDialog(TestedDialog):
         self._config = PageDialogConfig(self._application.config)
 
         self._notebook = wx.Notebook(self, -1)
+        self._appearancePanel = None
+        self._appearanceController = None
         self._createPanels()
 
         self._do_layout()
 
-        self._application.onPageDialogInit(self._application.selectedPage,
-                                           PageDialogInitParams(self))
+        self._application.onPageDialogInit(
+            self._application.selectedPage, PageDialogInitParams(self)
+        )
 
         self._setDialogSize()
         self._generalPanel.titleTextCtrl.SetFocus()
@@ -63,15 +70,15 @@ class BasePageDialog(TestedDialog):
             return
 
         self.saveParams()
-        list(map(lambda controller: controller.saveParams(),
-                 self._controllers))
+        list(map(lambda controller: controller.saveParams(), self._controllers))
         event.Skip()
 
     def Destroy(self):
         list(map(lambda controller: controller.clear(), self._controllers))
 
-        self._application.onPageDialogDestroy(self._application.selectedPage,
-                                              PageDialogDestroyParams(self))
+        self._application.onPageDialogDestroy(
+            self._application.selectedPage, PageDialogDestroyParams(self)
+        )
         super(BasePageDialog, self).Destroy()
 
     def getPanelsParent(self):
@@ -114,28 +121,35 @@ class BasePageDialog(TestedDialog):
     def generalPanel(self):
         return self._generalPanel
 
-    @property
-    def appearancePanel(self):
-        return self._appearancePanel
-
     def _createPanels(self):
+        # Add general panel
         parent = self.getPanelsParent()
 
         self._generalPanel = GeneralPanel(parent)
-        self.addPanel(self._generalPanel, _('General'))
+        self.addPanel(self._generalPanel, _("General"))
 
-        # self._iconsPanel = IconsPanel(parent)
-        # self.addPanel(self._iconsPanel, _(u'Icon'))
-
-        self._generalController = GeneralController(self._generalPanel,
-                                                    self._application,
-                                                    self)
+        self._generalController = GeneralController(
+            self._generalPanel, self._application, self
+        )
         self.addController(self._generalController)
 
-        # self._iconsController = IconsController(self._iconsPanel,
-        #                                         self._application,
-        #                                         self)
-        # self.addController(self._iconsController)
+    def showAppearancePanel(self):
+        if self._appearancePanel is None:
+            parent = self.getPanelsParent()
+            self._appearancePanel = AppearancePanel(parent)
+            self.addPanel(self._appearancePanel, _("Appearance"))
+
+            self._appearanceController = AppearanceController(
+                self._appearancePanel, self._application, self
+            )
+            self.addController(self._appearanceController)
+
+    def hideAppearancePanel(self):
+        if self._appearancePanel is not None:
+            self.removeController(self._appearanceController)
+            self.removePanel(self._appearancePanel)
+            self._appearancePanel = None
+            self._appearanceController = None
 
     def _do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)

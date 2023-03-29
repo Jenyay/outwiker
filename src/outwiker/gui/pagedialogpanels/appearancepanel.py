@@ -40,7 +40,7 @@ class AppearancePanel(wx.Panel):
 
 class AppearanceController(BasePageDialogController):
     def __init__(self, appearancePanel, application, dialog):
-        super(AppearanceController, self).__init__(application)
+        super().__init__(application)
         self._dialog = dialog
         self._appearancePanel = appearancePanel
 

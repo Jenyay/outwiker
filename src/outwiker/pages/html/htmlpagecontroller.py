@@ -11,9 +11,6 @@ from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.gui.simplespellcontroller import SimpleSpellController
-from outwiker.gui.pagedialogpanels.appearancepanel import (
-    AppearancePanel,
-    AppearanceController)
 from outwiker.utilites.textfile import writeTextFile, readTextFile
 
 from .htmlpage import HtmlWikiPage, HtmlPageFactory
@@ -24,15 +21,12 @@ class HtmlPageController:
 
     def __init__(self, application):
         self._application = application
-        self._appearancePanel = None
-        self._appearanceController = None
         self._spellController = SimpleSpellController(
             self._application,
             HtmlWikiPage.getTypeString())
 
     def initialize(self):
         self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
-        self._application.onPageDialogDestroy += self.__onPageDialogDestroy
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
@@ -40,7 +34,6 @@ class HtmlPageController:
 
     def clear(self):
         self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
-        self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
@@ -49,30 +42,9 @@ class HtmlPageController:
         if not self._application.testMode:
             self._spellController.clear()
 
-    def _addTab(self, dialog):
-        if self._appearancePanel is None:
-            self._appearancePanel = AppearancePanel(dialog.getPanelsParent())
-            dialog.addPanel(self._appearancePanel, _(u'Appearance'))
-
-            self._appearanceController = AppearanceController(
-                self._appearancePanel,
-                self._application,
-                dialog)
-
-            dialog.addController(self._appearanceController)
-
     def __onPageDialogPageTypeChanged(self, page, params):
         if params.pageType == HtmlWikiPage.getTypeString():
-            self._addTab(params.dialog)
-        elif self._appearancePanel is not None:
-            params.dialog.removeController(self._appearanceController)
-            params.dialog.removePanel(self._appearancePanel)
-            self._appearancePanel = None
-            self._appearanceController = None
-
-    def __onPageDialogDestroy(self, page, params):
-        self._appearancePanel = None
-        self._appearanceController = None
+            params.dialog.showAppearancePanel()
 
     @pagetype(HtmlWikiPage)
     def __onPageViewCreate(self, page):

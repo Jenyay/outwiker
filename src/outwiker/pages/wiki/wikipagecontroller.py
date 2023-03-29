@@ -6,8 +6,6 @@ import wx
 
 from outwiker.core.style import Style
 from outwiker.core.event import pagetype
-from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
-                                                           AppearanceController)
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
@@ -27,15 +25,12 @@ class WikiPageController:
     """GUI controller for wiki page"""
     def __init__(self, application):
         self._application = application
-        self._appearancePanel = None
-        self._appearanceController = None
         self._colorizerController = WikiColorizerController(
             self._application,
             WikiWikiPage.getTypeString())
 
     def initialize(self):
         self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
-        self._application.onPageDialogDestroy += self.__onPageDialogDestroy
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
@@ -45,7 +40,6 @@ class WikiPageController:
 
     def clear(self):
         self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
-        self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
@@ -55,30 +49,9 @@ class WikiPageController:
         if not self._application.testMode:
             self._colorizerController.clear()
 
-    def _addTab(self, dialog):
-        if self._appearancePanel is None:
-            self._appearancePanel = AppearancePanel(dialog.getPanelsParent())
-            dialog.addPanel(self._appearancePanel, _(u'Appearance'))
-
-            self._appearanceController = AppearanceController(
-                self._appearancePanel,
-                self._application,
-                dialog)
-
-            dialog.addController(self._appearanceController)
-
     def __onPageDialogPageTypeChanged(self, page, params):
         if params.pageType == WikiWikiPage.getTypeString():
-            self._addTab(params.dialog)
-        elif self._appearancePanel is not None:
-            params.dialog.removeController(self._appearanceController)
-            params.dialog.removePanel(self._appearancePanel)
-            self._appearancePanel = None
-            self._appearanceController = None
-
-    def __onPageDialogDestroy(self, page, params):
-        self._appearancePanel = None
-        self._appearanceController = None
+            params.dialog.showAppearancePanel()
 
     def __onPreferencesDialogCreate(self, dialog):
         panel = WikiPrefGeneralPanel(dialog.treeBook)
