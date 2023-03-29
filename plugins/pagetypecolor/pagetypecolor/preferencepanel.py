@@ -1,10 +1,9 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
-from outwiker.core.application import Application
-from outwiker.core.events import PageDialogPageFactoriesNeededParams
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.api.core.events import PageDialogPageFactoriesNeededParams
+from outwiker.api.gui.preferences import BasePrefPanel
 
 from pagetypecolor.i18n import get_
 from pagetypecolor.colorslist import ColorsList
@@ -14,26 +13,25 @@ class PreferencePanel(BasePrefPanel):
     """
     Панель с настройками
     """
-    def __init__(self, parent, config):
+
+    def __init__(self, parent, application):
         """
-        parent - родитель панели(должен быть wx.Treebook)
-        config - настройки из plugin._application.config
+        parent - родитель панели (должен быть wx.Treebook)
         """
-        super(PreferencePanel, self).__init__(parent)
+        super().__init__(parent)
+        self._application = application
 
         global _
         _ = get_()
-
-        self._application = Application
 
         # Key - page type string, value - ColorPicker instance
         self._colorPickers = {}
         self._colorsList = ColorsList(self._application)
 
-        self.__createGui()
+        self._createGui()
         self.SetupScrolling()
 
-    def __createGui(self):
+    def _createGui(self):
         """
         Создать элементы управления
         """
@@ -42,14 +40,12 @@ class PreferencePanel(BasePrefPanel):
         mainSizer.AddGrowableCol(1)
 
         descriptionLabel = wx.StaticText(
-            self,
-            -1,
-            _(u'The colors for the various page types')
+            self, -1, _("The colors for the various page types")
         )
 
-        mainSizer.Add(descriptionLabel,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=2)
+        mainSizer.Add(
+            descriptionLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
         mainSizer.AddSpacer(0)
 
         eventParams = PageDialogPageFactoriesNeededParams(None, None)
@@ -57,8 +53,7 @@ class PreferencePanel(BasePrefPanel):
 
         for factory in eventParams.pageFactories:
             label, colorPicker = self._createLabelAndColorPicker(
-                factory.title,
-                mainSizer
+                factory.title, mainSizer
             )
             self._colorPickers[factory.getTypeString()] = colorPicker
 
@@ -75,5 +70,9 @@ class PreferencePanel(BasePrefPanel):
         self._colorsList.load()
         for pageType in self._colorsList.getPageTypes():
             if pageType in self._colorPickers:
-                color = self._colorPickers[pageType].GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
+                color = (
+                    self._colorPickers[pageType]
+                    .GetColour()
+                    .GetAsString(wx.C2S_HTML_SYNTAX)
+                )
                 self._colorsList.setColor(pageType, color)
