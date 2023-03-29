@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from .defines import REGISTRY_PAGE_HASH
-from .wikihashcalculator import WikiHashCalculator
+from .hashcalculator import WikiHashCalculator
 
 
 class HtmlCache:
