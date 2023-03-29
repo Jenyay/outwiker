@@ -10,8 +10,7 @@ class PluginController:
     """
 
     def __init__(self, plugin, application):
-        """
-        """
+        """ """
         self._plugin = plugin
         self._application = application
 

@@ -5,7 +5,7 @@
 
 import wx
 
-from outwiker.gui.defines import MENU_FILE
+from outwiker.api.gui.defines import MENU_FILE
 
 from .i18n import get_
 from .sessionstorage import SessionStorage
@@ -16,7 +16,7 @@ from .saveaction import SaveSessionAction
 from .editaction import EditSessionsAction
 
 
-class GuiCreator(object):
+class GuiCreator:
     """
     Создание элементов интерфейса с использованием actions
     """
@@ -44,8 +44,14 @@ class GuiCreator(object):
 
     def initialize(self):
         if self._application.mainWindow is not None:
-            [*map(lambda action: self._application.actionController.register(
-                action(self._application, self), None), self._actions)]
+            [
+                *map(
+                    lambda action: self._application.actionController.register(
+                        action(self._application, self), None
+                    ),
+                    self._actions,
+                )
+            ]
 
         self.createTools()
 
@@ -55,21 +61,32 @@ class GuiCreator(object):
         if mainWindow is None:
             return
 
-        [*map(lambda action: self._application.actionController.appendMenuItem(
-            action.stringId, self._menu), self._actions)]
+        [
+            *map(
+                lambda action: self._application.actionController.appendMenuItem(
+                    action.stringId, self._menu
+                ),
+                self._actions,
+            )
+        ]
 
         self._menu.AppendSeparator()
         self.updateMenu()
 
-        self._menuItem = self._getParentMenu().Insert(self._menuIndex,
-                                                      -1,
-                                                      _(u"Sessions"),
-                                                      submenu=self._menu)
+        self._menuItem = self._getParentMenu().Insert(
+            self._menuIndex, -1, _("Sessions"), submenu=self._menu
+        )
 
     def removeTools(self):
         if self._application.mainWindow is not None:
-            [*map(lambda action: self._application.actionController.removeMenuItem(action.stringId),
-                  self._actions)]
+            [
+                *map(
+                    lambda action: self._application.actionController.removeMenuItem(
+                        action.stringId
+                    ),
+                    self._actions,
+                )
+            ]
 
             self._getParentMenu().DestroyItem(self._menuItem)
             self._menuItem = None
@@ -86,8 +103,14 @@ class GuiCreator(object):
         self.removeTools()
 
         if self._application.mainWindow is not None:
-            [*map(lambda action: self._application.actionController.removeAction(action.stringId),
-                  self._actions)]
+            [
+                *map(
+                    lambda action: self._application.actionController.removeAction(
+                        action.stringId
+                    ),
+                    self._actions,
+                )
+            ]
 
     def updateMenu(self):
         """
@@ -101,9 +124,8 @@ class GuiCreator(object):
         for sessionName in sorted(sessions.keys(), key=str.lower):
             menuItem = self._menu.Append(wx.ID_ANY, sessionName)
             self._application.mainWindow.Bind(
-                wx.EVT_MENU,
-                self._getSessionRestore(sessions[sessionName]),
-                menuItem)
+                wx.EVT_MENU, self._getSessionRestore(sessions[sessionName]), menuItem
+            )
             self._sessionsMenuId.append(menuItem.GetId())
 
     def _getSessionRestore(self, session):
@@ -111,8 +133,7 @@ class GuiCreator(object):
         Метод, вовзращающий функцию, вызываемую при выборе пункта меню.
         За счет замыкания выбирается нужная сессия session.
         """
-        return lambda event: SessionController(
-            self._application).restore(session)
+        return lambda event: SessionController(self._application).restore(session)
 
     def _clearSessionMenu(self):
         """

@@ -2,20 +2,21 @@
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
-from outwiker.gui.testeddialog import TestedDialog
-from outwiker.core.commands import MessageBox
+from outwiker.api.gui.actions import BaseAction
+from outwiker.api.gui.dialogs.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs.messagebox import MessageBox
 
 from .i18n import get_
 from .sessionstorage import SessionStorage
 from .sessioncontroller import SessionController
 
 
-class SaveSessionAction (BaseAction):
+class SaveSessionAction(BaseAction):
     """
     Действие для сохранения сессии
     """
-    stringId = u"Sessions_SaveSession"
+
+    stringId = "Sessions_SaveSession"
 
     def __init__(self, application, guicreator):
         self._application = application
@@ -26,25 +27,26 @@ class SaveSessionAction (BaseAction):
 
     @property
     def title(self):
-        return _(u"Save current session...")
+        return _("Save current session...")
 
     @property
     def description(self):
-        return _(u"Save currently opened tabs")
+        return _("Save currently opened tabs")
 
     def run(self, params):
         storage = SessionStorage(self._application.config)
         names = sorted(storage.getSessions().keys())
 
-        with SaveSessionDialog(self._application.mainWindow, self._application, names) as dlg:
+        with SaveSessionDialog(
+            self._application.mainWindow, self._application, names
+        ) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
-                session = SessionController(
-                    self._application).getCurrentSession()
+                session = SessionController(self._application).getCurrentSession()
                 storage.save(session, dlg.sessionName)
                 self._guicreator.updateMenu()
 
 
-class SaveSessionDialog (TestedDialog):
+class SaveSessionDialog(TestedDialog):
     def __init__(self, parent, application, names):
         """
         parent - родительское окно
@@ -56,7 +58,7 @@ class SaveSessionDialog (TestedDialog):
         self._application = application
         self._names = names
 
-        self.SetTitle(_(u"Save Session"))
+        self.SetTitle(_("Save Session"))
         self.__createGui()
         self._sessionComboBox.SetFocus()
 
@@ -65,21 +67,28 @@ class SaveSessionDialog (TestedDialog):
     def __onOk(self, event):
         name = self.sessionName
         if len(name.strip()) == 0:
-            MessageBox(_(u"The session name must not be empty"),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
+            MessageBox(
+                _("The session name must not be empty"),
+                _("Error"),
+                wx.ICON_ERROR | wx.OK,
+            )
             return
 
-        if (name in self._names and
-            MessageBox(_(u'Session with name "{}" exists. Overwrite?').format(name),
-                       _(u"Overwrite session?"),
-                       wx.ICON_QUESTION | wx.YES | wx.NO) != wx.YES):
+        if (
+            name in self._names
+            and MessageBox(
+                _('Session with name "{}" exists. Overwrite?').format(name),
+                _("Overwrite session?"),
+                wx.ICON_QUESTION | wx.YES | wx.NO,
+            )
+            != wx.YES
+        ):
             return
 
         event.Skip()
 
     def __createGui(self):
-        sessionNameLabel = wx.StaticText(self, label=_(u"Enter session name"))
+        sessionNameLabel = wx.StaticText(self, label=_("Enter session name"))
         self._sessionComboBox = wx.ComboBox(self, style=wx.CB_DROPDOWN)
         self._sessionComboBox.SetMinSize((200, -1))
         self._sessionComboBox.Clear()
@@ -89,11 +98,7 @@ class SaveSessionDialog (TestedDialog):
 
         mainSizer = wx.FlexGridSizer(cols=2)
         mainSizer.AddGrowableCol(1)
-        mainSizer.Add(
-            sessionNameLabel,
-            1,
-            wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-            border=2)
+        mainSizer.Add(sessionNameLabel, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
         mainSizer.Add(self._sessionComboBox, 1, wx.EXPAND | wx.ALL, border=2)
         mainSizer.AddSpacer(1)
         mainSizer.Add(buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border=2)
