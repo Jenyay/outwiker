@@ -2,7 +2,7 @@
 
 import os.path
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 
@@ -10,13 +10,13 @@ from .i18n import set_
 from .controller import Controller
 
 
-class PluginWebPage (Plugin):
+class PluginWebPage(Plugin):
     def __init__(self, application):
         """
         application - instance of the core.application.ApplicationParams
         class
         """
-        super(PluginWebPage, self).__init__(application)
+        super().__init__(application)
         self.__controller = Controller(self, self._application)
 
     @property

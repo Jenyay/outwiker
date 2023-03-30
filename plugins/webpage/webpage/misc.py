@@ -39,4 +39,4 @@ polyActions = [
     MARK_STR_ID,
 ]
 
-onPrepareHtmlEventString = 'WebPage_onPrepareHtml'
+onPrepareHtmlEventString = "WebPage_onPrepareHtml"

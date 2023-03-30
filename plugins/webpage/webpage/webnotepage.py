@@ -8,18 +8,18 @@ import shutil
 from shutil import copytree
 
 
-from outwiker.core.config import StringOption, BooleanOption
-from outwiker.core.defines import PAGE_RESULT_HTML
+from outwiker.api.core.config import StringOption, BooleanOption
+from outwiker.api.core.defines import PAGE_RESULT_HTML
 from outwiker.core.factory import PageFactory
 from outwiker.core.pagetitletester import WindowsPageTitleTester
-from outwiker.core.tree import WikiPage
+from outwiker.api.core.tree import WikiPage
 
 from .gui.webpageview import WebPageView
 
 # Directory for images, scripts, css etc.
-STATIC_DIR_NAME = '__download'
+STATIC_DIR_NAME = "__download"
 
-logger = logging.getLogger('webpage')
+logger = logging.getLogger("webpage")
 
 
 class WebNotePage(WikiPage):
@@ -36,15 +36,15 @@ class WebNotePage(WikiPage):
         """
         super(WebNotePage, self).__init__(path, title, parent, readonly)
 
-        self.PARAMS_SECTION = 'WebPage'
+        self.PARAMS_SECTION = "WebPage"
 
-        self.SOURCE_PARAM = 'source'
+        self.SOURCE_PARAM = "source"
         self.SOURCE_DEFAULT = None
 
-        self.LOG_PARAM = 'log'
-        self.LOG_DEFAULT = ''
+        self.LOG_PARAM = "log"
+        self.LOG_DEFAULT = ""
 
-        self.DISABLE_SCRIPTS_PARAM = 'disable_scripts'
+        self.DISABLE_SCRIPTS_PARAM = "disable_scripts"
         self.DISABLE_SCRIPTS_DEFAULT = True
 
     @staticmethod
@@ -84,25 +84,22 @@ class WebNotePage(WikiPage):
         self._getDisableScriptOption().value = value
 
     def _getSourceOption(self):
-        return StringOption(self.params,
-                            self.PARAMS_SECTION,
-                            self.SOURCE_PARAM,
-                            self.SOURCE_DEFAULT
-                            )
+        return StringOption(
+            self.params, self.PARAMS_SECTION, self.SOURCE_PARAM, self.SOURCE_DEFAULT
+        )
 
     def _getLogOption(self):
-        return StringOption(self.params,
-                            self.PARAMS_SECTION,
-                            self.LOG_PARAM,
-                            self.LOG_DEFAULT
-                            )
+        return StringOption(
+            self.params, self.PARAMS_SECTION, self.LOG_PARAM, self.LOG_DEFAULT
+        )
 
     def _getDisableScriptOption(self):
-        return BooleanOption(self.params,
-                             self.PARAMS_SECTION,
-                             self.DISABLE_SCRIPTS_PARAM,
-                             self.DISABLE_SCRIPTS_DEFAULT
-                             )
+        return BooleanOption(
+            self.params,
+            self.PARAMS_SECTION,
+            self.DISABLE_SCRIPTS_PARAM,
+            self.DISABLE_SCRIPTS_DEFAULT,
+        )
 
 
 class WebPageFactory(PageFactory):
@@ -115,21 +112,23 @@ class WebPageFactory(PageFactory):
     @property
     def title(self):
         """Return page title for the page dialog."""
-        return _(u"Web Page")
+        return _("Web Page")
 
     def getPageView(self, parent, application):
         """Return page view for the page."""
         return WebPageView(parent, application)
 
-    def createWebPage(self,
-                      parentPage,
-                      title,
-                      favicon,
-                      tags,
-                      content,
-                      url,
-                      tmpStaticDir,
-                      logContent=''):
+    def createWebPage(
+        self,
+        parentPage,
+        title,
+        favicon,
+        tags,
+        content,
+        url,
+        tmpStaticDir,
+        logContent="",
+    ):
         """
         Create WebNotePage instance.
 
@@ -162,18 +161,17 @@ class WebPageFactory(PageFactory):
         return page
 
     def _getTitle(self, parentPage, title):
-        defaultTitle = _('Web page')
+        defaultTitle = _("Web page")
 
         if title is None or len(title.strip()) == 0:
             title = defaultTitle
         else:
-            title = WindowsPageTitleTester().replaceDangerousSymbols(title, '_')
+            title = WindowsPageTitleTester().replaceDangerousSymbols(title, "_")
 
         index = 1
         newTitle = title
         while parentPage[newTitle] is not None:
-            newTitle = '{title}({index})'.format(title=title,
-                                                  index=index)
+            newTitle = "{title}({index})".format(title=title, index=index)
             index += 1
 
         return newTitle

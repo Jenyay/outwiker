@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs.testeddialog import TestedDialog
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 
 from webpage.i18n import get_
@@ -12,7 +12,7 @@ class InfoDialog(TestedDialog):
     """Dialog with Web page information(log, source url, etc)"""
 
     def __init__(self, parent):
-        super(InfoDialog, self).__init__(parent)
+        super().__init__(parent)
         global _
         _ = get_()
 
@@ -28,14 +28,13 @@ class InfoDialog(TestedDialog):
         self._addOk(mainSizer)
 
         self.SetSizer(mainSizer)
-        self.SetTitle(_(u'Web page information'))
+        self.SetTitle(_("Web page information"))
         self.SetMinSize((550, 350))
         self.Fit()
 
     def _addLogGui(self, mainSizer):
-        logLabel = wx.StaticText(self, label=_(u'Downloading log'))
-        self.logText = wx.TextCtrl(self,
-                                   style=wx.TE_READONLY | wx.TE_MULTILINE)
+        logLabel = wx.StaticText(self, label=_("Downloading log"))
+        self.logText = wx.TextCtrl(self, style=wx.TE_READONLY | wx.TE_MULTILINE)
         self.logText.SetMinSize((-1, 100))
 
         mainSizer.Add(logLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
@@ -45,15 +44,10 @@ class InfoDialog(TestedDialog):
         sizer = wx.FlexGridSizer(cols=2)
         sizer.AddGrowableCol(1)
 
-        self.urlLabel = wx.StaticText(self, label=_(u'Source URL'))
-        self.urlText = HyperLinkCtrl(self,
-                                     label=_(u'Link'),
-                                     URL=u'https://jenyay.net')
+        self.urlLabel = wx.StaticText(self, label=_("Source URL"))
+        self.urlText = HyperLinkCtrl(self, label=_("Link"), URL="https://jenyay.net")
 
-        sizer.Add(self.urlLabel,
-                  0,
-                  wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                  border=2)
+        sizer.Add(self.urlLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         sizer.Add(self.urlText, 0, wx.ALL | wx.EXPAND, border=2)
 
         mainSizer.Add(sizer, 0, wx.ALL | wx.EXPAND, border=2)
@@ -63,10 +57,9 @@ class InfoDialog(TestedDialog):
 
     def _addOk(self, mainSizer):
         buttonsSizer = self.CreateButtonSizer(wx.OK)
-        mainSizer.Add(buttonsSizer,
-                      0,
-                      wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL,
-                      border=4)
+        mainSizer.Add(
+            buttonsSizer, 0, wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL, border=4
+        )
 
     def setUrl(self, url):
         self.urlText.SetURL(url)

@@ -9,12 +9,12 @@ from shutil import rmtree
 import wx
 
 from outwiker.core.tagslist import TagsList
-from outwiker.gui.testeddialog import TestedDialog
-from outwiker.gui.tagsselector import TagsSelector
-from outwiker.core.commands import MessageBox
 from outwiker.core.iconmaker import IconMaker
-from outwiker.core.commands import getClipboardText
-from outwiker.gui.testeddialog import TestedFileDialog
+from outwiker.api.gui.dialogs.testeddialog import TestedDialog
+from outwiker.gui.tagsselector import TagsSelector
+from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.services.clipboard import getClipboardText
+from outwiker.api.gui.dialogs.testeddialog import TestedFileDialog
 
 import webpage.events
 from webpage.downloader import Downloader, WebPageDownloadController
@@ -26,7 +26,7 @@ from webpage.i18n import get_
 
 class DownloadDialog(TestedDialog):
     def __init__(self, parent):
-        super(DownloadDialog, self).__init__(parent)
+        super().__init__(parent)
         global _
         _ = get_()
 

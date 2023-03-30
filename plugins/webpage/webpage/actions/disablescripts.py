@@ -1,36 +1,37 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.gui.baseaction import BaseAction
-from outwiker.core.events import PageUpdateNeededParams
+from outwiker.api.gui.actions import BaseAction
+from outwiker.api.core.events import PageUpdateNeededParams
 
 from webpage.webnotepage import WebNotePage
 from webpage.i18n import get_
 
 
-class DisableScriptsAction (BaseAction):
+class DisableScriptsAction(BaseAction):
     """Enable / disable scripts on WebPage."""
 
-    stringId = u"WebPageDisableScripts"
+    stringId = "WebPageDisableScripts"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
         global _
         _ = get_()
 
+    @property
+    def title(self):
+        return _("Disable scripts on page")
 
     @property
-    def title (self):
-        return _(u"Disable scripts on page")
+    def description(self):
+        return _("WebPage. Enable / disable scripts on downloaded page.")
 
-
-    @property
-    def description (self):
-        return _(u"WebPage. Enable / disable scripts on downloaded page.")
-
-
-    def run (self, checked):
-        assert self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()
+    def run(self, checked):
+        assert (
+            self._application.selectedPage.getTypeString()
+            == WebNotePage.getTypeString()
+        )
 
         self._application.selectedPage.disableScripts = checked
-        self._application.onPageUpdateNeeded (self._application.selectedPage,
-                                              PageUpdateNeededParams(None))
+        self._application.onPageUpdateNeeded(
+            self._application.selectedPage, PageUpdateNeededParams(None)
+        )
