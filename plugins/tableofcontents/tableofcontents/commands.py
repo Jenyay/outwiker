@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.parser.command import Command
 
 from .tocwikimaker import TocWikiMaker
 
 
-class TOCCommand (Command):
+class TOCCommand(Command):
     """
     Вставить оглавление
     """
@@ -14,7 +14,7 @@ class TOCCommand (Command):
         """
         parser - экземпляр парсера
         """
-        Command.__init__(self, parser)
+        super().__init__(parser)
         self._application = application
         self._enabled = True
 
@@ -23,7 +23,7 @@ class TOCCommand (Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"toc"
+        return "toc"
 
     def execute(self, params, content):
         """
@@ -35,10 +35,11 @@ class TOCCommand (Command):
             # To avoid infinite recursion
             self._enabled = False
             toc = TocWikiMaker(self._application.config).make(
-                self._application.selectedPage.content)
+                self._application.selectedPage.content
+            )
             result = self.parser.parseWikiMarkup(toc)
             self._enabled = True
         else:
-            result = ''
+            result = ""
 
         return result
