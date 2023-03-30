@@ -3,7 +3,7 @@
 import wx
 
 from outwiker.gui.preferences.configelements import IntegerElement
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.api.gui.preferences import BasePrefPanel
 
 from .sourceconfig import SourceConfig
 from .i18n import get_
@@ -53,31 +53,24 @@ class PreferencePanel(BasePrefPanel):
 
         tabWidthLabel = wx.StaticText(self, -1, _("Default Tab Width"))
 
-        self.tabWidthSpin = wx.SpinCtrl(
-            self,
-            style=wx.SP_ARROW_KEYS
-        )
+        self.tabWidthSpin = wx.SpinCtrl(self, style=wx.SP_ARROW_KEYS)
         self.tabWidthSpin.SetMinSize(wx.Size(150, -1))
 
         tabSizer.Add(
             tabWidthLabel,
             proportion=1,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-            border=2
+            border=2,
         )
 
         tabSizer.Add(
             self.tabWidthSpin,
             proportion=1,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-            border=2
+            border=2,
         )
 
-        mainSizer.Add(
-            tabSizer,
-            proportion=1,
-            flag=wx.ALL | wx.EXPAND,
-            border=2)
+        mainSizer.Add(tabSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
 
     def __createDefaultStyleGui(self, mainSizer):
         """
@@ -88,30 +81,23 @@ class PreferencePanel(BasePrefPanel):
 
         styleLabel = wx.StaticText(self, -1, _("Default Style"))
 
-        self.styleComboBox = wx.ComboBox(self,
-                                         -1,
-                                         style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.styleComboBox = wx.ComboBox(
+            self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY
+        )
         self.styleComboBox.SetMinSize((150, -1))
 
         styleSizer.Add(
-            styleLabel,
-            proportion=1,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-            border=2
+            styleLabel, proportion=1, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
 
         styleSizer.Add(
             self.styleComboBox,
             proportion=1,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-            border=2
+            border=2,
         )
 
-        mainSizer.Add(
-            styleSizer,
-            proportion=1,
-            flag=wx.ALL | wx.EXPAND,
-            border=2)
+        mainSizer.Add(styleSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
 
     def __createLangGui(self, mainSizer):
         """
@@ -123,7 +109,8 @@ class PreferencePanel(BasePrefPanel):
             languageLabel,
             proportion=1,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-            border=2)
+            border=2,
+        )
 
         # Сайзер для расположения списка языков и кнопок
         langSizer = wx.FlexGridSizer(0, 2, 0, 0)
@@ -131,11 +118,7 @@ class PreferencePanel(BasePrefPanel):
         langSizer.AddGrowableCol(0)
 
         self.langList = wx.CheckListBox(self, -1)
-        langSizer.Add(
-            self.langList,
-            proportion=1,
-            flag=wx.ALL | wx.EXPAND,
-            border=2)
+        langSizer.Add(self.langList, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
 
         # Кнопки
         buttonsSizer = wx.BoxSizer(wx.VERTICAL)
@@ -143,28 +126,16 @@ class PreferencePanel(BasePrefPanel):
         self.clearButton = wx.Button(self, label=_("Clear"))
 
         buttonsSizer.Add(
-            self.selectAllButton,
-            proportion=1,
-            flag=wx.ALL | wx.EXPAND,
-            border=2)
+            self.selectAllButton, proportion=1, flag=wx.ALL | wx.EXPAND, border=2
+        )
 
         buttonsSizer.Add(
-            self.clearButton,
-            proportion=1,
-            flag=wx.ALL | wx.EXPAND,
-            border=2)
+            self.clearButton, proportion=1, flag=wx.ALL | wx.EXPAND, border=2
+        )
 
-        langSizer.Add(
-            buttonsSizer,
-            proportion=1,
-            flag=wx.ALL,
-            border=2)
+        langSizer.Add(buttonsSizer, proportion=1, flag=wx.ALL, border=2)
 
-        mainSizer.Add(
-            langSizer,
-            proportion=1,
-            flag=wx.ALL | wx.EXPAND,
-            border=2)
+        mainSizer.Add(langSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
 
     def LoadState(self):
         self.__controller.loadState()
@@ -194,20 +165,23 @@ class PrefPanelController(object):
             self._config.tabWidth,
             self._owner.tabWidthSpin,
             self.MIN_TAB_WIDTH,
-            self.MAX_TAB_WIDTH
+            self.MAX_TAB_WIDTH,
         )
 
-        fillStyleComboBox(self._config,
-                          self._owner.styleComboBox,
-                          self._config.defaultStyle.value.strip())
+        fillStyleComboBox(
+            self._config,
+            self._owner.styleComboBox,
+            self._config.defaultStyle.value.strip(),
+        )
 
         allLanguages = self._getAllLanguages()
         self._owner.langList.Clear()
         self._owner.langList.AppendItems(allLanguages)
 
-        selectedLanguages = [self._langList.getLangName(designation)
-                             for designation
-                             in self._config.languageList.value]
+        selectedLanguages = [
+            self._langList.getLangName(designation)
+            for designation in self._config.languageList.value
+        ]
 
         self._owner.langList.SetCheckedStrings(selectedLanguages)
 
@@ -215,13 +189,14 @@ class PrefPanelController(object):
         self._tabWidthOption.save()
         self._config.defaultStyle.value = self._owner.styleComboBox.GetValue()
 
-        designations = [self._langList.getDesignation(name)
-                        for name in self._owner.langList.GetCheckedStrings()]
+        designations = [
+            self._langList.getDesignation(name)
+            for name in self._owner.langList.GetCheckedStrings()
+        ]
         self._config.languageList.value = designations
 
     def _onSelectAll(self, event):
-        self._owner.langList.SetChecked(
-            range(self._owner.langList.GetCount()))
+        self._owner.langList.SetChecked(range(self._owner.langList.GetCount()))
 
     def _onClear(self, event):
         self._owner.langList.SetChecked([])

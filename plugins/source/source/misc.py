@@ -19,7 +19,7 @@ def getFileName(fileParam):
     fname = fileParam.strip()
 
     if fname.startswith(AttachToken.attachString):
-        fname = fname[len(AttachToken.attachString):]
+        fname = fname[len(AttachToken.attachString) :]
 
     return fname
 
@@ -38,6 +38,7 @@ def getDefaultStyle(config):
     Получить стиль, который используется по уомлчанию
     """
     from .pygments.styles import STYLE_MAP
+
     style = config.defaultStyle.value
 
     if style not in STYLE_MAP:

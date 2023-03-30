@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
-from outwiker.core.attachment import Attachment
+from outwiker.api.pages.wiki.parser.command import Command
+from outwiker.api.core.attachment import Attachment
 from outwiker.core.htmlformatter import HtmlFormatter
 
 from .sourceconfig import SourceConfig
@@ -35,8 +35,8 @@ class CommandSource(Command):
 
      Параметры:
      tabwidth - размер табуляции
-     lang - язык программирования(пока не используется)
-     file - имя прикрепленного файла(с приставкой Attach: или без нее)
+     lang - язык программирования (пока не используется)
+     file - имя прикрепленного файла (с приставкой Attach: или без нее)
      encoding - кодировка для прикрепленного файла
          (используется вместе с параметром file).
          Если кодировка не указана, используется UTF-8
@@ -55,7 +55,6 @@ class CommandSource(Command):
 
         global _
         _ = get_()
-
 
     @property
     def name(self):
@@ -76,7 +75,9 @@ class CommandSource(Command):
         except KeyError:
             sourceText = content
         except IOError:
-            content = _("Source plugin: File '{}' not found").format(getFileName(params_dict[FILE_PARAM_NAME]))
+            content = _("Source plugin: File '{}' not found").format(
+                getFileName(params_dict[FILE_PARAM_NAME])
+            )
             return self._html_formatter.error(content)
         except UnicodeDecodeError:
             content = _("Source plugin: Encoding error")

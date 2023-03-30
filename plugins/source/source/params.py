@@ -46,7 +46,7 @@ STYLE_DEFAULT = "default"
 # Дополнительные cтили
 
 # Стиль для общего div
-HIGHLIGHT_STYLE = '{padding: 1em; }'
+HIGHLIGHT_STYLE = "{padding: 1em; }"
 
 # Список языков программирования по умолчанию
 LANGUAGE_LIST_DEFAULT = [
@@ -63,11 +63,11 @@ LANGUAGE_LIST_DEFAULT = [
     "javascript",
     "objective-c",
     "perl",
-    "vb.net"
+    "vb.net",
 ]
 
-CSS_SOURCE_PLUGIN = 'ow-plugin-source'
-CSS_SOURCE_BLOCK = 'ow-plugin-source-block'
+CSS_SOURCE_PLUGIN = "ow-plugin-source"
+CSS_SOURCE_BLOCK = "ow-plugin-source-block"
 
 
 CUSTOM_STYLES = """
