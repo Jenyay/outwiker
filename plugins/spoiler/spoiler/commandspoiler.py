@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.parser.command import Command
 
 from .i18n import get_
 
 
-class SpoilerCommand (Command):
+class SpoilerCommand(Command):
     """
     Команда для вставки скрываемого текста.
     Обрабатывает команды вида (:spoiler params... :) content (:spoilerend:)
@@ -14,6 +14,7 @@ class SpoilerCommand (Command):
         collapsetext - текст вместо надписи "Collapse/Свернуть"
         inline - спойлер вставляется в текст
     """
+
     def __init__(self, parser, name, lang):
         """
         parser - экземпляр парсера
@@ -24,12 +25,12 @@ class SpoilerCommand (Command):
 
         self.__name = name
 
-        self.__style1 = u"""<style>div.spoiler_style1 {
+        self.__style1 = """<style>div.spoiler_style1 {
     padding: 3px;
     border: 1px solid #d8d8d8;
     }</style>"""
 
-        self.__style2 = u"""<style>div.spoiler_style2 {
+        self.__style2 = """<style>div.spoiler_style2 {
     text-transform: uppercase;
     border-bottom: 1px solid #CCCCCC;
     margin-bottom: 3px;
@@ -43,13 +44,13 @@ class SpoilerCommand (Command):
 
         self.__inlineTemplate = r"""<span><span onClick="this.parentNode.getElementsByTagName('span')[1].style.display = ''; this.style.display = 'none';"><a href="#">{expandtext}</a></span><span style="display: none;" onClick="this.parentNode.getElementsByTagName('span')[0].style.display = ''; this.style.display = 'none';">{content}</span></span>"""
 
-        self.__expandParam = u"expandtext"
-        self.__collapseParam = u"collapsetext"
-        self.__inlineParam = u"inline"
+        self.__expandParam = "expandtext"
+        self.__collapseParam = "collapsetext"
+        self.__inlineParam = "inline"
 
         # Надписи по умолчанию
-        self.__expandTextDefault = _(u"Expand")
-        self.__collapseTextDefault = _(u"Collapse")
+        self.__expandTextDefault = _("Expand")
+        self.__collapseTextDefault = _("Collapse")
 
         # Добавлены ли стили в заголовок
         self.__styleAppend = False
@@ -71,11 +72,9 @@ class SpoilerCommand (Command):
         template = self.__getTemplate(params_dict)
 
         parsedcontent = self.parser.parseWikiMarkup(content.strip())
-        result = template.replace(u"{expandtext}",
-                                  self.__getExpandText(params_dict))
-        result = result.replace(u"{collapsetext}",
-                                self.__getCollapseText(params_dict))
-        result = result.replace(u"{content}", parsedcontent)
+        result = template.replace("{expandtext}", self.__getExpandText(params_dict))
+        result = result.replace("{collapsetext}", self.__getCollapseText(params_dict))
+        result = result.replace("{content}", parsedcontent)
 
         self.__appendStyles()
         return result
