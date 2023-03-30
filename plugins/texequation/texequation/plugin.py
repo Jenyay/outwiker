@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 from .controller import Controller
@@ -24,15 +24,15 @@ class PluginTexEquation(Plugin):
 
     @property
     def name(self):
-        return u"TeXEquation"
+        return "TeXEquation"
 
     @property
     def description(self):
-        return _(u"TeXEquation plug-in allow to insert equations in the TeX format.")
+        return _("TeXEquation plug-in allow to insert equations in the TeX format.")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/TexEquationEn")
+        return _("https://jenyay.net/Outwiker/TexEquationEn")
 
     def initialize(self):
         set_(self.gettext)
