@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.attachment import Attachment
-from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.defines import PAGE_ATTACH_DIR
 
 from .basethumbgenerator import BaseThumbGenerator
 
@@ -24,11 +24,11 @@ class ThumbTableGenerator(BaseThumbGenerator):
         self._cols = cols
 
         # Обертка для галереи в целом
-        self._fullTemplate = u'<table class="thumbgallery-table">{content}</table>'
+        self._fullTemplate = '<table class="thumbgallery-table">{content}</table>'
 
-        self._rowTemplate = u'<tr class="thumbgallery-row">{row}</tr>'
+        self._rowTemplate = '<tr class="thumbgallery-row">{row}</tr>'
 
-        self._singleThumbTemplate = u'<td class="thumbgallery-td"><div class="thumbgallery-table-item"><div class="thumbgallery-table-image">{thumbimage}</div><div class="thumbgallery-table-comment">{comment}</div></div></td>'
+        self._singleThumbTemplate = '<td class="thumbgallery-td"><div class="thumbgallery-table-item"><div class="thumbgallery-table-image">{thumbimage}</div><div class="thumbgallery-table-comment">{comment}</div></div></td>'
 
         self._style = """<!-- Begin thumbgallery styles -->
 <style>
@@ -74,7 +74,7 @@ class ThumbTableGenerator(BaseThumbGenerator):
         image = (
             """<a href="{attachdir}/{imagename}"><img src="{thumbpath}"/></a>""".format(
                 attachdir=PAGE_ATTACH_DIR,
-                imagename=item[0].replace('\\', '/'),
+                imagename=item[0].replace("\\", "/"),
                 thumbpath=self._getThumbnail(self._parser.page, item[0]),
             )
         )

@@ -3,9 +3,9 @@
 from pathlib import Path
 from typing import List, Tuple
 
-from outwiker.core.attachment import Attachment
-from outwiker.core.commands import isImage
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.images import isImage
+from outwiker.api.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 from .thumbstreamgenerator import ThumbStreamGenerator
@@ -60,8 +60,10 @@ class ThumbListCommand(Command):
         attach = Attachment(self.parser.page)
         root_dir = attach.getAttachPath(create=False)
 
-        filesList = [(item[0].replace('\\', '/'), item[1])
-                     for item in self._getLinesItems(content)]
+        filesList = [
+            (item[0].replace("\\", "/"), item[1])
+            for item in self._getLinesItems(content)
+        ]
         allFiles = attach.getAttachRelative()
         allFiles.sort()
 
@@ -89,12 +91,12 @@ class ThumbListCommand(Command):
             """
             attachPhrase = "attach:"
             if line.lower().startswith(attachPhrase):
-                line = line[len(attachPhrase):]
+                line = line[len(attachPhrase) :]
 
             return line
 
         lines = []
-        for line in content.split('\n'):
+        for line in content.split("\n"):
             if len(line.strip()) != 0:
                 items = self._parse_line(_removeAttach(line.strip()))
                 lines.extend(items)
@@ -115,7 +117,7 @@ class ThumbListCommand(Command):
             fname = line
             comment = ""
 
-        fname = fname.replace('\\', '/')
+        fname = fname.replace("\\", "/")
 
         # Remove quotes
         if fname.startswith('"') and fname.endswith('"'):
@@ -135,14 +137,15 @@ class ThumbListCommand(Command):
             return []
 
         glob_result = root_dir.glob(mask)
-        glob_images_relative = [fname.relative_to(root_dir)
-                                for fname in glob_result
-                                if isImage(fname)]
+        glob_images_relative = [
+            fname.relative_to(root_dir) for fname in glob_result if isImage(fname)
+        ]
 
-        glob_filter = [str(fname)
-                       for fname in glob_images_relative
-                       if (not str(fname).startswith('__') or
-                           str(fname) == fname.name)]
+        glob_filter = [
+            str(fname)
+            for fname in glob_images_relative
+            if (not str(fname).startswith("__") or str(fname) == fname.name)
+        ]
 
         return glob_filter
 
