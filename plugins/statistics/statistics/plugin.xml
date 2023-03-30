@@ -6,7 +6,7 @@
 	<website>https://jenyay.net/Outwiker/StatisticsEn</website>
 	<website lang="ru">https://jenyay.net/Outwiker/Statistics</website>
 	<requirements>
-		<api>3.868</api>
+		<api>3.922</api>
 	</requirements>
 
 	<author>
@@ -21,5 +21,5 @@
 		<website>https://jenyay.net</website>
 	</author>
 
-	<version number="1.3"/>
+	<version number="1.3.1"/>
 </info>

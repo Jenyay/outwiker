@@ -21,9 +21,7 @@ class TreeStatDialog(wx.Dialog):
         """
         treestat - экземпляр класса TreeStat
         """
-        super(TreeStatDialog, self).__init__(
-            parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        super().__init__(parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         self._application = application
         self._treestat = treestat
@@ -33,7 +31,7 @@ class TreeStatDialog(wx.Dialog):
         self._itemsCount = 20
 
         # Шаблон для содержимого HTML-рендера
-        self._htmlTemplate = u"""<!DOCTYPE html>
+        self._htmlTemplate = """<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
@@ -48,10 +46,11 @@ class TreeStatDialog(wx.Dialog):
         global _
         _ = get_()
 
-        self.SetTitle(_(u"Tree Statistic"))
+        self.SetTitle(_("Tree Statistic"))
 
-        self.SetSize((self._config.treeDialogWidth.value,
-                      self._config.treeDialogHeight.value))
+        self.SetSize(
+            (self._config.treeDialogWidth.value, self._config.treeDialogHeight.value)
+        )
 
         self.Show()
         self._createGUI()
@@ -77,12 +76,11 @@ class TreeStatDialog(wx.Dialog):
         self.Layout()
 
     def _updateStatistics(self):
-        self._setHtml(_(u"Collecting statistics. Please wait..."))
+        self._setHtml(_("Collecting statistics. Please wait..."))
 
-        runner = LongProcessRunner(self._getContent,
-                                   self,
-                                   _(u"Statistics"),
-                                   _(u"Collecting statistics..."))
+        runner = LongProcessRunner(
+            self._getContent, self, _("Statistics"), _("Collecting statistics...")
+        )
 
         resultList = runner.run()
         self._setHtml(resultList)
@@ -97,19 +95,18 @@ class TreeStatDialog(wx.Dialog):
         """
         infoList = [
             PageCountInfo(self._treestat.pageCount),
-            TagsInfo(self._treestat.frequentTags,
-                     self._itemsCount),
-            DatePageInfo(self._treestat.pageDate,
-                         self._itemsCount,
-                         self._application.config),
-            PageContentLengthInfo(self._treestat.pageContentLength,
-                                  self._itemsCount),
-            PageAttachmentSizeInfo(self._treestat.pageAttachmentsSize,
-                                   self._itemsCount),
+            TagsInfo(self._treestat.frequentTags, self._itemsCount),
+            DatePageInfo(
+                self._treestat.pageDate, self._itemsCount, self._application.config
+            ),
+            PageContentLengthInfo(self._treestat.pageContentLength, self._itemsCount),
+            PageAttachmentSizeInfo(
+                self._treestat.pageAttachmentsSize, self._itemsCount
+            ),
             MaxDepthInfo(self._treestat.maxDepth),
         ]
 
-        return u"".join([info.content for info in infoList])
+        return "".join([info.content for info in infoList])
 
     def _onClose(self, event):
         self._saveParams()

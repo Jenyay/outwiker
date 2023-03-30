@@ -3,7 +3,7 @@
 from .i18n import get_
 
 
-class PageAttachmentSizeInfo (object):
+class PageAttachmentSizeInfo:
     """Класс для генерации информации о самых записях с самым большим
     размером прикрепленных файлов"""
 
@@ -20,17 +20,19 @@ class PageAttachmentSizeInfo (object):
     @property
     def content(self):
         title = _(
-            u"Pages with the largest size of attachments (in brackets the size of attachments):")
+            "Pages with the largest size of attachments (in brackets the size of attachments):"
+        )
         pageListHtml = self._getGratestPages()
 
-        return u"""<p>{title}<br>
+        return """<p>{title}<br>
 {items}
 </p>
-<hr/>""".format(title=title, items=pageListHtml)
+<hr/>""".format(
+            title=title, items=pageListHtml
+        )
 
     def _getGratestPages(self):
-        pageList = self._pageListAll[0: min(
-            self._itemsCount, len(self._pageListAll))]
+        pageList = self._pageListAll[0 : min(self._itemsCount, len(self._pageListAll))]
         return self._getPageListHtml(pageList)
 
     def _getPageListHtml(self, pageList):
@@ -38,12 +40,15 @@ class PageAttachmentSizeInfo (object):
         Оформить список страниц в виде HTML
         """
         # Локализованные единицы изменения размеров файлов
-        kb = _(u"kB")
+        kb = _("kB")
 
-        items = [u"<li><b>{title}</b> ({size} {kb})</li>".format(
-            title=page.display_subpath,
-            size="{0:,.2f}".format(size / 1024.0).replace(",", " "),
-            kb=kb)
-            for page, size in pageList]
+        items = [
+            "<li><b>{title}</b> ({size} {kb})</li>".format(
+                title=page.display_subpath,
+                size="{0:,.2f}".format(size / 1024.0).replace(",", " "),
+                kb=kb,
+            )
+            for page, size in pageList
+        ]
 
-        return u"<ul>" + u"".join(items) + u"</ul>"
+        return "<ul>" + "".join(items) + "</ul>"

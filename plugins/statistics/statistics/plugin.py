@@ -2,8 +2,8 @@
 
 import wx
 
-from outwiker.core.pluginbase import Plugin
-from outwiker.gui.defines import MENU_TOOLS
+from outwiker.api.core.plugins import Plugin
+from outwiker.api.gui.defines import MENU_TOOLS
 
 from .i18n import set_
 from .pagestat import PageStat
@@ -17,7 +17,7 @@ class PluginStatistics(Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
+        super().__init__(application)
 
         self._separatorMenuItem = None
         self._pageStatMenuItem = None
@@ -29,17 +29,19 @@ class PluginStatistics(Plugin):
 
     @property
     def name(self):
-        return u"Statistics"
+        return "Statistics"
 
     @property
     def description(self):
-        return _(u"""The plugin to display statistics. 
+        return _(
+            """The plugin to display statistics. 
                 
-Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools -> Tree Statistic</b>.""")
+Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools -> Tree Statistic</b>."""
+        )
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/StatisticsEn")
+        return _("https://jenyay.net/Outwiker/StatisticsEn")
 
     def initialize(self):
         set_(self.gettext)
@@ -69,18 +71,16 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
 
         self._separatorMenuItem = self.toolsMenu.AppendSeparator()
 
-        self._pageStatMenuItem = self.toolsMenu.Append(wx.ID_ANY,
-                                                       _(u"Page Statistic"))
+        self._pageStatMenuItem = self.toolsMenu.Append(wx.ID_ANY, _("Page Statistic"))
 
-        self._application.mainWindow.Bind(wx.EVT_MENU,
-                                          self._onPageStat,
-                                          id=self._pageStatMenuItem.GetId())
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self._onPageStat, id=self._pageStatMenuItem.GetId()
+        )
 
-        self._treeStatMenuItem = self.toolsMenu.Append(wx.ID_ANY,
-                                                       _(u"Tree Statistic"))
-        self._application.mainWindow.Bind(wx.EVT_MENU,
-                                          self._onTreeStat,
-                                          id=self._treeStatMenuItem.GetId())
+        self._treeStatMenuItem = self.toolsMenu.Append(wx.ID_ANY, _("Tree Statistic"))
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self._onTreeStat, id=self._treeStatMenuItem.GetId()
+        )
 
     def _removeMenu(self):
         """
@@ -90,10 +90,8 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
         assert self._pageStatMenuItem is not None
         assert self._treeStatMenuItem is not None
 
-        self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                            handler=self._onPageStat)
-        self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                            handler=self._onTreeStat)
+        self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self._onPageStat)
+        self._application.mainWindow.Unbind(wx.EVT_MENU, handler=self._onTreeStat)
 
         self.toolsMenu.Remove(self._separatorMenuItem)
         self.toolsMenu.Remove(self._pageStatMenuItem)
@@ -113,7 +111,7 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
     def _onTreeStat(self, event):
         if self._application.wikiroot is not None:
             treeStat = TreeStat(self._application.wikiroot)
-            with TreeStatDialog(self._application.mainWindow,
-                                self._application,
-                                treeStat) as dlg:
+            with TreeStatDialog(
+                self._application.mainWindow, self._application, treeStat
+            ) as dlg:
                 dlg.ShowModal()

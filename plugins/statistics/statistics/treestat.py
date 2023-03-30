@@ -2,16 +2,17 @@
 
 from datetime import datetime
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import WikiDocument
 from outwiker.core.tagslist import TagsList
 
 from .pagestat import PageStat
 
 
-class TreeStat(object):
+class TreeStat:
     """
     Класс для сбора статистики по дереву
     """
+
     def __init__(self, root):
         """
         root - страница, которая считается корневой
@@ -27,7 +28,9 @@ class TreeStat(object):
         """
         Возвращает количество страниц в дереве
         """
-        startcount = 0 if self._root.getTypeString() == WikiDocument.getTypeString() else 1
+        startcount = (
+            0 if self._root.getTypeString() == WikiDocument.getTypeString() else 1
+        )
         return self._getChildCount(self._root) + startcount
 
     @property
@@ -71,8 +74,12 @@ class TreeStat(object):
         """
         pageList = self._getPageList(self._root)
 
-        pageList.sort(key=lambda page: page.datetime if page.datetime is not None else datetime(2000, 1, 1),
-                      reverse=True)
+        pageList.sort(
+            key=lambda page: page.datetime
+            if page.datetime is not None
+            else datetime(2000, 1, 1),
+            reverse=True,
+        )
         return pageList
 
     @property

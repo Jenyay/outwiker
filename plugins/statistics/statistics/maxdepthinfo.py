@@ -3,7 +3,7 @@
 from .i18n import get_
 
 
-class MaxDepthInfo (object):
+class MaxDepthInfo:
     """Класс для оформления сведений о страницах с максимальной глубиной вложенности"""
 
     def __init__(self, maxDepthList):
@@ -18,16 +18,16 @@ class MaxDepthInfo (object):
 
     @property
     def content(self):
-        maxDepth = 0 if len(
-            self._maxDepthList) == 0 else self._maxDepthList[0][0]
+        maxDepth = 0 if len(self._maxDepthList) == 0 else self._maxDepthList[0][0]
 
-        maxDepthHtml = u"<p>" + \
-            _(u"Max page depth: {0}").format(maxDepth) + "</p>"
+        maxDepthHtml = "<p>" + _("Max page depth: {0}").format(maxDepth) + "</p>"
 
         # Сформировать список страниц с наибольшей глубиной вложенности
-        pagesList = [u"<li><b>{title}</b></li>".format(
-            title=page.display_subpath) for depth, page in self._maxDepthList]
+        pagesList = [
+            "<li><b>{title}</b></li>".format(title=page.display_subpath)
+            for depth, page in self._maxDepthList
+        ]
 
-        pagesHtml = u"<p><ul>" + u"".join(pagesList) + u"</ul></p>"
+        pagesHtml = "<p><ul>" + "".join(pagesList) + "</ul></p>"
 
-        return maxDepthHtml + pagesHtml + u"<hr/>"
+        return maxDepthHtml + pagesHtml + "<hr/>"
