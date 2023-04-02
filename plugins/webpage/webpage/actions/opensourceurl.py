@@ -3,7 +3,7 @@
 import wx
 
 from outwiker.api.gui.actions import BaseAction
-from outwiker.core.system import getOS
+from outwiker.api.services.application import startFile
 from outwiker.api.gui.dialogs.messagebox import MessageBox
 
 from webpage.i18n import get_
@@ -26,7 +26,7 @@ class OpenSourceURLAction(BaseAction):
 
         if url is not None:
             try:
-                getOS().startFile(url)
+                startFile(url)
             except OSError:
                 text = _("Can't open URL '{}'").format(url)
                 MessageBox(text, "Error", wx.ICON_ERROR | wx.OK)

@@ -6,7 +6,8 @@ from typing import List
 
 import wx
 
-from outwiker.core.attachfilters import (
+from outwiker.api.core.attachment import (
+    Attachment,
     getImagesOnlyFilter,
     getHiddenFilter,
     getDirOnlyFilter,
@@ -14,7 +15,6 @@ from outwiker.core.attachfilters import (
     orFilter,
     notFilter,
 )
-from outwiker.api.core.attachment import Attachment
 from outwiker.gui.preferences.configelements import IntegerElement
 from outwiker.gui.controls.filestreectrl import FilesTreeCtrl
 

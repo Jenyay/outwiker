@@ -22,6 +22,10 @@ def startFile(path: Union[str, Path]) -> None:
     return _system.getOS().startFile(path)
 
 
+def getCurrentDir() -> str:
+    return _system.getCurrentDir()
+
+
 def getImagesDir() -> str:
     return _system.getImagesDir()
 
@@ -70,3 +74,7 @@ def getSpellDirList() -> List[str]:
     Возвращает список директорий со словарями для проверки орфографии
     """
     return _system.getSpellDirList()
+
+
+def getSpecialDirList(dirname) -> List[str]:
+    return _system.getSpecialDirList(dirname)

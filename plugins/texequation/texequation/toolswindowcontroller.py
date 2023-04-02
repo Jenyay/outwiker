@@ -4,7 +4,7 @@ from typing import Tuple
 
 import wx.aui
 
-from outwiker.utilites.text import positionInside
+from outwiker.api.core.text import positionInside
 
 from .gui.toolswindow import ToolsPane
 from .i18n import get_

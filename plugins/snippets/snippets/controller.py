@@ -2,7 +2,7 @@
 
 import os
 
-from outwiker.core.system import getSpecialDirList
+from outwiker.api.services.application import getSpecialDirList
 
 from .i18n import get_
 from .guicontroller import GuiController

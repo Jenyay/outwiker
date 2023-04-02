@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from outwiker.api.core.tree import WikiDocument
-from outwiker.core.tagslist import TagsList
+from outwiker.api.core.tags import TagsList
 
 from .pagestat import PageStat
 

@@ -3,7 +3,7 @@
 import wx
 import wx.html2
 
-from outwiker.core.system import getCurrentDir
+from outwiker.api.services.application import getCurrentDir
 
 from .i18n import get_
 from .maxdepthinfo import MaxDepthInfo

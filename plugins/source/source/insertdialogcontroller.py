@@ -8,8 +8,8 @@ import wx
 from outwiker.api.core.attachment import Attachment
 from outwiker.api.core.tree import testreadonly
 from outwiker.api.services.attachment import attachFiles
-from outwiker.core.attachfilters import getHiddenFilter, notFilter
-import outwiker.core.exceptions
+from outwiker.api.core.attachment import getHiddenFilter, notFilter
+from outwiker.api.core.exceptions import ReadonlyException
 
 from .misc import getDefaultStyle, fillStyleComboBox
 from .insertdialog import InsertDialog
@@ -100,7 +100,7 @@ class InsertDialogController:
         Обработчик события при нажатии на кнопку для прикрепления файла
         """
         if self._page.readonly:
-            raise outwiker.core.exceptions.ReadonlyException
+            raise ReadonlyException()
 
         # Кусок ниже практически полностью скопирован из функции
         # outwiker.core.commands.attachFilesWithDialog

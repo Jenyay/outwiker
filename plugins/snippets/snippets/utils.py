@@ -3,7 +3,7 @@
 import os
 import shutil
 
-from outwiker.core.system import getSpecialDirList, getOS
+from outwiker.api.services.application import getSpecialDirList, startFile
 
 from snippets.defines import SNIPPETS_DIR
 from snippets.i18n import get_
@@ -23,7 +23,7 @@ def openHelp():
 
     help_dir = _("help/en")
     help_path = os.path.join(getPluginPath(), help_dir, "__content.html")
-    getOS().startFile(help_path)
+    startFile(help_path)
 
 
 def findUniquePath(path, name, extension=""):

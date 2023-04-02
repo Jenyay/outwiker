@@ -8,7 +8,7 @@ from shutil import rmtree
 
 import wx
 
-from outwiker.core.tagslist import TagsList
+from outwiker.api.core.tags import TagsList
 from outwiker.core.iconmaker import IconMaker
 from outwiker.api.gui.dialogs.testeddialog import TestedDialog
 from outwiker.gui.tagsselector import TagsSelector
