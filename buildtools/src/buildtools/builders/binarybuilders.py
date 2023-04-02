@@ -64,6 +64,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             'outwiker.api.core.hashcalculator',
             'outwiker.api.core.htmlimprover',
             'outwiker.api.core.images',
+            'outwiker.api.core.pagecontentcache',
             'outwiker.api.core.text',
             'outwiker.api.core.tree',
             'outwiker.api.core.plugins',

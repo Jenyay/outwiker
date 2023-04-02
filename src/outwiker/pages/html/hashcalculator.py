@@ -21,13 +21,7 @@ class HtmlHashCalculator(SimpleHashCalculator):
         # Здесь накапливаем список интересующих строк (по которым определяем
         # изменилась страница или нет)
         # Заголовок страницы
-        items: List[str] = []
-
-        self._getPageTitleContent(page, items)
-        self._getPageContent(page, items)
-        self._getDirContent(page, items)
-        self._getPluginsListContent(items)
-        self._getPageChildrenContent(page, items)
+        items: List[str] = super().getFullContent(page)
         self._getStyleContent(page, items)
         self._getHtmlSettingsContent(items)
         return items

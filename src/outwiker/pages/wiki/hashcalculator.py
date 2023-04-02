@@ -25,18 +25,14 @@ class WikiHashCalculator(HtmlHashCalculator):
         # Здесь накапливаем список интересующих строк (по которым определяем
         # изменилась страница или нет)
         # Заголовок страницы
-        items: List[str] = []
-
-        self._getPageTitleContent(page, items)
-        self._getPageContent(page, items)
-        self._getDirContent(page, items)
-        self._getPluginsListContent(items)
-        self._getPageChildrenContent(page, items)
-        self._getStyleContent(page, items)
+        items: List[str] = super().getFullContent(page)
         self._getWikiSettingsContent(items)
-        self._getHtmlSettingsContent(items)
         self._getEmptyContent(page, items)
         return items
+
+    def _getWikiSettingsContent(self, content: List[str]) -> None:
+        content.append(str(self._wikiConfig.showAttachInsteadBlankOptions.value))
+        content.append(str(self._wikiConfig.thumbSizeOptions.value))
 
     def _getEmptyContent(self, page, content: List[str]) -> None:
         if len(page.content) == 0:
@@ -44,7 +40,3 @@ class WikiHashCalculator(HtmlHashCalculator):
             # пустой страницы
             emptycontent = EmptyContent(self.application.config)
             return content.append(str(emptycontent.content))
-
-    def _getWikiSettingsContent(self, content: List[str]) -> None:
-        content.append(str(self._wikiConfig.showAttachInsteadBlankOptions.value))
-        content.append(str(self._wikiConfig.thumbSizeOptions.value))

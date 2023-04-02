@@ -4,10 +4,9 @@ import os
 
 from outwiker.api.core.events import pagetype
 from outwiker.api.core.text import writeTextFile
+from outwiker.api.core.pagecontentcache import PageContentCache, WikiHashCalculator
 from outwiker.api.core.pagestyle import getPageStyle
 from outwiker.api.core.tree import addPageFactory, removePageFactory
-
-from outwiker.pages.wiki.htmlcache import HtmlCache
 
 from .colorizercontroller import ColorizerController
 from .markdownhtmlgenerator import MarkdownHtmlGenerator
@@ -84,12 +83,12 @@ class Controller:
             return
 
         if not params.allowCache:
-            HtmlCache(page, self._application).resetHash()
+            self._getPageContentCache(page).resetHash()
         self._updatePage(page)
 
     def _updatePage(self, page):
         path = page.getHtmlPath()
-        cache = HtmlCache(page, self._application)
+        cache = self._getPageContentCache(page)
 
         # Проверим, можно ли прочитать уже готовый HTML
         if cache.canReadFromCache() and os.path.exists(path):
@@ -101,3 +100,8 @@ class Controller:
         html = generator.makeHtml(stylepath)
         writeTextFile(path, html)
         cache.saveHash()
+
+    def _getPageContentCache(self, page) -> PageContentCache:
+        return PageContentCache(
+            page, WikiHashCalculator(self._application), self._application
+        )
