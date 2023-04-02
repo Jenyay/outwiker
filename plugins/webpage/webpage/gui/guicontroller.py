@@ -6,7 +6,7 @@ import wx
 
 from outwiker.api.services.texteditor import insertCurrentDate
 from outwiker.api.core.events import EVENT_PRIORITY_DEFAULT, pagetype
-from outwiker.core.system import getImagesDir
+from outwiker.api.services.application import getImagesDir
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
@@ -33,7 +33,7 @@ from .defines import TOOLBAR_WEBPAGE
 
 
 class GuiController:
-    """Controller for creation and destroying GUI."""
+    """Controller for creation and destroying GUI"""
 
     def __init__(self, application):
         self._application = application

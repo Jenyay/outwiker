@@ -7,10 +7,8 @@ import wx
 
 from outwiker.api.core.attachment import Attachment
 from outwiker.api.services.texteditor import insertCurrentDate
-from outwiker.core.system import getImagesDir
+from outwiker.api.services.application import getImagesDir
 from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
-from outwiker.pages.wiki.htmlcache import HtmlCache
-from outwiker.pages.wiki.wikieditor import WikiEditor
 
 from outwiker.actions.polyactionsid import *
 
@@ -19,6 +17,7 @@ from .links.linkdialogcontroller import LinkDialogController
 from .images.imagedialog import ImageDialog
 from .images.imagedialogcontroller import ImageDialogController
 from .defines import MENU_MARKDOWN, TOOLBAR_MARKDOWN_GENERAL
+from .markdowneditor import MarkdownEditor
 
 
 class MarkdownPageView(BaseWikiPageView):
@@ -30,7 +29,7 @@ class MarkdownPageView(BaseWikiPageView):
         return True
 
     def getTextEditor(self):
-        return WikiEditor
+        return MarkdownEditor
 
     def _getPageTitle(self):
         return _("Markdown")
@@ -66,9 +65,6 @@ class MarkdownPageView(BaseWikiPageView):
 
     def _getSpecificActions(self):
         return []
-
-    def _getCacher(self, page, application):
-        return HtmlCache(page, application)
 
     def _getAttachString(self, fnames):
         """
