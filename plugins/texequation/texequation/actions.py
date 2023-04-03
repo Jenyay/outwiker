@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.api.gui.actions import BaseAction
-from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
+from outwiker.api.gui.dialogs import ButtonsDialog
 
 from .i18n import get_
 

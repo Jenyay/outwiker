@@ -3,6 +3,9 @@ import outwiker.gui.dialogs.messagebox as _messagebox
 from outwiker.gui.testeddialog import (TestedDialog, TestedColourDialog,
                                        TestedFileDialog,
                                        TestedSingleChoiceDialog)
+from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
+from outwiker.gui.tabledialog import TableDialog
+from outwiker.gui.tablerowsdialog import TableRowsDialog
 
 
 def MessageBox(*args, **kwargs):

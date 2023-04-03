@@ -8,13 +8,12 @@ import time
 import wx
 
 from outwiker.app.gui.pagedialogpanels.generalpanel import IconsGroupInfo
+from outwiker.api.gui.hotkeys import HotKey
+from outwiker.api.gui.dialogs import ButtonsDialog, MessageBox
 from outwiker.api.services.application import getImagesDir
-from outwiker.core.commands import MessageBox
-from outwiker.core.pluginbase import Plugin
-from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
-from outwiker.gui.hotkey import HotKey
-from outwiker.gui.defines import TOOLBAR_PLUGINS
-from outwiker.utilites.text import positionInside
+from outwiker.api.core.plugins import Plugin
+from outwiker.api.gui.defines import TOOLBAR_PLUGINS
+from outwiker.api.core.text import positionInside
 
 from .debugaction import DebugAction
 from .eventswatcher import EventsWatcher

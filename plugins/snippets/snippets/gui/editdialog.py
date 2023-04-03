@@ -6,11 +6,11 @@ import shutil
 
 import wx
 
+from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.api.gui.dialogs import MessageBox
 from outwiker.api.services.application import getSpecialDirList
-from outwiker.gui.controls.popupbutton import PopupButton, EVT_POPUP_BUTTON_MENU_CLICK
-from outwiker.gui.controls.safeimagelist import SafeImageList
-from outwiker.gui.guiconfig import MainWindowConfig
+from outwiker.api.gui.controls import PopupButton, EVT_POPUP_BUTTON_MENU_CLICK
+from outwiker.api.gui.controls import SafeImageList
 from outwiker.api.core.text import readTextFile, writeTextFile
 
 from snippets.events import RunSnippetParams

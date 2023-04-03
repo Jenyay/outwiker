@@ -3,8 +3,9 @@
 import re
 
 import wx
+import wx.stc
 
-from outwiker.gui.controls.texteditorbase import TextEditorBase
+from outwiker.api.gui.controls import TextEditorBase
 
 
 class SnippetEditor(TextEditorBase):

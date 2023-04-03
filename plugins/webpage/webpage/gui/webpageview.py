@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.api.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
-from outwiker.gui.htmltexteditor import HtmlTextEditor
+from outwiker.api.gui.controls import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 
 from ..misc import polyActions

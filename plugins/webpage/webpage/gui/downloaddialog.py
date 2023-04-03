@@ -8,10 +8,10 @@ from shutil import rmtree
 
 import wx
 
-from outwiker.api.core.tags import TagsList
 from outwiker.core.iconmaker import IconMaker
+from outwiker.api.core.tags import TagsList
 from outwiker.api.gui.dialogs import TestedDialog, MessageBox, TestedFileDialog
-from outwiker.gui.tagsselector import TagsSelector
+from outwiker.api.gui.controls import TagsSelector
 from outwiker.api.services.clipboard import getClipboardText
 
 import webpage.events

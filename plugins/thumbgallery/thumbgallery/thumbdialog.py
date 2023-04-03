@@ -16,7 +16,7 @@ from outwiker.api.core.attachment import (
     notFilter,
 )
 from outwiker.gui.preferences.configelements import IntegerElement
-from outwiker.gui.controls.filestreectrl import FilesTreeCtrl
+from outwiker.api.gui.controls import FilesTreeCtrl
 
 from .thumbconfig import ThumbConfig
 from .i18n import get_
