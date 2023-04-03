@@ -2,8 +2,8 @@
 
 import wx
 
+from outwiker.api.app.clipboard import copyTextToClipboard
 from outwiker.api.gui.actions import BaseAction
-from outwiker.api.services.clipboard import copyTextToClipboard
 
 from webpage.i18n import get_
 

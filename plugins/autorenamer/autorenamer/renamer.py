@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.services.tree import testPageTitle, renamePage
+from outwiker.api.app.tree import testPageTitle, renamePage
 from .config import PluginConfig
 
 

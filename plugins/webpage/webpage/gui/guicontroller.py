@@ -4,9 +4,9 @@ import os
 
 import wx
 
-from outwiker.api.services.texteditor import insertCurrentDate
+from outwiker.api.app.application import getImagesDir
+from outwiker.api.app.texteditor import insertCurrentDate
 from outwiker.api.core.events import EVENT_PRIORITY_DEFAULT, pagetype
-from outwiker.api.services.application import getImagesDir
 from outwiker.api.gui.dialogs import TableDialog
 from outwiker.api.gui.dialogs import TableRowsDialog
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction

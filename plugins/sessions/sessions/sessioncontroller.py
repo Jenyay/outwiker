@@ -2,9 +2,9 @@
 
 import os.path
 
+from outwiker.api.app.tree import openWiki
 from outwiker.api.core.tree import closeWiki
 from outwiker.api.core.exceptions import ReadonlyException
-from outwiker.api.services.tree import openWiki
 
 from .sessionstorage import SessionInfo
 

@@ -3,7 +3,7 @@
 import os
 import shutil
 
-from outwiker.api.services.application import getSpecialDirList, startFile
+from outwiker.api.app.application import getSpecialDirList, startFile
 
 from snippets.defines import SNIPPETS_DIR
 from snippets.i18n import get_

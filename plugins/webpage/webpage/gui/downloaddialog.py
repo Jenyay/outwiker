@@ -9,10 +9,10 @@ from shutil import rmtree
 import wx
 
 from outwiker.core.iconmaker import IconMaker
+from outwiker.api.app.clipboard import getClipboardText
 from outwiker.api.core.tags import TagsList
 from outwiker.api.gui.dialogs import TestedDialog, MessageBox, TestedFileDialog
 from outwiker.api.gui.controls import TagsSelector
-from outwiker.api.services.clipboard import getClipboardText
 
 import webpage.events
 from webpage.downloader import Downloader, WebPageDownloadController

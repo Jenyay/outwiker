@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.api.app.application import startFile
 from outwiker.api.gui.actions import BaseAction
-from outwiker.api.services.application import startFile
 
 from ..i18n import get_
 

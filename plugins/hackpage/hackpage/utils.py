@@ -2,10 +2,10 @@
 
 import wx
 
-from outwiker.api.core.tree import testreadonly
-from outwiker.api.services.tree import testPageTitle
-from outwiker.api.core.exceptions import ReadonlyException
+from outwiker.api.app.tree import testPageTitle
 from outwiker.api.core.events import PAGE_UPDATE_CONTENT
+from outwiker.api.core.exceptions import ReadonlyException
+from outwiker.api.core.tree import testreadonly
 
 from .gui.textentrydialog import TextEntryDialog
 from .gui.datetimedialog import DateTimeDialog

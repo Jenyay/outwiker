@@ -2,8 +2,8 @@
 
 import os.path
 
+from outwiker.api.app.application import openInNewWindow
 from outwiker.api.gui.actions import BaseAction
-from outwiker.api.services.application import openInNewWindow
 
 from .i18n import get_
 

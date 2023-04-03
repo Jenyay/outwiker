@@ -5,9 +5,9 @@ from pathlib import Path
 
 import wx
 
+from outwiker.api.app.attachment import attachFiles
 from outwiker.api.core.attachment import Attachment
 from outwiker.api.core.tree import testreadonly
-from outwiker.api.services.attachment import attachFiles
 from outwiker.api.core.attachment import getHiddenFilter, notFilter
 from outwiker.api.core.exceptions import ReadonlyException
 

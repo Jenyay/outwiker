@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.preferences.configelements import IntegerElement
+from outwiker.api.gui.configelements import IntegerElement
 from outwiker.api.gui.preferences import BasePrefPanel
 
 from .sourceconfig import SourceConfig

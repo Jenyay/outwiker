@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.api.app.config import GeneralGuiConfig
 
 from .i18n import get_
 
