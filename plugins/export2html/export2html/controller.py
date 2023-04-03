@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.dialogs import MessageBox
 
 from .exportmenu import ExportMenuFactory
 from .exportpagedialog import ExportPageDialog

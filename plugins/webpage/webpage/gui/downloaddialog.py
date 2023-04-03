@@ -10,11 +10,9 @@ import wx
 
 from outwiker.api.core.tags import TagsList
 from outwiker.core.iconmaker import IconMaker
-from outwiker.api.gui.dialogs.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs import TestedDialog, MessageBox, TestedFileDialog
 from outwiker.gui.tagsselector import TagsSelector
-from outwiker.api.gui.dialogs.messagebox import MessageBox
 from outwiker.api.services.clipboard import getClipboardText
-from outwiker.api.gui.dialogs.testeddialog import TestedFileDialog
 
 import webpage.events
 from webpage.downloader import Downloader, WebPageDownloadController

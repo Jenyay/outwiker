@@ -7,5 +7,5 @@ from outwiker.api.services.attachment import attachFiles
 from outwiker.api.services.clipboard import copyTextToClipboard, getClipboardText
 from outwiker.api.services.texteditor import insertCurrentDate
 from outwiker.api.services.tree import openWiki
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.dialogs import MessageBox
 from outwiker.api.services.tree import testPageTitle, renamePage

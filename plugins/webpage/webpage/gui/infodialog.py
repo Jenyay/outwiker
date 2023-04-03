@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.api.gui.dialogs.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs import TestedDialog
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 
 from webpage.i18n import get_

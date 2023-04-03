@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.gui.dialogs.baselinkdialogcontroller import BaseLinkDialogController
+from outwiker.api.gui.dialogs import BaseLinkDialogController
 
 from .linkcreator import LinkCreator
 

@@ -6,7 +6,7 @@ from typing import Union
 import wx
 import wx.adv
 
-from outwiker.api.gui.dialogs.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs import TestedDialog
 
 from ..i18n import get_
 

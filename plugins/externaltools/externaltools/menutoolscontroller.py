@@ -6,7 +6,7 @@ import subprocess
 import wx
 
 from outwiker.api.core.defines import PAGE_CONTENT_FILE
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.dialogs import MessageBox
 
 from .i18n import get_
 from .menumaker import MenuMaker

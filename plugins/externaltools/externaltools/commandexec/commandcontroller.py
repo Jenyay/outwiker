@@ -6,7 +6,7 @@ from io import StringIO
 
 import wx
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.dialogs import MessageBox
 
 from .commandparams import EXEC_BEGIN, PROTO_COMMAND
 from ..config import ExternalToolsConfig

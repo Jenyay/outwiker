@@ -4,7 +4,7 @@ import wx
 
 from outwiker.api.gui.actions import BaseAction
 from outwiker.api.services.application import startFile
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.dialogs import MessageBox
 
 from webpage.i18n import get_
 

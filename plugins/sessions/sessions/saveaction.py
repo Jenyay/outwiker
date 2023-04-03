@@ -3,8 +3,7 @@
 import wx
 
 from outwiker.api.gui.actions import BaseAction
-from outwiker.api.gui.dialogs.testeddialog import TestedDialog
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.dialogs import TestedDialog, MessageBox
 
 from .i18n import get_
 from .sessionstorage import SessionStorage

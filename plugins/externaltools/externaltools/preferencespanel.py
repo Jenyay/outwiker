@@ -4,7 +4,7 @@ import configparser
 
 import wx
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.dialogs import MessageBox
 from outwiker.api.core.exceptions import PreferencesException
 from outwiker.api.gui.preferences import BasePrefPanel
 

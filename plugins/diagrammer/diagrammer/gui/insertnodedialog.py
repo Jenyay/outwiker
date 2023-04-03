@@ -3,7 +3,7 @@
 import wx
 import wx.adv
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.dialogs import MessageBox
 
 from ..i18n import get_
 from ..diagramrender import DiagramRender

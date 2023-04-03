@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.api.gui.dialogs.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs import TestedDialog
 
 from externaltools.i18n import get_
 

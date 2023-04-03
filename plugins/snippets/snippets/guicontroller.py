@@ -5,7 +5,7 @@ from collections import namedtuple
 
 import wx
 
-from outwiker.api.gui.dialogs.messagebox import MessageBox
+from outwiker.api.gui.dialogs import MessageBox
 from outwiker.api.core.text import readTextFile
 
 from .actions.editsnippets import EditSnippetsAction
