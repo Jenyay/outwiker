@@ -8,7 +8,7 @@ from shutil import rmtree
 
 import wx
 
-from outwiker.core.iconmaker import IconMaker
+from outwiker.api.core.images import createIcon
 from outwiker.api.app.clipboard import getClipboardText
 from outwiker.api.core.tags import TagsList
 from outwiker.api.gui.dialogs import TestedDialog, MessageBox, TestedFileDialog
@@ -336,9 +336,8 @@ class DownloadThread(Thread):
             iconname = favicon_src[::-1].replace('.', '_16.'[::-1], 1)[::-1]
             if iconname.endswith(ico_ext):
                 iconname = iconname[:-len(ico_ext)] + '.png'
-                iconmaker = IconMaker()
                 try:
-                    iconmaker.create(favicon_src, iconname)
+                    createIcon(favicon_src, iconname)
                     return iconname
                 except IOError:
                     pass
