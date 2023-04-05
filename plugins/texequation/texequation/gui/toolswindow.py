@@ -8,8 +8,8 @@ from pathlib import Path
 import wx
 import wx.html2
 
-from outwiker.core.htmltemplate import MyTemplate
-from outwiker.core.system import getOS
+from outwiker.api.app.system import getOSName
+from outwiker.api.core.html import MyTemplate
 from outwiker.api.core.text import readTextFile
 from outwiker.gui.mainpanes.mainpane import MainPane
 
@@ -69,7 +69,7 @@ class ToolsPanel(wx.Panel):
             + "/"
         )
         self._htmlRender.SetPage(html, path)
-        if self._firstLoad and getOS().name == "windows":
+        if self._firstLoad and getOSName() == "windows":
             self._htmlRender.Reload()
             self._firstLoad = False
 

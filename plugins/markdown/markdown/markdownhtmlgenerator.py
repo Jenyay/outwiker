@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.htmltemplate import HtmlTemplate
+from outwiker.api.core.html import HtmlTemplate
 from outwiker.api.core.text import readTextFile
 
 from markdownparser.parser import Parser

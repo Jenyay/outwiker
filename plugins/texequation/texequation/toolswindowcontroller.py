@@ -37,11 +37,7 @@ class ToolsWindowController:
             self._toolsPane.close()
             self._toolsPane = None
 
-    def __onTextEditorCaretMove(
-        self,
-        page: "outwiker.core.tree.WikiPage",
-        params: "outwiker.core.events.TextEditorCaretMoveParams",
-    ) -> None:
+    def __onTextEditorCaretMove(self, page, params) -> None:
         if params.startSelection != params.endSelection:
             return
 

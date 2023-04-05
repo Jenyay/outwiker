@@ -3,7 +3,7 @@
 import re
 from io import StringIO
 
-from outwiker.api.core.htmlimprover import HtmlImprover
+from outwiker.api.core.html import HtmlImprover
 
 
 class ParagraphHtmlImprover(HtmlImprover):

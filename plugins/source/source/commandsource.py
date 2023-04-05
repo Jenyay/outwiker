@@ -2,7 +2,7 @@
 
 from outwiker.api.pages.wiki.parser.command import Command
 from outwiker.api.core.attachment import Attachment
-from outwiker.core.htmlformatter import HtmlFormatter
+from outwiker.api.core.html import HtmlFormatter
 
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
@@ -164,7 +164,7 @@ class CommandSource(Command):
         нужные стили в заголовок страницы
         """
         from .pygments import highlight
-        from .pygments.formatters import HtmlFormatter
+        from .pygments import formatters
 
         lexermaker = LexerMaker()
         lexer = lexermaker.getLexer(params_dict)
@@ -175,7 +175,7 @@ class CommandSource(Command):
         style = self._getStyle(params_dict)
         cssclass = self._getCssClass(style, parentbg)
 
-        formatter = HtmlFormatter(linenos=linenum, cssclass=cssclass, style=style)
+        formatter = formatters.HtmlFormatter(linenos=linenum, cssclass=cssclass, style=style)
 
         if cssclass not in self.__appendCssClasses:
             sourceStyle = formatter.get_style_defs()
