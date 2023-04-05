@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 import unittest
 
 from outwiker.actions.polyactionsid import *
-from outwiker.api.services.clipboard import getClipboardText
+from outwiker.api.app.clipboard import getClipboardText
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory

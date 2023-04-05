@@ -2,7 +2,7 @@
 
 import unittest
 
-from outwiker.api.services.tree import movePage
+from outwiker.api.app.tree import movePage
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 

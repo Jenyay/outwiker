@@ -2,7 +2,7 @@
 
 import unittest
 
-from outwiker.api.services.clipboard import copyTextToClipboard
+from outwiker.api.app.clipboard import copyTextToClipboard
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.core.pageuiddepot import PageUidDepot

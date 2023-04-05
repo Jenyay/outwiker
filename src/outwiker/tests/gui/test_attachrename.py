@@ -3,7 +3,7 @@
 import os.path
 import unittest
 
-from outwiker.api.services.attachment import renameAttach
+from outwiker.api.app.attachment import renameAttach
 from outwiker.core.attachment import Attachment
 from outwiker.gui.tester import Tester, getButtonId
 from outwiker.pages.text.textpage import TextPageFactory

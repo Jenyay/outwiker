@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from outwiker.app.actions.attachcreatesubdir import AttachCreateSubdirAction
-from outwiker.api.services.attachment import getDefaultSubdirName
+from outwiker.api.app.attachment import getDefaultSubdirName
 from outwiker.core.attachment import Attachment
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin

@@ -7,7 +7,7 @@ import unittest
 import wx
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.api.services.tree import openWikiWithDialog, openWiki
+from outwiker.api.app.tree import openWikiWithDialog, openWiki
 from outwiker.api.core.tree import findPage
 from outwiker.gui.tester import Tester
 from outwiker.pages.text.textpage import TextPageFactory
