@@ -48,6 +48,15 @@ class HtmlTemplate:
         self.template = MyTemplate(template)
 
     def substitute(self, content, **kwargs):
+        """
+        In outwiker.core 1.5 'userhead' parameter will be replaced to **kwargs
+        TODO: Remove the legacy code
+        """
+        if 'userhead' not in kwargs:
+            kwargs['userhead'] = ''
+        if 'title' not in kwargs:
+            kwargs['title'] = ''
+
         return self.template.safe_substitute(
             content=content,
             fontsize=self.fontsize,
