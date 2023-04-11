@@ -24,9 +24,28 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
 
 def testPageTitle(title) -> bool:
     """
-    Возвращает True, если можно создавать страницу с таким заголовком
+    Возвращает True, если можно создавать страницу с таким заголовком в текущей ОС
     """
     return _tree.testPageTitle(title)
+
+
+def testPageTitleWindows(title) -> bool:
+    """
+    Возвращает True, если можно создавать страницу с таким заголовком в Windows
+    """
+    return _tree.testPageTitleWindows(title)
+
+
+def testPageTitleLinux(title) -> bool:
+    """
+    Возвращает True, если можно создавать страницу с таким заголовком в Linux
+    """
+    return _tree.testPageTitleLinux(title)
+
+
+def replaceTitleDangerousSymbols(title: str, replacement: str) -> str:
+    """Replace dangerous symbols by 'replacement'"""
+    return _tree.replaceTitleDangerousSymbols(title, replacement)
 
 
 def renamePage(page, newtitle) -> None:

@@ -8,10 +8,10 @@ import shutil
 from shutil import copytree
 
 
+from outwiker.api.app.tree import replaceTitleDangerousSymbols
 from outwiker.api.core.config import StringOption, BooleanOption
 from outwiker.api.core.defines import PAGE_RESULT_HTML
-from outwiker.core.factory import PageFactory
-from outwiker.core.pagetitletester import WindowsPageTitleTester
+from outwiker.api.core.tree import PageFactory
 from outwiker.api.core.tree import WikiPage
 
 from .gui.webpageview import WebPageView
@@ -166,7 +166,7 @@ class WebPageFactory(PageFactory):
         if title is None or len(title.strip()) == 0:
             title = defaultTitle
         else:
-            title = WindowsPageTitleTester().replaceDangerousSymbols(title, "_")
+            title = replaceTitleDangerousSymbols(title, "_")
 
         index = 1
         newTitle = title
