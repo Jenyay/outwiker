@@ -95,10 +95,10 @@ class PageTitleTester(metaclass=ABCMeta):
         """
         pass
 
-    def replaceDangerousSymbols(self, title, replace):
-        """Replace dangerous symbols by 'replace'"""
+    def replaceDangerousSymbols(self, title, replacement):
+        """Replace dangerous symbols by 'replacement'"""
         regexp = re.compile(r'[><|?*:"\\/#]|(%[0-9a-fA-F]{2})')
-        return regexp.sub(replace, title)
+        return regexp.sub(replacement, title)
 
 
 class WindowsPageTitleTester(PageTitleTester):
