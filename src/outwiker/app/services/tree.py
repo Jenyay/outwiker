@@ -224,6 +224,7 @@ def testPageTitleWindows(title: str) -> bool:
 
 
 def replaceTitleDangerousSymbols(title: str, replacement: str) -> str:
+    """Replace dangerous symbols by 'replacement'"""
     return getOS().pageTitleTester.replaceDangerousSymbols(title, replacement)
 
 
