@@ -1,5 +1,7 @@
 from typing import Optional
 
+from outwiker.gui.mainpanes.mainpane import MainPane
+
 import outwiker.app.gui.mainwindowtools as _tools
 
 

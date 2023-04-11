@@ -11,7 +11,7 @@ import wx.html2
 from outwiker.api.app.system import getOSName
 from outwiker.api.core.html import MyTemplate
 from outwiker.api.core.text import readTextFile
-from outwiker.gui.mainpanes.mainpane import MainPane
+from outwiker.api.gui.mainwindow import MainPane
 
 from ..defines import KATEX_DIR_NAME, TOOLS_PANE_NAME
 from ..texconfig import TeXConfig
