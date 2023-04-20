@@ -47,7 +47,7 @@ class PageFactory(metaclass=ABCMeta):
         tags: List[str],
         order_calculator: Callable[
             [RootWikiPage, str, List[str]], int
-        ] = orderCalculatorBottom,
+        ] = orderCalculatorBottom
     ) -> WikiPage:
         """
         Создать страницу. Вызывать этот метод вместо конструктора
@@ -80,18 +80,21 @@ class PageFactory(metaclass=ABCMeta):
         """
         Метод возвращает тип создаваемой страницы (не экземпляр страницы)
         """
+        raise NotImplementedError
 
     @abstractproperty
-    def title(self):
+    def title(self) -> str:
         """
         Название страницы, показываемое пользователю
         """
+        raise NotImplementedError
 
     @abstractmethod
     def getPageView(self, parent, application):
         """Метод возвращает контрол,
         который будет отображать и редактировать страницу
         """
+        raise NotImplementedError
 
-    def getTypeString(self):
+    def getTypeString(self) -> str:
         return self.getPageType().getTypeString()

@@ -5,8 +5,8 @@ from typing import List, Tuple
 
 from outwiker.api.core.attachment import Attachment
 from outwiker.api.core.images import isImage
-from outwiker.api.pages.wiki.parser.command import Command
-from outwiker.pages.wiki.wikiconfig import WikiConfig
+from outwiker.api.pages.wiki.config import WikiConfig
+from outwiker.api.pages.wiki.wikiparser import Command
 
 from .thumbstreamgenerator import ThumbStreamGenerator
 from .thumbtablegenerator import ThumbTableGenerator
@@ -26,7 +26,7 @@ class ThumbListCommand(Command):
         """
         parser - экземпляр парсера
         """
-        Command.__init__(self, parser)
+        super().__init__(parser)
 
     @property
     def name(self):

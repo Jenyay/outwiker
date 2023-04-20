@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 
 
 class TitleCommand(Command):
@@ -12,7 +12,7 @@ class TitleCommand(Command):
         """
         parser - экземпляр парсера
         """
-        Command.__init__(self, parser)
+        super().__init__(parser)
 
     @property
     def name(self):

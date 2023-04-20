@@ -3,7 +3,7 @@
 import os.path
 import shutil
 
-from outwiker.api.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 from outwiker.api.core.attachment import Thumbnails
 
 

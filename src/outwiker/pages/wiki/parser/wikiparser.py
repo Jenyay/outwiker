@@ -3,6 +3,7 @@
 import traceback
 
 from outwiker.core.htmlformatter import HtmlFormatter
+from outwiker.core.thumbnails import Thumbnails
 import outwiker.core.cssclasses as css
 
 from .markup import Markup
@@ -28,8 +29,6 @@ from .tokenquote import QuoteFactory
 from .tokenwikistyle import WikiStyleInlineFactory, WikiStyleBlockFactory
 from .tokencomment import CommentFactory
 from .tokenmultilineblock import MultilineBlockFactory
-
-from ..thumbnails import Thumbnails
 
 
 class Parser:
@@ -258,7 +257,7 @@ class Parser:
         Свойство возвращает строку из добавленных заголовочных элементов
         (то, что должно быть внутри тега <head>...</head>)
         """
-        return ''.join(self.__headers)
+        return "".join(self.__headers)
 
     def appendToHead(self, header):
         """
@@ -268,14 +267,14 @@ class Parser:
 
     @property
     def headItems(self):
-        '''
+        """
         Return list of the strings for the <head> HTML tag.
-        '''
+        """
         return self.__headers
 
     @property
     def footer(self):
-        return u''.join(self.__footers)
+        return "".join(self.__footers)
 
     @property
     def footerItems(self):
@@ -286,7 +285,7 @@ class Parser:
 
     def toHtml(self, text):
         """
-        Сгенерить HTML без заголовков типа <HTML> и т.п.
+        Сгенерить HTML без заголовков типа <html> и т.п.
         """
         thumb = Thumbnails(self.page)
         thumb.clearDir()

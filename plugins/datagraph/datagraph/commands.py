@@ -2,7 +2,7 @@
 
 import re
 
-from outwiker.api.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 
 from .renders.highcharts import HighChartsRender
 from .graphbuilder import GraphBuilder

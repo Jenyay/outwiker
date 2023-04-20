@@ -2,7 +2,7 @@
 
 from abc import ABCMeta, abstractproperty
 
-from outwiker.api.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 
 
 class LjCommand(Command, metaclass=ABCMeta):

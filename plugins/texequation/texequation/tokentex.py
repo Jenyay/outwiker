@@ -8,7 +8,7 @@ import shutil
 from pyparsing import QuotedString
 
 from outwiker.api.core.attachment import Thumbnails
-from outwiker.pages.wiki.parser.wikiparser import Parser
+from outwiker.api.pages.wiki.wikiparser import Parser
 
 from .defines import KATEX_DIR_NAME
 from .texconfig import TeXConfig

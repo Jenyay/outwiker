@@ -5,7 +5,7 @@ import re
 from typing import List, Tuple, Dict
 
 from pyparsing import (Regex, Forward, Literal,
-                       LineStart, LineEnd, NoMatch, AtLineStart,
+                       LineEnd, NoMatch, AtLineStart,
                        SkipTo)
 
 from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
@@ -28,25 +28,25 @@ PARAM_NAME_BACKGROUND_COLOR = 'bgcolor'
 PARAM_NAME_STYLE = 'style'
 
 
-class WikiStyleInlineFactory(object):
+class WikiStyleInlineFactory:
     """
     A factory to create inline wiki style tokens.
     """
     @staticmethod
     def make(parser):
-        return WikiStyleInline(parser).getToken()
+        return WikiStyleInlineToken(parser).getToken()
 
 
-class WikiStyleBlockFactory(object):
+class WikiStyleBlockFactory:
     """
     A factory to create block wiki style tokens.
     """
     @staticmethod
     def make(parser):
-        return WikiStyleBlock(parser).getToken()
+        return WikiStyleBlockToken(parser).getToken()
 
 
-class WikiStyleBase(object, metaclass=ABCMeta):
+class WikiStyleBase( metaclass=ABCMeta):
     def __init__(self, parser):
         self.parser = parser
         self._custom_styles_on_page = {}
@@ -66,27 +66,27 @@ class WikiStyleBase(object, metaclass=ABCMeta):
 
     @abstractproperty
     def name(self) -> str:
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def _getOptionNameForCustomStylesFromPage(self) -> str:
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def _getBeginToken(self):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def _getEndToken(self):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def _getTag(self) -> str:
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def _getStylesFolder(self) -> str:
-        pass
+        raise NotImplementedError
 
     def _getForbiddenToken(self):
         return NoMatch()
@@ -181,7 +181,7 @@ class WikiStyleBase(object, metaclass=ABCMeta):
         return text
 
 
-class WikiStyleInline(WikiStyleBase):
+class WikiStyleInlineToken(WikiStyleBase):
     '''
     Token for inline style: %class-name...% ... %%
     '''
@@ -208,7 +208,7 @@ class WikiStyleInline(WikiStyleBase):
         return CONFIG_STYLES_INLINE_OPTION
 
 
-class WikiStyleBlock(WikiStyleBase):
+class WikiStyleBlockToken(WikiStyleBase):
     '''
     Token for block style:
         %class-name...%

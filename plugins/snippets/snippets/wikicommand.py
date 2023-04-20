@@ -2,7 +2,7 @@
 
 import os
 
-from outwiker.api.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 from outwiker.api.core.text import readTextFile
 
 from snippets.defines import WIKI_COMMAND_PARAM_FILE

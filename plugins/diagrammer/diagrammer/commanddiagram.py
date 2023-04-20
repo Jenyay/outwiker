@@ -3,7 +3,7 @@
 import os.path
 import hashlib
 
-from outwiker.api.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 from outwiker.api.core.attachment import Thumbnails
 
 from .i18n import get_

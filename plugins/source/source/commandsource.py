@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 from outwiker.api.core.attachment import Attachment
 from outwiker.api.core.html import HtmlFormatter
 

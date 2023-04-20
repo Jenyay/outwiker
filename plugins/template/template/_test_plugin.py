@@ -2,10 +2,10 @@
 
 import unittest
 
+from outwiker.api.pages.wiki.wikipage import createWikiPage
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.utils import removeDir
 
 
@@ -31,7 +31,7 @@ class PluginNameTest(unittest.TestCase):
 
         self.rootwiki = WikiDocument.create(self.path)
 
-        WikiPageFactory().create(self.rootwiki, "Страница 1", [])
+        createWikiPage(self.rootwiki, "Страница 1", [])
         self.testPage = self.rootwiki["Страница 1"]
 
     def testPluginLoad(self):

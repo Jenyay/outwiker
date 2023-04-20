@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
-from outwiker.pages.wiki.wikiconfig import WikiConfig
+from outwiker.api.core.images import PageThumbmaker
+from outwiker.api.pages.wiki.config import WikiConfig
 
 
 class BaseThumbGenerator:

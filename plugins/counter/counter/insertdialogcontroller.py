@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.api.pages.wiki.parser import ParserFactory
+from outwiker.api.pages.wiki.wikiparser import ParserFactory
 
 from .config import CounterConfig
 from .nameharvester import NameHarvester
