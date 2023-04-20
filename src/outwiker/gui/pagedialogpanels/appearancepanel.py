@@ -17,7 +17,7 @@ from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogControlle
 
 class AppearancePanel(wx.Panel):
     def __init__(self, parent):
-        super(AppearancePanel, self).__init__(parent)
+        super().__init__(parent)
 
         self.styleText = wx.StaticText(self, -1, _("Page style"))
         self.styleCombo = wx.ComboBox(
