@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.simplespellcontroller import SimpleSpellController
+from outwiker.api.core.spellchecker import SimpleSpellController
 
 from .webnotepage import WebNotePage
 
