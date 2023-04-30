@@ -12,11 +12,8 @@ from outwiker.core.defines import (PAGE_MODE_TEXT,
                                    PAGE_ATTACH_DIR)
 from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 from outwiker.gui.htmltexteditor import HtmlTextEditor
-from outwiker.gui.tabledialog import TableDialog
-from outwiker.gui.tablerowsdialog import TableRowsDialog
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
-from outwiker.pages.html.tabledialogcontroller import (TableDialogController,
-                                                       TableRowsDialogController)
+from outwiker.pages.html.guitools import insertTable, insertTableRows
 
 from .actions.autolinewrap import HtmlAutoLineWrap
 from .actions.link import insertLink
@@ -661,25 +658,10 @@ class HtmlPageView(BaseHtmlPanel):
         mainMenu.Remove(index)
 
     def _insertTable(self, param):
-        editor = self.codeEditor
-        parent = self._application.mainWindow
-
-        with TableDialog(parent) as dlg:
-            controller = TableDialogController(dlg, self._application.config)
-            if controller.showDialog() == wx.ID_OK:
-                result = controller.getResult()
-                editor.replaceText(result)
+        insertTable(self._application, self.codeEditor)
 
     def _insertTableRows(self, param):
-        editor = self.codeEditor
-        parent = self._application.mainWindow
-
-        with TableRowsDialog(parent) as dlg:
-            controller = TableRowsDialogController(dlg,
-                                                   self._application.config)
-            if controller.showDialog() == wx.ID_OK:
-                result = controller.getResult()
-                editor.replaceText(result)
+        insertTableRows(self._application, self.codeEditor)
 
     def _getAttachString(self, fnames):
         """

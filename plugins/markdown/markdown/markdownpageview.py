@@ -8,7 +8,7 @@ import wx
 from outwiker.api.app.application import getImagesDir
 from outwiker.api.app.texteditor import insertCurrentDate
 from outwiker.api.core.attachment import Attachment
-from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
+from outwiker.api.pages.wiki.gui import BaseWikiPageView
 
 from outwiker.actions.polyactionsid import *
 

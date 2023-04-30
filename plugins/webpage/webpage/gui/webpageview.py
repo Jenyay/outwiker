@@ -2,7 +2,7 @@
 
 from outwiker.api.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
 from outwiker.api.gui.controls import HtmlTextEditor
-from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
+from outwiker.api.pages.html.gui import BaseHtmlPanel
 
 from ..misc import polyActions
 
@@ -10,7 +10,6 @@ from ..misc import polyActions
 class WebPageView(BaseHtmlPanel):
     def __init__(self, parent, application):
         super().__init__(parent, application)
-        self.__htmlMenu = None
 
         self.mainWindow.UpdateAuiManager()
 

@@ -7,14 +7,8 @@ import wx
 from outwiker.api.app.application import getImagesDir
 from outwiker.api.app.texteditor import insertCurrentDate
 from outwiker.api.core.events import EVENT_PRIORITY_DEFAULT, pagetype
-from outwiker.api.gui.dialogs import TableDialog
-from outwiker.api.gui.dialogs import TableRowsDialog
-from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
-from outwiker.pages.html.actions.link import insertLink
-from outwiker.pages.html.tabledialogcontroller import (
-    TableDialogController,
-    TableRowsDialogController,
-)
+from outwiker.api.pages.html.actions import SwitchCodeResultAction
+from outwiker.api.pages.html.guitools import insertLink, insertTable, insertTableRows
 from outwiker.actions.polyactionsid import *
 
 from ..i18n import get_
@@ -768,24 +762,16 @@ class GuiController:
         return fname
 
     def _insertTable(self, param):
-        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        parent = self._application.mainWindow
-
-        with TableDialog(parent) as dlg:
-            controller = TableDialogController(dlg, self._application.config)
-            if controller.showDialog() == wx.ID_OK:
-                result = controller.getResult()
-                editor.replaceText(result)
+        insertTable(
+            self._application,
+            self._application.mainWindow.pagePanel.pageView.codeEditor,
+        )
 
     def _insertTableRows(self, param):
-        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        parent = self._application.mainWindow
-
-        with TableRowsDialog(parent) as dlg:
-            controller = TableRowsDialogController(dlg, self._application.config)
-            if controller.showDialog() == wx.ID_OK:
-                result = controller.getResult()
-                editor.replaceText(result)
+        insertTableRows(
+            self._application,
+            self._application.mainWindow.pagePanel.pageView.codeEditor,
+        )
 
     def turnText(self, left, right):
         """

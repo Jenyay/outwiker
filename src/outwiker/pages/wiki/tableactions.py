@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
@@ -9,7 +9,7 @@ from outwiker.gui.tablerowsdialog import TableRowsDialog
 from outwiker.pages.wiki.utils import getCommandsByPos
 from outwiker.pages.wiki.tabledialogcontroller import (
     TableDialogController,
-    TableRowsDialogController
+    TableRowsDialogController,
 )
 
 
@@ -17,33 +17,32 @@ def getTableByPos(text, position):
     """
     Return suffix for command name for most nested (:tableNN:) command in the position
     """
-    regex = re.compile(r'table(?P<suffix>\d*)$')
+    regex = re.compile(r"table(?P<suffix>\d*)$")
     matches = getCommandsByPos(text, position)
     matches.reverse()
 
     for match in matches:
-        name = match.groupdict()['name']
+        name = match.groupdict()["name"]
         tableMatch = regex.match(name)
         if tableMatch:
-            return tableMatch.groupdict()['suffix']
+            return tableMatch.groupdict()["suffix"]
 
     return None
 
 
-def getInsertTableActionFunc (application, parent, pageView):
-    def func (param):
+def getInsertTableActionFunc(application, parent, pageView):
+    def func(param):
         editor = pageView.codeEditor
-        tableSuffix = getTableByPos (editor.GetText(),
-                                     editor.GetCurrentPosition())
+        tableSuffix = getTableByPos(editor.GetText(), editor.GetCurrentPosition())
         if tableSuffix is None:
-            suffix = u''
-        elif tableSuffix == u'':
-            suffix = u'2'
+            suffix = ""
+        elif tableSuffix == "":
+            suffix = "2"
         else:
             try:
                 suffix = str(int(tableSuffix) + 1)
             except ValueError:
-                suffix = u''
+                suffix = ""
 
         with TableDialog(parent) as dlg:
             controller = TableDialogController(dlg, suffix, application.config)
@@ -54,21 +53,20 @@ def getInsertTableActionFunc (application, parent, pageView):
     return func
 
 
-def getInsertTableRowsActionFunc (application, parent, pageView):
-    def func (param):
+def getInsertTableRowsActionFunc(application, parent, pageView):
+    def func(param):
         editor = pageView.codeEditor
-        tableSuffix = getTableByPos (editor.GetText(),
-                                     editor.GetCurrentPosition())
+        tableSuffix = getTableByPos(editor.GetText(), editor.GetCurrentPosition())
         if tableSuffix is None:
-            suffix = u''
+            suffix = ""
         else:
             try:
                 suffix = str(int(tableSuffix))
             except ValueError:
-                suffix = u''
+                suffix = ""
 
-        with TableRowsDialog (parent) as dlg:
-            controller = TableRowsDialogController (dlg, suffix, application.config)
+        with TableRowsDialog(parent) as dlg:
+            controller = TableRowsDialogController(dlg, suffix, application.config)
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
                 editor.replaceText(result)
@@ -76,20 +74,19 @@ def getInsertTableRowsActionFunc (application, parent, pageView):
     return func
 
 
-def getInsertTableCellActionFunc (application, parent, pageView):
-    def func (param):
+def getInsertTableCellActionFunc(application, parent, pageView):
+    def func(param):
         editor = pageView.codeEditor
-        tableSuffix = getTableByPos (editor.GetText(),
-                                     editor.GetCurrentPosition())
+        tableSuffix = getTableByPos(editor.GetText(), editor.GetCurrentPosition())
         if tableSuffix is None:
-            suffix = u''
+            suffix = ""
         else:
             try:
                 suffix = str(int(tableSuffix))
             except ValueError:
-                suffix = u''
+                suffix = ""
 
-        text = u'(:cell{}:)'.format(suffix)
+        text = "(:cell{}:)".format(suffix)
         editor.replaceText(text)
 
     return func
