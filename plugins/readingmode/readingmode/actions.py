@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.gui.actions import BaseAction
-from outwiker.actions.showhidetree import ShowHideTreeAction
-from outwiker.actions.showhidetags import ShowHideTagsAction
-from outwiker.actions.showhideattaches import ShowHideAttachesAction
+from outwiker.api.gui.actions import (
+    BaseAction,
+    ShowHideTreeAction,
+    ShowHideTagsAction,
+    ShowHideAttachesAction,
+)
 
 from .i18n import get_
 

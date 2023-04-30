@@ -8,9 +8,8 @@ import wx
 from outwiker.api.app.application import getImagesDir
 from outwiker.api.app.texteditor import insertCurrentDate
 from outwiker.api.core.attachment import Attachment
+from outwiker.api.gui.actions import polyactions
 from outwiker.api.pages.wiki.gui import BaseWikiPageView
-
-from outwiker.actions.polyactionsid import *
 
 from .links.linkdialog import LinkDialog
 from .links.linkdialogcontroller import LinkDialogController
@@ -45,22 +44,22 @@ class MarkdownPageView(BaseWikiPageView):
 
     def _getPolyActions(self):
         return [
-            BOLD_STR_ID,
-            ITALIC_STR_ID,
-            BOLD_ITALIC_STR_ID,
-            HEADING_1_STR_ID,
-            HEADING_2_STR_ID,
-            HEADING_3_STR_ID,
-            HEADING_4_STR_ID,
-            HEADING_5_STR_ID,
-            HEADING_6_STR_ID,
-            CODE_STR_ID,
-            HORLINE_STR_ID,
-            LINK_STR_ID,
-            IMAGE_STR_ID,
-            HTML_ESCAPE_STR_ID,
-            CURRENT_DATE,
-            COMMENT_STR_ID,
+            polyactions.BOLD_STR_ID,
+            polyactions.ITALIC_STR_ID,
+            polyactions.BOLD_ITALIC_STR_ID,
+            polyactions.HEADING_1_STR_ID,
+            polyactions.HEADING_2_STR_ID,
+            polyactions.HEADING_3_STR_ID,
+            polyactions.HEADING_4_STR_ID,
+            polyactions.HEADING_5_STR_ID,
+            polyactions.HEADING_6_STR_ID,
+            polyactions.CODE_STR_ID,
+            polyactions.HORLINE_STR_ID,
+            polyactions.LINK_STR_ID,
+            polyactions.IMAGE_STR_ID,
+            polyactions.HTML_ESCAPE_STR_ID,
+            polyactions.CURRENT_DATE,
+            polyactions.COMMENT_STR_ID,
         ] + self._baseTextPolyactions
 
     def _getSpecificActions(self):
@@ -102,50 +101,50 @@ class MarkdownPageView(BaseWikiPageView):
         actionController = self._application.actionController
 
         # Bold
-        actionController.getAction(BOLD_STR_ID).setFunc(
+        actionController.getAction(polyactions.BOLD_STR_ID).setFunc(
             lambda param: self.turnText("**", "**")
         )
 
-        actionController.appendMenuItem(BOLD_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.BOLD_STR_ID, menu)
         actionController.appendToolbarButton(
-            BOLD_STR_ID,
+            polyactions.BOLD_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_bold.png"),
             fullUpdate=False,
         )
 
         # Italic
-        actionController.getAction(ITALIC_STR_ID).setFunc(
+        actionController.getAction(polyactions.ITALIC_STR_ID).setFunc(
             lambda param: self.turnText("*", "*")
         )
 
-        actionController.appendMenuItem(ITALIC_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.ITALIC_STR_ID, menu)
         actionController.appendToolbarButton(
-            ITALIC_STR_ID,
+            polyactions.ITALIC_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_italic.png"),
             fullUpdate=False,
         )
 
         # Bold italic
-        bold_italic_action = actionController.getAction(BOLD_ITALIC_STR_ID)
+        bold_italic_action = actionController.getAction(polyactions.BOLD_ITALIC_STR_ID)
         bold_italic_action.setFunc(lambda param: self.turnText("**_", "_**"))
 
-        actionController.appendMenuItem(BOLD_ITALIC_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.BOLD_ITALIC_STR_ID, menu)
         actionController.appendToolbarButton(
-            BOLD_ITALIC_STR_ID,
+            polyactions.BOLD_ITALIC_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_bold_italic.png"),
             fullUpdate=False,
         )
 
         # Comment
-        actionController.getAction(COMMENT_STR_ID).setFunc(
+        actionController.getAction(polyactions.COMMENT_STR_ID).setFunc(
             lambda param: self.turnText("<!--", "-->")
         )
-        actionController.appendMenuItem(COMMENT_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.COMMENT_STR_ID, menu)
         actionController.appendToolbarButton(
-            COMMENT_STR_ID,
+            polyactions.COMMENT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "comment.png"),
             fullUpdate=False,
@@ -162,73 +161,73 @@ class MarkdownPageView(BaseWikiPageView):
         menu = self._headingMenu
         actionController = self._application.actionController
 
-        actionController.getAction(HEADING_1_STR_ID).setFunc(
+        actionController.getAction(polyactions.HEADING_1_STR_ID).setFunc(
             lambda param: self._setHeading("# ")
         )
 
-        actionController.getAction(HEADING_2_STR_ID).setFunc(
+        actionController.getAction(polyactions.HEADING_2_STR_ID).setFunc(
             lambda param: self._setHeading("## ")
         )
 
-        actionController.getAction(HEADING_3_STR_ID).setFunc(
+        actionController.getAction(polyactions.HEADING_3_STR_ID).setFunc(
             lambda param: self._setHeading("### ")
         )
 
-        actionController.getAction(HEADING_4_STR_ID).setFunc(
+        actionController.getAction(polyactions.HEADING_4_STR_ID).setFunc(
             lambda param: self._setHeading("#### ")
         )
 
-        actionController.getAction(HEADING_5_STR_ID).setFunc(
+        actionController.getAction(polyactions.HEADING_5_STR_ID).setFunc(
             lambda param: self._setHeading("##### ")
         )
 
-        actionController.getAction(HEADING_6_STR_ID).setFunc(
+        actionController.getAction(polyactions.HEADING_6_STR_ID).setFunc(
             lambda param: self._setHeading("###### ")
         )
 
-        actionController.appendMenuItem(HEADING_1_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.HEADING_1_STR_ID, menu)
         actionController.appendToolbarButton(
-            HEADING_1_STR_ID,
+            polyactions.HEADING_1_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_1.png"),
             fullUpdate=False,
         )
 
-        actionController.appendMenuItem(HEADING_2_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.HEADING_2_STR_ID, menu)
         actionController.appendToolbarButton(
-            HEADING_2_STR_ID,
+            polyactions.HEADING_2_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_2.png"),
             fullUpdate=False,
         )
 
-        actionController.appendMenuItem(HEADING_3_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.HEADING_3_STR_ID, menu)
         actionController.appendToolbarButton(
-            HEADING_3_STR_ID,
+            polyactions.HEADING_3_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_3.png"),
             fullUpdate=False,
         )
 
-        actionController.appendMenuItem(HEADING_4_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.HEADING_4_STR_ID, menu)
         actionController.appendToolbarButton(
-            HEADING_4_STR_ID,
+            polyactions.HEADING_4_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_4.png"),
             fullUpdate=False,
         )
 
-        actionController.appendMenuItem(HEADING_5_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.HEADING_5_STR_ID, menu)
         actionController.appendToolbarButton(
-            HEADING_5_STR_ID,
+            polyactions.HEADING_5_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_5.png"),
             fullUpdate=False,
         )
 
-        actionController.appendMenuItem(HEADING_6_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.HEADING_6_STR_ID, menu)
         actionController.appendToolbarButton(
-            HEADING_6_STR_ID,
+            polyactions.HEADING_6_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_6.png"),
             fullUpdate=False,
@@ -240,61 +239,61 @@ class MarkdownPageView(BaseWikiPageView):
         actionController = self._application.actionController
 
         # Link
-        actionController.getAction(LINK_STR_ID).setFunc(self._insertLink)
+        actionController.getAction(polyactions.LINK_STR_ID).setFunc(self._insertLink)
 
-        actionController.appendMenuItem(LINK_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.LINK_STR_ID, menu)
         actionController.appendToolbarButton(
-            LINK_STR_ID,
+            polyactions.LINK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "link.png"),
             fullUpdate=False,
         )
 
         # Image
-        actionController.getAction(IMAGE_STR_ID).setFunc(self._insertImage)
+        actionController.getAction(polyactions.IMAGE_STR_ID).setFunc(self._insertImage)
 
-        actionController.appendMenuItem(IMAGE_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.IMAGE_STR_ID, menu)
         actionController.appendToolbarButton(
-            IMAGE_STR_ID,
+            polyactions.IMAGE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "image.png"),
             fullUpdate=False,
         )
 
         # Horizontal line
-        actionController.getAction(HORLINE_STR_ID).setFunc(
+        actionController.getAction(polyactions.HORLINE_STR_ID).setFunc(
             lambda param: self.replaceText("----")
         )
 
-        actionController.appendMenuItem(HORLINE_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.HORLINE_STR_ID, menu)
         actionController.appendToolbarButton(
-            HORLINE_STR_ID,
+            polyactions.HORLINE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_horizontalrule.png"),
             fullUpdate=False,
         )
 
         # Текущая дата
-        actionController.getAction(CURRENT_DATE).setFunc(
+        actionController.getAction(polyactions.CURRENT_DATE).setFunc(
             lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
         )
 
-        actionController.appendMenuItem(CURRENT_DATE, menu)
+        actionController.appendMenuItem(polyactions.CURRENT_DATE, menu)
         actionController.appendToolbarButton(
-            CURRENT_DATE,
+            polyactions.CURRENT_DATE,
             toolbar,
             os.path.join(self.imagesDir, "date.png"),
             fullUpdate=False,
         )
 
         # Code block
-        actionController.getAction(CODE_STR_ID).setFunc(
+        actionController.getAction(polyactions.CODE_STR_ID).setFunc(
             lambda param: self.turnText("```\n", "\n```")
         )
 
-        actionController.appendMenuItem(CODE_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.CODE_STR_ID, menu)
         actionController.appendToolbarButton(
-            CODE_STR_ID,
+            polyactions.CODE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "code.png"),
             fullUpdate=False,
@@ -303,10 +302,10 @@ class MarkdownPageView(BaseWikiPageView):
         self.toolsMenu.AppendSeparator()
 
         # Преобразовать некоторые символы в и их HTML-представление
-        actionController.getAction(HTML_ESCAPE_STR_ID).setFunc(
+        actionController.getAction(polyactions.HTML_ESCAPE_STR_ID).setFunc(
             lambda param: self.escapeHtml()
         )
-        actionController.appendMenuItem(HTML_ESCAPE_STR_ID, menu)
+        actionController.appendMenuItem(polyactions.HTML_ESCAPE_STR_ID, menu)
 
     def _addToolbarSeparator(self):
         toolbar = self._application.mainWindow.toolbars[TOOLBAR_MARKDOWN_GENERAL]

@@ -7,9 +7,9 @@ import wx
 from outwiker.api.app.application import getImagesDir
 from outwiker.api.app.texteditor import insertCurrentDate
 from outwiker.api.core.events import EVENT_PRIORITY_DEFAULT, pagetype
+from outwiker.api.gui.actions import polyactions
 from outwiker.api.pages.html.actions import SwitchCodeResultAction
 from outwiker.api.pages.html.guitools import insertLink, insertTable, insertTableRows
-from outwiker.actions.polyactionsid import *
 
 from ..i18n import get_
 from ..webnotepage import WebNotePage
@@ -263,92 +263,92 @@ class GuiController:
         menu = self._fontMenu
 
         # Полужирный шрифт
-        self._application.actionController.getAction(BOLD_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.BOLD_STR_ID).setFunc(
             lambda param: self.turnText("<b>", "</b>")
         )
 
-        self._application.actionController.appendMenuItem(BOLD_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.BOLD_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            BOLD_STR_ID,
+            polyactions.BOLD_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_bold.png"),
             fullUpdate=False,
         )
 
         # Курсивный шрифт
-        self._application.actionController.getAction(ITALIC_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.ITALIC_STR_ID).setFunc(
             lambda param: self.turnText("<i>", "</i>")
         )
 
-        self._application.actionController.appendMenuItem(ITALIC_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.ITALIC_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            ITALIC_STR_ID,
+            polyactions.ITALIC_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_italic.png"),
             fullUpdate=False,
         )
 
         # Полужирный курсивный шрифт
-        self._application.actionController.getAction(BOLD_ITALIC_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.BOLD_ITALIC_STR_ID).setFunc(
             lambda param: self.turnText("<b><i>", "</i></b>")
         )
 
-        self._application.actionController.appendMenuItem(BOLD_ITALIC_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.BOLD_ITALIC_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            BOLD_ITALIC_STR_ID,
+            polyactions.BOLD_ITALIC_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_bold_italic.png"),
             fullUpdate=False,
         )
 
         # Подчеркнутый шрифт
-        self._application.actionController.getAction(UNDERLINE_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.UNDERLINE_STR_ID).setFunc(
             lambda param: self.turnText("<u>", "</u>")
         )
 
-        self._application.actionController.appendMenuItem(UNDERLINE_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.UNDERLINE_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            UNDERLINE_STR_ID,
+            polyactions.UNDERLINE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_underline.png"),
             fullUpdate=False,
         )
 
         # Зачеркнутый шрифт
-        self._application.actionController.getAction(STRIKE_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.STRIKE_STR_ID).setFunc(
             lambda param: self.turnText("<strike>", "</strike>")
         )
 
-        self._application.actionController.appendMenuItem(STRIKE_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.STRIKE_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            STRIKE_STR_ID,
+            polyactions.STRIKE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_strikethrough.png"),
             fullUpdate=False,
         )
 
         # Нижний индекс
-        self._application.actionController.getAction(SUBSCRIPT_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.SUBSCRIPT_STR_ID).setFunc(
             lambda param: self.turnText("<sub>", "</sub>")
         )
 
-        self._application.actionController.appendMenuItem(SUBSCRIPT_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.SUBSCRIPT_STR_ID, menu)
 
         self._application.actionController.appendToolbarButton(
-            SUBSCRIPT_STR_ID,
+            polyactions.SUBSCRIPT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_subscript.png"),
             fullUpdate=False,
         )
 
         # Верхний индекс
-        self._application.actionController.getAction(SUPERSCRIPT_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.SUPERSCRIPT_STR_ID).setFunc(
             lambda param: self.turnText("<sup>", "</sup>")
         )
 
-        self._application.actionController.appendMenuItem(SUPERSCRIPT_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.SUPERSCRIPT_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            SUPERSCRIPT_STR_ID,
+            polyactions.SUPERSCRIPT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_superscript.png"),
             fullUpdate=False,
@@ -362,54 +362,54 @@ class GuiController:
         menu = self._alignMenu
 
         # Выравнивание по левому краю
-        self._application.actionController.getAction(ALIGN_LEFT_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.ALIGN_LEFT_STR_ID).setFunc(
             lambda param: self.turnText('<div align="left">', "</div>")
         )
 
-        self._application.actionController.appendMenuItem(ALIGN_LEFT_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.ALIGN_LEFT_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            ALIGN_LEFT_STR_ID,
+            polyactions.ALIGN_LEFT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_align_left.png"),
             fullUpdate=False,
         )
 
         # Выравнивание по центру
-        self._application.actionController.getAction(ALIGN_CENTER_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.ALIGN_CENTER_STR_ID).setFunc(
             lambda param: self.turnText('<div align="center">', "</div>")
         )
 
-        self._application.actionController.appendMenuItem(ALIGN_CENTER_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.ALIGN_CENTER_STR_ID, menu)
 
         self._application.actionController.appendToolbarButton(
-            ALIGN_CENTER_STR_ID,
+            polyactions.ALIGN_CENTER_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_align_center.png"),
             fullUpdate=False,
         )
 
         # Выравнивание по правому краю
-        self._application.actionController.getAction(ALIGN_RIGHT_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.ALIGN_RIGHT_STR_ID).setFunc(
             lambda param: self.turnText('<div align="right">', "</div>")
         )
 
-        self._application.actionController.appendMenuItem(ALIGN_RIGHT_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.ALIGN_RIGHT_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            ALIGN_RIGHT_STR_ID,
+            polyactions.ALIGN_RIGHT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_align_right.png"),
             fullUpdate=False,
         )
 
         # Выравнивание по ширине
-        self._application.actionController.getAction(ALIGN_JUSTIFY_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.ALIGN_JUSTIFY_STR_ID).setFunc(
             lambda param: self.turnText('<div align="justify">', "</div>")
         )
 
-        self._application.actionController.appendMenuItem(ALIGN_JUSTIFY_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.ALIGN_JUSTIFY_STR_ID, menu)
 
         self._application.actionController.appendToolbarButton(
-            ALIGN_JUSTIFY_STR_ID,
+            polyactions.ALIGN_JUSTIFY_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_align_justify.png"),
             fullUpdate=False,
@@ -423,39 +423,39 @@ class GuiController:
         menu = self._tableMenu
 
         # Вставить таблицу
-        self._application.actionController.getAction(TABLE_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.TABLE_STR_ID).setFunc(
             self._insertTable
         )
 
-        self._application.actionController.appendMenuItem(TABLE_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.TABLE_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            TABLE_STR_ID,
+            polyactions.TABLE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "table.png"),
             fullUpdate=False,
         )
 
         # Вставить строку таблицы
-        self._application.actionController.getAction(TABLE_ROW_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.TABLE_ROW_STR_ID).setFunc(
             self._insertTableRows
         )
 
-        self._application.actionController.appendMenuItem(TABLE_ROW_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.TABLE_ROW_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            TABLE_ROW_STR_ID,
+            polyactions.TABLE_ROW_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "table_insert_row.png"),
             fullUpdate=False,
         )
 
         # Вставить ячейку таблицы
-        self._application.actionController.getAction(TABLE_CELL_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.TABLE_CELL_STR_ID).setFunc(
             lambda param: self.turnText("<td>", "</td>")
         )
 
-        self._application.actionController.appendMenuItem(TABLE_CELL_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.TABLE_CELL_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            TABLE_CELL_STR_ID,
+            polyactions.TABLE_CELL_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "table_insert_cell.png"),
             fullUpdate=False,
@@ -469,30 +469,30 @@ class GuiController:
         menu = self._listMenu
 
         # Ненумерованный список
-        self._application.actionController.getAction(LIST_BULLETS_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.LIST_BULLETS_STR_ID).setFunc(
             lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(
                 "<ul>\n", "</ul>", "<li>", "</li>"
             )
         )
 
-        self._application.actionController.appendMenuItem(LIST_BULLETS_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.LIST_BULLETS_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            LIST_BULLETS_STR_ID,
+            polyactions.LIST_BULLETS_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_list_bullets.png"),
             fullUpdate=False,
         )
 
         # Нумерованный список
-        self._application.actionController.getAction(LIST_NUMBERS_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.LIST_NUMBERS_STR_ID).setFunc(
             lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(
                 "<ol>\n", "</ol>", "<li>", "</li>"
             )
         )
 
-        self._application.actionController.appendMenuItem(LIST_NUMBERS_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.LIST_NUMBERS_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            LIST_NUMBERS_STR_ID,
+            polyactions.LIST_NUMBERS_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_list_numbers.png"),
             fullUpdate=False,
@@ -505,73 +505,73 @@ class GuiController:
         toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self._headingMenu
 
-        self._application.actionController.getAction(HEADING_1_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.HEADING_1_STR_ID).setFunc(
             lambda param: self.turnText("<h1>", "</h1>")
         )
 
-        self._application.actionController.getAction(HEADING_2_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.HEADING_2_STR_ID).setFunc(
             lambda param: self.turnText("<h2>", "</h2>")
         )
 
-        self._application.actionController.getAction(HEADING_3_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.HEADING_3_STR_ID).setFunc(
             lambda param: self.turnText("<h3>", "</h3>")
         )
 
-        self._application.actionController.getAction(HEADING_4_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.HEADING_4_STR_ID).setFunc(
             lambda param: self.turnText("<h4>", "</h4>")
         )
 
-        self._application.actionController.getAction(HEADING_5_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.HEADING_5_STR_ID).setFunc(
             lambda param: self.turnText("<h5>", "</h5>")
         )
 
-        self._application.actionController.getAction(HEADING_6_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.HEADING_6_STR_ID).setFunc(
             lambda param: self.turnText("<h6>", "</h6>")
         )
 
-        self._application.actionController.appendMenuItem(HEADING_1_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.HEADING_1_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            HEADING_1_STR_ID,
+            polyactions.HEADING_1_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_1.png"),
             fullUpdate=False,
         )
 
-        self._application.actionController.appendMenuItem(HEADING_2_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.HEADING_2_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            HEADING_2_STR_ID,
+            polyactions.HEADING_2_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_2.png"),
             fullUpdate=False,
         )
 
-        self._application.actionController.appendMenuItem(HEADING_3_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.HEADING_3_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            HEADING_3_STR_ID,
+            polyactions.HEADING_3_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_3.png"),
             fullUpdate=False,
         )
 
-        self._application.actionController.appendMenuItem(HEADING_4_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.HEADING_4_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            HEADING_4_STR_ID,
+            polyactions.HEADING_4_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_4.png"),
             fullUpdate=False,
         )
 
-        self._application.actionController.appendMenuItem(HEADING_5_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.HEADING_5_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            HEADING_5_STR_ID,
+            polyactions.HEADING_5_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_5.png"),
             fullUpdate=False,
         )
 
-        self._application.actionController.appendMenuItem(HEADING_6_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.HEADING_6_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            HEADING_6_STR_ID,
+            polyactions.HEADING_6_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_6.png"),
             fullUpdate=False,
@@ -582,45 +582,45 @@ class GuiController:
         menu = self._formatMenu
 
         # Preformat
-        self._application.actionController.getAction(PREFORMAT_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.PREFORMAT_STR_ID).setFunc(
             lambda param: self.turnText("<pre>", "</pre>")
         )
-        self._application.actionController.appendMenuItem(PREFORMAT_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.PREFORMAT_STR_ID, menu)
 
         # Цитирование
-        self._application.actionController.getAction(QUOTE_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.QUOTE_STR_ID).setFunc(
             lambda param: self.turnText("<blockquote>", "</blockquote>")
         )
 
-        self._application.actionController.appendMenuItem(QUOTE_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.QUOTE_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            QUOTE_STR_ID,
+            polyactions.QUOTE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "quote.png"),
             fullUpdate=False,
         )
 
         # Mark
-        self._application.actionController.getAction(MARK_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.MARK_STR_ID).setFunc(
             lambda param: self.turnText("<mark>", "</mark>")
         )
 
-        self._application.actionController.appendMenuItem(MARK_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.MARK_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            MARK_STR_ID,
+            polyactions.MARK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "mark.png"),
             fullUpdate=False,
         )
 
         # Код
-        self._application.actionController.getAction(CODE_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.CODE_STR_ID).setFunc(
             lambda param: self.turnText("<code>", "</code>")
         )
 
-        self._application.actionController.appendMenuItem(CODE_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.CODE_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            CODE_STR_ID,
+            polyactions.CODE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "code.png"),
             fullUpdate=False,
@@ -634,80 +634,80 @@ class GuiController:
         menu = self._menu
 
         # Вставить картинку
-        self._application.actionController.getAction(IMAGE_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.IMAGE_STR_ID).setFunc(
             lambda param: self.turnText('<img src="', '"/>')
         )
 
-        self._application.actionController.appendMenuItem(IMAGE_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.IMAGE_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            IMAGE_STR_ID,
+            polyactions.IMAGE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "image.png"),
             fullUpdate=False,
         )
 
         # Вставить ссылку
-        self._application.actionController.getAction(LINK_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.LINK_STR_ID).setFunc(
             lambda param: insertLink(self._application)
         )
 
-        self._application.actionController.appendMenuItem(LINK_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.LINK_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            LINK_STR_ID,
+            polyactions.LINK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "link.png"),
             fullUpdate=False,
         )
 
         # Вставить якорь
-        self._application.actionController.getAction(ANCHOR_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.ANCHOR_STR_ID).setFunc(
             lambda param: self.turnText('<a name="', '"></a>')
         )
 
-        self._application.actionController.appendMenuItem(ANCHOR_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.ANCHOR_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            ANCHOR_STR_ID,
+            polyactions.ANCHOR_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "anchor.png"),
             fullUpdate=False,
         )
 
         # Вставить горизонтальную линию
-        self._application.actionController.getAction(HORLINE_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.HORLINE_STR_ID).setFunc(
             lambda param: self.replaceText("<hr>")
         )
 
-        self._application.actionController.appendMenuItem(HORLINE_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.HORLINE_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            HORLINE_STR_ID,
+            polyactions.HORLINE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_horizontalrule.png"),
             fullUpdate=False,
         )
 
         # Вставка разрыва страницы
-        self._application.actionController.getAction(LINE_BREAK_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.LINE_BREAK_STR_ID).setFunc(
             lambda param: self.replaceText("<br>\n")
         )
 
-        self._application.actionController.appendMenuItem(LINE_BREAK_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.LINE_BREAK_STR_ID, menu)
         self._application.actionController.appendToolbarButton(
-            LINE_BREAK_STR_ID,
+            polyactions.LINE_BREAK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "linebreak.png"),
             fullUpdate=False,
         )
 
         # Текущая дата
-        self._application.actionController.getAction(CURRENT_DATE).setFunc(
+        self._application.actionController.getAction(polyactions.CURRENT_DATE).setFunc(
             lambda param: insertCurrentDate(
                 self._application.mainWindow, self.codeEditor
             )
         )
 
-        self._application.actionController.appendMenuItem(CURRENT_DATE, menu)
+        self._application.actionController.appendMenuItem(polyactions.CURRENT_DATE, menu)
         self._application.actionController.appendToolbarButton(
-            CURRENT_DATE,
+            polyactions.CURRENT_DATE,
             toolbar,
             os.path.join(self.imagesDir, "date.png"),
             fullUpdate=False,
@@ -716,10 +716,10 @@ class GuiController:
         self._menu.AppendSeparator()
 
         # Преобразовать символы в их HTML-представление
-        self._application.actionController.getAction(HTML_ESCAPE_STR_ID).setFunc(
+        self._application.actionController.getAction(polyactions.HTML_ESCAPE_STR_ID).setFunc(
             lambda param: self.escapeHtml()
         )
-        self._application.actionController.appendMenuItem(HTML_ESCAPE_STR_ID, menu)
+        self._application.actionController.appendMenuItem(polyactions.HTML_ESCAPE_STR_ID, menu)
 
     def _addToolbarSeparator(self):
         toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
