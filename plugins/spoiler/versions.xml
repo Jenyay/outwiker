@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="1.7.1" date="">
+	<version number="1.7.1" date="2023-05-03">
 		<download href="https://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.7.1.zip">
 			<requirements>
 				<api>3.922</api>

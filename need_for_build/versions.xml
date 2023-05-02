@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.2.0.921" status="dev">
+    <version number="3.2.0.922" status="beta" date="2023-05-03">
         <changes>
+			<change>Update plugins API.</change>
         </changes>
 
         <changes lang="ru">
+			<change>Обновление API для плагинов.</change>
         </changes>
     </version>
 
