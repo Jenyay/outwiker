@@ -95,6 +95,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             'outwiker.api.app.tree',
             'outwiker.api.pages',
             'outwiker.api.pages.html',
+            'outwiker.api.pages.html.gui',
             'outwiker.api.pages.html.guitools',
             'outwiker.api.pages.html.actions',
             'outwiker.api.pages.wiki',
