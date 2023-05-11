@@ -6,12 +6,12 @@ import urllib
 from pathlib import Path
 
 import wx
-import wx.html2
 
 from outwiker.api.app.system import getOSName
 from outwiker.api.core.html import MyTemplate
 from outwiker.api.core.text import readTextFile
 from outwiker.api.gui.mainwindow import MainPane
+from outwiker.api.gui.controls import getHtmlRender
 
 from ..defines import KATEX_DIR_NAME, TOOLS_PANE_NAME
 from ..texconfig import TeXConfig
@@ -35,7 +35,7 @@ class ToolsPanel(wx.Panel):
         self.createGUI()
 
     def createGUI(self):
-        self._htmlRender = wx.html2.WebView.New(self)
+        self._htmlRender = getHtmlRender(self)
         self._htmlRender.Disable()
 
         mainSizer = wx.FlexGridSizer(cols=1)
@@ -70,7 +70,7 @@ class ToolsPanel(wx.Panel):
         )
         self._htmlRender.SetPage(html, path)
         if self._firstLoad and getOSName() == "windows":
-            self._htmlRender.Reload()
+            # self._htmlRender.Reload()
             self._firstLoad = False
 
     def _getHTML(self, equation: str, blockMode: bool):

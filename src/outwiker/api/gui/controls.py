@@ -6,3 +6,13 @@ from outwiker.gui.controls.texteditorbase import TextEditorBase
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
+
+from outwiker.core.system import getOS as _getOS
+
+
+def getHtmlRender(parent):
+    return _getOS().getHtmlRender(parent)
+
+
+def getHtmlRenderForPage(parent):
+    return _getOS().getHtmlRenderForPage(parent)
