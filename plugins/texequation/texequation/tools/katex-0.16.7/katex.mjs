@@ -737,49 +737,49 @@ function supportedCodepoint(codepoint) {
  * It's a storehouse of path geometry for SVG images.
  */
 // In all paths below, the viewBox-to-em scale is 1000:1.
-var hLinePad = 80; // padding above a sqrt viniculum. Prevents image cropping.
-// The viniculum of a \sqrt can be made thicker by a KaTeX rendering option.
-// Think of variable extraViniculum as two detours in the SVG path.
-// The detour begins at the lower left of the area labeled extraViniculum below.
-// The detour proceeds one extraViniculum distance up and slightly to the right,
-// displacing the radiused corner between surd and viniculum. The radius is
+var hLinePad = 80; // padding above a sqrt vinculum. Prevents image cropping.
+// The vinculum of a \sqrt can be made thicker by a KaTeX rendering option.
+// Think of variable extraVinculum as two detours in the SVG path.
+// The detour begins at the lower left of the area labeled extraVinculum below.
+// The detour proceeds one extraVinculum distance up and slightly to the right,
+// displacing the radiused corner between surd and vinculum. The radius is
 // traversed as usual, then the detour resumes. It goes right, to the end of
-// the very long viniculumn, then down one extraViniculum distance,
+// the very long vinculum, then down one extraVinculum distance,
 // after which it resumes regular path geometry for the radical.
 
-/*                                                  viniculum
+/*                                                  vinculum
                                                    /
-         /▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒←extraViniculum
-        / █████████████████████←0.04em (40 unit) std viniculum thickness
+         /▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒←extraVinculum
+        / █████████████████████←0.04em (40 unit) std vinculum thickness
        / /
       / /
      / /\
     / / surd
 */
 
-var sqrtMain = function sqrtMain(extraViniculum, hLinePad) {
+var sqrtMain = function sqrtMain(extraVinculum, hLinePad) {
   // sqrtMain path geometry is from glyph U221A in the font KaTeX Main
-  return "M95," + (622 + extraViniculum + hLinePad) + "\nc-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14\nc0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54\nc44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10\ns173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429\nc69,-144,104.5,-217.7,106.5,-221\nl" + extraViniculum / 2.075 + " -" + extraViniculum + "\nc5.3,-9.3,12,-14,20,-14\nH400000v" + (40 + extraViniculum) + "H845.2724\ns-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7\nc-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z\nM" + (834 + extraViniculum) + " " + hLinePad + "h400000v" + (40 + extraViniculum) + "h-400000z";
+  return "M95," + (622 + extraVinculum + hLinePad) + "\nc-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14\nc0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54\nc44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10\ns173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429\nc69,-144,104.5,-217.7,106.5,-221\nl" + extraVinculum / 2.075 + " -" + extraVinculum + "\nc5.3,-9.3,12,-14,20,-14\nH400000v" + (40 + extraVinculum) + "H845.2724\ns-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7\nc-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z\nM" + (834 + extraVinculum) + " " + hLinePad + "h400000v" + (40 + extraVinculum) + "h-400000z";
 };
 
-var sqrtSize1 = function sqrtSize1(extraViniculum, hLinePad) {
+var sqrtSize1 = function sqrtSize1(extraVinculum, hLinePad) {
   // size1 is from glyph U221A in the font KaTeX_Size1-Regular
-  return "M263," + (601 + extraViniculum + hLinePad) + "c0.7,0,18,39.7,52,119\nc34,79.3,68.167,158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120\nc340,-704.7,510.7,-1060.3,512,-1067\nl" + extraViniculum / 2.084 + " -" + extraViniculum + "\nc4.7,-7.3,11,-11,19,-11\nH40000v" + (40 + extraViniculum) + "H1012.3\ns-271.3,567,-271.3,567c-38.7,80.7,-84,175,-136,283c-52,108,-89.167,185.3,-111.5,232\nc-22.3,46.7,-33.8,70.3,-34.5,71c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1\ns-109,-253,-109,-253c-72.7,-168,-109.3,-252,-110,-252c-10.7,8,-22,16.7,-34,26\nc-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26s76,-59,76,-59s76,-60,76,-60z\nM" + (1001 + extraViniculum) + " " + hLinePad + "h400000v" + (40 + extraViniculum) + "h-400000z";
+  return "M263," + (601 + extraVinculum + hLinePad) + "c0.7,0,18,39.7,52,119\nc34,79.3,68.167,158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120\nc340,-704.7,510.7,-1060.3,512,-1067\nl" + extraVinculum / 2.084 + " -" + extraVinculum + "\nc4.7,-7.3,11,-11,19,-11\nH40000v" + (40 + extraVinculum) + "H1012.3\ns-271.3,567,-271.3,567c-38.7,80.7,-84,175,-136,283c-52,108,-89.167,185.3,-111.5,232\nc-22.3,46.7,-33.8,70.3,-34.5,71c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1\ns-109,-253,-109,-253c-72.7,-168,-109.3,-252,-110,-252c-10.7,8,-22,16.7,-34,26\nc-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26s76,-59,76,-59s76,-60,76,-60z\nM" + (1001 + extraVinculum) + " " + hLinePad + "h400000v" + (40 + extraVinculum) + "h-400000z";
 };
 
-var sqrtSize2 = function sqrtSize2(extraViniculum, hLinePad) {
+var sqrtSize2 = function sqrtSize2(extraVinculum, hLinePad) {
   // size2 is from glyph U221A in the font KaTeX_Size2-Regular
-  return "M983 " + (10 + extraViniculum + hLinePad) + "\nl" + extraViniculum / 3.13 + " -" + extraViniculum + "\nc4,-6.7,10,-10,18,-10 H400000v" + (40 + extraViniculum) + "\nH1013.1s-83.4,268,-264.1,840c-180.7,572,-277,876.3,-289,913c-4.7,4.7,-12.7,7,-24,7\ns-12,0,-12,0c-1.3,-3.3,-3.7,-11.7,-7,-25c-35.3,-125.3,-106.7,-373.3,-214,-744\nc-10,12,-21,25,-33,39s-32,39,-32,39c-6,-5.3,-15,-14,-27,-26s25,-30,25,-30\nc26.7,-32.7,52,-63,76,-91s52,-60,52,-60s208,722,208,722\nc56,-175.3,126.3,-397.3,211,-666c84.7,-268.7,153.8,-488.2,207.5,-658.5\nc53.7,-170.3,84.5,-266.8,92.5,-289.5z\nM" + (1001 + extraViniculum) + " " + hLinePad + "h400000v" + (40 + extraViniculum) + "h-400000z";
+  return "M983 " + (10 + extraVinculum + hLinePad) + "\nl" + extraVinculum / 3.13 + " -" + extraVinculum + "\nc4,-6.7,10,-10,18,-10 H400000v" + (40 + extraVinculum) + "\nH1013.1s-83.4,268,-264.1,840c-180.7,572,-277,876.3,-289,913c-4.7,4.7,-12.7,7,-24,7\ns-12,0,-12,0c-1.3,-3.3,-3.7,-11.7,-7,-25c-35.3,-125.3,-106.7,-373.3,-214,-744\nc-10,12,-21,25,-33,39s-32,39,-32,39c-6,-5.3,-15,-14,-27,-26s25,-30,25,-30\nc26.7,-32.7,52,-63,76,-91s52,-60,52,-60s208,722,208,722\nc56,-175.3,126.3,-397.3,211,-666c84.7,-268.7,153.8,-488.2,207.5,-658.5\nc53.7,-170.3,84.5,-266.8,92.5,-289.5z\nM" + (1001 + extraVinculum) + " " + hLinePad + "h400000v" + (40 + extraVinculum) + "h-400000z";
 };
 
-var sqrtSize3 = function sqrtSize3(extraViniculum, hLinePad) {
+var sqrtSize3 = function sqrtSize3(extraVinculum, hLinePad) {
   // size3 is from glyph U221A in the font KaTeX_Size3-Regular
-  return "M424," + (2398 + extraViniculum + hLinePad) + "\nc-1.3,-0.7,-38.5,-172,-111.5,-514c-73,-342,-109.8,-513.3,-110.5,-514\nc0,-2,-10.7,14.3,-32,49c-4.7,7.3,-9.8,15.7,-15.5,25c-5.7,9.3,-9.8,16,-12.5,20\ns-5,7,-5,7c-4,-3.3,-8.3,-7.7,-13,-13s-13,-13,-13,-13s76,-122,76,-122s77,-121,77,-121\ns209,968,209,968c0,-2,84.7,-361.7,254,-1079c169.3,-717.3,254.7,-1077.7,256,-1081\nl" + extraViniculum / 4.223 + " -" + extraViniculum + "c4,-6.7,10,-10,18,-10 H400000\nv" + (40 + extraViniculum) + "H1014.6\ns-87.3,378.7,-272.6,1166c-185.3,787.3,-279.3,1182.3,-282,1185\nc-2,6,-10,9,-24,9\nc-8,0,-12,-0.7,-12,-2z M" + (1001 + extraViniculum) + " " + hLinePad + "\nh400000v" + (40 + extraViniculum) + "h-400000z";
+  return "M424," + (2398 + extraVinculum + hLinePad) + "\nc-1.3,-0.7,-38.5,-172,-111.5,-514c-73,-342,-109.8,-513.3,-110.5,-514\nc0,-2,-10.7,14.3,-32,49c-4.7,7.3,-9.8,15.7,-15.5,25c-5.7,9.3,-9.8,16,-12.5,20\ns-5,7,-5,7c-4,-3.3,-8.3,-7.7,-13,-13s-13,-13,-13,-13s76,-122,76,-122s77,-121,77,-121\ns209,968,209,968c0,-2,84.7,-361.7,254,-1079c169.3,-717.3,254.7,-1077.7,256,-1081\nl" + extraVinculum / 4.223 + " -" + extraVinculum + "c4,-6.7,10,-10,18,-10 H400000\nv" + (40 + extraVinculum) + "H1014.6\ns-87.3,378.7,-272.6,1166c-185.3,787.3,-279.3,1182.3,-282,1185\nc-2,6,-10,9,-24,9\nc-8,0,-12,-0.7,-12,-2z M" + (1001 + extraVinculum) + " " + hLinePad + "\nh400000v" + (40 + extraVinculum) + "h-400000z";
 };
 
-var sqrtSize4 = function sqrtSize4(extraViniculum, hLinePad) {
+var sqrtSize4 = function sqrtSize4(extraVinculum, hLinePad) {
   // size4 is from glyph U221A in the font KaTeX_Size4-Regular
-  return "M473," + (2713 + extraViniculum + hLinePad) + "\nc339.3,-1799.3,509.3,-2700,510,-2702 l" + extraViniculum / 5.298 + " -" + extraViniculum + "\nc3.3,-7.3,9.3,-11,18,-11 H400000v" + (40 + extraViniculum) + "H1017.7\ns-90.5,478,-276.2,1466c-185.7,988,-279.5,1483,-281.5,1485c-2,6,-10,9,-24,9\nc-8,0,-12,-0.7,-12,-2c0,-1.3,-5.3,-32,-16,-92c-50.7,-293.3,-119.7,-693.3,-207,-1200\nc0,-1.3,-5.3,8.7,-16,30c-10.7,21.3,-21.3,42.7,-32,64s-16,33,-16,33s-26,-26,-26,-26\ns76,-153,76,-153s77,-151,77,-151c0.7,0.7,35.7,202,105,604c67.3,400.7,102,602.7,104,\n606zM" + (1001 + extraViniculum) + " " + hLinePad + "h400000v" + (40 + extraViniculum) + "H1017.7z";
+  return "M473," + (2713 + extraVinculum + hLinePad) + "\nc339.3,-1799.3,509.3,-2700,510,-2702 l" + extraVinculum / 5.298 + " -" + extraVinculum + "\nc3.3,-7.3,9.3,-11,18,-11 H400000v" + (40 + extraVinculum) + "H1017.7\ns-90.5,478,-276.2,1466c-185.7,988,-279.5,1483,-281.5,1485c-2,6,-10,9,-24,9\nc-8,0,-12,-0.7,-12,-2c0,-1.3,-5.3,-32,-16,-92c-50.7,-293.3,-119.7,-693.3,-207,-1200\nc0,-1.3,-5.3,8.7,-16,30c-10.7,21.3,-21.3,42.7,-32,64s-16,33,-16,33s-26,-26,-26,-26\ns76,-153,76,-153s77,-151,77,-151c0.7,0.7,35.7,202,105,604c67.3,400.7,102,602.7,104,\n606zM" + (1001 + extraVinculum) + " " + hLinePad + "h400000v" + (40 + extraVinculum) + "H1017.7z";
 };
 
 var phasePath = function phasePath(y) {
@@ -788,43 +788,43 @@ var phasePath = function phasePath(y) {
   return "M400000 " + y + " H0 L" + x + " 0 l65 45 L145 " + (y - 80) + " H400000z";
 };
 
-var sqrtTall = function sqrtTall(extraViniculum, hLinePad, viewBoxHeight) {
+var sqrtTall = function sqrtTall(extraVinculum, hLinePad, viewBoxHeight) {
   // sqrtTall is from glyph U23B7 in the font KaTeX_Size4-Regular
-  // One path edge has a variable length. It runs vertically from the viniculumn
-  // to a point near (14 units) the bottom of the surd. The viniculum
+  // One path edge has a variable length. It runs vertically from the vinculum
+  // to a point near (14 units) the bottom of the surd. The vinculum
   // is normally 40 units thick. So the length of the line in question is:
-  var vertSegment = viewBoxHeight - 54 - hLinePad - extraViniculum;
-  return "M702 " + (extraViniculum + hLinePad) + "H400000" + (40 + extraViniculum) + "\nH742v" + vertSegment + "l-4 4-4 4c-.667.7 -2 1.5-4 2.5s-4.167 1.833-6.5 2.5-5.5 1-9.5 1\nh-12l-28-84c-16.667-52-96.667 -294.333-240-727l-212 -643 -85 170\nc-4-3.333-8.333-7.667-13 -13l-13-13l77-155 77-156c66 199.333 139 419.667\n219 661 l218 661zM702 " + hLinePad + "H400000v" + (40 + extraViniculum) + "H742z";
+  var vertSegment = viewBoxHeight - 54 - hLinePad - extraVinculum;
+  return "M702 " + (extraVinculum + hLinePad) + "H400000" + (40 + extraVinculum) + "\nH742v" + vertSegment + "l-4 4-4 4c-.667.7 -2 1.5-4 2.5s-4.167 1.833-6.5 2.5-5.5 1-9.5 1\nh-12l-28-84c-16.667-52-96.667 -294.333-240-727l-212 -643 -85 170\nc-4-3.333-8.333-7.667-13 -13l-13-13l77-155 77-156c66 199.333 139 419.667\n219 661 l218 661zM702 " + hLinePad + "H400000v" + (40 + extraVinculum) + "H742z";
 };
 
-var sqrtPath = function sqrtPath(size, extraViniculum, viewBoxHeight) {
-  extraViniculum = 1000 * extraViniculum; // Convert from document ems to viewBox.
+var sqrtPath = function sqrtPath(size, extraVinculum, viewBoxHeight) {
+  extraVinculum = 1000 * extraVinculum; // Convert from document ems to viewBox.
 
   var path = "";
 
   switch (size) {
     case "sqrtMain":
-      path = sqrtMain(extraViniculum, hLinePad);
+      path = sqrtMain(extraVinculum, hLinePad);
       break;
 
     case "sqrtSize1":
-      path = sqrtSize1(extraViniculum, hLinePad);
+      path = sqrtSize1(extraVinculum, hLinePad);
       break;
 
     case "sqrtSize2":
-      path = sqrtSize2(extraViniculum, hLinePad);
+      path = sqrtSize2(extraVinculum, hLinePad);
       break;
 
     case "sqrtSize3":
-      path = sqrtSize3(extraViniculum, hLinePad);
+      path = sqrtSize3(extraVinculum, hLinePad);
       break;
 
     case "sqrtSize4":
-      path = sqrtSize4(extraViniculum, hLinePad);
+      path = sqrtSize4(extraVinculum, hLinePad);
       break;
 
     case "sqrtTall":
-      path = sqrtTall(extraViniculum, hLinePad, viewBoxHeight);
+      path = sqrtTall(extraVinculum, hLinePad, viewBoxHeight);
   }
 
   return path;
@@ -930,7 +930,7 @@ var path = {
   widecheck4: "M1181,340h2l1171,-296c6,0,10,-5,10,-11l-2,-23c-1,-6,-5,-10,\n-11,-10h-1l-1168,273l-1167,-273h-1c-6,0,-10,4,-11,10l-2,23c-1,6,4,11,10,11z",
   // The next ten paths support reaction arrows from the mhchem package.
   // Arrows for \ce{<-->} are offset from xAxis by 0.22ex, per mhchem in LaTeX
-  // baraboveleftarrow is mostly from from glyph U+2190 in font KaTeX Main
+  // baraboveleftarrow is mostly from glyph U+2190 in font KaTeX Main
   baraboveleftarrow: "M400000 620h-399890l3 -3c68.7 -52.7 113.7 -120 135 -202\nc4 -14.7 6 -23 6 -25c0 -7.3 -7 -11 -21 -11c-8 0 -13.2 0.8 -15.5 2.5\nc-2.3 1.7 -4.2 5.8 -5.5 12.5c-1.3 4.7 -2.7 10.3 -4 17c-12 48.7 -34.8 92 -68.5 130\ns-74.2 66.3 -121.5 85c-10 4 -16 7.7 -18 11c0 8.7 6 14.3 18 17c47.3 18.7 87.8 47\n121.5 85s56.5 81.3 68.5 130c0.7 2 1.3 5 2 9s1.2 6.7 1.5 8c0.3 1.3 1 3.3 2 6\ns2.2 4.5 3.5 5.5c1.3 1 3.3 1.8 6 2.5s6 1 10 1c14 0 21 -3.7 21 -11\nc0 -2 -2 -10.3 -6 -25c-20 -79.3 -65 -146.7 -135 -202l-3 -3h399890z\nM100 620v40h399900v-40z M0 241v40h399900v-40zM0 241v40h399900v-40z",
   // rightarrowabovebar is mostly from glyph U+2192, KaTeX Main
   rightarrowabovebar: "M0 241v40h399891c-47.3 35.3-84 78-110 128-16.7 32\n-27.7 63.7-33 95 0 1.3-.2 2.7-.5 4-.3 1.3-.5 2.3-.5 3 0 7.3 6.7 11 20 11 8 0\n13.2-.8 15.5-2.5 2.3-1.7 4.2-5.5 5.5-11.5 2-13.3 5.7-27 11-41 14.7-44.7 39\n-84.5 73-119.5s73.7-60.2 119-75.5c6-2 9-5.7 9-11s-3-9-9-11c-45.3-15.3-85-40.5\n-119-75.5s-58.3-74.8-73-119.5c-4.7-14-8.3-27.3-11-40-1.3-6.7-3.2-10.8-5.5\n-12.5-2.3-1.7-7.5-2.5-15.5-2.5-14 0-21 3.7-21 11 0 2 2 10.3 6 25 20.7 83.3 67\n151.7 139 205zm96 379h399894v40H0zm0 0h399904v40H0z",
@@ -3133,9 +3133,9 @@ var fontMetricsData = {
 // In TeX, there are actually three sets of dimensions, one for each of
 // textstyle (size index 5 and higher: >=9pt), scriptstyle (size index 3 and 4:
 // 7-8pt), and scriptscriptstyle (size index 1 and 2: 5-6pt).  These are
-// provided in the the arrays below, in that order.
+// provided in the arrays below, in that order.
 //
-// The font metrics are stored in fonts cmsy10, cmsy7, and cmsy5 respsectively.
+// The font metrics are stored in fonts cmsy10, cmsy7, and cmsy5 respectively.
 // This was determined by running the following script:
 //
 //     latex -interaction=nonstopmode \
@@ -3145,7 +3145,7 @@ var fontMetricsData = {
 //     '\expandafter\show\the\scriptscriptfont2' \
 //     '\stop'
 //
-// The metrics themselves were retreived using the following commands:
+// The metrics themselves were retrieved using the following commands:
 //
 //     tftopl cmsy10
 //     tftopl cmsy7
@@ -3352,7 +3352,7 @@ function getCharacterMetrics(character, font, mode) {
     // So if the character is in a script we support but we
     // don't have metrics for it, just use the metrics for
     // the Latin capital letter M. This is close enough because
-    // we (currently) only care about the height of the glpyh
+    // we (currently) only care about the height of the glyph
     // not its width.
     if (supportedCodepoint(ch)) {
       metrics = fontMetricsData[font][77]; // 77 is the charcode for 'M'
@@ -6563,7 +6563,7 @@ function buildHTML(tree, options) {
  * since we're mainly using MathML to improve accessibility, we don't manage
  * any of the styling state that the plain DOM nodes do.
  *
- * The `toNode` and `toMarkup` functions work simlarly to how they do in
+ * The `toNode` and `toMarkup` functions work similarly to how they do in
  * domTree.js, creating namespaced DOM nodes and HTML text markup respectively.
  */
 function newDocumentFragment(children) {
@@ -6694,7 +6694,7 @@ class TextNode {
   }
   /**
    * Converts the text node into a string
-   * (representing the text iteself).
+   * (representing the text itself).
    */
 
 
@@ -6789,7 +6789,7 @@ var mathMLTree = {
 };
 
 /**
- * This file converts a parse tree into a cooresponding MathML tree. The main
+ * This file converts a parse tree into a corresponding MathML tree. The main
  * entry point is the `buildMathML` function, which takes a parse tree from the
  * parser.
  */
@@ -6864,7 +6864,7 @@ var getVariant = function getVariant(group, options) {
   } else if (font === "mathfrak") {
     return "fraktur";
   } else if (font === "mathscr" || font === "mathcal") {
-    // MathML makes no distinction between script and caligrahpic
+    // MathML makes no distinction between script and calligraphic
     return "script";
   } else if (font === "mathsf") {
     return "sans-serif";
@@ -7780,7 +7780,7 @@ defineFunction({
   },
 
   // Flow is unable to correctly infer the type of `group`, even though it's
-  // unamibiguously determined from the passed-in `type` above.
+  // unambiguously determined from the passed-in `type` above.
   htmlBuilder(group, options) {
     var style = options.style; // Build the argument groups in the appropriate style.
     // Ref: amsmath.dtx:   \hbox{$\scriptstyle\mkern#3mu{#6}\mkern#4mu$}%
@@ -8549,8 +8549,7 @@ defineFunction({
   names: ["\\\\"],
   props: {
     numArgs: 0,
-    numOptionalArgs: 1,
-    argTypes: ["size"],
+    numOptionalArgs: 0,
     allowedInText: true
   },
 
@@ -8558,7 +8557,7 @@ defineFunction({
     var {
       parser
     } = _ref;
-    var size = optArgs[0];
+    var size = parser.gullet.future().text === "[" ? parser.parseSizeGroup(true) : null;
     var newLine = !parser.settings.displayMode || !parser.settings.useStrictBehavior("newLineInDisplayMode", "In LaTeX, \\\\ or \\newline " + "does nothing in display mode");
     return {
       type: "cr",
@@ -9143,7 +9142,7 @@ var makeStackedDelim = function makeStackedDelim(delim, heightTotal, center, opt
     var middleMetrics = getMetrics(middle, font, mode);
     middleHeightTotal = middleMetrics.height + middleMetrics.depth;
     middleFactor = 2; // repeat symmetrically above and below middle
-  } // Calcuate the minimal height that the delimiter can have.
+  } // Calculate the minimal height that the delimiter can have.
   // It is at least the size of the top, bottom, and optional middle combined.
 
 
@@ -9227,7 +9226,7 @@ var makeStackedDelim = function makeStackedDelim(delim, heightTotal, center, opt
     children: stack
   }, newOptions);
   return styleWrap(buildCommon.makeSpan(["delimsizing", "mult"], [inner], newOptions), Style$1.TEXT, options, classes);
-}; // All surds have 0.08em padding above the viniculum inside the SVG.
+}; // All surds have 0.08em padding above the vinculum inside the SVG.
 // That keeps browser span height rounding error from pinching the line.
 
 
@@ -9235,8 +9234,8 @@ var vbPad = 80; // padding above the surd, measured inside the viewBox.
 
 var emPad = 0.08; // padding, in ems, measured in the document.
 
-var sqrtSvg = function sqrtSvg(sqrtName, height, viewBoxHeight, extraViniculum, options) {
-  var path = sqrtPath(sqrtName, extraViniculum, viewBoxHeight);
+var sqrtSvg = function sqrtSvg(sqrtName, height, viewBoxHeight, extraVinculum, options) {
+  var path = sqrtPath(sqrtName, extraVinculum, viewBoxHeight);
   var pathNode = new PathNode(sqrtName, path);
   var svg = new SvgNode([pathNode], {
     // Note: 1000:1 ratio of viewBox to document em width.
@@ -9259,10 +9258,10 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
 
   var delim = traverseSequence("\\surd", height * newOptions.sizeMultiplier, stackLargeDelimiterSequence, newOptions);
   var sizeMultiplier = newOptions.sizeMultiplier; // default
-  // The standard sqrt SVGs each have a 0.04em thick viniculum.
-  // If Settings.minRuleThickness is larger than that, we add extraViniculum.
+  // The standard sqrt SVGs each have a 0.04em thick vinculum.
+  // If Settings.minRuleThickness is larger than that, we add extraVinculum.
 
-  var extraViniculum = Math.max(0, options.minRuleThickness - options.fontMetrics().sqrtRuleThickness); // Create a span containing an SVG image of a sqrt symbol.
+  var extraVinculum = Math.max(0, options.minRuleThickness - options.fontMetrics().sqrtRuleThickness); // Create a span containing an SVG image of a sqrt symbol.
 
   var span;
   var spanHeight = 0;
@@ -9270,14 +9269,14 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
   var viewBoxHeight = 0;
   var advanceWidth; // We create viewBoxes with 80 units of "padding" above each surd.
   // Then browser rounding error on the parent span height will not
-  // encroach on the ink of the viniculum. But that padding is not
+  // encroach on the ink of the vinculum. But that padding is not
   // included in the TeX-like `height` used for calculation of
   // vertical alignment. So texHeight = span.height < span.style.height.
 
   if (delim.type === "small") {
     // Get an SVG that is derived from glyph U+221A in font KaTeX-Main.
     // 1000 unit normal glyph height.
-    viewBoxHeight = 1000 + 1000 * extraViniculum + vbPad;
+    viewBoxHeight = 1000 + 1000 * extraVinculum + vbPad;
 
     if (height < 1.0) {
       sizeMultiplier = 1.0; // mimic a \textfont radical
@@ -9285,26 +9284,26 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
       sizeMultiplier = 0.7; // mimic a \scriptfont radical
     }
 
-    spanHeight = (1.0 + extraViniculum + emPad) / sizeMultiplier;
-    texHeight = (1.00 + extraViniculum) / sizeMultiplier;
-    span = sqrtSvg("sqrtMain", spanHeight, viewBoxHeight, extraViniculum, options);
+    spanHeight = (1.0 + extraVinculum + emPad) / sizeMultiplier;
+    texHeight = (1.00 + extraVinculum) / sizeMultiplier;
+    span = sqrtSvg("sqrtMain", spanHeight, viewBoxHeight, extraVinculum, options);
     span.style.minWidth = "0.853em";
     advanceWidth = 0.833 / sizeMultiplier; // from the font.
   } else if (delim.type === "large") {
     // These SVGs come from fonts: KaTeX_Size1, _Size2, etc.
     viewBoxHeight = (1000 + vbPad) * sizeToMaxHeight[delim.size];
-    texHeight = (sizeToMaxHeight[delim.size] + extraViniculum) / sizeMultiplier;
-    spanHeight = (sizeToMaxHeight[delim.size] + extraViniculum + emPad) / sizeMultiplier;
-    span = sqrtSvg("sqrtSize" + delim.size, spanHeight, viewBoxHeight, extraViniculum, options);
+    texHeight = (sizeToMaxHeight[delim.size] + extraVinculum) / sizeMultiplier;
+    spanHeight = (sizeToMaxHeight[delim.size] + extraVinculum + emPad) / sizeMultiplier;
+    span = sqrtSvg("sqrtSize" + delim.size, spanHeight, viewBoxHeight, extraVinculum, options);
     span.style.minWidth = "1.02em";
     advanceWidth = 1.0 / sizeMultiplier; // 1.0 from the font.
   } else {
     // Tall sqrt. In TeX, this would be stacked using multiple glyphs.
     // We'll use a single SVG to accomplish the same thing.
-    spanHeight = height + extraViniculum + emPad;
-    texHeight = height + extraViniculum;
-    viewBoxHeight = Math.floor(1000 * height + extraViniculum) + vbPad;
-    span = sqrtSvg("sqrtTall", spanHeight, viewBoxHeight, extraViniculum, options);
+    spanHeight = height + extraVinculum + emPad;
+    texHeight = height + extraVinculum;
+    viewBoxHeight = Math.floor(1000 * height + extraVinculum) + vbPad;
+    span = sqrtSvg("sqrtTall", spanHeight, viewBoxHeight, extraVinculum, options);
     span.style.minWidth = "0.742em";
     advanceWidth = 1.056;
   }
@@ -9318,7 +9317,7 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
     // This actually should depend on the chosen font -- e.g. \boldmath
     // should use the thicker surd symbols from e.g. KaTeX_Main-Bold, and
     // have thicker rules.
-    ruleWidth: (options.fontMetrics().sqrtRuleThickness + extraViniculum) * sizeMultiplier
+    ruleWidth: (options.fontMetrics().sqrtRuleThickness + extraVinculum) * sizeMultiplier
   };
 }; // There are three kinds of delimiters, delimiters that stack when they become
 // too large
@@ -9885,7 +9884,7 @@ defineFunction({
     return middleDelim;
   },
   mathmlBuilder: (group, options) => {
-    // A Firefox \middle will strech a character vertically only if it
+    // A Firefox \middle will stretch a character vertically only if it
     // is in the fence part of the operator dictionary at:
     // https://www.w3.org/TR/MathML3/appendixc.html.
     // So we need to avoid U+2223 and use plain "|" instead.
@@ -10854,8 +10853,8 @@ var mathmlBuilder$5 = function mathmlBuilder(group, options) {
   // LaTeX \arraystretch multiplies the row baseline-to-baseline distance.
   // We simulate this by adding (arraystretch - 1)em to the gap. This
   // does a reasonable job of adjusting arrays containing 1 em tall content.
-  // The 0.16 and 0.09 values are found emprically. They produce an array
-  // similar to LaTeX and in which content does not interfere with \hines.
+  // The 0.16 and 0.09 values are found empirically. They produce an array
+  // similar to LaTeX and in which content does not interfere with \hlines.
 
   var gap = group.arraystretch === 0.5 ? 0.1 // {smallmatrix}, {subarray}
   : 0.16 + group.arraystretch - 1 + (group.addJot ? 0.09 : 0);
@@ -16317,15 +16316,15 @@ class MacroExpander {
    * Expand the next token only once if possible.
    *
    * If the token is expanded, the resulting tokens will be pushed onto
-   * the stack in reverse order and will be returned as an array,
-   * also in reverse order.
+   * the stack in reverse order, and the number of such tokens will be
+   * returned.  This number might be zero or positive.
    *
-   * If not, the next token will be returned without removing it
-   * from the stack.  This case can be detected by a `Token` return value
-   * instead of an `Array` return value.
+   * If not, the return value is `false`, and the next token remains at the
+   * top of the stack.
    *
    * In either case, the next token will be on the top of the stack,
-   * or the stack will be empty.
+   * or the stack will be empty (in case of empty expansion
+   * and no other tokens).
    *
    * Used to implement `expandAfterFuture` and `expandNextToken`.
    *
@@ -16345,7 +16344,7 @@ class MacroExpander {
       }
 
       this.pushToken(topToken);
-      return topToken;
+      return false;
     }
 
     this.expansionCount++;
@@ -16386,7 +16385,7 @@ class MacroExpander {
 
 
     this.pushTokens(tokens);
-    return tokens;
+    return tokens.length;
   }
   /**
    * Expand the next token only once (if possible), and return the resulting
@@ -16407,16 +16406,16 @@ class MacroExpander {
 
   expandNextToken() {
     for (;;) {
-      var expanded = this.expandOnce(); // expandOnce returns Token if and only if it's fully expanded.
-
-      if (expanded instanceof Token) {
-        // the token after \noexpand is interpreted as if its meaning
+      if (this.expandOnce() === false) {
+        // fully expanded
+        var token = this.stack.pop(); // the token after \noexpand is interpreted as if its meaning
         // were ‘\relax’
-        if (expanded.treatAsRelax) {
-          expanded.text = "\\relax";
+
+        if (token.treatAsRelax) {
+          token.text = "\\relax";
         }
 
-        return this.stack.pop(); // === expanded
+        return token;
       }
     } // Flow unable to figure out that this pathway is impossible.
     // https://github.com/facebook/flow/issues/4808
@@ -16446,17 +16445,18 @@ class MacroExpander {
     this.pushTokens(tokens);
 
     while (this.stack.length > oldStackLength) {
-      var expanded = this.expandOnce(true); // expand only expandable tokens
-      // expandOnce returns Token if and only if it's fully expanded.
+      // Expand only expandable tokens
+      if (this.expandOnce(true) === false) {
+        // fully expanded
+        var token = this.stack.pop();
 
-      if (expanded instanceof Token) {
-        if (expanded.treatAsRelax) {
+        if (token.treatAsRelax) {
           // the expansion of \noexpand is the token itself
-          expanded.noexpand = false;
-          expanded.treatAsRelax = false;
+          token.noexpand = false;
+          token.treatAsRelax = false;
         }
 
-        output.push(this.stack.pop());
+        output.push(token);
       }
     }
 
@@ -17215,7 +17215,7 @@ class Parser {
    * Parses an "expression", which is a list of atoms.
    *
    * `breakOnInfix`: Should the parsing stop when we hit infix nodes? This
-   *                 happens when functions have higher precendence han infix
+   *                 happens when functions have higher precedence han infix
    *                 nodes in implicit parses.
    *
    * `breakOnTokenText`: The text of the token that the expression should end
@@ -18297,7 +18297,7 @@ var katex = {
   /**
    * Current KaTeX version
    */
-  version: "0.16.3",
+  version: "0.16.7",
 
   /**
    * Renders the given LaTeX into an HTML+MathML combination, and adds
@@ -18361,6 +18361,13 @@ var katex = {
    * adds a new symbol to builtin symbols table
    */
   __defineSymbol: defineSymbol,
+
+  /**
+   * adds a new function to builtin function list,
+   * which directly produce parse tree elements
+   * and have their own html/mathml builders
+   */
+  __defineFunction: defineFunction,
 
   /**
    * adds a new macro to builtin macro list
