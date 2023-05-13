@@ -114,6 +114,9 @@ class HtmlRenderBase(wx.Panel):
 
         return link
 
+    def Reload(self):
+        self._render.Reload()
+
 
 class HTMLRenderForPageMixin:
     def getClickParams(self,
