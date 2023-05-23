@@ -23,27 +23,36 @@ import outwiker.core.events
 
 class WikiPageController:
     """GUI controller for wiki page"""
+
     def __init__(self, application):
         self._application = application
         self._colorizerController = WikiColorizerController(
-            self._application,
-            WikiWikiPage.getTypeString())
+            self._application, WikiWikiPage.getTypeString()
+        )
 
     def initialize(self):
-        self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
+        self._application.onPageDialogPageTypeChanged += (
+            self.__onPageDialogPageTypeChanged
+        )
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
-        self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageDialogPageFactoriesNeeded += (
+            self.__onPageDialogPageFactoriesNeeded
+        )
         self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
         self._application.onTextEditorKeyDown += self.__onTextEditorKeyDown
 
     def clear(self):
-        self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
+        self._application.onPageDialogPageTypeChanged -= (
+            self.__onPageDialogPageTypeChanged
+        )
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
-        self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageDialogPageFactoriesNeeded -= (
+            self.__onPageDialogPageFactoriesNeeded
+        )
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
         self._application.onTextEditorKeyDown -= self.__onTextEditorKeyDown
         if not self._application.testMode:
@@ -55,9 +64,9 @@ class WikiPageController:
 
     def __onPreferencesDialogCreate(self, dialog):
         panel = WikiPrefGeneralPanel(dialog.treeBook)
-        prefPanelInfo = PreferencePanelInfo(panel, _(u"General"))
+        prefPanelInfo = PreferencePanelInfo(panel, _("General"))
 
-        dialog.appendPreferenceGroup(_(u'Wiki Page'), [prefPanelInfo])
+        dialog.appendPreferenceGroup(_("Wiki Page"), [prefPanelInfo])
 
     @pagetype(WikiWikiPage)
     def __onPageViewCreate(self, page):
@@ -74,9 +83,11 @@ class WikiPageController:
         params.addPageFactory(WikiPageFactory())
 
     def __onPageUpdateNeeded(self, page, params):
-        if (page is None or
-                page.getTypeString() != WikiWikiPage.getTypeString() or
-                page.readonly):
+        if (
+            page is None
+            or page.getTypeString() != WikiWikiPage.getTypeString()
+            or page.readonly
+        ):
             return
 
         if not params.allowCache:
@@ -84,9 +95,11 @@ class WikiPageController:
         self._updatePage(page)
 
     @pagetype(WikiWikiPage)
-    def __onTextEditorKeyDown(self,
-                              page: outwiker.core.tree.WikiPage,
-                              params: outwiker.core.events.TextEditorKeyDownParams) -> None:
+    def __onTextEditorKeyDown(
+        self,
+        page: outwiker.core.tree.WikiPage,
+        params: outwiker.core.events.TextEditorKeyDownParams,
+    ) -> None:
         if params.keyCode == wx.WXK_RETURN and not params.hasModifiers():
             result = listComplete_wiki(params.editor)
             if result:
