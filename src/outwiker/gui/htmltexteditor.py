@@ -27,6 +27,7 @@ class HtmlTextEditor(TextEditor):
         # Устанавливаемые стили
         styles = self.loadStyles()
 
+        textCtrl.SetLexer(wx.stc.STC_LEX_NULL)
         textCtrl.SetLexer(wx.stc.STC_LEX_HTML)
         textCtrl.StyleClearAll()
 

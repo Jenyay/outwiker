@@ -61,6 +61,7 @@ class TextEditorBase(wx.Panel):
         event.Skip()
 
     def _setDefaultSettings(self):
+        self.ClearDocumentStyle()
         self.textCtrl.SetEndAtLastLine(False)
         self.textCtrl.StyleClearAll()
         self.textCtrl.SetWrapMode(wx.stc.STC_WRAP_WORD)
@@ -554,6 +555,9 @@ class TextEditorBase(wx.Panel):
     def InsertText(self, pos, text):
         pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
         self.textCtrl.InsertText(pos_bytes, text)
+
+    def ClearDocumentStyle(self):
+        self.textCtrl.ClearDocumentStyle()
 
     def _calcCharPos(self, pos_bytes):
         """
