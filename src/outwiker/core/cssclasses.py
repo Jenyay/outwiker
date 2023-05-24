@@ -163,6 +163,7 @@ def getDefaultStyles() -> str:
 		  border-bottom: 1px solid transparent;
 		  text-decoration: none;
 		  font-style: italic;
+          white-space: nowrap;
 		}
 
 		a.ow-link-attach:hover {
