@@ -18,6 +18,12 @@ def create_link_to_attached_file(href: str, text: str) -> str:
     return html.link(href, text, css_classes)
 
 
+def create_invalid_attached_file(filename: str) -> str:
+    html = HtmlFormatter()
+    css_classes = [css.CSS_WIKI, css.CSS_LINK_ATTACH, css.CSS_ATTACH_ERROR]
+    return html.span(filename, css_classes)
+
+
 def create_image(src: str, css_classes: Optional[List[str]] = None) -> str:
     if css_classes:
         css_class = ' '.join(css_classes)

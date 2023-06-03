@@ -15,13 +15,6 @@ from outwiker.tests.utils import removeDir
 class ParserAttachTest(unittest.TestCase):
     def setUp(self):
         self.filesPath = "testdata/samplefiles/"
-
-        self.pagelinks = [
-            "Страница 1",
-            "/Страница 1",
-            "/Страница 2/Страница 3"]
-        self.pageComments = ["Страницо 1", "Страницо 1", "Страницо 3"]
-
         self.__createWiki()
 
         factory = ParserFactory()
@@ -37,15 +30,14 @@ class ParserAttachTest(unittest.TestCase):
 
         files = ["accept.png", "filename.tmp",
                  "файл с пробелами.tmp", "картинка с пробелами.png",
-                 "image.webp", "image_01.JPG", "dir"]
+                 "image.webp", "image_01.JPG", "dir", "dir.xxx"]
 
         fullFilesPath = [os.path.join(self.filesPath, fname)
                          for fname in files]
 
-        self.attach_page2 = Attachment(self.wikiroot["Страница 2"])
-
         # Прикрепим к двум страницам файлы
-        Attachment(self.testPage).attach(fullFilesPath)
+        self.attach = Attachment(self.testPage)
+        self.attach.attach(fullFilesPath)
 
     def tearDown(self):
         removeDir(self.path)
@@ -360,5 +352,53 @@ class ParserAttachTest(unittest.TestCase):
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
         result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_file_not_found(self):
+        fname = "invalid.inv"
+        text = "Attach:{}".format(fname)
+        result = '<span class="ow-wiki ow-link-attach ow-attach-error">{}</span>'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_file_not_found_single_quotes(self):
+        fname = "invalid.inv"
+        text = "Attach:'{}'".format(fname)
+        result = '<span class="ow-wiki ow-link-attach ow-attach-error">{}</span>'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_file_not_found_double_quotes(self):
+        fname = "invalid.inv"
+        text = 'Attach:"{}"'.format(fname)
+        result = '<span class="ow-wiki ow-link-attach ow-attach-error">{}</span>'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_file_not_found_in_subdir(self):
+        fname = "dir/subdir/subdir2/invalid.inv"
+        text = "Attach:{}".format(fname)
+        result = '<span class="ow-wiki ow-link-attach ow-attach-error">{}</span>'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_file_not_found_in_subdir_backslash(self):
+        fname = "dir\\subdir\\subdir2\\invalid.inv"
+        text = "Attach:{}".format(fname)
+        result = '<span class="ow-wiki ow-link-attach ow-attach-error">{}</span>'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_image_not_found(self):
+        fname = "invalid.png"
+        text = "Attach:{}".format(fname)
+        result = '<span class="ow-wiki ow-link-attach ow-attach-error">{}</span>'.format(
+            fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
