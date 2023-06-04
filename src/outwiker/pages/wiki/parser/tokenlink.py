@@ -4,12 +4,13 @@ import html
 
 from pyparsing import QuotedString
 
+from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.core.htmlformatter import HtmlFormatter
 from outwiker.utilites.urls import is_url
 
 from .tokenattach import AttachToken
-from .htmlelements import create_link_to_page, create_link_to_attached_file
+from .htmlelements import create_link_to_page, create_link_to_attached_file, create_invalid_attached_file
 import outwiker.core.cssclasses as css
 
 
@@ -26,6 +27,7 @@ class LinkToken:
 
     def __init__(self, parser):
         self.parser = parser
+        self.attach_prefix = PAGE_ATTACH_DIR + '/'
 
     def getToken(self):
         return QuotedString(LinkToken.linkStart,
@@ -101,13 +103,16 @@ class LinkToken:
 
     def _generateHtmlTag(self, url, comment):
         if (not is_url(url) and
-                not url.startswith(PAGE_ATTACH_DIR + '/') and
+                not url.startswith(self.attach_prefix) and
                 not url.startswith('#') and
                 not url.startswith('mailto:')):
             url = 'page://' + url
 
-        if url.startswith(PAGE_ATTACH_DIR + '/') and not self._isHasImage(comment):
-            return create_link_to_attached_file(url, comment)
+        if url.startswith(self.attach_prefix) and not self._isHasImage(comment):
+            if Attachment(self.parser.page).exists(url[len(self.attach_prefix):]):
+                return create_link_to_attached_file(url, comment)
+            else:
+                return create_invalid_attached_file(comment)
 
         if url.startswith('page://'):
             return create_link_to_page(url, comment)
@@ -127,7 +132,10 @@ class LinkToken:
 
             url = '{}/{}'.format(PAGE_ATTACH_DIR, attach_name)
             comment = attach_name
-            return create_link_to_attached_file(url, comment)
+            if Attachment(self.parser.page).exists(attach_name):
+                return create_link_to_attached_file(url, comment)
+            else:
+                return create_invalid_attached_file(comment)
         elif (textStrip.startswith("#") and
                 self.parser.page is not None and
                 self.parser.page[textStrip] is None):

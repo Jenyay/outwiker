@@ -28,12 +28,12 @@ class ParserLinkTest(unittest.TestCase):
             "/Страница 2/Страница 3"]
         self.pageComments = ["Страницо 1", "Страницо 1", "Страницо 3"]
 
-        self.__createWiki()
+        self._createWiki()
 
         factory = ParserFactory()
         self.parser = factory.make(self.testPage, Application.config)
 
-    def __createWiki(self):
+    def _createWiki(self):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
@@ -630,6 +630,14 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testLinkAttachSimpleNotExists(self):
+        filename = 'filename_invalid.tmp'
+        text = '[[Attach:{}]]'.format(filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
     def testLinkAttachSimpleDoubleQuotes(self):
         filename = 'filename.tmp'
         text = '[[Attach:"{}"]]'.format(filename)
@@ -639,11 +647,27 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testLinkAttachSimpleDoubleQuotesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        text = '[[Attach:"{}"]]'.format(filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
     def testLinkAttachSimpleSingleQuotes(self):
         filename = 'filename.tmp'
         text = "[[Attach:'{}']]".format(filename)
         expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{filename}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachSimpleSingleQuotesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        text = "[[Attach:'{}']]".format(filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(filename=filename)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -659,6 +683,16 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testLinkAttachCommentArrowNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = '[[{comment} -> Attach:{filename}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
     def testLinkAttachCommentArrowDoubleQoutes(self):
         filename = 'filename.tmp'
         comment = "bla bla bla"
@@ -670,6 +704,16 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testLinkAttachCommentArrowDoubleQoutesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = '[[{comment} -> Attach:"{filename}"]]'.format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
     def testLinkAttachCommentArrowSingleQoutes(self):
         filename = 'filename.tmp'
         comment = "bla bla bla"
@@ -677,6 +721,16 @@ class ParserLinkTest(unittest.TestCase):
             comment=comment, filename=filename)
         expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentArrowSingleQoutesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = "[[{comment} -> Attach:'{filename}']]".format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -714,6 +768,16 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testLinkAttachCommentPipeNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = '[[Attach:{filename} | {comment}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
     def testLinkAttachCommentPipeDoubleQuotes(self):
         filename = 'filename.tmp'
         comment = "bla bla bla"
@@ -725,6 +789,16 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testLinkAttachCommentPipeDoubleQuotesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = '[[Attach:"{filename}" | {comment}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
     def testLinkAttachCommentPipeSingleQuotes(self):
         filename = 'filename.tmp'
         comment = "bla bla bla"
@@ -732,6 +806,16 @@ class ParserLinkTest(unittest.TestCase):
             comment=comment, filename=filename)
         expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentPipeSingleQuotesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = "[[Attach:'{filename}' | {comment}]]".format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -769,6 +853,16 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testLinkAttachImageSimpleNotExists(self):
+        filename = 'invalid.png'
+        text = "бла-бла-бла \n[[Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        expected = 'бла-бла-бла \n<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span> бла-бла-бла\nбла-бла-бла'.format(
+            filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
     def testLinkAttachImageSimpleDoublleQuotes(self):
         filename = 'accept.png'
         text = 'бла-бла-бла \n[[Attach:"{filename}"]] бла-бла-бла\nбла-бла-бла'.format(
@@ -802,6 +896,16 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testLinkAttachImageArrowNotExists(self):
+        filename = 'invalid.png'
+        text = "бла-бла-бла \n[[Attach:{filename} -> Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(
+            filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertIn(expected, result)
+
     def testLinkAttachImageArrowSingleQuotes(self):
         filename = 'accept.png'
         text = "бла-бла-бла \n[[Attach:'{filename}' -> Attach:'{filename}']] бла-бла-бла\nбла-бла-бла".format(
@@ -834,6 +938,16 @@ class ParserLinkTest(unittest.TestCase):
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
+
+    def testLinkAttachImagePipeNotExists(self):
+        filename = 'invalid.png'
+        text = "бла-бла-бла \n[[Attach:{filename} | Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(
+            filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertIn(expected, result)
 
     def testLinkAttachImagePipeSingleQuotes(self):
         filename = 'accept.png'

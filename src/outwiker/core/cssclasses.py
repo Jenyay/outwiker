@@ -231,7 +231,7 @@ def getDefaultStyles() -> str:
           color: #cc0033;
         }
 
-        span.ow-attach-error:before {
+        span.ow-attach-error:not(span.ow-attach-error span.ow-attach-error):before {
 		  margin-right: 0px;
 		  content: "";
 		  height: 1.8em;
