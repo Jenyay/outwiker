@@ -12,6 +12,7 @@ from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
 from outwiker.app.actions.attachcreatesubdir import AttachCreateSubdirAction
 from outwiker.app.actions.attachfiles import AttachFilesAction
+from outwiker.app.actions.attachfolder import AttachFolderAction
 from outwiker.app.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.app.actions.close import CloseAction
 from outwiker.app.actions.clipboard import (CopyAttachPathAction,
@@ -464,6 +465,14 @@ class MainWindow(wx.Frame):
             AttachFilesAction.stringId,
             toolbar,
             getBuiltinImagePath("attach.png"),
+            True)
+
+        actionController.appendMenuItem(AttachFolderAction.stringId, menu)
+
+        actionController.appendToolbarButton(
+            AttachFolderAction.stringId,
+            toolbar,
+            getBuiltinImagePath("attach_folder.png"),
             True)
 
         actionController.appendMenuItem(AttachCreateSubdirAction.stringId, menu)

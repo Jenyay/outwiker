@@ -12,6 +12,7 @@ from outwiker.app.actions.clipboard import CopyAttachPathAction
 from outwiker.app.actions.attachcreatesubdir import AttachCreateSubdirActionForAttachPanel
 from outwiker.app.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.app.actions.attachfiles import AttachFilesActionForAttachPanel
+from outwiker.app.actions.attachfolder import AttachFolderActionForAttachPanel
 from outwiker.app.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
 from outwiker.app.actions.attachselectall import AttachSelectAllAction
 from outwiker.app.actions.attachopenfolder import OpenAttachFolderActionForAttachPanel
@@ -200,6 +201,13 @@ class AttachPanel(wx.Panel):
             AttachFilesActionForAttachPanel.stringId,
             toolbar,
             getBuiltinImagePath("attach.png")
+        )
+
+        # Attach Folder
+        actionController.appendToolbarButton(
+            AttachFolderActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("attach_folder.png")
         )
 
         # Create subdir

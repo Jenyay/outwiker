@@ -9,6 +9,7 @@ from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
 from outwiker.app.actions.attachfiles import AttachFilesAction
+from outwiker.app.actions.attachfolder import AttachFolderAction
 from outwiker.app.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.app.actions.close import CloseAction
 from outwiker.app.actions.editpageprop import EditPagePropertiesAction
@@ -101,6 +102,7 @@ class MainWndController:
             NextTabAction,
             GlobalSearchAction,
             AttachFilesAction,
+            AttachFolderAction,
             clipboard.CopyPageTitleAction,
             clipboard.CopyPagePathAction,
             clipboard.CopyAttachPathAction,
