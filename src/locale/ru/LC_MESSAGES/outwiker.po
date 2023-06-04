@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 12:42+0300\n"
+"POT-Creation-Date: 2023-06-04 20:30+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -105,19 +105,19 @@ msgstr "Вы не выбрали файл(ы) для запуска"
 msgid "Can't execute file '%s'"
 msgstr "Ошибка запуска файла '%s'"
 
-#: outwiker/app/actions/attachfiles.py:22
+#: outwiker/app/actions/attachfiles.py:24
 msgid "Attach Files…"
 msgstr "Прикрепить файлы…"
 
-#: outwiker/app/actions/attachfiles.py:26
+#: outwiker/app/actions/attachfiles.py:28
 msgid "Attach files to current page"
 msgstr "Прикрепить файлы к текущей странице"
 
-#: outwiker/app/actions/attachfolder.py:23
+#: outwiker/app/actions/attachfolder.py:25
 msgid "Attach Folder…"
 msgstr "Прикрепить папку..."
 
-#: outwiker/app/actions/attachfolder.py:27
+#: outwiker/app/actions/attachfolder.py:29
 msgid "Attach folder with files to current page"
 msgstr "Прикрепить папку с файлами к текущей странице"
 
@@ -1074,53 +1074,89 @@ msgstr "OutWiker"
 msgid "Version:"
 msgstr "Версия:"
 
-#: outwiker/app/gui/dialogs/about.py:30
+#: outwiker/app/gui/dialogs/about.py:29
 msgid "OutWiker is personal wiki system and tree notes outliner."
 msgstr ""
 "OutWiker - это персональная викисистема и древовидный редактор заметок."
 
-#: outwiker/app/gui/dialogs/about.py:33
+#: outwiker/app/gui/dialogs/about.py:32
 msgid "License: GPL 3"
 msgstr "Лицензия: GPL 3"
 
-#: outwiker/app/gui/dialogs/about.py:38
-msgid "OutWiker's page:"
-msgstr "Страница программы:"
+#: outwiker/app/gui/dialogs/about.py:34
+msgid "OutWiker's home page"
+msgstr "Домашняя страница OutWiker"
 
-#: outwiker/app/gui/dialogs/about.py:44 outwiker/app/gui/dialogs/about.py:45
+#: outwiker/app/gui/dialogs/about.py:35 outwiker/app/gui/dialogs/about.py:71
+msgid "Telegram group"
+msgstr "Группа в Телеграме"
+
+#: outwiker/app/gui/dialogs/about.py:36
+msgid "VK group"
+msgstr "Группа VK"
+
+#: outwiker/app/gui/dialogs/about.py:37
+msgid "Sources on github"
+msgstr "Исходники на Github"
+
+#: outwiker/app/gui/dialogs/about.py:42 outwiker/app/gui/dialogs/about.py:43
 msgid "https://jenyay.net/Outwiker/English"
 msgstr "https://jenyay.net/Soft/Outwiker"
 
-#: outwiker/app/gui/dialogs/about.py:54
-msgid "mailto:jenyay.ilin@gmail.com"
-msgstr "mailto:jenyay.ilin@gmail.com"
+#: outwiker/app/gui/dialogs/about.py:49 outwiker/app/gui/dialogs/about.py:50
+msgid "https://t.me/outwiker"
+msgstr "https://t.me/outwiker"
 
-#: outwiker/app/gui/dialogs/about.py:60
-msgid "Twitter"
-msgstr "Twitter"
-
-#: outwiker/app/gui/dialogs/about.py:61
-msgid "https://twitter.com/OutWiker"
-msgstr "https://twitter.com/OutWiker"
-
-#: outwiker/app/gui/dialogs/about.py:67
-msgid "Vkontakte group"
-msgstr "Группа Вконтакте"
-
-#: outwiker/app/gui/dialogs/about.py:68
+#: outwiker/app/gui/dialogs/about.py:56 outwiker/app/gui/dialogs/about.py:57
 msgid "https://vk.com/outwiker"
 msgstr "https://vk.com/outwiker"
 
-#: outwiker/app/gui/dialogs/about.py:80 outwiker/app/gui/dialogs/about.py:102
+#: outwiker/app/gui/dialogs/about.py:63 outwiker/app/gui/dialogs/about.py:64
+msgid "https://github.com/Jenyay/outwiker"
+msgstr "https://github.com/Jenyay/outwiker"
+
+#: outwiker/app/gui/dialogs/about.py:69
+msgid "Email"
+msgstr "Email"
+
+#: outwiker/app/gui/dialogs/about.py:70
+msgid "Home site"
+msgstr "Домашний сайт"
+
+#: outwiker/app/gui/dialogs/about.py:72
+msgid "Github page"
+msgstr "Страница на Github"
+
+#: outwiker/app/gui/dialogs/about.py:77
+msgid "jenyay.ilin@gmail.com"
+msgstr "jenyay.ilin@gmail.com"
+
+#: outwiker/app/gui/dialogs/about.py:78
+msgid "mailto:jenyay.ilin@gmail.com"
+msgstr "mailto:jenyay.ilin@gmail.com"
+
+#: outwiker/app/gui/dialogs/about.py:84 outwiker/app/gui/dialogs/about.py:85
+msgid "https://jenyay.net"
+msgstr "https://jenyay.net"
+
+#: outwiker/app/gui/dialogs/about.py:91 outwiker/app/gui/dialogs/about.py:92
+msgid "https://t.me/jenyaynet"
+msgstr "https://t.me/jenyaynet"
+
+#: outwiker/app/gui/dialogs/about.py:98 outwiker/app/gui/dialogs/about.py:99
+msgid "https://github.com/Jenyay"
+msgstr "https://github.com/Jenyay"
+
+#: outwiker/app/gui/dialogs/about.py:111 outwiker/app/gui/dialogs/about.py:136
 msgid "About"
 msgstr "О программе"
 
-#: outwiker/app/gui/dialogs/about.py:103
-msgid "Contacts"
-msgstr "Контакты"
+#: outwiker/app/gui/dialogs/about.py:137
+msgid "Author contacts"
+msgstr "Контакты автора"
 
-#: outwiker/app/gui/dialogs/about.py:123
-msgid "Author: Ilin Eugeniy (aka Jenyay)"
+#: outwiker/app/gui/dialogs/about.py:166
+msgid "Author: Eugeniy Ilin (aka Jenyay)"
 msgstr "Автор: Евгений Ильин (aka Jenyay)"
 
 #: outwiker/app/gui/dialogs/renametagdialog.py:35
@@ -2865,6 +2901,24 @@ msgstr "[[комментарий -> ссылка]]"
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
 
+#~ msgid "OutWiker's page:"
+#~ msgstr "Страница программы:"
+
+#~ msgid "Twitter"
+#~ msgstr "Twitter"
+
+#~ msgid "https://twitter.com/OutWiker"
+#~ msgstr "https://twitter.com/OutWiker"
+
+#~ msgid "Vkontakte group"
+#~ msgstr "Группа Вконтакте"
+
+#~ msgid "Contacts"
+#~ msgstr "Контакты"
+
+#~ msgid "Author: Ilin Eugeniy (aka Jenyay)"
+#~ msgstr "Автор: Евгений Ильин (aka Jenyay)"
+
 #~ msgid "<b>Can't create thumbnail for \"{}\"</b>"
 #~ msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
 
@@ -2938,9 +2992,6 @@ msgstr "[[ссылка | комментарий]]"
 
 #~ msgid "The page is open as read only"
 #~ msgstr "Эта страница открыта только для чтения"
-
-#~ msgid "jenyay.ilin@gmail.com"
-#~ msgstr "jenyay.ilin@gmail.com"
 
 #~ msgid "Google+ page"
 #~ msgstr "Страница на Google+"
