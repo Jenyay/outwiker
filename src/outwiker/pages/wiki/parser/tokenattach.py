@@ -62,10 +62,6 @@ class AttachToken(metaclass=ABCMeta):
         finalToken = finalToken.setParseAction(self._convertToLink)
         return finalToken
 
-    def attach_exists(self, fname: str) -> bool:
-        attach = Attachment(self.parser.page)
-        return os.path.exists(os.path.join(attach.getAttachPath(create=False), fname))
-
     @abstractmethod
     def _getRegex(self):
         pass
@@ -96,7 +92,7 @@ class AttachAllToken(AttachToken):
         href = "{dirname}/{fname}".format(dirname=PAGE_ATTACH_DIR, fname=fname_fix_slash)
         text = fname
 
-        if self.attach_exists(fname_fix_slash):
+        if Attachment(self.parser.page).exists(fname_fix_slash):
             return create_link_to_attached_file(href, text)
 
         return create_invalid_attached_file(fname)
@@ -125,7 +121,7 @@ class AttachImagesToken(AttachToken):
         fname_fix_slash = fname.replace("\\", "/")
         src = "{dirname}/{fname}".format(dirname=PAGE_ATTACH_DIR, fname=fname_fix_slash)
 
-        if self.attach_exists(fname_fix_slash):
+        if Attachment(self.parser.page).exists(fname_fix_slash):
             return create_image(src, [css.CSS_IMAGE])
 
         return create_invalid_attached_file(fname)

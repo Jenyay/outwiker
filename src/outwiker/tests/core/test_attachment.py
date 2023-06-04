@@ -679,3 +679,16 @@ class AttachmentTest(unittest.TestCase):
         attach = Attachment(self.page)
 
         self.assertRaises(OSError, attach.createSubdir, subdir)
+
+    def testAttachExists(self):
+        attach = Attachment(self.page)
+        attach.attach(self.fullFilesPath)
+
+        self.assertTrue(attach.exists('accept.png'))
+        self.assertFalse(attach.exists('invalid.png'))
+
+        self.assertTrue(attach.exists('attach.png', subdir='dir'))
+        self.assertFalse(attach.exists('invalid.png', subdir='dir'))
+
+        self.assertTrue(attach.exists('dir/attach.png'))
+        self.assertFalse(attach.exists('dir/invalid.png'))
