@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 20:30+0300\n"
+"POT-Creation-Date: 2023-06-04 20:45+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1076,7 +1076,7 @@ msgstr "License: GPL 3"
 msgid "OutWiker's home page"
 msgstr "OutWiker's home page"
 
-#: outwiker/app/gui/dialogs/about.py:35 outwiker/app/gui/dialogs/about.py:71
+#: outwiker/app/gui/dialogs/about.py:35 outwiker/app/gui/dialogs/about.py:79
 msgid "Telegram group"
 msgstr "Telegram group"
 
@@ -1088,63 +1088,71 @@ msgstr "VK group"
 msgid "Sources on github"
 msgstr "Sources on github"
 
-#: outwiker/app/gui/dialogs/about.py:42 outwiker/app/gui/dialogs/about.py:43
+#: outwiker/app/gui/dialogs/about.py:38
+msgid "OutWiker localizations"
+msgstr "OutWiker localizations"
+
+#: outwiker/app/gui/dialogs/about.py:43 outwiker/app/gui/dialogs/about.py:44
 msgid "https://jenyay.net/Outwiker/English"
 msgstr "https://jenyay.net/Outwiker/English"
 
-#: outwiker/app/gui/dialogs/about.py:49 outwiker/app/gui/dialogs/about.py:50
+#: outwiker/app/gui/dialogs/about.py:50 outwiker/app/gui/dialogs/about.py:51
 msgid "https://t.me/outwiker"
 msgstr "https://t.me/outwiker"
 
-#: outwiker/app/gui/dialogs/about.py:56 outwiker/app/gui/dialogs/about.py:57
+#: outwiker/app/gui/dialogs/about.py:57 outwiker/app/gui/dialogs/about.py:58
 msgid "https://vk.com/outwiker"
 msgstr "https://vk.com/outwiker"
 
-#: outwiker/app/gui/dialogs/about.py:63 outwiker/app/gui/dialogs/about.py:64
+#: outwiker/app/gui/dialogs/about.py:64 outwiker/app/gui/dialogs/about.py:65
 msgid "https://github.com/Jenyay/outwiker"
 msgstr "https://github.com/Jenyay/outwiker"
 
-#: outwiker/app/gui/dialogs/about.py:69
+#: outwiker/app/gui/dialogs/about.py:71 outwiker/app/gui/dialogs/about.py:72
+msgid "https://crowdin.com/project/outwiker"
+msgstr "https://crowdin.com/project/outwiker"
+
+#: outwiker/app/gui/dialogs/about.py:77
 msgid "Email"
 msgstr "Email"
 
-#: outwiker/app/gui/dialogs/about.py:70
+#: outwiker/app/gui/dialogs/about.py:78
 msgid "Home site"
 msgstr "Home site"
 
-#: outwiker/app/gui/dialogs/about.py:72
+#: outwiker/app/gui/dialogs/about.py:80
 msgid "Github page"
 msgstr "Github page"
 
-#: outwiker/app/gui/dialogs/about.py:77
+#: outwiker/app/gui/dialogs/about.py:85
 msgid "jenyay.ilin@gmail.com"
 msgstr "jenyay.ilin@gmail.com"
 
-#: outwiker/app/gui/dialogs/about.py:78
+#: outwiker/app/gui/dialogs/about.py:86
 msgid "mailto:jenyay.ilin@gmail.com"
 msgstr "mailto:jenyay.ilin@gmail.com"
 
-#: outwiker/app/gui/dialogs/about.py:84 outwiker/app/gui/dialogs/about.py:85
+#: outwiker/app/gui/dialogs/about.py:92 outwiker/app/gui/dialogs/about.py:93
 msgid "https://jenyay.net"
 msgstr "https://jenyay.net"
 
-#: outwiker/app/gui/dialogs/about.py:91 outwiker/app/gui/dialogs/about.py:92
+#: outwiker/app/gui/dialogs/about.py:99 outwiker/app/gui/dialogs/about.py:100
 msgid "https://t.me/jenyaynet"
 msgstr "https://t.me/jenyaynet"
 
-#: outwiker/app/gui/dialogs/about.py:98 outwiker/app/gui/dialogs/about.py:99
+#: outwiker/app/gui/dialogs/about.py:106 outwiker/app/gui/dialogs/about.py:107
 msgid "https://github.com/Jenyay"
 msgstr "https://github.com/Jenyay"
 
-#: outwiker/app/gui/dialogs/about.py:111 outwiker/app/gui/dialogs/about.py:136
+#: outwiker/app/gui/dialogs/about.py:119 outwiker/app/gui/dialogs/about.py:144
 msgid "About"
 msgstr "About"
 
-#: outwiker/app/gui/dialogs/about.py:137
+#: outwiker/app/gui/dialogs/about.py:145
 msgid "Author contacts"
 msgstr "Author contacts"
 
-#: outwiker/app/gui/dialogs/about.py:166
+#: outwiker/app/gui/dialogs/about.py:174
 msgid "Author: Eugeniy Ilin (aka Jenyay)"
 msgstr "Author: Eugeniy Ilin (aka Jenyay)"
 
@@ -2888,6 +2896,12 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "OutWiker's localizations"
+#~ msgstr "OutWiker's localizations"
+
+#~ msgid "Outwiker localizations"
+#~ msgstr "Outwiker localizations"
 
 #~ msgid "OutWiker's page:"
 #~ msgstr "OutWiker's page:"

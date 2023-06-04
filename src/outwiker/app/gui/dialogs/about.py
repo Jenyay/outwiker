@@ -35,6 +35,7 @@ class AboutDialog(TestedDialog):
         self.outwikerTelegramLabel = wx.StaticText(self.aboutPane, -1, _("Telegram group"))
         self.outwikerVKLabel = wx.StaticText(self.aboutPane, -1, _("VK group"))
         self.outwikerGithubLabel = wx.StaticText(self.aboutPane, -1, _("Sources on github"))
+        self.outwikerCrowdinLabel = wx.StaticText(self.aboutPane, -1, _("OutWiker localizations"))
 
         self.outwikerUrl = HyperLinkCtrl(
             self.aboutPane,
@@ -62,6 +63,13 @@ class AboutDialog(TestedDialog):
             -1,
             label=_("https://github.com/Jenyay/outwiker"),
             URL=_("https://github.com/Jenyay/outwiker"),
+        )
+
+        self.outwikerCrowdin = HyperLinkCtrl(
+            self.aboutPane,
+            -1,
+            label=_("https://crowdin.com/project/outwiker"),
+            URL=_("https://crowdin.com/project/outwiker"),
         )
 
         self.contactsPane = wx.Panel(self.notebook, -1)
@@ -109,7 +117,7 @@ class AboutDialog(TestedDialog):
 
     def __set_properties(self):
         self.SetTitle(_("About"))
-        self.SetSize((550, 350))
+        self.SetSize((550, 380))
         self.titleLabel.SetFont(
             wx.Font(
                 15,
@@ -198,6 +206,13 @@ class AboutDialog(TestedDialog):
         )
         outwiker_pages_sizer.Add(
             self.outwikerGithub, flag=wx.ALL | wx.ALIGN_LEFT, border=2
+        )
+
+        outwiker_pages_sizer.Add(
+            self.outwikerCrowdinLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        outwiker_pages_sizer.Add(
+            self.outwikerCrowdin, flag=wx.ALL | wx.ALIGN_LEFT, border=2
         )
 
         about_tab_right_column.Add(outwiker_pages_sizer, flag=wx.EXPAND, border=0)

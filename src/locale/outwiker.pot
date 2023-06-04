@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 20:30+0300\n"
+"POT-Creation-Date: 2023-06-04 20:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1085,7 +1085,7 @@ msgstr ""
 msgid "OutWiker's home page"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:35 outwiker/app/gui/dialogs/about.py:71
+#: outwiker/app/gui/dialogs/about.py:35 outwiker/app/gui/dialogs/about.py:79
 msgid "Telegram group"
 msgstr ""
 
@@ -1097,64 +1097,73 @@ msgstr ""
 msgid "Sources on github"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:42 outwiker/app/gui/dialogs/about.py:43
+#: outwiker/app/gui/dialogs/about.py:38
+msgid "OutWiker localizations"
+msgstr ""
+
+#: outwiker/app/gui/dialogs/about.py:43 outwiker/app/gui/dialogs/about.py:44
 msgid "https://jenyay.net/Outwiker/English"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:49 outwiker/app/gui/dialogs/about.py:50
+#: outwiker/app/gui/dialogs/about.py:50 outwiker/app/gui/dialogs/about.py:51
 msgid "https://t.me/outwiker"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:56 outwiker/app/gui/dialogs/about.py:57
+#: outwiker/app/gui/dialogs/about.py:57 outwiker/app/gui/dialogs/about.py:58
 msgid "https://vk.com/outwiker"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:63 outwiker/app/gui/dialogs/about.py:64
+#: outwiker/app/gui/dialogs/about.py:64 outwiker/app/gui/dialogs/about.py:65
 msgid "https://github.com/Jenyay/outwiker"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:69
-msgid "Email"
-msgstr ""
-
-#: outwiker/app/gui/dialogs/about.py:70
-msgid "Home site"
-msgstr ""
-
-#: outwiker/app/gui/dialogs/about.py:72
-msgid "Github page"
+#: outwiker/app/gui/dialogs/about.py:71 outwiker/app/gui/dialogs/about.py:72
+msgid "https://crowdin.com/project/outwiker"
 msgstr ""
 
 #: outwiker/app/gui/dialogs/about.py:77
-msgid "jenyay.ilin@gmail.com"
+msgid "Email"
 msgstr ""
 
 #: outwiker/app/gui/dialogs/about.py:78
+msgid "Home site"
+msgstr ""
+
+#: outwiker/app/gui/dialogs/about.py:80
+msgid "Github page"
+msgstr ""
+
+#: outwiker/app/gui/dialogs/about.py:85
+msgid "jenyay.ilin@gmail.com"
+msgstr ""
+
+#: outwiker/app/gui/dialogs/about.py:86
 msgid "mailto:jenyay.ilin@gmail.com"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:84 outwiker/app/gui/dialogs/about.py:85
+#: outwiker/app/gui/dialogs/about.py:92 outwiker/app/gui/dialogs/about.py:93
 msgid "https://jenyay.net"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:91 outwiker/app/gui/dialogs/about.py:92
+#: outwiker/app/gui/dialogs/about.py:99 outwiker/app/gui/dialogs/about.py:100
 msgid "https://t.me/jenyaynet"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:98 outwiker/app/gui/dialogs/about.py:99
+#: outwiker/app/gui/dialogs/about.py:106
+#: outwiker/app/gui/dialogs/about.py:107
 msgid "https://github.com/Jenyay"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:111
-#: outwiker/app/gui/dialogs/about.py:136
+#: outwiker/app/gui/dialogs/about.py:119
+#: outwiker/app/gui/dialogs/about.py:144
 msgid "About"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:137
+#: outwiker/app/gui/dialogs/about.py:145
 msgid "Author contacts"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/about.py:166
+#: outwiker/app/gui/dialogs/about.py:174
 msgid "Author: Eugeniy Ilin (aka Jenyay)"
 msgstr ""
 
