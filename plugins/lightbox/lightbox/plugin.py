@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .controller import Controller
 from .i18n import set_
@@ -10,6 +10,7 @@ class PluginLightbox(Plugin):
     """
     Плагин, добавляющий обработку команды (:lightbox:) в википарсер
     """
+
     def __init__(self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
@@ -19,11 +20,12 @@ class PluginLightbox(Plugin):
 
     @property
     def name(self):
-        return u"Lightbox"
+        return "Lightbox"
 
     @property
     def description(self):
-        return _("""This plugin adds a command (:lightbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.
+        return _(
+            """This plugin adds a command (:lightbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.
                 
 <B>Usage</B>
 
@@ -32,11 +34,12 @@ class PluginLightbox(Plugin):
 bla-bla-bla %thumb%Attach:image_1.jpg%%
 bla-bla-bla...
 %thumb%Attach:image_2.png%%
-""")
+"""
+        )
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/LightboxEn")
+        return _("https://jenyay.net/Outwiker/LightboxEn")
 
     def initialize(self):
         set_(self.gettext)

@@ -3,7 +3,7 @@
 	<version number="1.0">
 		<download href="https://example.com/pluginname/pluginname-1.0.zip">
 			<requirements>
-				<api>2.835</api>
+				<api>3.922</api>
 			</requirements>
 		</download>
 		<changes>

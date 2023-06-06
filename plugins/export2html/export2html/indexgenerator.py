@@ -2,7 +2,7 @@
 
 import os.path
 
-from outwiker.utilites.textfile import writeTextFile
+from outwiker.api.core.text import writeTextFile
 
 from .indexcontentgenerator import IndexContentGenerator
 from .template import loadTemplate
@@ -16,12 +16,14 @@ class IndexGenerator:
     def __init__(self, rootpage, renames):
         """
         rootpage - страница, с которой начинается экспортирование ветки.ы
-        renames - словарь, который дает соответствие между страницей (ключ) и тем, как называется файл (без расширения) и директория, созданные при экспорте этой страницы.
+        renames - словарь, который дает соответствие между страницей (ключ) и
+        тем, как называется файл (без расширения) и директория,
+        созданные при экспорте этой страницы.
         """
         self.__rootpage = rootpage
         self.__renames = renames
 
-        self.__templatename = u"index.html"
+        self.__templatename = "index.html"
 
     def generatefiles(self, indexfname, contentfname):
         """
@@ -31,12 +33,13 @@ class IndexGenerator:
         contentfname - имя файла со ссылками на страницы
         """
         # Создать экземпляр класса, оформляющий список страниц
-        contentgenerator = IndexContentGenerator(
-            self.__rootpage, self.__renames)
+        contentgenerator = IndexContentGenerator(self.__rootpage, self.__renames)
         contentgenerator.generate(contentfname)
 
         # Создать файл с фреймами, отображающий все оглавление
         indextemplate = loadTemplate(self.__templatename)
-        indexresult = indextemplate.substitute(contentfname=os.path.basename (contentfname))
+        indexresult = indextemplate.substitute(
+            contentfname=os.path.basename(contentfname)
+        )
 
         writeTextFile(indexfname, indexresult)

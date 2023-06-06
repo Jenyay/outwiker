@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs import TestedDialog
 
 
 class ComboBoxDialog(TestedDialog):
@@ -28,25 +28,16 @@ class ComboBoxDialog(TestedDialog):
         mainSizer.AddGrowableCol(1)
         mainSizer.AddGrowableRow(1)
 
-        self._messageCtrl = wx.StaticText(self, -1, u"")
+        self._messageCtrl = wx.StaticText(self, -1, "")
         self._comboBox = wx.ComboBox(self, -1, style=comboStyle)
         self._comboBox.SetMinSize((200, -1))
 
         okCancel = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
-        mainSizer.Add(self._messageCtrl,
-                      1,
-                      wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=2)
-        mainSizer.Add(self._comboBox,
-                      1,
-                      wx.ALL | wx.EXPAND,
-                      border=2)
+        mainSizer.Add(self._messageCtrl, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        mainSizer.Add(self._comboBox, 1, wx.ALL | wx.EXPAND, border=2)
         mainSizer.AddSpacer(1)
-        mainSizer.Add(okCancel,
-                      1,
-                      wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-                      border=2)
+        mainSizer.Add(okCancel, 1, wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM, border=2)
 
         self.SetSizer(mainSizer)
 

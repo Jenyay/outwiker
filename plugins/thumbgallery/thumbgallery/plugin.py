@@ -2,7 +2,7 @@
 
 import os.path
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .controller import Controller
 from .i18n import set_
@@ -13,6 +13,7 @@ class PluginThumbGallery(Plugin):
     Плагин, добавляющий обработку команды (:thumblist:) и (:thumbgallery:)
         в википарсер
     """
+
     def __init__(self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
@@ -22,7 +23,7 @@ class PluginThumbGallery(Plugin):
 
     @property
     def name(self):
-        return u"ThumbGallery"
+        return "ThumbGallery"
 
     @property
     def description(self):
@@ -44,18 +45,18 @@ class PluginThumbGallery(Plugin):
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/ThumbGalleryEn")
+        return _("https://jenyay.net/Outwiker/ThumbGalleryEn")
 
     def _loadDescription(self):
         """
         Загрузить описание плагина из файла
         """
-        path = _(u"locale/description.html")
+        path = _("locale/description.html")
         fullpath = os.path.join(self.pluginPath, path)
         print(fullpath)
 
         try:
-            with open(fullpath, encoding='utf8') as fp:
+            with open(fullpath, encoding="utf8") as fp:
                 return fp.read()
         except IOError:
-            return _(u"Can't load description")
+            return _("Can't load description")

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import time
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -26,7 +27,7 @@ class ParserFontTest (unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]
 
@@ -408,3 +409,36 @@ class ParserFontTest (unittest.TestCase):
             result,
             self.parser.toHtml(text).encode(
                 self.encoding))
+
+    def testManyBold(self):
+        text = "'''''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111'''"
+        expected = "<b></b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b>"
+
+        begin = time.perf_counter()
+        result = self.parser.toHtml(text)
+        end = time.perf_counter()
+
+        self.assertLess(end - begin, 1)
+        self.assertEqual(result, expected)
+
+    def testManyBoldItalic(self):
+        text = "'''''''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111'''"
+        expected = "<b><i></i></b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b>"
+
+        begin = time.perf_counter()
+        result = self.parser.toHtml(text)
+        end = time.perf_counter()
+
+        self.assertLess(end - begin, 1)
+        self.assertEqual(result, expected)
+
+    def testInvalidBoldItalic(self):
+        text = "''''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111'''"
+        expected = "<b>'111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b> <b>111</b>"
+
+        begin = time.perf_counter()
+        result = self.parser.toHtml(text)
+        end = time.perf_counter()
+
+        self.assertLess(end - begin, 1)
+        self.assertEqual(result, expected)

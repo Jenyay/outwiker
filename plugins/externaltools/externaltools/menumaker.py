@@ -35,30 +35,34 @@ class MenuMaker:
         """
         # Меню для открытия файла с текстом
         self.contentMenu = wx.Menu()
-        self.__appendToolsMenu(self.contentMenu,
-                               self.__onOpenContentFile,
-                               self._controller.tools)
+        self.__appendToolsMenu(
+            self.contentMenu, self.__onOpenContentFile, self._controller.tools
+        )
 
         itemsCount = len(self._menu.GetMenuItems())
-        self._menu.Insert(itemsCount - self._popupPosition,
-                          -1,
-                          _(u"Open Content File with..."),
-                          self.contentMenu,
-                          u"")
+        self._menu.Insert(
+            itemsCount - self._popupPosition,
+            -1,
+            _("Open Content File with..."),
+            self.contentMenu,
+            "",
+        )
 
     def insertResultMenuItem(self):
         # Меню для открытия файла с результатом (HTML)
         self.resultMenu = wx.Menu()
-        self.__appendToolsMenu(self.resultMenu,
-                               self.__onOpenResultFile,
-                               self._controller.tools)
+        self.__appendToolsMenu(
+            self.resultMenu, self.__onOpenResultFile, self._controller.tools
+        )
 
         itemsCount = len(self._menu.GetMenuItems())
-        self._menu.Insert(itemsCount - self._popupPosition,
-                          -1,
-                          _(u"Open Result HTML File with..."),
-                          self.resultMenu,
-                          u"")
+        self._menu.Insert(
+            itemsCount - self._popupPosition,
+            -1,
+            _("Open Result HTML File with..."),
+            self.resultMenu,
+            "",
+        )
 
     def insertSeparator(self):
         itemsCount = len(self._menu.GetMenuItems())

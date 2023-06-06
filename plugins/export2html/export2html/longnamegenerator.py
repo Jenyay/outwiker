@@ -2,7 +2,7 @@
 
 import os.path
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import WikiDocument
 
 
 class LongNameGenerator:
@@ -24,8 +24,9 @@ class LongNameGenerator:
 
     def __getExportName(self, root, page):
         if root.getTypeString() == WikiDocument.getTypeString():
-            exportname = os.path.basename(
-                root.path) + "_" + page.subpath.replace("/", "_")
+            exportname = (
+                os.path.basename(root.path) + "_" + page.subpath.replace("/", "_")
+            )
         else:
             if page == root:
                 exportname = page.title
@@ -34,12 +35,12 @@ class LongNameGenerator:
         return exportname
 
     def __getSubpathExportName(self, root, page):
-        assert page.subpath.startswith (root.subpath)
-        exportname = page.subpath.replace (root.subpath, u"", 1)
+        assert page.subpath.startswith(root.subpath)
+        exportname = page.subpath.replace(root.subpath, "", 1)
 
-        assert len (exportname) > 0
+        assert len(exportname) > 0
         if exportname[0] == "/":
             exportname = exportname[1:]
 
-        exportname = root.title + "_" + exportname.replace ("/", "_")
+        exportname = root.title + "_" + exportname.replace("/", "_")
         return exportname

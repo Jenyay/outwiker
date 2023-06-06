@@ -23,7 +23,7 @@ class HotKeysTest(TestCase, BaseOutWikerGUIMixin):
         self.destroyApplication()
 
     def test_duplicate(self):
-        import outwiker.gui.actionslist as actionslist
+        import outwiker.app.gui.actionslist as actionslist
         actions_list = (actionslist.actionsList +
                         wikipage.wiki_actions +
                         htmlpage.html_actions +

@@ -2,9 +2,9 @@
 
 import unittest
 
+from outwiker.app.actions.movepageup import MovePageUpAction
+from outwiker.app.actions.movepagedown import MovePageDownAction
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.actions.movepageup import MovePageUpAction
-from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 

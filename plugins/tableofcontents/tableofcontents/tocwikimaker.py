@@ -4,7 +4,7 @@ from .tocwikigenerator import TOCWikiGenerator
 from .contentsparser import ContentsParser
 
 
-class TocWikiMaker (object):
+class TocWikiMaker:
     """
     Класс создает текст оглавления по тексту заметки
     """

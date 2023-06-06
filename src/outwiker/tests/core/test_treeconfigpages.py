@@ -4,7 +4,7 @@ import os.path
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.config import StringOption
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
@@ -19,7 +19,7 @@ class ConfigPagesTest (unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create (self.wikiroot, "Страница 1", [])
@@ -40,7 +40,7 @@ class ConfigPagesTest (unittest.TestCase):
         self.assertEqual (param.value, "Значение 1")
 
         # Прочитаем вики и проверим установленный параметр
-        wiki = WikiDocument.create (self.path)
+        wiki = createNotesTree (self.path)
 
         param_new = StringOption (wiki.params, "TestSection_1", "value1", "")
         self.assertEqual (param_new.value, "Значение 1")
@@ -55,7 +55,7 @@ class ConfigPagesTest (unittest.TestCase):
         self.assertEqual (param2.value, "Значение 1")
 
         # Прочитаем вики и проверим установленный параметр
-        wiki = WikiDocument.load (self.path)
+        wiki = loadNotesTree (self.path)
         param3 = StringOption (wiki["Страница 1"].params, "TestSection_1", "value1", "")
 
         self.assertEqual (param3.value, "Значение 1")
@@ -69,7 +69,7 @@ class ConfigPagesTest (unittest.TestCase):
         param.value = "Значение 1"
 
         path = os.path.join (self.path, "Страница 1")
-        subwiki = WikiDocument.load (path)
+        subwiki = loadNotesTree (path)
 
         subwikiparam = StringOption (subwiki.params, "TestSection_1", "value1", "")
         self.assertEqual (subwikiparam.value, "Значение 1")
@@ -83,7 +83,7 @@ class ConfigPagesTest (unittest.TestCase):
         self.assertEqual (subwikiparam2.value, "Значение 2")
 
         # На всякий случай прочитаем вики еще раз
-        wiki = WikiDocument.load (self.path)
+        wiki = loadNotesTree (self.path)
 
         wikiparam1 = StringOption (wiki["Страница 1"].params, "TestSection_1", "value1", "")
         wikiparam2 = StringOption (wiki["Страница 1"].params, "TestSection_2", "value2", "")

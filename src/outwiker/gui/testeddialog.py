@@ -20,7 +20,7 @@ class TestedDialog(wx.Dialog):
             event = wx.CommandEvent(wx.EVT_BUTTON.typeId, result)
             wx.PostEvent(self, event)
 
-        return super(TestedDialog, self).ShowModal()
+        return super().ShowModal()
 
 
 class TestedStandardDialogMixin:
@@ -48,7 +48,7 @@ class TestedFileDialog(TestedStandardDialogMixin, wx.FileDialog):
 
     def GetPath(self):
         return (self._testedValue if self._testedValue is not None
-                else super(TestedFileDialog, self).GetPath())
+                else super().GetPath())
 
 
 class TestedColourDialog(TestedStandardDialogMixin, wx.ColourDialog):
@@ -74,3 +74,15 @@ class TestedSingleChoiceDialog(TestedStandardDialogMixin,
     def GetStringSelection(self) -> str:
         return (self._testedValue if self._testedValue is not None
                 else super().GetStringSelection())
+
+
+class TestedDirDialog(TestedStandardDialogMixin, wx.DirDialog):
+    """
+    Testable select directory dialog 
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def GetPath(self):
+        return (self._testedValue if self._testedValue is not None
+                else super().GetPath())

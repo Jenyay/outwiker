@@ -1,18 +1,14 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from io import StringIO
 
 import wx
 
 from ..config import ExternalToolsConfig
-from ..commandexec.commandparams import (
-    TITLE_NAME,
-    FORMAT_NAME,
-    FORMAT_BUTTON
-)
+from ..commandexec.commandparams import TITLE_NAME, FORMAT_NAME, FORMAT_BUTTON
 
 
-class ExecDialogController(object):
+class ExecDialogController:
     def __init__(self, dialog, application):
         self._dialog = dialog
         self._application = application
@@ -60,17 +56,16 @@ class ExecDialogController(object):
         Return tuple:(begin command, end command)
         """
         openCommand = StringIO()
-        openCommand.write(u'(:exec')
+        openCommand.write("(:exec")
 
         if self._dialog.title:
-            openCommand.write(u' {}="{}"'.format(TITLE_NAME,
-                                                 self._dialog.title))
+            openCommand.write(' {}="{}"'.format(TITLE_NAME, self._dialog.title))
 
         if self._dialog.format == 1:
-            openCommand.write(u' {}="{}"'.format(FORMAT_NAME, FORMAT_BUTTON))
+            openCommand.write(' {}="{}"'.format(FORMAT_NAME, FORMAT_BUTTON))
 
-        openCommand.write(u':)')
+        openCommand.write(":)")
 
-        closeComamnd = u'(:execend:)'
+        closeComamnd = "(:execend:)"
 
-        return(openCommand.getvalue(), closeComamnd)
+        return (openCommand.getvalue(), closeComamnd)

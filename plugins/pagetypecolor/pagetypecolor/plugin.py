@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 from .controller import Controller
@@ -24,15 +24,17 @@ class PluginPageTypeColor(Plugin):
 
     @property
     def name(self):
-        return u"PageTypeColor"
+        return "PageTypeColor"
 
     @property
     def description(self):
-        return _(u"Plugin colorize the page dialog controls in depending on the selected page type.")
+        return _(
+            "Plugin colorize the page dialog controls in depending on the selected page type."
+        )
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/PageTypeColorEn")
+        return _("https://jenyay.net/Outwiker/PageTypeColorEn")
 
     def initialize(self):
         set_(self.gettext)

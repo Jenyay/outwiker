@@ -5,14 +5,14 @@ import os.path
 from tempfile import mkdtemp
 from unittest import TestCase
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
-from outwiker.pages.wiki.wikihashcalculator import WikiHashCalculator
+from outwiker.pages.wiki.hashcalculator import WikiHashCalculator
 from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 
@@ -61,7 +61,7 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]

@@ -15,8 +15,8 @@ from typing import List
 
 import wx
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import WikiDocument
 
 
 def removeDir(path):
@@ -72,7 +72,7 @@ def create_temp_notes_tree():
     Create empty notes tree in the temp directory
     '''
     path = mkdtemp(prefix='Абырвалг абыр')
-    wikiroot = WikiDocument.create(path)
+    wikiroot = createNotesTree(path)
     return wikiroot
 
 

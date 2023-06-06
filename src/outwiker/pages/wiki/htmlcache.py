@@ -1,45 +1,30 @@
 # -*- coding: utf-8 -*-
 
-from .defines import REGISTRY_PAGE_HASH
-from .wikihashcalculator import WikiHashCalculator
+from outwiker.core.pagecontentcache import PageContentCache
+from .hashcalculator import WikiHashCalculator
 
 
-class HtmlCache (object):
+class HtmlCache:
     """
     Класс для проверки того, можно ли использовать уже созданный HTML-файл
     для викистраницы или надо его создавать заново
     """
 
     def __init__(self, page, application):
-        self._page = page
-        self._application = application
+        hashCalculator = WikiHashCalculator(application)
+        self._pageContentCache = PageContentCache(page, hashCalculator, application)
 
-        self._configSection = u"wiki"
-
-    def getHash(self, page):
-        return WikiHashCalculator(self._application).getHash(page)
+    def getHash(self, page) -> str:
+        return self._pageContentCache.getHash(page)
 
     def canReadFromCache(self):
         """
         Можно ли прочитать готовый HTML, или его надо создавать заново?
         """
-        reg = self._page.root.registry.get_page_registry(self._page)
-        try:
-            old_hash = reg.getstr(REGISTRY_PAGE_HASH, default='')
-        except KeyError:
-            old_hash = ''
-
-        return (self.getHash(self._page) == old_hash)
+        return self._pageContentCache.canReadFromCache()
 
     def resetHash(self):
-        self._setHash('')
-
-    def _setHash(self, value):
-        reg = self._page.root.registry.get_page_registry(self._page)
-        try:
-            reg.set(REGISTRY_PAGE_HASH, value)
-        except KeyError:
-            pass
+        self._pageContentCache.resetHash()
 
     def saveHash(self):
-        self._setHash(self.getHash(self._page))
+        self._pageContentCache.saveHash()

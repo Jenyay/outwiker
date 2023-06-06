@@ -3,15 +3,15 @@
 from os.path import basename
 import unittest
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import loadNotesTree
+from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=True)
         self.wikiroot = self.createWiki()
 
         factory = TextPageFactory()
@@ -324,7 +324,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = None
         self.assertEqual(self._tabsController.getTabsCount(), 0)
 
-        otherwiki = WikiDocument.load(self.wikiroot.path)
+        otherwiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = otherwiki
         self.assertEqual(self._tabsController.getTabsCount(), 1)
         self.assertEqual(self._tabsController.getSelection(), 0)
@@ -340,7 +340,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = None
         self.assertEqual(self._tabsController.getTabsCount(), 0)
 
-        otherwiki = WikiDocument.load(self.wikiroot.path)
+        otherwiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = otherwiki
 
         self.assertEqual(self._tabsController.getTabsCount(), 3)
@@ -362,7 +362,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = None
         self.assertEqual(self._tabsController.getTabsCount(), 0)
 
-        otherwiki = WikiDocument.load(self.wikiroot.path)
+        otherwiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = otherwiki
 
         self.assertEqual(self._tabsController.getTabsCount(), 3)
@@ -385,7 +385,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = None
         self.assertEqual(self._tabsController.getTabsCount(), 0)
 
-        otherwiki = WikiDocument.load(self.wikiroot.path)
+        otherwiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = otherwiki
 
         self.assertEqual(self._tabsController.getTabsCount(), 3)
@@ -398,7 +398,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getPage(2), otherwiki["Страница 2"])
 
     def testSaveTabs5(self):
-        wiki = WikiDocument.load(self.wikiroot.path)
+        wiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = wiki
 
         self.application.selectedPage = wiki["Страница 1"]
@@ -407,7 +407,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getTabsCount(), 3)
 
         # Загрузим вики еще раз, чтобы убедиться, что состояние вкладок мы не поменяли
-        otherwiki = WikiDocument.load(self.wikiroot.path)
+        otherwiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = otherwiki
         self.assertEqual(self._tabsController.getTabsCount(), 3)
         self.assertEqual(self.application.selectedPage, otherwiki["Страница 2"])
@@ -423,7 +423,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.wikiroot["Страница 1"].remove()
 
-        otherwiki = WikiDocument.load(self.wikiroot.path)
+        otherwiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = otherwiki
         self.assertEqual(self._tabsController.getTabsCount(), 4)
         self.assertEqual(self._tabsController.getSelection(), 3)
@@ -438,7 +438,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.wikiroot["Страница 1"].moveTo(self.wikiroot["Страница 2"])
 
-        otherwiki = WikiDocument.load(self.wikiroot.path)
+        otherwiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = otherwiki
         self.assertEqual(self._tabsController.getTabsCount(), 3)
         self.assertEqual(self._tabsController.getPage(0), otherwiki["Страница 2/Страница 1"])
@@ -460,7 +460,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 2/Страница 1"])
 
     def testReadOnly(self):
-        wikiReadOnly = WikiDocument.load(self.wikiroot.path, readonly=True)
+        wikiReadOnly = loadNotesTree(self.wikiroot.path, readonly=True)
         self.application.wikiroot = wikiReadOnly
 
         self.application.selectedPage = wikiReadOnly["Страница 1"]
@@ -469,7 +469,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getTabsCount(), 3)
 
         # Загрузим вики еще раз, чтобы убедиться, что состояние вкладок мы не поменяли
-        otherwiki = WikiDocument.load(self.wikiroot.path, readonly=True)
+        otherwiki = loadNotesTree(self.wikiroot.path, readonly=True)
         self.application.wikiroot = otherwiki
         self.assertEqual(self._tabsController.getTabsCount(), 1)
         self.assertEqual(self.application.selectedPage, None)

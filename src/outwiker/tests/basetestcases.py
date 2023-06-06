@@ -9,12 +9,13 @@ from tempfile import NamedTemporaryFile, mkdtemp
 
 import wx
 
+from outwiker.api.core.tree import createNotesTree
+from outwiker.app.owapplication import OutWikerApplication
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from outwiker.gui.owapplication import OutWikerApplication
 from outwiker.gui.tester import Tester
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.pages.html.htmlpage import HtmlPageFactory
@@ -31,7 +32,7 @@ class WikiTestMixin:
     def createWiki(self) -> WikiDocument:
         wikipath = mkdtemp(
             prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
-        return WikiDocument.create(wikipath)
+        return createNotesTree(wikipath)
 
     def destroyWiki(self, wikiroot):
         removeDir(wikiroot.path)
@@ -47,6 +48,7 @@ class BaseWxTestCase(unittest.TestCase):
         if self.mainWindow is not None:
             self.mainWindow.Close()
 
+        wx.SafeYield()
         self._wxapp.MainLoop()
         del self._wxapp
 
@@ -82,11 +84,12 @@ class BaseOutWikerMixin(WikiTestMixin):
 
 
 class BaseOutWikerGUIMixin(BaseOutWikerMixin):
-    def initApplication(self, lang='en'):
+    def initApplication(self, lang='en', enableActionsGui=False):
         super().initApplication(lang)
 
         self.outwiker_app = OutWikerApplication(self.application)
         self.outwiker_app.use_fake_html_render = True
+        self.outwiker_app.enableActionsGui = enableActionsGui
         self.outwiker_app.initMainWindow()
         self.mainWindow = self.outwiker_app.mainWnd
 
@@ -122,8 +125,11 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         """
         pass
 
+    def isEnabledActionsGui(self) -> bool:
+        return False
+
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=self.isEnabledActionsGui())
         self.wikiroot = self.createWiki()
         self.__createWiki()
 

@@ -3,7 +3,7 @@
 from os.path import basename
 import unittest
 
-from outwiker.core.commands import renamePage
+from outwiker.api.app.tree import renamePage
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tester import Tester
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin

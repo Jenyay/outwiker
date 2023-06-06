@@ -5,7 +5,7 @@ import configparser
 
 import wx
 
-from outwiker.core.config import IntegerOption, BooleanOption
+from outwiker.api.core.config import IntegerOption, BooleanOption
 
 from .toolsinfo import ToolsInfo
 
@@ -26,31 +26,30 @@ class ExternalToolsConfig:
 
         # Recent selected format
         DEFAULT_FORMAT = 0
-        DIALOG_SELECTED_FORMAT_OPTION = 'ExecFormat'
+        DIALOG_SELECTED_FORMAT_OPTION = "ExecFormat"
 
         # Show warning
         DEFAULT_WARNING = True
-        WARNING_OPTION = 'ShowExecWarning'
+        WARNING_OPTION = "ShowExecWarning"
 
-        self._dialogWidth = IntegerOption(self._config,
-                                          self._sectionName,
-                                          DIALOG_WIDTH_OPTION,
-                                          DEFAULT_DIALOG_WIDTH)
+        self._dialogWidth = IntegerOption(
+            self._config, self._sectionName, DIALOG_WIDTH_OPTION, DEFAULT_DIALOG_WIDTH
+        )
 
-        self._dialogHeight = IntegerOption(self._config,
-                                           self._sectionName,
-                                           DIALOG_HEIGHT_OPTION,
-                                           DEFAULT_DIALOG_HEIGHT)
+        self._dialogHeight = IntegerOption(
+            self._config, self._sectionName, DIALOG_HEIGHT_OPTION, DEFAULT_DIALOG_HEIGHT
+        )
 
-        self._execFormat = IntegerOption(self._config,
-                                         self._sectionName,
-                                         DIALOG_SELECTED_FORMAT_OPTION,
-                                         DEFAULT_FORMAT)
+        self._execFormat = IntegerOption(
+            self._config,
+            self._sectionName,
+            DIALOG_SELECTED_FORMAT_OPTION,
+            DEFAULT_FORMAT,
+        )
 
-        self._execWarning = BooleanOption(self._config,
-                                          self._sectionName,
-                                          WARNING_OPTION,
-                                          DEFAULT_WARNING)
+        self._execWarning = BooleanOption(
+            self._config, self._sectionName, WARNING_OPTION, DEFAULT_WARNING
+        )
 
     def clearAll(self):
         """
@@ -95,8 +94,7 @@ class ExternalToolsConfig:
         toolsItems = []
 
         while True:
-            paramname = self._toolsItemTemplate.format(
-                index=len(toolsItems) + 1)
+            paramname = self._toolsItemTemplate.format(index=len(toolsItems) + 1)
             try:
                 toolsPath = self._config.get(self._sectionName, paramname)
             except configparser.Error:

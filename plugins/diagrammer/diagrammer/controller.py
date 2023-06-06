@@ -2,11 +2,10 @@
 
 import os.path
 
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo,
-                                                    ButtonInfo)
-from outwiker.pages.wiki.defines import MENU_WIKI
-from outwiker.pages.wiki.wikipage import WikiWikiPage
+from outwiker.api.gui.actions import (ActionsGUIController, ActionGUIInfo,
+                                      ButtonInfo)
+from outwiker.api.pages.wiki.defines import MENU_WIKI
+from outwiker.api.pages.wiki import WikiWikiPage
 
 from .i18n import get_
 from .commanddiagram import CommandDiagram

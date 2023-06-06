@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
-from outwiker.core.attachment import Attachment
-from outwiker.core.htmlformatter import HtmlFormatter
+from outwiker.api.pages.wiki.wikiparser import Command
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.html import HtmlFormatter
 
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
@@ -35,8 +35,8 @@ class CommandSource(Command):
 
      Параметры:
      tabwidth - размер табуляции
-     lang - язык программирования(пока не используется)
-     file - имя прикрепленного файла(с приставкой Attach: или без нее)
+     lang - язык программирования (пока не используется)
+     file - имя прикрепленного файла (с приставкой Attach: или без нее)
      encoding - кодировка для прикрепленного файла
          (используется вместе с параметром file).
          Если кодировка не указана, используется UTF-8
@@ -55,7 +55,6 @@ class CommandSource(Command):
 
         global _
         _ = get_()
-
 
     @property
     def name(self):
@@ -76,7 +75,9 @@ class CommandSource(Command):
         except KeyError:
             sourceText = content
         except IOError:
-            content = _("Source plugin: File '{}' not found").format(getFileName(params_dict[FILE_PARAM_NAME]))
+            content = _("Source plugin: File '{}' not found").format(
+                getFileName(params_dict[FILE_PARAM_NAME])
+            )
             return self._html_formatter.error(content)
         except UnicodeDecodeError:
             content = _("Source plugin: Encoding error")
@@ -163,7 +164,7 @@ class CommandSource(Command):
         нужные стили в заголовок страницы
         """
         from .pygments import highlight
-        from .pygments.formatters import HtmlFormatter
+        from .pygments import formatters
 
         lexermaker = LexerMaker()
         lexer = lexermaker.getLexer(params_dict)
@@ -174,7 +175,7 @@ class CommandSource(Command):
         style = self._getStyle(params_dict)
         cssclass = self._getCssClass(style, parentbg)
 
-        formatter = HtmlFormatter(linenos=linenum, cssclass=cssclass, style=style)
+        formatter = formatters.HtmlFormatter(linenos=linenum, cssclass=cssclass, style=style)
 
         if cssclass not in self.__appendCssClasses:
             sourceStyle = formatter.get_style_defs()

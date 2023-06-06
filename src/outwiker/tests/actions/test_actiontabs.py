@@ -2,8 +2,8 @@
 
 import unittest
 
-from outwiker.actions.tabs import (AddTabAction, CloseTabAction,
-                                   PreviousTabAction, NextTabAction)
+from outwiker.app.actions.tabs import (AddTabAction, CloseTabAction,
+                                       PreviousTabAction, NextTabAction)
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 

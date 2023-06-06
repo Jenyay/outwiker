@@ -2,8 +2,8 @@
 
 import unittest
 
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
@@ -34,7 +34,7 @@ class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
         plugin = self.loader["TestPage"]
 
         path = "testdata/samplewiki"
-        wikiroot = WikiDocument.load(path)
+        wikiroot = loadNotesTree(path)
 
         test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual(type(test_page), plugin.TestPage)
@@ -54,7 +54,7 @@ class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testPageView(self):
         plugin = self.loader["TestPage"]
 
-        wikiroot = WikiDocument.create(self.wikiroot.path)
+        wikiroot = createNotesTree(self.wikiroot.path)
         test_page = plugin.TestPageFactory().create(wikiroot, "Страница 1", [])
 
         self.application.wikiroot = wikiroot
@@ -66,7 +66,7 @@ class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testLoadContent(self):
         plugin = self.loader["TestPage"]
 
-        wikiroot = WikiDocument.create(self.wikiroot.path)
+        wikiroot = createNotesTree(self.wikiroot.path)
         test_page = plugin.TestPageFactory().create(wikiroot, "Страница 1", [])
 
         test_page.content = "Абырвалг"
@@ -82,7 +82,7 @@ class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testChangeContent(self):
         plugin = self.loader["TestPage"]
 
-        wikiroot = WikiDocument.create(self.wikiroot.path)
+        wikiroot = createNotesTree(self.wikiroot.path)
         test_page = plugin.TestPageFactory().create(wikiroot, "Страница 1", [])
         test_page.content = "Абырвалг"
 
@@ -95,7 +95,7 @@ class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
         self.application.wikiroot = None
 
-        wikiroot_other = WikiDocument.load(self.wikiroot.path)
+        wikiroot_other = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = wikiroot_other
         self.application.selectedPage = wikiroot_other["Страница 1"]
 

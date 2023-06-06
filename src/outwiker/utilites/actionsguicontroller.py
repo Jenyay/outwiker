@@ -8,20 +8,20 @@ import os.path
 from outwiker.core.defines import PAGE_MODE_TEXT
 
 
-class ActionGUIInfo(object):
+class ActionGUIInfo:
     def __init__(self, action, menu_id=None, button_info=None):
         self.action = action
         self.menu_id = menu_id
         self.button_info = button_info
 
 
-class ButtonInfo(object):
+class ButtonInfo:
     def __init__(self, toolbar_id, image_fname):
         self.toolbar_id = toolbar_id
         self.image_fname = image_fname
 
 
-class ActionsGUIController(object):
+class ActionsGUIController:
     """
     Class to create buttons at toolbar and menu items for actions
     """

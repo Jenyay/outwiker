@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
 
@@ -14,13 +14,14 @@ class InsertEdgeDialog(BaseDialog):
     """
     Диалог для выбора параметров ребра
     """
+
     def __init__(self, parent):
         super(InsertEdgeDialog, self).__init__(parent)
 
         global _
         _ = get_()
 
-        self.SetTitle(_(u"Insert edge"))
+        self.SetTitle(_("Insert edge"))
 
         self.__createGui()
         self.Fit()
@@ -30,9 +31,7 @@ class InsertEdgeDialog(BaseDialog):
 
     def __createGui(self):
         self._paramsPanel = wx.CollapsiblePane(
-            self,
-            label=_(u"Options"),
-            style=wx.CP_DEFAULT_STYLE | wx.CP_NO_TLW_RESIZE
+            self, label=_("Options"), style=wx.CP_DEFAULT_STYLE | wx.CP_NO_TLW_RESIZE
         )
 
         mainSizer = wx.FlexGridSizer(cols=1)
@@ -45,85 +44,80 @@ class InsertEdgeDialog(BaseDialog):
 
         propFactory = PropertyFactory(self)
 
-        self._firstName = propFactory.createText(self,
-                                                 nameSizer,
-                                                 _(u"First node name"),
-                                                 "firstName")
+        self._firstName = propFactory.createText(
+            self, nameSizer, _("First node name"), "firstName"
+        )
 
-        self._secondName = propFactory.createText(self,
-                                                  nameSizer,
-                                                  _(u"Second node name"),
-                                                  "secondName")
-        mainSizer.Add(nameSizer,
-                      flag=wx.ALL | wx.EXPAND,
-                      border=2)
+        self._secondName = propFactory.createText(
+            self, nameSizer, _("Second node name"), "secondName"
+        )
+        mainSizer.Add(nameSizer, flag=wx.ALL | wx.EXPAND, border=2)
 
         optionsSizer = wx.FlexGridSizer(cols=2)
         optionsSizer.AddGrowableCol(0)
         optionsSizer.AddGrowableCol(1)
 
-        propFactory.createStyle(self._paramsPanel.GetPane(),
-                                optionsSizer,
-                                _(u"Line style"))
+        propFactory.createStyle(
+            self._paramsPanel.GetPane(), optionsSizer, _("Line style")
+        )
 
-        propFactory.createBoolean(self._paramsPanel.GetPane(),
-                                  optionsSizer,
-                                  _(u"Thick line"),
-                                  "thick")
+        propFactory.createBoolean(
+            self._paramsPanel.GetPane(), optionsSizer, _("Thick line"), "thick"
+        )
 
-        propFactory.createArrowStyle(self._paramsPanel.GetPane(),
-                                     optionsSizer,
-                                     _(u"Arrow style"))
+        propFactory.createArrowStyle(
+            self._paramsPanel.GetPane(), optionsSizer, _("Arrow style")
+        )
 
-        propFactory.createColor(self._paramsPanel.GetPane(),
-                                optionsSizer,
-                                _(u"Set line color"),
-                                "black",
-                                "lineColor",
-                                "isLineColorChanged")
+        propFactory.createColor(
+            self._paramsPanel.GetPane(),
+            optionsSizer,
+            _("Set line color"),
+            "black",
+            "lineColor",
+            "isLineColorChanged",
+        )
 
-        propFactory.createText(self._paramsPanel.GetPane(),
-                               optionsSizer,
-                               _(u"Label"),
-                               "label")
+        propFactory.createText(
+            self._paramsPanel.GetPane(), optionsSizer, _("Label"), "label"
+        )
 
-        propFactory.createInteger(self._paramsPanel.GetPane(),
-                                  optionsSizer,
-                                  _(u"Set font size"),
-                                  "fontSize",
-                                  "isFontSizeChanged",
-                                  1,
-                                  100,
-                                  11)
+        propFactory.createInteger(
+            self._paramsPanel.GetPane(),
+            optionsSizer,
+            _("Set font size"),
+            "fontSize",
+            "isFontSizeChanged",
+            1,
+            100,
+            11,
+        )
 
-        propFactory.createColor(self._paramsPanel.GetPane(),
-                                optionsSizer,
-                                _(u"Set text color"),
-                                "black",
-                                "textColor",
-                                "isTextColorChanged")
+        propFactory.createColor(
+            self._paramsPanel.GetPane(),
+            optionsSizer,
+            _("Set text color"),
+            "black",
+            "textColor",
+            "isTextColorChanged",
+        )
 
-        propFactory.createBoolean(self._paramsPanel.GetPane(),
-                                  optionsSizer,
-                                  _(u"Folded"),
-                                  "folded")
+        propFactory.createBoolean(
+            self._paramsPanel.GetPane(), optionsSizer, _("Folded"), "folded"
+        )
 
         helpLink = wx.adv.HyperlinkCtrl(
             self,
             -1,
             _("Open the documentation page"),
-            "http://blockdiag.com/en/blockdiag/attributes/edge.attributes.html"
+            "http://blockdiag.com/en/blockdiag/attributes/edge.attributes.html",
         )
 
         self._paramsPanel.GetPane().SetSizer(optionsSizer)
 
-        mainSizer.Add(self._paramsPanel,
-                      flag=wx.EXPAND | wx.ALL,
-                      border=2)
+        mainSizer.Add(self._paramsPanel, flag=wx.EXPAND | wx.ALL, border=2)
 
-        mainSizer.Add(helpLink,
-                      flag=wx.ALIGN_LEFT | wx.ALL,
-                      border=4)
+        mainSizer.Add(helpLink, flag=wx.ALIGN_LEFT | wx.ALL, border=4)
 
         propFactory.createOkCancelButtons(mainSizer)
 
@@ -156,27 +150,22 @@ class InsertEdgeControllerBase(object, metaclass=ABCMeta):
         """
         firstname = self._getFirstName(self._dialog).strip()
         if len(firstname) == 0:
-            firstname = _(u"Node1")
+            firstname = _("Node1")
 
         secondname = self._getSecondName(self._dialog).strip()
         if len(secondname) == 0:
-            secondname = _(u"Node2")
+            secondname = _("Node2")
 
         edge = self.getEdge()
         params = self._getParamString(self._dialog).strip()
 
         if len(params) == 0:
-            return u"{firstname} {edge} {secondname}".format(
-                firstname=firstname,
-                secondname=secondname,
-                edge=edge
+            return "{firstname} {edge} {secondname}".format(
+                firstname=firstname, secondname=secondname, edge=edge
             )
         else:
-            return u"{firstname} {edge} {secondname} [{params}]".format(
-                firstname=firstname,
-                secondname=secondname,
-                edge=edge,
-                params=params
+            return "{firstname} {edge} {secondname} [{params}]".format(
+                firstname=firstname, secondname=secondname, edge=edge, params=params
             )
 
     def _getParamString(self, dialog):
@@ -193,8 +182,8 @@ class InsertEdgeControllerBase(object, metaclass=ABCMeta):
         return ", ".join([param for param in params if len(param.strip()) != 0])
 
     def __getNameNotation(self, name):
-        if u" " in name:
-            return u'"{}"'.format(name)
+        if " " in name:
+            return '"{}"'.format(name)
 
         return name
 
@@ -205,67 +194,75 @@ class InsertEdgeControllerBase(object, metaclass=ABCMeta):
         return self.__getNameNotation(dialog.secondName)
 
     def _getLabelParam(self, dialog):
-        return u'label = "{}"'.format(dialog.label) if len(dialog.label) != 0 else u""
+        return 'label = "{}"'.format(dialog.label) if len(dialog.label) != 0 else ""
 
     def _getFontSizeParam(self, dialog):
-        return u'fontsize = {}'.format(dialog.fontSize) if dialog.isFontSizeChanged else u""
+        return (
+            "fontsize = {}".format(dialog.fontSize) if dialog.isFontSizeChanged else ""
+        )
 
     def _getLineStyleParam(self, dialog):
         """
         Возвращает строку с параметром, задающим стиль линии
         """
-        style = dialog.style.lower().strip().replace(u" ", u"")
+        style = dialog.style.lower().strip().replace(" ", "")
 
         if len(style) == 0:
-            return u""
+            return ""
 
         if style[0].isdigit():
-            return u'style = "{}"'.format(style)
+            return 'style = "{}"'.format(style)
 
-        return u"style = {}".format(style)
+        return "style = {}".format(style)
 
     def _getArrowStyleParam(self, dialog):
         """
         Возвращает строку с параметром, задающим стиль линии
         """
-        style = dialog.arrowStyle.lower().strip().replace(u" ", u"")
+        style = dialog.arrowStyle.lower().strip().replace(" ", "")
 
         if len(style) == 0:
-            return u""
+            return ""
 
         if style[0].isdigit():
-            return u'hstyle = "{}"'.format(style)
+            return 'hstyle = "{}"'.format(style)
 
-        return u"hstyle = {}".format(style)
+        return "hstyle = {}".format(style)
 
     def _getLineColorParam(self, dialog):
-        return u'color = "{}"'.format(dialog.lineColor) if dialog.isLineColorChanged else u""
+        return (
+            'color = "{}"'.format(dialog.lineColor) if dialog.isLineColorChanged else ""
+        )
 
     def _getTextColorParam(self, dialog):
-        return u'textcolor = "{}"'.format(dialog.textColor) if dialog.isTextColorChanged else u""
+        return (
+            'textcolor = "{}"'.format(dialog.textColor)
+            if dialog.isTextColorChanged
+            else ""
+        )
 
     def _getThickParam(self, dialog):
-        return u"thick" if dialog.thick else u""
+        return "thick" if dialog.thick else ""
 
     def _getFoldedParam(self, dialog):
-        return u"folded" if dialog.folded else u""
+        return "folded" if dialog.folded else ""
 
 
 class InsertEdgeControllerNone(InsertEdgeControllerBase):
     def getEdge(self):
-        return u"--"
+        return "--"
 
 
 class InsertEdgeControllerLeft(InsertEdgeControllerBase):
     def getEdge(self):
-        return u"<-"
+        return "<-"
 
 
 class InsertEdgeControllerRight(InsertEdgeControllerBase):
     def getEdge(self):
-        return u"->"
+        return "->"
 
 
 class InsertEdgeControllerBoth(InsertEdgeControllerBase):
     def getEdge(self):
-        return u"<->"
+        return "<->"

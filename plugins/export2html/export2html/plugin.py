@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .controller import Controller
 from .i18n import set_
@@ -11,7 +11,7 @@ class PluginExport2Html(Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
+        super().__init__(application)
         self.__controller = Controller(self, application)
 
     @property

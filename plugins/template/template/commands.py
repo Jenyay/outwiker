@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 
 
 class CommandPlugin(Command):
-    """
-    """
+    """ """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
         """
-        Command.__init__(self, parser)
+        super().__init__(parser)
 
     @property
     def name(self):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"PluginCommand"
+        return "PluginCommand"
 
     def execute(self, params, content):
         """
@@ -27,4 +27,4 @@ class CommandPlugin(Command):
         """
         params_dict = Command.parseParams(params)
 
-        return u"Plugin Command Result"
+        return "Plugin Command Result"

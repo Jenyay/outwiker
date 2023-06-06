@@ -6,19 +6,12 @@ import os
 import wx
 
 from outwiker.actions.polyactionsid import *
-from outwiker.core.commands import insertCurrentDate
-from outwiker.core.defines import (PAGE_MODE_TEXT,
-                                   PAGE_MODE_PREVIEW,
-                                   PAGE_ATTACH_DIR)
+from outwiker.app.services.texteditor import insertCurrentDate
+from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW, PAGE_ATTACH_DIR
 from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 from outwiker.gui.htmltexteditor import HtmlTextEditor
-from outwiker.gui.tabledialog import TableDialog
-from outwiker.gui.tablerowsdialog import TableRowsDialog
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
-from outwiker.pages.html.tabledialogcontroller import (
-    TableDialogController,
-    TableRowsDialogController
-)
+from outwiker.pages.html.guitools import insertTable, insertTableRows
 
 from .actions.autolinewrap import HtmlAutoLineWrap
 from .actions.link import insertLink
@@ -26,28 +19,28 @@ from .actions.switchcoderesult import SwitchCodeResultAction
 from . import defines
 
 
-logger = logging.getLogger('outwiker.pages.html.htmlpageview')
+logger = logging.getLogger("outwiker.pages.html.htmlpageview")
 
 
 class HtmlPageView(BaseHtmlPanel):
     def __init__(self, parent, application):
-        logger.debug('HtmlPageView creation started')
+        logger.debug("HtmlPageView creation started")
         super().__init__(parent, application)
 
         self.__HTML_MENU_INDEX = 7
-        self._menuName = _(u"HTML")
+        self._menuName = _("HTML")
 
         self._toolbars = [
-            (defines.TOOLBAR_HTML_GENERAL, _(u"HTML")),
-            (defines.TOOLBAR_HTML_HEADING, _(u"Heading")),
-            (defines.TOOLBAR_HTML_FONT, _(u"Font")),
-            (defines.TOOLBAR_HTML_ALIGN, _(u"Align")),
-            (defines.TOOLBAR_HTML_TABLE, _(u"Table")),
+            (defines.TOOLBAR_HTML_GENERAL, _("HTML")),
+            (defines.TOOLBAR_HTML_HEADING, _("Heading")),
+            (defines.TOOLBAR_HTML_FONT, _("Font")),
+            (defines.TOOLBAR_HTML_ALIGN, _("Align")),
+            (defines.TOOLBAR_HTML_TABLE, _("Table")),
         ]
         for toolbar_id, title in self._toolbars:
-            self.mainWindow.toolbars.createToolBar(toolbar_id,
-                                                   title,
-                                                   order=TOOLBAR_ORDER_TEXT)
+            self.mainWindow.toolbars.createToolBar(
+                toolbar_id, title, order=TOOLBAR_ORDER_TEXT
+            )
 
         # Список используемых полиморфных действий
         self.__polyActions = [
@@ -91,14 +84,13 @@ class HtmlPageView(BaseHtmlPanel):
         # А еще их надо дизаблить при переходе на вкладку просмотра результата
         # Не убираю пустой список, поскольку в будущем могут появиться
         # нестандартные действия, специфические только для HTML-страниц
-        self.__htmlNotationActions = [
-        ]
+        self.__htmlNotationActions = []
 
         self.__createCustomTools()
         self.mainWindow.UpdateAuiManager()
 
         self._application.onPageModeChange += self.onTabChanged
-        logger.debug('HtmlPageView creation ended')
+        logger.debug("HtmlPageView creation ended")
 
     def getTextEditor(self):
         return HtmlTextEditor
@@ -176,20 +168,17 @@ class HtmlPageView(BaseHtmlPanel):
         toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_GENERAL]
         actionController = self._application.actionController
 
-        actionController.appendMenuCheckItem(HtmlAutoLineWrap.stringId,
-                                             self.__htmlMenu)
+        actionController.appendMenuCheckItem(HtmlAutoLineWrap.stringId, self.__htmlMenu)
         actionController.appendToolbarCheckButton(
-            HtmlAutoLineWrap.stringId,
-            toolbar,
-            image,
-            fullUpdate=False)
+            HtmlAutoLineWrap.stringId, toolbar, image, fullUpdate=False
+        )
         self.__updateLineWrapTools()
 
     def __updateLineWrapTools(self):
         if self._currentpage is not None:
             self._application.actionController.check(
-                HtmlAutoLineWrap.stringId,
-                self._currentpage.autoLineWrap)
+                HtmlAutoLineWrap.stringId, self._currentpage.autoLineWrap
+            )
 
     def __createCustomTools(self):
         """
@@ -209,12 +198,12 @@ class HtmlPageView(BaseHtmlPanel):
         self.__createLineWrapTools()
         self.toolsMenu.AppendSeparator()
 
-        self.__htmlMenu.AppendSubMenu(self.__headingMenu, _(u"Heading"))
-        self.__htmlMenu.AppendSubMenu(self.__fontMenu, _(u"Font"))
-        self.__htmlMenu.AppendSubMenu(self.__alignMenu, _(u"Alignment"))
-        self.__htmlMenu.AppendSubMenu(self.__formatMenu, _(u"Formatting"))
-        self.__htmlMenu.AppendSubMenu(self.__listMenu, _(u"Lists"))
-        self.__htmlMenu.AppendSubMenu(self.__tableMenu, _(u"Tables"))
+        self.__htmlMenu.AppendSubMenu(self.__headingMenu, _("Heading"))
+        self.__htmlMenu.AppendSubMenu(self.__fontMenu, _("Font"))
+        self.__htmlMenu.AppendSubMenu(self.__alignMenu, _("Alignment"))
+        self.__htmlMenu.AppendSubMenu(self.__formatMenu, _("Formatting"))
+        self.__htmlMenu.AppendSubMenu(self.__listMenu, _("Lists"))
+        self.__htmlMenu.AppendSubMenu(self.__tableMenu, _("Tables"))
 
         self.__addFontTools()
         self.__addAlignTools()
@@ -228,14 +217,12 @@ class HtmlPageView(BaseHtmlPanel):
         self._addRenderTools()
 
         mainMenu = self.mainWindow.menuController.getRootMenu()
-        mainMenu.Insert(self.__HTML_MENU_INDEX,
-                        self.__htmlMenu,
-                        self._menuName)
+        mainMenu.Insert(self.__HTML_MENU_INDEX, self.__htmlMenu, self._menuName)
 
     def _addRenderTools(self):
         self._application.actionController.appendMenuItem(
-            SwitchCodeResultAction.stringId,
-            self.toolsMenu)
+            SwitchCodeResultAction.stringId, self.toolsMenu
+        )
 
     def __addFontTools(self):
         """
@@ -247,80 +234,94 @@ class HtmlPageView(BaseHtmlPanel):
 
         # Полужирный шрифт
         actionController.getAction(BOLD_STR_ID).setFunc(
-            lambda param: self.turnText(u"<b>", u"</b>"))
+            lambda param: self.turnText("<b>", "</b>")
+        )
 
         actionController.appendMenuItem(BOLD_STR_ID, menu)
         actionController.appendToolbarButton(
             BOLD_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_bold.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Курсивный шрифт
         actionController.getAction(ITALIC_STR_ID).setFunc(
-            lambda param: self.turnText(u"<i>", u"</i>"))
+            lambda param: self.turnText("<i>", "</i>")
+        )
 
         actionController.appendMenuItem(ITALIC_STR_ID, menu)
         actionController.appendToolbarButton(
             ITALIC_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_italic.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Полужирный курсивный шрифт
         actionController.getAction(BOLD_ITALIC_STR_ID).setFunc(
-            lambda param: self.turnText(u"<b><i>", u"</i></b>"))
+            lambda param: self.turnText("<b><i>", "</i></b>")
+        )
 
         actionController.appendMenuItem(BOLD_ITALIC_STR_ID, menu)
         actionController.appendToolbarButton(
             BOLD_ITALIC_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_bold_italic.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Подчеркнутый шрифт
         actionController.getAction(UNDERLINE_STR_ID).setFunc(
-            lambda param: self.turnText(u"<u>", u"</u>"))
+            lambda param: self.turnText("<u>", "</u>")
+        )
 
         actionController.appendMenuItem(UNDERLINE_STR_ID, menu)
         actionController.appendToolbarButton(
             UNDERLINE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_underline.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Зачеркнутый шрифт
         actionController.getAction(STRIKE_STR_ID).setFunc(
-            lambda param: self.turnText(u"<strike>", u"</strike>"))
+            lambda param: self.turnText("<strike>", "</strike>")
+        )
 
         actionController.appendMenuItem(STRIKE_STR_ID, menu)
         actionController.appendToolbarButton(
             STRIKE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_strikethrough.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Нижний индекс
         actionController.getAction(SUBSCRIPT_STR_ID).setFunc(
-            lambda param: self.turnText(u"<sub>", u"</sub>"))
+            lambda param: self.turnText("<sub>", "</sub>")
+        )
 
         actionController.appendMenuItem(SUBSCRIPT_STR_ID, menu)
         actionController.appendToolbarButton(
             SUBSCRIPT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_subscript.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Верхний индекс
         actionController.getAction(SUPERSCRIPT_STR_ID).setFunc(
-            lambda param: self.turnText(u"<sup>", u"</sup>"))
+            lambda param: self.turnText("<sup>", "</sup>")
+        )
 
         actionController.appendMenuItem(SUPERSCRIPT_STR_ID, menu)
         actionController.appendToolbarButton(
             SUPERSCRIPT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_superscript.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
     def __addAlignTools(self):
         """
@@ -332,49 +333,55 @@ class HtmlPageView(BaseHtmlPanel):
 
         # Выравнивание по левому краю
         actionController.getAction(ALIGN_LEFT_STR_ID).setFunc(
-            lambda param: self.turnText(u'<div align="left">', u'</div>'))
+            lambda param: self.turnText('<div align="left">', "</div>")
+        )
 
-        actionController.appendMenuItem(
-            ALIGN_LEFT_STR_ID,
-            menu)
+        actionController.appendMenuItem(ALIGN_LEFT_STR_ID, menu)
         actionController.appendToolbarButton(
             ALIGN_LEFT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_align_left.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Выравнивание по центру
         actionController.getAction(ALIGN_CENTER_STR_ID).setFunc(
-            lambda param: self.turnText(u'<div align="center">', u'</div>'))
+            lambda param: self.turnText('<div align="center">', "</div>")
+        )
 
         actionController.appendMenuItem(ALIGN_CENTER_STR_ID, menu)
         actionController.appendToolbarButton(
             ALIGN_CENTER_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_align_center.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Выравнивание по правому краю
         actionController.getAction(ALIGN_RIGHT_STR_ID).setFunc(
-            lambda param: self.turnText(u'<div align="right">', u'</div>'))
+            lambda param: self.turnText('<div align="right">', "</div>")
+        )
 
         actionController.appendMenuItem(ALIGN_RIGHT_STR_ID, menu)
         actionController.appendToolbarButton(
             ALIGN_RIGHT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_align_right.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Выравнивание по ширине
         actionController.getAction(ALIGN_JUSTIFY_STR_ID).setFunc(
-            lambda param: self.turnText(u'<div align="justify">', u'</div>'))
+            lambda param: self.turnText('<div align="justify">', "</div>")
+        )
 
         actionController.appendMenuItem(ALIGN_JUSTIFY_STR_ID, menu)
         actionController.appendToolbarButton(
             ALIGN_JUSTIFY_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_align_justify.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
     def __addTableTools(self):
         """
@@ -392,30 +399,32 @@ class HtmlPageView(BaseHtmlPanel):
             TABLE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "table.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Вставить строку таблицы
-        actionController.getAction(TABLE_ROW_STR_ID).setFunc(
-            self._insertTableRows
-        )
+        actionController.getAction(TABLE_ROW_STR_ID).setFunc(self._insertTableRows)
 
         actionController.appendMenuItem(TABLE_ROW_STR_ID, menu)
         actionController.appendToolbarButton(
             TABLE_ROW_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "table_insert_row.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Вставить ячейку таблицы
         actionController.getAction(TABLE_CELL_STR_ID).setFunc(
-            lambda param: self.turnText(u'<td>', u'</td>'))
+            lambda param: self.turnText("<td>", "</td>")
+        )
 
         actionController.appendMenuItem(TABLE_CELL_STR_ID, menu)
         actionController.appendToolbarButton(
             TABLE_CELL_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "table_insert_cell.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
     def __addListTools(self):
         """
@@ -427,25 +436,33 @@ class HtmlPageView(BaseHtmlPanel):
 
         # Ненумерованный список
         actionController.getAction(LIST_BULLETS_STR_ID).setFunc(
-            lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(u'<ul>\n', u'</ul>', u'<li>', u'</li>'))
+            lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(
+                "<ul>\n", "</ul>", "<li>", "</li>"
+            )
+        )
 
         actionController.appendMenuItem(LIST_BULLETS_STR_ID, menu)
         actionController.appendToolbarButton(
             LIST_BULLETS_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_list_bullets.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Нумерованный список
         actionController.getAction(LIST_NUMBERS_STR_ID).setFunc(
-            lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(u'<ol>\n', u'</ol>', u'<li>', u'</li>'))
+            lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(
+                "<ol>\n", "</ol>", "<li>", "</li>"
+            )
+        )
 
         actionController.appendMenuItem(LIST_NUMBERS_STR_ID, menu)
         actionController.appendToolbarButton(
             LIST_NUMBERS_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_list_numbers.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
     def __addHTools(self):
         """
@@ -456,64 +473,76 @@ class HtmlPageView(BaseHtmlPanel):
         actionController = self._application.actionController
 
         actionController.getAction(HEADING_1_STR_ID).setFunc(
-            lambda param: self.turnText(u"<h1>", u"</h1>"))
+            lambda param: self.turnText("<h1>", "</h1>")
+        )
 
         actionController.getAction(HEADING_2_STR_ID).setFunc(
-            lambda param: self.turnText(u"<h2>", u"</h2>"))
+            lambda param: self.turnText("<h2>", "</h2>")
+        )
 
         actionController.getAction(HEADING_3_STR_ID).setFunc(
-            lambda param: self.turnText(u"<h3>", u"</h3>"))
+            lambda param: self.turnText("<h3>", "</h3>")
+        )
 
         actionController.getAction(HEADING_4_STR_ID).setFunc(
-            lambda param: self.turnText(u"<h4>", u"</h4>"))
+            lambda param: self.turnText("<h4>", "</h4>")
+        )
 
         actionController.getAction(HEADING_5_STR_ID).setFunc(
-            lambda param: self.turnText(u"<h5>", u"</h5>"))
+            lambda param: self.turnText("<h5>", "</h5>")
+        )
 
         actionController.getAction(HEADING_6_STR_ID).setFunc(
-            lambda param: self.turnText(u"<h6>", u"</h6>"))
+            lambda param: self.turnText("<h6>", "</h6>")
+        )
 
         actionController.appendMenuItem(HEADING_1_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_1_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_1.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_2_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_2_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_2.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_3_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_3_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_3.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_4_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_4_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_4.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_5_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_5_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_5.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_6_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_6_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_heading_6.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
     def __addFormatTools(self):
         toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_GENERAL]
@@ -522,51 +551,60 @@ class HtmlPageView(BaseHtmlPanel):
 
         # Preformat
         actionController.getAction(PREFORMAT_STR_ID).setFunc(
-            lambda param: self.turnText(u"<pre>", u"</pre>"))
+            lambda param: self.turnText("<pre>", "</pre>")
+        )
         actionController.appendMenuItem(PREFORMAT_STR_ID, menu)
 
         # Comment
         actionController.getAction(COMMENT_STR_ID).setFunc(
-            lambda param: self.turnText(u"<!--", u"-->"))
+            lambda param: self.turnText("<!--", "-->")
+        )
         actionController.appendMenuItem(COMMENT_STR_ID, menu)
         actionController.appendToolbarButton(
             COMMENT_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "comment.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Цитирование
         actionController.getAction(QUOTE_STR_ID).setFunc(
-            lambda param: self.turnText(u"<blockquote>", u"</blockquote>"))
+            lambda param: self.turnText("<blockquote>", "</blockquote>")
+        )
 
         actionController.appendMenuItem(QUOTE_STR_ID, menu)
         actionController.appendToolbarButton(
             QUOTE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "quote.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Mark
         actionController.getAction(MARK_STR_ID).setFunc(
-            lambda param: self.turnText(u"<mark>", u"</mark>"))
+            lambda param: self.turnText("<mark>", "</mark>")
+        )
 
         actionController.appendMenuItem(MARK_STR_ID, menu)
         actionController.appendToolbarButton(
             MARK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "mark.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Код
         actionController.getAction(CODE_STR_ID).setFunc(
-            lambda param: self.turnText(u'<code>', u'</code>'))
+            lambda param: self.turnText("<code>", "</code>")
+        )
 
         actionController.appendMenuItem(CODE_STR_ID, menu)
         actionController.appendToolbarButton(
             CODE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "code.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
     def __addOtherTools(self):
         """
@@ -578,76 +616,88 @@ class HtmlPageView(BaseHtmlPanel):
 
         # Вставить картинку
         actionController.getAction(IMAGE_STR_ID).setFunc(
-            lambda param: self.turnText(u'<img src="', u'"/>'))
+            lambda param: self.turnText('<img src="', '"/>')
+        )
 
         actionController.appendMenuItem(IMAGE_STR_ID, menu)
         actionController.appendToolbarButton(
             IMAGE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "image.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Вставить ссылку
         actionController.getAction(LINK_STR_ID).setFunc(
-            lambda param: insertLink(self._application))
+            lambda param: insertLink(self._application)
+        )
 
         actionController.appendMenuItem(LINK_STR_ID, menu)
         actionController.appendToolbarButton(
             LINK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "link.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Вставить якорь
         actionController.getAction(ANCHOR_STR_ID).setFunc(
-            lambda param: self.turnText(u'<a name="', u'"></a>'))
+            lambda param: self.turnText('<a name="', '"></a>')
+        )
 
         actionController.appendMenuItem(ANCHOR_STR_ID, menu)
         actionController.appendToolbarButton(
             ANCHOR_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "anchor.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Вставить горизонтальную линию
         actionController.getAction(HORLINE_STR_ID).setFunc(
-            lambda param: self.replaceText(u"<hr>"))
+            lambda param: self.replaceText("<hr>")
+        )
 
         actionController.appendMenuItem(HORLINE_STR_ID, menu)
         actionController.appendToolbarButton(
             HORLINE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_horizontalrule.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Вставка разрыва страницы
         actionController.getAction(LINE_BREAK_STR_ID).setFunc(
-            lambda param: self.replaceText(u"<br>\n"))
+            lambda param: self.replaceText("<br>\n")
+        )
 
         actionController.appendMenuItem(LINE_BREAK_STR_ID, menu)
         actionController.appendToolbarButton(
             LINE_BREAK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "linebreak.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Текущая дата
         actionController.getAction(CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow,
-                                            self.codeEditor))
+            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
+        )
 
         actionController.appendMenuItem(CURRENT_DATE, menu)
         actionController.appendToolbarButton(
             CURRENT_DATE,
             toolbar,
             os.path.join(self.imagesDir, "date.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         self.__htmlMenu.AppendSeparator()
 
         # Преобразовать символы в их HTML-представление
         actionController.getAction(HTML_ESCAPE_STR_ID).setFunc(
-            lambda param: self.escapeHtml())
+            lambda param: self.escapeHtml()
+        )
         actionController.appendMenuItem(HTML_ESCAPE_STR_ID, menu)
 
     def _addSeparator(self):
@@ -663,29 +713,14 @@ class HtmlPageView(BaseHtmlPanel):
         mainMenu.Remove(index)
 
     def _insertTable(self, param):
-        editor = self.codeEditor
-        parent = self._application.mainWindow
-
-        with TableDialog(parent) as dlg:
-            controller = TableDialogController(dlg, self._application.config)
-            if controller.showDialog() == wx.ID_OK:
-                result = controller.getResult()
-                editor.replaceText(result)
+        insertTable(self._application, self.codeEditor)
 
     def _insertTableRows(self, param):
-        editor = self.codeEditor
-        parent = self._application.mainWindow
-
-        with TableRowsDialog(parent) as dlg:
-            controller = TableRowsDialogController(dlg,
-                                                   self._application.config)
-            if controller.showDialog() == wx.ID_OK:
-                result = controller.getResult()
-                editor.replaceText(result)
+        insertTableRows(self._application, self.codeEditor)
 
     def _getAttachString(self, fnames):
         """
         Функция возвращает текст, который будет вставлен на страницу при
         вставке выбранных прикрепленных файлов из панели вложений
         """
-        return ' '.join([PAGE_ATTACH_DIR + "/" + fname for fname in fnames])
+        return " ".join([PAGE_ATTACH_DIR + "/" + fname for fname in fnames])

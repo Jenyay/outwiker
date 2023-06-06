@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .guicontroller import GuiController
 from .i18n import set_
@@ -21,15 +21,15 @@ class PluginHackPage(Plugin):
 
     @property
     def name(self):
-        return u"HackPage"
+        return "HackPage"
 
     @property
     def description(self):
-        return _(u"The HackPage plugin allow to edit hidden page properties")
+        return _("The HackPage plugin allow to edit hidden page properties")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/HackPageEn")
+        return _("https://jenyay.net/Outwiker/HackPageEn")
 
     def initialize(self):
         set_(self.gettext)

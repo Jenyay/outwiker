@@ -1,20 +1,20 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 # Имя параметра для задания имени счетчика
-NAME_PARAM_NAME = u"name"
+NAME_PARAM_NAME = "name"
 
 # Имя параметра для задания начального значения счетчика
-START_PARAM_NAME = u"start"
+START_PARAM_NAME = "start"
 
 # Имя параметра для задания родительского счетчика
-PARENT_PARAM_NAME = u"parent"
+PARENT_PARAM_NAME = "parent"
 
 # Имя параметра для указания, что данный счетчик нужно скрыть,
 # но при этом увеличить его значение
-HIDE_PARAM_NAME = u"hide"
+HIDE_PARAM_NAME = "hide"
 
 # Имя параметра для задания шага изменения счетчика
-STEP_PARAM_NAME = u"step"
+STEP_PARAM_NAME = "step"
 
 # Имя параметра для задания разделителя между своим значением и родительским
-SEPARATOR_PARAM_NAME = u"separator"
+SEPARATOR_PARAM_NAME = "separator"

@@ -9,12 +9,12 @@ import sys
 import wx
 
 import outwiker
+from outwiker.app.owapplication import OutWikerApplication
+from outwiker.app.core.starter import Starter, StarterExit
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_DEBUG
 from outwiker.core.system import getOS, getConfigPath
-from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.system import getSpecialDirList
-from outwiker.gui.owapplication import OutWikerApplication
 
 
 logger = logging.getLogger('outwiker')

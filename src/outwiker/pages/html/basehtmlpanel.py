@@ -6,16 +6,21 @@ import os
 import wx
 import wx.aui
 
-from outwiker.actions.search import (SearchAction,
-                                     SearchNextAction,
-                                     SearchPrevAction,
-                                     SearchAndReplaceAction)
+from outwiker.app.actions.search import (
+    SearchAction,
+    SearchNextAction,
+    SearchPrevAction,
+    SearchAndReplaceAction,
+)
+from outwiker.app.gui.mainwindowtools import setStatusText
 import outwiker.actions.polyactionsid as polyactions
+from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import MessageBox, setStatusText
-from outwiker.core.defines import (PAGE_MODE_TEXT,
-                                   PAGE_MODE_PREVIEW,
-                                   REGISTRY_PAGE_CURSOR_POSITION)
+from outwiker.core.defines import (
+    PAGE_MODE_TEXT,
+    PAGE_MODE_PREVIEW,
+    REGISTRY_PAGE_CURSOR_POSITION,
+)
 from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams
 from outwiker.core.system import getImagesDir
 from outwiker.gui.basetextpanel import BaseTextPanel
@@ -24,7 +29,7 @@ from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.utilites.textfile import readTextFile
 
 
-logger = logging.getLogger('outwiker.pages.basehtmlpanel')
+logger = logging.getLogger("outwiker.pages.basehtmlpanel")
 
 
 class BaseHtmlPanel(BaseTextPanel):
@@ -32,9 +37,10 @@ class BaseHtmlPanel(BaseTextPanel):
     CODE_PAGE_INDEX = 0
     RESULT_PAGE_INDEX = 1
 
-    def __init__(self, parent: 'outwiker.gui.currentpagepanel.CurrentPagePanel',
-                 application):
-        logger.debug('BaseHtmlPanel creation started')
+    def __init__(
+        self, parent: "outwiker.app.gui.currentpagepanel.CurrentPagePanel", application
+    ):
+        logger.debug("BaseHtmlPanel creation started")
         super().__init__(parent, application)
 
         # Предыдущее содержимое результирующего HTML, чтобы не переписывать
@@ -57,40 +63,40 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self.__do_layout()
 
-        self.Bind(wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED,
-                  self._onTabChanged,
-                  self.notebook)
+        self.Bind(
+            wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self._onTabChanged, self.notebook
+        )
         self.Bind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
         self._application.onPageUpdate += self._onPageUpdate
         self._bindHotkeys()
-        logger.debug('BaseHtmlPanel creation ended')
+        logger.debug("BaseHtmlPanel creation ended")
 
     def _bindHotkeys(self):
         actionController = self._application.actionController
 
         actionController.getAction(polyactions.SWITCH_TO_CODE_TAB_ID).setFunc(
-            lambda param: self.SetPageMode(PAGE_MODE_TEXT))
+            lambda param: self.SetPageMode(PAGE_MODE_TEXT)
+        )
         actionController.appendHotkey(polyactions.SWITCH_TO_CODE_TAB_ID)
 
         actionController.getAction(polyactions.SWITCH_TO_PREVIEW_TAB_ID).setFunc(
-            lambda param: self.SetPageMode(PAGE_MODE_PREVIEW))
+            lambda param: self.SetPageMode(PAGE_MODE_PREVIEW)
+        )
         actionController.appendHotkey(polyactions.SWITCH_TO_PREVIEW_TAB_ID)
 
     def _unbindHotkeys(self):
         actionController = self._application.actionController
 
-        actionController.getAction(
-            polyactions.SWITCH_TO_CODE_TAB_ID).setFunc(None)
+        actionController.getAction(polyactions.SWITCH_TO_CODE_TAB_ID).setFunc(None)
         actionController.removeHotkey(polyactions.SWITCH_TO_CODE_TAB_ID)
 
-        actionController.getAction(
-            polyactions.SWITCH_TO_PREVIEW_TAB_ID).setFunc(None)
+        actionController.getAction(polyactions.SWITCH_TO_PREVIEW_TAB_ID).setFunc(None)
         actionController.removeHotkey(polyactions.SWITCH_TO_PREVIEW_TAB_ID)
 
     def GetPageMode(self):
-        '''
+        """
         Return the current page mode.
-        '''
+        """
         if self._selectedPageIndex == self.CODE_PAGE_INDEX:
             return PAGE_MODE_TEXT
         elif self._selectedPageIndex == self.RESULT_PAGE_INDEX:
@@ -106,9 +112,11 @@ class BaseHtmlPanel(BaseTextPanel):
             raise ValueError()
 
     def Clear(self):
-        self.Unbind(wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED,
-                    source=self.notebook,
-                    handler=self._onTabChanged)
+        self.Unbind(
+            wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED,
+            source=self.notebook,
+            handler=self._onTabChanged,
+        )
         self.Unbind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
         self._application.onPageUpdate -= self._onPageUpdate
 
@@ -189,8 +197,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
         reg = page.root.registry.get_page_registry(page)
         try:
-            cursor_position = reg.getint(REGISTRY_PAGE_CURSOR_POSITION,
-                                         default=0)
+            cursor_position = reg.getint(REGISTRY_PAGE_CURSOR_POSITION, default=0)
             self.SetCursorPosition(cursor_position)
         except (KeyError, ValueError):
             pass
@@ -224,8 +231,10 @@ class BaseHtmlPanel(BaseTextPanel):
     def _getDefaultPage(self):
         assert self._currentpage is not None
 
-        if (len(self._currentpage.content) > 0 or
-                len(Attachment(self._currentpage).attachmentFull) > 0):
+        if (
+            len(self._currentpage.content) > 0
+            or len(Attachment(self._currentpage).attachmentFull) > 0
+        ):
             return self.RESULT_PAGE_INDEX
 
         return self.CODE_PAGE_INDEX
@@ -233,8 +242,7 @@ class BaseHtmlPanel(BaseTextPanel):
     def _onTabChanged(self, event):
         pagemode = self.GetPageMode()
         params = PageModeChangeParams(pagemode)
-        self._application.onPageModeChange(self._application.selectedPage,
-                                           params)
+        self._application.onPageModeChange(self._application.selectedPage, params)
 
     def savePageTab(self, page):
         """
@@ -295,15 +303,14 @@ class BaseHtmlPanel(BaseTextPanel):
         assert self._currentpage is not None
 
         setStatusText(STATUSBAR_MESSAGE_ITEM, _("Page rendered. Please wait…"))
-        self._application.onHtmlRenderingBegin(self._currentpage,
-                                               self.htmlWindow)
+        self._application.onHtmlRenderingBegin(self._currentpage, self.htmlWindow)
 
-        self._application.onPageUpdateNeeded(self._currentpage,
-                                             PageUpdateNeededParams(True))
+        self._application.onPageUpdateNeeded(
+            self._currentpage, PageUpdateNeededParams(True)
+        )
 
         setStatusText(STATUSBAR_MESSAGE_ITEM, "")
-        self._application.onHtmlRenderingEnd(self._currentpage,
-                                             self.htmlWindow)
+        self._application.onHtmlRenderingEnd(self._currentpage, self.htmlWindow)
 
     def _updateHtmlWindow(self):
         """
@@ -320,16 +327,17 @@ class BaseHtmlPanel(BaseTextPanel):
 
             html = readTextFile(path)
 
-            if(self._oldPage != self._currentpage or
-                    self._oldHtmlResult != html):
+            if self._oldPage != self._currentpage or self._oldHtmlResult != html:
                 self.htmlWindow.LoadPage(path)
                 self._oldHtmlResult = html
                 self._oldPage = self._currentpage
         except EnvironmentError as e:
             logger.error(str(e))
-            MessageBox(_(u'Page loading error: {}').format(
-                self._currentpage.title),
-                _(u'Error'), wx.ICON_ERROR | wx.OK)
+            MessageBox(
+                _("Page loading error: {}").format(self._currentpage.title),
+                _("Error"),
+                wx.ICON_ERROR | wx.OK,
+            )
 
         setStatusText(STATUSBAR_MESSAGE_ITEM, "")
 
@@ -353,7 +361,8 @@ class BaseHtmlPanel(BaseTextPanel):
 
         actionController.enableTools(
             SearchAndReplaceAction.stringId,
-            searchEnabled and not self._application.selectedPage.readonly)
+            searchEnabled and not self._application.selectedPage.readonly,
+        )
 
         self.mainWindow.UpdateAuiManager()
 
@@ -364,8 +373,7 @@ class BaseHtmlPanel(BaseTextPanel):
         assert self.notebook is not None
         assert self._selectedPageIndex != -1
 
-        enabled = (tool.alwaysEnabled or
-                   self.GetPageMode() == PAGE_MODE_TEXT)
+        enabled = tool.alwaysEnabled or self.GetPageMode() == PAGE_MODE_TEXT
 
         return enabled
 
@@ -396,8 +404,7 @@ class BaseHtmlPanel(BaseTextPanel):
         Метод предназначен в первую очередь для упрощения доступа к
         одноименному методу из codeEditor
         """
-        self._application.mainWindow.pagePanel.pageView.codeEditor.turnText(
-            left, right)
+        self._application.mainWindow.pagePanel.pageView.codeEditor.turnText(left, right)
 
     def replaceText(self, text):
         """
@@ -405,8 +412,7 @@ class BaseHtmlPanel(BaseTextPanel):
         Метод предназначен в первую очередь для упрощения доступа к
         одноименному методу из codeEditor
         """
-        self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(
-            text)
+        self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(text)
 
     def escapeHtml(self):
         """
@@ -426,7 +432,9 @@ class BaseHtmlPanel(BaseTextPanel):
             return self.htmlWindow.SetFocus()
 
     def _onPageUpdate(self, sender, **kwargs):
-        if (sender == self._currentpage and
-                self.notebook.GetSelection() == self.RESULT_PAGE_INDEX):
+        if (
+            sender == self._currentpage
+            and self.notebook.GetSelection() == self.RESULT_PAGE_INDEX
+        ):
             self._updatePage()
             self._updateHtmlWindow()

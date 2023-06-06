@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -10,10 +10,9 @@ def insertLink(application):
     codeEditor = application.mainWindow.pagePanel.pageView.codeEditor
 
     with LinkDialog(application.mainWindow) as dlg:
-        linkController = LinkDialogController(application,
-                                              application.selectedPage,
-                                              dlg,
-                                              codeEditor.GetSelectedText())
+        linkController = LinkDialogController(
+            application, application.selectedPage, dlg, codeEditor.GetSelectedText()
+        )
 
         if linkController.showDialog() == wx.ID_OK:
             codeEditor.replaceText(linkController.linkResult)

@@ -5,7 +5,8 @@ import wx
 from .basepagepanel import BasePagePanel
 from .controls.pagelist import PageList, EVT_PAGE_CLICK
 from .controls.pagelist_columns import ColumnsFactory
-from outwiker.actions.addchildpage import AddChildPageAction
+
+from outwiker.app.services.bookmarks import toggleBookmarkForCurrentPage
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
@@ -79,8 +80,7 @@ class ButtonsPanel(wx.Panel):
         self.SetSizer(buttonsSizer)
 
     def _onNewPage(self, event):
-        actionController = self._application.actionController
-        actionController.getAction(AddChildPageAction.stringId).run(None)
+        toggleBookmarkForCurrentPage(self._application)
 
 
 class NotesTreePathPanel(wx.Panel):

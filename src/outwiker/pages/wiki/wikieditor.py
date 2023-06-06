@@ -85,7 +85,7 @@ class WikiEditor(TextEditor):
         self._styles[self.STYLE_THUMBNAIL_ID] = config.thumbnail.value.tostr()
 
     def setDefaultSettings(self):
-        super(WikiEditor, self).setDefaultSettings()
+        super().setDefaultSettings()
         config = WikiConfig(Application.config)
 
         self.__createStyles(config)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import os.path
 import shutil
 
@@ -8,17 +9,22 @@ from .system import getTemplatesDir
 from . import events
 
 
-class Style(object):
+def getPageStyle(page) -> str:
+    return Style().getPageStyle(page)
+
+
+class Style:
     """
     Класс для работы со стилями страниц
     """
+
     def __init__(self):
-        self._styleFname = u"__style.html"
-        self._styleDir = u"__style"
+        self._styleFname = "__style.html"
+        self._styleDir = "__style"
 
-        self._defaultDir = u"__default"
+        self._defaultDir = "__default"
 
-    def getPageStyle(self, page):
+    def getPageStyle(self, page) -> str:
         """
         Возвращает путь до файла стиля для страницы page
         """
@@ -29,15 +35,13 @@ class Style(object):
 
         return style
 
-    def getDefaultStyle(self):
+    def getDefaultStyle(self) -> str:
         """
         Возвращает путь до стиля по умолчанию
         """
-        return os.path.join(getTemplatesDir(),
-                            self._defaultDir,
-                            self._styleFname)
+        return os.path.join(getTemplatesDir(), self._defaultDir, self._styleFname)
 
-    def setPageStyle(self, page, style):
+    def setPageStyle(self, page, style: str) -> None:
         """
         Установить стиль для страницы
         style может быть путем до папки или до файла __style.html
@@ -56,12 +60,10 @@ class Style(object):
         style_fname = os.path.join(styledir, self._styleFname)
         style_folder = os.path.join(styledir, self._styleDir)
 
-        if(os.path.abspath(style_fname) ==
-                os.path.abspath(self.getPageStyle(page))):
+        if os.path.abspath(style_fname) == os.path.abspath(self.getPageStyle(page)):
             return
 
-        if(os.path.abspath(style_fname) ==
-                os.path.abspath(self.getDefaultStyle())):
+        if os.path.abspath(style_fname) == os.path.abspath(self.getDefaultStyle()):
             self.setPageStyleDefault(page)
             return
 
@@ -69,8 +71,7 @@ class Style(object):
         shutil.copy(style_fname, page.path)
 
         if os.path.exists(style_folder):
-            shutil.copytree(style_folder,
-                            os.path.join(page.path, self._styleDir))
+            shutil.copytree(style_folder, os.path.join(page.path, self._styleDir))
 
         page.updateDateTime()
         page.root.onPageUpdate(page, change=events.PAGE_UPDATE_STYLE)
@@ -106,12 +107,11 @@ class Style(object):
         page.updateDateTime()
         page.root.onPageUpdate(page, change=events.PAGE_UPDATE_STYLE)
 
-    def check(self, path):
+    def check(self, path: str):
         """
         Возвращает True, если path - путь до корректного стиля
         """
         style_file = os.path.join(path, self._styleFname)
-        file_correct = (os.path.exists(style_file) and
-                        os.path.isfile(style_file))
+        file_correct = os.path.exists(style_file) and os.path.isfile(style_file)
 
         return file_correct

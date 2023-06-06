@@ -3,13 +3,12 @@
 from string import Template
 import os.path
 
-from outwiker.core.system import getOS
-from outwiker.utilites.textfile import readTextFile
+from outwiker.api.core.text import readTextFile
 
 
-def loadTemplate(fname):
+def loadTemplate(fname: str) -> Template:
     """
-    Загрузить шаблон.
+    Load template from file
     """
     templatedir = "templates"
 

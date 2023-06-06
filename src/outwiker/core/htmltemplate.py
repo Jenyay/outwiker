@@ -8,7 +8,7 @@ from outwiker.gui.guiconfig import HtmlRenderConfig
 import outwiker.core.cssclasses as css
 
 
-class MyTemplate (Template):
+class MyTemplate(Template):
     """
     Класс работы с шаблонами. Единственное, для чего сделан такой класс
     - избавиться от замены $$ на $
@@ -23,10 +23,12 @@ class MyTemplate (Template):
       {(?P<braced>%(id)s)} |     # delimiter and a braced identifier
       (?P<invalid>^$)            # never matches (the regex is not multilined)
     )
-    """ % dict(delim=re.escape(Template.delimiter), id=Template.idpattern)
+    """ % dict(
+        delim=re.escape(Template.delimiter), id=Template.idpattern
+    )
 
 
-class HtmlTemplate(object):
+class HtmlTemplate:
     """Класс для генерации HTML-страницы на основе шаблона."""
 
     def __init__(self, template):
@@ -55,9 +57,11 @@ class HtmlTemplate(object):
         if 'title' not in kwargs:
             kwargs['title'] = ''
 
-        return self.template.safe_substitute(content=content,
-                                             fontsize=self.fontsize,
-                                             fontfamily=self.fontfamily,
-                                             userstyle=self.userStyle,
-                                             defaultstyle=css.getDefaultStyles(),
-                                             **kwargs)
+        return self.template.safe_substitute(
+            content=content,
+            fontsize=self.fontsize,
+            fontfamily=self.fontfamily,
+            userstyle=self.userStyle,
+            defaultstyle=css.getDefaultStyles(),
+            **kwargs
+        )

@@ -3,11 +3,16 @@
 from datetime import datetime
 import os
 
-from outwiker.core.attachment import Attachment
-from outwiker.utilites.textfile import readTextFile
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.text import readTextFile
 
-from jinja2 import (Environment, meta, FileSystemLoader,
-                    TemplateSyntaxError, TemplateNotFound)
+from jinja2 import (
+    Environment,
+    meta,
+    FileSystemLoader,
+    TemplateSyntaxError,
+    TemplateNotFound,
+)
 import snippets.defines as defines
 from snippets.i18n import get_
 
@@ -19,9 +24,10 @@ class SnippetException(Exception):
 
 
 def _convertExceptions(func):
-    '''
+    """
     Decorator to convert Jinja's errors and other errors to SnippetException.
-    '''
+    """
+
     def _process(self, *args, **kwargs):
         global _
         _ = get_()
@@ -29,25 +35,18 @@ def _convertExceptions(func):
         try:
             return func(self, *args, **kwargs)
         except TemplateNotFound as e:
-            text = _(u'Snippet "{name}" not found').format(
-                name=e.name
-            )
+            text = _('Snippet "{name}" not found').format(name=e.name)
             raise SnippetException(text)
         except TemplateSyntaxError as e:
-            text = _(u'Snippet error at line {line}:\n{text}').format(
-                line=e.lineno,
-                text=e.message
+            text = _("Snippet error at line {line}:\n{text}").format(
+                line=e.lineno, text=e.message
             )
             raise SnippetException(text)
         except EnvironmentError as e:
-            text = _(u'Snippet reading error:\n{text}').format(
-                text=str(e)
-            )
+            text = _("Snippet reading error:\n{text}").format(text=str(e))
             raise SnippetException(text)
         except BaseException as e:
-            text = _(u'Snippet processing error:\n{text}').format(
-                text=str(e)
-            )
+            text = _("Snippet processing error:\n{text}").format(text=str(e))
             raise SnippetException(text)
 
     return _process
@@ -93,10 +92,13 @@ class SnippetParser(object):
 
         if page is not None:
             attach = Attachment(page)
-            attachList = VarList([fname
-                                  for fname
-                                  in sorted(attach.getAttachRelative())
-                                  if not fname.startswith(u'__')])
+            attachList = VarList(
+                [
+                    fname
+                    for fname in sorted(attach.getAttachRelative())
+                    if not fname.startswith("__")
+                ]
+            )
 
             globals_page = {
                 defines.VAR_SEL_TEXT: selectedText,
@@ -109,9 +111,9 @@ class SnippetParser(object):
                 defines.VAR_DATE_EDITIND: page.datetime,
                 defines.VAR_TAGS: VarList(sorted(page.tags)),
                 defines.VAR_PAGE_TYPE: page.getTypeString(),
-                defines.VAR_CHILDLIST: VarList([subpage.title
-                                                for subpage
-                                                in page.children]),
+                defines.VAR_CHILDLIST: VarList(
+                    [subpage.title for subpage in page.children]
+                ),
                 defines.VAR_ATTACHLIST: attachList,
             }
             globals.update(globals_page)
@@ -130,7 +132,7 @@ class VarList(object):
         return self._data[i]
 
     def __str__(self):
-        return ', '.join(self._data)
+        return ", ".join(self._data)
 
     def __iter__(self):
         return iter(self._data)

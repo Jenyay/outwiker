@@ -3,45 +3,42 @@
 import os.path
 import re
 
-from outwiker.utilites.textfile import readTextFile
+from outwiker.api.core.text import readTextFile
 
 from .baseexporter import BaseExporter
 
 
-class HtmlExporter (BaseExporter):
+class HtmlExporter(BaseExporter):
     """
     Класс для экспорта HTML- и викистраниц
     """
 
     def __init__(self, page):
-        BaseExporter.__init__(self, page)
+        super().__init__(page)
 
         from .i18n import _
+
         global _
 
     def export(self, outdir, exportname, imagesonly, alwaysOverwrite):
         """
         Экспорт HTML-страниц
         """
-        self.__htmlFileName = u"__content.html"
+        self.__htmlFileName = "__content.html"
 
         # Чтение файла с содержимым
         try:
-            content = readTextFile(os.path.join (self._page.path, self.__htmlFileName))
+            content = readTextFile(os.path.join(self._page.path, self.__htmlFileName))
         except IOError:
-            content = u""
+            content = ""
 
-        changedContent = self.__prepareHtmlContent (content, exportname)
+        changedContent = self.__prepareHtmlContent(content, exportname)
 
-        self._exportContent (self._page,
-                             changedContent,
-                             exportname,
-                             outdir,
-                             imagesonly,
-                             alwaysOverwrite)
+        self._exportContent(
+            self._page, changedContent, exportname, outdir, imagesonly, alwaysOverwrite
+        )
 
-
-    def __replaceAttaches (self, content, tag, attrib, exportname):
+    def __replaceAttaches(self, content, tag, attrib, exportname):
         """
         Заменить ссылки на папку __attach на новую папку с вложениями
         """
@@ -52,23 +49,26 @@ class HtmlExporter (BaseExporter):
             ({attrib})\s*=['"]{attach}(.*?)['"]
             (.*?)
             (/?)>
-            """.format (tag=tag, attrib=attrib, attach=__attachDir)
+            """.format(
+            tag=tag, attrib=attrib, attach=__attachDir
+        )
 
-        regex = re.compile (tag_regex, re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE)
+        regex = re.compile(
+            tag_regex, re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE
+        )
 
-        replace = u'<\\1 \\2\\3="{exportname}\\4"\\5\\6>'.format (exportname=exportname)
-        content = regex.sub (replace, content)
+        replace = '<\\1 \\2\\3="{exportname}\\4"\\5\\6>'.format(exportname=exportname)
+        content = regex.sub(replace, content)
 
         # for currenttag in tags:
         return content
 
-
-    def __prepareHtmlContent (self, content, exportname):
+    def __prepareHtmlContent(self, content, exportname):
         """
         Заменить ссылки на прикрепленные файлы
         Используется при экспорте HTML-страниц
         """
-        content = self.__replaceAttaches (content, "a", "href", exportname)
-        content = self.__replaceAttaches (content, "img", "src", exportname)
+        content = self.__replaceAttaches(content, "a", "href", exportname)
+        content = self.__replaceAttaches(content, "img", "src", exportname)
 
         return content

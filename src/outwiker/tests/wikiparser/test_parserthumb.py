@@ -5,7 +5,7 @@ import os.path
 from tempfile import mkdtemp
 from unittest import TestCase
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -32,7 +32,7 @@ class ParserThumbTest(BaseOutWikerMixin, TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 2", [])
 
         files = ["accept.png", "add.png", "anchor.png",

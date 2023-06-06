@@ -6,17 +6,18 @@ import wx
 class LogDialog(wx.Dialog):
     def __init__(self, parent, logList):
         from .i18n import _
+
         global _
 
-        wx.Dialog.__init__(self,
-                           parent,
-                           title=_("Errors List"),
-                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        super().__init__(
+            parent,
+            title=_("Errors List"),
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+        )
 
         logMinWidth = 550
         logMinHeight = 350
-        self.__logText = wx.TextCtrl(self,
-                                     style=wx.TE_MULTILINE | wx.TE_READONLY)
+        self.__logText = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
         self.__logText.SetMinSize((logMinWidth, logMinHeight))
 
         log = "\n\n".join(logList)
@@ -47,9 +48,8 @@ class LogDialog(wx.Dialog):
         mainSizer.AddGrowableRow(0)
 
         mainSizer.Add(self.__logText, flag=wx.ALL | wx.EXPAND, border=2)
-        mainSizer.Add(self.__buttonsSizer, flag=wx.ALL |
-                      wx.ALIGN_CENTER, border=2)
+        mainSizer.Add(self.__buttonsSizer, flag=wx.ALL | wx.ALIGN_CENTER, border=2)
 
-        self.SetSizer (mainSizer)
+        self.SetSizer(mainSizer)
         self.Fit()
         self.Layout()

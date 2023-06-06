@@ -2,22 +2,23 @@
 
 from pyparsing import QuotedString
 
-from outwiker.pages.wiki.parser.tokenblock import TextBlockToken
+from outwiker.api.pages.wiki.wikiparser import TextBlockToken
 
 
-class DebugTokenFactory (object):
+class DebugTokenFactory:
     @staticmethod
-    def makeDebugToken (parser):
+    def makeDebugToken(parser):
         return DebugToken(parser).getToken()
 
 
-
-class DebugToken (TextBlockToken):
+class DebugToken(TextBlockToken):
     start = "{{{{"
     end = "}}}}"
 
-    def getToken (self):
-        return QuotedString(DebugToken.start,
-                            endQuoteChar=DebugToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<font color='red'>", "</font>"))("debug")
+    def getToken(self):
+        return QuotedString(
+            DebugToken.start,
+            endQuoteChar=DebugToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self.convertToHTML("<font color='red'>", "</font>"))("debug")

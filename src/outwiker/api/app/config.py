@@ -1,0 +1,17 @@
+from outwiker.gui.guiconfig import (
+    GuiConfig,
+    AttachConfig,
+    EditorConfig,
+    GeneralGuiConfig,
+    HtmlEditorStylesConfig,
+    HtmlRenderConfig,
+    MainWindowConfig,
+    PageDialogConfig,
+    PluginsConfig,
+    PrefDialogConfig,
+    TagsCloudConfig,
+    TagsConfig,
+    TextPrintConfig,
+    TrayConfig,
+    TreeConfig,
+)

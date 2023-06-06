@@ -12,6 +12,7 @@ import sys
 import subprocess
 import logging
 from pathlib import Path
+from typing import List, Union
 from uuid import UUID
 
 import wx
@@ -64,7 +65,7 @@ class Windows(System):
     def python(self):
         return 'python'
 
-    def startFile(self, path):
+    def startFile(self, path: Union[str, Path]):
         """
         Запустить программу по умолчанию для path
         """
@@ -180,11 +181,11 @@ class Unix(System):
     def python(self):
         return 'python3'
 
-    def startFile(self, path):
+    def startFile(self, path: Union[str, Path]):
         """
         Запустить программу по умолчанию для path
         """
-        subprocess.Popen(['xdg-open', path])
+        subprocess.Popen(['xdg-open', str(path)])
 
     @property
     def settingsDir(self):
@@ -260,7 +261,7 @@ def getOS():
         return Unix()
 
 
-def getCurrentDir():
+def getCurrentDir() -> str:
     if __file__.endswith('.pyc'):
         # For compiled with cx_freeze package
         current_dir = str(Path(__file__).parents[3].resolve())
@@ -313,7 +314,7 @@ def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     return confPath
 
 
-def getImagesDir():
+def getImagesDir() -> str:
     return op.join(getCurrentDir(), IMAGES_FOLDER_NAME)
 
 
@@ -324,11 +325,11 @@ def getBuiltinImagePath(*relative_image_name: str) -> str:
     return os.path.abspath(os.path.join(getImagesDir(), *relative_image_name))
 
 
-def getTemplatesDir():
+def getTemplatesDir() -> str:
     return op.join(getCurrentDir(), STYLES_FOLDER_NAME)
 
 
-def getExeFile():
+def getExeFile() -> str:
     """
     Возвращает имя запускаемого файла
     """
@@ -336,7 +337,7 @@ def getExeFile():
 
 
 def getPluginsDirList(configDirName=DEFAULT_CONFIG_DIR,
-                      configFileName=DEFAULT_CONFIG_NAME):
+                      configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
     Возвращает список директорий, откуда должны грузиться плагины
     """
@@ -346,7 +347,7 @@ def getPluginsDirList(configDirName=DEFAULT_CONFIG_DIR,
 
 
 def getIconsDirList(configDirName=DEFAULT_CONFIG_DIR,
-                    configFileName=DEFAULT_CONFIG_NAME):
+                    configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
     Возвращает список директорий, где могут располагаться иконки для страниц
     """
@@ -354,7 +355,7 @@ def getIconsDirList(configDirName=DEFAULT_CONFIG_DIR,
 
 
 def getStylesDirList(configDirName=DEFAULT_CONFIG_DIR,
-                     configFileName=DEFAULT_CONFIG_NAME):
+                     configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
     Возвращает список директорий, откуда должны грузиться плагины
     """
@@ -362,7 +363,7 @@ def getStylesDirList(configDirName=DEFAULT_CONFIG_DIR,
 
 
 def getSpellDirList(configDirName=DEFAULT_CONFIG_DIR,
-                    configFileName=DEFAULT_CONFIG_NAME):
+                    configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
     Возвращает список директорий со словарями для проверки орфографии
     """
@@ -371,9 +372,9 @@ def getSpellDirList(configDirName=DEFAULT_CONFIG_DIR,
 
 def getSpecialDirList(dirname,
                       configDirName=DEFAULT_CONFIG_DIR,
-                      configFileName=DEFAULT_CONFIG_NAME):
+                      configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
-    Возвращает список "специальных" директорий(директорий для плагинов,
+    Возвращает список "специальных" директорий (директорий для плагинов,
     стилей и т.п., расположение которых зависит от расположения файла настроек)
     """
     # Директория рядом с запускаемым файлом

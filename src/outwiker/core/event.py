@@ -5,10 +5,11 @@ EVENT_PRIORITY_MAX_CORE = 100
 EVENT_PRIORITY_MIN_CORE = -100
 
 
-class Event(object):
+class Event:
     """
     Events with priority
     """
+
     def __init__(self):
         # List of the tuples:(event handler, priority)
         # First item - handler with max priority
@@ -57,8 +58,9 @@ class Event(object):
         return len(self._handlers)
 
 
-class CustomEvents(object):
+class CustomEvents:
     """Class contains events for access by key"""
+
     def __init__(self):
         # key - string is event ID
         # value - Event instance
@@ -117,10 +119,12 @@ def pagetype(pagecls):
 
     Added in outwiker.core version 1.1
     """
+
     def decorator(func):
         def event_func(self, page, *args, **kwargs):
-            if (page is not None and
-                    pagecls.getTypeString() == page.getTypeString()):
+            if page is not None and pagecls.getTypeString() == page.getTypeString():
                 return func(self, page, *args, **kwargs)
+
         return event_func
+
     return decorator

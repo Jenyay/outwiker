@@ -7,20 +7,19 @@ import wx
 from .ljconfig import LJConfig
 
 
-class DialogController(object, metaclass=ABCMeta):
+class DialogController(metaclass=ABCMeta):
     """
     Базовый класс для диалога вставки пользователя и сообщества ЖЖ
     """
-    def __init__(self, dialog, application, initial=u""):
+
+    def __init__(self, dialog, application, initial=""):
         self._dialog = dialog
         self._application = application
 
         items = sorted(self.getParam(LJConfig(self._application.config)))
-        self._items = [item.strip()
-                       for item in items
-                       if len(item.strip()) != 0]
+        self._items = [item.strip() for item in items if len(item.strip()) != 0]
 
-        self._result = u""
+        self._result = ""
 
         self._initDialog(initial)
 
@@ -49,16 +48,16 @@ class DialogController(object, metaclass=ABCMeta):
         dlgResult = self._dialog.ShowModal()
         if dlgResult == wx.ID_OK:
             name = self._dialog.GetValue().strip()
-            self._result = u"(:{command} {name}:)".format(
-                command=self.getCommandName(),
-                name=name)
+            self._result = "(:{command} {name}:)".format(
+                command=self.getCommandName(), name=name
+            )
 
-            if (len(name) != 0 and name not in self._items):
+            if len(name) != 0 and name not in self._items:
                 self._items.append(name)
 
-                clearItems = sorted([item
-                                     for item in self._items
-                                     if len(item.strip()) != 0])
+                clearItems = sorted(
+                    [item for item in self._items if len(item.strip()) != 0]
+                )
                 self.setParam(LJConfig(self._application.config), clearItems)
 
         return dlgResult
@@ -68,6 +67,7 @@ class UserDialogController(DialogController):
     """
     Класс контроллера для вставки пользователя ЖЖ
     """
+
     def getParam(self, config):
         return config.users.value
 
@@ -75,13 +75,14 @@ class UserDialogController(DialogController):
         config.users.value = value
 
     def getCommandName(self):
-        return u"ljuser"
+        return "ljuser"
 
 
 class CommunityDialogController(DialogController):
     """
     Класс контроллера для вставки сообщества ЖЖ
     """
+
     def getParam(self, config):
         return config.communities.value
 
@@ -89,4 +90,4 @@ class CommunityDialogController(DialogController):
         config.communities.value = value
 
     def getCommandName(self):
-        return u"ljcomm"
+        return "ljcomm"

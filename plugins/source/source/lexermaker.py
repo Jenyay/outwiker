@@ -28,9 +28,11 @@ class LexerMaker:
         from .pygments.lexers import ClassNotFound
         from .pygments.lexers import get_lexer_by_name
 
-        lang = (params_dict[LANGUAGE_PARAM_NAME]
-                if LANGUAGE_PARAM_NAME in params_dict
-                else LANGUAGE_DEFAULT)
+        lang = (
+            params_dict[LANGUAGE_PARAM_NAME]
+            if LANGUAGE_PARAM_NAME in params_dict
+            else LANGUAGE_DEFAULT
+        )
 
         try:
             lexer = get_lexer_by_name(lang)

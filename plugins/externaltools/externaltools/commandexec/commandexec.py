@@ -1,17 +1,17 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 
 from externaltools.commandexec.commandexecparser import CommandExecParser
 from externaltools.commandexec.htmlmakers import HtmlMakerLink, HtmlMakerButton
-from externaltools.commandexec.commandparams import (FORMAT_NAME,
-                                                     FORMAT_BUTTON)
+from externaltools.commandexec.commandparams import FORMAT_NAME, FORMAT_BUTTON
 
 
 class CommandExec(Command):
     """
     The (:exec:) command for execute custom tools from wiki page
     """
+
     def __init__(self, parser):
         super(CommandExec, self).__init__(parser)
 
@@ -20,7 +20,7 @@ class CommandExec(Command):
         """
         Return command name
         """
-        return u"exec"
+        return "exec"
 
     def execute(self, params, content):
         """

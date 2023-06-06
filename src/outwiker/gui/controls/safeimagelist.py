@@ -6,8 +6,8 @@ from typing import Union
 import wx
 from wx.svg import SVGimage
 
-from outwiker.core.images import isSVG, isImage
 from outwiker.core.exceptions import InvalidImageFormat
+from outwiker.core.images import isSVG, isImage
 
 
 class SafeImageList(wx.ImageList):

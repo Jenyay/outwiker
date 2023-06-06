@@ -4,9 +4,9 @@ import os.path
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.core.tree import WikiDocument
 from outwiker.core.config import StringOption
 
 from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
@@ -24,7 +24,7 @@ class WikiPagesTest(unittest.TestCase):
 
     def setUp(self):
         self.path = "testdata/samplewiki"
-        self.root = WikiDocument.load(self.path)
+        self.root = loadNotesTree(self.path)
 
     def testLoadWiki(self):
         self.assertEqual(len(self.root), 6)
@@ -230,7 +230,7 @@ class SubWikiTest(unittest.TestCase):
 
     def test1(self):
         path = os.path.join(self.rootpath, "Страница 1")
-        root = WikiDocument.load(path)
+        root = loadNotesTree(path)
 
         self.assertEqual(len(root), 1)
         self.assertEqual(root["Страница 2"].title, "Страница 2")
@@ -248,7 +248,7 @@ class TextPageAttachmentTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         Application.wikiroot = self.wikiroot
 
         factory = TextPageFactory()
@@ -305,7 +305,7 @@ class TextPageAttachmentTest(unittest.TestCase):
         Attachment(self.wikiroot[page3]).attach([fullFilesPath[0], fullFilesPath[1]])
 
         # Заново загрузим вики
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
 
         # Проверим, что файлы прикрепились к тем страницам, куда прикрепляли
         self.assertEqual(len(Attachment(wiki[page1]).attachmentFull), 3)

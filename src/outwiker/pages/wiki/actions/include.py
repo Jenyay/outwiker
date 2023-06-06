@@ -5,15 +5,14 @@ from typing import Callable, Optional, Union
 
 import wx
 
+from outwiker.app.services.messages import showError
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
 from outwiker.gui.controls.validators.selectedfilevalidator import SelectedFileValidator
-from outwiker.gui.guiconfig import GuiConfig
 from outwiker.gui.windowssizesaver import WindowSizeSaver
 from outwiker.core.attachfilters import getHiddenFilter, notFilter
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import showError
 
 
 class WikiIncludeAction(BaseAction):

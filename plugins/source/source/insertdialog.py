@@ -2,8 +2,8 @@
 
 import wx
 
-from outwiker.gui.testeddialog import TestedDialog
-from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
+from outwiker.api.gui.dialogs import TestedDialog
+from outwiker.api.gui.controls import FilesTreeComboBox
 
 from .i18n import get_
 from .misc import getImagePath

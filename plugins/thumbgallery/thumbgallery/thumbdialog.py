@@ -6,15 +6,17 @@ from typing import List
 
 import wx
 
-from outwiker.core.attachfilters import (getImagesOnlyFilter,
-                                         getHiddenFilter,
-                                         getDirOnlyFilter,
-                                         andFilter,
-                                         orFilter,
-                                         notFilter)
-from outwiker.core.attachment import Attachment
-from outwiker.gui.preferences.configelements import IntegerElement
-from outwiker.gui.controls.filestreectrl import FilesTreeCtrl
+from outwiker.api.core.attachment import (
+    Attachment,
+    getImagesOnlyFilter,
+    getHiddenFilter,
+    getDirOnlyFilter,
+    andFilter,
+    orFilter,
+    notFilter,
+)
+from outwiker.api.gui.configelements import IntegerElement
+from outwiker.api.gui.controls import FilesTreeCtrl
 
 from .thumbconfig import ThumbConfig
 from .i18n import get_
@@ -22,9 +24,7 @@ from .i18n import get_
 
 class ThumbDialog(wx.Dialog):
     def __init__(self, parent, page, application):
-        super().__init__(
-            parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        super().__init__(parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         global _
         _ = get_()
 
@@ -37,30 +37,25 @@ class ThumbDialog(wx.Dialog):
 
         # Контролы для выбора количества столбцов
         self.columnsLabel = wx.StaticText(
-            self,
-            -1,
-            _("Columns count (0 - without table)"))
-        self.columns = wx.SpinCtrl(self,
-                                   min=0,
-                                   max=self._config.COLUMNS_COUNT_MAX)
+            self, -1, _("Columns count (0 - without table)")
+        )
+        self.columns = wx.SpinCtrl(self, min=0, max=self._config.COLUMNS_COUNT_MAX)
         self.columns.SetMinSize((150, -1))
 
         # Контролы для указания размера превьюшек
         self.thumbSizeLabel = wx.StaticText(
-            self,
-            -1,
-            _("Thumbnails size (0 - default size)"))
-        self.thumbSizeCtrl = wx.SpinCtrl(self,
-                                         min=0,
-                                         max=self._config.THUMB_SIZE_MAX)
+            self, -1, _("Thumbnails size (0 - default size)")
+        )
+        self.thumbSizeCtrl = wx.SpinCtrl(self, min=0, max=self._config.THUMB_SIZE_MAX)
         self.thumbSizeCtrl.SetMinSize((150, -1))
 
         # Контролы для выбора прикрепленных файлов
         self.attachFiles = FilesTreeCtrl(self, check_boxes=True)
 
-        files_filter = andFilter(orFilter(getImagesOnlyFilter(),
-                                          getDirOnlyFilter()),
-                                 notFilter(getHiddenFilter(self._page)))
+        files_filter = andFilter(
+            orFilter(getImagesOnlyFilter(), getDirOnlyFilter()),
+            notFilter(getHiddenFilter(self._page)),
+        )
         self.attachFiles.SetFilterFunc(files_filter)
 
         self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
@@ -90,13 +85,11 @@ class ThumbDialog(wx.Dialog):
         attachSizer.AddGrowableCol(0)
         attachSizer.AddGrowableRow(0)
 
-        attachSizer.Add(self.attachFiles,
-                        flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP,
-                        border=2)
+        attachSizer.Add(
+            self.attachFiles, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2
+        )
 
-        attachSizer.Add(buttonsSizer,
-                        flag=wx.EXPAND | wx.BOTTOM,
-                        border=2)
+        attachSizer.Add(buttonsSizer, flag=wx.EXPAND | wx.BOTTOM, border=2)
 
         return attachSizer
 
@@ -108,13 +101,15 @@ class ThumbDialog(wx.Dialog):
 
         columnsSizer.Add(
             self.columnsLabel,
-            flag=wx.ALIGN_CENTER_VERTICAL | wx. ALIGN_LEFT | wx.ALL,
-            border=2)
+            flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT | wx.ALL,
+            border=2,
+        )
 
         columnsSizer.Add(
             self.columns,
             flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL,
-            border=2)
+            border=2,
+        )
 
         return columnsSizer
 
@@ -126,13 +121,15 @@ class ThumbDialog(wx.Dialog):
 
         thumbSizer.Add(
             self.thumbSizeLabel,
-            flag=wx.ALIGN_CENTER_VERTICAL | wx. ALIGN_LEFT | wx.ALL,
-            border=2)
+            flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT | wx.ALL,
+            border=2,
+        )
 
         thumbSizer.Add(
             self.thumbSizeCtrl,
             flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL,
-            border=2)
+            border=2,
+        )
 
         return thumbSizer
 
@@ -157,9 +154,9 @@ class ThumbDialog(wx.Dialog):
     def _createOkCancelButtons(self, sizer):
         # Создание кнопок Ok/Cancel
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
-        sizer.Add(buttonsSizer,
-                  flag=wx.ALIGN_RIGHT | wx.ALL | wx.ALIGN_BOTTOM,
-                  border=2)
+        sizer.Add(
+            buttonsSizer, flag=wx.ALIGN_RIGHT | wx.ALL | wx.ALIGN_BOTTOM, border=2
+        )
 
     @property
     def columnsCount(self) -> int:
@@ -180,22 +177,16 @@ class ThumbDialog(wx.Dialog):
         """
         Список выбранных файлов
         """
-        return [fname
-                for fname in self.attachFiles.GetChecked()
-                if not fname.is_dir()]
+        return [fname for fname in self.attachFiles.GetChecked() if not fname.is_dir()]
 
     def LoadState(self):
         self.columnsCountConfigElement = IntegerElement(
-            self._config.columnsCount,
-            self.columns,
-            0,
-            self._config.COLUMNS_COUNT_MAX)
+            self._config.columnsCount, self.columns, 0, self._config.COLUMNS_COUNT_MAX
+        )
 
         self.thumbSizeConfigElement = IntegerElement(
-            self._config.thumbSize,
-            self.thumbSizeCtrl,
-            0,
-            self._config.THUMB_SIZE_MAX)
+            self._config.thumbSize, self.thumbSizeCtrl, 0, self._config.THUMB_SIZE_MAX
+        )
 
     def Save(self):
         self.columnsCountConfigElement.save()

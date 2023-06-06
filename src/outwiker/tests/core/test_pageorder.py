@@ -6,7 +6,7 @@
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.core.config import PageConfig
@@ -28,7 +28,7 @@ class PageOrderTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         Application.onPageOrderChange += self.onPageOrder
         Application.wikiroot = None
 
@@ -176,7 +176,7 @@ class PageOrderTest(unittest.TestCase):
 
         self.wikiroot["Абырвалг"].title = "Ррррр"
 
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
 
         self.assertEqual(wiki["Плагины"].order, 0)
         self.assertEqual(wiki["Ррррр"].order, 1)
@@ -477,7 +477,7 @@ class PageOrderTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 2", [])
         TextPageFactory().create(self.wikiroot, "Страница 3", [])
 
-        wikiroot = WikiDocument.load(self.path)
+        wikiroot = loadNotesTree(self.path)
 
         self.assertEqual(wikiroot["Страница 0"].order, 0)
         self.assertEqual(wikiroot["Страница 1"].order, 1)
@@ -492,7 +492,7 @@ class PageOrderTest(unittest.TestCase):
 
         self.wikiroot["Страница 0"].order += 1
 
-        wikiroot = WikiDocument.load(self.path)
+        wikiroot = loadNotesTree(self.path)
 
         self.assertEqual(wikiroot["Страница 1"].order, 0)
         self.assertEqual(wikiroot["Страница 0"].order, 1)
@@ -508,7 +508,7 @@ class PageOrderTest(unittest.TestCase):
         self.wikiroot["Страница 0"].order += 1
         self.wikiroot["Страница 3"].order -= 1
 
-        wikiroot = WikiDocument.load(self.path)
+        wikiroot = loadNotesTree(self.path)
 
         self.assertEqual(wikiroot["Страница 1"].order, 0)
         self.assertEqual(wikiroot["Страница 0"].order, 1)
@@ -538,7 +538,7 @@ class PageOrderTest(unittest.TestCase):
                       PageConfig.sectionName,
                       PageConfig.orderParamName, -1).remove_option()
 
-        wikiroot = WikiDocument.load(self.path)
+        wikiroot = loadNotesTree(self.path)
 
         self.assertEqual(wikiroot["Страница 0"].order, 0)
         self.assertEqual(wikiroot["Страница 1"].order, 1)
@@ -568,7 +568,7 @@ class PageOrderTest(unittest.TestCase):
                       PageConfig.sectionName,
                       PageConfig.orderParamName, -1).remove_option()
 
-        wikiroot = WikiDocument.load(self.path)
+        wikiroot = loadNotesTree(self.path)
 
         self.assertEqual(wikiroot["Страница 0"].order, 0)
         self.assertEqual(wikiroot["Страница 1"].order, 1)

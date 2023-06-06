@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from ..gui.insertnodedialog import InsertNodeDialog, InsertNodeController
 from ..i18n import get_
@@ -12,7 +12,7 @@ class InsertNodeAction(BaseAction):
     """
     Описание действия
     """
-    stringId = u"Diagrammer_InsertNode"
+    stringId = "Diagrammer_InsertNode"
 
     def __init__(self, application):
         self._application = application
@@ -22,11 +22,11 @@ class InsertNodeAction(BaseAction):
 
     @property
     def title(self):
-        return _(u"Insert node")
+        return _("Insert node")
 
     @property
     def description(self):
-        return _(u"Diagrammer. Insert new node")
+        return _("Diagrammer. Insert new node")
 
     def run(self, params):
         assert self._application.mainWindow is not None

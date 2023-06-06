@@ -4,8 +4,8 @@ import unittest
 
 import wx
 
+from outwiker.app.gui.pagedialog import createPageWithDialog, editPage
 from outwiker.gui.tester import Tester
-from outwiker.gui.pagedialog import createPageWithDialog, editPage
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 

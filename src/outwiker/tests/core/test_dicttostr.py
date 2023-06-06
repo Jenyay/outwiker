@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 
-from outwiker.core.commands import dictToStr
+from outwiker.api.core.text import dictToStr
 
 
 class DictToStrTest(unittest.TestCase):

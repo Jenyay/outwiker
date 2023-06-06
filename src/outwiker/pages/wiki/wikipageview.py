@@ -6,7 +6,7 @@ import re
 from io import StringIO
 
 from outwiker.actions.polyactionsid import *
-from outwiker.core.commands import insertCurrentDate
+from outwiker.app.services.texteditor import insertCurrentDate
 from outwiker.core.standardcolors import StandardColors
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.defines import RECENT_COLORS_COUNT
@@ -48,10 +48,10 @@ class WikiPageView(BaseWikiPageView):
         return WikiEditor
 
     def _getPageTitle(self):
-        return _(u"Wiki")
+        return _("Wiki")
 
     def _getMenuTitle(self):
-        return _(u"Wiki")
+        return _("Wiki")
 
     def _getMenuId(self):
         return defines.MENU_WIKI
@@ -61,11 +61,11 @@ class WikiPageView(BaseWikiPageView):
 
     def _getToolbarsInfo(self, mainWindow):
         return [
-            (defines.TOOLBAR_WIKI_GENERAL, _(u"Wiki")),
-            (defines.TOOLBAR_WIKI_HEADING, _(u"Heading")),
-            (defines.TOOLBAR_WIKI_FONT, _(u"Font")),
-            (defines.TOOLBAR_WIKI_ALIGN, _(u"Align")),
-            (defines.TOOLBAR_WIKI_TABLE, _(u"Table")),
+            (defines.TOOLBAR_WIKI_GENERAL, _("Wiki")),
+            (defines.TOOLBAR_WIKI_HEADING, _("Heading")),
+            (defines.TOOLBAR_WIKI_FONT, _("Font")),
+            (defines.TOOLBAR_WIKI_ALIGN, _("Align")),
+            (defines.TOOLBAR_WIKI_TABLE, _("Table")),
         ]
 
     def _getAttachString(self, fnames):

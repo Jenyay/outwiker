@@ -3,10 +3,10 @@
 import unittest
 
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.actions.moving import (GoToParentAction,
-                                     GoToFirstChildAction,
-                                     GoToNextSiblingAction,
-                                     GoToPrevSiblingAction)
+from outwiker.app.actions.moving import (GoToParentAction,
+                                         GoToFirstChildAction,
+                                         GoToNextSiblingAction,
+                                         GoToPrevSiblingAction)
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 

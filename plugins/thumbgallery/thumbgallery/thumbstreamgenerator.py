@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.attachment import Attachment
-from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.defines import PAGE_ATTACH_DIR
 
 from .basethumbgenerator import BaseThumbGenerator
 
@@ -55,7 +55,7 @@ class ThumbStreamGenerator(BaseThumbGenerator):
             [
                 self._singleThumbTemplate.format(
                     attachdir=PAGE_ATTACH_DIR,
-                    imagename=item[0].replace('\\', '/'),
+                    imagename=item[0].replace("\\", "/"),
                     thumbpath=self._getThumbnail(self._parser.page, item[0]),
                 )
                 for item in self._items

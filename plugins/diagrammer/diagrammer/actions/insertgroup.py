@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from ..gui.insertgroupdialog import InsertGroupDialog, InsertGroupController
 from ..i18n import get_
@@ -12,7 +12,7 @@ class InsertGroupAction(BaseAction):
     """
     Действие для вставки группы объектов
     """
-    stringId = u"Diagrammer_InsertGroup"
+    stringId = "Diagrammer_InsertGroup"
 
     def __init__(self, application):
         self._application = application
@@ -22,11 +22,11 @@ class InsertGroupAction(BaseAction):
 
     @property
     def title(self):
-        return _(u"Insert group")
+        return _("Insert group")
 
     @property
     def description(self):
-        return _(u"Diagrammer. Insert new group")
+        return _("Diagrammer. Insert new group")
 
     def run(self, params):
         assert self._application.mainWindow is not None

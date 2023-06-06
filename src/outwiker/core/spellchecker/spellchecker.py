@@ -4,7 +4,7 @@ import re
 from outwiker.core.system import getOS
 
 
-class SpellChecker(object):
+class SpellChecker:
     """
     Class for checking a word with dictionaries
     """

@@ -3,7 +3,7 @@
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -27,7 +27,7 @@ class ParserFormatTest(unittest.TestCase):
         removeDir(self.path)
 
     def __createWiki(self):
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]
 

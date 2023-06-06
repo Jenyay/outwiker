@@ -3,8 +3,8 @@
 from pathlib import Path
 from typing import Callable
 
-from outwiker.core.attachment import Attachment
 from outwiker.core.images import isImage
+from outwiker.core.attachment import Attachment
 
 
 def getImagesOnlyFilter() -> Callable[[Path], bool]:

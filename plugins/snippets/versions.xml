@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.4.4" date="2023-05-03">
+		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.4.4.zip">
+			<requirements>
+				<api>3.922</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Migrate to new API.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на новый API.</change>
+		</changes>
+	</version>
+
 	<version number="1.4.3" date="2022-12-11">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.4.3.zip">
 			<requirements>

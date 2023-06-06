@@ -60,6 +60,10 @@ class ActionController:
         self._actionsInfo = {}          # type: Dict[str, ActionInfoInternal]
 
         self._configSection = "HotKeys"
+        self._enabledGui = True
+
+    def enableGui(self, enabled):
+        self._enabledGui = enabled
 
     def destroy(self):
         self._mainWindow = None
@@ -128,6 +132,9 @@ class ActionController:
         Добавить действие в меню menu
         Действие должно быть уже зарегистрировано с помощью метода register
         """
+        if not self._enabledGui:
+            return 
+
         menuItem = menu.Append(wx.ID_ANY, self._getMenuItemTitle(strid))
         self._actionsInfo[strid].menuItem = menuItem
 
@@ -140,6 +147,9 @@ class ActionController:
         Добавить действие в меню menu
         Действие должно быть уже зарегистрировано с помощью метода register
         """
+        if not self._enabledGui:
+            return 
+
         menuItem = menu.AppendCheckItem(wx.ID_ANY,
                                         self._getMenuItemTitle(strid))
         self._actionsInfo[strid].menuItem = menuItem
@@ -212,6 +222,9 @@ class ActionController:
         """
         Create hotkey binding for action
         """
+        if not self._enabledGui:
+            return 
+
         actionInfo = self._actionsInfo[strid]
         actionInfo.isHotkeyActive = True
         actionInfo.window = window if window is not None else self._mainWindow
@@ -304,6 +317,9 @@ class ActionController:
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
+        if not self._enabledGui:
+            return 
+
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
         bitmap = wx.Bitmap(image)
@@ -332,6 +348,9 @@ class ActionController:
             toolbar.Realize()
 
     def updateToolbars(self):
+        if not self._enabledGui:
+            return 
+
         toolbars = set([action_info.toolbar
                         for action_info in self._actionsInfo.values()
                         if action_info.toolbar is not None])
@@ -351,6 +370,9 @@ class ActionController:
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
+        if not self._enabledGui:
+            return 
+
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
         bitmap = wx.Bitmap(image)
@@ -457,6 +479,9 @@ class ActionController:
         action.run(checked)
 
     def enableTools(self, strid, enabled=True):
+        if not self._enabledGui:
+            return 
+
         actionInfo = self._actionsInfo[strid]
 
         if actionInfo.toolItemId is not None:

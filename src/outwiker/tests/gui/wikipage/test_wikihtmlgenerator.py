@@ -5,10 +5,10 @@ import os.path
 from tempfile import mkdtemp
 from unittest import TestCase
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.style import Style
-from outwiker.core.tree import WikiDocument
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -86,7 +86,7 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]

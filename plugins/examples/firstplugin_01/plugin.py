@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 
 class PluginFirst(Plugin):
     def __init__(self, application):
-        super(PluginFirst, self).__init__(application)
+        super().__init__(application)
 
     #########################################
     # Properties and methods to overloading #
@@ -13,11 +13,11 @@ class PluginFirst(Plugin):
 
     @property
     def name(self):
-        return u"FirstPlugin"
+        return "FirstPlugin"
 
     @property
     def description(self):
-        return _(u"My first plugin")
+        return _("My first plugin")
 
     def initialize(self):
         pass

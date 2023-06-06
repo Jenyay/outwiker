@@ -1,25 +1,24 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
-from outwiker.core.system import getOS
-from outwiker.core.commands import MessageBox
+from outwiker.api.app.application import startFile
+from outwiker.api.gui.actions import BaseAction
+from outwiker.api.gui.dialogs import MessageBox
 
 from webpage.i18n import get_
 
 
-class OpenSourceURLAction (BaseAction):
-    stringId = u"webpage_open_source_url"
+class OpenSourceURLAction(BaseAction):
+    stringId = "webpage_open_source_url"
 
-    def __init__ (self, application):
-        super (OpenSourceURLAction, self).__init__()
+    def __init__(self, application):
+        super().__init__()
         self._application = application
         global _
         _ = get_()
 
-
-    def run (self, params):
+    def run(self, params):
         page = self._application.selectedPage
         assert page is not None
 
@@ -27,17 +26,15 @@ class OpenSourceURLAction (BaseAction):
 
         if url is not None:
             try:
-                getOS().startFile (url)
+                startFile(url)
             except OSError:
-                text = _(u"Can't open URL '{}'").format (url)
-                MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)
-
-
-    @property
-    def title (self):
-        return _(u"Open source URL in browser")
-
+                text = _("Can't open URL '{}'").format(url)
+                MessageBox(text, "Error", wx.ICON_ERROR | wx.OK)
 
     @property
-    def description (self):
-        return _(u'WebPage. Open source URL of the page in the browser.')
+    def title(self):
+        return _("Open source URL in browser")
+
+    @property
+    def description(self):
+        return _("WebPage. Open source URL of the page in the browser.")

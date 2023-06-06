@@ -3,7 +3,7 @@
 from .i18n import get_
 
 
-class PageContentLengthInfo (object):
+class PageContentLengthInfo:
     """Класс для генерации информации о самых длинных записях"""
 
     def __init__(self, pageContentList, itemsCount):
@@ -18,17 +18,18 @@ class PageContentLengthInfo (object):
 
     @property
     def content(self):
-        title = _(u"The longest notes (in brackets the number of characters):")
+        title = _("The longest notes (in brackets the number of characters):")
         pageListHtml = self._getLongestPages()
 
-        return u"""<p>{title}<br>
+        return """<p>{title}<br>
 {items}
 </p>
-<hr/>""".format(title=title, items=pageListHtml)
+<hr/>""".format(
+            title=title, items=pageListHtml
+        )
 
     def _getLongestPages(self):
-        pageList = self._pageListAll[0: min(
-            self._itemsCount, len(self._pageListAll))]
+        pageList = self._pageListAll[0 : min(self._itemsCount, len(self._pageListAll))]
         return self._getPageListHtml(pageList)
 
     def _getPageListHtml(self, pageList):
@@ -36,9 +37,11 @@ class PageContentLengthInfo (object):
         Оформить список страниц в виде HTML
         """
 
-        items = [u"<li><b>{title}</b> ({length})</li>".format(
-            title=page.display_subpath,
-            length=length)
-            for page, length in pageList]
+        items = [
+            "<li><b>{title}</b> ({length})</li>".format(
+                title=page.display_subpath, length=length
+            )
+            for page, length in pageList
+        ]
 
-        return u"<ul>" + u"".join(items) + u"</ul>"
+        return "<ul>" + "".join(items) + "</ul>"

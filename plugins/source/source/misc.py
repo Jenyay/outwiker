@@ -6,25 +6,26 @@
 
 import os.path
 
-from outwiker.pages.wiki.parser.tokenattach import AttachToken
+from outwiker.api.pages.wiki.wikiparser import AttachToken
 
 from .params import STYLE_DEFAULT
 
 
-def getFileName(fileParam):
+def getFileName(fileParam) -> str:
     """
     Получить имя прикрепленного файла по параметру file
     fileParam - значение параметра file
     """
     fname = fileParam.strip()
+    attach_string = AttachToken.attachString
 
-    if fname.startswith(AttachToken.attachString):
-        fname = fname[len(AttachToken.attachString):]
+    if fname.startswith(attach_string):
+        fname = fname[len(attach_string) :]
 
     return fname
 
 
-def getImagePath(imageName):
+def getImagePath(imageName) -> str:
     """
     Получить полный путь до картинки
     """
@@ -33,11 +34,12 @@ def getImagePath(imageName):
     return fname
 
 
-def getDefaultStyle(config):
+def getDefaultStyle(config) -> str:
     """
     Получить стиль, который используется по уомлчанию
     """
     from .pygments.styles import STYLE_MAP
+
     style = config.defaultStyle.value
 
     if style not in STYLE_MAP:

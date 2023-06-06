@@ -10,10 +10,12 @@ class HtmlFormatter:
         self._error_template = '<div class="{classes}">{content}</div>'
         self._image_template = '<img class="{classes}" src="{content}" />'
         self._block_template = '<div class="{classes}">{content}</div>'
+        self._span_template = '<span class="{classes}">{content}</span>'
 
         self._error_classes: List[str] = [css.CSS_ERROR]
         self._image_classes: List[str] = [css.CSS_IMAGE]
         self._block_classes: List[str] = []
+        self._span_classes: List[str] = []
 
         self._common_classes = classes if classes is not None else []
 
@@ -41,6 +43,12 @@ class HtmlFormatter:
             other_classes = []
 
         return self._format(content, self._block_template, self._block_classes + other_classes)
+
+    def span(self, content: str, other_classes: Optional[List[str]] = None) -> str:
+        if other_classes is None:
+            other_classes = []
+
+        return self._format(content, self._span_template, self._span_classes + other_classes)
 
     def link(self, href: str, text: str, css_classes: Optional[List[str]] = None) -> str:
         if css_classes:

@@ -1,5 +1,37 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="2.6.7">
+		<download href="https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.6.7.zip">
+			<requirements>
+				<api>3.924</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Update the KaTeX engine.</change>
+			<change>Fix errors.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Обновление движка KaTeX.</change>
+			<change>Исправление ошибок.</change>
+		</changes>
+	</version>
+
+	<version number="2.6.6" date="2023-05-03">
+		<download href="https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.6.6.zip">
+			<requirements>
+				<api>3.922</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Migrate to new API.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на новый API.</change>
+		</changes>
+	</version>
+
 	<version number="2.6.5" date="2022-12-11">
 		<download href="https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.6.5.zip">
 			<requirements>

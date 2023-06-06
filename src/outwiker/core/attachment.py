@@ -308,3 +308,6 @@ class Attachment:
 
         return [str(fname.relative_to(root_dir)).replace('\\', '/')
                 for fname in glob_result]
+
+    def exists(self, fname: Union[Path, str], subdir: Union[Path, str] = '.') -> bool:
+        return Path(self.getAttachPath(), subdir, fname).exists()
