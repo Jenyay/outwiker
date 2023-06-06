@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.api.app.config import GeneralGuiConfig
 
 from .i18n import get_
 
 
-class DatePageInfo (object):
+class DatePageInfo:
     """Класс для генерации информации о старых страницах и страницах,
     которые изменяли в последнее время"""
 
@@ -25,36 +25,43 @@ class DatePageInfo (object):
         recentPages = self._getRecentEditedPages()
         oldPages = self._getOldestPages()
 
-        return u"""{recentPages}
+        return """{recentPages}
 {oldPages}
-<hr/>""".format(recentPages=recentPages, oldPages=oldPages)
+<hr/>""".format(
+            recentPages=recentPages, oldPages=oldPages
+        )
 
     def _getRecentEditedPages(self):
-        title = _(u"Recent edited pages:")
-        pageList = self._pageDateList[0: min(
-            self._itemsCount, len(self._pageDateList))]
+        title = _("Recent edited pages:")
+        pageList = self._pageDateList[
+            0 : min(self._itemsCount, len(self._pageDateList))
+        ]
 
         itemsHtml = self._getPageListHtml(pageList)
-        return u"""<p>{title}<br>{items}</p>""".format(title=title, items=itemsHtml)
+        return """<p>{title}<br>{items}</p>""".format(title=title, items=itemsHtml)
 
     def _getOldestPages(self):
-        title = _(u"Oldest pages:")
+        title = _("Oldest pages:")
         pageListRevert = self._pageDateList[:]
         pageListRevert.reverse()
 
-        pageList = pageListRevert[0: min(
-            self._itemsCount, len(self._pageDateList))]
+        pageList = pageListRevert[0 : min(self._itemsCount, len(self._pageDateList))]
 
         itemsHtml = self._getPageListHtml(pageList)
-        return u"""<p>{title}<br>{items}</p>""".format(title=title, items=itemsHtml)
+        return """<p>{title}<br>{items}</p>""".format(title=title, items=itemsHtml)
 
     def _getPageListHtml(self, pageList):
         """
         Оформить список страниц в виде HTML
         """
-        items = [u"<li><b>{title}</b> ({date})</li>".format(
-            title=page.display_subpath,
-            date=page.datetime.strftime(self._dateTimeFormat)) if page.datetime is not None else ''
-            for page in pageList]
+        items = [
+            "<li><b>{title}</b> ({date})</li>".format(
+                title=page.display_subpath,
+                date=page.datetime.strftime(self._dateTimeFormat),
+            )
+            if page.datetime is not None
+            else ""
+            for page in pageList
+        ]
 
-        return u"<ul>" + u"".join(items) + u"</ul>"
+        return "<ul>" + "".join(items) + "</ul>"

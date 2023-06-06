@@ -2,8 +2,8 @@
 
 import wx
 
-from outwiker.core.defines import PAGE_MODE_TEXT
-from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+from outwiker.api.core.defines import PAGE_MODE_TEXT
+from outwiker.api.gui.preferences import PreferencePanelInfo
 
 from .actions import AddAutoRenameTagAction
 from .preferencesPanel import PreferencesPanel
@@ -67,28 +67,38 @@ class AutoRenamer:
 
     def enableMenu(self):
         pageView = self._application.mainWindow.pagePanel.pageView
-        enabled = (pageView.GetPageMode() == PAGE_MODE_TEXT and
-                   not self._application.selectedPage.readonly)
+        enabled = (
+            pageView.GetPageMode() == PAGE_MODE_TEXT
+            and not self._application.selectedPage.readonly
+        )
         self._application.actionController.enableTools(
-            AddAutoRenameTagAction.stringId,
-            enabled)
+            AddAutoRenameTagAction.stringId, enabled
+        )
 
     def addMenuItem(self):
         self._application.actionController.register(
-            AddAutoRenameTagAction(self._application), None)
+            AddAutoRenameTagAction(self._application), None
+        )
         if self._application.mainWindow is not None:
             self._menu = wx.Menu()
-            self._submenuItem = self._application.mainWindow.pagePanel.pageView.toolsMenu.AppendSubMenu(
-                self._menu, _("AutoRenamer"))
+            self._submenuItem = (
+                self._application.mainWindow.pagePanel.pageView.toolsMenu.AppendSubMenu(
+                    self._menu, _("AutoRenamer")
+                )
+            )
             self._application.actionController.appendMenuItem(
-                AddAutoRenameTagAction.stringId, self._menu)
+                AddAutoRenameTagAction.stringId, self._menu
+            )
 
     def removeMenuItem(self):
         if self._application.mainWindow is not None:
             self._application.actionController.removeMenuItem(
-                AddAutoRenameTagAction.stringId)
+                AddAutoRenameTagAction.stringId
+            )
             self._application.mainWindow.pagePanel.pageView.toolsMenu.DestroyItem(
-                self._submenuItem)
+                self._submenuItem
+            )
             self._submenuItem = None
             self._application.actionController.removeAction(
-                AddAutoRenameTagAction.stringId)
+                AddAutoRenameTagAction.stringId
+            )

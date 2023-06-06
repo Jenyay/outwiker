@@ -52,6 +52,9 @@ class WikiConfig:
     STYLE_ATTACHMENT_PARAM = "attachment"
     STYLE_ATTACHMENT_DEFAULT = StcStyle.parse("fore:#5b81c9,underline")
 
+    STYLE_THUMBNAIL_PARAM = "thumbnail"
+    STYLE_THUMBNAIL_DEFAULT = StcStyle.parse("fore:#5b81c9,underline")
+
     COLORIZE_SYNTAX_PARAM = 'ColorizeSyntax'
     COLORIZE_SYNTAX_DEFAULT = True
 
@@ -109,9 +112,14 @@ class WikiConfig:
                                       WikiConfig.STYLE_COMMENT_DEFAULT)
 
         self.attachment = StcStyleOption(self.config,
-                                      WikiConfig.STYLES_SECTION,
-                                      WikiConfig.STYLE_ATTACHMENT_PARAM,
-                                      WikiConfig.STYLE_ATTACHMENT_DEFAULT)
+                                         WikiConfig.STYLES_SECTION,
+                                         WikiConfig.STYLE_ATTACHMENT_PARAM,
+                                         WikiConfig.STYLE_ATTACHMENT_DEFAULT)
+
+        self.thumbnail = StcStyleOption(self.config,
+                                        WikiConfig.STYLES_SECTION,
+                                        WikiConfig.STYLE_THUMBNAIL_PARAM,
+                                        WikiConfig.STYLE_THUMBNAIL_DEFAULT)
 
         self.colorizeSyntax = BooleanOption(self.config,
                                             self.WIKI_SECTION,

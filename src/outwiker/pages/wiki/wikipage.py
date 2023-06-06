@@ -23,7 +23,10 @@ from .actions.openhtmlcode import WikiOpenHtmlCodeAction
 from .actions.thumb import WikiThumbAction
 from .actions.updatehtml import WikiUpdateHtmlAction
 from .actions.wikistyle import WikiStyleAdvancedAction, WikiStyleOnlyAction
+from .actions.listitemstyle import ListItemStyleAction
 from .wikipageview import WikiPageView
+
+from .defines import PAGE_TYPE_STRING
 
 
 wiki_actions = [
@@ -41,6 +44,7 @@ wiki_actions = [
     ActionInfo(WikiStyleOnlyAction, None),
     ActionInfo(WikiStyleAdvancedAction, None),
     ActionInfo(MultilineBlockAction, None),
+    ActionInfo(ListItemStyleAction, None),
 ]
 
 
@@ -50,11 +54,11 @@ class WikiWikiPage(WikiPage):
     """
 
     def __init__(self, path, title, parent, readonly=False):
-        WikiPage.__init__(self, path, title, parent, readonly)
+        super().__init__(path, title, parent, readonly)
 
     @staticmethod
     def getTypeString():
-        return "wiki"
+        return PAGE_TYPE_STRING
 
     def getHtmlPath(self):
         """

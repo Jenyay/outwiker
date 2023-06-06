@@ -2,8 +2,8 @@
 
 import wx
 
-from outwiker.core.config import Config
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.api.core.config import Config
+from outwiker.api.gui.preferences import BasePrefPanel
 
 from .i18n import get_
 from .texconfig import TeXConfig
@@ -30,30 +30,18 @@ class PreferencePanel(BasePrefPanel):
         mainSizer.AddGrowableCol(1)
 
         # Scale of inline equation
-        scale_inline_label = wx.StaticText(
-            self,
-            label=_('Inline equations scale (%)'))
+        scale_inline_label = wx.StaticText(self, label=_("Inline equations scale (%)"))
 
         self.scale_inline_spin = wx.SpinCtrl(
-            self,
-            style=wx.SP_ARROW_KEYS,
-            min=1,
-            max=10000,
-            initial=100
+            self, style=wx.SP_ARROW_KEYS, min=1, max=10000, initial=100
         )
         self.scale_inline_spin.SetMinSize((150, -1))
 
         # Scale of block equation
-        scale_block_label = wx.StaticText(
-            self,
-            label=_('Block equations scale (%)'))
+        scale_block_label = wx.StaticText(self, label=_("Block equations scale (%)"))
 
         self.scale_block_spin = wx.SpinCtrl(
-            self,
-            style=wx.SP_ARROW_KEYS,
-            min=1,
-            max=10000,
-            initial=100
+            self, style=wx.SP_ARROW_KEYS, min=1, max=10000, initial=100
         )
         self.scale_block_spin.SetMinSize((150, -1))
 
@@ -61,22 +49,26 @@ class PreferencePanel(BasePrefPanel):
         mainSizer.Add(
             scale_inline_label,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT,
-            border=2)
+            border=2,
+        )
 
         mainSizer.Add(
             self.scale_inline_spin,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-            border=2)
+            border=2,
+        )
 
         mainSizer.Add(
             scale_block_label,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT,
-            border=2)
+            border=2,
+        )
 
         mainSizer.Add(
             self.scale_block_spin,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-            border=2)
+            border=2,
+        )
 
         self.SetSizer(mainSizer)
 

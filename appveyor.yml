@@ -1,9 +1,9 @@
-version: 3.0.0.xxx.{build}
+version: 3.2.0.xxx.{build}
 image:
     - Visual Studio 2019
-    - Ubuntu1804
+    - Ubuntu2004
 environment:
-    PY_PYTHON: 3.8-32
+    PY_PYTHON: 3.8
     PY_DIR: C:\Python38
     PYTHONIOENCODING: utf_8
     PIPENV_IGNORE_VIRTUALENVS: 1
@@ -21,14 +21,18 @@ install:
     - git submodule update
     - cmd: cinst innosetup
     - cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% run python -m pip install --upgrade pip
-    - cmd: py -%PY_PYTHON% -m pipenv update --dev -v
+    - cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% run python -m pip install attrdict
+    - cmd: py -%PY_PYTHON% -m pipenv install --skip-lock --dev -v
+    - cmd: py -%PY_PYTHON% -m pipenv run python -m pip install -e .
     - cmd: py -%PY_PYTHON% -m pipenv run python -m pip install -e ./buildtools
     - cmd: py -%PY_PYTHON% -m pipenv run python -m pip list
     - sh: python -m pip install pipenv
     - sh: pipenv run python -m pip install --upgrade pip
+    - sh: pipenv run python -m pip install attrdict
+    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.0
+    - sh: pipenv run python -m pip install -e .
     - sh: pipenv run python -m pip install -e ./buildtools
-    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython==4.1.1
-    - sh: pipenv update --dev -v
+    - sh: pipenv install --skip-lock --dev -v
 build_script:
     - cmd: py -%PY_PYTHON% -m pipenv run inv win
     - cmd: py -%PY_PYTHON% -m pipenv run inv win --is-stable

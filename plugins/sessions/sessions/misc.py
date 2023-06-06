@@ -4,8 +4,6 @@
 """
 import os.path
 
-from outwiker.core.system import getOS
-
 
 def getImagePath(imageName):
     """

@@ -4,8 +4,8 @@ from pathlib import Path
 from typing import List
 import unittest
 
+from outwiker.api.app.attachment import attachFiles
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import attachFiles
 from outwiker.gui.tester import Tester, getButtonId
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin

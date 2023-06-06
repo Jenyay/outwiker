@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+from pathlib import Path
 
 import wx
 
-from outwiker.core.attachment import Attachment
-from outwiker.core.commands import attachFiles, testreadonly
-import outwiker.core.exceptions
+from outwiker.api.app.attachment import attachFiles
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.tree import testreadonly
+from outwiker.api.core.attachment import getHiddenFilter, notFilter
+from outwiker.api.core.exceptions import ReadonlyException
 
 from .misc import getDefaultStyle, fillStyleComboBox
 from .insertdialog import InsertDialog
@@ -15,7 +18,7 @@ from .i18n import get_
 from .gui.filterlistdialog import FilterListDialog
 
 
-class InsertDialogController(object):
+class InsertDialogController:
     """
     Класс для управления диалогом InsertDialog
     """
@@ -39,15 +42,12 @@ class InsertDialogController(object):
         self.MIN_TAB_WIDTH = 0
         self.MAX_TAB_WIDTH = 50
 
-        self.AUTO_LANGUAGE = _(u"Auto")
+        self.AUTO_LANGUAGE = _("Auto")
 
     def _bindEvents(self):
-        self._dialog.fileCheckBox.Bind(wx.EVT_CHECKBOX,
-                                       handler=self._onfileChecked)
-        self._dialog.attachButton.Bind(wx.EVT_BUTTON,
-                                       handler=self._onAttach)
-        self._dialog.languageComboBox.Bind(wx.EVT_COMBOBOX,
-                                           handler=self._onLangSelect)
+        self._dialog.fileCheckBox.Bind(wx.EVT_CHECKBOX, handler=self._onfileChecked)
+        self._dialog.attachButton.Bind(wx.EVT_BUTTON, handler=self._onAttach)
+        self._dialog.languageComboBox.Bind(wx.EVT_COMBOBOX, handler=self._onLangSelect)
 
     def _onLangSelect(self, event):
         count = self._dialog.languageComboBox.GetCount()
@@ -58,19 +58,23 @@ class InsertDialogController(object):
 
     def _addNewLang(self):
         current_langs = self._getLangList()
-        lang_list = [lang_name
-                     for lang_name in self._langList.allNames()
-                     if lang_name not in current_langs]
+        lang_list = [
+            lang_name
+            for lang_name in self._langList.allNames()
+            if lang_name not in current_langs
+        ]
         lang_list.sort(key=str.lower)
 
-        with FilterListDialog(self._dialog,
-                              lang_list,
-                              _('Add other language')) as dialog:
+        with FilterListDialog(
+            self._dialog, lang_list, _("Add other language")
+        ) as dialog:
             dialog.SetSize((300, 450))
             if dialog.ShowModal() == wx.ID_OK:
                 new_lang_name = dialog.selectedLanguage
                 new_lang_designation = self._langList.getDesignation(new_lang_name)
-                self._config.languageList.value = self._config.languageList.value + [new_lang_designation]
+                self._config.languageList.value = self._config.languageList.value + [
+                    new_lang_designation
+                ]
                 self._config.defaultLanguage.value = new_lang_designation
 
             self.loadLanguagesState()
@@ -96,25 +100,23 @@ class InsertDialogController(object):
         Обработчик события при нажатии на кнопку для прикрепления файла
         """
         if self._page.readonly:
-            raise outwiker.core.exceptions.ReadonlyException
+            raise ReadonlyException()
 
         # Кусок ниже практически полностью скопирован из функции
         # outwiker.core.commands.attachFilesWithDialog
         dlg = wx.FileDialog(
-            self._dialog,
-            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE
+            self._dialog, style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE
         )
 
         if dlg.ShowModal() == wx.ID_OK:
             files = sorted(dlg.GetPaths())
             attachFiles(self._dialog, self._page, files)
 
-            self._loadAttachmentState()
+            self._updateFilesList()
 
             # Выберем только что добавленный файл
             newfile = os.path.basename(files[0])
-            if newfile in self._dialog.attachmentComboBox.GetItems():
-                self._dialog.attachmentComboBox.SetStringSelection(newfile)
+            self._dialog.attachmentComboBox.SetValue(newfile)
 
             self._dialog.fileCheckBox.SetValue(True)
             self.updateFileChecked()
@@ -136,61 +138,63 @@ class InsertDialogController(object):
 
     def _getTabWidthParam(self):
         if self._dialog.tabWidth != 0:
-            return u' tabwidth="{0}"'.format(self._dialog.tabWidth)
+            return ' tabwidth="{0}"'.format(self._dialog.tabWidth)
         else:
-            return u''
+            return ""
 
     def _getParentBg(self):
         if self._dialog.parentbg:
-            return u' parentbg'
+            return " parentbg"
 
-        return u''
+        return ""
 
     def _getLineNum(self):
         if self._dialog.lineNum:
-            return u' linenum'
+            return " linenum"
 
-        return u''
+        return ""
 
     def _getStyleParam(self):
-        return (u''
-                if self._dialog.style == getDefaultStyle(self._config)
-                else ' style="{style}"'.format(style=self._dialog.style))
+        return (
+            ""
+            if self._dialog.style == getDefaultStyle(self._config)
+            else ' style="{style}"'.format(style=self._dialog.style)
+        )
 
     def _getCommonParams(self):
         """
         Получить список параметров, общий для исходников,
             вставляемых в виде текста и из файла
         """
-        commonparams = u'{tabwidth}{style}{parentbg}{linenum}'
+        commonparams = "{tabwidth}{style}{parentbg}{linenum}"
 
         tabWidthStr = self._getTabWidthParam()
         styleStr = self._getStyleParam()
         parentbg = self._getParentBg()
         linenum = self._getLineNum()
 
-        return commonparams.format(tabwidth=tabWidthStr,
-                                   style=styleStr,
-                                   parentbg=parentbg,
-                                   linenum=linenum)
+        return commonparams.format(
+            tabwidth=tabWidthStr, style=styleStr, parentbg=parentbg, linenum=linenum
+        )
 
     def _getStringsForText(self):
         """
         Возвращает кортеж строк для случая оформления исходников
             из текста (не из файла)
         """
-        langStr = u' lang="{language}"'.format(
-            language=self._langList.getDesignation(self._dialog.language))
+        langStr = ' lang="{language}"'.format(
+            language=self._langList.getDesignation(self._dialog.language)
+        )
 
         commonparams = self._getCommonParams()
 
-        startCommand = u'(:source{lang}{commonparams}:)\n'.format(
-            lang=langStr,
-            commonparams=commonparams)
+        startCommand = "(:source{lang}{commonparams}:)\n".format(
+            lang=langStr, commonparams=commonparams
+        )
 
-        endCommand = u'\n(:sourceend:)'
+        endCommand = "\n(:sourceend:)"
 
-        return(startCommand, endCommand)
+        return (startCommand, endCommand)
 
     def _getStringsForAttachment(self):
         """
@@ -199,31 +203,30 @@ class InsertDialogController(object):
         """
         fname = self._dialog.attachment
         encoding = self._dialog.encoding
-        language = (None
-                    if self._dialog.languageComboBox.GetSelection() == 0
-                    else self._langList.getDesignation(self._dialog.language))
-
-        fnameStr = u' file="Attach:{fname}"'.format(fname=fname)
-        encodingStr = (
-            u''
-            if encoding == "utf8"
-            else u' encoding="{encoding}"'.format(encoding=encoding)
+        language = (
+            None
+            if self._dialog.languageComboBox.GetSelection() == 0
+            else self._langList.getDesignation(self._dialog.language)
         )
 
-        langStr = (u''
-                   if language is None
-                   else u' lang="{lang}"'.format(lang=language))
+        fnameStr = ' file="Attach:{fname}"'.format(fname=fname)
+        encodingStr = (
+            ""
+            if encoding == "utf8"
+            else ' encoding="{encoding}"'.format(encoding=encoding)
+        )
+
+        langStr = "" if language is None else ' lang="{lang}"'.format(lang=language)
 
         commonparams = self._getCommonParams()
 
-        startCommand = u'(:source{file}{encoding}{lang}{commonparams}:)'.format(file=fnameStr,
-                                                                                encoding=encodingStr,
-                                                                                lang=langStr,
-                                                                                commonparams=commonparams)
+        startCommand = "(:source{file}{encoding}{lang}{commonparams}:)".format(
+            file=fnameStr, encoding=encodingStr, lang=langStr, commonparams=commonparams
+        )
 
-        endCommand = u'(:sourceend:)'
+        endCommand = "(:sourceend:)"
 
-        return(startCommand, endCommand)
+        return (startCommand, endCommand)
 
     def getCommandStrings(self):
         """
@@ -235,14 +238,15 @@ class InsertDialogController(object):
             return self._getStringsForText()
 
     def _getLangList(self):
-        languages = [self._langList.getLangName(item)
-                     for item
-                     in self._config.languageList.value
-                     if len(item.strip()) > 0]
+        languages = [
+            self._langList.getLangName(item)
+            for item in self._config.languageList.value
+            if len(item.strip()) > 0
+        ]
 
         # Если не выбран ни один из языков, добавляем "text"
         if len(languages) == 0:
-            languages = [u"text"]
+            languages = ["text"]
 
         languages.sort()
         return languages
@@ -254,7 +258,7 @@ class InsertDialogController(object):
         self._loadTabWidthState()
         self.loadLanguagesState()
         self._loadEncodingState()
-        self._loadAttachmentState()
+        self._updateFilesList()
         self._loadStyleState()
 
         self._dialog.parentBgCheckBox.SetValue(self._config.parentbg.value)
@@ -275,20 +279,19 @@ class InsertDialogController(object):
 
         self._dialog.SetClientSize(dialogWidth, dialogHeight)
 
-    def _loadAttachmentState(self):
+    def _updateFilesList(self):
         attach = Attachment(self._page)
-        files = sorted(attach.getAttachRelative())
-
+        attach_path = Path(attach.getAttachPath(create=False))
         self._dialog.attachmentComboBox.Clear()
-        self._dialog.attachmentComboBox.AppendItems(files)
-
-        if len(files) > 0:
-            self._dialog.attachmentComboBox.SetSelection(0)
+        if attach_path.exists():
+            files_filter = notFilter(getHiddenFilter(self._page))
+            self._dialog.attachmentComboBox.SetRootDir(attach_path)
+            self._dialog.attachmentComboBox.SetFilterFunc(files_filter)
 
     def _loadStyleState(self):
-        fillStyleComboBox(self._config,
-                          self._dialog.styleComboBox,
-                          self._config.style.value.strip())
+        fillStyleComboBox(
+            self._config, self._dialog.styleComboBox, self._config.style.value.strip()
+        )
 
     def _loadEncodingState(self):
         """
@@ -301,15 +304,14 @@ class InsertDialogController(object):
         """
         Настройки элементов интерфейса, связанных с шириной табуляции
         """
-        self._dialog.tabWidthSpin.SetRange(self.MIN_TAB_WIDTH,
-                                           self.MAX_TAB_WIDTH)
+        self._dialog.tabWidthSpin.SetRange(self.MIN_TAB_WIDTH, self.MAX_TAB_WIDTH)
         self._dialog.tabWidthSpin.SetValue(0)
 
     def loadLanguagesState(self):
         """
         Заполнение списка языков программирования
         """
-        languages = self._getLangList() + [_('Other...')]
+        languages = self._getLangList() + [_("Other...")]
 
         if self._dialog.insertFromFile:
             languages = [self.AUTO_LANGUAGE] + languages
@@ -322,7 +324,8 @@ class InsertDialogController(object):
         else:
             try:
                 default_lang = self._langList.getLangName(
-                    self._config.defaultLanguage.value.lower().strip())
+                    self._config.defaultLanguage.value.lower().strip()
+                )
 
                 selindex = languages.index(default_lang)
                 self._dialog.languageComboBox.SetSelection(selindex)
@@ -333,9 +336,13 @@ class InsertDialogController(object):
         """
         Сохранить настройки диалога
         """
-        if (not self._dialog.insertFromFile or
-                self._dialog.languageComboBox.GetSelection() != 0):
-            self._config.defaultLanguage.value = self._langList.getDesignation(self._dialog.language)
+        if (
+            not self._dialog.insertFromFile
+            or self._dialog.languageComboBox.GetSelection() != 0
+        ):
+            self._config.defaultLanguage.value = self._langList.getDesignation(
+                self._dialog.language
+            )
 
         currentWidth, currentHeight = self._dialog.GetClientSize()
         self._config.dialogWidth.value = currentWidth
@@ -364,5 +371,5 @@ class InsertDialogController(object):
             "koi8_r",
             "mac_cyrillic",
             "ascii",
-            "latin_1"
+            "latin_1",
         ]

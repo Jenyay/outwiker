@@ -2,18 +2,16 @@
 
 import os.path
 
-from outwiker.gui.defines import TOOLBAR_PLUGINS
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo,
-                                                    ButtonInfo)
+from outwiker.api.gui.defines import TOOLBAR_PLUGINS
+from outwiker.api.pages.wiki import WikiWikiPage
+from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo, ButtonInfo
 
 from .commandspoiler import SpoilerCommand
 from .actions import SpoilerAction
 
 
-class Controller(object):
+class Controller:
     def __init__(self, plugin, application):
         self._plugin = plugin
         self._application = application
@@ -29,14 +27,14 @@ class Controller(object):
         self._initialize_guicontroller()
 
     def _initialize_guicontroller(self):
-        imagesPath = os.path.join(self._plugin.pluginPath, 'images')
+        imagesPath = os.path.join(self._plugin.pluginPath, "images")
 
         action_gui_info = [
-            ActionGUIInfo(SpoilerAction(self._application),
-                          MENU_WIKI_COMMANDS,
-                          ButtonInfo(TOOLBAR_PLUGINS,
-                                     os.path.join(imagesPath, 'spoiler.png'))
-                          ),
+            ActionGUIInfo(
+                SpoilerAction(self._application),
+                MENU_WIKI_COMMANDS,
+                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "spoiler.png")),
+            ),
         ]
 
         if self._application.mainWindow is not None:

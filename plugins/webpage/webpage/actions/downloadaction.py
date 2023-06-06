@@ -1,27 +1,26 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from webpage.i18n import get_
 
 
 class BaseWebPageAction(BaseAction, metaclass=ABCMeta):
     def __init__(self, application):
-        super(BaseWebPageAction, self).__init__()
+        super().__init__()
         self._application = application
         global _
         _ = get_()
 
     def run(self, params):
-        from webpage.gui.downloaddialog import(DownloadDialog,
-                                               DownloadDialogController)
+        from webpage.gui.downloaddialog import DownloadDialog, DownloadDialogController
 
         with DownloadDialog(self._application.mainWindow) as dlg:
-            controller = DownloadDialogController(dlg,
-                                                  self._application,
-                                                  self._getParentPage())
+            controller = DownloadDialogController(
+                dlg, self._application, self._getParentPage()
+            )
             controller.showDialog()
 
     @abstractmethod
@@ -32,15 +31,15 @@ class BaseWebPageAction(BaseAction, metaclass=ABCMeta):
 class CreateChildWebPageAction(BaseWebPageAction):
     """Download content and create child web page."""
 
-    stringId = u"webpage_create_child_page"
+    stringId = "webpage_create_child_page"
 
     @property
     def title(self):
-        return _(u"Create child web page")
+        return _("Create child web page")
 
     @property
     def description(self):
-        return _(u'Download content from the Internet and create child web page')
+        return _("Download content from the Internet and create child web page")
 
     def _getParentPage(self):
         assert self._application.wikiroot is not None
@@ -54,15 +53,15 @@ class CreateChildWebPageAction(BaseWebPageAction):
 class CreateSiblingWebPageAction(BaseWebPageAction):
     """Download content and create sibling web page."""
 
-    stringId = u"webpage_create_sibling_page"
+    stringId = "webpage_create_sibling_page"
 
     @property
     def title(self):
-        return _(u"Create sibling web page")
+        return _("Create sibling web page")
 
     @property
     def description(self):
-        return _(u'Download content from the Internet and create sibling web page')
+        return _("Download content from the Internet and create sibling web page")
 
     def _getParentPage(self):
         assert self._application.wikiroot is not None

@@ -16,7 +16,10 @@ from .exceptions import (ClearConfigError, RootFormatError, DuplicateTitle,
                          ReadonlyException, TreeException)
 from .tagscommands import parseTagsList
 from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
-from .defines import PAGE_CONTENT_FILE, PAGE_OPT_FILE, REGISTRY_FILE
+from .defines import (PAGE_CONTENT_FILE,
+                      PAGE_OPT_FILE,
+                      REGISTRY_FILE,
+                      CONFIG_GENERAL_SECTION)
 from .iconcontroller import IconController
 from .system import getIconsDirList
 from .registrynotestree import NotesTreeRegistry, PickleSaver
@@ -32,8 +35,6 @@ class RootWikiPage:
     Класс для корня вики
     """
     contentFile = PAGE_CONTENT_FILE
-
-    sectionGeneral = u"General"
 
     def __init__(self, path, readonly=False):
         """
@@ -375,7 +376,7 @@ class WikiDocument(RootWikiPage):
         """
         Очистить файл __page.opt.
         Используется в случае, если файл __page.opt испорчен
-        path - путь до вики(или до директории с файлом __page.opt,
+        path - путь до вики (или до директории с файлом __page.opt,
         или включая этот файл)
         """
         if path.endswith(PAGE_OPT_FILE):
@@ -395,14 +396,18 @@ class WikiDocument(RootWikiPage):
         Загрузить корневую страницу вики.
         Использовать этот метод вместо конструктора
         """
+        logger.debug('Wiki document loading started')
         try:
             root = WikiDocument(path, readonly)
         except configparser.Error:
             raise RootFormatError
 
+        logger.debug('Children notes loading started')
         root.loadChildren()
+        logger.debug('Children notes loading ended')
 
         root.onTreeUpdate(root)
+        logger.debug('Wiki document loading ended')
         return root
 
     def save(self):
@@ -771,7 +776,7 @@ class WikiPage(RootWikiPage):
 
         # Удалим начальные ", "
         tags = tags[2:]
-        self._params.set(RootWikiPage.sectionGeneral, WikiPage.paramTags, tags)
+        self._params.set(CONFIG_GENERAL_SECTION, WikiPage.paramTags, tags)
 
     def initAfterCreating(self, tags):
         """
@@ -790,7 +795,7 @@ class WikiPage(RootWikiPage):
         Выделить теги из строки конфигурационного файла
         """
         try:
-            tagsString = configParser.get(RootWikiPage.sectionGeneral,
+            tagsString = configParser.get(CONFIG_GENERAL_SECTION,
                                           WikiPage.paramTags)
         except configparser.NoOptionError:
             return []

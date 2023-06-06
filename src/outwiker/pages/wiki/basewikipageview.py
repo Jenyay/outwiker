@@ -1,26 +1,28 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import wx
 
-from outwiker.core.commands import showError
-
+from outwiker.app.services.messages import showError
+from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW, PAGE_MODE_HTML
 from outwiker.gui.htmltexteditor import HtmlTextEditor
+from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
+from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 from outwiker.utilites.textfile import readTextFile
 
 from .actions.openhtmlcode import WikiOpenHtmlCodeAction
 from .actions.updatehtml import WikiUpdateHtmlAction
-from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
-from outwiker.core.defines import (PAGE_MODE_TEXT,
-                                   PAGE_MODE_PREVIEW,
-                                   PAGE_MODE_HTML)
-from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 
 
-class BaseWikiPageView (BaseHtmlPanel):
+logger = logging.getLogger("outwiker.pages.wiki.basewikipageview")
+
+
+class BaseWikiPageView(BaseHtmlPanel):
     HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
 
     def __init__(self, parent, application):
+        logger.debug("BaseWikiPageView creation started")
         super(BaseWikiPageView, self).__init__(parent, application)
 
         # Редактор с просмотром получившегося HTML (если есть)
@@ -38,9 +40,9 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         self._toolbars = self._getToolbarsInfo(self.mainWindow)
         for toolbar_id, title in self._toolbars:
-            self.mainWindow.toolbars.createToolBar(toolbar_id,
-                                                   title,
-                                                   order=TOOLBAR_ORDER_TEXT)
+            self.mainWindow.toolbars.createToolBar(
+                toolbar_id, title, order=TOOLBAR_ORDER_TEXT
+            )
 
         self.notebook.SetPageText(0, self._getPageTitle())
 
@@ -53,8 +55,10 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         self._wikiMenu = wx.Menu()
 
+        logger.debug("Wiki page GUI creation started")
         self._createCommonTools()
         self._createWikiTools()
+        logger.debug("Wiki page GUI creation ended")
 
         self.mainWindow.UpdateAuiManager()
 
@@ -64,6 +68,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.Layout()
 
         self._application.onPageModeChange += self.onTabChanged
+        logger.debug("BaseWikiPageView creation ended")
 
     # Методы, которые необходимо переопределить в производном классе
     def _createWikiTools(self):
@@ -118,9 +123,9 @@ class BaseWikiPageView (BaseHtmlPanel):
     # Конец методов, которые необходимо переопределить в производном классе
 
     def GetPageMode(self):
-        '''
+        """
         Return the current page mode.
-        '''
+        """
         if self._selectedPageIndex == self.CODE_PAGE_INDEX:
             return PAGE_MODE_TEXT
         elif self._selectedPageIndex == self.RESULT_PAGE_INDEX:
@@ -141,6 +146,7 @@ class BaseWikiPageView (BaseHtmlPanel):
             raise ValueError()
 
     def Clear(self):
+        logger.debug("GUI destroying started")
         self._removeActionTools()
         self._application.onPageModeChange -= self.onTabChanged
 
@@ -148,6 +154,7 @@ class BaseWikiPageView (BaseHtmlPanel):
             self.mainWindow.toolbars.destroyToolBar(toolbar_info[0])
 
         super().Clear()
+        logger.debug("GUI destroying ended")
 
     def onPreferencesDialogClose(self, prefDialog):
         super(BaseWikiPageView, self).onPreferencesDialogClose(prefDialog)
@@ -189,8 +196,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         # Окно для просмотра получившегося кода HTML
         self.htmlCodeWindow = HtmlTextEditor(self.notebook)
         self.htmlCodeWindow.SetReadOnly(True)
-        parentSizer.Add(self.htmlCodeWindow, 1,
-                        wx.TOP | wx.BOTTOM | wx.EXPAND, 2)
+        parentSizer.Add(self.htmlCodeWindow, 1, wx.TOP | wx.BOTTOM | wx.EXPAND, 2)
 
         self.addPage(self.htmlCodeWindow, _("HTML"))
         return self.pageCount - 1
@@ -204,6 +210,8 @@ class BaseWikiPageView (BaseHtmlPanel):
     def GetSearchPanel(self):
         if self._selectedPageIndex == self.CODE_PAGE_INDEX:
             return self.codeEditor.searchPanel
+        elif self._selectedPageIndex == self.RESULT_PAGE_INDEX:
+            return self.htmlWindow.searchPanel
         elif self._selectedPageIndex == self.htmlcodePageIndex:
             return self.htmlCodeWindow.searchPanel
 
@@ -224,12 +232,13 @@ class BaseWikiPageView (BaseHtmlPanel):
         actionController = self._application.actionController
 
         # Активируем / дизактивируем собственные действия
-        [actionController.enableTools(action.stringId, enabled) for action
-         in self.__wikiNotationActions]
+        [
+            actionController.enableTools(action.stringId, enabled)
+            for action in self.__wikiNotationActions
+        ]
 
         # Активируем / дизактивируем полиморфные действия
-        [actionController.enableTools(strid, enabled) for strid
-         in self.__polyActions]
+        [actionController.enableTools(strid, enabled) for strid in self.__polyActions]
 
     def _onSwitchCodeHtml(self):
         assert self._currentpage is not None
@@ -255,16 +264,17 @@ class BaseWikiPageView (BaseHtmlPanel):
             self.htmlCodeWindow.SetText(html)
             self.htmlCodeWindow.SetReadOnly(True)
         except IOError as e:
-            showError(self._application.mainWindow,
-                      _(u"Can't load file %s") % (unicode(e.filename)))
+            showError(
+                self._application.mainWindow,
+                _("Can't load file %s") % (unicode(e.filename)),
+            )
 
     @BaseHtmlPanel._selectedPageIndex.setter
     def _selectedPageIndex(self, index):
         """
         Устанавливает выбранную страницу (код, просмотр или полученный HTML)
         """
-        if (index == self.HTML_RESULT_PAGE_INDEX and
-                self.htmlcodePageIndex == -1):
+        if index == self.HTML_RESULT_PAGE_INDEX and self.htmlcodePageIndex == -1:
             self.htmlcodePageIndex = self.__createHtmlCodePanel(self.htmlSizer)
             selectedPage = self.htmlcodePageIndex
         else:
@@ -281,8 +291,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         assert index != wx.NOT_FOUND
 
         mainMenu.Remove(index)
-        self._application.mainWindow.menuController.removeMenu(
-            self._getMenuId())
+        self._application.mainWindow.menuController.removeMenu(self._getMenuId())
 
     def removeGui(self):
         super(BaseWikiPageView, self).removeGui()
@@ -296,26 +305,26 @@ class BaseWikiPageView (BaseHtmlPanel):
 
     def _createCommonTools(self):
         mainMenu = self._application.mainWindow.menuController.getRootMenu()
-        mainMenu.Insert(self.__WIKI_MENU_INDEX,
-                        self.toolsMenu,
-                        self._getMenuTitle())
-        self.mainWindow.menuController.addMenu(self._getMenuId(),
-                                               self.toolsMenu)
+        mainMenu.Insert(self.__WIKI_MENU_INDEX, self.toolsMenu, self._getMenuTitle())
+        self.mainWindow.menuController.addMenu(self._getMenuId(), self.toolsMenu)
 
         # Переключиться с кода на результат и обратно
         self._application.actionController.appendMenuItem(
-            SwitchCodeResultAction.stringId, self.toolsMenu)
+            SwitchCodeResultAction.stringId, self.toolsMenu
+        )
 
         # Переключиться на код HTML
         self._application.actionController.appendMenuItem(
-            WikiOpenHtmlCodeAction.stringId, self.toolsMenu)
+            WikiOpenHtmlCodeAction.stringId, self.toolsMenu
+        )
 
         # Обновить код HTML
         self._application.actionController.appendMenuItem(
-            WikiUpdateHtmlAction.stringId, self.toolsMenu)
+            WikiUpdateHtmlAction.stringId, self.toolsMenu
+        )
 
     def _onSpellOnOff(self, event):
-        super(BaseWikiPageView, self)._onSpellOnOff(event)
+        super()._onSpellOnOff(event)
 
         if self.htmlCodeWindow is not None:
             self.htmlCodeWindow.setDefaultSettings()

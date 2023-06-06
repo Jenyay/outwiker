@@ -1,4 +1,4 @@
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from hackpage.utils import setPageCreationDate
 from hackpage.i18n import get_

@@ -4,14 +4,16 @@ import re
 
 from pyparsing import Regex
 
+import outwiker.core.cssclasses as css
 
-class HeadingFactory (object):
+
+class HeadingFactory:
     @staticmethod
     def make(parser):
         return HeadingToken(parser).getToken()
 
 
-class HeadingToken (object):
+class HeadingToken:
     def __init__(self, parser):
         self.heading_Regex = r"^(?P<header>!!+)\s+(?P<title>(\\\n|.)*)$"
         self.parser = parser
@@ -25,4 +27,4 @@ class HeadingToken (object):
     def convertToHeading(self, s, l, t):
         level = len(t["header"]) - 1
         content = self.parser.parseHeadingMarkup(t["title"])
-        return u"<h{level}>{content}</h{level}>".format(level=level, content=content)
+        return '<h{level} class="{css_class}">{content}</h{level}>'.format(level=level, content=content, css_class=css.CSS_WIKI)

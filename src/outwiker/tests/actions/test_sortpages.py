@@ -2,9 +2,9 @@
 
 import unittest
 
+from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
+from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.actions.sortchildalpha import SortChildAlphabeticalAction
-from outwiker.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 

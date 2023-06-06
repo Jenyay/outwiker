@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
-from outwiker.core.attachment import Attachment
-from outwiker.pages.wiki.wikiconfig import WikiConfig
+from pathlib import Path
+from typing import List, Tuple
+
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.images import isImage
+from outwiker.api.pages.wiki.config import WikiConfig
+from outwiker.api.pages.wiki.wikiparser import Command
 
 from .thumbstreamgenerator import ThumbStreamGenerator
 from .thumbtablegenerator import ThumbTableGenerator
-from .utilites import isImage
 
 
 class ThumbListCommand(Command):
@@ -18,18 +21,19 @@ class ThumbListCommand(Command):
     Список файлов
     (:thumblistend:)
     """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
         """
-        Command.__init__(self, parser)
+        super().__init__(parser)
 
     @property
     def name(self):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"thumblist"
+        return "thumblist"
 
     def execute(self, params, content):
         """
@@ -46,26 +50,31 @@ class ThumbListCommand(Command):
         if columnsCount == 0:
             generator = ThumbStreamGenerator(lineItems, thumbsize, self.parser)
         else:
-            generator = ThumbTableGenerator(lineItems,
-                                            thumbsize,
-                                            self.parser,
-                                            columnsCount)
+            generator = ThumbTableGenerator(
+                lineItems, thumbsize, self.parser, columnsCount
+            )
 
         return generator.generate()
 
     def _parseContent(self, content):
         attach = Attachment(self.parser.page)
+        root_dir = attach.getAttachPath(create=False)
 
-        filesList = self._getLinesItems(content)
+        filesList = [
+            (item[0].replace("\\", "/"), item[1])
+            for item in self._getLinesItems(content)
+        ]
         allFiles = attach.getAttachRelative()
         allFiles.sort()
 
         if len(content) == 0:
-            files = [(fname, u"") for fname in allFiles if isImage(fname)]
+            files = [(fname, "") for fname in allFiles if isImage(fname)]
         else:
-            files = [lineitem for lineitem
-                     in filesList
-                     if isImage(lineitem[0]) and lineitem[0] in allFiles]
+            files = [
+                lineitem
+                for lineitem in filesList
+                if isImage(lineitem[0]) and Path(root_dir, lineitem[0]).exists()
+            ]
 
         return files
 
@@ -75,33 +84,70 @@ class ThumbListCommand(Command):
         перечисленных в теле команды.
         Возвращает список кортежей: (имя файла, комментарий)
         """
+
         def _removeAttach(line):
             """
-            Удалить фразу "Attach:" в начале строки
+            Remove "Attach:" notation
             """
-            attachPhrase = u"attach:"
-            return (line[len(attachPhrase):]
-                    if line.lower().startswith(attachPhrase)
-                    else line)
+            attachPhrase = "attach:"
+            if line.lower().startswith(attachPhrase):
+                line = line[len(attachPhrase) :]
 
-        lines = [self._splitLine(_removeAttach(fname.strip()))
-                 for fname in content.split(u"\n")
-                 if len(fname.strip()) != 0]
+            return line
+
+        lines = []
+        for line in content.split("\n"):
+            if len(line.strip()) != 0:
+                items = self._parse_line(_removeAttach(line.strip()))
+                lines.extend(items)
 
         return lines
 
-    def _splitLine(self, line):
+    def _parse_line(self, line: str) -> List[Tuple[str, str]]:
         """
-        Из строки в формате "Имя файла | Комментарий" делает кортеж
+        Из строки в формате "Имя файла | Комментарий" делает список кортежей
         (Имя файла, Комментарий)
         """
+        # Extract comment
         splitItems = line.rsplit("|", 1)
         if len(splitItems) > 1:
-            result = (splitItems[0].strip(), splitItems[1].strip())
+            fname = splitItems[0].strip()
+            comment = splitItems[1].strip()
         else:
-            result = (line, u"")
+            fname = line
+            comment = ""
 
-        return result
+        fname = fname.replace("\\", "/")
+
+        # Remove quotes
+        if fname.startswith('"') and fname.endswith('"'):
+            fname = fname[1:-1]
+
+        if fname.startswith("'") and fname.endswith("'"):
+            fname = fname[1:-1]
+
+        # Extract files by mask
+        files = self._getFilesByMask(fname)
+        return [(fname, comment) for fname in files]
+
+    def _getFilesByMask(self, mask: str) -> List[str]:
+        attach = Attachment(self.parser.page)
+        root_dir = Path(attach.getAttachPath(create=False))
+        if not root_dir.exists():
+            return []
+
+        glob_result = root_dir.glob(mask)
+        glob_images_relative = [
+            fname.relative_to(root_dir) for fname in glob_result if isImage(fname)
+        ]
+
+        glob_filter = [
+            str(fname)
+            for fname in glob_images_relative
+            if (not str(fname).startswith("__") or str(fname) == fname.name)
+        ]
+
+        return glob_filter
 
     def _getColumnsCount(self, paramsDict):
         """

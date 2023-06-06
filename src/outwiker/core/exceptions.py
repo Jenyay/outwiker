@@ -6,9 +6,6 @@ class OutWikerException(Exception):
     Базовый класс для исключений, специфических для OutWiker
     """
 
-    def __init__(self):
-        BaseException.__init__(self)
-
 
 class TreeException(OutWikerException):
     """
@@ -64,3 +61,12 @@ class PreferencesException(OutWikerException):
 
     def __init__(self):
         OutWikerException.__init__(self)
+
+
+class InvalidImageFormat(OutWikerException):
+    """
+    An exception is thrown when the image format is incorrect
+    """
+
+    def __init__(self, filename):
+        self.filename = filename

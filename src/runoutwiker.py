@@ -9,12 +9,12 @@ import sys
 import wx
 
 import outwiker
+from outwiker.app.owapplication import OutWikerApplication
+from outwiker.app.core.starter import Starter, StarterExit
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_DEBUG
 from outwiker.core.system import getOS, getConfigPath
-from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.system import getSpecialDirList
-from outwiker.gui.owapplication import OutWikerApplication
 
 
 logger = logging.getLogger('outwiker')
@@ -63,9 +63,9 @@ if __name__ == "__main__":
     if starter.pluginsEnabled:
         outwiker_app.loadPlugins()
 
-    outwiker_app.showMainWindow(starter.allowMinimizingMainWindow)
     outwiker_app.bindActivateApp()
     starter.processGUI()
+    outwiker_app.showMainWindow(starter.allowMinimizingMainWindow)
     outwiker_app.MainLoop()
 
     logger.debug('Exit')

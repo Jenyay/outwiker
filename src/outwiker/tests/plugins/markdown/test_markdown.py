@@ -2,10 +2,10 @@
 
 import unittest
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.style import Style
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.utils import removeDir
 
@@ -28,7 +28,7 @@ class MarkdownTest(unittest.TestCase):
         self.path = "testdata/testwiki"
         removeDir(self.path)
 
-        self.rootwiki = WikiDocument.create(self.path)
+        self.rootwiki = createNotesTree(self.path)
 
         WikiPageFactory().create(self.rootwiki, "Страница 1", [])
         self.testPage = self.rootwiki["Страница 1"]

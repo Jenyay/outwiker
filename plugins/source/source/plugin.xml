@@ -2,7 +2,7 @@
 <info>
 	<name>Source</name>
 	<requirements>
-		<api>3.868</api>
+		<api>3.922</api>
 	</requirements>
 
 	<website>https://jenyay.net/Outwiker/SourcePluginEn</website>
@@ -22,5 +22,5 @@
 		<website>https://jenyay.net</website>
 	</author>
 
-	<version number="1.22"/>
+	<version number="1.25"/>
 </info>

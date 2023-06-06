@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Source plugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-16 21:52+0300\n"
-"PO-Revision-Date: 2018-11-16 21:52+0300\n"
+"POT-Creation-Date: 2022-07-27 15:23+0300\n"
+"PO-Revision-Date: 2022-07-27 15:24+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: en_US\n"
@@ -16,59 +16,96 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: actions.py:29
+msgid "Source Code (:source ...:)"
+msgstr "Source Code (:source ...:)"
+
+#: actions.py:34
+msgid ""
+"Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr ""
+"Source plugin. Insert (: source... :) command for source code highlighting"
+
+#: commandsource.py:78
+#| msgid "<B>Source plugin: File '{0}' not found</B>"
+msgid "Source plugin: File '{}' not found"
+msgstr "Source plugin: File '{}' not found"
+
+#: commandsource.py:81
+#| msgid "<B>Source plugin: Encoding error</B>"
+msgid "Source plugin: Encoding error"
+msgstr "Source plugin: Encoding error"
+
+#: commandsource.py:84
+#| msgid "<B>Source plugin: Unknown encoding</B>"
+msgid "Source plugin: Unknown encoding"
+msgstr "Source plugin: Unknown encoding"
 
 #: controller.py:87
 msgid "Source [Plugin]"
 msgstr "Source [Plugin]"
 
-#: insertdialog.py:21
+#: insertdialog.py:24
 msgid "Source code"
 msgstr "Source code"
 
-#: insertdialog.py:88
+#: insertdialog.py:87
 msgid "General"
 msgstr "General"
 
-#: insertdialog.py:89
+#: insertdialog.py:88
 msgid "Appearance"
 msgstr "Appearance"
 
-#: insertdialog.py:137
+#: insertdialog.py:135
 msgid "Use the page background for the code block"
 msgstr "Use the page background for the code block"
 
-#: insertdialog.py:151
+#: insertdialog.py:149
 msgid "Enable line numbers"
 msgstr "Enable line numbers"
 
-#: insertdialog.py:167
-msgid "Language"
-msgstr "Language"
-
-#: insertdialog.py:203
+#: insertdialog.py:165
 msgid "Tab Width (0 - Default Value)"
 msgstr "Tab Width (0 - Default Value)"
 
-#: insertdialog.py:238
+#: insertdialog.py:197
 msgid "Style"
 msgstr "Style"
 
-#: insertdialog.py:271
+#: insertdialog.py:224
 msgid "Insert source from file"
 msgstr "Insert source from file"
 
-#: insertdialog.py:284
+#: insertdialog.py:225
 msgid "Attached file"
 msgstr "Attached file"
 
-#: insertdialog.py:303
+#: insertdialog.py:244
 msgid "Attach new files"
 msgstr "Attach new files"
 
-#: insertdialog.py:320
+#: insertdialog.py:265
 msgid "File encoding"
 msgstr "File encoding"
+
+#: insertdialog.py:288
+msgid "Language"
+msgstr "Language"
+
+#: insertdialogcontroller.py:43
+msgid "Auto"
+msgstr "Auto"
+
+#: insertdialogcontroller.py:69
+msgid "Add other language"
+msgstr "Add other language"
+
+#: insertdialogcontroller.py:309
+msgid "Other..."
+msgstr "Other..."
 
 #: lang_translate.py:4
 msgid "1S"
@@ -77,31 +114,6 @@ msgstr "1S"
 #: lang_translate.py:5
 msgid "Text only"
 msgstr "Text only"
-
-#: commandsource.py:73
-#, python-brace-format
-msgid "<B>Source plugin: File '{0}' not found</B>"
-msgstr "<B>Source plugin: File '{0}' not found</B>"
-
-#: commandsource.py:77
-msgid "<B>Source plugin: Encoding error</B>"
-msgstr "<B>Source plugin: Encoding error</B>"
-
-#: commandsource.py:79
-msgid "<B>Source plugin: Unknown encoding</B>"
-msgstr "<B>Source plugin: Unknown encoding</B>"
-
-#: insertdialogcontroller.py:42
-msgid "Auto"
-msgstr "Auto"
-
-#: insertdialogcontroller.py:67
-msgid "Add other language"
-msgstr "Add other language"
-
-#: insertdialogcontroller.py:310
-msgid "Other..."
-msgstr "Other..."
 
 #: plugin.py:47
 msgid ""
@@ -240,16 +252,6 @@ msgstr ""
 #: plugin.py:127
 msgid "https://jenyay.net/Outwiker/SourcePluginEn"
 msgstr "https://jenyay.net/Outwiker/SourcePluginEn"
-
-#: actions.py:29
-msgid "Source Code (:source ...:)"
-msgstr "Source Code (:source ...:)"
-
-#: actions.py:34
-msgid ""
-"Source plugin. Insert (: source... :) command for source code highlighting"
-msgstr ""
-"Source plugin. Insert (: source... :) command for source code highlighting"
 
 #: preferencepanel.py:54
 msgid "Default Tab Width"

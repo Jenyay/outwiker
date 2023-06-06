@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.longprocessrunner import LongProcessRunner
+from outwiker.api.gui.longprocessrunner import LongProcessRunner
 
 from .exportdialog import ExportDialog
 from .branchexporter import BranchExporter
@@ -11,7 +11,7 @@ from .longnamegenerator import LongNameGenerator
 from .titlenamegenerator import TitleNameGenerator
 
 
-class ExportBranchDialog (ExportDialog):
+class ExportBranchDialog(ExportDialog):
     """
     Класс диалога для экспорта ветки страниц
     """
@@ -22,6 +22,7 @@ class ExportBranchDialog (ExportDialog):
         self.__application = application
 
         from .i18n import _
+
         global _
 
         self.__addNameFormatCheckBox()
@@ -45,47 +46,49 @@ class ExportBranchDialog (ExportDialog):
         """
         Добавить чекбокс "Создавать файлы с длинными именами (включать заголовки родителей)"
         """
-        self.__longNameFormatCheckBox = wx.CheckBox(self,
-                                                    -1,
-                                                    _("Use long file names (include parent name)"))
+        self.__longNameFormatCheckBox = wx.CheckBox(
+            self, -1, _("Use long file names (include parent name)")
+        )
 
-        self._mainSizer.Insert(4,
-                               self.__longNameFormatCheckBox,
-                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               border=2)
+        self._mainSizer.Insert(
+            4,
+            self.__longNameFormatCheckBox,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
 
     def __getNameGenerator(self):
         """
         Возвращает генератор имен для создаваемых страниц (длинные имена или короткие)
         """
-        return LongNameGenerator(self.__rootpage) if self.longNames else TitleNameGenerator(self.path)
+        return (
+            LongNameGenerator(self.__rootpage)
+            if self.longNames
+            else TitleNameGenerator(self.path)
+        )
 
     def _threadExport(self, exporter, path, imagesOnly, overwrite):
         """
         Экспорт, выполняемый в отдельном потоке
         """
-        return exporter.export (path, imagesOnly, overwrite)
+        return exporter.export(path, imagesOnly, overwrite)
 
-    def _onOk (self):
+    def _onOk(self):
         self._config.longNames = self.longNames
         self._config.imagesOnly = self.imagesOnly
         self._config.overwrite = self.overwrite
 
         namegenerator = self.__getNameGenerator()
-        exporter = BranchExporter (self.__rootpage, namegenerator, self.__application)
+        exporter = BranchExporter(self.__rootpage, namegenerator, self.__application)
 
-        runner = LongProcessRunner (self._threadExport,
-                                    self,
-                                    _("Export to HTML"),
-                                    _("Please wait..."))
+        runner = LongProcessRunner(
+            self._threadExport, self, _("Export to HTML"), _("Please wait...")
+        )
 
-        result = runner.run (exporter,
-                             self.path,
-                             self.imagesOnly,
-                             self.overwrite)
+        result = runner.run(exporter, self.path, self.imagesOnly, self.overwrite)
 
-        if len (result) != 0:
-            logdlg = LogDialog (self, result)
+        if len(result) != 0:
+            logdlg = LogDialog(self, result)
             logdlg.ShowModal()
         else:
-            self.EndModal (wx.ID_OK)
+            self.EndModal(wx.ID_OK)

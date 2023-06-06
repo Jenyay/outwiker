@@ -1,32 +1,34 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.config import IntegerOption
+from outwiker.api.core.config import IntegerOption
 
 
-class StatisticsConfig (object):
+class StatisticsConfig:
     def __init__(self, config):
         self.__config = config
 
-        self.section = u"StatisticsPlugin"
+        self.section = "StatisticsPlugin"
 
         # Размеры диалога статистики дерева
         self.DEFAULT_TREE_DIALOG_WIDTH = 600
         self.DEFAULT_TREE_DIALOG_HEIGHT = 500
 
-        treeDialogWidthOption = u"TreeDialogWidth"
-        treeDialogHeightOption = u"TreeDialogHeight"
+        treeDialogWidthOption = "TreeDialogWidth"
+        treeDialogHeightOption = "TreeDialogHeight"
 
         self.__treeDialogWidth = IntegerOption(
             self.__config,
             self.section,
             treeDialogWidthOption,
-            self.DEFAULT_TREE_DIALOG_WIDTH)
+            self.DEFAULT_TREE_DIALOG_WIDTH,
+        )
 
         self.__treeDialogHeight = IntegerOption(
             self.__config,
             self.section,
             treeDialogHeightOption,
-            self.DEFAULT_TREE_DIALOG_HEIGHT)
+            self.DEFAULT_TREE_DIALOG_HEIGHT,
+        )
 
     @property
     def treeDialogWidth(self):

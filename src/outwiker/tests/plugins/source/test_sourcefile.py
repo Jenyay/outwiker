@@ -189,3 +189,75 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue('source_utf8111.py' in result, result)
+
+    def testHighlightFileSubdirForwardSlash(self):
+        subdir = 'subdir 1/subdir 2/'
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+
+        files = [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        attach.attach(files, subdir=subdir)
+
+        content = '(:source file="subdir 1/subdir 2/source_utf8.py" lang="text":)'
+        self.testPage.content = content
+
+        generator = HtmlGenerator(self.testPage)
+        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+
+        self.assertTrue("__correctSysPath()" in result)
+        self.assertTrue(
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+
+    def testHighlightFileSubdirBackSlash(self):
+        subdir = 'subdir 1/subdir 2/'
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+
+        files = [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        attach.attach(files, subdir=subdir)
+
+        content = r'(:source file="subdir 1\subdir 2\source_utf8.py" lang="text":)'
+        self.testPage.content = content
+
+        generator = HtmlGenerator(self.testPage)
+        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+
+        self.assertTrue("__correctSysPath()" in result)
+        self.assertTrue(
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+
+    def testHighlightFileSubdirForwardSlashWithAttach(self):
+        subdir = 'subdir 1/subdir 2/'
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+
+        files = [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        attach.attach(files, subdir=subdir)
+
+        content = '(:source file="Attach:subdir 1/subdir 2/source_utf8.py" lang="text":)'
+        self.testPage.content = content
+
+        generator = HtmlGenerator(self.testPage)
+        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+
+        self.assertTrue("__correctSysPath()" in result)
+        self.assertTrue(
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+
+    def testHighlightFileSubdirBackSlashWithAttach(self):
+        subdir = 'subdir 1/subdir 2/'
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+
+        files = [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        attach.attach(files, subdir=subdir)
+
+        content = r'(:source file="Attach:subdir 1\subdir 2\source_utf8.py" lang="text":)'
+        self.testPage.content = content
+
+        generator = HtmlGenerator(self.testPage)
+        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+
+        self.assertTrue("__correctSysPath()" in result)
+        self.assertTrue(
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)

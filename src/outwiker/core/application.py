@@ -355,6 +355,12 @@ class ApplicationParams:
         #     params - instance of the BeginAttachRenamingParams class
         self.onBeginAttachRenaming = Event()
 
+        # Event occurs after selection / clear selection attachments
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the AttachSelectionChangedParams class
+        self.onAttachSelectionChanged = Event()
+
     def init(self, fullConfigPath):
         """
         Initialize config and locale

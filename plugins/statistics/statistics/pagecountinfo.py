@@ -3,7 +3,7 @@
 from .i18n import get_
 
 
-class PageCountInfo (object):
+class PageCountInfo:
     """Класс для оформления информации о количестве страниц в дереве"""
 
     def __init__(self, pageCount):
@@ -14,4 +14,4 @@ class PageCountInfo (object):
 
     @property
     def content(self):
-        return u"<p>" + _(u"Page count: {0}").format(self._pageCount) + "</p><hr/>"
+        return "<p>" + _("Page count: {0}").format(self._pageCount) + "</p><hr/>"

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 from .controller import Controller
@@ -24,15 +24,15 @@ class PluginName(Plugin):
 
     @property
     def name(self):
-        return u"HtmlFormatter"
+        return "HtmlFormatter"
 
     @property
     def description(self):
-        return _(u"Plugin for more punctual HTML generation")
+        return _("Plugin for more punctual HTML generation")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/HtmlFormatterEn")
+        return _("https://jenyay.net/Outwiker/HtmlFormatterEn")
 
     def initialize(self):
         set_(self.gettext)

@@ -4,8 +4,8 @@ import os.path
 from tempfile import mkdtemp
 import unittest
 
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
@@ -39,7 +39,7 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
     def testCreate(self):
         from webpage.webnotepage import WebPageFactory, WebNotePage
 
-        wikiroot = WikiDocument.create(self.path)
+        wikiroot = createNotesTree(self.path)
         test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
         self.assertEqual(type(test_page), WebNotePage)
 
@@ -59,7 +59,7 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
     def testClear_01(self):
         from webpage.webnotepage import WebPageFactory
 
-        wikiroot = WikiDocument.create(self.path)
+        wikiroot = createNotesTree(self.path)
         self.application.wikiroot = wikiroot
 
         test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
@@ -70,7 +70,7 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
     def testClear_02(self):
         from webpage.webnotepage import WebPageFactory
 
-        wikiroot = WikiDocument.create(self.path)
+        wikiroot = createNotesTree(self.path)
         self.application.wikiroot = wikiroot
 
         test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
@@ -83,7 +83,7 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
         from webpage.webnotepage import WebPageFactory
         from webpage.gui.webpageview import WebPageView
 
-        wikiroot = WikiDocument.create(self.path)
+        wikiroot = createNotesTree(self.path)
         test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
 
         self.application.wikiroot = wikiroot
@@ -95,7 +95,7 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
     def testLoadContent(self):
         from webpage.webnotepage import WebPageFactory
 
-        wikiroot = WikiDocument.create(self.path)
+        wikiroot = createNotesTree(self.path)
         test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
 
         test_page.content = "Абырвалг"
@@ -111,7 +111,7 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
     def testChangeContent(self):
         from webpage.webnotepage import WebPageFactory
 
-        wikiroot = WikiDocument.create(self.path)
+        wikiroot = createNotesTree(self.path)
         test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
         test_page.content = "Абырвалг"
 
@@ -125,7 +125,7 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
         self.application.wikiroot = None
 
-        wikiroot_other = WikiDocument.load(self.path)
+        wikiroot_other = loadNotesTree(self.path)
         self.application.wikiroot = wikiroot_other
         self.application.selectedPage = wikiroot_other["Страница 1"]
 

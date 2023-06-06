@@ -8,7 +8,7 @@ from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 class IconMaker:
     """ Class for creation icons by images. """
 
-    def create(self, fname_in, fname_out):
+    def create(self, fname_in, fname_out) -> None:
         """ Create icon by file fname_in. Result will have saved as fname_out.
         """
         img_new = Image.new('RGBA', (ICON_WIDTH, ICON_HEIGHT))

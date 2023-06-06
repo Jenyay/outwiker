@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
+from typing import Union
 
-def readTextFile(fname):
+
+def readTextFile(fname: Union[str, Path]) -> str:
     """
     Read text content. Content must be in utf-8 encoding.
     The function return unicode object
@@ -10,7 +13,7 @@ def readTextFile(fname):
         return fp.read()
 
 
-def writeTextFile(fname, text):
+def writeTextFile(fname, text: str) -> None:
     """
     Write text with utf-8 encoding
     """

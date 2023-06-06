@@ -2,6 +2,8 @@
 
 import unittest
 
+from outwiker.app.gui.emptypageview import ClosedTreePanel
+from outwiker.gui.rootpagepanel import RootPagePanel
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.text.textpanel import TextPanel
 from outwiker.pages.html.htmlpage import HtmlPageFactory
@@ -10,8 +12,6 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.search.searchpanel import SearchPanel
-from outwiker.gui.emptypageview import ClosedTreePanel
-from outwiker.gui.rootpagepanel import RootPagePanel
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 

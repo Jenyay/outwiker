@@ -19,7 +19,7 @@ class OverwriteDialog(TestedDialog):
         self._createControls()
         self._do_layout()
 
-        self.SetTitle(_("Overwrite Files"))
+        self.SetTitle(_("File already exists"))
         self.overwrite.SetFocus()
         self.overwrite.SetDefault()
 
@@ -50,17 +50,37 @@ class OverwriteDialog(TestedDialog):
     def _createControls(self):
         self._createButtons()
         self._createFileInfoPanels()
+
+        fname_font = wx.Font(wx.FontInfo(wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize() + 2).Bold())
         self.textLabel = wx.StaticText(self,
-                                       label=_("Overwrite file?"),
+                                       label="File name",
                                        style=wx.ALIGN_CENTRE)
-        downArrowBmp = wx.Image(os.path.join(
-            getImagesDir(), 'arrow_down.png')).ConvertToBitmap()
-        self._downArrow = wx.StaticBitmap(self, bitmap=downArrowBmp)
+        self.textLabel.SetFont(fname_font)
+        arrowBmp = wx.Image(os.path.join(
+            getImagesDir(), 'arrow_right.png')).ConvertToBitmap()
+        self._arrow = wx.StaticBitmap(self, bitmap=arrowBmp)
 
     def _do_layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
         main_sizer.AddGrowableRow(1)
+
+        information_sizer = wx.FlexGridSizer(cols=3)
+        information_sizer.AddGrowableCol(0)
+        information_sizer.AddGrowableCol(2)
+        information_sizer.AddGrowableRow(0)
+
+        information_sizer.Add(self.newFileBox,
+                       flag=wx.ALL | wx.EXPAND,
+                       border=4)
+
+        information_sizer.Add(self._arrow,
+                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                       border=4)
+
+        information_sizer.Add(self.oldFileBox,
+                       flag=wx.ALL | wx.EXPAND,
+                       border=4)
 
         buttons_sizer = self._createButtonsSizer()
 
@@ -68,16 +88,8 @@ class OverwriteDialog(TestedDialog):
                        flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL,
                        border=4)
 
-        main_sizer.Add(self.newFileBox,
-                       flag=wx.ALL | wx.EXPAND,
-                       border=4)
-
-        main_sizer.Add(self._downArrow,
-                       flag=wx.ALL | wx.ALIGN_CENTER_HORIZONTAL,
-                       border=4)
-
-        main_sizer.Add(self.oldFileBox,
-                       flag=wx.ALL | wx.EXPAND,
+        main_sizer.Add(information_sizer,
+                       flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL,
                        border=4)
 
         main_sizer.Add(buttons_sizer,
@@ -122,21 +134,21 @@ class OverwriteDialog(TestedDialog):
         return buttons_sizer
 
     def _setNewFileInfo(self, info: stat_result):
-        size_label = _('New file size: {size:_d} bites').format(
+        size_label = _('{size:_d} bytes').format(
             size=info.st_size).replace('_', ' ')
 
         date = datetime.fromtimestamp(info.st_mtime)
-        date_label = _("New file date: {date:%c}").format(date=date)
+        date_label = "{date:%c}".format(date=date)
 
         self._newFileSizeLabel.SetLabel(size_label)
         self._newFileDateLabel.SetLabel(date_label)
 
     def _setOldFileInfo(self, info: stat_result):
-        size_label = _('Exiting file size: {size:_d} bites').format(
+        size_label = _('{size:_d} bytes').format(
             size=info.st_size).replace('_', ' ')
 
         date = datetime.fromtimestamp(info.st_mtime)
-        date_label = _("Exiting file date: {date:%c}").format(date=date)
+        date_label = "{date:%c}".format(date=date)
 
         self._oldFileSizeLabel.SetLabel(size_label)
         self._oldFileDateLabel.SetLabel(date_label)

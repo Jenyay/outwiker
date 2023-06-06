@@ -6,8 +6,6 @@ import os.path
 from pathlib import Path
 import shutil
 
-import wx
-
 from invoke import Context
 from buildtools.utilites import remove, print_info
 
@@ -56,7 +54,65 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
         return [
             'importlib',
             'urllib',
+            'outwiker.api',
+            'outwiker.api.core',
+            'outwiker.api.core.attachment',
+            'outwiker.api.core.config',
+            'outwiker.api.core.defines',
+            'outwiker.api.core.events',
+            'outwiker.api.core.exceptions',
+            'outwiker.api.core.hashcalculator',
+            'outwiker.api.core.html',
+            'outwiker.api.core.images',
+            'outwiker.api.core.pagecontentcache',
+            'outwiker.api.core.text',
+            'outwiker.api.core.tree',
+            'outwiker.api.core.plugins',
+            'outwiker.api.core.pagestyle',
+            'outwiker.api.core.spellchecker',
+            'outwiker.api.core.tags',
+            'outwiker.api.gui',
+            'outwiker.api.gui.actions',
+            'outwiker.api.gui.basetextstylingcontroller',
+            'outwiker.api.gui.configelements',
+            'outwiker.api.gui.controls',
+            'outwiker.api.gui.defines',
+            'outwiker.api.gui.dialogs',
+            'outwiker.api.gui.hotkeys',
+            'outwiker.api.gui.longprocessrunner',
+            'outwiker.api.gui.mainwindow',
+            'outwiker.api.gui.preferences',
+            'outwiker.api.gui.texteditorhelper',
+            'outwiker.api.app',
+            'outwiker.api.app.application',
+            'outwiker.api.app.config',
+            'outwiker.api.app.attachment',
+            'outwiker.api.app.bookmarks',
+            'outwiker.api.app.clipboard',
+            'outwiker.api.app.messages',
+            'outwiker.api.app.system',
+            'outwiker.api.app.texteditor',
+            'outwiker.api.app.tree',
+            'outwiker.api.pages',
+            'outwiker.api.pages.html',
+            'outwiker.api.pages.html.gui',
+            'outwiker.api.pages.html.guitools',
+            'outwiker.api.pages.html.actions',
+            'outwiker.api.pages.wiki',
+            'outwiker.api.pages.wiki.config',
+            'outwiker.api.pages.wiki.defines',
+            'outwiker.api.pages.wiki.editor',
+            'outwiker.api.pages.wiki.gui',
+            'outwiker.api.pages.wiki.wikiparser',
+            'outwiker.api.pages.wiki.wikipage',
+            'outwiker.actions.close',
+            'outwiker.actions.showhideattaches',
+            'outwiker.actions.showhidetags',
+            'outwiker.actions.showhidetree',
             'outwiker.gui.controls.popupbutton',
+            'outwiker.gui.controls.filestreectrl',
+            'outwiker.core.attachfilters',
+            'outwiker.core.commands',
             'outwiker.utilites.actionsguicontroller',
             'outwiker.utilites.text',
             'PIL.Image',
@@ -86,11 +142,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
                 'styles', 'textstyles', 'plugins']
 
     def get_additional_files(self):
-        # Add the standard wxPython locales
-        wx_locales_path = os.path.join(os.path.dirname(wx.__file__), 'locale')
-        languages = ['ru', 'de', 'sv', 'uk']
-        return [(os.path.join(wx_locales_path, lang, 'LC_MESSAGES', 'wxstd.mo'),
-                 os.path.join('locale', lang, 'LC_MESSAGES')) for lang in languages]
+        return []
 
     def _copy_additional_files(self):
         root_dir = os.path.join(self._dist_dir, u'outwiker')

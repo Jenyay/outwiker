@@ -4,7 +4,7 @@ import os
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -33,7 +33,7 @@ class ParserAlignTest (unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]
 
@@ -97,7 +97,7 @@ class ParserAlignTest (unittest.TestCase):
 
     def testCenter5(self):
         text = "бла-бла-бла \n\n% center %Attach:accept.png\n\nбла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n\n<div align="center"><img src="__attach/accept.png"/></div>\n\nбла-бла-бла\nбла-бла-бла'
+        result = 'бла-бла-бла \n\n<div align="center"><img class="ow-image" src="__attach/accept.png"/></div>\n\nбла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),

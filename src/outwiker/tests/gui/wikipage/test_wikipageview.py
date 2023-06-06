@@ -4,10 +4,10 @@ import unittest
 
 import wx
 
+from outwiker.api.core.tree import loadNotesTree
 from outwiker.core.defines import (PAGE_MODE_TEXT,
                                    PAGE_MODE_PREVIEW,
                                    PAGE_MODE_HTML)
-from outwiker.core.tree import WikiDocument
 from outwiker.gui.rootpagepanel import RootPagePanel
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipageview import WikiPageView
@@ -318,7 +318,7 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
 
         # Теперь загрузим эту вики в режиме только для чтения и поменяем позицию
-        wikiroot_ro = WikiDocument.load(self.wikiroot.path, readonly=True)
+        wikiroot_ro = loadNotesTree(self.wikiroot.path, readonly=True)
         self.application.wikiroot = wikiroot_ro
         self.application.selectedPage = wikiroot_ro["Викистраница"]
         self.assertEqual(self._getCodeEditor().GetCurrentPosition(), 3)

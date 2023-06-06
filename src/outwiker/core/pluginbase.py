@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod, abstractproperty
-import sys
-import os
 import logging
+import os
+import sys
+from abc import ABCMeta, abstractmethod, abstractproperty
 
 from outwiker.core.i18n import getLanguageFromConfig, loadLanguage
 
 
-class Plugin (object, metaclass=ABCMeta):
+class Plugin(metaclass=ABCMeta):
     """
     Base class for plugins.
     The class defines minimal plugin's interface.
@@ -24,32 +24,28 @@ class Plugin (object, metaclass=ABCMeta):
         )
 
         # Load plugin's information
-        self._version = u'0.0'
+        self._version = '0.0'
 
         self.logger = logging.getLogger(self.name)
+        self.gettext = self._init_i18n()
 
-        domain = self.name.lower()
-        langdir = os.path.join(self.pluginPath, "locale")
-        self._init_i18n(domain, langdir)
-
-    def _init_i18n(self, domain, langdir):
+    def _init_i18n(self):
         """
-        init localisation settings
-        domain - domain in localisation files
+        init localization settings
+        domain - domain in localization files
         langdir - путь до папки с переводами
         """
-        language = getLanguageFromConfig(self._application.config)
-        self.lang = loadLanguage(language, langdir, domain)
+        domain = self.name.lower()
+        langdir = os.path.join(self._pluginPath, "locale")
 
-        if self.lang is not None:
-            self.gettext = self.lang.gettext
+        language = getLanguageFromConfig(self._application.config)
+        lang = loadLanguage(language, langdir, domain)
+
+        if lang is not None:
+            return lang.gettext
         else:
             self.logger.debug('Localization not found.')
-            self.gettext = self._no_translate
-        return self.gettext
-
-    def _no_translate(self, text):
-        return text
+            return lambda text: text
 
     @property
     def version(self):
@@ -106,14 +102,3 @@ class Plugin (object, metaclass=ABCMeta):
         The method is called if plugin is disabled.
         """
         pass
-
-
-class InvalidPlugin(object):
-    """
-    Class with the information about plugin with errors
-    """
-    def __init__(self, name, description, version=u'', url=None):
-        self.name = name
-        self.description = description
-        self.version = version if version is not None else u''
-        self.url = url

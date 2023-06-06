@@ -5,9 +5,10 @@ from string import Template
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import HtmlRenderConfig
+import outwiker.core.cssclasses as css
 
 
-class MyTemplate (Template):
+class MyTemplate(Template):
     """
     Класс работы с шаблонами. Единственное, для чего сделан такой класс
     - избавиться от замены $$ на $
@@ -22,10 +23,12 @@ class MyTemplate (Template):
       {(?P<braced>%(id)s)} |     # delimiter and a braced identifier
       (?P<invalid>^$)            # never matches (the regex is not multilined)
     )
-    """ % dict(delim=re.escape(Template.delimiter), id=Template.idpattern)
+    """ % dict(
+        delim=re.escape(Template.delimiter), id=Template.idpattern
+    )
 
 
-class HtmlTemplate(object):
+class HtmlTemplate:
     """Класс для генерации HTML-страницы на основе шаблона."""
 
     def __init__(self, template):
@@ -47,14 +50,18 @@ class HtmlTemplate(object):
     def substitute(self, content, **kwargs):
         """
         In outwiker.core 1.5 'userhead' parameter will be replaced to **kwargs
+        TODO: Remove the legacy code
         """
         if 'userhead' not in kwargs:
-            kwargs['userhead'] = u''
+            kwargs['userhead'] = ''
         if 'title' not in kwargs:
-            kwargs['title'] = u''
+            kwargs['title'] = ''
 
-        return self.template.safe_substitute(content=content,
-                                             fontsize=self.fontsize,
-                                             fontfamily=self.fontfamily,
-                                             userstyle=self.userStyle,
-                                             **kwargs)
+        return self.template.safe_substitute(
+            content=content,
+            fontsize=self.fontsize,
+            fontfamily=self.fontfamily,
+            userstyle=self.userStyle,
+            defaultstyle=css.getDefaultStyles(),
+            **kwargs
+        )

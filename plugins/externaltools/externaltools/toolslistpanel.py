@@ -38,9 +38,11 @@ class ToolsListPanel(ScrolledPanel):
 
     @property
     def tools(self):
-        return [toolGuiElement.toolItem for
-                toolGuiElement in self._toolsGuiElements
-                if len(toolGuiElement.toolItem.command.strip()) != 0]
+        return [
+            toolGuiElement.toolItem
+            for toolGuiElement in self._toolsGuiElements
+            if len(toolGuiElement.toolItem.command.strip()) != 0
+        ]
 
     @tools.setter
     def tools(self, newtools):
@@ -88,13 +90,13 @@ class ToolsItemCtrl(wx.Panel):
         toolItem - экземпляр класса ToolsInfo
         """
         super(ToolsItemCtrl, self).__init__(
-            parent,
-            style=wx.BORDER_NONE | wx.TAB_TRAVERSAL)
+            parent, style=wx.BORDER_NONE | wx.TAB_TRAVERSAL
+        )
 
         self._toolItem = toolItem
 
         if self._toolItem is None:
-            self._pathTextCtrl = wx.TextCtrl(self, -1, u"")
+            self._pathTextCtrl = wx.TextCtrl(self, -1, "")
         else:
             self._pathTextCtrl = wx.TextCtrl(self, -1, toolItem.command)
 
@@ -117,9 +119,7 @@ class ToolsItemCtrl(wx.Panel):
         else:
             wildcard = _("All Files|*")
 
-        dlg = wx.FileDialog(self,
-                            wildcard=wildcard,
-                            style=wx.FD_OPEN)
+        dlg = wx.FileDialog(self, wildcard=wildcard, style=wx.FD_OPEN)
 
         if dlg.ShowModal() == wx.ID_OK:
             self._pathTextCtrl.Value = dlg.Path
@@ -138,8 +138,7 @@ class ToolsItemCtrl(wx.Panel):
         sizer = wx.FlexGridSizer(1, 3, 0, 0)
         sizer.AddGrowableCol(0)
         sizer.Add(self._pathTextCtrl, 1, wx.EXPAND | wx.ALL, border=2)
-        sizer.Add(self._browseButton, 1, wx.RIGHT | wx.TOP | wx.BOTTOM,
-                  border=2)
+        sizer.Add(self._browseButton, 1, wx.RIGHT | wx.TOP | wx.BOTTOM, border=2)
         sizer.Add(self._removeButton, 1, wx.ALL, border=2)
 
         self.SetSizer(sizer)

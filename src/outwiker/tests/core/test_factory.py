@@ -6,12 +6,13 @@
 
 import unittest
 
+from outwiker.api.core.tree import loadNotesTree
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.text.textpanel import TextPanel
-from outwiker.core.tree import WikiDocument, WikiPage
+from outwiker.core.tree import WikiPage
 from outwiker.core.factory import PageFactory
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
@@ -28,7 +29,7 @@ class FactorySelectorTest(unittest.TestCase):
         FactorySelector.reset()
 
     def testSelection(self):
-        wikiroot = WikiDocument.load(self.path)
+        wikiroot = loadNotesTree(self.path)
         html_page = wikiroot["Типы страниц/HTML-страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(html_page.getTypeString())),
@@ -57,7 +58,7 @@ class FactorySelectorTest(unittest.TestCase):
     def testAddFactory(self):
         FactorySelector.addFactory(ExamplePageFactory())
 
-        wikiroot = WikiDocument.load(self.path)
+        wikiroot = loadNotesTree(self.path)
 
         test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual(
@@ -67,7 +68,7 @@ class FactorySelectorTest(unittest.TestCase):
     def testRemoveFactory_01(self):
         FactorySelector.removeFactory(WikiPageFactory().getTypeString())
 
-        wikiroot = WikiDocument.load(self.path)
+        wikiroot = loadNotesTree(self.path)
 
         wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
@@ -75,7 +76,7 @@ class FactorySelectorTest(unittest.TestCase):
             UnknownPageTypeFactory)
 
     def testRemoveFactory_02(self):
-        wikiroot = WikiDocument.load(self.path)
+        wikiroot = loadNotesTree(self.path)
 
         FactorySelector.removeFactory(WikiPageFactory().getTypeString())
 

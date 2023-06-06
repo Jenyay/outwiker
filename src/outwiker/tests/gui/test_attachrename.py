@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-from tempfile import mkdtemp
 import unittest
 
+from outwiker.api.app.attachment import renameAttach
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import renameAttach
-from outwiker.core.tree import WikiDocument
 from outwiker.gui.tester import Tester, getButtonId
-from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 

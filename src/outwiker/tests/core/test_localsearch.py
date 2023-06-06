@@ -1,12 +1,11 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 
-from outwiker.gui.searchreplacecontroller import LocalSearcher
+from outwiker.gui.controls.searchreplacepanelcontroller import LocalSearcher
 
 
 class LocalSearchTest(unittest.TestCase):
-
     def test1(self):
         text = "1111 sdf sdf 111 657 111 1111 sdf sdf1243"
         phrase = "111"

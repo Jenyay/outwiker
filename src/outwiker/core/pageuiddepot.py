@@ -3,11 +3,11 @@
 import uuid
 
 from outwiker.core.config import StringOption
-from outwiker.core.tree import RootWikiPage
+from outwiker.core.defines import CONFIG_GENERAL_SECTION
 from outwiker.core.exceptions import ReadonlyException
 
 
-class PageUidDepot(object):
+class PageUidDepot:
     """
     Класс для хранения уникальных идентификаторов страниц и ссылок по ним
     """
@@ -16,8 +16,8 @@ class PageUidDepot(object):
         wikiroot - корень викидерева или корневая страница.
         Если wikiroot != None, то приосходит поиск всех UID
         """
-        self.__configSection = RootWikiPage.sectionGeneral
-        self.__configParamName = u"uid"
+        self.__configSection = CONFIG_GENERAL_SECTION
+        self.__configParamName = "uid"
 
         # Словарь идентификаторов.
         # Ключ - уникальный идентификатор, значение - указатель на страницу
@@ -47,7 +47,7 @@ class PageUidDepot(object):
         uid = StringOption(page.params,
                            self.__configSection,
                            self.__configParamName,
-                           u"").value.lower()
+                           "").value.lower()
 
         if len(uid.strip()) == 0:
             uid = None
@@ -127,4 +127,4 @@ class PageUidDepot(object):
         StringOption(page.params,
                      self.__configSection,
                      self.__configParamName,
-                     u"").value = newUid
+                     "").value = newUid

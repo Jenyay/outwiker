@@ -3,11 +3,12 @@
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
+import outwiker.core.cssclasses as css
 
 
 class ParserLineBreakTest (unittest.TestCase):
@@ -31,7 +32,7 @@ class ParserLineBreakTest (unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]
 
@@ -65,7 +66,7 @@ class ParserLineBreakTest (unittest.TestCase):
 # Третий элемент списка [[<<]][[<<]] Вторая строка третьего элемента списка после двух отступов.
 # Четвертый элемент списка."""
 
-        result_right = r"""<ol><li>Первый элемент списка.</li><li>Второй элемент списка <br/>Вторая строка второго элемента списка.</li><li>Третий элемент списка <br/><br/> Вторая строка третьего элемента списка после двух отступов.</li><li>Четвертый элемент списка.</li></ol>"""
+        result_right = f"""<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Первый элемент списка.</li><li class="{css.CSS_WIKI}">Второй элемент списка <br/>Вторая строка второго элемента списка.</li><li class="{css.CSS_WIKI}">Третий элемент списка <br/><br/> Вторая строка третьего элемента списка после двух отступов.</li><li class="{css.CSS_WIKI}">Четвертый элемент списка.</li></ol>"""
         result = self.parser.toHtml(text)
 
         self.assertEqual(result, result_right, result)

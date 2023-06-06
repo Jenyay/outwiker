@@ -28,6 +28,7 @@ class WikiEditor(TextEditor):
         self.STYLE_COMMAND_ID = (1 << 4) + 1
         self.STYLE_COMMENT_ID = (1 << 4) + 2
         self.STYLE_ATTACHMENT_ID = (1 << 4) + 3
+        self.STYLE_THUMBNAIL_ID = (1 << 4) + 4
 
         # Комбинации стилей
         self.STYLE_BOLD_ITALIC_UNDERLINE_ID = (self.STYLE_BOLD_ID |
@@ -81,9 +82,10 @@ class WikiEditor(TextEditor):
         self._styles[self.STYLE_COMMAND_ID] = config.command.value.tostr()
         self._styles[self.STYLE_COMMENT_ID] = config.comment.value.tostr()
         self._styles[self.STYLE_ATTACHMENT_ID] = config.attachment.value.tostr()
+        self._styles[self.STYLE_THUMBNAIL_ID] = config.thumbnail.value.tostr()
 
     def setDefaultSettings(self):
-        super(WikiEditor, self).setDefaultSettings()
+        super().setDefaultSettings()
         config = WikiConfig(Application.config)
 
         self.__createStyles(config)

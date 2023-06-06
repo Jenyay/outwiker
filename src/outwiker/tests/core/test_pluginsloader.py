@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.appinfo import AppInfo
-from outwiker.gui.guiconfig import PluginsConfig
-from outwiker.tests.basetestcases import BaseOutWikerMixin
 import unittest
 import shutil
 import os
 from time import sleep
+
+from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.core.appinfo import AppInfo
+from outwiker.gui.guiconfig import PluginsConfig
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
 class PluginsLoaderRepositoryTest(unittest.TestCase):
@@ -455,8 +456,6 @@ class PluginsLoaderImportTest(unittest.TestCase):
 
         self.assertEqual(len(loader), 0)
         self.assertEqual(len(loader.invalidPlugins), 1)
-        # self.assertIn(u'Please, install a new OutWiker version.',
-        #               loader.invalidPlugins[0].description)
 
     def testLoadInvalid_04(self):
         dirlist = ["testdata/plugins/testoutdated"]
@@ -467,8 +466,6 @@ class PluginsLoaderImportTest(unittest.TestCase):
 
         self.assertEqual(len(loader), 0)
         self.assertEqual(len(loader.invalidPlugins), 1)
-        # self.assertIn(u'Please, update the plug-in.',
-        #               loader.invalidPlugins[0].description)
 
     def testGetInfo(self):
         dirlist = ["testdata/plugins/testempty1", ]
@@ -503,5 +500,5 @@ class PluginsLoaderImportTest(unittest.TestCase):
 
         self.assertEqual(len(loader), 1)
 
-        plugInfo = loader.getInfo("Wring_module")
+        plugInfo = loader.getInfo("Wrong_module")
         self.assertIs(plugInfo, None)

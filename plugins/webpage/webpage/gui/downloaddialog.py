@@ -8,13 +8,11 @@ from shutil import rmtree
 
 import wx
 
-from outwiker.core.tagslist import TagsList
-from outwiker.gui.testeddialog import TestedDialog
-from outwiker.gui.tagsselector import TagsSelector
-from outwiker.core.commands import MessageBox
-from outwiker.core.iconmaker import IconMaker
-from outwiker.core.commands import getClipboardText
-from outwiker.gui.testeddialog import TestedFileDialog
+from outwiker.api.core.images import createIcon
+from outwiker.api.app.clipboard import getClipboardText
+from outwiker.api.core.tags import TagsList
+from outwiker.api.gui.dialogs import TestedDialog, MessageBox, TestedFileDialog
+from outwiker.api.gui.controls import TagsSelector
 
 import webpage.events
 from webpage.downloader import Downloader, WebPageDownloadController
@@ -26,7 +24,7 @@ from webpage.i18n import get_
 
 class DownloadDialog(TestedDialog):
     def __init__(self, parent):
-        super(DownloadDialog, self).__init__(parent)
+        super().__init__(parent)
         global _
         _ = get_()
 
@@ -338,9 +336,8 @@ class DownloadThread(Thread):
             iconname = favicon_src[::-1].replace('.', '_16.'[::-1], 1)[::-1]
             if iconname.endswith(ico_ext):
                 iconname = iconname[:-len(ico_ext)] + '.png'
-                iconmaker = IconMaker()
                 try:
-                    iconmaker.create(favicon_src, iconname)
+                    createIcon(favicon_src, iconname)
                     return iconname
                 except IOError:
                     pass

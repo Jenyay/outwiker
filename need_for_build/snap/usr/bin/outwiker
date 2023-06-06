@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd $SNAP/usr/share/outwiker
-$SNAP/bin/python3.8 runoutwiker.py "$@"
+python3.9 runoutwiker.py "$@"

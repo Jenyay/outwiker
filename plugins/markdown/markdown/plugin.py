@@ -3,7 +3,7 @@
 import os
 import sys
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 
@@ -13,10 +13,11 @@ class PluginMarkdown(Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
+        super().__init__(application)
         self._correctSysPath()
 
         from .controller import Controller
+
         self.__controller = Controller(self, application)
 
     @property
@@ -29,15 +30,15 @@ class PluginMarkdown(Plugin):
 
     @property
     def name(self):
-        return u"Markdown"
+        return "Markdown"
 
     @property
     def description(self):
-        return _(u"The Markdown plug-in add a new page type with Markdown notation")
+        return _("The Markdown plug-in add a new page type with Markdown notation")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/MarkdownEn")
+        return _("https://jenyay.net/Outwiker/MarkdownEn")
 
     def initialize(self):
         set_(self.gettext)
@@ -52,7 +53,7 @@ class PluginMarkdown(Plugin):
     #############################################
 
     def _correctSysPath(self):
-        libs_path = os.path.join(self._pluginPath, u'markdown_plugin_libs')
+        libs_path = os.path.join(self._pluginPath, "markdown_plugin_libs")
 
         if self._pluginPath not in sys.path:
             sys.path.insert(0, self._pluginPath)

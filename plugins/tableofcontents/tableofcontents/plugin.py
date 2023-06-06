@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 from .controller import Controller
@@ -11,7 +11,7 @@ class PluginTableOfContents(Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
+        super().__init__(application)
         self.__controller = Controller(self, application)
 
     @property
@@ -24,15 +24,17 @@ class PluginTableOfContents(Plugin):
 
     @property
     def name(self):
-        return u"TableOfContents"
+        return "TableOfContents"
 
     @property
     def description(self):
-        return _(u'''Plugin add the menu "Wiki - Table of contents" and the wiki command (:toc:) for generation of the table of contents.''')
+        return _(
+            """Plugin add the menu "Wiki - Table of contents" and the wiki command (:toc:) for generation of the table of contents."""
+        )
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/ContentsEn")
+        return _("https://jenyay.net/Outwiker/ContentsEn")
 
     def initialize(self):
         set_(self.gettext)

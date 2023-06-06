@@ -4,7 +4,7 @@ import unittest
 import os.path
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
@@ -16,7 +16,7 @@ class RemovePagesTest(unittest.TestCase):
         self.path = mkdtemp(prefix='Абырвалг абыр')
         Application.wikiroot = None
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])

@@ -6,12 +6,12 @@ import os.path
 from pathlib import Path
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.exceptions import ReadonlyException
-from outwiker.core.tree import WikiDocument
-from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
 
@@ -24,7 +24,7 @@ class AttachmentTest(unittest.TestCase):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         TextPageFactory().create(self.wikiroot, "Страница 1", [])
         self.page = self.wikiroot["Страница 1"]
@@ -509,14 +509,13 @@ class AttachmentTest(unittest.TestCase):
 
         self.assertEqual(len(attach.getAttachFull(subdir)), 5)
 
-    def testAttachInvalidSubdir(self):
-        subdir = 'invalid'
+    def testAttachNewSubdir(self):
+        subdir = 'new_subdir'
         attach = Attachment(self.page)
-        attach.attach(self.fullFilesPath)
 
         new_file = os.path.join(self.filesPath, 'dir.png')
-
-        self.assertRaises(IOError, attach.attach, [new_file], subdir)
+        attach.attach([new_file], subdir=subdir)
+        self.assertTrue(Path(attach.getAttachPath(), subdir).exists())
 
     def testFixSubdirRootNotExists(self):
         attach = Attachment(self.page)
@@ -630,8 +629,8 @@ class AttachmentTest(unittest.TestCase):
         subdir = 'subdir'
         attach = Attachment(self.page)
 
-        result = attach.createSubdir(subdir)
-        path_expected = Path(attach.getAttachPath(create=False), subdir)
+        result = Path(attach.createSubdir(subdir)).resolve()
+        path_expected = Path(attach.getAttachPath(create=False), subdir).resolve()
 
         self.assertEqual(result, path_expected)
         self.assertTrue(path_expected.exists())
@@ -641,8 +640,8 @@ class AttachmentTest(unittest.TestCase):
         subdir = Path('subdir1', 'subdir2')
         attach = Attachment(self.page)
 
-        result = attach.createSubdir(subdir)
-        path_expected = Path(attach.getAttachPath(create=False), subdir)
+        result = Path(attach.createSubdir(subdir)).resolve()
+        path_expected = Path(attach.getAttachPath(create=False), subdir).resolve()
 
         self.assertEqual(result, path_expected)
         self.assertTrue(path_expected.exists())
@@ -655,8 +654,8 @@ class AttachmentTest(unittest.TestCase):
         attach = Attachment(self.page)
 
         attach.createSubdir(subdir1)
-        result = attach.createSubdir(subdir2)
-        path_expected = Path(attach.getAttachPath(create=False), subdir2)
+        result = Path(attach.createSubdir(subdir2)).resolve()
+        path_expected = Path(attach.getAttachPath(create=False), subdir2).resolve()
 
         self.assertEqual(result, path_expected)
         self.assertTrue(path_expected.exists())
@@ -668,3 +667,28 @@ class AttachmentTest(unittest.TestCase):
         attach = Attachment(self.page)
 
         self.assertRaises(ReadonlyException, attach.createSubdir, subdir)
+
+    def testCreateSubdirWithParentPath_01(self):
+        subdir = '../subdir'
+        attach = Attachment(self.page)
+
+        self.assertRaises(OSError, attach.createSubdir, subdir)
+
+    def testCreateSubdirWithParentPath_02(self):
+        subdir = '..'
+        attach = Attachment(self.page)
+
+        self.assertRaises(OSError, attach.createSubdir, subdir)
+
+    def testAttachExists(self):
+        attach = Attachment(self.page)
+        attach.attach(self.fullFilesPath)
+
+        self.assertTrue(attach.exists('accept.png'))
+        self.assertFalse(attach.exists('invalid.png'))
+
+        self.assertTrue(attach.exists('attach.png', subdir='dir'))
+        self.assertFalse(attach.exists('invalid.png', subdir='dir'))
+
+        self.assertTrue(attach.exists('dir/attach.png'))
+        self.assertFalse(attach.exists('dir/invalid.png'))

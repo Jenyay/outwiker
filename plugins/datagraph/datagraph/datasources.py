@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """Classes for parsing data"""
 
 from abc import ABCMeta, abstractmethod
@@ -6,7 +6,7 @@ import re
 import codecs
 
 
-class BaseSource(object):
+class BaseSource:
     __meta__ = ABCMeta
 
     def __init__(self, colsep, skiprows=0):

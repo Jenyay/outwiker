@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
-from outwiker.pages.wiki.wikiconfig import WikiConfig
+from outwiker.api.core.images import PageThumbmaker
+from outwiker.api.pages.wiki.config import WikiConfig
 
 
-class BaseThumbGenerator (object):
+class BaseThumbGenerator:
     """
     Базовый класс для генератора галерей
     """
+
     def __init__(self, items, thumbsize, parser):
         """
         items - список кортежей, описывающие прикрепленные файлов,
@@ -27,10 +28,9 @@ class BaseThumbGenerator (object):
         """
         thumbmaker = PageThumbmaker()
 
-        return thumbmaker.createThumbByMaxSize(
-            page,
-            fname,
-            self._thumbsize).replace("\\", "/")
+        return thumbmaker.createThumbByMaxSize(page, fname, self._thumbsize).replace(
+            "\\", "/"
+        )
 
     def _parseThumbSize(self, thumbsize):
         """

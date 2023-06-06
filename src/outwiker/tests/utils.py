@@ -9,11 +9,14 @@ import os
 import shutil
 import time
 import gc
+from pathlib import Path
 from tempfile import mkdtemp
+from typing import List
 
 import wx
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
+from outwiker.core.attachment import Attachment
 
 
 def removeDir(path):
@@ -69,9 +72,19 @@ def create_temp_notes_tree():
     Create empty notes tree in the temp directory
     '''
     path = mkdtemp(prefix='Абырвалг абыр')
-    wikiroot = WikiDocument.create(path)
+    wikiroot = createNotesTree(path)
     return wikiroot
 
 
 def remove_notes_tree(wikiroot):
     removeDir(wikiroot.path)
+
+
+def attach_files(page, files: List[str], subdir: str = '.'):
+    attach = Attachment(page)
+    if subdir != '.':
+        attach.createSubdir(subdir)
+
+    attach_dir = Path('testdata', 'samplefiles')
+    attaches = [attach_dir / fname for fname in files]
+    attach.attach(attaches, subdir)

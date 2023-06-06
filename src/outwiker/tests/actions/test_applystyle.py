@@ -5,7 +5,7 @@ import unittest
 
 import wx
 
-from outwiker.actions.applystyle import SetStyleToBranchAction
+from outwiker.app.actions.applystyle import SetStyleToBranchAction
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.text.textpage import TextPageFactory

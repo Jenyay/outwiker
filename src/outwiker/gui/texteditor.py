@@ -54,7 +54,6 @@ class TextEditor(TextEditorBase):
         self._styleSet = False
 
         self.__stylebytes = None
-        self.__indicatorsbytes = None
 
         # Начинаем раскраску кода не менее чем через это время
         # с момента его изменения

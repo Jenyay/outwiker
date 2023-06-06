@@ -5,10 +5,12 @@ import logging
 import wx
 import wx.lib.newevent
 
-from outwiker.actions.search import (SearchAction,
-                                     SearchNextAction,
-                                     SearchPrevAction,
-                                     SearchAndReplaceAction)
+from outwiker.app.actions.search import (SearchAction,
+                                         SearchNextAction,
+                                         SearchPrevAction,
+                                         SearchAndReplaceAction)
+from outwiker.app.services.clipboard import copyTextToClipboard
+from outwiker.app.services.messages import showError
 from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             LINE_DUPLICATE_ID,
                                             MOVE_SELECTED_LINES_UP_ID,
@@ -30,8 +32,8 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             CLIPBOARD_COPY_WORD,
                                             CLIPBOARD_CUT_WORD,
                                             )
+from outwiker.core.treetools import pageExists
 from outwiker.core.system import getBuiltinImagePath
-from outwiker.core.commands import pageExists, copyTextToClipboard, showError
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from .basepagepanel import BasePagePanel
 from .dialogs.buttonsdialog import ButtonsDialog

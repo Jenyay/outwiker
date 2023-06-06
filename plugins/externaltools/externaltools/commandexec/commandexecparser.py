@@ -4,34 +4,32 @@ import os.path
 import re
 import shlex
 
-from outwiker.core.attachment import Attachment
-from outwiker.core.defines import PAGE_CONTENT_FILE
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.defines import PAGE_CONTENT_FILE
 
 from .execinfo import ExecInfo
 from . import commandparams
 
 
-class CommandExecParser(object):
+class CommandExecParser:
     """
     Class for parsing text between (:exec:) and (:execend:)
     """
+
     def __init__(self, page):
         self._page = page
 
-        self._commentsRegexp = re.compile(r'^#.*?$', re.MULTILINE)
-        self._joinRegexp = re.compile(r'\\\s*$\s*', re.MULTILINE)
+        self._commentsRegexp = re.compile(r"^#.*?$", re.MULTILINE)
+        self._joinRegexp = re.compile(r"\\\s*$\s*", re.MULTILINE)
 
     def parse(self, text):
         """
         Return list of the ExecInfo instances
         """
-        text = self._commentsRegexp.sub(u'', text)
-        text = self._joinRegexp.sub(u' ', text)
+        text = self._commentsRegexp.sub("", text)
+        text = self._joinRegexp.sub(" ", text)
 
-        lines = [line.strip()
-                 for line
-                 in text.split(u'\n')
-                 if line.strip()]
+        lines = [line.strip() for line in text.split("\n") if line.strip()]
 
         result = []
         for line in lines:
@@ -54,21 +52,18 @@ class CommandExecParser(object):
 
     def _substitutePage(self, paramText):
         pagePath = os.path.join(self._page.path, PAGE_CONTENT_FILE)
-        return paramText.replace(commandparams.MACROS_PAGE,
-                                 pagePath)
+        return paramText.replace(commandparams.MACROS_PAGE, pagePath)
 
     def _substituteHtml(self, paramText):
-        htmlPath = os.path.join(self._page.path, u'__content.html')
-        return paramText.replace(commandparams.MACROS_HTML,
-                                 htmlPath)
+        htmlPath = os.path.join(self._page.path, "__content.html")
+        return paramText.replace(commandparams.MACROS_HTML, htmlPath)
 
     def _substituteFolder(self, paramText):
-        return paramText.replace(commandparams.MACROS_FOLDER,
-                                 self._page.path)
+        return paramText.replace(commandparams.MACROS_FOLDER, self._page.path)
 
     def _substituteAttach(self, paramText):
         attachPath = Attachment(self._page).getAttachPath(True)
-        if attachPath.endswith(u'/') or attachPath.endswith(u'\\'):
+        if attachPath.endswith("/") or attachPath.endswith("\\"):
             attachPath = attachPath[:-1]
 
         # Substitute %attach%
@@ -80,13 +75,13 @@ class CommandExecParser(object):
         return result
 
     def _substituteAttachWiki(self, paramText):
-        attachWiki = u'Attach:'
+        attachWiki = "Attach:"
         attachPath = Attachment(self._page).getAttachPath(False)
 
         # "Attach:" may be at the beginning only
         if not paramText.startswith(attachWiki):
             return paramText
 
-        fname = paramText[len(attachWiki):]
+        fname = paramText[len(attachWiki) :]
 
         return os.path.join(attachPath, fname)

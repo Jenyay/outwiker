@@ -1,12 +1,12 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from markdown_plugin_libs.markdown import markdown
 from markdown_plugin_libs.markdown.extensions.fenced_code import FencedCodeExtension
 from markdown_plugin_libs.markdown.extensions.codehilite import CodeHiliteExtension
 from markdown_plugin_libs.markdown.extensions.tables import TableExtension
-from pygments.formatters import HtmlFormatter
+from markdown_plugin_libs.pygments.formatters import HtmlFormatter
 
-CUSTOM_STYLES = u"""
+CUSTOM_STYLES = """
 div.{name} {{border-style: solid; border-color: gray; border-width: 1px; padding: 0.5em;}}
 table {{
     border-collapse: collapse;
@@ -27,12 +27,12 @@ div.{name} > pre {{
 """
 
 
-class Parser (object):
+class Parser(object):
     def __init__(self):
-        self._cssclass = u'codehilite'
+        self._cssclass = "codehilite"
 
     def getCSS(self):
-        formatter = HtmlFormatter(style=u'default', cssclass=self._cssclass)
+        formatter = HtmlFormatter(style="default", cssclass=self._cssclass)
         css = formatter.get_style_defs()
         css += CUSTOM_STYLES.format(name=self._cssclass)
         return css
@@ -40,9 +40,7 @@ class Parser (object):
     def convert(self, text):
         html = markdown(
             text,
-            output_format='html5',
-            extensions=[CodeHiliteExtension(),
-                        FencedCodeExtension(),
-                        TableExtension()]
+            output_format="html5",
+            extensions=[CodeHiliteExtension(), FencedCodeExtension(), TableExtension()],
         )
         return html

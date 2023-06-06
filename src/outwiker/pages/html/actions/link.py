@@ -6,6 +6,7 @@ from outwiker.pages.html.htmllinkdialogcontroller import HtmlLinkDialogControlle
 from outwiker.gui.dialogs.linkdialog import LinkDialog
 
 
+# TODO: Move to other module
 def insertLink(application):
     assert application.mainWindow is not None
     assert application.mainWindow.pagePanel is not None

@@ -4,6 +4,7 @@
 """
 
 from abc import ABCMeta, abstractmethod
+from typing import List
 
 import wx
 
@@ -125,6 +126,25 @@ class IntegerElement (BaseElement):
         В производных классах этот метод переопределяется
         """
         self.control.SetValue(self.option.value)
+
+
+class ComboBoxListElement(BaseElement):
+    """
+    Настройка для списа строк.
+    Элемент управления - wx.ComboBox
+    """
+
+    def __init__(self, option, control: wx.ComboBox, items: List[str]):
+        super().__init__(option, control)
+        self.control.Clear()
+        self.control.Append(items)
+        self._setGUIValue()
+
+    def _getGUIValue(self):
+        return self.control.GetSelection()
+
+    def _setGUIValue(self):
+        self.control.SetSelection(self.option.value)
 
 
 class FontElement (object):

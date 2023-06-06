@@ -5,10 +5,10 @@ import html
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.utils import removeDir
@@ -28,16 +28,16 @@ class ParserLinkTest(unittest.TestCase):
             "/Страница 2/Страница 3"]
         self.pageComments = ["Страницо 1", "Страницо 1", "Страницо 3"]
 
-        self.__createWiki()
+        self._createWiki()
 
         factory = ParserFactory()
         self.parser = factory.make(self.testPage, Application.config)
 
-    def __createWiki(self):
+    def _createWiki(self):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = WikiPageFactory()
         factory.create(self.wikiroot, "Страница 2", [])
@@ -62,7 +62,7 @@ class ParserLinkTest(unittest.TestCase):
 
     def testUrl1(self):
         text = "бла-бла-бла \n{} бла-бла-бла\nбла-бла-бла".format(self.url1)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1, self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -70,7 +70,7 @@ class ParserLinkTest(unittest.TestCase):
     def testUrl2(self):
         text = "бла-бла-бла \ntest {} бла-бла-бла\nбла-бла-бла".format(
             self.url2)
-        result = 'бла-бла-бла \ntest <a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \ntest <a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, self.url2)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -78,7 +78,7 @@ class ParserLinkTest(unittest.TestCase):
     def testLink1(self):
         text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(
             self.url1)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1, self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -86,7 +86,7 @@ class ParserLinkTest(unittest.TestCase):
     def testLink2(self):
         text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, html.escape(self.url2))
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -95,38 +95,38 @@ class ParserLinkTest(unittest.TestCase):
         url = "http://jenyay.net/social/feed.png"
 
         text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(url)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             url, url)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLink4(self):
         text = "[[http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431 | Ссылко]]"
-        result = '<a href="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">Ссылко</a>'
+        result = '<a class="ow-wiki" href="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">Ссылко</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLink5(self):
         text = "[[Ссылко -> http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431]]"
-        result = '<a href="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">Ссылко</a>'
+        result = '<a class="ow-wiki" href="http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431">Ссылко</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLink6(self):
         text = "[[\\t -> http://www.example.com]]"
-        result = '<a href="http://www.example.com">\\t</a>'
+        result = '<a class="ow-wiki" href="http://www.example.com">\\t</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLink7(self):
         text = "[[http://www.example.com | \\t]]"
-        result = '<a href="http://www.example.com">\\t</a>'
+        result = '<a class="ow-wiki" href="http://www.example.com">\\t</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLink8(self):
         text = "[[\\t]]"
-        result = '<a href="page://\\t">\\t</a>'
+        result = '<a class="ow-wiki ow-link-page" href="page://\\t">\\t</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -134,7 +134,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -143,7 +143,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -152,7 +152,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко с '''полужирным''' текстом"
         text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, "Ссылко с <b>полужирным</b> текстом")
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -161,7 +161,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко с '''полужирным''' текстом"
         text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, "Ссылко с <b>полужирным</b> текстом")
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -169,7 +169,7 @@ class ParserLinkTest(unittest.TestCase):
     def testCommentLink5(self):
         text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url1, self.url1)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1, self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -177,7 +177,7 @@ class ParserLinkTest(unittest.TestCase):
     def testCommentLink6(self):
         text = "бла-бла-бла \n[[Комментарий с <, > и & -> {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url1)
-        result = 'бла-бла-бла \n<a href="{}">Комментарий с &lt;, &gt; и &amp;</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">Комментарий с &lt;, &gt; и &amp;</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -185,7 +185,7 @@ class ParserLinkTest(unittest.TestCase):
     def testCommentLink7(self):
         text = "бла-бла-бла \n[[{} | Комментарий с <, > и &]] бла-бла-бла\nбла-бла-бла".format(
             self.url1)
-        result = 'бла-бла-бла \n<a href="{}">Комментарий с &lt;, &gt; и &amp;</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">Комментарий с &lt;, &gt; и &amp;</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -194,7 +194,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{{-{}-}} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><strike>{}</strike></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><strike>{}</strike></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -203,7 +203,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | {{-{}-}}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><strike>{}</strike></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><strike>{}</strike></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -211,7 +211,7 @@ class ParserLinkTest(unittest.TestCase):
     def testPageLinks(self):
         for link in self.pagelinks:
             text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(link)
-            result = 'бла-бла-бла \n<a href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
                 link, link)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -238,7 +238,7 @@ class ParserLinkTest(unittest.TestCase):
         for link in self.pagelinks:
             text = "бла-бла-бла \n[[{} | [='''ля-ля-ля'''=] ]] бла-бла-бла\nбла-бла-бла".format(
                 link)
-            result = "бла-бла-бла \n<a href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
+            result = "бла-бла-бла \n<a class=\"ow-wiki ow-link-page\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
                 link)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -247,7 +247,7 @@ class ParserLinkTest(unittest.TestCase):
         for link in self.pagelinks:
             text = "бла-бла-бла \n[[[='''ля-ля-ля'''=] -> {}]] бла-бла-бла\nбла-бла-бла".format(
                 link)
-            result = "бла-бла-бла \n<a href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
+            result = "бла-бла-бла \n<a class=\"ow-wiki ow-link-page\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
                 link)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -259,7 +259,7 @@ class ParserLinkTest(unittest.TestCase):
 
             text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
                 link, comment)
-            result = 'бла-бла-бла \n<a href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
                 link, comment)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -271,7 +271,7 @@ class ParserLinkTest(unittest.TestCase):
 
             text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
                 comment, link)
-            result = 'бла-бла-бла \n<a href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
                 link, comment)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -280,7 +280,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | '_{}_']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><sub>{}</sub></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><sub>{}</sub></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -289,7 +289,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[['_{}_' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><sub>{}</sub></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><sub>{}</sub></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -298,7 +298,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | '^{}^']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><sup>{}</sup></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><sup>{}</sup></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -307,7 +307,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[['^{}^' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><sup>{}</sup></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><sup>{}</sup></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -316,7 +316,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | ''''{}'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -325,7 +325,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[''''{}'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -334,7 +334,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | '''{}''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><b>{}</b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b>{}</b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -343,7 +343,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[['''{}''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><b>{}</b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b>{}</b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -352,7 +352,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | ''{}'']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><i>{}</i></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><i>{}</i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -361,7 +361,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[''{}'' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><i>{}</i></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><i>{}</i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -369,7 +369,7 @@ class ParserLinkTest(unittest.TestCase):
     def testUrlImage1(self):
         text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(
             self.urlimage)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.urlimage, self.urlimage)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -378,7 +378,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.urlimage)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.urlimage, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -386,7 +386,7 @@ class ParserLinkTest(unittest.TestCase):
     def testUrlImage3(self):
         text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             self.urlimage, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><img src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><img class="ow-image" src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, self.urlimage)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -394,7 +394,7 @@ class ParserLinkTest(unittest.TestCase):
     def testUrlImage4(self):
         text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, self.urlimage)
-        result = 'бла-бла-бла \n<a href="{}"><img src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><img class="ow-image" src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, self.urlimage)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -403,7 +403,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | {{+{}+}}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><u>{}</u></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><u>{}</u></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -412,7 +412,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{{+{}+}} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><u>{}</u></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><u>{}</u></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -421,7 +421,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | ''''_{}_'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><b><sub>{}</sub></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><sub>{}</sub></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -430,7 +430,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[ ''''_{}_'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><b><sub>{}</sub></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><sub>{}</sub></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -439,7 +439,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | ''''^{}^'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><b><sup>{}</sup></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><sup>{}</sup></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -448,7 +448,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[ ''''^{}^'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><b><sup>{}</sup></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><sup>{}</sup></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -457,7 +457,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | '''_{}_''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><i><sub>{}</sub></i></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><i><sub>{}</sub></i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -466,7 +466,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[ '''_{}_''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><i><sub>{}</sub></i></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><i><sub>{}</sub></i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -475,7 +475,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | '''^{}^''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><i><sup>{}</sup></i></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><i><sup>{}</sup></i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -484,7 +484,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[ '''^{}^''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><i><sup>{}</sup></i></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><i><sup>{}</sup></i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -493,7 +493,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | ''''{}'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -502,7 +502,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[ ''''{}'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -511,7 +511,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[{} | ''''{}'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -520,7 +520,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Ссылко"
         text = "бла-бла-бла \n[[ ''''{}'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -529,7 +529,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Attach:filename.tmp"
         text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -538,7 +538,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Attach:'filename.tmp'"
         text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -547,7 +547,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = 'Attach:"filename.tmp"'
         text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -556,7 +556,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Attach:filename.tmp"
         text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -565,7 +565,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "Attach:'filename.tmp'"
         text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -574,58 +574,66 @@ class ParserLinkTest(unittest.TestCase):
         comment = '"Attach:"filename.tmp"'
         text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testManyArrows(self):
         text = "бла-бла-бла \n[[Бла-бла-бла -> Бла-бла-бла -> http://jenyay.net]] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n<a href="http://jenyay.net">Бла-бла-бла -&gt; Бла-бла-бла</a> бла-бла-бла\nбла-бла-бла'
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="http://jenyay.net">Бла-бла-бла -&gt; Бла-бла-бла</a> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testManyPipes1(self):
         text = "бла-бла-бла \n[[http://jenyay.net | Бла-бла-бла | Бла-бла-бла]] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n<a href="http://jenyay.net">Бла-бла-бла | Бла-бла-бла</a> бла-бла-бла\nбла-бла-бла'
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="http://jenyay.net">Бла-бла-бла | Бла-бла-бла</a> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testManyPipes2(self):
         text = "бла-бла-бла \n[[http://jenyay.net/|blablabla | Бла-бла-бла]] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n<a href="http://jenyay.net/|blablabla">Бла-бла-бла</a> бла-бла-бла\nбла-бла-бла'
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="http://jenyay.net/|blablabla">Бла-бла-бла</a> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testManyPipes3(self):
         text = "бла-бла-бла \n[[http://jenyay.net/|blablabla|Бла-бла-бла]] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n<a href="http://jenyay.net/|blablabla">Бла-бла-бла</a> бла-бла-бла\nбла-бла-бла'
+        result = 'бла-бла-бла \n<a class="ow-wiki" href="http://jenyay.net/|blablabla">Бла-бла-бла</a> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testMailto_01(self):
         text = "[[mailto:example@example.com | example@example.com]]"
-        result = '<a href="mailto:example@example.com">example@example.com</a>'
+        result = '<a class="ow-wiki" href="mailto:example@example.com">example@example.com</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testMailto_02(self):
         text = "[[example@example.com -> mailto:example@example.com]]"
-        result = '<a href="mailto:example@example.com">example@example.com</a>'
+        result = '<a class="ow-wiki" href="mailto:example@example.com">example@example.com</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testMailto_03(self):
         text = "[[mailto:example@example.com]]"
-        result = '<a href="mailto:example@example.com">mailto:example@example.com</a>'
+        result = '<a class="ow-wiki" href="mailto:example@example.com">mailto:example@example.com</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkAttachSimple(self):
         filename = 'filename.tmp'
         text = '[[Attach:{}]]'.format(filename)
-        expected = '<a href="{dir}/{filename}">{filename}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{filename}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachSimpleNotExists(self):
+        filename = 'filename_invalid.tmp'
+        text = '[[Attach:{}]]'.format(filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(filename=filename)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -633,8 +641,16 @@ class ParserLinkTest(unittest.TestCase):
     def testLinkAttachSimpleDoubleQuotes(self):
         filename = 'filename.tmp'
         text = '[[Attach:"{}"]]'.format(filename)
-        expected = '<a href="{dir}/{filename}">{filename}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{filename}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachSimpleDoubleQuotesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        text = '[[Attach:"{}"]]'.format(filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(filename=filename)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -642,8 +658,16 @@ class ParserLinkTest(unittest.TestCase):
     def testLinkAttachSimpleSingleQuotes(self):
         filename = 'filename.tmp'
         text = "[[Attach:'{}']]".format(filename)
-        expected = '<a href="{dir}/{filename}">{filename}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{filename}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachSimpleSingleQuotesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        text = "[[Attach:'{}']]".format(filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(filename=filename)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -653,8 +677,18 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[{comment} -> Attach:{filename}]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentArrowNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = '[[{comment} -> Attach:{filename}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -664,8 +698,18 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[{comment} -> Attach:"{filename}"]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentArrowDoubleQoutesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = '[[{comment} -> Attach:"{filename}"]]'.format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -675,8 +719,18 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = "[[{comment} -> Attach:'{filename}']]".format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentArrowSingleQoutesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = "[[{comment} -> Attach:'{filename}']]".format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -686,7 +740,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = "[[{comment} -> Attach:'{filename}']]".format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -697,7 +751,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[{comment} -> Attach:"{filename}"]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -708,8 +762,18 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[Attach:{filename} | {comment}]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentPipeNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = '[[Attach:{filename} | {comment}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -719,8 +783,18 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[Attach:"{filename}" | {comment}]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentPipeDoubleQuotesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = '[[Attach:"{filename}" | {comment}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -730,8 +804,18 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = "[[Attach:'{filename}' | {comment}]]".format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentPipeSingleQuotesNotExists(self):
+        filename = 'filename_invalid.tmp'
+        comment = "bla bla bla"
+        text = "[[Attach:'{filename}' | {comment}]]".format(
+            comment=comment, filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{comment}</span>'.format(comment=comment)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -741,7 +825,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = "[[Attach:'{filename}' | {comment}]]".format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -752,7 +836,7 @@ class ParserLinkTest(unittest.TestCase):
         comment = "bla bla bla"
         text = '[[Attach:"{filename}" | {comment}]]'.format(
             comment=comment, filename=filename)
-        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+        expected = '<a class="ow-wiki ow-link-attach ow-attach-file" href="{dir}/{filename}">{comment}</a>'.format(
             dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
 
         result = self.parser.toHtml(text)
@@ -763,8 +847,18 @@ class ParserLinkTest(unittest.TestCase):
         text = "бла-бла-бла \n[[Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}">{filename}</a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki ow-link-attach ow-attach-file" href="{attach_path}">{filename}</a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachImageSimpleNotExists(self):
+        filename = 'invalid.png'
+        text = "бла-бла-бла \n[[Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        expected = 'бла-бла-бла \n<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span> бла-бла-бла\nбла-бла-бла'.format(
+            filename=filename)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -774,7 +868,7 @@ class ParserLinkTest(unittest.TestCase):
         text = 'бла-бла-бла \n[[Attach:"{filename}"]] бла-бла-бла\nбла-бла-бла'.format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}">{filename}</a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki ow-link-attach ow-attach-file" href="{attach_path}">{filename}</a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path, filename=filename)
 
         result = self.parser.toHtml(text)
@@ -785,7 +879,7 @@ class ParserLinkTest(unittest.TestCase):
         text = "бла-бла-бла \n[[Attach:'{filename}']] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}">{filename}</a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki ow-link-attach ow-attach-file" href="{attach_path}">{filename}</a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path, filename=filename)
 
         result = self.parser.toHtml(text)
@@ -796,18 +890,28 @@ class ParserLinkTest(unittest.TestCase):
         text = "бла-бла-бла \n[[Attach:{filename} -> Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
+
+    def testLinkAttachImageArrowNotExists(self):
+        filename = 'invalid.png'
+        text = "бла-бла-бла \n[[Attach:{filename} -> Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(
+            filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertIn(expected, result)
 
     def testLinkAttachImageArrowSingleQuotes(self):
         filename = 'accept.png'
         text = "бла-бла-бла \n[[Attach:'{filename}' -> Attach:'{filename}']] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
@@ -818,7 +922,7 @@ class ParserLinkTest(unittest.TestCase):
         text = 'бла-бла-бла \n[[Attach:"{filename}" -> Attach:"{filename}"]] бла-бла-бла\nбла-бла-бла'.format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
@@ -829,18 +933,28 @@ class ParserLinkTest(unittest.TestCase):
         text = "бла-бла-бла \n[[Attach:{filename} | Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
+
+    def testLinkAttachImagePipeNotExists(self):
+        filename = 'invalid.png'
+        text = "бла-бла-бла \n[[Attach:{filename} | Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        expected = '<span class="ow-wiki ow-link-attach ow-attach-error">{filename}</span>'.format(
+            filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertIn(expected, result)
 
     def testLinkAttachImagePipeSingleQuotes(self):
         filename = 'accept.png'
         text = "бла-бла-бла \n[[Attach:'{filename}' | Attach:'{filename}']] бла-бла-бла\nбла-бла-бла".format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)
@@ -851,7 +965,7 @@ class ParserLinkTest(unittest.TestCase):
         text = 'бла-бла-бла \n[[Attach:"{filename}" | Attach:"{filename}"]] бла-бла-бла\nбла-бла-бла'.format(
             filename=filename)
         attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path)
 
         result = self.parser.toHtml(text)

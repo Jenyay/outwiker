@@ -1,0 +1,1 @@
+from outwiker.gui.simplespellcontroller import SimpleSpellController

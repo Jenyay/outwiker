@@ -1,10 +1,9 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
-from outwiker.core.defines import PAGE_RESULT_HTML
-from outwiker.core.factory import PageFactory
-from outwiker.core.tree import WikiPage
+from outwiker.api.core.defines import PAGE_RESULT_HTML
+from outwiker.api.core.tree import WikiPage, PageFactory
 
 from .markdownpageview import MarkdownPageView
 from .i18n import get_
@@ -14,12 +13,13 @@ class MarkdownPage(WikiPage):
     """
     Класс тестовых страниц
     """
+
     def __init__(self, path, title, parent, readonly=False):
         super(MarkdownPage, self).__init__(path, title, parent, readonly)
 
     @staticmethod
     def getTypeString():
-        return u"markdown"
+        return "markdown"
 
     def getHtmlPath(self):
         """
@@ -38,7 +38,7 @@ class MarkdownPageFactory(PageFactory):
         Название страницы, показываемое пользователю
         """
         _ = get_()
-        return _(u"Markdown Page")
+        return _("Markdown Page")
 
     def getPageView(self, parent, application):
         """

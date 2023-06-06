@@ -3,6 +3,7 @@
 Действия, которые зависят от ОС, на которой запущена программа
 """
 
+import ctypes
 import locale
 import os
 import os.path as op
@@ -11,6 +12,8 @@ import sys
 import subprocess
 import logging
 from pathlib import Path
+from typing import List, Union
+from uuid import UUID
 
 import wx
 
@@ -25,25 +28,18 @@ from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    SPELL_FOLDER_NAME,
                                    STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
+                                   DEFAULT_CONFIG_DIR,
+                                   DEFAULT_CONFIG_NAME,
                                    )
 
 
-# Имя файла настроек по умолчанию
-DEFAULT_CONFIG_NAME = u"outwiker.ini"
-
 # Имя по умолчанию для папки с настройками в профиле пользователя (устарело)
-DEFAULT_OLD_CONFIG_DIR = u".outwiker"
-
-# Новая местоположение конфигурационной директории
-# По стандарту, если переменная XDG_CONFIG_HOME не задана в окружении,
-# то берется значение по умолчанию т.е. ~/.config
-# http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-DEFAULT_CONFIG_DIR = u"outwiker"
+DEFAULT_OLD_CONFIG_DIR = ".outwiker"
 
 logger = logging.getLogger('outwiker.core.system')
 
 
-class System(object):
+class System:
     def migrateConfig(self,
                       oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
                       newConfDirName=DEFAULT_CONFIG_DIR):
@@ -63,13 +59,13 @@ class System(object):
 class Windows(System):
     @property
     def name(self):
-        return u'windows'
+        return 'windows'
 
     @property
     def python(self):
         return 'python'
 
-    def startFile(self, path):
+    def startFile(self, path: Union[str, Path]):
         """
         Запустить программу по умолчанию для path
         """
@@ -102,6 +98,43 @@ class Windows(System):
                    else homeDir)
         return appdata
 
+    @property
+    def documentsDir(self):
+        # Get from https://gist.github.com/mkropat/7550097#file-knownpaths-py
+        from ctypes import windll, wintypes
+
+        class GUID(ctypes.Structure):
+            _fields_ = [
+                ("Data1", wintypes.DWORD),
+                ("Data2", wintypes.WORD),
+                ("Data3", wintypes.WORD),
+                ("Data4", wintypes.BYTE * 8)
+            ] 
+
+            def __init__(self, uuid):
+                ctypes.Structure.__init__(self)
+                self.Data1, self.Data2, self.Data3, self.Data4[0], self.Data4[1], rest = UUID(uuid).fields
+                for i in range(2, 8):
+                    self.Data4[i] = rest>>(8 - i - 1)*8 & 0xff
+
+        documents_uuid = GUID('{FDD39AD0-238F-46AF-ADB4-6C85480369C7}')
+        S_OK = 0
+        p_path = ctypes.c_wchar_p()
+        result = windll.shell32.SHGetKnownFolderPath(
+                ctypes.byref(documents_uuid), 
+                0, 
+                wintypes.HANDLE(0),
+                ctypes.byref(p_path))
+
+        if result != S_OK:
+            logger.error("Can't get documents directory")
+            windll.ole32.CoTaskMemFree(p_path)
+            return
+
+        path = p_path.value
+        windll.ole32.CoTaskMemFree(p_path)
+        return path
+
     def getHtmlRender(self, parent):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
@@ -118,6 +151,10 @@ class Windows(System):
             from outwiker.gui.htmlrenderie import HtmlRenderIEForPage
             return HtmlRenderIEForPage(parent)
 
+    def getHtmlRenderSearchController(self, searchPanel, htmlRender):
+        from outwiker.gui.controls.htmlsearchpanelcontrollerwindows import HtmlSearchPanelControllerWindows
+        return HtmlSearchPanelControllerWindows(searchPanel, htmlRender)
+
     def getSpellChecker(self, langlist, folders):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
@@ -132,17 +169,17 @@ class Windows(System):
 class Unix(System):
     @property
     def name(self):
-        return u'unix'
+        return 'unix'
 
     @property
     def python(self):
         return 'python3'
 
-    def startFile(self, path):
+    def startFile(self, path: Union[str, Path]):
         """
         Запустить программу по умолчанию для path
         """
-        subprocess.Popen([u'xdg-open', path])
+        subprocess.Popen(['xdg-open', str(path)])
 
     @property
     def settingsDir(self):
@@ -158,6 +195,10 @@ class Unix(System):
             settingsDir = op.join(homeDir, settingsDir)
 
         return settingsDir
+
+    @property
+    def documentsDir(self):
+        return op.expanduser("~")
 
     @property
     def inputEncoding(self):
@@ -202,6 +243,10 @@ class Unix(System):
     def windowIconFile(self) -> str:
         return getBuiltinImagePath("outwiker.ico")
 
+    def getHtmlRenderSearchController(self, searchPanel, htmlRender):
+        from outwiker.gui.controls.htmlsearchpanelcontrollerunix import HtmlSearchPanelControllerUnix
+        return HtmlSearchPanelControllerUnix(searchPanel, htmlRender)
+
 
 def getOS():
     if os.name == "nt":
@@ -210,7 +255,7 @@ def getOS():
         return Unix()
 
 
-def getCurrentDir():
+def getCurrentDir() -> str:
     if __file__.endswith('.pyc'):
         # For compiled with cx_freeze package
         current_dir = str(Path(__file__).parents[3].resolve())
@@ -263,7 +308,7 @@ def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     return confPath
 
 
-def getImagesDir():
+def getImagesDir() -> str:
     return op.join(getCurrentDir(), IMAGES_FOLDER_NAME)
 
 
@@ -274,11 +319,11 @@ def getBuiltinImagePath(*relative_image_name: str) -> str:
     return os.path.abspath(os.path.join(getImagesDir(), *relative_image_name))
 
 
-def getTemplatesDir():
+def getTemplatesDir() -> str:
     return op.join(getCurrentDir(), STYLES_FOLDER_NAME)
 
 
-def getExeFile():
+def getExeFile() -> str:
     """
     Возвращает имя запускаемого файла
     """
@@ -286,7 +331,7 @@ def getExeFile():
 
 
 def getPluginsDirList(configDirName=DEFAULT_CONFIG_DIR,
-                      configFileName=DEFAULT_CONFIG_NAME):
+                      configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
     Возвращает список директорий, откуда должны грузиться плагины
     """
@@ -296,7 +341,7 @@ def getPluginsDirList(configDirName=DEFAULT_CONFIG_DIR,
 
 
 def getIconsDirList(configDirName=DEFAULT_CONFIG_DIR,
-                    configFileName=DEFAULT_CONFIG_NAME):
+                    configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
     Возвращает список директорий, где могут располагаться иконки для страниц
     """
@@ -304,7 +349,7 @@ def getIconsDirList(configDirName=DEFAULT_CONFIG_DIR,
 
 
 def getStylesDirList(configDirName=DEFAULT_CONFIG_DIR,
-                     configFileName=DEFAULT_CONFIG_NAME):
+                     configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
     Возвращает список директорий, откуда должны грузиться плагины
     """
@@ -312,7 +357,7 @@ def getStylesDirList(configDirName=DEFAULT_CONFIG_DIR,
 
 
 def getSpellDirList(configDirName=DEFAULT_CONFIG_DIR,
-                    configFileName=DEFAULT_CONFIG_NAME):
+                    configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
     Возвращает список директорий со словарями для проверки орфографии
     """
@@ -321,9 +366,9 @@ def getSpellDirList(configDirName=DEFAULT_CONFIG_DIR,
 
 def getSpecialDirList(dirname,
                       configDirName=DEFAULT_CONFIG_DIR,
-                      configFileName=DEFAULT_CONFIG_NAME):
+                      configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
-    Возвращает список "специальных" директорий(директорий для плагинов,
+    Возвращает список "специальных" директорий (директорий для плагинов,
     стилей и т.п., расположение которых зависит от расположения файла настроек)
     """
     # Директория рядом с запускаемым файлом

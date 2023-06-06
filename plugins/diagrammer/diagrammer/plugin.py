@@ -3,7 +3,7 @@
 import os.path
 import sys
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 from .controller import Controller
@@ -27,15 +27,15 @@ class PluginDiagrammer(Plugin):
 
     @property
     def name(self):
-        return u"Diagrammer"
+        return "Diagrammer"
 
     @property
     def description(self):
-        return _(u"Plugin for the construction of diagrams")
+        return _("Plugin for the construction of diagrams")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/DiagrammerEn")
+        return _("https://jenyay.net/Outwiker/DiagrammerEn")
 
     def initialize(self):
         set_(self.gettext)
@@ -47,14 +47,14 @@ class PluginDiagrammer(Plugin):
 
     def __correctSysPath(self):
         cmd_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                  u"libs")
+                                  "libs")
 
         if cmd_folder not in sys.path:
             sys.path.insert(0, cmd_folder)
 
     def destroy(self):
         """
-        Уничтожение(выгрузка) плагина.
+        Уничтожение (выгрузка) плагина.
         Здесь плагин должен отписаться от всех событий
         """
         self.__controller.destroy()

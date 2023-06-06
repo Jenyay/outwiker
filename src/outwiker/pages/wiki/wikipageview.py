@@ -6,7 +6,7 @@ import re
 from io import StringIO
 
 from outwiker.actions.polyactionsid import *
-from outwiker.core.commands import insertCurrentDate
+from outwiker.app.services.texteditor import insertCurrentDate
 from outwiker.core.standardcolors import StandardColors
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.defines import RECENT_COLORS_COUNT
@@ -32,6 +32,7 @@ from .actions.include import WikiIncludeAction
 from .actions.dates import WikiDateCreationAction, WikiDateEditionAction
 from .actions.wikistyle import WikiStyleOnlyAction, WikiStyleAdvancedAction
 from .actions.multilineblock import MultilineBlockAction
+from .actions.listitemstyle import ListItemStyleAction
 
 
 class WikiPageView(BaseWikiPageView):
@@ -47,10 +48,10 @@ class WikiPageView(BaseWikiPageView):
         return WikiEditor
 
     def _getPageTitle(self):
-        return _(u"Wiki")
+        return _("Wiki")
 
     def _getMenuTitle(self):
-        return _(u"Wiki")
+        return _("Wiki")
 
     def _getMenuId(self):
         return defines.MENU_WIKI
@@ -60,11 +61,11 @@ class WikiPageView(BaseWikiPageView):
 
     def _getToolbarsInfo(self, mainWindow):
         return [
-            (defines.TOOLBAR_WIKI_GENERAL, _(u"Wiki")),
-            (defines.TOOLBAR_WIKI_HEADING, _(u"Heading")),
-            (defines.TOOLBAR_WIKI_FONT, _(u"Font")),
-            (defines.TOOLBAR_WIKI_ALIGN, _(u"Align")),
-            (defines.TOOLBAR_WIKI_TABLE, _(u"Table")),
+            (defines.TOOLBAR_WIKI_GENERAL, _("Wiki")),
+            (defines.TOOLBAR_WIKI_HEADING, _("Heading")),
+            (defines.TOOLBAR_WIKI_FONT, _("Font")),
+            (defines.TOOLBAR_WIKI_ALIGN, _("Align")),
+            (defines.TOOLBAR_WIKI_TABLE, _("Table")),
         ]
 
     def _getAttachString(self, fnames):
@@ -140,6 +141,7 @@ class WikiPageView(BaseWikiPageView):
             WikiStyleOnlyAction,
             WikiStyleAdvancedAction,
             MultilineBlockAction,
+            ListItemStyleAction,
         ]
 
     def _createWikiTools(self):
@@ -493,6 +495,9 @@ class WikiPageView(BaseWikiPageView):
             lambda param: self._decreaseNestingListItems())
 
         actionController.appendMenuItem(LIST_DECREASE_LEVEL_STR_ID, menu)
+
+        # List item style (bullet)
+        actionController.appendMenuItem(ListItemStyleAction.stringId, menu)
 
     def __addFormatTools(self):
         menu = self._formatMenu

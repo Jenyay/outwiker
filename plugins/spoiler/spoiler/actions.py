@@ -1,33 +1,34 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from .i18n import get_
 
 
-class SpoilerAction (BaseAction):
+class SpoilerAction(BaseAction):
     """
     Описание действия
     """
+
     def __init__(self, application):
         self._application = application
 
         global _
         _ = get_()
 
-    stringId = u"Spoiler_Spoiler"
+    stringId = "Spoiler_Spoiler"
 
     @property
     def title(self):
-        return _(u"(:spoiler:) Command")
+        return _("(:spoiler:) Command")
 
     @property
     def description(self):
-        return _(u"Insert (:spoiler:) wiki command")
+        return _("Insert (:spoiler:) wiki command")
 
     def run(self, params):
-        startCommand = u'(:spoiler:)'
-        endCommand = u'(:spoilerend:)'
+        startCommand = "(:spoiler:)"
+        endCommand = "(:spoilerend:)"
 
         pageView = self._getPageView()
         pageView.codeEditor.turnText(startCommand, endCommand)

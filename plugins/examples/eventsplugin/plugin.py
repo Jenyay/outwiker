@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .controller import Controller
 
 
 class PluginExampleEvents(Plugin):
     def __init__(self, application):
-        super(PluginExampleEvents, self).__init__(application)
+        super().__init__(application)
         self.controller = Controller(application)
 
     #########################################
@@ -16,11 +16,11 @@ class PluginExampleEvents(Plugin):
 
     @property
     def name(self):
-        return u"ExampleEventsPlugin"
+        return "ExampleEventsPlugin"
 
     @property
     def description(self):
-        return _(u"Example plugin")
+        return _("Example plugin")
 
     def initialize(self):
         self.controller.initialize()

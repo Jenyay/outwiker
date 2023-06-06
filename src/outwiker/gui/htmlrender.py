@@ -5,8 +5,11 @@ import idna
 import wx
 
 import outwiker.core
+from outwiker.app.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams
+from outwiker.core.system import getOS
+from outwiker.gui.controls.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.defines import ID_KEY_CTRL, ID_KEY_SHIFT
 
 
@@ -19,10 +22,13 @@ class HtmlRenderBase(wx.Panel):
         super().__init__(parent)
 
         self._render = self._createRender()
-        sizer = wx.FlexGridSizer(1)
+        self._searchPanel = SearchReplacePanel(self)
+        self._searchPanelController = getOS().getHtmlRenderSearchController(self._searchPanel, self)
+        sizer = wx.FlexGridSizer(cols=1)
         sizer.AddGrowableCol(0)
         sizer.AddGrowableRow(0)
-        sizer.Add(self._render, 0, wx.EXPAND)
+        sizer.Add(self._render, flag=wx.EXPAND | wx.ALL, border=2)
+        sizer.Add(self._searchPanel, flag=wx.EXPAND | wx.ALL, border=2)
         self.SetSizer(sizer)
 
     def LoadPage(self, fname):
@@ -49,9 +55,20 @@ class HtmlRenderBase(wx.Panel):
         Must return instance of HTML render engine
         '''
 
+    def Find(self, text):
+        if self._render:
+            return self._render.Find(text)
+
     @property
     def render(self):
         return self._render
+
+    @property
+    def searchPanel(self):
+        """
+        Возвращает контроллер панели поиска
+        """
+        return self._searchPanelController
 
     def openUrl(self, href):
         """
@@ -61,7 +78,7 @@ class HtmlRenderBase(wx.Panel):
             outwiker.core.system.getOS().startFile(href)
         except OSError:
             text = _(u"Can't execute file '%s'") % (href)
-            outwiker.core.commands.showError(Application.mainWindow, text)
+            showError(Application.mainWindow, text)
 
     def _getLinkProtocol(self, link):
         """
@@ -96,6 +113,9 @@ class HtmlRenderBase(wx.Panel):
                 pass
 
         return link
+
+    def Reload(self):
+        self._render.Reload()
 
 
 class HTMLRenderForPageMixin:

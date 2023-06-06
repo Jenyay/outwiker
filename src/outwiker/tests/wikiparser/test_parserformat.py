@@ -3,11 +3,12 @@
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
+import outwiker.core.cssclasses as css
 
 
 class ParserFormatTest(unittest.TestCase):
@@ -26,7 +27,7 @@ class ParserFormatTest(unittest.TestCase):
         removeDir(self.path)
 
     def __createWiki(self):
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]
 
@@ -102,12 +103,12 @@ class ParserFormatTest(unittest.TestCase):
 
     def test_comments_05(self):
         text = '* Текст<!-- Комментарий -->'
-        result = '<ul><li>Текст</li></ul>'
+        result = f'<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Текст</li></ul>'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_comments_06(self):
         text = '!! Текст<!-- Комментарий -->'
-        result = '<h1>Текст</h1>'
+        result = f'<h1 class="{css.CSS_WIKI}">Текст</h1>'
 
         self.assertEqual(self.parser.toHtml(text), result)

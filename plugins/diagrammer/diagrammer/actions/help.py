@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.baseaction import BaseAction
-from outwiker.core.system import getOS
+from outwiker.api.app.application import startFile
+from outwiker.api.gui.actions import BaseAction
 
 from ..i18n import get_
 
@@ -16,15 +16,15 @@ class HelpAction(BaseAction):
         global _
         _ = get_()
 
-    stringId = u"Diagrammer_Help"
+    stringId = "Diagrammer_Help"
 
     @property
     def title(self):
-        return _(u"Online Help")
+        return _("Online Help")
 
     @property
     def description(self):
-        return _(u"Diagrammer. Go to blockdiag webpage")
+        return _("Diagrammer. Go to blockdiag webpage")
 
     def run(self, params):
-        getOS().startFile(u"http://blockdiag.com/en/blockdiag/index.html")
+        startFile("http://blockdiag.com/en/blockdiag/index.html")

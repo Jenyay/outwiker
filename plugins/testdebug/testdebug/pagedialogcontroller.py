@@ -1,39 +1,32 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 
 
-class DebugPageDialogController (BasePageDialogController):
-    def __init__ (self, application):
-        super (DebugPageDialogController, self).__init__ (application)
+class DebugPageDialogController(BasePageDialogController):
+    def __init__(self, application):
+        super().__init__(application)
 
-
-    def setPageProperties (self, page):
-        print(u'DebugPageDialogController.setPageProperties()')
+    def setPageProperties(self, page):
+        print("DebugPageDialogController.setPageProperties()")
         return True
 
+    def initBeforeCreation(self, parentPage):
+        print("DebugPageDialogController.initBeforeCreation()")
 
-    def initBeforeCreation (self, parentPage):
-        print(u'DebugPageDialogController.initBeforeCreation()')
+    def initBeforeEditing(self, currentPage):
+        print("DebugPageDialogController.initBeforeEditing()")
 
-
-    def initBeforeEditing (self, currentPage):
-        print(u'DebugPageDialogController.initBeforeEditing()')
-
-
-    def validateBeforeCreation (self, parentPage):
-        print(u'DebugPageDialogController.validateBeforeCreation()')
+    def validateBeforeCreation(self, parentPage):
+        print("DebugPageDialogController.validateBeforeCreation()")
         return True
 
-
-    def validateBeforeEditing (self, currentPage):
-        print(u'DebugPageDialogController.validateBeforeEditing()')
+    def validateBeforeEditing(self, currentPage):
+        print("DebugPageDialogController.validateBeforeEditing()")
         return True
 
+    def saveParams(self):
+        print("DebugPageDialogController.saveParams()")
 
-    def saveParams (self):
-        print(u'DebugPageDialogController.saveParams()')
-
-
-    def clear (self):
-        print(u'DebugPageDialogController.clear()')
+    def clear(self):
+        print("DebugPageDialogController.clear()")

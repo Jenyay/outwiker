@@ -4,10 +4,10 @@ import os.path
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.exceptions import DuplicateTitle
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
@@ -16,7 +16,7 @@ class RenameTest(unittest.TestCase):
     def setUp(self):
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create(self.path)
+        self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
@@ -113,7 +113,7 @@ class RenameTest(unittest.TestCase):
         page = self.wikiroot["Страница 1"]
         page.title = "Страница 1 new"
 
-        wiki = WikiDocument.load(self.path)
+        wiki = loadNotesTree(self.path)
         self.assertNotEqual(wiki["Страница 1 new"], None)
         self.assertEqual(wiki["Страница 1"], None)
 

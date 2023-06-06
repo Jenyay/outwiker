@@ -1,23 +1,23 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
-from outwiker.gui.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs import TestedDialog
 
 from .i18n import get_
 
 
-class InsertDialog (TestedDialog):
+class InsertDialog(TestedDialog):
     """
     Диалог для вставки команды (:counter:)
     """
-    def __init__ (self, parent):
+    def __init__(self, parent):
         global _
         _ = get_()
 
         super (InsertDialog, self).__init__ (parent, 
                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
-                title=u"Counter")
+                title="Counter")
 
         # Размер отступа
         self._fieldsWidth = 200
@@ -33,21 +33,18 @@ class InsertDialog (TestedDialog):
         self._counterName.SetFocus()
         self.Center(wx.BOTH)
 
-
-    def _onSetReset (self, event):
+    def _onSetReset(self, event):
         self._startValue.Enable (self._startCheckBox.IsChecked())
 
-
     @property
-    def countersList (self):
+    def countersList(self):
         """
         Список имен счетчиков, взятый из _counterName. Считаем, что _counterName и _parentCounterName содержат один и тот же список имен.
         """
         return self._counterName.GetStrings()
 
-
     @countersList.setter
-    def countersList (self, value):
+    def countersList(self, value):
         """
         Установить список счетчиков в диалоге. В списке обязательно превым должно присутствовать "пустое" имя. Этот список формируется в InsertDialogController
         """
@@ -61,79 +58,64 @@ class InsertDialog (TestedDialog):
         self._parentCounterName.AppendItems (value)
         self._parentCounterName.SetSelection (0)
 
-
     @property
-    def counterName (self):
+    def counterName(self):
         return self._counterName.GetValue()
 
-
     @counterName.setter
-    def counterName (self, value):
+    def counterName(self, value):
         self._counterName.SetValue (value)
 
-
     @property
-    def parentName (self):
+    def parentName(self):
         return self._parentCounterName.GetValue()
 
-
     @parentName.setter
-    def parentName (self, value):
+    def parentName(self, value):
         self._parentCounterName.SetValue (value)
 
-
     @property
-    def separator (self):
+    def separator(self):
         return self._separator.GetValue()
 
-
     @separator.setter
-    def separator (self, value):
+    def separator(self, value):
         return self._separator.SetValue (value)
 
-
     @property
-    def reset (self):
+    def reset(self):
         """
         Нужно ли устанавливать параметр start
         """
         return self._startCheckBox.IsChecked()
 
-
     @reset.setter
-    def reset (self, value):
+    def reset(self, value):
         self._startCheckBox.SetValue (value)
 
-
     @property
-    def start (self):
+    def start(self):
         return self._startValue.GetValue()
 
-
     @start.setter
-    def start (self, value):
+    def start(self, value):
         self._startValue.SetValue (value)
 
-
     @property
-    def step (self):
+    def step(self):
         return self._stepValue.GetValue()
 
-
     @step.setter
-    def step (self, value):
+    def step(self, value):
         self._stepValue.SetValue (value)
 
-
     @property
-    def hide (self):
+    def hide(self):
         return self._hideCheckBox.IsChecked()
 
-
     @hide.setter
-    def hide (self, value):
+    def hide(self, value):
         self._hideCheckBox.SetValue (value)
-
 
     def _createGui(self):
         """
@@ -164,20 +146,19 @@ class InsertDialog (TestedDialog):
         self.SetSizer (mainSizer)
         self.Fit()
 
-
-    def _createAdvancedGui (self):
+    def _createAdvancedGui(self):
         """
         Создание остальных элементов управления (сброс счетчика к заданному значению, установка шага счетчика, скрытие счетчика)
         """
-        advancedPanel = wx.StaticBox (self, label=_(u"Advanced"))
-        
-        self._startCheckBox = wx.CheckBox (self, label = _(u"Start count from"))
+        advancedPanel = wx.StaticBox (self, label=_("Advanced"))
+
+        self._startCheckBox = wx.CheckBox (self, label = _("Start count from"))
         self._startValue = wx.SpinCtrl (self, min=-10000, max=10000, initial=1)
 
-        stepLabel = wx.StaticText (self, label = _(u"Step"))
+        stepLabel = wx.StaticText (self, label = _("Step"))
         self._stepValue = wx.SpinCtrl (self, min=-10000, max=10000, initial=1)
 
-        self._hideCheckBox = wx.CheckBox (self, label=_(u"Hide counter"))
+        self._hideCheckBox = wx.CheckBox (self, label=_("Hide counter"))
 
         advancedSizer = wx.FlexGridSizer (cols=2)
         advancedSizer.AddGrowableCol (0)
@@ -194,7 +175,7 @@ class InsertDialog (TestedDialog):
         advancedSizer.Add (stepLabel, 
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                 border=2)
-        
+
         advancedSizer.Add (self._stepValue, 
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
                 border=2)
@@ -209,18 +190,17 @@ class InsertDialog (TestedDialog):
                 flag = wx.ALL | wx.EXPAND,
                 border=2)
 
-
-    def _createNestedGui (self):
+    def _createNestedGui(self):
         """
         Создание элементов управления, связанных с вложенным счетчиком
         """
-        nestedPanel = wx.StaticBox (self, label=_(u"Nested counter"))
-        
-        parentNameLabel = wx.StaticText (self, label = _(u"Parent counter name"))
+        nestedPanel = wx.StaticBox (self, label=_("Nested counter"))
+
+        parentNameLabel = wx.StaticText (self, label = _("Parent counter name"))
         self._parentCounterName = wx.ComboBox (self, style=wx.CB_DROPDOWN)
         self._parentCounterName.SetMinSize ((self._fieldsWidth, -1))
 
-        separatorLabel = wx.StaticText (self, label = _(u"Separator"))
+        separatorLabel = wx.StaticText (self, label = _("Separator"))
         self._separator = wx.TextCtrl (self, value=u".")
 
         nestedSizer = wx.FlexGridSizer (cols=2)
@@ -230,7 +210,7 @@ class InsertDialog (TestedDialog):
         nestedSizer.Add (parentNameLabel, 
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                 border=2)
-        
+
         nestedSizer.Add (self._parentCounterName, 
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
                 border=2)
@@ -238,7 +218,7 @@ class InsertDialog (TestedDialog):
         nestedSizer.Add (separatorLabel, 
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                 border=2)
-        
+
         nestedSizer.Add (self._separator, 
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
                 border=2)
@@ -248,13 +228,11 @@ class InsertDialog (TestedDialog):
                 flag = wx.ALL | wx.EXPAND,
                 border=2)
 
-
-
-    def _createCounterNameGui (self):
+    def _createCounterNameGui(self):
         """
         Создание элементов управления, связанных с вводом имени счетчика
         """
-        counterNameLabel = wx.StaticText (self, label = _(u"Counter name"))
+        counterNameLabel = wx.StaticText (self, label = _("Counter name"))
         self._counterName = wx.ComboBox (self, style=wx.CB_DROPDOWN)
         self._counterName.SetMinSize ((self._fieldsWidth, -1))
 
@@ -265,13 +243,12 @@ class InsertDialog (TestedDialog):
         self._counterNameSizer.Add (counterNameLabel, 
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                 border=2)
-        
+
         self._counterNameSizer.Add (self._counterName, 
                 flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
                 border=2)
 
-
-    def _createOkCancelButtons (self, mainSizer):
+    def _createOkCancelButtons(self, mainSizer):
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
         mainSizer.AddStretchSpacer()
         mainSizer.Add (

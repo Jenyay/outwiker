@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.api.pages.wiki.wikiparser import Command
 
 
 class TitleCommand(Command):
     """
     Команда для вставки тега <title>
     """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
         """
-        Command.__init__(self, parser)
+        super().__init__(parser)
 
     @property
     def name(self):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"title"
+        return "title"
 
     def execute(self, params, content):
         """
@@ -26,15 +27,16 @@ class TitleCommand(Command):
         Метод возвращает текст, который будет вставлен на место команды
             в вики-нотации
         """
-        title = u"<title>{}</title>".format(params)
+        title = "<title>{}</title>".format(params)
         self.parser.appendToHead(title)
-        return u""
+        return ""
 
 
 class StyleCommand(Command):
     """
     Команда для вставки тега <style>
     """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
@@ -46,7 +48,7 @@ class StyleCommand(Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"style"
+        return "style"
 
     def execute(self, params, content):
         """
@@ -54,15 +56,16 @@ class StyleCommand(Command):
         Метод возвращает текст, который будет вставлен на место команды
             в вики-нотации
         """
-        title = u"<style>{}</style>".format(content.strip())
+        title = "<style>{}</style>".format(content.strip())
         self.parser.appendToHead(title)
-        return u""
+        return ""
 
 
 class DescriptionCommand(Command):
     """
     Команда для вставки тега <meta name="description">
     """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
@@ -74,7 +77,7 @@ class DescriptionCommand(Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"description"
+        return "description"
 
     def execute(self, params, content):
         """
@@ -82,15 +85,16 @@ class DescriptionCommand(Command):
         Метод возвращает текст, который будет вставлен на место
             команды в вики-нотации
         """
-        head = u'<meta name="description" content="{}"/>'.format(params)
+        head = '<meta name="description" content="{}"/>'.format(params)
         self.parser.appendToHead(head)
-        return u""
+        return ""
 
 
 class KeywordsCommand(Command):
     """
     Команда для вставки тега <meta name="keywords">
     """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
@@ -102,7 +106,7 @@ class KeywordsCommand(Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"keywords"
+        return "keywords"
 
     def execute(self, params, content):
         """
@@ -110,15 +114,16 @@ class KeywordsCommand(Command):
         Метод возвращает текст, который будет вставлен на место
             команды в вики-нотации
         """
-        head = u'<meta name="keywords" content="{}"/>'.format(params)
+        head = '<meta name="keywords" content="{}"/>'.format(params)
         self.parser.appendToHead(head)
-        return u""
+        return ""
 
 
 class CustomHeadsCommand(Command):
     """
     Команда для вставки любых заголовков в тег <head>...</head>
     """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
@@ -130,7 +135,7 @@ class CustomHeadsCommand(Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"htmlhead"
+        return "htmlhead"
 
     def execute(self, params, content):
         """
@@ -138,7 +143,10 @@ class CustomHeadsCommand(Command):
         Метод возвращает текст, который будет вставлен на место
             команды в вики-нотации
         """
-        list(map(lambda head: self.parser.appendToHead(head.strip()),
-                 content.split("\n")))
+        list(
+            map(
+                lambda head: self.parser.appendToHead(head.strip()), content.split("\n")
+            )
+        )
 
-        return u""
+        return ""

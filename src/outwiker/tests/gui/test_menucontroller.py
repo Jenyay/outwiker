@@ -4,7 +4,7 @@ import unittest
 
 import wx
 
-from outwiker.gui.menucontroller import MenuController, ROOT_MENU_ID
+from outwiker.app.gui.menucontroller import MenuController, ROOT_MENU_ID
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 

@@ -1,21 +1,21 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
-from outwiker.core.attachment import Attachment
+from outwiker.api.core.attachment import Attachment
 
 from .graphelements import Graph, Curve
 from .datasources import StringSource, FileSource
 from . import defines
 
 
-class GraphBuilder(object):
+class GraphBuilder:
     """Class for creation Graph and fill its properties"""
 
     def __init__(self, params_dict, content, page):
         """
         params_dict - dictionary with parameters of the(:plot:) command
-        content - text between(:plot:) and(:plotend:)
+        content - text between (:plot:) and (:plotend:)
         page - wiki page for that will create graph
         """
         self._graph = Graph()
@@ -28,7 +28,7 @@ class GraphBuilder(object):
 
     def _setUpProperties(self, params_dict):
         """Set-up properties of the inner objects"""
-        self._sep = u'.'
+        self._sep = "."
 
         for key, val in params_dict.items():
             if key.endswith(self._sep):
@@ -37,12 +37,10 @@ class GraphBuilder(object):
             self._setObjectProperties(self.graph, key, val)
 
     def _setObjectProperties(self, obj, key, val):
-        """ Set properties for single object and them children
-        """
-        splitted = [subkey.lower()
-                    for subkey
-                    in key.split(self._sep, 1)
-                    if len(subkey) != 0]
+        """Set properties for single object and them children"""
+        splitted = [
+            subkey.lower() for subkey in key.split(self._sep, 1) if len(subkey) != 0
+        ]
         if len(splitted) == 1:
             obj.setProperty(splitted[0], val)
         else:
@@ -54,13 +52,13 @@ class GraphBuilder(object):
         """Create curves by parameters.
         Return set of the names of the new curves"""
 
-        curvename = re.compile(r'^(?P<name>curve\d*)\.', re.IGNORECASE)
-        names = set([u'curve'])
+        curvename = re.compile(r"^(?P<name>curve\d*)\.", re.IGNORECASE)
+        names = set(["curve"])
 
         for key in params_dict:
             match = curvename.match(key)
             if match is not None:
-                names.update(match.groups('name'))
+                names.update(match.groups("name"))
 
         for name in names:
             self._graph.addObject(name.lower(), Curve())
@@ -69,7 +67,7 @@ class GraphBuilder(object):
 
     def _setDataSources(self, curvenames, page, content):
         """
-        Set data sources(StringSource or FileSource) for all curves
+        Set data sources (StringSource or FileSource) for all curves
         """
         for name in curvenames:
             curve = self._graph.getObject(name)
@@ -78,32 +76,30 @@ class GraphBuilder(object):
             data = curve.getObject(defines.CURVE_DATA_OBJECT_NAME)
             assert data is not None
 
-            colsep = data.getProperty(defines.DATA_COLUMNS_SEPARATOR_NAME,
-                                      defines.DATA_COLUMNS_SEPARATOR_DEFAULT)
+            colsep = data.getProperty(
+                defines.DATA_COLUMNS_SEPARATOR_NAME,
+                defines.DATA_COLUMNS_SEPARATOR_DEFAULT,
+            )
 
             try:
-                skiprows = int(data.getProperty(defines.DATA_SKIP_ROWS_NAME,
-                                                '0'))
+                skiprows = int(data.getProperty(defines.DATA_SKIP_ROWS_NAME, "0"))
             except ValueError:
                 skiprows = 0
 
             attachName = curve.getProperty(defines.CURVE_DATA_NAME, None)
             if attachName is None:
-                data.setSource(StringSource(content.strip(),
-                                            colsep=colsep,
-                                            skiprows=skiprows)
-                               )
+                data.setSource(
+                    StringSource(content.strip(), colsep=colsep, skiprows=skiprows)
+                )
             else:
                 # Remove prefix "Attach:"
-                attachPrefix = u'Attach:'
+                attachPrefix = "Attach:"
                 if attachName.startswith(attachPrefix):
-                    attachName = attachName[len(attachPrefix):]
+                    attachName = attachName[len(attachPrefix) :]
 
                 # Get full path to the attached file
                 path = Attachment(page).getFullPath(attachName)
-                data.setSource(FileSource(path,
-                                          colsep=colsep,
-                                          skiprows=skiprows))
+                data.setSource(FileSource(path, colsep=colsep, skiprows=skiprows))
 
     @property
     def graph(self):

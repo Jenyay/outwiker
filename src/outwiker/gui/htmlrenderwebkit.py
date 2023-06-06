@@ -10,10 +10,10 @@ import urllib.error
 import wx
 
 import outwiker.core.system
-import outwiker.core.commands
+from outwiker.app.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR
-from outwiker.gui.defines import ID_KEY_CTRL, ID_KEY_SHIFT, ID_MOUSE_LEFT
+from outwiker.gui.defines import ID_KEY_CTRL, ID_MOUSE_LEFT
 from outwiker.utilites.textfile import readTextFile
 
 
@@ -259,7 +259,7 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
                 text = _("Can't execute file '%s'") % filename
-                outwiker.core.commands.showError(Application.mainWindow, text)
+                showError(Application.mainWindow, text)
         elif anchor is not None:
             return False
 
@@ -341,7 +341,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
                 text = _(u"Can't execute file '%s'") % filename
-                outwiker.core.commands.showError(Application.mainWindow, text)
+                showError(Application.mainWindow, text)
         elif anchor is not None:
             return False
 

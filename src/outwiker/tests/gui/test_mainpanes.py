@@ -4,15 +4,15 @@ import unittest
 
 import wx.aui
 
-from outwiker.actions.showhideattaches import ShowHideAttachesAction
-from outwiker.actions.showhidetree import ShowHideTreeAction
-from outwiker.actions.showhidetags import ShowHideTagsAction
+from outwiker.app.actions.showhideattaches import ShowHideAttachesAction
+from outwiker.app.actions.showhidetree import ShowHideTreeAction
+from outwiker.app.actions.showhidetags import ShowHideTagsAction
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class MainPanesTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(enableActionsGui=True)
 
         self.attachAction = self.application.actionController.getAction(
             ShowHideAttachesAction.stringId)

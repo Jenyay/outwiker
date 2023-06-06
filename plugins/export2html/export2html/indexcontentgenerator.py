@@ -3,7 +3,7 @@
 import html
 import os.path
 
-from outwiker.utilites.textfile import writeTextFile
+from outwiker.api.core.text import writeTextFile
 
 from .template import loadTemplate
 
@@ -51,8 +51,9 @@ class IndexContentGenerator:
             return
 
         dirname = self.__renames[page]
-        iconpath = "{dirname}/{iconname}".format(dirname=dirname,
-                                                 iconname=os.path.basename(page.icon))
+        iconpath = "{dirname}/{iconname}".format(
+            dirname=dirname, iconname=os.path.basename(page.icon)
+        )
 
         return iconpath
 
@@ -75,17 +76,20 @@ class IndexContentGenerator:
         templateIcon = "{indent}<li><span style='white-space:nowrap'><a href='{url}' target='main'><img src='{iconpath}'></a><a href='{url}' target='main'>{title}</a></span></li>"
 
         if page.icon is None:
-            itemstring = template.format(indent=self.__indent * level,
-                                         url=self.__prepareUrl(
-                                             self.__renames[page] + ".html"),
-                                         title=html.escape(page.title))
+            itemstring = template.format(
+                indent=self.__indent * level,
+                url=self.__prepareUrl(self.__renames[page] + ".html"),
+                title=html.escape(page.title),
+            )
         else:
             iconpath = self.__getIcon(page)
 
-            itemstring = templateIcon.format(indent=self.__indent * level,
-                                             url=self.__prepareUrl (self.__renames[page] + ".html"),
-                                             title=html.escape(page.title),
-                                             iconpath=self.__prepareUrl(iconpath))
+            itemstring = templateIcon.format(
+                indent=self.__indent * level,
+                url=self.__prepareUrl(self.__renames[page] + ".html"),
+                title=html.escape(page.title),
+                iconpath=self.__prepareUrl(iconpath),
+            )
 
         return itemstring
 
