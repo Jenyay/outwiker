@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="2.6.7">
+	<version number="2.6.7" date="2023-06-17">
 		<download href="https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.6.7.zip">
 			<requirements>
 				<api>3.924</api>

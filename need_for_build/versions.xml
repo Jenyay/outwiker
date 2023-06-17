@@ -1,10 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.2.0.923" status="dev">
+    <version number="3.2.0.924" date="2023-06-17">
         <changes>
+			<change>Added menu item and button "Attach Folder".</change>
+			<change>Added color highlighting links to missing attachments on wiki pages.</change>
+			<change>Updated the About dialog.</change>
+			<change>Updated CSS styles for wiki pages.</change>
+			<change>Fixed bug with enabling/disabling spell checking on text and HTML pages.</change>
+			<change>Migrate to wxPython 4.2.1.</change>
         </changes>
 
         <changes lang="ru">
+			<change>Добавлены пункт меню и кнопка "Прикрепить папку".</change>
+			<change>Добавлено выделение цветом ссылок на отсутствующие прикрепленные файлы на викистраницах.</change>
+			<change>Обновлен диалог "О программе".</change>
+			<change>Оформительские исправления в стилях CSS для викистраниц.</change>
+			<change>Исправлена ошибка с включением/выключением проверки орфографии на текстовой и HTML-страницах.</change>
+			<change>Переход на wxPython 4.2.1.</change>
         </changes>
     </version>
 
