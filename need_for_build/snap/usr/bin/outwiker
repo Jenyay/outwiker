@@ -1,4 +1,6 @@
 #!/bin/sh
 
 cd $SNAP/usr/share/outwiker
-python3.9 runoutwiker.py "$@"
+#. $SNAP/venv/bin/activate
+#$SNAP/venv/bin/python3 runoutwiker.py "$@"
+PYTHONPATH=$SNAP/venv/lib/python3.8/site-packages python3 runoutwiker.py "$@"
