@@ -36,8 +36,8 @@ apps:
         extensions:
             - gnome-3-38
         desktop: usr/share/applications/outwiker.desktop
-        environment:
-            LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/lib/python3/site-packages/hunspell:$LD_LIBRARY_PATH
+        #environment:
+        #    LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/lib/python3/site-packages/hunspell:$LD_LIBRARY_PATH
             #PYTHONPATH: $SNAP/lib/python3.8/site-packages/
 
 parts:
@@ -62,6 +62,9 @@ parts:
             - libsm-dev
             - libtiff-dev
             - libxtst-dev
+            - g++-10
+            - gcc-10
+            - build-essential
         stage-packages:
             - python3
             - python3-venv
@@ -96,6 +99,14 @@ parts:
             python -m pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
             python -m pip install Pillow==9.5.0 idna==2.10 pyparsing==3.0.9 rcssmin==1.1.1
             #snapcraftctl build
+            cd $SNAPCRAFT_PART_SRC/depends/cacheman
+            python setup.py clean
+            python setup.py install
+            #g++ --version
+            #gcc --version
+            cd $SNAPCRAFT_PART_SRC/depends/cyhunspell
+            python setup.py clean
+            python setup.py install
             cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
             chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
 

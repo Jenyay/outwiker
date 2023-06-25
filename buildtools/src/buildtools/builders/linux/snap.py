@@ -49,6 +49,7 @@ class BuilderSnap(BuilderBase):
         with self.context.cd(self.facts.temp_dir):
             snap_params = ' '.join(self._snap_params)
             self.context.run('snapcraft snap {params}'.format(params=snap_params))
+            # self.context.run('snapcraft pack {params}'.format(params=snap_params))
             # self.context.run('sudo snapcraft snap {params}'.format(params=snap_params))
 
         # self.context.run('docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"')
@@ -91,6 +92,11 @@ class BuilderSnap(BuilderBase):
         # Copy plug-ins
         dest_plugins_dir = os.path.join(usr_share_outwiker, PLUGINS_DIR)
         self._copy_plugins(dest_plugins_dir)
+
+        dirs = ['depends']
+        for dir_name in dirs:
+            name = os.path.basename(dir_name)
+            shutil.copytree(dir_name, os.path.join(root, name))
 
     def _prepare_snapcraft_file(self, snapcraft_file):
         substitute_in_file(snapcraft_file,
