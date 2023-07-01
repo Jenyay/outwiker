@@ -2,11 +2,11 @@ name: outwiker
 version: '{version}'
 summary: Cross-platform software for keeping your notes in a tree
 description: |
-    OutWiker is a cross-platform software for keeping your notes in a tree.
-    Similar programs call "outliner", "tree-like editor" or personal wiki.
-    Main difference OutWiker from other programs is a keeping notes as folders on disk.
-    A notes can to have attached files. OutWiker can contain pages of different types,
-    currently supports three types of pages: plain text, HTML pages and wiki pages.
+  OutWiker is a cross-platform software for keeping your notes in a tree.
+  Similar programs call "outliner", "tree-like editor" or personal wiki.
+  Main difference OutWiker from other programs is a keeping notes as folders on disk.
+  A notes can to have attached files. OutWiker can contain pages of different types,
+  currently supports three types of pages: plain text, HTML pages and wiki pages.
 
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
@@ -14,107 +14,183 @@ icon: usr/share/icons/outwiker.svg
 base: core20
 
 apps:
-    outwiker:
-        # command: bin/snapcraft-preload $SNAP/usr/bin/outwiker
-        # command: bin/snapcraft-preload usr/bin/outwiker
-        command: usr/bin/outwiker
-        plugs:
-            - x11
-            - unity7
-            - wayland
-            - pulseaudio
-            - home
-            - gsettings
-            - network
-            - network-bind
-            - cups-control
-            - desktop
-            - desktop-legacy
-            - removable-media
-            - upower-observe
-            - mount-observe
-        extensions:
-            - gnome-3-38
-        desktop: usr/share/applications/outwiker.desktop
-        #environment:
-        #    LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/lib/python3/site-packages/hunspell:$LD_LIBRARY_PATH
-            #PYTHONPATH: $SNAP/lib/python3.8/site-packages/
+  outwiker:
+    command: usr/bin/outwiker
+    plugs:
+      - x11
+      - unity7
+      - wayland
+      - pulseaudio
+      - home
+      - gsettings
+      - network
+      - network-bind
+      - cups-control
+      - desktop
+      - desktop-legacy
+      - removable-media
+      - upower-observe
+      - mount-observe
+      - locale-control
+    #extensions:
+    #  - gnome-3-38
+    desktop: usr/share/applications/outwiker.desktop
+    environment:
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/venv/lib/python3.9/site-packages/cyhunspell-2.0.2.post1-py3.9-linux-x86_64.egg/hunspell:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libgtk-3-0:$LD_LIBRARY_PATH
+      PYTHONPATH: $SNAP/venv/lib/python3.9/site-packages
+      PATH: $SNAP/venv/bin:$SNAP/venv/lib/python3.9/site-packages:$PATH
+
+layout:
+  /usr/lib/locale:
+    bind: $SNAP/usr/lib/locale
+  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0:
+    bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0
+  /usr/share/xml/iso-codes:
+    bind: $SNAP/usr/share/xml/iso-codes
+
+plugs:
+  gtk-3-themes:
+    default-provider: gtk-common-themes
+    interface: content
+    target: $SNAP/usr/share/themes
+  icon-themes:
+    default-provider: gtk-common-themes
+    interface: content
+    target: $SNAP/usr/share/icons
+  sound-themes:
+    default-provider: gtk-common-themes
+    interface: content
+    target: $SNAP/usr/share/sounds
 
 parts:
-    outwiker:
-        #after:
-        #    - snapcraft-preload
-        plugin: nil
-        #plugin: python
-        source: .
-        build-packages:
-            - libhunspell-dev
-            - wget
-            - libwebkit2gtk-4.0-dev
-            - freeglut3-dev
-            - libgl1-mesa-dev
-            - libglu1-mesa-dev
-            - libgstreamer-plugins-base1.0-dev
-            - libjpeg-dev
-            - libnotify-dev
-            - libpng-dev
-            - libsdl2-dev
-            - libsm-dev
-            - libtiff-dev
-            - libxtst-dev
-            - g++-10
-            - gcc-10
-            - build-essential
-        stage-packages:
-            - python3
-            - python3-venv
-            - python3-dev
-            - python3-distutils
-            - python3-setuptools
-            - python3-pip
-            - libglu1-mesa
-            - libsdl2-2.0-0
-            - libsndio7.0
-            - libxss1
-            - freeglut3
-            - ibus-gtk3
-            - zlib1g
-            - libsm6
-            - libpulse0
-            - libhunspell-1.7-0
-            - libsdl-gfx1.2-5
-            - libgstreamer1.0-0
-            - libslang2
-        #python-packages:
-        #    - -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
-        #    - Pillow==9.5.0
-        #    - cyhunspell==2.0.2
-        #    - idna==2.10
-        #    - pyparsing==3.0.9
-        #    - rcssmin==1.1.1
-        override-build: |
-            python3 -m venv $SNAPCRAFT_PART_INSTALL/venv
-            . $SNAPCRAFT_PART_INSTALL/venv/bin/activate
-            #mkdir $SNAPCRAFT_PART_INSTALL/python-packages
-            python -m pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
-            python -m pip install Pillow==9.5.0 idna==2.10 pyparsing==3.0.9 rcssmin==1.1.1
-            #snapcraftctl build
-            cd $SNAPCRAFT_PART_SRC/depends/cacheman
-            python setup.py clean
-            python setup.py install
-            #g++ --version
-            #gcc --version
-            cd $SNAPCRAFT_PART_SRC/depends/cyhunspell
-            python setup.py clean
-            python setup.py install
-            cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
-            chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
+  outwiker:
+    after:
+      - desktop-gtk3
+    plugin: nil
+    source: .
+    build-packages:
+      - python3.9-dev
+      - libhunspell-dev
+      - wget
+      - libwebkit2gtk-4.0-dev
+      - freeglut3-dev
+      - libgl1-mesa-dev
+      - libglu1-mesa-dev
+      - libgstreamer-plugins-base1.0-dev
+      - libjpeg-dev
+      - libnotify-dev
+      - libpng-dev
+      - libsdl2-dev
+      - libsm-dev
+      - libtiff-dev
+      - libxtst-dev
+      - g++-10
+      - gcc-10
+      - build-essential
+      - autoconf
+      - automake
+      - libtool
+    stage-packages:
+      - python3.9
+      - python3.9-venv
+      - python3-distutils
+      - libglu1-mesa
+      - libsdl2-2.0-0
+      - libsndio7.0
+      - libxss1
+      - freeglut3
+      - ibus-gtk3
+      - zlib1g
+      - libsm6
+      - libpulse0
+      - libhunspell-1.7-0
+      - libsdl-gfx1.2-5
+      - libgstreamer1.0-0
+      - libslang2
+      - libatomic1
+      - libegl1
+      - libenchant-2-2
+      - libgbm1
+      - libgstreamer-gl1.0-0
+      - libgstreamer-plugins-base1.0-0
+      - libgudev-1.0-0
+      - libharfbuzz-icu0
+      - libhyphen0
+      - libjavascriptcoregtk-4.0-18
+      - libnotify4
+      - libopengl0
+      - libopenjp2-7
+      - liborc-0.4-0
+      - libpcre2-32-0
+      - libsecret-1-0
+      - libwayland-server0
+      - libwebkit2gtk-4.0-37
+      - libwebpdemux2
+      - libwoff1
+      - libxslt1.1
+      - libxtst6
+      - dmz-cursor-theme
+      - gnome-themes-standard
+      - libgtk-3-0
+      - libgdk-pixbuf2.0-0
+      - locales-all
+      - libc-bin
+      - libgnutls30
+      - glib-networking
+      - adwaita-icon-theme-full
+      - gnome-icon-theme
+      - hicolor-icon-theme
+      - shared-mime-info
+      - libglib2.0-bin
+      - xdg-user-dirs
+      - libgtk2.0-0
+      - libcanberra-gtk3-module
+      - gir1.2-xapp-1.0
+      - libxapp-dev
+      - libxapp1
+    override-build: |
+      python3.9 -m venv $SNAPCRAFT_PART_INSTALL/venv --without-pip --system-site-packages
+      . $SNAPCRAFT_PART_INSTALL/venv/bin/activate
+      wget -O $SNAPCRAFT_PART_INSTALL/usr/bin/get-pip.py https://bootstrap.pypa.io/get-pip.py
+      python $SNAPCRAFT_PART_INSTALL/usr/bin/get-pip.py
+      python -m pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
+      python -m pip install Pillow==9.5.0 idna==2.10 pyparsing==3.0.9 rcssmin==1.1.1 wheel setuptools
+      cd $SNAPCRAFT_PART_SRC/depends/cacheman
+      python setup.py bdist
+      python setup.py bdist_wheel
+      python -m pip install dist/CacheMan-2.1.0.post1-py2.py3-none-any.whl
+      cd $SNAPCRAFT_PART_SRC/depends/cyhunspell
+      python setup.py bdist
+      python setup.py bdist_wheel
+      python -m pip install dist/cyhunspell-2.0.2.post1-cp39-cp39-linux_x86_64.whl
+      cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
+      chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
 
-    #snapcraft-preload:
-    #    source: https://github.com/sergiusens/snapcraft-preload.git
-    #    plugin: cmake
-    #    build-packages:
-    #      - gcc-multilib
-    #      - g++-multilib
-    #    stage-packages:
-    #      - lib32stdc++6
+  desktop-gtk3:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-subdir: gtk
+    plugin: make
+    make-parameters: ["FLAVOR=gtk3"]
+    build-packages:
+      - build-essential
+      - libgtk-3-dev
+    stage-packages:
+      - libxkbcommon0  # XKB_CONFIG_ROOT
+      - ttf-ubuntu-font-family
+      - dmz-cursor-theme
+      - light-themes
+      - gnome-themes-standard
+      - shared-mime-info
+      - libgtk-3-0
+      - libgdk-pixbuf2.0-0
+      - libglib2.0-bin
+      - libgtk-3-bin
+      - unity-gtk3-module
+      - libappindicator3-1
+      - locales-all
+      - xdg-user-dirs
+      - ibus-gtk3
+      - libibus-1.0-5
+      - fcitx-frontend-gtk3
+      - libgtk2.0-0
+      - libcanberra-gtk3-module
