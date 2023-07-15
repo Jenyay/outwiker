@@ -48,7 +48,7 @@ class BuilderSnap(BuilderBase):
         print_info('Build snap')
         with self.context.cd(self.facts.temp_dir):
             snap_params = ' '.join(self._snap_params)
-            self.context.run('snapcraft snap {params}'.format(params=snap_params))
+            self.context.run('snapcraft pack {params}'.format(params=snap_params))
             # self.context.run('snapcraft pack {params}'.format(params=snap_params))
             # self.context.run('sudo snapcraft snap {params}'.format(params=snap_params))
 
