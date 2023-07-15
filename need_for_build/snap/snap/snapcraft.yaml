@@ -72,11 +72,8 @@ parts:
       - python3.10-dev
       - python3-pip
       - libhunspell-dev
-      - wget
       - libwebkit2gtk-4.0-dev
       - freeglut3-dev
-      - libgl1-mesa-dev
-      - libglu1-mesa-dev
       - libgstreamer-plugins-base1.0-dev
       - libjpeg-dev
       - libnotify-dev
@@ -94,17 +91,13 @@ parts:
     stage-packages:
       - python3.10
       - python3-distutils
-      - libglu1-mesa
       - libsdl2-2.0-0
-      - libsndio7.0
       - libxss1
       - freeglut3
       - ibus-gtk3
-      - zlib1g
       - libsm6
       - libpulse0
       - libhunspell-1.7-0
-      - libsdl-gfx1.2-5
       - libgstreamer1.0-0
       - libslang2
       - libatomic1
@@ -120,19 +113,16 @@ parts:
       - libnotify4
       - libopengl0
       - libopenjp2-7
-      - liborc-0.4-0
       - libpcre2-32-0
       - libsecret-1-0
       - libwayland-server0
       - libwebkit2gtk-4.0-37
       - libwebpdemux2
-      - libwoff1
       - libxslt1.1
       - libxtst6
       - dmz-cursor-theme
       - gnome-themes-standard
       - libgtk-3-0
-      - libgdk-pixbuf2.0-0
       - locales-all
       - libc-bin
       - libgnutls30
@@ -145,9 +135,6 @@ parts:
       - xdg-user-dirs
       - libgtk2.0-0
       - libcanberra-gtk3-module
-      - gir1.2-xapp-1.0
-      - libxapp-dev
-      - libxapp1
     override-build: |
       pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-22.04 wxPython==4.2.1
       pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib Pillow==9.5.0 idna==2.10 pyparsing==3.0.9 rcssmin==1.1.1 wheel setuptools
@@ -172,21 +159,17 @@ parts:
       - libgtk-3-dev
     stage-packages:
       - libxkbcommon0  # XKB_CONFIG_ROOT
-      #- ttf-ubuntu-font-family
       - dmz-cursor-theme
       - light-themes
       - gnome-themes-standard
       - shared-mime-info
       - libgtk-3-0
-      - libgdk-pixbuf2.0-0
       - libglib2.0-bin
       - libgtk-3-bin
       - unity-gtk3-module
-      - libappindicator3-1
       - locales-all
       - xdg-user-dirs
       - ibus-gtk3
       - libibus-1.0-5
       - fcitx-frontend-gtk3
       - libgtk2.0-0
-      - libcanberra-gtk3-module
