@@ -36,7 +36,7 @@ apps:
       - gnome
     desktop: usr/share/applications/outwiker.desktop
     environment:
-      LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/pylib/cyhunspell-2.0.2.post1-py3.10-linux-x86_64.egg/hunspell:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libgtk-3-0:$LD_LIBRARY_PATH
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/pylib/cyhunspell-2.0.3.post1-py3.10-linux-x86_64.egg/hunspell:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libgtk-3-0:$LD_LIBRARY_PATH
       PYTHONPATH: $SNAP/pylib
       PATH: $SNAP/usr/bin:$SNAP/pylib:$PATH
 
@@ -113,6 +113,6 @@ parts:
       cd $SNAPCRAFT_PART_SRC/depends/cyhunspell
       python3 setup.py bdist
       python3 setup.py bdist_wheel
-      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib dist/cyhunspell-2.0.2.post1-cp310-cp310-linux_x86_64.whl
+      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib dist/cyhunspell-2.0.3.post1-cp310-cp310-linux_x86_64.whl
       cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
       chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
