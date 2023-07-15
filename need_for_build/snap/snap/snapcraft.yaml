@@ -32,8 +32,8 @@ apps:
       - upower-observe
       - mount-observe
       - locale-control
-    #extensions:
-    #  - gnome-3-38
+    extensions:
+      - gnome
     desktop: usr/share/applications/outwiker.desktop
     environment:
       LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/pylib/cyhunspell-2.0.2.post1-py3.10-linux-x86_64.egg/hunspell:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libgtk-3-0:$LD_LIBRARY_PATH
@@ -64,8 +64,6 @@ plugs:
 
 parts:
   outwiker:
-    after:
-      - desktop-gtk3
     plugin: nil
     source: .
     build-packages:
@@ -148,28 +146,3 @@ parts:
       pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib dist/cyhunspell-2.0.2.post1-cp310-cp310-linux_x86_64.whl
       cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
       chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
-
-  desktop-gtk3:
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    source-subdir: gtk
-    plugin: make
-    make-parameters: ["FLAVOR=gtk3"]
-    build-packages:
-      - build-essential
-      - libgtk-3-dev
-    stage-packages:
-      - libxkbcommon0  # XKB_CONFIG_ROOT
-      - dmz-cursor-theme
-      - light-themes
-      - gnome-themes-standard
-      - shared-mime-info
-      - libgtk-3-0
-      - libglib2.0-bin
-      - libgtk-3-bin
-      - unity-gtk3-module
-      - locales-all
-      - xdg-user-dirs
-      - ibus-gtk3
-      - libibus-1.0-5
-      - fcitx-frontend-gtk3
-      - libgtk2.0-0
