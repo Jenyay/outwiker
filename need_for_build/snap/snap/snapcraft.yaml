@@ -100,7 +100,6 @@ parts:
       - libjavascriptcoregtk-4.0-18
       - libwebkit2gtk-4.0-37
       - libwebpdemux2
-      - libgtk-3-0
       - libgnutls30
       - xdg-user-dirs
       - libcanberra-gtk3-module
