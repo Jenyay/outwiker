@@ -2,31 +2,24 @@
 
 || border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
-
 || [=https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg=] || https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg || Вставить картинку из интернета ||
-
 || [=Attach:small_image.jpg=] || Attach:small_image.jpg || Вставить прикрепленную картинку ||
-
+|| [=Attach:"subdir/small_image_in_subdir.jpg"=] || Attach:"subdir/small_image_in_subdir.jpg" || Вставить прикрепленную картинку из вложенной папки ||
 || [=[[http://jenyay.net | Attach:small_image.jpg]]=] || [[http://jenyay.net | Attach:small_image.jpg]] || Вставить ссылку в виде картинки ||
-
 || [=[[page://__bdf571a9-ebca-4e1c-8d79-9e7816a03029 | Attach:small_image.jpg]]=] || [[page://__bdf571a9-ebca-4e1c-8d79-9e7816a03029 | Attach:small_image.jpg]] || Вставить ссылку на другую страницу в виде картинки ||
-
 || [=%thumb%Attach:image.jpg%%=] || %thumb%Attach:image.jpg%% || Вставить уменьшенную картинку со ссылкой на оригинал. [[<<]]Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами ||
-
 || [=%width=200%Attach:image.jpg%%=] || %width=200%Attach:image.jpg%% || Вставить уменьшенную картинку с заданным размером по горизонтали со ссылкой на оригинал.[[<<]][[<<]]\
 Возможные варианты команды: [[<<]][[<<]]\
 ''[=%width=200px%Attach:image.jpg%%=]'' [[<<]][[<<]]\
 или [[<<]][[<<]]\
 ''[=%thumb width=200%Attach:image.jpg%%=]'' [[<<]][[<<]]\
 Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами ||
-
 || [=%height=200%Attach:image.jpg%%=] || %height=200%Attach:image.jpg%% || Вставить уменьшенную картинку с заданным размером по вертикали со ссылкой на оригинал.[[<<]][[<<]]\
 Возможные варианты команды: [[<<]][[<<]]\
 ''[=%height=200px%Attach:image.jpg%%=]'' [[<<]][[<<]]\
 или [[<<]]\
 ''[=%thumb height=200%Attach:image.jpg%%=]'' [[<<]][[<<]]\
 Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами ||
-
 || [=%maxsize=200%Attach:image.jpg%%=] || %maxsize=200%Attach:image.jpg%% || Вставить уменьшенную картинку с заданным максимальным размером со ссылкой на оригинал.[[<<]][[<<]]\
 Возможные варианты команды: [[<<]][[<<]]\
 ''[=%maxsize=200px%Attach:image.jpg%%=]'' [[<<]][[<<]]\
@@ -38,13 +31,11 @@
 
 || border=1 width=90% style="border-collapse: collapse; border: 1px solid black;"
 || '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
-
 ||[=Attach:file.txt=] || Attach:file.txt || Ссылка на прикрепленный файл ||
-
+||[=Attach:"subdir/file_in_subdir.txt"=] || Attach:"subdir/file_in_subdir.txt" || Ссылка на прикрепленный файл во вложенной папке ||
 ||[=[[Attach:file.txt]]=] || [[Attach:file.txt]] || Ссылка на прикрепленный файл. [[<<]]То же, что и предыдущая запись. ||
-
 ||[=[[Attach:small_image.jpg]]=] || [[Attach:small_image.jpg]] || Ссылка на прикрепленную картинку ||
-
 ||[=[[Attach:file.txt | Прикрепленный файл]]=] || [[Attach:file.txt | Прикрепленный файл]] || Ссылка на прикрепленный файл с комментарием ||
-
+||[=[[Attach:"subdir/file_in_subdir.txt" | Прикрепленный файл]]=] || [[Attach:"subdir/file_in_subdir.txt" | Прикрепленный файл]] || Ссылка на прикрепленный файл во вложенной папке с комментарием ||
 ||[=[[Прикрепленный файл -> Attach:file.txt]]=] || [[Прикрепленный файл -> Attach:file.txt]] || Ссылка на прикрепленный файл с комментарием [[<<]]То же, что и предыдущая запись. ||
+||[=[[Прикрепленный файл -> Attach:"subdir/file_in_subdir.txt"]]=] || [[Прикрепленный файл -> Attach:"subdir/file_in_subdir.txt"]] || Ссылка на прикрепленный файл во вложенной папке с комментарием [[<<]]То же, что и предыдущая запись. ||

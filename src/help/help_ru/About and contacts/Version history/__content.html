@@ -11,316 +11,85 @@
 			font-family:Verdana;
 		}
 
-		img{border:none}
+		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}ul.ow-wiki li.ow-li-empty:before{background-image:none}ul.ow-wiki li.ow-li-circle:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMzMzNDUgMCAwIC4zMjQ0OSAtMy41Mjg1IC0zLjY1MDUpIiBmaWxsPSJub25lIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjQiLz4KPC9nPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-complete:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+CjxwYXRoIGQ9Im0wLjI2OTI1IDAuMjY5MjUgMS40NzI0IDEuNDcyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xOCIvPgo8cGF0aCBkPSJtMS43NTg1IDAuMjQ0MDEtMS40ODA5IDEuNDg5MyIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xOCIvPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-incomplete:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+CjxwYXRoIGQ9Im0xLjc1ODUgMC4yNDQwMS0xLjQ4MDkgMS40ODkzIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjE4Ii8+Cjwvc3ZnPgo=")}ul.ow-wiki li.ow-li-todo:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+Cjwvc3ZnPgoK")}ul.ow-wiki li.ow-li-star:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwNTMgMCAwIC45NDEwMSAtMTIuMTg5IC0xMi4wMzcpIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjIiPgo8cGF0aCBkPSJtMTMuMTIxIDEzLjE2NHYxLjM4MTUiLz4KPHBhdGggZD0ibTEzLjcxOSAxMy41MDktMS4xOTY0IDAuNjkwNzYiLz4KPHBhdGggZD0ibTEzLjcxOSAxNC4yLTEuMTk2NC0wLjY5MDc2Ii8+CjwvZz4KPC9zdmc+Cgo=")}ul.ow-wiki li.ow-li-plus:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNiAwIDAgMSAtNy4wNTMyIC0xMi42NjMpIiBzdHJva2Utd2lkdGg9Ii4xOTM2NSI+CjxwYXRoIGQ9Im0xMi40MjIgMTMuNjYzaDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTkzNjUiLz4KPC9nPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgwIC42IC0xIDAgMTQuNjYzIC03LjA1MzIpIiBzdHJva2Utd2lkdGg9Ii4xOTM2NSI+CjxwYXRoIGQ9Im0xMi40MjIgMTMuNjYzaDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTkzNjUiLz4KPC9nPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-minus:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNiAwIDAgMSAtNy4wNTMyIC0xMi42NjMpIiBzdHJva2Utd2lkdGg9Ii4xOTM2NSI+CjxwYXRoIGQ9Im0xMi40MjIgMTMuNjYzaDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTkzNjUiLz4KPC9nPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-check:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNzUwMSAwIDAgLjc5ODkgLTkuMTA2NSAtOS45MTc4KSI+CjxwYXRoIGQ9Im0xMi42MTcgMTMuNDA1IDAuNTk4NzcgMS4wMjM0IDEuMTIyNi0xLjY5MzIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMjU1cHgiLz4KPC9nPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-lt:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNzMyMTcgMCAwIC42NTA2MyAtOC41ODM5IC04LjAzODkpIj4KPHBhdGggZD0ibTEzLjg2OSAxMy4yODQtMS4zNzU0IDAuNTU2NzIgMS4zNzY5IDAuNjUxMjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTc5NDdweCIvPgo8L2c+Cjwvc3ZnPgo=")}ul.ow-wiki li.ow-li-gt:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgtLjczMjE3IDAgMCAtLjY1MDYzIDEwLjU4NCAxMC4wMzIpIj4KPHBhdGggZD0ibTEzLjg2OSAxMy4yODQtMS4zNzU0IDAuNTU2NzIgMS4zNzY5IDAuNjUxMjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTc5NDdweCIvPgo8L2c+Cjwvc3ZnPgo=")}ul.ow-child-list{padding-left:1rem;list-style-type:none}ul.ow-child-list ul{margin-left:15px;padding-left:10px;border-left:1px dashed #ddd}ul.ow-child-list li{content:"";padding-left:1.5em;background-position:0.0em 0.1em;background-size:auto 1.0em;background-repeat:no-repeat;height:1.6em;background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IklDT04iIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojYjBjYmUwO30uY2xzLTEsLmNscy0ye3N0cm9rZTojNjY2NjdlO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6MTVweDt9LmNscy0ye2ZpbGw6IzVmOWNjYjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zOTEsMTU4LjV2MjY1YTI1LDI1LDAsMCwxLTI1LDI1SDE0NmEyNSwyNSwwLDAsMS0yNS0yNVY4OC41YTI1LDI1LDAsMCwxLDI1LTI1SDI5NloiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zOTEsMTU4LjVIMzIxYTI1LDI1LDAsMCwxLTI1LTI1di03MFoiLz48L3N2Zz4=")}span.ow-child-list-title{font-weight:bold}span.ow-child-list-title:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IklDT04iIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojYjBjYmUwO30uY2xzLTEsLmNscy0ye3N0cm9rZTojNjY2NjdlO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6MTVweDt9LmNscy0ye2ZpbGw6IzVmOWNjYjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zOTEsMTU4LjV2MjY1YTI1LDI1LDAsMCwxLTI1LDI1SDE0NmEyNSwyNSwwLDAsMS0yNS0yNVY4OC41YTI1LDI1LDAsMCwxLDI1LTI1SDI5NloiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zOTEsMTU4LjVIMzIxYTI1LDI1LDAsMCwxLTI1LTI1di03MFoiLz48L3N2Zz4=");background-position:center center;background-size:75% auto}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}ul.ow-attach-list{margin-left:0px;padding-left:0px}.ow-attach-list ul{margin-left:15px;padding-left:10px;border-left:1px dashed #ddd}ul.ow-attach-list li{list-style:none;font-weight:normal;background-image:none;padding-left:1.0rem}.ow-attach-list a.ow-attach-dir{font-weight:bold;font-style:normal;transition:all 0.2s ease}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}
 		
 	</style>
 	
 </head>
 
 <body>
-<h2>3.0 (Июль 2020 г.)</h2>
-<ul>
-<li>Теперь в именах заметок можно использовать любые символы.</li>
-<li>Переделаны панели инструментов.</li>
-<li>Новый интерфейс выбора значков заметок.</li>
-<li>Новый интерфейс всплывающего окна при клике на тег.</li>
-<li>Новый интерфейс при выборе корня дерева заметок.</li>
-<li>Новый интерфейс для отображения страниц неизвестного типа.</li>
-<li>Добавлена возможность выбора положения новой заметки в списке заметок.</li>
-<li>Добавлена настройка для шаблона имени новых страниц.</li>
-<li>Другие улучшения в интерфейсе.</li>
-<li>Новые викикоманды для раскраски текста и применения пользовательских стилей.</li>
-<li>Добавлена возможность вставки комментариев в викинотации.</li>
-<li>Добавлено слежение за прикрепленными файлами для текущей страницы.</li>
-<li>В файлы стилей страниц добавлена новая переменная $title.</li>
-<li>Добавлен новый стиль страниц "rifle_green_and_red".</li>
-<li>Добавлена немецкая локализация.</li>
-<li>Переход на Python 3.x и wxPython 4.0.</li>
-<li>Изменение формата хранения некоторых настроек страниц в дереве заметок.</li>
-<li>Изменен способ хранения стандартных значков в заметках.</li>
-<li>Изменен формат плагинов.</li>
+<h2 class="ow-wiki">3.2 (Август 2023 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Добавлена возможность создания папок в прикрепленных файлах.</li><li class="ow-wiki">Добавлена возможность перехода во вложенные папки на панели прикрепленных файлов.</li><li class="ow-wiki">Добавлена возможность вставки ссылок на файлы во вложенных прикрепленных папках.</li><li class="ow-wiki">Добавлено выделение цветом ссылок на отсутствующие прикрепленные файлы на викистраницах.</li><li class="ow-wiki">Добавлен поиск по странице в режиме просмотра.</li><li class="ow-wiki">Добавлена поддержка вложенных папок в викикоманде (:include:).</li><li class="ow-wiki">Добавлена поддержка вложенных папок в викикоманде %thumb%.</li><li class="ow-wiki">Реализована подсветка викикоманды %thumb% в редакторе.</li><li class="ow-wiki">Изменен дизайн диалога с информацией о перезаписи прикрепленных файлов.</li><li class="ow-wiki">Улучшен дизайн ссылок на прикрепленные файлы и на другие страницы.</li><li class="ow-wiki">Добавлен параметр subdir для викикоманды (:attachlist:).</li><li class="ow-wiki">Улучшен дизайн результата работы викикоманд (:childlist:) и (:attachlist:).</li><li class="ow-wiki">В создаваемый код HTML добавлены новые CSS-классы.</li><li class="ow-wiki">Добавлена возможность отображения скрытых папок на панели с вложениями.</li><li class="ow-wiki">Добавлены настройки поведения кнопок "Свернуть" и "Закрыть".</li><li class="ow-wiki">Добавлена информация о выбранных прикрепленных файлах на статусную панель.</li><li class="ow-wiki">Добавлена возможность задавать стиль маркеров элементов списка на викистранице.</li><li class="ow-wiki">Переход на wxPython 4.2.1.</li>
+</ul>
+<h2 class="ow-wiki">3.1 (Апрель 2022 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Упрощение диалога создания / редактирования свойств страницы.</li><li class="ow-wiki">Улучшена работа с горячими клавишами.</li><li class="ow-wiki">Улучшения в интерфейсе панели с прикрепленными файлами.</li>
+</ul>
+<h2 class="ow-wiki">3.0 (Май 2021 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Теперь в именах заметок можно использовать любые символы.</li><li class="ow-wiki">Переделаны панели инструментов.</li><li class="ow-wiki">Новый интерфейс выбора значков заметок.</li><li class="ow-wiki">Новый интерфейс всплывающего окна при клике на тег.</li><li class="ow-wiki">Новый интерфейс при выборе корня дерева заметок.</li><li class="ow-wiki">Новый интерфейс для отображения страниц неизвестного типа.</li><li class="ow-wiki">Добавлена возможность выбора положения новой заметки в списке заметок.</li><li class="ow-wiki">Добавлена настройка для шаблона имени новых страниц.</li><li class="ow-wiki">Другие улучшения в интерфейсе.</li><li class="ow-wiki">Новые викикоманды для раскраски текста и применения пользовательских стилей.</li><li class="ow-wiki">Добавлена возможность вставки комментариев в викинотации.</li><li class="ow-wiki">Добавлено слежение за прикрепленными файлами для текущей страницы.</li><li class="ow-wiki">В файлы стилей страниц добавлена новая переменная $title.</li><li class="ow-wiki">Добавлен новый стиль страниц "rifle_green_and_red".</li><li class="ow-wiki">Добавлена немецкая локализация.</li><li class="ow-wiki">Переход на Python 3.x и wxPython 4.0.</li><li class="ow-wiki">Изменение формата хранения некоторых настроек страниц в дереве заметок.</li><li class="ow-wiki">Изменен способ хранения стандартных значков в заметках.</li><li class="ow-wiki">Изменен формат плагинов.</li>
 </ul>
 <br/>
-<h2>2.0 (Июнь 2017 г.)</h2>
-<ul>
-<li>Переход на библиотеку wxPython 3.0.</li>
-<li>В редактор добавлена возможность дублировать текущую строку с помощью горячей клавиши или меню.</li>
-<li>В редактор добавлена возможность удалять текущую строку с помощью горячей клавиши или меню.</li>
-<li>В редактор добавлена возможность перемещения строк вверх / вниз с помощью горячих клавиш или меню.</li>
-<li>В редактор добавлена возможность для слияния строк с помощью горячей клавиши или меню.</li>
-<li>В редактор добавлена возможность удаления слов слева / справа с помощью горячей клавиши или меню.</li>
-<li>Добавлены пункты меню и горячие клавиши для перемещения по тексту.</li>
-<li>Добавлены пункты меню и горячие клавиши для копирования / вырезания текущей строки в буфер обмена.</li>
-<li>В редактор добавлены возможности для редактирования слов и строк.</li>
-<li>Добавлен параметр командной строки "--page, -p" для выбора страницы при запуске.</li>
-<li>Добавлен параметр командной строки "--normal" для отключения свертывания окна при запуске.</li>
-<li>Добавлен параметр командной строки "--debug" для запуска в режиме отладки.</li>
-<li>Добавлена поддержка шведского языка.</li>
-<li>Восстановлена работоспособность иконки в трее под Linux.</li>
-<li>Добавлена возможность создавать псевдонимы для страниц.</li>
-<li>Переделан интерфейс для установки горячих клавиш.</li>
-<li>Добавлена настройка для изменения цвета фона поля редактора.</li>
-<li>Добавлена настройка для изменения цвета фона выделенного текста.</li>
+<h2 class="ow-wiki">2.0 (Июнь 2017 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Переход на библиотеку wxPython 3.0.</li><li class="ow-wiki">В редактор добавлена возможность дублировать текущую строку с помощью горячей клавиши или меню.</li><li class="ow-wiki">В редактор добавлена возможность удалять текущую строку с помощью горячей клавиши или меню.</li><li class="ow-wiki">В редактор добавлена возможность перемещения строк вверх / вниз с помощью горячих клавиш или меню.</li><li class="ow-wiki">В редактор добавлена возможность для слияния строк с помощью горячей клавиши или меню.</li><li class="ow-wiki">В редактор добавлена возможность удаления слов слева / справа с помощью горячей клавиши или меню.</li><li class="ow-wiki">Добавлены пункты меню и горячие клавиши для перемещения по тексту.</li><li class="ow-wiki">Добавлены пункты меню и горячие клавиши для копирования / вырезания текущей строки в буфер обмена.</li><li class="ow-wiki">В редактор добавлены возможности для редактирования слов и строк.</li><li class="ow-wiki">Добавлен параметр командной строки "--page, -p" для выбора страницы при запуске.</li><li class="ow-wiki">Добавлен параметр командной строки "--normal" для отключения свертывания окна при запуске.</li><li class="ow-wiki">Добавлен параметр командной строки "--debug" для запуска в режиме отладки.</li><li class="ow-wiki">Добавлена поддержка шведского языка.</li><li class="ow-wiki">Восстановлена работоспособность иконки в трее под Linux.</li><li class="ow-wiki">Добавлена возможность создавать псевдонимы для страниц.</li><li class="ow-wiki">Переделан интерфейс для установки горячих клавиш.</li><li class="ow-wiki">Добавлена настройка для изменения цвета фона поля редактора.</li><li class="ow-wiki">Добавлена настройка для изменения цвета фона выделенного текста.</li>
 </ul>
-<h2>1.9.0.790 (Апрель 2016 г.)</h2>
-<ul>
-<li>Иконки для заметок разделены на группы.</li>
-<li>Теперь пользователи могут дополнять стандартный набор иконок своими файлами.</li>
-<li>Добавлены новые иконки.</li>
-<li>Теперь в диалоге вставки ссылок можно выбирать один из прикрепленных файлов, чтобы сделать ссылку на него.</li>
-<li>Исправления ошибок</li>
+<h2 class="ow-wiki">1.9.0.790 (Апрель 2016 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Иконки для заметок разделены на группы.</li><li class="ow-wiki">Теперь пользователи могут дополнять стандартный набор иконок своими файлами.</li><li class="ow-wiki">Добавлены новые иконки.</li><li class="ow-wiki">Теперь в диалоге вставки ссылок можно выбирать один из прикрепленных файлов, чтобы сделать ссылку на него.</li><li class="ow-wiki">Исправления ошибок</li>
 </ul>
 <br/>
-<h2>1.8.1.752 (Октябрь 2014 г.)</h2>
-<ul>
-<li>Исправления ошибок.</li>
+<h2 class="ow-wiki">1.8.1.752 (Октябрь 2014 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Исправления ошибок.</li>
 </ul>
 <br/>
-<h2>1.8.0.750 (Октябрь 2014 г.)</h2>
-<ul>
-<li>Добавлена возможность настройки горячих клавиш.</li>
-<li>Добавлена возможность ссылаться на страницы, используя их уникальные идентификаторы.</li>
-<li>Добавлена возможность перехода по ссылкам на якоря, расположенные на других страницах (<u>page://bla-bla-bla/#anchor</u>).</li>
-<li>Добавлена возможность использовать относительные пути в ссылках на страницы (<u>../../Страница 1/Страница 2</u>)</li>
-<li>Добавлена возможность установки стиля страницы разом для всех страниц ветки дерева (или всего дерева).</li>
-<li>Добавлена возможность поиска и замены по странице.</li>
-<li>Добавлены кнопки Вперед / Назад для возврата к предыдущим открытым страницам.</li>
-<li>Добавлена возможность настройки цветов редактора.</li>
-<li>Добавлена настройка для изменения поведения клавиш Home / End в редакторе (перескакивать в начало / конец строки или абзаца).</li>
-<li>Добавлен новый тег викисинтаксиса для цитирования: [>...<].</li>
-<li>Добавлена кнопка и пункт меню для вставки текущей даты и времени.</li>
-<li>Добавлены команды (:crdate:) и (:eddate:) для вставки даты создания и редактирования страницы соответственно.</li>
-<li>Добавлены диалоги для вставки команд (:attachlist:), (:childlist:) и (:include:).</li>
-<li>В команде (:childlist:) добавлена возможность сортировки дочерних страниц по дате создания и дате последнего изменения.</li>
-<li>На странице глобального поиска добавлена возможность сортировки найденных страниц по дате создания.</li>
-<li>Добавлен новый параметр командной строки "-r" или "--readonly", позволяющий открывать дерево заметок в режиме "Только для чтения".</li>
-<li>Добавлены всплывающие подсказки над иконками в окне свойств страниц.</li>
-<li>Добавлены новые стили оформления страниц.</li>
-<li>Добавлена кнопка и пункт меню для открытия папки с прикрепленными файлами в системном файловом менеджере.</li>
-<li>Добавлено сохранение последнего используемого стиля страницы.</li>
-<li>Добавлено сохранение положения курсора на каждой странице перед закрытием.</li>
-<li>Добавлена итальянская локализация.</li>
-<li>Теперь в панели с прикрепленными файлами показываются иконки файлов.</li>
-<li>Изменен алгоритм расстановки переносов строк.</li>
-<li>Открытие заметок и поиск страниц осуществляется в отдельном потоке.</li>
-<li>Теперь для каждой страницы сохраняется дата создания.</li>
-<li>Теперь все HTML-теги, создаваемые википарсером, будут строчными буквами.</li>
-<li>Теперь справка открывается в новом окне.</li>
-<li>Новые иконки.</li>
-<li>Настройки перенесены из ~/.outwiker в более идеологически верные места (зависит от операционной системы).</li>
-<li>Ускорение работы.</li>
-<li>Различные исправления и улучшения.</li>
-<li>Исправление ошибок.</li>
+<h2 class="ow-wiki">1.8.0.750 (Октябрь 2014 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Добавлена возможность настройки горячих клавиш.</li><li class="ow-wiki">Добавлена возможность ссылаться на страницы, используя их уникальные идентификаторы.</li><li class="ow-wiki">Добавлена возможность перехода по ссылкам на якоря, расположенные на других страницах (<u>page://bla-bla-bla/#anchor</u>).</li><li class="ow-wiki">Добавлена возможность использовать относительные пути в ссылках на страницы (<u>../../Страница 1/Страница 2</u>)</li><li class="ow-wiki">Добавлена возможность установки стиля страницы разом для всех страниц ветки дерева (или всего дерева).</li><li class="ow-wiki">Добавлена возможность поиска и замены по странице.</li><li class="ow-wiki">Добавлены кнопки Вперед / Назад для возврата к предыдущим открытым страницам.</li><li class="ow-wiki">Добавлена возможность настройки цветов редактора.</li><li class="ow-wiki">Добавлена настройка для изменения поведения клавиш Home / End в редакторе (перескакивать в начало / конец строки или абзаца).</li><li class="ow-wiki">Добавлен новый тег викисинтаксиса для цитирования: [>...<].</li><li class="ow-wiki">Добавлена кнопка и пункт меню для вставки текущей даты и времени.</li><li class="ow-wiki">Добавлены команды (:crdate:) и (:eddate:) для вставки даты создания и редактирования страницы соответственно.</li><li class="ow-wiki">Добавлены диалоги для вставки команд (:attachlist:), (:childlist:) и (:include:).</li><li class="ow-wiki">В команде (:childlist:) добавлена возможность сортировки дочерних страниц по дате создания и дате последнего изменения.</li><li class="ow-wiki">На странице глобального поиска добавлена возможность сортировки найденных страниц по дате создания.</li><li class="ow-wiki">Добавлен новый параметр командной строки "-r" или "--readonly", позволяющий открывать дерево заметок в режиме "Только для чтения".</li><li class="ow-wiki">Добавлены всплывающие подсказки над иконками в окне свойств страниц.</li><li class="ow-wiki">Добавлены новые стили оформления страниц.</li><li class="ow-wiki">Добавлена кнопка и пункт меню для открытия папки с прикрепленными файлами в системном файловом менеджере.</li><li class="ow-wiki">Добавлено сохранение последнего используемого стиля страницы.</li><li class="ow-wiki">Добавлено сохранение положения курсора на каждой странице перед закрытием.</li><li class="ow-wiki">Добавлена итальянская локализация.</li><li class="ow-wiki">Теперь в панели с прикрепленными файлами показываются иконки файлов.</li><li class="ow-wiki">Изменен алгоритм расстановки переносов строк.</li><li class="ow-wiki">Открытие заметок и поиск страниц осуществляется в отдельном потоке.</li><li class="ow-wiki">Теперь для каждой страницы сохраняется дата создания.</li><li class="ow-wiki">Теперь все HTML-теги, создаваемые википарсером, будут строчными буквами.</li><li class="ow-wiki">Теперь справка открывается в новом окне.</li><li class="ow-wiki">Новые иконки.</li><li class="ow-wiki">Настройки перенесены из ~/.outwiker в более идеологически верные места (зависит от операционной системы).</li><li class="ow-wiki">Ускорение работы.</li><li class="ow-wiki">Различные исправления и улучшения.</li><li class="ow-wiki">Исправление ошибок.</li>
 </ul>
 <br/>
-<h2>1.7.0.684 (Декабрь 2012 г.)</h2>
-<ul>
-<li>Добавлена возможность открывать заметки в отдельных вкладках.</li>
-<li>Панель инструментов разделена на несколько перемещаемых панелей.</li>
-<li>Теперь сохраняется и показывается дата последней правки на странице.</li>
-<li>Значительно ускорены разбор и раскраска викисинтаксиса (по тестам ускорение от 2 до 10 раз).</li>
-<li>Добавлен интерфейс для вставки некоторых элементов викисинтаксиса.</li>
-<li>Добавлена возможность с помощью викисинтаксиса делать более крупный и мелкий шрифт.</li>
-<li>Добавлена возможность сортировки результатов поиска по алфавиту или по дате.</li>
-<li>Добавлена возможность принудительной пересборки HTML-кода по викинотации.</li>
-<li>Исправления в шаблонах страниц.</li>
-<li>В дистрибутив под Linux добавлена векторная иконка и иконки больших размеров.</li>
-<li>Изменения во внешнем виде страницы поиска.</li>
-<li>Создан инсталятор под Windows.</li>
-<li>Исправлена ошибка, из-за которой не создавались превьюшки на викистраницах, если расширения файлов с картинками было записано заглавными буквами.</li>
-<li>Исправлена ошибка из-за которой не сохранялись размеры внутренних окон (дерево заметок, прикрепленные файлы и т.п.)</li>
-<li>Исправления других ошибок.</li>
-<li>Множество небольших исправлений и улучшений в интерфейсе</li>
+<h2 class="ow-wiki">1.7.0.684 (Декабрь 2012 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Добавлена возможность открывать заметки в отдельных вкладках.</li><li class="ow-wiki">Панель инструментов разделена на несколько перемещаемых панелей.</li><li class="ow-wiki">Теперь сохраняется и показывается дата последней правки на странице.</li><li class="ow-wiki">Значительно ускорены разбор и раскраска викисинтаксиса (по тестам ускорение от 2 до 10 раз).</li><li class="ow-wiki">Добавлен интерфейс для вставки некоторых элементов викисинтаксиса.</li><li class="ow-wiki">Добавлена возможность с помощью викисинтаксиса делать более крупный и мелкий шрифт.</li><li class="ow-wiki">Добавлена возможность сортировки результатов поиска по алфавиту или по дате.</li><li class="ow-wiki">Добавлена возможность принудительной пересборки HTML-кода по викинотации.</li><li class="ow-wiki">Исправления в шаблонах страниц.</li><li class="ow-wiki">В дистрибутив под Linux добавлена векторная иконка и иконки больших размеров.</li><li class="ow-wiki">Изменения во внешнем виде страницы поиска.</li><li class="ow-wiki">Создан инсталятор под Windows.</li><li class="ow-wiki">Исправлена ошибка, из-за которой не создавались превьюшки на викистраницах, если расширения файлов с картинками было записано заглавными буквами.</li><li class="ow-wiki">Исправлена ошибка из-за которой не сохранялись размеры внутренних окон (дерево заметок, прикрепленные файлы и т.п.)</li><li class="ow-wiki">Исправления других ошибок.</li><li class="ow-wiki">Множество небольших исправлений и улучшений в интерфейсе</li>
 </ul>
-<h2>1.6.0.650 (Май 2012 г.)</h2>
-<ul>
-<li>Переделан диалог свойств страницы.</li>
-<li>Викикоманды для оформления ссылок на пользователей и сообщества livejournal.com вынесены из программы в <a href="http://jenyay.net/Outwiker/LivejournalPlugin">отдельный плагин</a>.</li>
-<li>Добавлена раскраска викисинтаксиса в редакторе.</li>
-<li>Добавлена возможность смены стиля страниц.</li>
-<li>Теперь для выравнивания текста на викистраницах кроме %center% и %right% можно использовать %left% и %justify%.</li>
-<li>Множество небольших исправлений.</li>
+<h2 class="ow-wiki">1.6.0.650 (Май 2012 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Переделан диалог свойств страницы.</li><li class="ow-wiki">Викикоманды для оформления ссылок на пользователей и сообщества livejournal.com вынесены из программы в <a class="ow-wiki" href="http://jenyay.net/Outwiker/LivejournalPlugin">отдельный плагин</a>.</li><li class="ow-wiki">Добавлена раскраска викисинтаксиса в редакторе.</li><li class="ow-wiki">Добавлена возможность смены стиля страниц.</li><li class="ow-wiki">Теперь для выравнивания текста на викистраницах кроме %center% и %right% можно использовать %left% и %justify%.</li><li class="ow-wiki">Множество небольших исправлений.</li>
 </ul>
-<h2>1.5.0.627 (Февраль 2012 г.)</h2>
-<ul>
-<li>Добавлено облако меток в главное окно.</li>
-<li>Добавлена возможность выбора меток из облака существующих меток.</li>
-<li>Добавлены возможности для группового добавления / удаления меток.</li>
-<li>Добавлена возможность переименования меток.</li>
-<li>Небольшие исправления в интерфейсе программы.</li>
+<h2 class="ow-wiki">1.5.0.627 (Февраль 2012 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Добавлено облако меток в главное окно.</li><li class="ow-wiki">Добавлена возможность выбора меток из облака существующих меток.</li><li class="ow-wiki">Добавлены возможности для группового добавления / удаления меток.</li><li class="ow-wiki">Добавлена возможность переименования меток.</li><li class="ow-wiki">Небольшие исправления в интерфейсе программы.</li>
 </ul>
-<h2>1.4.0.601 (Декабрь 2011 г.)</h2>
-<ul>
-<li>Добавлена поддержка плагинов.</li>
-<li>Добавлено автосохранение заметок по таймеру (интервал сохранения задается в настройках).</li>
-<li>Добавлена проверка изменения текста заметок сторонними программами.</li>
-<li>Для HTML-страниц добавлена кнопка включения/выключения автоматического переноса строк.</li>
-<li>Версия под Linux теперь устанавливается в /usr, а не в /opt. Теперь из консоли программу можно вызывать с помощью команды <i>outwiker</i>.</li>
-<li>Улучшена обработка викисинтаксиса, касающегося создания списков.</li>
-<li>Теперь поиск по страницам ищет искомую фразу в именах прикрепленных файлов и в названиях тегов.</li>
-<li>Исправления ошибок и небольшие улучшения интерфейса.</li>
-<li>Программа теперь тестируется только под Python 2.7.</li>
+<h2 class="ow-wiki">1.4.0.601 (Декабрь 2011 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Добавлена поддержка плагинов.</li><li class="ow-wiki">Добавлено автосохранение заметок по таймеру (интервал сохранения задается в настройках).</li><li class="ow-wiki">Добавлена проверка изменения текста заметок сторонними программами.</li><li class="ow-wiki">Для HTML-страниц добавлена кнопка включения/выключения автоматического переноса строк.</li><li class="ow-wiki">Версия под Linux теперь устанавливается в /usr, а не в /opt. Теперь из консоли программу можно вызывать с помощью команды <i>outwiker</i>.</li><li class="ow-wiki">Улучшена обработка викисинтаксиса, касающегося создания списков.</li><li class="ow-wiki">Теперь поиск по страницам ищет искомую фразу в именах прикрепленных файлов и в названиях тегов.</li><li class="ow-wiki">Исправления ошибок и небольшие улучшения интерфейса.</li><li class="ow-wiki">Программа теперь тестируется только под Python 2.7.</li>
 </ul>
-<h2>1.3.2.496 (Сентябрь 2011 г.)</h2>
-<ul>
-<li>Новый интерфейс выбора иконок.</li>
-<li>Добавил новые иконки из наборов <a href="http://www.famfamfam.com/lab/icons/silk">famfamfam.com</a> и <a href="http://p.yusukekamiyamane.com/">yusukekamiyamane.com</a>.</li>
-<li>Новая иконка программы (спасибо Алексею Набродову).</li>
-<li>В пределах одной страницы теперь работают якоря.</li>
-<li>Новый элемент викинотации для добавления якорей.</li>
-<li>Значительно уменьшено моргание  и обновление интерфейса при перемещении по дереву.</li>
-<li>Справка на английском языке (спасибо Илье Чешкову за исправления моего корявого перевода с помощью Google Translate :) ).</li>
-<li>Добавлены горячие клавиши для тега &lt;PRE&gt; на HTML-странице и [@...@] на викистранице.</li>
-<li>Добавлены горячая клавиша и кнопка для [[<<]] на викистранице.</li>
-<li>Добавлены кнопки для тегов &lt;code&gt; и &lt;blockquote&gt; на HTML-странице.</li>
-<li>Добавлена кнопка "Обновить" для панели с прикрепленными файлами.</li>
-<li>При нажатии на иконку в трее, свернутое окно разворачивается, а развернутое теперь сворачивается.</li>
-<li>Исправлено: под Windows не работали ссылки на страницы, имеющие в своем пути символ "#".</li>
-<li>Исправлена ошибка, возникавшая при испорченном файле __page.opt в корне вики.</li>
-<li>Другие исправления ошибок в программе и переводе.</li>
-<li>Рефакторинг кода.</li>
+<h2 class="ow-wiki">1.3.2.496 (Сентябрь 2011 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Новый интерфейс выбора иконок.</li><li class="ow-wiki">Добавил новые иконки из наборов <a class="ow-wiki" href="http://www.famfamfam.com/lab/icons/silk">famfamfam.com</a> и <a class="ow-wiki" href="http://p.yusukekamiyamane.com/">yusukekamiyamane.com</a>.</li><li class="ow-wiki">Новая иконка программы (спасибо Алексею Набродову).</li><li class="ow-wiki">В пределах одной страницы теперь работают якоря.</li><li class="ow-wiki">Новый элемент викинотации для добавления якорей.</li><li class="ow-wiki">Значительно уменьшено моргание  и обновление интерфейса при перемещении по дереву.</li><li class="ow-wiki">Справка на английском языке (спасибо Илье Чешкову за исправления моего корявого перевода с помощью Google Translate :) ).</li><li class="ow-wiki">Добавлены горячие клавиши для тега &lt;PRE&gt; на HTML-странице и [@...@] на викистранице.</li><li class="ow-wiki">Добавлены горячая клавиша и кнопка для [[<<]] на викистранице.</li><li class="ow-wiki">Добавлены кнопки для тегов &lt;code&gt; и &lt;blockquote&gt; на HTML-странице.</li><li class="ow-wiki">Добавлена кнопка "Обновить" для панели с прикрепленными файлами.</li><li class="ow-wiki">При нажатии на иконку в трее, свернутое окно разворачивается, а развернутое теперь сворачивается.</li><li class="ow-wiki">Исправлено: под Windows не работали ссылки на страницы, имеющие в своем пути символ "#".</li><li class="ow-wiki">Исправлена ошибка, возникавшая при испорченном файле __page.opt в корне вики.</li><li class="ow-wiki">Другие исправления ошибок в программе и переводе.</li><li class="ow-wiki">Рефакторинг кода.</li>
 </ul>
-<h2>1.3.1.393 (Июль 2011 г.)</h2>
-<ul>
-<li>Под Windows исправлена ошибка, из-за которой не работали ссылки на странице поиска.</li>
-<li>Под Linux исправлена ошибка, из-за которой не открывались страницы, если в пути до них был символ '#'.</li>
+<h2 class="ow-wiki">1.3.1.393 (Июль 2011 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Под Windows исправлена ошибка, из-за которой не работали ссылки на странице поиска.</li><li class="ow-wiki">Под Linux исправлена ошибка, из-за которой не открывались страницы, если в пути до них был символ '#'.</li>
 </ul>
-<h2>1.3.0.384 (Июнь 2011 г.)</h2>
-<ul>
-<li>Теперь в качестве HTML-рендера под Windows используется движок Internet Explorer, под Linux - WebKit.</li>
-<li>Добавлена возможность печати заметок и их исходного текста.</li>
-<li>Добавлен новый вики-тег {-...-} для зачеркнутого текста.</li>
-<li>Добавлена кнопка для зачеркнутого текста на HTML-странице.</li>
-<li>Возможность установки размера шрифта при просмотре заметок через окно настроек.</li>
-<li>Возможность установки дополнительных стилей CSS для заметок.</li>
-<li>Изменение горячей клавиши для переключением между кодом и просмотром на F4.</li>
-<li>Добавлены пункты меню для вики-команд (:...:).</li>
-<li>Страницы, открытые в режиме "Только для чтения", выделяются курсивом.</li>
-<li>Под Windows программа теперь должна работать без установки MS Visual C++ 2008 Redistributable Package.</li>
-<li>При запуске программы под Windows с помощью exe-шника ошибки будут выводиться в файл outwiker.log, который будет создан в той же папке, где расположен файл настроек outwiker.ini.</li>
-<li>Исправлены ошибки, возникавщие при попытке открыть вики, если для какой-то из заметок нет прав на запись.</li>
-<li>Исправлена ошибка, из-за которой под Windows не работал рендеринг формул, если программа была установлена в директорию, содержащей пробелы.</li>
+<h2 class="ow-wiki">1.3.0.384 (Июнь 2011 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Теперь в качестве HTML-рендера под Windows используется движок Internet Explorer, под Linux - WebKit.</li><li class="ow-wiki">Добавлена возможность печати заметок и их исходного текста.</li><li class="ow-wiki">Добавлен новый вики-тег {-...-} для зачеркнутого текста.</li><li class="ow-wiki">Добавлена кнопка для зачеркнутого текста на HTML-странице.</li><li class="ow-wiki">Возможность установки размера шрифта при просмотре заметок через окно настроек.</li><li class="ow-wiki">Возможность установки дополнительных стилей CSS для заметок.</li><li class="ow-wiki">Изменение горячей клавиши для переключением между кодом и просмотром на F4.</li><li class="ow-wiki">Добавлены пункты меню для вики-команд (:...:).</li><li class="ow-wiki">Страницы, открытые в режиме "Только для чтения", выделяются курсивом.</li><li class="ow-wiki">Под Windows программа теперь должна работать без установки MS Visual C++ 2008 Redistributable Package.</li><li class="ow-wiki">При запуске программы под Windows с помощью exe-шника ошибки будут выводиться в файл outwiker.log, который будет создан в той же папке, где расположен файл настроек outwiker.ini.</li><li class="ow-wiki">Исправлены ошибки, возникавщие при попытке открыть вики, если для какой-то из заметок нет прав на запись.</li><li class="ow-wiki">Исправлена ошибка, из-за которой под Windows не работал рендеринг формул, если программа была установлена в директорию, содержащей пробелы.</li>
 </ul>
-<h2>1.2.0.322 (Апрель 2011 г.)</h2>
-<ul>
-<li>Для вики-страниц добавлена возможность ввода формул в нотации TeX (для рендеринга используется mimeTex).</li>
-<li>Ссылка на картинку в виде  [[Attach:xxx.png]]  или [[http://.../xxx.png]] в вики-страницах вставляет только ссылку на картинку, а не саму картинку.</li>
-<li>Добавлена вики-команда (:childlist:) для вставки списка дочерних заметок.</li>
-<li>Добавлена вики-команда (:attachlist:)для вставки списка прикрепленных файлов</li>
-<li>Добавлена вики-команда (:include:) для вставки содержимого прикрепленных файлов.</li>
-<li>Добавлены вики-команды для вставки ссылок на пользователей Livejournal.com (команда (:ljuser:)) и на ЖЖ-сообщества (команда (:ljcomm:)).</li>
-<li>В меню добавлена функция для преобразования специальных символов HTML (&lt;, &gt; и т.п.) в их HTML-представление.</li>
-<li>Внутри оператора [@ ... @] при разборе вики-нотации символы "&lt;" заменяются на "&amp;lt;", а "&gt;" - на "&amp;gt;".</li>
-<li>Добавлена возможность задания шаблона для пустой вики-страницы (см. настройки).</li>
-<li>Из вики-нотации удалена команда \\\, так как ее полностью заменяет команда [[&lt;&lt;]] (перевод строки).</li>
-<li>В дереве заметок теперь показывается корень вики.</li>
-<li>Значительно ускорена сортировка страниц по алфавиту.</li>
-<li>Улучшено распознавание ссылок в тексте вики-страниц.</li>
-<li>Улучшено кеширование разбора (парсинга) вики-страниц.</li>
-<li>В заголовках (выделенные нотацией !!, !!! и т.п.) теперь можно использовать и некоторые другие элементы вики-нотации (выделение полужирным, курсив и т.д, а также формулы и вики-команды (:...:)).</li>
-<li>Исправлены ошибки, связанные с удалением и перемещением заметок, которые нельзя удалить/переместить из-за блокировки их директорий.</li>
-<li>Исправлены ошибка, возникавшая при попытке сохранить страницу, директорию которой удалили вручную во время работы программы.</li>
-<li>Исправлено падение программы под Linux при переименовании страницы, содержащей картинки, загружаемые из интернета.</li>
-<li>Другие небольшие исправления и рефакторинг кода (особенно вики-парсера).</li>
+<h2 class="ow-wiki">1.2.0.322 (Апрель 2011 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Для вики-страниц добавлена возможность ввода формул в нотации TeX (для рендеринга используется mimeTex).</li><li class="ow-wiki">Ссылка на картинку в виде  [[Attach:xxx.png]]  или [[http://.../xxx.png]] в вики-страницах вставляет только ссылку на картинку, а не саму картинку.</li><li class="ow-wiki">Добавлена вики-команда (:childlist:) для вставки списка дочерних заметок.</li><li class="ow-wiki">Добавлена вики-команда (:attachlist:)для вставки списка прикрепленных файлов</li><li class="ow-wiki">Добавлена вики-команда (:include:) для вставки содержимого прикрепленных файлов.</li><li class="ow-wiki">Добавлены вики-команды для вставки ссылок на пользователей Livejournal.com (команда (:ljuser:)) и на ЖЖ-сообщества (команда (:ljcomm:)).</li><li class="ow-wiki">В меню добавлена функция для преобразования специальных символов HTML (&lt;, &gt; и т.п.) в их HTML-представление.</li><li class="ow-wiki">Внутри оператора [@ ... @] при разборе вики-нотации символы "&lt;" заменяются на "&amp;lt;", а "&gt;" - на "&amp;gt;".</li><li class="ow-wiki">Добавлена возможность задания шаблона для пустой вики-страницы (см. настройки).</li><li class="ow-wiki">Из вики-нотации удалена команда \\\, так как ее полностью заменяет команда [[&lt;&lt;]] (перевод строки).</li><li class="ow-wiki">В дереве заметок теперь показывается корень вики.</li><li class="ow-wiki">Значительно ускорена сортировка страниц по алфавиту.</li><li class="ow-wiki">Улучшено распознавание ссылок в тексте вики-страниц.</li><li class="ow-wiki">Улучшено кеширование разбора (парсинга) вики-страниц.</li><li class="ow-wiki">В заголовках (выделенные нотацией !!, !!! и т.п.) теперь можно использовать и некоторые другие элементы вики-нотации (выделение полужирным, курсив и т.д, а также формулы и вики-команды (:...:)).</li><li class="ow-wiki">Исправлены ошибки, связанные с удалением и перемещением заметок, которые нельзя удалить/переместить из-за блокировки их директорий.</li><li class="ow-wiki">Исправлены ошибка, возникавшая при попытке сохранить страницу, директорию которой удалили вручную во время работы программы.</li><li class="ow-wiki">Исправлено падение программы под Linux при переименовании страницы, содержащей картинки, загружаемые из интернета.</li><li class="ow-wiki">Другие небольшие исправления и рефакторинг кода (особенно вики-парсера).</li>
 </ul>
-<h2>1.1.0.218 (Февраль 2011 г.)</h2>
-<ul>
-<li>Переделан интерфейс главного окна. Теперь можно перемещать и закрывать панели с деревом заметок и вложенными файлами.</li>
-<li>Добавлена возможность изменения порядка следования заметок в дереве (горячие клавиши Ctrl+Shift+Up / Ctrl+Shift+Down).</li>
-<li>Добавлена возможность принудительной сортировки записей по алфавиту.</li>
-<li>Добавлен полноэкранный режим.</li>
-<li>Автосохранение заметок при переключении на другое приложение.</li>
-<li>Добавлена возможность перетаскивать файлы из окна вложений в другие программы.</li>
-<li>Добавлена настройка: всегда показывать значок в трее.</li>
-<li>Добавлена настройка: размер табуляции в редакторе.</li>
-<li>Теперь при создании страницы по умолчанию выбирается тип страницы, созданной в прошлый раз.</li>
-<li>Теперь при создании страницы директория __attach для вложенных файлов не создается. Она создается при первой необходимости.</li>
-<li>Уменьшено моргание главного окна при различных действиях.</li>
-<li>Исправления ошибок.</li>
-<li>Мелкие исправления в интерфейсе.</li>
+<h2 class="ow-wiki">1.1.0.218 (Февраль 2011 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Переделан интерфейс главного окна. Теперь можно перемещать и закрывать панели с деревом заметок и вложенными файлами.</li><li class="ow-wiki">Добавлена возможность изменения порядка следования заметок в дереве (горячие клавиши Ctrl+Shift+Up / Ctrl+Shift+Down).</li><li class="ow-wiki">Добавлена возможность принудительной сортировки записей по алфавиту.</li><li class="ow-wiki">Добавлен полноэкранный режим.</li><li class="ow-wiki">Автосохранение заметок при переключении на другое приложение.</li><li class="ow-wiki">Добавлена возможность перетаскивать файлы из окна вложений в другие программы.</li><li class="ow-wiki">Добавлена настройка: всегда показывать значок в трее.</li><li class="ow-wiki">Добавлена настройка: размер табуляции в редакторе.</li><li class="ow-wiki">Теперь при создании страницы по умолчанию выбирается тип страницы, созданной в прошлый раз.</li><li class="ow-wiki">Теперь при создании страницы директория __attach для вложенных файлов не создается. Она создается при первой необходимости.</li><li class="ow-wiki">Уменьшено моргание главного окна при различных действиях.</li><li class="ow-wiki">Исправления ошибок.</li><li class="ow-wiki">Мелкие исправления в интерфейсе.</li>
 </ul>
-<h2>1.0.0.108 release (Декабрь 2010 г.)</h2>
-<ul>
-<li>Добавлено окно настроек.</li>
-<li>Добавлена поддержка многоязычности (теперь в программе есть русский и английский интерфейс).</li>
-<li>Добавлена возможность сворачивания в трей (в том числе и при запуске).</li>
-<li>Добавлена возможность автоматического открытия последней вики при запуске программы.</li>
-<li>Добавлена возможность отключения вопроса перед выходом из программы.</li>
-<li>Добавлена возможность установки шрифта для редактора.</li>
-<li>Добавлена возможность включения нумерации строк в окне редактора.</li>
-<li>Добавлена настройка размера по умолчанию для превьюшек картинок на вики-страницах.</li>
-<li>Добавлена вкладка для просмотра полученного по вики-нотации кода HTML.</li>
-<li>Пустые страницы по умолчанию открываются на вкладке для редактирования.</li>
-<li>Если страница пустая, то на вкладке просмотра выводится список прикрепленных файлов (эту особенность можно отключить)</li>
-<li>Добавлена настройка заголовка главного окна. По умолчанию туда выводится имя открытой вики и текущей страницы.</li>
-<li>Новое окно "О программе", добавил туда вкладку "Donate" (удивительно, но эту "фичу" просили сразу несколько человек :)).</li>
-<li>Исправлена ошибка, связанная с хранением настроек в профиле с русскими буквами.</li>
-<li>Улучшено распознавание интернет-адресов в вики-нотации.</li>
-<li>Двойной клик по заметке в дереве открывает диалог со свойствами заметки.</li>
-<li>Вики-файлы, открытые в режиме "только для чтения" теперь не попадают в список последних открытых файлов.</li>
-<li>Различные мелкие исправления и улучшения в интерфейсе.</li>
+<h2 class="ow-wiki">1.0.0.108 release (Декабрь 2010 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Добавлено окно настроек.</li><li class="ow-wiki">Добавлена поддержка многоязычности (теперь в программе есть русский и английский интерфейс).</li><li class="ow-wiki">Добавлена возможность сворачивания в трей (в том числе и при запуске).</li><li class="ow-wiki">Добавлена возможность автоматического открытия последней вики при запуске программы.</li><li class="ow-wiki">Добавлена возможность отключения вопроса перед выходом из программы.</li><li class="ow-wiki">Добавлена возможность установки шрифта для редактора.</li><li class="ow-wiki">Добавлена возможность включения нумерации строк в окне редактора.</li><li class="ow-wiki">Добавлена настройка размера по умолчанию для превьюшек картинок на вики-страницах.</li><li class="ow-wiki">Добавлена вкладка для просмотра полученного по вики-нотации кода HTML.</li><li class="ow-wiki">Пустые страницы по умолчанию открываются на вкладке для редактирования.</li><li class="ow-wiki">Если страница пустая, то на вкладке просмотра выводится список прикрепленных файлов (эту особенность можно отключить)</li><li class="ow-wiki">Добавлена настройка заголовка главного окна. По умолчанию туда выводится имя открытой вики и текущей страницы.</li><li class="ow-wiki">Новое окно "О программе", добавил туда вкладку "Donate" (удивительно, но эту "фичу" просили сразу несколько человек :)).</li><li class="ow-wiki">Исправлена ошибка, связанная с хранением настроек в профиле с русскими буквами.</li><li class="ow-wiki">Улучшено распознавание интернет-адресов в вики-нотации.</li><li class="ow-wiki">Двойной клик по заметке в дереве открывает диалог со свойствами заметки.</li><li class="ow-wiki">Вики-файлы, открытые в режиме "только для чтения" теперь не попадают в список последних открытых файлов.</li><li class="ow-wiki">Различные мелкие исправления и улучшения в интерфейсе.</li>
 </ul>
-<h2>1.0 beta 3 (Октябрь 2010 г.)</h2>
-<ul>
-<li>Добавлен режим открытия вики "только для чтения". Теперь справка открывается именно в этом режиме.</li>
-<li>Добавлена возможность хранить настройки в папке профиля, а не в папке с программой (непортабельный режим).</li>
-<li>Устранено моргание окна при переключении страниц.</li>
-<li>Исходники перенесены с github на launchpad.net (<a href="https://launchpad.net/outwiker)">https://launchpad.net/outwiker)</a>. Теперь вместо git используется Bazaar.</li>
-<li>Исправление нескольких ошибок в вики-парсере.</li>
+<h2 class="ow-wiki">1.0 beta 3 (Октябрь 2010 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Добавлен режим открытия вики "только для чтения". Теперь справка открывается именно в этом режиме.</li><li class="ow-wiki">Добавлена возможность хранить настройки в папке профиля, а не в папке с программой (непортабельный режим).</li><li class="ow-wiki">Устранено моргание окна при переключении страниц.</li><li class="ow-wiki">Исходники перенесены с github на launchpad.net (<a class="ow-wiki" href="https://launchpad.net/outwiker)">https://launchpad.net/outwiker)</a>. Теперь вместо git используется Bazaar.</li><li class="ow-wiki">Исправление нескольких ошибок в вики-парсере.</li>
 </ul>
-<h2>1.0 beta 2 (Август 2010 г.)</h2>
-<ul>
-<li>Добавлена возможность перемещения страниц по дереву.</li>
-<li>Добавлена возможность переименования страниц без вызова диалога свойств страницы.</li>
-<li>Добавлено контекстное меню для дерева заметок.</li>
-<li>Относительные пути для ссылок на страницы теперь регистронезависимы.</li>
-<li>Изменение горячей клавиши для переключения между кодом и просмотром (было F2, стало F5).</li>
-<li>Если прикрепляется файл с именем, которое уже существует среди прикрепленных файлов, то показывается диалог с вопросом "Что делать?"</li>
-<li>Папка __thumb с превьюшками картинок теперь не показывается в списке прикрепленных файлов.</li>
-<li>Теперь дерево заметок сохраняет свое состояние (раскрыт узел или закрыт).</li>
-<li>Добавлена статусная панель, на которой показывается текст ссылки при наведении на нее курсора.</li>
-<li>В программе теперь используются абсолютные пути до папок, поэтому при запуске программы из ихсходников рабочей папкой не обязательно должна быть папка с исходниками.</li>
-<li>Исправления ошибок и глюков.</li>
+<h2 class="ow-wiki">1.0 beta 2 (Август 2010 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Добавлена возможность перемещения страниц по дереву.</li><li class="ow-wiki">Добавлена возможность переименования страниц без вызова диалога свойств страницы.</li><li class="ow-wiki">Добавлено контекстное меню для дерева заметок.</li><li class="ow-wiki">Относительные пути для ссылок на страницы теперь регистронезависимы.</li><li class="ow-wiki">Изменение горячей клавиши для переключения между кодом и просмотром (было F2, стало F5).</li><li class="ow-wiki">Если прикрепляется файл с именем, которое уже существует среди прикрепленных файлов, то показывается диалог с вопросом "Что делать?"</li><li class="ow-wiki">Папка __thumb с превьюшками картинок теперь не показывается в списке прикрепленных файлов.</li><li class="ow-wiki">Теперь дерево заметок сохраняет свое состояние (раскрыт узел или закрыт).</li><li class="ow-wiki">Добавлена статусная панель, на которой показывается текст ссылки при наведении на нее курсора.</li><li class="ow-wiki">В программе теперь используются абсолютные пути до папок, поэтому при запуске программы из ихсходников рабочей папкой не обязательно должна быть папка с исходниками.</li><li class="ow-wiki">Исправления ошибок и глюков.</li>
 </ul>
-<h2>1.0 beta 1 (Июль 2010 г.)</h2>
-<ul>
-<li>Новый тип страниц - страница в нотации wiki.</li>
-<li>Добавлена справка по программе.</li>
-<li>Добавлен пункт меню для копирования ссылки на страницу в буфер обмена.</li>
-<li>Добавлена возможность открывать вики, передавая путь в командной строке.</li>
-<li>Добавлена горячая клавиша и пункт меню для переключения между кодом и просмотром страницы.</li>
-<li>На панель инструментов добавлены кнопки для выравнивания текста в HTML (по центру, по левому краю и т.п.).</li>
-<li>Пункт меню для копирования заголовка страницы в буфер обмена.</li>
-<li>Перед перезагрузкой вики теперь программа спрашивает, хотите ли вы сохранить текущую страницу.</li>
-<li>Добавлен пункт меню Edit (Undo/Redo/Cut/Copy/Paste).</li>
-<li>Исправлено копирование в буфер обмена из режима просмотра HTML.</li>
-<li>Мелкие исправления и улучшения.</li>
+<h2 class="ow-wiki">1.0 beta 1 (Июль 2010 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Новый тип страниц - страница в нотации wiki.</li><li class="ow-wiki">Добавлена справка по программе.</li><li class="ow-wiki">Добавлен пункт меню для копирования ссылки на страницу в буфер обмена.</li><li class="ow-wiki">Добавлена возможность открывать вики, передавая путь в командной строке.</li><li class="ow-wiki">Добавлена горячая клавиша и пункт меню для переключения между кодом и просмотром страницы.</li><li class="ow-wiki">На панель инструментов добавлены кнопки для выравнивания текста в HTML (по центру, по левому краю и т.п.).</li><li class="ow-wiki">Пункт меню для копирования заголовка страницы в буфер обмена.</li><li class="ow-wiki">Перед перезагрузкой вики теперь программа спрашивает, хотите ли вы сохранить текущую страницу.</li><li class="ow-wiki">Добавлен пункт меню Edit (Undo/Redo/Cut/Copy/Paste).</li><li class="ow-wiki">Исправлено копирование в буфер обмена из режима просмотра HTML.</li><li class="ow-wiki">Мелкие исправления и улучшения.</li>
 </ul>
-<h2>1.0 alpha 3 (Июнь 2010 г.)</h2>
-<ul>
-<li>Добавлена возможность поиска по странице.</li>
-<li>Кнопки для основных тегов на странице HTML.</li>
-<li>Добавлена возможность создания ссылок на прикрепленные файлы.</li>
-<li>Добавлена кнопка для сброса флажков со всех тегов при глобальном поиске.</li>
-<li>Добавлены новые иконки для страниц.</li>
-<li>Добавлена возможность прикреплять файлы к странице, перетащив их в окно программы.</li>
-<li>Улучшен вывод списков на HTML-страницах.</li>
-<li>Исправлены некоторые баги.</li>
+<h2 class="ow-wiki">1.0 alpha 3 (Июнь 2010 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Добавлена возможность поиска по странице.</li><li class="ow-wiki">Кнопки для основных тегов на странице HTML.</li><li class="ow-wiki">Добавлена возможность создания ссылок на прикрепленные файлы.</li><li class="ow-wiki">Добавлена кнопка для сброса флажков со всех тегов при глобальном поиске.</li><li class="ow-wiki">Добавлены новые иконки для страниц.</li><li class="ow-wiki">Добавлена возможность прикреплять файлы к странице, перетащив их в окно программы.</li><li class="ow-wiki">Улучшен вывод списков на HTML-страницах.</li><li class="ow-wiki">Исправлены некоторые баги.</li>
 </ul>
-<h2>1.0 alpha 2 (Май 2010 г.)</h2>
-<ul>
-<li>Возможность удаления и переименования страниц.</li>
-<li>Глобальный поиск по тексту заметок и по тегам.</li>
-<li>Добавлен новый тип страниц - поиск (search).</li>
-<li>Добавлена возможность запуска прикрепленных файлов.</li>
-<li>Добавлена возможность создания ссылок между страницами.</li>
-<li>Страницы в дереве теперь всегда сортируются по алфавиту.</li>
-<li>Устранены некоторые глюки.</li>
-<li>Несущественные изменения в интерфейсе.</li>
+<h2 class="ow-wiki">1.0 alpha 2 (Май 2010 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Возможность удаления и переименования страниц.</li><li class="ow-wiki">Глобальный поиск по тексту заметок и по тегам.</li><li class="ow-wiki">Добавлен новый тип страниц - поиск (search).</li><li class="ow-wiki">Добавлена возможность запуска прикрепленных файлов.</li><li class="ow-wiki">Добавлена возможность создания ссылок между страницами.</li><li class="ow-wiki">Страницы в дереве теперь всегда сортируются по алфавиту.</li><li class="ow-wiki">Устранены некоторые глюки.</li><li class="ow-wiki">Несущественные изменения в интерфейсе.</li>
 </ul>
-<h2>1.0 alpha 1 (Май 2010 г.)</h2>
-<ul>
-<li>Первая публичная версия. Реализованы основные возможности.</li>
+<h2 class="ow-wiki">1.0 alpha 1 (Май 2010 г.)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Первая публичная версия. Реализованы основные возможности.</li>
 </ul>
 </body>
 </html>
