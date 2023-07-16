@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+from outwiker.api.gui.preferences import PreferencePanelInfo
 
 from .i18n import get_
 
@@ -8,13 +8,13 @@ from .preferencepanel import PreferencePanel
 from .colorslist import ColorsList
 
 
-class Controller(object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
+
     def __init__(self, plugin, application):
-        """
-        """
+        """ """
         self._plugin = plugin
         self._application = application
 
@@ -32,7 +32,9 @@ class Controller(object):
         _ = get_()
 
         self._application.onPageDialogInit += self.__onPageDialogInit
-        self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
+        self._application.onPageDialogPageTypeChanged += (
+            self.__onPageDialogPageTypeChanged
+        )
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
     def destroy(self):
@@ -40,7 +42,9 @@ class Controller(object):
         Вызывается при отключении плагина
         """
         self._application.onPageDialogInit -= self.__onPageDialogInit
-        self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
+        self._application.onPageDialogPageTypeChanged -= (
+            self.__onPageDialogPageTypeChanged
+        )
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
 
     def __onPageDialogPageTypeChanged(self, page, params):
@@ -52,9 +56,9 @@ class Controller(object):
         """
         Add preferences page to dialog
         """
-        prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
+        prefPanel = PreferencePanel(dialog.treeBook, self._application)
 
-        panelName = _(u"PageTypeColor [Plugin]")
+        panelName = _("PageTypeColor [Plugin]")
         panelsList = [PreferencePanelInfo(prefPanel, panelName)]
         dialog.appendPreferenceGroup(panelName, panelsList)
 

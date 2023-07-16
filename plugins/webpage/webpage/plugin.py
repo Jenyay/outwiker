@@ -2,7 +2,7 @@
 
 import os.path
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 
@@ -10,13 +10,13 @@ from .i18n import set_
 from .controller import Controller
 
 
-class PluginWebPage (Plugin):
+class PluginWebPage(Plugin):
     def __init__(self, application):
         """
         application - instance of the core.application.ApplicationParams
         class
         """
-        super(PluginWebPage, self).__init__(application)
+        super().__init__(application)
         self.__controller = Controller(self, self._application)
 
     @property
@@ -28,15 +28,15 @@ class PluginWebPage (Plugin):
     ###################################################
     @property
     def name(self):
-        return u"WebPage"
+        return "WebPage"
 
     @property
     def description(self):
-        return _(u"Plug-in for downloading HTML pages from web")
+        return _("Plug-in for downloading HTML pages from web")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/WebPageEn")
+        return _("https://jenyay.net/Outwiker/WebPageEn")
 
     def initialize(self):
         set_(self.gettext)
@@ -51,16 +51,3 @@ class PluginWebPage (Plugin):
         всех событий
         """
         self.__controller.destroy()
-
-    #############################################
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-
-        set_(_)

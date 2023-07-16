@@ -1,41 +1,36 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.core.config import IntegerOption, StringOption
+from outwiker.api.core.config import IntegerOption, StringOption
 
 
-class SnippetsConfig (object):
+class SnippetsConfig:
     def __init__(self, config):
         self._config = config
 
-        self.section = u'SnippetsPlugin'
+        self.section = "SnippetsPlugin"
 
         # EditDialog size
-        self._editDialogWidth = IntegerOption(self._config,
-                                              self.section,
-                                              u'EditDialogWidth',
-                                              800)
+        self._editDialogWidth = IntegerOption(
+            self._config, self.section, "EditDialogWidth", 800
+        )
 
-        self._editDialogHeight = IntegerOption(self._config,
-                                               self.section,
-                                               u'EditDialogHeight',
-                                               500)
+        self._editDialogHeight = IntegerOption(
+            self._config, self.section, "EditDialogHeight", 500
+        )
 
         # VariablesDialog size
-        self._variablesDialogWidth = IntegerOption(self._config,
-                                                   self.section,
-                                                   u'VariablesDialogWidth',
-                                                   700)
+        self._variablesDialogWidth = IntegerOption(
+            self._config, self.section, "VariablesDialogWidth", 700
+        )
 
-        self._variablesDialogHeight = IntegerOption(self._config,
-                                                    self.section,
-                                                    u'VariablesDialogHeight',
-                                                    400)
+        self._variablesDialogHeight = IntegerOption(
+            self._config, self.section, "VariablesDialogHeight", 400
+        )
 
         # Recently used snippet
-        self._recentSnippet = StringOption(self._config,
-                                           self.section,
-                                           u'RecentSnippet',
-                                           u'')
+        self._recentSnippet = StringOption(
+            self._config, self.section, "RecentSnippet", ""
+        )
 
     # EditDialog size
     @property

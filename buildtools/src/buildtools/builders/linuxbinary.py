@@ -3,7 +3,7 @@
 import os
 import shutil
 
-from fabric.api import local, lcd
+from invoke import Context
 
 from .base import BuilderBase
 from .binarybuilders import PyInstallerBuilderLinuxSimple
@@ -15,8 +15,8 @@ class BuilderLinuxBinary(BuilderBase):
     """
     Base class for all Linux binary builders.
     """
-    def __init__(self, create_archive=True, is_stable=False):
-        super(BuilderLinuxBinary, self).__init__(LINUX_BUILD_DIR, is_stable)
+    def __init__(self, c: Context, create_archive=True, is_stable=False):
+        super().__init__(c, LINUX_BUILD_DIR, is_stable)
 
         self._archiveFullName_7z = os.path.join(self.build_dir,
                                                 'outwiker_linux_bin.7z')
@@ -52,9 +52,9 @@ class BuilderLinuxBinary(BuilderBase):
 
     def _build_archive(self):
         # Create archive without plugins
-        with lcd(self._exe_path):
-            local('7z a "{}" ./* ./plugins -r -aoa'.format(self._archiveFullName_7z))
-            local('7z a "{}" ./* ./plugins -r -aoa'.format(self._archiveFullName_zip))
+        with self.context.cd(self._exe_path):
+            self.context.run('7z a "{}" ./* ./plugins -r -aoa'.format(self._archiveFullName_7z))
+            self.context.run('7z a "{}" ./* ./plugins -r -aoa'.format(self._archiveFullName_zip))
 
     def _copy_necessary_files(self):
         shutil.copy(u'copyright.txt', self.facts.temp_dir)

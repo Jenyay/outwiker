@@ -1,6 +1,4 @@
-# -*- coding: UTF-8 -*-
-
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from hackpage.utils import changeUidWithDialog
 from hackpage.i18n import get_
@@ -10,6 +8,7 @@ class ChangeUIDAction(BaseAction):
     """
     Описание действия
     """
+
     def __init__(self, application, controller):
         self._application = application
         self._controller = controller
@@ -17,15 +16,15 @@ class ChangeUIDAction(BaseAction):
         global _
         _ = get_()
 
-    stringId = u"HackPage_ChangePageUID"
+    stringId = "HackPage_ChangePageUID"
 
     @property
     def title(self):
-        return _(u"Change Page Identifier...")
+        return _("Change Page Identifier...")
 
     @property
     def description(self):
-        return _(u"HackPage plugin. Change Page Identifier")
+        return _("HackPage plugin. Change Page Identifier")
 
     def run(self, params):
         changeUidWithDialog(self._application.selectedPage, self._application)

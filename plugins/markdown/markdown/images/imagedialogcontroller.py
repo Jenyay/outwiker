@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.commands import isImage
+from outwiker.api.core.images import isImage
 
 
-class ImageDialogController (object):
+class ImageDialogController:
     def __init__(self, dialog, attachList, selectedText):
         """
         dialog - ImageDialog instance
@@ -15,11 +15,11 @@ class ImageDialogController (object):
         self._selectedText = selectedText.strip()
 
         # Result string after dialog running
-        self.result = u""
+        self.result = ""
         self._initDialog()
 
     def _initDialog(self):
-        attach_str = u'__attach/'
+        attach_str = "__attach/"
 
         filesList = list(filter(isImage, self._attachList))
         filesList.sort()
@@ -41,5 +41,5 @@ class ImageDialogController (object):
         fname = self._dialog.fileName
         comment = self._dialog.comment
 
-        result = u"![{comment}]({url})".format(comment=comment, url=fname)
+        result = "![{comment}]({url})".format(comment=comment, url=fname)
         return result

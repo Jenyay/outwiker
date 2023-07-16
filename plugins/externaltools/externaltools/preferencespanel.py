@@ -4,9 +4,9 @@ import configparser
 
 import wx
 
-from outwiker.core.commands import MessageBox
-from outwiker.core.exceptions import PreferencesException
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.api.gui.dialogs import MessageBox
+from outwiker.api.core.exceptions import PreferencesException
+from outwiker.api.gui.preferences import BasePrefPanel
 
 from .toolslistpanel import ToolsListPanel
 from .i18n import get_
@@ -17,6 +17,7 @@ class PreferencesPanel(BasePrefPanel):
     """
     Панель с настройками
     """
+
     def __init__(self, parent, config):
         """
         parent - родитель панели(должен быть wx.Treebook)
@@ -34,13 +35,11 @@ class PreferencesPanel(BasePrefPanel):
 
     def __makeGui(self):
         self.warningCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _(u'Warn before executing applications by (:exec:) command')
+            self, -1, _("Warn before executing applications by (:exec:) command")
         )
 
-        self.toolsLabel = wx.StaticText(self, -1, _(u"Tools List"))
-        self.appendToolsButton = wx.Button(self, -1, _(u"Append Tools"))
+        self.toolsLabel = wx.StaticText(self, -1, _("Tools List"))
+        self.appendToolsButton = wx.Button(self, -1, _("Append Tools"))
         self.toolsListPanel = ToolsListPanel(self)
 
         self.appendToolsButton.Bind(wx.EVT_BUTTON, self.__onAppendTools)
@@ -57,18 +56,14 @@ class PreferencesPanel(BasePrefPanel):
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(3)
 
-        mainSizer.Add(self.warningCheckBox, 1,
-                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                      border=2)
-        mainSizer.Add(self.toolsLabel, 1,
-                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                      border=2)
-        mainSizer.Add(self.appendToolsButton, 1,
-                      flag=wx.EXPAND | wx.ALL,
-                      border=2)
-        mainSizer.Add(self.toolsListPanel, 1,
-                      flag=wx.EXPAND | wx.ALL,
-                      border=2)
+        mainSizer.Add(
+            self.warningCheckBox, 1, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2
+        )
+        mainSizer.Add(
+            self.toolsLabel, 1, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2
+        )
+        mainSizer.Add(self.appendToolsButton, 1, flag=wx.EXPAND | wx.ALL, border=2)
+        mainSizer.Add(self.toolsListPanel, 1, flag=wx.EXPAND | wx.ALL, border=2)
 
         self.SetSizer(mainSizer)
         self.Layout()
@@ -81,6 +76,7 @@ class PrefController(object):
     """
     Контроллер для управления панелью настроек
     """
+
     def __init__(self, prefPanel, config):
         self._prefPanel = prefPanel
         self._config = config
@@ -97,7 +93,5 @@ class PrefController(object):
             toolsConfig.tools = self._prefPanel.toolsListPanel.tools
             toolsConfig.execWarning = self._prefPanel.warningCheckBox.GetValue()
         except configparser.Error:
-            MessageBox(_(u"Can't save options"),
-                       _(u"Error"),
-                       wx.OK | wx.ICON_ERROR)
+            MessageBox(_("Can't save options"), _("Error"), wx.OK | wx.ICON_ERROR)
             raise PreferencesException()

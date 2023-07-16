@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 import wx.aui
 
 
-class MainPane(object, metaclass=ABCMeta):
+class MainPane(metaclass=ABCMeta):
     """
     Базовый класс для хранения основных панелей главного окна
     """

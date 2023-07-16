@@ -2,7 +2,7 @@
 
 import re
 
-from pyparsing import Regex, OneOrMore, Optional, LineEnd, LineStart, Literal
+from pyparsing import Regex, OneOrMore, Optional, LineEnd, LineStart, Literal, AtLineStart
 
 
 class TableFactory (object):
@@ -23,10 +23,10 @@ class TableToken (object):
         tableCell = Regex(r"(?P<text>(.|(\\\n))*?)\|\|")
         tableCell.setParseAction(self.__convertTableCell)
 
-        tableRow = LineStart() + Literal("||") + OneOrMore(tableCell).leaveWhitespace() + Optional(LineEnd())
+        tableRow = AtLineStart(Literal("||") + OneOrMore(tableCell.leaveWhitespace()) + Optional(LineEnd()))
         tableRow.setParseAction(self.__convertTableRow)
 
-        table = LineStart() + Regex(r"\|\| *(?P<params>.+)?") + LineEnd() + OneOrMore(tableRow)
+        table = AtLineStart(Regex(r"\|\| *(?P<params>.+)?") + LineEnd() + OneOrMore(tableRow))
         table = table.setParseAction(self.__convertTable)("table")
 
         return table

@@ -2,7 +2,7 @@
 
 # Плагин для вставки свернутого текста
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .controller import Controller
 from .i18n import set_
@@ -12,11 +12,12 @@ class PluginSpoiler(Plugin):
     """
     Плагин, добавляющий обработку команды spoiler в википарсер
     """
+
     def __init__(self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
+        super().__init__(application)
         self._controller = Controller(self, application)
 
     def initialize(self):
@@ -28,11 +29,12 @@ class PluginSpoiler(Plugin):
 
     @property
     def name(self):
-        return u"Spoiler"
+        return "Spoiler"
 
     @property
     def description(self):
-        return _(u"""Add (:spoiler:) wiki command to parser.
+        return _(
+            """Add (:spoiler:) wiki command to parser.
 
 <B>Usage:</B>
 <PRE>(:spoiler:)
@@ -60,11 +62,12 @@ Text
 <PRE>(:spoiler expandtext="More..." collapsetext="Less" inline :)
 Text
 (:spoilerend:)</PRE>
-""")
+"""
+        )
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/SpoilerEn")
+        return _("https://jenyay.net/Outwiker/SpoilerEn")
 
     def destroy(self):
         """

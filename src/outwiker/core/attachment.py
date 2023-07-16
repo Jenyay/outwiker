@@ -3,23 +3,26 @@
 import os
 import os.path
 import shutil
+from pathlib import Path
+from typing import Union, List
 
 from .defines import PAGE_ATTACH_DIR
 from .exceptions import ReadonlyException
 from .events import AttachListChangedParams
 
 
-class Attachment(object):
+class Attachment:
     """
     Класс для работы с прикрепленными файлами
     """
+
     def __init__(self, page):
         """
         page - страница, для которой интересуют прикрепленные файлы
         """
         self.page = page
 
-    def getAttachPath(self, create=False):
+    def getAttachPath(self, create: bool = False) -> str:
         """
         Возвращает путь до папки с прикрепленными файлами
         create - создать папку для прикрепленных файлов,
@@ -33,20 +36,42 @@ class Attachment(object):
         return path
 
     @property
-    def attachmentFull(self):
+    def attachmentFull(self) -> List[str]:
+        """
+        Возвращает список прикрепленных файлов.
+        Пути до файлов полные
+        """
+        return self.getAttachFull()
+
+    def getAttachFull(self, subdir: str = ".") -> List[str]:
         """
         Возвращает список прикрепленных файлов.
         Пути до файлов полные
         """
         path = self.getAttachPath()
-        return [os.path.join(path, fname)
-                for fname in self.getAttachRelative()]
+        return [os.path.normpath(os.path.join(path, subdir, fname))
+                for fname in self.getAttachRelative(subdir)]
 
-    def getAttachRelative(self, dirname="."):
+    def createSubdir(self, subdir: Union[str, Path]) -> Path:
+        if self.page.readonly:
+            raise ReadonlyException
+
+        root = Path(self.getAttachPath(create=True)).resolve()
+        subdir_path = (root / subdir).resolve()
+        if root == subdir_path:
+            return root
+
+        if root not in subdir_path.parents:
+            raise OSError
+
+        subdir_path.mkdir(parents=True, exist_ok=True)
+        return subdir_path
+
+    def getAttachRelative(self, subdir="."):
         """
         Возвращает список прикрепленных файлов
-        (только имена файлов без путей относительно директории dirname).
-        dirname - поддиректория в PAGE_ATTACH_DIR,
+        (только имена файлов без путей относительно директории subdir).
+        subdir - поддиректория в PAGE_ATTACH_DIR,
         где хотим получить список файлов
         """
         path = self.getAttachPath()
@@ -54,26 +79,31 @@ class Attachment(object):
         if not os.path.exists(path):
             return []
 
-        fullpath = os.path.join(path, dirname)
+        fullpath = os.path.join(path, subdir)
 
         return os.listdir(fullpath)
 
-    def attach(self, files):
+    def attach(self, files: List[Union[Path, str]], subdir: Union[Path, str] = '.') -> None:
         """
         Прикрепить файлы к странице
         files -- список файлов (или папок), которые надо прикрепить
+        subdir -- вложенная директория в папку __attach
         """
         if self.page.readonly:
             raise ReadonlyException
 
-        attachPath = self.getAttachPath(True)
+        subdir_path = self.createSubdir(subdir)
+
+        if not subdir_path.exists() or not subdir_path.is_dir():
+            raise OSError
 
         for name in files:
-            if os.path.isdir(name):
-                basename = os.path.basename(name)
-                shutil.copytree(name, os.path.join(attachPath, basename))
+            name_path = Path(name)
+            if name_path.is_dir():
+                basename = name_path.name
+                shutil.copytree(name, subdir_path / basename)
             else:
-                shutil.copy(name, attachPath)
+                shutil.copy(name, subdir_path)
 
         self.page.updateDateTime()
         self.page.root.onAttachListChanged(self.page,
@@ -104,6 +134,44 @@ class Attachment(object):
         self.page.updateDateTime()
         self.page.root.onAttachListChanged(self.page,
                                            AttachListChangedParams())
+
+    def fixCurrentSubdir(self):
+        """
+        Fix invalid attachment current subdir for the page.
+        Returns absolute path to attachment fixed directory
+        or None if __attach is not created.
+        """
+        root = os.path.abspath(self.getAttachPath(create=False))
+
+        # Check if root attach directory exists
+        if not self._dirExists(root):
+            if self.page.currentAttachSubdir != '.':
+                self.page.currentAttachSubdir = None
+            return None
+
+        current_subdir = self.page.currentAttachSubdir
+        current_path = os.path.join(root, current_subdir)
+
+        # Check if current attach subdir exists
+        if self._dirExists(current_path):
+            return current_path
+
+        # Find first existed parent directory
+        while current_subdir != '':
+            if self._dirExists(os.path.join(root, current_subdir)):
+                break
+            current_subdir = os.path.dirname(current_subdir)
+
+        # Walk to parent?
+        if current_subdir == '':
+            current_subdir = None
+
+        # Current page must be fixed
+        self.page.currentAttachSubdir = current_subdir
+        return os.path.join(root, self.page.currentAttachSubdir)
+
+    def _dirExists(self, path):
+        return os.path.exists(path) and os.path.isdir(path)
 
     @staticmethod
     def sortByName(fname):
@@ -219,3 +287,27 @@ class Attachment(object):
         если ее еще не существует?
         """
         return os.path.join(self.getAttachPath(create), fname)
+
+    def query(self, mask: str) -> List[str]:
+        mask = mask.replace('\\', '/').strip()
+        if len(mask) == 0:
+            return []
+
+        if mask.find('..') != -1:
+            return []
+
+        if mask.startswith('/'):
+            return []
+
+
+        root_dir = Path(self.getAttachPath(create=False))
+        if not root_dir.exists():
+            return []
+
+        glob_result = root_dir.glob(mask)
+
+        return [str(fname.relative_to(root_dir)).replace('\\', '/')
+                for fname in glob_result]
+
+    def exists(self, fname: Union[Path, str], subdir: Union[Path, str] = '.') -> bool:
+        return Path(self.getAttachPath(), subdir, fname).exists()

@@ -6,11 +6,13 @@ from pyparsing import Regex
 
 from outwiker.core.thumbexception import ThumbException
 from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.core.htmlformatter import HtmlFormatter
+from outwiker.core.cssclasses import CSS_WIKI
 from .pagethumbmaker import PageThumbmaker
 from ..wikiconfig import WikiConfig
 
 
-class ThumbnailFactory (object):
+class ThumbnailFactory:
     """
     Класс для создания токена ThumbnailToken
     """
@@ -19,7 +21,7 @@ class ThumbnailFactory (object):
         return ThumbnailToken(parser).getToken()
 
 
-class ThumbnailToken (object):
+class ThumbnailToken:
     """
     Класс, содержащий все необходимое для разбора и создания превьюшек
     картинок на вики-странице
@@ -28,6 +30,7 @@ class ThumbnailToken (object):
     def __init__(self, parser):
         self.parser = parser
         self.thumbmaker = PageThumbmaker()
+        self._html_formatter = HtmlFormatter([CSS_WIKI])
 
     def getToken(self):
         result = Regex(r"""%\s*?
@@ -40,7 +43,7 @@ class ThumbnailToken (object):
                             |thumb\s*?
                         )\s*?
                         %\s*?
-                        Attach:(?P<fname>.*?\.(?:jpe?g|bmp|gif|tiff?|png|webp))\s*?%%""",
+                        Attach:(?P<quote>["']?)(?P<fname>.*?\.(?:jpe?g|bmp|gif|tiff?|png|webp))(?P=quote)\s*?%%""",
                        re.IGNORECASE | re.VERBOSE)
         result = result.setParseAction(self.__convertThumb)("thumbnail")
         return result
@@ -67,8 +70,8 @@ class ThumbnailToken (object):
 
         try:
             thumb = func(self.parser.page, fname, size)
-
         except (ThumbException, IOError):
-            return _(u"<b>Can't create thumbnail for \"{}\"</b>").format(fname)
+            text = _("Can't create thumbnail for <b>\"{}\"</b>").format(fname)
+            return self._html_formatter.error(text)
 
-        return u'<a href="%s/%s"><img src="%s"/></a>' % (PAGE_ATTACH_DIR, fname, thumb.replace("\\", "/"))
+        return '<a href="{}/{}"><img src="{}"/></a>'.format(PAGE_ATTACH_DIR, fname, thumb.replace("\\", "/"))

@@ -162,7 +162,7 @@ class LineJumpDrawFilter(LazyReceiver):
 
     def save(self, *args, **kwargs):
         # Search crosspoints
-        from bisect import insort, bisect_left, bisect_right
+        from bisect import bisect_left, bisect_right, insort
         xtree = []
         for y, _, ((x1, y1), (x2, y2)) in self.ytree:
             if x2 < x1:

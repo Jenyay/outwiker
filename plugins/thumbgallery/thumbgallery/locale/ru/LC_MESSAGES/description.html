@@ -40,22 +40,114 @@
 <u>Создание галереи из выбранных файлов с оформлением в виде таблицы</u>
 
 (:thumbgallery cols=3 px=150:)
-&nbsp;&nbsp;&nbsp;Attach:DSC_0567.jpg
-&nbsp;&nbsp;&nbsp;Attach:DSC_0604.jpg
-&nbsp;&nbsp;&nbsp;Attach:klyazma_2011_07.jpg
-&nbsp;&nbsp;&nbsp;Attach:smoke.jpg
-&nbsp;&nbsp;&nbsp;Attach:sunset_1.jpg
-&nbsp;&nbsp;&nbsp;Attach:sev_beach2.jpg
+&nbsp;&nbsp;&nbsp;Attach:"filename_1.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"filename_2.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"filename_3.jpg"
 (:thumbgalleryend:)
 
-
-<u>Создание галереи из выбранных файлов с комментариями</u>
+или
 
 (:thumbgallery cols=3 px=150:)
-&nbsp;&nbsp;&nbsp;DSC_0567.jpg
-&nbsp;&nbsp;&nbsp;DSC_0604.jpg
-&nbsp;&nbsp;&nbsp;klyazma_2011_07.jpg | Река Клязьма
-&nbsp;&nbsp;&nbsp;smoke.jpg | Дымное лето в Москве
-&nbsp;&nbsp;&nbsp;sunset_1.jpg
-&nbsp;&nbsp;&nbsp;sev_beach2.jpg | Черное море. Севастополь
+&nbsp;&nbsp;&nbsp;filename_1.jpg
+&nbsp;&nbsp;&nbsp;filename_2.jpg
+&nbsp;&nbsp;&nbsp;filename_3.jpg
 (:thumbgalleryend:)
+
+
+<u>Создание галереи из выбратных файлов с добавлением комментариев</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Attach:"filename_1.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"filename_2.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"filename_3.jpg" | Комментарий для filename_3
+&nbsp;&nbsp;&nbsp;Attach:"filename_4.jpg" | Комментарий для filename_4
+(:thumbgalleryend:)
+
+или
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;filename_1.jpg
+&nbsp;&nbsp;&nbsp;filename_2.jpg
+&nbsp;&nbsp;&nbsp;filename_3.jpg | Комментарий для filename_3
+&nbsp;&nbsp;&nbsp;filename_4.jpg | Комментарий для filename_4
+(:thumbgalleryend:)
+
+
+<u>Указать файлы во вложенной папке</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Attach:"folder/subfolder/filename_1.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"folder/subfolder/filename_2.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"folder/subfolder/filename_3.jpg" | Комментарий для filename_3
+&nbsp;&nbsp;&nbsp;Attach:"folder/subfolder/filename_4.jpg" | Комментарий для filename_4
+(:thumbgalleryend:)
+
+или
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;folder/subfolder/filename_1.jpg
+&nbsp;&nbsp;&nbsp;folder/subfolder/filename_2.jpg
+&nbsp;&nbsp;&nbsp;folder/subfolder/filename_3.jpg | Комментарий для filename_3
+&nbsp;&nbsp;&nbsp;folder/subfolder/filename_4.jpg | Комментарий для filename_4
+(:thumbgalleryend:)
+
+
+<u>Выбор файлов по маске</u>
+
+Выбрать все изображения в папке __attach
+
+(:thumbgallery cols=3 px=150:)
+    *
+(:thumbgalleryend:)
+
+или
+
+(:thumbgallery cols=3 px=150:)
+    *.*
+(:thumbgalleryend:)
+
+или
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"*"
+(:thumbgalleryend:)
+
+
+Выбрать изображения по маске в папке __attach
+
+(:thumbgallery cols=3 px=150:)
+    *.png
+(:thumbgalleryend:)
+
+или
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"*.png"
+(:thumbgalleryend:)
+
+
+Выбрать изображения по маске в папке __attach и всех вложенных папках
+
+(:thumbgallery cols=3 px=150:)
+    **/*.png
+(:thumbgalleryend:)
+
+или
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"**/*.png"
+(:thumbgalleryend:)
+
+
+Выбрать все изображения по маске в одной папке
+
+(:thumbgallery cols=3 px=150:)
+    folder_name/*.jpg
+(:thumbgalleryend:)
+
+или
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"folder name/*.jpg"
+(:thumbgalleryend:)
+

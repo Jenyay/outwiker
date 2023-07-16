@@ -4,10 +4,10 @@ import os
 import os.path
 import re
 
-from outwiker.core.attachment import Attachment
+from outwiker.api.core.attachment import Attachment
 
 
-class PageStat (object):
+class PageStat:
     """
     Класс для сбора статистики одиночной страницы
     """
@@ -19,8 +19,8 @@ class PageStat (object):
         self._page = page
 
         # Типы страниц, по которым можно собрать статистику
-        self._supportedPages = ['html', 'text', 'wiki', 'markdown', 'web']
-        self._wordsRegExp = re.compile(r'\w+', re.M)
+        self._supportedPages = ["html", "text", "wiki", "markdown", "web"]
+        self._wordsRegExp = re.compile(r"\w+", re.M)
 
     def _testPageType(self):
         if self._page.getTypeString() not in self._supportedPages:
@@ -50,8 +50,9 @@ class PageStat (object):
         Возвращает количество непустых строк в тексте страницы
         """
         self._testPageType()
-        lines = [line for line in self._page.content.split(
-            "\n") if len(line.strip()) != 0]
+        lines = [
+            line for line in self._page.content.split("\n") if len(line.strip()) != 0
+        ]
         return len(lines)
 
     @property
@@ -100,6 +101,7 @@ class PageStat (object):
             if os.path.isfile(fname):
                 filesListFlat.append(fname)
             elif os.path.isdir(fname):
-                currentFiles = [os.path.join(fname, listItem)
-                                for listItem in os.listdir(fname)]
+                currentFiles = [
+                    os.path.join(fname, listItem) for listItem in os.listdir(fname)
+                ]
                 self._getFilesListRecursive(currentFiles, filesListFlat)

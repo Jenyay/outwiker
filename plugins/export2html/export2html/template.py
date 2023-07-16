@@ -3,19 +3,18 @@
 from string import Template
 import os.path
 
-from outwiker.core.system import getOS
-from outwiker.utilites.textfile import readTextFile
+from outwiker.api.core.text import readTextFile
 
 
-def loadTemplate (fname):
+def loadTemplate(fname: str) -> Template:
     """
-    Загрузить шаблон.
+    Load template from file
     """
-    templatedir = u"templates"
+    templatedir = "templates"
 
-    currentdir = str ((os.path.dirname (__file__)))
+    currentdir = str((os.path.dirname(__file__)))
 
-    templateFileName = os.path.join (currentdir, templatedir, fname)
+    templateFileName = os.path.join(currentdir, templatedir, fname)
     template = readTextFile(templateFileName)
 
-    return Template (template)
+    return Template(template)

@@ -6,16 +6,15 @@ import os.path
 from pathlib import Path
 import shutil
 
-import wx
-from fabric.api import lcd, local
-
+from invoke import Context
 from buildtools.utilites import remove, print_info
 
 
-class BaseBinaryBuilder(object, metaclass=ABCMeta):
+class BaseBinaryBuilder(metaclass=ABCMeta):
     """Base class for any binary builders"""
 
-    def __init__(self, src_dir, dest_dir, temp_dir):
+    def __init__(self, c: Context, src_dir: str, dest_dir: str, temp_dir: str):
+        self.context = c
         self._src_dir = src_dir
         self._dest_dir = dest_dir
         self._temp_dir = temp_dir
@@ -55,7 +54,65 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
         return [
             'importlib',
             'urllib',
+            'outwiker.api',
+            'outwiker.api.core',
+            'outwiker.api.core.attachment',
+            'outwiker.api.core.config',
+            'outwiker.api.core.defines',
+            'outwiker.api.core.events',
+            'outwiker.api.core.exceptions',
+            'outwiker.api.core.hashcalculator',
+            'outwiker.api.core.html',
+            'outwiker.api.core.images',
+            'outwiker.api.core.pagecontentcache',
+            'outwiker.api.core.text',
+            'outwiker.api.core.tree',
+            'outwiker.api.core.plugins',
+            'outwiker.api.core.pagestyle',
+            'outwiker.api.core.spellchecker',
+            'outwiker.api.core.tags',
+            'outwiker.api.gui',
+            'outwiker.api.gui.actions',
+            'outwiker.api.gui.basetextstylingcontroller',
+            'outwiker.api.gui.configelements',
+            'outwiker.api.gui.controls',
+            'outwiker.api.gui.defines',
+            'outwiker.api.gui.dialogs',
+            'outwiker.api.gui.hotkeys',
+            'outwiker.api.gui.longprocessrunner',
+            'outwiker.api.gui.mainwindow',
+            'outwiker.api.gui.preferences',
+            'outwiker.api.gui.texteditorhelper',
+            'outwiker.api.app',
+            'outwiker.api.app.application',
+            'outwiker.api.app.config',
+            'outwiker.api.app.attachment',
+            'outwiker.api.app.bookmarks',
+            'outwiker.api.app.clipboard',
+            'outwiker.api.app.messages',
+            'outwiker.api.app.system',
+            'outwiker.api.app.texteditor',
+            'outwiker.api.app.tree',
+            'outwiker.api.pages',
+            'outwiker.api.pages.html',
+            'outwiker.api.pages.html.gui',
+            'outwiker.api.pages.html.guitools',
+            'outwiker.api.pages.html.actions',
+            'outwiker.api.pages.wiki',
+            'outwiker.api.pages.wiki.config',
+            'outwiker.api.pages.wiki.defines',
+            'outwiker.api.pages.wiki.editor',
+            'outwiker.api.pages.wiki.gui',
+            'outwiker.api.pages.wiki.wikiparser',
+            'outwiker.api.pages.wiki.wikipage',
+            'outwiker.actions.close',
+            'outwiker.actions.showhideattaches',
+            'outwiker.actions.showhidetags',
+            'outwiker.actions.showhidetree',
             'outwiker.gui.controls.popupbutton',
+            'outwiker.gui.controls.filestreectrl',
+            'outwiker.core.attachfilters',
+            'outwiker.core.commands',
             'outwiker.utilites.actionsguicontroller',
             'outwiker.utilites.text',
             'PIL.Image',
@@ -85,11 +142,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
                 'styles', 'textstyles', 'plugins']
 
     def get_additional_files(self):
-        # Add the standard wxPython locales
-        wx_locales_path = os.path.join(os.path.dirname(wx.__file__), 'locale')
-        languages = ['ru', 'de', 'sv', 'uk']
-        return [(os.path.join(wx_locales_path, lang, 'LC_MESSAGES', 'wxstd.mo'),
-                 os.path.join('locale', lang, 'LC_MESSAGES')) for lang in languages]
+        return []
 
     def _copy_additional_files(self):
         root_dir = os.path.join(self._dist_dir, u'outwiker')
@@ -98,7 +151,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             dest_dir = os.path.join(root_dir, subpath)
             if not os.path.exists(dest_dir):
                 os.makedirs(dest_dir)
-            print_info(u'Copy: {} -> {}'.format(fname, dest_dir))
+            print_info('Copy: {} -> {}'.format(fname, dest_dir))
             shutil.copy(fname, dest_dir)
 
 
@@ -153,8 +206,8 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     def build(self):
         params = self.get_params()
         command = u'pyinstaller runoutwiker.py ' + u' '.join(params)
-        with lcd(self._src_dir):
-            local(command)
+        with self.context.cd(self._src_dir):
+            self.context.run(command)
 
         self._remove_files()
         self._copy_additional_files()
@@ -180,8 +233,8 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
 class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     """Class for binary assembling creation with cx_freeze. """
 
-    def __init__(self, src_dir, dest_dir, temp_dir):
-        super().__init__(src_dir, dest_dir, temp_dir)
+    def __init__(self, c: Context, src_dir, dest_dir, temp_dir):
+        super().__init__(c, src_dir, dest_dir, temp_dir)
 
         # The path where the folder with the assembly will be created
         # (before copying to self.dest_dir)
@@ -211,8 +264,8 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     def build(self):
         params = self.get_params()
         command = u'cxfreeze runoutwiker.py ' + u' '.join(params)
-        with lcd(self._src_dir):
-            local(command)
+        with self.context.cd(self._src_dir):
+            self.context.run(command)
 
         self._remove_files()
         self._copy_additional_files()
@@ -330,7 +383,7 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
         for fname in files_for_strip:
             print_info(u'Strip {}'.format(fname))
             if os.path.exists(str(fname)):
-                local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
+                self.context.run('strip -s -o "{fname}" "{fname}"'.format(fname=fname))
 
     def get_includes(self):
         result = super().get_includes()

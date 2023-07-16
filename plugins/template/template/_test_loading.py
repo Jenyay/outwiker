@@ -2,7 +2,7 @@
 
 import unittest
 
-from tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.basetestcases import PluginLoadingMixin
 
 
 class PluginNameLoadingTest(PluginLoadingMixin, unittest.TestCase):
@@ -10,7 +10,7 @@ class PluginNameLoadingTest(PluginLoadingMixin, unittest.TestCase):
         """
         Must return path to plugin
         """
-        return u"../plugins/pluginname"
+        return "../plugins/pluginname"
 
     def getPluginName(self):
         """

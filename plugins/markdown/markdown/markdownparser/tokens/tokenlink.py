@@ -3,18 +3,20 @@
 from pyparsing import QuotedString
 
 
-class LinkFactory (object):
+class LinkFactory:
     @staticmethod
     def make():
         return LinkToken().getToken()
 
 
-class LinkToken (object):
+class LinkToken:
     def getToken(self):
-        token = (QuotedString('[',
-                              endQuoteChar=']',
-                              convertWhitespaceEscapes=False)('comment') +
-                 QuotedString('(',
-                              endQuoteChar=')',
-                              convertWhitespaceEscapes=False).leaveWhitespace()('url'))('link')
+        token = (
+            QuotedString("[", endQuoteChar="]", convertWhitespaceEscapes=False)(
+                "comment"
+            )
+            + QuotedString(
+                "(", endQuoteChar=")", convertWhitespaceEscapes=False
+            ).leaveWhitespace()("url")
+        )("link")
         return token

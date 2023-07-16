@@ -4,7 +4,7 @@ import os
 import shutil
 import datetime
 
-from fabric.api import local, lcd
+from invoke import Context
 
 from ..base import BuilderBase
 from buildtools.versions import getOutwikerVersion, getOutwikerAppInfo
@@ -21,8 +21,8 @@ class BuilderBaseDebSource(BuilderBase):
     """
     The base class for source deb packages assebbling.
     """
-    def __init__(self, subdir_name, is_stable):
-        super(BuilderBaseDebSource, self).__init__(subdir_name, is_stable)
+    def __init__(self, c: Context, subdir_name, is_stable):
+        super().__init__(c, subdir_name, is_stable)
 
     def clear(self):
         super(BuilderBaseDebSource, self).clear()
@@ -52,8 +52,8 @@ class BuilderBaseDebSource(BuilderBase):
                                           u'changelog')
             writeTextFile(changelog_path, changelog)
 
-            with lcd(current_debian_dirname):
-                local(command)
+            with self.context.cd(current_debian_dirname):
+                self.context.run(command)
 
     def _postBuild(self):
         # Remove temp files
@@ -72,11 +72,11 @@ class BuilderBaseDebSource(BuilderBase):
 
         origname = self._getOrigName(distname)
 
-        with lcd(self.build_dir):
-            local("tar -cvf {} {}".format(origname, self._getDebName()))
+        with self.context.cd(self.build_dir):
+            self.context.run("tar -cvf {} {}".format(origname, self._getDebName()))
 
         orig_dirname = os.path.join(self.build_dir, origname)
-        local("gzip -f {}".format(orig_dirname))
+        self.context.run("gzip -f {}".format(orig_dirname))
 
     def _source(self, distname):
         """
@@ -157,8 +157,8 @@ class BuilderBaseDebSource(BuilderBase):
             dirname=dirname,
             excludes=excludes_param)
 
-        with lcd(self.facts.temp_dir):
-            local(command)
+        with self.context.cd(self.facts.temp_dir):
+            self.context.run(command)
 
     def _debclean(self):
         """
@@ -183,8 +183,8 @@ class BuilderBaseDebSource(BuilderBase):
 
 
 class BuilderDebSource(BuilderBaseDebSource):
-    def __init__(self, subdir_name, release_names, is_stable):
-        super(BuilderBaseDebSource, self).__init__(subdir_name, is_stable)
+    def __init__(self, c: Context, subdir_name, release_names, is_stable):
+        super().__init__(c, subdir_name, is_stable)
         self._release_names = release_names
 
     def _build(self):
@@ -193,8 +193,8 @@ class BuilderDebSource(BuilderBaseDebSource):
 
 
 class BuilderDebSourcesIncluded(BuilderBaseDebSource):
-    def __init__(self, subdir_name, release_names, is_stable):
-        super(BuilderDebSourcesIncluded, self).__init__(subdir_name, is_stable)
+    def __init__(self, c: Context, subdir_name, release_names, is_stable):
+        super().__init__(c, subdir_name, is_stable)
         self._release_names = release_names
 
     def _build(self):

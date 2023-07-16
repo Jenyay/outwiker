@@ -15,15 +15,6 @@ class MultilineBlockFactory(object):
         return MultilineBlockToken(parser).getToken()
 
 
-# class MultilineBlockToken(SimpleNestedBlock):
-#     start = '[{'
-#     end = '}]'
-#     start_html = ''
-#     end_html = ''
-#     name = 'block'
-#     ignore = LineBreakToken().getToken()
-
-
 class MultilineBlockToken:
     start = "[{"
     end = "}]"

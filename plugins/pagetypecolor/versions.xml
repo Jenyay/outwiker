@@ -1,6 +1,21 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="1.4" date="19.10.2019">
+	<version number="1.4.1" date="2023-05-03">
+		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.4.1.zip">
+			<requirements>
+				<api>3.922</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Migrate to new API.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на новый API.</change>
+		</changes>
+	</version>
+
+	<version number="1.4" date="2019-10-19">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.4.zip">
 			<requirements>
 				<api>3.868</api>
@@ -15,7 +30,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3" date="26.08.2018">
+	<version number="1.3" date="2018-08-26">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.3.zip">
 			<requirements>
 				<api>2.835</api>
@@ -30,7 +45,7 @@
 		</changes>
 	</version>
 
-	<version number="1.2" date="15.02.2018">
+	<version number="1.2" date="2018-02-15">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.2.zip">
 			<requirements>
 				<api>2.0</api>
@@ -45,7 +60,7 @@
 		</changes>
 	</version>
 
-	<version number="1.1.1" date="28.05.2017">
+	<version number="1.1.1" date="2017-05-28">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.1.zip">
 			<requirements>
 				<api>2.0</api>
@@ -60,7 +75,7 @@
 		</changes>
 	</version>
 
-	<version number="1.1" date="25.04.2017">
+	<version number="1.1" date="2017-04-25">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.zip">
 			<requirements>
 				<api>2.0</api>
@@ -75,7 +90,7 @@
 		</changes>
 	</version>
 
-	<version number="1.0.4" date="17.10.2016">
+	<version number="1.0.4" date="2016-10-17">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.4.zip">
 			<requirements>
 				<api>2.0</api>
@@ -90,7 +105,7 @@
 		</changes>
 	</version>
 
-	<version number="1.0.3" date="20.08.2016">
+	<version number="1.0.3" date="2016-08-20">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.3.zip">
 			<requirements>
 				<api>1.0</api>
@@ -105,7 +120,7 @@
 		</changes>
 	</version>
 
-	<version number="1.0.2" date="10.03.2016">
+	<version number="1.0.2" date="2016-03-10">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.2.zip">
 			<requirements>
 				<api>1.0</api>
@@ -120,7 +135,7 @@
 		</changes>
 	</version>
 
-	<version number="1.0.1" date="27.11.2015">
+	<version number="1.0.1" date="2015-11-27">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.1.zip">
 			<requirements>
 				<api>1.0</api>
@@ -135,7 +150,7 @@
 		</changes>
 	</version>
 
-	<version number="1.0" date="30.10.2015">
+	<version number="1.0" date="2015-10-30">
 		<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.zip">
 			<requirements>
 				<api>1.0</api>

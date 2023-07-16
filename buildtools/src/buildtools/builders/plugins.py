@@ -6,7 +6,7 @@ import urllib.request
 import urllib.error
 import urllib.parse
 
-from fabric.api import local, lcd
+from invoke import Context
 
 from .base import BuilderBase
 from buildtools.defines import (PLUGINS_DIR,
@@ -23,10 +23,11 @@ class BuilderPlugins(BuilderBase):
     """
 
     def __init__(self,
-                 updatedOnly=False,
-                 build_dir=PLUGINS_DIR,
+                 c: Context,
+                 updatedOnly: bool = False,
+                 build_dir: str = PLUGINS_DIR,
                  plugins_list=None):
-        super(BuilderPlugins, self).__init__(build_dir)
+        super().__init__(c, build_dir)
         self._all_plugins_fname = u'outwiker-plugins-all.zip'
         self._plugins_list = (plugins_list if plugins_list is not None
                               else PLUGINS_LIST)
@@ -79,13 +80,13 @@ class BuilderPlugins(BuilderBase):
                 shutil.copy(changelog_path, plugin_dir_path)
 
                 # Archive a single plug-in
-                with lcd("plugins/{}".format(plugin)):
-                    local(
+                with self.context.cd("plugins/{}".format(plugin)):
+                    self.context.run(
                         '7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!doc -x!versions.xml "{}" ./*'.format(archive_path))
 
             # Add a plug-in to full archive
-            with lcd("plugins/{}".format(plugin)):
-                local(
+            with self.context.cd("plugins/{}".format(plugin)):
+                self.context.run(
                     '7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!versions.xml -w../ "{}" ./*'.format(full_archive_path))
 
     def _getSubpath(self, *args):

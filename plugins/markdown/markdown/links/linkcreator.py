@@ -1,7 +1,7 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 
-class LinkCreator(object):
+class LinkCreator:
     def create(self, link, comment, title):
         """
         Return tuple: (link string, reference string or None)
@@ -9,13 +9,10 @@ class LinkCreator(object):
         link = link.strip()
         reference = None
         if len(title.strip()) == 0:
-            link_text = u'[{comment}]({link})'.format(comment=comment,
-                                                      link=link)
+            link_text = "[{comment}]({link})".format(comment=comment, link=link)
         else:
-            link_text = u'[{comment}]({link} "{title}")'.format(
-                comment=comment,
-                link=link,
-                title=title
+            link_text = '[{comment}]({link} "{title}")'.format(
+                comment=comment, link=link, title=title
             )
 
         return (link_text, reference)

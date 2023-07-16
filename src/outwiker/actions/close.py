@@ -1,25 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import closeWiki
-
-
-class CloseAction (BaseAction):
-    """
-    Закрытие дерева заметок
-    """
-    stringId = u"CloseWiki"
-
-    def __init__(self, application):
-        self._application = application
-
-    @property
-    def title(self):
-        return _(u"Close")
-
-    @property
-    def description(self):
-        return _(u"Close a tree notes")
-
-    def run(self, params):
-        closeWiki(self._application)
+# TODO: Remove in next version
+from outwiker.app.actions.close import CloseAction

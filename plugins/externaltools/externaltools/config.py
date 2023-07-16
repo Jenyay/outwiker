@@ -5,12 +5,12 @@ import configparser
 
 import wx
 
-from outwiker.core.config import IntegerOption, BooleanOption
+from outwiker.api.core.config import IntegerOption, BooleanOption
 
 from .toolsinfo import ToolsInfo
 
 
-class ExternalToolsConfig(object):
+class ExternalToolsConfig:
     def __init__(self, config):
         self._sectionName = "ExternalTools"
         self._toolsItemTemplate = "tools{index}"
@@ -21,36 +21,35 @@ class ExternalToolsConfig(object):
         DEFAULT_DIALOG_WIDTH = -1
         DEFAULT_DIALOG_HEIGHT = -1
 
-        DIALOG_WIDTH_OPTION = u"DialogWidth"
-        DIALOG_HEIGHT_OPTION = u"DialogHeight"
+        DIALOG_WIDTH_OPTION = "DialogWidth"
+        DIALOG_HEIGHT_OPTION = "DialogHeight"
 
         # Recent selected format
         DEFAULT_FORMAT = 0
-        DIALOG_SELECTED_FORMAT_OPTION = u'ExecFormat'
+        DIALOG_SELECTED_FORMAT_OPTION = "ExecFormat"
 
         # Show warning
         DEFAULT_WARNING = True
-        WARNING_OPTION = u'ShowExecWarning'
+        WARNING_OPTION = "ShowExecWarning"
 
-        self._dialogWidth = IntegerOption(self._config,
-                                          self._sectionName,
-                                          DIALOG_WIDTH_OPTION,
-                                          DEFAULT_DIALOG_WIDTH)
+        self._dialogWidth = IntegerOption(
+            self._config, self._sectionName, DIALOG_WIDTH_OPTION, DEFAULT_DIALOG_WIDTH
+        )
 
-        self._dialogHeight = IntegerOption(self._config,
-                                           self._sectionName,
-                                           DIALOG_HEIGHT_OPTION,
-                                           DEFAULT_DIALOG_HEIGHT)
+        self._dialogHeight = IntegerOption(
+            self._config, self._sectionName, DIALOG_HEIGHT_OPTION, DEFAULT_DIALOG_HEIGHT
+        )
 
-        self._execFormat = IntegerOption(self._config,
-                                         self._sectionName,
-                                         DIALOG_SELECTED_FORMAT_OPTION,
-                                         DEFAULT_FORMAT)
+        self._execFormat = IntegerOption(
+            self._config,
+            self._sectionName,
+            DIALOG_SELECTED_FORMAT_OPTION,
+            DEFAULT_FORMAT,
+        )
 
-        self._execWarning = BooleanOption(self._config,
-                                          self._sectionName,
-                                          WARNING_OPTION,
-                                          DEFAULT_WARNING)
+        self._execWarning = BooleanOption(
+            self._config, self._sectionName, WARNING_OPTION, DEFAULT_WARNING
+        )
 
     def clearAll(self):
         """

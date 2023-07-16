@@ -12,7 +12,7 @@ from outwiker.core.pageuiddepot import PageUidDepot
 logger = logging.getLogger('outwiker.core.application')
 
 
-class ApplicationParams(object):
+class ApplicationParams:
     def __init__(self):
         # Opened wiki
         self.__wikiroot = None
@@ -26,6 +26,9 @@ class ApplicationParams(object):
         self.actionController = None
         self.plugins = PluginsLoader(self)
         self.pageUidDepot = PageUidDepot()
+
+        # Set to True for unit tests
+        self.testMode = False
 
         # Values for shared purpose
         self.sharedData = {}
@@ -314,6 +317,12 @@ class ApplicationParams(object):
         #     params - instance of the AttachListChangedParams class
         self.onAttachListChanged = Event()
 
+        # Event occurs after opening subdirectory in attachments
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the AttachSubdirChangedParams class
+        self.onAttachSubdirChanged = Event()
+
         # Event occurs after key pressing in the notes text editor
         # Parameters:
         #     page - current (selected) page
@@ -339,6 +348,18 @@ class ApplicationParams(object):
         #     page - current (selected) page
         #     params - instance of the PreContentWritingParams class
         self.onPreContentWriting = Event()
+
+        # Need for attachment renaming.
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the BeginAttachRenamingParams class
+        self.onBeginAttachRenaming = Event()
+
+        # Event occurs after selection / clear selection attachments
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the AttachSelectionChangedParams class
+        self.onAttachSelectionChanged = Event()
 
     def init(self, fullConfigPath):
         """
@@ -434,6 +455,7 @@ class ApplicationParams(object):
         wiki.onPageCreate += self.onPageCreate
         wiki.onPageRemove += self.onPageRemove
         wiki.onAttachListChanged += self.onAttachListChanged
+        wiki.onAttachSubdirChanged += self.onAttachSubdirChanged
         wiki.bookmarks.onBookmarksChanged += self.onBookmarksChanged
         wiki.onPostContentReading += self.onPostContentReading
         wiki.onPreContentWriting += self.onPreContentWriting
@@ -452,6 +474,7 @@ class ApplicationParams(object):
         wiki.onPageCreate -= self.onPageCreate
         wiki.onPageRemove -= self.onPageRemove
         wiki.onAttachListChanged -= self.onAttachListChanged
+        wiki.onAttachSubdirChanged -= self.onAttachSubdirChanged
         wiki.bookmarks.onBookmarksChanged -= self.onBookmarksChanged
         wiki.onPostContentReading -= self.onPostContentReading
         wiki.onPreContentWriting -= self.onPreContentWriting

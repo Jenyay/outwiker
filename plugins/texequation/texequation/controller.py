@@ -3,13 +3,11 @@
 
 import os.path
 
-from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-from outwiker.gui.defines import TOOLBAR_PLUGINS
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo,
-                                                    ButtonInfo)
+from outwiker.api.gui.preferences import PreferencePanelInfo
+from outwiker.api.gui.defines import TOOLBAR_PLUGINS
+from outwiker.api.pages.wiki import WikiWikiPage
+from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo, ButtonInfo
 
 from .actions import TexEquationAction
 from .i18n import get_
@@ -17,13 +15,12 @@ from .preferencepanel import PreferencePanel
 from .toolswindowcontroller import ToolsWindowController
 
 
-class Controller(object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
+
     def __init__(self, plugin, application):
-        """
-        """
         self._plugin = plugin
         self._application = application
 
@@ -49,14 +46,14 @@ class Controller(object):
             self._toolsWindowController.initialize()
 
     def _initialize_guicontroller(self):
-        imagesPath = os.path.join(self._plugin.pluginPath, 'images')
+        imagesPath = os.path.join(self._plugin.pluginPath, "images")
 
         action_gui_info = [
-            ActionGUIInfo(TexEquationAction(self._application),
-                          MENU_WIKI_COMMANDS,
-                          ButtonInfo(TOOLBAR_PLUGINS,
-                                     os.path.join(imagesPath, 'equation.png'))
-                          ),
+            ActionGUIInfo(
+                TexEquationAction(self._application),
+                MENU_WIKI_COMMANDS,
+                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "equation.png")),
+            ),
         ]
 
         if self._application.mainWindow is not None:
@@ -79,6 +76,7 @@ class Controller(object):
 
     def __onWikiParserPrepare(self, parser):
         from .tokentex import TexFactory
+
         tex_inline = TexFactory().makeInlineTexToken(parser)
         tex_big = TexFactory().makeBigTexToken(parser)
 
@@ -103,6 +101,6 @@ class Controller(object):
         """
         prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
 
-        panelName = _(u"TeXEquation [Plugin]")
+        panelName = _("TeXEquation [Plugin]")
         panelsList = [PreferencePanelInfo(prefPanel, panelName)]
         dialog.appendPreferenceGroup(panelName, panelsList)

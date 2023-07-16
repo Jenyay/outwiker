@@ -4544,7 +4544,7 @@ class UltimateListLineData(object):
                 # We got a checkbox-type item
                 ix, iy = self._owner.GetCheckboxImageSize()
                 checked = item.IsChecked()
-                self._owner.DrawCheckbox(dc, xOld, y + (height-iy+1)/2, item.GetKind(), checked, enabled)
+                self._owner.DrawCheckbox(dc, xOld, y + (height-iy+1)//2, item.GetKind(), checked, enabled)
                 xOld += ix
                 width -= ix
 
@@ -4555,7 +4555,7 @@ class UltimateListLineData(object):
                 for img in images:
 
                     ix, iy = self._owner.GetImageSize([img])
-                    self._owner.DrawImage(img, dc, xOld, y + (height-iy)/2, enabled)
+                    self._owner.DrawImage(img, dc, xOld, y + (height-iy)//2, enabled)
 
                     xOld += ix
                     width -= ix
@@ -5870,7 +5870,8 @@ class UltimateListTextCtrl(ExpandoTextCtrl):
                 # Notify the owner about the changes
                 self.AcceptChanges()
                 # Even if vetoed, close the control (consistent with MSW)
-                wx.CallAfter(self.Finish)
+                # wx.CallAfter(self.Finish)
+                self.Finish()
 
         elif keycode == wx.WXK_ESCAPE:
             self.StopEditing()
@@ -5925,7 +5926,8 @@ class UltimateListTextCtrl(ExpandoTextCtrl):
         # We must let the native text control handle focus, too, otherwise
         # it could have problems with the cursor (e.g., in wxGTK).
         event.Skip()
-        wx.CallAfter(self.Finish)
+        # wx.CallAfter(self.Finish)
+        self.Finish()
 
 
     def StopEditing(self):
@@ -10433,7 +10435,8 @@ class UltimateListMainWindow(wx.ScrolledWindow):
         self.ResetVisibleLinesRange()
 
         if self.HasAGWFlag(ULC_HAS_VARIABLE_ROW_HEIGHT):
-            wx.CallAfter(self.RecalculatePositions, True)
+            # wx.CallAfter(self.RecalculatePositions, True)
+            self.RecalculatePositions(True)
 
         if event.GetOrientation() == wx.HORIZONTAL:
             lc = self.GetListCtrl()
@@ -10872,7 +10875,8 @@ class UltimateListCtrl(wx.Control):
         self.CreateOrDestroyFooterWindowAsNeeded()
 
         self.SetInitialSize(size)
-        wx.CallAfter(self.Layout)
+        # wx.CallAfter(self.Layout)
+        self.Layout()
 
 
     def CreateOrDestroyHeaderWindowAsNeeded(self):
@@ -12200,7 +12204,8 @@ class UltimateListCtrl(wx.Control):
         """
 
         self._mainWin.SortItems(func)
-        wx.CallAfter(self.Refresh)
+        # wx.CallAfter(self.Refresh)
+        self.Refresh()
 
         return True
 
@@ -12220,7 +12225,8 @@ class UltimateListCtrl(wx.Control):
             # We don't have the proper column sizes until we are visible so
             # use CallAfter to resize the columns on the first display
             if self._mainWin:
-                wx.CallAfter(self._mainWin.ResizeColumns)
+                # wx.CallAfter(self._mainWin.ResizeColumns)
+                self._mainWin.ResizeColumns()
 
         if not self._mainWin:
             return

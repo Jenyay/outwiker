@@ -4,7 +4,7 @@ from typing import Tuple
 
 import wx.aui
 
-from outwiker.utilites.text import positionInside
+from outwiker.api.core.text import positionInside
 
 from .gui.toolswindow import ToolsPane
 from .i18n import get_
@@ -12,7 +12,7 @@ from .tokentex import InlineTexToken
 from .defines import TOOLS_PANE_NAME
 
 
-class ToolsWindowController(object):
+class ToolsWindowController:
     def __init__(self, application):
         self._application = application
         self._toolsPane = None
@@ -24,12 +24,10 @@ class ToolsWindowController(object):
         _ = get_()
 
         self._application.onTextEditorCaretMove += self.__onTextEditorCaretMove
-        self._auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE,
-                              handler=self._onPaneClose)
+        self._auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE, handler=self._onPaneClose)
 
     def destroy(self):
-        self._auiManager.Unbind(wx.aui.EVT_AUI_PANE_CLOSE,
-                                handler=self._onPaneClose)
+        self._auiManager.Unbind(wx.aui.EVT_AUI_PANE_CLOSE, handler=self._onPaneClose)
         self._application.onTextEditorCaretMove -= self.__onTextEditorCaretMove
         self._destroyToolsWindow()
 
@@ -39,16 +37,14 @@ class ToolsWindowController(object):
             self._toolsPane.close()
             self._toolsPane = None
 
-    def __onTextEditorCaretMove(self,
-                                page: 'outwiker.core.tree.WikiPage',
-                                params: 'outwiker.core.events.TextEditorCaretMoveParams') -> None:
+    def __onTextEditorCaretMove(self, page, params) -> None:
         if params.startSelection != params.endSelection:
             return
 
         editor = params.editor
         position = params.startSelection
         text = editor.GetText()
-        insideEquation = positionInside(text, position, '{$', '$}')
+        insideEquation = positionInside(text, position, "{$", "$}")
 
         if insideEquation:
             # May be the window was closed by user
@@ -62,15 +58,16 @@ class ToolsWindowController(object):
         self._prevPositionInsideEquation = insideEquation
 
     def _showToolsWindow(self):
-        '''
+        """
         Show tools window (with equation preview). The window will be created
         if _toolsPane is None.
-        '''
+        """
         if self._toolsPane is None:
             self._toolsPane = ToolsPane(
                 self._application.mainWindow,
                 self._application.mainWindow.auiManager,
-                self._application)
+                self._application,
+            )
             self._application.mainWindow.UpdateAuiManager()
 
         if not self._toolsPane.isShown():
@@ -98,10 +95,10 @@ class ToolsWindowController(object):
 
         blockMode = False
         if left_pos == -1 or right_pos == -1:
-            return ('', blockMode)
+            return ("", blockMode)
 
-        equation = text[left_pos + len(left_token): right_pos]
-        if equation.startswith('$') and equation.endswith('$'):
+        equation = text[left_pos + len(left_token) : right_pos]
+        if equation.startswith("$") and equation.endswith("$"):
             equation = equation[1:-1]
             blockMode = True
 

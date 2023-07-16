@@ -5,14 +5,16 @@ source =
 
 [report]
 omit =
-    outwiker/libs/*
-    tests/*
+    src/outwiker/tests/*
     plugins/datagraph/datagraph/libs/*
     plugins/diagrammer/diagrammer/libs/*
     plugins/snippets/snippets/libs/*
     plugins/testlatexpage/testlatexpage/libs/*
     plugins/updatenotifier/updatenotifier/libs/*
     plugins/webpage/webpage/libs/*
+    plugins/markdown/markdown/markdown_plugin_libs/*
+	plugins/template/*
+	testdata/*
     */.local/*
 precision = 2
 skip_covered = True

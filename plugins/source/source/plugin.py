@@ -3,7 +3,7 @@
 import os.path
 import sys
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 
@@ -17,11 +17,12 @@ class PluginSource(Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
+        super().__init__(application)
 
         self.__correctSysPath()
 
         from .controller import Controller
+
         self.__controller = Controller(self, application)
 
     def initialize(self):
@@ -39,19 +40,23 @@ class PluginSource(Plugin):
 
     @property
     def name(self):
-        return u"Source"
+        return "Source"
 
     @property
     def description(self):
         description = _(
-            u"Add command (:source:) in wiki parser. This command highlight your source code.")
+            "Add command (:source:) in wiki parser. This command highlight your source code."
+        )
 
-        usage = _(u"""<B>Usage:</B>:
+        usage = _(
+            """<B>Usage:</B>:
 (:source params... :)
 source code
-(:sourceend:)""")
+(:sourceend:)"""
+        )
 
-        params = _(u"""<B>Params:</B>
+        params = _(
+            """<B>Params:</B>
 <U>lang</U> - programming language
 
 <U>tabwidth</U> - tab size
@@ -64,42 +69,53 @@ source code
 
 <U>parentbg</U> - use the page background for the code block
 
-<U>linenum</U> - enable line numbers""")
+<U>linenum</U> - enable line numbers"""
+        )
 
-        example1 = _(u"""<B>Example 1:</B>
+        example1 = _(
+            """<B>Example 1:</B>
 <PRE>(:source lang="python" tabwidth=4:)
 import os
 
 if __name__ == "__main__":
     print "Hello World!"
 (:sourceend:)
-</PRE>""")
+</PRE>"""
+        )
 
-        example2 = _(u"""<B>Example 2:</B>
+        example2 = _(
+            """<B>Example 2:</B>
 <PRE>(:source lang="python" style="autumn":)
 import os
 
 if __name__ == "__main__":
     print "Hello World!"
 (:sourceend:)
-</PRE>""")
+</PRE>"""
+        )
 
-        example3 = _(u"""<B>Example 3:</B>
+        example3 = _(
+            """<B>Example 3:</B>
 <PRE>(:source lang="python" tabwidth=4 parentbg linenum:)
 import os
 
 if __name__ == "__main__":
     print "Hello World!"
 (:sourceend:)
-</PRE>""")
+</PRE>"""
+        )
 
-        example4 = _(u"""<B>Example 4:</B>
-<PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>""")
+        example4 = _(
+            """<B>Example 4:</B>
+<PRE>(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)</PRE>"""
+        )
 
-        example5 = _(u"""<B>Example 5:</B>
-<PRE>(:source file="Attach:example.txt" lang="python":)(:sourceend:)</PRE>""")
+        example5 = _(
+            """<B>Example 5:</B>
+<PRE>(:source file="Attach:example.txt" lang="python":)(:sourceend:)</PRE>"""
+        )
 
-        return u"""{description}
+        return """{description}
 
 {usage}
 
@@ -113,18 +129,20 @@ if __name__ == "__main__":
 
 {example4}
 
-{example5}""".format(description=description,
-                     usage=usage,
-                     params=params,
-                     example1=example1,
-                     example2=example2,
-                     example3=example3,
-                     example4=example4,
-                     example5=example5)
+{example5}""".format(
+            description=description,
+            usage=usage,
+            params=params,
+            example1=example1,
+            example2=example2,
+            example3=example3,
+            example4=example4,
+            example5=example5,
+        )
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/SourcePluginEn")
+        return _("https://jenyay.net/Outwiker/SourcePluginEn")
 
     def destroy(self):
         """
@@ -136,4 +154,5 @@ if __name__ == "__main__":
     @property
     def config(self):
         from .sourceconfig import SourceConfig
+
         return SourceConfig(self._application.config)

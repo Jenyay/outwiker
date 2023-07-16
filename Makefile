@@ -2,7 +2,7 @@ OUTWIKER_DIR=$(DESTDIR)/usr/share/outwiker
 SRC_DIR=src
 NFB_LINUX_DIR=need_for_build/linux/
 PLUGINS_DIR=plugins
-PLUGINS=autorenamer counter datagraph diagrammer export2html externaltools hackpage htmlformatter htmlheads lightbox livejournal markdown pagetypecolor readingmode sessions snippets source spoiler statistics tableofcontents texequation thumbgallery updatenotifier webpage
+PLUGINS=autorenamer counter datagraph diagrammer export2html externaltools hackpage htmlformatter htmlheads lightbox livejournal markdown pagetypecolor readingmode sessions snippets source spoiler statistics tableofcontents texequation thumbgallery webpage
 
 all:
 
@@ -30,7 +30,6 @@ install:
 	cp -r $(SRC_DIR)/textstyles $(OUTWIKER_DIR)
 	mkdir -p $(OUTWIKER_DIR)/plugins
 	cp $(SRC_DIR)/runoutwiker.py $(OUTWIKER_DIR)
-	cp $(SRC_DIR)/versions.xml $(OUTWIKER_DIR)
 	cp "copyright.txt" $(OUTWIKER_DIR)
 	cp "README" $(OUTWIKER_DIR)
 	cp $(NFB_LINUX_DIR)/outwiker $(DESTDIR)/usr/bin/

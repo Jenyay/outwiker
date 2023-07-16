@@ -3,7 +3,7 @@
 import wx
 
 
-class DialogTester(object):
+class DialogTester:
     """
     Класс, используемый для тестирования GUI (диалогов)
     """
@@ -33,31 +33,31 @@ class DialogTester(object):
         Метод добавляет в _dialogActions функцию,
         которая только возвращает wx.ID_OK
         """
-        self.append(self._returnResult, wx.ID_OK)
+        self.append(returnResult, wx.ID_OK)
 
     def appendCancel(self):
         """
         Метод добавляет в _dialogActions функцию,
         которая только возвращает wx.ID_CANCEL
         """
-        self.append(self._returnResult, wx.ID_CANCEL)
+        self.append(returnResult, wx.ID_CANCEL)
 
     def appendYes(self):
         """
         Метод добавляет в _dialogActions функцию,
         которая только возвращает wx.YES
         """
-        self.append(self._returnResult, wx.YES)
+        self.append(returnResult, wx.YES)
 
     def appendNo(self):
         """
         Метод добавляет в _dialogActions функцию,
-        которая только возвращает wx.YES
+        которая только возвращает wx.NO
         """
-        self.append(self._returnResult, wx.NO)
+        self.append(returnResult, wx.NO)
 
     def appendError(self):
-        self.append(self._error)
+        self.append(error)
 
     def pop(self):
         """
@@ -81,14 +81,24 @@ class DialogTester(object):
 
         return result
 
-    def _returnResult(self, _dialog, result):
-        return result
 
-    def _error(self, _dialog):
-        assert False
+def returnResult(dialog, result):
+    return result
 
 
-class TesterInterface(object):
+def error(dialog):
+    assert False
+
+
+def getButtonId(dialog, button_name: str):
+    """
+    Returns button id for clicking in the dialog
+    button_name - button member name in dialog
+    """
+    return getattr(dialog, button_name).GetId()
+
+
+class TesterInterface:
     def __init__(self):
         self.dialogTester = DialogTester()
 

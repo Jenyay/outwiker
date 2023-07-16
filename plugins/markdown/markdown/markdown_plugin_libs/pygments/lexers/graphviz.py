@@ -4,12 +4,13 @@
 
     Lexer for the DOT language (graphviz).
 
-    :copyright: Copyright 2006-2021 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2022 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
 from pygments.lexer import RegexLexer, bygroups
-from pygments.token import Comment, Keyword, Operator, Name, String, Number, Punctuation, Whitespace
+from pygments.token import Comment, Keyword, Operator, Name, String, Number, \
+    Punctuation, Whitespace
 
 
 __all__ = ['GraphvizLexer']
@@ -22,6 +23,7 @@ class GraphvizLexer(RegexLexer):
     .. versionadded:: 2.8
     """
     name = 'Graphviz'
+    url = 'https://www.graphviz.org/doc/info/lang.html'
     aliases = ['graphviz', 'dot']
     filenames = ['*.gv', '*.dot']
     mimetypes = ['text/x-graphviz', 'text/vnd.graphviz']
@@ -37,9 +39,9 @@ class GraphvizLexer(RegexLexer):
                 bygroups(Name.Attribute, Whitespace, Punctuation, Whitespace),
                 'attr_id'),
             (r'\b(n|ne|e|se|s|sw|w|nw|c|_)\b', Name.Builtin),
-            (r'\b\D\w*', Name.Tag), # node
+            (r'\b\D\w*', Name.Tag),  # node
             (r'[-]?((\.[0-9]+)|([0-9]+(\.[0-9]*)?))', Number),
-            (r'"(\\"|[^"])*?"', Name.Tag), # quoted node
+            (r'"(\\"|[^"])*?"', Name.Tag),  # quoted node
             (r'<', Punctuation, 'xml'),
         ],
         'attr_id': [

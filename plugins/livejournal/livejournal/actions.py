@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractproperty
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from .i18n import get_
 from .comboboxdialog import ComboBoxDialog
@@ -29,10 +29,12 @@ class BaseLJAction(BaseAction, metaclass=ABCMeta):
     def run(self, params):
         assert self._application.mainWindow is not None
 
-        with ComboBoxDialog(self._application.mainWindow,
-                            self.dialogTitle,
-                            self.dialogTitle,
-                            wx.CB_DROPDOWN | wx.CB_SORT) as dlg:
+        with ComboBoxDialog(
+            self._application.mainWindow,
+            self.dialogTitle,
+            self.dialogTitle,
+            wx.CB_DROPDOWN | wx.CB_SORT,
+        ) as dlg:
             editor = self._getPageView().codeEditor
 
             selText = editor.GetSelectedText()
@@ -49,19 +51,21 @@ class BaseLJAction(BaseAction, metaclass=ABCMeta):
 
 
 class LJUserAction(BaseLJAction):
-    stringId = u"Livejournal_user"
+    stringId = "Livejournal_user"
 
     @property
     def title(self):
-        return _(u"LiveJournal user (:ljuser ...:)")
+        return _("LiveJournal user (:ljuser ...:)")
 
     @property
     def description(self):
-        return _(u"LiveJournal plugin. Insert (:ljuser... :) command to create the link to LiveJournal user")
+        return _(
+            "LiveJournal plugin. Insert (:ljuser... :) command to create the link to LiveJournal user"
+        )
 
     @property
     def dialogTitle(self):
-        return _(u"LiveJournal user")
+        return _("LiveJournal user")
 
     @property
     def controllerType(self):
@@ -69,19 +73,21 @@ class LJUserAction(BaseLJAction):
 
 
 class LJCommAction(BaseLJAction):
-    stringId = u"LiveJournal_commmunity"
+    stringId = "LiveJournal_commmunity"
 
     @property
     def title(self):
-        return _(u"LiveJournal community (:ljcomm ...:)")
+        return _("LiveJournal community (:ljcomm ...:)")
 
     @property
     def description(self):
-        return _(u"LiveJournal plugin. Insert (:ljcomm... :) command to create the link to LiveJournal community")
+        return _(
+            "LiveJournal plugin. Insert (:ljcomm... :) command to create the link to LiveJournal community"
+        )
 
     @property
     def dialogTitle(self):
-        return _(u"LiveJournal community")
+        return _("LiveJournal community")
 
     @property
     def controllerType(self):

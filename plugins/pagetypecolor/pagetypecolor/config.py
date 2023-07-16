@@ -1,33 +1,18 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.core.config import StringOption
+from outwiker.api.core.config import StringOption
 
 
-class PageTypeColorConfig (object):
-    '''
+class PageTypeColorConfig:
+    """
     Класс для хранения настроек панели с облагом тегов
-    '''
-    SECTION = u'PageTypeColor'
+    """
+
+    SECTION = "PageTypeColor"
 
     def __init__(self, config):
         self.config = config
-
-        self.wikiColor = StringOption(self.config,
-                                      self.SECTION,
-                                      u'wiki',
-                                      u'#9DC0FA')
-
-        self.htmlColor = StringOption(self.config,
-                                      self.SECTION,
-                                      u'html',
-                                      u'#F1F779')
-
-        self.textColor = StringOption(self.config,
-                                      self.SECTION,
-                                      u'text',
-                                      u'#79F7B8')
-
-        self.searchColor = StringOption(self.config,
-                                        self.SECTION,
-                                        u'search',
-                                        u'#F280E3')
+        self.wikiColor = StringOption(self.config, self.SECTION, "wiki", "#9DC0FA")
+        self.htmlColor = StringOption(self.config, self.SECTION, "html", "#F1F779")
+        self.textColor = StringOption(self.config, self.SECTION, "text", "#79F7B8")
+        self.searchColor = StringOption(self.config, self.SECTION, "search", "#F280E3")

@@ -4,52 +4,61 @@ import html
 
 from pyparsing import QuotedString
 
-from .tokenattach import AttachToken
+from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.core.htmlformatter import HtmlFormatter
 from outwiker.utilites.urls import is_url
 
+from .tokenattach import AttachToken
+from .htmlelements import create_link_to_page, create_link_to_attached_file, create_invalid_attached_file
+import outwiker.core.cssclasses as css
 
-class LinkFactory(object):
+
+class LinkFactory:
     @staticmethod
     def make(parser):
         return LinkToken(parser).getToken()
 
 
-class LinkToken(object):
+class LinkToken:
     linkStart = "[["
     linkEnd = "]]"
-    attachString = u"Attach:"
+    attachString = "Attach:"
 
     def __init__(self, parser):
         self.parser = parser
+        self.attach_prefix = PAGE_ATTACH_DIR + '/'
 
     def getToken(self):
         return QuotedString(LinkToken.linkStart,
                             endQuoteChar=LinkToken.linkEnd,
                             multiline=False,
-                            convertWhitespaceEscapes=False).setParseAction(self.__convertToLink)("link")
+                            convertWhitespaceEscapes=False).setParseAction(self._convertToLink)("link")
 
-    def __convertToLink(self, _s, _l, t):
+    def _isHasImage(self, text: str) -> bool:
+        return '<img' in text.lower()
+
+    def _convertToLink(self, _s, _l, t):
         """
         Преобразовать ссылку
         """
         if "->" in t[0]:
-            return self.__convertLinkArrow(t[0])
+            return self._convertLinkArrow(t[0])
         elif "|" in t[0]:
-            return self.__convertLinkLine(t[0])
+            return self._convertLinkLine(t[0])
 
-        return self.__convertEmptyLink(t[0])
+        return self._convertEmptyLink(t[0])
 
-    def __convertLinkArrow(self, text):
+    def _convertLinkArrow(self, text):
         """
         Преобразовать ссылки в виде [[comment -> url]]
         """
         comment, url = text.rsplit("->", 1)
-        realurl = self.__prepareUrl(url)
+        realurl = self._prepareUrl(url)
 
-        return self.__getUrlTag(realurl, html.escape(comment, False))
+        return self._getUrlTag(realurl, html.escape(comment, False))
 
-    def __convertLinkLine(self, text):
+    def _convertLinkLine(self, text):
         """
         Преобразовать ссылки в виде [[url | comment]]
         """
@@ -59,37 +68,58 @@ class LinkToken(object):
             url, comment = text.split(" |", 1)
         else:
             url, comment = text.rsplit("|", 1)
-        realurl = self.__prepareUrl(url)
+        realurl = self._prepareUrl(url)
 
-        return self.__getUrlTag(realurl, html.escape(comment, False))
+        return self._getUrlTag(realurl, html.escape(comment, False))
 
-    def __prepareUrl(self, url):
+    def _prepareUrl(self, url):
         """
         Подготовить адрес для ссылки.
         Если ссылка - прикрепленный файл, то создать путь до него
         """
+        # Prepare URL to attached file
         if url.strip().startswith(AttachToken.attachString):
-            return url.strip().replace(AttachToken.attachString,
-                                       PAGE_ATTACH_DIR + "/", 1)
+            url = url.strip()
+
+            # Extract path to attached file
+            url = url[len(AttachToken.attachString):]
+            url = self._removeQuotes(url)
+
+            return '{}/{}'.format(PAGE_ATTACH_DIR, url)
 
         return url
 
-    def __getUrlTag(self, url, comment):
-        return self.__generateHtmlTag(
-                url.strip(),
-                self.parser.parseLinkMarkup(comment.strip()))
+    def _removeQuotes(self, text):
+        if ((text.startswith("'") and text.endswith("'")) or
+                ((text.startswith('"') and text.endswith('"')))):
+            text = text[1:-1]
 
-    def __generateHtmlTag(self, url, comment):
+        return text
+
+    def _getUrlTag(self, url, comment):
+        return self._generateHtmlTag(
+            url.strip(),
+            self.parser.parseLinkMarkup(comment.strip()))
+
+    def _generateHtmlTag(self, url, comment):
         if (not is_url(url) and
-                not url.startswith(AttachToken.attachString) and
-                not url.startswith(PAGE_ATTACH_DIR + '/') and
+                not url.startswith(self.attach_prefix) and
                 not url.startswith('#') and
                 not url.startswith('mailto:')):
             url = 'page://' + url
 
-        return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
+        if url.startswith(self.attach_prefix) and not self._isHasImage(comment):
+            if Attachment(self.parser.page).exists(url[len(self.attach_prefix):]):
+                return create_link_to_attached_file(url, comment)
+            else:
+                return create_invalid_attached_file(comment)
 
-    def __convertEmptyLink(self, text):
+        if url.startswith('page://'):
+            return create_link_to_page(url, comment)
+
+        return HtmlFormatter().link(url, comment, [css.CSS_WIKI])
+
+    def _convertEmptyLink(self, text):
         """
         Преобразовать ссылки в виде [[link]]
         """
@@ -97,18 +127,23 @@ class LinkToken(object):
 
         if textStrip.startswith(AttachToken.attachString):
             # Ссылка на прикрепление
-            url = textStrip.replace(
-                AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
-            comment = textStrip.replace(AttachToken.attachString, "")
-            return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
+            attach_name = self._removeQuotes(
+                    textStrip[len(AttachToken.attachString):])
+
+            url = '{}/{}'.format(PAGE_ATTACH_DIR, attach_name)
+            comment = attach_name
+            if Attachment(self.parser.page).exists(attach_name):
+                return create_link_to_attached_file(url, comment)
+            else:
+                return create_invalid_attached_file(comment)
         elif (textStrip.startswith("#") and
                 self.parser.page is not None and
                 self.parser.page[textStrip] is None):
             # Ссылка начинается на #, но вложенных страниц с таким именем нет,
             # значит это якорь
-            return '<a id="{anchor}"></a>'.format(anchor=textStrip[1:])
+            return HtmlFormatter().anchor(textStrip[1:])
 
         # Ссылка не на прикрепление
         url = text.strip()
         comment = text.strip()
-        return self.__generateHtmlTag(url, html.escape(comment, False))
+        return self._generateHtmlTag(url, html.escape(comment, False))

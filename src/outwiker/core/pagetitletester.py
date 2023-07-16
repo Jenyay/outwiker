@@ -7,8 +7,8 @@ from abc import ABCMeta, abstractmethod
 class PageTitleError(Exception):
     """Exception raised for title if it can't be used in all OS systems.
 
-        Attributes:
-            message -- explanation of the error
+    Attributes:
+        message -- explanation of the error
     """
 
     def __init__(self, message):
@@ -18,15 +18,15 @@ class PageTitleError(Exception):
 class PageTitleWarning(Exception):
     """Exception raised for title if it can't be used in Windows system.
 
-        Attributes:
-            message -- explanation of the error
+    Attributes:
+        message -- explanation of the error
     """
 
     def __init__(self, message):
         self.message = message
 
 
-class PageTitleTester(object, metaclass=ABCMeta):
+class PageTitleTester(metaclass=ABCMeta):
     """Класс для проверки правильности заголовка страницы."""
 
     def test(self, title):
@@ -48,25 +48,28 @@ class PageTitleTester(object, metaclass=ABCMeta):
         regex = "%[0-9a-fA-F]{2}"
         if re.search(regex, title, flags=re.IGNORECASE) is not None:
             raise PageTitleWarning(
-                _(u'The page title contains the expression "%xx". Links on this page may be invalid.'))
+                _(
+                    'The page title contains the expression "%xx". Links on this page may be invalid.'
+                )
+            )
 
     def _testCommonErrors(self, title):
         """Проверка на ошибки, общие для всех систем."""
         striptitle = title.strip()
 
         if len(striptitle) == 0:
-            raise PageTitleError(_('The page title is empty'))
+            raise PageTitleError(_("The page title is empty"))
 
-        if striptitle == u".":
-            raise PageTitleError(_('Invalid the page title'))
+        if striptitle == ".":
+            raise PageTitleError(_("Invalid the page title"))
 
-        if striptitle.startswith('__'):
-            raise PageTitleError(_('The page title can not begin with __'))
+        if striptitle.startswith("__"):
+            raise PageTitleError(_("The page title can not begin with __"))
 
-        invalidCharacters = '\\/\0'
+        invalidCharacters = "\\/\0"
 
         if not self._testForInvalidChar(striptitle, invalidCharacters):
-            raise PageTitleError(_('The page title contains invalid characters'))
+            raise PageTitleError(_("The page title contains invalid characters"))
 
     @staticmethod
     def _testForInvalidChar(title, invalidCharacters):
@@ -92,20 +95,21 @@ class PageTitleTester(object, metaclass=ABCMeta):
         """
         pass
 
-    def replaceDangerousSymbols(self, title, replace):
-        """Replace dangerous symbols by 'replace'"""
+    def replaceDangerousSymbols(self, title, replacement):
+        """Replace dangerous symbols by 'replacement'"""
         regexp = re.compile(r'[><|?*:"\\/#]|(%[0-9a-fA-F]{2})')
-        return regexp.sub(replace, title)
+        return regexp.sub(replacement, title)
 
 
 class WindowsPageTitleTester(PageTitleTester):
     """Проверка имени страницы для Windows."""
+
     def _testForError(self, title):
         invalidCharacters = '><|?*:"\\'
         striptitle = title.strip()
 
         if not self._testForInvalidChar(striptitle, invalidCharacters):
-            raise PageTitleError(_('The page title contains invalid characters'))
+            raise PageTitleError(_("The page title contains invalid characters"))
 
     def _testForWarning(self, title):
         pass
@@ -113,6 +117,7 @@ class WindowsPageTitleTester(PageTitleTester):
 
 class LinuxPageTitleTester(PageTitleTester):
     """Проверка имени страницы для Linux."""
+
     def _testForError(self, title):
         pass
 
@@ -122,4 +127,7 @@ class LinuxPageTitleTester(PageTitleTester):
 
         if not self._testForInvalidChar(striptitle, invalidCharacters):
             raise PageTitleWarning(
-                _('The page title contains invalid characters for Microsoft Windows operating system'))
+                _(
+                    "The page title contains invalid characters for Microsoft Windows operating system"
+                )
+            )

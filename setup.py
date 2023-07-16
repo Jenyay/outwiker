@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='outwiker',
-    version='3.0.0',
+    version='3.2.0',
     description='A cross-platform software for keeping your notes in a tree',
     author='Eugene Ilin (aka Jenyay)',
     author_email='jenyay.ilin@gmail.com',
@@ -39,15 +39,14 @@ setup(
         'Topic :: Text Editors',
         'Topic :: Text Processing :: Markup',
     ],
-    python_requires='>=3.5',
+    python_requires='>=3.8',
     install_requires=[
-        'wxPython==4.0.7.post2',
-        'Pillow>=7.0.0',
-        'idna>=2.9',
-        'pyparsing>=2.4.6',
-        'psutil==5.6.6',
-        'cyhunspell>=1.3.4',
-        'comtypes>=1.1.7;platform_system=="Windows"',
+        'wxPython==4.2.1',
+        'Pillow==9.5.0',
+        'idna>=2.10',
+        'pyparsing==3.0.9',
+        'psutil>=5.9.5',
+        'rcssmin>=1.1'
     ],
     project_urls={
         'Documentation': 'https://outwiker.readthedocs.io/',

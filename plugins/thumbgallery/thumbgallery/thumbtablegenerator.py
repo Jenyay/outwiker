@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.attachment import Attachment
-from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.api.core.attachment import Attachment
+from outwiker.api.core.defines import PAGE_ATTACH_DIR
 
 from .basethumbgenerator import BaseThumbGenerator
 
 
-class ThumbTableGenerator (BaseThumbGenerator):
+class ThumbTableGenerator(BaseThumbGenerator):
     """
     Создание списка превьюшек в виде таблицы
     """
+
     def __init__(self, items, thumbsize, parser, cols):
         """
         items - список кортежей, описывающие прикрепленные файлов,
@@ -23,37 +24,37 @@ class ThumbTableGenerator (BaseThumbGenerator):
         self._cols = cols
 
         # Обертка для галереи в целом
-        self._fullTemplate = u'<table class="thumblist-table">{content}</table>'
+        self._fullTemplate = '<table class="thumbgallery-table">{content}</table>'
 
-        self._rowTemplate = u'<tr class="thumblist-row">{row}</tr>'
+        self._rowTemplate = '<tr class="thumbgallery-row">{row}</tr>'
 
-        self._singleThumbTemplate = u'<td class="thumblist-td"><div class="thumblist-table-item"><div class="thumblist-table-image">{thumbimage}</div><div class="thumblist-table-comment">{comment}</div></div></td>'
+        self._singleThumbTemplate = '<td class="thumbgallery-td"><div class="thumbgallery-table-item"><div class="thumbgallery-table-image">{thumbimage}</div><div class="thumbgallery-table-comment">{comment}</div></div></td>'
 
-        self._style = """<!-- Begin Thumblist styles -->
+        self._style = """<!-- Begin thumbgallery styles -->
 <style>
-    table.thumblist-table {
+    table.thumbgallery-table {
         border: 1px solid #DDD;
         }
 
-    div.thumblist-table-item{
+    div.thumbgallery-table-item{
 		padding: 1em;
 	}
 
-	td.thumblist-td {
+	td.thumbgallery-td {
         border: 1px solid #DDD;
 		text-align: center;
 	}
 
-    div.thumblist-table-image{
+    div.thumbgallery-table-image{
 		text-align: center;
 	}
 
-	div.thumblist-table-comment{
+	div.thumbgallery-table-comment{
 		text-align: center;
 		height: 100%;
 	}
 </style>
-<!-- End Thumblist styles -->"""
+<!-- End thumbgallery styles -->"""
 
     def generate(self):
         """
@@ -70,10 +71,13 @@ class ThumbTableGenerator (BaseThumbGenerator):
         """
         Возвращает оформленный элемент таблицы
         """
-        image = u"""<A HREF="{attachdir}/{imagename}"><IMG SRC="{thumbpath}"/></A>""".format(
+        image = (
+            """<a href="{attachdir}/{imagename}"><img src="{thumbpath}"/></a>""".format(
                 attachdir=PAGE_ATTACH_DIR,
-                imagename=item[0],
-                thumbpath=self._getThumbnail(self._parser.page, item[0]))
+                imagename=item[0].replace("\\", "/"),
+                thumbpath=self._getThumbnail(self._parser.page, item[0]),
+            )
+        )
 
         return self._singleThumbTemplate.format(thumbimage=image, comment=item[1])
 
@@ -84,10 +88,9 @@ class ThumbTableGenerator (BaseThumbGenerator):
         itemsText = [self._generateItemText(item) for item in self._items]
 
         # Разрежем список на несколько списков, длиной self._cols
-        splitItems = [itemsText[i: i + self._cols]
-                      for i in range(0, len(itemsText), self._cols)]
+        splitItems = [
+            itemsText[i : i + self._cols] for i in range(0, len(itemsText), self._cols)
+        ]
 
-        rows = [self._rowTemplate.format(row=u"".join(row))
-                for
-                row in splitItems]
-        return u"".join(rows)
+        rows = [self._rowTemplate.format(row="".join(row)) for row in splitItems]
+        return "".join(rows)

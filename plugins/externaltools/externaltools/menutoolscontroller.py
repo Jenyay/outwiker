@@ -5,8 +5,8 @@ import subprocess
 
 import wx
 
-from outwiker.core.tree import RootWikiPage
-from outwiker.core.commands import MessageBox
+from outwiker.api.core.defines import PAGE_CONTENT_FILE
+from outwiker.api.gui.dialogs import MessageBox
 
 from .i18n import get_
 from .menumaker import MenuMaker
@@ -39,13 +39,11 @@ class MenuToolsController(object):
         menuMaker = MenuMaker(self, menu, self._application.mainWindow)
         pagetype = page.getTypeString()
 
-        if(pagetype == u"wiki" or
-                pagetype == u"html" or
-                pagetype == u"markdown"):
+        if pagetype == "wiki" or pagetype == "html" or pagetype == "markdown":
             menuMaker.insertSeparator()
             menuMaker.insertContentMenuItem()
             menuMaker.insertResultMenuItem()
-        elif pagetype == u"text":
+        elif pagetype == "text":
             menuMaker.insertSeparator()
             menuMaker.insertContentMenuItem()
 
@@ -54,7 +52,7 @@ class MenuToolsController(object):
         Открыть файл контента текущей страницы с помощью tools
         """
         assert self._page is not None
-        contentFname = os.path.join(self._page.path, RootWikiPage.contentFile)
+        contentFname = os.path.join(self._page.path, PAGE_CONTENT_FILE)
         self.__executeTools(tools.command, contentFname)
 
     def openResultFile(self, tools):
@@ -69,6 +67,4 @@ class MenuToolsController(object):
         try:
             subprocess.call([command, fname])
         except OSError:
-            MessageBox(_(u"Can't execute tools"),
-                       _(u"Error"),
-                       wx.OK | wx.ICON_ERROR)
+            MessageBox(_("Can't execute tools"), _("Error"), wx.OK | wx.ICON_ERROR)

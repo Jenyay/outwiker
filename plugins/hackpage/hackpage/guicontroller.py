@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.defines import MENU_TOOLS
+from outwiker.api.gui.defines import MENU_TOOLS
 
 from hackpage.i18n import get_
 from hackpage.actions.changeuid import ChangeUIDAction
@@ -10,27 +10,32 @@ from hackpage.actions.setalias import SetAliasAction
 from hackpage.actions.changepagefolder import ChangePageFolderAction
 from hackpage.actions.changepagecreationdate import ChangePageCreationDateAction
 from hackpage.actions.changepagechangedate import ChangePageChangeDateAction
-from hackpage.utils import (changeUidWithDialog,
-                            setAliasWithDialog,
-                            setPageFolderWithDialog,
-                            setPageCreationDate,
-                            setPageChangeDate)
+from hackpage.utils import (
+    changeUidWithDialog,
+    setAliasWithDialog,
+    setPageFolderWithDialog,
+    setPageCreationDate,
+    setPageChangeDate,
+)
 
 
-class GuiController(object):
+class GuiController:
     """
     Создание элементов интерфейса с использованием actions
     """
+
     def __init__(self, controller, application):
         self._controller = controller
         self._application = application
 
         # All actions list
-        self._actions = [ChangeUIDAction,
-                         SetAliasAction,
-                         ChangePageFolderAction,
-                         ChangePageCreationDateAction,
-                         ChangePageChangeDateAction]
+        self._actions = [
+            ChangeUIDAction,
+            SetAliasAction,
+            ChangePageFolderAction,
+            ChangePageCreationDateAction,
+            ChangePageChangeDateAction,
+        ]
 
         global _
         _ = get_()
@@ -39,12 +44,6 @@ class GuiController(object):
 
         # Pointer to clicked page
         self._selectedPage = None
-
-        self.CHANGE_PAGE_UID = wx.NewId()
-        self.SET_PAGE_ALIAS_UID = wx.NewId()
-        self.SET_PAGE_FOLDER_UID = wx.NewId()
-        self.SET_PAGE_CREATION_DATE_UID = wx.NewId()
-        self.SET_PAGE_CHANGE_DATE_UID = wx.NewId()
 
         self._popupSubmenu = None
 
@@ -58,9 +57,14 @@ class GuiController(object):
         self._bind()
 
         if self._application.mainWindow is not None:
-            list(map(lambda action: self._application.actionController.register(
-                action(self._application, self._controller), None),
-                self._actions))
+            list(
+                map(
+                    lambda action: self._application.actionController.register(
+                        action(self._application, self._controller), None
+                    ),
+                    self._actions,
+                )
+            )
 
             self.createTools()
 
@@ -73,10 +77,16 @@ class GuiController(object):
         menu_tools = mainWindow.menuController[MENU_TOOLS]
         # Menu for action
         menu = wx.Menu()
-        self._mainSubmenuItem = menu_tools.AppendSubMenu(menu, u'HackPage')
+        self._mainSubmenuItem = menu_tools.AppendSubMenu(menu, "HackPage")
 
-        list(map(lambda action: self._application.actionController.appendMenuItem(
-            action.stringId, menu), self._actions))
+        list(
+            map(
+                lambda action: self._application.actionController.appendMenuItem(
+                    action.stringId, menu
+                ),
+                self._actions,
+            )
+        )
 
     def destroy(self):
         self._unbind()
@@ -85,8 +95,12 @@ class GuiController(object):
 
         if mainWindow is not None:
             menu_tools = mainWindow.menuController[MENU_TOOLS]
-            [*map(lambda action: actionController.removeAction(action.stringId),
-                  self._actions)]
+            [
+                *map(
+                    lambda action: actionController.removeAction(action.stringId),
+                    self._actions,
+                )
+            ]
             menu_tools.Remove(self._mainSubmenuItem)
             self._mainSubmenuItem = None
 
@@ -94,47 +108,48 @@ class GuiController(object):
         self._selectedPage = page
 
         self._popupSubmenu = wx.Menu()
-        self._popupSubmenu.Append(self.CHANGE_PAGE_UID,
-                                  _("Change page identifier..."))
-        self._popupSubmenu.Append(self.SET_PAGE_ALIAS_UID,
-                                  _("Set page alias..."))
-        self._popupSubmenu.Append(self.SET_PAGE_FOLDER_UID,
-                                  _("Change page folder..."))
-        self._popupSubmenu.Append(self.SET_PAGE_CREATION_DATE_UID,
-                                  _("Change page creation date and time..."))
-        self._popupSubmenu.Append(self.SET_PAGE_CHANGE_DATE_UID,
-                                  _("Change date and time of change of the page..."))
+        changePageUIDMenuItem = self._popupSubmenu.Append(
+            wx.ID_ANY, _("Change page identifier...")
+        )
+
+        setPageAliasMenuItem = self._popupSubmenu.Append(
+            wx.ID_ANY, _("Set page alias...")
+        )
+
+        setPageFolderMenuItem = self._popupSubmenu.Append(
+            wx.ID_ANY, _("Change page folder...")
+        )
+
+        setPageCreationDateMenuItem = self._popupSubmenu.Append(
+            wx.ID_ANY, _("Change page creation date and time...")
+        )
+
+        setPageChangeDateMenuItem = self._popupSubmenu.Append(
+            wx.ID_ANY, _("Change date and time of change of the page...")
+        )
 
         menu.AppendSubMenu(self._popupSubmenu, "HackPage")
 
         self._application.mainWindow.Bind(
-            wx.EVT_MENU,
-            id=self.CHANGE_PAGE_UID,
-            handler=self.__onChangePageUIDPopupClick
+            wx.EVT_MENU, self.__onChangePageUIDPopupClick, changePageUIDMenuItem
+        )
+
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self.__onSetPageAliasPopupClick, setPageAliasMenuItem
+        )
+
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self.__onSetPageFolderPopupClick, setPageFolderMenuItem
         )
 
         self._application.mainWindow.Bind(
             wx.EVT_MENU,
-            id=self.SET_PAGE_ALIAS_UID,
-            handler=self.__onSetPageAliasPopupClick
+            self.__onSetPageCreationDatePopupClick,
+            setPageCreationDateMenuItem,
         )
 
         self._application.mainWindow.Bind(
-            wx.EVT_MENU,
-            id=self.SET_PAGE_FOLDER_UID,
-            handler=self.__onSetPageFolderPopupClick
-        )
-
-        self._application.mainWindow.Bind(
-            wx.EVT_MENU,
-            id=self.SET_PAGE_CREATION_DATE_UID,
-            handler=self.__onSetPageCreationDatePopupClick
-        )
-
-        self._application.mainWindow.Bind(
-            wx.EVT_MENU,
-            id=self.SET_PAGE_CHANGE_DATE_UID,
-            handler=self.__onSetPageChangeDatePopupClick
+            wx.EVT_MENU, self.__onSetPageChangeDatePopupClick, setPageChangeDateMenuItem
         )
 
     def __onChangePageUIDPopupClick(self, event):
@@ -168,13 +183,22 @@ class GuiController(object):
         self._selectedPage = None
 
     def _unbindPopupMenu(self):
-        self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                            id=self.SET_PAGE_FOLDER_UID)
-        self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                            id=self.SET_PAGE_ALIAS_UID)
-        self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                            id=self.CHANGE_PAGE_UID)
-        self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                            id=self.SET_PAGE_CREATION_DATE_UID)
-        self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                            id=self.SET_PAGE_CHANGE_DATE_UID)
+        self._application.mainWindow.Unbind(
+            wx.EVT_MENU, handler=self.__onSetPageFolderPopupClick
+        )
+
+        self._application.mainWindow.Unbind(
+            wx.EVT_MENU, handler=self.__onSetPageAliasPopupClick
+        )
+
+        self._application.mainWindow.Unbind(
+            wx.EVT_MENU, handler=self.__onChangePageUIDPopupClick
+        )
+
+        self._application.mainWindow.Unbind(
+            wx.EVT_MENU, handler=self.__onSetPageCreationDatePopupClick
+        )
+
+        self._application.mainWindow.Unbind(
+            wx.EVT_MENU, handler=self.__onSetPageChangeDatePopupClick
+        )

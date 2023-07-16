@@ -1,6 +1,53 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="1.4.1" date="29.12.2020">
+	<version number="1.4.4" date="2023-05-03">
+		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.4.4.zip">
+			<requirements>
+				<api>3.922</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Migrate to new API.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на новый API.</change>
+		</changes>
+	</version>
+
+	<version number="1.4.3" date="2022-12-11">
+		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.4.3.zip">
+			<requirements>
+				<api>3.868</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Update libraries.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Обновление используемых библиотек.</change>
+		</changes>
+	</version>
+
+	<version number="1.4.2" date="2022-02-19">
+		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.4.2.zip">
+			<requirements>
+				<api>3.868</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Fix errors.</change>
+			<change>Update libraries.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Исправление ошибок.</change>
+			<change>Обновление используемых библиотек.</change>
+		</changes>
+	</version>
+
+	<version number="1.4.1" date="2020-12-29">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.4.1.zip">
 			<requirements>
 				<api>3.868</api>
@@ -15,7 +62,7 @@
 		</changes>
 	</version>
 
-	<version number="1.4" date="19.10.2019">
+	<version number="1.4" date="2019-10-19">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.4.zip">
 			<requirements>
 				<api>3.868</api>
@@ -30,7 +77,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3.3" date="26.05.2019">
+	<version number="1.3.3" date="2019-05-26">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.3.zip">
 			<requirements>
 				<api>2.858</api>
@@ -45,7 +92,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3.2" date="22.03.2019">
+	<version number="1.3.2" date="2019-03-22">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.2.zip">
 			<requirements>
 				<api>2.858</api>
@@ -62,7 +109,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3.1" date="24.01.2019">
+	<version number="1.3.1" date="2019-01-24">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.1.zip">
 			<requirements>
 				<api>2.858</api>
@@ -79,7 +126,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3" date="26.08.2018">
+	<version number="1.3" date="2018-08-26">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.zip">
 			<requirements>
 				<api>2.835</api>
@@ -94,7 +141,7 @@
 		</changes>
 	</version>
 
-	<version number="1.2.1" date="20.03.2018">
+	<version number="1.2.1" date="2018-03-20">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.1.zip">
 			<requirements>
 				<api>2.835</api>
@@ -109,7 +156,7 @@
 		</changes>
 	</version>
 
-	<version number="1.2" date="15.02.2018">
+	<version number="1.2" date="2018-02-15">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.zip">
 			<requirements>
 				<api>1.0</api>
@@ -124,7 +171,7 @@
 		</changes>
 	</version>
 
-	<version number="1.1.1" date="22.05.2017">
+	<version number="1.1.1" date="2017-05-22">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.1.zip">
 			<requirements>
 				<api>1.0</api>
@@ -139,7 +186,7 @@
 		</changes>
 	</version>
 
-	<version number="1.1" date="24.02.2017">
+	<version number="1.1" date="2017-02-24">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.zip">
 			<requirements>
 				<api>1.0</api>
@@ -156,7 +203,7 @@
 		</changes>
 	</version>
 
-	<version number="1.0" date="06.02.2017">
+	<version number="1.0" date="2017-02-06">
 		<download href="https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.0.zip">
 			<requirements>
 				<api>1.0</api>

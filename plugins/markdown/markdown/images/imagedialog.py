@@ -2,12 +2,12 @@
 
 import wx
 
-from outwiker.gui.testeddialog import TestedDialog
+from outwiker.api.gui.dialogs import TestedDialog
 
 from markdown.i18n import get_
 
 
-class ImageDialog (TestedDialog):
+class ImageDialog(TestedDialog):
     def __init__(self, parent):
         """
         parent - parent window
@@ -46,13 +46,13 @@ class ImageDialog (TestedDialog):
 
     def _createGui(self):
         # Элементы для выбора имени файла
-        filenameLabel = wx.StaticText(self, label=_(u"File name or link"))
+        filenameLabel = wx.StaticText(self, label=_("File name or link"))
         self.filesListCombo = wx.ComboBox(self, style=wx.CB_DROPDOWN)
         self.filesListCombo.SetSelection(0)
         self.filesListCombo.SetMinSize((250, -1))
 
         # Элементы для выбора размера
-        commentLabel = wx.StaticText(self, label=_(u"Comment"))
+        commentLabel = wx.StaticText(self, label=_("Comment"))
 
         self.commentText = wx.TextCtrl(self)
         self.commentText.SetMinSize((250, -1))
@@ -65,25 +65,25 @@ class ImageDialog (TestedDialog):
         mainSizer.AddGrowableCol(1)
         mainSizer.AddGrowableRow(2)
 
-        mainSizer.Add(filenameLabel,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=4)
-        mainSizer.Add(self.filesListCombo,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                      border=4)
+        mainSizer.Add(filenameLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
+        mainSizer.Add(
+            self.filesListCombo,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=4,
+        )
 
-        mainSizer.Add(commentLabel,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=4)
+        mainSizer.Add(commentLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
 
-        mainSizer.Add(self.commentText,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                      border=4)
+        mainSizer.Add(
+            self.commentText,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=4,
+        )
 
         mainSizer.AddStretchSpacer()
-        mainSizer.Add(okCancel,
-                      flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-                      border=4)
+        mainSizer.Add(
+            okCancel, flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM, border=4
+        )
 
         self.SetSizer(mainSizer)
         self.Fit()

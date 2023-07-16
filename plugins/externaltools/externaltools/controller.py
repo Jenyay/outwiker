@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo)
+from outwiker.api.gui.preferences import PreferencePanelInfo
+from outwiker.api.pages.wiki import WikiWikiPage
+from outwiker.api.pages.wiki.defines import MENU_WIKI
+from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo
 
 from .i18n import get_
 from .menutoolscontroller import MenuToolsController
@@ -14,16 +13,17 @@ from .commandexec.actions import (
     MacrosPageAction,
     MacrosHtmlAction,
     MacrosAttachAction,
-    MacrosFolderAction
+    MacrosFolderAction,
 )
 
 from . import defines
 
 
-class Controller(object):
+class Controller:
     """
     Этот класс отвечает за основную работу плагина
     """
+
     def __init__(self, plugin, application):
         self._plugin = plugin
         self._application = application
@@ -48,27 +48,26 @@ class Controller(object):
 
     def _initialize_guicontroller(self):
         action_gui_info = [
-            ActionGUIInfo(CommandExecAction(self._application),
-                          defines.MENU_EXTERNALTOOLS
-                          ),
-            ActionGUIInfo(MacrosPageAction(self._application),
-                          defines.MENU_EXTERNALTOOLS
-                          ),
-            ActionGUIInfo(MacrosHtmlAction(self._application),
-                          defines.MENU_EXTERNALTOOLS
-                          ),
-            ActionGUIInfo(MacrosAttachAction(self._application),
-                          defines.MENU_EXTERNALTOOLS
-                          ),
-            ActionGUIInfo(MacrosFolderAction(self._application),
-                          defines.MENU_EXTERNALTOOLS
-                          ),
+            ActionGUIInfo(
+                CommandExecAction(self._application), defines.MENU_EXTERNALTOOLS
+            ),
+            ActionGUIInfo(
+                MacrosPageAction(self._application), defines.MENU_EXTERNALTOOLS
+            ),
+            ActionGUIInfo(
+                MacrosHtmlAction(self._application), defines.MENU_EXTERNALTOOLS
+            ),
+            ActionGUIInfo(
+                MacrosAttachAction(self._application), defines.MENU_EXTERNALTOOLS
+            ),
+            ActionGUIInfo(
+                MacrosFolderAction(self._application), defines.MENU_EXTERNALTOOLS
+            ),
         ]
-        new_menus = [(defines.MENU_EXTERNALTOOLS, _('ExternalTools'), MENU_WIKI)]
+        new_menus = [(defines.MENU_EXTERNALTOOLS, _("ExternalTools"), MENU_WIKI)]
 
         if self._application.mainWindow is not None:
-            self._GUIController.initialize(action_gui_info,
-                                           new_menus=new_menus)
+            self._GUIController.initialize(action_gui_info, new_menus=new_menus)
 
     def destroy(self):
         self._menuToolsController.destroy()
@@ -82,8 +81,9 @@ class Controller(object):
 
     def __onPreferencesDialogCreate(self, dialog):
         from .preferencespanel import PreferencesPanel
+
         prefPanel = PreferencesPanel(dialog.treeBook, self._application.config)
 
-        panelName = _(u"External Tools [Plugin]")
+        panelName = _("External Tools [Plugin]")
         panelsList = [PreferencePanelInfo(prefPanel, panelName)]
         dialog.appendPreferenceGroup(panelName, panelsList)

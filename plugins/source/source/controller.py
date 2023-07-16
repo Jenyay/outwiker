@@ -2,20 +2,18 @@
 
 import os.path
 
-from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-from outwiker.gui.defines import TOOLBAR_PLUGINS
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo,
-                                                    ButtonInfo)
+from outwiker.api.gui.preferences import PreferencePanelInfo
+from outwiker.api.gui.defines import TOOLBAR_PLUGINS
+from outwiker.api.pages.wiki import WikiWikiPage
+from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo, ButtonInfo
 
 from .i18n import get_
 from .preferencepanel import PreferencePanel
 from .actions import InsertSourceAction
 
 
-class Controller(object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
@@ -46,14 +44,14 @@ class Controller(object):
         self._initialize_guicontroller()
 
     def _initialize_guicontroller(self):
-        imagesPath = os.path.join(self._plugin.pluginPath, 'images')
+        imagesPath = os.path.join(self._plugin.pluginPath, "images")
 
         action_gui_info = [
-            ActionGUIInfo(InsertSourceAction(self._application),
-                          MENU_WIKI_COMMANDS,
-                          ButtonInfo(TOOLBAR_PLUGINS,
-                                     os.path.join(imagesPath, 'source.png'))
-                          ),
+            ActionGUIInfo(
+                InsertSourceAction(self._application),
+                MENU_WIKI_COMMANDS,
+                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "source.png")),
+            ),
         ]
 
         if self._application.mainWindow is not None:
@@ -76,6 +74,7 @@ class Controller(object):
         Вызывается до разбора викитекста. Добавление команды(:source:)
         """
         from .commandsource import CommandSource
+
         parser.addCommand(CommandSource(parser, self._application.config))
 
     def __onPreferencesDialogCreate(self, dialog):
@@ -84,6 +83,6 @@ class Controller(object):
         """
         prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
 
-        panelName = _(u"Source [Plugin]")
+        panelName = _("Source [Plugin]")
         panelsList = [PreferencePanelInfo(prefPanel, panelName)]
         dialog.appendPreferenceGroup(panelName, panelsList)

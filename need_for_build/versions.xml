@@ -1,404 +1,176 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <versions>
-	<version number="3.0.0.885" status="dev">
-		<changes>
-			<change></change>
-		</changes>
+    <version number="3.2.0.925" status="dev">
+        <changes>
+        </changes>
 
-		<changes lang="ru">
-			<change></change>
-		</changes>
-	</version>
+        <changes lang="ru">
+        </changes>
+    </version>
 
-	<version number="3.0.0.884" status="dev" date="07.02.2021">
-		<changes>
-			<change>Add the wiki tags for a multiline block.</change>
-			<change>Update the German localization.</change>
-		</changes>
+    <version number="3.2.0.924" date="2023-06-17">
+        <changes>
+			<change>Added menu item and button "Attach Folder".</change>
+			<change>Added color highlighting links to missing attachments on wiki pages.</change>
+			<change>Updated the About dialog.</change>
+			<change>Updated CSS styles for wiki pages.</change>
+			<change>Fixed bug with enabling/disabling spell checking on text and HTML pages.</change>
+			<change>Migrate to wxPython 4.2.1.</change>
+        </changes>
 
-		<changes lang="ru">
-			<change>В викинотацию добавлены теги для обозначения многострочного блока.</change>
-			<change>Обновление немецкой локализации.</change>
-		</changes>
-	</version>
+        <changes lang="ru">
+			<change>Добавлены пункт меню и кнопка "Прикрепить папку".</change>
+			<change>Добавлено выделение цветом ссылок на отсутствующие прикрепленные файлы на викистраницах.</change>
+			<change>Обновлен диалог "О программе".</change>
+			<change>Оформительские исправления в стилях CSS для викистраниц.</change>
+			<change>Исправлена ошибка с включением/выключением проверки орфографии на текстовой и HTML-страницах.</change>
+			<change>Переход на wxPython 4.2.1.</change>
+        </changes>
+    </version>
 
-	<version number="3.0.0.882" status="dev" date="23.01.2021">
-		<changes>
-			<change>In the dialog asking about overwriting attached files, information about files (size and date) is now displayed.</change>
-			<change>Bug fixes.</change>
-		</changes>
+    <version number="3.2.0.922" status="beta" date="2023-05-03">
+        <changes>
+			<change>Update plugins API.</change>
+        </changes>
 
-		<changes lang="ru">
-		  <change>В диалоге с вопросом о перезаписи прикрепленных файлов теперь показывается информация о файлах (размер и дата).</change>
-		  <change>Исправление ошибок.</change>
-		</changes>
-	</version>
-	
-	<version number="3.0.0.880" status="dev" date="18.01.2021">
-		<changes>
-			<change>Add the plugins to installer for Windows.</change>
-			<change>Add the ability to install without administrator privileges with installer for Windows.</change>
-			<change>Add the ability to install in the portable mode with installer for Windows.</change>
-		</changes>
+        <changes lang="ru">
+			<change>Обновление API для плагинов.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>В инсталятор под Windows добавлены плагины.</change>
-			<change>В инсталятор под Windows добавлена возможность установки без прав администратора.</change>
-			<change>В инсталятор добавлена возможность установки в портабельном режиме под Windows.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.920" status="beta" date="2023-03-05">
+        <changes>
+            <change>Updating the internal architecture.</change>
+            <change>Bug fixes.</change>
+        </changes>
 
-	<version number="3.0.0.878" status="dev" date="13.01.2020">
-		<changes>
-			<change>Bug fixes.</change>
-		</changes>
+        <changes lang="ru">
+            <change>Изменение внутренней архитектуры.</change>
+            <change>Исправления ошибок.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.918" status="beta" date="2023-01-07">
+        <changes>
+            <change>Added the ability to set the style of list item bullets on a wiki page.</change>
+            <change>Migrate to wxPython 4.2.0.</change>
+        </changes>
 
-	<version number="3.0.0.876" status="dev" date="29.12.2020">
-		<changes>
-			<change>Migrate to wxPython 4.1.1.</change>
-		</changes>
+        <changes lang="ru">
+            <change>Добавлена возможность задавать стиль маркеров элементов списка на викистранице.</change>
+            <change>Переход на wxPython 4.2.0.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>Переход на wxPython 4.1.1.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.916" status="beta" date="2022-12-11">
+        <changes>
+            <change>Added settings for the Minimize and Close buttons.</change>
+            <change>Added information about selected attachments to the status bar.</change>
+            <change>Changed the design of links to other pages.</change>
+        </changes>
 
-	<version number="3.0.0.874" status="dev" date="04.06.2020">
-		<changes>
-			<change>Update help.</change>
-			<change>Add the ability to link to page by alias.</change>
-			<change>The childlist wiki command take into account an alias of a page.</change>
-		</changes>
+        <changes lang="ru">
+            <change>Добавлены настройки поведения кнопок "Свернуть" и "Закрыть".</change>
+            <change>Добавлена информация о выбранных прикрепленных файлах на статусную панель.</change>
+            <change>Изменен дизайн ссылок на другие страницы.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>Обновление справки.</change>
-			<change>Добавлена возможность ссылаться на страницы по ее псевдониму.</change>
-			<change>Викикоманда childlist теперь учитывает псевдонимы страниц.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.914" status="beta" date="2022-11-20">
+        <changes>
+            <change>Improved design of links to attached files and other pages.</change>
+            <change>Added a new subdir parameter to [=(:attachlist:)=] wiki command.</change>
+            <change>Improved [=(:childlist:)=] and [=(:attachlist:)=] wiki commands result design.</change>
+            <change>Added new CSS classes to generated HTML code.</change>
+        </changes>
 
-	<version number="3.0.0.872" status="dev" date="03.05.2020">
-		<changes>
-			<change>Update the German localization.</change>
-		</changes>
+        <changes lang="ru">
+            <change>Улучшен дизайн ссылок на прикрепленные файлы и на другие страницы.</change>
+            <change>Добавлен параметр subdir для викикоманды [=(:attachlist:)=].</change>
+            <change>Улучшен дизайн результата работы викикоманд [=(:childlist:)=] и [=(:attachlist:)=].</change>
+            <change>В создаваемый код HTML добавлены новые CSS-классы.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>Обновление немецкой локализации.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.912" status="beta" date="2022-10-29">
+        <changes>
+            <change>Added page search in preview mode.</change>
+            <change>Small GUI improvements.</change>
+            <change>Bug fixes.</change>
+        </changes>
 
-	<version number="3.0.0.870" status="dev" date="23.02.2020">
-		<changes>
-			<change>Add the ability to select notes position in the notes list.</change>
-			<change>Update used libraries.</change>
-		</changes>
+        <changes lang="ru">
+            <change>Добавлен поиск по странице в режиме просмотра.</change>
+            <change>Мелкие улучшения в интерфейсе.</change>
+            <change>Исправления ошибок.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>Добавлена возможность выбора положения новой заметки в списке заметок.</change>
-			<change>Обновление используемых библиотек.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.910" status="beta" date="2022-08-03">
+        <changes>
+            <change>Added the support of nested subfolders in the dialog for link creation.</change>
+        </changes>
 
-	<version number="3.0.0.868" status="dev" date="19.10.2019">
-		<changes>
-			<change>New plug-in's manifest file format.</change>
-			<change>Add a new preferences fot new page title.</change>
-			<change>Small GUI improvements.</change>
-		</changes>
+        <changes lang="ru">
+            <change>Добавлена поддержка вложенных папок в диалоге для вставки ссылок.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>Новый формат файла манифеста плагинов.</change>
-			<change>Добавлена настройка для шаблона имени новых страниц.</change>
-			<change>Небольшие улучшения в интерфейсе.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.908" status="beta" date="2022-07-17">
+        <changes>
+            <change>Added the support of nested subfolders for the [=(:include:)=] wiki command.</change>
+            <change>Added the support of nested subfolders in the dialog for the [=(:include:)=] wiki command.</change>
+            <change>Added the support of nested subfolders in the dialog for thumbnails creation with the [=%thumb%=] wiki command.</change>
+            <change>Small GUI improvements.</change>
+        </changes>
 
-	<version number="3.0.0.866" status="dev" date="13.08.2019">
-		<changes>
-			<change>Add comments to wiki notation.</change>
-			<change>Fix errors.</change>
-		</changes>
+        <changes lang="ru">
+            <change>Добавлена поддержка вложенных папок в викикоманде [=(:include:)=].</change>
+            <change>Добавлена поддержка вложенных папок в диалоге для вставки викикоманды [=(:include:)=].</change>
+            <change>Добавлена поддержка вложенных папок в диалоге для вставки миниатюры с помощью викикоманды [=%thumb%=].</change>
+            <change>Мелкие улучшения в интерфейсе.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>Добавлена возможность вставки комментариев в викинотации.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.906" status="beta" date="2022-06-26">
+        <changes>
+            <change>Added the ability to show hidden folders in attachments.</change>
+        </changes>
 
-	<version number="3.0.0.864" status="dev" date="12.06.2019">
-		<changes>
-			<change>Fix errors.</change>
-		</changes>
+        <changes lang="ru">
+            <change>Добавлена возможность отображения скрытых папок на панели с вложениями.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.904" status="beta" date="2022-05-28">
+        <changes>
+            <change>Added the support of nested subfolders for the [=%thumb%=] wiki command.</change>
+            <change>Implemented highlighting the [=%thumb%=] wiki command on wiki pages.</change>
+            <change>Changed design of the dialog about overwriting of attached files.</change>
+            <change>Small GUI fixes.</change>
+        </changes>
 
-	<version number="3.0.0.862" status="dev" date="26.05.2019">
-		<changes>
-			<change>New GUI displayed if the notes tree is not currently open.</change>
-			<change>New GUI when selecting the root of the notes tree.</change>
-			<change>New GUI to show a page with unknown type.</change>
-			<change>Changing the appearance of a window reporting a lengthy operation (for example, opening a notes tree).</change>
-			<change>Update German localization.</change>
-			<change>Other GUI improvements.</change>
-			<change>Fix errors.</change>
-			<change>Update used libraries.</change>
-		</changes>
+        <changes lang="ru">
+            <change>Добавлена поддержка вложенных папок в викикоманде [=%thumb%=].</change>
+            <change>Реализована подсветка викикоманды [=%thumb%=] в редакторе.</change>
+            <change>Изменен дизайн диалога с информацией о перезаписи прикрепленных файлов.</change>
+            <change>Мелкие исправления в интерфейсе.</change>
+        </changes>
+    </version>
 
-		<changes lang="ru">
-			<change>Новый интерфейс, отображаемый, если в данный момент не открыто дерево заметок.</change>
-			<change>Новый интерфейс при выборе корня дерева заметок.</change>
-			<change>Новый интерфейс для отображения страниц неизвестного типа.</change>
-			<change>Изменение внешнего вида окна, сообщающего о длительной операции (например, открытия дерева заметок).</change>
-			<change>Обновление немецкой локализации.</change>
-			<change>Другие небольшие изменения в интерфейсе.</change>
-			<change>Исправление ошибок.</change>
-			<change>Обновление используемых библиотек.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.902" status="beta" date="2022-05-22">
+        <changes>
+            <change>Added the ability to create folders in attached files.</change>
+            <change>Added the ability to navigate to subfolders in the attachments panel.</change>
+            <change>Added the ability to insert links to files in attached subfolders.</change>
+            <change>Implemented highlighting links to attached files on wiki pages.</change>
+        </changes>
 
-	<version number="3.0.0.860" status="dev" date="22.03.2019">
-		<changes>
-			<change>Fix errors.</change>
-			<change>Update localizations.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Исправление ошибок.</change>
-			<change>Обновление локализаций.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.858" status="dev" date="24.01.2019">
-		<changes>
-			<change>Add list autocomplete for wiki pages.</change>
-			<change>Add "--disable-plugins" command line parameter.</change>
-			<change>New events for API.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлено автодополнение списков для викистраниц.</change>
-			<change>Добавлен параметр командной строки "--disable-plugins".</change>
-			<change>Новые события в API.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.856" status="dev" date="26.12.2018">
-		<changes>
-			<change>Improve GUI.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Улучшения в интерфейсе.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.854" status="dev" date="24.11.2018">
-		<changes>
-			<change>Improve GUI.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Улучшения в интерфейсе.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.852" status="dev" date="24.11.2018">
-		<changes>
-			<change>Create snap package.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Создан snap-пакет.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.850" status="dev" date="04.10.2018">
-		<changes>
-			<change>Now you can use any symbols in the notes.</change>
-			<change>New design for popup window when clicking on the tag.</change>
-			<change>Add a new wiki style "code".</change>
-			<change>Return back to wxPython 4.0.1.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Теперь в заметках можно использовать любые символы.</change>
-			<change>Новый интерфейс всплывающего окна при клике на тег.</change>
-			<change>Добавлен новый викистиль "code".</change>
-			<change>Возврат на wxPython 4.0.1.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.848" status="dev" date="26.08.2018">
-		<changes>
-			<change>Add German localization.</change>
-			<change>Improve wiki styles interface.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлена немецкая локализация.</change>
-			<change>Улучшения в интерфейсе работы с викистилями.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.846" status="dev" date="31.07.2018">
-		<changes>
-			<change>Add new wiki commands for styles.</change>
-			<change>Migrate to wxPython 4.0.3.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлены новые команды для викистилей.</change>
-			<change>Миграция на wxPython 4.0.3.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.844" status="dev" date="16.06.2018">
-		<changes>
-			<change>Change the storage format for certain properties of the notes tree pages.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Изменение формата хранения некоторых настроек страниц в дереве заметок.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.842" status="dev" date="26.05.2018">
-		<changes>
-			<change>Accelerated plug-ins loading.</change>
-			<change>GUI fixes.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Ускорена загрузка плагинов.</change>
-			<change>Исправления в интерфейсе.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.840" status="dev" date="22.04.2018">
-		<changes>
-			<change>New toolbars.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Новые панели инструментов.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.838" status="dev" date="20.03.2018">
-		<changes>
-			<change>Add a new page style "rifle_green_and_red".</change>
-			<change>Fixed errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлен новый стиль страниц "rifle_green_and_red".</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.836" status="dev" date="15.02.2018">
-		<changes>
-			<change>Migrate to Python 3.x and wxPython 4.0.0.</change>
-			<change>Add watching for attached files for selected page.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Переход на Python 3.x и wxPython 4.0.0.</change>
-			<change>Добавлено слежение за прикрепленными файлами для текущей страницы.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.834" status="dev" date="17.12.2017">
-		<changes>
-			<change>32-bit binary builds for Linux are no longer created.</change>
-			<change>Created AppImage packages for Linux.</change>
-			<change>Fixed errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Больше не создаются 32-битные бинарные сборки под Linux.</change>
-			<change>Теперь создаются пакеты AppImage для Linux.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.832" status="dev" date="20.11.2017">
-		<changes>
-			<change>Added options to select length of history of recently used icons.</change>
-			<change>Fixed errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлена настройка для выбора размера истории последних используемых значков страницы.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.830" status="dev" date="23.10.2017">
-		<changes>
-			<change>The way of storing standard icons in notes is changed.</change>
-			<change>New interface to select notes icons.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Изменен способ хранения стандартных значков в заметках.</change>
-			<change>Новый интерфейс выбора значков заметок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.828" status="dev" date="24.09.2017">
-		<changes>
-			<change>To the page style files added a new variable with name $title.</change>
-			<change>Added support for Ubuntu 17.10.</change>
-			<change>Bug fixes.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>В файлы стилей страниц добавлена новая переменная $title.</change>
-			<change>Добавлена поддержка Ubuntu 17.10.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.826" status="dev" date="22.08.2017">
-		<changes>
-			<change>Created the binary deb package for Linux.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Созданы бинарные deb-пакеты под Linux.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.824" status="dev" date="21.07.2017">
-		<changes>
-			<change>Created binary assembly for Linux.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Созданы бинарные сборки для Linux.</change>
-		</changes>
-	</version>
+        <changes lang="ru">
+            <change>Добавлена возможность создания папок в прикрепленных файлах.</change>
+            <change>Добавлена возможность перехода во вложенные папки на панели прикрепленных файлов.</change>
+            <change>Добавлена возможность вставки ссылок на файлы во вложенных прикрепленных папках.</change>
+            <change>Реализована подсветка ссылок на прикрепленные файлы на викистраницах.</change>
+        </changes>
+    </version>
 </versions>

@@ -6,7 +6,7 @@ from buildtools.versions import getOutwikerVersionStr, getOutwikerVersion
 from . import defines
 
 
-class BuildFacts(object):
+class BuildFacts:
     def __init__(self):
         # x.x.x.xxx
         self.version = getOutwikerVersionStr()

@@ -46,7 +46,8 @@ APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
 APP_DATA_DISABLE_PLUGINS = '__disablePlugins'
 
 ICONS_STD_PREFIX = u'__std_'
-ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp', u'ico']
+ICONS_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'ico']
+IMAGES_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp']
 ICON_DEFAULT = ICONS_STD_PREFIX + u'_default.png'
 RECENT_ICONS_SECTION = u'RecentIcons'
 RECENT_ICONS_PARAM_NAME = u'icon'
@@ -63,30 +64,45 @@ PAGE_MODE_TEXT = 0
 PAGE_MODE_PREVIEW = 1
 PAGE_MODE_HTML = 2
 
+CONFIG_GENERAL_SECTION = 'General'
 CONFIG_TOOLBARS_SECTION = 'Toolbars'
 CONFIG_TOOLBARS_VISIBLE_SUFFIX = '_visible'
 
 REGISTRY_SECTION_PAGES = '__pages'
 REGISTRY_PAGE_CURSOR_POSITION = 'cursorposition'
+REGISTRY_PAGE_HASH = 'md5_hash'
+
+URL_TRANSLATE = 'https://crowdin.com/project/outwiker'
+
+# Местоположение конфигурационной директории
+# По стандарту, если переменная XDG_CONFIG_HOME не задана в окружении,
+# то берется значение по умолчанию т.е. ~/.config
+# http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+DEFAULT_CONFIG_DIR = "outwiker"
+
+# Имя файла настроек по умолчанию
+DEFAULT_CONFIG_NAME = "outwiker.ini"
 
 
 # To translate this words with xgettext
-if __name__ == u'__main__':
+if __name__ == '__main__':
+    _ = lambda s: s
+
     _('versions_lang')
 
     # Folder names for localizations
-    _(u"awards")
-    _(u"battery")
-    _(u"books")
-    _(u"computer")
-    _(u"emotions")
-    _(u"flags")
-    _(u"folders")
-    _(u"food")
-    _(u"internet")
-    _(u"money")
-    _(u"people")
-    _(u"signs")
-    _(u"software")
-    _(u"tags")
-    _(u"weather")
+    _("awards")
+    _("battery")
+    _("books")
+    _("computer")
+    _("emotions")
+    _("flags")
+    _("folders")
+    _("food")
+    _("internet")
+    _("money")
+    _("people")
+    _("signs")
+    _("software")
+    _("tags")
+    _("weather")

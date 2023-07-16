@@ -1,15 +1,15 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
 import wx
 
-from outwiker.core.commands import MessageBox
+from outwiker.api.gui.dialogs import MessageBox
 
 from hackpage.i18n import get_
 
 
-class ChangeUidValidator(object):
+class ChangeUidValidator:
     def __init__(self, application, page):
         """
         page - текущая страница, для которой показывается диалог
@@ -27,20 +27,21 @@ class ChangeUidValidator(object):
         value = value.strip()
         otherpage = self._application.pageUidDepot[value]
 
-        if (otherpage is not None and otherpage != self._page):
-            MessageBox(_(u"Same identifier exist already"),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
+        if otherpage is not None and otherpage != self._page:
+            MessageBox(
+                _("Same identifier exist already"), _("Error"), wx.ICON_ERROR | wx.OK
+            )
             return False
 
-        regexp = re.compile(r"^[-\w,\$\.\+\!\*\(\):@|&=\?~\#\%]+$",
-                            re.I | re.U)
+        regexp = re.compile(r"^[-\w,\$\.\+\!\*\(\):@|&=\?~\#\%]+$", re.I | re.U)
         match = regexp.match(value)
 
         if match is None:
-            MessageBox(_(u"Identifier contain invalid character"),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
+            MessageBox(
+                _("Identifier contain invalid character"),
+                _("Error"),
+                wx.ICON_ERROR | wx.OK,
+            )
             return False
 
         return True

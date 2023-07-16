@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 from .plugincontroller import PluginController
@@ -24,15 +24,15 @@ class PluginSessions(Plugin):
 
     @property
     def name(self):
-        return u"Sessions"
+        return "Sessions"
 
     @property
     def description(self):
-        return _(u"Save and restore tabs")
+        return _("Save and restore tabs")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/SessionsEn")
+        return _("https://jenyay.net/Outwiker/SessionsEn")
 
     def initialize(self):
         set_(self.gettext)

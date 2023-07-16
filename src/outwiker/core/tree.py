@@ -7,6 +7,7 @@ import configparser
 import shutil
 import datetime
 from functools import cmp_to_key, reduce
+from typing import Optional, Union
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
@@ -15,7 +16,10 @@ from .exceptions import (ClearConfigError, RootFormatError, DuplicateTitle,
                          ReadonlyException, TreeException)
 from .tagscommands import parseTagsList
 from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
-from .defines import PAGE_CONTENT_FILE, PAGE_OPT_FILE, REGISTRY_FILE
+from .defines import (PAGE_CONTENT_FILE,
+                      PAGE_OPT_FILE,
+                      REGISTRY_FILE,
+                      CONFIG_GENERAL_SECTION)
 from .iconcontroller import IconController
 from .system import getIconsDirList
 from .registrynotestree import NotesTreeRegistry, PickleSaver
@@ -26,13 +30,11 @@ from outwiker.utilites.textfile import readTextFile, writeTextFile
 logger = logging.getLogger('core')
 
 
-class RootWikiPage(object):
+class RootWikiPage:
     """
     Класс для корня вики
     """
     contentFile = PAGE_CONTENT_FILE
-
-    sectionGeneral = u"General"
 
     def __init__(self, path, readonly=False):
         """
@@ -69,7 +71,7 @@ class RootWikiPage(object):
         return self._path
 
     @property
-    def parent(self):
+    def parent(self) -> Optional[Union['RootWikiPage', 'WikiPage']]:
         return self._parent
 
     @property
@@ -99,7 +101,7 @@ class RootWikiPage(object):
     def __len__(self):
         return len(self._children)
 
-    def __getitem__(self, path):
+    def __getitem__(self, path: str) -> Optional[Union['RootWikiPage', 'WikiPage']]:
         """
         Получить нужную страницу по относительному пути в дереве
         """
@@ -115,11 +117,11 @@ class RootWikiPage(object):
 
         # Разделим путь по составным частям
         titles = path.split("/")
-        page = self
+        page: Optional[Union['RootWikiPage', 'WikiPage']] = self
 
         for title in titles:
             found = False
-            if title == u"..":
+            if title == "..":
                 page = page.parent
                 found = (page is not None)
             else:
@@ -152,7 +154,10 @@ class RootWikiPage(object):
         Проверить заголовок страницы на то, что в родителе нет
         страницы с таким заголовком
         """
-        return parent[title] is None
+        for page in parent.children:
+            if page.title.lower() == title.lower():
+                return False
+        return True
 
     def changeChildOrder(self, page, neworder):
         """
@@ -346,6 +351,12 @@ class WikiDocument(RootWikiPage):
         #     params - instance if the AttachListChangedParams class
         self.onAttachListChanged = Event()
 
+        # Event occurs after opening subdirectory in attachments
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the AttachSubdirChangedParams class
+        self.onAttachSubdirChanged = Event()
+
         # Event occurs after page content reading. The content can be changed
         # by event handlers
         # Parameters:
@@ -365,7 +376,7 @@ class WikiDocument(RootWikiPage):
         """
         Очистить файл __page.opt.
         Используется в случае, если файл __page.opt испорчен
-        path - путь до вики(или до директории с файлом __page.opt,
+        path - путь до вики (или до директории с файлом __page.opt,
         или включая этот файл)
         """
         if path.endswith(PAGE_OPT_FILE):
@@ -385,14 +396,18 @@ class WikiDocument(RootWikiPage):
         Загрузить корневую страницу вики.
         Использовать этот метод вместо конструктора
         """
+        logger.debug('Wiki document loading started')
         try:
             root = WikiDocument(path, readonly)
         except configparser.Error:
             raise RootFormatError
 
+        logger.debug('Children notes loading started')
         root.loadChildren()
+        logger.debug('Children notes loading ended')
 
         root.onTreeUpdate(root)
+        logger.debug('Wiki document loading ended')
         return root
 
     def save(self):
@@ -454,14 +469,14 @@ class WikiPage(RootWikiPage):
     """
     Страница в дереве.
     """
-    paramTags = u"tags"
-    paramType = u"type"
+    paramTags = "tags"
+    paramType = "type"
 
     iconController = IconController(getIconsDirList()[0])
 
     @staticmethod
     def getTypeString():
-        return u"base"
+        return "base"
 
     def __init__(self, path, title, parent, readonly=False):
         """
@@ -470,16 +485,33 @@ class WikiPage(RootWikiPage):
         path -- путь до страницы
         """
         if not RootWikiPage.testDublicate(parent, title):
-            logger.error(u'Duplicate page title in the parent page. Title: {}. Parent: {}'.format(
+            logger.error('Duplicate page title in the parent page. Title: {}. Parent: {}'.format(
                 title, parent.subpath))
             raise DuplicateTitle
 
         RootWikiPage.__init__(self, path, readonly)
+        self._DEFAULT_ATTACH_SUBDIR = ''
+        self._attach_subdir = self._DEFAULT_ATTACH_SUBDIR
         self._title = title
         self._parent = parent
         self._alias = self.params.aliasOption.value
         if len(self._alias) == 0:
             self._alias = None
+
+    @property
+    def currentAttachSubdir(self) -> str:
+        return self._attach_subdir
+
+    @currentAttachSubdir.setter
+    def currentAttachSubdir(self, value: str):
+        if not value or value == '.':
+            value = self._DEFAULT_ATTACH_SUBDIR
+
+        self._attach_subdir = value
+        self.root.onAttachSubdirChanged(self, events.AttachSubdirChangedParams())
+
+    def isCurrentAttachSubdirRoot(self):
+        return self._attach_subdir == self._DEFAULT_ATTACH_SUBDIR
 
     @property
     def order(self):
@@ -744,7 +776,7 @@ class WikiPage(RootWikiPage):
 
         # Удалим начальные ", "
         tags = tags[2:]
-        self._params.set(RootWikiPage.sectionGeneral, WikiPage.paramTags, tags)
+        self._params.set(CONFIG_GENERAL_SECTION, WikiPage.paramTags, tags)
 
     def initAfterCreating(self, tags):
         """
@@ -763,7 +795,7 @@ class WikiPage(RootWikiPage):
         Выделить теги из строки конфигурационного файла
         """
         try:
-            tagsString = configParser.get(RootWikiPage.sectionGeneral,
+            tagsString = configParser.get(CONFIG_GENERAL_SECTION,
                                           WikiPage.paramTags)
         except configparser.NoOptionError:
             return []

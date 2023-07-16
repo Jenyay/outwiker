@@ -1,9 +1,11 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>ThumbGallery</name>
-	<description>Creating a gallery of the attached pictures.</description>
+
 	<website>https://jenyay.net/Outwiker/ThumbGalleryEn</website>
 	<website lang="ru">https://jenyay.net/Outwiker/ThumbGallery</website>
+
+	<description>Creating a gallery of the attached pictures.</description>
 	<description lang="ru">Создание галереи из прикрепленных изображений.</description>
 
 	<author>
@@ -19,8 +21,8 @@
 	</author>
 
 	<requirements>
-		<api>3.868</api>
+		<api>3.922</api>
 	</requirements>
 
-	<version number="1.4"/>
+	<version number="1.6.1"/>
 </info>

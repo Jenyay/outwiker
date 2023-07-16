@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from ..i18n import get_
 from ..gui.insertdiagramdialog import (InsertDiagramDialog,
@@ -19,15 +19,15 @@ class InsertDiagramAction(BaseAction):
         global _
         _ = get_()
 
-    stringId = u"Diagrammer_InsertDiagram"
+    stringId = "Diagrammer_InsertDiagram"
 
     @property
     def title(self):
-        return _(u"Insert diagram")
+        return _("Insert diagram")
 
     @property
     def description(self):
-        return _(u"Diagrammer. Insert diagram")
+        return _("Diagrammer. Insert diagram")
 
     def run(self, params):
         assert self._application.mainWindow is not None

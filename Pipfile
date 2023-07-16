@@ -6,21 +6,24 @@ name = "pypi"
 [requires]
 
 [packages]
-wxPython = "==4.1.1"
-Pillow = "==8.1.2"
-cyhunspell = "==2.0.2"
-idna = "==3.1"
-pyparsing = "==2.4.7"
-psutil = "==5.8.0"
+attrdict3 = "==2.0.2"
+wxPython = "==4.2.1"
+Pillow = "==9.5.0"
+cacheman = {version = "==2.1.0.post1", path = "depends/cacheman"}
+cyhunspell = {version = "==2.0.3.post1", path = "depends/cyhunspell"}
+idna = ">=2.10"
+pyparsing = "==3.0.9"
+psutil = "==5.9.5"
+rcssmin = "==1.1.1"
 
 [dev-packages]
-Fabric3 = "==1.14.post1"
-cx-freeze = "==6.5.3"
-pympler = "==0.9"
-pytest = "==6.2.2"
-coverage = "==5.5"
-jinja2 = "==2.11.3"
-colorama = "==0.4.4"
-sphinx = ">=3.5"
-outwiker = {editable = true,path = "."}
-buildtools = {editable = true,path = "buildtools"}
+invoke = "==2.1.1"
+cx-freeze = "==6.14.9"
+pympler = "==1.0.1"
+pytest = ">=7.1"
+coverage = ">=6.4"
+jinja2 = ">=3.1"
+colorama = "==0.4.6"
+sphinx = ">=7.0"
+outwiker = {editable = true, path = "."}
+buildtools = {editable = true, path = "./buildtools"}

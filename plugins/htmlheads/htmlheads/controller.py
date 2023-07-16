@@ -1,26 +1,32 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo)
+from outwiker.api.pages.wiki import WikiWikiPage
+from outwiker.api.pages.wiki.defines import MENU_WIKI
+from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo
 
 from .i18n import get_
-from .commands import (TitleCommand, DescriptionCommand,
-                       KeywordsCommand, CustomHeadsCommand,
-                       StyleCommand)
-from .actions import (TitleAction,
-                      DescriptionAction,
-                      KeywordsAction,
-                      CustomHeadsAction,
-                      StyleAction)
+from .commands import (
+    TitleCommand,
+    DescriptionCommand,
+    KeywordsCommand,
+    CustomHeadsCommand,
+    StyleCommand,
+)
+from .actions import (
+    TitleAction,
+    DescriptionAction,
+    KeywordsAction,
+    CustomHeadsAction,
+    StyleAction,
+)
 from . import defines
 
 
-class Controller(object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
+
     def __init__(self, plugin, application):
         """
         plugin - Владелец контроллера(экземпляр класса PluginSource)
@@ -29,11 +35,13 @@ class Controller(object):
         self._plugin = plugin
         self._application = application
 
-        self._commands = [TitleCommand,
-                          DescriptionCommand,
-                          KeywordsCommand,
-                          StyleCommand,
-                          CustomHeadsCommand]
+        self._commands = [
+            TitleCommand,
+            DescriptionCommand,
+            KeywordsCommand,
+            StyleCommand,
+            CustomHeadsCommand,
+        ]
 
         self._GUIController = ActionsGUIController(
             self._application,
@@ -53,28 +61,32 @@ class Controller(object):
 
     def _initialize_guicontroller(self):
         action_gui_info = [
-            ActionGUIInfo(StyleAction(self._application),
-                          defines.MENU_HTMLHEADS,
-                          ),
-            ActionGUIInfo(TitleAction(self._application),
-                          defines.MENU_HTMLHEADS,
-                          ),
-            ActionGUIInfo(DescriptionAction(self._application),
-                          defines.MENU_HTMLHEADS,
-                          ),
-            ActionGUIInfo(KeywordsAction(self._application),
-                          defines.MENU_HTMLHEADS,
-                          ),
-            ActionGUIInfo(CustomHeadsAction(self._application),
-                          defines.MENU_HTMLHEADS,
-                          ),
+            ActionGUIInfo(
+                StyleAction(self._application),
+                defines.MENU_HTMLHEADS,
+            ),
+            ActionGUIInfo(
+                TitleAction(self._application),
+                defines.MENU_HTMLHEADS,
+            ),
+            ActionGUIInfo(
+                DescriptionAction(self._application),
+                defines.MENU_HTMLHEADS,
+            ),
+            ActionGUIInfo(
+                KeywordsAction(self._application),
+                defines.MENU_HTMLHEADS,
+            ),
+            ActionGUIInfo(
+                CustomHeadsAction(self._application),
+                defines.MENU_HTMLHEADS,
+            ),
         ]
 
-        new_menus = [(defines.MENU_HTMLHEADS, _('HTML Headers'), MENU_WIKI)]
+        new_menus = [(defines.MENU_HTMLHEADS, _("HTML Headers"), MENU_WIKI)]
 
         if self._application.mainWindow is not None:
-            self._GUIController.initialize(action_gui_info,
-                                           new_menus=new_menus)
+            self._GUIController.initialize(action_gui_info, new_menus=new_menus)
 
     def destroy(self):
         """
@@ -91,5 +103,4 @@ class Controller(object):
         """
         Вызывается до разбора викитекста. Добавление команды(:counter:)
         """
-        list(map(lambda command: parser.addCommand(command(parser)),
-                 self._commands))
+        list(map(lambda command: parser.addCommand(command(parser)), self._commands))

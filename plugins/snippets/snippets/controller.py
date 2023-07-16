@@ -2,7 +2,7 @@
 
 import os
 
-from outwiker.core.system import getSpecialDirList
+from outwiker.api.app.application import getSpecialDirList
 
 from .i18n import get_
 from .guicontroller import GuiController
@@ -14,13 +14,12 @@ from .wikicommand import CommandSnip
 from .utils import getSnippetsDir
 
 
-class Controller(object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
+
     def __init__(self, plugin, application):
-        """
-        """
         self._plugin = plugin
         self._application = application
 
@@ -69,12 +68,24 @@ class Controller(object):
         parser.addCommand(command)
 
     def _isWikiPage(self, page):
-        return page is not None and page.getTypeString() == u"wiki"
+        return page is not None and page.getTypeString() == "wiki"
 
     def _registerActions(self):
-        [*map(lambda actionTuple: self._application.actionController.register(
-            actionTuple[0](self._application), actionTuple[1]), self._actions)]
+        [
+            *map(
+                lambda actionTuple: self._application.actionController.register(
+                    actionTuple[0](self._application), actionTuple[1]
+                ),
+                self._actions,
+            )
+        ]
 
     def _unregisterActions(self):
-        [*map(lambda actionTuple: self._application.actionController.removeAction(
-            actionTuple[0].stringId), self._actions)]
+        [
+            *map(
+                lambda actionTuple: self._application.actionController.removeAction(
+                    actionTuple[0].stringId
+                ),
+                self._actions,
+            )
+        ]

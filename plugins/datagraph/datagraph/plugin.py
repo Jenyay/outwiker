@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .i18n import set_
 from .controller import Controller
@@ -24,15 +24,15 @@ class PluginDataGraph(Plugin):
 
     @property
     def name(self):
-        return u"DataGraph"
+        return "DataGraph"
 
     @property
     def description(self):
-        return _(u"DataGraph plug-in designed for creation a charts by text data.")
+        return _("DataGraph plug-in designed for creation a charts by text data.")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/DataGraphEn")
+        return _("https://jenyay.net/Outwiker/DataGraphEn")
 
     def initialize(self):
         set_(self.gettext)

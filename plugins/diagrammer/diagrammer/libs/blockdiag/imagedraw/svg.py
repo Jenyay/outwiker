@@ -247,7 +247,7 @@ class SVGImageDrawElement(_base.ImageDraw):
                     stream = images.open(url, mode='png')
                     url = "data:;base64," + str(b64encode(stream.read()))
                 except IOError:
-                    pass
+                    url = None
                 finally:
                     if stream:
                         stream.close()

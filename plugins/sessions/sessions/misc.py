@@ -1,10 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Небольшие функции, которые могут быть использованы в разных классах
 """
 import os.path
-
-from outwiker.core.system import getOS
 
 
 def getImagePath(imageName):

@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from ..i18n import get_
 from ..gui.insertedgedialog import (InsertEdgeDialog,
@@ -42,7 +42,7 @@ class InsertEdgeNoneAction(InsertEdgeBaseAction):
     """
     Вставить ребро без "головы"
     """
-    stringId = u"Diagrammer_InsertEdgeNone"
+    stringId = "Diagrammer_InsertEdgeNone"
 
     def __init__(self, application):
         self._application = application
@@ -52,11 +52,11 @@ class InsertEdgeNoneAction(InsertEdgeBaseAction):
 
     @property
     def title(self):
-        return _(u"Insert edge without any arrow")
+        return _("Insert edge without any arrow")
 
     @property
     def description(self):
-        return _(u"Diagrammer. Insert edge without any arrow")
+        return _("Diagrammer. Insert edge without any arrow")
 
     def getController(self, dlg):
         return InsertEdgeControllerNone(dlg)
@@ -66,7 +66,7 @@ class InsertEdgeRightAction(InsertEdgeBaseAction):
     """
     Вставить ребро со стрелкой направо
     """
-    stringId = u"Diagrammer_InsertEdgeRight"
+    stringId = "Diagrammer_InsertEdgeRight"
 
     def __init__(self, application):
         self._application = application
@@ -76,11 +76,11 @@ class InsertEdgeRightAction(InsertEdgeBaseAction):
 
     @property
     def title(self):
-        return _(u"Insert edge with the right arrow")
+        return _("Insert edge with the right arrow")
 
     @property
     def description(self):
-        return _(u"Diagrammer. Insert edge with the right arrow")
+        return _("Diagrammer. Insert edge with the right arrow")
 
     def getController(self, dlg):
         return InsertEdgeControllerRight(dlg)
@@ -90,7 +90,7 @@ class InsertEdgeLeftAction(InsertEdgeBaseAction):
     """
     Вставить ребро со стрелкой налево
     """
-    stringId = u"Diagrammer_InsertEdgeLeft"
+    stringId = "Diagrammer_InsertEdgeLeft"
 
     def __init__(self, application):
         self._application = application
@@ -100,11 +100,11 @@ class InsertEdgeLeftAction(InsertEdgeBaseAction):
 
     @property
     def title(self):
-        return _(u"Insert edge with the left arrow")
+        return _("Insert edge with the left arrow")
 
     @property
     def description(self):
-        return _(u"Diagrammer. Insert edge with the left arrow")
+        return _("Diagrammer. Insert edge with the left arrow")
 
     def getController(self, dlg):
         return InsertEdgeControllerLeft(dlg)
@@ -114,7 +114,7 @@ class InsertEdgeBothAction(InsertEdgeBaseAction):
     """
     Вставить ребро со стрелками с обоих сторон
     """
-    stringId = u"Diagrammer_InsertEdgeBoth"
+    stringId = "Diagrammer_InsertEdgeBoth"
 
     def __init__(self, application):
         self._application = application
@@ -124,11 +124,11 @@ class InsertEdgeBothAction(InsertEdgeBaseAction):
 
     @property
     def title(self):
-        return _(u"Insert edge with the both arrows")
+        return _("Insert edge with the both arrows")
 
     @property
     def description(self):
-        return _(u"Diagrammer. Insert edge with the both arrows")
+        return _("Diagrammer. Insert edge with the both arrows")
 
     def getController(self, dlg):
         return InsertEdgeControllerBoth(dlg)

@@ -12,7 +12,7 @@ class DiagramRender(object):
     shapes = []
 
     def __init__(self):
-        self._fontDefault = u"mplus-2p-regular.ttf"
+        self._fontDefault = "mplus-2p-regular.ttf"
 
     @classmethod
     def _initPackage(cls, packagename, modulename):
@@ -71,7 +71,7 @@ class DiagramRender(object):
         """
         Добавить фигуру в shapes по имени модуля
         """
-        parent = u"blockdiag.noderenderer."
+        parent = "blockdiag.noderenderer."
 
         assert parent in modulename
 
@@ -101,13 +101,13 @@ class DiagramRender(object):
         from blockdiag.utils.fontmap import FontMap
 
         font = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            u"fonts",
+                            "fonts",
                             self._fontDefault)
 
         fontmap = FontMap()
         fontmap.set_default_font(font)
 
-        text = u"blockdiag {{ {content} }}".format(content=content)
+        text = "blockdiag {{ {content} }}".format(content=content)
 
         tree = parse_string(text)
         diagram = ScreenNodeBuilder.build(tree)

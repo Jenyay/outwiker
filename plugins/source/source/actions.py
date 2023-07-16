@@ -2,9 +2,9 @@
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import testreadonly
-import outwiker.core.exceptions
+from outwiker.api.gui.actions import BaseAction
+from outwiker.api.core.tree import testreadonly
+from outwiker.api.core.exceptions import ReadonlyException
 
 from .i18n import get_
 from .sourceconfig import SourceConfig
@@ -16,7 +16,8 @@ class InsertSourceAction(BaseAction):
     """
     Вызвать диалог для вставки команды (:source:)
     """
-    stringId = u"Source_InsertSource"
+
+    stringId = "Source_InsertSource"
 
     def __init__(self, application):
         self._application = application
@@ -26,12 +27,13 @@ class InsertSourceAction(BaseAction):
 
     @property
     def title(self):
-        return _(u"Source Code (:source ...:)")
+        return _("Source Code (:source ...:)")
 
     @property
     def description(self):
         return _(
-            u"Source plugin. Insert (: source... :) command for source code highlighting")
+            "Source plugin. Insert (: source... :) command for source code highlighting"
+        )
 
     def run(self, params):
         self._insertCommand()
@@ -42,14 +44,14 @@ class InsertSourceAction(BaseAction):
         Вставка команды (:source:) в редактор
         """
         if self._application.selectedPage.readonly:
-            raise outwiker.core.exceptions.ReadonlyException
+            raise ReadonlyException()
 
         config = SourceConfig(self._application.config)
 
         with InsertDialog(self._application.mainWindow) as dlg:
             dlgController = InsertDialogController(
-                self._application.selectedPage,
-                dlg, config)
+                self._application.selectedPage, dlg, config
+            )
             resultDlg = dlgController.showDialog()
 
             if resultDlg == wx.ID_OK:

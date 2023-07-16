@@ -7,14 +7,13 @@ import time
 
 import wx
 
-from outwiker.core.commands import MessageBox
-from outwiker.core.pluginbase import Plugin
-from outwiker.core.system import getImagesDir
-from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
-from outwiker.gui.hotkey import HotKey
-from outwiker.gui.pagedialogpanels.iconspanel import IconsGroupInfo
-from outwiker.gui.defines import TOOLBAR_PLUGINS
-from outwiker.utilites.text import positionInside
+from outwiker.api.app.application import getImagesDir
+from outwiker.api.core.plugins import Plugin
+from outwiker.api.core.text import positionInside
+from outwiker.api.gui.hotkeys import HotKey
+from outwiker.api.gui.dialogs import ButtonsDialog, MessageBox
+from outwiker.api.gui.defines import TOOLBAR_PLUGINS
+from outwiker.app.gui.pagedialogpanels.generalpanel import IconsGroupInfo
 
 from .debugaction import DebugAction
 from .eventswatcher import EventsWatcher
@@ -29,18 +28,11 @@ from .i18n import set_
 class PluginDebug(Plugin):
     def __init__(self, application):
         Plugin.__init__(self, application)
-        self._url = u"https://jenyay.net/Outwiker/DebugPlugin"
+        self._url = "https://jenyay.net/Outwiker/DebugPlugin"
         self._watcher = EventsWatcher(self._application)
         self._timer = Timer()
         self._startWikiOpenTime = None
         self._prePostContentPrefix = "'''DEBUG PrePostContent'''"
-
-        self.ID_PLUGINSLIST = wx.NewId()
-        self.ID_BUTTONSDIALOG = wx.NewId()
-        self.ID_START_WATCH_EVENTS = wx.NewId()
-        self.ID_STOP_WATCH_EVENTS = wx.NewId()
-        self.ID_RAISE_EXCEPTION = wx.NewId()
-        self.ID_SHOW_TOASTER = wx.NewId()
 
     def enableFeatures(self):
         config = DebugConfig(self._application.config)
@@ -80,11 +72,7 @@ class PluginDebug(Plugin):
         _ = self.gettext
 
         self.enableFeatures()
-
-        self.__ID_TREE_POPUP = wx.NewId()
-        self.__ID_TRAY_POPUP = wx.NewId()
-
-        self.__menuName = _(u"Debug")
+        self.__menuName = _("Debug")
 
         if self._application.mainWindow is not None:
             self.__createMenu()
@@ -115,34 +103,36 @@ class PluginDebug(Plugin):
 
     def destroy(self):
         """
-        Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+        Уничтожение (выгрузка) плагина.
+        Здесь плагин должен отписаться от всех событий
         """
         mainWindow = self._application.mainWindow
         mainMenu = mainWindow.menuController.getRootMenu()
         if mainWindow is not None and TOOLBAR_PLUGINS in mainWindow.toolbars:
-            self._application.actionController.removeMenuItem(DebugAction.stringId)
-            self._application.actionController.removeToolbarButton(DebugAction.stringId)
-            self._application.actionController.removeAction(DebugAction.stringId)
+            self._application.actionController.removeMenuItem(
+                DebugAction.stringId)
+            self._application.actionController.removeToolbarButton(
+                DebugAction.stringId)
+            self._application.actionController.removeAction(
+                DebugAction.stringId)
 
             self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onPluginsList,
-                                                id=self.ID_PLUGINSLIST)
+                                                handler=self.__onPluginsList)
 
             self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onButtonsDialog,
-                                                id=self.ID_BUTTONSDIALOG)
+                                                handler=self.__onButtonsDialog)
 
             self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onStartWatchEvents,
-                                                id=self.ID_START_WATCH_EVENTS)
+                                                handler=self.__onStartWatchEvents)
 
             self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onStopWatchEvents,
-                                                id=self.ID_STOP_WATCH_EVENTS)
+                                                handler=self.__onStopWatchEvents)
 
             self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onShowToaster,
-                                                id=self.ID_SHOW_TOASTER)
+                                                handler=self.__onRaiseException)
+
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onShowToaster)
 
             index = mainMenu.FindMenu(self.__menuName)
             assert index != wx.NOT_FOUND
@@ -173,38 +163,45 @@ class PluginDebug(Plugin):
 
     def __createMenu(self):
         self.menu = wx.Menu(u"")
-        self.menu.Append(self.ID_PLUGINSLIST, _(u"Plugins List"))
-        self.menu.Append(self.ID_BUTTONSDIALOG, _(u"ButtonsDialog"))
-        self.menu.Append(self.ID_START_WATCH_EVENTS, _(u"Start watch events"))
-        self.menu.Append(self.ID_STOP_WATCH_EVENTS, _(u"Stop watch events"))
-        self.menu.Append(self.ID_RAISE_EXCEPTION, _(u"Raise exception"))
-        self.menu.Append(self.ID_SHOW_TOASTER, _(u"Show toaster"))
+        pluginsListMenuItem = self.menu.Append(wx.ID_ANY,
+                                               _("Plugins List"))
+        buttonsDialogMenuItem = self.menu.Append(wx.ID_ANY,
+                                                 _("ButtonsDialog"))
+        startWatchMenuItem = self.menu.Append(wx.ID_ANY,
+                                              _("Start watch events"))
+        stopWatchMenuItem = self.menu.Append(wx.ID_ANY,
+                                             _("Stop watch events"))
+        raiseExceptionMenuItem = self.menu.Append(wx.ID_ANY,
+                                                  _("Raise exception"))
+        showToasterMenuItem = self.menu.Append(wx.ID_ANY,
+                                               _("Show toaster"))
 
-        self._application.mainWindow.menuController.getRootMenu().Append(self.menu, self.__menuName)
+        self._application.mainWindow.menuController.getRootMenu().Append(self.menu,
+                                                                         self.__menuName)
 
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self.__onPluginsList,
-                                          id=self.ID_PLUGINSLIST)
+                                          pluginsListMenuItem)
 
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self.__onButtonsDialog,
-                                          id=self.ID_BUTTONSDIALOG)
+                                          buttonsDialogMenuItem)
 
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self.__onStartWatchEvents,
-                                          id=self.ID_START_WATCH_EVENTS)
+                                          startWatchMenuItem)
 
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self.__onStopWatchEvents,
-                                          id=self.ID_STOP_WATCH_EVENTS)
+                                          stopWatchMenuItem)
 
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self.__onRaiseException,
-                                          id=self.ID_RAISE_EXCEPTION)
+                                          raiseExceptionMenuItem)
 
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self.__onShowToaster,
-                                          id=self.ID_SHOW_TOASTER)
+                                          showToasterMenuItem)
 
     def __createTestAction(self):
         mainWindow = self._application.mainWindow
@@ -237,35 +234,33 @@ class PluginDebug(Plugin):
         Событие срабатывает после создания всплывающего меню над деревом заметок
         """
         if page.getTypeString() == "wiki":
-            menu.Append(self.__ID_TREE_POPUP, _(u"Message For Wiki Page"))
+            menuItem = menu.Append(wx.ID_ANY, _("Message For Wiki Page"))
             menu.Bind(wx.EVT_MENU,
-                      lambda event: MessageBox(_("Wiki Message"), _(u"This is wiki page")),
-                      id=self.__ID_TREE_POPUP)
+                      lambda event: MessageBox(
+                          _("Wiki Message"), _("This is wiki page")),
+                      menuItem)
 
         elif page.getTypeString() == "html":
-            menu.Append(self.__ID_TREE_POPUP, _(u"Message For HTML Page"))
+            menuItem = menu.Append(wx.ID_ANY, _("Message For HTML Page"))
             menu.Bind(wx.EVT_MENU,
-                      lambda event: MessageBox(_("HTML Message"), _(u"This is HTML page")),
-                      id=self.__ID_TREE_POPUP)
+                      lambda event: MessageBox(
+                          _("HTML Message"), _("This is HTML page")),
+                      menuItem)
 
         elif page.getTypeString() == "text":
-            menu.Append(self.__ID_TREE_POPUP, _(u"Message For Text Page"))
+            menuItem = menu.Append(wx.ID_ANY, _("Message For Text Page"))
             menu.Bind(wx.EVT_MENU,
-                      lambda event: MessageBox(_("Text Message"), _(u"This is Text page")),
-                      id=self.__ID_TREE_POPUP)
+                      lambda event: MessageBox(
+                          _("Text Message"), _("This is Text page")),
+                      menuItem)
 
     def __onRaiseException(self, event):
         raise IOError
 
-    # def __onTrayPopupMenu(self, menu, tray):
-    #     menu.Insert(0, self.__ID_TRAY_POPUP, _(u"Tray Menu From Plugin"))
-    #     menu.Bind(wx.EVT_MENU,
-    #               lambda event: MessageBox(_("Tray Icon"), _(u"This is tray icon")),
-    #               id=self.__ID_TRAY_POPUP)
-
     def __onPostProcessing(self, page, params):
         if self._enablePostProcessing:
-            params.result = re.compile(re.escape(u"абырвалг"), re.I | re.U).sub(u"Главрыба", params.result)
+            params.result = re.compile(re.escape("абырвалг"), re.I | re.U).sub(
+                "Главрыба", params.result)
 
     def __onPreProcessing(self, page, params):
         if self._enablePreProcessing:
@@ -278,11 +273,11 @@ class PluginDebug(Plugin):
         images_dir = getImagesDir()
 
         iconslist = [
-            os.path.join(images_dir, u'add.png'),
-            os.path.join(images_dir, u'code.png'),
-            os.path.join(images_dir, u'save.png'),
+            os.path.join(images_dir, 'add.png'),
+            os.path.join(images_dir, 'code.png'),
+            os.path.join(images_dir, 'save.png'),
         ]
-        title = u'__Debug group__'
+        title = '__Debug group__'
         cover = None
         group_type = IconsGroupInfo.TYPE_OTHER
         sort_key = None
@@ -295,23 +290,25 @@ class PluginDebug(Plugin):
         params.groupsList.insert(0, newgroup)
 
     def __onButtonsDialog(self, event):
-        buttons = [_(u"Button 1"), _(u"Button 2"), _(u"Button 3"), _(u"Cancel")]
+        buttons = [_("Button 1"), _("Button 2"),
+                   _("Button 3"), _("Cancel")]
         with ButtonsDialog(self._application.mainWindow,
-                           _(u"Message"),
-                           _(u"Caption"),
+                           _("Message"),
+                           _("Caption"),
                            buttons,
                            default=0,
                            cancel=3) as dlg:
             result = dlg.ShowModal()
 
             if result == wx.ID_CANCEL:
-                print (u"Cancel")
+                print("Cancel")
             else:
-                print (result)
+                print(result)
 
     def __onPluginsList(self, event):
-        pluginslist = [plugin.name + "\n" for plugin in self._application.plugins]
-        MessageBox(u"".join(pluginslist), _(u"Plugins List"))
+        pluginslist = [plugin.name +
+                       "\n" for plugin in self._application.plugins]
+        MessageBox("".join(pluginslist), _("Plugins List"))
 
     def __onStartWatchEvents(self, event):
         self._watcher.startWatch()
@@ -326,22 +323,22 @@ class PluginDebug(Plugin):
         if params.link is None:
             return
 
-        if params.link.startswith(u"http"):
-            params.text = u"(link) {}".format(params.text)
-        elif params.link.startswith(u"tag://"):
-            params.text = u"(tag) {}".format(params.link)
+        if params.link.startswith("http"):
+            params.text = "(link) {}".format(params.text)
+        elif params.link.startswith("tag://"):
+            params.text = "(tag) {}".format(params.link)
 
     def __onLinkClick(self, page, params):
         if not self._enableOnLinkClick:
             return
 
-        print (params.link)
+        print(params.link)
         # params["process"] = True
 
     def __onEditorPopupMenu(self, page, params):
         if self._enableOnEditorPopup:
             params.menu.AppendSeparator()
-            params.menu.Append(-1, u'Debug popup menu item')
+            params.menu.Append(-1, 'Debug popup menu item')
 
     def __onHtmlRenderingBegin(self, page, htmlView):
         self._timer.start()
@@ -351,7 +348,7 @@ class PluginDebug(Plugin):
 
         if self._enableRenderingTimeMeasuring:
             interval = self._timer.getTimeInterval()
-            text = u'Rendering "{page}": {time} sec'.format(
+            text = 'Rendering "{page}": {time} sec'.format(
                 page=page.title,
                 time=interval)
 
@@ -369,30 +366,30 @@ class PluginDebug(Plugin):
     def __onPageDialogInit(self, page, params):
         if self._enableNewPageDialogTab:
             panel = NewPageDialogPanel(params.dialog.getPanelsParent())
-            params.dialog.addPanel(panel, _(u'Debug'))
+            params.dialog.addPanel(panel, _('Debug'))
 
             controller = DebugPageDialogController(self._application)
             params.dialog.addController(controller)
 
     def __onPageDialogPageTypeChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print (u'Selected page type: {}'.format(params.pageType))
+            print('Selected page type: {}'.format(params.pageType))
 
     def __onPageDialogPageTitleChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print (u'New page title: {}'.format(params.pageTitle))
+            print('New page title: {}'.format(params.pageTitle))
 
     def __onPageDialogPageStyleChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print (u'New page style: {}'.format(params.pageStyle))
+            print('New page style: {}'.format(params.pageStyle))
 
     def __onPageDialogPageIconChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print (u'New page icon: {}'.format(params.pageIcon))
+            print('New page icon: {}'.format(params.pageIcon))
 
     def __onPageDialogPageTagsChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print (u'New page tags: {}'.format(params.pageTags))
+            print('New page tags: {}'.format(params.pageTags))
 
     def __onPreWikiOpen(self, page, params):
         if self._enableOpeningTimeMeasure:
@@ -402,7 +399,7 @@ class PluginDebug(Plugin):
         if self._enableOpeningTimeMeasure:
             interval = time.time() - self._startWikiOpenTime
             self._startWikiOpenTime = None
-            text = u'Opening wiki {path}: {time} sec'.format(
+            text = 'Opening wiki {path}: {time} sec'.format(
                 path=params.path,
                 time=interval)
             logging.info(text)
@@ -424,7 +421,8 @@ class PluginDebug(Plugin):
     def __onPostContentReading(self, page, params):
         if self._enableOnPrePostContent:
             if params.content.startswith(self._prePostContentPrefix):
-                params.content = params.content[len(self._prePostContentPrefix):]
+                params.content = params.content[len(
+                    self._prePostContentPrefix):]
 
     def __onTextEditorCaretMove(self, page, params):
         if self._enableOnTextEditorCaretMove:
@@ -445,11 +443,11 @@ class PluginDebug(Plugin):
 
     @property
     def name(self):
-        return u"TestDebug"
+        return "TestDebug"
 
     @property
     def description(self):
-        return _(u"""Debug Plugin
+        return _("""Debug Plugin
                  <a href="https://jenyay.net">https://jenyay.net</a>
 
                  <a href="/111">Link to page</a>

@@ -5,10 +5,11 @@ import wx
 from .i18n import get_
 
 
-class MenuMaker(object):
+class MenuMaker:
     """
     Класс добавляет пункты в контекстное меню
     """
+
     def __init__(self, controller, menu, parent):
         """
         menu - контекстное меню
@@ -34,30 +35,34 @@ class MenuMaker(object):
         """
         # Меню для открытия файла с текстом
         self.contentMenu = wx.Menu()
-        self.__appendToolsMenu(self.contentMenu,
-                               self.__onOpenContentFile,
-                               self._controller.tools)
+        self.__appendToolsMenu(
+            self.contentMenu, self.__onOpenContentFile, self._controller.tools
+        )
 
         itemsCount = len(self._menu.GetMenuItems())
-        self._menu.Insert(itemsCount - self._popupPosition,
-                          -1,
-                          _(u"Open Content File with..."),
-                          self.contentMenu,
-                          u"")
+        self._menu.Insert(
+            itemsCount - self._popupPosition,
+            -1,
+            _("Open Content File with..."),
+            self.contentMenu,
+            "",
+        )
 
     def insertResultMenuItem(self):
         # Меню для открытия файла с результатом (HTML)
         self.resultMenu = wx.Menu()
-        self.__appendToolsMenu(self.resultMenu,
-                               self.__onOpenResultFile,
-                               self._controller.tools)
+        self.__appendToolsMenu(
+            self.resultMenu, self.__onOpenResultFile, self._controller.tools
+        )
 
         itemsCount = len(self._menu.GetMenuItems())
-        self._menu.Insert(itemsCount - self._popupPosition,
-                          -1,
-                          _(u"Open Result HTML File with..."),
-                          self.resultMenu,
-                          u"")
+        self._menu.Insert(
+            itemsCount - self._popupPosition,
+            -1,
+            _("Open Result HTML File with..."),
+            self.resultMenu,
+            "",
+        )
 
     def insertSeparator(self):
         itemsCount = len(self._menu.GetMenuItems())
@@ -70,9 +75,7 @@ class MenuMaker(object):
         function - обработчик события выбора пункта меню
         """
         for toolItem in tools:
-            menuId = wx.NewId()
-
-            menu.Append(menuId, toolItem.title)
+            menuId = menu.Append(wx.ID_ANY, toolItem.title).GetId()
             self._parent.Bind(wx.EVT_MENU, id=menuId, handler=function)
             self._menuId[menuId] = toolItem
 

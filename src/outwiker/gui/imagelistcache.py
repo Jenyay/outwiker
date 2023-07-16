@@ -7,7 +7,7 @@ import wx
 from .controls.safeimagelist import SafeImageList
 
 
-class ImageListCache(object):
+class ImageListCache:
     def __init__(self, defaultImage: str):
         self._defaultImage = wx.Bitmap(defaultImage)
         assert self._defaultImage.IsOk()

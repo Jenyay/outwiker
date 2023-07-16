@@ -28,8 +28,10 @@ addons:
             - libgstreamer1.0-0
             - libwebkit2gtk-4.0
 install:
+    - git submodule init
+    - git submodule update
     - python -m pip install pipenv
     - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython==4.1.1
     - pipenv update --dev
 script:
-    - xvfb-run pipenv run fab test
+    - xvfb-run pipenv run inv test -p src/outwiker/tests

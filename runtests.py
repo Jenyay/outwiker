@@ -6,7 +6,7 @@ import os
 
 import pytest
 
-from tests.utils import print_memory
+from outwiker.tests.utils import print_memory
 
 if __name__ == '__main__':
     args = sys.argv[1:]

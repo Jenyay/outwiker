@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.pluginbase import Plugin
+from outwiker.api.core.plugins import Plugin
 
 from .controller import Controller
 from .i18n import set_
@@ -11,7 +11,7 @@ class PluginLivejournal(Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
+        super().__init__(application)
         self._controller = Controller(self, application)
 
     def initialize(self):
@@ -26,20 +26,22 @@ class PluginLivejournal(Plugin):
 
     @property
     def name(self):
-        return u"Livejournal"
+        return "Livejournal"
 
     @property
     def description(self):
-        return _(u"""Add commands (:ljuser:) and (:ljcomm:) in wiki parser.
+        return _(
+            """Add commands (:ljuser:) and (:ljcomm:) in wiki parser.
 
                  <B>Usage:</B>
                  (:ljuser username:)
                  (:ljcomm communityname:)
-                 """)
+                 """
+        )
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/LivejournalPluginEn")
+        return _("https://jenyay.net/Outwiker/LivejournalPluginEn")
 
     def destroy(self):
         """

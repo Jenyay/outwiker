@@ -17,17 +17,17 @@ class HtmlTextEditor(TextEditor):
     _htmlDictIsCopied = False
 
     def __init__(self, parent):
-        self._htmlStylesSection = "HtmlStyles"
         super().__init__(parent)
 
     def setDefaultSettings(self):
-        super(HtmlTextEditor, self).setDefaultSettings()
+        super().setDefaultSettings()
         self.setupHtmlStyles(self.textCtrl)
 
     def setupHtmlStyles(self, textCtrl):
         # Устанавливаемые стили
         styles = self.loadStyles()
 
+        textCtrl.SetLexer(wx.stc.STC_LEX_NULL)
         textCtrl.SetLexer(wx.stc.STC_LEX_HTML)
         textCtrl.StyleClearAll()
 
@@ -108,8 +108,11 @@ class HtmlTextEditor(TextEditor):
 
         # Собираем все элементы
         if len(items) > 0:
-            itemsList = reduce(lambda result, item: result +
-                               itemStart + item.strip() + itemEnd + "\n", items, "")
+            itemsList = reduce(
+                lambda result, item: result + itemStart + item.strip() + itemEnd + "\n",
+                items,
+                "",
+            )
         else:
             itemsList = itemStart + itemEnd + "\n"
 
@@ -118,22 +121,23 @@ class HtmlTextEditor(TextEditor):
         if len(end) == 0:
             # Если нет завершающего тега (как в викинотации),
             # то не нужен перевод строки у последнего элемента
-            result = result[: -1]
+            result = result[:-1]
 
         self.textCtrl.ReplaceSelection(result)
 
         if len(items) == 0:
-            endText = u"%s\n%s" % (itemEnd, end)
+            endText = "%s\n%s" % (itemEnd, end)
 
             newPos = self.GetSelectionEnd() - len(endText)
             self.SetSelection(newPos, newPos)
 
     def getSpellChecker(self):
-        langlist = self._getDictsFromConfig() + ['html']
+        langlist = self._getDictsFromConfig() + ["html"]
         spellDirList = getSpellDirList()
 
         spellChecker = SpellChecker(langlist, spellDirList)
-        spellChecker.addCustomDict(os.path.join(spellDirList[-1],
-                                                CUSTOM_DICT_FILE_NAME))
+        spellChecker.addCustomDict(
+            os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME)
+        )
 
         return spellChecker

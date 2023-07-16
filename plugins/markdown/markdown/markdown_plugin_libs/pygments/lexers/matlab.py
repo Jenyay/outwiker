@@ -4,7 +4,7 @@
 
     Lexers for Matlab and related languages.
 
-    :copyright: Copyright 2006-2021 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2022 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -18,7 +18,6 @@ from pygments.token import Text, Comment, Operator, Keyword, Name, String, \
 from pygments.lexers import _scilab_builtins
 
 __all__ = ['MatlabLexer', 'MatlabSessionLexer', 'OctaveLexer', 'ScilabLexer']
-
 
 
 class MatlabLexer(RegexLexer):
@@ -2777,14 +2776,14 @@ class MatlabSessionLexer(Lexer):
                 # line = "\n" + line
                 token = (0, Generic.Traceback, line)
                 insertions.append((idx, [token]))
-            elif continuation:
+            elif continuation and insertions:
                 # line_start is the length of the most recent prompt symbol
                 line_start = len(insertions[-1][-1][-1])
                 # Set leading spaces with the length of the prompt to be a generic prompt
                 # This keeps code aligned when prompts are removed, say with some Javascript
                 if line.startswith(' '*line_start):
-                    insertions.append((len(curcode),
-                                    [(0, Generic.Prompt, line[:line_start])]))
+                    insertions.append(
+                        (len(curcode), [(0, Generic.Prompt, line[:line_start])]))
                     curcode += line[line_start:]
                 else:
                     curcode += line
@@ -2816,6 +2815,7 @@ class OctaveLexer(RegexLexer):
     .. versionadded:: 1.5
     """
     name = 'Octave'
+    url = 'https://www.gnu.org/software/octave/index'
     aliases = ['octave']
     filenames = ['*.m']
     mimetypes = ['text/octave']
@@ -3146,18 +3146,21 @@ class OctaveLexer(RegexLexer):
 
     tokens = {
         'root': [
-            # We should look into multiline comments
+            (r'%\{\s*\n', Comment.Multiline, 'percentblockcomment'),
+            (r'#\{\s*\n', Comment.Multiline, 'hashblockcomment'),
             (r'[%#].*$', Comment),
             (r'^\s*function\b', Keyword, 'deffunc'),
 
             # from 'iskeyword' on hg changeset 8cc154f45e37
             (words((
-                '__FILE__', '__LINE__', 'break', 'case', 'catch', 'classdef', 'continue', 'do', 'else',
-                'elseif', 'end', 'end_try_catch', 'end_unwind_protect', 'endclassdef',
-                'endevents', 'endfor', 'endfunction', 'endif', 'endmethods', 'endproperties',
-                'endswitch', 'endwhile', 'events', 'for', 'function', 'get', 'global', 'if', 'methods',
-                'otherwise', 'persistent', 'properties', 'return', 'set', 'static', 'switch', 'try',
-                'until', 'unwind_protect', 'unwind_protect_cleanup', 'while'), suffix=r'\b'),
+                '__FILE__', '__LINE__', 'break', 'case', 'catch', 'classdef',
+                'continue', 'do', 'else', 'elseif', 'end', 'end_try_catch',
+                'end_unwind_protect', 'endclassdef', 'endevents', 'endfor',
+                'endfunction', 'endif', 'endmethods', 'endproperties', 'endswitch',
+                'endwhile', 'events', 'for', 'function', 'get', 'global', 'if',
+                'methods', 'otherwise', 'persistent', 'properties', 'return',
+                'set', 'static', 'switch', 'try', 'until', 'unwind_protect',
+                'unwind_protect_cleanup', 'while'), suffix=r'\b'),
              Keyword),
 
             (words(builtin_kw + command_kw + function_kw + loadable_kw + mapping_kw,
@@ -3191,7 +3194,18 @@ class OctaveLexer(RegexLexer):
             (r'(?<![\w)\].])\'', String, 'string'),
 
             (r'[a-zA-Z_]\w*', Name),
+            (r'\s+', Text),
             (r'.', Text),
+        ],
+        'percentblockcomment': [
+            (r'^\s*%\}', Comment.Multiline, '#pop'),
+            (r'^.*\n', Comment.Multiline),
+            (r'.', Comment.Multiline),
+        ],
+        'hashblockcomment': [
+            (r'^\s*#\}', Comment.Multiline, '#pop'),
+            (r'^.*\n', Comment.Multiline),
+            (r'.', Comment.Multiline),
         ],
         'string': [
             (r"[^']*'", String, '#pop'),
@@ -3219,6 +3233,7 @@ class ScilabLexer(RegexLexer):
     .. versionadded:: 1.5
     """
     name = 'Scilab'
+    url = 'https://www.scilab.org/'
     aliases = ['scilab']
     filenames = ['*.sci', '*.sce', '*.tst']
     mimetypes = ['text/scilab']
@@ -3249,7 +3264,7 @@ class ScilabLexer(RegexLexer):
             (r'\.\*|\*|\+|\.\^|\.\\|\.\/|\/|\\', Operator),
 
             # punctuation:
-            (r'[\[\](){}@.,=:;]', Punctuation),
+            (r'[\[\](){}@.,=:;]+', Punctuation),
 
             (r'"[^"]*"', String),
 
@@ -3263,6 +3278,7 @@ class ScilabLexer(RegexLexer):
             (r'\d+', Number.Integer),
 
             (r'[a-zA-Z_]\w*', Name),
+            (r'\s+', Whitespace),
             (r'.', Text),
         ],
         'string': [

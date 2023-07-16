@@ -7,7 +7,7 @@ from outwiker.gui.basetextpanel import BaseTextPanel
 from .textpageeditor import TextPageEditor
 
 
-class TextPanel (BaseTextPanel):
+class TextPanel(BaseTextPanel):
     """
     Класс для представления текстовых страниц
     """
@@ -51,8 +51,7 @@ class TextPanel (BaseTextPanel):
 
         reg = page.root.registry.get_page_registry(page)
         try:
-            cursor_position = reg.getint(REGISTRY_PAGE_CURSOR_POSITION,
-                                         default=0)
+            cursor_position = reg.getint(REGISTRY_PAGE_CURSOR_POSITION, default=0)
             self.SetCursorPosition(cursor_position)
         except (KeyError, ValueError):
             pass

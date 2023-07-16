@@ -8,7 +8,7 @@ from codecs import register_error, xmlcharrefreplace_errors
 from .constants import voidElements, booleanAttributes, spaceCharacters
 from .constants import rcdataElements, entities, xmlEntities
 from . import treewalkers, _utils
-from xml.sax.saxutils import escape
+from webpage_xml.sax.saxutils import escape
 
 _quoteAttributeSpecChars = "".join(spaceCharacters) + "\"'=<>`"
 _quoteAttributeSpec = re.compile("[" + _quoteAttributeSpecChars + "]")
@@ -274,7 +274,7 @@ class HTMLSerializer(object):
                 if token["systemId"]:
                     if token["systemId"].find('"') >= 0:
                         if token["systemId"].find("'") >= 0:
-                            self.serializeError("System identifer contains both single and double quote characters")
+                            self.serializeError("System identifier contains both single and double quote characters")
                         quote_char = "'"
                     else:
                         quote_char = '"'

@@ -1,28 +1,35 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
+from outwiker.pages.wiki.parser.htmlelements import create_link_to_page
+import outwiker.core.cssclasses as css
 
 
-class SimpleView (object):
+class SimpleView:
     """
     Класс для простого представления списка дочерних страниц - каждая страница
     на отдельной строке
     """
     @staticmethod
-    def make(children, parser, params):
+    def make(title, children, parser, params) -> str:
         """
         children - список упорядоченных дочерних страниц
         """
-        template = '<a href="page://{link}">{text}</a>\n'
-        result = ''.join(
-            [template.format(link=page.title, text=page.display_title)
-                for page in children])
+        if not children:
+            return ''
 
-        # Выкинем последний перевод строки
-        return result[: -1]
+        links = [create_link_to_page('page://{}'.format(page.title),
+                                     page.display_title)
+                for page in children]
+        items = [f'<li class="{css.CSS_ATTACH_LIST_ITEM}">{link}</li>'
+                 for link in links]
+        all_items_str = ''.join(items)
+        result = f'<ul class="{css.CSS_CHILD_LIST}"><span class="{css.CSS_CHILD_LIST_TITLE}">{title}</span><ul class="{css.CSS_CHILD_LIST}">{all_items_str}</ul></ul>'
+
+        return result
 
 
-class ChildListCommand (Command):
+class ChildListCommand(Command):
     """
     Команда для вставки списка дочерних команд.
     Синтсаксис: (:childlist [params...]:)
@@ -41,15 +48,16 @@ class ChildListCommand (Command):
 
     @property
     def name(self):
-        return u"childlist"
+        return "childlist"
 
     def execute(self, params, content):
         params_dict = Command.parseParams(params)
 
         children = self.parser.page.children
+        title = self.parser.page.display_title
         self._sortChildren(children, params_dict)
 
-        return SimpleView.make(children, self.parser, params)
+        return SimpleView.make(title, children, self.parser, params)
 
     def _sortByNameKey(self, page):
         return page.display_title.lower()
@@ -75,14 +83,14 @@ class ChildListCommand (Command):
         # Ключ - название сортировки,
         # значение - кортеж из (функция ключа сортировки, reverse)
         sortdict = {
-            u"name":             (self._sortByNameKey, False),
-            u"descendname":      (self._sortByNameKey, True),
-            u"order":            (self._sortByOrder, False),
-            u"descendorder":     (self._sortByOrder, True),
-            u"edit":             (self._sortByEditDate, False),
-            u"descendedit":      (self._sortByEditDate, True),
-            u"creation":         (self._sortByCreationDate, False),
-            u"descendcreation":  (self._sortByCreationDate, True),
+            "name":             (self._sortByNameKey, False),
+            "descendname":      (self._sortByNameKey, True),
+            "order":            (self._sortByOrder, False),
+            "descendorder":     (self._sortByOrder, True),
+            "edit":             (self._sortByEditDate, False),
+            "descendedit":      (self._sortByEditDate, True),
+            "creation":         (self._sortByCreationDate, False),
+            "descendcreation":  (self._sortByCreationDate, True),
         }
 
         if sort in sortdict:

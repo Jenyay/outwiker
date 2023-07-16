@@ -3,12 +3,19 @@ __license__ = "MIT"
 
 from collections import defaultdict
 import itertools
+import re
+import warnings
 import sys
 from bs4.element import (
     CharsetMetaAttributeValue,
     ContentMetaAttributeValue,
+    RubyParenthesisString,
+    RubyTextString,
+    Stylesheet,
+    Script,
+    TemplateString,
     nonwhitespace_re
-    )
+)
 
 __all__ = [
     'HTMLTreeBuilder',
@@ -24,6 +31,12 @@ STRICT = 'strict'
 XML = 'xml'
 HTML = 'html'
 HTML_5 = 'html5'
+
+class XMLParsedAsHTMLWarning(UserWarning):
+    """The warning issued when an HTML parser is used to parse
+    XML that is not XHTML.
+    """
+    MESSAGE = """It looks like you're parsing an XML document using an HTML parser. If this really is an HTML document (maybe it's XHTML?), you can ignore or filter this warning. If it's XML, you should know that using an XML parser will be more reliable. To parse this document as XML, make sure you have the lxml package installed, and pass the keyword argument `features="xml"` into the BeautifulSoup constructor."""
 
 
 class TreeBuilderRegistry(object):
@@ -111,7 +124,12 @@ class TreeBuilder(object):
     # comma-separated list of CDATA, rather than a single CDATA.
     DEFAULT_CDATA_LIST_ATTRIBUTES = {}
 
+    # Whitespace should be preserved inside these tags.
     DEFAULT_PRESERVE_WHITESPACE_TAGS = set()
+
+    # The textual contents of tags with these names should be
+    # instantiated with some class other than NavigableString.
+    DEFAULT_STRING_CONTAINERS = {}
     
     USE_DEFAULT = object()
 
@@ -120,12 +138,14 @@ class TreeBuilder(object):
     
     def __init__(self, multi_valued_attributes=USE_DEFAULT,
                  preserve_whitespace_tags=USE_DEFAULT,
-                 store_line_numbers=USE_DEFAULT):
+                 store_line_numbers=USE_DEFAULT,
+                 string_containers=USE_DEFAULT,
+    ):
         """Constructor.
 
         :param multi_valued_attributes: If this is set to None, the
          TreeBuilder will not turn any values for attributes like
-         'class' into lists. Setting this do a dictionary will
+         'class' into lists. Setting this to a dictionary will
          customize this behavior; look at DEFAULT_CDATA_LIST_ATTRIBUTES
          for an example.
 
@@ -137,6 +157,12 @@ class TreeBuilder(object):
          the way <pre> tags are treated in HTML. Tags in this list
          are immune from pretty-printing; their contents will always be
          output as-is.
+
+        :param string_containers: A dictionary mapping tag names to
+        the classes that should be instantiated to contain the textual
+        contents of those tags. The default is to use NavigableString
+        for every tag, no matter what the name. You can override the
+        default by changing DEFAULT_STRING_CONTAINERS.
 
         :param store_line_numbers: If the parser keeps track of the
          line numbers and positions of the original markup, that
@@ -155,7 +181,10 @@ class TreeBuilder(object):
         self.preserve_whitespace_tags = preserve_whitespace_tags
         if store_line_numbers == self.USE_DEFAULT:
             store_line_numbers = self.TRACKS_LINE_NUMBERS
-        self.store_line_numbers = store_line_numbers
+        self.store_line_numbers = store_line_numbers 
+        if string_containers == self.USE_DEFAULT:
+            string_containers = self.DEFAULT_STRING_CONTAINERS
+        self.string_containers = string_containers
         
     def initialize_soup(self, soup):
         """The BeautifulSoup object has been initialized and is now
@@ -215,7 +244,8 @@ class TreeBuilder(object):
         :param markup: Some markup -- probably a bytestring.
         :param user_specified_encoding: The user asked to try this encoding.
         :param document_declared_encoding: The markup itself claims to be
-            in this encoding.
+            in this encoding. NOTE: This argument is not used by the
+            calling code and can probably be removed.
         :param exclude_encodings: The user asked _not_ to try any of
             these encodings.
 
@@ -299,7 +329,7 @@ class TreeBuilder(object):
                         values = value
                     attrs[attr] = values
         return attrs
-
+    
 class SAXTreeBuilder(TreeBuilder):
     """A Beautiful Soup treebuilder that listens for SAX events.
 
@@ -315,11 +345,11 @@ class SAXTreeBuilder(TreeBuilder):
 
     def startElement(self, name, attrs):
         attrs = dict((key[1], value) for key, value in list(attrs.items()))
-        #print "Start %s, %r" % (name, attrs)
+        #print("Start %s, %r" % (name, attrs))
         self.soup.handle_starttag(name, attrs)
 
     def endElement(self, name):
-        #print "End %s" % name
+        #print("End %s" % name)
         self.soup.handle_endtag(name)
 
     def startElementNS(self, nsTuple, nodeName, attrs):
@@ -369,6 +399,30 @@ class HTMLTreeBuilder(TreeBuilder):
     # but it may do so eventually, and this information is available if
     # you need to use it.
     block_elements = set(["address", "article", "aside", "blockquote", "canvas", "dd", "div", "dl", "dt", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "header", "hr", "li", "main", "nav", "noscript", "ol", "output", "p", "pre", "section", "table", "tfoot", "ul", "video"])
+
+    # These HTML tags need special treatment so they can be
+    # represented by a string class other than NavigableString.
+    #
+    # For some of these tags, it's because the HTML standard defines
+    # an unusual content model for them. I made this list by going
+    # through the HTML spec
+    # (https://html.spec.whatwg.org/#metadata-content) and looking for
+    # "metadata content" elements that can contain strings.
+    #
+    # The Ruby tags (<rt> and <rp>) are here despite being normal
+    # "phrasing content" tags, because the content they contain is
+    # qualitatively different from other text in the document, and it
+    # can be useful to be able to distinguish it.
+    #
+    # TODO: Arguably <noscript> could go here but it seems
+    # qualitatively different from the other tags.
+    DEFAULT_STRING_CONTAINERS = {
+        'rt' : RubyTextString,
+        'rp' : RubyParenthesisString,
+        'style': Stylesheet,
+        'script': Script,
+        'template': TemplateString,
+    }    
     
     # The HTML standard defines these attributes as containing a
     # space-separated list of values, not a single value. That is,
@@ -395,7 +449,7 @@ class HTMLTreeBuilder(TreeBuilder):
         }
 
     DEFAULT_PRESERVE_WHITESPACE_TAGS = set(['pre', 'textarea'])
-    
+
     def set_up_substitutions(self, tag):
         """Replace the declared encoding in a <meta> tag with a placeholder,
         to be substituted when the tag is output to a string.
@@ -439,10 +493,102 @@ class HTMLTreeBuilder(TreeBuilder):
 
         return (meta_encoding is not None)
 
+class DetectsXMLParsedAsHTML(object):
+    """A mixin class for any class (a TreeBuilder, or some class used by a
+    TreeBuilder) that's in a position to detect whether an XML
+    document is being incorrectly parsed as HTML, and issue an
+    appropriate warning.
+
+    This requires being able to observe an incoming processing
+    instruction that might be an XML declaration, and also able to
+    observe tags as they're opened. If you can't do that for a given
+    TreeBuilder, there's a less reliable implementation based on
+    examining the raw markup.
+    """
+
+    # Regular expression for seeing if markup has an <html> tag.
+    LOOKS_LIKE_HTML = re.compile("<[^ +]html", re.I)
+    LOOKS_LIKE_HTML_B = re.compile(b"<[^ +]html", re.I)
+
+    XML_PREFIX = '<?xml'
+    XML_PREFIX_B = b'<?xml'
+    
+    @classmethod
+    def warn_if_markup_looks_like_xml(cls, markup):
+        """Perform a check on some markup to see if it looks like XML
+        that's not XHTML. If so, issue a warning.
+
+        This is much less reliable than doing the check while parsing,
+        but some of the tree builders can't do that.
+
+        :return: True if the markup looks like non-XHTML XML, False
+        otherwise.
+        """
+        if isinstance(markup, bytes):
+            prefix = cls.XML_PREFIX_B
+            looks_like_html = cls.LOOKS_LIKE_HTML_B
+        else:
+            prefix = cls.XML_PREFIX
+            looks_like_html = cls.LOOKS_LIKE_HTML
+        
+        if (markup is not None
+            and markup.startswith(prefix)
+            and not looks_like_html.search(markup[:500])
+        ):
+            cls._warn()
+            return True
+        return False
+
+    @classmethod
+    def _warn(cls):
+        """Issue a warning about XML being parsed as HTML."""
+        warnings.warn(
+            XMLParsedAsHTMLWarning.MESSAGE, XMLParsedAsHTMLWarning
+        )
+        
+    def _initialize_xml_detector(self):
+        """Call this method before parsing a document."""
+        self._first_processing_instruction = None
+        self._root_tag = None
+       
+    def _document_might_be_xml(self, processing_instruction):
+        """Call this method when encountering an XML declaration, or a
+        "processing instruction" that might be an XML declaration.
+        """
+        if (self._first_processing_instruction is not None
+            or self._root_tag is not None):
+            # The document has already started. Don't bother checking
+            # anymore.
+            return
+
+        self._first_processing_instruction = processing_instruction
+
+        # We won't know until we encounter the first tag whether or
+        # not this is actually a problem.
+        
+    def _root_tag_encountered(self, name):
+        """Call this when you encounter the document's root tag.
+
+        This is where we actually check whether an XML document is
+        being incorrectly parsed as HTML, and issue the warning.
+        """
+        if self._root_tag is not None:
+            # This method was incorrectly called multiple times. Do
+            # nothing.
+            return
+
+        self._root_tag = name
+        if (name != 'html' and self._first_processing_instruction is not None
+            and self._first_processing_instruction.lower().startswith('xml ')):
+            # We encountered an XML declaration and then a tag other
+            # than 'html'. This is a reliable indicator that a
+            # non-XHTML document is being parsed as XML.
+            self._warn()
+
+    
 def register_treebuilders_from(module):
     """Copy TreeBuilders from the given module into this module."""
-    # I'm fairly sure this is not the best way to do this.
-    this_module = sys.modules['bs4.builder']
+    this_module = sys.modules[__name__]
     for name in module.__all__:
         obj = getattr(module, name)
 

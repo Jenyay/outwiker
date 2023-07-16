@@ -1,89 +1,87 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 import re
 
-from outwiker.core.tree import WikiDocument
-from outwiker.utilites.textfile import readTextFile, writeTextFile
+from outwiker.api.core.tree import WikiDocument
+from outwiker.api.core.text import readTextFile, writeTextFile
 
 from .exporterfactory import ExporterFactory
 from .indexgenerator import IndexGenerator
 
 
-class BranchExporter (object):
-    def __init__ (self, startpage, nameGenerator, application):
+class BranchExporter:
+    def __init__(self, startpage, nameGenerator, application):
         self.__startpage = startpage
         self.__application = application
 
-        self.__indexfname = u"__index.html"
-        self.__contentfname = u"__content.html"
+        self.__indexfname = "__index.html"
+        self.__contentfname = "__content.html"
 
         # Список ошибок, возникших при экспорте
         self.__log = []
         self.__nameGenerator = nameGenerator
 
-        self.__a_tag_regex = re.compile (
+        self.__a_tag_regex = re.compile(
             r"""
             (<\s*a\s+
             (.*?)
             href\s*=['"](.*?)['"]
             (.*?)>)
             """,
-            re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE)
-
+            re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE,
+        )
 
         # Словарь, который сохраняет, как была названа каждая страница при экспорте
         # Ключ - страница, значение - имя ее директории или файла (без расширения) после экспорта
         self.__renames = {}
 
     @property
-    def log (self):
+    def log(self):
         return self.__log
 
-    def export (self, outdir, imagesonly, alwaysOverwrite):
+    def export(self, outdir, imagesonly, alwaysOverwrite):
         self.__log = []
         self.__renames = {}
 
-        self.__export (self.__startpage,
-                       self.__startpage,
-                       outdir,
-                       imagesonly,
-                       alwaysOverwrite)
+        self.__export(
+            self.__startpage, self.__startpage, outdir, imagesonly, alwaysOverwrite
+        )
 
-        self.__replacePageLinks (outdir)
+        self.__replacePageLinks(outdir)
         try:
-            self.__createIndex (outdir, alwaysOverwrite)
+            self.__createIndex(outdir, alwaysOverwrite)
         except IOError as e:
-            str (e)
+            self.log.append(str(e))
 
         return self.log
 
-    def __createIndex (self, outdir, alwaysOverwrite):
+    def __createIndex(self, outdir, alwaysOverwrite):
         """
         Создать оглавление
         """
-        indexpath = os.path.join (outdir, self.__indexfname)
-        contentpath = os.path.join (outdir, self.__contentfname)
+        indexpath = os.path.join(outdir, self.__indexfname)
+        contentpath = os.path.join(outdir, self.__contentfname)
 
-        indexgenerator = IndexGenerator (self.__startpage, self.__renames)
-        indexgenerator.generatefiles (indexpath, contentpath)
+        indexgenerator = IndexGenerator(self.__startpage, self.__renames)
+        indexgenerator.generatefiles(indexpath, contentpath)
 
-    def __replacePageLinks (self, outdir):
+    def __replacePageLinks(self, outdir):
         """
         Скорректировать ссылки на страницы
         """
         for page in list(self.__renames.keys()):
-            fullname = os.path.join (outdir, self.__renames[page] + u".html")
+            fullname = os.path.join(outdir, self.__renames[page] + ".html")
 
             try:
                 text = readTextFile(fullname)
-                newtext = self.__replacePageLinksInText (text, page, outdir)
+                newtext = self.__replacePageLinksInText(text, page, outdir)
                 writeTextFile(fullname, newtext)
             except BaseException as error:
-                self.__log.append (u"{0}: {1}".format (page.title, str(error)))
+                self.__log.append("{0}: {1}".format(page.title, str(error)))
 
-    def __replacePageLinksInText (self, text, page, outdir):
-        matches = self.__a_tag_regex.findall (text)
+    def __replacePageLinksInText(self, text, page, outdir):
+        matches = self.__a_tag_regex.findall(text)
         hrefMatchIndex = 2
         fullMatchIndex = 0
 
@@ -95,17 +93,17 @@ class BranchExporter (object):
                 continue
 
             # Проверить, что это не ссылка на сайт
-            if self.__isInternetUrl (url):
+            if self.__isInternetUrl(url):
                 continue
 
             # Проверить, что это не ссылка на файл
-            if self.__isFileLink (url, outdir):
+            if self.__isFileLink(url, outdir):
                 continue
 
             linkToPage = None
             anchor = None
 
-            linkToPage, anchor = self.__getPageByProtocol (url)
+            linkToPage, anchor = self.__getPageByProtocol(url)
 
             # Это ссылка на подстраницу?
             if linkToPage is None:
@@ -128,64 +126,63 @@ class BranchExporter (object):
             if anchor is not None:
                 newhref += anchor
 
-            newFullLink = match[fullMatchIndex].replace (url, newhref)
+            newFullLink = match[fullMatchIndex].replace(url, newhref)
 
-            result = result.replace (match[fullMatchIndex], newFullLink)
+            result = result.replace(match[fullMatchIndex], newFullLink)
 
         return result
 
-    def __getPageByProtocol (self, href):
+    def __getPageByProtocol(self, href):
         """
-        Если href - протокол вида page://..., то возвращает страницу, на которую ведет ссылка (если она существует), в противном случае возвращает None.
+               Если href - протокол вида page://..., то возвращает страницу,
+        на которую ведет ссылка (если она существует),
+        в противном случае возвращает None.
         """
         # Т.к. поддержка этого протокола появилась только в версии 1.8.0,
         # то нужно проверить, есть ли в self.__application член pageUidDepot
         if "pageUidDepot" not in self.__application.__dict__:
             return (None, None)
 
-        protocol = u"page://"
+        protocol = "page://"
 
-        if not href.startswith (protocol):
+        if not href.startswith(protocol):
             return (None, None)
 
         # Отсечем протокол
-        uid = href[len (protocol):]
+        uid = href[len(protocol) :]
 
         # Отсечем все, что после /
-        slashPos = uid.find ("/")
-        uid_clean = uid[: slashPos] if slashPos != -1 else uid
+        slashPos = uid.find("/")
+        uid_clean = uid[:slashPos] if slashPos != -1 else uid
 
         page = self.__application.pageUidDepot[uid_clean]
-        anchor = self.__getAnchor (uid)
+        anchor = self.__getAnchor(uid)
 
         return (page, anchor)
 
-    def __getAnchor (self, href):
+    def __getAnchor(self, href):
         """
         Попытаться найти якорь, если используется ссылка вида page://...
         """
-        pos = href.rfind ("/#")
+        pos = href.rfind("/#")
         if pos != -1:
-            return href[pos + 1:]
+            return href[pos + 1 :]
 
         return None
 
-    def __isInternetUrl (self, url):
-        return (url.startswith ("http://") or
-                url.startswith ("https://") or
-                url.startswith ("ftp://") or
-                url.startswith ("mailto:"))
+    def __isInternetUrl(self, url):
+        return (
+            url.startswith("http://")
+            or url.startswith("https://")
+            or url.startswith("ftp://")
+            or url.startswith("mailto:")
+        )
 
-    def __isFileLink (self, url, outdir):
-        fname = os.path.join (outdir, url)
-        return os.path.exists (fname) and os.path.isfile (fname)
+    def __isFileLink(self, url, outdir):
+        fname = os.path.join(outdir, url)
+        return os.path.exists(fname) and os.path.isfile(fname)
 
-    def __export (self,
-                  page,
-                  root,
-                  outdir,
-                  imagesonly,
-                  alwaysOverwrite):
+    def __export(self, page, root, outdir, imagesonly, alwaysOverwrite):
         """
         page - страница, начиная с которой надо начать экспортирование
         root - корневая страница, откуда началось общее экспортирование (для определения имени файлов)
@@ -195,18 +192,13 @@ class BranchExporter (object):
         """
         if page.getTypeString() != WikiDocument.getTypeString():
             try:
-                exporter = ExporterFactory.getExporter (page)
-                exportname = self.__nameGenerator.getName (page)
+                exporter = ExporterFactory.getExporter(page)
+                exportname = self.__nameGenerator.getName(page)
                 self.__renames[page] = exportname
 
-                exporter.export (outdir, exportname, imagesonly, alwaysOverwrite)
+                exporter.export(outdir, exportname, imagesonly, alwaysOverwrite)
             except BaseException as error:
-                self.__log.append (u"{0}: {1}".format (page.title, str(error)))
+                self.__log.append("{0}: {1}".format(page.title, str(error)))
 
         for child in page.children:
-            self.__export (
-                child,
-                root,
-                outdir,
-                imagesonly,
-                alwaysOverwrite)
+            self.__export(child, root, outdir, imagesonly, alwaysOverwrite)

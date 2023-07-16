@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI
-from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo)
+from outwiker.api.pages.wiki import WikiWikiPage
+from outwiker.api.pages.wiki.defines import MENU_WIKI
+from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo
 
 from .i18n import get_
 from .commands import TOCCommand
@@ -11,14 +10,13 @@ from .actions import GenerateTOC, InsertTOCCommand
 from . import defines
 
 
-class Controller(object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
 
     def __init__(self, plugin, application):
-        """
-        """
+        """ """
         self._plugin = plugin
         self._application = application
 
@@ -43,17 +41,14 @@ class Controller(object):
 
     def _initialize_guicontroller(self):
         action_gui_info = [
-            ActionGUIInfo(GenerateTOC(self._application),
-                          defines.MENU_TOC),
-            ActionGUIInfo(InsertTOCCommand(self._application),
-                          defines.MENU_TOC),
+            ActionGUIInfo(GenerateTOC(self._application), defines.MENU_TOC),
+            ActionGUIInfo(InsertTOCCommand(self._application), defines.MENU_TOC),
         ]
 
-        new_menus = [(defines.MENU_TOC, _('Table of contents'), MENU_WIKI)]
+        new_menus = [(defines.MENU_TOC, _("Table of contents"), MENU_WIKI)]
 
         if self._application.mainWindow is not None:
-            self._GUIController.initialize(action_gui_info,
-                                           new_menus=new_menus)
+            self._GUIController.initialize(action_gui_info, new_menus=new_menus)
 
     def destroy(self):
         """
@@ -70,5 +65,9 @@ class Controller(object):
         """
         Вызывается до разбора викитекста. Добавление команды(:counter:)
         """
-        list(map(lambda command: parser.addCommand(command(parser, self._application)),
-                 self._commands))
+        list(
+            map(
+                lambda command: parser.addCommand(command(parser, self._application)),
+                self._commands,
+            )
+        )

@@ -8,6 +8,7 @@ __all__ = [
 import warnings
 import re
 from bs4.builder import (
+    DetectsXMLParsedAsHTML,
     PERMISSIVE,
     HTML,
     HTML_5,
@@ -39,7 +40,18 @@ except ImportError as e:
     new_html5lib = True
 
 class HTML5TreeBuilder(HTMLTreeBuilder):
-    """Use html5lib to build a tree."""
+    """Use html5lib to build a tree.
+
+    Note that this TreeBuilder does not support some features common
+    to HTML TreeBuilders. Some of these features could theoretically
+    be implemented, but at the very least it's quite difficult,
+    because html5lib moves the parse tree around as it's being built.
+
+    * This TreeBuilder doesn't use different subclasses of NavigableString
+      based on the name of the tag in which the string was found.
+
+    * You can't use a SoupStrainer to parse only part of a document.
+    """
 
     NAME = "html5lib"
 
@@ -59,6 +71,11 @@ class HTML5TreeBuilder(HTMLTreeBuilder):
         # UnicodeDammit.
         if exclude_encodings:
             warnings.warn("You provided a value for exclude_encoding, but the html5lib tree builder doesn't support exclude_encoding.")
+
+        # html5lib only parses HTML, so if it's given XML that's worth
+        # noting.
+        DetectsXMLParsedAsHTML.warn_if_markup_looks_like_xml(markup)
+
         yield (markup, None, None, False)
 
     # These methods are defined by Beautiful Soup.
@@ -116,6 +133,9 @@ class TreeBuilderForHtml5lib(treebuilder_base.TreeBuilder):
                 "", "html.parser", store_line_numbers=store_line_numbers,
                 **kwargs
             )
+        # TODO: What are **kwargs exactly? Should they be passed in
+        # here in addition to/instead of being passed to the BeautifulSoup
+        # constructor?
         super(TreeBuilderForHtml5lib, self).__init__(namespaceHTMLElements)
 
         # This will be set later to an html5lib.html5parser.HTMLParser
@@ -228,8 +248,8 @@ class AttrList(object):
     def __setitem__(self, name, value):
         # If this attribute is a multi-valued attribute for this element,
         # turn its value into a list.
-        list_attr = self.element.cdata_list_attributes
-        if (name in list_attr['*']
+        list_attr = self.element.cdata_list_attributes or {}
+        if (name in list_attr.get('*')
             or (self.element.name in list_attr
                 and name in list_attr[self.element.name])):
             # A node that is being cloned may have already undergone
@@ -361,9 +381,9 @@ class Element(treebuilder_base.Node):
 
     def reparentChildren(self, new_parent):
         """Move all of this tag's children into another tag."""
-        # print "MOVE", self.element.contents
-        # print "FROM", self.element
-        # print "TO", new_parent.element
+        # print("MOVE", self.element.contents)
+        # print("FROM", self.element)
+        # print("TO", new_parent.element)
 
         element = self.element
         new_parent_element = new_parent.element
@@ -421,9 +441,9 @@ class Element(treebuilder_base.Node):
         element.contents = []
         element.next_element = final_next_element
 
-        # print "DONE WITH MOVE"
-        # print "FROM", self.element
-        # print "TO", new_parent_element
+        # print("DONE WITH MOVE")
+        # print("FROM", self.element)
+        # print("TO", new_parent_element)
 
     def cloneNode(self):
         tag = self.soup.new_tag(self.element.name, self.namespace)

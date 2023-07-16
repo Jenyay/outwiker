@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod
 from pyparsing import nestedExpr, originalTextFor
 
 
-class TextBlockToken (object):
+class TextBlockToken:
     """
     Класс, содержащий метод для оборачивания текста в теги текстового уровня
     """
@@ -18,15 +18,15 @@ class TextBlockToken (object):
         closing - закрывающийся тег(и)
         """
         def conversionParseAction(s, l, t):
-            return u"".join([
+            return ''.join([
                 opening,
-                self.parser.parseTextLevelMarkup(u''.join(t)),
+                self.parser.parseTextLevelMarkup(''.join(t)),
                 closing,
             ])
         return conversionParseAction
 
 
-class NestedBlockBase(object, metaclass=ABCMeta):
+class NestedBlockBase(metaclass=ABCMeta):
     '''
     Base class for tokens of the nested blocks.
     '''
@@ -78,7 +78,7 @@ class SimpleNestedBlock(NestedBlockBase):
 
             inner_text = text[len(self.start):-len(self.end)]
 
-            return u"".join([
+            return ''.join([
                 opening,
                 self.parser.parseWikiMarkup(inner_text),
                 closing,

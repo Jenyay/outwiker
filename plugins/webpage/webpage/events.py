@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx.lib.newevent
 
@@ -8,8 +8,9 @@ ErrorDownloadEvent, EVT_DOWNLOAD_ERROR = wx.lib.newevent.NewEvent()
 FinishDownloadEvent, EVT_DOWNLOAD_FINISH = wx.lib.newevent.NewEvent()
 
 
-class PrepareHtmlEventParams (object):
+class PrepareHtmlEventParams:
     """Used for 'WebPage_onPrepareHtml' event"""
+
     def __init__(self, page, soup):
         """
         page - current page;

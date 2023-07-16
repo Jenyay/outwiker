@@ -6,23 +6,24 @@ import shutil
 
 import wx
 
-from outwiker.core.commands import MessageBox
-from outwiker.core.system import getSpecialDirList
-from outwiker.gui.controls.popupbutton import (PopupButton,
-                                               EVT_POPUP_BUTTON_MENU_CLICK)
-from outwiker.gui.controls.safeimagelist import SafeImageList
-from outwiker.gui.guiconfig import MainWindowConfig
-from outwiker.utilites.textfile import readTextFile, writeTextFile
+from outwiker.api.app.config import MainWindowConfig
+from outwiker.api.app.application import getSpecialDirList
+from outwiker.api.gui.dialogs import MessageBox
+from outwiker.api.gui.controls import PopupButton, EVT_POPUP_BUTTON_MENU_CLICK
+from outwiker.api.gui.controls import SafeImageList
+from outwiker.api.core.text import readTextFile, writeTextFile
 
 from snippets.events import RunSnippetParams
 from snippets.gui.snippeteditor import SnippetEditor
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
-from snippets.utils import (getImagesPath,
-                            findUniquePath,
-                            createFile,
-                            moveSnippetsTo,
-                            openHelp)
+from snippets.utils import (
+    getImagesPath,
+    findUniquePath,
+    createFile,
+    moveSnippetsTo,
+    openHelp,
+)
 import snippets.defines as defines
 from snippets.snippetparser import SnippetParser, SnippetException
 from snippets.config import SnippetsConfig
@@ -35,13 +36,23 @@ class TreeItemInfo(object):
 
 
 class EditSnippetsDialog(wx.Frame):
-    '''
+    """
     Dialog to create, edit and remove snippets and folders.
-    '''
+    """
+
     def __init__(self, parent):
         super().__init__(
             parent,
-            style=wx.CAPTION | wx.CLOSE | wx.SYSTEM_MENU | wx.MINIMIZE_BOX | wx.MAXIMIZE_BOX | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.FRAME_TOOL_WINDOW | wx.FRAME_NO_TASKBAR | wx.FRAME_FLOAT_ON_PARENT
+            style=wx.CAPTION
+            | wx.CLOSE
+            | wx.SYSTEM_MENU
+            | wx.MINIMIZE_BOX
+            | wx.MAXIMIZE_BOX
+            | wx.CLOSE_BOX
+            | wx.RESIZE_BORDER
+            | wx.FRAME_TOOL_WINDOW
+            | wx.FRAME_NO_TASKBAR
+            | wx.FRAME_FLOAT_ON_PARENT,
         )
         global _
         _ = get_()
@@ -57,33 +68,33 @@ class EditSnippetsDialog(wx.Frame):
         self.addSnippetBtn = None
 
         self._varMenuItems = [
-            (_(u'Selected text'), defines.VAR_SEL_TEXT),
-            (_(u'Current date'), defines.VAR_DATE),
-            (_(u'Page title'), defines.VAR_TITLE),
-            (_(u'Page type'), defines.VAR_PAGE_TYPE),
-            (_(u'Page tags list'), defines.VAR_TAGS),
-            (_(u'Attachments path'), defines.VAR_ATTACH),
-            (_(u'Path to page'), defines.VAR_FOLDER),
-            (_(u'Relative page path'), defines.VAR_SUBPATH),
-            (_(u'Page creation date'), defines.VAR_DATE_CREATING),
-            (_(u'Page modification date'), defines.VAR_DATE_EDITIND),
-            (_(u'Page Id'), defines.VAR_PAGE_ID),
-            (_(u'Attachments list'), defines.VAR_ATTACHLIST),
-            (_(u'Child pages'), defines.VAR_CHILDLIST),
+            (_("Selected text"), defines.VAR_SEL_TEXT),
+            (_("Current date"), defines.VAR_DATE),
+            (_("Page title"), defines.VAR_TITLE),
+            (_("Page type"), defines.VAR_PAGE_TYPE),
+            (_("Page tags list"), defines.VAR_TAGS),
+            (_("Attachments path"), defines.VAR_ATTACH),
+            (_("Path to page"), defines.VAR_FOLDER),
+            (_("Relative page path"), defines.VAR_SUBPATH),
+            (_("Page creation date"), defines.VAR_DATE_CREATING),
+            (_("Page modification date"), defines.VAR_DATE_EDITIND),
+            (_("Page Id"), defines.VAR_PAGE_ID),
+            (_("Attachments list"), defines.VAR_ATTACHLIST),
+            (_("Child pages"), defines.VAR_CHILDLIST),
         ]
 
         self._blocksMenuItems = [
-            (_('{% if %}'), (u'{% if %}', '{% elif %}{% else %}{% endif %}')),
-            (_('{% include %}'), (u"{% include '", u"' %}")),
-            (_('{# comment #}'), (u'{# ', ' #}')),
+            (_("{% if %}"), ("{% if %}", "{% elif %}{% else %}{% endif %}")),
+            (_("{% include %}"), ("{% include '", "' %}")),
+            (_("{# comment #}"), ("{# ", " #}")),
         ]
 
         self._createGUI()
-        self.SetTitle(_(u'Snippets management'))
+        self.SetTitle(_("Snippets management"))
         self.disableSnippetEditor()
 
     def disableSnippetEditor(self):
-        self.snippetEditor.SetText(u'')
+        self.snippetEditor.SetText("")
         self._snippetPanel.Disable()
         self.runSnippetBtn.Disable()
 
@@ -94,90 +105,80 @@ class EditSnippetsDialog(wx.Frame):
     def appendDirTreeItem(self, parentItem, name, data):
         itemData = data
         if parentItem is not None:
-            newItemId = self.snippetsTree.AppendItem(parentItem,
-                                                     name,
-                                                     self._dirImageId,
-                                                     data=itemData)
+            newItemId = self.snippetsTree.AppendItem(
+                parentItem, name, self._dirImageId, data=itemData
+            )
         else:
-            newItemId = self.snippetsTree.AddRoot(name,
-                                                  self._dirImageId,
-                                                  data=itemData)
+            newItemId = self.snippetsTree.AddRoot(name, self._dirImageId, data=itemData)
         return newItemId
 
     def appendSnippetTreeItem(self, parentItem, name, data):
         itemData = data
-        newItemId = self.snippetsTree.AppendItem(parentItem,
-                                                 name,
-                                                 self._snippetImageId,
-                                                 data=itemData)
+        newItemId = self.snippetsTree.AppendItem(
+            parentItem, name, self._snippetImageId, data=itemData
+        )
         return newItemId
 
     def _createTreeButtons(self, groupButtonsSizer):
         # Add a group button
         self.addGroupBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "folder_add.png"))
+            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "folder_add.png"))
         )
-        self.addGroupBtn.SetToolTip(_(u"Add new snippets group"))
+        self.addGroupBtn.SetToolTip(_("Add new snippets group"))
         groupButtonsSizer.Add(self.addGroupBtn, flag=wx.ALL, border=0)
 
         # Add a snippet button
         self.addSnippetBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "snippet_add.png"))
+            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "snippet_add.png"))
         )
-        self.addSnippetBtn.SetToolTip(_(u"Create new snippet"))
+        self.addSnippetBtn.SetToolTip(_("Create new snippet"))
         groupButtonsSizer.Add(self.addSnippetBtn, flag=wx.ALL, border=0)
 
         # Rename group or snippet button
         self.renameBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "rename.png"))
+            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "rename.png"))
         )
-        self.renameBtn.SetToolTip(_(u"Rename"))
+        self.renameBtn.SetToolTip(_("Rename"))
         groupButtonsSizer.Add(self.renameBtn, flag=wx.ALL, border=0)
 
         # Remove group or snippet button
         self.removeBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "remove.png"))
+            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "remove.png"))
         )
-        self.removeBtn.SetToolTip(_(u"Remove"))
+        self.removeBtn.SetToolTip(_("Remove"))
         groupButtonsSizer.Add(self.removeBtn, flag=wx.ALL, border=0)
 
         # Run snippet
         self.runSnippetBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "run.png"))
+            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "run.png"))
         )
-        self.runSnippetBtn.SetToolTip(_(u"Run snippet"))
+        self.runSnippetBtn.SetToolTip(_("Run snippet"))
         groupButtonsSizer.Add(self.runSnippetBtn, flag=wx.ALL, border=0)
 
         # Open help
         self.openHelpBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "help.png"))
+            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "help.png"))
         )
-        self.openHelpBtn.SetToolTip(_(u"Open help..."))
+        self.openHelpBtn.SetToolTip(_("Open help..."))
         groupButtonsSizer.Add(self.openHelpBtn, flag=wx.ALL, border=0)
 
     def _createImagesList(self):
         self._imagelist = SafeImageList(self.ICON_WIDTH, self.ICON_HEIGHT)
 
         self._dirImageId = self._imagelist.Add(
-            wx.Bitmap(os.path.join(self._imagesPath, u'folder.png'))
+            wx.Bitmap(os.path.join(self._imagesPath, "folder.png"))
         )
 
         self._snippetImageId = self._imagelist.Add(
-            wx.Bitmap(os.path.join(self._imagesPath, u'snippet.png'))
+            wx.Bitmap(os.path.join(self._imagesPath, "snippet.png"))
         )
 
     def _createTreePanel(self, mainSizer):
         self._createImagesList()
 
         self.snippetsTree = wx.TreeCtrl(
-            self,
-            style=wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
+            self, style=wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER
+        )
         self.snippetsTree.SetMinSize((200, 200))
 
         self.snippetsTree.AssignImageList(self._imagelist)
@@ -199,26 +200,24 @@ class EditSnippetsDialog(wx.Frame):
         # Insert variable
         self.insertVariableBtn = PopupButton(
             parent,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath,
-                                          "variables-menu.png"))
+            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "variables-menu.png")),
         )
-        self.insertVariableBtn.SetToolTip(_(u"Insert variable"))
+        self.insertVariableBtn.SetToolTip(_("Insert variable"))
 
         for menuitem in self._varMenuItems:
-            data = u'{{' + menuitem[1] + u'}}'
-            title = u'{var} - {title}'.format(var=data, title=menuitem[0])
+            data = "{{" + menuitem[1] + "}}"
+            title = "{var} - {title}".format(var=data, title=menuitem[0])
             self.insertVariableBtn.appendMenuItem(title, data)
 
-        self.insertVariableBtn.appendMenuItem(_(u'Other variable...'), None)
+        self.insertVariableBtn.appendMenuItem(_("Other variable..."), None)
 
         snippetButtonsSizer.Add(self.insertVariableBtn, flag=wx.ALL, border=0)
 
         # Insert block
         self.insertBlockBtn = PopupButton(
-            parent,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "block-menu.png"))
+            parent, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "block-menu.png"))
         )
-        self.insertBlockBtn.SetToolTip(_(u"Insert block"))
+        self.insertBlockBtn.SetToolTip(_("Insert block"))
 
         for menuitem in self._blocksMenuItems:
             data = menuitem[1]
@@ -239,8 +238,7 @@ class EditSnippetsDialog(wx.Frame):
 
         # Errors messages
         self.errorsTextCtrl = wx.TextCtrl(
-            self._snippetPanel,
-            style=wx.TE_MULTILINE | wx.TE_READONLY
+            self._snippetPanel, style=wx.TE_MULTILINE | wx.TE_READONLY
         )
         self.errorsTextCtrl.SetMinSize((-1, 100))
 
@@ -258,7 +256,7 @@ class EditSnippetsDialog(wx.Frame):
 
     def _createBottomButtons(self, mainSizer):
         mainSizer.AddStretchSpacer()
-        self.closeBtn = wx.Button(self, id=wx.ID_CLOSE, label=_(u'Close'))
+        self.closeBtn = wx.Button(self, id=wx.ID_CLOSE, label=_("Close"))
         mainSizer.Add(self.closeBtn, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
 
     def _createMenu(self):
@@ -266,37 +264,37 @@ class EditSnippetsDialog(wx.Frame):
         editMenu = self._createEditMenu()
         fileMenu = self._createFileMenu()
         helpMenu = self._createHelpMenu()
-        self._menuBar.Append(fileMenu, _('File'))
-        self._menuBar.Append(editMenu, _('Edit'))
-        self._menuBar.Append(helpMenu, _('Help'))
+        self._menuBar.Append(fileMenu, _("File"))
+        self._menuBar.Append(editMenu, _("Edit"))
+        self._menuBar.Append(helpMenu, _("Help"))
         self.SetMenuBar(self._menuBar)
 
     def _createFileMenu(self):
         menu = wx.Menu()
-        menu.Append(self.addGroupBtn.GetId(),
-                    _(u"Add new snippets group") + '\tCtrl+Shift+N')
-        menu.Append(self.addSnippetBtn.GetId(),
-                    _(u"Create new snippet") + '\tCtrl+N')
-        menu.Append(self.renameBtn.GetId(), _(u"Rename") + '\tF2')
-        menu.Append(self.removeBtn.GetId(), _(u"Remove") + '\tCtrl+Del')
-        menu.Append(self.runSnippetBtn.GetId(), _(u"Run snippet") + '\tF5')
+        menu.Append(
+            self.addGroupBtn.GetId(), _("Add new snippets group") + "\tCtrl+Shift+N"
+        )
+        menu.Append(self.addSnippetBtn.GetId(), _("Create new snippet") + "\tCtrl+N")
+        menu.Append(self.renameBtn.GetId(), _("Rename") + "\tF2")
+        menu.Append(self.removeBtn.GetId(), _("Remove") + "\tCtrl+Del")
+        menu.Append(self.runSnippetBtn.GetId(), _("Run snippet") + "\tF5")
         return menu
 
     def _createHelpMenu(self):
         menu = wx.Menu()
-        menu.Append(self.openHelpBtn.GetId(), _(u"Open help...") + '\tF1')
+        menu.Append(self.openHelpBtn.GetId(), _("Open help...") + "\tF1")
         return menu
 
     def _createEditMenu(self):
         menu = wx.Menu()
-        menu.Append(wx.ID_UNDO, _(u"Undo") + "\tCtrl+Z")
-        menu.Append(wx.ID_REDO, _(u"Redo") + "\tCtrl+Y")
+        menu.Append(wx.ID_UNDO, _("Undo") + "\tCtrl+Z")
+        menu.Append(wx.ID_REDO, _("Redo") + "\tCtrl+Y")
         menu.AppendSeparator()
-        menu.Append(wx.ID_CUT, _(u"Cut") + "\tCtrl+X")
-        menu.Append(wx.ID_COPY, _(u"Copy") + "\tCtrl+C")
-        menu.Append(wx.ID_PASTE, _(u"Paste") + "\tCtrl+V")
+        menu.Append(wx.ID_CUT, _("Cut") + "\tCtrl+X")
+        menu.Append(wx.ID_COPY, _("Copy") + "\tCtrl+C")
+        menu.Append(wx.ID_PASTE, _("Paste") + "\tCtrl+V")
         menu.AppendSeparator()
-        menu.Append(wx.ID_SELECTALL, _(u"Select All") + "\tCtrl+A")
+        menu.Append(wx.ID_SELECTALL, _("Select All") + "\tCtrl+A")
         return menu
 
     def _createGUI(self):
@@ -316,16 +314,17 @@ class EditSnippetsDialog(wx.Frame):
 
     @property
     def currentSnippet(self):
-        return self.snippetEditor.GetText()
+        return self.snippetEditor.GetText().replace("\r\n", "\n")
 
     def setError(self, text):
         self.errorsTextCtrl.SetValue(text)
 
 
 class EditSnippetsDialogController(object):
-    '''
+    """
     Controller to manage EditSnippetsDialog.
-    '''
+    """
+
     def __init__(self, application):
         global _
         _ = get_()
@@ -334,9 +333,12 @@ class EditSnippetsDialogController(object):
         self._dialog = EditSnippetsDialog(self._application.mainWindow)
         self._config = SnippetsConfig(self._application.config)
         self._mainWindowconfig = MainWindowConfig(self._application.config)
-        self._dialog.SetClientSize((self._config.editDialogWidth,
-                                    self._config.editDialogHeight))
-        self._dialog.SetBackgroundColour(self._mainWindowconfig.mainPanesBackgroundColor.value)
+        self._dialog.SetClientSize(
+            (self._config.editDialogWidth, self._config.editDialogHeight)
+        )
+        self._dialog.SetBackgroundColour(
+            self._mainWindowconfig.mainPanesBackgroundColor.value
+        )
         self._bind()
 
     def _bind(self):
@@ -346,61 +348,65 @@ class EditSnippetsDialogController(object):
         self._dialog.closeBtn.Bind(wx.EVT_BUTTON, handler=self._onCloseBtn)
 
         self._dialog.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self._onAddGroup)
-        self._dialog.Bind(wx.EVT_MENU,
-                          id=self._dialog.addGroupBtn.GetId(),
-                          handler=self._onAddGroup)
+        self._dialog.Bind(
+            wx.EVT_MENU, id=self._dialog.addGroupBtn.GetId(), handler=self._onAddGroup
+        )
 
-        self._dialog.addSnippetBtn.Bind(wx.EVT_BUTTON,
-                                        handler=self._onAddSnippet)
-        self._dialog.Bind(wx.EVT_MENU,
-                          id=self._dialog.addSnippetBtn.GetId(),
-                          handler=self._onAddSnippet)
+        self._dialog.addSnippetBtn.Bind(wx.EVT_BUTTON, handler=self._onAddSnippet)
+        self._dialog.Bind(
+            wx.EVT_MENU,
+            id=self._dialog.addSnippetBtn.GetId(),
+            handler=self._onAddSnippet,
+        )
 
         self._dialog.removeBtn.Bind(wx.EVT_BUTTON, handler=self._onRemove)
-        self._dialog.Bind(wx.EVT_MENU,
-                          id=self._dialog.removeBtn.GetId(),
-                          handler=self._onRemove)
+        self._dialog.Bind(
+            wx.EVT_MENU, id=self._dialog.removeBtn.GetId(), handler=self._onRemove
+        )
 
         self._dialog.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
-        self._dialog.Bind(wx.EVT_MENU,
-                          id=self._dialog.renameBtn.GetId(),
-                          handler=self._onRenameClick)
+        self._dialog.Bind(
+            wx.EVT_MENU, id=self._dialog.renameBtn.GetId(), handler=self._onRenameClick
+        )
 
-        self._dialog.runSnippetBtn.Bind(wx.EVT_BUTTON,
-                                        handler=self._onRunSnippet)
-        self._dialog.Bind(wx.EVT_MENU,
-                          id=self._dialog.runSnippetBtn.GetId(),
-                          handler=self._onRunSnippet)
+        self._dialog.runSnippetBtn.Bind(wx.EVT_BUTTON, handler=self._onRunSnippet)
+        self._dialog.Bind(
+            wx.EVT_MENU,
+            id=self._dialog.runSnippetBtn.GetId(),
+            handler=self._onRunSnippet,
+        )
 
         self._dialog.openHelpBtn.Bind(wx.EVT_BUTTON, handler=self._onOpenHelp)
-        self._dialog.Bind(wx.EVT_MENU,
-                          id=self._dialog.openHelpBtn.GetId(),
-                          handler=self._onOpenHelp)
+        self._dialog.Bind(
+            wx.EVT_MENU, id=self._dialog.openHelpBtn.GetId(), handler=self._onOpenHelp
+        )
 
-        self._dialog.insertVariableBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
-                                            handler=self._onInsertVariable)
-        self._dialog.insertBlockBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
-                                         handler=self._onInsertBlock)
+        self._dialog.insertVariableBtn.Bind(
+            EVT_POPUP_BUTTON_MENU_CLICK, handler=self._onInsertVariable
+        )
+        self._dialog.insertBlockBtn.Bind(
+            EVT_POPUP_BUTTON_MENU_CLICK, handler=self._onInsertBlock
+        )
 
         # Snippets tree
-        self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGED,
-                               handler=self._onTreeItemChanged)
-        self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGING,
-                               handler=self._onTreeItemChanging)
-        self.snippetsTree.Bind(wx.EVT_TREE_END_LABEL_EDIT,
-                               handler=self._onRenameEnd)
-        self.snippetsTree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT,
-                               handler=self._onRenameBegin)
-        self.snippetsTree.Bind(wx.EVT_TREE_BEGIN_DRAG,
-                               handler=self._onTreeItemDragBegin)
-        self.snippetsTree.Bind(wx.EVT_TREE_END_DRAG,
-                               handler=self._onTreeItemDragEnd)
+        self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGED, handler=self._onTreeItemChanged)
+        self.snippetsTree.Bind(
+            wx.EVT_TREE_SEL_CHANGING, handler=self._onTreeItemChanging
+        )
+        self.snippetsTree.Bind(wx.EVT_TREE_END_LABEL_EDIT, handler=self._onRenameEnd)
+        self.snippetsTree.Bind(
+            wx.EVT_TREE_BEGIN_LABEL_EDIT, handler=self._onRenameBegin
+        )
+        self.snippetsTree.Bind(
+            wx.EVT_TREE_BEGIN_DRAG, handler=self._onTreeItemDragBegin
+        )
+        self.snippetsTree.Bind(wx.EVT_TREE_END_DRAG, handler=self._onTreeItemDragEnd)
 
         # Snippet editor
-        self._dialog.snippetEditor.Bind(wx.stc.EVT_STC_CHANGE,
-                                        handler=self._onSnippetEdit)
-        self._dialog.snippetEditor.Bind(wx.EVT_IDLE,
-                                        handler=self._onSnippetEditIdle)
+        self._dialog.snippetEditor.Bind(
+            wx.stc.EVT_STC_CHANGE, handler=self._onSnippetEdit
+        )
+        self._dialog.snippetEditor.Bind(wx.EVT_IDLE, handler=self._onSnippetEditIdle)
 
     def ShowDialog(self):
         self._updateSnippetsTree()
@@ -418,15 +424,13 @@ class EditSnippetsDialogController(object):
             return
 
         snippet_text = self._dialog.currentSnippet
-        parser = SnippetParser(snippet_text,
-                               os.path.dirname(path),
-                               self._application)
+        parser = SnippetParser(snippet_text, os.path.dirname(path), self._application)
         try:
             parser.getVariables()
         except SnippetException as e:
             self._dialog.setError(e.message)
         else:
-            self._dialog.setError(_(u'No snippet errors'))
+            self._dialog.setError(_("No snippet errors"))
 
         self._snippetChanged = False
 
@@ -445,7 +449,7 @@ class EditSnippetsDialogController(object):
     def _fillSnippetsTree(self, snippetsCollection, selectedPath):
         self.snippetsTree.DeleteAllItems()
         info = TreeItemInfo(snippetsCollection.path, True)
-        rootId = self._dialog.appendDirTreeItem(None, _(u'Snippets'), info)
+        rootId = self._dialog.appendDirTreeItem(None, _("Snippets"), info)
         self._buildSnippetsTree(rootId, snippetsCollection, selectedPath)
         self.snippetsTree.ExpandAll()
 
@@ -455,14 +459,11 @@ class EditSnippetsDialogController(object):
 
     def _buildSnippetsTree(self, parentItemId, snippetsCollection, selectedPath):
         # Append snippet directories
-        for subcollection in sorted(snippetsCollection.dirs,
-                                    key=lambda x: x.name):
+        for subcollection in sorted(snippetsCollection.dirs, key=lambda x: x.name):
             name = subcollection.name
             path = os.path.join(snippetsCollection.path, name)
             data = TreeItemInfo(path)
-            dirItemId = self._dialog.appendDirTreeItem(parentItemId,
-                                                       name,
-                                                       data)
+            dirItemId = self._dialog.appendDirTreeItem(parentItemId, name, data)
             self._buildSnippetsTree(dirItemId, subcollection, selectedPath)
             if selectedPath == path:
                 self.snippetsTree.SelectItem(dirItemId)
@@ -471,10 +472,7 @@ class EditSnippetsDialogController(object):
         for snippet in sorted(snippetsCollection.snippets):
             name = os.path.basename(snippet)
             data = TreeItemInfo(snippet)
-            snippetItem = self._dialog.appendSnippetTreeItem(
-                parentItemId,
-                name,
-                data)
+            snippetItem = self._dialog.appendSnippetTreeItem(parentItemId, name, data)
             if selectedPath == snippet:
                 self.snippetsTree.SelectItem(snippetItem)
 
@@ -498,9 +496,11 @@ class EditSnippetsDialogController(object):
 
         path = self._getItemData(item).path
         path_base = os.path.basename(path)
-        result = MessageBox(_(u'Remove directory "{}" and all snippets inside?').format(path_base),
-                            _(u"Remove snippets directory"),
-                            wx.YES | wx.NO | wx.ICON_QUESTION)
+        result = MessageBox(
+            _('Remove directory "{}" and all snippets inside?').format(path_base),
+            _("Remove snippets directory"),
+            wx.YES | wx.NO | wx.ICON_QUESTION,
+        )
         if result == wx.YES:
             try:
                 shutil.rmtree(path)
@@ -509,18 +509,21 @@ class EditSnippetsDialogController(object):
                 self._updateMenu()
             except EnvironmentError:
                 MessageBox(
-                    _(u'Can\'t remove directory "{}"').format(path_base),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+                    _('Can\'t remove directory "{}"').format(path_base),
+                    _("Error"),
+                    wx.ICON_ERROR | wx.OK,
+                )
 
     def _removeSnippet(self, item):
         parentItem = self.snippetsTree.GetItemParent(item)
         parent_path = self._getItemData(parentItem).path
         path = self._getItemData(item).path
         path_base = os.path.basename(path)
-        result = MessageBox(_(u'Remove snippet "{}"?').format(path_base),
-                            _(u"Remove snippet"),
-                            wx.YES | wx.NO | wx.ICON_QUESTION)
+        result = MessageBox(
+            _('Remove snippet "{}"?').format(path_base),
+            _("Remove snippet"),
+            wx.YES | wx.NO | wx.ICON_QUESTION,
+        )
         if result == wx.YES:
             try:
                 os.remove(path)
@@ -529,14 +532,15 @@ class EditSnippetsDialogController(object):
                 self._updateMenu()
             except EnvironmentError:
                 MessageBox(
-                    _(u'Can\'t remove snippet "{}"').format(path_base),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+                    _('Can\'t remove snippet "{}"').format(path_base),
+                    _("Error"),
+                    wx.ICON_ERROR | wx.OK,
+                )
 
     def _onAddGroup(self, event):
-        '''
+        """
         Add group button click
-        '''
+        """
         selectedItem = self._getSelectedItemData()
         assert selectedItem is not None
         rootdir = selectedItem.path
@@ -557,28 +561,31 @@ class EditSnippetsDialogController(object):
             self._scrollToSelectedItem()
         except EnvironmentError:
             MessageBox(
-                _(u"Can't create directory\n{}").format(newpath),
-                _(u"Error"),
-                wx.ICON_ERROR | wx.OK)
+                _("Can't create directory\n{}").format(newpath),
+                _("Error"),
+                wx.ICON_ERROR | wx.OK,
+            )
 
     def _isDirItem(self, treeItem):
-        '''
+        """
         Return True if treeItem is directory item
-        '''
+        """
         path = self._getItemData(treeItem).path
         return os.path.isdir(path)
 
     def _checkName(self, label):
-        return (label != u'..' and
-                label != u'.' and
-                len(label) != 0 and
-                u'/' not in label and
-                u'\\' not in label)
+        return (
+            label != ".."
+            and label != "."
+            and len(label) != 0
+            and "/" not in label
+            and "\\" not in label
+        )
 
     def _onRenameEnd(self, event):
-        '''
+        """
         Rename button event handler
-        '''
+        """
         if event.IsEditCancelled():
             return
 
@@ -598,7 +605,7 @@ class EditSnippetsDialogController(object):
             newpath = findUniquePath(os.path.dirname(oldpath), newlabel)
         else:
             # Rename snippet
-            newpath = findUniquePath(os.path.dirname(oldpath), newlabel, u'')
+            newpath = findUniquePath(os.path.dirname(oldpath), newlabel, "")
 
         try:
             self._getItemData(item).path = newpath
@@ -607,9 +614,10 @@ class EditSnippetsDialogController(object):
             self._scrollToSelectedItem()
         except EnvironmentError as e:
             MessageBox(
-                _(u"Can't rename the snippet '{}'\n{}").format(oldpath, e),
-                _(u"Error"),
-                wx.ICON_ERROR | wx.OK)
+                _("Can't rename the snippet '{}'\n{}").format(oldpath, e),
+                _("Error"),
+                wx.ICON_ERROR | wx.OK,
+            )
 
         event.Veto()
         self._updateMenu()
@@ -620,7 +628,7 @@ class EditSnippetsDialogController(object):
         if os.path.isdir(info.path):
             # Selected item is directory
             self._dialog.disableSnippetEditor()
-            self._dialog.snippetEditor.SetText('')
+            self._dialog.snippetEditor.SetText("")
         else:
             # Selected item is snippet
             self._dialog.enableSnippetEditor()
@@ -646,9 +654,10 @@ class EditSnippetsDialogController(object):
             self._dialog.snippetEditor.SetText(text)
         except EnvironmentError:
             MessageBox(
-                _(u"Can't read the snippet\n{}").format(info.path),
-                _(u"Error"),
-                wx.ICON_ERROR | wx.OK)
+                _("Can't read the snippet\n{}").format(info.path),
+                _("Error"),
+                wx.ICON_ERROR | wx.OK,
+            )
 
     def _getItemData(self, item):
         if not item.IsOk():
@@ -666,9 +675,9 @@ class EditSnippetsDialogController(object):
             self.snippetsTree.ScrollTo(item)
 
     def _updateMenu(self):
-        '''
+        """
         Update 'Snippets' menu in main menu.
-        '''
+        """
         self._application.customEvents(defines.EVENT_UPDATE_MENU, None)
 
     def _onAddSnippet(self, event):
@@ -680,7 +689,7 @@ class EditSnippetsDialogController(object):
             rootdir = os.path.dirname(rootdir)
 
         # Find unique file name for snippets
-        newpath = findUniquePath(rootdir, _(defines.NEW_SNIPPET_NAME), u'')
+        newpath = findUniquePath(rootdir, _(defines.NEW_SNIPPET_NAME), "")
 
         try:
             createFile(newpath)
@@ -692,9 +701,10 @@ class EditSnippetsDialogController(object):
             self._scrollToSelectedItem()
         except EnvironmentError:
             MessageBox(
-                _(u"Can't create snippet\n{}").format(newpath),
-                _(u"Error"),
-                wx.ICON_ERROR | wx.OK)
+                _("Can't create snippet\n{}").format(newpath),
+                _("Error"),
+                wx.ICON_ERROR | wx.OK,
+            )
 
     def _saveItemSnippet(self, item):
         if not item.IsOk():
@@ -704,12 +714,13 @@ class EditSnippetsDialogController(object):
         if os.path.isdir(path):
             return
         try:
-            writeTextFile(path, self._dialog.snippetEditor.GetText())
+            writeTextFile(path, self._dialog.currentSnippet)
         except EnvironmentError:
             MessageBox(
-                _(u"Can't save snippet\n{}").format(path),
-                _(u"Error"),
-                wx.ICON_ERROR | wx.OK)
+                _("Can't save snippet\n{}").format(path),
+                _("Error"),
+                wx.ICON_ERROR | wx.OK,
+            )
             raise
 
     def _onTreeItemChanging(self, event):
@@ -752,8 +763,7 @@ class EditSnippetsDialogController(object):
         self._dialog.Close()
         if self._application.selectedPage is not None:
             eventParams = RunSnippetParams(snippet_fname)
-            self._application.customEvents(defines.EVENT_RUN_SNIPPET,
-                                           eventParams)
+            self._application.customEvents(defines.EVENT_RUN_SNIPPET, eventParams)
 
     def _onOpenHelp(self, event):
         openHelp()
@@ -761,10 +771,12 @@ class EditSnippetsDialogController(object):
     def _onInsertVariable(self, event):
         text = event.data
         if text is None:
-            with wx.TextEntryDialog(self._dialog,
-                                    _(u'Enter variable name (English leters, numbers and _ only)'),
-                                    _(u'Variable name'),
-                                    u'varname') as dlg:
+            with wx.TextEntryDialog(
+                self._dialog,
+                _("Enter variable name (English leters, numbers and _ only)"),
+                _("Variable name"),
+                "varname",
+            ) as dlg:
                 name_ok = False
                 while not name_ok:
                     result = dlg.ShowModal()
@@ -774,19 +786,18 @@ class EditSnippetsDialogController(object):
                     name_ok = self._checkVarName(text)
                     if not name_ok:
                         MessageBox(
-                            _(u'Invalid variable name "{}"').format(text),
-                            _(u"Error"),
-                            wx.ICON_ERROR | wx.OK)
-                    text = u'{{' + text + u'}}'
+                            _('Invalid variable name "{}"').format(text),
+                            _("Error"),
+                            wx.ICON_ERROR | wx.OK,
+                        )
+                    text = "{{" + text + "}}"
 
         self._dialog.snippetEditor.replaceText(text)
         self._dialog.snippetEditor.SetFocus()
 
     def _checkVarName(self, name):
-        regex = re.compile('[a-zA-Z][a-zA-Z0-9_]*$')
-        result = (name is not None and
-                  len(name) > 0 and
-                  regex.match(name) is not None)
+        regex = re.compile("[a-zA-Z][a-zA-Z0-9_]*$")
+        result = name is not None and len(name) > 0 and regex.match(name) is not None
         return result
 
     def _onTreeItemDragBegin(self, event):

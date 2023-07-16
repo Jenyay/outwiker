@@ -1,13 +1,13 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.gui.baseaction import BaseAction
+from outwiker.api.gui.actions import BaseAction
 
 from snippets.i18n import get_
 from snippets.gui.editdialog import EditSnippetsDialogController
 
 
-class EditSnippetsAction (BaseAction):
-    stringId = u"snippets_edit_snippets"
+class EditSnippetsAction(BaseAction):
+    stringId = "snippets_edit_snippets"
 
     def __init__(self, application):
         super(EditSnippetsAction, self).__init__()
@@ -21,8 +21,8 @@ class EditSnippetsAction (BaseAction):
 
     @property
     def title(self):
-        return _(u"Snippets management...")
+        return _("Snippets management...")
 
     @property
     def description(self):
-        return _(u'Snippets. Open dialog to edit, create or remove snippets.')
+        return _("Snippets. Open dialog to edit, create or remove snippets.")

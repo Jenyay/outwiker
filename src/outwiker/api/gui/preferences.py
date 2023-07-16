@@ -1,0 +1,2 @@
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
