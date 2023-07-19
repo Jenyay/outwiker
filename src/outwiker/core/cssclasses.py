@@ -15,6 +15,7 @@ CSS_ATTACH_LIST_ITEM = 'ow-attach-list-item'
 CSS_ATTACH_ERROR = 'ow-attach-error'
 CSS_CHILD_LIST = 'ow-child-list'
 CSS_CHILD_LIST_TITLE = 'ow-child-list-title'
+CSS_CHILD_LIST_ITEM = 'ow-child-list-item'
 CSS_WIKI_INCLUDE = 'ow-wiki-include'
 CSS_LIST_ITEM_EMPTY = 'ow-li-empty'
 CSS_LIST_ITEM_TODO = 'ow-li-todo'
@@ -135,7 +136,7 @@ def getDefaultStyles() -> str:
 		  border-left: 1px dashed #ddd;
 		}
 
-		ul.ow-child-list li {
+        li.ow-child-list-item:before {
 		  content: "";
 		  padding-left: 1.5em;
           background-position: 0.0em 0.1em;
