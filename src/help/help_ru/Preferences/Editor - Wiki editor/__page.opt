@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = fixme, настройки
+tags = настройки
 order = 12
 creationdatetime = 2020-05-10 11:00:34.628315
-datetime = 2023-07-18 10:07:27.857207
+datetime = 2023-07-19 15:05:41.757088
 uid = settings_editor_wiki_editor
 alias = Редактор - Викиредактор
 
