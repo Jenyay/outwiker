@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = fixme, настройки
+tags = настройки
 order = 5
 creationdatetime = 2015-02-01 20:49:35.017769
-datetime = 2023-07-18 09:58:24.709597
+datetime = 2023-07-21 09:22:21.985501
 cursorposition = 10862
 alias = Настройки программы
 uid = settings

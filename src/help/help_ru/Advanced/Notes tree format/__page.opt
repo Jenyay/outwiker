@@ -6,8 +6,8 @@ expand = False
 
 [General]
 type = wiki
-tags = продвинутым пользователям
-datetime = 2013-05-22 18:02:11.393394
+tags = расширенные возможности
+datetime = 2023-07-21 09:26:10.100389
 cursorposition = 0
 order = 3
 alias = Структура дерева заметок
