@@ -21,4 +21,4 @@ There are five files attached to the current note. The following table shows the
 
 ||width=850 border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Command''' || [=(:attachlist:)=] || [=(:attachlist sort=ext:)=] || [=(:attachlist sort=descendext:)=] || [=(:attachlist sort=size:)=] ||
-|| '''Result''' || (:attachlist:) || (:attachlist sort=ext:) || (:attachlist sort=descendext:) || (:attachlist sort=size:) ||
+|| '''Result''' ||(:attachlist:) ||(:attachlist sort=ext:) ||(:attachlist sort=descendext:) ||(:attachlist sort=size:) ||

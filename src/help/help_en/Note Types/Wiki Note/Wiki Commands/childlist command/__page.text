@@ -20,6 +20,6 @@ If '''sort''' parameter is not specified, then the note names in the list will b
 
 There are five files attached to the current note. The following table shows the output of the command [= (:childlist:) =] with various values ​​of the switch ''sort'':
 
-||width=850 border=1 style="border-collapse: collapse; border: 1px solid black;"
+||width=900em border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Command''' || [=(:childlist:)=] || [=(:childlist sort=name:)=] || [=(:childlist sort=descendname:)=] || [=(:childlist sort=descendorder:)=] ||
-|| '''Result''' || (:childlist:) || (:childlist sort=name:) || (:childlist sort=descendname:) || (:childlist sort=descendorder:) ||
+|| '''Result''' ||(:childlist:) ||(:childlist sort=name:) ||(:childlist sort=descendname:) ||(:childlist sort=descendorder:) ||
