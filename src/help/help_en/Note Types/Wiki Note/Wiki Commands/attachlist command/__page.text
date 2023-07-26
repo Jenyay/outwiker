@@ -19,6 +19,32 @@ The command [= (:attachlist:) =] can be used with the ''sort'' switch, which spe
 
 There are five files attached to the current note. The following table shows the output of the command [= (:attachlist:) =] with various values ​​of the ''sort'' switch:
 
-||width=850 border=1 style="border-collapse: collapse; border: 1px solid black;"
-|| '''Command''' || [=(:attachlist:)=] || [=(:attachlist sort=ext:)=] || [=(:attachlist sort=descendext:)=] || [=(:attachlist sort=size:)=] ||
-|| '''Result''' ||(:attachlist:) ||(:attachlist sort=ext:) ||(:attachlist sort=descendext:) ||(:attachlist sort=size:) ||
+(:table border="1" style="border-collapse: collapse; border: 1px solid black;":)
+(:row:)
+(:hcell width=150em:) Команда
+(:hcell width=200em:) Результат
+
+(:row:)
+(:cell:)[=(:attachlist:)=]
+(:cell:)(:attachlist:)
+
+(:row:)
+(:cell:)[=(:attachlist sort=ext:)=]
+(:cell:)(:attachlist sort=ext:)
+
+(:row:)
+(:cell:)[=(:attachlist sort=descendext:)=]
+(:cell:)(:attachlist sort=descendext:)
+
+(:row:)
+(:cell:)[=(:attachlist sort=size:)=]
+(:cell:)(:attachlist sort=size:)
+
+(:row:)
+(:cell:)[=(:attachlist subdir="subfolder":)=]
+(:cell:)(:attachlist subdir="subfolder":)
+
+(:row:)
+(:cell:)[=(:attachlist subdir="subfolder" sort=descendname:)=]
+(:cell:)(:attachlist subdir="subfolder" sort=descendname:)
+(:tableend:)

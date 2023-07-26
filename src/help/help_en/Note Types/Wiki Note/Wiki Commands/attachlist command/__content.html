@@ -31,33 +31,57 @@ The command  (:attachlist:)  can be used with the <i>sort</i> switch, which spec
 <br/>
 There are five files attached to the current note. The following table shows the output of the command  (:attachlist:)  with various values ​​of the <i>sort</i> switch:<br/>
 <br/>
-<table width=850 border=1 style="border-collapse: collapse; border: 1px solid black;">
-<tr>
-<td align="center"><b>Command</b></td>
-<td align="center">(:attachlist:)</td>
-<td align="center">(:attachlist sort=ext:)</td>
-<td align="center">(:attachlist sort=descendext:)</td>
-<td align="center">(:attachlist sort=size:)</td>
+<table border="1" style="border-collapse: collapse; border: 1px solid black;">
+<tr><th width=150em> Команда</th><th width=200em> Результат<br/>
+</th>
 </tr>
 <tr>
-<td align="center"><b>Result</b></td>
-<td align="left"><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Прикрепленные файлы</a></li><ul class="ow-attach-list"><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li>
+<td>(:attachlist:)</td>
+<td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Attachments</a></li><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder">subfolder</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li>
 </ul>
 </ul>
+<br/>
 </td>
-<td align="left"><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Прикрепленные файлы</a></li><ul class="ow-attach-list"><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li>
+</tr>
+<tr>
+<td>(:attachlist sort=ext:)</td>
+<td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Attachments</a></li><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder">subfolder</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li>
 </ul>
 </ul>
+<br/>
 </td>
-<td align="left"><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Прикрепленные файлы</a></li><ul class="ow-attach-list"><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li>
+</tr>
+<tr>
+<td>(:attachlist sort=descendext:)</td>
+<td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Attachments</a></li><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder">subfolder</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li>
 </ul>
 </ul>
+<br/>
 </td>
-<td align="left"><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Прикрепленные файлы</a></li><ul class="ow-attach-list"><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li>
+</tr>
+<tr>
+<td>(:attachlist sort=size:)</td>
+<td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Attachments</a></li><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder">subfolder</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li>
+</ul>
+</ul>
+<br/>
+</td>
+</tr>
+<tr>
+<td>(:attachlist subdir="subfolder":)</td>
+<td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder/">subfolder</a></li><ul class="ow-attach-list"><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/feed.gif">feed.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/icon.jpeg">icon.jpeg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/new.png">new.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/open.png">open.png</a></li>
+</ul>
+</ul>
+<br/>
+</td>
+</tr>
+<tr>
+<td>(:attachlist subdir="subfolder" sort=descendname:)</td>
+<td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder/">subfolder</a></li><ul class="ow-attach-list"><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/open.png">open.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/new.png">new.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/icon.jpeg">icon.jpeg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/feed.gif">feed.gif</a></li>
 </ul>
 </ul>
 </td>
 </tr>
-</table>
+</table><br/>
 </body>
 </html>
