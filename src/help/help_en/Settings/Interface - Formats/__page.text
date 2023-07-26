@@ -1,0 +1,7 @@
+!!! Interface - Formats
+
+%center%Attach:outwiker_opt_formats.png
+
+The '''Date and time format''' input field determines how the creation and modification dates throughout the program interface looks like, for example, the date and time in the rightmost part of the status bar. OutWiker uses date format from [[Python language -> https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior]]. Clicking the button to the right of the input field expands the list of all possible placeholders.
+
+The '''New page title template''' input field allows you to set default page title when creating. This is useful if you often create pages whose headings contain the current date or time. You can use the same substitution elements in this input field as for the input field ''' Date and time format''' (see above).

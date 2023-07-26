@@ -10,6 +10,6 @@ If OutWiker runs in the normal mode, under '''Windows 7/10''' the ''outwiker.ini
 
 The location of the settings file Under '''Linux''' depends on the value of ''XDG_CONFIG_HOME'' environment variable. If the environment variable is not set the ''outwiker.ini'' file locates in the ''~/.config/outwiker'' directory.
 
-All the preferences described below can be changed in the "Preferences" dialogue, which can be called via the '''Edit - Preferences...''' menu.
+All the preferences described below can be changed in the "Preferences" dialog, which can be called via the '''Edit - Preferences...''' menu.
 
 %center%Attach:outwiker_opt_general.png
