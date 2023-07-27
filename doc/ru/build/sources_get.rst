@@ -10,6 +10,7 @@
 .. code:: bash
 
     git clone https://github.com/Jenyay/outwiker
+    git submodule update --init --recursive
 
 В репозитории исходных кодов имеются три "долгоживующие" ветки (branch) в зависимости от степени стабильности версии программы:
 
