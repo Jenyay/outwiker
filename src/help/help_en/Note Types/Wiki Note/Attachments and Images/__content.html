@@ -101,37 +101,53 @@ Thumbnails are stored in the "__thumb" subdirectory of the attachments directory
 </tr>
 </table><h2 class="ow-wiki"><i>Attaching files of other types</i></h2>
 <br/>
-<table border=1>
+<table border=1 width=90% style="border-collapse: collapse; border: 1px solid black;">
 <tr>
 <td align="center"><b>Syntax</b></td>
 <td align="center"><b>Result</b></td>
 <td align="center"><b>Comment</b></td>
 </tr>
 <tr>
-<td align="center">Attach:file.txt</td>
+<td align="left">Attach:file.txt</td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/file.txt">file.txt</a></td>
 <td align="center">Link to attached file</td>
 </tr>
 <tr>
-<td align="center">[[Attach:file.txt]]</td>
+<td align="left">[[Attach:file.txt]]</td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/file.txt">file.txt</a></td>
 <td align="center">Link to attached file. <br/>
 Same as the previous variant.</td>
 </tr>
 <tr>
-<td align="center">[[Attach:small_image.jpg]]</td>
+<td align="left">Attach:"subdir/file_in_subdir.txt"</td>
+<td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/subdir/file_in_subdir.txt">subdir/file_in_subdir.txt</a></td>
+<td align="center">Link to attached file in subfolder</td>
+</tr>
+<tr>
+<td align="left">[[Attach:small_image.jpg]]</td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/small_image.jpg">small_image.jpg</a></td>
 <td align="center">Link to attached image</td>
 </tr>
 <tr>
-<td align="right">[[Attach:file.txt | Attached file]]</td>
+<td>[[Attach:file.txt | Attached file]]</td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/file.txt">Attached file</a></td>
 <td align="center">Link to attached file with comment</td>
 </tr>
 <tr>
-<td align="right">[[Attached file -> Attach:file.txt]]</td>
+<td>[[Attached file -> Attach:file.txt]]</td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/file.txt">Attached file</a></td>
 <td align="center">Link to attached file with comment <br/>
+Same as the previous variant.</td>
+</tr>
+<tr>
+<td align="left">[[Attach:"subdir/file_in_subdir.txt" | Attached file]]</td>
+<td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/subdir/file_in_subdir.txt">Attached file</a></td>
+<td align="center">Link to attached file in subfolder with comment</td>
+</tr>
+<tr>
+<td align="left">[[Attached file -> Attach:"subdir/file_in_subdir.txt"]]</td>
+<td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/subdir/file_in_subdir.txt">Attached file</a></td>
+<td align="center">Link to attached file in subfolder with comment. <br/>
 Same as the previous variant.</td>
 </tr>
 </table>

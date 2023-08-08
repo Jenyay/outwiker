@@ -32,10 +32,10 @@
 || border=1 width=90% style="border-collapse: collapse; border: 1px solid black;"
 || '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
 ||[=Attach:file.txt=] || Attach:file.txt || Ссылка на прикрепленный файл ||
-||[=Attach:"subdir/file_in_subdir.txt"=] || Attach:"subdir/file_in_subdir.txt" || Ссылка на прикрепленный файл во вложенной папке ||
 ||[=[[Attach:file.txt]]=] || [[Attach:file.txt]] || Ссылка на прикрепленный файл. [[<<]]То же, что и предыдущая запись. ||
+||[=Attach:"subdir/file_in_subdir.txt"=] || Attach:"subdir/file_in_subdir.txt" || Ссылка на прикрепленный файл во вложенной папке ||
 ||[=[[Attach:small_image.jpg]]=] || [[Attach:small_image.jpg]] || Ссылка на прикрепленную картинку ||
 ||[=[[Attach:file.txt | Прикрепленный файл]]=] || [[Attach:file.txt | Прикрепленный файл]] || Ссылка на прикрепленный файл с комментарием ||
-||[=[[Attach:"subdir/file_in_subdir.txt" | Прикрепленный файл]]=] || [[Attach:"subdir/file_in_subdir.txt" | Прикрепленный файл]] || Ссылка на прикрепленный файл во вложенной папке с комментарием ||
 ||[=[[Прикрепленный файл -> Attach:file.txt]]=] || [[Прикрепленный файл -> Attach:file.txt]] || Ссылка на прикрепленный файл с комментарием [[<<]]То же, что и предыдущая запись. ||
+||[=[[Attach:"subdir/file_in_subdir.txt" | Прикрепленный файл]]=] || [[Attach:"subdir/file_in_subdir.txt" | Прикрепленный файл]] || Ссылка на прикрепленный файл во вложенной папке с комментарием ||
 ||[=[[Прикрепленный файл -> Attach:"subdir/file_in_subdir.txt"]]=] || [[Прикрепленный файл -> Attach:"subdir/file_in_subdir.txt"]] || Ссылка на прикрепленный файл во вложенной папке с комментарием [[<<]]То же, что и предыдущая запись. ||

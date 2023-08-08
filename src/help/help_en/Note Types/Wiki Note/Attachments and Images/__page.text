@@ -26,10 +26,13 @@ Thumbnails are stored in the "__thumb" subdirectory of the attachments directory
 
 !!! ''Attaching files of other types''
 
-|| border=1
+|| border=1 width=90% style="border-collapse: collapse; border: 1px solid black;"
 || '''Syntax''' || '''Result''' || '''Comment''' ||
-|| [=Attach:file.txt=] || Attach:file.txt || Link to attached file ||
-|| [=[[Attach:file.txt]]=] || [[Attach:file.txt]] || Link to attached file. [[<<]]Same as the previous variant. ||
-|| [=[[Attach:small_image.jpg]]=] || [[Attach:small_image.jpg]] || Link to attached image ||
-|| [=[[Attach:file.txt | Attached file]]=]|| [[Attach:file.txt | Attached file]] || Link to attached file with comment ||
-|| [=[[Attached file -> Attach:file.txt]]=]|| [[Attached file -> Attach:file.txt]] || Link to attached file with comment [[<<]]Same as the previous variant. ||
+||[=Attach:file.txt=] || Attach:file.txt || Link to attached file ||
+||[=[[Attach:file.txt]]=] || [[Attach:file.txt]] || Link to attached file. [[<<]]Same as the previous variant. ||
+||[=Attach:"subdir/file_in_subdir.txt"=] || Attach:"subdir/file_in_subdir.txt" || Link to attached file in subfolder ||
+||[=[[Attach:small_image.jpg]]=] || [[Attach:small_image.jpg]] || Link to attached image ||
+||[=[[Attach:file.txt | Attached file]]=]|| [[Attach:file.txt | Attached file]] || Link to attached file with comment ||
+||[=[[Attached file -> Attach:file.txt]]=]|| [[Attached file -> Attach:file.txt]] || Link to attached file with comment [[<<]]Same as the previous variant. ||
+||[=[[Attach:"subdir/file_in_subdir.txt" | Attached file]]=] || [[Attach:"subdir/file_in_subdir.txt" | Attached file]] || Link to attached file in subfolder with comment ||
+||[=[[Attached file -> Attach:"subdir/file_in_subdir.txt"]]=] || [[Attached file -> Attach:"subdir/file_in_subdir.txt"]] || Link to attached file in subfolder with comment. [[<<]]Same as the previous variant. ||
