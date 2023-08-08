@@ -18,6 +18,11 @@
 </head>
 
 <body>
+<h2 class="ow-wiki">Section content</h2>
+<ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki" href="#intro">General information</a></li><li class="ow-wiki"><a class="ow-wiki" href="#unorder">Bulleted lists</a></li><li class="ow-wiki"><a class="ow-wiki" href="#order">Numbered lists</a></li><li class="ow-wiki"><a class="ow-wiki" href="#mixed">Mixed lists</a></li><li class="ow-wiki"><a class="ow-wiki" href="#styles">List item styles</a></li>
+</ul>
+<h2 class="ow-wiki"><a id="intro"></a> General information</h2>
+<br/>
 OutWiker supports both bulleted and numbered lists in wiki notes. Every item of bulleted list should begin with asterisk (*) character(s). Slash characters are used in stead of asterisks for numbered lists. The number of the asterisks or slashes denotes the nesting level shown by indent.<br/>
 <br/>
 In order to create a bulleted list one can use either the "Wiki - Lists - bulleted list" menu or the <img class="ow-image" src="__attach/bullet.png"/> button.<br/>
@@ -27,9 +32,8 @@ In order to create an numbered list one can use either the "Wiki - Lists - numbe
 If cursor is placed on list item, then clicking <img class="ow-image" src="__attach/bullet.png"/> or <img class="ow-image" src="__attach/order.png"/> (or the corrsponding menus) increases the nesting level by one.<br/>
 <br/>
 Below are a few examples of using lists in wiki notation.<br/>
-<h2 class="ow-wiki">Bulleted lists</h2>
-<br/>
-Syntax:<br/>
+<h2 class="ow-wiki"><a id="unorder"></a> Bulleted lists</h2>
+<h3 class="ow-wiki">Syntax</h3>
 <br/>
 * Line 1<br/>
 * Line 2<br/>
@@ -40,16 +44,15 @@ Syntax:<br/>
 ** Line 7<br/>
 *Line 8<br/>
 <br/>
-<br/>
-Result:<ul class="ow-wiki"><li class="ow-wiki">Line 1</li><li class="ow-wiki">Line 2</li><ul class="ow-wiki"><li class="ow-wiki">Line 3</li><li class="ow-wiki">Line 4</li><ul class="ow-wiki"><li class="ow-wiki">Line 5</li><li class="ow-wiki">Line 6</li>
+<h3 class="ow-wiki">Result</h3>
+<ul class="ow-wiki"><li class="ow-wiki">Line 1</li><li class="ow-wiki">Line 2</li><ul class="ow-wiki"><li class="ow-wiki">Line 3</li><li class="ow-wiki">Line 4</li><ul class="ow-wiki"><li class="ow-wiki">Line 5</li><li class="ow-wiki">Line 6</li>
 </ul>
 <li class="ow-wiki">Line 7</li>
 </ul>
 <li class="ow-wiki">Line 8</li>
 </ul>
-<h2 class="ow-wiki">Numbered lists</h2>
-<br/>
-Syntax:<br/>
+<h2 class="ow-wiki"><a id="order"></a> Numbered lists</h2>
+<h3 class="ow-wiki">Syntax</h3>
 <br/>
 # Line 1<br/>
 # Line 2<br/>
@@ -60,13 +63,12 @@ Syntax:<br/>
 ## Line 7<br/>
 # Line 8<br/>
 <br/>
-<br/>
-Result:<ol class="ow-wiki"><li class="ow-wiki">Line 1</li><li class="ow-wiki">Line 2</li><ol class="ow-wiki"><li class="ow-wiki">Line 3</li><li class="ow-wiki">Line 4</li><ol class="ow-wiki"><li class="ow-wiki">Line 5</li><li class="ow-wiki">Line 6</li>
+<h3 class="ow-wiki">Result</h3>
+<ol class="ow-wiki"><li class="ow-wiki">Line 1</li><li class="ow-wiki">Line 2</li><ol class="ow-wiki"><li class="ow-wiki">Line 3</li><li class="ow-wiki">Line 4</li><ol class="ow-wiki"><li class="ow-wiki">Line 5</li><li class="ow-wiki">Line 6</li>
 </ol><li class="ow-wiki">Line 7</li>
 </ol><li class="ow-wiki">Line 8</li>
-</ol><h2 class="ow-wiki">Mixed lists</h2>
-<br/>
-Syntax:<br/>
+</ol><h2 class="ow-wiki"><a id="mixed"></a> Mixed lists</h2>
+<h3 class="ow-wiki">Syntax</h3>
 <br/>
 # Line 1<br/>
 # Line 2<br/>
@@ -77,11 +79,102 @@ Syntax:<br/>
 ** Line 7<br/>
 # Line 8<br/>
 <br/>
-<br/>
-Result:<ol class="ow-wiki"><li class="ow-wiki">Line 1</li><li class="ow-wiki">Line 2</li><ul class="ow-wiki"><li class="ow-wiki">Line 3</li><li class="ow-wiki">Line 4</li><ol class="ow-wiki"><li class="ow-wiki">Line 5</li><li class="ow-wiki">Line 6</li>
+<h3 class="ow-wiki">Result</h3>
+<ol class="ow-wiki"><li class="ow-wiki">Line 1</li><li class="ow-wiki">Line 2</li><ul class="ow-wiki"><li class="ow-wiki">Line 3</li><li class="ow-wiki">Line 4</li><ol class="ow-wiki"><li class="ow-wiki">Line 5</li><li class="ow-wiki">Line 6</li>
 </ol><li class="ow-wiki">Line 7</li>
 </ul>
 <li class="ow-wiki">Line 8</li>
-</ol>
+</ol><h2 class="ow-wiki"><a id="styles"></a> List item styles</h2>
+<br/>
+You can change the style of the bullets for unordered lists. This can be useful, for example, to create a list of tasks, then upcoming tasks can be marked with one style, and completed tasks with another (there are special styles for this.). List item styles are useful if you use the <a class="ow-wiki" href="https://en.wikipedia.org/wiki/Bullet_journal">Bullet Journal</a> methodology.<br/>
+<br/>
+The style is specified after the "*" character. The style is a combination of square brackets, between which there can be an additional character. The following table shows the currently supported styles:<br/>
+<br/>
+<table border="1" width=500em style="border-collapse: collapse; border: 1px solid black;">
+<tr><th> Wiki notation</th><th> Result</th>
+</tr>
+<tr>
+<td>* [ ] The first element of a list<br/>
+* [ ] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-todo">The first element of a list</li><li class="ow-wiki ow-li-todo">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [/] The first element of a list<br/>
+* [/] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-incomplete">The first element of a list</li><li class="ow-wiki ow-li-incomplete">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [x] The first element of a list<br/>
+* [x] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-complete">The first element of a list</li><li class="ow-wiki ow-li-complete">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [*] The first element of a list<br/>
+* [*] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-star">The first element of a list</li><li class="ow-wiki ow-li-star">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [+] The first element of a list<br/>
+* [+] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-plus">The first element of a list</li><li class="ow-wiki ow-li-plus">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [-] The first element of a list<br/>
+* [-] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-minus">The first element of a list</li><li class="ow-wiki ow-li-minus">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [o] The first element of a list<br/>
+* [o] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-circle">The first element of a list</li><li class="ow-wiki ow-li-circle">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [v] The first element of a list<br/>
+* [v] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-check">The first element of a list</li><li class="ow-wiki ow-li-check">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [<] The first element of a list<br/>
+* [<] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-lt">The first element of a list</li><li class="ow-wiki ow-li-lt">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [>] The first element of a list<br/>
+* [>] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-gt">The first element of a list</li><li class="ow-wiki ow-li-gt">The second element of a list</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>* [] The first element of a list<br/>
+* [] The second element of a list</td>
+<td><ul class="ow-wiki"><li class="ow-wiki ow-li-empty">The first element of a list</li><li class="ow-wiki ow-li-empty">The second element of a list</li>
+</ul>
+</td>
+</tr>
+</table><br/>
+<br/>
+You can use the menu item "Wiki - Lists - List item style..." to insert a list element with a style. When you select this menu item, a dialog will open in which you can select the desired style of the list item. In the dialog, you can select the desired style of the list item. The dialog is shown in the next picture.<br/>
+<br/>
+<div align="center"><img class="ow-image" src="__attach/bullet_style.png"/><br/>
+</div>
 </body>
 </html>

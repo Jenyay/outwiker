@@ -1,6 +1,6 @@
 !!! The [=(:include:)=] command
 
-The [= (:include:) =] command is a placeholder, which is to be replaced with content of the attached file, wnen parsing. The full syntax for the command is as follows:
+The [= (:include:) =] command is a placeholder, which is to be replaced with content of the attached file, when parsing. The full syntax for the command is as follows:
 
 [=(:include Attach:filename [params...]:)=]
 
@@ -15,7 +15,7 @@ The [=(:include:)=] command can take the following values:
 * ''wikiparse''
 
 !!!! encoding
-''Encoding'' switch indicates the encoding of the attached file to be included. Since OutWiker is incapable of recognising encodings, as, by default, it treats all files as if they were encoded in UTF-8.
+''Encoding'' switch indicates the encoding of the attached file to be included. Since OutWiker is incapable of recognizing encodings, as, by default, it treats all files as if they were encoded in UTF-8.
 
 If the file is encoded in Attach:text_utf8.txt the "encoding" switch may be omitted:
 

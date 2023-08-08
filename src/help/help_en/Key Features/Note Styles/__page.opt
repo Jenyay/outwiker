@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = fixme, for users, styles
+tags = styles, for users
 order = 3
 cursorposition = 1548
-datetime = 2023-07-21 13:33:01.169633
+datetime = 2023-08-08 16:43:02.045036
 uid = styles
 
 [wiki]

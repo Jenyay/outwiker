@@ -10,3 +10,5 @@ The choice is to be made between the following actions:
 
 * To open the clicked file in application associated with this type of files.
 * To insert link to the clicked file in note text.
+
+Using the '''Show hidden folders''' checkbox, you can enable or disable the display of folders that start with two underscores, are considered hidden in OutWiker and are used for internal needs (for example, to store thumbnails of images).

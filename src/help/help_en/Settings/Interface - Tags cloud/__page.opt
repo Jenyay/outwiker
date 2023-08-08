@@ -1,8 +1,8 @@
 [General]
 type = wiki
-tags = fixme, settings, tags
+tags = settings, tags
 order = 5
 creationdatetime = 2020-05-10 10:28:37.258955
-datetime = 2023-07-26 12:48:19.041498
+datetime = 2023-08-08 13:43:21.034118
 uid = settings_interface_tags_cloud
 

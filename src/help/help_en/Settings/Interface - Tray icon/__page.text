@@ -4,10 +4,8 @@
 
 The settings in this section allows you to select behavior for the program icon in system tray (area with icons near the clock in Windows).
 
-If the '''Minimize to tray''' check-box is selected, clicking the "Minimize" button results in disappearance of the program button from the taskbar and appearance of the corresponding ison in the tray. This may come in handy if there is a need to have more free place on the taskbar.
+You can select the behavior of the buttons in the main program window Using the '''Minimize window button''' and '''Close window button''' drop-down lists. For the window minimization button, you can select actions: "Minimize window" and "Minimize to tray" (in the latter case, the window will disappear from the taskbar, but will be displayed as a tray icon). There is also a "Close Window" action for the window close button (which is what this button does by default).
 
 The '''Start iconized''' check-box selection forces OutWiker to start minimized with icon in the systray and no taskbar button. This may come in handy if OutWiker is added to the list of programs to autorun upon OS booting.
 
 If the '''Always show tray icon''' check-box is selected, then the systray icon is shown always, not just when the program is minimized.
-
-If the '''Minimize on close window''' check-box is selected, then OutWiker does not close when the "Close" button is clicked, but minimized in stead. To close OutWiker, go to '''File - Exit...'''.
