@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -169,7 +169,7 @@ msgstr "Удаление прикрепленных файлов"
 
 #: outwiker/app/actions/attachrename.py:18
 msgid "Rename attachment"
-msgstr "Переименование прикрепленного файла"
+msgstr "Переименовать прикрепленный файл"
 
 #: outwiker/app/actions/attachrename.py:22
 msgid "Rename selected attached file. Action for attachments panel"

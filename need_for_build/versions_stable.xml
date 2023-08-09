@@ -5,28 +5,41 @@
             <change>Added the ability to create folders in attached files.</change>
             <change>Added the ability to navigate to subfolders in the attachments panel.</change>
             <change>Added the ability to insert links to files in attached subfolders.</change>
-            <change>Implemented highlighting links to attached files on wiki pages.</change>
+            <change>Added page search in preview mode.</change>
+            <change>Added the support of nested subfolders for the (:include:) wiki command..</change>
+            <change>Added the support of nested subfolders for the %thumb% wiki command.</change>
+            <change>Implemented highlighting the %thumb% wiki command on wiki pages.</change>
+            <change>Changed design of the dialog about overwriting of attached files.</change>
+            <change>Improved design of links to attached files and other pages.</change>
+            <change>Added a new subdir parameter to (:attachlist:) wiki command.</change>
+            <change>Improved (:childlist:) and (:attachlist:) wiki commands result design.</change>
+            <change>Added new CSS classes to generated HTML code.</change>
+            <change>Added the ability to show hidden folders in attachments.</change>
+            <change>Added settings for the Minimize and Close buttons.</change>
+            <change>Added information about selected attachments to the status bar.</change>
+            <change>Added the ability to set the style of list item bullets on a wiki page.</change>
+            <change>Migrate to wxPython 4.2.1.</change>
         </changes>
 
         <changes lang="ru">
             <change>Добавлена возможность создания папок в прикрепленных файлах.</change>
             <change>Добавлена возможность перехода во вложенные папки на панели прикрепленных файлов.</change>
             <change>Добавлена возможность вставки ссылок на файлы во вложенных прикрепленных папках.</change>
-            <change>Реализована подсветка ссылок на прикрепленные файлы на викистраницах.</change>
-        </changes>
-    </version>
-
-    <version number="3.1.0.900" date="2022-04-16">
-        <changes>
-            <change>Improve dialog for creation notes and edit notes properties.</change>
-            <change>Improve work with hotkeys.</change>
-            <change>Improve attachments panel GUI.</change>
-        </changes>
-
-        <changes lang="ru">
-            <change>Упрощение диалога создания / редактирования свойств страницы.</change>
-            <change>Улучшена работа с горячими клавишами.</change>
-            <change>Улучшения в интерфейсе панели с прикрепленными файлами.</change>
+            <change>Добавлено выделение цветом ссылок на отсутствующие прикрепленные файлы на викистраницах.</change>
+            <change>Добавлен поиск по странице в режиме просмотра.</change>
+            <change>Добавлена поддержка вложенных папок в викикоманде (:include:).</change>
+            <change>Добавлена поддержка вложенных папок в викикоманде %thumb%.</change>
+            <change>Реализована подсветка викикоманды %thumb% в редакторе.</change>
+            <change>Изменен дизайн диалога с информацией о перезаписи прикрепленных файлов.</change>
+            <change>Улучшен дизайн ссылок на прикрепленные файлы и на другие страницы.</change>
+            <change>Добавлен параметр subdir для викикоманды (:attachlist:).</change>
+            <change>Улучшен дизайн результата работы викикоманд (:childlist:) и (:attachlist:).</change>
+            <change>В создаваемый код HTML добавлены новые CSS-классы.</change>
+            <change>Добавлена возможность отображения скрытых папок на панели с вложениями.</change>
+            <change>Добавлены настройки поведения кнопок "Свернуть" и "Закрыть".</change>
+            <change>Добавлена информация о выбранных прикрепленных файлах на статусную панель.</change>
+            <change>Добавлена возможность задавать стиль маркеров элементов списка на викистранице.</change>
+            <change>Переход на wxPython 4.2.1.</change>
         </changes>
     </version>
 </versions>

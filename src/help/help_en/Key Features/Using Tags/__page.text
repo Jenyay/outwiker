@@ -1,4 +1,4 @@
-!!! Adding tags to the notes
+!!! Adding tags to notes
 
 Tags can be used to find specific note(s). Any number of tags can be associated with a note.
 
@@ -40,7 +40,7 @@ It results in associating all the selected tags with every note of the branch.
 To remove a tag from a branch or the entire tree, one should follow the same steps, but go to "Tools - Remove the labels from the branches..." at the step 2.
 
 
-!!!! Tags rename
+!!!! Renaming a tag
 
 OutWiker supports renaming of existing tags. Steps to follow:
 1. Go to "Tools - Rename Tag...". The following dialogue pops up:

@@ -1,12 +1,11 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import html
 
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from outwiker.core.system import getOS
 
 
-class HtmlReport (object):
+class HtmlReport:
     """
     Класс для генерации HTML-а, для вывода найденных страниц
     """
@@ -26,7 +25,7 @@ class HtmlReport (object):
         """
         Сгенерить отчет
         """
-        shell = u"""<html>
+        shell = """<html>
                 <head>
                 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
                 </head>
@@ -37,7 +36,7 @@ class HtmlReport (object):
                 </body>
                 </html>"""
 
-        items = u""
+        items = ""
 
         for page in self.__pages:
             items += self.generataPageView(page)
@@ -49,14 +48,16 @@ class HtmlReport (object):
         """
         Вернуть представление для одной страницы
         """
-        item = u'<b><a href="page://%s">%s</a></b>' % (
-            html.escape(page.subpath, True), page.title)
+        item = '<b><a href="page://{link}">{comment}</a></b>'.format(
+            link=html.escape(page.subpath, True),
+            comment=page.display_title,
+        )
         if page.parent.parent is not None:
-            item += u" (%s)" % page.parent.subpath
+            item += " ({})".format(page.parent.display_title)
 
-        item += u"<br>" + self.generatePageInfo(page) + "<p></p>"
+        item += "<br>" + self.generatePageInfo(page) + "<p></p>"
 
-        result = u"<li>%s</li>\n" % item
+        result = "<li>{}</li>\n".format(item)
 
         return result
 
@@ -64,14 +65,15 @@ class HtmlReport (object):
         tags = self.generatePageTags(page)
         date = self.generateDate(page)
 
-        pageinfo = u"<font size='-1'>{tags}<br>{date}</font>".format(
-            tags=tags, date=date)
+        pageinfo = "<font size='-1'>{tags}<br>{date}</font>".format(
+            tags=tags, date=date
+        )
         return pageinfo
 
     def generateDate(self, page):
         config = GeneralGuiConfig(self.__application.config)
         dateStr = page.datetime.strftime(config.dateTimeFormat.value)
-        result = _(u"Last modified date: {0}").format(dateStr)
+        result = _("Last modified date: {0}").format(dateStr)
 
         return result
 
@@ -79,12 +81,12 @@ class HtmlReport (object):
         """
         Создать список тегов для страницы
         """
-        result = _(u"Tags: ")
+        result = _("Tags: ")
         for tag in page.tags:
-            result += self.generageTagView(tag) + u", "
+            result += self.generageTagView(tag) + ", "
 
         if result.endswith(", "):
-            result = result[: -2]
+            result = result[:-2]
 
         return result
 
@@ -93,7 +95,7 @@ class HtmlReport (object):
         Оформление для одного тега
         """
         if tag in self.__searchTags:
-            style = u"font-weight: bold; background-color: rgb(255,255,36);"
-            return u"<span style='{style}'>{tag}</span>".format(style=style, tag=tag)
+            style = "font-weight: bold; background-color: rgb(255,255,36);"
+            return "<span style='{style}'>{tag}</span>".format(style=style, tag=tag)
         else:
             return tag

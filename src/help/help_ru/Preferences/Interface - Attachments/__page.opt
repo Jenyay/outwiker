@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = настройки, вложения
+tags = вложения, настройки
 order = 6
 creationdatetime = 2020-05-10 10:31:15.223023
-datetime = 2020-05-11 19:39:15.436371
+datetime = 2023-07-18 10:22:04.220670
 uid = settings_interface_attachments
 alias = Интерфейс - Прикрепленные файлы
 

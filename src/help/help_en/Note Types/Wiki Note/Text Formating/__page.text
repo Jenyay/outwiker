@@ -1,51 +1,28 @@
 
 || border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Syntax''' || '''Result''' || '''Comment''' ||
-
 ||[=''Italic''=] ||''Italic'' || - ||
-
 ||[='''Bold'''=] ||'''Bold''' || - ||
-
 ||[=''''Bold Italic''''=] ||''''Bold Italic'''' || - ||
-
 ||[=@@Monospaced font@@=] ||@@Monospaced font@@ || The text is marked by the tag &lt;code&gt;...&lt;/code&gt; ||
-
 ||[='^Superscript^'=] ||'^Superscript^' || For comparison: normal font '^Superscript^' ||
-
 ||[='_Subscript_'=] ||'_Subscript_' || For comparison: normal font '_Subscript_' ||
-
 ||[=[----Small font----]=] ||[----Small font----] || - ||
-
 ||[=[---Small font---]=] ||[---Small font---] || - ||
-
 ||[=[--Small font--]=] ||[--Small font--] || - ||
-
 ||[=[-Small font-]=] ||[-Small font-] || - ||
-
 ||[=[+Big font+]=] ||[+Big font+] || - ||
-
 ||[=[++Big font++]=] ||[++Big font++] || - ||
-
 ||[=[+++Big font+++]=] ||[+++Big font+++] || - ||
-
 ||[=[++++Big font++++]=] ||[++++Big font++++] || - ||
-
 ||[=[+++++Big font+++++]=] ||[+++++Big font+++++] || - ||
-
 ||[={+Underlined+}=] ||{+Underlined+} || - ||
-
 ||[={-Strikethrough-}=] ||{-Strikethrough-} || - ||
-
 ||[=[>Quote<]=] ||[>Quote<] || The text is marked by the tag &lt;clockquote&gt;...&lt;/blockquote&gt; ||
-
 ||[=[!Marked text!]=] ||[!Marked text!] || The text is marked by the tag &lt;mark&gt;...&lt;/mark&gt; ||
-
 ||[=[@Preformated '''text'''@]=] ||[@Preformated '''text'''@] || Special characters of wiki notation are escaped when enclosed in square brackets, text is marked by the tag &lt;pre&gt;...&lt;/pre&gt; ||
-
 ||[@[=Nonformated '''text'''=]@] ||[=Nonformated '''text'''=] || Special characters of wiki notation are escaped when enclosed in square brackets ||
-
 ||[=----=] || ---- || Horizontal line ||
-
 ||[=%blue%Text with a style%%=] ||%blue%Text with a style%% || Read more at [[Text styles -> page://textstyles]] ||
 
 

@@ -1,6 +1,6 @@
 [Search]
 strategy = 1
-tags = пользователям
+tags = настройки
 phrase = 
 sort = 0
 
@@ -11,39 +11,26 @@ expand = False
 type = search
 order = 0
 tags = поиск
-datetime = 2020-05-09 18:51:10.173376
+datetime = 2023-07-19 15:29:40.362730
 alias = # Поиск
 
 [SearchResults]
-page_0 = Main features
-page_1 = Main features/Search
-page_2 = Main features/Attachments
-page_3 = Main features/Link to page
-page_4 = Main features/Link to page/subpage
-page_5 = Main features/Tags
-page_6 = Main features/Page style
-page_7 = Main features/Page style/Style creating
-page_8 = Main features/plugins
-page_9 = Shortcuts
-page_10 = Page types
-page_11 = Page types/HTML page
-page_12 = Page types/Wiki page
-page_13 = Page types/Wiki page/Headings
-page_14 = Page types/Wiki page/Attachments
-page_15 = Page types/Wiki page/Lists
-page_16 = Page types/Wiki page/Links
-page_17 = Page types/Wiki page/Tables
-page_18 = Page types/Wiki page/Text formatting
-page_19 = Page types/Wiki page/Text styles
-page_20 = Page types/Wiki page/Text styles/Built-in styles
-page_21 = Page types/Wiki page/Text styles/Custom styles
-page_22 = Page types/Wiki page/Wiki commands
-page_23 = Page types/Wiki page/Wiki commands/attachlist
-page_24 = Page types/Wiki page/Wiki commands/childlist
-page_25 = Page types/Wiki page/Wiki commands/include
-page_26 = Page types/Wiki page/Wiki commands/crdate and eddate
-page_27 = Page types/Text page
-page_28 = Page types/Search page
-page_29 = Preferences
-page_30 = FAQ
+page_0 = Preferences
+page_1 = Preferences/Interface - General
+page_2 = Preferences/Interface - Main window
+page_3 = Preferences/Interface - Colors
+page_4 = Preferences/Interface - Tray
+page_5 = Preferences/Interface - Preview
+page_6 = Preferences/Interface - Tags cloud
+page_7 = Preferences/Interface - Attachments
+page_8 = Preferences/Interface - Hotkeys
+page_9 = Preferences/Interface - Formats
+page_10 = Preferences/Editor - General
+page_11 = Preferences/Editor - Spell checking
+page_12 = Preferences/Editor - HTML editor
+page_13 = Preferences/Editor - Wiki editor
+page_14 = Preferences/Iconset
+page_15 = Preferences/Plugins
+page_16 = Preferences/Interface - Text printout
+page_17 = Preferences/Wiki page
 

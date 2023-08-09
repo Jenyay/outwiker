@@ -1,3 +1,14 @@
+!!! Section content
+
+* [[General information -> #intro]]
+* [[Bulleted lists -> #unorder]]
+* [[Numbered lists -> #order]]
+* [[Mixed lists -> #mixed]]
+* [[List item styles -> #styles]]
+
+
+!!! [[#intro]] General information
+
 OutWiker supports both bulleted and numbered lists in wiki notes. Every item of bulleted list should begin with asterisk (*) character(s). Slash characters are used in stead of asterisks for numbered lists. The number of the asterisks or slashes denotes the nesting level shown by indent.
 
 In order to create a bulleted list one can use either the "Wiki - Lists - bulleted list" menu or the Attach:bullet.png button.
@@ -8,9 +19,9 @@ If cursor is placed on list item, then clicking Attach:bullet.png or Attach:orde
 
 Below are a few examples of using lists in wiki notation.
 
-!!! Bulleted lists
+!!! [[#unorder]] Bulleted lists
 
-Syntax:
+!!!! Syntax
 [=
 * Line 1
 * Line 2
@@ -22,7 +33,7 @@ Syntax:
 *Line 8
 =]
 
-Result:
+!!!! Result
 * Line 1
 * Line 2
 ** Line 3
@@ -32,9 +43,9 @@ Result:
 ** Line 7
 *Line 8
 
-!!! Numbered lists
+!!! [[#order]] Numbered lists
 
-Syntax:
+!!!! Syntax
 [=
 # Line 1
 # Line 2
@@ -46,7 +57,7 @@ Syntax:
 # Line 8
 =]
 
-Result:
+!!!! Result
 # Line 1
 # Line 2
 ## Line 3
@@ -56,9 +67,9 @@ Result:
 ## Line 7
 # Line 8
 
-!!! Mixed lists
+!!! [[#mixed]] Mixed lists
 
-Syntax:
+!!!! Syntax
 [=
 # Line 1
 # Line 2
@@ -70,7 +81,7 @@ Syntax:
 # Line 8
 =]
 
-Result:
+!!!! Result
 # Line 1
 # Line 2
 ** Line 3
@@ -79,3 +90,95 @@ Result:
 ### Line 6
 ** Line 7
 # Line 8
+
+!!! [[#styles]] List item styles
+
+You can change the style of the bullets for unordered lists. This can be useful, for example, to create a list of tasks, then upcoming tasks can be marked with one style, and completed tasks with another (there are special styles for this.). List item styles are useful if you use the [[Bullet Journal -> https://en.wikipedia.org/wiki/Bullet_journal]] methodology.
+
+The style is specified after the "*" character. The style is a combination of square brackets, between which there can be an additional character. The following table shows the currently supported styles:
+
+(:table border="1" width=500em style="border-collapse: collapse; border: 1px solid black;":)
+(:row:)
+(:hcell:) Wiki notation
+(:hcell:) Result
+(:row:)
+(:cell:)[=* [ ] The first element of a list
+* [ ] The second element of a list=]
+(:cell:)
+* [ ] The first element of a list
+* [ ] The second element of a list
+
+(:row:)
+(:cell:)[=* [/] The first element of a list
+* [/] The second element of a list=]
+(:cell:)
+* [/] The first element of a list
+* [/] The second element of a list
+
+(:row:)
+(:cell:)[=* [x] The first element of a list
+* [x] The second element of a list=]
+(:cell:)
+* [x] The first element of a list
+* [x] The second element of a list
+
+(:row:)
+(:cell:)[=* [*] The first element of a list
+* [*] The second element of a list=]
+(:cell:)
+* [*] The first element of a list
+* [*] The second element of a list
+
+(:row:)
+(:cell:)[=* [+] The first element of a list
+* [+] The second element of a list=]
+(:cell:)
+* [+] The first element of a list
+* [+] The second element of a list
+
+(:row:)
+(:cell:)[=* [-] The first element of a list
+* [-] The second element of a list=]
+(:cell:)
+* [-] The first element of a list
+* [-] The second element of a list
+
+(:row:)
+(:cell:)[=* [o] The first element of a list
+* [o] The second element of a list=]
+(:cell:)
+* [o] The first element of a list
+* [o] The second element of a list
+
+(:row:)
+(:cell:)[=* [v] The first element of a list
+* [v] The second element of a list=]
+(:cell:)
+* [v] The first element of a list
+* [v] The second element of a list
+
+(:row:)
+(:cell:)[=* [<] The first element of a list
+* [<] The second element of a list=]
+(:cell:)
+* [<] The first element of a list
+* [<] The second element of a list
+
+(:row:)
+(:cell:)[=* [>] The first element of a list
+* [>] The second element of a list=]
+(:cell:)
+* [>] The first element of a list
+* [>] The second element of a list
+
+(:row:)
+(:cell:)[=* [] The first element of a list
+* [] The second element of a list=]
+(:cell:)
+* [] The first element of a list
+* [] The second element of a list
+(:tableend:)
+
+You can use the menu item "Wiki - Lists - List item style..." to insert a list element with a style. When you select this menu item, a dialog will open in which you can select the desired style of the list item. In the dialog, you can select the desired style of the list item. The dialog is shown in the next picture.
+
+%center%Attach:bullet_style.png

@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = настройки, метки
+tags = метки, настройки
 order = 5
 creationdatetime = 2020-05-10 10:28:37.258955
-datetime = 2020-06-07 11:49:55.194249
+datetime = 2023-07-18 10:16:22.669129
 uid = settings_interface_tags_cloud
 alias = Интерфейс - Облако меток
 

@@ -6,9 +6,9 @@ expand = False
 
 [General]
 type = wiki
-order = 3
+order = 4
 tags = 
-datetime = 2020-05-15 21:24:49.180553
+datetime = 2023-08-08 12:12:12.547896
 cursorposition = 0
 alias = Комбинации клавиш
 

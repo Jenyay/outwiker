@@ -1,6 +1,6 @@
 OutWiker allows to set pre-defined styles that can be used to change look of wiki-type and HTML-type notes. In order to set a style for specific note, right-click its name in the tree, select "Page properties..."; switch to the "Appearance" tab and select the style.
 
-%center% Attach:styles_01.png 
+%center% Attach:styles.png 
 
 Styles for specific notes are stored in the subdirectory ''styles'' of the note's directory.
 
