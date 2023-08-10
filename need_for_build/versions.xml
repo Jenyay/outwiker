@@ -83,15 +83,15 @@
     <version number="3.2.0.914" status="beta" date="2022-11-20">
         <changes>
             <change>Improved design of links to attached files and other pages.</change>
-            <change>Added a new subdir parameter to [=(:attachlist:)=] wiki command.</change>
-            <change>Improved [=(:childlist:)=] and [=(:attachlist:)=] wiki commands result design.</change>
+            <change>Added a new subdir parameter to (:attachlist:) wiki command.</change>
+            <change>Improved (:childlist:) and (:attachlist:) wiki commands result design.</change>
             <change>Added new CSS classes to generated HTML code.</change>
         </changes>
 
         <changes lang="ru">
             <change>Улучшен дизайн ссылок на прикрепленные файлы и на другие страницы.</change>
-            <change>Добавлен параметр subdir для викикоманды [=(:attachlist:)=].</change>
-            <change>Улучшен дизайн результата работы викикоманд [=(:childlist:)=] и [=(:attachlist:)=].</change>
+            <change>Добавлен параметр subdir для викикоманды (:attachlist:).</change>
+            <change>Улучшен дизайн результата работы викикоманд (:childlist:) и (:attachlist:).</change>
             <change>В создаваемый код HTML добавлены новые CSS-классы.</change>
         </changes>
     </version>
@@ -122,16 +122,16 @@
 
     <version number="3.2.0.908" status="beta" date="2022-07-17">
         <changes>
-            <change>Added the support of nested subfolders for the [=(:include:)=] wiki command.</change>
-            <change>Added the support of nested subfolders in the dialog for the [=(:include:)=] wiki command.</change>
-            <change>Added the support of nested subfolders in the dialog for thumbnails creation with the [=%thumb%=] wiki command.</change>
+            <change>Added the support of nested subfolders for the (:include:) wiki command.</change>
+            <change>Added the support of nested subfolders in the dialog for the (:include:) wiki command.</change>
+            <change>Added the support of nested subfolders in the dialog for thumbnails creation with the %thumb% wiki command.</change>
             <change>Small GUI improvements.</change>
         </changes>
 
         <changes lang="ru">
-            <change>Добавлена поддержка вложенных папок в викикоманде [=(:include:)=].</change>
-            <change>Добавлена поддержка вложенных папок в диалоге для вставки викикоманды [=(:include:)=].</change>
-            <change>Добавлена поддержка вложенных папок в диалоге для вставки миниатюры с помощью викикоманды [=%thumb%=].</change>
+            <change>Добавлена поддержка вложенных папок в викикоманде (:include:).</change>
+            <change>Добавлена поддержка вложенных папок в диалоге для вставки викикоманды (:include:).</change>
+            <change>Добавлена поддержка вложенных папок в диалоге для вставки миниатюры с помощью викикоманды %thumb%.</change>
             <change>Мелкие улучшения в интерфейсе.</change>
         </changes>
     </version>
@@ -148,15 +148,15 @@
 
     <version number="3.2.0.904" status="beta" date="2022-05-28">
         <changes>
-            <change>Added the support of nested subfolders for the [=%thumb%=] wiki command.</change>
-            <change>Implemented highlighting the [=%thumb%=] wiki command on wiki pages.</change>
+            <change>Added the support of nested subfolders for the %thumb% wiki command.</change>
+            <change>Implemented highlighting the %thumb% wiki command on wiki pages.</change>
             <change>Changed design of the dialog about overwriting of attached files.</change>
             <change>Small GUI fixes.</change>
         </changes>
 
         <changes lang="ru">
-            <change>Добавлена поддержка вложенных папок в викикоманде [=%thumb%=].</change>
-            <change>Реализована подсветка викикоманды [=%thumb%=] в редакторе.</change>
+            <change>Добавлена поддержка вложенных папок в викикоманде %thumb%.</change>
+            <change>Реализована подсветка викикоманды %thumb% в редакторе.</change>
             <change>Изменен дизайн диалога с информацией о перезаписи прикрепленных файлов.</change>
             <change>Мелкие исправления в интерфейсе.</change>
         </changes>
