@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 20:45+0300\n"
+"POT-Creation-Date: 2023-08-14 18:08+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -87,23 +87,22 @@ msgstr ""
 "panel"
 
 #: outwiker/app/actions/attachexecute.py:22
-msgid "Execute files"
-msgstr "Execute files"
+msgid "Execute attachments"
+msgstr "Execute attachments"
 
 #: outwiker/app/actions/attachexecute.py:26
-msgid "Execute selected attached files"
-msgstr "Execute selected attached files"
+msgid "Execute selected attachments"
+msgstr "Execute selected attachments"
 
 #: outwiker/app/actions/attachexecute.py:35
-msgid "You did not select a file to execute"
-msgstr "You did not select a file to execute"
+msgid "You did not select an attachment to execute"
+msgstr "You did not select an attachment to execute"
 
-#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrender.py:80
-#: outwiker/gui/htmlrenderie.py:256 outwiker/gui/htmlrenderie.py:338
-#: outwiker/gui/htmlrenderwebkit.py:261 outwiker/gui/htmlrenderwebkit.py:343
+#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrenderie.py:256
+#: outwiker/gui/htmlrenderie.py:338
 #, python-format
-msgid "Can't execute file '%s'"
-msgstr "Can't execute file '%s'"
+msgid "Can't execute attachment '%s'"
+msgstr "Can't execute attachment '%s'"
 
 #: outwiker/app/actions/attachfiles.py:24
 msgid "Attach Files…"
@@ -127,8 +126,8 @@ msgid "Open Attachments Folder"
 msgstr "Open Attachments Folder"
 
 #: outwiker/app/actions/attachopenfolder.py:24
-msgid "Open folder with attached files"
-msgstr "Open folder with attached files"
+msgid "Open folder with attachments"
+msgstr "Open folder with attachments"
 
 #: outwiker/app/actions/attachopenfolder.py:38
 #: outwiker/app/actions/openpluginsfolder.py:32
@@ -136,32 +135,29 @@ msgid "Can't open folder '{}'"
 msgstr "Can't open folder '{}'"
 
 #: outwiker/app/actions/attachpastelink.py:18
-msgid "Insert link to attached files"
-msgstr "Insert link to attached files"
-
 #: outwiker/app/actions/attachpastelink.py:22
-msgid "Insert link to attached file"
-msgstr "Insert link to attached file"
+msgid "Insert link to attachments"
+msgstr "Insert link to attachments"
 
 #: outwiker/app/actions/attachpastelink.py:29
-msgid "You did not select any attached file"
-msgstr "You did not select any attached file"
+msgid "You did not select any attachments"
+msgstr "You did not select any attachments"
 
 #: outwiker/app/actions/attachremove.py:24
-msgid "Remove attached files"
-msgstr "Remove attached files"
+msgid "Remove attachments"
+msgstr "Remove attachments"
 
 #: outwiker/app/actions/attachremove.py:28
-msgid "Remove attached files. Action for attach panel"
-msgstr "Remove attached files. Action for attach panel"
+msgid "Remove selected attachments. Action for attach panel"
+msgstr "Remove selected attachments. Action for attach panel"
 
-#: outwiker/app/actions/attachremove.py:38 outwiker/app/gui/attachpanel.py:400
-msgid "You did not select any file to remove"
-msgstr "You did not select any file to remove"
+#: outwiker/app/actions/attachremove.py:38
+msgid "You did not select any attachment to remove"
+msgstr "You did not select any attachment to remove"
 
-#: outwiker/app/actions/attachremove.py:42 outwiker/app/gui/attachpanel.py:403
-msgid "Remove selected files?"
-msgstr "Remove selected files?"
+#: outwiker/app/actions/attachremove.py:42
+msgid "Remove selected attachments?"
+msgstr "Remove selected attachments?"
 
 #: outwiker/app/actions/attachremove.py:45
 msgid "Removing attachments"
@@ -180,8 +176,8 @@ msgid "Select all"
 msgstr "Select all"
 
 #: outwiker/app/actions/attachselectall.py:21
-msgid "Select all attached files. Action for attachments panel"
-msgstr "Select all attached files. Action for attachments panel"
+msgid "Select all attachments. Action for the attachments panel"
+msgstr "Select all attachments. Action for the attachments panel"
 
 #: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:109
 msgid "Copy Page Title"
@@ -1011,6 +1007,14 @@ msgstr "Switch to preview tab"
 msgid "Switch to preview tab for some page types"
 msgstr "Switch to preview tab for some page types"
 
+#: outwiker/app/gui/attachpanel.py:400
+msgid "You did not select any file to remove"
+msgstr "You did not select any file to remove"
+
+#: outwiker/app/gui/attachpanel.py:403
+msgid "Remove selected files?"
+msgstr "Remove selected files?"
+
 #: outwiker/app/gui/attachpanel.py:404
 msgid "Remove files?"
 msgstr "Remove files?"
@@ -1368,12 +1372,12 @@ msgid "Invalid icon file: {}"
 msgstr "Invalid icon file: {}"
 
 #: outwiker/app/gui/preferences/attachpanel.py:16
-msgid "Insert link to file"
-msgstr "Insert link to file"
+msgid "Insert link to attachment"
+msgstr "Insert link to attachment"
 
 #: outwiker/app/gui/preferences/attachpanel.py:17
-msgid "Execute file"
-msgstr "Execute file"
+msgid "Execute attachment"
+msgstr "Execute attachment"
 
 #: outwiker/app/gui/preferences/attachpanel.py:37
 msgid "Double clicking or pressing Enter on an attached file"
@@ -1924,10 +1928,10 @@ msgstr "You can't remove the root element"
 #: outwiker/app/services/tree.py:51
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
-"All attached files will also be deleted."
+"All attachments will also be deleted."
 msgstr ""
 "Remove page \"{}\" and all subpages?\n"
-"All attached files will also be deleted."
+"All attachments will also be deleted."
 
 #: outwiker/app/services/tree.py:53
 msgid "Remove page?"
@@ -2320,6 +2324,12 @@ msgstr "Skip all"
 msgid "{size:_d} bytes"
 msgstr "{size:_d} bytes"
 
+#: outwiker/gui/htmlrender.py:80 outwiker/gui/htmlrenderwebkit.py:261
+#: outwiker/gui/htmlrenderwebkit.py:343
+#, python-format
+msgid "Can't execute file '%s'"
+msgstr "Can't execute file '%s'"
+
 #: outwiker/gui/htmlrenderie.py:278 outwiker/gui/htmlrenderwebkit.py:171
 #: outwiker/gui/htmlrenderwebkit.py:283
 #, python-format
@@ -2470,12 +2480,12 @@ msgstr "Lists"
 msgid "Tables"
 msgstr "Tables"
 
-#: outwiker/pages/search/htmlreport.py:74
+#: outwiker/pages/search/htmlreport.py:76
 #, python-brace-format
 msgid "Last modified date: {0}"
 msgstr "Last modified date: {0}"
 
-#: outwiker/pages/search/htmlreport.py:82
+#: outwiker/pages/search/htmlreport.py:84
 #: outwiker/pages/search/searchpanel.py:40
 msgid "Tags: "
 msgstr "Tags: "
@@ -2896,6 +2906,49 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Execute files"
+#~ msgstr "Execute files"
+
+#~ msgid "Insert link to file"
+#~ msgstr "Insert link to file"
+
+#~ msgid "Execute file"
+#~ msgstr "Execute file"
+
+#~ msgid "Execute selected attached files"
+#~ msgstr "Execute selected attached files"
+
+#~ msgid "You did not select a file to execute"
+#~ msgstr "You did not select a file to execute"
+
+#~ msgid "Open folder with attached files"
+#~ msgstr "Open folder with attached files"
+
+#~ msgid "Insert link to attached files"
+#~ msgstr "Insert link to attached files"
+
+#~ msgid "Insert link to attached file"
+#~ msgstr "Insert link to attached file"
+
+#~ msgid "You did not select any attached file"
+#~ msgstr "You did not select any attached file"
+
+#~ msgid "Remove attached files"
+#~ msgstr "Remove attached files"
+
+#~ msgid "Remove attached files. Action for attach panel"
+#~ msgstr "Remove attached files. Action for attach panel"
+
+#~ msgid "Select all attached files. Action for attachments panel"
+#~ msgstr "Select all attached files. Action for attachments panel"
+
+#~ msgid ""
+#~ "Remove page \"{}\" and all subpages?\n"
+#~ "All attached files will also be deleted."
+#~ msgstr ""
+#~ "Remove page \"{}\" and all subpages?\n"
+#~ "All attached files will also be deleted."
 
 #~ msgid "OutWiker's localizations"
 #~ msgstr "OutWiker's localizations"

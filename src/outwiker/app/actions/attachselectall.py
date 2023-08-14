@@ -5,7 +5,7 @@ from outwiker.gui.baseaction import BaseAction
 
 class AttachSelectAllAction(BaseAction):
     """
-    Select all attached files on attachments panel
+    Select all attachments on attachments panel
     """
     stringId = "AttachSelectAll"
 
@@ -18,7 +18,7 @@ class AttachSelectAllAction(BaseAction):
 
     @property
     def description(self):
-        return _("Select all attached files. Action for attachments panel")
+        return _("Select all attachments. Action for the attachments panel")
 
     def run(self, params):
         self._application.mainWindow.attachPanel.panel.selectAllAttachments()

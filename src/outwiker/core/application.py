@@ -71,7 +71,7 @@ class ApplicationParams:
         #     sender - selected page
         self.onPageSelect = Event()
 
-        # User want insert link to selected attached files to page
+        # User want insert link to selected attachments to page
         # Parameters:
         #     fnames - selected file names (names only, without full paths)
         self.onAttachmentPaste = Event()
@@ -311,7 +311,7 @@ class ApplicationParams:
         #     params - instance of the PageModeChangeParams class
         self.onPageModeChange = Event()
 
-        # Event occurs after change attached file list.
+        # Event occurs after change attachments list.
         # Parameters:
         #     page - current (selected) page
         #     params - instance of the AttachListChangedParams class

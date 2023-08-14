@@ -24,7 +24,7 @@ REGISTRY_FILE = '__cache.tmp'
 # Base name for icons
 PAGE_ICON_NAME = u'__icon'
 
-# Folder for attached files
+# Folder for attachments
 PAGE_ATTACH_DIR = u'__attach'
 
 # Final file after wiki parsing or HTML generation

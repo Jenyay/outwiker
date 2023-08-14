@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 20:45+0300\n"
+"POT-Creation-Date: 2023-08-14 18:08+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -76,34 +76,33 @@ msgstr "Создать новую прикрепленную папку"
 
 #: outwiker/app/actions/attachcreatesubdir.py:23
 msgid "Create a new folder in the current attached folder"
-msgstr "Сознать новую папку в текущей папке с прикрепленными файлами"
+msgstr "Сознать новую папку в текущей папке с вложениями"
 
 #: outwiker/app/actions/attachcreatesubdir.py:36
 msgid ""
 "Create a new folder in the current attached folder. Action for attachments "
 "panel"
 msgstr ""
-"Создать новую папку в текущей папке с прикрепленными файлами. Действие для "
-"панели с прикрепленными файлами"
+"Создать новую папку в текущей папке с вложениями. Действие для панели "
+"\"Вложения\""
 
 #: outwiker/app/actions/attachexecute.py:22
-msgid "Execute files"
-msgstr "Запустить файлы"
+msgid "Execute attachments"
+msgstr "Запустить вложения"
 
 #: outwiker/app/actions/attachexecute.py:26
-msgid "Execute selected attached files"
-msgstr "Запустить выбранные прикрепленные файлы"
+msgid "Execute selected attachments"
+msgstr "Запустить выбранные вложения"
 
 #: outwiker/app/actions/attachexecute.py:35
-msgid "You did not select a file to execute"
-msgstr "Вы не выбрали файл(ы) для запуска"
+msgid "You did not select an attachment to execute"
+msgstr "Не выбрано ни одно вложение для запуска"
 
-#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrender.py:80
-#: outwiker/gui/htmlrenderie.py:256 outwiker/gui/htmlrenderie.py:338
-#: outwiker/gui/htmlrenderwebkit.py:261 outwiker/gui/htmlrenderwebkit.py:343
+#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrenderie.py:256
+#: outwiker/gui/htmlrenderie.py:338
 #, python-format
-msgid "Can't execute file '%s'"
-msgstr "Ошибка запуска файла '%s'"
+msgid "Can't execute attachment '%s'"
+msgstr "Ошибка запуска вложения '%s'"
 
 #: outwiker/app/actions/attachfiles.py:24
 msgid "Attach Files…"
@@ -115,7 +114,7 @@ msgstr "Прикрепить файлы к текущей странице"
 
 #: outwiker/app/actions/attachfolder.py:25
 msgid "Attach Folder…"
-msgstr "Прикрепить папку..."
+msgstr "Прикрепить папку…"
 
 #: outwiker/app/actions/attachfolder.py:29
 msgid "Attach folder with files to current page"
@@ -124,11 +123,11 @@ msgstr "Прикрепить папку с файлами к текущей ст
 #: outwiker/app/actions/attachopenfolder.py:20
 #: outwiker/app/gui/pagepopupmenu.py:117
 msgid "Open Attachments Folder"
-msgstr "Открыть папку с прикрепленными файлами"
+msgstr "Открыть папку с вложениями"
 
 #: outwiker/app/actions/attachopenfolder.py:24
-msgid "Open folder with attached files"
-msgstr "Открывает папку с прикрепленными файлами"
+msgid "Open folder with attachments"
+msgstr "Открыть папку с вложениями"
 
 #: outwiker/app/actions/attachopenfolder.py:38
 #: outwiker/app/actions/openpluginsfolder.py:32
@@ -136,55 +135,49 @@ msgid "Can't open folder '{}'"
 msgstr "Ошибка открытия папки '{}'"
 
 #: outwiker/app/actions/attachpastelink.py:18
-msgid "Insert link to attached files"
-msgstr "Вставить ссылку на прикрепленные файлы"
-
 #: outwiker/app/actions/attachpastelink.py:22
-msgid "Insert link to attached file"
-msgstr "Вставить ссылку на прикрепленный файл"
+msgid "Insert link to attachments"
+msgstr "Вставить ссылку на вложения"
 
 #: outwiker/app/actions/attachpastelink.py:29
-msgid "You did not select any attached file"
-msgstr "Вы не выбрали ни одного прикрепленного файла"
+msgid "You did not select any attachments"
+msgstr "Не выбрано ни одно вложение"
 
 #: outwiker/app/actions/attachremove.py:24
-msgid "Remove attached files"
-msgstr "Удалить выбранные файлы"
+msgid "Remove attachments"
+msgstr "Удалить вложения"
 
 #: outwiker/app/actions/attachremove.py:28
-msgid "Remove attached files. Action for attach panel"
-msgstr "Удалить прикрепленные файлы. Действие для панели прикрепленных файлов"
+msgid "Remove selected attachments. Action for attach panel"
+msgstr "Удалить выбранные вложения. Действие для панели \"Вложения\""
 
-#: outwiker/app/actions/attachremove.py:38 outwiker/app/gui/attachpanel.py:400
-msgid "You did not select any file to remove"
-msgstr "Вы не выбрали файл(ы) для удаления"
+#: outwiker/app/actions/attachremove.py:38
+msgid "You did not select any attachment to remove"
+msgstr "Не выбрано ни одно вложение для удаления"
 
-#: outwiker/app/actions/attachremove.py:42 outwiker/app/gui/attachpanel.py:403
-msgid "Remove selected files?"
-msgstr "Удалить выбранные файлы?"
+#: outwiker/app/actions/attachremove.py:42
+msgid "Remove selected attachments?"
+msgstr "Удалить выбранные вложения?"
 
 #: outwiker/app/actions/attachremove.py:45
 msgid "Removing attachments"
-msgstr "Удаление прикрепленных файлов"
+msgstr "Удаление вложений"
 
 #: outwiker/app/actions/attachrename.py:18
 msgid "Rename attachment"
-msgstr "Переименовать прикрепленный файл"
+msgstr "Переименовать вложение"
 
 #: outwiker/app/actions/attachrename.py:22
 msgid "Rename selected attached file. Action for attachments panel"
-msgstr ""
-"Переименовать выбранный прикрепленный файлы. Действие для панели "
-"прикрепленных файлов"
+msgstr "Переименовать выбранное вложение. Действие для панели \"Вложения\""
 
 #: outwiker/app/actions/attachselectall.py:17
 msgid "Select all"
 msgstr "Выбрать всё"
 
 #: outwiker/app/actions/attachselectall.py:21
-msgid "Select all attached files. Action for attachments panel"
-msgstr ""
-"Выбрать все прикрепленные файлы. Действие для панели прикрепленных файлов"
+msgid "Select all attachments. Action for the attachments panel"
+msgstr "Выбрать все вложения. Действие для панели \"Вложения\""
 
 #: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:109
 msgid "Copy Page Title"
@@ -217,16 +210,15 @@ msgstr "Путь до страницы скопирован в буфер обм
 
 #: outwiker/app/actions/clipboard.py:82 outwiker/app/gui/pagepopupmenu.py:113
 msgid "Copy Attachments Path"
-msgstr "Копировать путь до прикрепленных файлов"
+msgstr "Копировать путь до вложений"
 
 #: outwiker/app/actions/clipboard.py:86
 msgid "Copy path to attachments for current page to clipboard"
-msgstr ""
-"Копировать путь до прикрепленных файлов текущей страницы в буфер обмена"
+msgstr "Копировать путь до вложений текущей страницы в буфер обмена"
 
 #: outwiker/app/actions/clipboard.py:99
 msgid "Path to the page attachments has been copied to the clipboard"
-msgstr "Путь до прикрепленных файлов страницы скопирован в буфер обмена"
+msgstr "Путь до вложений страницы скопирован в буфер обмена"
 
 #: outwiker/app/actions/clipboard.py:114 outwiker/app/gui/pagepopupmenu.py:115
 msgid "Copy Page Link"
@@ -489,11 +481,11 @@ msgstr "Начать поиск и замену по странице"
 #: outwiker/gui/controls/filestreectrl.py:84
 #: outwiker/pages/wiki/parser/commands/attachlist.py:34
 msgid "Attachments"
-msgstr "Прикрепленные файлы"
+msgstr "Вложения"
 
 #: outwiker/app/actions/showhideattaches.py:22
 msgid "Show / hide a attachments panel"
-msgstr "Показать / спрятать панель с прикрепленными файлами"
+msgstr "Показать / спрятать панель \"Вложения\""
 
 #: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:86
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:52
@@ -548,7 +540,7 @@ msgstr "Установить фокус на дерево заметок"
 
 #: outwiker/app/actions/switchto.py:67
 msgid "Set focus to attachments panel"
-msgstr "Установить фокус на панель с прикрепленными файлами"
+msgstr "Установить фокус на панель с вложениями"
 
 #: outwiker/app/actions/switchto.py:90
 msgid "Set focus to tags cloud panel"
@@ -1015,6 +1007,14 @@ msgstr "Переключиться на вкладку просмотра"
 msgid "Switch to preview tab for some page types"
 msgstr "Переключиться на вкладку просмотра для некоторых типов страниц"
 
+#: outwiker/app/gui/attachpanel.py:400
+msgid "You did not select any file to remove"
+msgstr "Вы не выбрали файл(ы) для удаления"
+
+#: outwiker/app/gui/attachpanel.py:403
+msgid "Remove selected files?"
+msgstr "Удалить выбранные файлы?"
+
 #: outwiker/app/gui/attachpanel.py:404
 msgid "Remove files?"
 msgstr "Удалить файлы?"
@@ -1379,16 +1379,16 @@ msgid "Invalid icon file: {}"
 msgstr "Ошибка в файле значка: {}"
 
 #: outwiker/app/gui/preferences/attachpanel.py:16
-msgid "Insert link to file"
-msgstr "Вставить ссылку на файл"
+msgid "Insert link to attachment"
+msgstr "Вставить ссылку на вложение"
 
 #: outwiker/app/gui/preferences/attachpanel.py:17
-msgid "Execute file"
-msgstr "Запустить файл"
+msgid "Execute attachment"
+msgstr "Запустить вложение"
 
 #: outwiker/app/gui/preferences/attachpanel.py:37
 msgid "Double clicking or pressing Enter on an attached file"
-msgstr "Двойной клик или нажатие клавиши Enter на прикрепленном файле"
+msgstr "Двойной клик или нажатие клавиши Enter на вложении"
 
 #: outwiker/app/gui/preferences/attachpanel.py:46
 msgid "Show hidden folders"
@@ -1909,7 +1909,7 @@ msgstr "Новая папка"
 
 #: outwiker/app/services/attachment.py:206
 msgid "Can't create folder {} for attachments"
-msgstr "Ошибка создания папки {} для прикрепленных файлов"
+msgstr "Ошибка создания папки {} для вложений"
 
 #: outwiker/app/services/clipboard.py:17 outwiker/app/services/clipboard.py:34
 msgid "Can't open clipboard"
@@ -1935,10 +1935,10 @@ msgstr "Нельзя удалить корневой элемент"
 #: outwiker/app/services/tree.py:51
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
-"All attached files will also be deleted."
+"All attachments will also be deleted."
 msgstr ""
 "Удалить страницу \"{}\" и все дочерние страницы?\n"
-"Все прикрепленные файлы тоже будут удалены."
+"Все вложения будут также удалены."
 
 #: outwiker/app/services/tree.py:53
 msgid "Remove page?"
@@ -2332,6 +2332,12 @@ msgstr "Пропустить все"
 msgid "{size:_d} bytes"
 msgstr "{size:_d} байт"
 
+#: outwiker/gui/htmlrender.py:80 outwiker/gui/htmlrenderwebkit.py:261
+#: outwiker/gui/htmlrenderwebkit.py:343
+#, python-format
+msgid "Can't execute file '%s'"
+msgstr "Ошибка запуска файла '%s'"
+
 #: outwiker/gui/htmlrenderie.py:278 outwiker/gui/htmlrenderwebkit.py:171
 #: outwiker/gui/htmlrenderwebkit.py:283
 #, python-format
@@ -2482,12 +2488,12 @@ msgstr "Списки"
 msgid "Tables"
 msgstr "Таблицы"
 
-#: outwiker/pages/search/htmlreport.py:74
+#: outwiker/pages/search/htmlreport.py:76
 #, python-brace-format
 msgid "Last modified date: {0}"
 msgstr "Дата последнего изменения: {0}"
 
-#: outwiker/pages/search/htmlreport.py:82
+#: outwiker/pages/search/htmlreport.py:84
 #: outwiker/pages/search/searchpanel.py:40
 msgid "Tags: "
 msgstr "Метки: "
@@ -2554,7 +2560,7 @@ msgstr "Текстовая страница"
 
 #: outwiker/pages/wiki/actions/attachlist.py:25
 msgid "Attachment (:attachlist:)"
-msgstr "Прикрепленные файлы (:attachlist:)"
+msgstr "Вложения (:attachlist:)"
 
 #: outwiker/pages/wiki/actions/attachlist.py:29
 #: outwiker/pages/wiki/actions/attachlist.py:95
@@ -2667,11 +2673,11 @@ msgstr "Вставить команду (:include:)"
 #: outwiker/pages/wiki/actions/include.py:43
 #: outwiker/pages/wiki/thumbdialogcontroller.py:91
 msgid "Current page does not have any attachments"
-msgstr "К текущей странице не прикреплено ни одного файла"
+msgstr "На текущей странице нет ни одного вложенного файла"
 
 #: outwiker/pages/wiki/actions/include.py:149
 msgid "Select attachment"
-msgstr "Выберите прикрепленный файл"
+msgstr "Выберите вложение"
 
 #: outwiker/pages/wiki/actions/include.py:158
 msgid "Encoding"
@@ -2836,7 +2842,7 @@ msgstr "Миниатюра"
 
 #: outwiker/pages/wiki/thumbdialog.py:68
 msgid "Select attached image"
-msgstr "Выберите прикрепленную картинку"
+msgstr "Выберите картинку из вложений"
 
 #: outwiker/pages/wiki/thumbdialog.py:81
 msgid "Thumbnail size"
@@ -2908,6 +2914,51 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Execute files"
+#~ msgstr "Запустить файлы"
+
+#~ msgid "Insert link to file"
+#~ msgstr "Вставить ссылку на файл"
+
+#~ msgid "Execute file"
+#~ msgstr "Запустить файл"
+
+#~ msgid "Execute selected attached files"
+#~ msgstr "Запустить выбранные прикрепленные файлы"
+
+#~ msgid "You did not select a file to execute"
+#~ msgstr "Вы не выбрали файл(ы) для запуска"
+
+#~ msgid "Open folder with attached files"
+#~ msgstr "Открывает папку с прикрепленными файлами"
+
+#~ msgid "Insert link to attached files"
+#~ msgstr "Вставить ссылку на прикрепленные файлы"
+
+#~ msgid "Insert link to attached file"
+#~ msgstr "Вставить ссылку на прикрепленный файл"
+
+#~ msgid "You did not select any attached file"
+#~ msgstr "Вы не выбрали ни одного прикрепленного файла"
+
+#~ msgid "Remove attached files"
+#~ msgstr "Удалить выбранные файлы"
+
+#~ msgid "Remove attached files. Action for attach panel"
+#~ msgstr ""
+#~ "Удалить прикрепленные файлы. Действие для панели прикрепленных файлов"
+
+#~ msgid "Select all attached files. Action for attachments panel"
+#~ msgstr ""
+#~ "Выбрать все прикрепленные файлы. Действие для панели прикрепленных файлов"
+
+#~ msgid ""
+#~ "Remove page \"{}\" and all subpages?\n"
+#~ "All attached files will also be deleted."
+#~ msgstr ""
+#~ "Удалить страницу \"{}\" и все дочерние страницы?\n"
+#~ "Все прикрепленные файлы тоже будут удалены."
 
 #~ msgid "OutWiker's localizations"
 #~ msgstr "Локализации OutWiker"

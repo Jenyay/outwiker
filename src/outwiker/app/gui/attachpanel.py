@@ -247,7 +247,7 @@ class AttachPanel(wx.Panel):
             getBuiltinImagePath("paste.png")
         )
 
-        # Execute files
+        # Execute attachments
         actionController.appendToolbarButton(
             AttachExecuteFilesAction.stringId,
             toolbar,

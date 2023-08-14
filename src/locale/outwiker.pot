@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 20:45+0300\n"
+"POT-Creation-Date: 2023-08-14 18:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -91,22 +91,21 @@ msgid ""
 msgstr ""
 
 #: outwiker/app/actions/attachexecute.py:22
-msgid "Execute files"
+msgid "Execute attachments"
 msgstr ""
 
 #: outwiker/app/actions/attachexecute.py:26
-msgid "Execute selected attached files"
+msgid "Execute selected attachments"
 msgstr ""
 
 #: outwiker/app/actions/attachexecute.py:35
-msgid "You did not select a file to execute"
+msgid "You did not select an attachment to execute"
 msgstr ""
 
-#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrender.py:80
-#: outwiker/gui/htmlrenderie.py:256 outwiker/gui/htmlrenderie.py:338
-#: outwiker/gui/htmlrenderwebkit.py:261 outwiker/gui/htmlrenderwebkit.py:343
+#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrenderie.py:256
+#: outwiker/gui/htmlrenderie.py:338
 #, python-format
-msgid "Can't execute file '%s'"
+msgid "Can't execute attachment '%s'"
 msgstr ""
 
 #: outwiker/app/actions/attachfiles.py:24
@@ -131,7 +130,7 @@ msgid "Open Attachments Folder"
 msgstr ""
 
 #: outwiker/app/actions/attachopenfolder.py:24
-msgid "Open folder with attached files"
+msgid "Open folder with attachments"
 msgstr ""
 
 #: outwiker/app/actions/attachopenfolder.py:38
@@ -140,33 +139,28 @@ msgid "Can't open folder '{}'"
 msgstr ""
 
 #: outwiker/app/actions/attachpastelink.py:18
-msgid "Insert link to attached files"
-msgstr ""
-
 #: outwiker/app/actions/attachpastelink.py:22
-msgid "Insert link to attached file"
+msgid "Insert link to attachments"
 msgstr ""
 
 #: outwiker/app/actions/attachpastelink.py:29
-msgid "You did not select any attached file"
+msgid "You did not select any attachments"
 msgstr ""
 
 #: outwiker/app/actions/attachremove.py:24
-msgid "Remove attached files"
+msgid "Remove attachments"
 msgstr ""
 
 #: outwiker/app/actions/attachremove.py:28
-msgid "Remove attached files. Action for attach panel"
+msgid "Remove selected attachments. Action for attach panel"
 msgstr ""
 
 #: outwiker/app/actions/attachremove.py:38
-#: outwiker/app/gui/attachpanel.py:400
-msgid "You did not select any file to remove"
+msgid "You did not select any attachment to remove"
 msgstr ""
 
 #: outwiker/app/actions/attachremove.py:42
-#: outwiker/app/gui/attachpanel.py:403
-msgid "Remove selected files?"
+msgid "Remove selected attachments?"
 msgstr ""
 
 #: outwiker/app/actions/attachremove.py:45
@@ -186,7 +180,7 @@ msgid "Select all"
 msgstr ""
 
 #: outwiker/app/actions/attachselectall.py:21
-msgid "Select all attached files. Action for attachments panel"
+msgid "Select all attachments. Action for the attachments panel"
 msgstr ""
 
 #: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:109
@@ -1020,6 +1014,14 @@ msgstr ""
 msgid "Switch to preview tab for some page types"
 msgstr ""
 
+#: outwiker/app/gui/attachpanel.py:400
+msgid "You did not select any file to remove"
+msgstr ""
+
+#: outwiker/app/gui/attachpanel.py:403
+msgid "Remove selected files?"
+msgstr ""
+
 #: outwiker/app/gui/attachpanel.py:404
 msgid "Remove files?"
 msgstr ""
@@ -1371,11 +1373,11 @@ msgid "Invalid icon file: {}"
 msgstr ""
 
 #: outwiker/app/gui/preferences/attachpanel.py:16
-msgid "Insert link to file"
+msgid "Insert link to attachment"
 msgstr ""
 
 #: outwiker/app/gui/preferences/attachpanel.py:17
-msgid "Execute file"
+msgid "Execute attachment"
 msgstr ""
 
 #: outwiker/app/gui/preferences/attachpanel.py:37
@@ -1915,7 +1917,7 @@ msgstr ""
 #: outwiker/app/services/tree.py:51
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
-"All attached files will also be deleted."
+"All attachments will also be deleted."
 msgstr ""
 
 #: outwiker/app/services/tree.py:53
@@ -2293,6 +2295,12 @@ msgstr ""
 msgid "{size:_d} bytes"
 msgstr ""
 
+#: outwiker/gui/htmlrender.py:80 outwiker/gui/htmlrenderwebkit.py:261
+#: outwiker/gui/htmlrenderwebkit.py:343
+#, python-format
+msgid "Can't execute file '%s'"
+msgstr ""
+
 #: outwiker/gui/htmlrenderie.py:278 outwiker/gui/htmlrenderwebkit.py:171
 #: outwiker/gui/htmlrenderwebkit.py:283
 #, python-format
@@ -2441,12 +2449,12 @@ msgstr ""
 msgid "Tables"
 msgstr ""
 
-#: outwiker/pages/search/htmlreport.py:74
+#: outwiker/pages/search/htmlreport.py:76
 #, python-brace-format
 msgid "Last modified date: {0}"
 msgstr ""
 
-#: outwiker/pages/search/htmlreport.py:82
+#: outwiker/pages/search/htmlreport.py:84
 #: outwiker/pages/search/searchpanel.py:40
 msgid "Tags: "
 msgstr ""

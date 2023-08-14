@@ -253,7 +253,7 @@ class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
             try:
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
-                text = _("Can't execute file '%s'") % filename
+                text = _("Can't execute attachment '%s'") % filename
                 showError(Application.mainWindow, text)
         elif anchor is not None:
             return False
@@ -275,7 +275,7 @@ class HtmlRenderIEGeneral(HtmlRenderIEBase):
         try:
             html = readTextFile(fname)
         except IOError:
-            text = _(u"Can't read file %s") % (fname)
+            text = _("Can't read file %s") % (fname)
             self.canOpenUrl.add(fname)
             self.SetPage(text, os.path.dirname(fname))
 
@@ -335,7 +335,7 @@ class HtmlRenderIEGeneral(HtmlRenderIEBase):
             try:
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
-                text = _(u"Can't execute file '%s'") % filename
+                text = _(u"Can't execute attachment '%s'") % filename
                 showError(Application.mainWindow, text)
         elif anchor is not None:
             return False

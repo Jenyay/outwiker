@@ -48,7 +48,7 @@ def removePage(page: "outwiker.core.tree.WikiPage"):
     if (
         MessageBox(
             _(
-                'Remove page "{}" and all subpages?\nAll attached files will also be deleted.'
+                'Remove page "{}" and all subpages?\nAll attachments will also be deleted.'
             ).format(page.title),
             _("Remove page?"),
             wx.YES_NO | wx.ICON_QUESTION,
