@@ -3,7 +3,6 @@
 import logging
 import os
 import os.path
-import configparser
 import shutil
 import datetime
 from functools import cmp_to_key, reduce
@@ -12,10 +11,9 @@ from typing import Optional, Union
 from .config import PageConfig
 from .bookmarks import Bookmarks
 from .event import Event
-from .exceptions import (ClearConfigError, RootFormatError, DuplicateTitle,
+from .exceptions import (ClearConfigError, DuplicateTitle,
                          ReadonlyException, TreeException)
-from .tagscommands import parseTagsList
-from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
+from .sortfunctions import sortAlphabeticalFunction
 from .defines import (PAGE_CONTENT_FILE,
                       PAGE_OPT_FILE,
                       REGISTRY_FILE,
@@ -52,14 +50,14 @@ class RootWikiPage:
                 not os.access(configpath, os.W_OK)):
             self.readonly = True
 
-        self._params = RootWikiPage._readParams(self.path, self.readonly)
+        self._params = RootWikiPage.readParams(self.path, self.readonly)
         self._datetime = self._getDateTime()
 
     def __bool__(self):
         return True
 
     @staticmethod
-    def _readParams(path, readonly=False):
+    def readParams(path, readonly=False):
         return PageConfig(os.path.join(path, PAGE_OPT_FILE), readonly)
 
     @property
@@ -77,6 +75,10 @@ class RootWikiPage:
     @property
     def children(self):
         return self._children[:]
+
+    @children.setter
+    def children(self, children):
+        self._children = children
 
     @property
     def root(self):
@@ -262,33 +264,6 @@ class RootWikiPage:
         The method can raise EnvironmentError.
         '''
 
-    def loadChildren(self):
-        """
-        Загрузить дочерние узлы
-        """
-        try:
-            entries = os.listdir(self.path)
-        except OSError:
-            raise IOError
-
-        self._children = []
-
-        for name in entries:
-            fullpath = os.path.join(self.path, name)
-
-            if not name.startswith("__") and os.path.isdir(fullpath):
-                try:
-                    page = WikiPage.load(fullpath, self, self.root.readonly)
-                except Exception as e:
-                    text = 'Error reading page {}'.format(fullpath)
-                    logging.error(text)
-                    logging.error(u'    ' + str(e))
-                    continue
-
-                self._children.append(page)
-
-        self._children.sort(key=cmp_to_key(sortOrderFunction))
-
 
 class WikiDocument(RootWikiPage):
     def __init__(self, path, readonly=False):
@@ -390,26 +365,6 @@ class WikiDocument(RootWikiPage):
         except IOError:
             raise ClearConfigError
 
-    @staticmethod
-    def load(path, readonly=False):
-        """
-        Загрузить корневую страницу вики.
-        Использовать этот метод вместо конструктора
-        """
-        logger.debug('Wiki document loading started')
-        try:
-            root = WikiDocument(path, readonly)
-        except configparser.Error:
-            raise RootFormatError
-
-        logger.debug('Children notes loading started')
-        root.loadChildren()
-        logger.debug('Children notes loading ended')
-
-        root.onTreeUpdate(root)
-        logger.debug('Wiki document loading ended')
-        return root
-
     def save(self):
         super().save()
         self._registry.save()
@@ -442,11 +397,11 @@ class WikiDocument(RootWikiPage):
 
     @property
     def subpath(self):
-        return u"/"
+        return "/"
 
     @property
     def display_subpath(self):
-        return u"/"
+        return "/"
 
     @property
     def title(self):
@@ -458,7 +413,7 @@ class WikiDocument(RootWikiPage):
 
     @staticmethod
     def getTypeString():
-        return u"document"
+        return "document"
 
     @property
     def registry(self):
@@ -606,7 +561,7 @@ class WikiPage(RootWikiPage):
         """
         oldPath = page.path
         page._path = newPath
-        page._params = RootWikiPage._readParams(page.path)
+        page._params = RootWikiPage.readParams(page.path)
 
         for child in page.children:
             newChildPath = child.path.replace(oldPath, newPath, 1)
@@ -708,7 +663,7 @@ class WikiPage(RootWikiPage):
     def tags(self, tags):
         """
         Установить теги для страницы
-        tags - список тегов(список строк)
+        tags - список тегов (список строк)
         """
         if self.readonly:
             raise ReadonlyException
@@ -723,28 +678,6 @@ class WikiPage(RootWikiPage):
             self.save()
             self.updateDateTime()
             self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TAGS)
-
-    @staticmethod
-    def load(path, parent, readonly=False):
-        """
-        Загрузить страницу.
-        Использовать этот метод вместо конструктора,
-        когда надо загрузить страницу
-        """
-        from .factoryselector import FactorySelector
-
-        title = os.path.basename(path)
-        params = RootWikiPage._readParams(path, readonly)
-
-        # Получим тип страницы по параметрам
-        pageType = FactorySelector.getFactory(
-            params.typeOption.value).getPageType()
-
-        page = pageType(path, title, parent, readonly)
-        page._tags = WikiPage.getTags(params)
-        page.loadChildren()
-
-        return page
 
     def save(self):
         """
@@ -788,21 +721,6 @@ class WikiPage(RootWikiPage):
         self.updateDateTime()
         self.parent.saveChildrenParams()
         self.root.onPageCreate(self)
-
-    @staticmethod
-    def getTags(configParser):
-        """
-        Выделить теги из строки конфигурационного файла
-        """
-        try:
-            tagsString = configParser.get(CONFIG_GENERAL_SECTION,
-                                          WikiPage.paramTags)
-        except configparser.NoOptionError:
-            return []
-
-        tags = parseTagsList(tagsString)
-
-        return tags
 
     @property
     def content(self):

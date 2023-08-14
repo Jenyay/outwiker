@@ -24,6 +24,7 @@ from outwiker.core.pagetitletester import (
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
 from outwiker.core.tree_commands import getAlternativeTitle
+from outwiker.core.notestreeloader import NotesTreeLoader
 from outwiker.core.treetools import testreadonly
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.longprocessrunner import LongProcessRunner
@@ -84,7 +85,7 @@ def openWikiWithDialog(parent, readonly=False):
 def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
     def threadFunc(path, readonly):
         try:
-            return WikiDocument.load(path, readonly)
+            return NotesTreeLoader().loadNotesTree(path, readonly)
         except Exception as e:
             return e
 
@@ -156,7 +157,7 @@ def _rootFormatErrorHandle(path, readonly):
     # Попробуем открыть вики еще раз
     try:
         # Загрузить вики
-        wikiroot = WikiDocument.load(os.path.realpath(path), readonly)
+        wikiroot = NotesTreeLoader().loadNotesTree(os.path.realpath(path), readonly)
         Application.wikiroot = wikiroot
     except IOError:
         _canNotLoadWikiMessage(path)

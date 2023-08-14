@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from .tagslist import TagsList
 
 
-def parseTagsList(tagsString):
+def parseTagsList(tagsString: str) -> List[str]:
     """
     Преобразовать строку тегов, разделенных запятой, в список
     """
@@ -13,7 +15,7 @@ def parseTagsList(tagsString):
     return tags
 
 
-def getTagsString(tags):
+def getTagsString(tags: List[str]) -> str:
     """
     Получить строку тегов
     """

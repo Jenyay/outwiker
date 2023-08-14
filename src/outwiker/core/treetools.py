@@ -9,11 +9,12 @@ from typing import Union
 from outwiker.app.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
+from outwiker.core.notestreeloader import NotesTreeLoader
 from outwiker.core.exceptions import ReadonlyException
 
 
 def loadNotesTree(path: Union[str, Path], readonly: bool = False) -> WikiDocument:
-    return WikiDocument.load(str(path), readonly)
+    return NotesTreeLoader().loadNotesTree(str(path), readonly)
 
 
 def createNotesTree(path: Union[str, Path]) -> WikiDocument:
