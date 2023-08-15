@@ -5,8 +5,9 @@ import os
 import os.path
 import shutil
 import datetime
+from abc import ABCMeta
 from functools import cmp_to_key, reduce
-from typing import List, Optional, Union
+from typing import final, List, Optional, Union
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
@@ -28,17 +29,14 @@ from outwiker.utilites.textfile import readTextFile, writeTextFile
 logger = logging.getLogger('core')
 
 
-class BasePage:
+class BasePage(metaclass=ABCMeta):
     """
-    Класс для корня вики
+    Base class for note page or for root page
     """
     contentFile = PAGE_CONTENT_FILE
 
     def __init__(self, path: str, readonly: bool = False):
-        """
-        readonly - True, если страница предназначена только для чтения
-        """
-        # Путь до страницы
+        # Path to page
         self._path = path
         self._parent : Optional[BasePage] = None
         self._children : List[WikiPage] = []
@@ -80,7 +78,7 @@ class BasePage:
     @property
     def root(self) -> 'BasePage':
         """
-        Найти корень дерева по странице
+        Return root of notes tree
         """
         result = self
         while result.parent is not None:
@@ -102,7 +100,7 @@ class BasePage:
 
     def __getitem__(self, path: str) -> Optional[Union['BasePage', 'WikiPage']]:
         """
-        Получить нужную страницу по относительному пути в дереве
+        Get pae by relative path in tree
         """
         if len(path) == 0:
             return None
@@ -139,7 +137,7 @@ class BasePage:
 
     def sortChildrenAlphabetical(self):
         """
-        Отсортировать дочерние страницы по алфавиту
+        Sort children pages alphabetical
         """
         self._children.sort(key=cmp_to_key(sortAlphabeticalFunction))
 
@@ -187,13 +185,13 @@ class BasePage:
 
     def addToChildren(self, page, order):
         """
-        Добавить страницу к дочерним страницам
+        Add the page to children
         """
         self._children.insert(order, page)
 
     def removeFromChildren(self, page):
         """
-        Удалить страницу из дочерних страниц
+        Remove the page from children
         """
         self._children.remove(page)
 
@@ -262,6 +260,7 @@ class BasePage:
         '''
 
 
+@final
 class WikiDocument(BasePage):
     def __init__(self, path, readonly=False):
         BasePage.__init__(self, path, readonly)
@@ -383,7 +382,7 @@ class WikiDocument(BasePage):
 
     @selectedPage.setter
     def selectedPage(self, page):
-        if isinstance(page, type(self)) or page is None:
+        if page is None or page.getTypeString() == WikiDocument.getTypeString():
             # Экземпляр класса WikiDocument выбирать нельзя
             self._selectedPage = None
         else:
@@ -417,7 +416,7 @@ class WikiDocument(BasePage):
         return self._registry
 
 
-class WikiPage(BasePage):
+class WikiPage(BasePage, metaclass=ABCMeta):
     """
     Страница в дереве.
     """
@@ -650,7 +649,7 @@ class WikiPage(BasePage):
     @property
     def tags(self):
         """
-        Получить список тегов для страницы(список строк)
+        Получить список тегов для страницы (список строк)
         """
         result = [tag.lower() for tag in self._tags]
         result.sort()
@@ -783,9 +782,6 @@ class WikiPage(BasePage):
 
     @property
     def display_subpath(self):
-        '''
-        Added in outwiker.core 1.3
-        '''
         result = self.display_title
         page = self.parent
 
