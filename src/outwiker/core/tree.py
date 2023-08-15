@@ -6,7 +6,7 @@ import os.path
 import shutil
 import datetime
 from functools import cmp_to_key, reduce
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
@@ -28,20 +28,20 @@ from outwiker.utilites.textfile import readTextFile, writeTextFile
 logger = logging.getLogger('core')
 
 
-class RootWikiPage:
+class BasePage:
     """
     Класс для корня вики
     """
     contentFile = PAGE_CONTENT_FILE
 
-    def __init__(self, path, readonly=False):
+    def __init__(self, path: str, readonly: bool = False):
         """
         readonly - True, если страница предназначена только для чтения
         """
         # Путь до страницы
         self._path = path
-        self._parent = None
-        self._children = []
+        self._parent : Optional[BasePage] = None
+        self._children : List[WikiPage] = []
         self.readonly = readonly
 
         configpath = os.path.join(path, PAGE_OPT_FILE)
@@ -50,38 +50,35 @@ class RootWikiPage:
                 not os.access(configpath, os.W_OK)):
             self.readonly = True
 
-        self._params = RootWikiPage.readParams(self.path, self.readonly)
+        self._params = BasePage.readParams(self.path, self.readonly)
         self._datetime = self._getDateTime()
 
-    def __bool__(self):
-        return True
-
     @staticmethod
-    def readParams(path, readonly=False):
+    def readParams(path: str, readonly: bool = False) -> PageConfig:
         return PageConfig(os.path.join(path, PAGE_OPT_FILE), readonly)
 
     @property
-    def params(self):
+    def params(self) -> PageConfig:
         return self._params
 
     @property
-    def path(self):
+    def path(self) -> str:
         return self._path
 
     @property
-    def parent(self) -> Optional[Union['RootWikiPage', 'WikiPage']]:
+    def parent(self) -> Optional['BasePage']:
         return self._parent
 
     @property
-    def children(self):
+    def children(self) -> List['WikiPage']:
         return self._children[:]
 
     @children.setter
-    def children(self, children):
+    def children(self, children: List['WikiPage']):
         self._children = children
 
     @property
-    def root(self):
+    def root(self) -> 'BasePage':
         """
         Найти корень дерева по странице
         """
@@ -100,10 +97,10 @@ class RootWikiPage:
 
         self._params.save()
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._children)
 
-    def __getitem__(self, path: str) -> Optional[Union['RootWikiPage', 'WikiPage']]:
+    def __getitem__(self, path: str) -> Optional[Union['BasePage', 'WikiPage']]:
         """
         Получить нужную страницу по относительному пути в дереве
         """
@@ -119,7 +116,7 @@ class RootWikiPage:
 
         # Разделим путь по составным частям
         titles = path.split("/")
-        page: Optional[Union['RootWikiPage', 'WikiPage']] = self
+        page = self
 
         for title in titles:
             found = False
@@ -226,7 +223,7 @@ class RootWikiPage:
             # Если дата не установлена, то возвратим дату последнего
             # изменения файла с контентом, при этом запишем эту дату в
             # файл настроек
-            contentpath = os.path.join(self.path, RootWikiPage.contentFile)
+            contentpath = os.path.join(self.path, BasePage.contentFile)
             if os.path.exists(contentpath):
                 time = os.path.getmtime(contentpath)
                 date = datetime.datetime.fromtimestamp(time)
@@ -265,9 +262,9 @@ class RootWikiPage:
         '''
 
 
-class WikiDocument(RootWikiPage):
+class WikiDocument(BasePage):
     def __init__(self, path, readonly=False):
-        RootWikiPage.__init__(self, path, readonly)
+        BasePage.__init__(self, path, readonly)
         self._selectedPage = None
         self._createEvents()
         self.bookmarks = Bookmarks(self, self._params)
@@ -420,7 +417,7 @@ class WikiDocument(RootWikiPage):
         return self._registry
 
 
-class WikiPage(RootWikiPage):
+class WikiPage(BasePage):
     """
     Страница в дереве.
     """
@@ -439,12 +436,12 @@ class WikiPage(RootWikiPage):
 
         path -- путь до страницы
         """
-        if not RootWikiPage.testDublicate(parent, title):
+        if not BasePage.testDublicate(parent, title):
             logger.error('Duplicate page title in the parent page. Title: {}. Parent: {}'.format(
                 title, parent.subpath))
             raise DuplicateTitle
 
-        RootWikiPage.__init__(self, path, readonly)
+        BasePage.__init__(self, path, readonly)
         self._DEFAULT_ATTACH_SUBDIR = ''
         self._attach_subdir = self._DEFAULT_ATTACH_SUBDIR
         self._title = title
@@ -561,7 +558,7 @@ class WikiPage(RootWikiPage):
         """
         oldPath = page.path
         page._path = newPath
-        page._params = RootWikiPage.readParams(page.path)
+        page._params = BasePage.readParams(page.path)
 
         for child in page.children:
             newChildPath = child.path.replace(oldPath, newPath, 1)
@@ -728,7 +725,7 @@ class WikiPage(RootWikiPage):
         Прочитать файл-содержимое страницы
         """
         text = ""
-        path = os.path.join(self.path, RootWikiPage.contentFile)
+        path = os.path.join(self.path, BasePage.contentFile)
 
         if os.path.exists(path):
             try:
@@ -756,7 +753,7 @@ class WikiPage(RootWikiPage):
         text = params.content
 
         if text != self.content or text == u"":
-            path = os.path.join(self.path, RootWikiPage.contentFile)
+            path = os.path.join(self.path, BasePage.contentFile)
 
             writeTextFile(path, text)
             self.updateDateTime()

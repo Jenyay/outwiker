@@ -42,7 +42,6 @@ def test_old_plugins_imports():
     from outwiker.core.system import getOS
     from outwiker.core.system import getSpecialDirList
     from outwiker.core.tagslist import TagsList
-    from outwiker.core.tree import RootWikiPage
     from outwiker.core.tree import WikiDocument
     from outwiker.core.tree import WikiPage
     from outwiker.gui.baseaction import BaseAction

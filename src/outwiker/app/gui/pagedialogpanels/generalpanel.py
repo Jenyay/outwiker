@@ -13,7 +13,7 @@ import outwiker.core.factory as ocf
 from outwiker.app.gui.pagedialogpanels.iconslistpopup import IconsListPopup
 
 from outwiker.core.tagslist import TagsList
-from outwiker.core.tree import RootWikiPage
+from outwiker.core.tree import BasePage
 from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageTitleChangedParams,
                                   PageDialogPageTagsChangedParams,
@@ -213,7 +213,7 @@ class GeneralController(BasePageDialogController):
         self._generalPanel.tagsSelector.tags = value
 
     @property
-    def orderCalculator(self) -> Callable[[RootWikiPage, str, List[str]], int]:
+    def orderCalculator(self) -> Callable[[BasePage, str, List[str]], int]:
         index = self._generalPanel.orderCombo.GetSelection()
         return self._orderCalculators[index][0]
 

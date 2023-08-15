@@ -8,7 +8,7 @@ from typing import List
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
 from outwiker.core.exceptions import RootFormatError
 from outwiker.core.tagscommands import parseTagsList
-from outwiker.core.tree import WikiDocument, RootWikiPage, WikiPage
+from outwiker.core.tree import WikiDocument, BasePage, WikiPage
 from outwiker.core.sortfunctions import sortOrderFunction
 
 
@@ -73,7 +73,7 @@ class NotesTreeLoader:
         from .factoryselector import FactorySelector
 
         title = os.path.basename(path)
-        params = RootWikiPage.readParams(path, readonly)
+        params = BasePage.readParams(path, readonly)
 
         # Получим тип страницы по параметрам
         pageType = FactorySelector.getFactory(
