@@ -12,13 +12,19 @@ from typing import final, List, Optional, Union
 from .config import PageConfig
 from .bookmarks import Bookmarks
 from .event import Event
-from .exceptions import (ClearConfigError, DuplicateTitle,
-                         ReadonlyException, TreeException)
+from .exceptions import (
+    ClearConfigError,
+    DuplicateTitle,
+    ReadonlyException,
+    TreeException,
+)
 from .sortfunctions import sortAlphabeticalFunction
-from .defines import (PAGE_CONTENT_FILE,
-                      PAGE_OPT_FILE,
-                      REGISTRY_FILE,
-                      CONFIG_GENERAL_SECTION)
+from .defines import (
+    PAGE_CONTENT_FILE,
+    PAGE_OPT_FILE,
+    REGISTRY_FILE,
+    CONFIG_GENERAL_SECTION,
+)
 from .iconcontroller import IconController
 from .system import getIconsDirList
 from .registrynotestree import NotesTreeRegistry, PickleSaver
@@ -26,24 +32,27 @@ from . import events
 from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 
-logger = logging.getLogger('core')
+logger = logging.getLogger("core")
 
 
 class BasePage(metaclass=ABCMeta):
     """
     Base class for note page or for root page
     """
+
     def __init__(self, path: str, readonly: bool = False):
         # Path to page
         self._path = path
-        self._parent : Optional[BasePage] = None
-        self._children : List[WikiPage] = []
+        self._parent: Optional[BasePage] = None
+        self._children: List[WikiPage] = []
         self.readonly = readonly
 
         configpath = os.path.join(path, PAGE_OPT_FILE)
-        if (not self.readonly and
-                os.path.exists(configpath) and
-                not os.access(configpath, os.W_OK)):
+        if (
+            not self.readonly
+            and os.path.exists(configpath)
+            and not os.access(configpath, os.W_OK)
+        ):
             self.readonly = True
 
         self._params = BasePage.readParams(self.path, self.readonly)
@@ -62,19 +71,19 @@ class BasePage(metaclass=ABCMeta):
         return self._path
 
     @property
-    def parent(self) -> Optional['BasePage']:
+    def parent(self) -> Optional["BasePage"]:
         return self._parent
 
     @property
-    def children(self) -> List['WikiPage']:
+    def children(self) -> List["WikiPage"]:
         return self._children[:]
 
     @children.setter
-    def children(self, children: List['WikiPage']):
+    def children(self, children: List["WikiPage"]):
         self._children = children
 
     @property
-    def root(self) -> 'BasePage':
+    def root(self) -> "BasePage":
         """
         Return root of notes tree
         """
@@ -96,7 +105,7 @@ class BasePage(metaclass=ABCMeta):
     def __len__(self) -> int:
         return len(self._children)
 
-    def __getitem__(self, path: str) -> Optional[Union['BasePage', 'WikiPage']]:
+    def __getitem__(self, path: str) -> Optional[Union["BasePage", "WikiPage"]]:
         """
         Get pae by relative path in tree
         """
@@ -118,12 +127,14 @@ class BasePage(metaclass=ABCMeta):
             found = False
             if title == "..":
                 page = page.parent
-                found = (page is not None)
+                found = page is not None
             else:
                 title_lower = title.lower()
                 for child in page.children:
-                    if (child.title.lower() == title_lower or
-                            child.display_title.lower() == title_lower):
+                    if (
+                        child.title.lower() == title_lower
+                        or child.display_title.lower() == title_lower
+                    ):
                         page = child
                         found = True
 
@@ -252,10 +263,10 @@ class BasePage(metaclass=ABCMeta):
         self.datetime = datetime.datetime.now()
 
     def update(self):
-        '''
+        """
         Update page content if needed.
         The method can raise EnvironmentError.
-        '''
+        """
 
 
 @final
@@ -354,7 +365,7 @@ class WikiDocument(BasePage):
             realpath = os.path.join(path, PAGE_OPT_FILE)
 
         try:
-            fp = open(realpath, "w", encoding='utf8')
+            fp = open(realpath, "w", encoding="utf8")
             fp.close()
         except IOError:
             raise ClearConfigError
@@ -418,6 +429,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     """
     Страница в дереве.
     """
+
     paramTags = "tags"
     paramType = "type"
 
@@ -434,12 +446,15 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         path -- путь до страницы
         """
         if not BasePage.testDublicate(parent, title):
-            logger.error('Duplicate page title in the parent page. Title: {}. Parent: {}'.format(
-                title, parent.subpath))
+            logger.error(
+                "Duplicate page title in the parent page. Title: {}. Parent: {}".format(
+                    title, parent.subpath
+                )
+            )
             raise DuplicateTitle
 
         BasePage.__init__(self, path, readonly)
-        self._DEFAULT_ATTACH_SUBDIR = ''
+        self._DEFAULT_ATTACH_SUBDIR = ""
         self._attach_subdir = self._DEFAULT_ATTACH_SUBDIR
         self._title = title
         self._parent = parent
@@ -453,7 +468,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     @currentAttachSubdir.setter
     def currentAttachSubdir(self, value: str):
-        if not value or value == '.':
+        if not value or value == ".":
             value = self._DEFAULT_ATTACH_SUBDIR
 
         self._attach_subdir = value
@@ -545,8 +560,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TITLE)
 
     def canRename(self, newtitle):
-        return (self.title.lower() == newtitle.lower() or
-                self.parent[newtitle] is None)
+        return self.title.lower() == newtitle.lower() or self.parent[newtitle] is None
 
     @staticmethod
     def _renamePaths(page, newPath):
@@ -620,7 +634,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         Метод возвращает полный путь
         """
         path, title = os.path.split(pagepath)
-        template = u"__{title}_{number}"
+        template = "__{title}_{number}"
         number = 0
         newname = template.format(title=title, number=number)
 
@@ -632,16 +646,16 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     @property
     def icon(self):
-        '''
+        """
         Return page icon.
-        '''
+        """
         return self.iconController.get_icon(self)
 
     @icon.setter
     def icon(self, iconpath):
-        '''
+        """
         Set page icon.
-        '''
+        """
         return self.iconController.set_icon(self, iconpath)
 
     @property
@@ -727,7 +741,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         if os.path.exists(path):
             try:
                 text = readTextFile(path)
-                text = text.replace('\r\n', '\n')
+                text = text.replace("\r\n", "\n")
             except Exception as e:
                 logger.error("Can't read page content for {}".format(path))
                 logger.error(str(e))
@@ -743,7 +757,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         if self.readonly:
             raise ReadonlyException
 
-        text = text.replace('\r\n', '\n')
+        text = text.replace("\r\n", "\n")
 
         params = events.PreContentWritingParams(text)
         self.root.onPreContentWriting(self, params)
@@ -810,8 +824,9 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self._removePageFromTree(self)
 
         # Если выбранная страница была удалена
-        if (oldSelectedPage is not None and
-                (oldSelectedPage == self or self.isChild(oldSelectedPage))):
+        if oldSelectedPage is not None and (
+            oldSelectedPage == self or self.isChild(oldSelectedPage)
+        ):
             # Новая выбранная страница взамен старой
             newselpage = oldSelectedPage
             while newselpage.parent is not None and newselpage.isRemoved:
