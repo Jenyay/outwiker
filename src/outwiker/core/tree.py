@@ -33,8 +33,6 @@ class BasePage(metaclass=ABCMeta):
     """
     Base class for note page or for root page
     """
-    contentFile = PAGE_CONTENT_FILE
-
     def __init__(self, path: str, readonly: bool = False):
         # Path to page
         self._path = path
@@ -221,7 +219,7 @@ class BasePage(metaclass=ABCMeta):
             # Если дата не установлена, то возвратим дату последнего
             # изменения файла с контентом, при этом запишем эту дату в
             # файл настроек
-            contentpath = os.path.join(self.path, BasePage.contentFile)
+            contentpath = os.path.join(self.path, PAGE_CONTENT_FILE)
             if os.path.exists(contentpath):
                 time = os.path.getmtime(contentpath)
                 date = datetime.datetime.fromtimestamp(time)
@@ -724,7 +722,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         Прочитать файл-содержимое страницы
         """
         text = ""
-        path = os.path.join(self.path, BasePage.contentFile)
+        path = os.path.join(self.path, PAGE_CONTENT_FILE)
 
         if os.path.exists(path):
             try:
@@ -751,8 +749,8 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self.root.onPreContentWriting(self, params)
         text = params.content
 
-        if text != self.content or text == u"":
-            path = os.path.join(self.path, BasePage.contentFile)
+        if text != self.content or text == "":
+            path = os.path.join(self.path, PAGE_CONTENT_FILE)
 
             writeTextFile(path, text)
             self.updateDateTime()

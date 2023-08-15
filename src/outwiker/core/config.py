@@ -50,7 +50,7 @@ class Config:
         self.has_option = self._config.has_option
 
     def _backup(self, fname, backup_fname):
-        shutil.copyfile(self.fname, backup_fname)
+        shutil.copyfile(fname, backup_fname)
 
     def getDefaultContent(self):
         """
@@ -58,7 +58,7 @@ class Config:
             Returns:
                 Empty string.
         """
-        return u""
+        return ""
 
     def set(self, section, param, value):
         """
