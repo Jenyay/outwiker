@@ -6,7 +6,7 @@ from wx.lib.newevent import NewEvent
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagscommands import getTagsString, parseTagsList
 from outwiker.gui.tagscloud import TagsCloud
-from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
+from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK
 
 
 TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()

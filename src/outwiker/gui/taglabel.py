@@ -9,7 +9,7 @@ from outwiker.gui.controls.hyperlink import (HyperLinkCtrl,
                                              EVT_HYPERLINK_RIGHT,
                                              EVT_HYPERLINK_MIDDLE)
 
-TagLeftClickEvent, EVT_TAG_LEFT_CLICK = wx.lib.newevent.NewEvent()
+# TagLeftClickEvent, EVT_TAG_LEFT_CLICK = wx.lib.newevent.NewEvent()
 TagMiddleClickEvent, EVT_TAG_MIDDLE_CLICK = wx.lib.newevent.NewEvent()
 
 
@@ -18,7 +18,7 @@ class TagLabel(HyperLinkCtrl):
     Класс для представления одной метки
     """
     def __init__(self, parent, title):
-        super(TagLabel, self).__init__(
+        super().__init__(
             parent,
             label=title,
             style=wx.adv.HL_ALIGN_CENTRE | wx.BORDER_NONE)

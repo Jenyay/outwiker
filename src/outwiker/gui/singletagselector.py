@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from .tagscloud import TagsCloud
-from .taglabel import EVT_TAG_LEFT_CLICK
+from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK
 
 
 class SingleTagSelector (TagsCloud):

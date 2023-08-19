@@ -11,7 +11,8 @@ from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
 from outwiker.gui.guiconfig import TagsConfig
-from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
+from outwiker.gui.taglabel import EVT_TAG_MIDDLE_CLICK
+from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK
 
 
 class TagsPanelController:

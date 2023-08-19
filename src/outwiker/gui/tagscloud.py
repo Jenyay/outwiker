@@ -5,8 +5,9 @@ import os
 import wx
 
 from outwiker.core.application import Application
-from outwiker.gui.taglabel import TagLabel
+# from outwiker.gui.taglabel import TagLabel
 from outwiker.gui.guiconfig import TagsConfig
+from outwiker.gui.controls.taglabel2 import TagLabel2
 
 
 class TagsCloud(wx.ScrolledWindow):
@@ -32,14 +33,14 @@ class TagsCloud(wx.ScrolledWindow):
         # Ключ - имя метки, значение - контрол, отображающий эту метку
         self.__labels = {}
 
-        self.__loadColors()
+        # self.__loadColors()
 
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
         self.Bind(wx.EVT_SIZE, self.__onSize)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
-        self.updateTagLabels()
+        # self.updateTagLabels()
 
     def __onSize(self, _event):
         newSize = self.GetSize()
@@ -47,30 +48,30 @@ class TagsCloud(wx.ScrolledWindow):
             self.__moveLabels()
             self._oldSize = newSize
 
-    def __loadColors(self):
-        config = TagsConfig(Application.config)
-        self.__tagNormalFontColor = config.colorFontNormal.value
-        self.__tagNormalHoverFontColor = config.colorFontNormalHover.value
+    # def __loadColors(self):
+    #     config = TagsConfig(Application.config)
+    #     self.__tagNormalFontColor = config.colorFontNormal.value
+    #     self.__tagNormalHoverFontColor = config.colorFontNormalHover.value
 
-        self.__tagSelectedFontColor = config.colorFontSelected.value
-        self.__tagSelectedHoverFontColor = config.colorFontSelectedHover.value
+    #     self.__tagSelectedFontColor = config.colorFontSelected.value
+    #     self.__tagSelectedHoverFontColor = config.colorFontSelectedHover.value
 
-        self.__tagSelectedBackColor = config.colorBackSelected.value
+    #     self.__tagSelectedBackColor = config.colorBackSelected.value
 
-    def __updateTagLabel(self, tagLabel):
-        tagLabel.normalFontColor = self.__tagNormalFontColor
-        tagLabel.normalHoverFontColor = self.__tagNormalHoverFontColor
+    # def __updateTagLabel(self, tagLabel):
+    #     tagLabel.normalFontColor = self.__tagNormalFontColor
+    #     tagLabel.normalHoverFontColor = self.__tagNormalHoverFontColor
 
-        tagLabel.markedFontColor = self.__tagSelectedFontColor
-        tagLabel.markedHoverFontColor = self.__tagSelectedHoverFontColor
+    #     tagLabel.markedFontColor = self.__tagSelectedFontColor
+    #     tagLabel.markedHoverFontColor = self.__tagSelectedHoverFontColor
 
-        tagLabel.markedBackColor = self.__tagSelectedBackColor
-        tagLabel.normalBackColor = self.GetBackgroundColour()
+    #     tagLabel.markedBackColor = self.__tagSelectedBackColor
+    #     tagLabel.normalBackColor = self.GetBackgroundColour()
 
-    def updateTagLabels(self):
-        self.__loadColors()
-        for label in self.__labels.values():
-            self.__updateTagLabel(label)
+    # def updateTagLabels(self):
+    #     self.__loadColors()
+    #     for label in self.__labels.values():
+    #         self.__updateTagLabel(label)
 
     def setTags(self, taglist):
         """
@@ -83,8 +84,8 @@ class TagsCloud(wx.ScrolledWindow):
         self.__tags = taglist
 
         for tag in taglist:
-            newlabel = TagLabel(self, tag)
-            self.__updateTagLabel(newlabel)
+            newlabel = TagLabel2(self, tag)
+            # self.__updateTagLabel(newlabel)
             self.__labels[tag] = newlabel
 
         self.__layoutTags()
