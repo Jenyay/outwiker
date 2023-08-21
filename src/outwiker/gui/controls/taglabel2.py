@@ -201,7 +201,11 @@ class TagLabel2(wx.Control):
         self.Refresh()
 
     def _onMouseClick(self, event):
-        self._sendTagEvent(TagLeftClickEvent)
+        x = event.GetX()
+        if x <= self._button_border_x:
+            self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
+        else:
+            self._sendTagEvent(TagLeftClickEvent)
 
     def _sendTagEvent(self, eventType):
         newevent = eventType(text=self._label)
