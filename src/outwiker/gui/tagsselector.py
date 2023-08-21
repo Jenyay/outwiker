@@ -3,7 +3,6 @@
 import wx
 from wx.lib.newevent import NewEvent
 
-from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagscommands import getTagsString, parseTagsList
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK
@@ -12,22 +11,19 @@ from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK
 TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()
 
 
-class TagsSelector (wx.Panel):
+class TagsSelector(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
 
         self.__tagsWidth = 350
         self.__tagsHeight = 150
 
-        self.__tagBitmap = wx.Bitmap(getBuiltinImagePath("tag.png"),
-                                     wx.BITMAP_TYPE_PNG)
-
-        self.label_tags = wx.StaticText(self, -1, _(u"Tags (comma separated)"))
+        self.label_tags = wx.StaticText(self, -1, _("Tags (comma separated)"))
 
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
         self.tagsTextCtrl.SetMinSize((250, -1))
 
-        self.__tagsCloud = TagsCloud(self)
+        self.__tagsCloud = TagsCloud(self, use_buttons=False)
         self.__tagsCloud.SetMinSize((self.__tagsWidth, self.__tagsHeight))
         self.__tagsCloud.Bind(EVT_TAG_LEFT_CLICK, self.__onTagClick)
         self.tagsTextCtrl.Bind(wx.EVT_TEXT, handler=self.__onTagsChanged)
@@ -49,8 +45,7 @@ class TagsSelector (wx.Panel):
         titleTextSizer = wx.FlexGridSizer(1, 2, 0, 0)
         titleTextSizer.AddGrowableCol(1)
 
-        titleTextSizer.Add(self.label_tags, 0, wx.ALL |
-                           wx.ALIGN_CENTER_VERTICAL, 4)
+        titleTextSizer.Add(self.label_tags, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 4)
         titleTextSizer.Add(self.tagsTextCtrl, 0, wx.ALL | wx.EXPAND, 0)
 
         mainSizer = wx.FlexGridSizer(2, 1, 0, 0)

@@ -11,8 +11,9 @@ from outwiker.gui.controls.taglabel2 import TagLabel2
 
 
 class TagsCloud(wx.ScrolledWindow):
-    def __init__(self, parent):
+    def __init__(self, parent, use_buttons: bool = True):
         super().__init__(parent, style=wx.BORDER_THEME)
+        self._use_buttons = use_buttons
 
         self.SetScrollRate(0, 0)
 
@@ -85,7 +86,7 @@ class TagsCloud(wx.ScrolledWindow):
         self.__tags = taglist
 
         for tag in taglist:
-            newlabel = TagLabel2(self, tag)
+            newlabel = TagLabel2(self, tag, self._use_buttons)
             # self.__updateTagLabel(newlabel)
             self.__labels[tag] = newlabel
 

@@ -9,23 +9,27 @@ TagRemoveEvent, EVT_TAG_REMOVE = wx.lib.newevent.NewEvent()
 
 
 class TagLabel2(wx.Control):
-    def __init__(self, parent, label):
+    def __init__(self, parent, label, use_buttons: bool = True):
         super().__init__(
             parent,
             style=wx.BORDER_NONE)
 
         self._label = label
-        self._propagationLevel = 10
+        self._use_buttons = use_buttons
+        self._is_marked = False
+        self._is_hover = False
+        self._is_hover_button = False
 
+        self._propagationLevel = 10
         self._min_font_size = 8
         self._max_font_size = 16
+        self._ratio = 1.0
         self._em = self._calc_em()
 
         self._back_color = wx.Colour("#FFFFFF")
 
         self._normal_back_color = wx.Colour("#FFFFFF")
         self._normal_border_color = wx.Colour("#FFFFFF")
-        # self._normal_border_color = wx.Colour("#BBBBBB")
         self._normal_font_color = wx.Colour("#34609D")
 
         self._normal_hover_back_color = wx.Colour("#D6E7FD")
@@ -36,11 +40,9 @@ class TagLabel2(wx.Control):
         self._marked_back_color = wx.Colour("#fcde78")
         self._marked_border_color = wx.Colour("#EDB14A")
         self._marked_font_color = wx.Colour("#714b0a")
-        # self._marked_font_color = wx.Colour("#947200")
 
         self._marked_hover_back_color = wx.Colour("#FFC500")
         self._marked_hover_border_color = wx.Colour("#B5931E")
-        # self._marked_hover_font_color = wx.Colour("#AD7B3C")
         self._marked_hover_font_color = wx.Colour("#000000")
         self._remove_button_color = wx.Colour("#B5931E")
 
@@ -70,11 +72,6 @@ class TagLabel2(wx.Control):
         self._button_remove_top = self._center_y - int(self._button_remove_height / 2)
         self._button_remove_bottom = self._center_y + int(self._button_remove_height / 2)
 
-        self._is_marked = False
-        self._is_hover = False
-        self._is_hover_button = False
-
-        self._ratio = 1.0
         self._font_size = self._max_font_size
         self._text_width = 0
         self._width = 0
@@ -123,6 +120,17 @@ class TagLabel2(wx.Control):
     def isMarked(self) -> bool:
         return self._is_marked
 
+    @property
+    def isUsedButtons(self) -> bool:
+        return self._use_buttons
+
+    @isUsedButtons.setter
+    def isUsedButtons(self, value):
+        old_value = self._use_buttons
+        self._use_buttons = value
+        if old_value != value:
+            self.Refresh()
+
     def _onPaint(self, event):
         dc = wx.PaintDC(self)
 
@@ -157,10 +165,11 @@ class TagLabel2(wx.Control):
         dc.DrawText(self._label, text_x, text_y)
 
         # Draw button
-        if self._is_hover and not self._is_marked:
-            self._draw_add_button(dc)
-        elif self._is_hover and self._is_marked:
-            self._draw_remove_button(dc)
+        if self._use_buttons:
+            if self._is_hover and not self._is_marked:
+                self._draw_add_button(dc)
+            elif self._is_hover and self._is_marked:
+                self._draw_remove_button(dc)
 
     def _draw_add_button(self, dc: wx.DC):
         width = 2
@@ -202,7 +211,7 @@ class TagLabel2(wx.Control):
 
     def _onMouseClick(self, event):
         x = event.GetX()
-        if x <= self._button_border_x:
+        if self._use_buttons and x <= self._button_border_x:
             self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
         else:
             self._sendTagEvent(TagLeftClickEvent)

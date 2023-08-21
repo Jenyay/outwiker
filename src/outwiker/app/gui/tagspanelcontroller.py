@@ -10,7 +10,6 @@ from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
-# from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK, EVT_TAG_ADD, EVT_TAG_REMOVE, TagAddEvent, TagLeftClickEvent
 
 
@@ -57,32 +56,11 @@ class TagsPanelController:
         self.__bindAppEvents()
         self.updateTags()
 
-    # def __runAction(self, action, tagname):
-    #     if action == TagsConfig.ACTION_MARK_TOGGLE:
-    #         self.__toggleMarkTag(tagname)
-    #     else:
-    #         self.__showPopup(tagname)
-
     def __showPopup(self, tagname):
         pages = self.__currentTags[tagname][:]
         pages.sort(key=cmp_to_key(sortAlphabeticalFunction))
 
         self.__tagsPanel.showPopup(pages)
-
-    # def __toggleMarkTag(self, tagname):
-    #     selectedPage = self.__application.selectedPage
-    #     if selectedPage is None:
-    #         return
-
-    #     if selectedPage.readonly:
-    #         showError(self.__application.mainWindow,
-    #                   _('Page is opened as read-only'))
-    #         return
-
-    #     if tagname in selectedPage.tags:
-    #         removeTag(selectedPage, tagname)
-    #     else:
-    #         appendTag(selectedPage, tagname)
 
     def __onTagLeftClick(self, event: TagLeftClickEvent):
         """
