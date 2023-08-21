@@ -4,6 +4,8 @@ import wx
 import wx.lib.newevent
 
 TagLeftClickEvent, EVT_TAG_LEFT_CLICK = wx.lib.newevent.NewEvent()
+TagAddEvent, EVT_TAG_ADD = wx.lib.newevent.NewEvent()
+TagRemoveEvent, EVT_TAG_REMOVE = wx.lib.newevent.NewEvent()
 
 
 class TagLabel2(wx.Control):
@@ -115,7 +117,7 @@ class TagLabel2(wx.Control):
 
     def mark(self, marked: bool = True):
         self._is_marked = marked
-        # self.updateColors()
+        self.Refresh()
 
     @property
     def isMarked(self) -> bool:

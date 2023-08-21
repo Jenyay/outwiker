@@ -4,9 +4,9 @@ import os
 
 import wx
 
-from outwiker.core.application import Application
+# from outwiker.core.application import Application
 # from outwiker.gui.taglabel import TagLabel
-from outwiker.gui.guiconfig import TagsConfig
+# from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.controls.taglabel2 import TagLabel2
 
 
@@ -68,10 +68,11 @@ class TagsCloud(wx.ScrolledWindow):
     #     tagLabel.markedBackColor = self.__tagSelectedBackColor
     #     tagLabel.normalBackColor = self.GetBackgroundColour()
 
-    # def updateTagLabels(self):
-    #     self.__loadColors()
-    #     for label in self.__labels.values():
-    #         self.__updateTagLabel(label)
+    def updateTagLabels(self):
+        pass
+        # self.__loadColors()
+        # for label in self.__labels.values():
+        #     self.__updateTagLabel(label)
 
     def setTags(self, taglist):
         """
