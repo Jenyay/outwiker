@@ -19,7 +19,7 @@ class TagsList:
         """
         Возвращает список тегов
         """
-        return list(self._tags.keys())
+        return list(sorted(self._tags.keys()))
 
     def _findTags(self, page):
         """
