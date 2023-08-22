@@ -8,7 +8,7 @@ from outwiker.gui.guiconfig import TagsCloudConfig
 from outwiker.gui.mainpanes.mainpane import MainPane
 
 
-class TagsCloudMainPane (MainPane):
+class TagsCloudMainPane(MainPane):
     """
     Класс для работы с панелью с облаком тегов в главном окне
     """
@@ -32,8 +32,7 @@ class TagsCloudMainPane (MainPane):
         pane.CloseButton()
         pane.Caption(self.caption)
 
-        pane.BestSize((self.config.width.value,
-                       self.config.height.value))
+        pane.BestSize((self.config.width.value, self.config.height.value))
 
         return pane
 
@@ -43,10 +42,22 @@ class TagsCloudMainPane (MainPane):
         direction = treepane.dock_direction
         paneName = "TagsPane"
 
-        pane = wx.aui.AuiPaneInfo().Name(paneName).Caption(self.caption).Gripper(False).CaptionVisible(True).Layer(layer).Position(1).CloseButton(True).MaximizeButton(False).Direction(direction).Dock()
+        pane = (
+            wx.aui.AuiPaneInfo()
+            .Name(paneName)
+            .Caption(self.caption)
+            .Gripper(False)
+            .CaptionVisible(True)
+            .Layer(layer)
+            .Position(1)
+            .CloseButton(True)
+            .MaximizeButton(False)
+            .Direction(direction)
+            .Dock()
+        )
 
         return pane
 
     @property
     def caption(self):
-        return _(u"Tags")
+        return _("Tags")

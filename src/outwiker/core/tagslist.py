@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 
-class TagsList(object):
+class TagsList:
     """
     Класс для хранения списка всех тегов в вики
     """
+
     def __init__(self, root):
         self._root = root
 
