@@ -82,9 +82,6 @@ class TagsCloudPanel(wx.Panel):
     def setTags(self, tags):
         self._tagscloud.setTags(tags)
 
-    def updateTagLabels(self):
-        self._tagscloud.updateTagLabels()
-
     def _createGUI(self):
         self._tagscloud = TagsCloud(self)
         mainSizer = wx.FlexGridSizer(1, 1, 0)

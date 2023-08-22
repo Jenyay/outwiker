@@ -155,8 +155,6 @@ class TagsPanelController:
             self.__tagsPanel.setTags(tags)
             self.__currentTags = tags
             self.__markTags()
-        else:
-            self.__tagsPanel.updateTagLabels()
 
     def __markTags(self):
         self.__tagsPanel.clearMarks()
