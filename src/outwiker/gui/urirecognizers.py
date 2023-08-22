@@ -52,7 +52,7 @@ class Recognizer(metaclass=ABCMeta):
         """
         Remove 'file://' protocol
         """
-        fileprotocol = u"file://"
+        fileprotocol = "file://"
         if href.startswith(fileprotocol):
             return href[len(fileprotocol):]
 
@@ -175,7 +175,7 @@ class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
         """
         Find page by href like page://..
         """
-        protocol = u"page://"
+        protocol = "page://"
         page = None
 
         # Если есть якорь, то отсечем его
@@ -201,7 +201,7 @@ class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
 
         return page
 
-    def _recognize(self, href: str) -> str:
+    def _recognize(self, href: str):
         page = (self._findPageByProtocol(href) or
                 self._findPageByPath(href))
         return page

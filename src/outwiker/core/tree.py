@@ -462,6 +462,9 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         if len(self._alias) == 0:
             self._alias = None
 
+    def __bool__(self):
+        return True
+
     @property
     def currentAttachSubdir(self) -> str:
         return self._attach_subdir
