@@ -7,8 +7,6 @@ class TagsList:
     """
 
     def __init__(self, root):
-        self._root = root
-
         # Словарь тегов. Ключ - тег, значение - список страниц с этим тегом
         self._tags = {}
 

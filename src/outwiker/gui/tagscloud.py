@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import wx
 
@@ -27,7 +27,7 @@ class TagsCloud(wx.Panel):
         self._oldSize = (-1, -1)
 
         self._filter = ""
-        self._tags = None
+        self._tags: Optional[TagsList] = None
         self._filtered_tags: List[str] = []
 
         # Ключ - имя метки, значение - контрол, отображающий эту метку
@@ -75,7 +75,6 @@ class TagsCloud(wx.Panel):
             self._search_ctrl.SetValue("")
 
         event.Skip()
-        
 
     def setTags(self, taglist: TagsList):
         """
@@ -89,24 +88,36 @@ class TagsCloud(wx.Panel):
         self._filtered_tags = self._filter_tags(self._tags.tags) if self._tags is not None else []
 
         self._create_tag_labels()
+        self._filter_tag_labels()
         self._tags_panel.Scroll(-1, oldy)
         self.Thaw()
 
     def setFilter(self, tags_filter: str):
         self._filter = tags_filter
-        tags = self._tags
-        self.Freeze()
-        self.clear()
 
-        self._tags = tags
+        if self._tags is None:
+            return
+
+        self.Freeze()
         self._filtered_tags = self._filter_tags(self._tags.tags) if self._tags is not None else []
-        self._create_tag_labels()
+        self._filter_tag_labels()
         self.Thaw()
 
     def _create_tag_labels(self):
-        for tag in self._filtered_tags:
+        if self._tags is None:
+            return
+
+        for tag in self._tags:
             newlabel = TagLabel2(self._tags_panel, tag, self._use_buttons)
             self._labels[tag] = newlabel
+
+    def _filter_tag_labels(self):
+        if self._tags is None:
+            return
+
+        for tag_name in self._tags:
+            tag_ctrl = self._labels[tag_name]
+            tag_ctrl.Show(tag_name in self._filtered_tags)
 
         self._layoutTags()
 
@@ -156,8 +167,11 @@ class TagsCloud(wx.Panel):
 
         return (maxheight, maxindex)
 
-    def __getMaxCount(self):
+    def __getMaxCount(self) -> int:
         count = 0
+        if self._tags is None:
+            return count
+
         for tag in self._tags:
             if len(self._tags[tag]) > count:
                 count = len(self._tags[tag])
@@ -176,6 +190,9 @@ class TagsCloud(wx.Panel):
         return ratio
 
     def __setSizeLabels(self):
+        if self._tags is None:
+            return
+
         for tagname in self._filtered_tags:
             count = len(self._tags[tagname])
             ratio = self.__calcSizeRatio(count)
@@ -198,6 +215,9 @@ class TagsCloud(wx.Panel):
         self.__moveLabels()
 
     def __moveLabels(self):
+        if self._tags is None:
+            return
+
         # Метки, расположенные на текущей строке
         currentLine = []
 
@@ -212,8 +232,11 @@ class TagsCloud(wx.Panel):
         if os.name != "nt":
             self._tags_panel.SetScrollbars(0, 0, 0, 0)
 
-        for tagname in self._filtered_tags:
+        for tagname in self._tags:
             label = self._labels[tagname]
+            if not label.Shown:
+                continue
+
             newRightBorder = currentx + label.GetSize()[0]
 
             if newRightBorder > maxwidth and len(currentLine) != 0:
