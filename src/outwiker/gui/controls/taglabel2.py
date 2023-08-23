@@ -4,6 +4,8 @@ import wx
 import wx.lib.newevent
 
 TagLeftClickEvent, EVT_TAG_LEFT_CLICK = wx.lib.newevent.NewEvent()
+TagRightClickEvent, EVT_TAG_RIGHT_CLICK = wx.lib.newevent.NewEvent()
+TagMiddleClickEvent, EVT_TAG_MIDDLE_CLICK = wx.lib.newevent.NewEvent()
 TagAddEvent, EVT_TAG_ADD = wx.lib.newevent.NewEvent()
 TagRemoveEvent, EVT_TAG_REMOVE = wx.lib.newevent.NewEvent()
 
@@ -80,7 +82,9 @@ class TagLabel2(wx.Control):
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self.Bind(wx.EVT_ENTER_WINDOW, handler=self._onMouseEnter)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeave)
-        self.Bind(wx.EVT_LEFT_DOWN, handler=self._onMouseClick)
+        self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
+        self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
+        self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
 
     def _calc_em(self) -> int:
         return self._calc_text_size("Q", self._max_font_size)[1]
@@ -209,12 +213,18 @@ class TagLabel2(wx.Control):
         self._is_hover = False
         self.Refresh()
 
-    def _onMouseClick(self, event):
+    def _onLeftMouseClick(self, event):
         x = event.GetX()
         if self._use_buttons and x <= self._button_border_x:
             self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
         else:
             self._sendTagEvent(TagLeftClickEvent)
+
+    def _onRightMouseClick(self, event):
+        self._sendTagEvent(TagRightClickEvent)
+
+    def _onMiddleMouseClick(self, event):
+        self._sendTagEvent(TagMiddleClickEvent)
 
     def _sendTagEvent(self, eventType):
         newevent = eventType(text=self._label)
