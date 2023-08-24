@@ -20,7 +20,7 @@ from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageFactoriesNeededParams,
                                   PageDialogNewPageOrderChangedParams)
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
-from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig
+from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig, TagsConfig
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 from outwiker.core.system import getIconsDirList, getBuiltinImagePath
 from outwiker.core.iconscollection import IconsCollection
@@ -153,6 +153,7 @@ class GeneralController(BasePageDialogController):
         self._dialog = dialog
         self._generalPanel = generalPanel
         self._config = PageDialogConfig(self._application.config)
+        self._tagsConfig = TagsConfig(self._application.config)
         self._iconsController = IconsController(
             self._generalPanel.iconsPopup.iconsPanel,
             self._generalPanel, application, self._dialog)
@@ -339,6 +340,7 @@ class GeneralController(BasePageDialogController):
         assert self._application.wikiroot is not None
 
         tagslist = TagsList(self._application.wikiroot)
+        self._generalPanel.tagsSelector.SetFontSize(self._tagsConfig.minFontSize.value, self._tagsConfig.maxFontSize.value)
         self._generalPanel.tagsSelector.setTagsList(tagslist)
 
     def _setComboPageType(self, pageTypeString):
