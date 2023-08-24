@@ -10,18 +10,26 @@ from outwiker.gui.controls.taglabel2 import TagLabel2
 
 
 class TagsCloud(wx.Panel):
-    def __init__(self, parent, use_buttons: bool = True):
+    def __init__(
+        self,
+        parent,
+        use_buttons: bool = True,
+        min_font_size: int = 8,
+        max_font_size: int = 16,
+    ):
         super().__init__(parent)
         self._use_buttons = use_buttons
+        self._min_font_size = min_font_size
+        self._max_font_size = max_font_size
 
         # Отступ от края окна
         self._margin = 4
 
-        # Отступ между тегами
-        self._space = 10
+        # Зазор между тегами по горизонтали
+        self._gapx = 10
 
-        # Шаг между строчками тегов
-        self._stepy = 28
+        # Зазор между метками по вертикали
+        self._gapy = 4
 
         # Size of the control before tags layout
         self._oldSize = (-1, -1)
@@ -39,6 +47,15 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Bind(wx.EVT_SIZE, self.__onSize)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
+
+    def SetFontSize(self, min_font_size: int, max_font_size: int):
+        self._min_font_size = min_font_size
+        self._max_font_size = max_font_size
+
+        for tag_label in self._labels.values():
+            tag_label.SetFontSize(min_font_size, max_font_size)
+
+        self._layoutTags()
 
     def _create_gui(self):
         self.SetMinSize((150, 150))
@@ -85,7 +102,9 @@ class TagsCloud(wx.Panel):
         self.clear()
 
         self._tags = taglist
-        self._filtered_tags = self._filter_tags(self._tags.tags) if self._tags is not None else []
+        self._filtered_tags = (
+            self._filter_tags(self._tags.tags) if self._tags is not None else []
+        )
 
         self._create_tag_labels()
         self._filter_tag_labels()
@@ -99,7 +118,9 @@ class TagsCloud(wx.Panel):
             return
 
         self.Freeze()
-        self._filtered_tags = self._filter_tags(self._tags.tags) if self._tags is not None else []
+        self._filtered_tags = (
+            self._filter_tags(self._tags.tags) if self._tags is not None else []
+        )
         self._filter_tag_labels()
         self.Thaw()
 
@@ -108,7 +129,13 @@ class TagsCloud(wx.Panel):
             return
 
         for tag in self._tags:
-            newlabel = TagLabel2(self._tags_panel, tag, self._use_buttons)
+            newlabel = TagLabel2(
+                self._tags_panel,
+                tag,
+                self._use_buttons,
+                self._min_font_size,
+                self._max_font_size,
+            )
             self._labels[tag] = newlabel
 
     def _filter_tag_labels(self):
@@ -125,7 +152,9 @@ class TagsCloud(wx.Panel):
         if not self._filter:
             return tags
 
-        return list(filter(lambda tag_name: self._filter.lower() in tag_name.lower(), tags))
+        return list(
+            filter(lambda tag_name: self._filter.lower() in tag_name.lower(), tags)
+        )
 
     def mark(self, tag, marked=True):
         """
@@ -218,11 +247,15 @@ class TagsCloud(wx.Panel):
         if self._tags is None:
             return
 
+        assert len(self._labels) != 0
+
+        stepy = list(self._labels.values())[0].GetSize()[1] + self._gapy
+
         # Метки, расположенные на текущей строке
         currentLine = []
 
         currentx = self._margin
-        currenty = self._margin + self._stepy // 2
+        currenty = self._margin + stepy // 2
 
         linesCount = 1
 
@@ -241,7 +274,7 @@ class TagsCloud(wx.Panel):
 
             if newRightBorder > maxwidth and len(currentLine) != 0:
                 currentx = self._margin
-                currenty += self._stepy
+                currenty += stepy
 
                 currentLine = []
                 linesCount += 1
@@ -250,10 +283,10 @@ class TagsCloud(wx.Panel):
             label.Refresh()
 
             currentLine.append(label)
-            currentx += label.GetSize()[0] + self._space
+            currentx += label.GetSize()[0] + self._gapx
 
         if len(self._filtered_tags) != 0:
-            commonheight = currenty + self.__getMaxHeight(currentLine)[0] + self._space
+            commonheight = currenty + self.__getMaxHeight(currentLine)[0] + self._gapx
             lineheight = commonheight // linesCount
 
             self._tags_panel.SetScrollbars(0, lineheight, 0, linesCount + 1)

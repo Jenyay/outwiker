@@ -1100,6 +1100,12 @@ class TagsConfig:
     POPUP_HEIGHT_SECTION = "TagsPopupHeight"
     POPUP_HEIGHT_DEFAULT = 200
 
+    MIN_FONT_SIZE_SECTION = "MinFontSize"
+    MIN_FONT_SIZE_DEFAULT = 8
+
+    MAX_FONT_SIZE_SECTION = "MaxFontSize"
+    MAX_FONT_SIZE_DEFAULT = 16
+
     def __init__(self, config):
         self.config = config
 
@@ -1122,4 +1128,18 @@ class TagsConfig:
             self.SECTION,
             self.POPUP_HEIGHT_SECTION,
             self.POPUP_HEIGHT_DEFAULT,
+        )
+
+        self.minFontSize = IntegerOption(
+            self.config,
+            self.SECTION,
+            self.MIN_FONT_SIZE_SECTION,
+            self.MIN_FONT_SIZE_DEFAULT,
+        )
+
+        self.maxFontSize = IntegerOption(
+            self.config,
+            self.SECTION,
+            self.MAX_FONT_SIZE_SECTION,
+            self.MAX_FONT_SIZE_DEFAULT,
         )

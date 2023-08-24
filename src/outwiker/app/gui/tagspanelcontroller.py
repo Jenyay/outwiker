@@ -9,6 +9,7 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
+from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
 from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK, EVT_TAG_ADD, EVT_TAG_REMOVE, TagAddEvent, TagLeftClickEvent
 
@@ -115,6 +116,7 @@ class TagsPanelController:
 
     def __onPreferencesDialogClose(self, dialog):
         self.updateTags()
+        self.__tagsPanel.updateFontSize()
 
     def __onPageSelect(self, page):
         self.__markTags()

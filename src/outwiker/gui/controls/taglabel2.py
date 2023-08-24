@@ -11,10 +11,15 @@ TagRemoveEvent, EVT_TAG_REMOVE = wx.lib.newevent.NewEvent()
 
 
 class TagLabel2(wx.Control):
-    def __init__(self, parent, label, use_buttons: bool = True):
-        super().__init__(
-            parent,
-            style=wx.BORDER_NONE)
+    def __init__(
+        self,
+        parent,
+        label,
+        use_buttons: bool = True,
+        min_font_size: int = 8,
+        max_font_size: int = 16,
+    ):
+        super().__init__(parent, style=wx.BORDER_NONE)
 
         self._label = label
         self._use_buttons = use_buttons
@@ -23,10 +28,7 @@ class TagLabel2(wx.Control):
         self._is_hover_button = False
 
         self._propagationLevel = 10
-        self._min_font_size = 8
-        self._max_font_size = 16
         self._ratio = 1.0
-        self._em = self._calc_em()
 
         self._back_color = wx.Colour("#FFFFFF")
 
@@ -47,6 +49,35 @@ class TagLabel2(wx.Control):
         self._marked_hover_border_color = wx.Colour("#B5931E")
         self._marked_hover_font_color = wx.Colour("#000000")
         self._remove_button_color = wx.Colour("#B5931E")
+
+        self.SetFontSize(min_font_size, max_font_size)
+
+        self.Bind(wx.EVT_PAINT, handler=self._onPaint)
+        self.Bind(wx.EVT_ENTER_WINDOW, handler=self._onMouseEnter)
+        self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeave)
+        self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
+        self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
+        self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
+
+    def SetFontSize(self, min_font_size: int, max_font_size: int):
+        self._min_font_size = min(min_font_size, max_font_size)
+        self._max_font_size = max(min_font_size, max_font_size)
+        self._calc_sizes()
+
+    def _calc_em(self) -> int:
+        return self._calc_text_size("Q", self._max_font_size)[1]
+
+    def _calc_text_size(self, text: str, font_size: int) -> Tuple[int, int]:
+        with wx.ClientDC(self) as dc:
+            font = wx.Font(wx.FontInfo(font_size))
+            dc.SetFont(font)
+            return dc.GetTextExtent(text)
+
+    def _em2px(self, em: float) -> int:
+        return int(em * self._em)
+
+    def _calc_sizes(self):
+        self._em = self._calc_em()
 
         self._height = self._em2px(1.0)
         self._margin_left = self._em2px(0.4)
@@ -69,40 +100,26 @@ class TagLabel2(wx.Control):
 
         self._button_remove_width = self._em2px(0.33)
         self._button_remove_height = self._em2px(0.35)
-        self._button_remove_left = int(self._button_center_x - self._button_remove_width / 2)
+        self._button_remove_left = int(
+            self._button_center_x - self._button_remove_width / 2
+        )
         self._button_remove_right = self._button_remove_left + self._button_remove_width
         self._button_remove_top = self._center_y - int(self._button_remove_height / 2)
-        self._button_remove_bottom = self._center_y + int(self._button_remove_height / 2)
+        self._button_remove_bottom = self._center_y + int(
+            self._button_remove_height / 2
+        )
 
-        self._font_size = self._max_font_size
-        self._text_width = 0
-        self._width = 0
-        self._calc_sizes()
+        self._font_size = int(
+            self._min_font_size
+            + self._ratio * (self._max_font_size - self._min_font_size)
+        )
 
-        self.Bind(wx.EVT_PAINT, handler=self._onPaint)
-        self.Bind(wx.EVT_ENTER_WINDOW, handler=self._onMouseEnter)
-        self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeave)
-        self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
-        self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
-        self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
-
-    def _calc_em(self) -> int:
-        return self._calc_text_size("Q", self._max_font_size)[1]
-
-    def _calc_text_size(self, text: str, font_size: int) -> Tuple[int, int]:
-        with wx.ClientDC(self) as dc:
-            font = wx.Font(wx.FontInfo(font_size))
-            dc.SetFont(font)
-            return dc.GetTextExtent(text)
-
-    def _em2px(self, em: float) -> int:
-        return int(em * self._em)
-
-    def _calc_sizes(self):
-        self._font_size = int(self._min_font_size + self._ratio *
-                              (self._max_font_size - self._min_font_size))
         self._text_width = self._calc_text_size(self._label, self._font_size)[0]
-        self._width = self._arc_width + self._margin_left + self._text_width + self._margin_right
+
+        self._width = (
+            self._arc_width + self._margin_left + self._text_width + self._margin_right
+        )
+
         self.SetClientSize(self._width, self._height)
 
     def _get_current_font(self):
@@ -148,14 +165,18 @@ class TagLabel2(wx.Control):
         tag_border_color = self._get_border_color()
         dc.SetBrush(wx.Brush(tag_back_color))
         dc.SetPen(wx.Pen(tag_back_color))
-        dc.DrawRectangle(self._arc_width, 0, self._width - self._arc_width - 1, self._height - 1)
+        dc.DrawRectangle(
+            self._arc_width, 0, self._width - self._arc_width - 1, self._height - 1
+        )
         dc.DrawEllipse(0, 0, self._height, self._height)
         dc.SetPen(wx.Pen(tag_border_color, 1))
-        dc.DrawLineList([
-            (self._arc_width, 0, self._width - 1, 0),
-            (self._width - 1, 0, self._width - 1, self._height - 1),
-            (self._arc_width, self._height - 1, self._width - 1, self._height - 1),
-            ])
+        dc.DrawLineList(
+            [
+                (self._arc_width, 0, self._width - 1, 0),
+                (self._width - 1, 0, self._width - 1, self._height - 1),
+                (self._arc_width, self._height - 1, self._width - 1, self._height - 1),
+            ]
+        )
         dc.DrawEllipticArc(0, 0, self._height, self._height - 1, 90, 270)
 
         # Draw text
@@ -179,15 +200,19 @@ class TagLabel2(wx.Control):
         width = 2
         dc.SetBrush(wx.Brush(self._add_button_color))
         dc.SetPen(wx.Pen(self._add_button_color))
-        dc.DrawRectangle(self._button_add_left,
-                         int(self._button_center_y - width / 2),
-                         self._button_add_width,
-                         width)
+        dc.DrawRectangle(
+            self._button_add_left,
+            int(self._button_center_y - width / 2),
+            self._button_add_width,
+            width,
+        )
 
-        dc.DrawRectangle(int(self._button_center_x - width / 2),
-                         self._button_add_top,
-                         width,
-                         self._button_add_height)
+        dc.DrawRectangle(
+            int(self._button_center_x - width / 2),
+            self._button_add_top,
+            width,
+            self._button_add_height,
+        )
 
         border_x = int((self._button_add_right + self._text_left) / 2)
         dc.SetPen(wx.Pen(self._normal_hover_border_color))
@@ -196,10 +221,22 @@ class TagLabel2(wx.Control):
     def _draw_remove_button(self, dc: wx.DC):
         width = 2
         dc.SetPen(wx.Pen(self._remove_button_color, width))
-        dc.DrawLineList([
-            (self._button_remove_left, self._button_remove_top, self._button_remove_right, self._button_remove_bottom),
-            (self._button_remove_left, self._button_remove_bottom, self._button_remove_right, self._button_remove_top),
-            ])
+        dc.DrawLineList(
+            [
+                (
+                    self._button_remove_left,
+                    self._button_remove_top,
+                    self._button_remove_right,
+                    self._button_remove_bottom,
+                ),
+                (
+                    self._button_remove_left,
+                    self._button_remove_bottom,
+                    self._button_remove_right,
+                    self._button_remove_top,
+                ),
+            ]
+        )
 
         border_x = int((self._button_remove_right + self._text_left) / 2)
         dc.SetPen(wx.Pen(self._marked_hover_border_color))
