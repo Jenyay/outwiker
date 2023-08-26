@@ -23,7 +23,7 @@ class TagsCloudPanel(wx.Panel):
 
     def updateFontSize(self):
         config = TagsConfig(self._application.config)
-        self._tagscloud.SetFontSize(config.minFontSize.value, config.maxFontSize.value)
+        self._tagscloud.setFontSize(config.minFontSize.value, config.maxFontSize.value)
 
     def _getPageListColumns(self) -> List[BaseColumn]:
         colFactory = ColumnsFactory()

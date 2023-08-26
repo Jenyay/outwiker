@@ -48,12 +48,12 @@ class TagsCloud(wx.Panel):
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
 
-    def SetFontSize(self, min_font_size: int, max_font_size: int):
+    def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min_font_size
         self._max_font_size = max_font_size
 
         for tag_label in self._labels.values():
-            tag_label.SetFontSize(min_font_size, max_font_size)
+            tag_label.setFontSize(min_font_size, max_font_size)
 
         self._layoutTags()
 

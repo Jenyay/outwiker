@@ -41,8 +41,8 @@ class TagsSelector(wx.Panel):
         tagsString = getTagsString(tags)
         self.tagsTextCtrl.SetValue(tagsString)
 
-    def SetFontSize(self, min_font_size: int, max_font_size: int):
-        self.__tagsCloud.SetFontSize(min_font_size, max_font_size)
+    def setFontSize(self, min_font_size: int, max_font_size: int):
+        self.__tagsCloud.setFontSize(min_font_size, max_font_size)
 
     def __layout(self):
         titleTextSizer = wx.FlexGridSizer(1, 2, 0, 0)

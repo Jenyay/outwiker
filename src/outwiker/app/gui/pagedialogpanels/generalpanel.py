@@ -340,7 +340,7 @@ class GeneralController(BasePageDialogController):
         assert self._application.wikiroot is not None
 
         tagslist = TagsList(self._application.wikiroot)
-        self._generalPanel.tagsSelector.SetFontSize(self._tagsConfig.minFontSize.value, self._tagsConfig.maxFontSize.value)
+        self._generalPanel.tagsSelector.setFontSize(self._tagsConfig.minFontSize.value, self._tagsConfig.maxFontSize.value)
         self._generalPanel.tagsSelector.setTagsList(tagslist)
 
     def _setComboPageType(self, pageTypeString):

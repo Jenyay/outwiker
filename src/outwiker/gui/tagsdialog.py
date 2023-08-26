@@ -7,7 +7,6 @@ from .tagsselector import TagsSelector
 
 
 class TagsDialog(wx.Dialog):
-
     def __init__(self, parent, application):
         super(TagsDialog, self).__init__(
             parent,
@@ -48,3 +47,6 @@ class TagsDialog(wx.Dialog):
     @property
     def tags(self):
         return self.__tagsSelector.tags
+
+    def setTagsCloudFontSize(self, minFontSize: int, maxFontSize: int):
+        self.__tagsSelector.setFontSize(minFontSize, maxFontSize)

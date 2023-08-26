@@ -1,21 +1,29 @@
 # -*- coding: utf-8 -*-
 
+from typing import Union
 import wx
 
 from outwiker.app.gui.dialogs.renametagdialog import RenameTagDialog
-from outwiker.core.tagscommands import (tagBranch,
-                                        removeTagsFromBranch,
-                                        renameTag)
+from outwiker.core.tagscommands import tagBranch, removeTagsFromBranch, renameTag
 from outwiker.core.tagslist import TagsList
 from outwiker.core.treetools import testreadonly
 from outwiker.gui.baseaction import BaseAction
+from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.tagsdialog import TagsDialog
+
+
+def _set_tags_cloud_font_size(application, dlg: Union[RenameTagDialog, TagsDialog]):
+    config = TagsConfig(application.config)
+    minFontSize = config.minFontSize.value
+    maxFontSize = config.maxFontSize.value
+    dlg.setTagsCloudFontSize(minFontSize, maxFontSize)
 
 
 class AddTagsToBranchAction(BaseAction):
     """
     Добавить теги к ветке
     """
+
     stringId = "AddTagsToBranch"
 
     def __init__(self, application):
@@ -36,11 +44,13 @@ class AddTagsToBranchAction(BaseAction):
             return
 
         if self._application.selectedPage is None:
-            self.addTagsToBranchGui(self._application.wikiroot,
-                                    self._application.mainWindow)
+            self.addTagsToBranchGui(
+                self._application.wikiroot, self._application.mainWindow
+            )
         else:
-            self.addTagsToBranchGui(self._application.selectedPage,
-                                    self._application.mainWindow)
+            self.addTagsToBranchGui(
+                self._application.selectedPage, self._application.mainWindow
+            )
 
     @testreadonly
     def addTagsToBranchGui(self, page, parent):
@@ -48,24 +58,25 @@ class AddTagsToBranchAction(BaseAction):
         Добавить теги к ветке, начинающейся со страницы page.
         Теги к самой странице page тоже добавляются
         """
-        dlg = TagsDialog(parent, self._application)
-        dlg.SetTitle(_("Add Tags to Branch"))
+        with TagsDialog(parent, self._application) as dlg:
+            _set_tags_cloud_font_size(self._application, dlg)
 
-        if dlg.ShowModal() == wx.ID_OK:
-            self._application.onStartTreeUpdate(page.root)
+            dlg.SetTitle(_("Add Tags to Branch"))
 
-            try:
-                tagBranch(page, dlg.tags)
-            finally:
-                self._application.onEndTreeUpdate(page.root)
+            if dlg.ShowModal() == wx.ID_OK:
+                self._application.onStartTreeUpdate(page.root)
 
-        dlg.Destroy()
+                try:
+                    tagBranch(page, dlg.tags)
+                finally:
+                    self._application.onEndTreeUpdate(page.root)
 
 
-class RemoveTagsFromBranchAction (BaseAction):
+class RemoveTagsFromBranchAction(BaseAction):
     """
     Удалить теги из ветки
     """
+
     stringId = "RemoveTagsFromBranch"
 
     def __init__(self, application):
@@ -87,36 +98,36 @@ class RemoveTagsFromBranchAction (BaseAction):
 
         if self._application.selectedPage is None:
             self.removeTagsFromBranchGui(
-                self._application.wikiroot,
-                self._application.mainWindow)
+                self._application.wikiroot, self._application.mainWindow
+            )
         else:
             self.removeTagsFromBranchGui(
-                self._application.selectedPage,
-                self._application.mainWindow)
+                self._application.selectedPage, self._application.mainWindow
+            )
 
     @testreadonly
     def removeTagsFromBranchGui(self, page, parent):
         """
         Удалить теги из ветки, начинающейся со страницы page
         """
-        dlg = TagsDialog(parent, self._application)
-        dlg.SetTitle(_("Remove Tags from Branch"))
+        with TagsDialog(parent, self._application) as dlg:
+            dlg.SetTitle(_("Remove Tags from Branch"))
+            _set_tags_cloud_font_size(self._application, dlg)
 
-        if dlg.ShowModal() == wx.ID_OK:
-            self._application.onStartTreeUpdate(page.root)
+            if dlg.ShowModal() == wx.ID_OK:
+                self._application.onStartTreeUpdate(page.root)
 
-            try:
-                removeTagsFromBranch(page, dlg.tags)
-            finally:
-                self._application.onEndTreeUpdate(page.root)
-
-        dlg.Destroy()
+                try:
+                    removeTagsFromBranch(page, dlg.tags)
+                finally:
+                    self._application.onEndTreeUpdate(page.root)
 
 
-class RenameTagAction (BaseAction):
+class RenameTagAction(BaseAction):
     """
     Переименовать тег
     """
+
     stringId = "RenameTag"
 
     def __init__(self, application):
@@ -134,21 +145,18 @@ class RenameTagAction (BaseAction):
         assert self._application.mainWindow is not None
 
         if self._application.wikiroot is not None:
-            self.renameTagGui(
-                self._application.wikiroot,
-                self._application.mainWindow)
+            self.renameTagGui(self._application.wikiroot, self._application.mainWindow)
 
     @testreadonly
     def renameTagGui(self, wikiroot, parent):
         tagslist = TagsList(wikiroot)
 
-        dlg = RenameTagDialog(parent, tagslist)
-        if dlg.ShowModal() == wx.ID_OK:
-            self._application.onStartTreeUpdate(wikiroot)
+        with RenameTagDialog(parent, tagslist) as dlg:
+            _set_tags_cloud_font_size(self._application, dlg)
+            if dlg.ShowModal() == wx.ID_OK:
+                self._application.onStartTreeUpdate(wikiroot)
 
-            try:
-                renameTag(wikiroot, dlg.oldTagName, dlg.newTagName)
-            finally:
-                self._application.onEndTreeUpdate(wikiroot)
-
-        dlg.Destroy()
+                try:
+                    renameTag(wikiroot, dlg.oldTagName, dlg.newTagName)
+                finally:
+                    self._application.onEndTreeUpdate(wikiroot)

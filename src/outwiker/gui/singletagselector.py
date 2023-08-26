@@ -4,7 +4,7 @@ from .tagscloud import TagsCloud
 from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK
 
 
-class SingleTagSelector (TagsCloud):
+class SingleTagSelector(TagsCloud):
     def __init__(self, parent):
         super(SingleTagSelector, self).__init__(parent)
 

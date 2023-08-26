@@ -50,7 +50,7 @@ class TagLabel2(wx.Control):
         self._marked_hover_font_color = wx.Colour("#000000")
         self._remove_button_color = wx.Colour("#B5931E")
 
-        self.SetFontSize(min_font_size, max_font_size)
+        self.setFontSize(min_font_size, max_font_size)
 
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self.Bind(wx.EVT_ENTER_WINDOW, handler=self._onMouseEnter)
@@ -59,7 +59,7 @@ class TagLabel2(wx.Control):
         self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
         self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
 
-    def SetFontSize(self, min_font_size: int, max_font_size: int):
+    def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min(min_font_size, max_font_size)
         self._max_font_size = max(min_font_size, max_font_size)
         self._calc_sizes()

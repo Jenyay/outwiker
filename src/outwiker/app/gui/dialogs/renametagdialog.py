@@ -70,6 +70,9 @@ class RenameTagDialog(wx.Dialog):
     def newTagName(self):
         return self.__newTagName.GetValue().strip()
 
+    def setTagsCloudFontSize(self, minFontSize: int, maxFontSize: int):
+        self.__tagSelector.setFontSize(minFontSize, maxFontSize)
+
     def __onOk(self, _event):
         if self.oldTagName is None:
             MessageBox(_("Select tag for rename"), _(
