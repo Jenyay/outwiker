@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import wx
+from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST
 
 from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
@@ -20,6 +21,7 @@ class TagsPanel(BasePrefPanel):
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
         self._createFontGui(mainSizer)
+        self._createModeGui(mainSizer)
         self._createHeadersGui(mainSizer)
         self.SetSizer(mainSizer)
 
@@ -30,6 +32,18 @@ class TagsPanel(BasePrefPanel):
 
         mainsizer.Add(text, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         mainsizer.Add(self._popupHeaders, 0, wx.ALL, border=2)
+
+    def _createModeGui(self, mainsizer):
+        modeSizer = wx.FlexGridSizer(cols=2)
+        modeSizer.AddGrowableCol(0)
+
+        modeLabel = wx.StaticText(self, label=_("Tags cloud view mode"))
+        self._modeList = wx.ComboBox(self, choices=[_("As continuous text"), _("As list")], style=wx.CB_READONLY)
+        self._modeList.SetMinSize((200, -1))
+
+        modeSizer.Add(modeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND| wx.ALL, border=2)
+        modeSizer.Add(self._modeList, flag=wx.ALIGN_RIGHT | wx.EXPAND| wx.ALL, border=2)
+        mainsizer.Add(modeSizer, 0, wx.EXPAND | wx.ALL, border=2)
 
     def _createFontGui(self, mainsizer):
         fontSizer = wx.FlexGridSizer(cols=2)
@@ -43,13 +57,13 @@ class TagsPanel(BasePrefPanel):
         self._maxFontSizeCtrl = wx.SpinCtrl(self, min=4, max=32)
         self._maxFontSizeCtrl.SetMinSize((150, -1))
 
-        fontSizer.Add(minFontSizeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=4)
-        fontSizer.Add(self._minFontSizeCtrl, flag=wx.ALIGN_RIGHT | wx.EXPAND, border=4)
+        fontSizer.Add(minFontSizeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL, border=2)
+        fontSizer.Add(self._minFontSizeCtrl, flag=wx.ALIGN_RIGHT | wx.EXPAND | wx.ALL, border=2)
 
-        fontSizer.Add(maxFontSizeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=4)
-        fontSizer.Add(self._maxFontSizeCtrl, flag=wx.ALIGN_RIGHT | wx.EXPAND, border=4)
+        fontSizer.Add(maxFontSizeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL, border=2)
+        fontSizer.Add(self._maxFontSizeCtrl, flag=wx.ALIGN_RIGHT | wx.EXPAND | wx.ALL, border=2)
 
-        mainsizer.Add(fontSizer, 0, wx.EXPAND, border=2)
+        mainsizer.Add(fontSizer, 0, wx.EXPAND | wx.ALL, border=2)
 
     def _fillHeaders(self):
         factory = ColumnsFactory()
@@ -72,6 +86,7 @@ class TagsPanel(BasePrefPanel):
         self._fillHeaders()
         self._minFontSizeCtrl.SetValue(self._config.minFontSize.value)
         self._maxFontSizeCtrl.SetValue(self._config.maxFontSize.value)
+        self._modeList.SetSelection(1 if self._config.tagsCloudMode.value == TAGS_CLOUD_MODE_LIST else 0)
 
     def _saveHeadersState(self):
         columns = []
@@ -89,3 +104,7 @@ class TagsPanel(BasePrefPanel):
         self._saveHeadersState()
         self._config.minFontSize.value = self._minFontSizeCtrl.GetValue()
         self._config.maxFontSize.value = self._maxFontSizeCtrl.GetValue()
+        if self._modeList.GetSelection() == 0:
+            self._config.tagsCloudMode.value = TAGS_CLOUD_MODE_CONTINUOUS
+        elif self._modeList.GetSelection() == 1:
+            self._config.tagsCloudMode.value = TAGS_CLOUD_MODE_LIST

@@ -7,6 +7,7 @@ import wx
 
 from outwiker.core.tagslist import TagsList
 from outwiker.gui.controls.taglabel2 import TagLabel2
+from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST
 
 
 class TagsCloud(wx.Panel):
@@ -16,11 +17,13 @@ class TagsCloud(wx.Panel):
         use_buttons: bool = True,
         min_font_size: int = 8,
         max_font_size: int = 16,
+        mode: str = TAGS_CLOUD_MODE_CONTINUOUS
     ):
         super().__init__(parent)
         self._use_buttons = use_buttons
         self._min_font_size = min_font_size
         self._max_font_size = max_font_size
+        self._mode = mode
 
         # Отступ от края окна
         self._margin = 4
@@ -55,6 +58,10 @@ class TagsCloud(wx.Panel):
         for tag_label in self._labels.values():
             tag_label.setFontSize(min_font_size, max_font_size)
 
+        self._layoutTags()
+
+    def setMode(self, mode):
+        self._mode = mode
         self._layoutTags()
 
     def _create_gui(self):
@@ -181,20 +188,20 @@ class TagsCloud(wx.Panel):
         self._tags = None
         self._filtered_tags = []
 
-    def __getMaxHeight(self, labels):
-        maxheight = 0
-        maxindex = -1
+    # def __getMaxHeight(self, labels):
+    #     maxheight = 0
+    #     maxindex = -1
 
-        if len(labels) == 0:
-            return (maxheight, maxindex)
+    #     if len(labels) == 0:
+    #         return (maxheight, maxindex)
 
-        for label, index in zip(labels, range(len(labels))):
-            height = label.GetSize()[1]
-            if height > maxheight:
-                maxheight = height
-                maxindex = index
+    #     for label, index in zip(labels, range(len(labels))):
+    #         height = label.GetSize()[1]
+    #         if height > maxheight:
+    #             maxheight = height
+    #             maxindex = index
 
-        return (maxheight, maxindex)
+    #     return (maxheight, maxindex)
 
     def __getMaxCount(self) -> int:
         count = 0
@@ -249,26 +256,41 @@ class TagsCloud(wx.Panel):
 
         assert len(self._labels) != 0
 
+        # Хак из-за разного поведения полос прокрутки в винде и линуксе
+        if os.name != "nt":
+            self._tags_panel.SetScrollbars(0, 0, 0, 0)
+
+        if self._mode == TAGS_CLOUD_MODE_LIST:
+            self.__moveLabelsAsList()
+        else:
+            self.__moveLabelsContinuous()
+
+    def __moveLabelsAsList(self):
+        stepy = list(self._labels.values())[0].GetSize()[1] + self._gapy
+
+        for line, tagname in enumerate(self._filtered_tags):
+            label = self._labels[tagname]
+            label.Move(self._margin, self._margin + line * stepy)
+            label.Refresh()
+
+        lineheight = stepy
+        self._tags_panel.SetScrollbars(0, lineheight, 0, len(self._filtered_tags))
+
+    def __moveLabelsContinuous(self):
         stepy = list(self._labels.values())[0].GetSize()[1] + self._gapy
 
         # Метки, расположенные на текущей строке
         currentLine = []
 
         currentx = self._margin
-        currenty = self._margin + stepy // 2
+        currenty = self._margin
 
         linesCount = 1
 
         maxwidth = self._tags_panel.GetClientSize()[0] - self._margin * 2
 
-        # Хак из-за разного поведения полос прокрутки в винде и линуксе
-        if os.name != "nt":
-            self._tags_panel.SetScrollbars(0, 0, 0, 0)
-
-        for tagname in self._tags:
+        for tagname in self._filtered_tags:
             label = self._labels[tagname]
-            if not label.Shown:
-                continue
 
             newRightBorder = currentx + label.GetSize()[0]
 
@@ -279,14 +301,11 @@ class TagsCloud(wx.Panel):
                 currentLine = []
                 linesCount += 1
 
-            label.Move(currentx, currenty - label.GetSize()[1] // 2)
+            label.Move(currentx, currenty)
             label.Refresh()
 
             currentLine.append(label)
             currentx += label.GetSize()[0] + self._gapx
 
-        if len(self._filtered_tags) != 0:
-            commonheight = currenty + self.__getMaxHeight(currentLine)[0] + self._gapx
-            lineheight = commonheight // linesCount
-
-            self._tags_panel.SetScrollbars(0, lineheight, 0, linesCount + 1)
+        lineheight = stepy
+        self._tags_panel.SetScrollbars(0, lineheight, 0, linesCount)

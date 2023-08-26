@@ -16,7 +16,9 @@ def _set_tags_cloud_font_size(application, dlg: Union[RenameTagDialog, TagsDialo
     config = TagsConfig(application.config)
     minFontSize = config.minFontSize.value
     maxFontSize = config.maxFontSize.value
+    mode = config.tagsCloudMode.value
     dlg.setTagsCloudFontSize(minFontSize, maxFontSize)
+    dlg.setTagsCloudMode(mode)
 
 
 class AddTagsToBranchAction(BaseAction):

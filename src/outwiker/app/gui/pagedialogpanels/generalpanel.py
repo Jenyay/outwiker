@@ -341,6 +341,7 @@ class GeneralController(BasePageDialogController):
 
         tagslist = TagsList(self._application.wikiroot)
         self._generalPanel.tagsSelector.setFontSize(self._tagsConfig.minFontSize.value, self._tagsConfig.maxFontSize.value)
+        self._generalPanel.tagsSelector.setMode(self._tagsConfig.tagsCloudMode.value)
         self._generalPanel.tagsSelector.setTagsList(tagslist)
 
     def _setComboPageType(self, pageTypeString):

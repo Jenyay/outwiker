@@ -116,7 +116,7 @@ class TagsPanelController:
 
     def __onPreferencesDialogClose(self, dialog):
         self.updateTags()
-        self.__tagsPanel.updateFontSize()
+        self.__tagsPanel.updateParamsFromConfig()
 
     def __onPageSelect(self, page):
         self.__markTags()

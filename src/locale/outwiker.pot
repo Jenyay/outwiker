@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-14 18:08+0300\n"
+"POT-Creation-Date: 2023-08-26 18:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -494,7 +494,7 @@ msgstr ""
 
 #: outwiker/app/actions/showhidetags.py:18
 #: outwiker/app/actions/switchto.py:86
-#: outwiker/app/gui/mainpanes/tagscloudmainpane.py:52
+#: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
 #: outwiker/gui/controls/pagelist_columns.py:226
 #: outwiker/pages/search/searchpanel.py:47
 msgid "Tags"
@@ -584,35 +584,35 @@ msgstr ""
 msgid "Go to previous tab"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:26
+#: outwiker/app/actions/tags.py:36
 msgid "Add Tags to Branch…"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:30
+#: outwiker/app/actions/tags.py:40
 msgid "Add tags to branch"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:52
+#: outwiker/app/actions/tags.py:66
 msgid "Add Tags to Branch"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:76
+#: outwiker/app/actions/tags.py:89
 msgid "Remove Tags from Branch…"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:80
+#: outwiker/app/actions/tags.py:93
 msgid "Remove tags from branch"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:103
+#: outwiker/app/actions/tags.py:116
 msgid "Remove Tags from Branch"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:127
+#: outwiker/app/actions/tags.py:140
 msgid "Rename Tag…"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:131
+#: outwiker/app/actions/tags.py:144
 #: outwiker/app/gui/dialogs/renametagdialog.py:21
 msgid "Rename tag"
 msgstr ""
@@ -1170,7 +1170,7 @@ msgid "Author: Eugeniy Ilin (aka Jenyay)"
 msgstr ""
 
 #: outwiker/app/gui/dialogs/renametagdialog.py:35
-#: outwiker/app/gui/dialogs/renametagdialog.py:75
+#: outwiker/app/gui/dialogs/renametagdialog.py:81
 msgid "Select tag for rename"
 msgstr ""
 
@@ -1178,9 +1178,9 @@ msgstr ""
 msgid "New tag name"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:76
-#: outwiker/app/gui/dialogs/renametagdialog.py:81
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:499
+#: outwiker/app/gui/dialogs/renametagdialog.py:82
+#: outwiker/app/gui/dialogs/renametagdialog.py:87
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:502
 #: outwiker/app/gui/preferences/iconsetpanel.py:212
 #: outwiker/app/gui/preferences/iconsetpanel.py:268
 #: outwiker/app/gui/preferences/iconsetpanel.py:274
@@ -1193,7 +1193,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:80
+#: outwiker/app/gui/dialogs/renametagdialog.py:86
 msgid "Enter new tag name"
 msgstr ""
 
@@ -1298,7 +1298,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: outwiker/app/gui/notestree.py:218 outwiker/app/services/tree.py:234
+#: outwiker/app/gui/notestree.py:218 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr ""
 
@@ -1342,32 +1342,32 @@ msgstr ""
 msgid "New page position"
 msgstr ""
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:161
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:162
 msgid "Top of the list"
 msgstr ""
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:162
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:163
 msgid "End of the list"
 msgstr ""
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:163
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:164
 msgid "Alphabetically"
 msgstr ""
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:435
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:438
 #: outwiker/app/gui/preferences/iconsetpanel.py:157
 msgid "Not in groups"
 msgstr ""
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:460
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:463
 msgid "Recent"
 msgstr ""
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:498
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:501
 msgid "Can't set page icon\n"
 msgstr ""
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:581
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:584
 #: outwiker/gui/iconlistctrl.py:54
 msgid "Invalid icon file: {}"
 msgstr ""
@@ -1388,42 +1388,17 @@ msgstr ""
 msgid "Show hidden folders"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:32
+#: outwiker/app/gui/preferences/colorspanel.py:29
 #: outwiker/app/gui/preferences/prefcontroller.py:134
 msgid "Main window"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:36
+#: outwiker/app/gui/preferences/colorspanel.py:33
 msgid "Main panels background color"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:40
+#: outwiker/app/gui/preferences/colorspanel.py:38
 msgid "Main panels text color"
-msgstr ""
-
-#: outwiker/app/gui/preferences/colorspanel.py:43
-#: outwiker/app/gui/preferences/prefcontroller.py:138
-msgid "Tags cloud"
-msgstr ""
-
-#: outwiker/app/gui/preferences/colorspanel.py:46
-msgid "Tag color"
-msgstr ""
-
-#: outwiker/app/gui/preferences/colorspanel.py:49
-msgid "Hover tag color"
-msgstr ""
-
-#: outwiker/app/gui/preferences/colorspanel.py:52
-msgid "Marked tag color"
-msgstr ""
-
-#: outwiker/app/gui/preferences/colorspanel.py:55
-msgid "Hover marked tag color"
-msgstr ""
-
-#: outwiker/app/gui/preferences/colorspanel.py:58
-msgid "Marked tag background color"
 msgstr ""
 
 #: outwiker/app/gui/preferences/editorpanel.py:29
@@ -1715,6 +1690,10 @@ msgstr ""
 msgid "Tray icon"
 msgstr ""
 
+#: outwiker/app/gui/preferences/prefcontroller.py:138
+msgid "Tags cloud"
+msgstr ""
+
 #: outwiker/app/gui/preferences/prefcontroller.py:140
 msgid "Hotkeys"
 msgstr ""
@@ -1763,24 +1742,28 @@ msgstr ""
 msgid "Custom dictonary (one word per line)"
 msgstr ""
 
-#: outwiker/app/gui/preferences/tagspanel.py:17
-msgid "Search pages with the tag"
+#: outwiker/app/gui/preferences/tagspanel.py:29
+msgid "Headers in the popup window: "
 msgstr ""
 
-#: outwiker/app/gui/preferences/tagspanel.py:18
-msgid "Toggle tag selection"
-msgstr ""
-
-#: outwiker/app/gui/preferences/tagspanel.py:38
-msgid "Left click on the tag"
+#: outwiker/app/gui/preferences/tagspanel.py:40
+msgid "Tags cloud view mode"
 msgstr ""
 
 #: outwiker/app/gui/preferences/tagspanel.py:41
-msgid "Middle click on the tag"
+msgid "As continuous text"
 msgstr ""
 
-#: outwiker/app/gui/preferences/tagspanel.py:46
-msgid "Headers in the popup window: "
+#: outwiker/app/gui/preferences/tagspanel.py:41
+msgid "As list"
+msgstr ""
+
+#: outwiker/app/gui/preferences/tagspanel.py:52
+msgid "Minimum font size"
+msgstr ""
+
+#: outwiker/app/gui/preferences/tagspanel.py:56
+msgid "Maximum font size"
 msgstr ""
 
 #: outwiker/app/gui/preferences/textprintpanel.py:27
@@ -1843,7 +1826,8 @@ msgstr ""
 msgid "Can't save file %s"
 msgstr ""
 
-#: outwiker/app/gui/tagspanelcontroller.py:79 outwiker/core/treetools.py:44
+#: outwiker/app/gui/tagspanelcontroller.py:80
+#: outwiker/app/gui/tagspanelcontroller.py:92 outwiker/core/treetools.py:45
 msgid "Page is opened as read-only"
 msgstr ""
 
@@ -1910,37 +1894,37 @@ msgstr ""
 msgid "Date format"
 msgstr ""
 
-#: outwiker/app/services/tree.py:45
+#: outwiker/app/services/tree.py:46
 msgid "You can't remove the root element"
 msgstr ""
 
-#: outwiker/app/services/tree.py:51
+#: outwiker/app/services/tree.py:52
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
 "All attachments will also be deleted."
 msgstr ""
 
-#: outwiker/app/services/tree.py:53
+#: outwiker/app/services/tree.py:54
 msgid "Remove page?"
 msgstr ""
 
-#: outwiker/app/services/tree.py:61
+#: outwiker/app/services/tree.py:62
 msgid "Can't remove page"
 msgstr ""
 
-#: outwiker/app/services/tree.py:112
+#: outwiker/app/services/tree.py:113
 msgid "Loading"
 msgstr ""
 
-#: outwiker/app/services/tree.py:112
+#: outwiker/app/services/tree.py:113
 msgid "Opening notes tree..."
 msgstr ""
 
-#: outwiker/app/services/tree.py:137
+#: outwiker/app/services/tree.py:138
 msgid "Can't load notes tree:\n"
 msgstr ""
 
-#: outwiker/app/services/tree.py:177
+#: outwiker/app/services/tree.py:178
 #, python-format
 msgid ""
 "Can't load wiki '%s'\n"
@@ -1949,42 +1933,42 @@ msgid ""
 "Bookmarks will be lost"
 msgstr ""
 
-#: outwiker/app/services/tree.py:180
+#: outwiker/app/services/tree.py:181
 msgid "__page.opt error"
 msgstr ""
 
-#: outwiker/app/services/tree.py:192
+#: outwiker/app/services/tree.py:193
 msgid "Invalid page title"
 msgstr ""
 
-#: outwiker/app/services/tree.py:195
+#: outwiker/app/services/tree.py:196
 #, python-brace-format
 msgid ""
 "{0}\n"
 "Continue?"
 msgstr ""
 
-#: outwiker/app/services/tree.py:198
+#: outwiker/app/services/tree.py:199
 msgid "The page title"
 msgstr ""
 
-#: outwiker/app/services/tree.py:251
+#: outwiker/app/services/tree.py:252
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr ""
 
-#: outwiker/app/services/tree.py:274
+#: outwiker/app/services/tree.py:275
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 
-#: outwiker/app/services/tree.py:279
+#: outwiker/app/services/tree.py:280
 msgid "Can't move page: {}"
 msgstr ""
 
-#: outwiker/app/services/tree.py:288
+#: outwiker/app/services/tree.py:289
 msgid "First Wiki Page"
 msgstr ""
 
-#: outwiker/app/services/tree.py:290
+#: outwiker/app/services/tree.py:291
 msgid ""
 "!! First Wiki Page\n"
 "\n"
@@ -1992,11 +1976,11 @@ msgid ""
 "''italic'', {+underlined text+}, [[https://jenyay.net | link]] and others."
 msgstr ""
 
-#: outwiker/app/services/tree.py:301
+#: outwiker/app/services/tree.py:302
 msgid "test"
 msgstr ""
 
-#: outwiker/app/services/tree.py:309
+#: outwiker/app/services/tree.py:310
 msgid "Can't create wiki\n"
 msgstr ""
 
@@ -2363,7 +2347,7 @@ msgstr ""
 msgid "Insert rows"
 msgstr ""
 
-#: outwiker/gui/tagsselector.py:25
+#: outwiker/gui/tagsselector.py:21
 msgid "Tags (comma separated)"
 msgstr ""
 

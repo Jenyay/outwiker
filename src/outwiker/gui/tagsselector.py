@@ -44,6 +44,9 @@ class TagsSelector(wx.Panel):
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self.__tagsCloud.setFontSize(min_font_size, max_font_size)
 
+    def setMode(self, mode:str):
+        self.__tagsCloud.setMode(mode)
+
     def __layout(self):
         titleTextSizer = wx.FlexGridSizer(1, 2, 0, 0)
         titleTextSizer.AddGrowableCol(1)

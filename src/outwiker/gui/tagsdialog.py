@@ -50,3 +50,6 @@ class TagsDialog(wx.Dialog):
 
     def setTagsCloudFontSize(self, minFontSize: int, maxFontSize: int):
         self.__tagsSelector.setFontSize(minFontSize, maxFontSize)
+
+    def setTagsCloudMode(self, mode: str):
+        self.__tagsSelector.setMode(mode)

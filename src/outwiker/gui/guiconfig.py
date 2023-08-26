@@ -11,6 +11,7 @@ from outwiker.core.config import (
     ListOption,
     StcStyleOption,
 )
+from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS
 from outwiker.gui.stcstyle import StcStyle
 
 
@@ -1106,6 +1107,9 @@ class TagsConfig:
     MAX_FONT_SIZE_SECTION = "MaxFontSize"
     MAX_FONT_SIZE_DEFAULT = 16
 
+    TAGS_CLOUD_MODE_SECTION = "tagsCloudMode"
+    TAGS_CLOUD_MODE_DEFAULT = TAGS_CLOUD_MODE_CONTINUOUS
+
     def __init__(self, config):
         self.config = config
 
@@ -1142,4 +1146,11 @@ class TagsConfig:
             self.SECTION,
             self.MAX_FONT_SIZE_SECTION,
             self.MAX_FONT_SIZE_DEFAULT,
+        )
+
+        self.tagsCloudMode = StringOption(
+            self.config,
+            self.SECTION,
+            self.TAGS_CLOUD_MODE_SECTION,
+            self.TAGS_CLOUD_MODE_DEFAULT,
         )

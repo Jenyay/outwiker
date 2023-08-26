@@ -21,9 +21,10 @@ class TagsCloudPanel(wx.Panel):
         self._controller = TagsPanelController(self, application)
         self._pageListPopup = None
 
-    def updateFontSize(self):
+    def updateParamsFromConfig(self):
         config = TagsConfig(self._application.config)
         self._tagscloud.setFontSize(config.minFontSize.value, config.maxFontSize.value)
+        self._tagscloud.setMode(config.tagsCloudMode.value)
 
     def _getPageListColumns(self) -> List[BaseColumn]:
         colFactory = ColumnsFactory()
@@ -90,8 +91,11 @@ class TagsCloudPanel(wx.Panel):
         config = TagsConfig(self._application.config)
         min_font_size = config.minFontSize.value
         max_font_size = config.maxFontSize.value
+        mode = config.tagsCloudMode.value
 
-        self._tagscloud = TagsCloud(self, min_font_size=min_font_size, max_font_size=max_font_size)
+        self._tagscloud = TagsCloud(
+            self, min_font_size=min_font_size, max_font_size=max_font_size, mode=mode
+        )
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
