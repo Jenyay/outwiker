@@ -17,13 +17,15 @@ class TagsCloud(wx.Panel):
         use_buttons: bool = True,
         min_font_size: int = 8,
         max_font_size: int = 16,
-        mode: str = TAGS_CLOUD_MODE_CONTINUOUS
+        mode: str = TAGS_CLOUD_MODE_CONTINUOUS,
+        show_tooltips: bool = True,
     ):
         super().__init__(parent)
         self._use_buttons = use_buttons
         self._min_font_size = min_font_size
         self._max_font_size = max_font_size
         self._mode = mode
+        self._enable_tooltips = show_tooltips
 
         # Отступ от края окна
         self._margin = 4
@@ -131,6 +133,11 @@ class TagsCloud(wx.Panel):
         self._filter_tag_labels()
         self.Thaw()
 
+    def enableTooltips(self, enable: bool = True):
+        if enable != self._enable_tooltips:
+            self._enable_tooltips = enable
+            self._update_tooltips()
+
     def _create_tag_labels(self):
         if self._tags is None:
             return
@@ -143,7 +150,24 @@ class TagsCloud(wx.Panel):
                 self._min_font_size,
                 self._max_font_size,
             )
+
             self._labels[tag] = newlabel
+
+        self._update_tooltips()
+
+    def _update_tooltips(self):
+        if self._tags is None:
+            return
+
+        for tag in self._tags:
+            label = self._labels[tag]
+
+            if self._enable_tooltips:
+                tooltip = _("Number of notes: {}").format(len(self._tags[tag]))
+                label.SetToolTip(tooltip)
+            else:
+                label.UnsetToolTip()
+
 
     def _filter_tag_labels(self):
         if self._tags is None:
@@ -187,21 +211,6 @@ class TagsCloud(wx.Panel):
         self._labels = {}
         self._tags = None
         self._filtered_tags = []
-
-    # def __getMaxHeight(self, labels):
-    #     maxheight = 0
-    #     maxindex = -1
-
-    #     if len(labels) == 0:
-    #         return (maxheight, maxindex)
-
-    #     for label, index in zip(labels, range(len(labels))):
-    #         height = label.GetSize()[1]
-    #         if height > maxheight:
-    #             maxheight = height
-    #             maxindex = index
-
-    #     return (maxheight, maxindex)
 
     def __getMaxCount(self) -> int:
         count = 0

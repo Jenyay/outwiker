@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-26 18:21+0300\n"
+"POT-Creation-Date: 2023-08-30 21:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -2345,6 +2345,10 @@ msgstr ""
 
 #: outwiker/gui/tablerowsdialog.py:15
 msgid "Insert rows"
+msgstr ""
+
+#: outwiker/gui/tagscloud.py:150
+msgid "Number of notes: {}"
 msgstr ""
 
 #: outwiker/gui/tagsselector.py:21
