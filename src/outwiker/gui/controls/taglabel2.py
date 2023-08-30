@@ -39,7 +39,8 @@ class TagLabel2(wx.Control):
         self._normal_hover_back_color = wx.Colour("#D6E7FD")
         self._normal_hover_border_color = wx.Colour("#78D8FC")
         self._normal_hover_font_color = wx.Colour("#34609D")
-        self._add_button_color = wx.Colour("#34609D")
+        self._add_button_color = wx.Colour("#577EBF")
+        self._hover_add_button_color = wx.Colour("#20518C")
 
         self._marked_back_color = wx.Colour("#fcde78")
         self._marked_border_color = wx.Colour("#EDB14A")
@@ -49,12 +50,14 @@ class TagLabel2(wx.Control):
         self._marked_hover_border_color = wx.Colour("#B5931E")
         self._marked_hover_font_color = wx.Colour("#000000")
         self._remove_button_color = wx.Colour("#B5931E")
+        self._hover_remove_button_color = wx.Colour("#8B6D00")
 
         self.setFontSize(min_font_size, max_font_size)
 
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self.Bind(wx.EVT_ENTER_WINDOW, handler=self._onMouseEnter)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeave)
+        self.Bind(wx.EVT_MOTION, handler=self._onMouseMotion)
         self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
         self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
         self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
@@ -166,18 +169,34 @@ class TagLabel2(wx.Control):
         dc.SetBrush(wx.Brush(tag_back_color))
         dc.SetPen(wx.Pen(tag_back_color))
         dc.DrawRectangle(
-            self._arc_width, 0, self._width - self._arc_width - 1, self._height - 1
+            self._button_border_x, 0, self._width - self._button_border_x - 1, self._height - 1
         )
-        dc.DrawEllipse(0, 0, self._height, self._height)
         dc.SetPen(wx.Pen(tag_border_color, 1))
         dc.DrawLineList(
             [
-                (self._arc_width, 0, self._width - 1, 0),
+                (self._button_border_x, 0, self._width - 1, 0),
                 (self._width - 1, 0, self._width - 1, self._height - 1),
-                (self._arc_width, self._height - 1, self._width - 1, self._height - 1),
+                (self._button_border_x, self._height - 1, self._width - 1, self._height - 1),
             ]
         )
+
+        # Draw the Add / Remove button background and border
+        button_back_color = self._get_button_back_color()
+        button_border_color = self._get_button_border_color()
+        dc.SetBrush(wx.Brush(button_back_color))
+        dc.SetPen(wx.Pen(button_back_color))
+        dc.DrawEllipse(0, 0, self._height, self._height)
+        dc.DrawRectangle(
+            self._arc_width, 0, self._button_border_x - self._arc_width - 1, self._height - 1
+        )
+        dc.SetPen(wx.Pen(button_border_color, 1))
         dc.DrawEllipticArc(0, 0, self._height, self._height - 1, 90, 270)
+        dc.DrawLineList(
+            [
+                (self._arc_width, 0, self._button_border_x, 0),
+                (self._arc_width, self._height - 1, self._button_border_x, self._height - 1),
+            ]
+        )
 
         # Draw text
         text_size = self._calc_text_size(self._label, self._font_size)
@@ -189,7 +208,7 @@ class TagLabel2(wx.Control):
         text_y = int((self._height - text_size[1]) / 2)
         dc.DrawText(self._label, text_x, text_y)
 
-        # Draw button
+        # Draw the Add / Remove button
         if self._use_buttons:
             if self._is_hover and not self._is_marked:
                 self._draw_add_button(dc)
@@ -198,20 +217,21 @@ class TagLabel2(wx.Control):
 
     def _draw_add_button(self, dc: wx.DC):
         width = 2
-        dc.SetBrush(wx.Brush(self._add_button_color))
-        dc.SetPen(wx.Pen(self._add_button_color))
+        button_color = self._hover_add_button_color if self._is_hover_button else self._add_button_color
+        dc.SetBrush(wx.Brush(button_color))
+        dc.SetPen(wx.Pen(button_color))
         dc.DrawRectangle(
             self._button_add_left,
             int(self._button_center_y - width / 2),
-            self._button_add_width,
+            self._button_add_width + 1,
             width,
         )
 
         dc.DrawRectangle(
             int(self._button_center_x - width / 2),
-            self._button_add_top,
+            self._button_add_top - 1,
             width,
-            self._button_add_height,
+            self._button_add_height + 1,
         )
 
         border_x = int((self._button_add_right + self._text_left) / 2)
@@ -220,7 +240,8 @@ class TagLabel2(wx.Control):
 
     def _draw_remove_button(self, dc: wx.DC):
         width = 2
-        dc.SetPen(wx.Pen(self._remove_button_color, width))
+        button_color = self._hover_remove_button_color if self._is_hover_button else self._remove_button_color
+        dc.SetPen(wx.Pen(button_color, width))
         dc.DrawLineList(
             [
                 (
@@ -244,11 +265,19 @@ class TagLabel2(wx.Control):
 
     def _onMouseEnter(self, event):
         self._is_hover = True
+        self._is_hover_button = event.GetX() <= self._button_border_x
         self.Refresh()
 
     def _onMouseLeave(self, event):
         self._is_hover = False
+        self._is_hover_button = False
         self.Refresh()
+
+    def _onMouseMotion(self, event):
+        new_is_hover_button = event.GetX() <= self._button_border_x
+        if new_is_hover_button != self._is_hover_button:
+            self._is_hover_button = new_is_hover_button
+            self.Refresh()
 
     def _onLeftMouseClick(self, event):
         x = event.GetX()
@@ -293,6 +322,30 @@ class TagLabel2(wx.Control):
         return self._normal_back_color
 
     def _get_border_color(self) -> wx.Colour:
+        if self._is_marked and not self._is_hover:
+            return self._marked_border_color
+
+        if self._is_marked and self._is_hover:
+            return self._marked_hover_border_color
+
+        if not self._is_marked and self._is_hover:
+            return self._normal_hover_border_color
+
+        return self._normal_border_color
+
+    def _get_button_back_color(self) -> wx.Colour:
+        if self._is_marked and not self._is_hover:
+            return self._marked_back_color
+
+        if self._is_marked and self._is_hover:
+            return self._marked_hover_back_color
+
+        if not self._is_marked and self._is_hover:
+            return self._normal_hover_back_color
+
+        return self._normal_back_color
+
+    def _get_button_border_color(self) -> wx.Colour:
         if self._is_marked and not self._is_hover:
             return self._marked_border_color
 
