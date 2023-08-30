@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-30 21:22+0300\n"
+"POT-Creation-Date: 2023-08-30 21:54+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1754,29 +1754,33 @@ msgstr "Используемые словари"
 msgid "Custom dictonary (one word per line)"
 msgstr "Пользовательский словарь (одно слово на строку)"
 
-#: outwiker/app/gui/preferences/tagspanel.py:29
+#: outwiker/app/gui/preferences/tagspanel.py:30
 msgid "Headers in the popup window: "
 msgstr "Заголовки во всплывающем окне: "
 
-#: outwiker/app/gui/preferences/tagspanel.py:40
+#: outwiker/app/gui/preferences/tagspanel.py:41
 msgid "Tags cloud view mode"
 msgstr "Режим отображения облака меток"
 
-#: outwiker/app/gui/preferences/tagspanel.py:41
+#: outwiker/app/gui/preferences/tagspanel.py:42
 msgid "As continuous text"
 msgstr "Непрерывным текстом"
 
-#: outwiker/app/gui/preferences/tagspanel.py:41
+#: outwiker/app/gui/preferences/tagspanel.py:42
 msgid "As list"
 msgstr "Списком"
 
-#: outwiker/app/gui/preferences/tagspanel.py:52
+#: outwiker/app/gui/preferences/tagspanel.py:53
 msgid "Minimum font size"
 msgstr "Минимальный размер шрифта"
 
-#: outwiker/app/gui/preferences/tagspanel.py:56
+#: outwiker/app/gui/preferences/tagspanel.py:57
 msgid "Maximum font size"
 msgstr "Максимальный размер шрифта"
+
+#: outwiker/app/gui/preferences/tagspanel.py:70
+msgid "Show tooltips"
+msgstr "Показывать всплывающие подсказки"
 
 #: outwiker/app/gui/preferences/textprintpanel.py:27
 msgid "This options for text printing only"
@@ -2384,7 +2388,7 @@ msgstr "Заголовочные ячейки в первой строке"
 msgid "Insert rows"
 msgstr "Вставить строки"
 
-#: outwiker/gui/tagscloud.py:150
+#: outwiker/gui/tagscloud.py:166
 msgid "Number of notes: {}"
 msgstr "Количество заметок: {}"
 

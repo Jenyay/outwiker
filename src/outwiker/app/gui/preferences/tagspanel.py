@@ -22,6 +22,7 @@ class TagsPanel(BasePrefPanel):
         mainSizer.AddGrowableCol(0)
         self._createFontGui(mainSizer)
         self._createModeGui(mainSizer)
+        self._createTooltipsGui(mainSizer)
         self._createHeadersGui(mainSizer)
         self.SetSizer(mainSizer)
 
@@ -65,6 +66,10 @@ class TagsPanel(BasePrefPanel):
 
         mainsizer.Add(fontSizer, 0, wx.EXPAND | wx.ALL, border=2)
 
+    def _createTooltipsGui(self, mainsizer):
+        self._enableTooltips = wx.CheckBox(self, label=_("Show tooltips"))
+        mainsizer.Add(self._enableTooltips, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
+
     def _fillHeaders(self):
         factory = ColumnsFactory()
         text = self._config.popupHeaders.value
@@ -82,12 +87,6 @@ class TagsPanel(BasePrefPanel):
             self._popupHeaders.Check(index, col.visible)
             self._popupHeaders.SetClientData(index, col)
 
-    def LoadState(self):
-        self._fillHeaders()
-        self._minFontSizeCtrl.SetValue(self._config.minFontSize.value)
-        self._maxFontSizeCtrl.SetValue(self._config.maxFontSize.value)
-        self._modeList.SetSelection(1 if self._config.tagsCloudMode.value == TAGS_CLOUD_MODE_LIST else 0)
-
     def _saveHeadersState(self):
         columns = []
         for n in range(self._popupHeaders.GetCount()):
@@ -100,10 +99,19 @@ class TagsPanel(BasePrefPanel):
         text = factory.toString(columns)
         self._config.popupHeaders.value = text
 
+    def LoadState(self):
+        self._fillHeaders()
+        self._minFontSizeCtrl.SetValue(self._config.minFontSize.value)
+        self._maxFontSizeCtrl.SetValue(self._config.maxFontSize.value)
+        self._modeList.SetSelection(1 if self._config.tagsCloudMode.value == TAGS_CLOUD_MODE_LIST else 0)
+        self._enableTooltips.SetValue(self._config.enableTooltips.value)
+
     def Save(self):
         self._saveHeadersState()
         self._config.minFontSize.value = self._minFontSizeCtrl.GetValue()
         self._config.maxFontSize.value = self._maxFontSizeCtrl.GetValue()
+        self._config.enableTooltips.value = self._enableTooltips.GetValue()
+
         if self._modeList.GetSelection() == 0:
             self._config.tagsCloudMode.value = TAGS_CLOUD_MODE_CONTINUOUS
         elif self._modeList.GetSelection() == 1:

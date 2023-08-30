@@ -1107,8 +1107,11 @@ class TagsConfig:
     MAX_FONT_SIZE_SECTION = "MaxFontSize"
     MAX_FONT_SIZE_DEFAULT = 16
 
-    TAGS_CLOUD_MODE_SECTION = "tagsCloudMode"
+    TAGS_CLOUD_MODE_SECTION = "TagsCloudMode"
     TAGS_CLOUD_MODE_DEFAULT = TAGS_CLOUD_MODE_CONTINUOUS
+
+    ENABLE_TOOLTIPS_SECTION = "EnableTooltips"
+    ENABLE_TOOLTIPS_DEFAULT = True
 
     def __init__(self, config):
         self.config = config
@@ -1153,4 +1156,11 @@ class TagsConfig:
             self.SECTION,
             self.TAGS_CLOUD_MODE_SECTION,
             self.TAGS_CLOUD_MODE_DEFAULT,
+        )
+
+        self.enableTooltips = BooleanOption(
+            self.config,
+            self.SECTION,
+            self.ENABLE_TOOLTIPS_SECTION,
+            self.ENABLE_TOOLTIPS_DEFAULT,
         )

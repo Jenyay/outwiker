@@ -76,6 +76,9 @@ class RenameTagDialog(wx.Dialog):
     def setTagsCloudMode(self, mode: str):
         self.__tagSelector.setMode(mode)
 
+    def enableTagsCloudTooltips(self, enable: bool = True):
+        self.__tagSelector.enableTooltips(enable)
+
     def __onOk(self, _event):
         if self.oldTagName is None:
             MessageBox(_("Select tag for rename"), _(

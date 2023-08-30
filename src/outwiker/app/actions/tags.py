@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union
+
 import wx
 
 from outwiker.app.gui.dialogs.renametagdialog import RenameTagDialog
@@ -12,13 +13,15 @@ from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.tagsdialog import TagsDialog
 
 
-def _set_tags_cloud_font_size(application, dlg: Union[RenameTagDialog, TagsDialog]):
+def _set_tags_cloud_settings(application, dlg: Union[RenameTagDialog, TagsDialog]):
     config = TagsConfig(application.config)
-    minFontSize = config.minFontSize.value
-    maxFontSize = config.maxFontSize.value
-    mode = config.tagsCloudMode.value
+    minFontSize: int = config.minFontSize.value
+    maxFontSize: int = config.maxFontSize.value
+    mode: str = config.tagsCloudMode.value
+    enableTooltips: bool = config.enableTooltips.value
     dlg.setTagsCloudFontSize(minFontSize, maxFontSize)
     dlg.setTagsCloudMode(mode)
+    dlg.enableTagsCloudTooltips(enableTooltips)
 
 
 class AddTagsToBranchAction(BaseAction):
@@ -61,7 +64,7 @@ class AddTagsToBranchAction(BaseAction):
         Теги к самой странице page тоже добавляются
         """
         with TagsDialog(parent, self._application) as dlg:
-            _set_tags_cloud_font_size(self._application, dlg)
+            _set_tags_cloud_settings(self._application, dlg)
 
             dlg.SetTitle(_("Add Tags to Branch"))
 
@@ -114,7 +117,7 @@ class RemoveTagsFromBranchAction(BaseAction):
         """
         with TagsDialog(parent, self._application) as dlg:
             dlg.SetTitle(_("Remove Tags from Branch"))
-            _set_tags_cloud_font_size(self._application, dlg)
+            _set_tags_cloud_settings(self._application, dlg)
 
             if dlg.ShowModal() == wx.ID_OK:
                 self._application.onStartTreeUpdate(page.root)
@@ -154,7 +157,7 @@ class RenameTagAction(BaseAction):
         tagslist = TagsList(wikiroot)
 
         with RenameTagDialog(parent, tagslist) as dlg:
-            _set_tags_cloud_font_size(self._application, dlg)
+            _set_tags_cloud_settings(self._application, dlg)
             if dlg.ShowModal() == wx.ID_OK:
                 self._application.onStartTreeUpdate(wikiroot)
 

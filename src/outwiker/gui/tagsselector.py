@@ -47,6 +47,9 @@ class TagsSelector(wx.Panel):
     def setMode(self, mode:str):
         self.__tagsCloud.setMode(mode)
 
+    def enableTooltips(self, enable: bool = True):
+        self.__tagsCloud.enableTooltips(enable)
+
     def __layout(self):
         titleTextSizer = wx.FlexGridSizer(1, 2, 0, 0)
         titleTextSizer.AddGrowableCol(1)

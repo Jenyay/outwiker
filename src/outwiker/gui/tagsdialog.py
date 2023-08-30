@@ -53,3 +53,6 @@ class TagsDialog(wx.Dialog):
 
     def setTagsCloudMode(self, mode: str):
         self.__tagsSelector.setMode(mode)
+
+    def enableTagsCloudTooltips(self, enable: bool = True):
+        self.__tagsSelector.enableTooltips(enable)

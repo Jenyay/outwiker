@@ -18,14 +18,14 @@ class TagsCloud(wx.Panel):
         min_font_size: int = 8,
         max_font_size: int = 16,
         mode: str = TAGS_CLOUD_MODE_CONTINUOUS,
-        show_tooltips: bool = True,
+        enable_tooltips: bool = True,
     ):
         super().__init__(parent)
         self._use_buttons = use_buttons
         self._min_font_size = min_font_size
         self._max_font_size = max_font_size
         self._mode = mode
-        self._enable_tooltips = show_tooltips
+        self._enable_tooltips = enable_tooltips
 
         # Отступ от края окна
         self._margin = 4
