@@ -260,7 +260,7 @@ class TagsCloud(wx.Panel):
         self.__moveLabels()
 
     def __moveLabels(self):
-        if self._tags is None:
+        if self._tags is None or len(self._tags) == 0:
             return
 
         assert len(self._labels) != 0
