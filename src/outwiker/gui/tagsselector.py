@@ -15,20 +15,20 @@ class TagsSelector(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.__tagsWidth = 350
-        self.__tagsHeight = 150
+        self._tagsWidth = 350
+        self._tagsHeight = 150
 
         self.label_tags = wx.StaticText(self, -1, _("Tags (comma separated)"))
 
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
         self.tagsTextCtrl.SetMinSize((250, -1))
 
-        self.__tagsCloud = TagsCloud(self, use_buttons=False)
-        self.__tagsCloud.SetMinSize((self.__tagsWidth, self.__tagsHeight))
-        self.__tagsCloud.Bind(EVT_TAG_LEFT_CLICK, self.__onTagClick)
-        self.tagsTextCtrl.Bind(wx.EVT_TEXT, handler=self.__onTagsChanged)
+        self._tagsCloud = TagsCloud(self, use_buttons=False)
+        self._tagsCloud.SetMinSize((self._tagsWidth, self._tagsHeight))
+        self._tagsCloud.Bind(EVT_TAG_LEFT_CLICK, self._onTagClick)
+        self.tagsTextCtrl.Bind(wx.EVT_TEXT, handler=self._onTagsChanged)
 
-        self.__layout()
+        self._layout()
 
     @property
     def tags(self):
@@ -42,15 +42,15 @@ class TagsSelector(wx.Panel):
         self.tagsTextCtrl.SetValue(tagsString)
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
-        self.__tagsCloud.setFontSize(min_font_size, max_font_size)
+        self._tagsCloud.setFontSize(min_font_size, max_font_size)
 
     def setMode(self, mode:str):
-        self.__tagsCloud.setMode(mode)
+        self._tagsCloud.setMode(mode)
 
     def enableTooltips(self, enable: bool = True):
-        self.__tagsCloud.enableTooltips(enable)
+        self._tagsCloud.enableTooltips(enable)
 
-    def __layout(self):
+    def _layout(self):
         titleTextSizer = wx.FlexGridSizer(1, 2, 0, 0)
         titleTextSizer.AddGrowableCol(1)
 
@@ -59,17 +59,17 @@ class TagsSelector(wx.Panel):
 
         mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
         mainSizer.Add(titleTextSizer, 0, wx.ALL | wx.EXPAND, 4)
-        mainSizer.Add(self.__tagsCloud, 0, wx.ALL | wx.EXPAND, 4)
+        mainSizer.Add(self._tagsCloud, 0, wx.ALL | wx.EXPAND, 4)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(1)
 
         self.SetSizer(mainSizer)
         self.Layout()
 
-    def __onTagClick(self, event):
-        self.__addTagText(event.text)
+    def _onTagClick(self, event):
+        self._addTagText(event.text)
 
-    def __addTagText(self, tagname):
+    def _addTagText(self, tagname):
         currentText = self.tagsTextCtrl.GetValue().strip()
 
         if len(currentText) == 0:
@@ -84,7 +84,7 @@ class TagsSelector(wx.Panel):
         self.tagsTextCtrl.SetSelection(len(newtext), len(newtext))
 
     def setTagsList(self, tagsList):
-        self.__tagsCloud.setTags(tagsList)
+        self._tagsCloud.setTags(tagsList)
 
     def _sendTagsListChangedEvent(self):
         propagationLevel = 10
@@ -92,5 +92,5 @@ class TagsSelector(wx.Panel):
         newevent.ResumePropagation(propagationLevel)
         wx.PostEvent(self, newevent)
 
-    def __onTagsChanged(self, _event):
+    def _onTagsChanged(self, _event):
         self._sendTagsListChangedEvent()

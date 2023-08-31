@@ -187,7 +187,7 @@ class TagsCloud(wx.Panel):
             filter(lambda tag_name: self._filter.lower() in tag_name.lower(), tags)
         )
 
-    def mark(self, tag, marked=True):
+    def mark(self, tag: str, marked: bool = True):
         """
         Выделить метку
         """
