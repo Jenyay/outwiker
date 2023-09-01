@@ -7,6 +7,7 @@ import json
 import shutil
 import logging
 import os
+from typing import List
 
 from outwiker.gui.stcstyle import StcStyle
 
@@ -209,9 +210,9 @@ class StringOption(BaseOption):
     def __init__(self, config, section, param, defaultValue):
         super().__init__(config, section, param, defaultValue)
 
-    def _loadValue(self):
+    def _loadValue(self) -> str:
         """
-        Получить значение. В производных классах этот метод переопределяется
+        Получить значение
         """
         return self.config.get(self.section, self.param)
 
@@ -222,9 +223,9 @@ class BooleanOption(BaseOption):
     Элемент управления - wx.CheckBox
     """
 
-    def _loadValue(self):
+    def _loadValue(self) -> bool:
         """
-        Получить значение. В производных классах этот метод переопределяется
+        Получить значение
         """
         return self.config.getbool(self.section, self.param)
 
@@ -252,7 +253,7 @@ class StcStyleOption(BaseOption):
         """
         super().__init__(config, section, param, defaultValue)
 
-    def _loadValue(self):
+    def _loadValue(self) -> StcStyle:
         """
         Получить значение. В производных классах этот метод переопределяется
         """
@@ -262,7 +263,7 @@ class StcStyleOption(BaseOption):
 
         return style
 
-    def _prepareToWrite(self, val):
+    def _prepareToWrite(self, val: StcStyle) -> str:
         return val.tostr()
 
 
@@ -276,11 +277,11 @@ class DateTimeOption(BaseOption):
     def __init__(self, config, section, param, defaultValue):
         super(DateTimeOption, self).__init__(config, section, param, defaultValue)
 
-    def _loadValue(self):
+    def _loadValue(self) -> datetime.datetime:
         strdate = self.config.get(self.section, self.param)
         return datetime.datetime.strptime(strdate, self.formatDate)
 
-    def _prepareToWrite(self, value):
+    def _prepareToWrite(self, value: datetime.datetime) -> str:
         return datetime.datetime.strftime(value, self.formatDate)
 
 
@@ -295,12 +296,12 @@ class ListOption(BaseOption):
         super().__init__(config, section, param, defaultValue)
         self.__separator = separator
 
-    def _loadValue(self):
+    def _loadValue(self) -> List[str]:
         line = self.config.get(self.section, self.param)
         items = line.split(self.__separator)
         return items
 
-    def _prepareToWrite(self, value):
+    def _prepareToWrite(self, value: List[str]) -> str:
         return self.__separator.join(value)
 
 
@@ -313,7 +314,7 @@ class IntegerOption(BaseOption):
     def __init__(self, config, section, param, defaultValue):
         super().__init__(config, section, param, defaultValue)
 
-    def _loadValue(self):
+    def _loadValue(self) -> int:
         """
         Получить значение. В производных классах этот метод переопределяется
         """
@@ -336,7 +337,7 @@ class StringListSection:
         self._section = section
         self._paramname = "%s{number}" % paramname
 
-    def _loadValue(self):
+    def _loadValue(self) -> List[str]:
         if not self._config.has_section(self._section):
             return []
 
@@ -354,14 +355,14 @@ class StringListSection:
         return result
 
     @property
-    def value(self):
+    def value(self) -> List[str]:
         """
         Возвращает знвчение парамета
         """
         return self._loadValue()
 
     @value.setter
-    def value(self, val):
+    def value(self, val: List[str]):
         """
         Устанавливает значение параметра
         """
