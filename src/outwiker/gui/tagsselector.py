@@ -17,6 +17,7 @@ class TagsSelector(wx.Panel):
 
         self._tagsWidth = 350
         self._tagsHeight = 150
+        self._current_tags = set()
 
         self.label_tags = wx.StaticText(self, -1, _("Tags (comma separated)"))
 
@@ -85,6 +86,7 @@ class TagsSelector(wx.Panel):
 
     def setTagsList(self, tagsList):
         self._tagsCloud.setTags(tagsList)
+        self._updateTagsMark()
 
     def _sendTagsListChangedEvent(self):
         propagationLevel = 10
@@ -93,4 +95,18 @@ class TagsSelector(wx.Panel):
         wx.PostEvent(self, newevent)
 
     def _onTagsChanged(self, _event):
+        self._updateTagsMark()
         self._sendTagsListChangedEvent()
+
+    def _updateTagsMark(self):
+        new_current_tags = set(self.tags)
+        new_tags = new_current_tags - self._current_tags
+        removed_tags = self._current_tags - new_current_tags
+
+        for tag_name in new_tags:
+            self._tagsCloud.mark(tag_name)
+
+        for tag_name in removed_tags:
+            self._tagsCloud.mark(tag_name, False)
+
+        self._current_tags = new_current_tags
