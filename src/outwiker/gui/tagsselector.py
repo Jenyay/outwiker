@@ -68,7 +68,11 @@ class TagsSelector(wx.Panel):
         self.Layout()
 
     def _onTagClick(self, event):
-        self._addTagText(event.text)
+        tag_name = event.text
+        if tag_name not in self.tags:
+            self._addTagText(tag_name)
+        else:
+            self._removeTagText(tag_name)
 
     def _addTagText(self, tagname):
         currentText = self.tagsTextCtrl.GetValue().strip()
@@ -83,6 +87,15 @@ class TagsSelector(wx.Panel):
         self.tagsTextCtrl.SetValue(newtext)
         self.tagsTextCtrl.SetFocus()
         self.tagsTextCtrl.SetSelection(len(newtext), len(newtext))
+
+    def _removeTagText(self, tag_name):
+        tags_list = self.tags[:]
+        if tag_name in tags_list:
+            tags_list.remove(tag_name)
+            text = ", ".join(tags_list)
+            self.tagsTextCtrl.SetValue(text)
+            pos = len(text)
+            self.tagsTextCtrl.SetSelection(pos, pos)
 
     def setTagsList(self, tagsList):
         self._tagsCloud.setTags(tagsList)
