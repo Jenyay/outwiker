@@ -47,6 +47,5 @@ def listComplete_wiki(editor: 'outwiker.gui.texeditor.TextEditor') -> bool:
 
     Returns True if enterPressed() change text else returns False.
     '''
-    # wiki_regexp = r'^[*#]+\s*(\[.?\]\s*)?'
     wiki_regexp = r'^(\*+\s*(\[.?\]\s*)?)|(#+\s*)'
     return listComplete_generic(editor, wiki_regexp)
