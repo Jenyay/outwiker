@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from typing import Tuple
 import wx
 
 from outwiker.gui.baseaction import BaseAction
@@ -29,8 +30,21 @@ class ListItemStyleAction(BaseAction):
         assert self._application.mainWindow.pagePanel is not None
         assert self._application.selectedPage is not None
 
-        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        line_number = editor.GetCurrentLine()
+        # editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        # line_number = editor.GetCurrentLine()
+        # first_line, last_line = editor.GetSelectionLines()
+        # print(first_line, last_line)
+        with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
+            controller = lis.ListItemStyleDialogController(dlg)
+            if controller.ShowModal() == wx.ID_OK:
+                style_str = controller.GetStyle()
+                editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+                # line_number = editor.GetCurrentLine()
+                first_line, last_line = editor.GetSelectionLines()
+                for line_number in range(first_line, last_line + 1):
+                    self._process_line(editor, line_number, style_str)
+
+    def _process_line(self, editor, line_number, style_str):
         line_str = editor.GetLine(line_number)
         cursor_position = editor.GetCurrentPosition()
 
@@ -48,19 +62,20 @@ class ListItemStyleAction(BaseAction):
         if list_token_end == 0:
             prefix = ListToken.unorderList + ' '
 
-        with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
-            controller = lis.ListItemStyleDialogController(dlg)
-            if controller.ShowModal() == wx.ID_OK:
-                style_str = controller.GetStyle()
-                if not list_token_end and style_str:
-                    suffix = ' '
+        # with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
+        #     controller = lis.ListItemStyleDialogController(dlg)
+            # if controller.ShowModal() == wx.ID_OK:
+        # style_str = controller.GetStyle()
+        if not list_token_end and style_str:
+            suffix = ' '
 
-                if list_token_end and not style_str and not suffix:
-                    prefix = ''
+        if list_token_end and not style_str and not suffix:
+            prefix = ''
 
-                insert_str = '{prefix}{style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
+        insert_str = '{prefix}{style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
 
-                new_line_str = line_str[: list_token_end] + insert_str + line_str[list_token_end:]
-                new_position = cursor_position + len(insert_str)
-                editor.SetLine(line_number, new_line_str)
-                editor.SetCurrentPosition(new_position)
+        new_line_str = line_str[: list_token_end] + insert_str + line_str[list_token_end:]
+        editor.SetLine(line_number, new_line_str)
+
+        new_position = cursor_position + len(insert_str)
+        editor.SetCurrentPosition(new_position)
