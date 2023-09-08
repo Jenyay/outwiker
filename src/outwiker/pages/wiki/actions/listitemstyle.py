@@ -30,23 +30,49 @@ class ListItemStyleAction(BaseAction):
         assert self._application.mainWindow.pagePanel is not None
         assert self._application.selectedPage is not None
 
-        # editor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        # line_number = editor.GetCurrentLine()
-        # first_line, last_line = editor.GetSelectionLines()
-        # print(first_line, last_line)
         with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
             controller = lis.ListItemStyleDialogController(dlg)
             if controller.ShowModal() == wx.ID_OK:
                 style_str = controller.GetStyle()
                 editor = self._application.mainWindow.pagePanel.pageView.codeEditor
-                # line_number = editor.GetCurrentLine()
                 first_line, last_line = editor.GetSelectionLines()
+                new_lines_str = []
                 for line_number in range(first_line, last_line + 1):
-                    self._process_line(editor, line_number, style_str)
+                    new_lines_str.append(self._process_line(editor, line_number, style_str))
 
-    def _process_line(self, editor, line_number, style_str):
+                new_text = '\n'.join(new_lines_str)
+                first_line_pos, last_line_pos = self._get_selection_full_lines(editor)
+                editor.SetSelection(first_line_pos, last_line_pos)
+                editor.replaceText(new_text)
+
+    def _get_selection_full_lines(self, editor) -> Tuple[int, int]:
+        startSelection = editor.GetSelectionStart()
+        endSelection = editor.GetSelectionEnd()
+
+        text = editor.GetText()
+
+        if len(text) == 0:
+            return (0, 0)
+
+        firstLinePos = text[:startSelection].rfind("\n")
+        lastLinePos = text[endSelection:].find("\n")
+
+        if firstLinePos == -1:
+            firstLinePos = 0
+        else:
+            firstLinePos += 1
+
+        if lastLinePos == -1:
+            lastLinePos = len(text)
+        else:
+            lastLinePos += endSelection
+
+        return (firstLinePos, lastLinePos)
+
+    def _process_line(self, editor, line_number, style_str) -> str:
         line_str = editor.GetLine(line_number)
-        cursor_position = editor.GetCurrentPosition()
+        if line_str.endswith('\n'):
+            line_str = line_str[:-1]
 
         # Find end of list markers
         list_token_end = 0
@@ -62,10 +88,6 @@ class ListItemStyleAction(BaseAction):
         if list_token_end == 0:
             prefix = ListToken.unorderList + ' '
 
-        # with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
-        #     controller = lis.ListItemStyleDialogController(dlg)
-            # if controller.ShowModal() == wx.ID_OK:
-        # style_str = controller.GetStyle()
         if not list_token_end and style_str:
             suffix = ' '
 
@@ -74,8 +96,4 @@ class ListItemStyleAction(BaseAction):
 
         insert_str = '{prefix}{style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
 
-        new_line_str = line_str[: list_token_end] + insert_str + line_str[list_token_end:]
-        editor.SetLine(line_number, new_line_str)
-
-        new_position = cursor_position + len(insert_str)
-        editor.SetCurrentPosition(new_position)
+        return line_str[: list_token_end] + insert_str + line_str[list_token_end:]
