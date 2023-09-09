@@ -44,7 +44,7 @@ setup(
         'wxPython==4.2.1',
         'Pillow==9.5.0',
         'idna>=2.10',
-        'pyparsing==3.0.9',
+        'pyparsing==3.1.1',
         'psutil>=5.9.5',
         'rcssmin>=1.1'
     ],
