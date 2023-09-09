@@ -20,10 +20,10 @@ rcssmin = "==1.1.1"
 invoke = "==2.1.1"
 cx-freeze = "==6.14.9"
 pympler = "==1.0.1"
-pytest = ">=7.1"
-coverage = ">=6.4"
+pytest = ">=7.4"
+coverage = ">=7.3"
 jinja2 = ">=3.1"
 colorama = "==0.4.6"
-sphinx = ">=7.0"
+sphinx = ">=7.2"
 outwiker = {editable = true, path = "."}
 buildtools = {editable = true, path = "./buildtools"}
