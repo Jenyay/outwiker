@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 from typing import Tuple
 import wx
 
@@ -74,14 +75,12 @@ class ListItemStyleAction(BaseAction):
         if line_str.endswith('\n'):
             line_str = line_str[:-1]
 
-        # Find end of list markers
-        list_token_end = 0
-        while list_token_end < len(line_str):
-            substr = line_str[list_token_end:]
-            if substr.startswith(ListToken.unorderList):
-                list_token_end += len(ListToken.unorderList)
-            else:
-                break
+        list_token_re = re.compile(r"^\*+(?P<style>\s*\[.?\])?")
+        match = list_token_re.search(line_str)
+        list_token_end = match.end(0) if match is not None else 0
+        style_token_start = match.start("style") if match is not None else list_token_end
+        if style_token_start == -1:
+            style_token_start = list_token_end
 
         prefix = ' '
         suffix = ''
@@ -96,4 +95,4 @@ class ListItemStyleAction(BaseAction):
 
         insert_str = '{prefix}{style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
 
-        return line_str[: list_token_end] + insert_str + line_str[list_token_end:]
+        return line_str[: style_token_start] + insert_str + line_str[list_token_end:]

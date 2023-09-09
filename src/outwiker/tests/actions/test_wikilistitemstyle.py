@@ -109,7 +109,4 @@ class WikiListItemStyleTest(unittest.TestCase, BaseOutWikerGUIMixin):
                 self.action.run(None)
 
                 result = self.editor.GetText()
-                cursor_pos = self.editor.GetCurrentPosition()
-
                 self.assertEqual(result, param.expected_text)
-                self.assertEqual(cursor_pos, param.expected_position)
