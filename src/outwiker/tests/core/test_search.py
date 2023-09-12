@@ -371,8 +371,8 @@ class SearchPageTest(unittest.TestCase):
         self.assertNotEqual(page, None)
         self.assertEqual(page.phrase, "декабрь")
         self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("Метка 1" in page.searchTags)
-        self.assertTrue("Метка 2" in page.searchTags)
+        self.assertTrue("метка 1" in page.searchTags)
+        self.assertTrue("метка 2" in page.searchTags)
         self.assertEqual(page.strategy, AllTagsSearchStrategy)
 
     def testManySearchPages1(self):
@@ -391,8 +391,8 @@ class SearchPageTest(unittest.TestCase):
         self.assertNotEqual(page, None)
         self.assertEqual(page.phrase, "декабрь")
         self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("Метка 1" in page.searchTags)
-        self.assertTrue("Метка 2" in page.searchTags)
+        self.assertTrue("метка 1" in page.searchTags)
+        self.assertTrue("метка 2" in page.searchTags)
         self.assertEqual(page.strategy, AllTagsSearchStrategy)
 
     def testManySearchPages2(self):
@@ -409,8 +409,8 @@ class SearchPageTest(unittest.TestCase):
         self.assertNotEqual(page, None)
         self.assertEqual(page.phrase, "декабрь")
         self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("Метка 1" in page.searchTags)
-        self.assertTrue("Метка 2" in page.searchTags)
+        self.assertTrue("метка 1" in page.searchTags)
+        self.assertTrue("метка 2" in page.searchTags)
         self.assertEqual(page.strategy, AllTagsSearchStrategy)
 
     def testManySearchPages3(self):
@@ -431,8 +431,8 @@ class SearchPageTest(unittest.TestCase):
         self.assertNotEqual(page, None)
         self.assertEqual(page.phrase, "декабрь")
         self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("Метка 1" in page.searchTags)
-        self.assertTrue("Метка 2" in page.searchTags)
+        self.assertTrue("метка 1" in page.searchTags)
+        self.assertTrue("метка 2" in page.searchTags)
         self.assertEqual(page.strategy, AllTagsSearchStrategy)
 
     def testSetPhrase(self):

@@ -56,7 +56,7 @@ class TagsListTest(unittest.TestCase):
         self.assertEqual(len(tags), 3)
 
         self.assertIn("метка 1", tags)
-        self.assertIn("Метка 2", tags)
+        self.assertIn("метка 2", tags)
         self.assertIn("метка 3", tags)
 
     def testAppendTag(self):

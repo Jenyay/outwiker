@@ -33,7 +33,7 @@ class TagsSelector(wx.Panel):
 
     @property
     def tags(self):
-        tagsString = self.tagsTextCtrl.GetValue().strip()
+        tagsString = self.tagsTextCtrl.GetValue().strip().lower()
         tags = parseTagsList(tagsString)
         return tags
 

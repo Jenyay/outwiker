@@ -9,7 +9,7 @@ def parseTagsList(tagsString: str) -> List[str]:
     """
     Преобразовать строку тегов, разделенных запятой, в список
     """
-    tags = [tag.strip() for tag in tagsString.split(",")
+    tags = [tag.strip() for tag in tagsString.lower().split(",")
             if len(tag.strip()) > 0]
 
     return tags
