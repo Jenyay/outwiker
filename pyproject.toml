@@ -1,3 +1,53 @@
+[project]
+name = "outwiker"
+version = "3.3.0.927"
+description = "A cross-platform software for keeping your notes in a tree"
+authors = [
+	{name = "Eugene Ilin (aka Jenyay)", email = "jenyay.ilin@gmail.com"},
+]
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+keywords = ["outliner", "notepad", "notes", "wiki"]
+requires-python = ">=3.8"
+dependencies = [
+	"wxPython==4.2.1",
+	"Pillow==9.5.0",
+	"idna>=2.10",
+	"pyparsing==3.1.1",
+	"psutil>=5.9.5",
+	"rcssmin>=1.1"
+]
+classifiers=[
+	"Development Status :: 4 - Beta",
+	"License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+	"Natural Language :: English",
+	"Natural Language :: Russian",
+	"Natural Language :: Ukrainian",
+	"Natural Language :: Swedish",
+	"Natural Language :: German",
+	"Operating System :: Microsoft :: Windows :: Windows 7",
+	"Operating System :: Microsoft :: Windows :: Windows 10",
+	"Operating System :: Microsoft :: Windows :: Windows 11",
+	"Operating System :: Unix",
+	"Programming Language :: Python",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3 :: Only",
+	"Programming Language :: Python :: 3.8",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Topic :: Desktop Environment :: File Managers",
+	"Topic :: Office/Business",
+	"Topic :: Text Editors",
+	"Topic :: Text Processing :: Markup",
+]
+#dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://jenyay.net/Outwiker/English"
+Documentation = "https://outwiker.readthedocs.io/"
+Repository = "https://github.com/Jenyay/outwiker"
+
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta:__legacy__"

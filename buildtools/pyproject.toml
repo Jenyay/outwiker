@@ -1,3 +1,32 @@
+[project]
+name='owbuildtools'
+version='0.1'
+description='Build tools for OutWiker'
+authors = [
+	{name = "Eugene Ilin (aka Jenyay)", email = "jenyay.ilin@gmail.com"},
+]
+classifiers=[
+	'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+	'Natural Language :: English',
+	'Operating System :: Microsoft :: Windows :: Windows 7',
+	'Operating System :: Microsoft :: Windows :: Windows 10',
+	'Operating System :: Microsoft :: Windows :: Windows 11',
+	'Operating System :: Unix',
+	'Programming Language :: Python',
+	'Programming Language :: Python :: 3',
+	'Programming Language :: Python :: 3 :: Only',
+	'Programming Language :: Python :: 3.8',
+	'Programming Language :: Python :: 3.9',
+	'Programming Language :: Python :: 3.10',
+	'Programming Language :: Python :: 3.11',
+]
+requires-python = ">=3.8"
+dependencies = [
+	'colorama>=0.4',
+	'outwiker>=3.3'
+]
+
+
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta:__legacy__"
