@@ -70,15 +70,15 @@ class TagsCloud(wx.Panel):
         self.SetMinSize((150, 150))
         self._main_sizer = wx.FlexGridSizer(cols=1)
         self._main_sizer.AddGrowableCol(0)
-        self._main_sizer.AddGrowableRow(0)
+        self._main_sizer.AddGrowableRow(1)
 
         self._tags_panel = wx.ScrolledWindow(self)
         self._tags_panel.SetScrollRate(0, 0)
 
         self._search_ctrl = wx.SearchCtrl(self)
 
-        self._main_sizer.Add(self._tags_panel, flag=wx.EXPAND | wx.ALL, border=4)
         self._main_sizer.Add(self._search_ctrl, flag=wx.EXPAND | wx.ALL, border=4)
+        self._main_sizer.Add(self._tags_panel, flag=wx.EXPAND | wx.ALL, border=4)
 
         self.SetSizer(self._main_sizer)
 

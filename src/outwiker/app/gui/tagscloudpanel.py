@@ -101,7 +101,7 @@ class TagsCloudPanel(wx.Panel):
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
-        mainSizer.Add(self._tagscloud, 0, wx.EXPAND)
+        mainSizer.Add(self._tagscloud, flag=wx.EXPAND)
         self.SetSizer(mainSizer)
 
     def SetBackgroundColour(self, colour):
