@@ -6,7 +6,7 @@ from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK
 
 class SingleTagSelector(TagsCloud):
     def __init__(self, parent):
-        super(SingleTagSelector, self).__init__(parent)
+        super().__init__(parent, use_buttons=False)
 
         self.__selectedTag = None
         self.Bind(EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
