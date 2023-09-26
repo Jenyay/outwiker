@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.3.0.927" status="beta">
-        <changes>
+    <version number="3.3.0.928" status="beta" date="2023-09-30">
+		<changes>
+			<change>Changed tags cloud design.</change>
+			<change>Added the ability to filter tags.</change>
+			<change>Added the ability to display the tags cloud as a list.</change>
+			<change>Improvements in working with list item styles.</change>
         </changes>
 
-        <changes lang="ru">
+		<changes lang="ru">
+			<change>Новый дизайн облака меток.</change>
+			<change>Добавлена возможность фильтрации меток.</change>
+			<change>Добавлена возможность отображения облака меток в виде списка.</change>
+			<change>Улучшения в работе со стилями элементов списка.</change>
         </changes>
     </version>
 
