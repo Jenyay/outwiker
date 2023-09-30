@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="3.3.0.929" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="3.3.0.928" status="beta" date="2023-09-30">
 		<changes>
 			<change>Changed tags cloud design.</change>
