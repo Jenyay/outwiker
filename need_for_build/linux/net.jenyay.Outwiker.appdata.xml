@@ -6,7 +6,11 @@
   <name>Outwiker</name>
   <launchable type="desktop-id">net.jenyay.Outwiker.desktop</launchable>
   <summary>Personal wiki and outliner.</summary>
-  <description>OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors. OutWiker's main difference from the other similar programs is keeping the tree of notes in the form of directories on disk, and encouraging changing the base by external sources and programs.</description>
+  <description>
+    <p>
+      OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors. OutWiker's main difference from the other similar programs is keeping the tree of notes in the form of directories on disk, and encouraging changing the base by external sources and programs.
+    </p>
+  </description>
   <categories>
     <category>Office</category>
   </categories>
