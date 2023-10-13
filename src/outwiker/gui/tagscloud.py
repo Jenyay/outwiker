@@ -50,8 +50,15 @@ class TagsCloud(wx.Panel):
 
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
         self._tags_panel.Bind(wx.EVT_SIZE, self.__onSize)
+        self._tags_panel.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
+
+    def _onPaint(self, event):
+        # dc = wx.PaintDC(self._tags_panel)
+        with wx.PaintDC(self._tags_panel) as dc:
+            for label in self._labels.values():
+                label.onPaint(dc)
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min_font_size
@@ -162,11 +169,11 @@ class TagsCloud(wx.Panel):
         for tag in self._tags:
             label = self._labels[tag]
 
-            if self._enable_tooltips:
-                tooltip = _("Number of notes: {}").format(len(self._tags[tag]))
-                label.SetToolTip(tooltip)
-            else:
-                label.UnsetToolTip()
+            # if self._enable_tooltips:
+            #     tooltip = _("Number of notes: {}").format(len(self._tags[tag]))
+            #     label.SetToolTip(tooltip)
+            # else:
+            #     label.UnsetToolTip()
 
 
     def _filter_tag_labels(self):
@@ -205,8 +212,8 @@ class TagsCloud(wx.Panel):
         return self._labels[tag].isMarked
 
     def clear(self):
-        for label in self._labels.values():
-            label.Destroy()
+        # for label in self._labels.values():
+        #     label.Destroy()
 
         self._labels = {}
         self._tags = None
@@ -273,6 +280,8 @@ class TagsCloud(wx.Panel):
             self.__moveLabelsAsList()
         else:
             self.__moveLabelsContinuous()
+
+        self.Refresh()
 
     def __moveLabelsAsList(self):
         stepy = list(self._labels.values())[0].GetSize()[1] + self._gapy

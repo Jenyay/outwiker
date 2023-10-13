@@ -10,7 +10,7 @@ TagAddEvent, EVT_TAG_ADD = wx.lib.newevent.NewEvent()
 TagRemoveEvent, EVT_TAG_REMOVE = wx.lib.newevent.NewEvent()
 
 
-class TagLabel2(wx.Control):
+class TagLabel2:
     def __init__(
         self,
         parent,
@@ -18,14 +18,21 @@ class TagLabel2(wx.Control):
         use_buttons: bool = True,
         min_font_size: int = 8,
         max_font_size: int = 16,
+        x = 0,
+        y = 0,
     ):
-        super().__init__(parent, style=wx.BORDER_NONE)
-
+        self._parent = parent
         self._label = label
         self._use_buttons = use_buttons
         self._is_marked = False
         self._is_hover = False
         self._is_hover_button = False
+
+        self._x = x
+        self._y = y
+        self._width = 0
+        self._height = 0
+        self._visible = True
 
         self._propagationLevel = 10
         self._ratio = 1.0
@@ -54,13 +61,23 @@ class TagLabel2(wx.Control):
 
         self.setFontSize(min_font_size, max_font_size)
 
-        self.Bind(wx.EVT_PAINT, handler=self._onPaint)
-        self.Bind(wx.EVT_ENTER_WINDOW, handler=self._onMouseEnter)
-        self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeave)
-        self.Bind(wx.EVT_MOTION, handler=self._onMouseMotion)
-        self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
-        self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
-        self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
+        # self.Bind(wx.EVT_PAINT, handler=self._onPaint)
+        # self.Bind(wx.EVT_ENTER_WINDOW, handler=self._onMouseEnter)
+        # self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeave)
+        # self.Bind(wx.EVT_MOTION, handler=self._onMouseMotion)
+        # self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
+        # self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
+        # self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
+
+    def Move(self, x: int, y: int):
+        self._x = x
+        self._y = y
+
+    def GetSize(self) -> Tuple[int, int]:
+        return (self._width, self._height)
+
+    def Show(self, visible=True):
+        self._visible = visible
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min(min_font_size, max_font_size)
@@ -71,7 +88,7 @@ class TagLabel2(wx.Control):
         return self._calc_text_size("Q", self._max_font_size)[1]
 
     def _calc_text_size(self, text: str, font_size: int) -> Tuple[int, int]:
-        with wx.ClientDC(self) as dc:
+        with wx.ClientDC(self._parent) as dc:
             font = wx.Font(wx.FontInfo(font_size))
             dc.SetFont(font)
             return dc.GetTextExtent(text)
@@ -123,7 +140,7 @@ class TagLabel2(wx.Control):
             self._arc_width + self._margin_left + self._text_width + self._margin_right
         )
 
-        self.SetClientSize(self._width, self._height)
+        # self.SetClientSize(self._width, self._height)
 
     def _get_current_font(self):
         return wx.Font(wx.FontInfo(self._font_size))
@@ -155,8 +172,15 @@ class TagLabel2(wx.Control):
         if old_value != value:
             self.Refresh()
 
-    def _onPaint(self, event):
-        dc = wx.PaintDC(self)
+    def Refresh(self):
+        with wx.ClientDC(self._parent) as dc:
+            self.onPaint(dc)
+
+    def onPaint(self, dc):
+        x0 = self._x
+        y0 = self._y
+        dc.SetDeviceOrigin(x0, y0)
+        # dc.SetLogicalOrigin(10, 10)
 
         # Draw background
         dc.SetBrush(wx.Brush(self._back_color))
@@ -295,7 +319,7 @@ class TagLabel2(wx.Control):
     def _sendTagEvent(self, eventType):
         newevent = eventType(text=self._label)
         newevent.ResumePropagation(self._propagationLevel)
-        wx.PostEvent(self.GetParent(), newevent)
+        wx.PostEvent(self._parent, newevent)
 
     def _get_font_color(self) -> wx.Colour:
         if self._is_marked and not self._is_hover:
