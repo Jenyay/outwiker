@@ -30,6 +30,21 @@ from blockdiag.utils.fontmap import FontMap, parse_fontpath
 from blockdiag.utils.myitertools import istep, stepslice
 
 
+# to support pillow < 9.1.0
+if not hasattr(Image, 'Resampling'):
+    from enum import IntEnum
+
+    class Resampling(IntEnum):
+        NEAREST = 0
+        BOX = 4
+        BILINEAR = 2
+        HAMMING = 5
+        BICUBIC = 3
+        LANCZOS = 1
+
+    Image.Resampling = Resampling
+
+
 def point_pairs(xylist):
     iterable = iter(xylist)
     for pt in iterable:
@@ -147,7 +162,7 @@ class ImageDrawExBase(base.ImageDraw):
         self.draw = ImageDraw.Draw(self._image)
 
     def resizeCanvas(self, size):
-        self._image = self._image.resize(size, Image.ANTIALIAS)
+        self._image = self._image.resize(size, Image.Resampling.LANCZOS)
         self.draw = ImageDraw.Draw(self._image)
 
     def arc(self, box, start, end, **kwargs):
@@ -273,13 +288,21 @@ class ImageDrawExBase(base.ImageDraw):
     def textlinesize(self, string, font):
         ttfont = ttfont_for(font)
         if ttfont is None:
-            size = self.draw.textsize(string, font=None)
+            if hasattr(self.draw, 'textbbox'):
+                left, top, right, bottom = self.draw.textbbox((0, 0), string)
+                size = (right - left, bottom - top)
+            else:
+                size = self.draw.textsize(string, font=None)
 
             font_ratio = font.size * 1.0 / FontMap.BASE_FONTSIZE
             size = Size(int(size[0] * font_ratio),
                         int(size[1] * font_ratio))
         else:
-            size = Size(*ttfont.getsize(string))
+            if hasattr(ttfont, 'getbbox'):
+                left, top, right, bottom = ttfont.getbbox(string)
+                size = Size(right - left, bottom - top)
+            else:
+                size = Size(*ttfont.getsize(string))
 
         return size
 
@@ -291,7 +314,11 @@ class ImageDrawExBase(base.ImageDraw):
             if self.scale_ratio == 1 and font.size == FontMap.BASE_FONTSIZE:
                 self.draw.text(xy, string, fill=fill)
             else:
-                size = self.draw.textsize(string)
+                if hasattr(self.draw, 'textbbox'):
+                    left, top, right, bottom = self.draw.textbbox((0, 0), string)
+                    size = (right - left, bottom - top)
+                else:
+                    size = self.draw.textsize(string)
                 image = Image.new('RGBA', size)
                 draw = ImageDraw.Draw(image)
                 draw.text((0, 0), string, fill=fill)
@@ -299,10 +326,14 @@ class ImageDrawExBase(base.ImageDraw):
 
                 basesize = (size[0] * self.scale_ratio,
                             size[1] * self.scale_ratio)
-                text_image = image.resize(basesize, Image.ANTIALIAS)
+                text_image = image.resize(basesize, Image.Resampling.LANCZOS)
                 self.paste(text_image, xy, text_image)
         else:
-            size = ttfont.getsize(string)
+            if hasattr(ttfont, 'getbbox'):
+                left, top, right, bottom = ttfont.getbbox(string)
+                size = (right - left, bottom - top)
+            else:
+                size = ttfont.getsize(string)
 
             # Generate mask to support BDF(bitmap font)
             mask = Image.new('1', size)
@@ -370,7 +401,7 @@ class ImageDrawExBase(base.ImageDraw):
             # resize image.
             w = min([box.width, image.size[0] * self.scale_ratio])
             h = min([box.height, image.size[1] * self.scale_ratio])
-            image.thumbnail((w, h), Image.ANTIALIAS)
+            image.thumbnail((w, h), Image.Resampling.LANCZOS)
 
             # centering image.
             w, h = image.size
@@ -404,7 +435,7 @@ class ImageDrawExBase(base.ImageDraw):
             y = int(self._image.size[1] / self.scale_ratio)
             size = (x, y)
 
-        self._image.thumbnail(size, Image.ANTIALIAS)
+        self._image.thumbnail(size, Image.Resampling.LANCZOS)
 
         if self.filename:
             self._image.save(self.filename, _format)

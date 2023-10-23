@@ -8,7 +8,7 @@ name = "pypi"
 [packages]
 attrdict3 = "==2.0.2"
 wxPython = "==4.2.1"
-Pillow = "==9.5.0"
+Pillow = "==10.1.0"
 cacheman = {version = "==2.1.0.post1", path = "depends/cacheman"}
 cyhunspell = {version = "==2.0.3.post1", path = "depends/cyhunspell"}
 idna = ">=2.10"
