@@ -27,6 +27,8 @@ class TagsCloud(wx.Panel):
         self._mode = mode
         self._enable_tooltips = enable_tooltips
 
+        self._back_color = wx.Colour("#FFFFFF")
+
         # Отступ от края окна
         self._margin = 4
 
@@ -55,10 +57,21 @@ class TagsCloud(wx.Panel):
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
 
     def _onPaint(self, event):
-        # dc = wx.PaintDC(self._tags_panel)
         with wx.PaintDC(self._tags_panel) as dc:
+            dc.SetBrush(wx.Brush(self._back_color))
+            dc.SetPen(wx.Pen(self._back_color))
+            height = self._tags_panel.GetClientSize()[1]
+            virtual_width, virtual_height = self._tags_panel.GetVirtualSize()
+            dc.DrawRectangle(0, 0, virtual_width, virtual_height)
+
+            scroll_y = self._tags_panel.GetScrollPos(wx.VERTICAL) * self._tags_panel.GetScrollPixelsPerUnit()[1]
+            # clip_rect = dc.GetClippingRect()
+
             for label in self._labels.values():
-                label.onPaint(dc)
+                x_min, y_min = label.getPosition()
+                y_max = label.getPositionMax()[1]
+                if y_min <= scroll_y + height and y_max >= scroll_y:
+                    label.onPaint(dc, x_min, y_min - scroll_y)
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min_font_size
@@ -283,8 +296,11 @@ class TagsCloud(wx.Panel):
 
         self.Refresh()
 
+    def _getScrollStepY(self) -> int:
+        return list(self._labels.values())[0].getSize()[1] + self._gapy
+
     def __moveLabelsAsList(self):
-        stepy = list(self._labels.values())[0].GetSize()[1] + self._gapy
+        stepy = self._getScrollStepY()
 
         for line, tagname in enumerate(self._filtered_tags):
             label = self._labels[tagname]
@@ -295,7 +311,7 @@ class TagsCloud(wx.Panel):
         self._tags_panel.SetScrollbars(0, lineheight, 0, len(self._filtered_tags))
 
     def __moveLabelsContinuous(self):
-        stepy = list(self._labels.values())[0].GetSize()[1] + self._gapy
+        stepy = list(self._labels.values())[0].getSize()[1] + self._gapy
 
         # Метки, расположенные на текущей строке
         currentLine = []
@@ -310,7 +326,7 @@ class TagsCloud(wx.Panel):
         for tagname in self._filtered_tags:
             label = self._labels[tagname]
 
-            newRightBorder = currentx + label.GetSize()[0]
+            newRightBorder = currentx + label.getSize()[0]
 
             if newRightBorder > maxwidth and len(currentLine) != 0:
                 currentx = self._margin
@@ -323,7 +339,7 @@ class TagsCloud(wx.Panel):
             label.Refresh()
 
             currentLine.append(label)
-            currentx += label.GetSize()[0] + self._gapx
+            currentx += label.getSize()[0] + self._gapx
 
         lineheight = stepy
         self._tags_panel.SetScrollbars(0, lineheight, 0, linesCount)

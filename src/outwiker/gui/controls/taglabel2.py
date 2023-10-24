@@ -73,11 +73,20 @@ class TagLabel2:
         self._x = x
         self._y = y
 
-    def GetSize(self) -> Tuple[int, int]:
+    def getSize(self) -> Tuple[int, int]:
         return (self._width, self._height)
+
+    def getPosition(self) -> Tuple[int, int]:
+        return (self._x, self._y)
+
+    def getPositionMax(self) -> Tuple[int, int]:
+        return (self._x + self._width, self._y + self._height)
 
     def Show(self, visible=True):
         self._visible = visible
+
+    def getLabel(self) -> str:
+        return self._label
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min(min_font_size, max_font_size)
@@ -173,14 +182,14 @@ class TagLabel2:
             self.Refresh()
 
     def Refresh(self):
-        with wx.ClientDC(self._parent) as dc:
-            self.onPaint(dc)
+        self._parent.Refresh()
+        # with wx.ClientDC(self._parent) as dc:
+        #     self.onPaint(dc)
 
-    def onPaint(self, dc):
-        x0 = self._x
-        y0 = self._y
+    def onPaint(self, dc, x0, y0):
+        # x0 = self._x
+        # y0 = self._y
         dc.SetDeviceOrigin(x0, y0)
-        # dc.SetLogicalOrigin(10, 10)
 
         # Draw background
         dc.SetBrush(wx.Brush(self._back_color))
