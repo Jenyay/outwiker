@@ -27,7 +27,7 @@ class TagsCloud(wx.Panel):
         self._mode = mode
         self._enable_tooltips = enable_tooltips
 
-        self._back_color = wx.Colour("#FFFFFF")
+        # self._back_color = wx.Colour("#FFFFFF")
 
         # Отступ от края окна
         self._margin = 4
@@ -58,20 +58,24 @@ class TagsCloud(wx.Panel):
 
     def _onPaint(self, event):
         with wx.PaintDC(self._tags_panel) as dc:
-            dc.SetBrush(wx.Brush(self._back_color))
-            dc.SetPen(wx.Pen(self._back_color))
-            height = self._tags_panel.GetClientSize()[1]
-            virtual_width, virtual_height = self._tags_panel.GetVirtualSize()
-            dc.DrawRectangle(0, 0, virtual_width, virtual_height)
+            # dc.SetBrush(wx.Brush(self._back_color))
+            # dc.SetPen(wx.Pen(self._back_color))
+            # virtual_width, virtual_height = self._tags_panel.GetVirtualSize()
+            # dc.DrawRectangle(0, 0, virtual_width, virtual_height)
 
-            scroll_y = self._tags_panel.GetScrollPos(wx.VERTICAL) * self._tags_panel.GetScrollPixelsPerUnit()[1]
             # clip_rect = dc.GetClippingRect()
+            height = self._tags_panel.GetClientSize()[1]
+            y_min = self._tags_panel.GetScrollPos(wx.VERTICAL) * self._tags_panel.GetScrollPixelsPerUnit()[1]
+            y_max = y_min + height
 
             for label in self._labels.values():
-                x_min, y_min = label.getPosition()
-                y_max = label.getPositionMax()[1]
-                if y_min <= scroll_y + height and y_max >= scroll_y:
-                    label.onPaint(dc, x_min, y_min - scroll_y)
+                label_x_min, label_y_min = label.getPosition()
+                label_y_max = label.getPositionMax()[1]
+                if label_y_min <= y_max and label_y_max >= y_min:
+                    label.onPaint(dc, label_x_min, label_y_min - y_min)
+
+                if label_y_min > y_max:
+                    break
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min_font_size
