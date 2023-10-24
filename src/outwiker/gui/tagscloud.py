@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
+from collections.abc import Iterable
 
 import wx
 
@@ -48,13 +49,72 @@ class TagsCloud(wx.Panel):
         # Ключ - имя метки, значение - контрол, отображающий эту метку
         self._labels: Dict[str, TagLabel2] = {}
 
+        self._prevLabelHovered: Optional[TagLabel2] = None
+
         self._create_gui()
 
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
         self._tags_panel.Bind(wx.EVT_SIZE, self.__onSize)
         self._tags_panel.Bind(wx.EVT_PAINT, handler=self._onPaint)
+        self._tags_panel.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
+
+    def _findLabel(self, x, y) -> Optional[TagLabel2]:
+        result = None
+
+        for label in self._labels.values():
+            if not label.isVisible():
+                continue
+
+            label_x_min, label_y_min = label.getPosition()
+            label_x_max, label_y_max = label.getPositionMax()
+            if (y >= label_y_min and y <= label_y_max and
+                    x >= label_x_min and x <= label_x_max):
+                result = label
+                break
+
+            if y < label_y_min:
+                break
+
+        return result
+
+    def _onMouseMove(self, event):
+        changed_labels: List[TagLabel2] = []
+        scroll_y = self._getScrolledY()[0]
+
+        label = self._findLabel(event.GetX(), event.GetY() + scroll_y)
+
+        if (self._prevLabelHovered is not None and 
+                label is not self._prevLabelHovered):
+            self._prevLabelHovered.setHover(False)
+            changed_labels.append(self._prevLabelHovered)
+
+        if label is not None and label is not self._prevLabelHovered:
+            label.setHover(True)
+            changed_labels.append(label)
+
+        self._prevLabelHovered = label
+        with wx.ClientDC(self._tags_panel) as dc:
+            self._repaintLabels(changed_labels, dc)
+
+    def _getScrolledY(self) -> Tuple[int, int]:
+        ymin = self._tags_panel.GetScrollPos(wx.VERTICAL) * self._tags_panel.GetScrollPixelsPerUnit()[1]
+        ymax = ymin + self._tags_panel.GetClientSize()[1]
+        return (ymin, ymax)
+
+    def _repaintLabels(self, labels: Iterable, dc: wx.DC):
+        y_min, y_max = self._getScrolledY()
+
+        for label in labels:
+            label_x_min, label_y_min = label.getPosition()
+            label_y_max = label.getPositionMax()[1]
+            if label_y_min <= y_max and label_y_max >= y_min:
+                label.onPaint(dc, label_x_min, label_y_min - y_min)
+
+            if label_y_min > y_max:
+                break
+
 
     def _onPaint(self, event):
         with wx.PaintDC(self._tags_panel) as dc:
@@ -64,18 +124,17 @@ class TagsCloud(wx.Panel):
             # dc.DrawRectangle(0, 0, virtual_width, virtual_height)
 
             # clip_rect = dc.GetClippingRect()
-            height = self._tags_panel.GetClientSize()[1]
-            y_min = self._tags_panel.GetScrollPos(wx.VERTICAL) * self._tags_panel.GetScrollPixelsPerUnit()[1]
-            y_max = y_min + height
+            # y_min, y_max = self._getScrolledY()
 
-            for label in self._labels.values():
-                label_x_min, label_y_min = label.getPosition()
-                label_y_max = label.getPositionMax()[1]
-                if label_y_min <= y_max and label_y_max >= y_min:
-                    label.onPaint(dc, label_x_min, label_y_min - y_min)
+            # for label in self._labels.values():
+            #     label_x_min, label_y_min = label.getPosition()
+            #     label_y_max = label.getPositionMax()[1]
+            #     if label_y_min <= y_max and label_y_max >= y_min:
+            #         label.onPaint(dc, label_x_min, label_y_min - y_min)
 
-                if label_y_min > y_max:
-                    break
+            #     if label_y_min > y_max:
+            #         break
+            self._repaintLabels(self._labels.values(), dc)
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min_font_size
@@ -142,6 +201,7 @@ class TagsCloud(wx.Panel):
         self._create_tag_labels()
         self._filter_tag_labels()
         self._tags_panel.Scroll(-1, oldy)
+        self._prevLabelHover = None
         self.Thaw()
 
     def setFilter(self, tags_filter: str):
@@ -198,8 +258,8 @@ class TagsCloud(wx.Panel):
             return
 
         for tag_name in self._tags:
-            tag_ctrl = self._labels[tag_name]
-            tag_ctrl.Show(tag_name in self._filtered_tags)
+            label = self._labels[tag_name]
+            label.Show(tag_name in self._filtered_tags)
 
         self._layoutTags()
 

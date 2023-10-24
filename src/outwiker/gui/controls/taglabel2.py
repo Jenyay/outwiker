@@ -69,6 +69,15 @@ class TagLabel2:
         # self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
         # self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
 
+    def isHover(self) -> bool:
+        return self._is_hover
+
+    def setHover(self, value: bool):
+        self._is_hover = value
+
+    def isVisible(self) -> bool:
+        return self._visible
+
     def Move(self, x: int, y: int):
         self._x = x
         self._y = y
@@ -187,6 +196,9 @@ class TagLabel2:
         #     self.onPaint(dc)
 
     def onPaint(self, dc, x0, y0):
+        if not self._visible:
+            return
+
         # x0 = self._x
         # y0 = self._y
         dc.SetDeviceOrigin(x0, y0)
@@ -296,34 +308,34 @@ class TagLabel2:
         dc.SetPen(wx.Pen(self._marked_hover_border_color))
         dc.DrawLine(border_x, 0, border_x, self._height)
 
-    def _onMouseEnter(self, event):
-        self._is_hover = True
-        self._is_hover_button = event.GetX() <= self._button_border_x
-        self.Refresh()
+    # def _onMouseEnter(self, event):
+    #     self._is_hover = True
+    #     self._is_hover_button = event.GetX() <= self._button_border_x
+    #     self.Refresh()
 
-    def _onMouseLeave(self, event):
-        self._is_hover = False
-        self._is_hover_button = False
-        self.Refresh()
+    # def _onMouseLeave(self, event):
+    #     self._is_hover = False
+    #     self._is_hover_button = False
+    #     self.Refresh()
 
-    def _onMouseMotion(self, event):
-        new_is_hover_button = event.GetX() <= self._button_border_x
-        if new_is_hover_button != self._is_hover_button:
-            self._is_hover_button = new_is_hover_button
-            self.Refresh()
+    # def _onMouseMotion(self, event):
+    #     new_is_hover_button = event.GetX() <= self._button_border_x
+    #     if new_is_hover_button != self._is_hover_button:
+    #         self._is_hover_button = new_is_hover_button
+    #         self.Refresh()
 
-    def _onLeftMouseClick(self, event):
-        x = event.GetX()
-        if self._use_buttons and x <= self._button_border_x:
-            self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
-        else:
-            self._sendTagEvent(TagLeftClickEvent)
+    # def _onLeftMouseClick(self, event):
+    #     x = event.GetX()
+    #     if self._use_buttons and x <= self._button_border_x:
+    #         self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
+    #     else:
+    #         self._sendTagEvent(TagLeftClickEvent)
 
-    def _onRightMouseClick(self, event):
-        self._sendTagEvent(TagRightClickEvent)
+    # def _onRightMouseClick(self, event):
+    #     self._sendTagEvent(TagRightClickEvent)
 
-    def _onMiddleMouseClick(self, event):
-        self._sendTagEvent(TagMiddleClickEvent)
+    # def _onMiddleMouseClick(self, event):
+    #     self._sendTagEvent(TagMiddleClickEvent)
 
     def _sendTagEvent(self, eventType):
         newevent = eventType(text=self._label)
