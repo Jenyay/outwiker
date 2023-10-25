@@ -80,10 +80,13 @@ class TagsCloud(wx.Panel):
 
         return result
 
+    def _getMouseCoord(self, event) -> Tuple[int, int]:
+        return (event.GetX(), event.GetY() + self._getScrolledY()[0])
+
     def _onMouseMove(self, event):
         changed_labels: List[TagLabel2] = []
-        scroll_y = self._getScrolledY()[0]
-        label = self._findLabel(event.GetX(), event.GetY() + scroll_y)
+        x, y = self._getMouseCoord(event)
+        label = self._findLabel(x, y)
 
         if (self._prevLabelHovered is not None and 
                 label is not self._prevLabelHovered):
@@ -98,28 +101,26 @@ class TagsCloud(wx.Panel):
         with wx.ClientDC(self._tags_panel) as dc:
             self._repaintLabels(changed_labels, dc)
 
+        if label is not None:
+            label_x, label_y = label.getPosition()
+            label.onMouseMove(x - label_x, y - label_y)
+
     def _onLeftMouseClick(self, event):
-        scroll_y = self._getScrolledY()[0]
-        x = event.GetX()
-        y = event.GetY() + scroll_y
+        x, y = self._getMouseCoord(event)
         label = self._findLabel(x, y)
         if label is not None:
             label_x, label_y = label.getPosition()
             label.onLeftMouseClick(x - label_x, y - label_y)
 
     def _onRightMouseClick(self, event):
-        scroll_y = self._getScrolledY()[0]
-        x = event.GetX()
-        y = event.GetY() + scroll_y
+        x, y = self._getMouseCoord(event)
         label = self._findLabel(x, y)
         if label is not None:
             label_x, label_y = label.getPosition()
             label.onRightMouseClick(x - label_x, y - label_y)
 
     def _onMiddleMouseClick(self, event):
-        scroll_y = self._getScrolledY()[0]
-        x = event.GetX()
-        y = event.GetY() + scroll_y
+        x, y = self._getMouseCoord(event)
         label = self._findLabel(x, y)
         if label is not None:
             label_x, label_y = label.getPosition()

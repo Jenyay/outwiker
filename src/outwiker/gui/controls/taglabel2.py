@@ -33,6 +33,8 @@ class TagLabel2:
         self._width = 0
         self._height = 0
         self._visible = True
+        self._paint_x = None
+        self._paint_y = None
 
         self._propagationLevel = 10
         self._ratio = 1.0
@@ -60,14 +62,6 @@ class TagLabel2:
         self._hover_remove_button_color = wx.Colour("#8B6D00")
 
         self.setFontSize(min_font_size, max_font_size)
-
-        # self.Bind(wx.EVT_PAINT, handler=self._onPaint)
-        # self.Bind(wx.EVT_ENTER_WINDOW, handler=self._onMouseEnter)
-        # self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeave)
-        # self.Bind(wx.EVT_MOTION, handler=self._onMouseMotion)
-        # self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
-        # self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
-        # self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
 
     def isHover(self) -> bool:
         return self._is_hover
@@ -158,8 +152,6 @@ class TagLabel2:
             self._arc_width + self._margin_left + self._text_width + self._margin_right
         )
 
-        # self.SetClientSize(self._width, self._height)
-
     def _get_current_font(self):
         return wx.Font(wx.FontInfo(self._font_size))
 
@@ -191,16 +183,16 @@ class TagLabel2:
             self.Refresh()
 
     def Refresh(self):
-        self._parent.Refresh()
-        # with wx.ClientDC(self._parent) as dc:
-        #     self.onPaint(dc)
+        if self._paint_x is not None and self._paint_y is not None:
+            with wx.ClientDC(self._parent) as dc:
+                self.onPaint(dc, self._paint_x, self._paint_y)
 
     def onPaint(self, dc, x0, y0):
         if not self._visible:
             return
 
-        # x0 = self._x
-        # y0 = self._y
+        self._paint_x = x0
+        self._paint_y = y0
         dc.SetDeviceOrigin(x0, y0)
 
         # Draw background
@@ -308,35 +300,6 @@ class TagLabel2:
         dc.SetPen(wx.Pen(self._marked_hover_border_color))
         dc.DrawLine(border_x, 0, border_x, self._height)
 
-    # def _onMouseEnter(self, event):
-    #     self._is_hover = True
-    #     self._is_hover_button = event.GetX() <= self._button_border_x
-    #     self.Refresh()
-
-    # def _onMouseLeave(self, event):
-    #     self._is_hover = False
-    #     self._is_hover_button = False
-    #     self.Refresh()
-
-    # def _onMouseMotion(self, event):
-    #     new_is_hover_button = event.GetX() <= self._button_border_x
-    #     if new_is_hover_button != self._is_hover_button:
-    #         self._is_hover_button = new_is_hover_button
-    #         self.Refresh()
-
-    # def _onLeftMouseClick(self, event):
-    #     x = event.GetX()
-    #     if self._use_buttons and x <= self._button_border_x:
-    #         self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
-    #     else:
-    #         self._sendTagEvent(TagLeftClickEvent)
-
-    # def _onRightMouseClick(self, event):
-    #     self._sendTagEvent(TagRightClickEvent)
-
-    # def _onMiddleMouseClick(self, event):
-    #     self._sendTagEvent(TagMiddleClickEvent)
-
     def onLeftMouseClick(self, x, y):
         if self._use_buttons and x <= self._button_border_x:
             self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
@@ -348,6 +311,12 @@ class TagLabel2:
 
     def onMiddleMouseClick(self, x, y):
         self._sendTagEvent(TagMiddleClickEvent)
+
+    def onMouseMove(self, x, y):
+        new_is_hover_button = x <= self._button_border_x
+        if new_is_hover_button != self._is_hover_button:
+            self._is_hover_button = new_is_hover_button
+            self.Refresh()
 
     def _sendTagEvent(self, eventType):
         newevent = eventType(text=self._label)
