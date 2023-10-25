@@ -67,7 +67,10 @@ class TagLabel2:
         return self._is_hover
 
     def setHover(self, value: bool):
+        old_value = self._is_hover
         self._is_hover = value
+        if value != old_value:
+            self.Refresh()
 
     def isVisible(self) -> bool:
         return self._visible

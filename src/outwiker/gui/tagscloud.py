@@ -27,6 +27,7 @@ class TagsCloud(wx.Panel):
         self._max_font_size = max_font_size
         self._mode = mode
         self._enable_tooltips = enable_tooltips
+        self._back_color = wx.Colour("#FFFFFF")
 
         # Отступ от края окна
         self._margin = 4
@@ -58,6 +59,7 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
         self._tags_panel.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
         self._tags_panel.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
+        # self._tags_panel.Bind(wx.EVT_SCROLLWIN, handler=self._onScroll)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
 
@@ -83,23 +85,21 @@ class TagsCloud(wx.Panel):
     def _getMouseCoord(self, event) -> Tuple[int, int]:
         return (event.GetX(), event.GetY() + self._getScrolledY()[0])
 
+    # def _onScroll(self, event):
+    #     event.Skip()
+
     def _onMouseMove(self, event):
-        changed_labels: List[TagLabel2] = []
         x, y = self._getMouseCoord(event)
         label = self._findLabel(x, y)
 
         if (self._prevLabelHovered is not None and 
                 label is not self._prevLabelHovered):
             self._prevLabelHovered.setHover(False)
-            changed_labels.append(self._prevLabelHovered)
 
         if label is not None and label is not self._prevLabelHovered:
             label.setHover(True)
-            changed_labels.append(label)
 
         self._prevLabelHovered = label
-        with wx.ClientDC(self._tags_panel) as dc:
-            self._repaintLabels(changed_labels, dc)
 
         if label is not None:
             label_x, label_y = label.getPosition()
@@ -145,6 +145,10 @@ class TagsCloud(wx.Panel):
 
     def _onPaint(self, event):
         with wx.PaintDC(self._tags_panel) as dc:
+            dc.SetBrush(wx.Brush(self._back_color))
+            dc.SetPen(wx.Pen(self._back_color))
+            width, height = self._tags_panel.GetClientSize()
+            dc.DrawRectangle(0, 0, width, height)
             self._repaintLabels(self._labels.values(), dc)
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
