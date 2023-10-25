@@ -337,6 +337,18 @@ class TagLabel2:
     # def _onMiddleMouseClick(self, event):
     #     self._sendTagEvent(TagMiddleClickEvent)
 
+    def onLeftMouseClick(self, x, y):
+        if self._use_buttons and x <= self._button_border_x:
+            self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
+        else:
+            self._sendTagEvent(TagLeftClickEvent)
+
+    def onRightMouseClick(self, x, y):
+        self._sendTagEvent(TagRightClickEvent)
+
+    def onMiddleMouseClick(self, x, y):
+        self._sendTagEvent(TagMiddleClickEvent)
+
     def _sendTagEvent(self, eventType):
         newevent = eventType(text=self._label)
         newevent.ResumePropagation(self._propagationLevel)

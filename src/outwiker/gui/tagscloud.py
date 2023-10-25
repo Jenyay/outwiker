@@ -28,8 +28,6 @@ class TagsCloud(wx.Panel):
         self._mode = mode
         self._enable_tooltips = enable_tooltips
 
-        # self._back_color = wx.Colour("#FFFFFF")
-
         # Отступ от края окна
         self._margin = 4
 
@@ -57,6 +55,9 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Bind(wx.EVT_SIZE, self.__onSize)
         self._tags_panel.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self._tags_panel.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
+        self._tags_panel.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
+        self._tags_panel.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
+        self._tags_panel.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
 
@@ -82,7 +83,6 @@ class TagsCloud(wx.Panel):
     def _onMouseMove(self, event):
         changed_labels: List[TagLabel2] = []
         scroll_y = self._getScrolledY()[0]
-
         label = self._findLabel(event.GetX(), event.GetY() + scroll_y)
 
         if (self._prevLabelHovered is not None and 
@@ -97,6 +97,33 @@ class TagsCloud(wx.Panel):
         self._prevLabelHovered = label
         with wx.ClientDC(self._tags_panel) as dc:
             self._repaintLabels(changed_labels, dc)
+
+    def _onLeftMouseClick(self, event):
+        scroll_y = self._getScrolledY()[0]
+        x = event.GetX()
+        y = event.GetY() + scroll_y
+        label = self._findLabel(x, y)
+        if label is not None:
+            label_x, label_y = label.getPosition()
+            label.onLeftMouseClick(x - label_x, y - label_y)
+
+    def _onRightMouseClick(self, event):
+        scroll_y = self._getScrolledY()[0]
+        x = event.GetX()
+        y = event.GetY() + scroll_y
+        label = self._findLabel(x, y)
+        if label is not None:
+            label_x, label_y = label.getPosition()
+            label.onRightMouseClick(x - label_x, y - label_y)
+
+    def _onMiddleMouseClick(self, event):
+        scroll_y = self._getScrolledY()[0]
+        x = event.GetX()
+        y = event.GetY() + scroll_y
+        label = self._findLabel(x, y)
+        if label is not None:
+            label_x, label_y = label.getPosition()
+            label.onMiddleMouseClick(x - label_x, y - label_y)
 
     def _getScrolledY(self) -> Tuple[int, int]:
         ymin = self._tags_panel.GetScrollPos(wx.VERTICAL) * self._tags_panel.GetScrollPixelsPerUnit()[1]
@@ -115,25 +142,8 @@ class TagsCloud(wx.Panel):
             if label_y_min > y_max:
                 break
 
-
     def _onPaint(self, event):
         with wx.PaintDC(self._tags_panel) as dc:
-            # dc.SetBrush(wx.Brush(self._back_color))
-            # dc.SetPen(wx.Pen(self._back_color))
-            # virtual_width, virtual_height = self._tags_panel.GetVirtualSize()
-            # dc.DrawRectangle(0, 0, virtual_width, virtual_height)
-
-            # clip_rect = dc.GetClippingRect()
-            # y_min, y_max = self._getScrolledY()
-
-            # for label in self._labels.values():
-            #     label_x_min, label_y_min = label.getPosition()
-            #     label_y_max = label.getPositionMax()[1]
-            #     if label_y_min <= y_max and label_y_max >= y_min:
-            #         label.onPaint(dc, label_x_min, label_y_min - y_min)
-
-            #     if label_y_min > y_max:
-            #         break
             self._repaintLabels(self._labels.values(), dc)
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
