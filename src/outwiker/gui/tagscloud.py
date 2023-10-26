@@ -3,6 +3,7 @@
 import os
 from typing import Dict, List, Optional, Tuple
 from collections.abc import Iterable
+from datetime import datetime
 
 import wx
 
@@ -28,6 +29,9 @@ class TagsCloud(wx.Panel):
         self._mode = mode
         self._enable_tooltips = enable_tooltips
         self._back_color = wx.Colour("#FFFFFF")
+
+        self._scroll_start_time = None
+        self._scroll_timeout_musec = 200e3
 
         # Отступ от края окна
         self._margin = 4
@@ -59,7 +63,7 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
         self._tags_panel.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
         self._tags_panel.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
-        # self._tags_panel.Bind(wx.EVT_SCROLLWIN, handler=self._onScroll)
+        self._tags_panel.Bind(wx.EVT_SCROLLWIN, handler=self._onScroll)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
 
@@ -85,10 +89,23 @@ class TagsCloud(wx.Panel):
     def _getMouseCoord(self, event) -> Tuple[int, int]:
         return (event.GetX(), event.GetY() + self._getScrolledY()[0])
 
-    # def _onScroll(self, event):
-    #     event.Skip()
+    def _onScroll(self, event):
+        event.Skip()
+        # Don't repaint labels during scroll
+        self._scroll_start_time = datetime.now()
+        if self._prevLabelHovered is not None:
+            self._prevLabelHovered.setHover(False)
+            self._prevLabelHovered = None
 
     def _onMouseMove(self, event):
+        # Don't repaint labels during scroll
+        if self._scroll_start_time is not None:
+            delta = datetime.now() - self._scroll_start_time
+            if delta.microseconds >= self._scroll_timeout_musec:
+                self._scroll_start_time = None
+            else:
+                return
+
         x, y = self._getMouseCoord(event)
         label = self._findLabel(x, y)
 
@@ -170,7 +187,7 @@ class TagsCloud(wx.Panel):
         self._main_sizer.AddGrowableCol(0)
         self._main_sizer.AddGrowableRow(1)
 
-        self._tags_panel = wx.ScrolledWindow(self)
+        self._tags_panel = wx.ScrolledCanvas(self)
         self._tags_panel.SetScrollRate(0, 0)
 
         self._search_ctrl = wx.SearchCtrl(self)
