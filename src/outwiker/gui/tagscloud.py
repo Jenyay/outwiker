@@ -95,6 +95,7 @@ class TagsCloud(wx.Panel):
         self._scroll_start_time = datetime.now()
         if self._prevLabelHovered is not None:
             self._prevLabelHovered.setHover(False)
+            self._tags_panel.UnsetToolTip()
             self._prevLabelHovered = None
 
     def _onMouseMove(self, event):
@@ -111,10 +112,14 @@ class TagsCloud(wx.Panel):
 
         if (self._prevLabelHovered is not None and 
                 label is not self._prevLabelHovered):
+            self._tags_panel.UnsetToolTip()
             self._prevLabelHovered.setHover(False)
 
         if label is not None and label is not self._prevLabelHovered:
             label.setHover(True)
+            assert self._tags is not None
+            tooltip = _("Number of notes: {}").format(len(self._tags[label.getLabel()]))
+            self._tags_panel.SetToolTip(tooltip)
 
         self._prevLabelHovered = label
 
@@ -252,7 +257,6 @@ class TagsCloud(wx.Panel):
     def enableTooltips(self, enable: bool = True):
         if enable != self._enable_tooltips:
             self._enable_tooltips = enable
-            self._update_tooltips()
 
     def _create_tag_labels(self):
         if self._tags is None:
@@ -268,22 +272,6 @@ class TagsCloud(wx.Panel):
             )
 
             self._labels[tag] = newlabel
-
-        self._update_tooltips()
-
-    def _update_tooltips(self):
-        if self._tags is None:
-            return
-
-        for tag in self._tags:
-            label = self._labels[tag]
-
-            # if self._enable_tooltips:
-            #     tooltip = _("Number of notes: {}").format(len(self._tags[tag]))
-            #     label.SetToolTip(tooltip)
-            # else:
-            #     label.UnsetToolTip()
-
 
     def _filter_tag_labels(self):
         if self._tags is None:
@@ -321,9 +309,6 @@ class TagsCloud(wx.Panel):
         return self._labels[tag].isMarked
 
     def clear(self):
-        # for label in self._labels.values():
-        #     label.Destroy()
-
         self._labels = {}
         self._tags = None
         self._filtered_tags = []
