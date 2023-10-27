@@ -28,7 +28,6 @@ class TagsCloud(wx.Panel):
         self._max_font_size = max_font_size
         self._mode = mode
         self._enable_tooltips = enable_tooltips
-        self._back_color = wx.Colour("#FFFFFF")
 
         self._scroll_start_time = None
         self._scroll_timeout_musec = 200e3
@@ -56,7 +55,7 @@ class TagsCloud(wx.Panel):
 
         self._create_gui()
 
-        self.SetBackgroundColour(wx.Colour(255, 255, 255))
+        # self.SetBackgroundColour(wx.Colour(255, 255, 255))
         self._tags_panel.Bind(wx.EVT_SIZE, self.__onSize)
         self._tags_panel.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self._tags_panel.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
@@ -168,8 +167,9 @@ class TagsCloud(wx.Panel):
 
     def _onPaint(self, event):
         with wx.PaintDC(self._tags_panel) as dc:
-            dc.SetBrush(wx.Brush(self._back_color))
-            dc.SetPen(wx.Pen(self._back_color))
+            back_color = self.GetBackgroundColour()
+            dc.SetBrush(wx.Brush(back_color))
+            dc.SetPen(wx.Pen(back_color))
             width, height = self._tags_panel.GetClientSize()
             dc.DrawRectangle(0, 0, width, height)
             self._repaintLabels(self._labels.values(), dc)
@@ -198,13 +198,17 @@ class TagsCloud(wx.Panel):
 
         self._search_ctrl = wx.SearchCtrl(self)
 
-        self._main_sizer.Add(self._search_ctrl, flag=wx.EXPAND | wx.ALL, border=4)
-        self._main_sizer.Add(self._tags_panel, flag=wx.EXPAND | wx.ALL, border=4)
+        self._main_sizer.Add(self._search_ctrl, flag=wx.EXPAND)
+        self._main_sizer.Add(self._tags_panel, flag=wx.EXPAND)
 
         self.SetSizer(self._main_sizer)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
+        self._tags_panel.SetBackgroundColour(colour)
+        self._search_ctrl.SetBackgroundColour(colour)
+        for label in self._labels.values():
+            label.setBackColor(colour)
 
     def __onSize(self, event):
         newSize = self.GetSize()
@@ -265,6 +269,7 @@ class TagsCloud(wx.Panel):
         if self._tags is None:
             return
 
+        back_color = self.GetBackgroundColour()
         for tag in self._tags:
             newlabel = TagLabel2(
                 self._tags_panel,
@@ -272,6 +277,7 @@ class TagsCloud(wx.Panel):
                 self._use_buttons,
                 self._min_font_size,
                 self._max_font_size,
+                back_color=back_color
             )
 
             self._labels[tag] = newlabel

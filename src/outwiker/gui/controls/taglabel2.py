@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Optional, Tuple
 
 import wx
 import wx.lib.newevent
@@ -13,13 +13,14 @@ TagRemoveEvent, EVT_TAG_REMOVE = wx.lib.newevent.NewEvent()
 class TagLabel2:
     def __init__(
         self,
-        parent,
-        label,
+        parent: wx.Window,
+        label: str,
         use_buttons: bool = True,
         min_font_size: int = 8,
         max_font_size: int = 16,
-        x = 0,
-        y = 0,
+        x: int = 0,
+        y: int = 0,
+        back_color: Optional[wx.Colour] = None
     ):
         self._parent = parent
         self._label = label
@@ -39,10 +40,10 @@ class TagLabel2:
         self._propagationLevel = 10
         self._ratio = 1.0
 
-        self._back_color = wx.Colour("#FFFFFF")
+        self._back_color = wx.Colour("#FFFFFF") if back_color is None else back_color
 
-        self._normal_back_color = wx.Colour("#FFFFFF")
-        self._normal_border_color = wx.Colour("#FFFFFF")
+        self._normal_back_color = self._back_color
+        self._normal_border_color = self._back_color
         self._normal_font_color = wx.Colour("#34609D")
 
         self._normal_hover_back_color = wx.Colour("#D6E7FD")
@@ -62,6 +63,11 @@ class TagLabel2:
         self._hover_remove_button_color = wx.Colour("#8B6D00")
 
         self.setFontSize(min_font_size, max_font_size)
+
+    def setBackColor(self, color: wx.Colour):
+        self._back_color = color
+        self._normal_back_color = self._back_color
+        self._normal_border_color = self._back_color
 
     def isHover(self) -> bool:
         return self._is_hover
