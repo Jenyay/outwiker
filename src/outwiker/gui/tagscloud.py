@@ -205,10 +205,10 @@ class TagsCloud(wx.Panel):
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
-        self._tags_panel.SetBackgroundColour(colour)
-        self._search_ctrl.SetBackgroundColour(colour)
         for label in self._labels.values():
             label.setBackColor(colour)
+        self._tags_panel.SetBackgroundColour(colour)
+        self._search_ctrl.SetBackgroundColour(colour)
 
     def __onSize(self, event):
         newSize = self.GetSize()
