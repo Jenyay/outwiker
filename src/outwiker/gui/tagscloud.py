@@ -117,9 +117,10 @@ class TagsCloud(wx.Panel):
 
         if label is not None and label is not self._prevLabelHovered:
             label.setHover(True)
-            assert self._tags is not None
-            tooltip = _("Number of notes: {}").format(len(self._tags[label.getLabel()]))
-            self._tags_panel.SetToolTip(tooltip)
+            if self._enable_tooltips:
+                assert self._tags is not None
+                tooltip = _("Number of notes: {}").format(len(self._tags[label.getLabel()]))
+                self._tags_panel.SetToolTip(tooltip)
 
         self._prevLabelHovered = label
 
@@ -257,6 +258,8 @@ class TagsCloud(wx.Panel):
     def enableTooltips(self, enable: bool = True):
         if enable != self._enable_tooltips:
             self._enable_tooltips = enable
+            if not enable:
+                self._tags_panel.UnsetToolTip()
 
     def _create_tag_labels(self):
         if self._tags is None:
