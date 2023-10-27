@@ -338,7 +338,7 @@ class ImageDrawExBase(base.ImageDraw):
             # Generate mask to support BDF(bitmap font)
             mask = Image.new('1', size)
             draw = ImageDraw.Draw(mask)
-            draw.text((0, 0), string, fill='white', font=ttfont)
+            draw.text((0, 0), string, fill='white', font=ttfont, anchor='lt')
 
             # Rendering text
             filler = Image.new('RGB', size, fill)
