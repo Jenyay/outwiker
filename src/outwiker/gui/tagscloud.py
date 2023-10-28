@@ -55,7 +55,6 @@ class TagsCloud(wx.Panel):
 
         self._create_gui()
 
-        # self.SetBackgroundColour(wx.Colour(255, 255, 255))
         self._tags_panel.Bind(wx.EVT_SIZE, self.__onSize)
         self._tags_panel.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self._tags_panel.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
@@ -153,10 +152,11 @@ class TagsCloud(wx.Panel):
         ymax = ymin + self._tags_panel.GetClientSize()[1]
         return (ymin, ymax)
 
-    def _repaintLabels(self, labels: Iterable, dc: wx.DC):
+    def _repaintLabels(self, label_names: Iterable, dc: wx.DC):
         y_min, y_max = self._getScrolledY()
 
-        for label in labels:
+        for label_name in label_names:
+            label = self._labels[label_name]
             label_x_min, label_y_min = label.getPosition()
             label_y_max = label.getPositionMax()[1]
             if label_y_min <= y_max and label_y_max >= y_min:
@@ -172,7 +172,7 @@ class TagsCloud(wx.Panel):
             dc.SetPen(wx.Pen(back_color))
             width, height = self._tags_panel.GetClientSize()
             dc.DrawRectangle(0, 0, width, height)
-            self._repaintLabels(self._labels.values(), dc)
+            self._repaintLabels(self._filtered_tags, dc)
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min_font_size
@@ -252,12 +252,10 @@ class TagsCloud(wx.Panel):
         if self._tags is None:
             return
 
-        self.Freeze()
         self._filtered_tags = (
             self._filter_tags(self._tags.tags) if self._tags is not None else []
         )
         self._filter_tag_labels()
-        self.Thaw()
 
     def enableTooltips(self, enable: bool = True):
         if enable != self._enable_tooltips:
@@ -363,10 +361,6 @@ class TagsCloud(wx.Panel):
             return
 
         self.__setSizeLabels()
-
-        # Дважды перемещаем метки, чтобы учесть,
-        # что может появиться полоса прокрутки
-        self.__moveLabels()
         self.__moveLabels()
 
     def __moveLabels(self):
@@ -384,7 +378,7 @@ class TagsCloud(wx.Panel):
         else:
             self.__moveLabelsContinuous()
 
-        self.Refresh()
+        self._tags_panel.Refresh()
 
     def _getScrollStepY(self) -> int:
         return list(self._labels.values())[0].getSize()[1] + self._gapy
@@ -395,7 +389,6 @@ class TagsCloud(wx.Panel):
         for line, tagname in enumerate(self._filtered_tags):
             label = self._labels[tagname]
             label.Move(self._margin, self._margin + line * stepy)
-            label.Refresh()
 
         lineheight = stepy
         self._tags_panel.SetScrollbars(0, lineheight, 0, len(self._filtered_tags))
@@ -426,7 +419,6 @@ class TagsCloud(wx.Panel):
                 linesCount += 1
 
             label.Move(currentx, currenty)
-            label.Refresh()
 
             currentLine.append(label)
             currentx += label.getSize()[0] + self._gapx
