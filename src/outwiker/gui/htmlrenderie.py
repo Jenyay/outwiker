@@ -65,7 +65,7 @@ class HtmlRenderIEBase(HtmlRenderBase):
         if anchor:
             path += anchor
 
-        self.canOpenUrl.add(path)
+        self.canOpenUrl.add(path.lower())
         self.render.SetPage(htmltext, path)
 
     def Sleep(self):
@@ -130,7 +130,7 @@ class HtmlRenderIEBase(HtmlRenderBase):
             return
 
         # Link clicked
-        if href not in self.canOpenUrl:
+        if href.lower() not in self.canOpenUrl:
             logger.debug(
                 '_onNavigating ({nav_id}). Link clicked.'.format(nav_id=nav_id))
             processed = self._onLinkClicked(href)
@@ -142,7 +142,7 @@ class HtmlRenderIEBase(HtmlRenderBase):
                 logger.debug('_onNavigating ({nav_id}) end. Allow href processing. href={href}'.format(
                     nav_id=nav_id, href=href))
         else:
-            self.canOpenUrl.remove(href)
+            self.canOpenUrl.remove(href.lower())
             logger.debug('_onNavigating ({nav_id}) end. canOpenUrl={canOpenUrl}'.format(
                 nav_id=nav_id, canOpenUrl=self.canOpenUrl))
 
@@ -174,7 +174,7 @@ class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
             anchor = Application.sharedData[APP_DATA_KEY_ANCHOR]
             del Application.sharedData[APP_DATA_KEY_ANCHOR]
 
-        self.canOpenUrl.add(fname)
+        self.canOpenUrl.add(fname.lower())
         if anchor is not None:
             fname += anchor
 
@@ -276,7 +276,7 @@ class HtmlRenderIEGeneral(HtmlRenderIEBase):
             html = readTextFile(fname)
         except IOError:
             text = _("Can't read file %s") % (fname)
-            self.canOpenUrl.add(fname)
+            self.canOpenUrl.add(fname.lower())
             self.SetPage(text, os.path.dirname(fname))
 
         basepath = os.path.dirname(fname)

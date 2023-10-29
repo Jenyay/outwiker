@@ -7,9 +7,13 @@ from abc import ABCMeta, abstractmethod
 from pathlib import Path
 from typing import Optional
 from urllib.parse import unquote
+import logging
 import os
 
 import idna
+
+
+logger = logging.getLogger('outwiker.gui.urirecognizers')
 
 
 class Recognizer(metaclass=ABCMeta):
@@ -86,7 +90,8 @@ class URLRecognizer(Recognizer):
 class AnchorRecognizerBase(Recognizer, metaclass=ABCMeta):
     def _recognizeAnchor(self, href: str, basepath: str) -> Optional[str]:
         anchor = None
-        if (href.startswith(basepath) and
+        logger.debug("AnchorRecognizerBase. href= '{}'; basepath = '{}'".format(href, basepath))
+        if (href.lower().startswith(basepath.lower()) and
                 len(href) > len(basepath) and
                 href[len(basepath)] == "#"):
             anchor = href[len(basepath):]
@@ -105,10 +110,15 @@ class AnchorRecognizerIE(AnchorRecognizerBase):
     '''
 
     def _recognize(self, href: str) -> Optional[str]:
+        logger.debug("AnchorRecognizerIE. href= '{}'; _basepath = '{}'".format(href, self._basepath))
         if href.startswith('/'):
             href = href[1:]
 
-        return self._recognizeAnchor(href, self._basepath)
+        basepath = self._basepath
+        if basepath.startswith("//"):
+            basepath = basepath[2:]
+
+        return self._recognizeAnchor(href, basepath)
 
 
 class AnchorRecognizerWebKit(AnchorRecognizerBase):
