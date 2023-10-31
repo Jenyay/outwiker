@@ -90,13 +90,19 @@ class Token {
  * about where in the source string the problem occurred.
  */
 class ParseError {
-  // Error position based on passed-in Token or ParseNode.
+  // Error start position based on passed-in Token or ParseNode.
+  // Length of affected text based on passed-in Token or ParseNode.
+  // The underlying error message without any context added.
   constructor(message, // The error message
   token // An object providing position information
   ) {
+    this.name = void 0;
     this.position = void 0;
+    this.length = void 0;
+    this.rawMessage = void 0;
     var error = "KaTeX parse error: " + message;
     var start;
+    var end;
     var loc = token && token.loc;
 
     if (loc && loc.start <= loc.end) {
@@ -105,7 +111,7 @@ class ParseError {
       var input = loc.lexer.input; // Prepend some information
 
       start = loc.start;
-      var end = loc.end;
+      end = loc.end;
 
       if (start === input.length) {
         error += " at end of input: ";
@@ -135,14 +141,20 @@ class ParseError {
       error += left + underlined + right;
     } // Some hackery to make ParseError a prototype of Error
     // See http://stackoverflow.com/a/8460753
+    // $FlowFixMe
 
 
     var self = new Error(error);
     self.name = "ParseError"; // $FlowFixMe
 
-    self.__proto__ = ParseError.prototype; // $FlowFixMe
-
+    self.__proto__ = ParseError.prototype;
     self.position = start;
+
+    if (start != null && end != null) {
+      self.length = end - start;
+    }
+
+    self.rawMessage = message;
     return self;
   }
 
@@ -5160,6 +5172,10 @@ for (var _i3 = 0; _i3 < letters.length; _i3++) {
 
   defineSymbol(math, main, mathord, _ch3, wideChar);
   defineSymbol(text, main, textord, _ch3, wideChar);
+  wideChar = String.fromCharCode(0xD835, 0xDD6C + _i3); // A-Z a-z bold Fractur
+
+  defineSymbol(math, main, mathord, _ch3, wideChar);
+  defineSymbol(text, main, textord, _ch3, wideChar);
   wideChar = String.fromCharCode(0xD835, 0xDDA0 + _i3); // A-Z a-z sans-serif
 
   defineSymbol(math, main, mathord, _ch3, wideChar);
@@ -5265,8 +5281,9 @@ var wideLatinLetterData = [["mathbf", "textbf", "Main-Bold"], // A-Z bold uprigh
 ["mathfrak", "textfrak", "Fraktur-Regular"], // a-z Fraktur
 ["mathbb", "textbb", "AMS-Regular"], // A-Z double-struck
 ["mathbb", "textbb", "AMS-Regular"], // k double-struck
-["", "", ""], // A-Z bold Fraktur No font metrics
-["", "", ""], // a-z bold Fraktur.   No font.
+// Note that we are using a bold font, but font metrics for regular Fraktur.
+["mathboldfrak", "textboldfrak", "Fraktur-Regular"], // A-Z bold Fraktur
+["mathboldfrak", "textboldfrak", "Fraktur-Regular"], // a-z bold Fraktur
 ["mathsf", "textsf", "SansSerif-Regular"], // A-Z sans-serif
 ["mathsf", "textsf", "SansSerif-Regular"], // a-z sans-serif
 ["mathboldsf", "textboldsf", "SansSerif-Bold"], // A-Z bold sans-serif
@@ -5442,10 +5459,15 @@ var makeOrd = function makeOrd(group, options, type) {
 
   var isFont = mode === "math" || mode === "text" && options.font;
   var fontOrFamily = isFont ? options.font : options.fontFamily;
+  var wideFontName = "";
+  var wideFontClass = "";
 
   if (text.charCodeAt(0) === 0xD835) {
+    [wideFontName, wideFontClass] = wideCharacterFont(text, mode);
+  }
+
+  if (wideFontName.length > 0) {
     // surrogate pairs get special treatment
-    var [wideFontName, wideFontClass] = wideCharacterFont(text, mode);
     return makeSymbol(text, wideFontName, mode, options, classes.concat(wideFontClass));
   } else if (fontOrFamily) {
     var fontName;
@@ -18297,7 +18319,7 @@ var katex = {
   /**
    * Current KaTeX version
    */
-  version: "0.16.7",
+  version: "0.16.9",
 
   /**
    * Renders the given LaTeX into an HTML+MathML combination, and adds

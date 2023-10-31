@@ -39,6 +39,6 @@ class TexEquationAction(BaseAction):
         with ButtonsDialog(parent, message, caption, buttons, cancel=2) as fp:
             result = fp.ShowModal()
             if result == 0:
-                codeEditor.turnText("{$", "$}")
+                codeEditor.turnText("{$ ", " $}")
             elif result == 1:
-                codeEditor.turnText("{$$", "$$}")
+                codeEditor.turnText("{$$ ", " $$}")
