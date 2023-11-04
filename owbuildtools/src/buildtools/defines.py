@@ -51,6 +51,9 @@ OUTWIKER_VERSIONS_FILENAME = 'versions.xml'
 NEED_FOR_BUILD_DIR = 'need_for_build'
 COVERAGE_PARAMS = '--rcfile=.coveragerc'
 
+WXPYTHON_SRC_DIR = 'depends/wxpython'
+WXPYTHON_BUILD_DIR = 'wxpython'
+
 PPA_DEV_PATH = 'ppa:outwiker-team/dev'
 PPA_UNSTABLE_PATH = 'ppa:outwiker-team/unstable'
 PPA_STABLE_PATH = 'ppa:outwiker-team/ppa'

@@ -22,6 +22,7 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderDebBinaryFactory,
                                  BuilderAppImage,
                                  BuilderSnap,
+                                 BuilderWxPython
                                  )
 from buildtools.versionstools import (display_version,
                                       InitUpdater,
@@ -338,6 +339,12 @@ def set_release_date(c, date=''):
 
     for fname, updater in _get_version_updaters():
         _set_release_date_for_file(fname, updater, date)
+
+@task
+def build_wxpython(c):
+    """Build wxPython from depends"""
+    builder = BuilderWxPython(c)
+    builder.build()
 
 
 def _get_version_updaters():

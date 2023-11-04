@@ -9,8 +9,4 @@ from .linux.debbinary import BuilderDebBinaryFactory
 from .linux.debsource import BuilderDebSource, BuilderDebSourcesIncluded
 from .linux.snap import BuilderSnap
 from .appimage import BuilderAppImage
-
-__all__ = [BuilderBase, BuilderWindows, BuilderSources, BuilderPlugins,
-           BuilderLinuxBinary,
-           BuilderDebSource, BuilderDebSourcesIncluded,
-           BuilderDebBinaryFactory, BuilderAppImage, BuilderSnap]
+from .wxpython import BuilderWxPython

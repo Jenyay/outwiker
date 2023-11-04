@@ -37,7 +37,7 @@ class BuilderPlugins(BuilderBase):
         return self._getSubpath(self._all_plugins_fname)
 
     def clear(self):
-        super(BuilderPlugins, self).clear()
+        super().clear()
         self._remove(self.get_plugins_pack_path())
 
     def _build(self):
