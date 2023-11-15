@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.3.0.929" status="dev">
+    <version number="3.3.0.930" status="beta" date="2023-11-18">
         <changes>
+			<change>Tags cloud GUI improvements.</change>
+			<change>Bug fixes.</change>
         </changes>
 
         <changes lang="ru">
+			<change>Улучшения в интерфейсе облака меток.</change>
+			<change>Исправление ошибок.</change>
         </changes>
     </version>
 
