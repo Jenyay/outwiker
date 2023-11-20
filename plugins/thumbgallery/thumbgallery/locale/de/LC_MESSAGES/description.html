@@ -39,22 +39,114 @@ oder
 <u>Erstellen einer Galerie der ausgewählten Dateien als Tabelle</u>
 
 (:thumbgallery cols=3 px=150:)
-&nbsp;&nbsp;&nbsp;Attach:DSC_0567.jpg
-&nbsp;&nbsp;&nbsp;Attach:DSC_0604.jpg
-&nbsp;&nbsp;&nbsp;Attach:klyazma_2011_07.jpg
-&nbsp;&nbsp;&nbsp;Attach:smoke.jpg
-&nbsp;&nbsp;&nbsp;Attach:sunset_1.jpg
-&nbsp;&nbsp;&nbsp;Attach:sev_beach2.jpg
+&nbsp;&nbsp;&nbsp;Anhang:"Dateiname_1.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"Dateiname_2.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"Dateiname_3.jpg"
+(:thumbgalleryend:)
+
+oder
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Dateiname_1.jpg
+&nbsp;&nbsp;&nbsp;Dateiname_2.jpg
+&nbsp;&nbsp;&nbsp;Dateiname_3.jpg
 (:thumbgalleryend:)
 
 
 <u>Erstellen einer Galerie der ausgewählten Dateien mit Kommentaren</u>
 
 (:thumbgallery cols=3 px=150:)
-&nbsp;&nbsp;&nbsp;DSC_0567.jpg
-&nbsp;&nbsp;&nbsp;DSC_0604.jpg
-&nbsp;&nbsp;&nbsp;klyazma_2011_07.jpg | Klyazma river
-&nbsp;&nbsp;&nbsp;smoke.jpg | Smoky summer in Moscow
-&nbsp;&nbsp;&nbsp;sunset_1.jpg
-&nbsp;&nbsp;&nbsp;sev_beach2.jpg | Black Sea. Sevastopol
+&nbsp;&nbsp;&nbsp;Anhang:"Dateiname_1.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"Dateiname_2.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"Dateiname_3.jpg" | Kommentar für Dateiname_3
+&nbsp;&nbsp;&nbsp;Attach:"Dateiname_4.jpg" | Kommentar für Dateiname_4
 (:thumbgalleryend:)
+
+oder
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Dateiname_1.jpg
+&nbsp;&nbsp;&nbsp;Dateiname_2.jpg
+&nbsp;&nbsp;&nbsp;Dateiname_3.jpg | Kommentar für Dateiname_3
+&nbsp;&nbsp;&nbsp;Dateiname_4.jpg | Kommentar für Dateiname_4
+(:thumbgalleryend:)
+
+
+<u>Auswählen von Dateien in Unterordnern</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Attach:"Ordner/Unterordner/Dateiname_1.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"Ordner/Unterordner/Dateiname_2.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"Ordner/Unterordner/Dateiname_3.jpg" | Kommentar für Dateiname_3
+&nbsp;&nbsp;&nbsp;Attach:"Ordner/Unterordner/Dateiname_4.jpg" | Kommentar für Dateiname_4
+(:thumbgalleryend:)
+
+oder
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Ordner/Unterordner/Dateiname_1.jpg
+&nbsp;&nbsp;&nbsp;Ordner/Unterordner/Dateiname_2.jpg
+&nbsp;&nbsp;&nbsp;Ordner/Unterordner/Dateiname_3.jpg | Kommentar für Dateiname_3
+&nbsp;&nbsp;&nbsp;Ordner/Unterordner/Dateiname_4.jpg | Kommentar für Dateiname_4
+(:thumbgalleryend:)
+
+
+<u>Dateien nach Suchmaske auswählen</u>
+
+Alle Bilddateien im __attach Ordner
+
+(:thumbgallery cols=3 px=150:)
+    *
+(:thumbgalleryend:)
+
+oder
+
+(:thumbgallery cols=3 px=150:)
+    *.*
+(:thumbgalleryend:)
+
+oder
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"*"
+(:thumbgalleryend:)
+
+
+Nur Bilddateien im __attach Ordner wählen, die zur Suchmaske passen
+
+(:thumbgallery cols=3 px=150:)
+    *.png
+(:thumbgalleryend:)
+
+oder
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"*.png"
+(:thumbgalleryend:)
+
+
+Bilddateien im __attach Ordner und allen Unterordnern wählen, die zur Suchmaske passen
+
+(:thumbgallery cols=3 px=150:)
+    **/*.png
+(:thumbgalleryend:)
+
+oder
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"**/*.png"
+(:thumbgalleryend:)
+
+
+Bilddateien in einem bestimmten Ordner wählen, die zur Suchmaske passen
+
+(:thumbgallery cols=3 px=150:)
+    Ordnername/*.jpg
+(:thumbgalleryend:)
+
+oder
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"Ordnername/*.jpg"
+(:thumbgalleryend:)
+

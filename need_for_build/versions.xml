@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.3.0.931">
-        <changes>
-        </changes>
+		<changes>
+			<change>Updated the German localization.</change>
+		</changes>
 
-        <changes lang="ru">
-        </changes>
+		<changes lang="ru">
+			<change>Обновлена немецкая локализация.</change>
+		</changes>
     </version>
 
     <version number="3.3.0.930" status="beta" date="2023-11-18">
