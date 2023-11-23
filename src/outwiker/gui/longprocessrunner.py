@@ -31,26 +31,27 @@ class LongProcessRunner:
         self.updateInterval = 0.1
 
     def run(self, *args, **kwargs):
-        progressDlg = ProgressWindow(self._parent, self._dialogTitle, self._dialogText)
-        progressDlg.Show()
+        # progressDlg = ProgressWindow(self._parent, self._dialogTitle, self._dialogText)
+        # progressDlg.Show()
 
-        result = []
-        thread = threading.Thread(
-            None,
-            lambda *args, **kwargs: result.append(self._threadFunc(*args, **kwargs)),
-            args=args,
-            kwargs=kwargs,
-        )
-        thread.start()
+        # result = []
+        # thread = threading.Thread(
+        #     None,
+        #     lambda *args, **kwargs: result.append(self._threadFunc(*args, **kwargs)),
+        #     args=args,
+        #     kwargs=kwargs,
+        # )
+        # thread.start()
 
-        while thread.is_alive():
-            progressDlg.UpdatePulse()
-            time.sleep(self.updateInterval)
+        # while thread.is_alive():
+        #     progressDlg.UpdatePulse()
+        #     time.sleep(self.updateInterval)
 
-        progressDlg.Destroy()
-        self._parent.Raise()
+        # progressDlg.Destroy()
+        # self._parent.Raise()
 
-        if result:
-            return result[0]
-        else:
-            return None
+        # if result:
+        #     return result[0]
+        # else:
+        #     return None
+        return self._threadFunc(*args, **kwargs)
