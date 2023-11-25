@@ -124,7 +124,7 @@ class MainWndController:
         self._recentId = {}
 
         self.bookmarks = BookmarksController(self, self._application)
-        self._autosaveTimer = AutosaveTimer(self._application)
+        # self._autosaveTimer = AutosaveTimer(self._application)
 
         datetime_width = self._mainWindowConfig.datetimeStatusWidth.value
         self._mainWindow.statusbar.addItem(STATUSBAR_PAGE_DATETIME_ITEM, datetime_width)
@@ -171,8 +171,8 @@ class MainWndController:
 
     def destroy(self):
         self._unbindAppEvents()
-        self._autosaveTimer.Destroy()
-        self._autosaveTimer = None
+        # self._autosaveTimer.Destroy()
+        # self._autosaveTimer = None
         self._mainWindow.Unbind(wx.EVT_CLOSE, handler=self._onClose)
         self._mainWindow.Unbind(wx.EVT_ICONIZE, handler=self._onIconize)
         self._mainWindow = None
