@@ -199,11 +199,14 @@ class MainWindow(wx.Frame):
 
         logger.debug('MainWindow. Create the AuiManager')
 
+        aui_flags = (
+                wx.aui.AUI_MGR_DEFAULT #|
+                # wx.aui.AUI_MGR_LIVE_RESIZE |
+                # wx.aui.AUI_MGR_ALLOW_FLOATING
+                )
         self.auiManager = wx.aui.AuiManager(
             self._mainContentPanel,
-            flags=wx.aui.AUI_MGR_DEFAULT |
-            wx.aui.AUI_MGR_LIVE_RESIZE |
-            wx.aui.AUI_MGR_ALLOW_FLOATING)
+            flags=aui_flags)
 
         self._createAuiPanes()
         self._createToolbars()
