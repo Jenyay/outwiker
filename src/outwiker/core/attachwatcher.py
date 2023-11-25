@@ -50,10 +50,10 @@ class AttachWatcher:
         self._watchedPage = self._application.selectedPage
         attach = Attachment(self._watchedPage)
         self._oldFilesList = attach.getAttachRelative()
-        self._timer.Start(self._period)
+        # self._timer.Start(self._period)
 
     def _stop_watch(self):
-        self._timer.Stop()
+        # self._timer.Stop()
         self._watchedPage = None
         self._oldFilesList = []
 
