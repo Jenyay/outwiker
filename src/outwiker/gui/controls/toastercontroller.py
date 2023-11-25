@@ -69,6 +69,7 @@ class ToasterController(object):
                     title,
                     captionBackgroundColor,
                     captionForegroundColor):
+        return
 
         toasterbox = tb.ToasterBox(
             self._parent,
