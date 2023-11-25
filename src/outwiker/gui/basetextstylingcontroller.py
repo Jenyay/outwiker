@@ -40,12 +40,12 @@ class BaseTextStylingController(metaclass=ABCMeta):
         self._stopColorizing()
 
     def _bindEvents(self):
-        self._application.onEditorStyleNeeded += self._onEditorStyleNeeded
+        # self._application.onEditorStyleNeeded += self._onEditorStyleNeeded
         self._application.onPreferencesDialogCreate += self._stopEventHandler
         self._application.onPageSelect += self._stopEventHandler
 
     def _unbindEvents(self):
-        self._application.onEditorStyleNeeded -= self._onEditorStyleNeeded
+        # self._application.onEditorStyleNeeded -= self._onEditorStyleNeeded
         self._application.onPreferencesDialogCreate -= self._stopEventHandler
         self._application.onPageSelect -= self._stopEventHandler
 
