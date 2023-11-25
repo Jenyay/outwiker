@@ -124,7 +124,7 @@ def test(c, params):
     Run the unit tests
     '''
     if not params:
-        params = ['buildtools/src/buildtools/tests', 'src/outwiker/tests']
+        params = ['owbuildtools/src/buildtools/tests', 'src/outwiker/tests']
 
     command = getPython() if params else 'coverage run {}'.format(COVERAGE_PARAMS)
 
