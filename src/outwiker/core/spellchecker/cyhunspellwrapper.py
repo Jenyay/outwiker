@@ -4,7 +4,7 @@ import os.path
 import logging
 from typing import List, Tuple
 
-# import hunspell
+import hunspell
 
 from .dictsfinder import DictsFinder
 from .spelldict import (create_new_dic_file,
@@ -43,11 +43,11 @@ class CyHunspellWrapper (object):
                 dic_file = os.path.join(path, lang + '.dic')
                 aff_file = os.path.join(path, lang + '.aff')
 
-                # if (checker is None and
-                #         os.path.exists(dic_file) and
-                #         os.path.exists(aff_file)):
-                #     checker = hunspell.Hunspell(
-                #         lang, hunspell_data_dir=path, system_encoding='UTF-8')
+                if (checker is None and
+                        os.path.exists(dic_file) and
+                        os.path.exists(aff_file)):
+                    checker = hunspell.Hunspell(
+                        lang, hunspell_data_dir=path, system_encoding='UTF-8')
 
                 logger.debug('Add dictionary: {}'.format(dic_file))
 
@@ -62,33 +62,32 @@ class CyHunspellWrapper (object):
         add_word_to_dic_file(dic_file, word)
 
     def addCustomDict(self, customDictPath: str):
-        pass
-        # logger.debug('Add custom dictionary: {}'.format(customDictPath))
+        logger.debug('Add custom dictionary: {}'.format(customDictPath))
 
-        # dic_folder = os.path.dirname(customDictPath)
-        # dic_file_name = os.path.basename(customDictPath)
-        # dic_name = dic_file_name[:-4]
-        # dic_file = customDictPath
-        # aff_file = customDictPath[:-4] + '.aff'
+        dic_folder = os.path.dirname(customDictPath)
+        dic_file_name = os.path.basename(customDictPath)
+        dic_name = dic_file_name[:-4]
+        dic_file = customDictPath
+        aff_file = customDictPath[:-4] + '.aff'
 
-        # key = '{}:{}'.format(dic_name, customDictPath)
-        # if key in self._checkers:
-        #     logger.debug('Dictionary already added: {}'.format(customDictPath))
-        #     return
+        key = '{}:{}'.format(dic_name, customDictPath)
+        if key in self._checkers:
+            logger.debug('Dictionary already added: {}'.format(customDictPath))
+            return
 
-        # try:
-        #     create_new_dic_file(dic_file)
-        #     create_new_aff_file(aff_file)
-        #     fix_dic_file(dic_file)
-        #     checker = hunspell.Hunspell(
-        #         dic_name,
-        #         hunspell_data_dir=dic_folder,
-        #         system_encoding='UTF-8')
-        #     self._checkers[key] = checker
-        #     self._customDicts.append((key, dic_file))
-        # except IOError:
-        #     logger.error(
-        #         "Can't create custom dictionary: {}".format(customDictPath))
+        try:
+            create_new_dic_file(dic_file)
+            create_new_aff_file(aff_file)
+            fix_dic_file(dic_file)
+            checker = hunspell.Hunspell(
+                dic_name,
+                hunspell_data_dir=dic_folder,
+                system_encoding='UTF-8')
+            self._checkers[key] = checker
+            self._customDicts.append((key, dic_file))
+        except IOError:
+            logger.error(
+                "Can't create custom dictionary: {}".format(customDictPath))
 
     def check(self, word: str):
         if not self._checkers:
