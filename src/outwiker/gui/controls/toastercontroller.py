@@ -9,13 +9,14 @@ from outwiker.gui.theme import Theme
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
-class ToasterController(object):
+class ToasterController:
     def __init__(self, parent, application):
         self._parent = parent
         self._application = application
         self._theme = Theme()
         self._config = GeneralGuiConfig(application.config)
         self._updateSettings()
+        self._toasters = []
 
         self._application.onPreferencesDialogClose += self._onPreferencesDialogClose
 
@@ -36,12 +37,17 @@ class ToasterController(object):
         return (x, y)
 
     def destroy(self):
-        toasterbox = tb.ToasterBox(
-            self._parent,
-            tbstyle=tb.TB_COMPLEX,
-            closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
-        )
-        toasterbox.CleanList()
+        # toasterbox = tb.ToasterBox(
+        #     self._parent,
+        #     tbstyle=tb.TB_COMPLEX,
+        #     closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
+        # )
+        # toasterbox.CleanList()
+        # tb.winlist = []
+        for toaster in self._toasters:
+            toaster.CleanList()
+
+        self._toasters = []
         tb.winlist = []
         self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
 
@@ -69,12 +75,13 @@ class ToasterController(object):
                     title,
                     captionBackgroundColor,
                     captionForegroundColor):
-
         toasterbox = tb.ToasterBox(
             self._parent,
             tbstyle=tb.TB_COMPLEX,
             closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
         )
+
+        self._toasters.append(toasterbox)
 
         parent = toasterbox.GetToasterBoxWindow()
         panel = InfoPanel(parent,
