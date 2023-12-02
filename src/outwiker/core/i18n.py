@@ -28,7 +28,7 @@ class I18nConfig(object):
 
 
 def getDefaultLanguage():
-    return locale.getlocale()[0]
+    return locale.getdefaultlocale()[0]
 
 
 def init_i18n(language):
