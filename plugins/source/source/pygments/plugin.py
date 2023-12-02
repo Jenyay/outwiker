@@ -34,7 +34,7 @@
         yourfilter = yourfilter:YourFilter
 
 
-    :copyright: Copyright 2006-2022 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2023 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -45,7 +45,27 @@ FILTER_ENTRY_POINT = 'pygments.filters'
 
 
 def iter_entry_points(group_name):
-    return []
+    try:
+        from importlib.metadata import entry_points
+    except ImportError:
+        try:
+            from importlib_metadata import entry_points
+        except ImportError:
+            try:
+                from pkg_resources import iter_entry_points
+            except (ImportError, OSError):
+                return []
+            else:
+                return iter_entry_points(group_name)
+    groups = entry_points()
+    if hasattr(groups, 'select'):
+        # New interface in Python 3.10 and newer versions of the
+        # importlib_metadata backport.
+        return groups.select(group=group_name)
+    else:
+        # Older interface, deprecated in Python 3.10 and recent
+        # importlib_metadata, but we need it in Python 3.8 and 3.9.
+        return groups.get(group_name, [])
 
 
 def find_plugin_lexers():
