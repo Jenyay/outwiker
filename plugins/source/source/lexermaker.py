@@ -25,8 +25,8 @@ class LexerMaker:
         Возвращает лексер для нужного языка программирования
         в зависимости от параметров
         """
-        from pygments.lexers import ClassNotFound
-        from pygments.lexers import get_lexer_by_name
+        from source_plugin_libs.pygments.lexers import ClassNotFound
+        from source_plugin_libs.pygments.lexers import get_lexer_by_name
 
         lang = (
             params_dict[LANGUAGE_PARAM_NAME]
@@ -42,8 +42,8 @@ class LexerMaker:
         return lexer
 
     def __getLexerByFileName(self, params_dict):
-        from pygments.lexers import ClassNotFound
-        from pygments.lexers import get_lexer_for_filename
+        from source_plugin_libs.pygments.lexers import ClassNotFound
+        from source_plugin_libs.pygments.lexers import get_lexer_for_filename
 
         fname = getFileName(params_dict[FILE_PARAM_NAME])
 
@@ -59,6 +59,6 @@ class LexerMaker:
         """
         Создать лексер по умолчанию
         """
-        from pygments.lexers import get_lexer_by_name
+        from source_plugin_libs.pygments.lexers import get_lexer_by_name
 
         return get_lexer_by_name(LANGUAGE_DEFAULT, stripall=True)

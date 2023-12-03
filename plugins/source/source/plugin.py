@@ -33,10 +33,14 @@ class PluginSource(Plugin):
         self.__controller.initialize()
 
     def __correctSysPath(self):
-        cmd_folder = os.path.dirname(os.path.abspath(__file__))
+        plugin_path = os.path.dirname(os.path.abspath(__file__))
+        libs_path = os.path.join(plugin_path, "source_plugin_libs")
 
-        if cmd_folder not in sys.path:
-            sys.path.insert(0, cmd_folder)
+        if plugin_path not in sys.path:
+            sys.path.insert(0, plugin_path)
+
+        if libs_path not in sys.path:
+            sys.path.insert(0, libs_path)
 
     @property
     def name(self):
