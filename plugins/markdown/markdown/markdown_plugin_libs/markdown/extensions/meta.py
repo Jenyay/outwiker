@@ -1,19 +1,25 @@
-"""
-Meta Data Extension for Python-Markdown
-=======================================
+# Meta Data Extension for Python-Markdown
+# =======================================
 
+# This extension adds Meta Data handling to markdown.
+
+# See https://Python-Markdown.github.io/extensions/meta_data
+# for documentation.
+
+# Original code Copyright 2007-2008 [Waylan Limberg](http://achinghead.com).
+
+# All changes Copyright 2008-2014 The Python Markdown Project
+
+# License: [BSD](https://opensource.org/licenses/bsd-license.php)
+
+"""
 This extension adds Meta Data handling to markdown.
 
-See <https://Python-Markdown.github.io/extensions/meta_data>
-for documentation.
-
-Original code Copyright 2007-2008 [Waylan Limberg](http://achinghead.com).
-
-All changes Copyright 2008-2014 The Python Markdown Project
-
-License: [BSD](https://opensource.org/licenses/bsd-license.php)
-
+See the [documentation](https://Python-Markdown.github.io/extensions/meta_data)
+for details.
 """
+
+from __future__ import annotations
 
 from . import Extension
 from ..preprocessors import Preprocessor
@@ -33,12 +39,12 @@ class MetaExtension (Extension):
     """ Meta-Data extension for Python-Markdown. """
 
     def extendMarkdown(self, md):
-        """ Add MetaPreprocessor to Markdown instance. """
+        """ Add `MetaPreprocessor` to Markdown instance. """
         md.registerExtension(self)
         self.md = md
         md.preprocessors.register(MetaPreprocessor(md), 'meta', 27)
 
-    def reset(self):
+    def reset(self) -> None:
         self.md.Meta = {}
 
 

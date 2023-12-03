@@ -1,6 +1,4 @@
-# markdown/searializers.py
-#
-# Add x/html serialization to Elementree
+# Add x/html serialization to `Elementree`
 # Taken from ElementTree 1.3 preview with slight modifications
 #
 # Copyright (c) 1999-2007 by Fredrik Lundh.  All rights reserved.
@@ -36,21 +34,24 @@
 # OF THIS SOFTWARE.
 # --------------------------------------------------------------------
 
+"""
+Python-Markdown provides two serializers which render [`ElementTree.Element`][xml.etree.ElementTree.Element]
+objects to a string of HTML. Both functions wrap the same underlying code with only a few minor
+differences as outlined below:
+
+1. Empty (self-closing) tags are rendered as `<tag>` for HTML and as `<tag />` for XHTML.
+2. Boolean attributes are rendered as `attrname` for HTML and as `attrname="attrname"` for XHTML.
+"""
+
+from __future__ import annotations
 
 from xml.etree.ElementTree import ProcessingInstruction
-from xml.etree.ElementTree import Comment, ElementTree, QName
+from xml.etree.ElementTree import Comment, ElementTree, Element, QName, HTML_EMPTY
 import re
 
 __all__ = ['to_html_string', 'to_xhtml_string']
 
-HTML_EMPTY = ("area", "base", "basefont", "br", "col", "frame", "hr",
-              "img", "input", "isindex", "link", "meta", "param")
 RE_AMP = re.compile(r'&(?!(?:\#[0-9]+|\#x[0-9a-f]+|[0-9a-z]+);)', re.I)
-
-try:
-    HTML_EMPTY = set(HTML_EMPTY)
-except NameError:  # pragma: no cover
-    pass
 
 
 def _raise_serialization_error(text):  # pragma: no cover
@@ -128,7 +129,7 @@ def _serialize_html(write, elem, format):
     else:
         namespace_uri = None
         if isinstance(tag, QName):
-            # QNAME objects store their data as a string: `{uri}tag`
+            # `QNAME` objects store their data as a string: `{uri}tag`
             if tag.text[:1] == "{":
                 namespace_uri, tag = tag.text[1:].split("}", 1)
             else:
@@ -139,10 +140,10 @@ def _serialize_html(write, elem, format):
             items = sorted(items)  # lexical order
             for k, v in items:
                 if isinstance(k, QName):
-                    # Assume a text only QName
+                    # Assume a text only `QName`
                     k = k.text
                 if isinstance(v, QName):
-                    # Assume a text only QName
+                    # Assume a text only `QName`
                     v = v.text
                 else:
                     v = _escape_attrib_html(v)
@@ -181,9 +182,12 @@ def _write_html(root, format="html"):
 # --------------------------------------------------------------------
 # public functions
 
-def to_html_string(element):
+
+def to_html_string(element: Element) -> str:
+    """ Serialize element and its children to a string of HTML5. """
     return _write_html(ElementTree(element).getroot(), format="html")
 
 
-def to_xhtml_string(element):
+def to_xhtml_string(element: Element) -> str:
+    """ Serialize element and its children to a string of XHTML. """
     return _write_html(ElementTree(element).getroot(), format="xhtml")

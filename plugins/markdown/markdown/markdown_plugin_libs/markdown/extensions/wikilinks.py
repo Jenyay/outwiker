@@ -1,19 +1,25 @@
-'''
-WikiLinks Extension for Python-Markdown
-======================================
+# WikiLinks Extension for Python-Markdown
+# ======================================
 
-Converts [[WikiLinks]] to relative links.
+# Converts [[WikiLinks]] to relative links.
 
-See <https://Python-Markdown.github.io/extensions/wikilinks>
-for documentation.
+# See https://Python-Markdown.github.io/extensions/wikilinks
+# for documentation.
 
-Original code Copyright [Waylan Limberg](http://achinghead.com/).
+# Original code Copyright [Waylan Limberg](http://achinghead.com/).
 
-All changes Copyright The Python Markdown Project
+# All changes Copyright The Python Markdown Project
 
-License: [BSD](https://opensource.org/licenses/bsd-license.php)
+# License: [BSD](https://opensource.org/licenses/bsd-license.php)
 
-'''
+"""
+Converts `[[WikiLinks]]` to relative links.
+
+See the [documentation](https://Python-Markdown.github.io/extensions/wikilinks)
+for details.
+"""
+
+from __future__ import annotations
 
 from . import Extension
 from ..inlinepatterns import InlineProcessor
@@ -22,12 +28,13 @@ import re
 
 
 def build_url(label, base, end):
-    """ Build a url from the label, a base, and an end. """
+    """ Build a URL from the label, a base, and an end. """
     clean_label = re.sub(r'([ ]+_)|(_[ ]+)|([ ]+)', '_', label)
     return '{}{}{}'.format(base, clean_label, end)
 
 
 class WikiLinkExtension(Extension):
+    """ Add inline processor to Markdown. """
 
     def __init__(self, **kwargs):
         self.config = {
@@ -36,7 +43,7 @@ class WikiLinkExtension(Extension):
             'html_class': ['wikilink', 'CSS hook. Leave blank for none.'],
             'build_url': [build_url, 'Callable formats URL from label.'],
         }
-
+        """ Default configuration options. """
         super().__init__(**kwargs)
 
     def extendMarkdown(self, md):
@@ -50,6 +57,8 @@ class WikiLinkExtension(Extension):
 
 
 class WikiLinksInlineProcessor(InlineProcessor):
+    """ Build link from `wikilink`. """
+
     def __init__(self, pattern, config):
         super().__init__(pattern)
         self.config = config
@@ -69,7 +78,7 @@ class WikiLinksInlineProcessor(InlineProcessor):
         return a, m.start(0), m.end(0)
 
     def _getMeta(self):
-        """ Return meta data or config data. """
+        """ Return meta data or `config` data. """
         base_url = self.config['base_url']
         end_url = self.config['end_url']
         html_class = self.config['html_class']
