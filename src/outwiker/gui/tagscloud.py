@@ -2,7 +2,7 @@
 
 import os
 from typing import Dict, List, Optional, Tuple
-from collections.abc import Iterable
+from collections.abc import Collection, Iterable
 from datetime import datetime
 
 import wx
@@ -324,6 +324,16 @@ class TagsCloud(wx.Panel):
             self._labels[tag.lower().strip()].mark(marked)
             if self._is_active_only():
                 self._updateFilter()
+
+    def mark_list(self, tags: Collection[str], marked: bool = True):
+        for tag in tags:
+            if tag.lower().strip() in self._labels.keys():
+                self._labels[tag.lower().strip()].mark(marked)
+
+        if self._is_active_only():
+            self._updateFilter()
+
+        self.Refresh()
 
     def clearMarks(self):
         """

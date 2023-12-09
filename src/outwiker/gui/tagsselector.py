@@ -116,10 +116,7 @@ class TagsSelector(wx.Panel):
         new_tags = new_current_tags - self._current_tags
         removed_tags = self._current_tags - new_current_tags
 
-        for tag_name in new_tags:
-            self._tagsCloud.mark(tag_name)
-
-        for tag_name in removed_tags:
-            self._tagsCloud.mark(tag_name, False)
+        self._tagsCloud.mark_list(new_tags)
+        self._tagsCloud.mark_list(removed_tags, False)
 
         self._current_tags = new_current_tags

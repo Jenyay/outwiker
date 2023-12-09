@@ -9,7 +9,6 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
-from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
 from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK, EVT_TAG_ADD, EVT_TAG_REMOVE, TagAddEvent, TagLeftClickEvent
 
@@ -162,5 +161,4 @@ class TagsPanelController:
         self.__tagsPanel.clearMarks()
 
         if self.__application.selectedPage is not None:
-            for tag in self.__application.selectedPage.tags:
-                self.__tagsPanel.mark(tag)
+            self.__tagsPanel.mark_list(self.__application.selectedPage.tags)

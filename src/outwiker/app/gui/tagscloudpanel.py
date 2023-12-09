@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collections.abc import Collection
 from typing import List
 
 import wx
@@ -84,6 +85,9 @@ class TagsCloudPanel(wx.Panel):
 
     def mark(self, tag, marked=True):
         self._tagscloud.mark(tag, marked)
+
+    def mark_list(self, tags: Collection[str], marked: bool = True):
+        self._tagscloud.mark_list(tags, marked)
 
     def setTags(self, tags):
         self._tagscloud.setTags(tags)
