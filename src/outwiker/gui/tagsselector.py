@@ -12,7 +12,7 @@ TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()
 
 
 class TagsSelector(wx.Panel):
-    def __init__(self, parent):
+    def __init__(self, parent, enable_active_tags_filter: bool = True):
         super().__init__(parent)
 
         self._tagsWidth = 350
@@ -24,7 +24,9 @@ class TagsSelector(wx.Panel):
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
         self.tagsTextCtrl.SetMinSize((250, -1))
 
-        self._tagsCloud = TagsCloud(self, use_buttons=False)
+        self._tagsCloud = TagsCloud(
+            self, use_buttons=False, enable_active_tags_filter=enable_active_tags_filter
+        )
         self._tagsCloud.SetMinSize((self._tagsWidth, self._tagsHeight))
         self._tagsCloud.Bind(EVT_TAG_LEFT_CLICK, self._onTagClick)
         self.tagsTextCtrl.Bind(wx.EVT_TEXT, handler=self._onTagsChanged)
@@ -45,7 +47,7 @@ class TagsSelector(wx.Panel):
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._tagsCloud.setFontSize(min_font_size, max_font_size)
 
-    def setMode(self, mode:str):
+    def setMode(self, mode: str):
         self._tagsCloud.setMode(mode)
 
     def enableTooltips(self, enable: bool = True):
@@ -55,7 +57,9 @@ class TagsSelector(wx.Panel):
         titleTextSizer = wx.FlexGridSizer(cols=2)
         titleTextSizer.AddGrowableCol(1)
 
-        titleTextSizer.Add(self.label_tags, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
+        titleTextSizer.Add(
+            self.label_tags, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4
+        )
         titleTextSizer.Add(self.tagsTextCtrl, flag=wx.ALL | wx.EXPAND, border=0)
 
         mainSizer = wx.FlexGridSizer(cols=1)

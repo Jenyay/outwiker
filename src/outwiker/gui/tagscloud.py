@@ -22,6 +22,7 @@ class TagsCloud(wx.Panel):
         max_font_size: int = 16,
         mode: str = TAGS_CLOUD_MODE_CONTINUOUS,
         enable_tooltips: bool = True,
+        enable_active_tags_filter: bool = True
     ):
         super().__init__(parent)
         self._use_buttons = use_buttons
@@ -29,6 +30,7 @@ class TagsCloud(wx.Panel):
         self._max_font_size = max_font_size
         self._mode = mode
         self._enable_tooltips = enable_tooltips
+        self._enable_active_tags_filter = enable_active_tags_filter
 
         self._scroll_start_time = None
         self._scroll_timeout_musec = 200e3
@@ -201,6 +203,7 @@ class TagsCloud(wx.Panel):
         self._search_ctrl = wx.SearchCtrl(self)
         self._active_tags_flag = wx.BitmapToggleButton(self, label=wx.Bitmap(getBuiltinImagePath("tag_active.png")))
         self._active_tags_flag.SetToolTip(_("Applied tags only"))
+        self._active_tags_flag.Show(self._enable_active_tags_filter)
 
         filter_sizer = wx.FlexGridSizer(cols=2)
         filter_sizer.AddGrowableCol(0)
@@ -255,17 +258,18 @@ class TagsCloud(wx.Panel):
         oldy = self._tags_panel.GetScrollPos(wx.VERTICAL)
         self.clear()
 
-        active_only = self._active_tags_flag.GetValue()
         self._tags = taglist
+        self._create_tag_labels()
+
+        active_only = self._active_tags_flag.GetValue()
         self._filtered_tags = (
             self._filter_tags(self._tags.tags, active_only) if self._tags is not None else []
         )
-
-        self._create_tag_labels()
         self._filter_tag_labels()
         self._tags_panel.Scroll(-1, oldy)
         self._prevLabelHover = None
         self.Thaw()
+        self.Update()
 
     def setFilter(self, tags_filter: str, active_only: bool = False):
         self._filter = tags_filter
@@ -333,7 +337,7 @@ class TagsCloud(wx.Panel):
         if self._is_active_only():
             self._updateFilter()
 
-        self.Refresh()
+        self.Update()
 
     def clearMarks(self):
         """
@@ -411,7 +415,7 @@ class TagsCloud(wx.Panel):
         else:
             self.__moveLabelsContinuous()
 
-        self._tags_panel.Refresh()
+        self._tags_panel.Update()
 
     def _getScrollStepY(self) -> int:
         return list(self._labels.values())[0].getSize()[1] + self._gapy

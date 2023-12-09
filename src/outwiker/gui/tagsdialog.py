@@ -26,7 +26,7 @@ class TagsDialog(wx.Dialog):
         self.__tagsSelector.setTagsList(tagslist)
 
     def __createControls(self):
-        self.__tagsSelector = TagsSelector(self)
+        self.__tagsSelector = TagsSelector(self, enable_active_tags_filter=False)
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
         mainSizer = wx.FlexGridSizer(2, 1, 0, 0)

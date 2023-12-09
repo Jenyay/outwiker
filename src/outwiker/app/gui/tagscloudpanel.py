@@ -100,7 +100,12 @@ class TagsCloudPanel(wx.Panel):
         enable_tooltips = config.enableTooltips.value
 
         self._tagscloud = TagsCloud(
-            self, min_font_size=min_font_size, max_font_size=max_font_size, mode=mode, enable_tooltips=enable_tooltips
+            self,
+            min_font_size=min_font_size,
+            max_font_size=max_font_size,
+            mode=mode,
+            enable_tooltips=enable_tooltips,
+            enable_active_tags_filter=True
         )
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
