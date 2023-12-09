@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from collections.abc import Collection
-from typing import List
+from typing import Collection, List
 
 import wx
 

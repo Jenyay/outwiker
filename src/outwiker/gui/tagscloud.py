@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
-from typing import Dict, List, Optional, Tuple
-from collections.abc import Collection, Iterable
+from typing import Collection, Dict, List, Optional, Tuple
+from collections.abc import Iterable
 from datetime import datetime
 
 import wx
