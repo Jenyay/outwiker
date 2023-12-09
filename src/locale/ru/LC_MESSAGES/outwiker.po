@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-30 21:54+0300\n"
+"POT-Creation-Date: 2023-12-09 20:32+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -578,35 +578,35 @@ msgstr "Предыдущая вкладка"
 msgid "Go to previous tab"
 msgstr "Перейти на предыдущую вкладку"
 
-#: outwiker/app/actions/tags.py:36
+#: outwiker/app/actions/tags.py:39
 msgid "Add Tags to Branch…"
 msgstr "Добавить метки к ветке…"
 
-#: outwiker/app/actions/tags.py:40
+#: outwiker/app/actions/tags.py:43
 msgid "Add tags to branch"
 msgstr "Добавить метки к ветке"
 
-#: outwiker/app/actions/tags.py:66
+#: outwiker/app/actions/tags.py:69
 msgid "Add Tags to Branch"
 msgstr "Добавление меток к ветке"
 
-#: outwiker/app/actions/tags.py:89
+#: outwiker/app/actions/tags.py:92
 msgid "Remove Tags from Branch…"
 msgstr "Удалить метки из ветки…"
 
-#: outwiker/app/actions/tags.py:93
+#: outwiker/app/actions/tags.py:96
 msgid "Remove tags from branch"
 msgstr "Удалить метки из ветки"
 
-#: outwiker/app/actions/tags.py:116
+#: outwiker/app/actions/tags.py:119
 msgid "Remove Tags from Branch"
 msgstr "Удаление меток из ветки"
 
-#: outwiker/app/actions/tags.py:140
+#: outwiker/app/actions/tags.py:143
 msgid "Rename Tag…"
 msgstr "Переименовать метку…"
 
-#: outwiker/app/actions/tags.py:144
+#: outwiker/app/actions/tags.py:147
 #: outwiker/app/gui/dialogs/renametagdialog.py:21
 msgid "Rename tag"
 msgstr "Переименование меток"
@@ -775,7 +775,7 @@ msgid "Convert HTML Symbols"
 msgstr "Преобразовать символы в HTML"
 
 #: outwiker/app/gui/actionslist.py:370 outwiker/pages/html/htmlpageview.py:38
-#: outwiker/pages/wiki/wikipageview.py:68
+#: outwiker/pages/wiki/wikipageview.py:70
 msgid "Table"
 msgstr "Таблица"
 
@@ -1040,7 +1040,7 @@ msgstr "Общие"
 msgid "Appearance"
 msgstr "Внешний вид"
 
-#: outwiker/app/gui/currentpagepanel.py:100
+#: outwiker/app/gui/currentpagepanel.py:99
 msgid "Can't open page. Page folder not exists"
 msgstr "Невозможно открыть страницу. Папка со страницей отсутствует"
 
@@ -1048,18 +1048,18 @@ msgstr "Невозможно открыть страницу. Папка со с
 msgid "Add to Bookmarks"
 msgstr "Добавить в закладки"
 
-#: outwiker/app/gui/currentpagepanel.py:117
+#: outwiker/app/gui/currentpagepanel.py:118
 msgid "Remove from Bookmarks"
 msgstr "Удалить из закладок"
 
-#: outwiker/app/gui/currentpagepanel.py:262
+#: outwiker/app/gui/currentpagepanel.py:261
 msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
 msgstr ""
 "Невозможно сохранить страницу. \n"
 "Папка с вики не существует. \n"
 "Вики будет закрыта."
 
-#: outwiker/app/gui/currentpagepanel.py:272
+#: outwiker/app/gui/currentpagepanel.py:274
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr ""
 "Невозможно сохранить страницу. \n"
@@ -1168,7 +1168,7 @@ msgid "Author: Eugeniy Ilin (aka Jenyay)"
 msgstr "Автор: Евгений Ильин (aka Jenyay)"
 
 #: outwiker/app/gui/dialogs/renametagdialog.py:35
-#: outwiker/app/gui/dialogs/renametagdialog.py:81
+#: outwiker/app/gui/dialogs/renametagdialog.py:84
 msgid "Select tag for rename"
 msgstr "Выберите метку для переименования"
 
@@ -1176,22 +1176,22 @@ msgstr "Выберите метку для переименования"
 msgid "New tag name"
 msgstr "Новое имя метки"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:82
-#: outwiker/app/gui/dialogs/renametagdialog.py:87
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:502
+#: outwiker/app/gui/dialogs/renametagdialog.py:85
+#: outwiker/app/gui/dialogs/renametagdialog.py:90
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:503
 #: outwiker/app/gui/preferences/iconsetpanel.py:212
 #: outwiker/app/gui/preferences/iconsetpanel.py:268
 #: outwiker/app/gui/preferences/iconsetpanel.py:274
 #: outwiker/app/gui/preferences/iconsetpanel.py:280
 #: outwiker/app/gui/preferences/iconsetpanel.py:320
 #: outwiker/core/textprinter.py:98
-#: outwiker/gui/controls/toastercontroller.py:49
+#: outwiker/gui/controls/toastercontroller.py:50
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:72
 #: outwiker/pages/html/basehtmlpanel.py:338
 msgid "Error"
 msgstr "Ошибка"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:86
+#: outwiker/app/gui/dialogs/renametagdialog.py:89
 msgid "Enter new tag name"
 msgstr "Введите новое имя метки"
 
@@ -1360,20 +1360,20 @@ msgstr "Конец списка"
 msgid "Alphabetically"
 msgstr "По алфавиту"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:438
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:439
 #: outwiker/app/gui/preferences/iconsetpanel.py:157
 msgid "Not in groups"
 msgstr "Без групп"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:463
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:464
 msgid "Recent"
 msgstr "Последнее"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:501
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:502
 msgid "Can't set page icon\n"
 msgstr "Ошибка установки значка страницы\n"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:584
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:585
 #: outwiker/gui/iconlistctrl.py:54
 msgid "Invalid icon file: {}"
 msgstr "Ошибка в файле значка: {}"
@@ -1412,8 +1412,8 @@ msgstr "Цвет текста основных панелей"
 #: outwiker/app/gui/preferences/textprintpanel.py:29
 #: outwiker/pages/html/htmlpageview.py:36
 #: outwiker/pages/html/htmlpageview.py:202
-#: outwiker/pages/wiki/wikipageview.py:66
-#: outwiker/pages/wiki/wikipageview.py:161
+#: outwiker/pages/wiki/wikipageview.py:68
+#: outwiker/pages/wiki/wikipageview.py:164
 msgid "Font"
 msgstr "Шрифт"
 
@@ -1823,8 +1823,8 @@ msgstr "Всегда показывать значок в трее"
 #: outwiker/app/gui/preferences/wikieditorpanel.py:34
 #: outwiker/pages/html/htmlpageview.py:35
 #: outwiker/pages/html/htmlpageview.py:201
-#: outwiker/pages/wiki/wikipageview.py:65
-#: outwiker/pages/wiki/wikipageview.py:160
+#: outwiker/pages/wiki/wikipageview.py:67
+#: outwiker/pages/wiki/wikipageview.py:163
 msgid "Heading"
 msgstr "Заголовки"
 
@@ -1842,8 +1842,8 @@ msgstr "Миниатюра"
 msgid "Can't save file %s"
 msgstr "Ошибка записи в файл %s"
 
-#: outwiker/app/gui/tagspanelcontroller.py:80
-#: outwiker/app/gui/tagspanelcontroller.py:92 outwiker/core/treetools.py:45
+#: outwiker/app/gui/tagspanelcontroller.py:79
+#: outwiker/app/gui/tagspanelcontroller.py:91 outwiker/core/treetools.py:45
 msgid "Page is opened as read-only"
 msgstr "Страница открыта только для чтения"
 
@@ -2388,11 +2388,15 @@ msgstr "Заголовочные ячейки в первой строке"
 msgid "Insert rows"
 msgstr "Вставить строки"
 
-#: outwiker/gui/tagscloud.py:166
+#: outwiker/gui/tagscloud.py:122
 msgid "Number of notes: {}"
 msgstr "Количество заметок: {}"
 
-#: outwiker/gui/tagsselector.py:21
+#: outwiker/gui/tagscloud.py:203
+msgid "Applied tags only"
+msgstr "Только установленные теги"
+
+#: outwiker/gui/tagsselector.py:22
 msgid "Tags (comma separated)"
 msgstr "Метки (разделенные запятыми)"
 
@@ -2456,27 +2460,27 @@ msgid "HTML Page"
 msgstr "HTML-страница"
 
 #: outwiker/pages/html/htmlpageview.py:37
-#: outwiker/pages/wiki/wikipageview.py:67
+#: outwiker/pages/wiki/wikipageview.py:69
 msgid "Align"
 msgstr "Выравнивание"
 
 #: outwiker/pages/html/htmlpageview.py:203
-#: outwiker/pages/wiki/wikipageview.py:162
+#: outwiker/pages/wiki/wikipageview.py:165
 msgid "Alignment"
 msgstr "Выравнивание"
 
 #: outwiker/pages/html/htmlpageview.py:204
-#: outwiker/pages/wiki/wikipageview.py:164
+#: outwiker/pages/wiki/wikipageview.py:167
 msgid "Formatting"
 msgstr "Форматирование"
 
 #: outwiker/pages/html/htmlpageview.py:205
-#: outwiker/pages/wiki/wikipageview.py:169
+#: outwiker/pages/wiki/wikipageview.py:173
 msgid "Lists"
 msgstr "Списки"
 
 #: outwiker/pages/html/htmlpageview.py:206
-#: outwiker/pages/wiki/wikipageview.py:168
+#: outwiker/pages/wiki/wikipageview.py:172
 msgid "Tables"
 msgstr "Таблицы"
 
@@ -2683,11 +2687,11 @@ msgstr "Преобразовывать символы <, > и && в HTML-пре�
 msgid "Parse wiki notation"
 msgstr "Включить разбор викинотации"
 
-#: outwiker/pages/wiki/actions/listitemstyle.py:21
+#: outwiker/pages/wiki/actions/listitemstyle.py:23
 msgid "List item style..."
 msgstr "Стиль элемента списка..."
 
-#: outwiker/pages/wiki/actions/listitemstyle.py:25
+#: outwiker/pages/wiki/actions/listitemstyle.py:27
 msgid "Select list item style (bullet)"
 msgstr "Выбор стиля элемента списка"
 
@@ -2861,21 +2865,21 @@ msgstr "0 - размер по умолчанию"
 msgid "Wiki Page"
 msgstr "Викистраница"
 
-#: outwiker/pages/wiki/wikipageview.py:51
-#: outwiker/pages/wiki/wikipageview.py:54
-#: outwiker/pages/wiki/wikipageview.py:64
+#: outwiker/pages/wiki/wikipageview.py:53
+#: outwiker/pages/wiki/wikipageview.py:56
+#: outwiker/pages/wiki/wikipageview.py:66
 msgid "Wiki"
 msgstr "Вики"
 
-#: outwiker/pages/wiki/wikipageview.py:171
+#: outwiker/pages/wiki/wikipageview.py:175
 msgid "Commands"
 msgstr "Команды"
 
-#: outwiker/pages/wiki/wikipageview.py:821
+#: outwiker/pages/wiki/wikipageview.py:894
 msgid "Select text color"
 msgstr "Выбор цвета текста"
 
-#: outwiker/pages/wiki/wikipageview.py:844
+#: outwiker/pages/wiki/wikipageview.py:914
 msgid "Select text background color"
 msgstr "Выбор цвета фона текста"
 
