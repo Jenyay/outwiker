@@ -7,6 +7,7 @@ from datetime import datetime
 
 import wx
 
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagslist import TagsList
 from outwiker.gui.controls.taglabel2 import TagLabel2
 from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST
@@ -64,6 +65,7 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Bind(wx.EVT_SCROLLWIN, handler=self._onScroll)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
+        self._active_tags_flag.Bind(wx.EVT_TOGGLEBUTTON, self._onActiveTagsToggle)
 
     def _findLabel(self, x, y) -> Optional[TagLabel2]:
         result = None
@@ -197,8 +199,17 @@ class TagsCloud(wx.Panel):
         self._tags_panel.SetScrollRate(0, 0)
 
         self._search_ctrl = wx.SearchCtrl(self)
+        self._active_tags_flag = wx.BitmapToggleButton(self, label=wx.Bitmap(getBuiltinImagePath("tag_active.png")))
+        self._active_tags_flag.SetToolTip(_("Applied tags only"))
 
-        self._main_sizer.Add(self._search_ctrl, flag=wx.EXPAND)
+        filter_sizer = wx.FlexGridSizer(cols=2)
+        filter_sizer.AddGrowableCol(0)
+        filter_sizer.AddGrowableRow(0)
+
+        filter_sizer.Add(self._search_ctrl, flag=wx.EXPAND)
+        filter_sizer.Add(self._active_tags_flag, flag=wx.ALIGN_RIGHT | wx.EXPAND)
+
+        self._main_sizer.Add(filter_sizer, flag=wx.EXPAND)
         self._main_sizer.Add(self._tags_panel, flag=wx.EXPAND)
 
         self.SetSizer(self._main_sizer)
@@ -217,7 +228,7 @@ class TagsCloud(wx.Panel):
             self._oldSize = newSize
 
     def _onSearch(self, event):
-        self.setFilter(event.GetString())
+        self._updateFilter()
 
     def _onKeyPressed(self, event):
         key = event.GetKeyCode()
@@ -227,6 +238,15 @@ class TagsCloud(wx.Panel):
 
         event.Skip()
 
+    def _is_active_only(self):
+        return self._active_tags_flag.GetValue()
+
+    def _onActiveTagsToggle(self, event):
+        self._updateFilter()
+
+    def _updateFilter(self):
+        self.setFilter(self._search_ctrl.GetValue(), self._is_active_only())
+
     def setTags(self, taglist: TagsList):
         """
         Добавить теги в облако
@@ -235,9 +255,10 @@ class TagsCloud(wx.Panel):
         oldy = self._tags_panel.GetScrollPos(wx.VERTICAL)
         self.clear()
 
+        active_only = self._active_tags_flag.GetValue()
         self._tags = taglist
         self._filtered_tags = (
-            self._filter_tags(self._tags.tags) if self._tags is not None else []
+            self._filter_tags(self._tags.tags, active_only) if self._tags is not None else []
         )
 
         self._create_tag_labels()
@@ -246,14 +267,14 @@ class TagsCloud(wx.Panel):
         self._prevLabelHover = None
         self.Thaw()
 
-    def setFilter(self, tags_filter: str):
+    def setFilter(self, tags_filter: str, active_only: bool = False):
         self._filter = tags_filter
 
         if self._tags is None:
             return
 
         self._filtered_tags = (
-            self._filter_tags(self._tags.tags) if self._tags is not None else []
+            self._filter_tags(self._tags.tags, active_only) if self._tags is not None else []
         )
         self._filter_tag_labels()
 
@@ -290,12 +311,9 @@ class TagsCloud(wx.Panel):
 
         self._layoutTags()
 
-    def _filter_tags(self, tags: List[str]) -> List[str]:
-        if not self._filter:
-            return tags
-
+    def _filter_tags(self, tags: List[str], active_only: bool) -> List[str]:
         return list(
-            filter(lambda tag_name: self._filter.lower() in tag_name.lower(), tags)
+            filter(lambda tag_name: self._filter.lower() in tag_name.lower() and (not active_only or self.isMarked(tag_name)), tags)
         )
 
     def mark(self, tag: str, marked: bool = True):
@@ -304,6 +322,8 @@ class TagsCloud(wx.Panel):
         """
         if tag.lower().strip() in self._labels.keys():
             self._labels[tag.lower().strip()].mark(marked)
+            if self._is_active_only():
+                self._updateFilter()
 
     def clearMarks(self):
         """
@@ -311,6 +331,9 @@ class TagsCloud(wx.Panel):
         """
         for label in self._labels.values():
             label.mark(False)
+
+        if self._is_active_only():
+            self._updateFilter()
 
     def isMarked(self, tag):
         return self._labels[tag].isMarked
