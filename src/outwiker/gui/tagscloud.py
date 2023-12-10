@@ -267,7 +267,7 @@ class TagsCloud(wx.Panel):
         )
         self._filter_tag_labels()
         self._tags_panel.Scroll(-1, oldy)
-        self._prevLabelHover = None
+        self._prevLabelHovered = None
         self.Thaw()
         self.Update()
 
