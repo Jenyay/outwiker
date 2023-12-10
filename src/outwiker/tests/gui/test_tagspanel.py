@@ -170,6 +170,10 @@ class FakeTagsPanel(object):
         else:
             self.__removeMark(tag)
 
+    def mark_list(self, tags, marked=True):
+        for tag in tags:
+            self.mark(tag, marked)
+
     def __setMark(self, tag):
         self.marks.append(tag)
 
