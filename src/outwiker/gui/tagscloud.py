@@ -269,7 +269,7 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Scroll(-1, oldy)
         self._prevLabelHovered = None
         self.Thaw()
-        self.Update()
+        self._tags_panel.Refresh()
 
     def setFilter(self, tags_filter: str, active_only: bool = False):
         self._filter = tags_filter
@@ -337,7 +337,7 @@ class TagsCloud(wx.Panel):
         if self._is_active_only():
             self._updateFilter()
 
-        self.Update()
+        self._tags_panel.Refresh()
 
     def clearMarks(self):
         """
@@ -415,7 +415,7 @@ class TagsCloud(wx.Panel):
         else:
             self.__moveLabelsContinuous()
 
-        self._tags_panel.Update()
+        self._tags_panel.Refresh()
 
     def _getScrollStepY(self) -> int:
         return list(self._labels.values())[0].getSize()[1] + self._gapy
