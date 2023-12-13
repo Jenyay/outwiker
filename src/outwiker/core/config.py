@@ -33,9 +33,9 @@ class Config:
         except (UnicodeDecodeError, IOError, configparser.Error):
             backup_fname = self.fname + ".bak"
             logger.error(
-                "Invalid config file: {src}. The file will be copied to {backup} and cleaned.".format(
-                    src=fname, backup=os.path.basename(backup_fname)
-                )
+                "Invalid config file: %s. The file will be copied to %s and cleaned.",
+                fname,
+                os.path.basename(backup_fname),
             )
 
             self._backup(self.fname, backup_fname)

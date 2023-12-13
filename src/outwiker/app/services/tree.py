@@ -89,7 +89,7 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
         except Exception as e:
             return e
 
-    logger.debug("Opening notes tree from: {}".format(path))
+    logger.debug("Opening notes tree from: %s", path)
     if not os.path.exists(path):
         _canNotLoadWikiMessage(path)
         return None
@@ -102,7 +102,7 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
 
     # The path may be changed in event handlers
     path = preWikiOpenParams.path
-    logger.debug("Notes tree path after onPreWikiOpen: {}".format(path))
+    logger.debug("Notes tree path after onPreWikiOpen: %s", path)
 
     # Если передан путь до файла настроек (а не до папки с вики),
     # то оставим только папку
@@ -134,7 +134,7 @@ def _canNotLoadWikiMessage(path):
     """
     Вывести сообщение о том, что невоможно открыть вики
     """
-    logger.warning("Can't load notes tree: {}".format(path))
+    logger.warning("Can't load notes tree: %s", path)
     text = _("Can't load notes tree:\n") + path
     showError(Application.mainWindow, text)
 

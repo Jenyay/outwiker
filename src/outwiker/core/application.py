@@ -406,14 +406,14 @@ class ApplicationParams:
             preWikiCloseParams = PreWikiCloseParams(self.__wikiroot)
             self.onPreWikiClose(self.selectedPage, preWikiCloseParams)
             if preWikiCloseParams.abortClose:
-                logger.debug('Wiki closing aborted: {}'.format(wikiPath))
+                logger.debug('Wiki closing aborted: %s', wikiPath)
                 return
 
             self.__unbindWikiEvents(self.__wikiroot)
             try:
                 self.__wikiroot.save()
             except OSError:
-                logger.error("Can't save notes tree settings: {}".format(self.__wikiroot.path))
+                logger.error("Can't save notes tree settings: %s", self.__wikiroot.path)
                 self.__wikiroot = None
 
             postWikiCloseParams = PostWikiCloseParams(wikiPath)

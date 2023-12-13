@@ -121,7 +121,7 @@ class TrayIcon(wx.adv.TaskBarIcon):
         self.mainWnd = mainWnd
         self._iconFileName = iconFileName
 
-        logger.debug('Tray icon available: {}'.format(self.IsAvailable()))
+        logger.debug('Tray icon available: %r', self.IsAvailable())
 
         self.ID_RESTORE = None
         self.ID_EXIT = None

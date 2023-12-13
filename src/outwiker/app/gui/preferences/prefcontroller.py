@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import wx
-import logging
 
 from outwiker.app.actions.openhelp import OpenHelpAction, OpenHelpParams
 
@@ -28,8 +27,6 @@ from outwiker.core.exceptions import PreferencesException
 
 from outwiker.gui.guiconfig import PrefDialogConfig
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-
-logger = logging.getLogger('prefcontroller')
 
 
 class PrefController:

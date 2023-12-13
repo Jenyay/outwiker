@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import logging
-
 import wx
 
 from outwiker.core.system import getCurrentDir, getOS
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
-
-logger = logging.getLogger("pluginspanel")
 
 
 class PluginsPanel(BasePrefPanel):

@@ -392,7 +392,7 @@ def openInNewWindow(path, args=[]):
     params = [exeFile, path] + args
     python = getOS().python
 
-    logger.debug('openInNewWindow. Params: {}'.format(params))
+    logger.debug('openInNewWindow. Params: %s', params)
 
     env = os.environ.copy()
 

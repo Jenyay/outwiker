@@ -447,9 +447,9 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         """
         if not BasePage.testDublicate(parent, title):
             logger.error(
-                "Duplicate page title in the parent page. Title: {}. Parent: {}".format(
-                    title, parent.subpath
-                )
+                "Duplicate page title in the parent page. Title: %s. Parent: %s",
+                title,
+                parent.subpath,
             )
             raise DuplicateTitle
 
@@ -746,7 +746,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
                 text = readTextFile(path)
                 text = text.replace("\r\n", "\n")
             except Exception as e:
-                logger.error("Can't read page content for {}".format(path))
+                logger.error("Can't read page content for %s", path)
                 logger.error(str(e))
 
         params = events.PostContentReadingParams(text)
