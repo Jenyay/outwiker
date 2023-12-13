@@ -90,7 +90,7 @@ class URLRecognizer(Recognizer):
 class AnchorRecognizerBase(Recognizer, metaclass=ABCMeta):
     def _recognizeAnchor(self, href: str, basepath: str) -> Optional[str]:
         anchor = None
-        logger.debug("AnchorRecognizerBase. href= '{}'; basepath = '{}'".format(href, basepath))
+        logger.debug("AnchorRecognizerBase. href= '%s'; basepath = '%s'", href, basepath)
         if (href.lower().startswith(basepath.lower()) and
                 len(href) > len(basepath) and
                 href[len(basepath)] == "#"):
@@ -110,7 +110,7 @@ class AnchorRecognizerIE(AnchorRecognizerBase):
     '''
 
     def _recognize(self, href: str) -> Optional[str]:
-        logger.debug("AnchorRecognizerIE. href= '{}'; _basepath = '{}'".format(href, self._basepath))
+        logger.debug("AnchorRecognizerIE. href= '%s'; _basepath = '%s'", href, self._basepath)
         if href.startswith('/'):
             href = href[1:]
 

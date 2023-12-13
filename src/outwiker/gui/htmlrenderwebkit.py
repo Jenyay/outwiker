@@ -19,16 +19,19 @@ from outwiker.utilites.textfile import readTextFile
 
 from .htmlrender import HtmlRenderBase, HTMLRenderForPageMixin
 from .urirecognizers import (
-    URLRecognizer, AnchorRecognizerWebKit, FileRecognizerWebKit,
-    PageRecognizerWebKit)
+    URLRecognizer,
+    AnchorRecognizerWebKit,
+    FileRecognizerWebKit,
+    PageRecognizerWebKit,
+)
 
-logger = logging.getLogger('outwiker.gui.htmlrenderwebkit')
+logger = logging.getLogger("outwiker.gui.htmlrenderwebkit")
 
 
 class HtmlRenderWebKitBase(HtmlRenderBase):
-    '''
+    """
     A base class for HTML render. Engine - WebKit.
-    '''
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -47,6 +50,7 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
 
     def _createRender(self):
         import wx.html2
+
         return wx.html2.WebView.New(self)
 
     def getBasePath(self) -> str:
@@ -66,8 +70,8 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
 
     def Sleep(self):
         import wx.html2 as webview
-        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
-                           handler=self._onNavigating)
+
+        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
 
@@ -76,21 +80,21 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         self._navigate_id = 1
 
         import wx.html2 as webview
+
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
-        self.render.Bind(webview.EVT_WEBVIEW_NAVIGATING,
-                         handler=self._onNavigating)
+        self.render.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
 
     def _pathToURL(self, path: str) -> str:
-        '''
+        """
         Convert file system path to file:// URL
-        '''
-        return 'file://' + urllib.parse.quote(path)
+        """
+        return "file://" + urllib.parse.quote(path)
 
     def _onClose(self, event):
         import wx.html2 as webview
-        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
-                           handler=self._onNavigating)
+
+        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
         self.render.Stop()
         event.Skip()
 
@@ -102,53 +106,57 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         nav_id = self._navigate_id
         self._navigate_id += 1
 
-        logger.debug('_onNavigating ({nav_id}) begin. canOpenUrl = {can_open_url}'.format(
-            nav_id=nav_id,
-            can_open_url=self.canOpenUrl))
+        logger.debug(
+            "_onNavigating (%d) begin. canOpenUrl = %r", nav_id, self.canOpenUrl
+        )
 
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
         frame = event.GetTarget()
         if frame:
-            logger.debug('_onNavigating ({nav_id}) frame={frame}'.format(
-                nav_id=nav_id, frame=frame))
-            logger.debug('_onNavigating ({nav_id}) end'.format(nav_id=nav_id))
+            logger.debug("_onNavigating (%d) frame=%s", nav_id, frame)
+            logger.debug("_onNavigating (%d) end", nav_id)
             return
 
         href = event.GetURL()
         curr_href = self.render.GetCurrentURL()
-        logger.debug('_onNavigating ({nav_id}). href={href}; curr_href={curr_href}; canOpenUrl={canOpenUrl}'.format(
-            nav_id=nav_id, href=href, curr_href=curr_href, canOpenUrl=self.canOpenUrl))
+        logger.debug(
+            "_onNavigating (%d). href=%s; curr_href=%s; canOpenUrl=%r",
+            nav_id,
+            href,
+            curr_href,
+            self.canOpenUrl
+        )
 
         # Open empty page
-        if href == 'about:blank' or href == '':
-            logger.debug('_onNavigating. Skip about:blank')
+        if href == "about:blank" or href == "":
+            logger.debug("_onNavigating. Skip about:blank")
             event.Veto()
             return
 
         # Link clicked
         if self.canOpenUrl == 0:
-            logger.debug(
-                '_onNavigating ({nav_id}). Link clicked.'.format(nav_id=nav_id))
+            logger.debug("_onNavigating (%d). Link clicked.", nav_id)
             processed = self._onLinkClicked(href)
             if processed:
                 event.Veto()
-                logger.debug(
-                    '_onNavigating ({nav_id}) end. Veto'.format(nav_id=nav_id))
+                logger.debug("_onNavigating (%d) end. Veto", nav_id)
             else:
-                logger.debug('_onNavigating ({nav_id}) end. Allow href processing. href={href}'.format(
-                    nav_id=nav_id, href=href))
+                logger.debug(
+                    "_onNavigating (%d) end. Allow href processing. href=%s",
+                    nav_id,
+                    href,
+                )
             return
 
         self.canOpenUrl -= 1
 
-        logger.debug('_onNavigating ({nav_id}) end. canOpenUrl={canOpenUrl}'.format(
-            nav_id=nav_id, canOpenUrl=self.canOpenUrl))
+        logger.debug("_onNavigating (%d) end. canOpenUrl=%r", nav_id, self.canOpenUrl)
 
 
 class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
-    '''
+    """
     HTML render for using as note page render. Engine - WebKit.
-    '''
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -174,8 +182,8 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
 
         basepath = os.path.dirname(fname)
 
-        if not basepath.endswith('/'):
-            basepath += '/'
+        if not basepath.endswith("/"):
+            basepath += "/"
 
         # Add anchor for references
         anchor = None
@@ -192,8 +200,8 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
         """
         uri = self.render.GetCurrentURL()
 
-        logger.debug('_identifyUri. href={href}'.format(href=href))
-        logger.debug('_identifyUri. current URI={uri}'.format(uri=uri))
+        logger.debug("_identifyUri. href=%s", href)
+        logger.debug("_identifyUri. current URI=%s", uri)
 
         if uri is not None:
             basepath = self.getBasePath()
@@ -203,12 +211,10 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
             filename = FileRecognizerWebKit(basepath).recognize(href)
             anchor = AnchorRecognizerWebKit(basepath).recognize(href)
 
-            logger.debug('_identifyUri. url={url}'.format(url=url))
-            logger.debug('_identifyUri. page={page}'.format(page=page))
-            logger.debug(
-                '_identifyUri. filename={filename}'.format(filename=filename))
-            logger.debug(
-                '_identifyUri. anchor={anchor}'.format(anchor=anchor))
+            logger.debug("_identifyUri. url=%s", url)
+            logger.debug("_identifyUri. page=%s", page)
+            logger.debug("_identifyUri. filename=%s", filename)
+            logger.debug("_identifyUri. anchor=%s", anchor)
 
             return (url, page, filename, anchor)
 
@@ -227,19 +233,13 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
         href = urllib.parse.unquote(href)
         href = self.decodeIDNA(href)
 
-        logger.debug('_onLinkClicked. href_src={source_href}'.format(
-            source_href=source_href)
-        )
+        logger.debug("_onLinkClicked. href_src=%s", source_href)
 
         (url, page, filename, anchor) = self._identifyUri(href)
 
-        params = self.getClickParams(source_href,
-                                     mouse_button,
-                                     modifier,
-                                     url,
-                                     page,
-                                     filename,
-                                     anchor)
+        params = self.getClickParams(
+            source_href, mouse_button, modifier, url, page, filename, anchor
+        )
 
         Application.onLinkClick(self._currentPage, params)
         if params.process:
@@ -267,9 +267,9 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
 
 
 class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
-    '''
+    """
     HTML render for common using. Engine - WebKit.
-    '''
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -280,14 +280,14 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
         try:
             html = readTextFile(fname)
         except IOError:
-            text = _(u"Can't read file %s") % (fname)
+            text = _("Can't read file %s") % (fname)
             self.canOpenUrl += 1
             self.SetPage(text, os.path.dirname(fname))
 
         basepath = os.path.dirname(fname)
 
-        if not basepath.endswith('/'):
-            basepath += '/'
+        if not basepath.endswith("/"):
+            basepath += "/"
 
         self.SetPage(html, basepath, anchor=None)
 
@@ -297,8 +297,8 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
         """
         uri = self.render.GetCurrentURL()
 
-        logger.debug('_identifyUri. href={href}'.format(href=href))
-        logger.debug('_identifyUri. current URI={uri}'.format(uri=uri))
+        logger.debug("_identifyUri. href=%s", href)
+        logger.debug("_identifyUri. current URI=%s", uri)
 
         if uri is not None:
             basepath = self.getBasePath()
@@ -307,11 +307,9 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
             filename = FileRecognizerWebKit(basepath).recognize(href)
             anchor = AnchorRecognizerWebKit(basepath).recognize(href)
 
-            logger.debug('_identifyUri. url={url}'.format(url=url))
-            logger.debug(
-                '_identifyUri. filename={filename}'.format(filename=filename))
-            logger.debug(
-                '_identifyUri. anchor={anchor}'.format(anchor=anchor))
+            logger.debug("_identifyUri. url=%s", url)
+            logger.debug("_identifyUri. filename=%s", filename)
+            logger.debug("_identifyUri. anchor=%s", anchor)
 
             return (url, filename, anchor)
 
@@ -328,9 +326,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
         href = urllib.parse.unquote(href)
         href = self.decodeIDNA(href)
 
-        logger.debug('_onLinkClicked. href_src={source_href}'.format(
-            source_href=source_href)
-        )
+        logger.debug("_onLinkClicked. href_src=%s", source_href)
 
         (url, filename, anchor) = self._identifyUri(href)
 
@@ -340,7 +336,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
             try:
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
-                text = _(u"Can't execute file '%s'") % filename
+                text = _("Can't execute file '%s'") % filename
                 showError(Application.mainWindow, text)
         elif anchor is not None:
             return False

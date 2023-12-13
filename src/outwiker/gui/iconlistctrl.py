@@ -51,7 +51,7 @@ class IconButton:
         wx.Log.EnableLogging(True)
 
         if not image.IsOk():
-            logging.error(_('Invalid icon file: %s', fname)
+            logging.error('Invalid icon file: %s', fname)
             image = wx.Bitmap(self._invalidFileName)
 
         return image

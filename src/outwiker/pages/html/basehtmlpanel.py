@@ -254,7 +254,7 @@ class BaseHtmlPanel(BaseTextPanel):
         try:
             reg.set(self.tabParamName, self._selectedPageIndex)
         except KeyError:
-            logger.error("Can't set tab index for {}".format(page.subpath))
+            logger.error("Can't set tab index for %s", page.subpath)
 
     def loadPageTab(self, page):
         """
