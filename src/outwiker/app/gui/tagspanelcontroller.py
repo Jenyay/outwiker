@@ -3,6 +3,7 @@
 import wx
 from functools import cmp_to_key
 
+from outwiker.app.gui.tagpopupmenu import TagPopupMenu
 from outwiker.app.services.messages import showError
 
 from outwiker.core.tagslist import TagsList
@@ -10,7 +11,7 @@ from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
-from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK, EVT_TAG_ADD, EVT_TAG_REMOVE, TagAddEvent, TagLeftClickEvent
+from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK, EVT_TAG_RIGHT_CLICK, EVT_TAG_ADD, EVT_TAG_REMOVE
 
 
 class TagsPanelController:
@@ -18,6 +19,7 @@ class TagsPanelController:
         self.__tagsPanel = tagsPanel
         self.__application = application
         self.__currentTags = None
+        self.__tagPopupMenu = None
 
         self.__bindAppEvents()
 
@@ -27,6 +29,7 @@ class TagsPanelController:
 
         self.__tagsPanel.Bind(EVT_PAGE_CLICK, handler=self.__onPageClick)
         self.__tagsPanel.Bind(EVT_TAG_LEFT_CLICK, handler=self.__onTagLeftClick)
+        self.__tagsPanel.Bind(EVT_TAG_RIGHT_CLICK, handler=self.__onTagRightClick)
         self.__tagsPanel.Bind(EVT_TAG_ADD, handler=self.__onTagAdd)
         self.__tagsPanel.Bind(EVT_TAG_REMOVE, handler=self.__onTagRemove)
         self.__tagsPanel.Bind(wx.EVT_CLOSE, handler=self.__onClose)
@@ -36,6 +39,7 @@ class TagsPanelController:
     def __onClose(self, event):
         self.__tagsPanel.Unbind(EVT_PAGE_CLICK, handler=self.__onPageClick)
         self.__tagsPanel.Unbind(EVT_TAG_LEFT_CLICK, handler=self.__onTagLeftClick)
+        self.__tagsPanel.Unbind(EVT_TAG_RIGHT_CLICK, handler=self.__onTagRightClick)
         self.__tagsPanel.Unbind(EVT_TAG_ADD, handler=self.__onTagAdd)
         self.__tagsPanel.Unbind(EVT_TAG_REMOVE, handler=self.__onTagRemove)
         self.__tagsPanel.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
@@ -59,17 +63,27 @@ class TagsPanelController:
     def __showPopup(self, tagname):
         pages = self.__currentTags[tagname][:]
         pages.sort(key=cmp_to_key(sortAlphabeticalFunction))
-
         self.__tagsPanel.showPopup(pages)
 
-    def __onTagLeftClick(self, event: TagLeftClickEvent):
+    def __showPopupMenu(self, tagname):
+        self.__tagPopupMenu = TagPopupMenu(self.__tagsPanel, tagname, self.__application)
+        self.__tagsPanel.PopupMenu(self.__tagPopupMenu.menu)
+
+    def __onTagLeftClick(self, event):
         """
         Клик левой кнопкой мыши по тегу
         """
         assert self.__currentTags is not None
         self.__showPopup(event.text)
 
-    def __onTagAdd(self, event: TagAddEvent):
+    def __onTagRightClick(self, event):
+        """
+        Клик левой кнопкой мыши по тегу
+        """
+        assert self.__currentTags is not None
+        self.__showPopupMenu(event.text)
+
+    def __onTagAdd(self, event):
         selectedPage = self.__application.selectedPage
         if selectedPage is None:
             return
