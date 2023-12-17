@@ -62,7 +62,7 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self._tags_panel.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
         self._tags_panel.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftMouseClick)
-        self._tags_panel.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightMouseClick)
+        self._tags_panel.Bind(wx.EVT_RIGHT_UP, handler=self._onRightMouseClick)
         self._tags_panel.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleMouseClick)
         self._tags_panel.Bind(wx.EVT_SCROLLWIN, handler=self._onScroll)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
@@ -131,6 +131,7 @@ class TagsCloud(wx.Panel):
             label.onMouseMove(x - label_x, y - label_y)
 
     def _onLeftMouseClick(self, event):
+        event.Skip()
         x, y = self._getMouseCoord(event)
         label = self._findLabel(x, y)
         if label is not None:
@@ -138,6 +139,7 @@ class TagsCloud(wx.Panel):
             label.onLeftMouseClick(x - label_x, y - label_y)
 
     def _onRightMouseClick(self, event):
+        event.Skip()
         x, y = self._getMouseCoord(event)
         label = self._findLabel(x, y)
         if label is not None:
@@ -145,6 +147,7 @@ class TagsCloud(wx.Panel):
             label.onRightMouseClick(x - label_x, y - label_y)
 
     def _onMiddleMouseClick(self, event):
+        event.Skip()
         x, y = self._getMouseCoord(event)
         label = self._findLabel(x, y)
         if label is not None:

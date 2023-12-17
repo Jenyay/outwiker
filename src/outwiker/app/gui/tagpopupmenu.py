@@ -18,16 +18,18 @@ class TagPopupMenu:
         menu = wx.Menu()
 
         self.ID_RENAME_TAG = menu.Append(wx.ID_ANY, _("Rename tag")).GetId()
-        menu.Bind(wx.EVT_MENU, self._onRenameTag, id=self.ID_RENAME_TAG)
+        menu.Bind(wx.EVT_MENU, handler=self._onRenameTag, id=self.ID_RENAME_TAG)
 
         return menu
 
     @testreadonly
     def _onRenameTag(self, event):
-        wikiroot = self._application.wikiroot
         tag_name_old = self._tag_name
         with wx.TextEntryDialog(self._parent, _("Enter new tag name"), _("Tag renaming"), value=tag_name_old) as dlg:
-            tag_name_new = dlg.GetValue()
+            if dlg.ShowModal() == wx.ID_OK:
+                wikiroot = self._application.wikiroot
+                tag_name_new = dlg.GetValue()
+                renameTag(wikiroot, tag_name_old, tag_name_new)
 
     @property
     def menu(self) -> wx.Menu:

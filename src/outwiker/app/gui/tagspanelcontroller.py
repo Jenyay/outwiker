@@ -60,28 +60,26 @@ class TagsPanelController:
         self.__bindAppEvents()
         self.updateTags()
 
-    def __showPopup(self, tagname):
+    def __showPopupTagsWindow(self, tagname):
         pages = self.__currentTags[tagname][:]
         pages.sort(key=cmp_to_key(sortAlphabeticalFunction))
         self.__tagsPanel.showPopup(pages)
-
-    def __showPopupMenu(self, tagname):
-        self.__tagPopupMenu = TagPopupMenu(self.__tagsPanel, tagname, self.__application)
-        self.__tagsPanel.PopupMenu(self.__tagPopupMenu.menu)
 
     def __onTagLeftClick(self, event):
         """
         Клик левой кнопкой мыши по тегу
         """
         assert self.__currentTags is not None
-        self.__showPopup(event.text)
+        self.__showPopupTagsWindow(event.text)
 
     def __onTagRightClick(self, event):
         """
         Клик левой кнопкой мыши по тегу
         """
         assert self.__currentTags is not None
-        self.__showPopupMenu(event.text)
+
+        self.__tagPopupMenu = TagPopupMenu(self.__application.mainWindow, event.text, self.__application)
+        self.__tagsPanel.PopupMenu(self.__tagPopupMenu.menu)
 
     def __onTagAdd(self, event):
         selectedPage = self.__application.selectedPage
