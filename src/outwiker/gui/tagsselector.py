@@ -5,7 +5,7 @@ from wx.lib.newevent import NewEvent
 
 from outwiker.core.tagscommands import getTagsString, parseTagsList
 from outwiker.gui.tagscloud import TagsCloud
-from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK
+from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
 
 
 TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()
@@ -28,7 +28,7 @@ class TagsSelector(wx.Panel):
             self, use_buttons=False, enable_active_tags_filter=enable_active_tags_filter
         )
         self._tagsCloud.SetMinSize((self._tagsWidth, self._tagsHeight))
-        self._tagsCloud.Bind(EVT_TAG_LEFT_CLICK, self._onTagClick)
+        self._tagsCloud.Bind(EVT_TAG_LEFT_DOWN, self._onTagClick)
         self.tagsTextCtrl.Bind(wx.EVT_TEXT, handler=self._onTagsChanged)
 
         self._layout()

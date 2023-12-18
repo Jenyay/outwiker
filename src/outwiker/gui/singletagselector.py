@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from .tagscloud import TagsCloud
-from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_CLICK
+from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
 
 
 class SingleTagSelector(TagsCloud):
@@ -13,7 +13,7 @@ class SingleTagSelector(TagsCloud):
         )
 
         self.__selectedTag = None
-        self.Bind(EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
+        self.Bind(EVT_TAG_LEFT_DOWN, self.__onTagLeftClick)
 
     def __onTagLeftClick(self, event):
         self.clearMarks()
