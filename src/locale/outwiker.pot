@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-18 09:44+0300\n"
+"POT-Creation-Date: 2023-12-18 14:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -614,7 +614,7 @@ msgstr ""
 
 #: outwiker/app/actions/tags.py:147
 #: outwiker/app/gui/dialogs/renametagdialog.py:21
-#: outwiker/app/gui/tagpopupmenu.py:20
+#: outwiker/app/gui/tagpopupmenu.py:22
 msgid "Rename tag"
 msgstr ""
 
@@ -1195,7 +1195,7 @@ msgid "Error"
 msgstr ""
 
 #: outwiker/app/gui/dialogs/renametagdialog.py:89
-#: outwiker/app/gui/tagpopupmenu.py:28
+#: outwiker/app/gui/tagpopupmenu.py:33
 msgid "Enter new tag name"
 msgstr ""
 
@@ -1827,8 +1827,20 @@ msgstr ""
 msgid "Can't save file %s"
 msgstr ""
 
-#: outwiker/app/gui/tagpopupmenu.py:28
+#: outwiker/app/gui/tagpopupmenu.py:25
+msgid "Remove tag from all pages"
+msgstr ""
+
+#: outwiker/app/gui/tagpopupmenu.py:33
 msgid "Tag renaming"
+msgstr ""
+
+#: outwiker/app/gui/tagpopupmenu.py:41
+msgid "Remove tags from all pages?"
+msgstr ""
+
+#: outwiker/app/gui/tagpopupmenu.py:41
+msgid "Tag removing"
 msgstr ""
 
 #: outwiker/app/gui/tagspanelcontroller.py:91

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-18 09:44+0300\n"
+"POT-Creation-Date: 2023-12-18 14:18+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -608,7 +608,7 @@ msgstr "Переименовать метку…"
 
 #: outwiker/app/actions/tags.py:147
 #: outwiker/app/gui/dialogs/renametagdialog.py:21
-#: outwiker/app/gui/tagpopupmenu.py:20
+#: outwiker/app/gui/tagpopupmenu.py:22
 msgid "Rename tag"
 msgstr "Переименовать метку"
 
@@ -1193,7 +1193,7 @@ msgid "Error"
 msgstr "Ошибка"
 
 #: outwiker/app/gui/dialogs/renametagdialog.py:89
-#: outwiker/app/gui/tagpopupmenu.py:28
+#: outwiker/app/gui/tagpopupmenu.py:33
 msgid "Enter new tag name"
 msgstr "Введите новое имя метки"
 
@@ -1839,9 +1839,21 @@ msgstr "Миниатюра"
 msgid "Can't save file %s"
 msgstr "Ошибка записи в файл %s"
 
-#: outwiker/app/gui/tagpopupmenu.py:28
+#: outwiker/app/gui/tagpopupmenu.py:25
+msgid "Remove tag from all pages"
+msgstr "Удалить метку из всех заметок"
+
+#: outwiker/app/gui/tagpopupmenu.py:33
 msgid "Tag renaming"
 msgstr "Переименование метки"
+
+#: outwiker/app/gui/tagpopupmenu.py:41
+msgid "Remove tags from all pages?"
+msgstr "Удалить метку из всех заметок?"
+
+#: outwiker/app/gui/tagpopupmenu.py:41
+msgid "Tag removing"
+msgstr "Удаление метки"
 
 #: outwiker/app/gui/tagspanelcontroller.py:91
 #: outwiker/app/gui/tagspanelcontroller.py:103 outwiker/core/treetools.py:45
