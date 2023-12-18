@@ -3,9 +3,15 @@ from typing import Optional, Tuple
 import wx
 import wx.lib.newevent
 
-TagLeftClickEvent, EVT_TAG_LEFT_CLICK = wx.lib.newevent.NewEvent()
-TagRightClickEvent, EVT_TAG_RIGHT_CLICK = wx.lib.newevent.NewEvent()
-TagMiddleClickEvent, EVT_TAG_MIDDLE_CLICK = wx.lib.newevent.NewEvent()
+TagLeftDownEvent, EVT_TAG_LEFT_DOWN = wx.lib.newevent.NewEvent()
+TagLeftUpEvent, EVT_TAG_LEFT_UP = wx.lib.newevent.NewEvent()
+
+TagRightDownEvent, EVT_TAG_RIGHT_DOWN = wx.lib.newevent.NewEvent()
+TagRightUpEvent, EVT_TAG_RIGHT_UP = wx.lib.newevent.NewEvent()
+
+TagMiddleDownEvent, EVT_TAG_MIDDLE_DOWN = wx.lib.newevent.NewEvent()
+TagMiddleUpEvent, EVT_TAG_MIDDLE_UP = wx.lib.newevent.NewEvent()
+
 TagAddEvent, EVT_TAG_ADD = wx.lib.newevent.NewEvent()
 TagRemoveEvent, EVT_TAG_REMOVE = wx.lib.newevent.NewEvent()
 
@@ -309,17 +315,26 @@ class TagLabel2:
         dc.SetPen(wx.Pen(self._marked_hover_border_color))
         dc.DrawLine(border_x, 0, border_x, self._height)
 
-    def onLeftMouseClick(self, x, y):
+    def onLeftDown(self, x, y):
         if self._use_buttons and x <= self._button_border_x:
             self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
         else:
-            self._sendTagEvent(TagLeftClickEvent)
+            self._sendTagEvent(TagLeftDownEvent)
 
-    def onRightMouseClick(self, x, y):
-        self._sendTagEvent(TagRightClickEvent)
+    def onRightDown(self, x, y):
+        self._sendTagEvent(TagRightDownEvent)
 
-    def onMiddleMouseClick(self, x, y):
-        self._sendTagEvent(TagMiddleClickEvent)
+    def onMiddleDown(self, x, y):
+        self._sendTagEvent(TagMiddleDownEvent)
+
+    def onLeftUp(self, x, y):
+        self._sendTagEvent(TagLeftUpEvent)
+
+    def onRightUp(self, x, y):
+        self._sendTagEvent(TagRightUpEvent)
+
+    def onMiddleUp(self, x, y):
+        self._sendTagEvent(TagMiddleUpEvent)
 
     def onMouseMove(self, x, y):
         new_is_hover_button = x <= self._button_border_x
