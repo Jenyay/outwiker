@@ -367,31 +367,41 @@ class MainWindow(wx.Frame):
 
         actionController.appendMenuItem(AddSiblingPageAction.stringId, menu)
         actionController.appendMenuItem(AddChildPageAction.stringId, menu)
-
-        menu.AppendSeparator()
-
-        actionController.appendMenuItem(MovePageUpAction.stringId, menu)
-        actionController.appendMenuItem(MovePageDownAction.stringId, menu)
-
-        actionController.appendMenuItem(SortChildAlphabeticalAction.stringId, menu)
-
-        actionController.appendMenuItem(SortSiblingsAlphabeticalAction.stringId, menu)
-
-        menu.AppendSeparator()
-
-        actionController.appendMenuItem(GoToParentAction.stringId, menu)
-        actionController.appendMenuItem(GoToFirstChildAction.stringId, menu)
-        actionController.appendMenuItem(GoToPrevSiblingAction.stringId, menu)
-        actionController.appendMenuItem(GoToNextSiblingAction.stringId, menu)
-
-        menu.AppendSeparator()
-
         actionController.appendMenuItem(RenamePageAction.stringId, menu)
         actionController.appendMenuItem(RemovePageAction.stringId, menu)
 
         menu.AppendSeparator()
 
+        self._createMovementSubmenu()
+        self._createGoToSubmenu()
+
+        menu.AppendSeparator()
+
         actionController.appendMenuItem(EditPagePropertiesAction.stringId, menu)
+
+    def _createMovementSubmenu(self):
+        menu = self.menuController[guidefines.MENU_TREE]
+        actionController = self._application.actionController
+        submenu = wx.Menu()
+
+        actionController.appendMenuItem(MovePageUpAction.stringId, submenu)
+        actionController.appendMenuItem(MovePageDownAction.stringId, submenu)
+        actionController.appendMenuItem(SortChildAlphabeticalAction.stringId, submenu)
+        actionController.appendMenuItem(SortSiblingsAlphabeticalAction.stringId, submenu)
+
+        menu.AppendSubMenu(submenu, _("Movement"))
+
+    def _createGoToSubmenu(self):
+        menu = self.menuController[guidefines.MENU_TREE]
+        actionController = self._application.actionController
+        submenu = wx.Menu()
+
+        actionController.appendMenuItem(GoToParentAction.stringId, submenu)
+        actionController.appendMenuItem(GoToFirstChildAction.stringId, submenu)
+        actionController.appendMenuItem(GoToPrevSiblingAction.stringId, submenu)
+        actionController.appendMenuItem(GoToNextSiblingAction.stringId, submenu)
+
+        menu.AppendSubMenu(submenu, _("Go to"))
 
     def _createToolsMenu(self):
         toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]

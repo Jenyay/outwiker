@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-20 09:49+0300\n"
+"POT-Creation-Date: 2023-12-20 09:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -481,7 +481,7 @@ msgstr ""
 #: outwiker/app/actions/showhideattaches.py:18
 #: outwiker/app/actions/switchto.py:63
 #: outwiker/app/gui/mainpanes/attachmainpane.py:40
-#: outwiker/app/gui/mainwindow.py:469
+#: outwiker/app/gui/mainwindow.py:479
 #: outwiker/app/gui/preferences/prefcontroller.py:136
 #: outwiker/app/gui/preferences/wikieditorpanel.py:37
 #: outwiker/gui/controls/filestreectrl.py:84
@@ -496,7 +496,7 @@ msgstr ""
 #: outwiker/app/actions/showhidetags.py:18
 #: outwiker/app/actions/switchto.py:86
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
-#: outwiker/app/gui/mainwindow.py:479
+#: outwiker/app/gui/mainwindow.py:489
 #: outwiker/gui/controls/pagelist_columns.py:226
 #: outwiker/pages/search/searchpanel.py:47
 msgid "Tags"
@@ -1250,7 +1250,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:142
+#: outwiker/app/gui/mainwindow.py:142 outwiker/app/gui/mainwindow.py:404
 msgid "Go to"
 msgstr ""
 
@@ -1287,15 +1287,19 @@ msgstr ""
 msgid "Select All"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:431
+#: outwiker/app/gui/mainwindow.py:392
+msgid "Movement"
+msgstr ""
+
+#: outwiker/app/gui/mainwindow.py:441
 msgid "Tabs"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:443
+#: outwiker/app/gui/mainwindow.py:453
 msgid "Paths"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:590
+#: outwiker/app/gui/mainwindow.py:600
 #, python-format
 msgid ""
 "Can't save config\n"
