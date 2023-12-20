@@ -398,10 +398,10 @@ class MainWindow(wx.Frame):
         menu = self.menuController[guidefines.MENU_TOOLS]
         actionController = self._application.actionController
 
-        actionController.appendMenuItem(AddTabAction.stringId, menu)
-        actionController.appendMenuItem(CloseTabAction.stringId, menu)
-        actionController.appendMenuItem(PreviousTabAction.stringId, menu)
-        actionController.appendMenuItem(NextTabAction.stringId, menu)
+        self._createTabsSubmenu()
+        self._createAtachmentsSubmenu()
+        self._createPathsSubmenu()
+        self._createTagsSubmenu()
 
         menu.AppendSeparator()
 
@@ -414,13 +414,47 @@ class MainWindow(wx.Frame):
             True,
         )
 
-        actionController.appendMenuItem(AttachFilesAction.stringId, menu)
+        actionController.appendMenuItem(SetStyleToBranchAction.stringId, menu)
+
+        menu.AppendSeparator()
+
+    def _createTabsSubmenu(self):
+        menu = self.menuController[guidefines.MENU_TOOLS]
+        actionController = self._application.actionController
+        submenu = wx.Menu()
+
+        actionController.appendMenuItem(AddTabAction.stringId, submenu)
+        actionController.appendMenuItem(CloseTabAction.stringId, submenu)
+        actionController.appendMenuItem(PreviousTabAction.stringId, submenu)
+        actionController.appendMenuItem(NextTabAction.stringId, submenu)
+
+        menu.AppendSubMenu(submenu, _("Tabs"))
+
+    def _createPathsSubmenu(self):
+        menu = self.menuController[guidefines.MENU_TOOLS]
+        actionController = self._application.actionController
+        submenu = wx.Menu()
+
+        actionController.appendMenuItem(CopyPageTitleAction.stringId, submenu)
+        actionController.appendMenuItem(CopyPagePathAction.stringId, submenu)
+        actionController.appendMenuItem(CopyAttachPathAction.stringId, submenu)
+        actionController.appendMenuItem(CopyPageLinkAction.stringId, submenu)
+
+        menu.AppendSubMenu(submenu, _("Paths"))
+
+    def _createAtachmentsSubmenu(self):
+        toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
+        menu = self.menuController[guidefines.MENU_TOOLS]
+        actionController = self._application.actionController
+        submenu = wx.Menu()
+
+        actionController.appendMenuItem(AttachFilesAction.stringId, submenu)
 
         actionController.appendToolbarButton(
             AttachFilesAction.stringId, toolbar, getBuiltinImagePath("attach.png"), True
         )
 
-        actionController.appendMenuItem(AttachFolderAction.stringId, menu)
+        actionController.appendMenuItem(AttachFolderAction.stringId, submenu)
 
         actionController.appendToolbarButton(
             AttachFolderAction.stringId,
@@ -429,33 +463,20 @@ class MainWindow(wx.Frame):
             True,
         )
 
-        actionController.appendMenuItem(AttachCreateSubdirAction.stringId, menu)
+        actionController.appendMenuItem(AttachCreateSubdirAction.stringId, submenu)
+        actionController.appendMenuItem(OpenAttachFolderAction.stringId, submenu)
 
-        menu.AppendSeparator()
-
-        actionController.appendMenuItem(CopyPageTitleAction.stringId, menu)
-
-        actionController.appendMenuItem(CopyPagePathAction.stringId, menu)
-        actionController.appendMenuItem(CopyAttachPathAction.stringId, menu)
-        actionController.appendMenuItem(CopyPageLinkAction.stringId, menu)
-        actionController.appendMenuItem(OpenAttachFolderAction.stringId, menu)
-
-        menu.AppendSeparator()
-
-        self._createTagsSubmenu()
-
-        actionController.appendMenuItem(SetStyleToBranchAction.stringId, menu)
+        menu.AppendSubMenu(submenu, _("Attachments"))
 
     def _createTagsSubmenu(self):
         menu = self.menuController[guidefines.MENU_TOOLS]
         actionController = self._application.actionController
+        submenu = wx.Menu()
 
-        tags_submenu = wx.Menu()
-
-        actionController.appendMenuItem(tags.AddTagsToBranchAction.stringId, tags_submenu)
-        actionController.appendMenuItem(tags.RemoveTagsFromBranchAction.stringId, tags_submenu)
-        actionController.appendMenuItem(tags.RenameTagAction.stringId, tags_submenu)
-        menu.AppendSubMenu(tags_submenu, _("Tags"))
+        actionController.appendMenuItem(tags.AddTagsToBranchAction.stringId, submenu)
+        actionController.appendMenuItem(tags.RemoveTagsFromBranchAction.stringId, submenu)
+        actionController.appendMenuItem(tags.RenameTagAction.stringId, submenu)
+        menu.AppendSubMenu(submenu, _("Tags"))
 
     def _createHelpMenu(self):
         menu = self.menuController[guidefines.MENU_HELP]

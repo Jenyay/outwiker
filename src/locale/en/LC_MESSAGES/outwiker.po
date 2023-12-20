@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-18 14:18+0300\n"
+"POT-Creation-Date: 2023-12-20 09:49+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -476,6 +476,7 @@ msgstr "Begin search and replace on page"
 #: outwiker/app/actions/showhideattaches.py:18
 #: outwiker/app/actions/switchto.py:63
 #: outwiker/app/gui/mainpanes/attachmainpane.py:40
+#: outwiker/app/gui/mainwindow.py:469
 #: outwiker/app/gui/preferences/prefcontroller.py:136
 #: outwiker/app/gui/preferences/wikieditorpanel.py:37
 #: outwiker/gui/controls/filestreectrl.py:84
@@ -489,6 +490,7 @@ msgstr "Show / hide a attachments panel"
 
 #: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:86
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
+#: outwiker/app/gui/mainwindow.py:479
 #: outwiker/gui/controls/pagelist_columns.py:226
 #: outwiker/pages/search/searchpanel.py:47
 msgid "Tags"
@@ -1276,7 +1278,15 @@ msgstr "Paste"
 msgid "Select All"
 msgstr "Select All"
 
-#: outwiker/app/gui/mainwindow.py:564
+#: outwiker/app/gui/mainwindow.py:431
+msgid "Tabs"
+msgstr "Tabs"
+
+#: outwiker/app/gui/mainwindow.py:443
+msgid "Paths"
+msgstr "Paths"
+
+#: outwiker/app/gui/mainwindow.py:590
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -1833,7 +1843,6 @@ msgid "Can't save file %s"
 msgstr "Can't save file %s"
 
 #: outwiker/app/gui/tagpopupmenu.py:25
-#| msgid "Remove tags from branch"
 msgid "Remove tag from all pages"
 msgstr "Remove tag from all pages"
 
@@ -1842,12 +1851,10 @@ msgid "Tag renaming"
 msgstr "Tag renaming"
 
 #: outwiker/app/gui/tagpopupmenu.py:41
-#| msgid "Remove tags from branch"
 msgid "Remove tags from all pages?"
 msgstr "Remove tags from all pages?"
 
 #: outwiker/app/gui/tagpopupmenu.py:41
-#| msgid "Tag renaming"
 msgid "Tag removing"
 msgstr "Tag removing"
 
