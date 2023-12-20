@@ -442,15 +442,20 @@ class MainWindow(wx.Frame):
 
         menu.AppendSeparator()
 
-        actionController.appendMenuItem(tags.AddTagsToBranchAction.stringId, menu)
-
-        actionController.appendMenuItem(tags.RemoveTagsFromBranchAction.stringId, menu)
-
-        actionController.appendMenuItem(tags.RenameTagAction.stringId, menu)
-
-        menu.AppendSeparator()
+        self._createTagsSubmenu()
 
         actionController.appendMenuItem(SetStyleToBranchAction.stringId, menu)
+
+    def _createTagsSubmenu(self):
+        menu = self.menuController[guidefines.MENU_TOOLS]
+        actionController = self._application.actionController
+
+        tags_submenu = wx.Menu()
+
+        actionController.appendMenuItem(tags.AddTagsToBranchAction.stringId, tags_submenu)
+        actionController.appendMenuItem(tags.RemoveTagsFromBranchAction.stringId, tags_submenu)
+        actionController.appendMenuItem(tags.RenameTagAction.stringId, tags_submenu)
+        menu.AppendSubMenu(tags_submenu, _("Tags"))
 
     def _createHelpMenu(self):
         menu = self.menuController[guidefines.MENU_HELP]
