@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import logging
 import os.path
 
 from pathlib import Path
@@ -11,6 +12,9 @@ from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
 from outwiker.core.notestreeloader import NotesTreeLoader
 from outwiker.core.exceptions import ReadonlyException
+
+
+logger = logging.getLogger("treetools")
 
 
 def loadNotesTree(path: Union[str, Path], readonly: bool = False) -> WikiDocument:
@@ -40,7 +44,12 @@ def testreadonly(func):
     def readOnlyWrap(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except ReadonlyException:
+        except ReadonlyException as ex:
+            if ex.page is not None:
+                logger.debug("ReadonlyException for page: %s (%s)", ex.page.display_title, ex.page.title)
+            else:
+                logger.debug("ReadonlyException for unknown page: %s (%s)")
+
             showError(Application.mainWindow,
                       _("Page is opened as read-only"))
 

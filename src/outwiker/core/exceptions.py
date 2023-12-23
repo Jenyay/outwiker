@@ -50,8 +50,9 @@ class ReadonlyException(OutWikerException):
     открытую в режиме "только для чтения"
     """
 
-    def __init__(self):
-        OutWikerException.__init__(self)
+    def __init__(self, page=None):
+        super().__init__(self)
+        self.page = page
 
 
 class PreferencesException(OutWikerException):

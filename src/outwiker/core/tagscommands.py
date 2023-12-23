@@ -26,9 +26,12 @@ def removeTag(page, tag):
     """
     Удалить тег из страницы
     """
-    pageTags = [pagetag.lower() for pagetag in page.tags]
-
     taglower = tag.lower()
+    pageTags = page.tags
+
+    if taglower not in pageTags:
+        return
+
     while taglower in pageTags:
         pageTags.remove(taglower)
 

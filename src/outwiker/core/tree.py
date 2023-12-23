@@ -170,8 +170,12 @@ class BasePage(metaclass=ABCMeta):
         Изменить порядок дочерних элементов
         Дочернюю страницу page переместить на уровень neworder
         """
+        oldorder = self._children.index(page)
+        if oldorder == neworder:
+            return
+
         if self.readonly:
-            raise ReadonlyException
+            raise ReadonlyException(self)
 
         realorder = neworder
 
@@ -181,7 +185,6 @@ class BasePage(metaclass=ABCMeta):
         if realorder >= len(self.children):
             realorder = len(self.children) - 1
 
-        oldorder = self._children.index(page)
         if oldorder != realorder:
             self.removeFromChildren(page)
             self._children.insert(realorder, page)
@@ -492,9 +495,6 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         """
         Изменить положение страницы (порядок)
         """
-        if self.readonly:
-            raise ReadonlyException
-
         self.parent.changeChildOrder(self, neworder)
 
     @property
@@ -503,8 +503,11 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     @alias.setter
     def alias(self, value):
+        if self._alias == value:
+            return
+
         if self.readonly:
-            raise ReadonlyException
+            raise ReadonlyException(self)
 
         if self._alias == value:
             return
@@ -537,8 +540,11 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     @title.setter
     def title(self, newtitle):
+        if self._title == newtitle:
+            return
+
         if self.readonly:
-            raise ReadonlyException
+            raise ReadonlyException(self)
 
         oldtitle = self.title
         oldpath = self.path
@@ -582,11 +588,11 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         """
         Переместить запись к другому родителю
         """
-        if self.readonly or newparent.readonly:
-            raise ReadonlyException
-
         if self._parent == newparent:
             return
+
+        if self.readonly or newparent.readonly:
+            raise ReadonlyException(self)
 
         if self.isChild(newparent):
             # Нельзя быть родителем своего родителя(предка)
@@ -676,15 +682,15 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         Установить теги для страницы
         tags - список тегов (список строк)
         """
-        if self.readonly:
-            raise ReadonlyException
-
         lowertags = [tag.lower() for tag in tags]
         # Избавимся от дубликатов
         newtagset = set(lowertags)
         newtags = list(newtagset)
 
         if newtagset != set(self._tags):
+            if self.readonly:
+                raise ReadonlyException(self)
+
             self._tags = newtags
             self.save()
             self.updateDateTime()
@@ -758,7 +764,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     @content.setter
     def content(self, text):
         if self.readonly:
-            raise ReadonlyException
+            raise ReadonlyException(self)
 
         text = text.replace("\r\n", "\n")
 
@@ -811,7 +817,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         Удалить страницу
         """
         if self.readonly:
-            raise ReadonlyException
+            raise ReadonlyException(self)
 
         oldpath = self.path
         tempname = self._getTempName(oldpath)
