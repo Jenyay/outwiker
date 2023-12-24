@@ -174,8 +174,8 @@ class BasePage(metaclass=ABCMeta):
         if oldorder == neworder:
             return
 
-        if self.readonly:
-            raise ReadonlyException(self)
+        if page.readonly:
+            raise ReadonlyException(page)
 
         realorder = neworder
 
