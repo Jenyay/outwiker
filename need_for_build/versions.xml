@@ -1,11 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.3.0.931">
+    <version number="3.3.0.932" status="beta" date="2023-12-24">
 		<changes>
+			<change>On tags cloud panel add a button to show applied tags only.</change>
+			<change>Add context menu for tags cloud.</change>
 			<change>Updated the German localization.</change>
 		</changes>
 
 		<changes lang="ru">
+			<change>На панели облака тегов добавлена кнопка для показа только установленных меток.</change>
+			<change>Добавлено контекстное меню для облака тегов.</change>
 			<change>Обновлена немецкая локализация.</change>
 		</changes>
     </version>
