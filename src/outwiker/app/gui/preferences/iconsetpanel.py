@@ -10,13 +10,13 @@ from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.gui.iconlistctrl import IconListCtrl
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 from outwiker.gui.controls.safeimagelist import SafeImageList
 
 
 class IconsetPanel(BasePrefPanel):
     def __init__(self, parent):
-        super(type(self), self).__init__(parent)
+        super().__init__(parent)
 
         self._default_group_cover = getBuiltinImagePath('icons_cover_default.png')
 

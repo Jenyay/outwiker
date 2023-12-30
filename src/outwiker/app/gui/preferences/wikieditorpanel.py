@@ -3,13 +3,13 @@
 import wx
 
 from outwiker.gui.editorstyleslist import EditorStylesList
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 
 class WikiEditorPanel(BasePrefPanel):
     def __init__(self, parent, application):
-        super(type(self), self).__init__(parent)
+        super().__init__(parent)
 
         self._config = WikiConfig(application.config)
         self.__createGui()

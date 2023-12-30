@@ -5,7 +5,7 @@ import wx
 from outwiker.core.system import getCurrentDir, getOS
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 from outwiker.gui.guiconfig import PluginsConfig
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 
 
 class PluginsPanel(BasePrefPanel):
@@ -14,7 +14,7 @@ class PluginsPanel(BasePrefPanel):
     """
 
     def __init__(self, parent, application):
-        super(PluginsPanel, self).__init__(parent)
+        super().__init__(parent)
         self._application = application
         self.pluginsInfo = None
 

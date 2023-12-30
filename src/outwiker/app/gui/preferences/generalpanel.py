@@ -7,7 +7,7 @@ from outwiker.gui.preferences import configelements
 from outwiker.core.defines import URL_TRANSLATE
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 from outwiker.gui.theme import get_theme
 
 

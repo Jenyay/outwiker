@@ -4,12 +4,12 @@ import wx
 
 from outwiker.gui.editorstyleslist import EditorStylesList
 from outwiker.gui.guiconfig import HtmlEditorStylesConfig
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 
 
 class HtmlEditorPanel(BasePrefPanel):
     def __init__(self, parent, application):
-        super(type(self), self).__init__(parent)
+        super().__init__(parent)
 
         self._config = HtmlEditorStylesConfig(application.config)
 

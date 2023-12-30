@@ -3,12 +3,12 @@
 import wx
 
 from outwiker.gui.guiconfig import AttachConfig
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 
 
 class AttachPanel(BasePrefPanel):
     def __init__(self, parent, application):
-        super(type(self), self).__init__(parent)
+        super().__init__(parent)
 
         self.ACTIONS_COMBOBOX_WIDTH = 200
 

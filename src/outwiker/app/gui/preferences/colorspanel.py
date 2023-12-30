@@ -4,7 +4,7 @@ import wx
 
 from outwiker.gui.preferences import configelements
 from outwiker.gui.guiconfig import MainWindowConfig
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 
 
 class ColorsPanel(BasePrefPanel):

@@ -6,12 +6,12 @@ from outwiker.core.config import FontOption
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.gui.preferences import configelements
 from outwiker.gui.guiconfig import HtmlRenderConfig
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 
 
 class HtmlRenderPanel(BasePrefPanel):
     def __init__(self, parent, application):
-        super(type(self), self).__init__(parent)
+        super().__init__(parent)
 
         self._application = application
 
