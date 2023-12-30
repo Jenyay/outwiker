@@ -41,3 +41,8 @@ ATTACH_ACTIONS_AREA = 'attach_panel'
 
 TAGS_CLOUD_MODE_CONTINUOUS = 'cont'
 TAGS_CLOUD_MODE_LIST = 'list'
+
+# Preferences panels tags
+PREF_PANEL_INTERFACE = "interface_panel"
+PREF_PANEL_PLUGINS = "plugins_panel"
+PREF_PANEL_EDITOR = "editor_panel"

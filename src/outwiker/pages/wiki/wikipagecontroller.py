@@ -15,6 +15,7 @@ from .wikipage import WikiWikiPage, WikiPageFactory
 from .wikipreferences import WikiPrefGeneralPanel
 from .wikicolorizercontroller import WikiColorizerController
 from .listautocomplete import listComplete_wiki
+from .defines import PREF_PANEL_WIKI
 
 # For type hints
 import outwiker.core.tree
@@ -66,7 +67,7 @@ class WikiPageController:
         panel = WikiPrefGeneralPanel(dialog.treeBook)
         prefPanelInfo = PreferencePanelInfo(panel, _("General"))
 
-        dialog.appendPreferenceGroup(_("Wiki Page"), [prefPanelInfo])
+        dialog.appendPreferenceGroup(_("Wiki Page"), [prefPanelInfo], PREF_PANEL_WIKI)
 
     @pagetype(WikiWikiPage)
     def __onPageViewCreate(self, page):

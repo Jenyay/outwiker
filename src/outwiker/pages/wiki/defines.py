@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.gui.defines import PREF_PANEL_EDITOR
+
+
 PAGE_TYPE_STRING = 'wiki'
 
 MENU_WIKI = 'Menu_Wiki'
@@ -17,3 +20,5 @@ REGISTRY_PAGE_HASH = 'md5_hash'
 CONFIG_STYLES_SECTION = 'wiki'
 CONFIG_STYLES_INLINE_OPTION = 'custom_styles_inline'
 CONFIG_STYLES_BLOCK_OPTION = 'custom_styles_block'
+
+PREF_PANEL_WIKI = 'wiki_panel'

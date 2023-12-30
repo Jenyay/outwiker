@@ -3,6 +3,8 @@
 Модуль с классом диалога настроек
 """
 
+from typing import Optional
+
 import wx
 
 from outwiker.core.system import getBuiltinImagePath
@@ -37,15 +39,12 @@ class PrefDialog(TestedDialog):
     @property
     def pages(self):
         return self._treeBook.GetPages()
-        # count = self._treeBook.GetPageCount()
-        # for n in range(count):
-        #     yield self._treeBook.GetPage(n)
 
     @property
     def currentPage(self):
         return self._treeBook.GetCurrentPage()
 
-    def appendPreferenceGroup(self, groupname, prefPanelsInfoList):
+    def appendPreferenceGroup(self, groupname, prefPanelsInfoList, parent_page_tag: Optional[str] = None):
         """
         Добавить группу настроек
         groupname - имя группы
@@ -55,13 +54,13 @@ class PrefDialog(TestedDialog):
         Массив не должен быть пустым
         """
         assert len(prefPanelsInfoList) != 0
-        self._treeBook.AddPage(prefPanelsInfoList[0].panel, groupname)
+        self._treeBook.AddPage(prefPanelsInfoList[0].panel, groupname, tag=parent_page_tag)
 
         # Если всего одна страница в списке,
         # то не будем добавлять вложенные страницы
         if len(prefPanelsInfoList) > 1:
             for panelInfo in prefPanelsInfoList:
-                self._treeBook.AddSubPage(panelInfo.panel, panelInfo.name)
+                self._treeBook.AddSubPage(panelInfo.panel, panelInfo.name, parent_page_tag)
 
     def _do_layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)

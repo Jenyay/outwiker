@@ -27,6 +27,7 @@ from outwiker.core.exceptions import PreferencesException
 
 from outwiker.gui.guiconfig import PrefDialogConfig
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+from outwiker.gui.defines import PREF_PANEL_EDITOR, PREF_PANEL_PLUGINS, PREF_PANEL_INTERFACE
 
 
 class PrefController:
@@ -139,7 +140,8 @@ class PrefController:
         ]
 
         self._dialog.appendPreferenceGroup(_("Interface"),
-                                           interfacePanelsList)
+                                           interfacePanelsList,
+                                           PREF_PANEL_INTERFACE)
 
     def _createEditorGroup(self):
         """
@@ -159,7 +161,7 @@ class PrefController:
             PreferencePanelInfo(wikiEditorPage, _("Wiki editor")),
         ]
 
-        self._dialog.appendPreferenceGroup(_("Editor"), editorPanesList)
+        self._dialog.appendPreferenceGroup(_("Editor"), editorPanesList, PREF_PANEL_EDITOR)
 
     def _createPluginsPage(self):
         pluginsPage = PluginsPanel(self._dialog.treeBook, self._application)

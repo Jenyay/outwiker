@@ -1,5 +1,5 @@
 import os.path
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
@@ -16,6 +16,7 @@ class Treebook2(wx.SplitterWindow):
         self._last_added_section: Optional[wx.TreeItemId] = None
         self._create_gui()
         self._pages: List[BasePrefPanel] = []
+        self._tagged_pages: Dict[str, Tuple[wx.TreeItemId, BasePrefPanel]] = {}
 
         self._tree.Bind(wx.EVT_TREE_SEL_CHANGED, handler=self._onSelected)
 
@@ -38,7 +39,7 @@ class Treebook2(wx.SplitterWindow):
             self, style=wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_HAS_BUTTONS | wx.TR_NO_LINES
         )
         self._tree.AssignImageList(self._iconsCache.getImageList())
-        self._root = self._tree.AddRoot(
+        self._root_item_id = self._tree.AddRoot(
             _("Preferences"), image=self._iconsCache.getDefaultImageId()
         )
 
@@ -58,24 +59,40 @@ class Treebook2(wx.SplitterWindow):
     def GetCurrentPage(self) -> Optional[wx.Panel]:
         return self._current_page
 
-    def AddPage(self, page: "BasePrefPanel", label: str, icon_fname=None):
-        self._pages.append(page)
+    def AddPage(self, page: "BasePrefPanel", label: str, icon_fname=None, tag: Optional[str] = None):
         page.Hide()
-        self._last_added_section = self._tree.AppendItem(
-            self._root, text=label, data=page, image=self._loadIcon(icon_fname)
+        item_id = self._last_added_section = self._tree.AppendItem(
+            self._root_item_id, text=label, data=page, image=self._loadIcon(icon_fname)
         )
 
-    def AddSubPage(self, page: "BasePrefPanel", label: str, icon_fname=None):
         self._pages.append(page)
+        if tag:
+            self._tagged_pages[tag] = (item_id, page)
+
+    def AddToRootPage(self, page: "BasePrefPanel", label: str, icon_fname=None, tag: Optional[str] = None):
         page.Hide()
-        parent = (
-            self._last_added_section
-            if self._last_added_section is not None
-            else self._root
+        item_id = self._last_added_section = self._tree.AppendItem(
+            self._root_item_id, text=label, data=page, image=self._loadIcon(icon_fname)
         )
-        self._tree.AppendItem(
+
+        self._pages.append(page)
+        if tag:
+            self._tagged_pages[tag] = (item_id, page)
+
+    def AddSubPage(self, page: "BasePrefPanel", label: str, parent_page_tag: Optional[str], icon_fname=None, tag: Optional[str] = None):
+        page.Hide()
+        if parent_page_tag is not None and parent_page_tag in self._tagged_pages:
+            parent = self._tagged_pages[parent_page_tag][0]
+        else:
+            parent = self._root_item_id
+
+        item_id = self._tree.AppendItem(
             parent, text=label, data=page, image=self._loadIcon(icon_fname)
         )
+
+        self._pages.append(page)
+        if tag:
+            self._tagged_pages[tag] = (item_id, page)
 
     def GetPages(self) -> List["BasePrefPanel"]:
         return self._pages
