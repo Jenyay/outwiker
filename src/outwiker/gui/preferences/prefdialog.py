@@ -5,7 +5,9 @@
 
 import wx
 
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.gui.controls.treebook2 import Treebook2
 
 
 class PrefDialog(TestedDialog):
@@ -15,9 +17,12 @@ class PrefDialog(TestedDialog):
 
     def __init__(self, parent, application):
         style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
-        super(PrefDialog, self).__init__(parent, style=style)
+        super().__init__(parent, style=style)
+
+        self._default_icon = getBuiltinImagePath('page.png')
+
         self._application = application
-        self._treeBook = wx.Treebook(self, -1)
+        self._treeBook = Treebook2(self, self._default_icon)
         self._do_layout()
         self._application.onPreferencesDialogCreate(self)
 
@@ -31,9 +36,10 @@ class PrefDialog(TestedDialog):
 
     @property
     def pages(self):
-        count = self._treeBook.GetPageCount()
-        for n in range(count):
-            yield self._treeBook.GetPage(n)
+        return self._treeBook.GetPages()
+        # count = self._treeBook.GetPageCount()
+        # for n in range(count):
+        #     yield self._treeBook.GetPage(n)
 
     @property
     def currentPage(self):

@@ -5,11 +5,13 @@ from typing import Tuple
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
+from outwiker.gui.controls.treebook2 import Treebook2
+
 
 class BasePrefPanel(ScrolledPanel):
-    def __init__(self, parent):
+    def __init__(self, treeBook: Treebook2):
         style = wx.TAB_TRAVERSAL | wx.HSCROLL | wx.VSCROLL
-        super(BasePrefPanel, self).__init__(parent, style=style)
+        super().__init__(treeBook.GetParentPanel(), style=style)
 
     def LoadState(self):
         pass
@@ -20,20 +22,24 @@ class BasePrefPanel(ScrolledPanel):
     def Cancel(self):
         pass
 
-    def _addLabelAndControlToSizer(self, sizer: wx.Sizer, label: wx.StaticText, control: wx.Control):
+    def _addLabelAndControlToSizer(
+        self, sizer: wx.Sizer, label: wx.StaticText, control: wx.Control
+    ):
         sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
 
-    def _createLabelAndComboBox(self, title: str, sizer: wx.Sizer) -> Tuple[wx.StaticText, wx.ComboBox]:
+    def _createLabelAndComboBox(
+        self, title: str, sizer: wx.Sizer
+    ) -> Tuple[wx.StaticText, wx.ComboBox]:
         label = wx.StaticText(self, label=title)
-        combobox = wx.ComboBox(self,
-                               -1,
-                               style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        combobox = wx.ComboBox(self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
 
         self._addLabelAndControlToSizer(sizer, label, combobox)
         return (label, combobox)
 
-    def _createLabelAndColorPicker(self, title: str, sizer: wx.Sizer) -> Tuple[wx.StaticText, wx.ColourPickerCtrl]:
+    def _createLabelAndColorPicker(
+        self, title: str, sizer: wx.Sizer
+    ) -> Tuple[wx.StaticText, wx.ColourPickerCtrl]:
         label = wx.StaticText(self, label=title)
         colorPicker = wx.ColourPickerCtrl(self)
 
@@ -45,10 +51,12 @@ class BasePrefPanel(ScrolledPanel):
         sizer.Add(checkBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         return checkBox
 
-    def _createSection(self, main_sizer: wx.Sizer, title: str) -> Tuple[wx.StaticBox, wx.StaticBoxSizer]:
-        '''
+    def _createSection(
+        self, main_sizer: wx.Sizer, title: str
+    ) -> Tuple[wx.StaticBox, wx.Sizer]:
+        """
         Create StaticBox for options
-        '''
+        """
         staticBox = wx.StaticBox(self, label=title)
         staticBoxSizer = wx.StaticBoxSizer(staticBox, wx.VERTICAL)
 

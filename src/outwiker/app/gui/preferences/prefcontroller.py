@@ -204,13 +204,16 @@ class PrefController:
         """
         Загрузить настройки для всех страниц
         """
-        for pageIndex in range(self._dialog.treeBook.GetPageCount()):
-            page = self._dialog.treeBook.GetPage(pageIndex)
+        # for pageIndex in range(self._dialog.treeBook.GetPageCount()):
+        #     page = self._dialog.treeBook.GetPage(pageIndex)
+        #     page.LoadState()
+        for page in self._dialog.treeBook.GetPages():
             page.LoadState()
 
     def _expandAllPages(self):
         """
         Развернуть все узлы в дереве настроек
         """
-        for pageindex in range(self._dialog.treeBook.GetPageCount()):
-            self._dialog.treeBook.ExpandNode(pageindex)
+        # for pageindex in range(self._dialog.treeBook.GetPageCount()):
+        #     self._dialog.treeBook.ExpandNode(pageindex)
+        pass
