@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from typing import Tuple
-
-import wx
-
-from outwiker.gui.controls.treebook2 import Treebook2
+# TODO: For old plug-ins. Remove this file in future
+from outwiker.gui.controls.treebook2 import BasePrefPanel
