@@ -180,11 +180,19 @@ class PrefController:
 
     def _createTextPrintoutPage(self):
         textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
-        self._dialog.treeBook.AddPage(textPrintPage, _("Text printout"), icon_fname=getBuiltinImagePath("printer.png"))
+        self._dialog.treeBook.AddPage(
+            textPrintPage,
+            _("Text printout"),
+            icon_fname=getBuiltinImagePath("printer.png"),
+        )
 
     def _createIconsetPage(self):
         iconsetPage = IconsetPanel(self._dialog.treeBook)
-        self._dialog.treeBook.AddPage(iconsetPage, _("User's iconset"), icon_fname=getBuiltinImagePath("picture.png"))
+        self._dialog.treeBook.AddPage(
+            iconsetPage,
+            _("User's iconset"),
+            icon_fname=getBuiltinImagePath("picture.png"),
+        )
 
     def _setDialogPreperties(self):
         config = PrefDialogConfig(self._application.config)
@@ -192,9 +200,7 @@ class PrefController:
         self._dialog.SetTitle(_("Preferences"))
         self._dialog.treeBook.SetMinSize((300, -1))
 
-        self._dialog.Fit()
-        fitWidth, fitHeight = self._dialog.GetSize()
-        self._dialog.SetMinSize((fitWidth, fitHeight))
+        self._dialog.SetMinSize((800, 500))
         self._dialog.SetClientSize((config.width.value, config.height.value))
         self._centerDialog()
 

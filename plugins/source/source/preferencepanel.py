@@ -34,7 +34,7 @@ class PreferencePanel(BasePrefPanel):
         """
         Создать элементы управления
         """
-        mainSizer = wx.FlexGridSizer(0, 1, 0, 0)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(3)
 
@@ -48,7 +48,7 @@ class PreferencePanel(BasePrefPanel):
         Создать элементы управления, связанные
             с выбором размера табуляции по умолчанию
         """
-        tabSizer = wx.FlexGridSizer(0, 2, 0, 0)
+        tabSizer = wx.FlexGridSizer(cols=2)
         tabSizer.AddGrowableCol(1)
 
         tabWidthLabel = wx.StaticText(self, -1, _("Default Tab Width"))
@@ -76,7 +76,7 @@ class PreferencePanel(BasePrefPanel):
         """
         Создать элементы управления, связанные с выбором стиля по умолчанию
         """
-        styleSizer = wx.FlexGridSizer(0, 2, 0, 0)
+        styleSizer = wx.FlexGridSizer(cols=2)
         styleSizer.AddGrowableCol(1)
 
         styleLabel = wx.StaticText(self, -1, _("Default Style"))
@@ -107,18 +107,17 @@ class PreferencePanel(BasePrefPanel):
         languageLabel = wx.StaticText(self, -1, _("Used Languages"))
         mainSizer.Add(
             languageLabel,
-            proportion=1,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
             border=2,
         )
 
         # Сайзер для расположения списка языков и кнопок
-        langSizer = wx.FlexGridSizer(0, 2, 0, 0)
-        langSizer.AddGrowableRow(0)
+        langSizer = wx.FlexGridSizer(cols=2)
+        # langSizer.AddGrowableRow(0)
         langSizer.AddGrowableCol(0)
 
         self.langList = wx.CheckListBox(self, -1)
-        langSizer.Add(self.langList, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
+        langSizer.Add(self.langList, flag=wx.ALL | wx.EXPAND, border=2)
 
         # Кнопки
         buttonsSizer = wx.BoxSizer(wx.VERTICAL)
@@ -126,16 +125,15 @@ class PreferencePanel(BasePrefPanel):
         self.clearButton = wx.Button(self, label=_("Clear"))
 
         buttonsSizer.Add(
-            self.selectAllButton, proportion=1, flag=wx.ALL | wx.EXPAND, border=2
+            self.selectAllButton, flag=wx.ALL | wx.EXPAND, border=2
         )
 
         buttonsSizer.Add(
-            self.clearButton, proportion=1, flag=wx.ALL | wx.EXPAND, border=2
+            self.clearButton, flag=wx.ALL | wx.EXPAND, border=2
         )
 
-        langSizer.Add(buttonsSizer, proportion=1, flag=wx.ALL, border=2)
-
-        mainSizer.Add(langSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
+        langSizer.Add(buttonsSizer, flag=wx.ALL, border=2)
+        mainSizer.Add(langSizer, flag=wx.ALL | wx.EXPAND, border=2)
 
     def LoadState(self):
         self.__controller.loadState()
