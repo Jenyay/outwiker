@@ -21,7 +21,7 @@ class PrefDialog(TestedDialog):
         style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         super().__init__(parent, style=style)
 
-        self._default_icon = getBuiltinImagePath('page.png')
+        self._default_icon = getBuiltinImagePath("page.png")
 
         self._application = application
         self._treeBook = Treebook2(self, self._default_icon)
@@ -44,7 +44,9 @@ class PrefDialog(TestedDialog):
     def currentPage(self):
         return self._treeBook.GetCurrentPage()
 
-    def appendPreferenceGroup(self, groupname, prefPanelsInfoList, parent_page_tag: Optional[str] = None):
+    def appendPreferenceGroup(
+        self, groupname, prefPanelsInfoList, parent_page_tag: Optional[str] = None
+    ):
         """
         Добавить группу настроек
         groupname - имя группы
@@ -54,13 +56,17 @@ class PrefDialog(TestedDialog):
         Массив не должен быть пустым
         """
         assert len(prefPanelsInfoList) != 0
-        self._treeBook.AddPage(prefPanelsInfoList[0].panel, groupname, tag=parent_page_tag)
+        self._treeBook.AddPage(
+            prefPanelsInfoList[0].panel, groupname, tag=parent_page_tag
+        )
 
         # Если всего одна страница в списке,
         # то не будем добавлять вложенные страницы
         if len(prefPanelsInfoList) > 1:
             for panelInfo in prefPanelsInfoList:
-                self._treeBook.AddSubPage(panelInfo.panel, panelInfo.name, parent_page_tag)
+                self._treeBook.AddPage(
+                    panelInfo.panel, panelInfo.name, parent_page_tag
+                )
 
     def _do_layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)
@@ -78,7 +84,4 @@ class PrefDialog(TestedDialog):
         Создать кнопки Ok / Cancel
         """
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL | wx.HELP)
-        sizer.Add(buttonsSizer,
-                  0,
-                  wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL,
-                  border=4)
+        sizer.Add(buttonsSizer, 0, wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL, border=4)

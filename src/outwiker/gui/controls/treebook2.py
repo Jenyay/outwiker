@@ -13,7 +13,6 @@ class Treebook2(wx.SplitterWindow):
         self._default_icon = defaultIcon
         self._current_page: Optional[wx.Panel] = None
         self._default_leftSize = 300
-        self._last_added_section: Optional[wx.TreeItemId] = None
         self._create_gui()
         self._pages: List[BasePrefPanel] = []
         self._tagged_pages: Dict[str, Tuple[wx.TreeItemId, BasePrefPanel]] = {}
@@ -36,7 +35,8 @@ class Treebook2(wx.SplitterWindow):
     def _create_gui(self):
         self._iconsCache = ImageListCache(self._default_icon)
         self._tree = wx.TreeCtrl(
-            self, style=wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_HAS_BUTTONS | wx.TR_NO_LINES
+            self,
+            style=wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_HAS_BUTTONS | wx.TR_NO_LINES,
         )
         self._tree.AssignImageList(self._iconsCache.getImageList())
         self._root_item_id = self._tree.AddRoot(
@@ -59,27 +59,14 @@ class Treebook2(wx.SplitterWindow):
     def GetCurrentPage(self) -> Optional[wx.Panel]:
         return self._current_page
 
-    def AddPage(self, page: "BasePrefPanel", label: str, icon_fname=None, tag: Optional[str] = None):
-        page.Hide()
-        item_id = self._last_added_section = self._tree.AppendItem(
-            self._root_item_id, text=label, data=page, image=self._loadIcon(icon_fname)
-        )
-
-        self._pages.append(page)
-        if tag:
-            self._tagged_pages[tag] = (item_id, page)
-
-    def AddToRootPage(self, page: "BasePrefPanel", label: str, icon_fname=None, tag: Optional[str] = None):
-        page.Hide()
-        item_id = self._last_added_section = self._tree.AppendItem(
-            self._root_item_id, text=label, data=page, image=self._loadIcon(icon_fname)
-        )
-
-        self._pages.append(page)
-        if tag:
-            self._tagged_pages[tag] = (item_id, page)
-
-    def AddSubPage(self, page: "BasePrefPanel", label: str, parent_page_tag: Optional[str], icon_fname=None, tag: Optional[str] = None):
+    def AddPage(
+        self,
+        page: "BasePrefPanel",
+        label: str,
+        parent_page_tag: Optional[str] = None,
+        icon_fname=None,
+        tag: Optional[str] = None,
+    ):
         page.Hide()
         if parent_page_tag is not None and parent_page_tag in self._tagged_pages:
             parent = self._tagged_pages[parent_page_tag][0]
@@ -97,11 +84,18 @@ class Treebook2(wx.SplitterWindow):
     def GetPages(self) -> List["BasePrefPanel"]:
         return self._pages
 
-    def SetSelection(self, index: int):
-        pass
+    def SetSelection(self, tag: str):
+        if tag in self._tagged_pages:
+            item_id = self._tagged_pages[tag][0]
+            self._tree.SelectItem(item_id)
 
-    def ExpandNode(self, index: int):
-        pass
+    def ExpandNode(self, tag: str):
+        if tag in self._tagged_pages:
+            item_id = self._tagged_pages[tag][0]
+            self._tree.Expand(item_id)
+
+    def ExpandAll(self):
+        self._tree.ExpandAll()
 
     def _loadIcon(self, icon_fname: Optional[str]):
         """

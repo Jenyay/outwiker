@@ -64,11 +64,11 @@ class PrefController:
         self._dialog.Bind(wx.EVT_BUTTON, self._onHelp, id=wx.ID_HELP)
 
     def _onPrefDialogCreateLast(self, dialog):
-        self._expandAllPages()
-        self._dialog.treeBook.SetSelection(0)
-
         self._loadAllOptions()
         self._setDialogPreperties()
+
+        self._dialog.treeBook.ExpandAll()
+        self._dialog.treeBook.SetSelection(PREF_PANEL_INTERFACE)
 
     def _onCancel(self, event):
         self._cancelAll()
@@ -206,16 +206,5 @@ class PrefController:
         """
         Загрузить настройки для всех страниц
         """
-        # for pageIndex in range(self._dialog.treeBook.GetPageCount()):
-        #     page = self._dialog.treeBook.GetPage(pageIndex)
-        #     page.LoadState()
         for page in self._dialog.treeBook.GetPages():
             page.LoadState()
-
-    def _expandAllPages(self):
-        """
-        Развернуть все узлы в дереве настроек
-        """
-        # for pageindex in range(self._dialog.treeBook.GetPageCount()):
-        #     self._dialog.treeBook.ExpandNode(pageindex)
-        pass
