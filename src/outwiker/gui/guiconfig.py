@@ -1067,6 +1067,9 @@ class PrefDialogConfig:
     HEIGHT_SECTION = "PrefDialogHeight"
     HEIGHT_DEFAULT = 500
 
+    TREE_WIDTH_SECTION = "PrefDialogTreeWidth"
+    TREE_WIDTH_DEFAULT = 300
+
     def __init__(self, config):
         self.config = config
 
@@ -1082,6 +1085,13 @@ class PrefDialogConfig:
             MainWindowConfig.MAIN_WINDOW_SECTION,
             self.HEIGHT_SECTION,
             self.HEIGHT_DEFAULT,
+        )
+
+        self.treeWidth = IntegerOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.TREE_WIDTH_SECTION,
+            self.TREE_WIDTH_DEFAULT,
         )
 
 

@@ -112,6 +112,7 @@ class PrefController:
 
         config.width.value = clientSize[0]
         config.height.value = clientSize[1]
+        config.treeWidth.value = self._dialog.treeBook.GetSashPosition()
 
     def _createInterfaceGroup(self):
         """
@@ -202,6 +203,9 @@ class PrefController:
 
         self._dialog.SetMinSize((800, 500))
         self._dialog.SetClientSize((config.width.value, config.height.value))
+
+        self._dialog.treeBook.SetSashPosition(config.treeWidth.value)
+
         self._centerDialog()
 
     def _centerDialog(self):
