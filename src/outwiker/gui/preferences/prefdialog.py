@@ -45,7 +45,11 @@ class PrefDialog(TestedDialog):
         return self._treeBook.GetCurrentPage()
 
     def appendPreferenceGroup(
-        self, groupname, prefPanelsInfoList, parent_page_tag: Optional[str] = None
+        self,
+        groupname,
+        prefPanelsInfoList,
+        parent_page_tag: Optional[str] = None,
+        icon_fname: Optional[str] = None,
     ):
         """
         Добавить группу настроек
@@ -57,16 +61,17 @@ class PrefDialog(TestedDialog):
         """
         assert len(prefPanelsInfoList) != 0
         self._treeBook.AddPage(
-            prefPanelsInfoList[0].panel, groupname, tag=parent_page_tag
+            prefPanelsInfoList[0].panel,
+            groupname,
+            tag=parent_page_tag,
+            icon_fname=icon_fname,
         )
 
         # Если всего одна страница в списке,
         # то не будем добавлять вложенные страницы
         if len(prefPanelsInfoList) > 1:
             for panelInfo in prefPanelsInfoList:
-                self._treeBook.AddPage(
-                    panelInfo.panel, panelInfo.name, parent_page_tag
-                )
+                self._treeBook.AddPage(panelInfo.panel, panelInfo.name, parent_page_tag)
 
     def addPage(
         self,

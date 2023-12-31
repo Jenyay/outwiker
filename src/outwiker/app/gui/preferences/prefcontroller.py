@@ -23,6 +23,7 @@ from outwiker.app.gui.preferences.formatspanel import FormatsPanel
 
 from outwiker.core.event import EVENT_PRIORITY_MAX_CORE, EVENT_PRIORITY_MIN_CORE
 from outwiker.core.exceptions import PreferencesException
+from outwiker.core.system import getBuiltinImagePath
 
 from outwiker.gui.guiconfig import PrefDialogConfig
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
@@ -139,7 +140,10 @@ class PrefController:
         ]
 
         self._dialog.appendPreferenceGroup(
-            _("Interface"), interfacePanelsList, PREF_PANEL_INTERFACE
+            _("Interface"),
+            interfacePanelsList,
+            PREF_PANEL_INTERFACE,
+            icon_fname=getBuiltinImagePath("interface.png"),
         )
 
     def _createEditorGroup(self):
@@ -159,20 +163,28 @@ class PrefController:
         ]
 
         self._dialog.appendPreferenceGroup(
-            _("Editor"), editorPanesList, PREF_PANEL_EDITOR
+            _("Editor"),
+            editorPanesList,
+            PREF_PANEL_EDITOR,
+            icon_fname=getBuiltinImagePath("editor.png"),
         )
 
     def _createPluginsPage(self):
         pluginsPage = PluginsPanel(self._dialog.treeBook, self._application)
-        self._dialog.addPage(pluginsPage, _("Plugins"), tag=PREF_PANEL_PLUGINS)
+        self._dialog.addPage(
+            pluginsPage,
+            _("Plugins"),
+            tag=PREF_PANEL_PLUGINS,
+            icon_fname=getBuiltinImagePath("plugin.png"),
+        )
 
     def _createTextPrintoutPage(self):
         textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
-        self._dialog.treeBook.AddPage(textPrintPage, _("Text printout"))
+        self._dialog.treeBook.AddPage(textPrintPage, _("Text printout"), icon_fname=getBuiltinImagePath("printer.png"))
 
     def _createIconsetPage(self):
         iconsetPage = IconsetPanel(self._dialog.treeBook)
-        self._dialog.treeBook.AddPage(iconsetPage, _("User's iconset"))
+        self._dialog.treeBook.AddPage(iconsetPage, _("User's iconset"), icon_fname=getBuiltinImagePath("picture.png"))
 
     def _setDialogPreperties(self):
         config = PrefDialogConfig(self._application.config)

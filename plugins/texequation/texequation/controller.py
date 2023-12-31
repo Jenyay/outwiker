@@ -45,14 +45,15 @@ class Controller:
         if self._application.mainWindow is not None:
             self._toolsWindowController.initialize()
 
-    def _initialize_guicontroller(self):
-        imagesPath = os.path.join(self._plugin.pluginPath, "images")
+    def _get_image_full_path(self, fname):
+        return os.path.join(self._plugin.pluginPath, "images", fname)
 
+    def _initialize_guicontroller(self):
         action_gui_info = [
             ActionGUIInfo(
                 TexEquationAction(self._application),
                 MENU_WIKI_COMMANDS,
-                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "equation.png")),
+                ButtonInfo(TOOLBAR_PLUGINS, self._get_image_full_path("equation.png")),
             ),
         ]
 
@@ -100,4 +101,9 @@ class Controller:
         Add page to preferences dialog
         """
         prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
-        dialog.addPage(prefPanel, _("TeXEquation [Plugin]"), parent_page_tag=PREF_PANEL_PLUGINS)
+        dialog.addPage(
+            prefPanel,
+            _("TeXEquation [Plugin]"),
+            parent_page_tag=PREF_PANEL_PLUGINS,
+            icon_fname=self._get_image_full_path("equation.png"),
+        )
