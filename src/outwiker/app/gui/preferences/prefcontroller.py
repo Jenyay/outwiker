@@ -21,13 +21,16 @@ from outwiker.app.gui.preferences.attachpanel import AttachPanel
 from outwiker.app.gui.preferences.colorspanel import ColorsPanel
 from outwiker.app.gui.preferences.formatspanel import FormatsPanel
 
-from outwiker.core.event import (EVENT_PRIORITY_MAX_CORE,
-                                 EVENT_PRIORITY_MIN_CORE)
+from outwiker.core.event import EVENT_PRIORITY_MAX_CORE, EVENT_PRIORITY_MIN_CORE
 from outwiker.core.exceptions import PreferencesException
 
 from outwiker.gui.guiconfig import PrefDialogConfig
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-from outwiker.gui.defines import PREF_PANEL_EDITOR, PREF_PANEL_PLUGINS, PREF_PANEL_INTERFACE
+from outwiker.gui.defines import (
+    PREF_PANEL_EDITOR,
+    PREF_PANEL_PLUGINS,
+    PREF_PANEL_INTERFACE,
+)
 
 
 class PrefController:
@@ -37,13 +40,11 @@ class PrefController:
 
     def initialize(self):
         self._application.onPreferencesDialogCreate.bind(
-            self._onPrefDialogCreateFirst,
-            EVENT_PRIORITY_MAX_CORE
+            self._onPrefDialogCreateFirst, EVENT_PRIORITY_MAX_CORE
         )
 
         self._application.onPreferencesDialogCreate.bind(
-            self._onPrefDialogCreateLast,
-            EVENT_PRIORITY_MIN_CORE
+            self._onPrefDialogCreateLast, EVENT_PRIORITY_MIN_CORE
         )
 
     def clear(self):
@@ -56,8 +57,8 @@ class PrefController:
         self._createInterfaceGroup()
         self._createEditorGroup()
         self._createIconsetPage()
-        self._createPluginsPage()
         self._createTextPrintoutPage()
+        self._createPluginsPage()
 
         self._dialog.Bind(wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
         self._dialog.Bind(wx.EVT_BUTTON, self._onCancel, id=wx.ID_CANCEL)
@@ -67,8 +68,8 @@ class PrefController:
         self._loadAllOptions()
         self._setDialogPreperties()
 
-        self._dialog.treeBook.ExpandAll()
-        self._dialog.treeBook.SetSelection(PREF_PANEL_INTERFACE)
+        self._dialog.expandAll()
+        self._dialog.setSelection(PREF_PANEL_INTERFACE)
 
     def _onCancel(self, event):
         self._cancelAll()
@@ -87,7 +88,7 @@ class PrefController:
     def _onHelp(self, event):
         controller = self._application.actionController
         action = controller.getAction(OpenHelpAction.stringId)
-        params = OpenHelpParams(u'page://settings')
+        params = OpenHelpParams("page://settings")
         action.run(params)
 
     def _saveAll(self):
@@ -116,12 +117,10 @@ class PrefController:
         Создать страницы с подгруппой "Interface"
         """
         generalPage = GeneralPanel(self._dialog.treeBook, self._application)
-        mainWindowPage = MainWindowPanel(
-            self._dialog.treeBook, self._application)
+        mainWindowPage = MainWindowPanel(self._dialog.treeBook, self._application)
         colorsPage = ColorsPanel(self._dialog.treeBook, self._application)
         trayPage = TrayPanel(self._dialog.treeBook, self._application)
-        htmlRenderPage = HtmlRenderPanel(
-            self._dialog.treeBook, self._application)
+        htmlRenderPage = HtmlRenderPanel(self._dialog.treeBook, self._application)
         hotkeysPage = HotKeysPanel(self._dialog.treeBook, self._application)
         tagsPage = TagsPanel(self._dialog.treeBook, self._application)
         attachPage = AttachPanel(self._dialog.treeBook, self._application)
@@ -139,9 +138,9 @@ class PrefController:
             PreferencePanelInfo(formatsPage, _("Formats")),
         ]
 
-        self._dialog.appendPreferenceGroup(_("Interface"),
-                                           interfacePanelsList,
-                                           PREF_PANEL_INTERFACE)
+        self._dialog.appendPreferenceGroup(
+            _("Interface"), interfacePanelsList, PREF_PANEL_INTERFACE
+        )
 
     def _createEditorGroup(self):
         """
@@ -149,10 +148,8 @@ class PrefController:
         """
         editorPage = EditorPanel(self._dialog.treeBook, self._application)
         spellPage = SpellPanel(self._dialog.treeBook, self._application)
-        htmlEditorPage = HtmlEditorPanel(
-            self._dialog.treeBook, self._application)
-        wikiEditorPage = WikiEditorPanel(
-            self._dialog.treeBook, self._application)
+        htmlEditorPage = HtmlEditorPanel(self._dialog.treeBook, self._application)
+        wikiEditorPage = WikiEditorPanel(self._dialog.treeBook, self._application)
 
         editorPanesList = [
             PreferencePanelInfo(editorPage, _("General")),
@@ -161,15 +158,16 @@ class PrefController:
             PreferencePanelInfo(wikiEditorPage, _("Wiki editor")),
         ]
 
-        self._dialog.appendPreferenceGroup(_("Editor"), editorPanesList, PREF_PANEL_EDITOR)
+        self._dialog.appendPreferenceGroup(
+            _("Editor"), editorPanesList, PREF_PANEL_EDITOR
+        )
 
     def _createPluginsPage(self):
         pluginsPage = PluginsPanel(self._dialog.treeBook, self._application)
-        self._dialog.treeBook.AddPage(pluginsPage, _("Plugins"))
+        self._dialog.addPage(pluginsPage, _("Plugins"), tag=PREF_PANEL_PLUGINS)
 
     def _createTextPrintoutPage(self):
-        textPrintPage = TextPrintPanel(
-            self._dialog.treeBook, self._application)
+        textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
         self._dialog.treeBook.AddPage(textPrintPage, _("Text printout"))
 
     def _createIconsetPage(self):
@@ -206,5 +204,5 @@ class PrefController:
         """
         Загрузить настройки для всех страниц
         """
-        for page in self._dialog.treeBook.GetPages():
+        for page in self._dialog.getPages():
             page.LoadState()

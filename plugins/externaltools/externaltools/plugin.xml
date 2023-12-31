@@ -18,8 +18,8 @@
 		<website>https://jenyay.net</website>
 	</author>
 	<requirements>
-		<api>3.922</api>
+		<api>3.934</api>
 	</requirements>
 
-	<version number="1.7.2"/>
+	<version number="1.7.3"/>
 </info>

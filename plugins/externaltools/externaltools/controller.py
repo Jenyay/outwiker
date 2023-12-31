@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.gui.preferences import PreferencePanelInfo
 from outwiker.api.pages.wiki import WikiWikiPage
 from outwiker.api.pages.wiki.defines import MENU_WIKI
 from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo
+from outwiker.api.gui.defines import PREF_PANEL_PLUGINS
 
 from .i18n import get_
 from .menutoolscontroller import MenuToolsController
@@ -83,7 +83,4 @@ class Controller:
         from .preferencespanel import PreferencesPanel
 
         prefPanel = PreferencesPanel(dialog.treeBook, self._application.config)
-
-        panelName = _("External Tools [Plugin]")
-        panelsList = [PreferencePanelInfo(prefPanel, panelName)]
-        dialog.appendPreferenceGroup(panelName, panelsList)
+        dialog.addPage(prefPanel, _("External Tools [Plugin]"), parent_page_tag=PREF_PANEL_PLUGINS)

@@ -3,13 +3,13 @@
 Модуль с классом диалога настроек
 """
 
-from typing import Optional
+from typing import List, Optional
 
 import wx
 
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.testeddialog import TestedDialog
-from outwiker.gui.controls.treebook2 import Treebook2
+from outwiker.gui.controls.treebook2 import Treebook2, BasePrefPanel
 
 
 class PrefDialog(TestedDialog):
@@ -67,6 +67,25 @@ class PrefDialog(TestedDialog):
                 self._treeBook.AddPage(
                     panelInfo.panel, panelInfo.name, parent_page_tag
                 )
+
+    def addPage(
+        self,
+        page: BasePrefPanel,
+        label: str,
+        parent_page_tag: Optional[str] = None,
+        icon_fname=None,
+        tag: Optional[str] = None,
+    ):
+        self._treeBook.AddPage(page, label, parent_page_tag, icon_fname, tag)
+
+    def expandAll(self):
+        self._treeBook.ExpandAll()
+
+    def setSelection(self, tag: str):
+        self._treeBook.SetSelection(tag)
+
+    def getPages(self) -> List[BasePrefPanel]:
+        return self._treeBook.GetPages()
 
     def _do_layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)

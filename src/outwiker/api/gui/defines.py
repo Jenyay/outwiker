@@ -13,3 +13,4 @@ from outwiker.gui.defines import (TOOLBAR_GENERAL, TOOLBAR_PLUGINS,
                                   PREF_PANEL_PLUGINS,
                                   PREF_PANEL_EDITOR
                                   )
+from outwiker.pages.wiki.defines import PREF_PANEL_WIKI

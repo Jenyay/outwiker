@@ -2,11 +2,11 @@
 
 import os.path
 
-from outwiker.api.gui.preferences import PreferencePanelInfo
 from outwiker.api.gui.defines import TOOLBAR_PLUGINS
 from outwiker.api.pages.wiki import WikiWikiPage
 from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS
 from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo, ButtonInfo
+from outwiker.api.gui.defines import PREF_PANEL_PLUGINS
 
 from .i18n import get_
 from .preferencepanel import PreferencePanel
@@ -82,7 +82,4 @@ class Controller:
         Добавление страницы с настройками
         """
         prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
-
-        panelName = _("Source [Plugin]")
-        panelsList = [PreferencePanelInfo(prefPanel, panelName)]
-        dialog.appendPreferenceGroup(panelName, panelsList)
+        dialog.addPage(prefPanel, _("Source [Plugin]"), parent_page_tag=PREF_PANEL_PLUGINS)

@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.7.3">
+		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.7.3.zip">
+			<requirements>
+				<api>3.934</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Use new API for settings.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на новый API для настроек.</change>
+		</changes>
+	</version>
+
 	<version number="1.7.2" date="2023-05-03">
 		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.7.2.zip">
 			<requirements>

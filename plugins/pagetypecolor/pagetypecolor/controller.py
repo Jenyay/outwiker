@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.gui.preferences import PreferencePanelInfo
+from outwiker.api.gui.defines import PREF_PANEL_PLUGINS
 
 from .i18n import get_
 
@@ -59,8 +59,7 @@ class Controller:
         prefPanel = PreferencePanel(dialog.treeBook, self._application)
 
         panelName = _("PageTypeColor [Plugin]")
-        panelsList = [PreferencePanelInfo(prefPanel, panelName)]
-        dialog.appendPreferenceGroup(panelName, panelsList)
+        dialog.addPage(prefPanel, _("PageTypeColor [Plugin]"), parent_page_tag=PREF_PANEL_PLUGINS)
 
     def __onPageDialogInit(self, page, params):
         self._updateColors()
