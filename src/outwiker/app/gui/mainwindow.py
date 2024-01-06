@@ -461,7 +461,7 @@ class MainWindow(wx.Frame):
         actionController.appendMenuItem(AttachFilesAction.stringId, submenu)
 
         actionController.appendToolbarButton(
-            AttachFilesAction.stringId, toolbar, getBuiltinImagePath("attach.png"), True
+            AttachFilesAction.stringId, toolbar, getBuiltinImagePath("attach.svg"), True
         )
 
         actionController.appendMenuItem(AttachFolderAction.stringId, submenu)
