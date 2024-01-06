@@ -15,7 +15,7 @@ class NotesTreeCtrl(wx.TreeCtrl):
         treeStyle = (wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
         super().__init__(parent, style=treeStyle)
 
-        self.defaultIcon = getBuiltinImagePath('page.png')
+        self.defaultIcon = getBuiltinImagePath('page.svg')
         self.iconHeight = ICON_HEIGHT
 
         # Картинки для дерева

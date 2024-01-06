@@ -46,3 +46,6 @@ TAGS_CLOUD_MODE_LIST = 'list'
 PREF_PANEL_INTERFACE = "interface_panel"
 PREF_PANEL_PLUGINS = "plugins_panel"
 PREF_PANEL_EDITOR = "editor_panel"
+
+ICONS_WIDTH = 16
+ICONS_HEIGHT = 16

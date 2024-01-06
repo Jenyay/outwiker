@@ -21,7 +21,7 @@ class PrefDialog(TestedDialog):
         style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         super().__init__(parent, style=style)
 
-        self._default_icon = getBuiltinImagePath("page.png")
+        self._default_icon = getBuiltinImagePath("page.svg")
 
         self._application = application
         self._treeBook = Treebook2(self, self._default_icon)

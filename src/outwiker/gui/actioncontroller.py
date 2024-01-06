@@ -4,6 +4,7 @@ import logging
 from typing import List, Optional, Tuple, Dict
 
 import wx
+from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH
 
 from outwiker.gui.images import readImage
 from outwiker.gui.controls.toolbar2 import ToolBar2
@@ -54,8 +55,8 @@ class ActionController:
     def __init__(self, mainWindow: wx.Window, config):
         self._mainWindow = mainWindow
         self._config = config
-        self._image_width = 16
-        self._image_height = 16
+        self._image_width = ICONS_WIDTH
+        self._image_height = ICONS_HEIGHT
 
         # Словарь для хранения информации о действиях
         # Ключ - строковый идентификатор действия,

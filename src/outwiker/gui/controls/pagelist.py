@@ -27,7 +27,7 @@ class PageList(wx.Panel):
         super().__init__(parent)
         self._columns = []                     # type: List[BaseColumn]
         self._pages = []                       # type: List[outwiker.core.tree.WikiPage]
-        self._defaultIcon = getBuiltinImagePath('page.png')
+        self._defaultIcon = getBuiltinImagePath('page.svg')
         self._imageList = ImageListCache(self._defaultIcon)
 
         self._propagationLevel = 15

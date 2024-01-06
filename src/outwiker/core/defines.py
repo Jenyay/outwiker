@@ -48,7 +48,7 @@ APP_DATA_DISABLE_PLUGINS = "__disablePlugins"
 ICONS_STD_PREFIX = "__std_"
 ICONS_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "ico"]
 IMAGES_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "webp"]
-ICON_DEFAULT = ICONS_STD_PREFIX + "_default.png"
+ICON_DEFAULT = ICONS_STD_PREFIX + "_default.svg"
 RECENT_ICONS_SECTION = "RecentIcons"
 RECENT_ICONS_PARAM_NAME = "icon"
 

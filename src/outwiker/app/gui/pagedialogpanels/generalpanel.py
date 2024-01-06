@@ -21,6 +21,8 @@ from outwiker.core.events import (
     PageDialogPageFactoriesNeededParams,
     PageDialogNewPageOrderChangedParams,
 )
+from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH
+from outwiker.gui.images import readImage
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig, TagsConfig
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
@@ -142,7 +144,7 @@ class GeneralPanel(wx.Panel):
         self.titleTextCtrl.SetValue(value)
 
     def setPageIcon(self, iconFileName):
-        bitmap = wx.Bitmap(iconFileName)
+        bitmap = readImage(iconFileName, ICONS_WIDTH, ICONS_HEIGHT)
         self.iconBtn.SetBitmapLabel(bitmap)
 
 

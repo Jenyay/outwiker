@@ -5,11 +5,13 @@ from typing import Dict
 import wx
 
 from .controls.safeimagelist import SafeImageList
+from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
+from outwiker.gui.images import readImage
 
 
 class ImageListCache:
     def __init__(self, defaultImage: str):
-        self._defaultImage = wx.Bitmap(defaultImage)
+        self._defaultImage = readImage(defaultImage, ICONS_WIDTH, ICONS_HEIGHT)
         assert self._defaultImage.IsOk()
 
         self._imagelist = SafeImageList(self._defaultImage.Width,
