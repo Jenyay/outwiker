@@ -19,6 +19,9 @@ class Treebook2(wx.SplitterWindow):
 
         self._tree.Bind(wx.EVT_TREE_SEL_CHANGED, handler=self._onSelected)
 
+    def Clear(self):
+        self._tree.Unbind(wx.EVT_TREE_SEL_CHANGED, handler=self._onSelected)
+
     def _onSelected(self, event):
         if self._current_page is not None:
             self._container_sizer.Clear()

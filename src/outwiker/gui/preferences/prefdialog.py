@@ -28,6 +28,10 @@ class PrefDialog(TestedDialog):
         self._do_layout()
         self._application.onPreferencesDialogCreate(self)
 
+    def Destroy(self):
+        self._treeBook.Clear()
+        super().Destroy()
+
     @property
     def treeBook(self):
         """
