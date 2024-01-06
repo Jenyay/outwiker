@@ -5,6 +5,7 @@ from typing import List, Optional, Tuple, Dict
 
 import wx
 
+from outwiker.gui.images import readImage
 from outwiker.gui.controls.toolbar2 import ToolBar2
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyoption import HotKeyOption
@@ -53,6 +54,8 @@ class ActionController:
     def __init__(self, mainWindow: wx.Window, config):
         self._mainWindow = mainWindow
         self._config = config
+        self._image_width = 16
+        self._image_height = 16
 
         # Словарь для хранения информации о действиях
         # Ключ - строковый идентификатор действия,
@@ -322,7 +325,7 @@ class ActionController:
 
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
-        bitmap = wx.Bitmap(image)
+        bitmap = readImage(image, self._image_width, self._image_height)
 
         if issubclass(type(toolbar), ToolBar2):
             toolbarItemId = toolbar.AddButton(title, bitmap, wx.ID_ANY)
@@ -375,7 +378,7 @@ class ActionController:
 
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
-        bitmap = wx.Bitmap(image)
+        bitmap = readImage(image, self._image_width, self._image_height)
 
         if issubclass(type(toolbar), ToolBar2):
             toolbarItemId = toolbar.AddCheckButton(title, bitmap, wx.ID_ANY)

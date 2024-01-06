@@ -111,6 +111,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             'outwiker.actions.showhidetree',
             'outwiker.gui.controls.popupbutton',
             'outwiker.gui.controls.filestreectrl',
+            'outwiker.gui.images',
             'outwiker.core.attachfilters',
             'outwiker.core.commands',
             'outwiker.utilites.actionsguicontroller',

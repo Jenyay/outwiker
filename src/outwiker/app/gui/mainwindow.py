@@ -301,7 +301,7 @@ class MainWindow(wx.Frame):
         actionController.appendMenuItem(NewAction.stringId, menu)
 
         actionController.appendToolbarButton(
-            NewAction.stringId, toolbar, getBuiltinImagePath("new.png"), True
+            NewAction.stringId, toolbar, getBuiltinImagePath("new.svg"), True
         )
 
         # Opem...
