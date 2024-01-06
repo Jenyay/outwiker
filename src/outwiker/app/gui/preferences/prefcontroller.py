@@ -197,13 +197,9 @@ class PrefController:
 
     def _setDialogPreperties(self):
         config = PrefDialogConfig(self._application.config)
-
         self._dialog.SetTitle(_("Preferences"))
-        self._dialog.treeBook.SetMinSize((300, -1))
-
         self._dialog.SetMinSize((800, 500))
         self._dialog.SetClientSize((config.width.value, config.height.value))
-
         self._dialog.treeBook.SetSashPosition(config.treeWidth.value)
 
         self._centerDialog()

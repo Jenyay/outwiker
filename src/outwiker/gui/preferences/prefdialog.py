@@ -93,10 +93,11 @@ class PrefDialog(TestedDialog):
         return self._treeBook.GetPages()
 
     def _do_layout(self):
+        self._treeBook.SetMinSize((300, 100))
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableRow(0)
         main_sizer.AddGrowableCol(0)
-        main_sizer.Add(self._treeBook, 0, wx.ALL | wx.EXPAND, 4)
+        main_sizer.Add(self._treeBook, flag=wx.ALL | wx.EXPAND, border=4)
 
         self._createOkCancelButtons(main_sizer)
 
@@ -108,4 +109,4 @@ class PrefDialog(TestedDialog):
         Создать кнопки Ok / Cancel
         """
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL | wx.HELP)
-        sizer.Add(buttonsSizer, 0, wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL, border=4)
+        sizer.Add(buttonsSizer, flag=wx.EXPAND | wx.ALIGN_BOTTOM | wx.ALL, border=4)
