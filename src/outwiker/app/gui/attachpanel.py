@@ -207,14 +207,14 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             AttachFolderActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("attach_folder.png")
+            getBuiltinImagePath("attach_folder.svg")
         )
 
         # Create subdir
         actionController.appendToolbarButton(
             AttachCreateSubdirActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("folder_add.png")
+            getBuiltinImagePath("folder_add.svg")
         )
 
         # Delete files

@@ -33,7 +33,7 @@ class BaseFileIcons(metaclass=ABCMeta):
             "file_icon_default.png"), wx.BITMAP_TYPE_ANY))
 
         self._imageList.Add(
-            wx.Bitmap(getBuiltinImagePath("folder.png"), wx.BITMAP_TYPE_ANY))
+            wx.Bitmap(getBuiltinImagePath("folder.svg"), wx.BITMAP_TYPE_ANY))
 
         self._imageList.Add(
             wx.Bitmap(getBuiltinImagePath("arrow_go_to_parent.png"), wx.BITMAP_TYPE_ANY))

@@ -308,7 +308,7 @@ class MainWindow(wx.Frame):
         actionController.appendMenuItem(OpenAction.stringId, menu)
 
         actionController.appendToolbarButton(
-            OpenAction.stringId, toolbar, getBuiltinImagePath("open.png"), True
+            OpenAction.stringId, toolbar, getBuiltinImagePath("open.svg"), True
         )
 
         # Open read only
@@ -469,7 +469,7 @@ class MainWindow(wx.Frame):
         actionController.appendToolbarButton(
             AttachFolderAction.stringId,
             toolbar,
-            getBuiltinImagePath("attach_folder.png"),
+            getBuiltinImagePath("attach_folder.svg"),
             True,
         )
 
