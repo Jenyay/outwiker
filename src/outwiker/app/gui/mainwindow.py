@@ -420,7 +420,7 @@ class MainWindow(wx.Frame):
         actionController.appendToolbarButton(
             GlobalSearchAction.stringId,
             toolbar,
-            getBuiltinImagePath("global_search.png"),
+            getBuiltinImagePath("global_search.svg"),
             True,
         )
 

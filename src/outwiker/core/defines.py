@@ -46,7 +46,7 @@ APP_DATA_DISABLE_MINIMIZING = "__disableMinimizing"
 APP_DATA_DISABLE_PLUGINS = "__disablePlugins"
 
 ICONS_STD_PREFIX = "__std_"
-ICONS_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "ico"]
+ICONS_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "ico", "svg"]
 IMAGES_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "webp"]
 ICON_DEFAULT = ICONS_STD_PREFIX + "_default.svg"
 RECENT_ICONS_SECTION = "RecentIcons"

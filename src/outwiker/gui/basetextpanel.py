@@ -321,7 +321,7 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.appendToolbarButton(
             SearchAction.stringId,
             toolbar,
-            getBuiltinImagePath("local_search.png"),
+            getBuiltinImagePath("local_search.svg"),
             fullUpdate=False)
 
         # Начать поиск и замену на странице
