@@ -6,14 +6,12 @@ import os.path
 import shutil
 from typing import Union
 
-from outwiker.core.defines import (ICONS_EXTENSIONS,
-                                   ICONS_STD_PREFIX,
-                                   PAGE_ICON_NAME)
+from outwiker.core.defines import ICONS_EXTENSIONS, ICONS_STD_PREFIX, PAGE_ICON_NAME
 from outwiker.core.events import PAGE_UPDATE_ICON
 from outwiker.core.exceptions import ReadonlyException
 
 
-class IconController(object):
+class IconController:
     def __init__(self, builtin_icons_path):
         """
         builtin_icons_path -- path to built-in icons folder.
@@ -43,12 +41,13 @@ class IconController(object):
 
         main_path = self._builtin_icons_path
 
-        return (self._is_subdir(fname, main_path) and
-                basename.startswith(ICONS_STD_PREFIX))
+        return self._is_subdir(fname, main_path) and basename.startswith(
+            ICONS_STD_PREFIX
+        )
 
     def _check_icon_extension(self, fname):
         for extension in ICONS_EXTENSIONS:
-            if fname.endswith(u'.' + extension):
+            if fname.endswith("." + extension):
                 return True
 
         return False
@@ -63,12 +62,11 @@ class IconController(object):
             raise ReadonlyException
 
         for extension in ICONS_EXTENSIONS:
-            icon_fname = os.path.join(page.path,
-                                      PAGE_ICON_NAME + u'.' + extension)
+            icon_fname = os.path.join(page.path, PAGE_ICON_NAME + "." + extension)
             if os.path.exists(icon_fname):
                 os.remove(icon_fname)
 
-        page.params.iconOption.value = u''
+        page.params.iconOption.value = ""
 
     def set_icon(self, page, icon_fname: Union[str, None]) -> Union[str, None]:
         """
@@ -77,8 +75,6 @@ class IconController(object):
         params, else file will be copied to page folder.
 
         Raises exceptions: ValueError, IOError
-
-        Added in outwiker.core 1.5
         """
         if page.readonly:
             raise ReadonlyException
@@ -136,15 +132,15 @@ class IconController(object):
 
         # Find __icon.* file
         for extension in ICONS_EXTENSIONS:
-            fname = os.path.join(page.path, PAGE_ICON_NAME + u'.' + extension)
+            fname = os.path.join(page.path, PAGE_ICON_NAME + "." + extension)
             if os.path.exists(fname):
                 return fname
 
         # If an icon file name wrote in the page params.
         icon_from_config = page.params.iconOption.value.strip()
         if icon_from_config:
-            icon_from_config = icon_from_config.replace(u'\\', os.sep)
-            icon_from_config = icon_from_config.replace(u'/', os.sep)
+            icon_from_config = icon_from_config.replace("\\", os.sep)
+            icon_from_config = icon_from_config.replace("/", os.sep)
             return os.path.join(self._builtin_icons_path, icon_from_config)
 
         return None
@@ -162,9 +158,9 @@ class IconController(object):
 
         dotPos = text.rfind(".")
         if dotPos != -1:
-            text = text[: dotPos]
+            text = text[:dotPos]
 
         if text.startswith(ICONS_STD_PREFIX):
-            text = text[len(ICONS_STD_PREFIX):]
+            text = text[len(ICONS_STD_PREFIX) :]
 
         return text
