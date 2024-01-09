@@ -126,10 +126,15 @@ class NotesTreeCtrl(wx.TreeCtrl):
             return self._iconsCache.getDefaultImageId()
 
         icon = os.path.abspath(icon)
-        imageId = self._iconsCache.add(icon)
+        page_path = os.path.abspath(page.path)
 
-        if imageId is None:
-            imageId = self._iconsCache.getDefaultImageId()
+        if icon.startswith(page_path):
+            imageId = self._iconsCache.replace(icon)
+        else:
+            imageId = self._iconsCache.add(icon)
+
+        # if imageId is None:
+        #     imageId = self._iconsCache.getDefaultImageId()
 
         return imageId
 
