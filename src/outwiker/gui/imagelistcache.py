@@ -28,7 +28,7 @@ class ImageListCache:
         if fname in self._iconsCache:
             return self._iconsCache[fname]
 
-        image = wx.Bitmap(fname)
+        image = readImage(fname, ICONS_WIDTH, ICONS_HEIGHT)
 
         imageId = 0
         if image.IsOk():
