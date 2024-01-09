@@ -18,18 +18,15 @@ class IconsetPanel(BasePrefPanel):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self._default_group_cover = getBuiltinImagePath('icons_cover_default.png')
+        self._default_group_cover = getBuiltinImagePath("icons_cover_default.png")
 
         self.__createGuiElements()
 
-        self._groups.Bind(wx.EVT_TREE_SEL_CHANGED,
-                          handler=self.__onGroupSelect)
+        self._groups.Bind(wx.EVT_TREE_SEL_CHANGED, handler=self.__onGroupSelect)
 
-        self._groups.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT,
-                          self.__onBeginLabelEdit)
+        self._groups.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.__onBeginLabelEdit)
 
-        self._groups.Bind(wx.EVT_TREE_END_LABEL_EDIT,
-                          self.__onEndLabelEdit)
+        self._groups.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.__onEndLabelEdit)
 
         self._groups.Bind(wx.EVT_KEY_DOWN, handler=self.__onKeyDown)
 
@@ -48,8 +45,8 @@ class IconsetPanel(BasePrefPanel):
         groupsSizer.AddGrowableRow(0)
 
         self._groups = wx.TreeCtrl(
-            self,
-            style=wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
+            self, style=wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER
+        )
         self._groups.SetMinSize((200, 200))
 
         self._imagelist = SafeImageList(ICON_WIDTH, ICON_HEIGHT)
@@ -60,26 +57,23 @@ class IconsetPanel(BasePrefPanel):
 
         # Add a group
         self.addGroupBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(getBuiltinImagePath("add.png"))
+            self, bitmap=wx.Bitmap(getBuiltinImagePath("add.png"))
         )
-        self.addGroupBtn.SetToolTip(_(u"Add new group"))
+        self.addGroupBtn.SetToolTip(_("Add new group"))
         self.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self.__onAddGroup)
 
         # Remove a group
         self.removeGroupBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(getBuiltinImagePath("remove.png"))
+            self, bitmap=wx.Bitmap(getBuiltinImagePath("remove.png"))
         )
-        self.removeGroupBtn.SetToolTip(_(u"Remove group"))
+        self.removeGroupBtn.SetToolTip(_("Remove group"))
         self.removeGroupBtn.Bind(wx.EVT_BUTTON, handler=self.__onRemoveGroup)
 
         # Rename a group
         self.renameGroupBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(getBuiltinImagePath("pencil.png"))
+            self, bitmap=wx.Bitmap(getBuiltinImagePath("pencil.png"))
         )
-        self.renameGroupBtn.SetToolTip(_(u"Rename group"))
+        self.renameGroupBtn.SetToolTip(_("Rename group"))
         self.renameGroupBtn.Bind(wx.EVT_BUTTON, handler=self.__onRenameGroup)
 
         groupButtonsSizer.Add(self.addGroupBtn, flag=wx.ALL, border=0)
@@ -103,26 +97,23 @@ class IconsetPanel(BasePrefPanel):
 
         # Add icons
         self.addIconsBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(getBuiltinImagePath("add.png"))
+            self, bitmap=wx.Bitmap(getBuiltinImagePath("add.png"))
         )
-        self.addIconsBtn.SetToolTip(_(u"Add icons"))
+        self.addIconsBtn.SetToolTip(_("Add icons"))
         self.addIconsBtn.Bind(wx.EVT_BUTTON, handler=self.__onAddIcons)
 
         # Remove icons
         self.removeIconsBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(getBuiltinImagePath("remove.png"))
+            self, bitmap=wx.Bitmap(getBuiltinImagePath("remove.png"))
         )
-        self.removeIconsBtn.SetToolTip(_(u"Remove selected icons"))
+        self.removeIconsBtn.SetToolTip(_("Remove selected icons"))
         self.removeIconsBtn.Bind(wx.EVT_BUTTON, handler=self.__onRemoveIcons)
 
         # Set icon as group cover
         self.setCoverBtn = wx.BitmapButton(
-            self,
-            bitmap=wx.Bitmap(getBuiltinImagePath("picture.png"))
+            self, bitmap=wx.Bitmap(getBuiltinImagePath("picture.png"))
         )
-        self.setCoverBtn.SetToolTip(_(u"Set icon as group cover"))
+        self.setCoverBtn.SetToolTip(_("Set icon as group cover"))
         self.setCoverBtn.Bind(wx.EVT_BUTTON, handler=self.__onSetCover)
 
         iconsButtonsSizer.Add(self.addIconsBtn, flag=wx.ALL, border=0)
@@ -153,10 +144,10 @@ class IconsetPanel(BasePrefPanel):
 
         # Add the root element
         rootimage = collection.getCover(None)
-        imageIndex = -1 if rootimage is None else self._imagelist.Add(wx.Bitmap(rootimage))
-        rootItem = self._groups.AddRoot(_(u"Not in groups"),
-                                        imageIndex,
-                                        data=None)
+        imageIndex = (
+            -1 if rootimage is None else self._imagelist.Add(wx.Bitmap(rootimage))
+        )
+        rootItem = self._groups.AddRoot(_("Not in groups"), imageIndex, data=None)
 
         # Add child groups
         for group in collection.getGroups():
@@ -166,10 +157,7 @@ class IconsetPanel(BasePrefPanel):
 
             imageIndex = self._imagelist.Add(wx.Bitmap(image))
 
-            self._groups.AppendItem(rootItem,
-                                    group,
-                                    imageIndex,
-                                    data=group)
+            self._groups.AppendItem(rootItem, group, imageIndex, data=group)
 
         self._groups.Expand(rootItem)
         self._groups.SelectItem(rootItem)
@@ -206,11 +194,12 @@ class IconsetPanel(BasePrefPanel):
             collection.addGroup(newGroupName)
             self.__updateGroups()
             self.__selectGroupItem(newGroupName)
-        except(IOError, SystemError):
+        except (IOError, SystemError):
             MessageBox(
-                _(u"Can't create directory for icons group"),
-                _(u"Error"),
-                wx.OK | wx.ICON_ERROR)
+                _("Can't create directory for icons group"),
+                _("Error"),
+                wx.OK | wx.ICON_ERROR,
+            )
 
     def __selectGroupItem(self, groupname):
         """
@@ -237,15 +226,15 @@ class IconsetPanel(BasePrefPanel):
         """
         Return name for new group
         """
-        newGroupTemplate = _(u"New group{}")
-        newGroupName = newGroupTemplate.format(u"")
+        newGroupTemplate = _("New group{}")
+        newGroupName = newGroupTemplate.format("")
         if newGroupName in groups:
             # Generate new group name in format "New group(1)",
             # "New group(2)" etc
             index = 0
             while newGroupName in groups:
                 index += 1
-                newGroupName = newGroupTemplate.format(u"({})".format(index))
+                newGroupName = newGroupTemplate.format("({})".format(index))
         return newGroupName
 
     def __onEndLabelEdit(self, event):
@@ -262,23 +251,26 @@ class IconsetPanel(BasePrefPanel):
 
         try:
             collection.renameGroup(oldGroupName, newGroupName)
-        except(IOError, SystemError):
+        except (IOError, SystemError):
             MessageBox(
-                _(u"Can't rename directory for icons group"),
-                _(u"Error"),
-                wx.OK | wx.ICON_ERROR)
+                _("Can't rename directory for icons group"),
+                _("Error"),
+                wx.OK | wx.ICON_ERROR,
+            )
             return
         except DuplicateGroupError:
             MessageBox(
-                _(u'Group with name "{}" exists already').format(newGroupName),
-                _(u"Error"),
-                wx.OK | wx.ICON_ERROR)
+                _('Group with name "{}" exists already').format(newGroupName),
+                _("Error"),
+                wx.OK | wx.ICON_ERROR,
+            )
             return
         except ValueError:
             MessageBox(
-                _(u'Invalid group name "{}"').format(newGroupName),
-                _(u"Error"),
-                wx.OK | wx.ICON_ERROR)
+                _('Invalid group name "{}"').format(newGroupName),
+                _("Error"),
+                wx.OK | wx.ICON_ERROR,
+            )
             return
 
         self.__updateGroups()
@@ -308,31 +300,32 @@ class IconsetPanel(BasePrefPanel):
         groupname = self._groups.GetItemData(selItem)
         assert groupname is not None
 
-        if MessageBox(
-                _(u'Remove group "{}" and all icons inside it?').format(groupname),
-                _(u"Remove group?"),
-                wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
+        if (
+            MessageBox(
+                _('Remove group "{}" and all icons inside it?').format(groupname),
+                _("Remove group?"),
+                wx.YES_NO | wx.ICON_QUESTION,
+            )
+            == wx.YES
+        ):
             try:
                 self.__getIconsCollection().removeGroup(groupname)
-            except(IOError, SystemError):
+            except (IOError, SystemError):
                 MessageBox(
-                    _(u"Can't remove group directory"),
-                    _(u"Error"),
-                    wx.OK | wx.ICON_ERROR)
+                    _("Can't remove group directory"), _("Error"), wx.OK | wx.ICON_ERROR
+                )
                 return
             self.__updateGroups()
 
     def __onAddIcons(self, event):
-        wildcard = u"{images}(*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png; *.jpg; *.jpeg; *.gif; *.bmp|*.png|*.png|*.jpg; *.jpeg|*.jpg;*.jpeg|*.gif|*.gif|*.bmp|*.bmp|{all}(*.*)|*.*".format(
-            images=_(u"All image files"),
-            all=_(u"All files"))
+        wildcard = "{images}(*.png; *.jpg; *.jpeg; *.gif; *.bmp; *.svg)|*.png;*.jpg;*.jpeg;*.gif;*.bmp;*.svg|*.png|*.png|*.jpg; *.jpeg|*.jpg;*.jpeg|*.gif|*.gif|*.bmp|*.bmp|*.svg|*.svg|{all}(*.*)|*.*".format(
+            images=_("All image files"), all=_("All files")
+        )
         style = wx.FD_OPEN | wx.FD_MULTIPLE | wx.FD_FILE_MUST_EXIST
 
         with TestedFileDialog(
-                self,
-                _(u"Select images"),
-                wildcard=wildcard,
-                style=style) as dlg:
+            self, _("Select images"), wildcard=wildcard, style=style
+        ) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
                 item = self._groups.GetSelection()
                 group = self._groups.GetItemData(item)
@@ -346,19 +339,24 @@ class IconsetPanel(BasePrefPanel):
         icons = self._iconsList.getSelection()
         if not icons:
             MessageBox(
-                _(u"You have not selected any icons"),
-                _(u"Select icons"),
-                wx.OK | wx.ICON_INFORMATION)
+                _("You have not selected any icons"),
+                _("Select icons"),
+                wx.OK | wx.ICON_INFORMATION,
+            )
             return
 
-        if MessageBox(
-                _(u"Remove selected icons?"),
-                _(u"Remove icons"),
-                wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
+        if (
+            MessageBox(
+                _("Remove selected icons?"),
+                _("Remove icons"),
+                wx.YES_NO | wx.ICON_QUESTION,
+            )
+            == wx.YES
+        ):
             for fname in icons:
                 try:
                     os.remove(fname)
-                except(IOError, SystemError):
+                except (IOError, SystemError):
                     pass
 
             item = self._groups.GetSelection()
@@ -370,9 +368,10 @@ class IconsetPanel(BasePrefPanel):
         icons = self._iconsList.getSelection()
         if not icons:
             MessageBox(
-                _(u"You have not selected any icons"),
-                _(u"Select icons"),
-                wx.OK | wx.ICON_ERROR)
+                _("You have not selected any icons"),
+                _("Select icons"),
+                wx.OK | wx.ICON_ERROR,
+            )
             return
 
         item = self._groups.GetSelection()
@@ -385,9 +384,11 @@ class IconsetPanel(BasePrefPanel):
         self.__selectGroupItem(group)
 
     def __onKeyDown(self, event):
-        if (event.GetKeyCode() == wx.WXK_F2 and
-                not event.AltDown() and
-                not event.CmdDown() and
-                not event.ControlDown() and
-                not event.ShiftDown()):
+        if (
+            event.GetKeyCode() == wx.WXK_F2
+            and not event.AltDown()
+            and not event.CmdDown()
+            and not event.ControlDown()
+            and not event.ShiftDown()
+        ):
             self.__onRenameGroup(None)
