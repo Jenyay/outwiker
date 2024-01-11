@@ -22,6 +22,7 @@ class IconsCollection:
 
     # File name for cover of the group
     COVER_FILE_NAME = "__cover.png"
+    COVER_FILE_NAME_SVG = "__cover.svg"
 
     def __init__(self, iconsDir):
         """
@@ -72,7 +73,10 @@ class IconsCollection:
         """
         cover = None
         fullpath = os.path.join(folder, self.COVER_FILE_NAME)
-        if os.path.exists(fullpath):
+        fullpath_svg = os.path.join(folder, self.COVER_FILE_NAME_SVG)
+        if os.path.exists(fullpath_svg):
+            cover = fullpath_svg
+        elif os.path.exists(fullpath):
             cover = fullpath
 
         return cover
@@ -91,6 +95,7 @@ class IconsCollection:
                 os.path.isfile(fullpath)
                 and self._isIcon(fullpath)
                 and fname != self.COVER_FILE_NAME
+                and fname != self.COVER_FILE_NAME_SVG
             ):
                 result.append(fullpath)
 
@@ -259,13 +264,16 @@ class IconsCollection:
         if not os.path.exists(grouppath):
             raise KeyError
 
-        if not isImage(fname) or not os.path.exists(fname):
+        if (not isImage(fname) and not isSVG(fname)) or not os.path.exists(fname):
             return
 
-        newIconPath = os.path.join(grouppath, self.COVER_FILE_NAME)
-
         try:
-            IconMaker().create(fname, newIconPath)
+            if isSVG(fname):
+                newIconPath = os.path.join(grouppath, self.COVER_FILE_NAME_SVG)
+                shutil.copy(fname, newIconPath)
+            else:
+                newIconPath = os.path.join(grouppath, self.COVER_FILE_NAME)
+                IconMaker().create(fname, newIconPath)
         except (IOError, ValueError):
             pass
 

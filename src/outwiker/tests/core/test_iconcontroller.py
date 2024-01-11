@@ -178,7 +178,7 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
-    def test_get_icon_05(self):
+    def test_get_icon_png(self):
         path_main = 'tmp'
         controller = IconController(path_main)
 
@@ -190,7 +190,7 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
-    def test_get_icon_06(self):
+    def test_get_icon_jpg(self):
         path_main = 'tmp'
         controller = IconController(path_main)
 
@@ -202,7 +202,7 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
-    def test_get_icon_07(self):
+    def test_get_icon_jpeg(self):
         path_main = 'tmp'
         controller = IconController(path_main)
 
@@ -214,7 +214,7 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
-    def test_get_icon_08(self):
+    def test_get_icon_gif(self):
         path_main = 'tmp'
         controller = IconController(path_main)
 
@@ -226,7 +226,7 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
-    def test_get_icon_09(self):
+    def test_get_icon_bmp(self):
         path_main = 'tmp'
         controller = IconController(path_main)
 
@@ -238,7 +238,19 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
-    def test_get_icon_10(self):
+    def test_get_icon_svg(self):
+        path_main = 'tmp'
+        controller = IconController(path_main)
+
+        icon_fname = os.path.join(self._page.path, PAGE_ICON_NAME + '.svg')
+        self._create_file(icon_fname)
+
+        result = controller.get_icon(self._page)
+        result_right = icon_fname
+
+        self.assertEqual(result, result_right)
+
+    def test_get_icon_invalid(self):
         path_main = 'tmp'
         controller = IconController(path_main)
 
@@ -250,7 +262,7 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
-    def test_get_icon_11(self):
+    def test_get_icon_invalid_and_icon_in_options(self):
         path_main = 'tmp'
         controller = IconController(path_main)
 
@@ -297,6 +309,18 @@ class IconControllerTest(unittest.TestCase):
         controller = IconController(path_main)
 
         icon_fname = ICONS_STD_PREFIX + 'icon.png'
+        icon_path = os.path.join(path_main, icon_fname)
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertNotEqual(self._page.params.iconOption.value, '')
+        self.assertEqual(icon_fname, self._page.params.iconOption.value)
+
+    def test_set_icon_builtin_svg(self):
+        path_main = 'tmp'
+        controller = IconController(path_main)
+
+        icon_fname = ICONS_STD_PREFIX + 'icon.svg'
         icon_path = os.path.join(path_main, icon_fname)
 
         controller.set_icon(self._page, icon_path)
@@ -464,6 +488,18 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertTrue(os.path.exists(
             os.path.join(self._page.path, PAGE_ICON_NAME + '.ico'))
+        )
+
+    def test_set_icon_custom_svg(self):
+        path_main = 'tmp'
+        controller = IconController(path_main)
+
+        icon_path = 'testdata/images/image1.svg'
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertTrue(os.path.exists(
+            os.path.join(self._page.path, PAGE_ICON_NAME + '.svg'))
         )
 
     def test_set_icon_custom_remove_param(self):

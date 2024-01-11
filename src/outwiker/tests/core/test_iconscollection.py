@@ -292,6 +292,19 @@ class IconsCollectionTest(BaseWxTestCase):
         self.assertIn('new.png', icons[0])
         self.assertIsNone(collection.getCover(None))
 
+    def testAddIcons_svg(self):
+        files = ['image1.svg']
+        fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
+
+        os.mkdir(self.tempDir1)
+        collection = IconsCollection(self.tempDir1)
+
+        collection.addIcons('', fullPaths)
+
+        icons = collection.getIcons(None)
+        self.assertIn('image1.svg', icons[0])
+        self.assertIsNone(collection.getCover(None))
+
     def testAddIcons_06(self):
         files = ['new.png']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -646,6 +659,30 @@ class IconsCollectionTest(BaseWxTestCase):
         newCoverPath = os.path.join(self.tempDir1,
                                     groupname,
                                     IconsCollection.COVER_FILE_NAME)
+
+        collection.setCover(groupname, coverpath)
+        self.assertTrue(os.path.exists(newCoverPath))
+        self.assertEqual(
+            os.path.abspath(newCoverPath),
+            os.path.abspath(collection.getCover(groupname))
+        )
+
+    def testAddCover_06_group_svg(self):
+        files = ['new.png', '8x8.png', 'image1.svg']
+        fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
+
+        groupname = 'Новая группа'
+
+        os.mkdir(self.tempDir1)
+        collection = IconsCollection(self.tempDir1)
+        collection.addGroup(groupname)
+        collection.addIcons(groupname, fullPaths)
+
+        coverpath = os.path.join(self.imagesDir, 'image1.svg')
+
+        newCoverPath = os.path.join(self.tempDir1,
+                                    groupname,
+                                    IconsCollection.COVER_FILE_NAME_SVG)
 
         collection.setCover(groupname, coverpath)
         self.assertTrue(os.path.exists(newCoverPath))
