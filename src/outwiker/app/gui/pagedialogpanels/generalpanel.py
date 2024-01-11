@@ -588,7 +588,7 @@ class IconsController(BasePageDialogController):
         newh = ICON_HEIGHT
 
         wx.Log.EnableLogging(False)
-        image = wx.Image(fname)
+        image = readImage(fname, ICONS_WIDTH, ICONS_HEIGHT).ConvertToImage()
         wx.Log.EnableLogging(True)
 
         if not image.IsOk():
