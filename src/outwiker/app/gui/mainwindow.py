@@ -346,7 +346,7 @@ class MainWindow(wx.Frame):
         actionController.appendMenuItem(HistoryBackAction.stringId, menu)
 
         actionController.appendToolbarButton(
-            HistoryBackAction.stringId, toolbar, getBuiltinImagePath("back.png"), True
+            HistoryBackAction.stringId, toolbar, getBuiltinImagePath("back.svg"), True
         )
 
         actionController.enableTools(HistoryBackAction.stringId, False)
@@ -356,7 +356,7 @@ class MainWindow(wx.Frame):
         actionController.appendToolbarButton(
             HistoryForwardAction.stringId,
             toolbar,
-            getBuiltinImagePath("forward.png"),
+            getBuiltinImagePath("forward.svg"),
             True,
         )
 
