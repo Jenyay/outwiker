@@ -32,7 +32,7 @@ class BaseFileIcons(metaclass=ABCMeta):
         from outwiker.core.system import getBuiltinImagePath
 
         self._imageList.Add(
-                readImage(getBuiltinImagePath("file_icon_default.png"), ICONS_WIDTH, ICONS_HEIGHT))
+                readImage(getBuiltinImagePath("file_icon_default.svg"), ICONS_WIDTH, ICONS_HEIGHT))
 
         self._imageList.Add(
             readImage(getBuiltinImagePath("folder.svg"), ICONS_WIDTH, ICONS_HEIGHT))
