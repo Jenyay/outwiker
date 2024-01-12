@@ -59,21 +59,21 @@ class IconsetPanel(BasePrefPanel):
 
         # Add a group
         self.addGroupBtn = wx.BitmapButton(
-            self, bitmap=readImage(getBuiltinImagePath("add.png"), ICONS_WIDTH, ICONS_HEIGHT)
+            self, bitmap=readImage(getBuiltinImagePath("add.svg"), ICONS_WIDTH, ICONS_HEIGHT)
         )
         self.addGroupBtn.SetToolTip(_("Add new group"))
         self.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self.__onAddGroup)
 
         # Remove a group
         self.removeGroupBtn = wx.BitmapButton(
-            self, bitmap=readImage(getBuiltinImagePath("remove.png"), ICONS_WIDTH, ICONS_HEIGHT)
+            self, bitmap=readImage(getBuiltinImagePath("remove.svg"), ICONS_WIDTH, ICONS_HEIGHT)
         )
         self.removeGroupBtn.SetToolTip(_("Remove group"))
         self.removeGroupBtn.Bind(wx.EVT_BUTTON, handler=self.__onRemoveGroup)
 
         # Rename a group
         self.renameGroupBtn = wx.BitmapButton(
-            self, bitmap=readImage(getBuiltinImagePath("pencil.png"), ICONS_WIDTH, ICONS_HEIGHT)
+            self, bitmap=readImage(getBuiltinImagePath("pencil.svg"), ICONS_WIDTH, ICONS_HEIGHT)
         )
         self.renameGroupBtn.SetToolTip(_("Rename group"))
         self.renameGroupBtn.Bind(wx.EVT_BUTTON, handler=self.__onRenameGroup)
@@ -99,14 +99,14 @@ class IconsetPanel(BasePrefPanel):
 
         # Add icons
         self.addIconsBtn = wx.BitmapButton(
-            self, bitmap=readImage(getBuiltinImagePath("add.png"), ICONS_WIDTH, ICONS_HEIGHT)
+            self, bitmap=readImage(getBuiltinImagePath("add.svg"), ICONS_WIDTH, ICONS_HEIGHT)
         )
         self.addIconsBtn.SetToolTip(_("Add icons"))
         self.addIconsBtn.Bind(wx.EVT_BUTTON, handler=self.__onAddIcons)
 
         # Remove icons
         self.removeIconsBtn = wx.BitmapButton(
-            self, bitmap=readImage(getBuiltinImagePath("remove.png"), ICONS_WIDTH, ICONS_HEIGHT)
+            self, bitmap=readImage(getBuiltinImagePath("remove.svg"), ICONS_WIDTH, ICONS_HEIGHT)
         )
         self.removeIconsBtn.SetToolTip(_("Remove selected icons"))
         self.removeIconsBtn.Bind(wx.EVT_BUTTON, handler=self.__onRemoveIcons)
