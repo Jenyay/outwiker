@@ -7,7 +7,7 @@
    viewBox="0 0 10 10"
    version="1.1"
    id="svg1"
-   sodipodi:docname="battery-010.svg"
+   sodipodi:docname="battery-025.svg"
    inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -24,27 +24,16 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="34.026202"
-     inkscape:cx="17.339579"
-     inkscape:cy="31.416965"
+     inkscape:zoom="8.5065504"
+     inkscape:cx="48.315707"
+     inkscape:cy="14.812115"
      inkscape:window-width="1920"
      inkscape:window-height="1088"
      inkscape:window-x="0"
      inkscape:window-y="40"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
-     showguides="true">
-    <sodipodi:guide
-       position="5,8.4624722"
-       orientation="1,0"
-       id="guide1"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="3.9588268,4.3476748"
-       orientation="1,0"
-       id="guide3"
-       inkscape:locked="false" />
-  </sodipodi:namedview>
+     showguides="true" />
   <defs
      id="defs1">
     <linearGradient
@@ -55,7 +44,7 @@
          offset="0"
          id="stop5" />
       <stop
-         style="stop-color:#febaba;stop-opacity:1;"
+         style="stop-color:#fecbcb;stop-opacity:1;"
          offset="0.28434727"
          id="stop7" />
       <stop
@@ -96,8 +85,7 @@
        y1="8.6200738"
        x2="7.4140038"
        y2="8.6200738"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1,0,0,0.5,1.390775e-7,4.8143205)" />
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
      inkscape:label="Слой 1"
@@ -118,11 +106,11 @@
        x="3.8892579"
        y="0.5455088" />
     <rect
-       style="fill:url(#linearGradient6);stroke:none;stroke-width:0.133737;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:url(#linearGradient6);stroke:none;stroke-width:0.189133;stroke-linecap:round;stroke-linejoin:round"
        id="rect3"
        width="4.8280077"
-       height="1"
-       x="2.5859964"
-       y="8.6243572" />
+       height="2"
+       x="2.5859962"
+       y="7.6200738" />
   </g>
 </svg>

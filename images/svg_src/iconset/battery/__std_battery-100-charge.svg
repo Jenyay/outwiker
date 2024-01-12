@@ -7,7 +7,7 @@
    viewBox="0 0 10 10"
    version="1.1"
    id="svg1"
-   sodipodi:docname="battery-025.svg"
+   sodipodi:docname="battery-100-charge.svg"
    inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -24,58 +24,31 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="8.5065504"
-     inkscape:cx="48.315707"
-     inkscape:cy="14.812115"
+     inkscape:zoom="12.030079"
+     inkscape:cx="18.703119"
+     inkscape:cy="21.861868"
      inkscape:window-width="1920"
      inkscape:window-height="1088"
      inkscape:window-x="0"
      inkscape:window-y="40"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
-     showguides="true">
-    <sodipodi:guide
-       position="5,8.4624722"
-       orientation="1,0"
-       id="guide1"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="3.9588268,4.3476748"
-       orientation="1,0"
-       id="guide3"
-       inkscape:locked="false" />
-  </sodipodi:namedview>
+     showguides="true" />
   <defs
      id="defs1">
-    <linearGradient
-       id="linearGradient4"
-       inkscape:collect="always">
-      <stop
-         style="stop-color:#fe7b02;stop-opacity:1;"
-         offset="0"
-         id="stop5" />
-      <stop
-         style="stop-color:#fedbba;stop-opacity:1;"
-         offset="0.28434727"
-         id="stop7" />
-      <stop
-         style="stop-color:#fe7b02;stop-opacity:1;"
-         offset="1"
-         id="stop6" />
-    </linearGradient>
     <linearGradient
        id="linearGradient2"
        inkscape:collect="always">
       <stop
-         style="stop-color:#cccccc;stop-opacity:1;"
+         style="stop-color:#2df021;stop-opacity:1;"
          offset="0"
          id="stop2" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
+         style="stop-color:#e4fde3;stop-opacity:1;"
          offset="0.31404659"
          id="stop4" />
       <stop
-         style="stop-color:#cccccc;stop-opacity:1;"
+         style="stop-color:#2df021;stop-opacity:1;"
          offset="1"
          id="stop3" />
     </linearGradient>
@@ -87,15 +60,6 @@
        y1="5.6789231"
        x2="7.7572118"
        y2="5.6789231"
-       gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4"
-       id="linearGradient6"
-       x1="2.5859962"
-       y1="8.6200738"
-       x2="7.4140038"
-       y2="8.6200738"
        gradientUnits="userSpaceOnUse" />
   </defs>
   <g
@@ -116,12 +80,10 @@
        height="0.97130251"
        x="3.8892579"
        y="0.5455088" />
-    <rect
-       style="fill:url(#linearGradient6);stroke:none;stroke-width:0.189133;stroke-linecap:round;stroke-linejoin:round"
-       id="rect3"
-       width="4.8280077"
-       height="2"
-       x="2.5859962"
-       y="7.6200738" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.0947136;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 4.9591278,2.6520773 h 1.356966 l -1.669169,2.4300471 1.863205,-0.091962 -2.726223,3.7350437 1.280089,-3.3771511 -1.590745,-0.00527 z"
+       id="path1"
+       sodipodi:nodetypes="cccccccc" />
   </g>
 </svg>
