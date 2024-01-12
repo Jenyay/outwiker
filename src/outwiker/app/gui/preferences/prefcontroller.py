@@ -192,7 +192,7 @@ class PrefController:
         self._dialog.treeBook.AddPage(
             iconsetPage,
             _("User's iconset"),
-            icon_fname=getBuiltinImagePath("picture.png"),
+            icon_fname=getBuiltinImagePath("picture.svg"),
         )
 
     def _setDialogPreperties(self):

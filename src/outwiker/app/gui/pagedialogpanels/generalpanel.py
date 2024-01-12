@@ -394,7 +394,7 @@ class IconsController(BasePageDialogController):
         self._generalPanel = generalPanel
         self._groupsMaxWidth = 200
         self._page = None
-        self._default_group_cover = getBuiltinImagePath("icons_cover_default.png")
+        self._default_group_cover = getBuiltinImagePath("icons_cover_default.svg")
         self._default_icon_filename = os.path.abspath(
             os.path.join(getIconsDirList()[0], ICON_DEFAULT)
         )

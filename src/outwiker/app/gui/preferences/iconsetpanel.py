@@ -20,7 +20,7 @@ class IconsetPanel(BasePrefPanel):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self._default_group_cover = getBuiltinImagePath("icons_cover_default.png")
+        self._default_group_cover = getBuiltinImagePath("icons_cover_default.svg")
 
         self.__createGuiElements()
 
@@ -113,7 +113,7 @@ class IconsetPanel(BasePrefPanel):
 
         # Set icon as group cover
         self.setCoverBtn = wx.BitmapButton(
-            self, bitmap=readImage(getBuiltinImagePath("picture.png"), ICONS_WIDTH, ICONS_HEIGHT)
+            self, bitmap=readImage(getBuiltinImagePath("folder_picture.svg"), ICONS_WIDTH, ICONS_HEIGHT)
         )
         self.setCoverBtn.SetToolTip(_("Set icon as group cover"))
         self.setCoverBtn.Bind(wx.EVT_BUTTON, handler=self.__onSetCover)

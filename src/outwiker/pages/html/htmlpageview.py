@@ -623,7 +623,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             IMAGE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "image.png"),
+            os.path.join(self.imagesDir, "picture.svg"),
             fullUpdate=False,
         )
 
