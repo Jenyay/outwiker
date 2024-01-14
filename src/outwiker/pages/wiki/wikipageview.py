@@ -655,7 +655,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             ANCHOR_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "anchor.png"),
+            os.path.join(self.imagesDir, "anchor.svg"),
             fullUpdate=False,
         )
 
