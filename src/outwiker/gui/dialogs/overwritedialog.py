@@ -7,6 +7,8 @@ from datetime import datetime
 import wx
 
 from outwiker.core.system import getImagesDir
+from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
+from outwiker.gui.images import readImage
 from outwiker.gui.testeddialog import TestedDialog
 
 
@@ -56,8 +58,7 @@ class OverwriteDialog(TestedDialog):
                                        label="File name",
                                        style=wx.ALIGN_CENTRE)
         self.textLabel.SetFont(fname_font)
-        arrowBmp = wx.Image(os.path.join(
-            getImagesDir(), 'arrow_right.png')).ConvertToBitmap()
+        arrowBmp = readImage(os.path.join(getImagesDir(), 'arrow_right.svg'), ICONS_WIDTH, ICONS_HEIGHT)
         self._arrow = wx.StaticBitmap(self, bitmap=arrowBmp)
 
     def _do_layout(self):
