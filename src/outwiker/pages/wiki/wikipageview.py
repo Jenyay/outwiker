@@ -681,7 +681,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             LINE_BREAK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "linebreak.png"),
+            os.path.join(self.imagesDir, "linebreak.svg"),
             fullUpdate=False,
         )
 
