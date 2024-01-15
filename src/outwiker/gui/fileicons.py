@@ -38,7 +38,7 @@ class BaseFileIcons(metaclass=ABCMeta):
             readImage(getBuiltinImagePath("folder.svg"), ICONS_WIDTH, ICONS_HEIGHT))
 
         self._imageList.Add(
-            readImage(getBuiltinImagePath("arrow_go_to_parent.png"), ICONS_WIDTH, ICONS_HEIGHT))
+            readImage(getBuiltinImagePath("arrow_go_to_parent.svg"), ICONS_WIDTH, ICONS_HEIGHT))
 
     def getFileImage(self, filepath):
         if self.imageListCount == 0:
