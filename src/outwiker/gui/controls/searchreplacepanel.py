@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import wx
+
 from outwiker.core.system import getBuiltinImagePath
+from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
+from outwiker.gui.images import readImage
 
 
 class SearchReplacePanel(wx.Panel):
@@ -103,8 +106,7 @@ class SearchReplacePanel(wx.Panel):
         self._closeBtn = wx.BitmapButton(
             self,
             -1,
-            wx.Bitmap(getBuiltinImagePath("close-button.png"),
-                      wx.BITMAP_TYPE_ANY))
+            readImage(getBuiltinImagePath("close.svg"), ICONS_WIDTH, ICONS_WIDTH))
 
         self._layout()
 
