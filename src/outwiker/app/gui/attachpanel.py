@@ -228,7 +228,7 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             RenameAttachActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("attach_rename.png")
+            getBuiltinImagePath("rename.svg")
         )
 
         # Select all files
