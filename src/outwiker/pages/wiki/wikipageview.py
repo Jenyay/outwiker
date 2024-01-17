@@ -668,7 +668,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             HORLINE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_horizontalrule.png"),
+            os.path.join(self.imagesDir, "text_horline.svg"),
             fullUpdate=False,
         )
 
