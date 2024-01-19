@@ -576,7 +576,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             QUOTE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "quote.png"),
+            os.path.join(self.imagesDir, "quote.svg"),
             fullUpdate=False,
         )
 
@@ -602,7 +602,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             CODE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "code.png"),
+            os.path.join(self.imagesDir, "code.svg"),
             fullUpdate=False,
         )
 

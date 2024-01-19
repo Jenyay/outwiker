@@ -583,7 +583,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             QUOTE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "quote.png"),
+            os.path.join(self.imagesDir, "quote.svg"),
             fullUpdate=False,
         )
 
@@ -609,7 +609,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             CODE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "code.png"),
+            os.path.join(self.imagesDir, "code.svg"),
             fullUpdate=False,
         )
 
