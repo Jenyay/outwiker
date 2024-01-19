@@ -589,7 +589,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             MARK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "mark.png"),
+            os.path.join(self.imagesDir, "mark.svg"),
             fullUpdate=False,
         )
 
