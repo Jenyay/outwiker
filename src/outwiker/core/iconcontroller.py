@@ -9,6 +9,7 @@ from typing import Union
 from outwiker.core.defines import ICONS_EXTENSIONS, ICONS_STD_PREFIX, PAGE_ICON_NAME
 from outwiker.core.events import PAGE_UPDATE_ICON
 from outwiker.core.exceptions import ReadonlyException
+from outwiker.core.images import convert_name_to_svg
 
 
 class IconController:
@@ -124,9 +125,6 @@ class IconController:
     def get_icon(self, page) -> Union[str, None]:
         """
         Return path to a page icon or None if icon is not installed.
-        The existence of a built-in icons is not checked.
-
-        Added in outwiker.core 1.5
         """
         assert page is not None
 
@@ -141,7 +139,14 @@ class IconController:
         if icon_from_config:
             icon_from_config = icon_from_config.replace("\\", os.sep)
             icon_from_config = icon_from_config.replace("/", os.sep)
-            return os.path.join(self._builtin_icons_path, icon_from_config)
+            icon_path_src = os.path.join(self._builtin_icons_path, icon_from_config)
+
+            # Return vector icon instead of bitmap icon if exists
+            icon_path_svg = convert_name_to_svg(icon_path_src)
+            if icon_path_src != icon_path_svg and os.path.exists(icon_path_svg):
+                return icon_path_svg
+
+            return icon_path_src
 
         return None
 

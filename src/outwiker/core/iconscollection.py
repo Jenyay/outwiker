@@ -6,7 +6,7 @@ import shutil
 import logging
 
 from outwiker.core.iconmaker import IconMaker
-from outwiker.core.images import isImage, isSVG
+from outwiker.core.images import convert_name_to_svg, isImage, isSVG
 
 logger = logging.getLogger("outwiker.core.iconscollection")
 
@@ -97,7 +97,10 @@ class IconsCollection:
                 and fname != self.COVER_FILE_NAME
                 and fname != self.COVER_FILE_NAME_SVG
             ):
-                result.append(fullpath)
+                fullpath_svg = convert_name_to_svg(fullpath)
+                # Skip bitmap icon if vector icon with same name exists
+                if not os.path.exists(fullpath_svg) or fullpath == fullpath_svg: 
+                    result.append(fullpath)
 
         return result
 
