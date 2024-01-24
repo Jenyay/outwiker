@@ -570,7 +570,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             COMMENT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "comment.png"),
+            os.path.join(self.imagesDir, "comment.svg"),
             fullUpdate=False,
         )
 
