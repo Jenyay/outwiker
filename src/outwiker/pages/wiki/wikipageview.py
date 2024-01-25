@@ -8,6 +8,7 @@ from io import StringIO
 from outwiker.actions.polyactionsid import *
 from outwiker.app.services.texteditor import insertCurrentDate
 from outwiker.core.standardcolors import StandardColors
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.defines import RECENT_COLORS_COUNT
 from outwiker.utilites.collections import update_recent
@@ -570,7 +571,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             COMMENT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "comment.svg"),
+            getBuiltinImagePath("comment.svg"),
             fullUpdate=False,
         )
 

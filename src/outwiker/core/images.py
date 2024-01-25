@@ -1,3 +1,4 @@
+import os.path
 from pathlib import Path
 from typing import Union
 
@@ -28,4 +29,11 @@ def convert_name_to_svg(fname: str) -> str:
     if fname.endswith(suffix_old):
         return fname[: -len(suffix_old)] + suffix_new
 
+    return fname
+
+def find_svg(fname: str) -> str:
+    fname_svg = convert_name_to_svg(fname)
+    if os.path.exists(fname_svg):
+        return fname_svg
+    
     return fname

@@ -17,6 +17,8 @@ from uuid import UUID
 
 import wx
 
+from outwiker.core.images import find_svg
+
 from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
 from .spellchecker.cyhunspellwrapper import CyHunspellWrapper
 
@@ -316,7 +318,8 @@ def getBuiltinImagePath(*relative_image_name: str) -> str:
     '''
     Return absolute path to image file from "images" directory
     '''
-    return os.path.abspath(os.path.join(getImagesDir(), *relative_image_name))
+    path = os.path.abspath(os.path.join(getImagesDir(), *relative_image_name))
+    return find_svg(path)
 
 
 def getTemplatesDir() -> str:

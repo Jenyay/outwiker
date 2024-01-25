@@ -8,6 +8,7 @@ import wx
 from outwiker.actions.polyactionsid import *
 from outwiker.app.services.texteditor import insertCurrentDate
 from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW, PAGE_ATTACH_DIR
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
@@ -563,7 +564,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             COMMENT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "comment.svg"),
+            getBuiltinImagePath("comment.svg"),
             fullUpdate=False,
         )
 
