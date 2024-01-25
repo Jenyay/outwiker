@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="text_bold.svg"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="8.5065504"
+     inkscape:cx="12.108316"
+     inkscape:cy="25.744866"
+     inkscape:window-width="1920"
+     inkscape:window-height="1088"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="font-weight:bold;font-size:10.5833px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#565656;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+       d="m 6.2531495,4.7881275 q 0.9973519,0.2325432 1.4004269,0.5632713 0.5787742,0.4702541 0.5787742,1.2195599 0,0.7906469 -0.6356181,1.3074096 Q 6.8164208,8.5036512 5.3281443,8.5036512 H 1.7676494 V 8.312449 q 0.485757,0 0.6562886,-0.08785 Q 2.5996373,8.131582 2.6668165,7.9868882 2.7391635,7.8421946 2.7391635,7.2737557 V 2.7262441 q 0,-0.5684389 -0.072347,-0.7131325 Q 2.5996375,1.8632504 2.423938,1.7754008 2.2482387,1.6875508 1.7676494,1.6875508 v -0.191202 h 3.3589574 q 1.2040571,0 1.7053169,0.217041 0.5012598,0.2118723 0.7906469,0.6407853 0.2893871,0.4237454 0.2893871,0.9043347 0,0.5064274 -0.3669015,0.9043347 -0.3669015,0.3927396 -1.2919067,0.625283 z M 4.3721333,4.6486016 q 0.733803,0 1.080034,-0.1653641 0.3513986,-0.165364 0.5374332,-0.4650864 0.1860346,-0.2997223 0.1860346,-0.7648088 0,-0.4650864 -0.1860346,-0.7596411 Q 5.8087336,2.1939789 5.4676702,2.0389501 5.1266068,1.8839213 4.3721333,1.8890889 Z m 0,0.4030749 v 2.2479176 l -0.00517,0.2583814 q 0,0.2790518 0.1395259,0.4237453 0.1446936,0.139526 0.4237454,0.139526 0.4134102,0 0.7596412,-0.180867 0.3513986,-0.1860345 0.5374331,-0.5322655 0.1860346,-0.3513986 0.1860346,-0.7803117 0,-0.4909245 -0.2273756,-0.8784965 Q 5.9585924,5.3565664 5.5606851,5.2015376 5.1627778,5.0465088 4.3721309,5.0516765 Z"
+       id="text1"
+       aria-label="B" />
+  </g>
+</svg>

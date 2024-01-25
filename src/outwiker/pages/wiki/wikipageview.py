@@ -234,7 +234,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             BOLD_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold.png"),
+            getBuiltinImagePath("text_bold.svg"),
             fullUpdate=False,
         )
 
@@ -247,7 +247,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_italic.png"),
+            getBuiltinImagePath("text_italic.svg"),
             fullUpdate=False,
         )
 
@@ -260,7 +260,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             BOLD_ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold_italic.png"),
+            getBuiltinImagePath("text_bold_italic.svg"),
             fullUpdate=False,
         )
 
@@ -273,7 +273,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             UNDERLINE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_underline.png"),
+            getBuiltinImagePath("text_underline.svg"),
             fullUpdate=False,
         )
 
