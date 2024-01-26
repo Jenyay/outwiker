@@ -105,7 +105,7 @@ parts:
       - libcanberra-gtk3-module
     override-build: |
       pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-22.04 wxPython==4.2.1
-      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib Pillow==10.1.0 idna==2.10 pyparsing==3.0.9 rcssmin==1.1.1 wheel setuptools
+      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib Pillow==10.2.0 idna==2.10 pyparsing==3.0.9 rcssmin==1.1.1 wheel setuptools
       cd $SNAPCRAFT_PART_SRC/depends/cacheman
       python3 setup.py bdist
       python3 setup.py bdist_wheel
