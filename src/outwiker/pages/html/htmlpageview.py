@@ -294,7 +294,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             STRIKE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_strikethrough.png"),
+            getBuiltinImagePath("text_strikethrough.svg"),
             fullUpdate=False,
         )
 
@@ -307,7 +307,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             SUBSCRIPT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_subscript.png"),
+            getBuiltinImagePath("text_subscript.svg"),
             fullUpdate=False,
         )
 
@@ -320,7 +320,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             SUPERSCRIPT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_superscript.png"),
+            getBuiltinImagePath("text_superscript.svg"),
             fullUpdate=False,
         )
 
@@ -501,7 +501,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_1_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_1.png"),
+            getBuiltinImagePath("text_heading_1.svg"),
             fullUpdate=False,
         )
 
@@ -509,7 +509,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_2_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_2.png"),
+            getBuiltinImagePath("text_heading_2.svg"),
             fullUpdate=False,
         )
 
@@ -517,7 +517,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_3_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_3.png"),
+            getBuiltinImagePath("text_heading_3.svg"),
             fullUpdate=False,
         )
 
@@ -525,7 +525,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_4_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_4.png"),
+            getBuiltinImagePath("text_heading_4.svg"),
             fullUpdate=False,
         )
 
@@ -533,7 +533,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_5_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_5.png"),
+            getBuiltinImagePath("text_heading_5.svg"),
             fullUpdate=False,
         )
 
@@ -541,7 +541,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_6_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_6.png"),
+            getBuiltinImagePath("text_heading_6.svg"),
             fullUpdate=False,
         )
 
