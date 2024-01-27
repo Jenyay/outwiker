@@ -1,17 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.3.0.933" status="dev">
+    <version number="3.3.0.934" status="beta" date="2024-01-27">
         <changes>
+			<change>Use new vector icons for buttons.</change>
+			<change>Added the ability to use vector icons for pages.</change>
+			<change>New preferences dialog.</change>
         </changes>
 
         <changes lang="ru">
+			<change>Новые векторные значки в интерфейсе.</change>
+			<change>Добавлена возможность использования векторных значков для страниц.</change>
+			<change>Новый диалог настроек.</change>
         </changes>
     </version>
 
     <version number="3.3.0.932" status="beta" date="2023-12-24">
 		<changes>
 			<change>On tags cloud panel add a button to show applied tags only.</change>
-			<change>Add context menu for tags cloud.</change>
+			<change>Added context menu for tags cloud.</change>
 			<change>Updated the German localization.</change>
 		</changes>
 
