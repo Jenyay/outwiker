@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="3.3.0.935" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="3.3.0.934" status="beta" date="2024-01-27">
         <changes>
 			<change>Use new vector icons for buttons.</change>
