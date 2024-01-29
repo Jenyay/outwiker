@@ -630,7 +630,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             WikiThumbAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "images.png"),
+            getBuiltinImagePath("thumb.svg"),
             fullUpdate=False,
         )
 
