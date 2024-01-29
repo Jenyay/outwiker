@@ -634,16 +634,16 @@ class WikiPageView(BaseWikiPageView):
             fullUpdate=False,
         )
 
-        # Вставка ссылок
-        actionController.getAction(LINK_STR_ID).setFunc(
-            lambda param: insertLink(self._application)
+        # Текущая дата
+        actionController.getAction(CURRENT_DATE).setFunc(
+            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
         )
 
-        actionController.appendMenuItem(LINK_STR_ID, menu)
+        actionController.appendMenuItem(CURRENT_DATE, menu)
         actionController.appendToolbarButton(
-            LINK_STR_ID,
+            CURRENT_DATE,
             toolbar,
-            os.path.join(self.imagesDir, "link.png"),
+            getBuiltinImagePath("date.svg"),
             fullUpdate=False,
         )
 
@@ -660,6 +660,19 @@ class WikiPageView(BaseWikiPageView):
             fullUpdate=False,
         )
 
+        # Вставка ссылок
+        actionController.getAction(LINK_STR_ID).setFunc(
+            lambda param: insertLink(self._application)
+        )
+
+        actionController.appendMenuItem(LINK_STR_ID, menu)
+        actionController.appendToolbarButton(
+            LINK_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "link.png"),
+            fullUpdate=False,
+        )
+        
         # Вставка горизонтальной линии
         actionController.getAction(HORLINE_STR_ID).setFunc(
             lambda param: self.replaceText("----")
@@ -683,19 +696,6 @@ class WikiPageView(BaseWikiPageView):
             LINE_BREAK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "linebreak.svg"),
-            fullUpdate=False,
-        )
-
-        # Текущая дата
-        actionController.getAction(CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
-        )
-
-        actionController.appendMenuItem(CURRENT_DATE, menu)
-        actionController.appendToolbarButton(
-            CURRENT_DATE,
-            toolbar,
-            os.path.join(self.imagesDir, "date.png"),
             fullUpdate=False,
         )
 

@@ -627,6 +627,32 @@ class HtmlPageView(BaseHtmlPanel):
             os.path.join(self.imagesDir, "picture.svg"),
             fullUpdate=False,
         )
+        
+        # Текущая дата
+        actionController.getAction(CURRENT_DATE).setFunc(
+            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
+        )
+
+        actionController.appendMenuItem(CURRENT_DATE, menu)
+        actionController.appendToolbarButton(
+            CURRENT_DATE,
+            toolbar,
+            getBuiltinImagePath("date.svg"),
+            fullUpdate=False,
+        )
+        
+        # Вставить якорь
+        actionController.getAction(ANCHOR_STR_ID).setFunc(
+            lambda param: self.turnText('<a name="', '"></a>')
+        )
+
+        actionController.appendMenuItem(ANCHOR_STR_ID, menu)
+        actionController.appendToolbarButton(
+            ANCHOR_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "anchor.svg"),
+            fullUpdate=False,
+        )
 
         # Вставить ссылку
         actionController.getAction(LINK_STR_ID).setFunc(
@@ -638,19 +664,6 @@ class HtmlPageView(BaseHtmlPanel):
             LINK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "link.png"),
-            fullUpdate=False,
-        )
-
-        # Вставить якорь
-        actionController.getAction(ANCHOR_STR_ID).setFunc(
-            lambda param: self.turnText('<a name="', '"></a>')
-        )
-
-        actionController.appendMenuItem(ANCHOR_STR_ID, menu)
-        actionController.appendToolbarButton(
-            ANCHOR_STR_ID,
-            toolbar,
-            os.path.join(self.imagesDir, "anchor.svg"),
             fullUpdate=False,
         )
 
@@ -677,19 +690,6 @@ class HtmlPageView(BaseHtmlPanel):
             LINE_BREAK_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "linebreak.svg"),
-            fullUpdate=False,
-        )
-
-        # Текущая дата
-        actionController.getAction(CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
-        )
-
-        actionController.appendMenuItem(CURRENT_DATE, menu)
-        actionController.appendToolbarButton(
-            CURRENT_DATE,
-            toolbar,
-            os.path.join(self.imagesDir, "date.png"),
             fullUpdate=False,
         )
 
