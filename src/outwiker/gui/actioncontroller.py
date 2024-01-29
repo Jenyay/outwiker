@@ -4,6 +4,7 @@ import logging
 from typing import List, Optional, Tuple, Dict
 
 import wx
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH
 
 from outwiker.gui.images import readImage
@@ -327,6 +328,9 @@ class ActionController:
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
         bitmap = readImage(image, self._image_width, self._image_height)
+        if not bitmap.IsOk():
+            logger.error("Invalid bitmap for %s", image)
+            bitmap = readImage(getBuiltinImagePath("cross.png"), self._image_width, self._image_height)
 
         if issubclass(type(toolbar), ToolBar2):
             toolbarItemId = toolbar.AddButton(title, bitmap, wx.ID_ANY)
