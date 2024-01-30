@@ -321,7 +321,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             WikiFontSizeBigAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "text_big.png"),
+            getBuiltinImagePath("text_big.svg"),
             fullUpdate=False,
         )
 
@@ -330,7 +330,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             WikiFontSizeSmallAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "text_small.png"),
+            getBuiltinImagePath("text_small.svg"),
             fullUpdate=False,
         )
 
@@ -340,7 +340,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             TEXT_COLOR_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_color.png"),
+            getBuiltinImagePath("text_color.svg"),
             fullUpdate=False,
         )
 
