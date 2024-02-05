@@ -522,7 +522,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             LIST_BULLETS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_bullets.png"),
+            getBuiltinImagePath("text_list_bullets.svg"),
             fullUpdate=False,
         )
 
@@ -535,7 +535,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             LIST_NUMBERS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_numbers.png"),
+            getBuiltinImagePath("text_list_numbers.svg"),
             fullUpdate=False,
         )
 

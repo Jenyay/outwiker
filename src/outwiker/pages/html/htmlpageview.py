@@ -446,7 +446,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             LIST_BULLETS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_bullets.png"),
+            getBuiltinImagePath("text_list_bullets.svg"),
             fullUpdate=False,
         )
 
@@ -461,7 +461,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             LIST_NUMBERS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_numbers.png"),
+            getBuiltinImagePath("text_list_numbers.svg"),
             fullUpdate=False,
         )
 
