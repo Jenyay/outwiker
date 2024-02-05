@@ -382,7 +382,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             ALIGN_LEFT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_left.png"),
+            getBuiltinImagePath("text_align_left.svg"),
             fullUpdate=False,
         )
 
@@ -395,7 +395,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             ALIGN_CENTER_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_center.png"),
+            getBuiltinImagePath("text_align_center.svg"),
             fullUpdate=False,
         )
 
@@ -408,7 +408,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             ALIGN_RIGHT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_right.png"),
+            getBuiltinImagePath("text_align_right.svg"),
             fullUpdate=False,
         )
 
@@ -421,7 +421,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             ALIGN_JUSTIFY_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_justify.png"),
+            getBuiltinImagePath("text_align_justify.svg"),
             fullUpdate=False,
         )
 
