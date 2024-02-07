@@ -25,7 +25,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="6.0150395"
-     inkscape:cx="67.331228"
+     inkscape:cx="67.331229"
      inkscape:cy="-3.4912489"
      inkscape:window-width="1920"
      inkscape:window-height="1088"
@@ -253,5 +253,16 @@
        style="fill:#4a9500;stroke-width:0.645795;paint-order:fill markers stroke"
        d="m 30.24822,-12.543128 c 0.237445,-0.220697 0.618065,-0.254818 0.942524,0 0.67919,0.533412 1.397433,2.199888 0.785157,2.7385915 -0.594213,0.5228104 -1.947236,0.5052234 -2.502792,2e-7 -0.588763,-0.5354207 0.201221,-2.2051797 0.775111,-2.7385917 z"
        sodipodi:nodetypes="sssss" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.5833px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#565656;fill-opacity:1;stroke-width:0.264583"
+       x="33.362766"
+       y="5.4793177"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="fill:#565656;fill-opacity:1;stroke-width:0.264583"
+         x="33.362766"
+         y="5.4793177">A</tspan></text>
   </g>
 </svg>

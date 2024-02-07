@@ -352,7 +352,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             TEXT_BACKGROUND_COLOR_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_color_background.png"),
+            getBuiltinImagePath("text_color_background.svg"),
             fullUpdate=False,
         )
 
