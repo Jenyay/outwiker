@@ -361,7 +361,7 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             WikiStyleOnlyAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "text_style.png"),
+            getBuiltinImagePath("text_style.svg"),
             fullUpdate=False,
         )
 
