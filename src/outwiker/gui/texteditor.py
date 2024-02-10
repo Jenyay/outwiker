@@ -273,7 +273,7 @@ class TextEditor(TextEditorBase):
         point = self.textCtrl.ScreenToClient(event.GetPosition())
         pos_byte = self.textCtrl.PositionFromPoint(point)
 
-        popupMenu = TextEditorMenu()
+        popupMenu = TextEditorMenu(Application)
         self._appendSpellMenuItems(popupMenu, pos_byte)
 
         Application.onEditorPopupMenu(

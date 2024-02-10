@@ -462,6 +462,11 @@ class BaseTextPanel(BasePagePanel):
         self._menuSeparators.append((editMenu, editMenu.InsertSeparator(2)))
 
         # Clipboard
+        # Cut
+        self._application.actionController.getAction(CLIPBOARD_CUT_ID).setFunc(
+            lambda params: self.GetEditor().Cut()
+        )
+        self._application.actionController.insertMenuItem(CLIPBOARD_CUT_ID, editMenu, 4)
 
         # Copy
         self._application.actionController.getAction(CLIPBOARD_COPY_ID).setFunc(
@@ -470,12 +475,6 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.insertMenuItem(
             CLIPBOARD_COPY_ID, editMenu, 3
         )
-
-        # Cut
-        self._application.actionController.getAction(CLIPBOARD_CUT_ID).setFunc(
-            lambda params: self.GetEditor().Cut()
-        )
-        self._application.actionController.insertMenuItem(CLIPBOARD_CUT_ID, editMenu, 4)
 
         # Paste
         self._application.actionController.getAction(CLIPBOARD_PASTE_ID).setFunc(
