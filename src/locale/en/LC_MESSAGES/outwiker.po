@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-10 21:32+0300\n"
+"POT-Creation-Date: 2024-02-10 21:35+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -121,7 +121,7 @@ msgid "Attach folder with files to current page"
 msgstr "Attach folder with files to current page"
 
 #: outwiker/app/actions/attachopenfolder.py:20
-#: outwiker/app/gui/pagepopupmenu.py:117
+#: outwiker/app/gui/pagepopupmenu.py:105
 msgid "Open Attachments Folder"
 msgstr "Open Attachments Folder"
 
@@ -172,6 +172,7 @@ msgid "Rename selected attached file. Action for attachments panel"
 msgstr "Rename selected attached file. Action for attachments panel"
 
 #: outwiker/app/actions/attachselectall.py:17
+#: outwiker/app/gui/actionslist.py:563 outwiker/gui/texteditormenu.py:59
 msgid "Select all"
 msgstr "Select all"
 
@@ -179,7 +180,7 @@ msgstr "Select all"
 msgid "Select all attachments. Action for the attachments panel"
 msgstr "Select all attachments. Action for the attachments panel"
 
-#: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:109
+#: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:98
 msgid "Copy Page Title"
 msgstr "Copy Page Title"
 
@@ -196,7 +197,7 @@ msgstr "Copied to clipboard"
 msgid "Page title has been copied to the clipboard"
 msgstr "Page title has been copied to the clipboard"
 
-#: outwiker/app/actions/clipboard.py:52 outwiker/app/gui/pagepopupmenu.py:111
+#: outwiker/app/actions/clipboard.py:52 outwiker/app/gui/pagepopupmenu.py:99
 msgid "Copy Page Path"
 msgstr "Copy Page Path"
 
@@ -208,7 +209,7 @@ msgstr "Copy path to current page to clipboard"
 msgid "Path to the page has been copied to the clipboard"
 msgstr "Path to the page has been copied to the clipboard"
 
-#: outwiker/app/actions/clipboard.py:82 outwiker/app/gui/pagepopupmenu.py:113
+#: outwiker/app/actions/clipboard.py:82 outwiker/app/gui/pagepopupmenu.py:101
 msgid "Copy Attachments Path"
 msgstr "Copy Attachments Path"
 
@@ -220,7 +221,7 @@ msgstr "Copy path to attachments for current page to clipboard"
 msgid "Path to the page attachments has been copied to the clipboard"
 msgstr "Path to the page attachments has been copied to the clipboard"
 
-#: outwiker/app/actions/clipboard.py:114 outwiker/app/gui/pagepopupmenu.py:115
+#: outwiker/app/actions/clipboard.py:114 outwiker/app/gui/pagepopupmenu.py:103
 msgid "Copy Page Link"
 msgstr "Copy Page Link"
 
@@ -441,7 +442,7 @@ msgstr "Save current note"
 
 #: outwiker/app/actions/search.py:29
 #: outwiker/app/gui/preferences/hotkeyspanel.py:86
-#: outwiker/gui/basetextpanel.py:314 outwiker/pages/search/searchpanel.py:274
+#: outwiker/gui/basetextpanel.py:318 outwiker/pages/search/searchpanel.py:274
 msgid "Search"
 msgstr "Search"
 
@@ -476,7 +477,7 @@ msgstr "Begin search and replace on page"
 #: outwiker/app/actions/showhideattaches.py:18
 #: outwiker/app/actions/switchto.py:63
 #: outwiker/app/gui/mainpanes/attachmainpane.py:40
-#: outwiker/app/gui/mainwindow.py:479
+#: outwiker/app/gui/mainwindow.py:460
 #: outwiker/app/gui/preferences/prefcontroller.py:138
 #: outwiker/app/gui/preferences/wikieditorpanel.py:37
 #: outwiker/gui/controls/filestreectrl.py:84
@@ -490,7 +491,7 @@ msgstr "Show / hide a attachments panel"
 
 #: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:86
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
-#: outwiker/app/gui/mainwindow.py:489
+#: outwiker/app/gui/mainwindow.py:472
 #: outwiker/gui/controls/pagelist_columns.py:226
 #: outwiker/pages/search/searchpanel.py:47
 msgid "Tags"
@@ -1010,6 +1011,44 @@ msgstr "Switch to preview tab"
 msgid "Switch to preview tab for some page types"
 msgstr "Switch to preview tab for some page types"
 
+#: outwiker/app/gui/actionslist.py:533 outwiker/app/gui/actionslist.py:534
+#: outwiker/gui/texteditormenu.py:25
+msgid "Undo"
+msgstr "Undo"
+
+#: outwiker/app/gui/actionslist.py:539 outwiker/app/gui/actionslist.py:540
+#: outwiker/gui/texteditormenu.py:31
+msgid "Redo"
+msgstr "Redo"
+
+#: outwiker/app/gui/actionslist.py:545 outwiker/gui/texteditormenu.py:45
+msgid "Copy"
+msgstr "Copy"
+
+#: outwiker/app/gui/actionslist.py:546
+msgid "Copy to clipboard"
+msgstr "Copy to clipboard"
+
+#: outwiker/app/gui/actionslist.py:551 outwiker/gui/texteditormenu.py:39
+msgid "Cut"
+msgstr "Cut"
+
+#: outwiker/app/gui/actionslist.py:552
+msgid "Cut to clipboard"
+msgstr "Cut to clipboard"
+
+#: outwiker/app/gui/actionslist.py:557 outwiker/gui/texteditormenu.py:51
+msgid "Paste"
+msgstr "Paste"
+
+#: outwiker/app/gui/actionslist.py:558
+msgid "Paste from clipboard"
+msgstr "Paste from clipboard"
+
+#: outwiker/app/gui/actionslist.py:564
+msgid "Select all text"
+msgstr "Select all text"
+
 #: outwiker/app/gui/attachpanel.py:400
 msgid "You did not select any file to remove"
 msgstr "You did not select any file to remove"
@@ -1241,7 +1280,7 @@ msgstr "Bookmarks"
 msgid "View"
 msgstr "View"
 
-#: outwiker/app/gui/mainwindow.py:142 outwiker/app/gui/mainwindow.py:404
+#: outwiker/app/gui/mainwindow.py:142 outwiker/app/gui/mainwindow.py:385
 msgid "Go to"
 msgstr "Go to"
 
@@ -1254,43 +1293,19 @@ msgstr "Toolbars"
 msgid "Plugins"
 msgstr "Plugins"
 
-#: outwiker/app/gui/mainwindow.py:274 outwiker/gui/texteditormenu.py:12
-msgid "Undo"
-msgstr "Undo"
-
-#: outwiker/app/gui/mainwindow.py:276 outwiker/gui/texteditormenu.py:13
-msgid "Redo"
-msgstr "Redo"
-
-#: outwiker/app/gui/mainwindow.py:280 outwiker/gui/texteditormenu.py:15
-msgid "Cut"
-msgstr "Cut"
-
-#: outwiker/app/gui/mainwindow.py:282 outwiker/gui/texteditormenu.py:16
-msgid "Copy"
-msgstr "Copy"
-
-#: outwiker/app/gui/mainwindow.py:284 outwiker/gui/texteditormenu.py:17
-msgid "Paste"
-msgstr "Paste"
-
-#: outwiker/app/gui/mainwindow.py:289 outwiker/gui/texteditormenu.py:19
-msgid "Select All"
-msgstr "Select All"
-
-#: outwiker/app/gui/mainwindow.py:392
+#: outwiker/app/gui/mainwindow.py:373
 msgid "Movement"
 msgstr "Movement"
 
-#: outwiker/app/gui/mainwindow.py:441
+#: outwiker/app/gui/mainwindow.py:422
 msgid "Tabs"
 msgstr "Tabs"
 
-#: outwiker/app/gui/mainwindow.py:453
+#: outwiker/app/gui/mainwindow.py:434
 msgid "Paths"
 msgstr "Paths"
 
-#: outwiker/app/gui/mainwindow.py:600
+#: outwiker/app/gui/mainwindow.py:581
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -1299,7 +1314,7 @@ msgstr ""
 "Can't save config\n"
 "%s"
 
-#: outwiker/app/gui/mainwndcontroller.py:240
+#: outwiker/app/gui/mainwndcontroller.py:238
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1842,7 +1857,7 @@ msgstr "Command"
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
-#: outwiker/app/gui/tabscontroller.py:243 outwiker/gui/basetextpanel.py:247
+#: outwiker/app/gui/tabscontroller.py:243 outwiker/gui/basetextpanel.py:250
 #, python-format
 msgid "Can't save file %s"
 msgstr "Can't save file %s"
@@ -2168,30 +2183,30 @@ msgstr ""
 msgid "Printing error"
 msgstr "Printing error"
 
-#: outwiker/gui/basetextpanel.py:202
+#: outwiker/gui/basetextpanel.py:208
 #: outwiker/gui/dialogs/overwritedialog.py:122
 msgid "Overwrite"
 msgstr "Overwrite"
 
-#: outwiker/gui/basetextpanel.py:202
+#: outwiker/gui/basetextpanel.py:208
 msgid "Load"
 msgstr "Load"
 
-#: outwiker/gui/basetextpanel.py:202
+#: outwiker/gui/basetextpanel.py:208
 #: outwiker/gui/dialogs/overwritedialog.py:126
 msgid "Cancel"
 msgstr "Cancel"
 
-#: outwiker/gui/basetextpanel.py:205
+#: outwiker/gui/basetextpanel.py:210
 #, python-format
 msgid "Page \"%s\" is changed by the external program"
 msgstr "Page \"%s\" is changed by the external program"
 
-#: outwiker/gui/basetextpanel.py:208
+#: outwiker/gui/basetextpanel.py:212
 msgid "Owerwrite?"
 msgstr "Owerwrite?"
 
-#: outwiker/gui/basetextpanel.py:514
+#: outwiker/gui/basetextpanel.py:585
 msgid "Lines"
 msgstr "Lines"
 
@@ -2424,11 +2439,11 @@ msgstr "Applied tags only"
 msgid "Tags (comma separated)"
 msgstr "Tags (comma separated)"
 
-#: outwiker/gui/texteditormenu.py:27 outwiker/gui/texteditormenu.py:31
+#: outwiker/gui/texteditormenu.py:76 outwiker/gui/texteditormenu.py:81
 msgid "Add \"{}\" to dictionary"
 msgstr "Add \"{}\" to dictionary"
 
-#: outwiker/gui/texteditormenu.py:40
+#: outwiker/gui/texteditormenu.py:91
 msgid "Spell"
 msgstr "Spell"
 
@@ -2934,6 +2949,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Select All"
+#~ msgstr "Select All"
 
 #~ msgid "Invalid icon file: {}"
 #~ msgstr "Invalid icon file: {}"
