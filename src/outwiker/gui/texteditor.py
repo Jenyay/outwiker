@@ -12,9 +12,11 @@ import outwiker.core.system
 from outwiker.core.application import Application
 from outwiker.core.spellchecker.spellchecker import SpellChecker
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
-from outwiker.core.events import (EditorPopupMenuParams,
-                                  TextEditorKeyDownParams,
-                                  TextEditorCaretMoveParams)
+from outwiker.core.events import (
+    EditorPopupMenuParams,
+    TextEditorKeyDownParams,
+    TextEditorCaretMoveParams,
+)
 from outwiker.gui.controls.texteditorbase import TextEditorBase
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.texteditormenu import TextEditorMenu
@@ -71,8 +73,6 @@ class TextEditor(TextEditorBase):
         self.__bindEvents()
 
     def __bindEvents(self):
-        self._bindStandardMenuItems()
-
         self.textCtrl.Bind(wx.EVT_CONTEXT_MENU, self.__onContextMenu)
         self.textCtrl.Bind(wx.EVT_IDLE, self._onStyleNeeded)
         self.textCtrl.Bind(wx.EVT_LEFT_DOWN, self._onMouseLeftDown)
@@ -127,8 +127,7 @@ class TextEditor(TextEditorBase):
         self.textCtrl.StyleSetItalic(wx.stc.STC_STYLE_DEFAULT, isItalic)
         self.textCtrl.StyleSetForeground(wx.stc.STC_STYLE_DEFAULT, fontColor)
         self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_DEFAULT, backColor)
-        self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_LINENUMBER,
-                                         marginBackColor)
+        self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_LINENUMBER, marginBackColor)
 
         self.textCtrl.SetSelBackground(1, selBackColor)
 
@@ -143,51 +142,48 @@ class TextEditor(TextEditorBase):
         self.enableSpellChecking = self._config.spellEnabled.value
         self.getSpellChecker().skipWordsWithNumbers = self.config.spellSkipDigits.value
 
-        self.textCtrl.IndicatorSetStyle(self.SPELL_ERROR_INDICATOR,
-                                        wx.stc.STC_INDIC_SQUIGGLE)
+        self.textCtrl.IndicatorSetStyle(
+            self.SPELL_ERROR_INDICATOR, wx.stc.STC_INDIC_SQUIGGLE
+        )
         self.textCtrl.IndicatorSetForeground(self.SPELL_ERROR_INDICATOR, "red")
         self._styleSet = False
 
     def _setHotKeys(self):
         if self._config.homeEndKeys.value == EditorConfig.HOME_END_OF_LINE:
             # Клавиши Home / End переносят курсор на начало / конец строки
-            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_HOME,
-                                       0,
-                                       wx.stc.STC_CMD_HOMEDISPLAY)
+            self.textCtrl.CmdKeyAssign(
+                wx.stc.STC_KEY_HOME, 0, wx.stc.STC_CMD_HOMEDISPLAY
+            )
 
-            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_HOME,
-                                       wx.stc.STC_SCMOD_ALT,
-                                       wx.stc.STC_CMD_HOME)
+            self.textCtrl.CmdKeyAssign(
+                wx.stc.STC_KEY_HOME, wx.stc.STC_SCMOD_ALT, wx.stc.STC_CMD_HOME
+            )
 
-            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END,
-                                       0,
-                                       wx.stc.STC_CMD_LINEENDDISPLAY)
+            self.textCtrl.CmdKeyAssign(
+                wx.stc.STC_KEY_END, 0, wx.stc.STC_CMD_LINEENDDISPLAY
+            )
 
-            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END,
-                                       wx.stc.STC_SCMOD_ALT,
-                                       wx.stc.STC_CMD_LINEEND)
+            self.textCtrl.CmdKeyAssign(
+                wx.stc.STC_KEY_END, wx.stc.STC_SCMOD_ALT, wx.stc.STC_CMD_LINEEND
+            )
         else:
             # Клавиши Home / End переносят курсор на начало / конец абзаца
-            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_HOME,
-                                       0,
-                                       wx.stc.STC_CMD_HOME)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_HOME, 0, wx.stc.STC_CMD_HOME)
 
-            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_HOME,
-                                       wx.stc.STC_SCMOD_ALT,
-                                       wx.stc.STC_CMD_HOMEDISPLAY)
+            self.textCtrl.CmdKeyAssign(
+                wx.stc.STC_KEY_HOME, wx.stc.STC_SCMOD_ALT, wx.stc.STC_CMD_HOMEDISPLAY
+            )
 
-            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END,
-                                       0,
-                                       wx.stc.STC_CMD_LINEEND)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END, 0, wx.stc.STC_CMD_LINEEND)
 
-            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END,
-                                       wx.stc.STC_SCMOD_ALT,
-                                       wx.stc.STC_CMD_LINEENDDISPLAY)
+            self.textCtrl.CmdKeyAssign(
+                wx.stc.STC_KEY_END, wx.stc.STC_SCMOD_ALT, wx.stc.STC_CMD_LINEENDDISPLAY
+            )
 
     def markSpellErrors(self, spellStatusFlags: List[bool]):
         """
-        spellStatusFlags - list for every character (!) to set or clear
- spell errors indicators. True for no spell error, False for spell error.
+               spellStatusFlags - list for every character (!) to set or clear
+        spell errors indicators. True for no spell error, False for spell error.
         """
         if not spellStatusFlags:
             return
@@ -212,11 +208,13 @@ class TextEditor(TextEditorBase):
 
     def _setClearSpellError(self, spellStatus, start_pos_bytes, end_pos_bytes):
         if spellStatus:
-            self.textCtrl.IndicatorClearRange(start_pos_bytes,
-                                              end_pos_bytes - start_pos_bytes)
+            self.textCtrl.IndicatorClearRange(
+                start_pos_bytes, end_pos_bytes - start_pos_bytes
+            )
         else:
-            self.textCtrl.IndicatorFillRange(start_pos_bytes,
-                                             end_pos_bytes - start_pos_bytes)
+            self.textCtrl.IndicatorFillRange(
+                start_pos_bytes, end_pos_bytes - start_pos_bytes
+            )
 
     def clearSpellChecking(self):
         text = self._getTextForParse()
@@ -224,20 +222,17 @@ class TextEditor(TextEditorBase):
         self.textCtrl.IndicatorClearRange(0, len_bytes)
 
     def _onStyleNeeded(self, _event):
-        if (not self._styleSet and
-                datetime.now() - self._lastEdit >= self._DELAY):
+        if not self._styleSet and datetime.now() - self._lastEdit >= self._DELAY:
             page = Application.selectedPage
             text = self._getTextForParse()
-            params = EditorStyleNeededParams(self,
-                                             text,
-                                             self._enableSpellChecking)
+            params = EditorStyleNeededParams(self, text, self._enableSpellChecking)
             Application.onEditorStyleNeeded(page, params)
             self._styleSet = True
 
     def _onApplyStyle(self, event: ApplyStyleEvent):
-        '''
+        """
         Call back function for EVT_APPLY_STYLE
-        '''
+        """
 
         if event.text == self._getTextForParse():
             lenBytes = len(event.styleBytes)
@@ -248,7 +243,7 @@ class TextEditor(TextEditorBase):
             if event.styleBytes is not None:
                 self.__stylebytes = event.styleBytes
 
-            stylebytesstr = ''.join([chr(byte) for byte in self.__stylebytes])
+            stylebytesstr = "".join([chr(byte) for byte in self.__stylebytes])
 
             if event.styleBytes is not None:
                 self.textCtrl.StartStyling(0)
@@ -262,8 +257,9 @@ class TextEditor(TextEditorBase):
             spellDirList = outwiker.core.system.getSpellDirList()
 
             spellChecker = SpellChecker(langlist, spellDirList)
-            spellChecker.addCustomDict(os.path.join(
-                spellDirList[-1], CUSTOM_DICT_FILE_NAME))
+            spellChecker.addCustomDict(
+                os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME)
+            )
 
             self._spellChecker = spellChecker
 
@@ -271,10 +267,7 @@ class TextEditor(TextEditorBase):
 
     def _getDictsFromConfig(self):
         dictsStr = self._config.spellCheckerDicts.value
-        return [item.strip()
-                for item
-                in dictsStr.split(',')
-                if item.strip()]
+        return [item.strip() for item in dictsStr.split(",") if item.strip()]
 
     def __onContextMenu(self, event):
         point = self.textCtrl.ScreenToClient(event.GetPosition())
@@ -285,7 +278,7 @@ class TextEditor(TextEditorBase):
 
         Application.onEditorPopupMenu(
             Application.selectedPage,
-            EditorPopupMenuParams(self, popupMenu, point, pos_byte)
+            EditorPopupMenuParams(self, popupMenu, point, pos_byte),
         )
 
         self.textCtrl.PopupMenu(popupMenu)
@@ -312,51 +305,53 @@ class TextEditor(TextEditorBase):
             return
 
         self._spellStartByteError = self.textCtrl.IndicatorStart(
-            self.SPELL_ERROR_INDICATOR, pos_byte)
+            self.SPELL_ERROR_INDICATOR, pos_byte
+        )
         self._spellEndByteError = self.textCtrl.IndicatorEnd(
-            self.SPELL_ERROR_INDICATOR, pos_byte)
+            self.SPELL_ERROR_INDICATOR, pos_byte
+        )
 
         self._spellErrorText = self.textCtrl.GetTextRange(
-            self._spellStartByteError,
-            self._spellEndByteError)
+            self._spellStartByteError, self._spellEndByteError
+        )
 
         spellChecker = self.getSpellChecker()
         self._spellSuggestList = spellChecker.getSuggest(self._spellErrorText)[
-            :self._spellMaxSuggest]
+            : self._spellMaxSuggest
+        ]
 
         menu.AppendSeparator()
-        self._suggestMenuItems = menu.AppendSpellSubmenu(self._spellErrorText,
-                                                         self._spellSuggestList)
+        self._suggestMenuItems = menu.AppendSpellSubmenu(
+            self._spellErrorText, self._spellSuggestList
+        )
 
         for menuItem in self._suggestMenuItems:
             self.textCtrl.Bind(wx.EVT_MENU, self.__onSpellSuggest, menuItem)
 
-        self.textCtrl.Bind(wx.EVT_MENU,
-                           self.__onAddWordToDict,
-                           id=menu.ID_ADD_WORD)
+        self.textCtrl.Bind(wx.EVT_MENU, self.__onAddWordToDict, id=menu.ID_ADD_WORD)
 
-        self.textCtrl.Bind(wx.EVT_MENU,
-                           self.__onAddWordLowerToDict,
-                           id=menu.ID_ADD_WORD_LOWER)
+        self.textCtrl.Bind(
+            wx.EVT_MENU, self.__onAddWordLowerToDict, id=menu.ID_ADD_WORD_LOWER
+        )
 
     def __onSpellSuggest(self, event):
         word = event.GetEventObject().GetLabelText(event.GetId())
 
-        self.textCtrl.SetSelection(self._spellStartByteError,
-                                   self._spellEndByteError)
+        self.textCtrl.SetSelection(self._spellStartByteError, self._spellEndByteError)
         self.textCtrl.ReplaceSelection(word)
 
     def onKeyDown(self, event: wx.KeyEvent):
-        eventParams = TextEditorKeyDownParams(self,
-                                              event.GetKeyCode(),
-                                              event.GetUnicodeKey(),
-                                              event.ControlDown(),
-                                              event.ShiftDown(),
-                                              event.AltDown(),
-                                              event.CmdDown(),
-                                              event.MetaDown())
-        Application.onTextEditorKeyDown(Application.selectedPage,
-                                        eventParams)
+        eventParams = TextEditorKeyDownParams(
+            self,
+            event.GetKeyCode(),
+            event.GetUnicodeKey(),
+            event.ControlDown(),
+            event.ShiftDown(),
+            event.AltDown(),
+            event.CmdDown(),
+            event.MetaDown(),
+        )
+        Application.onTextEditorKeyDown(Application.selectedPage, eventParams)
 
         if not eventParams.disableOutput:
             super().onKeyDown(event)
@@ -370,15 +365,16 @@ class TextEditor(TextEditorBase):
         new_start_selection = self.GetSelectionStart()
         new_end_selection = self.GetSelectionEnd()
 
-        if (self._oldStartSelection != new_start_selection or
-                self._oldEndSelection != new_end_selection):
+        if (
+            self._oldStartSelection != new_start_selection
+            or self._oldEndSelection != new_end_selection
+        ):
             self._oldStartSelection = new_start_selection
             self._oldEndSelection = new_end_selection
-            event_params = TextEditorCaretMoveParams(self,
-                                                     new_start_selection,
-                                                     new_end_selection)
-            Application.onTextEditorCaretMove(Application.selectedPage,
-                                              event_params)
+            event_params = TextEditorCaretMoveParams(
+                self, new_start_selection, new_end_selection
+            )
+            Application.onTextEditorCaretMove(Application.selectedPage, event_params)
 
     def _onMouseLeftDown(self, event):
         self._checkCaretMoving()
@@ -411,7 +407,7 @@ class TextEditor(TextEditorBase):
         else:
             # Количество десятичных цифр в числе строк
             digits = int(math.log10(linescount) + 1)
-            text = '_' + '9' * digits
+            text = "_" + "9" * digits
             width = self.textCtrl.TextWidth(wx.stc.STC_STYLE_LINENUMBER, text)
 
         return width

@@ -528,4 +528,40 @@ polyactionsList = [
         _("Switch to preview tab for some page types"),
         None,
     ),
+    PolyactionInfo(
+        polyactions.UNDO_ID,
+        _("Undo"),
+        _("Undo"),
+        HotKey("Z", ctrl=True),
+    ),
+    PolyactionInfo(
+        polyactions.REDO_ID,
+        _("Redo"),
+        _("Redo"),
+        HotKey("Y", ctrl=True),
+    ),
+    PolyactionInfo(
+        polyactions.CLIPBOARD_COPY_ID,
+        _("Copy"),
+        _("Copy to clipboard"),
+        HotKey("C", ctrl=True),
+    ),
+    PolyactionInfo(
+        polyactions.CLIPBOARD_CUT_ID,
+        _("Cut"),
+        _("Cut to clipboard"),
+        HotKey("X", ctrl=True),
+    ),
+    PolyactionInfo(
+        polyactions.CLIPBOARD_PASTE_ID,
+        _("Paste"),
+        _("Paste from clipboard"),
+        HotKey("V", ctrl=True),
+    ),
+    PolyactionInfo(
+        polyactions.SELECT_ALL_ID,
+        _("Select all"),
+        _("Select all text"),
+        HotKey("A", ctrl=True),
+    ),
 ]

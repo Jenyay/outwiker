@@ -268,27 +268,6 @@ class MainWindow(wx.Frame):
 
         actionController.appendMenuItem(switchto.SwitchToTagsCloudAction.stringId, menu)
 
-    def _createEditMenu(self):
-        editMenu = self.menuController[guidefines.MENU_EDIT]
-
-        editMenu.Append(wx.ID_UNDO, _("Undo") + "\tCtrl+Z", "", wx.ITEM_NORMAL)
-
-        editMenu.Append(wx.ID_REDO, _("Redo") + "\tCtrl+Y", "", wx.ITEM_NORMAL)
-
-        editMenu.AppendSeparator()
-
-        editMenu.Append(wx.ID_CUT, _("Cut") + "\tCtrl+X", "", wx.ITEM_NORMAL)
-
-        editMenu.Append(wx.ID_COPY, _("Copy") + "\tCtrl+C", "", wx.ITEM_NORMAL)
-
-        editMenu.Append(wx.ID_PASTE, _("Paste") + "\tCtrl+V", "", wx.ITEM_NORMAL)
-
-        editMenu.AppendSeparator()
-
-        editMenu.Append(
-            wx.ID_SELECTALL, _("Select All") + "\tCtrl+A", "", wx.ITEM_NORMAL
-        )
-
     def _createFileMenu(self):
         """
         Заполнить действиями меню Файл
@@ -387,7 +366,9 @@ class MainWindow(wx.Frame):
         actionController.appendMenuItem(MovePageUpAction.stringId, submenu)
         actionController.appendMenuItem(MovePageDownAction.stringId, submenu)
         actionController.appendMenuItem(SortChildAlphabeticalAction.stringId, submenu)
-        actionController.appendMenuItem(SortSiblingsAlphabeticalAction.stringId, submenu)
+        actionController.appendMenuItem(
+            SortSiblingsAlphabeticalAction.stringId, submenu
+        )
 
         menu.AppendSubMenu(submenu, _("Movement"))
 
@@ -484,7 +465,9 @@ class MainWindow(wx.Frame):
         submenu = wx.Menu()
 
         actionController.appendMenuItem(tags.AddTagsToBranchAction.stringId, submenu)
-        actionController.appendMenuItem(tags.RemoveTagsFromBranchAction.stringId, submenu)
+        actionController.appendMenuItem(
+            tags.RemoveTagsFromBranchAction.stringId, submenu
+        )
         actionController.appendMenuItem(tags.RenameTagAction.stringId, submenu)
         menu.AppendSubMenu(submenu, _("Tags"))
 
@@ -501,7 +484,6 @@ class MainWindow(wx.Frame):
         Создать элементы интерфейса, привязанные к actions
         """
         self._createFileMenu()
-        self._createEditMenu()
         self._createTreeMenu()
         self._createToolsMenu()
         self._createHelpMenu()
@@ -518,7 +500,6 @@ class MainWindow(wx.Frame):
 
         # Вызов диалога настроек
         menu_edit = self.menuController[guidefines.MENU_EDIT]
-        menu_edit.AppendSeparator()
 
         actionController.appendMenuItem(PreferencesAction.stringId, menu_edit)
 
@@ -567,7 +548,7 @@ class MainWindow(wx.Frame):
         Подписаться на события меню, кнопок и т.п.
         """
         self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_UNDO)
-        self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_REDO)
+        # self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_REDO)
         self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_CUT)
         self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_PASTE)
