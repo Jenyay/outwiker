@@ -115,13 +115,7 @@ class BaseTextPanel(BasePagePanel):
 
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
         self._addEditTools()
-        
-        sepMenuItem = editMenu.AppendSeparator()
-        self._menuSeparators.append((editMenu, sepMenuItem))
-        
-        self._addSpellTools()
         self._addWordTools()
-        self._addLinesTools()
 
         self._application.onAttachmentPaste += self.onAttachmentPaste
         self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
@@ -360,15 +354,15 @@ class BaseTextPanel(BasePagePanel):
             SearchPrevAction.stringId, self.searchMenu
         )
 
-    def _addSpellTools(self):
+    def _addSpellTools(self, position):
         generalToolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
         self._application.actionController.getAction(SPELL_ON_OFF_ID).setFunc(
             self._spellOnOff
         )
 
-        self._application.actionController.appendMenuCheckItem(
-            SPELL_ON_OFF_ID, editMenu
+        self._application.actionController.insertMenuCheckItem(
+            SPELL_ON_OFF_ID, editMenu, position
         )
 
         self._application.actionController.appendToolbarCheckButton(
@@ -459,47 +453,57 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.getAction(UNDO_ID).setFunc(
             lambda params: self.GetEditor().Undo()
         )
-        self._application.actionController.appendMenuItem(UNDO_ID, editMenu)
+        self._application.actionController.insertMenuItem(UNDO_ID, editMenu, 0)
 
         # Redo
         self._application.actionController.getAction(REDO_ID).setFunc(
             lambda params: self.GetEditor().Redo()
         )
-        self._application.actionController.appendMenuItem(REDO_ID, editMenu)
-        
-        sepMenuItem = editMenu.AppendSeparator()
+        self._application.actionController.insertMenuItem(REDO_ID, editMenu, 1)
+
+        sepMenuItem = editMenu.InsertSeparator(2)
         self._menuSeparators.append((editMenu, sepMenuItem))
-        
+
         # Clipboard
-        
+
         # Copy
         self._application.actionController.getAction(CLIPBOARD_COPY_ID).setFunc(
             lambda params: self.GetEditor().Copy()
         )
-        self._application.actionController.appendMenuItem(CLIPBOARD_COPY_ID, editMenu)
-        
+        self._application.actionController.insertMenuItem(
+            CLIPBOARD_COPY_ID, editMenu, 3
+        )
+
         # Cut
         self._application.actionController.getAction(CLIPBOARD_CUT_ID).setFunc(
             lambda params: self.GetEditor().Cut()
         )
-        self._application.actionController.appendMenuItem(CLIPBOARD_CUT_ID, editMenu)
-        
+        self._application.actionController.insertMenuItem(CLIPBOARD_CUT_ID, editMenu, 4)
+
         # Paste
         self._application.actionController.getAction(CLIPBOARD_PASTE_ID).setFunc(
             lambda params: self.GetEditor().Paste()
         )
-        self._application.actionController.appendMenuItem(CLIPBOARD_PASTE_ID, editMenu)
-        
-        sepMenuItem2 = editMenu.AppendSeparator()
+        self._application.actionController.insertMenuItem(
+            CLIPBOARD_PASTE_ID, editMenu, 5
+        )
+
+        sepMenuItem2 = editMenu.InsertSeparator(6)
         self._menuSeparators.append((editMenu, sepMenuItem2))
-        
+
         # Select all
         self._application.actionController.getAction(SELECT_ALL_ID).setFunc(
             lambda params: self.GetEditor().SelectAll()
         )
-        self._application.actionController.appendMenuItem(SELECT_ALL_ID, editMenu)
+        self._application.actionController.insertMenuItem(SELECT_ALL_ID, editMenu, 7)
 
-    def _addLinesTools(self):
+        sepMenuItem2 = editMenu.InsertSeparator(8)
+
+        self._addLinesTools(9)
+        self._addSpellTools(10)
+        sepMenuItem2 = editMenu.InsertSeparator(11)
+
+    def _addLinesTools(self, position):
         self.linesMenu = wx.Menu()
 
         # Copy the current line to clipboard
@@ -582,7 +586,9 @@ class BaseTextPanel(BasePagePanel):
         )
 
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        self.linesMenuItem = editMenu.AppendSubMenu(self.linesMenu, _("Lines"))
+        self.linesMenuItem = editMenu.Insert(
+            position, wx.ID_ANY, _("Lines"), self.linesMenu
+        )
 
     def _spellOnOff(self, checked):
         EditorConfig(self._application.config).spellEnabled.value = checked

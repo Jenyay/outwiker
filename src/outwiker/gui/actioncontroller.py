@@ -14,7 +14,7 @@ from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.gui.hotkeyparser import HotKeyParser
 
 
-logger = logging.getLogger('outwiker.gui.actioncontroller')
+logger = logging.getLogger("outwiker.gui.actioncontroller")
 
 
 class ActionInfoInternal(object):
@@ -23,11 +23,13 @@ class ActionInfoInternal(object):
     Хранит информацию о добавленных действиях
     """
 
-    def __init__(self,
-                 action,
-                 hotkey: Optional[HotKey],
-                 area: Optional[str],
-                 hidden: bool = False):
+    def __init__(
+        self,
+        action,
+        hotkey: Optional[HotKey],
+        area: Optional[str],
+        hidden: bool = False,
+    ):
         """
         action - действие
         """
@@ -62,7 +64,7 @@ class ActionController:
         # Словарь для хранения информации о действиях
         # Ключ - строковый идентификатор действия,
         # значение - экземпляр класса ActionInfoInternal
-        self._actionsInfo = {}          # type: Dict[str, ActionInfoInternal]
+        self._actionsInfo = {}  # type: Dict[str, ActionInfoInternal]
 
         self._configSection = "HotKeys"
         self._enabledGui = True
@@ -95,11 +97,9 @@ class ActionController:
         """
         return self._actionsInfo[strid]
 
-    def register(self,
-                 action,
-                 hotkey: HotKey = None,
-                 area: str = None,
-                 hidden: bool = False):
+    def register(
+        self, action, hotkey: HotKey = None, area: str = None, hidden: bool = False
+    ):
         """
         Добавить действие в словарь.
         При этом никаких элементов интерфейса не создается
@@ -116,21 +116,19 @@ class ActionController:
             action,
             hotkey=self._getHotKeyForAction(action, hotkey),
             area=area,
-            hidden=hidden
+            hidden=hidden,
         )
         self._actionsInfo[action.stringId] = actionInfo
-        logging.debug('Action registered: "%s" (%s)',
-                      action.title, str(hotkey))
+        logging.debug('Action registered: "%s" (%s)', action.title, str(hotkey))
 
     def _getHotKeyForAction(self, action, defaultHotKey: Optional[HotKey]) -> HotKey:
         """
         Получить горячую клавишу.
         Горячая клавиша берется из конфига, или defaultHotKey
         """
-        return HotKeyOption(self._config,
-                            self.configSection,
-                            action.stringId,
-                            defaultHotKey).value
+        return HotKeyOption(
+            self._config, self.configSection, action.stringId, defaultHotKey
+        ).value
 
     def appendMenuItem(self, strid, menu):
         """
@@ -138,14 +136,29 @@ class ActionController:
         Действие должно быть уже зарегистрировано с помощью метода register
         """
         if not self._enabledGui:
-            return 
+            return
 
         menuItem = menu.Append(wx.ID_ANY, self._getMenuItemTitle(strid))
         self._actionsInfo[strid].menuItem = menuItem
 
-        self._mainWindow.Bind(wx.EVT_MENU,
-                              handler=self._onMenuItemHandler,
-                              id=menuItem.GetId())
+        self._mainWindow.Bind(
+            wx.EVT_MENU, handler=self._onMenuItemHandler, id=menuItem.GetId()
+        )
+        
+    def insertMenuItem(self, strid, menu, position):
+        """
+        Вставить действие в указанную позицию в меню menu
+        Действие должно быть уже зарегистрировано с помощью метода register
+        """
+        if not self._enabledGui:
+            return
+
+        menuItem = menu.Insert(position, wx.ID_ANY, self._getMenuItemTitle(strid))
+        self._actionsInfo[strid].menuItem = menuItem
+
+        self._mainWindow.Bind(
+            wx.EVT_MENU, handler=self._onMenuItemHandler, id=menuItem.GetId()
+        )
 
     def appendMenuCheckItem(self, strid, menu):
         """
@@ -153,31 +166,44 @@ class ActionController:
         Действие должно быть уже зарегистрировано с помощью метода register
         """
         if not self._enabledGui:
-            return 
+            return
 
-        menuItem = menu.AppendCheckItem(wx.ID_ANY,
-                                        self._getMenuItemTitle(strid))
+        menuItem = menu.AppendCheckItem(wx.ID_ANY, self._getMenuItemTitle(strid))
         self._actionsInfo[strid].menuItem = menuItem
 
-        self._mainWindow.Bind(wx.EVT_MENU,
-                              handler=self._onCheckMenuItemHandler,
-                              id=menuItem.GetId())
+        self._mainWindow.Bind(
+            wx.EVT_MENU, handler=self._onCheckMenuItemHandler, id=menuItem.GetId()
+        )
+        
+    def insertMenuCheckItem(self, strid, menu, position):
+        """
+        Добавить действие в меню menu
+        Действие должно быть уже зарегистрировано с помощью метода register
+        """
+        if not self._enabledGui:
+            return
+
+        menuItem = menu.InsertCheckItem(position, wx.ID_ANY, self._getMenuItemTitle(strid))
+        self._actionsInfo[strid].menuItem = menuItem
+
+        self._mainWindow.Bind(
+            wx.EVT_MENU, handler=self._onCheckMenuItemHandler, id=menuItem.GetId()
+        )
 
     def saveHotKeys(self):
         """
         Сохранить все горячие клавиши в конфиг
         """
         for actionInfo in self._actionsInfo.values():
-            option = HotKeyOption(self._config,
-                                  self.configSection,
-                                  actionInfo.action.stringId,
-                                  None)
+            option = HotKeyOption(
+                self._config, self.configSection, actionInfo.action.stringId, None
+            )
             option.value = actionInfo.hotkey
 
     def changeHotkeys(self, newHotkeys: List[Tuple[str, HotKey]]):
-        '''
+        """
         newHotkeys - list of tuples with two elements: action id and hotkey for the strid
-        '''
+        """
         for strid, hotkey in newHotkeys:
             actionInfo = self._actionsInfo[strid]
             if actionInfo.hotkey == hotkey:
@@ -192,11 +218,9 @@ class ActionController:
             if actionInfo.menuItem is not None:
                 actionInfo.menuItem.SetItemLabel(self._getMenuItemTitle(strid))
 
-            if (actionInfo.toolbar is not None and
-                    actionInfo.toolItemId is not None):
+            if actionInfo.toolbar is not None and actionInfo.toolItemId is not None:
                 title = self._getToolbarItemTitle(strid)
-                actionInfo.toolbar.SetToolShortHelp(actionInfo.toolItemId,
-                                                    title)
+                actionInfo.toolbar.SetToolShortHelp(actionInfo.toolItemId, title)
 
         self._updateAcceleratorTables()
         self.saveHotKeys()
@@ -206,21 +230,25 @@ class ActionController:
             assert actionInfo.window is not None
             hotkeyId = wx.NewIdRef()
             actionInfo.hotkeyId = hotkeyId
-            logger.debug('Bind hotkey for action "%s": "%s"',
-                         actionInfo.action.title,
-                         str(actionInfo.hotkey))
-            actionInfo.window.Bind(wx.EVT_MENU,
-                                   handler=self._onHotKeyItemHandler,
-                                   id=hotkeyId)
+            logger.debug(
+                'Bind hotkey for action "%s": "%s"',
+                actionInfo.action.title,
+                str(actionInfo.hotkey),
+            )
+            actionInfo.window.Bind(
+                wx.EVT_MENU, handler=self._onHotKeyItemHandler, id=hotkeyId
+            )
 
     def _unbindHotkey(self, actionInfo: ActionInfoInternal):
         if actionInfo.hotkeyId is not None:
-            logger.debug('Unbind hotkey for action "%s": "%s"',
-                         actionInfo.action.title,
-                         str(actionInfo.hotkey))
-            actionInfo.window.Unbind(wx.EVT_MENU,
-                                     handler=self._onHotKeyItemHandler,
-                                     id=actionInfo.hotkeyId)
+            logger.debug(
+                'Unbind hotkey for action "%s": "%s"',
+                actionInfo.action.title,
+                str(actionInfo.hotkey),
+            )
+            actionInfo.window.Unbind(
+                wx.EVT_MENU, handler=self._onHotKeyItemHandler, id=actionInfo.hotkeyId
+            )
             actionInfo.hotkeyId = None
 
     def appendHotkey(self, strid: str, window: wx.Window = None):
@@ -228,7 +256,7 @@ class ActionController:
         Create hotkey binding for action
         """
         if not self._enabledGui:
-            return 
+            return
 
         actionInfo = self._actionsInfo[strid]
         actionInfo.isHotkeyActive = True
@@ -295,7 +323,7 @@ class ActionController:
                 elif issubclass(type(toolbar), wx.ToolBar):
                     toolbar.DeleteTool(toolid)
                 else:
-                    raise ValueError(u'Invalid toolbar type')
+                    raise ValueError("Invalid toolbar type")
 
                 self._mainWindow.Unbind(wx.EVT_TOOL, id=toolid)
                 actionInfo.toolbar = None
@@ -306,8 +334,7 @@ class ActionController:
             actionInfo = self._actionsInfo[strid]
 
             if actionInfo.menuItem is not None:
-                self._mainWindow.Unbind(wx.EVT_MENU,
-                                        id=actionInfo.menuItem.GetId())
+                self._mainWindow.Unbind(wx.EVT_MENU, id=actionInfo.menuItem.GetId())
                 actionInfo.menuItem.Menu.DestroyItem(actionInfo.menuItem)
                 actionInfo.menuItem = None
 
@@ -323,51 +350,52 @@ class ActionController:
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
         if not self._enabledGui:
-            return 
+            return
 
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
         bitmap = readImage(image, self._image_width, self._image_height)
         if not bitmap.IsOk():
             logger.error("Invalid bitmap for %s", image)
-            bitmap = readImage(getBuiltinImagePath("cross.png"), self._image_width, self._image_height)
+            bitmap = readImage(
+                getBuiltinImagePath("cross.png"), self._image_width, self._image_height
+            )
 
         if issubclass(type(toolbar), ToolBar2):
             toolbarItemId = toolbar.AddButton(title, bitmap, wx.ID_ANY)
         elif issubclass(type(toolbar), wx.ToolBar):
-            toolbarItem = toolbar.AddTool(wx.ID_ANY,
-                                          title,
-                                          bitmap,
-                                          wx.NullBitmap,
-                                          wx.ITEM_NORMAL,
-                                          title,
-                                          "")
+            toolbarItem = toolbar.AddTool(
+                wx.ID_ANY, title, bitmap, wx.NullBitmap, wx.ITEM_NORMAL, title, ""
+            )
             toolbarItemId = toolbarItem.GetId()
         else:
-            raise ValueError(u'Invalid toolbar type')
+            raise ValueError("Invalid toolbar type")
 
         self._actionsInfo[strid].toolbar = toolbar
         self._actionsInfo[strid].toolItemId = toolbarItemId
 
-        self._mainWindow.Bind(wx.EVT_TOOL,
-                              handler=self._onToolItemHandler,
-                              id=toolbarItemId)
+        self._mainWindow.Bind(
+            wx.EVT_TOOL, handler=self._onToolItemHandler, id=toolbarItemId
+        )
         if fullUpdate:
             toolbar.Realize()
 
     def updateToolbars(self):
         if not self._enabledGui:
-            return 
+            return
 
-        toolbars = set([action_info.toolbar
-                        for action_info in self._actionsInfo.values()
-                        if action_info.toolbar is not None])
+        toolbars = set(
+            [
+                action_info.toolbar
+                for action_info in self._actionsInfo.values()
+                if action_info.toolbar is not None
+            ]
+        )
 
         for toolbar in toolbars:
             toolbar.Realize()
 
-    def appendToolbarCheckButton(self, strid, toolbar, image,
-                                 fullUpdate=True):
+    def appendToolbarCheckButton(self, strid, toolbar, image, fullUpdate=True):
         """
         Добавить кнопку на панель инструментов.
         Действие уже должно быть зарегистрировано с помощью метода register
@@ -379,7 +407,7 @@ class ActionController:
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
         if not self._enabledGui:
-            return 
+            return
 
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
@@ -388,23 +416,19 @@ class ActionController:
         if issubclass(type(toolbar), ToolBar2):
             toolbarItemId = toolbar.AddCheckButton(title, bitmap, wx.ID_ANY)
         elif issubclass(type(toolbar), wx.ToolBar):
-            toolbarItem = toolbar.AddTool(wx.ID_ANY,
-                                          title,
-                                          bitmap,
-                                          wx.NullBitmap,
-                                          wx.ITEM_CHECK,
-                                          title,
-                                          "")
+            toolbarItem = toolbar.AddTool(
+                wx.ID_ANY, title, bitmap, wx.NullBitmap, wx.ITEM_CHECK, title, ""
+            )
             toolbarItemId = toolbarItem.GetId()
         else:
-            raise ValueError(u'Invalid toolbar type')
+            raise ValueError("Invalid toolbar type")
 
         self._actionsInfo[strid].toolbar = toolbar
         self._actionsInfo[strid].toolItemId = toolbarItemId
 
-        self._mainWindow.Bind(wx.EVT_TOOL,
-                              handler=self._onCheckToolItemHandler,
-                              id=toolbarItemId)
+        self._mainWindow.Bind(
+            wx.EVT_TOOL, handler=self._onCheckToolItemHandler, id=toolbarItemId
+        )
         if fullUpdate:
             toolbar.Realize()
 
@@ -417,24 +441,27 @@ class ActionController:
 
     def _getActionInfoByMenuItemId(self, menuItemId) -> Optional[ActionInfoInternal]:
         for actionInfo in self._actionsInfo.values():
-            if (actionInfo.menuItem is not None and
-                    actionInfo.menuItem.GetId() == menuItemId):
+            if (
+                actionInfo.menuItem is not None
+                and actionInfo.menuItem.GetId() == menuItemId
+            ):
                 return actionInfo
 
         return None
 
     def _getActionInfoByToolItemId(self, toolItemId) -> Optional[ActionInfoInternal]:
         for actionInfo in self._actionsInfo.values():
-            if (actionInfo.toolItemId is not None and
-                    actionInfo.toolItemId == toolItemId):
+            if (
+                actionInfo.toolItemId is not None
+                and actionInfo.toolItemId == toolItemId
+            ):
                 return actionInfo
 
         return None
 
     def _getActionInfoByHotkeyId(self, itemId) -> Optional[ActionInfoInternal]:
         for actionInfo in self._actionsInfo.values():
-            if (actionInfo.hotkeyId is not None and
-                    actionInfo.hotkeyId == itemId):
+            if actionInfo.hotkeyId is not None and actionInfo.hotkeyId == itemId:
                 return actionInfo
 
         return None
@@ -452,21 +479,20 @@ class ActionController:
     def _onMenuItemHandler(self, event):
         actionInfo = self._getActionInfoByMenuItemId(event.GetId())
         assert actionInfo is not None
-        logger.debug('Run action with menu item: %s', actionInfo.action.title)
+        logger.debug("Run action with menu item: %s", actionInfo.action.title)
         actionInfo.action.run(None)
 
     def _onHotKeyItemHandler(self, event):
         actionInfo = self._getActionInfoByHotkeyId(event.GetId())
         assert actionInfo is not None
 
-        logger.debug('Run action with hotkey: %s', actionInfo.action.title)
+        logger.debug("Run action with hotkey: %s", actionInfo.action.title)
         actionInfo.action.run(None)
 
     def _onToolItemHandler(self, event):
         actionInfo = self._getActionInfoByToolItemId(event.GetId())
         assert actionInfo is not None
-        logger.debug('Run action with tool button: %s',
-                     actionInfo.action.title)
+        logger.debug("Run action with tool button: %s", actionInfo.action.title)
         actionInfo.action.run(None)
 
     def _onCheck(self, action, checked):
@@ -475,20 +501,19 @@ class ActionController:
         """
         # Установим флажки на соответствующем пункте меню
         menuItem = self._actionsInfo[action.stringId].menuItem
-        if (menuItem is not None):
+        if menuItem is not None:
             menuItem.Check(checked)
 
         toolbar = self._actionsInfo[action.stringId].toolbar
         if toolbar is not None:
-            toolbar.ToggleTool(self._actionsInfo[action.stringId].toolItemId,
-                               checked)
+            toolbar.ToggleTool(self._actionsInfo[action.stringId].toolItemId, checked)
             toolbar.Refresh()
 
         action.run(checked)
 
     def enableTools(self, strid, enabled=True):
         if not self._enabledGui:
-            return 
+            return
 
         actionInfo = self._actionsInfo[strid]
 
@@ -523,7 +548,7 @@ class ActionController:
         if hotkey is None:
             return title
 
-        return '{0}\t{1}'.format(title, HotKeyParser.toString(hotkey))
+        return "{0}\t{1}".format(title, HotKeyParser.toString(hotkey))
 
     def _getToolbarItemTitle(self, strid):
         hotkey = self.getHotKey(strid)
@@ -532,4 +557,4 @@ class ActionController:
         if hotkey is None:
             return title
 
-        return '{0} ({1})'.format(title, HotKeyParser.toString(hotkey))
+        return "{0} ({1})".format(title, HotKeyParser.toString(hotkey))
