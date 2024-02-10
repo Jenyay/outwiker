@@ -112,8 +112,6 @@ class BaseTextPanel(BasePagePanel):
         self._spellOnOffEvent, self.EVT_SPELL_ON_OFF = wx.lib.newevent.NewEvent()
 
         self._addSearchTools()
-
-        editMenu = self._application.mainWindow.menuController[MENU_EDIT]
         self._addEditTools()
         self._addWordTools()
 
@@ -461,8 +459,7 @@ class BaseTextPanel(BasePagePanel):
         )
         self._application.actionController.insertMenuItem(REDO_ID, editMenu, 1)
 
-        sepMenuItem = editMenu.InsertSeparator(2)
-        self._menuSeparators.append((editMenu, sepMenuItem))
+        self._menuSeparators.append((editMenu, editMenu.InsertSeparator(2)))
 
         # Clipboard
 
@@ -488,8 +485,7 @@ class BaseTextPanel(BasePagePanel):
             CLIPBOARD_PASTE_ID, editMenu, 5
         )
 
-        sepMenuItem2 = editMenu.InsertSeparator(6)
-        self._menuSeparators.append((editMenu, sepMenuItem2))
+        self._menuSeparators.append((editMenu, editMenu.InsertSeparator(6)))
 
         # Select all
         self._application.actionController.getAction(SELECT_ALL_ID).setFunc(
@@ -497,11 +493,11 @@ class BaseTextPanel(BasePagePanel):
         )
         self._application.actionController.insertMenuItem(SELECT_ALL_ID, editMenu, 7)
 
-        sepMenuItem2 = editMenu.InsertSeparator(8)
+        self._menuSeparators.append((editMenu, editMenu.InsertSeparator(8)))
 
         self._addLinesTools(9)
         self._addSpellTools(10)
-        sepMenuItem2 = editMenu.InsertSeparator(11)
+        self._menuSeparators.append((editMenu, editMenu.InsertSeparator(11)))
 
     def _addLinesTools(self, position):
         self.linesMenu = wx.Menu()

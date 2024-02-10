@@ -98,7 +98,7 @@ class ActionController:
         return self._actionsInfo[strid]
 
     def register(
-        self, action, hotkey: HotKey = None, area: str = None, hidden: bool = False
+        self, action, hotkey: Optional[HotKey] = None, area: Optional[str] = None, hidden: bool = False
     ):
         """
         Добавить действие в словарь.
