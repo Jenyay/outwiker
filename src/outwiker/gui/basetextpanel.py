@@ -466,14 +466,14 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.getAction(CLIPBOARD_CUT_ID).setFunc(
             lambda params: self.GetEditor().Cut()
         )
-        self._application.actionController.insertMenuItem(CLIPBOARD_CUT_ID, editMenu, 4)
+        self._application.actionController.insertMenuItem(CLIPBOARD_CUT_ID, editMenu, 3)
 
         # Copy
         self._application.actionController.getAction(CLIPBOARD_COPY_ID).setFunc(
             lambda params: self.GetEditor().Copy()
         )
         self._application.actionController.insertMenuItem(
-            CLIPBOARD_COPY_ID, editMenu, 3
+            CLIPBOARD_COPY_ID, editMenu, 4
         )
 
         # Paste
