@@ -106,3 +106,4 @@ if __name__ == "__main__":
     _("software")
     _("tags")
     _("weather")
+    _("list")
