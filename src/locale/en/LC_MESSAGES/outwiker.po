@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-05 16:38+0300\n"
+"POT-Creation-Date: 2024-02-10 21:32+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -2103,6 +2103,10 @@ msgstr "tags"
 msgid "weather"
 msgstr "weather"
 
+#: outwiker/core/defines.py:109
+msgid "list"
+msgstr "list"
+
 #: outwiker/core/htmlimproverfactory.py:27
 msgid "Line Breaks (<br/>)"
 msgstr "Line Breaks (<br/>)"
@@ -2212,27 +2216,22 @@ msgid "Appropriate date and time representation"
 msgstr "Appropriate date and time representation"
 
 #: outwiker/gui/controls/datetimeformatctrl.py:25
-#| msgid "Day of the month as a decimal number [01,31]"
 msgid "Day of the month as a decimal number (01, 02, ..., 31)"
 msgstr "Day of the month as a decimal number (01, 02, ..., 31)"
 
 #: outwiker/gui/controls/datetimeformatctrl.py:26
-#| msgid "Hour(24-hour clock) as a decimal number [00,23]"
 msgid "Hour(24-hour clock) as a decimal number (00, 01, ..., 23)"
 msgstr "Hour(24-hour clock) as a decimal number (00, 01, ..., 23)"
 
 #: outwiker/gui/controls/datetimeformatctrl.py:27
-#| msgid "Hour(12-hour clock) as a decimal number [01,12]"
 msgid "Hour(12-hour clock) as a decimal number (01, 02, ..., 12)"
 msgstr "Hour(12-hour clock) as a decimal number (01, 02, ..., 12)"
 
 #: outwiker/gui/controls/datetimeformatctrl.py:28
-#| msgid "Month as a decimal number [01,12]"
 msgid "Month as a decimal number (01, 02, ..., 12)"
 msgstr "Month as a decimal number (01, 02, ..., 12)"
 
 #: outwiker/gui/controls/datetimeformatctrl.py:29
-#| msgid "Minute as a decimal number [00,59]"
 msgid "Minute as a decimal number (00, 01, ..., 59)"
 msgstr "Minute as a decimal number (00, 01, ..., 59)"
 
@@ -2241,7 +2240,6 @@ msgid "AM or PM"
 msgstr "AM or PM"
 
 #: outwiker/gui/controls/datetimeformatctrl.py:31
-#| msgid "Second as a decimal number [00,59]"
 msgid "Second as a decimal number (00, 01, ..., 59)"
 msgstr "Second as a decimal number (00, 01, ..., 59)"
 
@@ -2254,7 +2252,6 @@ msgid "Appropriate time representation"
 msgstr "Appropriate time representation"
 
 #: outwiker/gui/controls/datetimeformatctrl.py:34
-#| msgid "Year without century [00,99]"
 msgid "Year without century (00, 01, ..., 99)"
 msgstr "Year without century (00, 01, ..., 99)"
 

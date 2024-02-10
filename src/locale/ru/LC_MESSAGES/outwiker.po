@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-05 16:38+0300\n"
+"POT-Creation-Date: 2024-02-10 21:32+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -2113,6 +2113,10 @@ msgstr "ярлыки"
 msgid "weather"
 msgstr "погода"
 
+#: outwiker/core/defines.py:109
+msgid "list"
+msgstr "список"
+
 #: outwiker/core/htmlimproverfactory.py:27
 msgid "Line Breaks (<br/>)"
 msgstr "Разрывы строк (<br/>)"
@@ -2256,7 +2260,6 @@ msgid "Appropriate time representation"
 msgstr "Привычное представление времени"
 
 #: outwiker/gui/controls/datetimeformatctrl.py:34
-#| msgid "Year without century [00,99]"
 msgid "Year without century (00, 01, ..., 99)"
 msgstr "Год (последние две цифры)"
 
