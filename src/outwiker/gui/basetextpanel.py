@@ -296,7 +296,9 @@ class BaseTextPanel(BasePagePanel):
 
         mainMenu.Remove(self.searchMenuIndex)
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        editMenu.Remove(self.linesMenuItem)
+        
+        if self._isEnableGui():
+            editMenu.Remove(self.linesMenuItem)
 
         for item in self._menuSeparators:
             item[0].Remove(item[1])
@@ -315,6 +317,7 @@ class BaseTextPanel(BasePagePanel):
         assert self.mainWindow is not None
         self.searchMenu = wx.Menu()
         mainMenu = self._application.mainWindow.menuController.getRootMenu()
+        
         mainMenu.Insert(self.searchMenuIndex, self.searchMenu, _("Search"))
 
         toolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
@@ -459,7 +462,8 @@ class BaseTextPanel(BasePagePanel):
         )
         self._application.actionController.insertMenuItem(REDO_ID, editMenu, 1)
 
-        self._menuSeparators.append((editMenu, editMenu.InsertSeparator(2)))
+        # self._menuSeparators.append((editMenu, editMenu.InsertSeparator(2)))
+        self._insertSeparator(editMenu, 2)
 
         # Clipboard
         # Cut
@@ -484,7 +488,8 @@ class BaseTextPanel(BasePagePanel):
             CLIPBOARD_PASTE_ID, editMenu, 5
         )
 
-        self._menuSeparators.append((editMenu, editMenu.InsertSeparator(6)))
+        # self._menuSeparators.append((editMenu, editMenu.InsertSeparator(6)))
+        self._insertSeparator(editMenu, 6)
 
         # Select all
         self._application.actionController.getAction(SELECT_ALL_ID).setFunc(
@@ -492,11 +497,13 @@ class BaseTextPanel(BasePagePanel):
         )
         self._application.actionController.insertMenuItem(SELECT_ALL_ID, editMenu, 7)
 
-        self._menuSeparators.append((editMenu, editMenu.InsertSeparator(8)))
+        # self._menuSeparators.append((editMenu, editMenu.InsertSeparator(8)))
+        self._insertSeparator(editMenu, 8)
 
         self._addLinesTools(9)
         self._addSpellTools(10)
-        self._menuSeparators.append((editMenu, editMenu.InsertSeparator(11)))
+        # self._menuSeparators.append((editMenu, editMenu.InsertSeparator(11)))
+        self._insertSeparator(editMenu, 11)
 
     def _addLinesTools(self, position):
         self.linesMenu = wx.Menu()
@@ -580,10 +587,18 @@ class BaseTextPanel(BasePagePanel):
             DELETE_LINE_RIGHT, self.linesMenu
         )
 
-        editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        self.linesMenuItem = editMenu.Insert(
-            position, wx.ID_ANY, _("Lines"), self.linesMenu
-        )
+        if self._isEnableGui():
+            editMenu = self._application.mainWindow.menuController[MENU_EDIT]
+            self.linesMenuItem = editMenu.Insert(
+                position, wx.ID_ANY, _("Lines"), self.linesMenu
+            )
+        
+    def _insertSeparator(self, menu, position):
+        if self._isEnableGui():
+            self._menuSeparators.append((menu, menu.InsertSeparator(position)))
+            
+    def _isEnableGui(self) -> bool:
+        return wx.GetApp().enableActionsGui
 
     def _spellOnOff(self, checked):
         EditorConfig(self._application.config).spellEnabled.value = checked
