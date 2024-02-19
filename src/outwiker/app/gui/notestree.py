@@ -365,19 +365,19 @@ class NotesTree(wx.Panel):
         actionController.appendToolbarButton(
             AddSiblingPageAction.stringId,
             self.toolbar,
-            getBuiltinImagePath("node-insert-next.png"),
+            getBuiltinImagePath("node-insert-next.svg"),
             False)
 
         actionController.appendToolbarButton(
             AddChildPageAction.stringId,
             self.toolbar,
-            getBuiltinImagePath("node-insert-child.png"),
+            getBuiltinImagePath("node-insert-child.svg"),
             False)
 
         actionController.appendToolbarButton(
             RemovePageAction.stringId,
             self.toolbar,
-            getBuiltinImagePath("node-delete.png"),
+            getBuiltinImagePath("node-delete.svg"),
             False)
 
         self.toolbar.AddSeparator()
