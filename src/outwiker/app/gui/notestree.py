@@ -39,8 +39,8 @@ class NotesTree(wx.Panel):
         self._externalPageSelect = False
 
         self.toolbar = wx.ToolBar(
-            parent=self,
-            style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE)
+            parent=self, style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE
+        )
 
         self.treeCtrl = NotesTreeCtrl(self)
 
@@ -52,16 +52,16 @@ class NotesTree(wx.Panel):
         self.popupMenu = None
 
         # Секция настроек куда сохраняем развернутость страницы
-        self.pageOptionsSection = 'Tree'
+        self.pageOptionsSection = "Tree"
 
         # Имя опции для сохранения развернутости страницы
-        self.pageOptionExpand = 'Expand'
+        self.pageOptionExpand = "Expand"
 
         self.__BindApplicationEvents()
         self.__BindGuiEvents()
-        self._dropTarget = NotesTreeDropFilesTarget(self._application,
-                                                    self.treeCtrl,
-                                                    self)
+        self._dropTarget = NotesTreeDropFilesTarget(
+            self._application, self.treeCtrl, self
+        )
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -71,7 +71,7 @@ class NotesTree(wx.Panel):
         super().SetForegroundColour(colour)
         self.treeCtrl.SetForegroundColour(colour)
 
-    def getPageByItemId(self, item_id: wx.TreeItemId) -> 'outwiker.core.tree.WikiPage':
+    def getPageByItemId(self, item_id: wx.TreeItemId) -> "outwiker.core.tree.WikiPage":
         return self.treeCtrl.GetItemData(item_id)
 
     def __BindApplicationEvents(self):
@@ -106,7 +106,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.treeUpdate(root)
 
     def __onPageUpdate(self, page, **kwargs):
-        change = kwargs['change']
+        change = kwargs["change"]
         if change & PAGE_UPDATE_ICON:
             self.treeCtrl.updateIcon(page)
 
@@ -133,12 +133,9 @@ class NotesTree(wx.Panel):
         self.treeCtrl.Bind(wx.EVT_TREE_ITEM_MENU, self.__onPopupMenu)
 
         # Сворачивание/разворачивание элементов
-        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_COLLAPSED,
-                           self.__onTreeStateChanged)
-        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_EXPANDED,
-                           self.__onTreeStateChanged)
-        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_ACTIVATED,
-                           self.__onTreeItemActivated)
+        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
+        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.__onTreeStateChanged)
+        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.__onTreeItemActivated)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -304,10 +301,10 @@ class NotesTree(wx.Panel):
         ctrlstate = wx.GetKeyState(wx.WXK_CONTROL)
         shiftstate = wx.GetKeyState(wx.WXK_SHIFT)
 
-        if(ctrlstate or shiftstate) and not self._externalPageSelect:
+        if (ctrlstate or shiftstate) and not self._externalPageSelect:
             self._application.mainWindow.tabsController.openInTab(
-                self.selectedPage,
-                True)
+                self.selectedPage, True
+            )
         else:
             self._application.selectedPage = self.selectedPage
 
@@ -344,21 +341,8 @@ class NotesTree(wx.Panel):
             GoToParentAction.stringId,
             self.toolbar,
             getBuiltinImagePath("go_to_parent.png"),
-            False)
-
-        self.toolbar.AddSeparator()
-
-        actionController.appendToolbarButton(
-            MovePageDownAction.stringId,
-            self.toolbar,
-            getBuiltinImagePath("move_down.png"),
-            False)
-
-        actionController.appendToolbarButton(
-            MovePageUpAction.stringId,
-            self.toolbar,
-            getBuiltinImagePath("move_up.png"),
-            False)
+            False,
+        )
 
         self.toolbar.AddSeparator()
 
@@ -366,19 +350,38 @@ class NotesTree(wx.Panel):
             AddSiblingPageAction.stringId,
             self.toolbar,
             getBuiltinImagePath("node-insert-next.svg"),
-            False)
+            False,
+        )
 
         actionController.appendToolbarButton(
             AddChildPageAction.stringId,
             self.toolbar,
             getBuiltinImagePath("node-insert-child.svg"),
-            False)
+            False,
+        )
 
         actionController.appendToolbarButton(
             RemovePageAction.stringId,
             self.toolbar,
             getBuiltinImagePath("node-delete.svg"),
-            False)
+            False,
+        )
+        
+        self.toolbar.AddSeparator()
+
+        actionController.appendToolbarButton(
+            MovePageDownAction.stringId,
+            self.toolbar,
+            getBuiltinImagePath("move_down.svg"),
+            False,
+        )
+
+        actionController.appendToolbarButton(
+            MovePageUpAction.stringId,
+            self.toolbar,
+            getBuiltinImagePath("move_up.svg"),
+            False,
+        )
 
         self.toolbar.AddSeparator()
 
@@ -386,7 +389,8 @@ class NotesTree(wx.Panel):
             EditPagePropertiesAction.stringId,
             self.toolbar,
             getBuiltinImagePath("edit.png"),
-            False)
+            False,
+        )
 
         self.toolbar.Realize()
         self.Layout()
@@ -406,7 +410,9 @@ class NotesTree(wx.Panel):
         for action in actions:
             actionController.removeToolbarButton(action.stringId)
 
-    def getTreeItem(self, page: 'outwiker.core.tree.WikiPage') -> Optional[wx.TreeItemId]:
+    def getTreeItem(
+        self, page: "outwiker.core.tree.WikiPage"
+    ) -> Optional[wx.TreeItemId]:
         """
         Получить элемент дерева по странице.
         Если для страницы не создан элемент дерева, возвращается None
@@ -456,9 +462,7 @@ class NotesTreeDropFilesTarget(BaseDropFilesTarget):
     Class to drop files to notes in the notes tree panel.
     """
 
-    def __init__(self, application,
-                 targetWindow: wx.TreeCtrl,
-                 notesTree: NotesTree):
+    def __init__(self, application, targetWindow: wx.TreeCtrl, notesTree: NotesTree):
         super().__init__(application, targetWindow)
         self._notesTree = notesTree
 
@@ -470,20 +474,21 @@ class NotesTreeDropFilesTarget(BaseDropFilesTarget):
         if flags & flags_mask:
             page = self._notesTree.getPageByItemId(item)
             if page is not None:
-                file_names = [os.path.basename(fname)
-                              for fname
-                              in correctedFiles]
+                file_names = [os.path.basename(fname) for fname in correctedFiles]
 
                 text = _("Attach files to the note '{title}'?\n\n{files}").format(
-                    title=page.display_title,
-                    files='\n'.join(file_names)
+                    title=page.display_title, files="\n".join(file_names)
                 )
 
-                if MessageBox(text,
-                              _("Attach files to the note?"),
-                              wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
-                    attachFiles(self._application.mainWindow,
-                                page, correctedFiles)
+                if (
+                    MessageBox(
+                        text,
+                        _("Attach files to the note?"),
+                        wx.YES_NO | wx.ICON_QUESTION,
+                    )
+                    == wx.YES
+                ):
+                    attachFiles(self._application.mainWindow, page, correctedFiles)
                 return True
 
         return False
