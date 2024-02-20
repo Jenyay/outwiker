@@ -340,7 +340,7 @@ class NotesTree(wx.Panel):
         actionController.appendToolbarButton(
             GoToParentAction.stringId,
             self.toolbar,
-            getBuiltinImagePath("go_to_parent.png"),
+            getBuiltinImagePath("node-go_to_parent.svg"),
             False,
         )
 
@@ -372,14 +372,14 @@ class NotesTree(wx.Panel):
         actionController.appendToolbarButton(
             MovePageDownAction.stringId,
             self.toolbar,
-            getBuiltinImagePath("move_down.svg"),
+            getBuiltinImagePath("node-move_down.svg"),
             False,
         )
 
         actionController.appendToolbarButton(
             MovePageUpAction.stringId,
             self.toolbar,
-            getBuiltinImagePath("move_up.svg"),
+            getBuiltinImagePath("node-move_up.svg"),
             False,
         )
 
