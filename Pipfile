@@ -18,7 +18,7 @@ rcssmin = "==1.1.1"
 
 [dev-packages]
 invoke = "==2.2.0"
-cx-freeze = "==6.15.14"
+cx-freeze = "==6.15.15"
 pympler = "==1.0.1"
 pytest = ">=7.4"
 coverage = ">=7.3"
