@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.3.0.935" status="dev">
+    <version number="3.3.0.936" status="beta" date="2024-03-07">
         <changes>
+			<change>Added the ability for remapping for Ctr+C, Ctrl+V, Ctrl+X, Ctrl+A, Ctrl+Z, Ctrl+Y hot keys.</change>
+			<change>Use new vector icons for buttons.</change>
+			<change>Added new icons for pages.</change>
         </changes>
 
         <changes lang="ru">
+			<change>Возможность переназначать горячие клавиши Ctr+C, Ctrl+V, Ctrl+X, Ctrl+A, Ctrl+Z, Ctrl+Y.</change>
+			<change>Новые векторные значки в интерфейсе.</change>
+			<change>Добавлены новые значки для заметок.</change>
         </changes>
     </version>
 
