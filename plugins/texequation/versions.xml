@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="2.6.10">
+		<download href="https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.6.10.zip">
+			<requirements>
+				<api>3.934</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Update the KaTeX engine.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Обновление движка KaTeX.</change>
+		</changes>
+	</version>
+
 	<version number="2.6.9" date="2024-01-27">
 		<download href="https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.6.9.zip">
 			<requirements>
