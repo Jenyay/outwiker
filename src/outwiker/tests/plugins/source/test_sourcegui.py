@@ -27,7 +27,7 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         dirlist = ["plugins/source"]
         self.samplefilesPath = "testdata/samplefiles/sources"
-        self._stylesCount = 48
+        self._stylesCount = 49
 
         self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
