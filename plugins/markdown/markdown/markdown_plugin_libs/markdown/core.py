@@ -23,7 +23,7 @@ import codecs
 import sys
 import logging
 import importlib
-from typing import TYPE_CHECKING, Any, Callable, ClassVar, Mapping, Sequence, TextIO
+from typing import TYPE_CHECKING, Any, BinaryIO, Callable, ClassVar, Mapping, Sequence
 from . import util
 from .preprocessors import build_preprocessors
 from .blockprocessors import build_block_parser
@@ -159,7 +159,7 @@ class Markdown:
     def registerExtensions(
         self,
         extensions: Sequence[Extension | str],
-        configs: Mapping[str, Mapping[str, Any]]
+        configs: Mapping[str, dict[str, Any]]
     ) -> Markdown:
         """
         Load a list of extensions into an instance of the `Markdown` class.
@@ -387,8 +387,8 @@ class Markdown:
 
     def convertFile(
         self,
-        input: str | TextIO | None = None,
-        output: str | TextIO | None = None,
+        input: str | BinaryIO | None = None,
+        output: str | BinaryIO | None = None,
         encoding: str | None = None,
     ) -> Markdown:
         """
@@ -424,8 +424,6 @@ class Markdown:
             input_file.close()
         else:
             text = sys.stdin.read()
-            if not isinstance(text, str):  # pragma: no cover
-                text = text.decode(encoding)
 
         text = text.lstrip('\ufeff')  # remove the byte-order mark
 
@@ -448,12 +446,7 @@ class Markdown:
         else:
             # Encode manually and write bytes to stdout.
             html = html.encode(encoding, "xmlcharrefreplace")
-            try:
-                # Write bytes directly to buffer (Python 3).
-                sys.stdout.buffer.write(html)
-            except AttributeError:  # pragma: no cover
-                # Probably Python 2, which works with bytes by default.
-                sys.stdout.write(html)
+            sys.stdout.buffer.write(html)
 
         return self
 
@@ -498,8 +491,8 @@ def markdownFromFile(**kwargs: Any):
     [`convert`][markdown.Markdown.convert].
 
     Keyword arguments:
-        input (str | TextIO): A file name or readable object.
-        output (str | TextIO): A file name or writable object.
+        input (str | BinaryIO): A file name or readable object.
+        output (str | BinaryIO): A file name or writable object.
         encoding (str): Encoding of input and output.
         **kwargs: Any arguments accepted by the `Markdown` class.
 

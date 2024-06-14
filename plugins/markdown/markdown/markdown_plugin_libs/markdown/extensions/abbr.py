@@ -41,12 +41,12 @@ class AbbrExtension(Extension):
 class AbbrPreprocessor(BlockProcessor):
     """ Abbreviation Preprocessor - parse text for abbr references. """
 
-    RE = re.compile(r'^[*]\[(?P<abbr>[^\]]*)\][ ]?:[ ]*\n?[ ]*(?P<title>.*)$', re.MULTILINE)
+    RE = re.compile(r'^[*]\[(?P<abbr>[^\\]*?)\][ ]?:[ ]*\n?[ ]*(?P<title>.*)$', re.MULTILINE)
 
-    def test(self, parent, block):
+    def test(self, parent: etree.Element, block: str) -> bool:
         return True
 
-    def run(self, parent, blocks):
+    def run(self, parent: etree.Element, blocks: list[str]) -> bool:
         """
         Find and remove all Abbreviation references from the text.
         Each reference is set as a new `AbbrPattern` in the markdown instance.
@@ -71,30 +71,19 @@ class AbbrPreprocessor(BlockProcessor):
         blocks.insert(0, block)
         return False
 
-    def _generate_pattern(self, text):
-        """
-        Given a string, returns an regex pattern to match that string.
-
-        'HTML' -> r'(?P<abbr>[H][T][M][L])'
-
-        Note: we force each char as a literal match (in brackets) as we don't
-        know what they will be beforehand.
-
-        """
-        chars = list(text)
-        for i in range(len(chars)):
-            chars[i] = r'[%s]' % chars[i]
-        return r'(?P<abbr>\b%s\b)' % (r''.join(chars))
+    def _generate_pattern(self, text: str) -> str:
+        """ Given a string, returns a regex pattern to match that string. """
+        return f"(?P<abbr>\\b{ re.escape(text) }\\b)"
 
 
 class AbbrInlineProcessor(InlineProcessor):
     """ Abbreviation inline pattern. """
 
-    def __init__(self, pattern, title):
+    def __init__(self, pattern: str, title: str):
         super().__init__(pattern)
         self.title = title
 
-    def handleMatch(self, m, data):
+    def handleMatch(self, m: re.Match[str], data: str) -> tuple[etree.Element, int, int]:
         abbr = etree.Element('abbr')
         abbr.text = AtomicString(m.group('abbr'))
         abbr.set('title', self.title)

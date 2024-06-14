@@ -5,9 +5,11 @@ import itertools
 import contextlib
 import pathlib
 import re
+import stat
+import sys
 
-from .py310compat import text_encoding
-from .glob import translate
+from .compat.py310 import text_encoding
+from .glob import Translator
 
 
 __all__ = ['Path']
@@ -84,7 +86,69 @@ class InitializedState:
         super().__init__(*args, **kwargs)
 
 
-class CompleteDirs(InitializedState, zipfile.ZipFile):
+class SanitizedNames:
+    """
+    ZipFile mix-in to ensure names are sanitized.
+    """
+
+    def namelist(self):
+        return list(map(self._sanitize, super().namelist()))
+
+    @staticmethod
+    def _sanitize(name):
+        r"""
+        Ensure a relative path with posix separators and no dot names.
+
+        Modeled after
+        https://github.com/python/cpython/blob/bcc1be39cb1d04ad9fc0bd1b9193d3972835a57c/Lib/zipfile/__init__.py#L1799-L1813
+        but provides consistent cross-platform behavior.
+
+        >>> san = SanitizedNames._sanitize
+        >>> san('/foo/bar')
+        'foo/bar'
+        >>> san('//foo.txt')
+        'foo.txt'
+        >>> san('foo/.././bar.txt')
+        'foo/bar.txt'
+        >>> san('foo../.bar.txt')
+        'foo../.bar.txt'
+        >>> san('\\foo\\bar.txt')
+        'foo/bar.txt'
+        >>> san('D:\\foo.txt')
+        'D/foo.txt'
+        >>> san('\\\\server\\share\\file.txt')
+        'server/share/file.txt'
+        >>> san('\\\\?\\GLOBALROOT\\Volume3')
+        '?/GLOBALROOT/Volume3'
+        >>> san('\\\\.\\PhysicalDrive1\\root')
+        'PhysicalDrive1/root'
+
+        Retain any trailing slash.
+        >>> san('abc/')
+        'abc/'
+
+        Raises a ValueError if the result is empty.
+        >>> san('../..')
+        Traceback (most recent call last):
+        ...
+        ValueError: Empty filename
+        """
+
+        def allowed(part):
+            return part and part not in {'..', '.'}
+
+        # Remove the drive letter.
+        # Don't use ntpath.splitdrive, because that also strips UNC paths
+        bare = re.sub('^([A-Z]):', r'\1', name, flags=re.IGNORECASE)
+        clean = bare.replace('\\', '/')
+        parts = clean.split('/')
+        joined = '/'.join(filter(allowed, parts))
+        if not joined:
+            raise ValueError("Empty filename")
+        return joined + '/' * name.endswith('/')
+
+
+class CompleteDirs(InitializedState, SanitizedNames, zipfile.ZipFile):
     """
     A ZipFile subclass that ensures that implied directories
     are always included in the namelist.
@@ -179,13 +243,18 @@ class FastLookup(CompleteDirs):
 
 
 def _extract_text_encoding(encoding=None, *args, **kwargs):
-    # stacklevel=3 so that the caller of the caller see any warning.
-    return text_encoding(encoding, 3), args, kwargs
+    # compute stack level so that the caller of the caller sees any warning.
+    is_pypy = sys.implementation.name == 'pypy'
+    stack_level = 3 + is_pypy
+    return text_encoding(encoding, stack_level), args, kwargs
 
 
 class Path:
     """
-    A pathlib-compatible interface for zip files.
+    A :class:`importlib.resources.abc.Traversable` interface for zip files.
+
+    Implements many of the features users enjoy from
+    :class:`pathlib.Path`.
 
     Consider a zip file with this structure::
 
@@ -260,7 +329,7 @@ class Path:
     >>> str(path.parent)
     'mem'
 
-    If the zipfile has no filename, such attribtues are not
+    If the zipfile has no filename, such ﻿attributes are not
     valid and accessing them will raise an Exception.
 
     >>> zf.filename = None
@@ -388,17 +457,21 @@ class Path:
 
     def is_symlink(self):
         """
-        Return whether this path is a symlink. Always false (python/cpython#82102).
+        Return whether this path is a symlink.
         """
-        return False
+        info = self.root.getinfo(self.at)
+        mode = info.external_attr >> 16
+        return stat.S_ISLNK(mode)
 
     def glob(self, pattern):
         if not pattern:
             raise ValueError(f"Unacceptable pattern: {pattern!r}")
 
         prefix = re.escape(self.at)
-        matches = re.compile(prefix + translate(pattern)).fullmatch
-        return map(self._next, filter(matches, self.root.namelist()))
+        tr = Translator(seps='/')
+        matches = re.compile(prefix + tr.translate(pattern)).fullmatch
+        names = (data.filename for data in self.root.filelist)
+        return map(self._next, filter(matches, names))
 
     def rglob(self, pattern):
         return self.glob(f'**/{pattern}')

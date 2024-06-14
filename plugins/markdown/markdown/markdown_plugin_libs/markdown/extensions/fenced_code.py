@@ -25,10 +25,14 @@ from textwrap import dedent
 from . import Extension
 from ..preprocessors import Preprocessor
 from .codehilite import CodeHilite, CodeHiliteExtension, parse_hl_lines
-from .attr_list import get_attrs, AttrListExtension
+from .attr_list import get_attrs_and_remainder, AttrListExtension
 from ..util import parseBoolValue
 from ..serializers import _escape_attrib_html
 import re
+from typing import TYPE_CHECKING, Any, Iterable
+
+if TYPE_CHECKING:  # pragma: no cover
+    from markdown import Markdown
 
 
 class FencedCodeExtension(Extension):
@@ -52,7 +56,7 @@ class FencedBlockPreprocessor(Preprocessor):
     FENCED_BLOCK_RE = re.compile(
         dedent(r'''
             (?P<fence>^(?:~{3,}|`{3,}))[ ]*                          # opening fence
-            ((\{(?P<attrs>[^\}\n]*)\})|                              # (optional {attrs} or
+            ((\{(?P<attrs>[^\n]*)\})|                                # (optional {attrs} or
             (\.?(?P<lang>[\w#.+-]*)[ ]*)?                            # optional (.)lang
             (hl_lines=(?P<quot>"|')(?P<hl_lines>.*?)(?P=quot)[ ]*)?) # optional hl_lines)
             \n                                                       # newline (end of opening fence)
@@ -62,11 +66,11 @@ class FencedBlockPreprocessor(Preprocessor):
         re.MULTILINE | re.DOTALL | re.VERBOSE
     )
 
-    def __init__(self, md, config):
+    def __init__(self, md: Markdown, config: dict[str, Any]):
         super().__init__(md)
         self.config = config
         self.checked_for_deps = False
-        self.codehilite_conf = {}
+        self.codehilite_conf: dict[str, Any] = {}
         self.use_attr_list = False
         # List of options to convert to boolean values
         self.bool_options = [
@@ -76,7 +80,7 @@ class FencedBlockPreprocessor(Preprocessor):
             'use_pygments'
         ]
 
-    def run(self, lines):
+    def run(self, lines: list[str]) -> list[str]:
         """ Match and store Fenced Code Blocks in the `HtmlStash`. """
 
         # Check for dependent extensions
@@ -90,12 +94,17 @@ class FencedBlockPreprocessor(Preprocessor):
             self.checked_for_deps = True
 
         text = "\n".join(lines)
+        index = 0
         while 1:
-            m = self.FENCED_BLOCK_RE.search(text)
+            m = self.FENCED_BLOCK_RE.search(text, index)
             if m:
                 lang, id, classes, config = None, '', [], {}
                 if m.group('attrs'):
-                    id, classes, config = self.handle_attrs(get_attrs(m.group('attrs')))
+                    attrs, remainder = get_attrs_and_remainder(m.group('attrs'))
+                    if remainder:  # Does not have correctly matching curly braces, so the syntax is invalid.
+                        index = m.end('attrs')  # Explicitly skip over this, to prevent an infinite loop.
+                        continue
+                    id, classes, config = self.handle_attrs(attrs)
                     if len(classes):
                         lang = classes.pop(0)
                 else:
@@ -147,11 +156,13 @@ class FencedBlockPreprocessor(Preprocessor):
 
                 placeholder = self.md.htmlStash.store(code)
                 text = f'{text[:m.start()]}\n{placeholder}\n{text[m.end():]}'
+                # Continue from after the replaced text in the next iteration.
+                index = m.start() + 1 + len(placeholder)
             else:
                 break
         return text.split("\n")
 
-    def handle_attrs(self, attrs):
+    def handle_attrs(self, attrs: Iterable[tuple[str, str]]) -> tuple[str, list[str], dict[str, Any]]:
         """ Return tuple: `(id, [list, of, classes], {configs})` """
         id = ''
         classes = []
@@ -169,7 +180,7 @@ class FencedBlockPreprocessor(Preprocessor):
                 configs[k] = v
         return id, classes, configs
 
-    def _escape(self, txt):
+    def _escape(self, txt: str) -> str:
         """ basic html escaping """
         txt = txt.replace('&', '&amp;')
         txt = txt.replace('<', '&lt;')
