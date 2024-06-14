@@ -19,7 +19,7 @@ init:
     - sh: sudo apt-get -y install libwebkit2gtk-4.0
 install:
     - git submodule update --init --recursive
-    - cmd: cinst innosetup
+    - cmd: choco install innosetup -y
     - cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% run python -m pip install --upgrade pip
     - cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% run python -m pip install attrdict
     - cmd: py -%PY_PYTHON% -m pipenv install --dev -v
