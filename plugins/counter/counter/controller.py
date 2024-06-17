@@ -54,7 +54,7 @@ class Controller:
             ActionGUIInfo(InsertCounterAction(self._application, self),
                           MENU_WIKI_COMMANDS,
                           ButtonInfo(TOOLBAR_PLUGINS,
-                                     os.path.join(imagesPath, 'counter.png'))
+                                     os.path.join(imagesPath, 'counter.svg'))
                           ),
         ]
 
