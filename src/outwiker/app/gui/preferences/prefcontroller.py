@@ -144,7 +144,7 @@ class PrefController:
             _("Interface"),
             interfacePanelsList,
             PREF_PANEL_INTERFACE,
-            icon_fname=getBuiltinImagePath("interface.png"),
+            icon_fname=getBuiltinImagePath("interface.svg"),
         )
 
     def _createEditorGroup(self):

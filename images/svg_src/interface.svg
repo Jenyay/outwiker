@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   sodipodi:docname="interface.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="12.030079"
+     inkscape:cx="35.909989"
+     inkscape:cy="21.030618"
+     inkscape:window-width="1920"
+     inkscape:window-height="1088"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#ffffff;stroke:#4681c2;stroke-width:0.609335;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0.695433;paint-order:fill markers stroke;fill-opacity:1"
+       id="rect5"
+       width="9.3632183"
+       height="9.3599281"
+       x="0.31890818"
+       y="0.32024023" />
+    <rect
+       style="fill:#4681c2;fill-opacity:1;stroke:#4681c2;stroke-width:0.663177;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6"
+       width="9.2720928"
+       height="1.3499544"
+       x="0.36405858"
+       y="0.35328916" />
+    <circle
+       style="fill:#f2d23b;fill-opacity:1;stroke:none;stroke-width:0.140127;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle5"
+       cx="7.2474542"
+       cy="0.97827774"
+       r="0.59416145" />
+    <path
+       style="fill:none;stroke:#4681c2;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
+       d="M 5.0214537,1.7818708 V 9.6386932"
+       id="path6" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#4681c2;stroke-width:0.503657;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0.695433;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect11-3"
+       width="1.9887338"
+       height="2.0267997"
+       x="1.676553"
+       y="2.9901156" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#4681c2;stroke-width:0.503657;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0.695433;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect11"
+       width="1.9887338"
+       height="2.0267997"
+       x="1.676553"
+       y="6.383625" />
+    <path
+       style="fill:none;stroke:#565656;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 6.1257921,3.4615412 H 8.7192054"
+       id="path12" />
+    <path
+       style="fill:none;stroke:#565656;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 6.1257921,4.8766252 H 8.7192054"
+       id="path13" />
+    <path
+       style="fill:none;stroke:#565656;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 6.1257921,4.1690832 H 8.7192054"
+       id="path14" />
+    <path
+       style="fill:none;stroke:#565656;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 6.1257921,5.5841672 H 8.7192054"
+       id="path15" />
+    <circle
+       style="fill:#f2d23b;fill-opacity:1;stroke:none;stroke-width:0.140127;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="circle15"
+       cx="8.9189501"
+       cy="0.97827774"
+       r="0.59416145" />
+  </g>
+</svg>
