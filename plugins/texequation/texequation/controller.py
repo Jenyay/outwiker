@@ -53,7 +53,7 @@ class Controller:
             ActionGUIInfo(
                 TexEquationAction(self._application),
                 MENU_WIKI_COMMANDS,
-                ButtonInfo(TOOLBAR_PLUGINS, self._get_image_full_path("equation.png")),
+                ButtonInfo(TOOLBAR_PLUGINS, self._get_image_full_path("equation.svg")),
             ),
         ]
 
@@ -105,5 +105,5 @@ class Controller:
             prefPanel,
             _("TeXEquation [Plugin]"),
             parent_page_tag=PREF_PANEL_PLUGINS,
-            icon_fname=self._get_image_full_path("equation.png"),
+            icon_fname=self._get_image_full_path("equation.svg"),
         )
