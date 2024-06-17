@@ -51,7 +51,7 @@ class Controller:
             ActionGUIInfo(
                 InsertSourceAction(self._application),
                 MENU_WIKI_COMMANDS,
-                ButtonInfo(TOOLBAR_PLUGINS, self._get_image_full_path("source.png")),
+                ButtonInfo(TOOLBAR_PLUGINS, self._get_image_full_path("source.svg")),
             ),
         ]
 
@@ -87,5 +87,5 @@ class Controller:
             prefPanel,
             _("Source [Plugin]"),
             parent_page_tag=PREF_PANEL_PLUGINS,
-            icon_fname=self._get_image_full_path("source.png"),
+            icon_fname=self._get_image_full_path("source.svg"),
         )

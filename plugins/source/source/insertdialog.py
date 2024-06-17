@@ -4,6 +4,7 @@ import wx
 
 from outwiker.api.gui.dialogs import TestedDialog
 from outwiker.api.gui.controls import FilesTreeComboBox
+from outwiker.api.gui.images import readImage
 
 from .i18n import get_
 from .misc import getImagePath
@@ -23,6 +24,9 @@ class InsertDialog(TestedDialog):
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
             title=_("Source code"),
         )
+
+        self.ICONS_WIDTH = 16
+        self.ICONS_HEIGHT = 16
 
         # Размер отступа
         self._indent = 50
@@ -239,7 +243,9 @@ class InsertDialog(TestedDialog):
         )
 
         # Кнопка для прикрепления нового файла
-        attachImage = wx.Bitmap(getImagePath("attach.png"))
+        attachImage = readImage(
+            getImagePath("attach.svg"), self.ICONS_WIDTH, self.ICONS_HEIGHT
+        )
         self.attachButton = wx.BitmapButton(parent, -1, attachImage)
         self.attachButton.SetToolTip(_("Attach new files"))
 
