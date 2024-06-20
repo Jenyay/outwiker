@@ -119,6 +119,8 @@ class TextEditor(TextEditorBase):
         selBackColor = self._config.selBackColor.value
         marginBackColor = self._config.marginBackColor.value
 
+        self.textCtrl.SetUseTabs(not self._config.tabUseSpaces.value)
+
         self.__showlinenumbers = self._config.lineNumbers.value
 
         self.textCtrl.StyleSetSize(wx.stc.STC_STYLE_DEFAULT, size)

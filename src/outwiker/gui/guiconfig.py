@@ -332,6 +332,9 @@ class EditorConfig:
     TAB_WIDTH_SECTION = "TabWidth"
     TAB_WIDTH_DEFAULT = 4
 
+    TAB_USE_SPACES_SECTION = "TabUseSpaces"
+    TAB_USE_SPACES_DEFAULT = False
+
     FONT_SIZE_SECTION = "size"
     FONT_SIZE_DEFAULT = 10
 
@@ -394,6 +397,14 @@ class EditorConfig:
             GeneralGuiConfig.GENERAL_SECTION,
             EditorConfig.TAB_WIDTH_SECTION,
             EditorConfig.TAB_WIDTH_DEFAULT,
+        )
+
+        # Add spaces instead tabs
+        self.tabUseSpaces = BooleanOption(
+            self.config,
+            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.TAB_USE_SPACES_SECTION,
+            EditorConfig.TAB_USE_SPACES_DEFAULT,
         )
 
         # Размер шрифта

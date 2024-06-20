@@ -30,6 +30,7 @@ class EditorPanel(BasePrefPanel):
         self.fontLabel = wx.StaticText(self, -1, _("Font"))
         self.fontPicker = wx.FontPickerCtrl(self, -1)
         self.lineNumbersCheckBox = wx.CheckBox(self, -1, _("Show line numbers"))
+        self.tabUseSpacesCheckBox = wx.CheckBox(self, -1, _("Use spaces instead tabs"))
         self.tabWidthLabel = wx.StaticText(self, -1, _("Tab width"))
 
         self.tabWidthSpin = wx.SpinCtrl(
@@ -154,6 +155,7 @@ class EditorPanel(BasePrefPanel):
         mainSizer.Add(
             self.lineNumbersCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
+        mainSizer.Add(self.tabUseSpacesCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         mainSizer.Add(tabWidthSizer, 1, wx.EXPAND, 0)
         mainSizer.Add(homeEndSizer, 1, wx.EXPAND, 0)
 
@@ -164,6 +166,11 @@ class EditorPanel(BasePrefPanel):
         self.lineNumbers = configelements.BooleanElement(
             self.__config.lineNumbers, self.lineNumbersCheckBox
         )
+
+        # Use spaces instead tabs
+        self.tabUseSpaces = configelements.BooleanElement(
+                self.__config.tabUseSpaces, self.tabUseSpacesCheckBox
+                )
 
         # Шрифт для редактора
         fontOption = FontOption(
@@ -210,6 +217,7 @@ class EditorPanel(BasePrefPanel):
 
     def Save(self):
         self.lineNumbers.save()
+        self.tabUseSpaces.save()
         self.fontEditor.save()
         self.tabWidth.save()
         self.__config.homeEndKeys.value = self.homeEndCombo.GetSelection()

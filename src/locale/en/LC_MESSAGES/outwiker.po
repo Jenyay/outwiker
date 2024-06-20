@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-10 21:35+0300\n"
+"POT-Creation-Date: 2024-06-20 16:37+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -442,7 +442,7 @@ msgstr "Save current note"
 
 #: outwiker/app/actions/search.py:29
 #: outwiker/app/gui/preferences/hotkeyspanel.py:86
-#: outwiker/gui/basetextpanel.py:318 outwiker/pages/search/searchpanel.py:274
+#: outwiker/gui/basetextpanel.py:321 outwiker/pages/search/searchpanel.py:274
 msgid "Search"
 msgstr "Search"
 
@@ -1325,11 +1325,11 @@ msgstr ""
 "Can't save config.\n"
 "%s"
 
-#: outwiker/app/gui/notestree.py:218 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:215 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
-#: outwiker/app/gui/notestree.py:477
+#: outwiker/app/gui/notestree.py:479
 #, python-brace-format
 msgid ""
 "Attach files to the note '{title}'?\n"
@@ -1340,7 +1340,7 @@ msgstr ""
 "\n"
 "{files}"
 
-#: outwiker/app/gui/notestree.py:483
+#: outwiker/app/gui/notestree.py:486
 msgid "Attach files to the note?"
 msgstr "Attach files to the note?"
 
@@ -1441,10 +1441,14 @@ msgid "Show line numbers"
 msgstr "Show line numbers"
 
 #: outwiker/app/gui/preferences/editorpanel.py:33
+msgid "Use spaces instead tabs"
+msgstr "Use spaces instead tabs"
+
+#: outwiker/app/gui/preferences/editorpanel.py:34
 msgid "Tab width"
 msgstr "Tab width"
 
-#: outwiker/app/gui/preferences/editorpanel.py:46
+#: outwiker/app/gui/preferences/editorpanel.py:47
 msgid ""
 "Home / End keys moves the cursor \n"
 "to the beginning / end of "
@@ -1452,27 +1456,27 @@ msgstr ""
 "Home / End keys moves the cursor \n"
 "to the beginning / end of "
 
-#: outwiker/app/gui/preferences/editorpanel.py:52
+#: outwiker/app/gui/preferences/editorpanel.py:53
 msgid "Line"
 msgstr "Line"
 
-#: outwiker/app/gui/preferences/editorpanel.py:52
+#: outwiker/app/gui/preferences/editorpanel.py:53
 msgid "Paragraph"
 msgstr "Paragraph"
 
-#: outwiker/app/gui/preferences/editorpanel.py:55
+#: outwiker/app/gui/preferences/editorpanel.py:56
 msgid "Font color"
 msgstr "Font color"
 
-#: outwiker/app/gui/preferences/editorpanel.py:59
+#: outwiker/app/gui/preferences/editorpanel.py:60
 msgid "Background color"
 msgstr "Background color"
 
-#: outwiker/app/gui/preferences/editorpanel.py:64
+#: outwiker/app/gui/preferences/editorpanel.py:65
 msgid "Background color of the selected text"
 msgstr "Background color of the selected text"
 
-#: outwiker/app/gui/preferences/editorpanel.py:71
+#: outwiker/app/gui/preferences/editorpanel.py:72
 msgid "Page margin background color"
 msgstr "Page margin background color"
 
@@ -2206,7 +2210,7 @@ msgstr "Page \"%s\" is changed by the external program"
 msgid "Owerwrite?"
 msgstr "Owerwrite?"
 
-#: outwiker/gui/basetextpanel.py:585
+#: outwiker/gui/basetextpanel.py:593
 msgid "Lines"
 msgstr "Lines"
 
