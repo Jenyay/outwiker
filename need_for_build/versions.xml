@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.3.0.937" status="dev">
+    <version number="3.3.0.938" status="beta" date="2024-06-22">
         <changes>
+			<change>Added new vector icons for plugins.</change>
+			<change>Updated used libraries.</change>
         </changes>
 
         <changes lang="ru">
+			<change>Добавлены новые значки для плагинов.</change>
+			<change>Обновлены используемые библиотеки.</change>
         </changes>
     </version>
 
