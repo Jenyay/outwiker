@@ -79,6 +79,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             "outwiker.api.gui.defines",
             "outwiker.api.gui.dialogs",
             "outwiker.api.gui.hotkeys",
+            "outwiker.api.gui.images",
             "outwiker.api.gui.longprocessrunner",
             "outwiker.api.gui.mainwindow",
             "outwiker.api.gui.preferences",
