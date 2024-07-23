@@ -1,45 +1,30 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-    <version number="3.2.0.926" date="2023-08-10">
+    <version number="3.3.0.940" date="2023-08-13">
         <changes>
-            <change>Added the ability to create folders in attached files.</change>
-            <change>Added the ability to navigate to subfolders in the attachments panel.</change>
-            <change>Added the ability to insert links to files in attached subfolders.</change>
-            <change>Added page search in preview mode.</change>
-            <change>Added the support of nested subfolders for the (:include:) wiki command..</change>
-            <change>Added the support of nested subfolders for the %thumb% wiki command.</change>
-            <change>Implemented highlighting the %thumb% wiki command on wiki pages.</change>
-            <change>Changed design of the dialog about overwriting of attached files.</change>
-            <change>Improved design of links to attached files and other pages.</change>
-            <change>Added a new subdir parameter to (:attachlist:) wiki command.</change>
-            <change>Improved (:childlist:) and (:attachlist:) wiki commands result design.</change>
-            <change>Added new CSS classes to generated HTML code.</change>
-            <change>Added the ability to show hidden folders in attachments.</change>
-            <change>Added settings for the Minimize and Close buttons.</change>
-            <change>Added information about selected attachments to the status bar.</change>
-            <change>Added the ability to set the style of list item bullets on a wiki page.</change>
-            <change>Migrate to wxPython 4.2.1.</change>
+            <change>Changed tags cloud design.</change>
+            <change>Added the ability to filter tags.</change>
+            <change>Added the ability to display the tags cloud as a list.</change>
+            <change>On tags cloud panel add a button to show applied tags only.</change>
+            <change>Added context menu for tags cloud.</change>
+            <change>Use new vector icons for buttons.</change>
+            <change>Added the ability to use vector icons for pages.</change>
+            <change>New preferences dialog.</change>
+            <change>Improvements in working with list item styles on wiki pages.</change>
+            <change>Added new icons for pages.</change>
         </changes>
 
         <changes lang="ru">
-            <change>Добавлена возможность создания папок в прикрепленных файлах.</change>
-            <change>Добавлена возможность перехода во вложенные папки на панели прикрепленных файлов.</change>
-            <change>Добавлена возможность вставки ссылок на файлы во вложенных прикрепленных папках.</change>
-            <change>Добавлено выделение цветом ссылок на отсутствующие прикрепленные файлы на викистраницах.</change>
-            <change>Добавлен поиск по странице в режиме просмотра.</change>
-            <change>Добавлена поддержка вложенных папок в викикоманде (:include:).</change>
-            <change>Добавлена поддержка вложенных папок в викикоманде %thumb%.</change>
-            <change>Реализована подсветка викикоманды %thumb% в редакторе.</change>
-            <change>Изменен дизайн диалога с информацией о перезаписи прикрепленных файлов.</change>
-            <change>Улучшен дизайн ссылок на прикрепленные файлы и на другие страницы.</change>
-            <change>Добавлен параметр subdir для викикоманды (:attachlist:).</change>
-            <change>Улучшен дизайн результата работы викикоманд (:childlist:) и (:attachlist:).</change>
-            <change>В создаваемый код HTML добавлены новые CSS-классы.</change>
-            <change>Добавлена возможность отображения скрытых папок на панели с вложениями.</change>
-            <change>Добавлены настройки поведения кнопок "Свернуть" и "Закрыть".</change>
-            <change>Добавлена информация о выбранных прикрепленных файлах на статусную панель.</change>
-            <change>Добавлена возможность задавать стиль маркеров элементов списка на викистранице.</change>
-            <change>Переход на wxPython 4.2.1.</change>
+            <change>Новый дизайн облака меток.</change>
+            <change>Добавлена возможность фильтрации меток.</change>
+            <change>Добавлена возможность отображения облака меток в виде списка.</change>
+            <change>На панели облака тегов добавлена кнопка для показа только установленных меток.</change>
+            <change>Добавлено контекстное меню для облака меток.</change>
+            <change>Новые векторные значки в интерфейсе.</change>
+            <change>Добавлена возможность использования векторных значков для страниц.</change>
+            <change>Улучшения в работе со стилями элементов списка на викистраницах.</change>
+            <change>Новый диалог настроек.</change>
+            <change>Добавлены новые значки для заметок.</change>
         </changes>
     </version>
 </versions>

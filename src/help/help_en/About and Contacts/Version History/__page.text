@@ -1,3 +1,17 @@
+!!! [=3.3 (August 2024)=]
+
+* Changed tags cloud design.
+* Added the ability to filter tags.
+* Added the ability to display the tags cloud as a list.
+* On tags cloud panel add a button to show applied tags only.
+* Added context menu for tags cloud.
+* Use new vector icons for buttons.
+* Added the ability to use vector icons for pages.
+* New preferences dialog.
+* Improvements in working with list item styles on wiki pages.
+* Added new icons for pages.
+
+
 !!! [=3.2 (August 2023)=]
 
 * Added the ability to create folders in attached files.
