@@ -14,7 +14,7 @@ var __webpack_exports__ = {};
 
 ;// CONCATENATED MODULE: ./contrib/copy-tex/katex2tex.js
 // Set these to how you want inline and display math to be delimited.
-const defaultCopyDelimiters = {
+var defaultCopyDelimiters = {
   inline: ['$', '$'],
   // alternative: ['\(', '\)']
   display: ['$$', '$$'] // alternative: ['\[', '\]']
@@ -30,10 +30,10 @@ function katexReplaceWithTex(fragment, copyDelimiters) {
 
   // Remove .katex-html blocks that are preceded by .katex-mathml blocks
   // (which will get replaced below).
-  const katexHtml = fragment.querySelectorAll('.katex-mathml + .katex-html');
+  var katexHtml = fragment.querySelectorAll('.katex-mathml + .katex-html');
 
-  for (let i = 0; i < katexHtml.length; i++) {
-    const element = katexHtml[i];
+  for (var i = 0; i < katexHtml.length; i++) {
+    var element = katexHtml[i];
 
     if (element.remove) {
       element.remove();
@@ -44,17 +44,18 @@ function katexReplaceWithTex(fragment, copyDelimiters) {
   // descendant, with inline delimiters.
 
 
-  const katexMathml = fragment.querySelectorAll('.katex-mathml');
+  var katexMathml = fragment.querySelectorAll('.katex-mathml');
 
-  for (let i = 0; i < katexMathml.length; i++) {
-    const element = katexMathml[i];
-    const texSource = element.querySelector('annotation');
+  for (var _i = 0; _i < katexMathml.length; _i++) {
+    var _element = katexMathml[_i];
+
+    var texSource = _element.querySelector('annotation');
 
     if (texSource) {
-      if (element.replaceWith) {
-        element.replaceWith(texSource);
-      } else if (element.parentNode) {
-        element.parentNode.replaceChild(texSource, element);
+      if (_element.replaceWith) {
+        _element.replaceWith(texSource);
+      } else if (_element.parentNode) {
+        _element.parentNode.replaceChild(texSource, _element);
       }
 
       texSource.innerHTML = copyDelimiters.inline[0] + texSource.innerHTML + copyDelimiters.inline[1];
@@ -62,11 +63,11 @@ function katexReplaceWithTex(fragment, copyDelimiters) {
   } // Switch display math to display delimiters.
 
 
-  const displays = fragment.querySelectorAll('.katex-display annotation');
+  var displays = fragment.querySelectorAll('.katex-display annotation');
 
-  for (let i = 0; i < displays.length; i++) {
-    const element = displays[i];
-    element.innerHTML = copyDelimiters.display[0] + element.innerHTML.substr(copyDelimiters.inline[0].length, element.innerHTML.length - copyDelimiters.inline[0].length - copyDelimiters.inline[1].length) + copyDelimiters.display[1];
+  for (var _i2 = 0; _i2 < displays.length; _i2++) {
+    var _element2 = displays[_i2];
+    _element2.innerHTML = copyDelimiters.display[0] + _element2.innerHTML.substr(copyDelimiters.inline[0].length, _element2.innerHTML.length - copyDelimiters.inline[0].length - copyDelimiters.inline[1].length) + copyDelimiters.display[1];
   }
 
   return fragment;
@@ -78,41 +79,43 @@ function katexReplaceWithTex(fragment, copyDelimiters) {
 function closestKatex(node) {
   // If node is a Text Node, for example, go up to containing Element,
   // where we can apply the `closest` method.
-  const element = node instanceof Element ? node : node.parentElement;
+  var element = node instanceof Element ? node : node.parentElement;
   return element && element.closest('.katex');
 } // Global copy handler to modify behavior on/within .katex elements.
 
 
 document.addEventListener('copy', function (event) {
-  const selection = window.getSelection();
+  var selection = window.getSelection();
 
   if (selection.isCollapsed || !event.clipboardData) {
     return; // default action OK if selection is empty or unchangeable
   }
 
-  const clipboardData = event.clipboardData;
-  const range = selection.getRangeAt(0); // When start point is within a formula, expand to entire formula.
+  var clipboardData = event.clipboardData;
+  var range = selection.getRangeAt(0); // When start point is within a formula, expand to entire formula.
 
-  const startKatex = closestKatex(range.startContainer);
+  var startKatex = closestKatex(range.startContainer);
 
   if (startKatex) {
     range.setStartBefore(startKatex);
   } // Similarly, when end point is within a formula, expand to entire formula.
 
 
-  const endKatex = closestKatex(range.endContainer);
+  var endKatex = closestKatex(range.endContainer);
 
   if (endKatex) {
     range.setEndAfter(endKatex);
   }
 
-  const fragment = range.cloneContents();
+  var fragment = range.cloneContents();
 
   if (!fragment.querySelector('.katex-mathml')) {
     return; // default action OK if no .katex-mathml elements
   }
 
-  const htmlContents = Array.prototype.map.call(fragment.childNodes, el => el instanceof Text ? el.textContent : el.outerHTML).join(''); // Preserve usual HTML copy/paste behavior.
+  var htmlContents = Array.prototype.map.call(fragment.childNodes, function (el) {
+    return el instanceof Text ? el.textContent : el.outerHTML;
+  }).join(''); // Preserve usual HTML copy/paste behavior.
 
   clipboardData.setData('text/html', htmlContents); // Rewrite plain-text version.
 

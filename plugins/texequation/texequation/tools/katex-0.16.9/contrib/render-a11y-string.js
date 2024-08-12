@@ -100,7 +100,7 @@ var __webpack_exports__ = {};
 // included in the build.
 // $FlowIgnore: we import the types directly anyways
 
-const stringMap = {
+var stringMap = {
   "(": "left parenthesis",
   ")": "right parenthesis",
   "[": "open bracket",
@@ -173,22 +173,22 @@ const stringMap = {
   "\\hat": "hat",
   "\\acute": "acute"
 };
-const powerMap = {
+var powerMap = {
   "prime": "prime",
   "degree": "degrees",
   "circle": "degrees",
   "2": "squared",
   "3": "cubed"
 };
-const openMap = {
+var openMap = {
   "|": "open vertical bar",
   ".": ""
 };
-const closeMap = {
+var closeMap = {
   "|": "close vertical bar",
   ".": ""
 };
-const binMap = {
+var binMap = {
   "+": "plus",
   "-": "minus",
   "\\pm": "plus minus",
@@ -200,7 +200,7 @@ const binMap = {
   "\\circ": "circle",
   "\\bullet": "bullet"
 };
-const relMap = {
+var relMap = {
   "=": "equals",
   "\\approx": "approximately equals",
   "≠": "does not equal",
@@ -216,7 +216,7 @@ const relMap = {
   "\\Rightarrow": "right arrow",
   ":": "colon"
 };
-const accentUnderMap = {
+var accentUnderMap = {
   "\\underleftarrow": "left arrow",
   "\\underrightarrow": "right arrow",
   "\\underleftrightarrow": "left-right arrow",
@@ -225,12 +225,12 @@ const accentUnderMap = {
   "\\utilde": "tilde"
 };
 
-const buildString = (str, type, a11yStrings) => {
+var buildString = function buildString(str, type, a11yStrings) {
   if (!str) {
     return;
   }
 
-  let ret;
+  var ret;
 
   if (type === "open") {
     ret = str in openMap ? openMap[str] : stringMap[str] || str;
@@ -258,18 +258,18 @@ const buildString = (str, type, a11yStrings) => {
   }
 };
 
-const buildRegion = (a11yStrings, callback) => {
-  const regionStrings = [];
+var buildRegion = function buildRegion(a11yStrings, callback) {
+  var regionStrings = [];
   a11yStrings.push(regionStrings);
   callback(regionStrings);
 };
 
-const handleObject = (tree, a11yStrings, atomType) => {
+var handleObject = function handleObject(tree, a11yStrings, atomType) {
   // Everything else is assumed to be an object...
   switch (tree.type) {
     case "accent":
       {
-        buildRegion(a11yStrings, a11yStrings => {
+        buildRegion(a11yStrings, function (a11yStrings) {
           buildA11yStrings(tree.base, a11yStrings, atomType);
           a11yStrings.push("with");
           buildString(tree.label, "normal", a11yStrings);
@@ -280,7 +280,7 @@ const handleObject = (tree, a11yStrings, atomType) => {
 
     case "accentUnder":
       {
-        buildRegion(a11yStrings, a11yStrings => {
+        buildRegion(a11yStrings, function (a11yStrings) {
           buildA11yStrings(tree.base, a11yStrings, atomType);
           a11yStrings.push("with");
           buildString(accentUnderMap[tree.label], "normal", a11yStrings);
@@ -297,9 +297,7 @@ const handleObject = (tree, a11yStrings, atomType) => {
 
     case "atom":
       {
-        const {
-          text
-        } = tree;
+        var text = tree.text;
 
         switch (tree.family) {
           case "bin":
@@ -351,8 +349,8 @@ const handleObject = (tree, a11yStrings, atomType) => {
 
     case "color":
       {
-        const color = tree.color.replace(/katex-/, "");
-        buildRegion(a11yStrings, regionStrings => {
+        var color = tree.color.replace(/katex-/, "");
+        buildRegion(a11yStrings, function (regionStrings) {
           regionStrings.push("start color " + color);
           buildA11yStrings(tree.body, regionStrings, atomType);
           regionStrings.push("end color " + color);
@@ -378,12 +376,10 @@ const handleObject = (tree, a11yStrings, atomType) => {
 
     case "genfrac":
       {
-        buildRegion(a11yStrings, regionStrings => {
+        buildRegion(a11yStrings, function (regionStrings) {
           // genfrac can have unbalanced delimiters
-          const {
-            leftDelim,
-            rightDelim
-          } = tree; // NOTE: Not sure if this is a safe assumption
+          var leftDelim = tree.leftDelim,
+              rightDelim = tree.rightDelim; // NOTE: Not sure if this is a safe assumption
           // hasBarLine true -> fraction, false -> binomial
 
           if (tree.hasBarLine) {
@@ -422,7 +418,7 @@ const handleObject = (tree, a11yStrings, atomType) => {
 
     case "leftright":
       {
-        buildRegion(a11yStrings, regionStrings => {
+        buildRegion(a11yStrings, function (regionStrings) {
           buildString(tree.left, "open", regionStrings);
           buildA11yStrings(tree.body, regionStrings, atomType);
           buildString(tree.right, "close", regionStrings);
@@ -450,10 +446,8 @@ const handleObject = (tree, a11yStrings, atomType) => {
 
     case "op":
       {
-        const {
-          body,
-          name
-        } = tree;
+        var body = tree.body,
+            name = tree.name;
 
         if (body) {
           buildA11yStrings(body, a11yStrings, atomType);
@@ -532,14 +526,12 @@ const handleObject = (tree, a11yStrings, atomType) => {
 
     case "sqrt":
       {
-        buildRegion(a11yStrings, regionStrings => {
-          const {
-            body,
-            index
-          } = tree;
+        buildRegion(a11yStrings, function (regionStrings) {
+          var body = tree.body,
+              index = tree.index;
 
           if (index) {
-            const indexString = flatten(buildA11yStrings(index, [], atomType)).join(",");
+            var indexString = flatten(buildA11yStrings(index, [], atomType)).join(",");
 
             if (indexString === "3") {
               regionStrings.push("cube root of");
@@ -564,12 +556,10 @@ const handleObject = (tree, a11yStrings, atomType) => {
 
     case "supsub":
       {
-        const {
-          base,
-          sub,
-          sup
-        } = tree;
-        let isLog = false;
+        var base = tree.base,
+            sub = tree.sub,
+            sup = tree.sup;
+        var isLog = false;
 
         if (base) {
           buildA11yStrings(base, a11yStrings, atomType);
@@ -577,7 +567,7 @@ const handleObject = (tree, a11yStrings, atomType) => {
         }
 
         if (sub) {
-          const regionName = isLog ? "base" : "subscript";
+          var regionName = isLog ? "base" : "subscript";
           buildRegion(a11yStrings, function (regionStrings) {
             regionStrings.push("start " + regionName);
             buildA11yStrings(sub, regionStrings, atomType);
@@ -587,7 +577,7 @@ const handleObject = (tree, a11yStrings, atomType) => {
 
         if (sup) {
           buildRegion(a11yStrings, function (regionStrings) {
-            const supString = flatten(buildA11yStrings(sup, [], atomType)).join(",");
+            var supString = flatten(buildA11yStrings(sup, [], atomType)).join(",");
 
             if (supString in powerMap) {
               regionStrings.push(powerMap[supString]);
@@ -802,9 +792,10 @@ const handleObject = (tree, a11yStrings, atomType) => {
       {
         // \neq and \ne are macros so we let "htmlmathml" render the mathmal
         // side of things and extract the text from that.
-        const atomType = tree.mclass.slice(1); // $FlowFixMe: drop the leading "m" from the values in mclass
+        var _atomType = tree.mclass.slice(1); // $FlowFixMe: drop the leading "m" from the values in mclass
 
-        buildA11yStrings(tree.body, a11yStrings, atomType);
+
+        buildA11yStrings(tree.body, a11yStrings, _atomType);
         break;
       }
 
@@ -846,13 +837,13 @@ const handleObject = (tree, a11yStrings, atomType) => {
   }
 };
 
-const buildA11yStrings = function (tree, a11yStrings, atomType) {
+var buildA11yStrings = function buildA11yStrings(tree, a11yStrings, atomType) {
   if (a11yStrings === void 0) {
     a11yStrings = [];
   }
 
   if (tree instanceof Array) {
-    for (let i = 0; i < tree.length; i++) {
+    for (var i = 0; i < tree.length; i++) {
       buildA11yStrings(tree[i], a11yStrings, atomType);
     }
   } else {
@@ -862,8 +853,8 @@ const buildA11yStrings = function (tree, a11yStrings, atomType) {
   return a11yStrings;
 };
 
-const flatten = function (array) {
-  let result = [];
+var flatten = function flatten(array) {
+  var result = [];
   array.forEach(function (item) {
     if (item instanceof Array) {
       result = result.concat(flatten(item));
@@ -874,10 +865,10 @@ const flatten = function (array) {
   return result;
 };
 
-const renderA11yString = function (text, settings) {
-  const tree = katex__WEBPACK_IMPORTED_MODULE_0___default().__parse(text, settings);
+var renderA11yString = function renderA11yString(text, settings) {
+  var tree = katex__WEBPACK_IMPORTED_MODULE_0___default().__parse(text, settings);
 
-  const a11yStrings = buildA11yStrings(tree, [], "normal");
+  var a11yStrings = buildA11yStrings(tree, [], "normal");
   return flatten(a11yStrings).join(", ");
 };
 
