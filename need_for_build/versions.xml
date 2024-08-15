@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.3.0.939" status="dev">
+    <version number="3.3.0.940" date="2024-08-15">
         <changes>
+            <change>Release.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Выпуск стабильнйо версии.</change>
         </changes>
     </version>
 

@@ -11,7 +11,7 @@
 		</changes>
 
 		<changes lang="ru">
-			<change>Откат номера версии движка KaTeX.</change>
+			<change>Откат версии движка KaTeX.</change>
 		</changes>
 	</version>
 
