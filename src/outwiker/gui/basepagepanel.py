@@ -50,7 +50,7 @@ class BasePagePanel(ScrolledPanel):
 
     def removeTool(self, idstring, fullUpdate=True):
         if idstring not in self._tools:
-            logger.error('BasePagePanel.removeTool. Invalid idstring: {}'.format(idstring))
+            logger.error('BasePagePanel.removeTool. Invalid idstring: %s', idstring)
             return
 
         tool = self._tools[idstring]

@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 
-class TagsList(object):
+class TagsList:
     """
     Класс для хранения списка всех тегов в вики
     """
-    def __init__(self, root):
-        self._root = root
 
+    def __init__(self, root):
         # Словарь тегов. Ключ - тег, значение - список страниц с этим тегом
         self._tags = {}
 
@@ -18,7 +17,7 @@ class TagsList(object):
         """
         Возвращает список тегов
         """
-        return list(self._tags.keys())
+        return list(sorted(self._tags.keys()))
 
     def _findTags(self, page):
         """

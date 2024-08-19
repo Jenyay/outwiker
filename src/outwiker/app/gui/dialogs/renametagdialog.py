@@ -14,7 +14,7 @@ class RenameTagDialog(wx.Dialog):
         parent - родительское окно
         tagsList - список тегов для облака тегов (экземпляр класса TagsList)
         """
-        super(RenameTagDialog, self).__init__(
+        super().__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
@@ -27,7 +27,7 @@ class RenameTagDialog(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
 
     def __createControls(self, tagsList):
-        self.__tagSelector = SingleTagSelector(self)
+        self.__tagSelector = SingleTagSelector(self, enable_active_tags_filter=False)
         self.__tagSelector.SetMinSize((300, 150))
         self.__tagSelector.setTags(tagsList)
 
@@ -69,6 +69,15 @@ class RenameTagDialog(wx.Dialog):
     @property
     def newTagName(self):
         return self.__newTagName.GetValue().strip()
+
+    def setTagsCloudFontSize(self, minFontSize: int, maxFontSize: int):
+        self.__tagSelector.setFontSize(minFontSize, maxFontSize)
+
+    def setTagsCloudMode(self, mode: str):
+        self.__tagSelector.setMode(mode)
+
+    def enableTagsCloudTooltips(self, enable: bool = True):
+        self.__tagSelector.enableTooltips(enable)
 
     def __onOk(self, _event):
         if self.oldTagName is None:

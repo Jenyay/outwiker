@@ -152,7 +152,7 @@ class FakeTagsPanel(object):
         self.tags = []
         self.marks = []
 
-    def Bind(self, eventClass, eventFunc):
+    def Bind(self, eventClass, handler):
         pass
 
     def clearTags(self):
@@ -169,6 +169,10 @@ class FakeTagsPanel(object):
             self.__setMark(tag)
         else:
             self.__removeMark(tag)
+
+    def mark_list(self, tags, marked=True):
+        for tag in tags:
+            self.mark(tag, marked)
 
     def __setMark(self, tag):
         self.marks.append(tag)

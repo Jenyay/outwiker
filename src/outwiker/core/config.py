@@ -7,10 +7,11 @@ import json
 import shutil
 import logging
 import os
+from typing import List
 
 from outwiker.gui.stcstyle import StcStyle
 
-logger = logging.getLogger('outwiker.core.config')
+logger = logging.getLogger("outwiker.core.config")
 
 
 class Config:
@@ -20,27 +21,28 @@ class Config:
 
     def __init__(self, fname, readonly=False):
         """
-            fname: config file name
-            readonly: True if config should be in readonly mode
+        fname: config file name
+        readonly: True if config should be in readonly mode
         """
         self.readonly = readonly
         self.fname = fname
         self._config = configparser.ConfigParser(interpolation=None)
 
         try:
-            self._config.read(self.fname, encoding='utf8')
+            self._config.read(self.fname, encoding="utf8")
         except (UnicodeDecodeError, IOError, configparser.Error):
             backup_fname = self.fname + ".bak"
-            logger.error('Invalid config file: {src}. The file will be copied to {backup} and cleaned.'.format(
-                src=fname,
-                backup=os.path.basename(backup_fname))
+            logger.error(
+                "Invalid config file: %s. The file will be copied to %s and cleaned.",
+                fname,
+                os.path.basename(backup_fname),
             )
 
             self._backup(self.fname, backup_fname)
-            with open(self.fname, "w", encoding='utf8') as fp:
+            with open(self.fname, "w", encoding="utf8") as fp:
                 fp.write(self.getDefaultContent())
 
-            self._config.read(self.fname, encoding='utf8')
+            self._config.read(self.fname, encoding="utf8")
 
         # make aliases for the configparser methods
         self.get = self._config.get
@@ -50,7 +52,7 @@ class Config:
         self.has_option = self._config.has_option
 
     def _backup(self, fname, backup_fname):
-        shutil.copyfile(self.fname, backup_fname)
+        shutil.copyfile(fname, backup_fname)
 
     def getDefaultContent(self):
         """
@@ -58,7 +60,7 @@ class Config:
             Returns:
                 Empty string.
         """
-        return u""
+        return ""
 
     def set(self, section, param, value):
         """
@@ -93,7 +95,7 @@ class Config:
         if self.readonly:
             return False
 
-        with open(self.fname, "w", encoding='utf8') as fp:
+        with open(self.fname, "w", encoding="utf8") as fp:
             self._config.write(fp)
 
         return True
@@ -182,8 +184,8 @@ class BaseOption(metaclass=ABCMeta):
 
     def _prepareToWrite(self, val) -> str:
         """
-        Преобразовать (если надо) значение к виду, в котором оно будет
-    записано в конфиг
+            Преобразовать (если надо) значение к виду, в котором оно будет
+        записано в конфиг
         """
         return val
 
@@ -206,14 +208,11 @@ class StringOption(BaseOption):
     """
 
     def __init__(self, config, section, param, defaultValue):
-        super(StringOption, self).__init__(config,
-                                           section,
-                                           param,
-                                           defaultValue)
+        super().__init__(config, section, param, defaultValue)
 
-    def _loadValue(self):
+    def _loadValue(self) -> str:
         """
-        Получить значение. В производных классах этот метод переопределяется
+        Получить значение
         """
         return self.config.get(self.section, self.param)
 
@@ -224,9 +223,9 @@ class BooleanOption(BaseOption):
     Элемент управления - wx.CheckBox
     """
 
-    def _loadValue(self):
+    def _loadValue(self) -> bool:
         """
-        Получить значение. В производных классах этот метод переопределяется
+        Получить значение
         """
         return self.config.getbool(self.section, self.param)
 
@@ -252,12 +251,9 @@ class StcStyleOption(BaseOption):
         """
         defaultValue - экземпляр класса StcStyle
         """
-        super(StcStyleOption, self).__init__(config,
-                                             section,
-                                             param,
-                                             defaultValue)
+        super().__init__(config, section, param, defaultValue)
 
-    def _loadValue(self):
+    def _loadValue(self) -> StcStyle:
         """
         Получить значение. В производных классах этот метод переопределяется
         """
@@ -267,7 +263,7 @@ class StcStyleOption(BaseOption):
 
         return style
 
-    def _prepareToWrite(self, val):
+    def _prepareToWrite(self, val: StcStyle) -> str:
         return val.tostr()
 
 
@@ -275,19 +271,17 @@ class DateTimeOption(BaseOption):
     """
     Настройка для хранения даты и времени
     """
+
     formatDate = "%Y-%m-%d %H:%M:%S.%f"
 
     def __init__(self, config, section, param, defaultValue):
-        super(DateTimeOption, self).__init__(config,
-                                             section,
-                                             param,
-                                             defaultValue)
+        super(DateTimeOption, self).__init__(config, section, param, defaultValue)
 
-    def _loadValue(self):
+    def _loadValue(self) -> datetime.datetime:
         strdate = self.config.get(self.section, self.param)
         return datetime.datetime.strptime(strdate, self.formatDate)
 
-    def _prepareToWrite(self, value):
+    def _prepareToWrite(self, value: datetime.datetime) -> str:
         return datetime.datetime.strftime(value, self.formatDate)
 
 
@@ -299,15 +293,15 @@ class ListOption(BaseOption):
     """
 
     def __init__(self, config, section, param, defaultValue, separator=";"):
-        super(ListOption, self).__init__(config, section, param, defaultValue)
+        super().__init__(config, section, param, defaultValue)
         self.__separator = separator
 
-    def _loadValue(self):
+    def _loadValue(self) -> List[str]:
         line = self.config.get(self.section, self.param)
         items = line.split(self.__separator)
         return items
 
-    def _prepareToWrite(self, value):
+    def _prepareToWrite(self, value: List[str]) -> str:
         return self.__separator.join(value)
 
 
@@ -318,19 +312,16 @@ class IntegerOption(BaseOption):
     """
 
     def __init__(self, config, section, param, defaultValue):
-        super(IntegerOption, self).__init__(config,
-                                            section,
-                                            param,
-                                            defaultValue)
+        super().__init__(config, section, param, defaultValue)
 
-    def _loadValue(self):
+    def _loadValue(self) -> int:
         """
         Получить значение. В производных классах этот метод переопределяется
         """
         return self.config.getint(self.section, self.param)
 
 
-class StringListSection(object):
+class StringListSection:
     """
     Класс для хранения списка строк. Список хранится в отдельной секции
     """
@@ -344,16 +335,16 @@ class StringListSection(object):
         """
         self._config = config
         self._section = section
-        self._paramname = u"%s{number}" % paramname
+        self._paramname = "%s{number}" % paramname
 
-    def _loadValue(self):
+    def _loadValue(self) -> List[str]:
         if not self._config.has_section(self._section):
             return []
 
         result = []
         index = 0
         try:
-            while (1):
+            while 1:
                 option = self._paramname.format(number=index)
                 subpath = self._config.get(self._section, option)
                 result.append(subpath)
@@ -364,14 +355,14 @@ class StringListSection(object):
         return result
 
     @property
-    def value(self):
+    def value(self) -> List[str]:
         """
         Возвращает знвчение парамета
         """
         return self._loadValue()
 
     @value.setter
-    def value(self, val):
+    def value(self, val: List[str]):
         """
         Устанавливает значение параметра
         """
@@ -382,12 +373,8 @@ class StringListSection(object):
             self._config.set(self._section, option, val[index])
 
 
-class FontOption(object):
-    def __init__(self,
-                 faceNameOption,
-                 sizeOption,
-                 isBoldOption,
-                 isItalicOption):
+class FontOption:
+    def __init__(self, faceNameOption, sizeOption, isBoldOption, isItalicOption):
         """
         faceNameOption - экземепляр класса StringOption, где хранится
         значение начертания шрифта
@@ -404,48 +391,40 @@ class PageConfig(Config):
     """
     Класс для хранения настроек страниц
     """
-    sectionName = u"General"
-    orderParamName = u"order"
-    datetimeParamName = u"datetime"
-    creationDatetimeParamName = u"creationdatetime"
-    aliasParamName = u"alias"
-    iconParamName = u'icon'
-    typeParamName = u'type'
+
+    sectionName = "General"
+    orderParamName = "order"
+    datetimeParamName = "datetime"
+    creationDatetimeParamName = "creationdatetime"
+    aliasParamName = "alias"
+    iconParamName = "icon"
+    typeParamName = "type"
 
     def __init__(self, fname, readonly=False):
-        Config.__init__(self, fname, readonly)
+        super().__init__(fname, readonly)
 
-        self.typeOption = StringOption(self,
-                                       PageConfig.sectionName,
-                                       PageConfig.typeParamName,
-                                       u"")
+        self.typeOption = StringOption(
+            self, PageConfig.sectionName, PageConfig.typeParamName, ""
+        )
 
-        self.orderOption = IntegerOption(self,
-                                         PageConfig.sectionName,
-                                         PageConfig.orderParamName, -1)
+        self.orderOption = IntegerOption(
+            self, PageConfig.sectionName, PageConfig.orderParamName, -1
+        )
 
-        self.lastViewedPageOption = StringOption(self,
-                                                 u"History",
-                                                 u"LastViewedPage",
-                                                 u"")
+        self.lastViewedPageOption = StringOption(self, "History", "LastViewedPage", "")
 
-        self.datetimeOption = DateTimeOption(self,
-                                             PageConfig.sectionName,
-                                             PageConfig.datetimeParamName,
-                                             None)
+        self.datetimeOption = DateTimeOption(
+            self, PageConfig.sectionName, PageConfig.datetimeParamName, None
+        )
 
         self.creationDatetimeOption = DateTimeOption(
-            self,
-            PageConfig.sectionName,
-            PageConfig.creationDatetimeParamName,
-            None)
+            self, PageConfig.sectionName, PageConfig.creationDatetimeParamName, None
+        )
 
-        self.aliasOption = StringOption(self,
-                                        PageConfig.sectionName,
-                                        PageConfig.aliasParamName,
-                                        u'')
+        self.aliasOption = StringOption(
+            self, PageConfig.sectionName, PageConfig.aliasParamName, ""
+        )
 
-        self.iconOption = StringOption(self,
-                                       PageConfig.sectionName,
-                                       PageConfig.iconParamName,
-                                       u'')
+        self.iconOption = StringOption(
+            self, PageConfig.sectionName, PageConfig.iconParamName, ""
+        )

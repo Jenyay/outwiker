@@ -5,24 +5,24 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 from typing import Callable, List
 
 from .exceptions import ReadonlyException
-from .tree import RootWikiPage, WikiPage
+from .tree import BasePage, WikiPage
 from .tree_commands import getAlternativeTitle
 
 # Functions to calculate new page order
 
 
-def orderCalculatorTop(_parent: RootWikiPage, _alias: str, _tags: List[str]) -> int:
+def orderCalculatorTop(_parent: BasePage, _alias: str, _tags: List[str]) -> int:
     """Add a page to top of the siblings"""
     return 0
 
 
-def orderCalculatorBottom(parent: RootWikiPage, _alias: str, _tags: List[str]) -> int:
+def orderCalculatorBottom(parent: BasePage, _alias: str, _tags: List[str]) -> int:
     """Add a page to bottom of the siblings"""
     return len(parent.children)
 
 
 def orderCalculatorAlphabetically(
-    parent: RootWikiPage, alias: str, _tags: List[str]
+    parent: BasePage, alias: str, _tags: List[str]
 ) -> int:
     """Sort a page alias alphabetically"""
     order = len(parent.children)
@@ -42,11 +42,11 @@ class PageFactory(metaclass=ABCMeta):
 
     def create(
         self,
-        parent: RootWikiPage,
+        parent: BasePage,
         alias: str,
         tags: List[str],
         order_calculator: Callable[
-            [RootWikiPage, str, List[str]], int
+            [BasePage, str, List[str]], int
         ] = orderCalculatorBottom
     ) -> WikiPage:
         """

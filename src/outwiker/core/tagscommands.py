@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from .tagslist import TagsList
 
 
-def parseTagsList(tagsString):
+def parseTagsList(tagsString: str) -> List[str]:
     """
     Преобразовать строку тегов, разделенных запятой, в список
     """
-    tags = [tag.strip() for tag in tagsString.split(",")
+    tags = [tag.strip() for tag in tagsString.lower().split(",")
             if len(tag.strip()) > 0]
 
     return tags
 
 
-def getTagsString(tags):
+def getTagsString(tags: List[str]) -> str:
     """
     Получить строку тегов
     """
@@ -24,9 +26,12 @@ def removeTag(page, tag):
     """
     Удалить тег из страницы
     """
-    pageTags = [pagetag.lower() for pagetag in page.tags]
-
     taglower = tag.lower()
+    pageTags = page.tags
+
+    if taglower not in pageTags:
+        return
+
     while taglower in pageTags:
         pageTags.remove(taglower)
 

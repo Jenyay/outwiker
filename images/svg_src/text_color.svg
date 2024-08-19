@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   sodipodi:docname="text_color.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="12.030079"
+     inkscape:cx="23.690618"
+     inkscape:cy="27.597491"
+     inkscape:window-width="1920"
+     inkscape:window-height="1088"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient5"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#d7e8fe;stop-opacity:1;"
+         offset="0"
+         id="stop5" />
+      <stop
+         style="stop-color:#d7e8fe;stop-opacity:0;"
+         offset="1"
+         id="stop6" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5"
+       id="linearGradient6"
+       x1="2.0999999"
+       y1="9.0999994"
+       x2="6.9308696"
+       y2="1.8737516"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0009355,0,0,1.015166,-13.09263,-14.721603)" />
+  </defs>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="rect1"
+       style="fill:#ffffff;stroke:#4681c2;stroke-width:0.501634;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m -11.516187,-14.421772 h 3.5752518 l 3.239169,3.407276 v 6.0910896 h -6.8144208 z"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       id="rect4"
+       style="fill:url(#linearGradient6);stroke-width:0.28464"
+       d="m -10.990666,-13.807953 3.4050548,-0.05363 -0.0032,2.85172 2.383127,-0.02852 0.02042,5.5547939 H -10.99069 Z"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="fill:none;stroke:#4681c2;stroke-width:0.501634;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m -7.9409352,-14.421772 -0.004,3.407276 h 3.219168"
+       id="path4"
+       sodipodi:nodetypes="ccc" />
+    <rect
+       style="fill:#b1d3ff;fill-opacity:1;stroke:#4681c2;stroke-width:0.42737;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6"
+       width="4.5714769"
+       height="1.1370758"
+       x="-10.373693"
+       y="-7.7831135" />
+    <path
+       d="m 6.0386929,5.273202 h -2.713004 l -0.475422,1.1058721 q -0.175699,0.4082425 -0.175699,0.60978 0,0.1601964 0.149861,0.2842195 0.155029,0.1188554 0.661456,0.1550288 V 7.6193046 H 1.2793089 V 7.4281024 q 0.439248,-0.077514 0.568439,-0.2015375 0.263549,-0.248046 0.583942,-1.0076872 L 4.8966478,0.45180625 h 0.180866 L 7.5166341,6.2808892 q 0.2945547,0.7027973 0.5322657,0.91467 0.2428783,0.2067051 0.6717914,0.2325432 V 7.6193046 H 5.9560108 V 7.4281024 Q 6.3745887,7.4074324 6.5192822,7.2885765 6.6691434,7.169721 6.6691434,6.9991894 q 0,-0.2273756 -0.2067051,-0.7183002 z M 5.8939994,4.8907976 4.7054448,2.0589381 3.4858849,4.8907976 Z"
+       id="text1"
+       style="font-size:10.5833px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#565656;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       aria-label="A" />
+    <rect
+       style="fill:#4681c2;fill-opacity:1;stroke:none;stroke-width:0.133545;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke"
+       id="rect2"
+       width="10"
+       height="1.7683055"
+       x="0"
+       y="8.2316933" />
+  </g>
+</svg>

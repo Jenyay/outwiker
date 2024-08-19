@@ -6,14 +6,19 @@ Working with attachments is one of the main features of the OutWiker. All files 
 
 There is the special button bar (located on the "Attachments" pane) to work with attachments. 
 
-<div align="center"><img src="__attach/screenshot.png"></div>
+<div align="center"><img src="__attach/attach_panel.png"></div>
 
 Its buttons are as follows:
 
-<ul>
-<li>"Attach Files..." — To attach new files.</li>
-<li>"Remove Files..." — To remove selected files.</li>
-<li>"Paste" — To insert relative pathname of the selected file into the note's body, e.g., selecting the file "cat.jpg" attached to this note and clicking the "Paste" button results in inserting "__attach/cat.jpg".</li>
-<li>"Execute" — To execute the selected file.
+<ol>
+<li>"Attach Files..." — Attach new files.</li>
+<li>"Attach Folder..." — Add a new folder as a copy of an existing one on the disk.</li>
+<li>"Create a new attached folder" — Create an empty attached folder.</li>
+<li>"Remove attached files..." — Remove selected files.</li>
+<li>"Rename attachment" — Change the name of an attached file or folder.</li>
+<li>"Select all" — Select all attached files and folders.</li>
+<li>"Insert link to attached file" — To insert relative path name of the selected file into the note's body, e.g., selecting the file "cat.jpg" attached to this note and clicking the "Paste" button results in inserting "__attach/cat.jpg".</li>
+<li>"Execute files" — To execute the selected files.
 <li>"Open attachments folder" — To open folder with attached files in the default file manager.</li>
+<li>"Copy Attachments path" — Copy path to folder with attachments.</li>
 </ul> 

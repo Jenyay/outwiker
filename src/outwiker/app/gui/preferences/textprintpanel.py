@@ -5,12 +5,12 @@ import wx
 from outwiker.core.config import FontOption
 from outwiker.gui.preferences import configelements
 from outwiker.gui.guiconfig import TextPrintConfig
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 
 
 class TextPrintPanel(BasePrefPanel):
     def __init__(self, parent, application):
-        super(type(self), self).__init__(parent)
+        super().__init__(parent)
 
         self.__createGuiElements()
         self.__set_properties()

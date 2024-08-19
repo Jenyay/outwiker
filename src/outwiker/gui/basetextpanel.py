@@ -5,33 +5,42 @@ import logging
 import wx
 import wx.lib.newevent
 
-from outwiker.app.actions.search import (SearchAction,
-                                         SearchNextAction,
-                                         SearchPrevAction,
-                                         SearchAndReplaceAction)
+from outwiker.app.actions.search import (
+    SearchAction,
+    SearchNextAction,
+    SearchPrevAction,
+    SearchAndReplaceAction,
+)
 from outwiker.app.services.clipboard import copyTextToClipboard
 from outwiker.app.services.messages import showError
-from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
-                                            LINE_DUPLICATE_ID,
-                                            MOVE_SELECTED_LINES_UP_ID,
-                                            MOVE_SELECTED_LINES_DOWN_ID,
-                                            DELETE_CURRENT_LINE,
-                                            JOIN_LINES,
-                                            DELETE_WORD_LEFT,
-                                            DELETE_WORD_RIGHT,
-                                            DELETE_LINE_LEFT,
-                                            DELETE_LINE_RIGHT,
-                                            GOTO_PREV_WORD,
-                                            GOTO_NEXT_WORD,
-                                            GOTO_PREV_WORD_SELECT,
-                                            GOTO_NEXT_WORD_SELECT,
-                                            GOTO_WORD_START,
-                                            GOTO_WORD_END,
-                                            CLIPBOARD_COPY_LINE,
-                                            CLIPBOARD_CUT_LINE,
-                                            CLIPBOARD_COPY_WORD,
-                                            CLIPBOARD_CUT_WORD,
-                                            )
+from outwiker.actions.polyactionsid import (
+    SPELL_ON_OFF_ID,
+    LINE_DUPLICATE_ID,
+    MOVE_SELECTED_LINES_UP_ID,
+    MOVE_SELECTED_LINES_DOWN_ID,
+    DELETE_CURRENT_LINE,
+    JOIN_LINES,
+    DELETE_WORD_LEFT,
+    DELETE_WORD_RIGHT,
+    DELETE_LINE_LEFT,
+    DELETE_LINE_RIGHT,
+    GOTO_PREV_WORD,
+    GOTO_NEXT_WORD,
+    GOTO_PREV_WORD_SELECT,
+    GOTO_NEXT_WORD_SELECT,
+    GOTO_WORD_START,
+    GOTO_WORD_END,
+    CLIPBOARD_COPY_LINE,
+    CLIPBOARD_CUT_LINE,
+    CLIPBOARD_COPY_WORD,
+    CLIPBOARD_CUT_WORD,
+    CLIPBOARD_COPY_ID,
+    CLIPBOARD_CUT_ID,
+    CLIPBOARD_PASTE_ID,
+    UNDO_ID,
+    REDO_ID,
+    SELECT_ALL_ID,
+)
 from outwiker.core.treetools import pageExists
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
@@ -40,7 +49,7 @@ from .dialogs.buttonsdialog import ButtonsDialog
 from .guiconfig import EditorConfig
 from .defines import MENU_EDIT, TOOLBAR_GENERAL
 
-logger = logging.getLogger('outwiker.gui.basetextpanel')
+logger = logging.getLogger("outwiker.gui.basetextpanel")
 
 
 class BaseTextPanel(BasePagePanel):
@@ -73,11 +82,15 @@ class BaseTextPanel(BasePagePanel):
             CLIPBOARD_CUT_LINE,
             CLIPBOARD_COPY_WORD,
             CLIPBOARD_CUT_WORD,
+            CLIPBOARD_COPY_ID,
+            CLIPBOARD_CUT_ID,
+            CLIPBOARD_PASTE_ID,
+            UNDO_ID,
+            REDO_ID,
+            SELECT_ALL_ID,
         ]
 
         self.searchMenu = None
-
-        # Added in outwiker.gui 1.2
         self.linesMenu = None
         self.linesMenuItem = None
 
@@ -99,14 +112,8 @@ class BaseTextPanel(BasePagePanel):
         self._spellOnOffEvent, self.EVT_SPELL_ON_OFF = wx.lib.newevent.NewEvent()
 
         self._addSearchTools()
-        self._addSpellTools()
-
-        editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        sepMenuItem = editMenu.AppendSeparator()
-        self._menuSeparators.append((editMenu, sepMenuItem))
-
+        self._addEditTools()
         self._addWordTools()
-        self._addLinesTools()
 
         self._application.onAttachmentPaste += self.onAttachmentPaste
         self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
@@ -165,8 +172,7 @@ class BaseTextPanel(BasePagePanel):
         """
         Проверить, что страница не изменена внешними средствами
         """
-        if (self._oldContent is not None and
-                self._oldContent != self.page.content):
+        if self._oldContent is not None and self._oldContent != self.page.content:
             # Старое содержимое не совпадает с содержимым страницы.
             # Значит содержимое страницы кто-то изменил
             self.__externalEdit()
@@ -201,14 +207,10 @@ class BaseTextPanel(BasePagePanel):
         """
         buttons = [_("Overwrite"), _("Load"), _("Cancel")]
 
-        message = _(
-            'Page "%s" is changed by the external program') % self.page.title
-        self.externalEditDialog = ButtonsDialog(self,
-                                                message,
-                                                _("Owerwrite?"),
-                                                buttons,
-                                                default=0,
-                                                cancel=2)
+        message = _('Page "%s" is changed by the external program') % self.page.title
+        self.externalEditDialog = ButtonsDialog(
+            self, message, _("Owerwrite?"), buttons, default=0, cancel=2
+        )
 
         result = self.externalEditDialog.ShowModal()
         self.externalEditDialog.Destroy()
@@ -243,15 +245,17 @@ class BaseTextPanel(BasePagePanel):
             page.content = newContent
         except IOError as e:
             # TODO: Проверить под Windows
-            showError(self._application.mainWindow,
-                      _("Can't save file %s") % (str(e.filename)))
+            showError(
+                self._application.mainWindow,
+                _("Can't save file %s") % (str(e.filename)),
+            )
 
     def _getAttachString(self, fnames):
         """
         Функция возвращает текст, который будет вставлен на страницу при
         вставке выбранных прикрепленных файлов из панели вложений
         """
-        return ' '.join(fnames)
+        return " ".join(fnames)
 
     def Clear(self):
         """
@@ -292,7 +296,9 @@ class BaseTextPanel(BasePagePanel):
 
         mainMenu.Remove(self.searchMenuIndex)
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        editMenu.Remove(self.linesMenuItem)
+        
+        if self._isEnableGui():
+            editMenu.Remove(self.linesMenuItem)
 
         for item in self._menuSeparators:
             item[0].Remove(item[1])
@@ -311,54 +317,60 @@ class BaseTextPanel(BasePagePanel):
         assert self.mainWindow is not None
         self.searchMenu = wx.Menu()
         mainMenu = self._application.mainWindow.menuController.getRootMenu()
+        
         mainMenu.Insert(self.searchMenuIndex, self.searchMenu, _("Search"))
 
         toolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
 
         # Начать поиск на странице
         self._application.actionController.appendMenuItem(
-            SearchAction.stringId, self.searchMenu)
+            SearchAction.stringId, self.searchMenu
+        )
         self._application.actionController.appendToolbarButton(
             SearchAction.stringId,
             toolbar,
-            getBuiltinImagePath("local_search.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("local_search.svg"),
+            fullUpdate=False,
+        )
 
         # Начать поиск и замену на странице
         self._application.actionController.appendMenuItem(
-            SearchAndReplaceAction.stringId,
-            self.searchMenu)
+            SearchAndReplaceAction.stringId, self.searchMenu
+        )
 
         self._application.actionController.appendToolbarButton(
             SearchAndReplaceAction.stringId,
             toolbar,
             getBuiltinImagePath("local_replace.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Продолжить поиск вперед на странице
         self._application.actionController.appendMenuItem(
-            SearchNextAction.stringId,
-            self.searchMenu)
+            SearchNextAction.stringId, self.searchMenu
+        )
 
         # Продолжить поиск назад на странице
         self._application.actionController.appendMenuItem(
-            SearchPrevAction.stringId,
-            self.searchMenu)
+            SearchPrevAction.stringId, self.searchMenu
+        )
 
-    def _addSpellTools(self):
+    def _addSpellTools(self, position):
         generalToolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        self._application.actionController.getAction(
-            SPELL_ON_OFF_ID).setFunc(self._spellOnOff)
+        self._application.actionController.getAction(SPELL_ON_OFF_ID).setFunc(
+            self._spellOnOff
+        )
 
-        self._application.actionController.appendMenuCheckItem(SPELL_ON_OFF_ID,
-                                                               editMenu)
+        self._application.actionController.insertMenuCheckItem(
+            SPELL_ON_OFF_ID, editMenu, position
+        )
 
         self._application.actionController.appendToolbarCheckButton(
             SPELL_ON_OFF_ID,
             generalToolbar,
             getBuiltinImagePath("spellcheck.png"),
-            fullUpdate=False
+            fullUpdate=False,
         )
 
         enableSpell = EditorConfig(self._application.config).spellEnabled.value
@@ -366,152 +378,227 @@ class BaseTextPanel(BasePagePanel):
 
     def _addWordTools(self):
         # Copy word to clipboard
-        self._application.actionController.getAction(
-            CLIPBOARD_COPY_WORD).setFunc(self._copyCurrentWordToClipboard)
+        self._application.actionController.getAction(CLIPBOARD_COPY_WORD).setFunc(
+            self._copyCurrentWordToClipboard
+        )
 
         self._application.actionController.appendHotkey(CLIPBOARD_COPY_WORD)
 
         # Cut word to clipboard
-        self._application.actionController.getAction(
-            CLIPBOARD_CUT_WORD).setFunc(self._cutCurrentWordToClipboard)
+        self._application.actionController.getAction(CLIPBOARD_CUT_WORD).setFunc(
+            self._cutCurrentWordToClipboard
+        )
 
         self._application.actionController.appendHotkey(CLIPBOARD_CUT_WORD)
 
         # Delete word left
         self._application.actionController.getAction(DELETE_WORD_LEFT).setFunc(
-            lambda params: self.GetEditor().DelWordLeft())
+            lambda params: self.GetEditor().DelWordLeft()
+        )
 
         self._application.actionController.appendHotkey(DELETE_WORD_LEFT)
 
         # Delete word right
         self._application.actionController.getAction(DELETE_WORD_RIGHT).setFunc(
-            lambda params: self.GetEditor().DelWordRight())
+            lambda params: self.GetEditor().DelWordRight()
+        )
 
         self._application.actionController.appendHotkey(DELETE_WORD_RIGHT)
 
         # Go to start of the current word
         self._application.actionController.getAction(GOTO_WORD_START).setFunc(
-            lambda params: self.GetEditor().GotoWordStart())
+            lambda params: self.GetEditor().GotoWordStart()
+        )
 
         self._application.actionController.appendHotkey(GOTO_WORD_START)
 
         # Go to end of the current word
         self._application.actionController.getAction(GOTO_WORD_END).setFunc(
-            lambda params: self.GetEditor().GotoWordEnd())
+            lambda params: self.GetEditor().GotoWordEnd()
+        )
 
         self._application.actionController.appendHotkey(GOTO_WORD_END)
 
         # Go to previous word
         self._application.actionController.getAction(GOTO_PREV_WORD).setFunc(
-            lambda params: self.GetEditor().WordLeft())
+            lambda params: self.GetEditor().WordLeft()
+        )
 
         self._application.actionController.appendHotkey(GOTO_PREV_WORD)
 
         # Go to next word
         self._application.actionController.getAction(GOTO_NEXT_WORD).setFunc(
-            lambda params: self.GetEditor().WordRight())
+            lambda params: self.GetEditor().WordRight()
+        )
 
         self._application.actionController.appendHotkey(GOTO_NEXT_WORD)
 
         # Go to previous word and select
         self._application.actionController.getAction(GOTO_PREV_WORD_SELECT).setFunc(
-            lambda params: self.GetEditor().WordLeftExtend())
+            lambda params: self.GetEditor().WordLeftExtend()
+        )
 
         self._application.actionController.appendHotkey(GOTO_PREV_WORD_SELECT)
 
         # Go to next word and select
         self._application.actionController.getAction(GOTO_NEXT_WORD_SELECT).setFunc(
-            lambda params: self.GetEditor().WordRightExtend())
+            lambda params: self.GetEditor().WordRightExtend()
+        )
 
         self._application.actionController.appendHotkey(GOTO_NEXT_WORD_SELECT)
 
-    def _addLinesTools(self):
+    def _addEditTools(self):
+        editMenu = self._application.mainWindow.menuController[MENU_EDIT]
+
+        # Undo
+        self._application.actionController.getAction(UNDO_ID).setFunc(
+            lambda params: self.GetEditor().Undo()
+        )
+        self._application.actionController.insertMenuItem(UNDO_ID, editMenu, 0)
+
+        # Redo
+        self._application.actionController.getAction(REDO_ID).setFunc(
+            lambda params: self.GetEditor().Redo()
+        )
+        self._application.actionController.insertMenuItem(REDO_ID, editMenu, 1)
+
+        # self._menuSeparators.append((editMenu, editMenu.InsertSeparator(2)))
+        self._insertSeparator(editMenu, 2)
+
+        # Clipboard
+        # Cut
+        self._application.actionController.getAction(CLIPBOARD_CUT_ID).setFunc(
+            lambda params: self.GetEditor().Cut()
+        )
+        self._application.actionController.insertMenuItem(CLIPBOARD_CUT_ID, editMenu, 3)
+
+        # Copy
+        self._application.actionController.getAction(CLIPBOARD_COPY_ID).setFunc(
+            lambda params: self.GetEditor().Copy()
+        )
+        self._application.actionController.insertMenuItem(
+            CLIPBOARD_COPY_ID, editMenu, 4
+        )
+
+        # Paste
+        self._application.actionController.getAction(CLIPBOARD_PASTE_ID).setFunc(
+            lambda params: self.GetEditor().Paste()
+        )
+        self._application.actionController.insertMenuItem(
+            CLIPBOARD_PASTE_ID, editMenu, 5
+        )
+
+        # self._menuSeparators.append((editMenu, editMenu.InsertSeparator(6)))
+        self._insertSeparator(editMenu, 6)
+
+        # Select all
+        self._application.actionController.getAction(SELECT_ALL_ID).setFunc(
+            lambda params: self.GetEditor().SelectAll()
+        )
+        self._application.actionController.insertMenuItem(SELECT_ALL_ID, editMenu, 7)
+
+        # self._menuSeparators.append((editMenu, editMenu.InsertSeparator(8)))
+        self._insertSeparator(editMenu, 8)
+
+        self._addLinesTools(9)
+        self._addSpellTools(10)
+        # self._menuSeparators.append((editMenu, editMenu.InsertSeparator(11)))
+        self._insertSeparator(editMenu, 11)
+
+    def _addLinesTools(self, position):
         self.linesMenu = wx.Menu()
 
         # Copy the current line to clipboard
-        self._application.actionController.getAction(
-            CLIPBOARD_COPY_LINE).setFunc(self._copyCurrentLineToClipboard)
+        self._application.actionController.getAction(CLIPBOARD_COPY_LINE).setFunc(
+            self._copyCurrentLineToClipboard
+        )
 
         self._application.actionController.appendMenuItem(
-            CLIPBOARD_COPY_LINE,
-            self.linesMenu
+            CLIPBOARD_COPY_LINE, self.linesMenu
         )
 
         # Cut the current line to clipboard
-        self._application.actionController.getAction(
-            CLIPBOARD_CUT_LINE).setFunc(self._cutCurrentLineToClipboard)
+        self._application.actionController.getAction(CLIPBOARD_CUT_LINE).setFunc(
+            self._cutCurrentLineToClipboard
+        )
 
         self._application.actionController.appendMenuItem(
-            CLIPBOARD_CUT_LINE,
-            self.linesMenu
+            CLIPBOARD_CUT_LINE, self.linesMenu
         )
 
         # Delete the current line line
         self._application.actionController.getAction(DELETE_CURRENT_LINE).setFunc(
-            lambda params: self.GetEditor().LineDelete())
+            lambda params: self.GetEditor().LineDelete()
+        )
 
         self._application.actionController.appendMenuItem(
-            DELETE_CURRENT_LINE,
-            self.linesMenu
+            DELETE_CURRENT_LINE, self.linesMenu
         )
 
         # Duplicate the current line
         self._application.actionController.getAction(LINE_DUPLICATE_ID).setFunc(
-            lambda params: self.GetEditor().LineDuplicate())
+            lambda params: self.GetEditor().LineDuplicate()
+        )
 
         self._application.actionController.appendMenuItem(
-            LINE_DUPLICATE_ID,
-            self.linesMenu
+            LINE_DUPLICATE_ID, self.linesMenu
         )
 
         # Move selected lines up
         self._application.actionController.getAction(MOVE_SELECTED_LINES_UP_ID).setFunc(
-            lambda params: self.GetEditor().MoveSelectedLinesUp())
+            lambda params: self.GetEditor().MoveSelectedLinesUp()
+        )
 
         self._application.actionController.appendMenuItem(
-            MOVE_SELECTED_LINES_UP_ID,
-            self.linesMenu
+            MOVE_SELECTED_LINES_UP_ID, self.linesMenu
         )
 
         # Move selected lines down
-        self._application.actionController.getAction(MOVE_SELECTED_LINES_DOWN_ID).setFunc(
-            lambda params: self.GetEditor().MoveSelectedLinesDown())
+        self._application.actionController.getAction(
+            MOVE_SELECTED_LINES_DOWN_ID
+        ).setFunc(lambda params: self.GetEditor().MoveSelectedLinesDown())
 
         self._application.actionController.appendMenuItem(
-            MOVE_SELECTED_LINES_DOWN_ID,
-            self.linesMenu
+            MOVE_SELECTED_LINES_DOWN_ID, self.linesMenu
         )
 
         # Join Lines
         self._application.actionController.getAction(JOIN_LINES).setFunc(
-            lambda params: self.GetEditor().JoinLines())
-
-        self._application.actionController.appendMenuItem(
-            JOIN_LINES,
-            self.linesMenu
+            lambda params: self.GetEditor().JoinLines()
         )
+
+        self._application.actionController.appendMenuItem(JOIN_LINES, self.linesMenu)
 
         # Delete line to start
         self._application.actionController.getAction(DELETE_LINE_LEFT).setFunc(
-            lambda params: self.GetEditor().DelLineLeft())
+            lambda params: self.GetEditor().DelLineLeft()
+        )
 
         self._application.actionController.appendMenuItem(
-            DELETE_LINE_LEFT,
-            self.linesMenu
+            DELETE_LINE_LEFT, self.linesMenu
         )
 
         # Delete line to end
         self._application.actionController.getAction(DELETE_LINE_RIGHT).setFunc(
-            lambda params: self.GetEditor().DelLineRight())
-
-        self._application.actionController.appendMenuItem(
-            DELETE_LINE_RIGHT,
-            self.linesMenu
+            lambda params: self.GetEditor().DelLineRight()
         )
 
-        editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        self.linesMenuItem = editMenu.AppendSubMenu(self.linesMenu,
-                                                    _(u'Lines'))
+        self._application.actionController.appendMenuItem(
+            DELETE_LINE_RIGHT, self.linesMenu
+        )
+
+        if self._isEnableGui():
+            editMenu = self._application.mainWindow.menuController[MENU_EDIT]
+            self.linesMenuItem = editMenu.Insert(
+                position, wx.ID_ANY, _("Lines"), self.linesMenu
+            )
+        
+    def _insertSeparator(self, menu, position):
+        if self._isEnableGui():
+            self._menuSeparators.append((menu, menu.InsertSeparator(position)))
+            
+    def _isEnableGui(self) -> bool:
+        return wx.GetApp().enableActionsGui
 
     def _spellOnOff(self, checked):
         EditorConfig(self._application.config).spellEnabled.value = checked
@@ -545,7 +632,7 @@ class BaseTextPanel(BasePagePanel):
         word_start = editor.WordStartPosition(pos)
         word_end = editor.WordEndPosition(pos)
         editor.SetSelection(word_start, word_end)
-        editor.replaceText(u'')
+        editor.replaceText("")
 
     def SetFocus(self):
         self.GetEditor().SetFocus()

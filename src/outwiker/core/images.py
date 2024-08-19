@@ -1,3 +1,4 @@
+import os.path
 from pathlib import Path
 from typing import Union
 
@@ -19,3 +20,20 @@ def isImage(fname: Union[Path, str]) -> bool:
 def isSVG(fname: Union[Path, str]) -> bool:
     fnameLower = str(fname).lower()
     return fnameLower.endswith('.svg')
+
+
+def convert_name_to_svg(fname: str) -> str:
+    suffix_old = ".png"
+    suffix_new = ".svg"
+
+    if fname.endswith(suffix_old):
+        return fname[: -len(suffix_old)] + suffix_new
+
+    return fname
+
+def find_svg(fname: str) -> str:
+    fname_svg = convert_name_to_svg(fname)
+    if os.path.exists(fname_svg):
+        return fname_svg
+    
+    return fname

@@ -10,12 +10,12 @@ from outwiker.core.spellchecker.dictsfinder import DictsFinder
 from outwiker.core.spellchecker.spelldict import (get_words_from_dic_file,
                                                   write_to_dic_file)
 from outwiker.gui.guiconfig import EditorConfig
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 
 
 class SpellPanel(BasePrefPanel):
     def __init__(self, parent, application):
-        super(type(self), self).__init__(parent)
+        super().__init__(parent)
 
         self._config = EditorConfig(application.config)
         self._createGui()

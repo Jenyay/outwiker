@@ -1,14 +1,18 @@
 [wiki]
 md5_hash = 939f68ccbece21a224539fe559d68d4e
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 
 [General]
 type = wiki
 order = 0
 tags = wiki, команды
-datetime = 2020-05-10 10:55:52.820038
+datetime = 2023-07-26 15:52:42.253597
 cursorposition = 0
 alias = Команда attachlist
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = code
 

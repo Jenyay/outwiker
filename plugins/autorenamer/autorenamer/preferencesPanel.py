@@ -8,7 +8,7 @@ from .preferencesController import PreferencesController
 
 class PreferencesPanel(wx.Panel):
     def __init__(self, parent, config):
-        super().__init__(parent, style=wx.TAB_TRAVERSAL)
+        super().__init__(parent.GetParentPanel(), style=wx.TAB_TRAVERSAL)
 
         global _
         _ = get_()

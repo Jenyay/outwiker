@@ -1,38 +1,38 @@
 version: 3.2.0.xxx.{build}
 image:
-    - Visual Studio 2019
+    - Visual Studio 2022
     - Ubuntu2004
 environment:
     PY_PYTHON: 3.8
-    PY_DIR: C:\Python38
+    PY_DIR: C:\Python38-x64
     PYTHONIOENCODING: utf_8
     PIPENV_IGNORE_VIRTUALENVS: 1
 stack: Python 3.8
 init:
     - cmd: py --list
     - cmd: set PATH=%PY_DIR%;%PY_DIR%\Scripts;%PATH%
-    - cmd: py -%PY_PYTHON% -m pip install pipenv
+    - cmd: py -%PY_PYTHON% -m pip install pipenv==2023.6.2
     - cmd: py --list
-    - sh: sudo apt-get -y update
+    - cmd: python -m compileall
+    - sh: sudo apt update --allow-releaseinfo-change
     - sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libpng-dev libjpeg-dev libtiff-dev libsdl2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev libgstreamer1.0-0
     - sh: sudo apt-get -y install libwebkit2gtk-4.0
 install:
-    - git submodule init
-    - git submodule update
-    - cmd: cinst innosetup
+    - git submodule update --init --recursive
+    - cmd: choco install innosetup -y
     - cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% run python -m pip install --upgrade pip
     - cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% run python -m pip install attrdict
-    - cmd: py -%PY_PYTHON% -m pipenv install --skip-lock --dev -v
+    - cmd: py -%PY_PYTHON% -m pipenv install --dev -v
     - cmd: py -%PY_PYTHON% -m pipenv run python -m pip install -e .
-    - cmd: py -%PY_PYTHON% -m pipenv run python -m pip install -e ./buildtools
+    - cmd: py -%PY_PYTHON% -m pipenv run python -m pip install -e ./owbuildtools
     - cmd: py -%PY_PYTHON% -m pipenv run python -m pip list
     - sh: python -m pip install pipenv
     - sh: pipenv run python -m pip install --upgrade pip
     - sh: pipenv run python -m pip install attrdict
-    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.0
+    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
     - sh: pipenv run python -m pip install -e .
-    - sh: pipenv run python -m pip install -e ./buildtools
-    - sh: pipenv install --skip-lock --dev -v
+    - sh: pipenv run python -m pip install -e ./owbuildtools
+    - sh: pipenv install --dev -v
 build_script:
     - cmd: py -%PY_PYTHON% -m pipenv run inv win
     - cmd: py -%PY_PYTHON% -m pipenv run inv win --is-stable

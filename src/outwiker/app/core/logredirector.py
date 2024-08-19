@@ -17,10 +17,12 @@ class LogRedirector:
 
         self._firstWrite = True
 
-        self._runTime = time.strftime(u'%Y-%m-%d %H:%M:%S')
+        self._runTime = time.strftime("%Y-%m-%d %H:%M:%S")
 
-        logging.basicConfig(format='%(levelname)-10s %(asctime)-25s %(name)s - %(module)s - %(message)s',
-                            level=self._level)
+        logging.basicConfig(
+            format="%(levelname)-10s %(asctime)-25s %(name)s - %(module)s - %(message)s",
+            level=self._level,
+        )
         logging.getLogger("comtypes").setLevel(logging.WARNING)
         logging.getLogger("PIL").setLevel(logging.WARNING)
 
@@ -28,9 +30,9 @@ class LogRedirector:
         if self._terminal is not None:
             self._terminal.write(message)
 
-        with open(self._fname, "a", encoding='utf8') as fp:
+        with open(self._fname, "a", encoding="utf8") as fp:
             if self._firstWrite:
-                fp.write(u'\n\n{} - START\n'.format(self._runTime))
+                fp.write("\n\n{} - START\n".format(self._runTime))
                 self._firstWrite = False
             fp.write(message)
 

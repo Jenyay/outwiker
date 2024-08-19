@@ -15,18 +15,18 @@ class AttachPasteLinkActionForAttachPanel(BaseAction):
 
     @property
     def title(self):
-        return _("Insert link to attached files")
+        return _("Insert link to attachments")
 
     @property
     def description(self):
-        return _("Insert link to attached file")
+        return _("Insert link to attachments")
 
     def run(self, params):
         attachPanel = self._application.mainWindow.attachPanel.panel
         files = attachPanel.getSelectedFiles()
         if len(files) == 0:
             showError(self._application.mainWindow,
-                      _("You did not select any attached file"))
+                      _("You did not select any attachments"))
             return
 
         self._application.onAttachmentPaste(files)

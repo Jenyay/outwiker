@@ -71,7 +71,7 @@ class ApplicationParams:
         #     sender - selected page
         self.onPageSelect = Event()
 
-        # User want insert link to selected attached files to page
+        # User want insert link to selected attachments to page
         # Parameters:
         #     fnames - selected file names (names only, without full paths)
         self.onAttachmentPaste = Event()
@@ -311,7 +311,7 @@ class ApplicationParams:
         #     params - instance of the PageModeChangeParams class
         self.onPageModeChange = Event()
 
-        # Event occurs after change attached file list.
+        # Event occurs after change attachments list.
         # Parameters:
         #     page - current (selected) page
         #     params - instance of the AttachListChangedParams class
@@ -406,14 +406,14 @@ class ApplicationParams:
             preWikiCloseParams = PreWikiCloseParams(self.__wikiroot)
             self.onPreWikiClose(self.selectedPage, preWikiCloseParams)
             if preWikiCloseParams.abortClose:
-                logger.debug('Wiki closing aborted: {}'.format(wikiPath))
+                logger.debug('Wiki closing aborted: %s', wikiPath)
                 return
 
             self.__unbindWikiEvents(self.__wikiroot)
             try:
                 self.__wikiroot.save()
             except OSError:
-                logger.error("Can't save notes tree settings: {}".format(self.__wikiroot.path))
+                logger.error("Can't save notes tree settings: %s", self.__wikiroot.path)
                 self.__wikiroot = None
 
             postWikiCloseParams = PostWikiCloseParams(wikiPath)

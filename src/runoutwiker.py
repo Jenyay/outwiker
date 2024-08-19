@@ -21,7 +21,6 @@ logger = logging.getLogger('outwiker')
 
 
 def print_info():
-    logger.debug('OutWiker version: {}'.format(outwiker.getVersionStr()))
     logger.debug('Current OutWiker API version: {}.{}'.format(
         outwiker.__api_version__[0], outwiker.__api_version__[1]))
     logger.debug('Python version: {}'.format(sys.version))

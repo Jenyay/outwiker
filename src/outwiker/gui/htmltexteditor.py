@@ -4,6 +4,7 @@ import os.path
 from functools import reduce
 
 import wx
+import wx.stc
 
 from outwiker.gui.texteditor import TextEditor
 from outwiker.gui.guiconfig import HtmlEditorStylesConfig

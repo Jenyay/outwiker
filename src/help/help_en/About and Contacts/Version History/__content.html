@@ -8,315 +8,89 @@
 	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
-			font-family:Sans;
+			font-family:Verdana;
 		}
 
-		img{border:none}
+		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}ul.ow-wiki li.ow-li-empty:before{background-image:none}ul.ow-wiki li.ow-li-circle:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMzMzNDUgMCAwIC4zMjQ0OSAtMy41Mjg1IC0zLjY1MDUpIiBmaWxsPSJub25lIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjQiLz4KPC9nPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-complete:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+CjxwYXRoIGQ9Im0wLjI2OTI1IDAuMjY5MjUgMS40NzI0IDEuNDcyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xOCIvPgo8cGF0aCBkPSJtMS43NTg1IDAuMjQ0MDEtMS40ODA5IDEuNDg5MyIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xOCIvPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-incomplete:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+CjxwYXRoIGQ9Im0xLjc1ODUgMC4yNDQwMS0xLjQ4MDkgMS40ODkzIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjE4Ii8+Cjwvc3ZnPgo=")}ul.ow-wiki li.ow-li-todo:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+Cjwvc3ZnPgoK")}ul.ow-wiki li.ow-li-star:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwNTMgMCAwIC45NDEwMSAtMTIuMTg5IC0xMi4wMzcpIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjIiPgo8cGF0aCBkPSJtMTMuMTIxIDEzLjE2NHYxLjM4MTUiLz4KPHBhdGggZD0ibTEzLjcxOSAxMy41MDktMS4xOTY0IDAuNjkwNzYiLz4KPHBhdGggZD0ibTEzLjcxOSAxNC4yLTEuMTk2NC0wLjY5MDc2Ii8+CjwvZz4KPC9zdmc+Cgo=")}ul.ow-wiki li.ow-li-plus:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNiAwIDAgMSAtNy4wNTMyIC0xMi42NjMpIiBzdHJva2Utd2lkdGg9Ii4xOTM2NSI+CjxwYXRoIGQ9Im0xMi40MjIgMTMuNjYzaDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTkzNjUiLz4KPC9nPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgwIC42IC0xIDAgMTQuNjYzIC03LjA1MzIpIiBzdHJva2Utd2lkdGg9Ii4xOTM2NSI+CjxwYXRoIGQ9Im0xMi40MjIgMTMuNjYzaDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTkzNjUiLz4KPC9nPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-minus:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNiAwIDAgMSAtNy4wNTMyIC0xMi42NjMpIiBzdHJva2Utd2lkdGg9Ii4xOTM2NSI+CjxwYXRoIGQ9Im0xMi40MjIgMTMuNjYzaDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTkzNjUiLz4KPC9nPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-check:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNzUwMSAwIDAgLjc5ODkgLTkuMTA2NSAtOS45MTc4KSI+CjxwYXRoIGQ9Im0xMi42MTcgMTMuNDA1IDAuNTk4NzcgMS4wMjM0IDEuMTIyNi0xLjY5MzIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMjU1cHgiLz4KPC9nPgo8L3N2Zz4K")}ul.ow-wiki li.ow-li-lt:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNzMyMTcgMCAwIC42NTA2MyAtOC41ODM5IC04LjAzODkpIj4KPHBhdGggZD0ibTEzLjg2OSAxMy4yODQtMS4zNzU0IDAuNTU2NzIgMS4zNzY5IDAuNjUxMjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTc5NDdweCIvPgo8L2c+Cjwvc3ZnPgo=")}ul.ow-wiki li.ow-li-gt:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgtLjczMjE3IDAgMCAtLjY1MDYzIDEwLjU4NCAxMC4wMzIpIj4KPHBhdGggZD0ibTEzLjg2OSAxMy4yODQtMS4zNzU0IDAuNTU2NzIgMS4zNzY5IDAuNjUxMjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTc5NDdweCIvPgo8L2c+Cjwvc3ZnPgo=")}ul.ow-child-list{padding-left:1rem;list-style-type:none}ul.ow-child-list ul{margin-left:15px;padding-left:10px;border-left:1px dashed #ddd}li.ow-child-list-item:before{content:"";padding-left:1.5em;background-position:0.0em 0.1em;background-size:auto 1.0em;background-repeat:no-repeat;height:1.6em;background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IklDT04iIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojYjBjYmUwO30uY2xzLTEsLmNscy0ye3N0cm9rZTojNjY2NjdlO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6MTVweDt9LmNscy0ye2ZpbGw6IzVmOWNjYjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zOTEsMTU4LjV2MjY1YTI1LDI1LDAsMCwxLTI1LDI1SDE0NmEyNSwyNSwwLDAsMS0yNS0yNVY4OC41YTI1LDI1LDAsMCwxLDI1LTI1SDI5NloiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zOTEsMTU4LjVIMzIxYTI1LDI1LDAsMCwxLTI1LTI1di03MFoiLz48L3N2Zz4=")}span.ow-child-list-title{font-weight:bold}span.ow-child-list-title:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IklDT04iIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojYjBjYmUwO30uY2xzLTEsLmNscy0ye3N0cm9rZTojNjY2NjdlO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6MTVweDt9LmNscy0ye2ZpbGw6IzVmOWNjYjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zOTEsMTU4LjV2MjY1YTI1LDI1LDAsMCwxLTI1LDI1SDE0NmEyNSwyNSwwLDAsMS0yNS0yNVY4OC41YTI1LDI1LDAsMCwxLDI1LTI1SDI5NloiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zOTEsMTU4LjVIMzIxYTI1LDI1LDAsMCwxLTI1LTI1di03MFoiLz48L3N2Zz4=");background-position:center center;background-size:75% auto}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}ul.ow-attach-list{margin-left:0px;padding-left:0px}.ow-attach-list ul{margin-left:15px;padding-left:10px;border-left:1px dashed #ddd}ul.ow-attach-list li{list-style:none;font-weight:normal;background-image:none;padding-left:1.0rem}.ow-attach-list a.ow-attach-dir{font-weight:bold;font-style:normal;transition:all 0.2s ease}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}
 		
 	</style>
 	
 </head>
 
 <body>
-<h2>3.0 (July 2020)</h2>
-<ul>
-<li>Now you can use any symbols in the notes title.</li>
-<li>New toolbars.</li>
-<li>New design for popup window when clicking on the tag.</li>
-<li>New interface to select notes icons.</li>
-<li>New GUI displayed if the notes tree is not currently open.</li>
-<li>New GUI when selecting the root of the notes tree.</li>
-<li>New GUI to show a page with unknown type.</li>
-<li>Add the ability to select notes position in the notes list.</li>
-<li>Add watching for attached files for selected page.</li>
-<li>Other interface improvements.</li>
-<li>Add German localization.</li>
-<li>New commands for wiki pages to change text color and apply custom styles.</li>
-<li>Add comments to wiki notation.</li>
-<li>Added a new $title variable for the page style files .</li>
-<li>Add a new page style "rifle_green_and_red".</li>
-<li>Change the storage format for certain properties of the notes tree pages.</li>
-<li>Change the way of storing standard icons in notes.</li>
-<li>Change plug-ins format.</li>
-<li>Migrate to Python 3.x and wxPython 4.0.</li>
+<h2 class="ow-wiki">3.3 (August 2024)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Changed tags cloud design.</li><li class="ow-wiki">Added the ability to filter tags.</li><li class="ow-wiki">Added the ability to display the tags cloud as a list.</li><li class="ow-wiki">On tags cloud panel add a button to show applied tags only.</li><li class="ow-wiki">Added context menu for tags cloud.</li><li class="ow-wiki">Use new vector icons for buttons.</li><li class="ow-wiki">Added the ability to use vector icons for pages.</li><li class="ow-wiki">New preferences dialog.</li><li class="ow-wiki">Improvements in working with list item styles on wiki pages.</li><li class="ow-wiki">Added new icons for pages.</li>
 </ul>
-<h2>2.0 (June 2017)</h2>
-<ul>
-<li>The program now uses wxPython 3.0 library.</li>
-<li>Duplicating the current line via menu or hot key was implemented.</li>
-<li>Deleting the current line via menu or hot key.</li>
-<li>The editor can move lines up/down via menu or hot keys.</li>
-<li>The editor can join lines via menu or hot key.</li>
-<li>The editor can remove the whole word to beginning/end via menu or hot key.</li>
-<li>The editor can decrease nesting level of the list items via menu or hot key.</li>
-<li>Menu items to move cursor in text.</li>
-<li>Menu items to copy / cut the current line to clipboard.</li>
-<li>The "--page, -p" command line parameter to select page when starting.</li>
-<li>The "--normal" command line parameter to disable minimizing when starting.</li>
-<li>The "--debug" command line parameter to run in the debug mode.</li>
-<li>The Swedish translation was added.</li>
-<li>Restored availability the icon in the system tray on Linux.</li>
-<li>Added the ability to add alias to page.</li>
-<li>Changed GUI to set hot keys.</li>
-<li>New setting to change editor margin color was implemented.</li>
-<li>New setting to change background color of the selected text was implemented.</li>
+<h2 class="ow-wiki">3.2 (August 2023)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Added the ability to create folders in attached files.</li><li class="ow-wiki">Added the ability to navigate to subfolders in the attachments panel.</li><li class="ow-wiki">Added the ability to insert links to files in attached subfolders.</li><li class="ow-wiki">Added page search in preview mode.</li><li class="ow-wiki">Added the support of nested subfolders for the  wiki command..</li><li class="ow-wiki">Added the support of nested subfolders for the %thumb% wiki command.</li><li class="ow-wiki">Implemented highlighting the %thumb% wiki command on wiki pages.</li><li class="ow-wiki">Changed design of the dialog about overwriting of attached files.</li><li class="ow-wiki">Improved design of links to attached files and other pages.</li><li class="ow-wiki">Added a new subdir parameter to  wiki command.</li><li class="ow-wiki">Improved  and  wiki commands result design.</li><li class="ow-wiki">Added new CSS classes to generated HTML code.</li><li class="ow-wiki">Added the ability to show hidden folders in attachments.</li><li class="ow-wiki">Added settings for the Minimize and Close buttons.</li><li class="ow-wiki">Added information about selected attachments to the status bar.</li><li class="ow-wiki">Added the ability to set the style of list item bullets on a wiki page.</li><li class="ow-wiki">Migrate to wxPython 4.2.1.</li>
 </ul>
-<h2>1.9.0  (April 2016)</h2>
-<ul>
-<li>Icons for notes are separated into groups.</li>
-<li>Now users can complement a standard set of icons for new files.</li>
-<li>Added new icons</li>
-<li>Now in the dialog insert links, you can choose one of the attachments to make reference to it.</li>
-<li>Bug fixes</li>
+<h2 class="ow-wiki">3.1 (April 2022)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Improve dialog for creation notes and edit notes properties.</li><li class="ow-wiki">Improve work with hotkeys.</li><li class="ow-wiki">Improve attachments panel GUI.</li>
+</ul>
+<h2 class="ow-wiki">3.0 (May 2021)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Now you can use any symbols in the notes title.</li><li class="ow-wiki">New toolbars.</li><li class="ow-wiki">New design for popup window when clicking on the tag.</li><li class="ow-wiki">New interface to select notes icons.</li><li class="ow-wiki">New GUI displayed if the notes tree is not currently open.</li><li class="ow-wiki">New GUI when selecting the root of the notes tree.</li><li class="ow-wiki">New GUI to show a page with unknown type.</li><li class="ow-wiki">Add the ability to select notes position in the notes list.</li><li class="ow-wiki">Add watching for attached files for selected page.</li><li class="ow-wiki">Other interface improvements.</li><li class="ow-wiki">Add German localization.</li><li class="ow-wiki">New commands for wiki pages to change text color and apply custom styles.</li><li class="ow-wiki">Add comments to wiki notation.</li><li class="ow-wiki">Added a new $title variable for the page style files .</li><li class="ow-wiki">Add a new page style "rifle_green_and_red".</li><li class="ow-wiki">Change the storage format for certain properties of the notes tree pages.</li><li class="ow-wiki">Change the way of storing standard icons in notes.</li><li class="ow-wiki">Change plug-ins format.</li><li class="ow-wiki">Migrate to Python 3.x and wxPython 4.0.</li>
+</ul>
+<h2 class="ow-wiki">2.0 (June 2017)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">The program now uses wxPython 3.0 library.</li><li class="ow-wiki">Duplicating the current line via menu or hot key was implemented.</li><li class="ow-wiki">Deleting the current line via menu or hot key.</li><li class="ow-wiki">The editor can move lines up/down via menu or hot keys.</li><li class="ow-wiki">The editor can join lines via menu or hot key.</li><li class="ow-wiki">The editor can remove the whole word to beginning/end via menu or hot key.</li><li class="ow-wiki">The editor can decrease nesting level of the list items via menu or hot key.</li><li class="ow-wiki">Menu items to move cursor in text.</li><li class="ow-wiki">Menu items to copy / cut the current line to clipboard.</li><li class="ow-wiki">The "--page, -p" command line parameter to select page when starting.</li><li class="ow-wiki">The "--normal" command line parameter to disable minimizing when starting.</li><li class="ow-wiki">The "--debug" command line parameter to run in the debug mode.</li><li class="ow-wiki">The Swedish translation was added.</li><li class="ow-wiki">Restored availability the icon in the system tray on Linux.</li><li class="ow-wiki">Added the ability to add alias to page.</li><li class="ow-wiki">Changed GUI to set hot keys.</li><li class="ow-wiki">New setting to change editor margin color was implemented.</li><li class="ow-wiki">New setting to change background color of the selected text was implemented.</li>
+</ul>
+<h2 class="ow-wiki">1.9.0  (April 2016)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Icons for notes are separated into groups.</li><li class="ow-wiki">Now users can complement a standard set of icons for new files.</li><li class="ow-wiki">Added new icons</li><li class="ow-wiki">Now in the dialog insert links, you can choose one of the attachments to make reference to it.</li><li class="ow-wiki">Bug fixes</li>
 </ul>
 <br/>
-<h2>1.8.1.752 (October 2014)</h2>
-<ul>
-<li>Bug fixes.</li>
+<h2 class="ow-wiki">1.8.1.752 (October 2014)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Bug fixes.</li>
 </ul>
 <br/>
-<h2>1.8.0.750 (November 2014)</h2>
-<ul>
-<li>Added the ability to customize keyboard shortcuts.</li>
-<li>Added the ability to refer to a page using unique identifiers.</li>
-<li>Added the ability to navigate through the links to pages with the anchors (<u>page://bla-bla-bla/#anchor</u>).</li>
-<li>Added the ability to use relative paths in the links on the pages (<u>../../page 1/page 2</u>).</li>
-<li>Added the ability to change the page style for branch of the pages at the same time.</li>
-<li>Added the ability of search and replace on the page.</li>
-<li>Added the buttons "Forward" and "Back" for the return to the previous pages.</li>
-<li>Added the ability to change the editor colors.</li>
-<li>Added the ability to change the behaviour of the Home / End keys id the editor (go to begin / end of the string or the paragraph).</li>
-<li>Added a new tag of the wiki syntax for quoting: [>...<].</li>
-<li>Added the button and menu item insertion the current date and time</li>
-<li>Added the commands (:crdate:) and (:eddate:) for insertion the creation and edition dates of the page respectively.</li>
-<li>Added the dialogs for the comands (:attachlist:), (:childlist:) and (:include:).</li>
-<li>Added the ability to sort child pages for the creation and edition date in the command (:childlist:).</li>
-<li>On the global search page added the ability to sort child pages for the creation date.</li>
-<li>Added new command line parameter "-r" or "--readonly" for the opening the notes tree readonly.</li>
-<li>Added the popup tooltips for icons in the property dialog for page.</li>
-<li>Added a new styles for page design.</li>
-<li>Added the button and menu item for opening a folder with a attached files in a system file manager.</li>
-<li>Added the saving recent used page style.</li>
-<li>Added the saving cursor position for page before closing.</li>
-<li>Added the Italian localization.</li>
-<li>Now in the attachments panel showed the files icons.</li>
-<li>Changed the hyphenation algorithm (<i>br</i> tags instead of <i>p</i>).</li>
-<li>Now opening the notes tree and global search cunduct in a separate thread.</li>
-<li>Now for every page saved the creation date.</li>
-<li>Now all HTML tags, which the wiki parser create, in a lowercase.</li>
-<li>Now help will be open in a separate window.</li>
-<li>Settings moved from ~/.outwiker more ideologically correct place (depending on the operating system).</li>
-<li>Added new icons for pages.</li>
-<li>Many accelerations.</li>
-<li>Bug fixes and improvments.</li>
+<h2 class="ow-wiki">1.8.0.750 (November 2014)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Added the ability to customize keyboard shortcuts.</li><li class="ow-wiki">Added the ability to refer to a page using unique identifiers.</li><li class="ow-wiki">Added the ability to navigate through the links to pages with the anchors (<u>page://bla-bla-bla/#anchor</u>).</li><li class="ow-wiki">Added the ability to use relative paths in the links on the pages (<u>../../page 1/page 2</u>).</li><li class="ow-wiki">Added the ability to change the page style for branch of the pages at the same time.</li><li class="ow-wiki">Added the ability of search and replace on the page.</li><li class="ow-wiki">Added the buttons "Forward" and "Back" for the return to the previous pages.</li><li class="ow-wiki">Added the ability to change the editor colors.</li><li class="ow-wiki">Added the ability to change the behaviour of the Home / End keys id the editor (go to begin / end of the string or the paragraph).</li><li class="ow-wiki">Added a new tag of the wiki syntax for quoting: [>...<].</li><li class="ow-wiki">Added the button and menu item insertion the current date and time</li><li class="ow-wiki">Added the commands (:crdate:) and (:eddate:) for insertion the creation and edition dates of the page respectively.</li><li class="ow-wiki">Added the dialogs for the comands (:attachlist:), (:childlist:) and (:include:).</li><li class="ow-wiki">Added the ability to sort child pages for the creation and edition date in the command (:childlist:).</li><li class="ow-wiki">On the global search page added the ability to sort child pages for the creation date.</li><li class="ow-wiki">Added new command line parameter "-r" or "--readonly" for the opening the notes tree readonly.</li><li class="ow-wiki">Added the popup tooltips for icons in the property dialog for page.</li><li class="ow-wiki">Added a new styles for page design.</li><li class="ow-wiki">Added the button and menu item for opening a folder with a attached files in a system file manager.</li><li class="ow-wiki">Added the saving recent used page style.</li><li class="ow-wiki">Added the saving cursor position for page before closing.</li><li class="ow-wiki">Added the Italian localization.</li><li class="ow-wiki">Now in the attachments panel showed the files icons.</li><li class="ow-wiki">Changed the hyphenation algorithm (<i>br</i> tags instead of <i>p</i>).</li><li class="ow-wiki">Now opening the notes tree and global search cunduct in a separate thread.</li><li class="ow-wiki">Now for every page saved the creation date.</li><li class="ow-wiki">Now all HTML tags, which the wiki parser create, in a lowercase.</li><li class="ow-wiki">Now help will be open in a separate window.</li><li class="ow-wiki">Settings moved from ~/.outwiker more ideologically correct place (depending on the operating system).</li><li class="ow-wiki">Added new icons for pages.</li><li class="ow-wiki">Many accelerations.</li><li class="ow-wiki">Bug fixes and improvments.</li>
 </ul>
-<h2>1.7.0.684 (December 2012)</h2>
-<ul>
-<li>Added the ability to open the notes in separate tabs.</li>
-<li>The toolbar is divided into several floating toolbars.</li>
-<li>Saved and displayed date of the last changes in the page.</li>
-<li>Greatly accelerated parsing and coloring of wiki syntax (bacceleration from 2 to 10 times).</li>
-<li>Added interface to insert some elements of wiki syntax.</li>
-<li>Added ability to larger and smaller font on wiki pages.</li>
-<li>Added ability to force rebuilding HTML-code on the wiki notation.</li>
-<li>Fixes in page templates.</li>
-<li>The distribution for Linux adds vector and large icons.</li>
-<li>Changes in the appearance of the search page.</li>
-<li>Created the installler for Windows.</li>
-<li>Fixed a bug where thumbnails were not created to wiki pages if extensions image files was recorded in capital letters.</li>
-<li>Fixed a bug that did not keep the size of internal windows (tree notes, attachments, etc.)</li>
-<li>Fixed other bugs.</li>
-<li>Many small fixes and improvements in the interface</li>
+<h2 class="ow-wiki">1.7.0.684 (December 2012)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Added the ability to open the notes in separate tabs.</li><li class="ow-wiki">The toolbar is divided into several floating toolbars.</li><li class="ow-wiki">Saved and displayed date of the last changes in the page.</li><li class="ow-wiki">Greatly accelerated parsing and coloring of wiki syntax (bacceleration from 2 to 10 times).</li><li class="ow-wiki">Added interface to insert some elements of wiki syntax.</li><li class="ow-wiki">Added ability to larger and smaller font on wiki pages.</li><li class="ow-wiki">Added ability to force rebuilding HTML-code on the wiki notation.</li><li class="ow-wiki">Fixes in page templates.</li><li class="ow-wiki">The distribution for Linux adds vector and large icons.</li><li class="ow-wiki">Changes in the appearance of the search page.</li><li class="ow-wiki">Created the installler for Windows.</li><li class="ow-wiki">Fixed a bug where thumbnails were not created to wiki pages if extensions image files was recorded in capital letters.</li><li class="ow-wiki">Fixed a bug that did not keep the size of internal windows (tree notes, attachments, etc.)</li><li class="ow-wiki">Fixed other bugs.</li><li class="ow-wiki">Many small fixes and improvements in the interface</li>
 </ul>
-<h2>1.6.0.650 (May 2012)</h2>
-<ul>
-<li>Redesigned properties dialog page.</li>
-<li>Wiki commands for decoration options for users and community livejournal.com removed from the program into a <a href="http://jenyay.net/Outwiker/LivejournalPlugin">plugin</a>.</li>
-<li>Added the wiki syntax coloring in the editor.</li>
-<li>Added ability to change the style pages.</li>
-<li>Now to align text to the wiki pages other than %center% and %right% you can use %left% and %justify%.</li>
-<li>Many small improvements.</li>
+<h2 class="ow-wiki">1.6.0.650 (May 2012)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Redesigned properties dialog page.</li><li class="ow-wiki">Wiki commands for decoration options for users and community livejournal.com removed from the program into a <a class="ow-wiki" href="http://jenyay.net/Outwiker/LivejournalPlugin">plugin</a>.</li><li class="ow-wiki">Added the wiki syntax coloring in the editor.</li><li class="ow-wiki">Added ability to change the style pages.</li><li class="ow-wiki">Now to align text to the wiki pages other than %center% and %right% you can use %left% and %justify%.</li><li class="ow-wiki">Many small improvements.</li>
 </ul>
-<h2>1.5.0.627 (February 2012)</h2>
-<ul>
-<li>Tag cloud added to the main window.</li>
-<li>Added ability to select tags from the cloud of the existing tags.</li>
-<li>New features for the batch add / remove tags.</li>
-<li>Added ability to rename a tags.</li>
-<li>Minor changes in the interface.</li>
+<h2 class="ow-wiki">1.5.0.627 (February 2012)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Tag cloud added to the main window.</li><li class="ow-wiki">Added ability to select tags from the cloud of the existing tags.</li><li class="ow-wiki">New features for the batch add / remove tags.</li><li class="ow-wiki">Added ability to rename a tags.</li><li class="ow-wiki">Minor changes in the interface.</li>
 </ul>
-<h2>1.4.0.601 (December 2011)</h2>
-<ul>
-<li>Added plugins support.</li>
-<li>Added timer autosave.</li>
-<li>Added check for changing the text notes, third-party programs.</li>
-<li>For HTML-pages added button for enable/disable automatic line break.</li>
-<li>Linux version is now installed in /usr, but not in /opt. Now the program can be invoked from the console with the command <i>outwiker</i>.</li>
-<li>Improved handling of wiki syntax for lists.</li>
-<li>Now search through the pages looking for search phrase in the filename of the attachment and title names.</li>
-<li>Bug fixes and minor interface improvements.</li>
-<li>The program is now being tested only under Python 2.7.</li>
+<h2 class="ow-wiki">1.4.0.601 (December 2011)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Added plugins support.</li><li class="ow-wiki">Added timer autosave.</li><li class="ow-wiki">Added check for changing the text notes, third-party programs.</li><li class="ow-wiki">For HTML-pages added button for enable/disable automatic line break.</li><li class="ow-wiki">Linux version is now installed in /usr, but not in /opt. Now the program can be invoked from the console with the command <i>outwiker</i>.</li><li class="ow-wiki">Improved handling of wiki syntax for lists.</li><li class="ow-wiki">Now search through the pages looking for search phrase in the filename of the attachment and title names.</li><li class="ow-wiki">Bug fixes and minor interface improvements.</li><li class="ow-wiki">The program is now being tested only under Python 2.7.</li>
 </ul>
-<h2>1.3.2.496 (September 2011)</h2>
-<ul>
-<li>New interface for selecting icons.</li>
-<li>Added new icon from <a href="http://www.famfamfam.com/lab/icons/silk">famfamfam.com</a> and <a href="http://p.yusukekamiyamane.com/">yusukekamiyamane.com</a> sets.</li>
-<li>New program icon (thanks Alexey Nabrodov).</li>
-<li>In the same page now working anchor.</li>
-<li>New item to add wiki notation anchors.</li>
-<li>Significantly reduced blinking and update the interface.</li>
-<li>Help in English (thanks Ilya Cheshkova for correcting my clumsy translation by Google Translate:)).</li>
-<li>Added keyboard shortcuts for the &lt;PRE&gt; tag on HTML page and for [@...@] on wiki page.</li>
-<li>Added hot keys and buttons for [[<<]] on wiki page.</li>
-<li>Added buttons for tags and &lt;code&gt; &lt;blockquote&gt; on HTML page.</li>
-<li>Added the "Update" button on attachment panel.</li>
-<li>Clicking on the icon in the tray, minimized window is unwrapped and deployed now being phased out.</li>
-<li>Fixed: for Windows not working links to pages that are in its path "#" symbol.</li>
-<li>Fixed a bug with corrupted file in the root __page.opt wiki.</li>
-<li>Other bug fixes and translation program.</li>
-<li>Code refactoring.</li>
+<h2 class="ow-wiki">1.3.2.496 (September 2011)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">New interface for selecting icons.</li><li class="ow-wiki">Added new icon from <a class="ow-wiki" href="http://www.famfamfam.com/lab/icons/silk">famfamfam.com</a> and <a class="ow-wiki" href="http://p.yusukekamiyamane.com/">yusukekamiyamane.com</a> sets.</li><li class="ow-wiki">New program icon (thanks Alexey Nabrodov).</li><li class="ow-wiki">In the same page now working anchor.</li><li class="ow-wiki">New item to add wiki notation anchors.</li><li class="ow-wiki">Significantly reduced blinking and update the interface.</li><li class="ow-wiki">Help in English (thanks Ilya Cheshkova for correcting my clumsy translation by Google Translate:)).</li><li class="ow-wiki">Added keyboard shortcuts for the &lt;PRE&gt; tag on HTML page and for [@...@] on wiki page.</li><li class="ow-wiki">Added hot keys and buttons for [[<<]] on wiki page.</li><li class="ow-wiki">Added buttons for tags and &lt;code&gt; &lt;blockquote&gt; on HTML page.</li><li class="ow-wiki">Added the "Update" button on attachment panel.</li><li class="ow-wiki">Clicking on the icon in the tray, minimized window is unwrapped and deployed now being phased out.</li><li class="ow-wiki">Fixed: for Windows not working links to pages that are in its path "#" symbol.</li><li class="ow-wiki">Fixed a bug with corrupted file in the root __page.opt wiki.</li><li class="ow-wiki">Other bug fixes and translation program.</li><li class="ow-wiki">Code refactoring.</li>
 </ul>
-<h2>1.3.1.393 (July 2011)</h2>
-<ul>
-<li>On Windows, fixed the error due to which the links do not work on the search page.</li>
-<li>On Linux, fixed the error, because of which did not open the page, if the path to them was the '#'.</li>
+<h2 class="ow-wiki">1.3.1.393 (July 2011)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">On Windows, fixed the error due to which the links do not work on the search page.</li><li class="ow-wiki">On Linux, fixed the error, because of which did not open the page, if the path to them was the '#'.</li>
 </ul>
-<h2>1.3.0.384 (June 2011)</h2>
-<ul>
-<li>Now, as HTML-rendering engine is used Internet Explorer for Windows version, WebKit for Linux version.</li>
-<li>Added ability to print notes and their source code.</li>
-<li>Added a new wiki tag {-...-} for the strikethrough text.</li>
-<li>Added a button to strikethrough text on a HTML-page.</li>
-<li>Ability to set the font size when browsing through your notes.</li>
-<li>Ability to install additional CSS styles for notes.</li>
-<li>Changing the shortcut key for switching between code and viewing on the F4.</li>
-<li>Added menu items to the wiki commands (:...:).</li>
-<li>Pages that are open in "read only", are italics.</li>
-<li>On Windows, the program should now work without install MS Visual C + + 2008 Redistributable Package.</li>
-<li>If you run Windows programs using the exe then error will be output to a file outwiker.log, which will be created in the same folder where the file settings outwiker.ini.</li>
-<li>Fixed error when trying to open wikis, if for some of the notes is not writable.</li>
-<li>Fixed a bug which caused the Windows did not work rendering of formulas, if the OutWiker was installed in a directory containing spaces.</li>
+<h2 class="ow-wiki">1.3.0.384 (June 2011)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Now, as HTML-rendering engine is used Internet Explorer for Windows version, WebKit for Linux version.</li><li class="ow-wiki">Added ability to print notes and their source code.</li><li class="ow-wiki">Added a new wiki tag {-...-} for the strikethrough text.</li><li class="ow-wiki">Added a button to strikethrough text on a HTML-page.</li><li class="ow-wiki">Ability to set the font size when browsing through your notes.</li><li class="ow-wiki">Ability to install additional CSS styles for notes.</li><li class="ow-wiki">Changing the shortcut key for switching between code and viewing on the F4.</li><li class="ow-wiki">Added menu items to the wiki commands (:...:).</li><li class="ow-wiki">Pages that are open in "read only", are italics.</li><li class="ow-wiki">On Windows, the program should now work without install MS Visual C + + 2008 Redistributable Package.</li><li class="ow-wiki">If you run Windows programs using the exe then error will be output to a file outwiker.log, which will be created in the same folder where the file settings outwiker.ini.</li><li class="ow-wiki">Fixed error when trying to open wikis, if for some of the notes is not writable.</li><li class="ow-wiki">Fixed a bug which caused the Windows did not work rendering of formulas, if the OutWiker was installed in a directory containing spaces.</li>
 </ul>
-<h2>1.2.0.322 (April 2011)</h2>
-<ul>
-<li>For wiki added the ability to enter formulas in the TeX notation (used mimeTex).</li>
-<li>Link to image in  [[Attach: xxx.png]]  or  [[http://.../xxx.png]]  on the wiki pages only inserts a link to an image and not the picture itself.</li>
-<li>Added a wiki command  (: childlist:)  to insert a list of child notes.</li>
-<li>Added a wiki command  (: attachlist:)  to insert a list of attached files</li>
-<li>Added a wiki command  (: include:)  for the contents of attached files.</li>
-<li>Added a wiki commands to insert links to users Livejournal.com (command  (: ljuser :)) on LiveJournal Community (command  (: ljcomm :)).</li>
-<li>The menu function is added to convert special characters HTML (<,>, etc.) in their HTML representation.</li>
-<li>Inside the operator  [@ ... @]  When parsing the wiki notation symbols "<" replaced by "&lt;", and ">" - on "&gt;".</li>
-<li>Added ability to specify a template for a blank wiki page (see Configuration).</li>
-<li>From the wiki notation removed the \\\, as it completely replaces the command [[<<]] (line break).</li>
-<li>The tree now shows the root note.</li>
-<li>Sort pages alphabetically was accelerated.</li>
-<li>Improved recognition of the links in a wiki page.</li>
-<li>Improved caching of a wiki page.</li>
-<li>In the title (!!, !!!!, Etc.) can now be used and some other elements of the wiki notation (bold, italics, etc, formulas and wiki commands (:. ..:)).</li>
-<li>Fixed bugs related to deleting and moving the notes that you can not delete / move due to blockage of their directories.</li>
-<li>Fixed an error that occurred when trying to save the page, the directory is removed by hand during the program.</li>
-<li>Fixed a crash program under Linux if you rename a page containing images that are downloaded from internet.</li>
-<li>Other minor fixes and refactoring.</li>
+<h2 class="ow-wiki">1.2.0.322 (April 2011)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">For wiki added the ability to enter formulas in the TeX notation (used mimeTex).</li><li class="ow-wiki">Link to image in  [[Attach: xxx.png]]  or  [[http://.../xxx.png]]  on the wiki pages only inserts a link to an image and not the picture itself.</li><li class="ow-wiki">Added a wiki command  (: childlist:)  to insert a list of child notes.</li><li class="ow-wiki">Added a wiki command  (: attachlist:)  to insert a list of attached files</li><li class="ow-wiki">Added a wiki command  (: include:)  for the contents of attached files.</li><li class="ow-wiki">Added a wiki commands to insert links to users Livejournal.com (command  (: ljuser :)) on LiveJournal Community (command  (: ljcomm :)).</li><li class="ow-wiki">The menu function is added to convert special characters HTML (<,>, etc.) in their HTML representation.</li><li class="ow-wiki">Inside the operator  [@ ... @]  When parsing the wiki notation symbols "<" replaced by "&lt;", and ">" - on "&gt;".</li><li class="ow-wiki">Added ability to specify a template for a blank wiki page (see Configuration).</li><li class="ow-wiki">From the wiki notation removed the \\\, as it completely replaces the command [[<<]] (line break).</li><li class="ow-wiki">The tree now shows the root note.</li><li class="ow-wiki">Sort pages alphabetically was accelerated.</li><li class="ow-wiki">Improved recognition of the links in a wiki page.</li><li class="ow-wiki">Improved caching of a wiki page.</li><li class="ow-wiki">In the title (!!, !!!!, Etc.) can now be used and some other elements of the wiki notation (bold, italics, etc, formulas and wiki commands (:. ..:)).</li><li class="ow-wiki">Fixed bugs related to deleting and moving the notes that you can not delete / move due to blockage of their directories.</li><li class="ow-wiki">Fixed an error that occurred when trying to save the page, the directory is removed by hand during the program.</li><li class="ow-wiki">Fixed a crash program under Linux if you rename a page containing images that are downloaded from internet.</li><li class="ow-wiki">Other minor fixes and refactoring.</li>
 </ul>
-<h2>1.1.0.218 (February 2011)</h2>
-<ul>
-<li>Rebuild the interface of the main window. Now it is possible to move and to close the panel with wood notes and attachments.</li>
-<li>Added ability to change the order of notes in the tree (shortcut Ctrl + Shift + Up / Ctrl + Shift + Down).</li>
-<li>Added ability to sort the entries forced the alphabetally.</li>
-<li>Added full screen mode.</li>
-<li>Auto-save notes when you switch to another application.</li>
-<li>Added ability to drag files from the windows of investment in other programs.</li>
-<li>New option: Always show icon in system tray.</li>
-<li>New option: the size of tabs in the editor.</li>
-<li>Now when you create a page, type of page is selected by default pages created last time.</li>
-<li>Now when you create a page directory __attach are not created. It is created when the first necessity.</li>
-<li>Reduced blinking of the main window for different actions.</li>
-<li>Bug fixes.</li>
-<li>Minor fixes in the interface.</li>
+<h2 class="ow-wiki">1.1.0.218 (February 2011)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Rebuild the interface of the main window. Now it is possible to move and to close the panel with wood notes and attachments.</li><li class="ow-wiki">Added ability to change the order of notes in the tree (shortcut Ctrl + Shift + Up / Ctrl + Shift + Down).</li><li class="ow-wiki">Added ability to sort the entries forced the alphabetally.</li><li class="ow-wiki">Added full screen mode.</li><li class="ow-wiki">Auto-save notes when you switch to another application.</li><li class="ow-wiki">Added ability to drag files from the windows of investment in other programs.</li><li class="ow-wiki">New option: Always show icon in system tray.</li><li class="ow-wiki">New option: the size of tabs in the editor.</li><li class="ow-wiki">Now when you create a page, type of page is selected by default pages created last time.</li><li class="ow-wiki">Now when you create a page directory __attach are not created. It is created when the first necessity.</li><li class="ow-wiki">Reduced blinking of the main window for different actions.</li><li class="ow-wiki">Bug fixes.</li><li class="ow-wiki">Minor fixes in the interface.</li>
 </ul>
-<h2>1.0.0.108 release (December 2010)</h2>
-<ul>
-<li>Added preferences window.</li>
-<li>Added support for multiple languages (now program has English and Russian interface).</li>
-<li>Added ability to minimize to tray.</li>
-<li>Added ability to automatically open the last time opened wiki at startup.</li>
-<li>Added ability to disable the question before exiting the program.</li>
-<li>Added ability to set the font for the editor.</li>
-<li>Added ability to turn line numbering in the editor window.</li>
-<li>New option: default size for thumbnails of images on wiki pages.</li>
-<li>Added tab to view the HTML code for a wiki page.</li>
-<li>Blank pages are opened by default on the tab for editing.</li>
-<li>If the page is blank, then tab to view a list of attached files (this feature can be disabled)</li>
-<li>New option: main window title. By default, there contain the name of the wiki and open the current page.</li>
-<li>New window "About", added tab "Donate".</li>
-<li>Fixed a bug related to storing the settings in the profile with Russian letters.</li>
-<li>Improved detection of Internet addresses in a wiki notation.</li>
-<li>Double click on the note in the tree to open a dialog with the properties of the page.</li>
-<li>Wiki files, which was opened in "read only" do not added to the list of recently opened files.</li>
-<li>Various minor bug fixes and interface improvements.</li>
+<h2 class="ow-wiki">1.0.0.108 release (December 2010)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Added preferences window.</li><li class="ow-wiki">Added support for multiple languages (now program has English and Russian interface).</li><li class="ow-wiki">Added ability to minimize to tray.</li><li class="ow-wiki">Added ability to automatically open the last time opened wiki at startup.</li><li class="ow-wiki">Added ability to disable the question before exiting the program.</li><li class="ow-wiki">Added ability to set the font for the editor.</li><li class="ow-wiki">Added ability to turn line numbering in the editor window.</li><li class="ow-wiki">New option: default size for thumbnails of images on wiki pages.</li><li class="ow-wiki">Added tab to view the HTML code for a wiki page.</li><li class="ow-wiki">Blank pages are opened by default on the tab for editing.</li><li class="ow-wiki">If the page is blank, then tab to view a list of attached files (this feature can be disabled)</li><li class="ow-wiki">New option: main window title. By default, there contain the name of the wiki and open the current page.</li><li class="ow-wiki">New window "About", added tab "Donate".</li><li class="ow-wiki">Fixed a bug related to storing the settings in the profile with Russian letters.</li><li class="ow-wiki">Improved detection of Internet addresses in a wiki notation.</li><li class="ow-wiki">Double click on the note in the tree to open a dialog with the properties of the page.</li><li class="ow-wiki">Wiki files, which was opened in "read only" do not added to the list of recently opened files.</li><li class="ow-wiki">Various minor bug fixes and interface improvements.</li>
 </ul>
-<h2>1.0 beta 3 (October 2010)</h2>
-<ul>
-<li>Added a open mode "read only". Help now opens in this mode.</li>
-<li>The ability to store settings in your profile folder, not in the folder with the program (non-portable mode).</li>
-<li>Fixed blinking while switching windows pages.</li>
-<li>Source moved from github to launchpad.net (<a href="https://launchpad.net/outwiker)">https://launchpad.net/outwiker)</a>. Now, instead git using Bazaar.</li>
-<li>Fix a few bugs in the wiki parser.</li>
+<h2 class="ow-wiki">1.0 beta 3 (October 2010)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Added a open mode "read only". Help now opens in this mode.</li><li class="ow-wiki">The ability to store settings in your profile folder, not in the folder with the program (non-portable mode).</li><li class="ow-wiki">Fixed blinking while switching windows pages.</li><li class="ow-wiki">Source moved from github to launchpad.net (<a class="ow-wiki" href="https://launchpad.net/outwiker)">https://launchpad.net/outwiker)</a>. Now, instead git using Bazaar.</li><li class="ow-wiki">Fix a few bugs in the wiki parser.</li>
 </ul>
-<h2>1.0 beta 2 (August 2010)</h2>
-<ul>
-<li>Added ability to move pages in the tree.</li>
-<li>Added ability to rename pages without to call the page properties dialog.</li>
-<li>Added context menu for the tree notes.</li>
-<li>The relative path to pages for links are now case-insensitive.</li>
-<li>Changing the shortcut key to switch between the code and view (it was F2, became F5).</li>
-<li>If the attached file with a name that already exists among the attached files, the dialog is shown with the question "What should I do?"</li>
-<li>Folder with thumbnails of images __thumb now is not shown in the attachments.</li>
-<li>Now, tree notes, saves its state (expanded or closed site).</li>
-<li>Added a status panel that shows the link text when the mouse cursor on it.</li>
-<li>The program now uses absolute paths to folders, so when you run out of source working directory need not be a folder with the source.</li>
-<li>Fixed bugs.</li>
+<h2 class="ow-wiki">1.0 beta 2 (August 2010)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Added ability to move pages in the tree.</li><li class="ow-wiki">Added ability to rename pages without to call the page properties dialog.</li><li class="ow-wiki">Added context menu for the tree notes.</li><li class="ow-wiki">The relative path to pages for links are now case-insensitive.</li><li class="ow-wiki">Changing the shortcut key to switch between the code and view (it was F2, became F5).</li><li class="ow-wiki">If the attached file with a name that already exists among the attached files, the dialog is shown with the question "What should I do?"</li><li class="ow-wiki">Folder with thumbnails of images __thumb now is not shown in the attachments.</li><li class="ow-wiki">Now, tree notes, saves its state (expanded or closed site).</li><li class="ow-wiki">Added a status panel that shows the link text when the mouse cursor on it.</li><li class="ow-wiki">The program now uses absolute paths to folders, so when you run out of source working directory need not be a folder with the source.</li><li class="ow-wiki">Fixed bugs.</li>
 </ul>
-<h2>1.0 beta 1 (July 2010)</h2>
-<ul>
-<li>A new type of page - the page in a wiki notation.</li>
-<li>Added information about the program.</li>
-<li>Added menu item to copy to the clipboard the link to the page.</li>
-<li>Added ability to open wiki, passing the path to the command line.</li>
-<li>Added hot key and menu item to switch between the code and view.</li>
-<li>The toolbar buttons are added to align the text to HTML (center, left justified, etc.)</li>
-<li>The menu item to copy the title page to the clipboard.</li>
-<li>Before you restart the wiki is now the program asks whether you want to save the current page.</li>
-<li>Added menu item Edit (Undo / Redo / Cut / Copy / Paste).</li>
-<li>Fixed copying to clipboard from the view HTML.</li>
-<li>Minor fixes and improvements.</li>
+<h2 class="ow-wiki">1.0 beta 1 (July 2010)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">A new type of page - the page in a wiki notation.</li><li class="ow-wiki">Added information about the program.</li><li class="ow-wiki">Added menu item to copy to the clipboard the link to the page.</li><li class="ow-wiki">Added ability to open wiki, passing the path to the command line.</li><li class="ow-wiki">Added hot key and menu item to switch between the code and view.</li><li class="ow-wiki">The toolbar buttons are added to align the text to HTML (center, left justified, etc.)</li><li class="ow-wiki">The menu item to copy the title page to the clipboard.</li><li class="ow-wiki">Before you restart the wiki is now the program asks whether you want to save the current page.</li><li class="ow-wiki">Added menu item Edit (Undo / Redo / Cut / Copy / Paste).</li><li class="ow-wiki">Fixed copying to clipboard from the view HTML.</li><li class="ow-wiki">Minor fixes and improvements.</li>
 </ul>
-<h2>1.0 alpha 3 (June 2010)</h2>
-<ul>
-<li>Added ability to search by page.</li>
-<li>The buttons for the main tags page HTML.</li>
-<li>Added ability to create links to attached files.</li>
-<li>Added a button to clear checkboxes from all tags in the global search.</li>
-<li>Added new icons for the pages.</li>
-<li>Added ability to attach files to the page by dragging and dropping them into the program.</li>
-<li>Improved output lists in HTML-pages.</li>
-<li>Fixed some bugs.</li>
+<h2 class="ow-wiki">1.0 alpha 3 (June 2010)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Added ability to search by page.</li><li class="ow-wiki">The buttons for the main tags page HTML.</li><li class="ow-wiki">Added ability to create links to attached files.</li><li class="ow-wiki">Added a button to clear checkboxes from all tags in the global search.</li><li class="ow-wiki">Added new icons for the pages.</li><li class="ow-wiki">Added ability to attach files to the page by dragging and dropping them into the program.</li><li class="ow-wiki">Improved output lists in HTML-pages.</li><li class="ow-wiki">Fixed some bugs.</li>
 </ul>
-<h2>1.0 alpha 2 (May 2010)</h2>
-<ul>
-<li>Ability to delete and rename pages.</li>
-<li>The global search for text and tags.</li>
-<li>Added a new page type - search page.</li>
-<li>Added ability to run attached files.</li>
-<li>Added ability to create links between pages.</li>
-<li>Pages in the tree are now always sorted alphabetically.</li>
-<li>Fixed some bugs.</li>
-<li>Minor interface changes.</li>
+<h2 class="ow-wiki">1.0 alpha 2 (May 2010)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">Ability to delete and rename pages.</li><li class="ow-wiki">The global search for text and tags.</li><li class="ow-wiki">Added a new page type - search page.</li><li class="ow-wiki">Added ability to run attached files.</li><li class="ow-wiki">Added ability to create links between pages.</li><li class="ow-wiki">Pages in the tree are now always sorted alphabetically.</li><li class="ow-wiki">Fixed some bugs.</li><li class="ow-wiki">Minor interface changes.</li>
 </ul>
-<h2>1.0 alpha 1 (May 2010)</h2>
-<ul>
-<li>First public version.</li>
+<h2 class="ow-wiki">1.0 alpha 1 (May 2010)</h2>
+<ul class="ow-wiki"><li class="ow-wiki">First public version.</li>
 </ul>
 </body>
 </html>

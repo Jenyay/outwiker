@@ -17,10 +17,12 @@ from outwiker.app.actions.exit import ExitAction
 from outwiker.app.actions.globalsearch import GlobalSearchAction
 from outwiker.app.actions.movepagedown import MovePageDownAction
 from outwiker.app.actions.movepageup import MovePageUpAction
-from outwiker.app.actions.moving import (GoToParentAction,
-                                         GoToFirstChildAction,
-                                         GoToNextSiblingAction,
-                                         GoToPrevSiblingAction)
+from outwiker.app.actions.moving import (
+    GoToParentAction,
+    GoToFirstChildAction,
+    GoToNextSiblingAction,
+    GoToPrevSiblingAction,
+)
 from outwiker.app.actions.printaction import PrintAction
 from outwiker.app.actions.reloadwiki import ReloadWikiAction
 from outwiker.app.actions.removepage import RemovePageAction
@@ -28,10 +30,12 @@ from outwiker.app.actions.renamepage import RenamePageAction
 from outwiker.app.actions.save import SaveAction
 from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
 from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
-from outwiker.app.actions.tabs import (AddTabAction,
-                                       CloseTabAction,
-                                       PreviousTabAction,
-                                       NextTabAction)
+from outwiker.app.actions.tabs import (
+    AddTabAction,
+    CloseTabAction,
+    PreviousTabAction,
+    NextTabAction,
+)
 import outwiker.app.actions.clipboard as clipboard
 import outwiker.app.actions.tags as tags
 
@@ -45,13 +49,14 @@ from outwiker.core.events import PAGE_UPDATE_TITLE
 
 from outwiker.gui.autosavetimer import AutosaveTimer
 from outwiker.gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
-from outwiker.gui.defines import (MENU_FILE,
-                                  TOOLBAR_GENERAL,
-                                  CLOSE_BUTTON_ACTION_CLOSE,
-                                  CLOSE_BUTTON_ACTION_MINIMIZE,
-                                  CLOSE_BUTTON_ACTION_HIDE_TO_TRAY,
-                                  STATUSBAR_PAGE_DATETIME_ITEM,
-                                  )
+from outwiker.gui.defines import (
+    MENU_FILE,
+    TOOLBAR_GENERAL,
+    CLOSE_BUTTON_ACTION_CLOSE,
+    CLOSE_BUTTON_ACTION_MINIMIZE,
+    CLOSE_BUTTON_ACTION_HIDE_TO_TRAY,
+    STATUSBAR_PAGE_DATETIME_ITEM,
+)
 
 
 class MainWndController:
@@ -69,17 +74,6 @@ class MainWndController:
         self._tray_config = TrayConfig(self._application.config)
         self._generalConfig = GeneralGuiConfig(self._application.config)
         self._mainWindowConfig = MainWindowConfig(self._application.config)
-
-        # Идентификаторы пунктов меню и кнопок, которые надо задизаблить,
-        # если не открыта вики
-        self.disabledTools = [
-            wx.ID_UNDO,
-            wx.ID_REDO,
-            wx.ID_CUT,
-            wx.ID_COPY,
-            wx.ID_PASTE,
-            wx.ID_SELECTALL,
-        ]
 
         # Действия, которые надо дизаблить, если не открыта вики
         self._disabledActions = [
@@ -136,10 +130,13 @@ class MainWndController:
         """
         Создать горячие клавиши, которые не попали в меню
         """
-        aTable = wx.AcceleratorTable([
-           (wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
-           (wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
-           (wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
+        aTable = wx.AcceleratorTable(
+            [
+                (wx.ACCEL_CTRL, wx.WXK_INSERT, wx.ID_COPY),
+                (wx.ACCEL_SHIFT, wx.WXK_INSERT, wx.ID_PASTE),
+                (wx.ACCEL_SHIFT, wx.WXK_DELETE, wx.ID_CUT),
+            ]
+        )
         self._mainWindow.SetAcceleratorTable(aTable)
 
     def init(self):
@@ -222,7 +219,7 @@ class MainWndController:
         self.updateStatusBar()
 
     def _onPageUpdate(self, page, **kwargs):
-        if kwargs['change'] & PAGE_UPDATE_TITLE:
+        if kwargs["change"] & PAGE_UPDATE_TITLE:
             self.updateTitle()
             self.updateStatusBar()
             self.bookmarks.updateBookmarks()
@@ -236,8 +233,11 @@ class MainWndController:
                 self._application.recentWiki.add(wikiroot.path)
                 self.updateRecentMenu()
             except IOError as e:
-                showError(self._application.mainWindow,
-                    _("Can't add wiki to recent list.\nCan't save config.\n%s") % (str(e)))
+                showError(
+                    self._application.mainWindow,
+                    _("Can't add wiki to recent list.\nCan't save config.\n%s")
+                    % (str(e)),
+                )
 
         self.enableGui()
         self.bookmarks.updateBookmarks()
@@ -257,8 +257,7 @@ class MainWndController:
 
     def _updateBookmarksState(self):
         self._application.actionController.enableTools(
-            AddBookmarkAction.stringId,
-            self._application.selectedPage is not None
+            AddBookmarkAction.stringId, self._application.selectedPage is not None
         )
 
     def _onPreferencesDialogClose(self, prefDialog):
@@ -285,17 +284,8 @@ class MainWndController:
         self._updateBookmarksState()
 
     def _enableTools(self, enabled):
-        toolbar = self._mainWindow.toolbars[TOOLBAR_GENERAL]
-
-        for toolId in self.disabledTools:
-            if toolbar.FindById(toolId) is not None:
-                toolbar.EnableTool(toolId, enabled)
-
-            if self.mainMenu.FindItemById(toolId) is not None:
-                self.mainMenu.Enable(toolId, enabled)
-
-        [self._application.actionController.enableTools(action.stringId, enabled)
-         for action in self._disabledActions]
+        for action in self._disabledActions:
+            self._application.actionController.enableTools(action.stringId, enabled)
 
     def updateTitle(self):
         """
@@ -306,13 +296,15 @@ class MainWndController:
 
     def updateStatusBar(self):
         dateFormat = self._generalConfig.dateTimeFormat.value
-        text = ''
+        text = ""
 
-        if(self._application.selectedPage is not None and
-                self._application.selectedPage.datetime is not None):
+        if (
+            self._application.selectedPage is not None
+            and self._application.selectedPage.datetime is not None
+        ):
             text = datetime.datetime.strftime(
-                self._application.selectedPage.datetime,
-                dateFormat)
+                self._application.selectedPage.datetime, dateFormat
+            )
 
         setStatusText(STATUSBAR_PAGE_DATETIME_ITEM, text)
 
@@ -328,8 +320,7 @@ class MainWndController:
         xpos = self._mainWindow.mainWindowConfig.xPos.value
         ypos = self._mainWindow.mainWindowConfig.yPos.value
 
-        self._mainWindow.SetSize(
-            xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
+        self._mainWindow.SetSize(xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
         self.updateColors()
         self._mainWindow.Layout()
@@ -358,8 +349,7 @@ class MainWndController:
         Обновление меню со списком последних открытых вики
         """
         menu_file = self._mainWindow.menuController[MENU_FILE]
-        self.removeMenuItemsById(menu_file,
-                                 list(self._recentId.keys()))
+        self.removeMenuItemsById(menu_file, list(self._recentId.keys()))
         self._recentId = {}
 
         for n in range(len(self._application.recentWiki)):
@@ -367,8 +357,7 @@ class MainWndController:
             path = self._application.recentWiki[n]
             self._recentId[id] = path
 
-            title = path if n + 1 > 9 else u"&{n}. {path}".format(n=n+1,
-                                                                  path=path)
+            title = path if n + 1 > 9 else "&{n}. {path}".format(n=n + 1, path=path)
 
             menu_file.Append(id, title, "", wx.ITEM_NORMAL)
 

@@ -3,9 +3,13 @@
 Модуль с классом диалога настроек
 """
 
+from typing import List, Optional
+
 import wx
 
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.gui.controls.treebook2 import Treebook2, BasePrefPanel
 
 
 class PrefDialog(TestedDialog):
@@ -15,11 +19,18 @@ class PrefDialog(TestedDialog):
 
     def __init__(self, parent, application):
         style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
-        super(PrefDialog, self).__init__(parent, style=style)
+        super().__init__(parent, style=style)
+
+        self._default_icon = getBuiltinImagePath("page.svg")
+
         self._application = application
-        self._treeBook = wx.Treebook(self, -1)
+        self._treeBook = Treebook2(self, self._default_icon)
         self._do_layout()
         self._application.onPreferencesDialogCreate(self)
+
+    def Destroy(self):
+        self._treeBook.Clear()
+        super().Destroy()
 
     @property
     def treeBook(self):
@@ -31,15 +42,19 @@ class PrefDialog(TestedDialog):
 
     @property
     def pages(self):
-        count = self._treeBook.GetPageCount()
-        for n in range(count):
-            yield self._treeBook.GetPage(n)
+        return self._treeBook.GetPages()
 
     @property
     def currentPage(self):
         return self._treeBook.GetCurrentPage()
 
-    def appendPreferenceGroup(self, groupname, prefPanelsInfoList):
+    def appendPreferenceGroup(
+        self,
+        groupname,
+        prefPanelsInfoList,
+        parent_page_tag: Optional[str] = None,
+        icon_fname: Optional[str] = None,
+    ):
         """
         Добавить группу настроек
         groupname - имя группы
@@ -49,19 +64,44 @@ class PrefDialog(TestedDialog):
         Массив не должен быть пустым
         """
         assert len(prefPanelsInfoList) != 0
-        self._treeBook.AddPage(prefPanelsInfoList[0].panel, groupname)
+        self._treeBook.AddPage(
+            prefPanelsInfoList[0].panel,
+            groupname,
+            tag=parent_page_tag,
+            icon_fname=icon_fname,
+        )
 
         # Если всего одна страница в списке,
         # то не будем добавлять вложенные страницы
         if len(prefPanelsInfoList) > 1:
             for panelInfo in prefPanelsInfoList:
-                self._treeBook.AddSubPage(panelInfo.panel, panelInfo.name)
+                self._treeBook.AddPage(panelInfo.panel, panelInfo.name, parent_page_tag)
+
+    def addPage(
+        self,
+        page: BasePrefPanel,
+        label: str,
+        parent_page_tag: Optional[str] = None,
+        icon_fname=None,
+        tag: Optional[str] = None,
+    ):
+        self._treeBook.AddPage(page, label, parent_page_tag, icon_fname, tag)
+
+    def expandAll(self):
+        self._treeBook.ExpandAll()
+
+    def setSelection(self, tag: str):
+        self._treeBook.SetSelection(tag)
+
+    def getPages(self) -> List[BasePrefPanel]:
+        return self._treeBook.GetPages()
 
     def _do_layout(self):
+        self._treeBook.SetMinSize((300, 100))
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableRow(0)
         main_sizer.AddGrowableCol(0)
-        main_sizer.Add(self._treeBook, 0, wx.ALL | wx.EXPAND, 4)
+        main_sizer.Add(self._treeBook, flag=wx.ALL | wx.EXPAND, border=4)
 
         self._createOkCancelButtons(main_sizer)
 
@@ -73,7 +113,4 @@ class PrefDialog(TestedDialog):
         Создать кнопки Ok / Cancel
         """
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL | wx.HELP)
-        sizer.Add(buttonsSizer,
-                  0,
-                  wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL,
-                  border=4)
+        sizer.Add(buttonsSizer, flag=wx.EXPAND | wx.ALIGN_BOTTOM | wx.ALL, border=4)

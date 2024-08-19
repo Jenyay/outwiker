@@ -200,21 +200,21 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             AttachFilesActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("attach.png")
+            getBuiltinImagePath("attach.svg")
         )
 
         # Attach Folder
         actionController.appendToolbarButton(
             AttachFolderActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("attach_folder.png")
+            getBuiltinImagePath("attach_folder.svg")
         )
 
         # Create subdir
         actionController.appendToolbarButton(
             AttachCreateSubdirActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("folder_add.png")
+            getBuiltinImagePath("folder_add.svg")
         )
 
         # Delete files
@@ -228,7 +228,7 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             RenameAttachActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("attach_rename.png")
+            getBuiltinImagePath("rename.svg")
         )
 
         # Select all files
@@ -247,7 +247,7 @@ class AttachPanel(wx.Panel):
             getBuiltinImagePath("paste.png")
         )
 
-        # Execute files
+        # Execute attachments
         actionController.appendToolbarButton(
             AttachExecuteFilesAction.stringId,
             toolbar,

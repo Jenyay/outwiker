@@ -102,6 +102,7 @@ class BaseOutWikerGUIMixin(BaseOutWikerMixin):
     def destroyApplication(self):
         Tester.dialogTester.clear()
         self.outwiker_app.destroyMainWindow()
+        wx.SafeYield()
         self.outwiker_app.MainLoop()
         self.mainWindow = None
         del self.outwiker_app

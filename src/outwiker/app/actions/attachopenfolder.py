@@ -21,7 +21,7 @@ class OpenAttachFolderAction(BaseAction):
 
     @property
     def description(self):
-        return _("Open folder with attached files")
+        return _("Open folder with attachments")
 
     def run(self, page=None):
         if page is None:

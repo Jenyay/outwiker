@@ -11,6 +11,7 @@ from outwiker.core.config import (
     ListOption,
     StcStyleOption,
 )
+from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS
 from outwiker.gui.stcstyle import StcStyle
 
 
@@ -30,19 +31,17 @@ class GuiConfig:
         if height > 0:
             height_option.value = height
 
-    def loadWindowSize(self,
-                       prefix: str,
-                       width_default: int,
-                       height_default: int) -> Tuple[int, int]:
+    def loadWindowSize(
+        self, prefix: str, width_default: int, height_default: int
+    ) -> Tuple[int, int]:
         width_option, height_option = self._get_options(
-                prefix, width_default, height_default
+            prefix, width_default, height_default
         )
         return (width_option.value, height_option.value)
 
-    def _get_options(self,
-                     prefix: str,
-                     width_default: int,
-                     height_default: int) -> Tuple[IntegerOption, IntegerOption]:
+    def _get_options(
+        self, prefix: str, width_default: int, height_default: int
+    ) -> Tuple[IntegerOption, IntegerOption]:
         width_param_name = "{}_{}".format(prefix, self._wnd_width_suffix)
         height_param_name = "{}_{}".format(prefix, self._wnd_height_suffix)
 
@@ -236,7 +235,7 @@ class GeneralGuiConfig:
         )
 
 
-class PluginsConfig(object):
+class PluginsConfig:
     """
     Класс для хранения настроек, связанных с плагинами
     """
@@ -256,7 +255,7 @@ class PluginsConfig(object):
         )
 
 
-class TrayConfig(object):
+class TrayConfig:
     """
     Класс для хранения настроек, связанных с иконками в трее
     """
@@ -320,7 +319,7 @@ class TrayConfig(object):
         )
 
 
-class EditorConfig(object):
+class EditorConfig:
     """
     Класс для хранения настроек редактора
     """
@@ -332,6 +331,9 @@ class EditorConfig(object):
 
     TAB_WIDTH_SECTION = "TabWidth"
     TAB_WIDTH_DEFAULT = 4
+
+    TAB_USE_SPACES_SECTION = "TabUseSpaces"
+    TAB_USE_SPACES_DEFAULT = False
 
     FONT_SIZE_SECTION = "size"
     FONT_SIZE_DEFAULT = 10
@@ -395,6 +397,14 @@ class EditorConfig(object):
             GeneralGuiConfig.GENERAL_SECTION,
             EditorConfig.TAB_WIDTH_SECTION,
             EditorConfig.TAB_WIDTH_DEFAULT,
+        )
+
+        # Add spaces instead tabs
+        self.tabUseSpaces = BooleanOption(
+            self.config,
+            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.TAB_USE_SPACES_SECTION,
+            EditorConfig.TAB_USE_SPACES_DEFAULT,
         )
 
         # Размер шрифта
@@ -485,7 +495,7 @@ class EditorConfig(object):
         )
 
 
-class HtmlEditorStylesConfig(object):
+class HtmlEditorStylesConfig:
     """
     Класс для хранения настроек стилей редактора HTML
     """
@@ -566,7 +576,7 @@ class HtmlEditorStylesConfig(object):
         )
 
 
-class HtmlRenderConfig(object):
+class HtmlRenderConfig:
     """
     Класс для хранения настроек HTML-рендера
     """
@@ -638,7 +648,7 @@ class HtmlRenderConfig(object):
         )
 
 
-class TextPrintConfig(object):
+class TextPrintConfig:
     """
     Класс для хранения настроек печати текста
     """
@@ -740,7 +750,7 @@ class TextPrintConfig(object):
         )
 
 
-class MainWindowConfig(object):
+class MainWindowConfig:
     """
     Класс для хранения настроек главного окна
     """
@@ -863,7 +873,7 @@ class MainWindowConfig(object):
         )
 
 
-class TreeConfig(object):
+class TreeConfig:
     """
     Класс для хранения настроек панели с деревом
     """
@@ -965,7 +975,7 @@ class AttachConfig:
         )
 
 
-class TagsCloudConfig(object):
+class TagsCloudConfig:
     """
     Класс для хранения настроек панели с облагом тегов
     """
@@ -1005,7 +1015,7 @@ class TagsCloudConfig(object):
         )
 
 
-class PageDialogConfig(object):
+class PageDialogConfig:
     WIDTH_SECTION = "PageDialogWidth"
     WIDTH_DEFAULT = 500
 
@@ -1061,12 +1071,15 @@ class PageDialogConfig(object):
         )
 
 
-class PrefDialogConfig(object):
+class PrefDialogConfig:
     WIDTH_SECTION = "PrefDialogWidth"
     WIDTH_DEFAULT = 800
 
     HEIGHT_SECTION = "PrefDialogHeight"
     HEIGHT_DEFAULT = 500
+
+    TREE_WIDTH_SECTION = "PrefDialogTreeWidth"
+    TREE_WIDTH_DEFAULT = 300
 
     def __init__(self, config):
         self.config = config
@@ -1085,37 +1098,20 @@ class PrefDialogConfig(object):
             self.HEIGHT_DEFAULT,
         )
 
+        self.treeWidth = IntegerOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.TREE_WIDTH_SECTION,
+            self.TREE_WIDTH_DEFAULT,
+        )
 
-class TagsConfig(object):
+
+class TagsConfig:
     """
     Options for tags and tags cloud
     """
 
     SECTION = "Tags"
-
-    TAG_COLOR_FONT_NORMAL_PARAM = "TagFontNormalColor"
-    TAG_COLOR_FONT_NORMAL_DEFAULT = "#0000FF"
-
-    TAG_COLOR_FONT_SELECTED_PARAM = "TagFontSelectedColor"
-    TAG_COLOR_FONT_SELECTED_DEFAULT = "#0000FF"
-
-    TAG_COLOR_FONT_NORMAL_HOVER_PARAM = "TagFontNormalHoverColor"
-    TAG_COLOR_FONT_NORMAL_HOVER_DEFAULT = "#FF0000"
-
-    TAG_COLOR_FONT_SELECTED_HOVER_PARAM = "TagFontSelectedHoverColor"
-    TAG_COLOR_FONT_SELECTED_HOVER_DEFAULT = "#FF0000"
-
-    TAG_COLOR_BACK_SELECTED_PARAM = "TagBackSelectedColor"
-    TAG_COLOR_BACK_SELECTED_DEFAULT = "#FAFF24"
-
-    ACTION_SHOW_LIST = 0
-    ACTION_MARK_TOGGLE = 1
-
-    LEFT_CLICK_ACTION_PARAM = "LeftClickAction"
-    LEFT_CLICK_ACTION_DEFAULT = ACTION_SHOW_LIST
-
-    MIDDLE_CLICK_ACTION_PARAM = "MiddleClickAction"
-    MIDDLE_CLICK_ACTION_DEFAULT = ACTION_MARK_TOGGLE
 
     POPUP_HEADERS_SECTION = "PopupHeaders"
     POPUP_HEADERS_DEFAULT = ""
@@ -1126,57 +1122,20 @@ class TagsConfig(object):
     POPUP_HEIGHT_SECTION = "TagsPopupHeight"
     POPUP_HEIGHT_DEFAULT = 200
 
+    MIN_FONT_SIZE_SECTION = "MinFontSize"
+    MIN_FONT_SIZE_DEFAULT = 8
+
+    MAX_FONT_SIZE_SECTION = "MaxFontSize"
+    MAX_FONT_SIZE_DEFAULT = 16
+
+    TAGS_CLOUD_MODE_SECTION = "TagsCloudMode"
+    TAGS_CLOUD_MODE_DEFAULT = TAGS_CLOUD_MODE_CONTINUOUS
+
+    ENABLE_TOOLTIPS_SECTION = "EnableTooltips"
+    ENABLE_TOOLTIPS_DEFAULT = True
+
     def __init__(self, config):
         self.config = config
-
-        self.colorFontNormal = StringOption(
-            self.config,
-            self.SECTION,
-            self.TAG_COLOR_FONT_NORMAL_PARAM,
-            self.TAG_COLOR_FONT_NORMAL_DEFAULT,
-        )
-
-        self.colorFontSelected = StringOption(
-            self.config,
-            self.SECTION,
-            self.TAG_COLOR_FONT_SELECTED_PARAM,
-            self.TAG_COLOR_FONT_SELECTED_DEFAULT,
-        )
-
-        self.colorFontNormalHover = StringOption(
-            self.config,
-            self.SECTION,
-            self.TAG_COLOR_FONT_NORMAL_HOVER_PARAM,
-            self.TAG_COLOR_FONT_NORMAL_HOVER_DEFAULT,
-        )
-
-        self.colorFontSelectedHover = StringOption(
-            self.config,
-            self.SECTION,
-            self.TAG_COLOR_FONT_SELECTED_HOVER_PARAM,
-            self.TAG_COLOR_FONT_SELECTED_HOVER_DEFAULT,
-        )
-
-        self.colorBackSelected = StringOption(
-            self.config,
-            self.SECTION,
-            self.TAG_COLOR_BACK_SELECTED_PARAM,
-            self.TAG_COLOR_BACK_SELECTED_DEFAULT,
-        )
-
-        self.leftClickAction = IntegerOption(
-            self.config,
-            self.SECTION,
-            self.LEFT_CLICK_ACTION_PARAM,
-            self.LEFT_CLICK_ACTION_DEFAULT,
-        )
-
-        self.middleClickAction = IntegerOption(
-            self.config,
-            self.SECTION,
-            self.MIDDLE_CLICK_ACTION_PARAM,
-            self.MIDDLE_CLICK_ACTION_DEFAULT,
-        )
 
         self.popupHeaders = StringOption(
             self.config,
@@ -1197,4 +1156,32 @@ class TagsConfig(object):
             self.SECTION,
             self.POPUP_HEIGHT_SECTION,
             self.POPUP_HEIGHT_DEFAULT,
+        )
+
+        self.minFontSize = IntegerOption(
+            self.config,
+            self.SECTION,
+            self.MIN_FONT_SIZE_SECTION,
+            self.MIN_FONT_SIZE_DEFAULT,
+        )
+
+        self.maxFontSize = IntegerOption(
+            self.config,
+            self.SECTION,
+            self.MAX_FONT_SIZE_SECTION,
+            self.MAX_FONT_SIZE_DEFAULT,
+        )
+
+        self.tagsCloudMode = StringOption(
+            self.config,
+            self.SECTION,
+            self.TAGS_CLOUD_MODE_SECTION,
+            self.TAGS_CLOUD_MODE_DEFAULT,
+        )
+
+        self.enableTooltips = BooleanOption(
+            self.config,
+            self.SECTION,
+            self.ENABLE_TOOLTIPS_SECTION,
+            self.ENABLE_TOOLTIPS_DEFAULT,
         )

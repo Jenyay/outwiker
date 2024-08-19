@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   sodipodi:docname="text_small.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="8.5065506"
+     inkscape:cx="18.809034"
+     inkscape:cy="24.451744"
+     inkscape:window-width="1920"
+     inkscape:window-height="1088"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="font-size:10.5833px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#565656;fill-opacity:1;stroke:none;stroke-width:0.187744"
+       d="M 4.6011726,5.8883951 H 2.6981279 l -0.333486,0.7938062 q -0.1232448,0.2930406 -0.1232448,0.4377062 0,0.1149906 0.1051201,0.2040156 0.1087455,0.085315 0.4639805,0.1112812 V 7.5724512 H 1.2626883 V 7.4352043 q 0.308112,-0.05564 0.3987332,-0.1446655 0.1848672,-0.17805 0.4096077,-0.7233281 L 3.8000814,2.4275488 H 3.926951 L 5.6378789,6.6117233 Q 5.8444952,7.1161982 6.0112382,7.2682827 6.181606,7.4166575 6.4824684,7.4352043 V 7.5724512 H 4.5431751 V 7.4352043 q 0.2936127,-0.014838 0.3951084,-0.1001529 0.10512,-0.085315 0.10512,-0.2077251 0,-0.1632126 -0.1449938,-0.5156031 z M 4.4996769,5.6139013 3.665962,3.5811644 2.8104981,5.6139013 Z"
+       id="text1"
+       aria-label="A" />
+    <path
+       style="fill:#4681c2;fill-opacity:1;stroke:none;stroke-width:0.315585px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 10,6.7735154 H 6.638711 l 1.672237,3.18074 z"
+       id="path6-5" />
+  </g>
+</svg>

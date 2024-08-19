@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd /app/bin/net.jenyay.Outwiker
-python3 runoutwiker.py "$@"
+WEBKIT_DISABLE_DMABUF_RENDERER=1 python3 runoutwiker.py "$@"

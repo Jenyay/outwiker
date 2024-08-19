@@ -10,7 +10,7 @@ from outwiker.gui.baseaction import BaseAction
 
 class AttachExecuteFilesAction(BaseAction):
     """
-    Execute selected files action
+    Execute selected attachment action
     """
     stringId = "AttachExecuteFiles"
 
@@ -19,11 +19,11 @@ class AttachExecuteFilesAction(BaseAction):
 
     @property
     def title(self):
-        return _("Execute files")
+        return _("Execute attachments")
 
     @property
     def description(self):
-        return _("Execute selected attached files")
+        return _("Execute selected attachments")
 
     def run(self, params):
         attachPanel = self._application.mainWindow.attachPanel.panel
@@ -32,7 +32,7 @@ class AttachExecuteFilesAction(BaseAction):
 
             if len(files) == 0:
                 showError(self._application.mainWindow,
-                          _("You did not select a file to execute"))
+                          _("You did not select an attachment to execute"))
                 return
 
             for file in files:
@@ -41,5 +41,5 @@ class AttachExecuteFilesAction(BaseAction):
                 try:
                     getOS().startFile(fullpath)
                 except OSError:
-                    text = _("Can't execute file '%s'") % file
+                    text = _("Can't execute attachment '%s'") % file
                     showError(self._application.mainWindow, text)

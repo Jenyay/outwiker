@@ -8,6 +8,7 @@ import wx
 from outwiker.actions.polyactionsid import *
 from outwiker.app.services.texteditor import insertCurrentDate
 from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW, PAGE_ATTACH_DIR
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
@@ -241,7 +242,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             BOLD_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold.png"),
+            getBuiltinImagePath("text_bold.svg"),
             fullUpdate=False,
         )
 
@@ -254,7 +255,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_italic.png"),
+            getBuiltinImagePath("text_italic.svg"),
             fullUpdate=False,
         )
 
@@ -267,7 +268,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             BOLD_ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold_italic.png"),
+            getBuiltinImagePath("text_bold_italic.svg"),
             fullUpdate=False,
         )
 
@@ -280,7 +281,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             UNDERLINE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_underline.png"),
+            getBuiltinImagePath("text_underline.svg"),
             fullUpdate=False,
         )
 
@@ -293,7 +294,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             STRIKE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_strikethrough.png"),
+            getBuiltinImagePath("text_strikethrough.svg"),
             fullUpdate=False,
         )
 
@@ -306,7 +307,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             SUBSCRIPT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_subscript.png"),
+            getBuiltinImagePath("text_subscript.svg"),
             fullUpdate=False,
         )
 
@@ -319,7 +320,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             SUPERSCRIPT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_superscript.png"),
+            getBuiltinImagePath("text_superscript.svg"),
             fullUpdate=False,
         )
 
@@ -340,7 +341,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             ALIGN_LEFT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_left.png"),
+            getBuiltinImagePath("text_align_left.svg"),
             fullUpdate=False,
         )
 
@@ -353,7 +354,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             ALIGN_CENTER_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_center.png"),
+            getBuiltinImagePath("text_align_center.svg"),
             fullUpdate=False,
         )
 
@@ -366,7 +367,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             ALIGN_RIGHT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_right.png"),
+            getBuiltinImagePath("text_align_right.svg"),
             fullUpdate=False,
         )
 
@@ -379,7 +380,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             ALIGN_JUSTIFY_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_justify.png"),
+            getBuiltinImagePath("text_align_justify.svg"),
             fullUpdate=False,
         )
 
@@ -445,7 +446,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             LIST_BULLETS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_bullets.png"),
+            getBuiltinImagePath("text_list_bullets.svg"),
             fullUpdate=False,
         )
 
@@ -460,7 +461,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             LIST_NUMBERS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_numbers.png"),
+            getBuiltinImagePath("text_list_numbers.svg"),
             fullUpdate=False,
         )
 
@@ -500,7 +501,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_1_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_1.png"),
+            getBuiltinImagePath("text_heading_1.svg"),
             fullUpdate=False,
         )
 
@@ -508,7 +509,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_2_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_2.png"),
+            getBuiltinImagePath("text_heading_2.svg"),
             fullUpdate=False,
         )
 
@@ -516,7 +517,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_3_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_3.png"),
+            getBuiltinImagePath("text_heading_3.svg"),
             fullUpdate=False,
         )
 
@@ -524,7 +525,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_4_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_4.png"),
+            getBuiltinImagePath("text_heading_4.svg"),
             fullUpdate=False,
         )
 
@@ -532,7 +533,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_5_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_5.png"),
+            getBuiltinImagePath("text_heading_5.svg"),
             fullUpdate=False,
         )
 
@@ -540,7 +541,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HEADING_6_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_6.png"),
+            getBuiltinImagePath("text_heading_6.svg"),
             fullUpdate=False,
         )
 
@@ -563,7 +564,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             COMMENT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "comment.png"),
+            getBuiltinImagePath("comment.svg"),
             fullUpdate=False,
         )
 
@@ -576,7 +577,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             QUOTE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "quote.png"),
+            os.path.join(self.imagesDir, "quote.svg"),
             fullUpdate=False,
         )
 
@@ -589,7 +590,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             MARK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "mark.png"),
+            os.path.join(self.imagesDir, "mark.svg"),
             fullUpdate=False,
         )
 
@@ -602,7 +603,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             CODE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "code.png"),
+            os.path.join(self.imagesDir, "code.svg"),
             fullUpdate=False,
         )
 
@@ -623,7 +624,33 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             IMAGE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "image.png"),
+            os.path.join(self.imagesDir, "picture.svg"),
+            fullUpdate=False,
+        )
+        
+        # Текущая дата
+        actionController.getAction(CURRENT_DATE).setFunc(
+            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
+        )
+
+        actionController.appendMenuItem(CURRENT_DATE, menu)
+        actionController.appendToolbarButton(
+            CURRENT_DATE,
+            toolbar,
+            getBuiltinImagePath("date.svg"),
+            fullUpdate=False,
+        )
+        
+        # Вставить якорь
+        actionController.getAction(ANCHOR_STR_ID).setFunc(
+            lambda param: self.turnText('<a name="', '"></a>')
+        )
+
+        actionController.appendMenuItem(ANCHOR_STR_ID, menu)
+        actionController.appendToolbarButton(
+            ANCHOR_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "anchor.svg"),
             fullUpdate=False,
         )
 
@@ -636,20 +663,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             LINK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "link.png"),
-            fullUpdate=False,
-        )
-
-        # Вставить якорь
-        actionController.getAction(ANCHOR_STR_ID).setFunc(
-            lambda param: self.turnText('<a name="', '"></a>')
-        )
-
-        actionController.appendMenuItem(ANCHOR_STR_ID, menu)
-        actionController.appendToolbarButton(
-            ANCHOR_STR_ID,
-            toolbar,
-            os.path.join(self.imagesDir, "anchor.png"),
+            getBuiltinImagePath("link.svg"),
             fullUpdate=False,
         )
 
@@ -662,7 +676,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             HORLINE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_horizontalrule.png"),
+            os.path.join(self.imagesDir, "text_horline.svg"),
             fullUpdate=False,
         )
 
@@ -675,20 +689,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendToolbarButton(
             LINE_BREAK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "linebreak.png"),
-            fullUpdate=False,
-        )
-
-        # Текущая дата
-        actionController.getAction(CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
-        )
-
-        actionController.appendMenuItem(CURRENT_DATE, menu)
-        actionController.appendToolbarButton(
-            CURRENT_DATE,
-            toolbar,
-            os.path.join(self.imagesDir, "date.png"),
+            os.path.join(self.imagesDir, "linebreak.svg"),
             fullUpdate=False,
         )
 

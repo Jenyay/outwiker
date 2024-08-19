@@ -10,7 +10,7 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.config import IntegerOption
 from outwiker.gui.basepagepanel import BasePagePanel
 from outwiker.gui.tagscloud import TagsCloud
-from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
+from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from .htmlreport import HtmlReport
 from .sortstrategies import getSortStrategies
@@ -70,7 +70,7 @@ class SearchPanel(BasePagePanel):
         self.searchBtn.Bind(wx.EVT_BUTTON, handler=self.__onFind)
         self.sortStrategy.Bind(wx.EVT_COMBOBOX,
                                handler=self.__onChangeSortStrategy)
-        self.tagsList.Bind(EVT_TAG_LEFT_CLICK, handler=self.__onTagLeftClick)
+        self.tagsList.Bind(EVT_TAG_LEFT_DOWN, handler=self.__onTagLeftClick)
 
     def __do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)

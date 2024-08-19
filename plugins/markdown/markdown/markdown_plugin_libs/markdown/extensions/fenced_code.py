@@ -1,29 +1,38 @@
-"""
-Fenced Code Extension for Python Markdown
-=========================================
+# Fenced Code Extension for Python Markdown
+# =========================================
 
+# This extension adds Fenced Code Blocks to Python-Markdown.
+
+# See https://Python-Markdown.github.io/extensions/fenced_code_blocks
+# for documentation.
+
+# Original code Copyright 2007-2008 [Waylan Limberg](http://achinghead.com/).
+
+# All changes Copyright 2008-2014 The Python Markdown Project
+
+# License: [BSD](https://opensource.org/licenses/bsd-license.php)
+
+"""
 This extension adds Fenced Code Blocks to Python-Markdown.
 
-See <https://Python-Markdown.github.io/extensions/fenced_code_blocks>
-for documentation.
-
-Original code Copyright 2007-2008 [Waylan Limberg](http://achinghead.com/).
-
-
-All changes Copyright 2008-2014 The Python Markdown Project
-
-License: [BSD](https://opensource.org/licenses/bsd-license.php)
+See the [documentation](https://Python-Markdown.github.io/extensions/fenced_code_blocks)
+for details.
 """
 
+from __future__ import annotations
 
 from textwrap import dedent
 from . import Extension
 from ..preprocessors import Preprocessor
 from .codehilite import CodeHilite, CodeHiliteExtension, parse_hl_lines
-from .attr_list import get_attrs, AttrListExtension
+from .attr_list import get_attrs_and_remainder, AttrListExtension
 from ..util import parseBoolValue
 from ..serializers import _escape_attrib_html
 import re
+from typing import TYPE_CHECKING, Any, Iterable
+
+if TYPE_CHECKING:  # pragma: no cover
+    from markdown import Markdown
 
 
 class FencedCodeExtension(Extension):
@@ -31,20 +40,23 @@ class FencedCodeExtension(Extension):
         self.config = {
             'lang_prefix': ['language-', 'Prefix prepended to the language. Default: "language-"']
         }
+        """ Default configuration options. """
         super().__init__(**kwargs)
 
     def extendMarkdown(self, md):
-        """ Add FencedBlockPreprocessor to the Markdown instance. """
+        """ Add `FencedBlockPreprocessor` to the Markdown instance. """
         md.registerExtension(self)
 
         md.preprocessors.register(FencedBlockPreprocessor(md, self.getConfigs()), 'fenced_code_block', 25)
 
 
 class FencedBlockPreprocessor(Preprocessor):
+    """ Find and extract fenced code blocks. """
+
     FENCED_BLOCK_RE = re.compile(
         dedent(r'''
             (?P<fence>^(?:~{3,}|`{3,}))[ ]*                          # opening fence
-            ((\{(?P<attrs>[^\}\n]*)\})|                              # (optional {attrs} or
+            ((\{(?P<attrs>[^\n]*)\})|                                # (optional {attrs} or
             (\.?(?P<lang>[\w#.+-]*)[ ]*)?                            # optional (.)lang
             (hl_lines=(?P<quot>"|')(?P<hl_lines>.*?)(?P=quot)[ ]*)?) # optional hl_lines)
             \n                                                       # newline (end of opening fence)
@@ -54,13 +66,13 @@ class FencedBlockPreprocessor(Preprocessor):
         re.MULTILINE | re.DOTALL | re.VERBOSE
     )
 
-    def __init__(self, md, config):
+    def __init__(self, md: Markdown, config: dict[str, Any]):
         super().__init__(md)
         self.config = config
         self.checked_for_deps = False
-        self.codehilite_conf = {}
+        self.codehilite_conf: dict[str, Any] = {}
         self.use_attr_list = False
-        # List of options to convert to bool values
+        # List of options to convert to boolean values
         self.bool_options = [
             'linenums',
             'guess_lang',
@@ -68,8 +80,8 @@ class FencedBlockPreprocessor(Preprocessor):
             'use_pygments'
         ]
 
-    def run(self, lines):
-        """ Match and store Fenced Code Blocks in the HtmlStash. """
+    def run(self, lines: list[str]) -> list[str]:
+        """ Match and store Fenced Code Blocks in the `HtmlStash`. """
 
         # Check for dependent extensions
         if not self.checked_for_deps:
@@ -82,28 +94,33 @@ class FencedBlockPreprocessor(Preprocessor):
             self.checked_for_deps = True
 
         text = "\n".join(lines)
+        index = 0
         while 1:
-            m = self.FENCED_BLOCK_RE.search(text)
+            m = self.FENCED_BLOCK_RE.search(text, index)
             if m:
                 lang, id, classes, config = None, '', [], {}
                 if m.group('attrs'):
-                    id, classes, config = self.handle_attrs(get_attrs(m.group('attrs')))
+                    attrs, remainder = get_attrs_and_remainder(m.group('attrs'))
+                    if remainder:  # Does not have correctly matching curly braces, so the syntax is invalid.
+                        index = m.end('attrs')  # Explicitly skip over this, to prevent an infinite loop.
+                        continue
+                    id, classes, config = self.handle_attrs(attrs)
                     if len(classes):
                         lang = classes.pop(0)
                 else:
                     if m.group('lang'):
                         lang = m.group('lang')
                     if m.group('hl_lines'):
-                        # Support hl_lines outside of attrs for backward-compatibility
+                        # Support `hl_lines` outside of `attrs` for backward-compatibility
                         config['hl_lines'] = parse_hl_lines(m.group('hl_lines'))
 
-                # If config is not empty, then the codehighlite extension
+                # If `config` is not empty, then the `codehighlite` extension
                 # is enabled, so we call it to highlight the code
                 if self.codehilite_conf and self.codehilite_conf['use_pygments'] and config.get('use_pygments', True):
                     local_config = self.codehilite_conf.copy()
                     local_config.update(config)
-                    # Combine classes with cssclass. Ensure cssclass is at end
-                    # as pygments appends a suffix under certain circumstances.
+                    # Combine classes with `cssclass`. Ensure `cssclass` is at end
+                    # as Pygments appends a suffix under certain circumstances.
                     # Ignore ID as Pygments does not offer an option to set it.
                     if classes:
                         local_config['css_class'] = '{} {}'.format(
@@ -128,9 +145,9 @@ class FencedBlockPreprocessor(Preprocessor):
                     if id:
                         id_attr = f' id="{_escape_attrib_html(id)}"'
                     if self.use_attr_list and config and not config.get('use_pygments', False):
-                        # Only assign key/value pairs to code element if attr_list ext is enabled, key/value pairs
-                        # were defined on the code block, and the `use_pygments` key was not set to True. The
-                        # `use_pygments` key could be either set to False or not defined. It is omitted from output.
+                        # Only assign key/value pairs to code element if `attr_list` extension is enabled, key/value
+                        # pairs were defined on the code block, and the `use_pygments` key was not set to `True`. The
+                        # `use_pygments` key could be either set to `False` or not defined. It is omitted from output.
                         kv_pairs = ''.join(
                             f' {k}="{_escape_attrib_html(v)}"' for k, v in config.items() if k != 'use_pygments'
                         )
@@ -139,12 +156,14 @@ class FencedBlockPreprocessor(Preprocessor):
 
                 placeholder = self.md.htmlStash.store(code)
                 text = f'{text[:m.start()]}\n{placeholder}\n{text[m.end():]}'
+                # Continue from after the replaced text in the next iteration.
+                index = m.start() + 1 + len(placeholder)
             else:
                 break
         return text.split("\n")
 
-    def handle_attrs(self, attrs):
-        """ Return tuple: (id, [list, of, classes], {configs}) """
+    def handle_attrs(self, attrs: Iterable[tuple[str, str]]) -> tuple[str, list[str], dict[str, Any]]:
+        """ Return tuple: `(id, [list, of, classes], {configs})` """
         id = ''
         classes = []
         configs = {}
@@ -161,7 +180,7 @@ class FencedBlockPreprocessor(Preprocessor):
                 configs[k] = v
         return id, classes, configs
 
-    def _escape(self, txt):
+    def _escape(self, txt: str) -> str:
         """ basic html escaping """
         txt = txt.replace('&', '&amp;')
         txt = txt.replace('<', '&lt;')

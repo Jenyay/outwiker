@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   sodipodi:docname="counter.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="12.030079"
+     inkscape:cx="10.058122"
+     inkscape:cy="29.675616"
+     inkscape:window-width="1920"
+     inkscape:window-height="1088"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#fcfdff;fill-opacity:1;stroke:#4681c2;stroke-width:0.739593;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0.695433;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect5"
+       width="5.721458"
+       height="5.8516684"
+       x="2.1392708"
+       y="6.8377981" />
+    <rect
+       style="fill:#fcfdff;fill-opacity:1;stroke:#4681c2;stroke-width:0.739593;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0.695433;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect5-1"
+       width="5.721458"
+       height="5.8516684"
+       x="2.1392708"
+       y="-4.8655391" />
+    <path
+       style="font-weight:bold;font-size:8.74847px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#565656;stroke-width:0.153974"
+       d="m 5.4992081,7.6951187 v 3.3350803 q 0,0.375911 0.03308,0.481167 0.03308,0.102245 0.1383353,0.168408 0.1052546,0.06615 0.3368161,0.06615 h 0.093226 v 0.111278 H 3.9534632 v -0.111271 h 0.108262 q 0.2616336,0 0.3729035,-0.06015 0.1112695,-0.06014 0.1503643,-0.1654 0.039095,-0.105259 0.039095,-0.490188 V 8.9160792 q 0,-0.2826853 -0.027065,-0.3518529 -0.027067,-0.072176 -0.1022483,-0.1202932 -0.072178,-0.051124 -0.1684074,-0.051124 -0.1533717,0 -0.3729035,0.096234 L 3.8993346,8.380781 5.3999705,7.6951196 Z"
+       id="text1"
+       aria-label="1" />
+    <rect
+       style="fill:#fcfdff;fill-opacity:1;stroke:#4681c2;stroke-width:0.739593;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0.695433;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect5-3"
+       width="5.721458"
+       height="5.8516684"
+       x="2.1392708"
+       y="0.98612916" />
+    <path
+       style="font-weight:bold;font-size:8.74847px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#565656;stroke-width:0.147919"
+       d="M 6.0171248,5.9619307 H 3.7687439 v -0.065164 q 1.03403,-1.2945691 1.2537965,-1.7418882 0.2225841,-0.4473194 0.2225841,-0.8739023 0,-0.3110499 -0.1831388,-0.5154541 Q 4.8788469,2.5581553 4.614,2.5581553 q -0.4338981,0 -0.6733872,0.4562067 L 3.8363647,2.975851 Q 3.9885106,2.4070739 4.2984378,2.1345349 4.608365,1.8619959 5.0140879,1.8619959 q 0.2902047,0 0.5296938,0.1421942 0.2394892,0.1421942 0.3747301,0.3910342 0.1352409,0.2458776 0.1352409,0.4621314 0,0.3939967 -0.2084964,0.7998429 -0.2845695,0.5480398 -1.2425262,1.5285886 h 0.8255332 q 0.3042923,0 0.3944529,-0.026664 0.092979,-0.026664 0.1521461,-0.088869 0.059168,-0.065164 0.1549635,-0.269577 h 0.1014299 z"
+       id="text1-5"
+       aria-label="2" />
+    <rect
+       style="fill:#fcfdff;fill-opacity:1;stroke:#4681c2;stroke-width:0.6;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0.695433;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect5-7"
+       width="5.709188"
+       height="7.1177497"
+       x="-19.867739"
+       y="14.924795" />
+    <text
+       xml:space="preserve"
+       style="font-size:8.74847px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#565656;fill-opacity:1;stroke-width:0.218712"
+       x="-18.875189"
+       y="21.275349"
+       id="text1-0"><tspan
+         sodipodi:role="line"
+         id="tspan1-9"
+         style="font-style:normal;font-weight:bold;fill:#565656;fill-opacity:1;stroke-width:0.218712"
+         x="-18.875189"
+         y="21.275349">1</tspan></text>
+    <rect
+       style="fill:#fcfdff;fill-opacity:1;stroke:#4681c2;stroke-width:0.6;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0.695433;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect5-3-3"
+       width="5.709188"
+       height="7.1177497"
+       x="-19.757639"
+       y="6.605473" />
+    <text
+       xml:space="preserve"
+       style="font-size:8.74847px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#565656;fill-opacity:1;stroke-width:0.218712"
+       x="-18.765089"
+       y="12.956026"
+       id="text1-5-6"><tspan
+         sodipodi:role="line"
+         id="tspan1-6-0"
+         style="font-style:normal;font-weight:bold;fill:#565656;fill-opacity:1;stroke-width:0.218712"
+         x="-18.765089"
+         y="12.956026">2</tspan></text>
+  </g>
+</svg>

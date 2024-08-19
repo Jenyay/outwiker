@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import re
+from typing import Tuple
 import wx
 
 from outwiker.gui.baseaction import BaseAction
@@ -29,38 +31,68 @@ class ListItemStyleAction(BaseAction):
         assert self._application.mainWindow.pagePanel is not None
         assert self._application.selectedPage is not None
 
-        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        line_number = editor.GetCurrentLine()
-        line_str = editor.GetLine(line_number)
-        cursor_position = editor.GetCurrentPosition()
+        with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
+            controller = lis.ListItemStyleDialogController(dlg)
+            if controller.ShowModal() == wx.ID_OK:
+                style_str = controller.GetStyle()
+                editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+                first_line, last_line = editor.GetSelectionLines()
+                new_lines_str = []
+                for line_number in range(first_line, last_line + 1):
+                    new_lines_str.append(self._process_line(editor, line_number, style_str))
 
-        # Find end of list markers
-        list_token_end = 0
-        while list_token_end < len(line_str):
-            substr = line_str[list_token_end:]
-            if substr.startswith(ListToken.unorderList):
-                list_token_end += len(ListToken.unorderList)
-            else:
-                break
+                new_text = '\n'.join(new_lines_str)
+                first_line_pos, last_line_pos = self._get_selection_full_lines(editor)
+                editor.SetSelection(first_line_pos, last_line_pos)
+                editor.replaceText(new_text)
+
+    def _get_selection_full_lines(self, editor) -> Tuple[int, int]:
+        startSelection = editor.GetSelectionStart()
+        endSelection = editor.GetSelectionEnd()
+
+        text = editor.GetText()
+
+        if len(text) == 0:
+            return (0, 0)
+
+        firstLinePos = text[:startSelection].rfind("\n")
+        lastLinePos = text[endSelection:].find("\n")
+
+        if firstLinePos == -1:
+            firstLinePos = 0
+        else:
+            firstLinePos += 1
+
+        if lastLinePos == -1:
+            lastLinePos = len(text)
+        else:
+            lastLinePos += endSelection
+
+        return (firstLinePos, lastLinePos)
+
+    def _process_line(self, editor, line_number, style_str) -> str:
+        line_str = editor.GetLine(line_number)
+        if line_str.endswith('\n'):
+            line_str = line_str[:-1]
+
+        list_token_re = re.compile(r"^\*+(?P<style>\s*\[.?\])?")
+        match = list_token_re.search(line_str)
+        list_token_end = match.end(0) if match is not None else 0
+        style_token_start = match.start("style") if match is not None else list_token_end
+        if style_token_start == -1:
+            style_token_start = list_token_end
 
         prefix = ' '
         suffix = ''
         if list_token_end == 0:
             prefix = ListToken.unorderList + ' '
 
-        with lis.ListItemStyleDialog(self._application.mainWindow) as dlg:
-            controller = lis.ListItemStyleDialogController(dlg)
-            if controller.ShowModal() == wx.ID_OK:
-                style_str = controller.GetStyle()
-                if not list_token_end and style_str:
-                    suffix = ' '
+        if not list_token_end and style_str:
+            suffix = ' '
 
-                if list_token_end and not style_str and not suffix:
-                    prefix = ''
+        if list_token_end and not style_str and not suffix:
+            prefix = ''
 
-                insert_str = '{prefix}{style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
+        insert_str = '{prefix}{style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
 
-                new_line_str = line_str[: list_token_end] + insert_str + line_str[list_token_end:]
-                new_position = cursor_position + len(insert_str)
-                editor.SetLine(line_number, new_line_str)
-                editor.SetCurrentPosition(new_position)
+        return line_str[: style_token_start] + insert_str + line_str[list_token_end:]

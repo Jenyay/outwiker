@@ -6,12 +6,12 @@ from outwiker.gui.preferences.configelements import BooleanElement, IntegerEleme
 from outwiker.core.application import Application
 from .wikiconfig import WikiConfig
 from .emptycontent import EmptyContent
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 
 
 class WikiPrefGeneralPanel(BasePrefPanel):
     def __init__(self, parent):
-        super(WikiPrefGeneralPanel, self).__init__(parent)
+        super().__init__(parent)
 
         self.__createGui()
         self.config = WikiConfig(Application.config)

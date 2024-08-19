@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Various names and constants
-'''
+"""
 
 import os.path
 
@@ -13,66 +13,66 @@ ICON_HEIGHT = 16
 
 # Files for pages
 # Page content
-PAGE_CONTENT_FILE = u'__page.text'
+PAGE_CONTENT_FILE = "__page.text"
 
 # Page options (properties)
-PAGE_OPT_FILE = u'__page.opt'
+PAGE_OPT_FILE = "__page.opt"
 
 # Registry file (cache)
-REGISTRY_FILE = '__cache.tmp'
+REGISTRY_FILE = "__cache.tmp"
 
 # Base name for icons
-PAGE_ICON_NAME = u'__icon'
+PAGE_ICON_NAME = "__icon"
 
-# Folder for attached files
-PAGE_ATTACH_DIR = u'__attach'
+# Folder for attachments
+PAGE_ATTACH_DIR = "__attach"
 
 # Final file after wiki parsing or HTML generation
-PAGE_RESULT_HTML = u'__content.html'
+PAGE_RESULT_HTML = "__content.html"
 
 # This string will be translated to 'en' or 'ru'
-VERSIONS_LANG = u'versions_lang'
+VERSIONS_LANG = "versions_lang"
 
-PLUGIN_INFO_FILE_NAME = u'plugin.xml'
+PLUGIN_INFO_FILE_NAME = "plugin.xml"
 
 # Keys for Application.sharedData
 # Anchor for transition during the opening other page
-APP_DATA_KEY_ANCHOR = u'__anchor'
+APP_DATA_KEY_ANCHOR = "__anchor"
 
-APP_DATA_DEBUG = u'__debug'
+APP_DATA_DEBUG = "__debug"
 
-APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
+APP_DATA_DISABLE_MINIMIZING = "__disableMinimizing"
 
-APP_DATA_DISABLE_PLUGINS = '__disablePlugins'
+APP_DATA_DISABLE_PLUGINS = "__disablePlugins"
 
-ICONS_STD_PREFIX = u'__std_'
-ICONS_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'ico']
-IMAGES_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp']
-ICON_DEFAULT = ICONS_STD_PREFIX + u'_default.png'
-RECENT_ICONS_SECTION = u'RecentIcons'
-RECENT_ICONS_PARAM_NAME = u'icon'
+ICONS_STD_PREFIX = "__std_"
+ICONS_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "ico", "svg"]
+IMAGES_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "webp"]
+ICON_DEFAULT = ICONS_STD_PREFIX + "_default.svg"
+RECENT_ICONS_SECTION = "RecentIcons"
+RECENT_ICONS_PARAM_NAME = "icon"
 
-ICONS_FOLDER_NAME = u'iconset'
-IMAGES_FOLDER_NAME = u'images'
-STYLES_FOLDER_NAME = u"styles"
-PLUGINS_FOLDER_NAME = u"plugins"
-SPELL_FOLDER_NAME = u"spell"
-STYLES_BLOCK_FOLDER_NAME = os.path.join("textstyles", 'block')
-STYLES_INLINE_FOLDER_NAME = os.path.join("textstyles", 'inline')
+ICONS_FOLDER_NAME = "iconset"
+IMAGES_FOLDER_NAME = "images"
+STYLES_FOLDER_NAME = "styles"
+PLUGINS_FOLDER_NAME = "plugins"
+SPELL_FOLDER_NAME = "spell"
+STYLES_BLOCK_FOLDER_NAME = os.path.join("textstyles", "block")
+STYLES_INLINE_FOLDER_NAME = os.path.join("textstyles", "inline")
 
 PAGE_MODE_TEXT = 0
 PAGE_MODE_PREVIEW = 1
 PAGE_MODE_HTML = 2
 
-CONFIG_GENERAL_SECTION = 'General'
-CONFIG_TOOLBARS_SECTION = 'Toolbars'
-CONFIG_TOOLBARS_VISIBLE_SUFFIX = '_visible'
+CONFIG_GENERAL_SECTION = "General"
+CONFIG_TOOLBARS_SECTION = "Toolbars"
+CONFIG_TOOLBARS_VISIBLE_SUFFIX = "_visible"
 
-REGISTRY_SECTION_PAGES = '__pages'
-REGISTRY_PAGE_CURSOR_POSITION = 'cursorposition'
-REGISTRY_PAGE_HASH = 'md5_hash'
+REGISTRY_SECTION_PAGES = "__pages"
+REGISTRY_PAGE_CURSOR_POSITION = "cursorposition"
+REGISTRY_PAGE_HASH = "md5_hash"
 
-URL_TRANSLATE = 'https://crowdin.com/project/outwiker'
+URL_TRANSLATE = "https://crowdin.com/project/outwiker"
 
 # Местоположение конфигурационной директории
 # По стандарту, если переменная XDG_CONFIG_HOME не задана в окружении,
@@ -85,10 +85,10 @@ DEFAULT_CONFIG_NAME = "outwiker.ini"
 
 
 # To translate this words with xgettext
-if __name__ == '__main__':
+if __name__ == "__main__":
     _ = lambda s: s
 
-    _('versions_lang')
+    _("versions_lang")
 
     # Folder names for localizations
     _("awards")
@@ -106,3 +106,4 @@ if __name__ == '__main__':
     _("software")
     _("tags")
     _("weather")
+    _("list")

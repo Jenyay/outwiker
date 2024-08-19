@@ -147,18 +147,6 @@ GOTO_WORD_START = "GotoWordStart"
 # Added in outwiker.actions 1.1
 GOTO_WORD_END = "GotoWordEnd"
 
-# Copy line to clipboard
-CLIPBOARD_COPY_LINE = "ClipboardCopyLine"
-
-# Cut line to clipboard
-CLIPBOARD_CUT_LINE = "ClipboardCutLine"
-
-# Copy the word to clipboard
-CLIPBOARD_COPY_WORD = "ClipboardCopyWord"
-
-# Cut the word to clipboard
-CLIPBOARD_CUT_WORD = "ClipboardCutWord"
-
 # Set text color
 TEXT_COLOR_STR_ID = "TextColor"
 
@@ -173,3 +161,22 @@ SWITCH_TO_CODE_TAB_ID = "SwitchToCodeTab"
 
 # Switch to preview tab
 SWITCH_TO_PREVIEW_TAB_ID = "SwitchToPreviewTab"
+
+# Clipboard
+CLIPBOARD_COPY_ID = "ClipboardCopy"
+CLIPBOARD_CUT_ID = "ClipboardCut"
+CLIPBOARD_PASTE_ID = "ClipboardPaste"
+
+CLIPBOARD_COPY_LINE = "ClipboardCopyLine"
+CLIPBOARD_CUT_LINE = "ClipboardCutLine"
+CLIPBOARD_COPY_WORD = "ClipboardCopyWord"
+CLIPBOARD_CUT_WORD = "ClipboardCutWord"
+
+# Redo
+UNDO_ID = "Undo"
+
+# Redo
+REDO_ID = "Redo"
+
+# Select all
+SELECT_ALL_ID = "SelectAll"

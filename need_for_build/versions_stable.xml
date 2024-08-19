@@ -1,32 +1,30 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-    <version number="3.2.0" date="">
+    <version number="3.3.0.940" date="2023-08-15">
         <changes>
-            <change>Added the ability to create folders in attached files.</change>
-            <change>Added the ability to navigate to subfolders in the attachments panel.</change>
-            <change>Added the ability to insert links to files in attached subfolders.</change>
-            <change>Implemented highlighting links to attached files on wiki pages.</change>
+            <change>Changed tags cloud design.</change>
+            <change>Added the ability to filter tags.</change>
+            <change>Added the ability to display the tags cloud as a list.</change>
+            <change>On tags cloud panel add a button to show applied tags only.</change>
+            <change>Added context menu for tags cloud.</change>
+            <change>Use new vector icons for buttons.</change>
+            <change>Added the ability to use vector icons for pages.</change>
+            <change>New preferences dialog.</change>
+            <change>Improvements in working with list item styles on wiki pages.</change>
+            <change>Added new icons for pages.</change>
         </changes>
 
         <changes lang="ru">
-            <change>Добавлена возможность создания папок в прикрепленных файлах.</change>
-            <change>Добавлена возможность перехода во вложенные папки на панели прикрепленных файлов.</change>
-            <change>Добавлена возможность вставки ссылок на файлы во вложенных прикрепленных папках.</change>
-            <change>Реализована подсветка ссылок на прикрепленные файлы на викистраницах.</change>
-        </changes>
-    </version>
-
-    <version number="3.1.0.900" date="2022-04-16">
-        <changes>
-            <change>Improve dialog for creation notes and edit notes properties.</change>
-            <change>Improve work with hotkeys.</change>
-            <change>Improve attachments panel GUI.</change>
-        </changes>
-
-        <changes lang="ru">
-            <change>Упрощение диалога создания / редактирования свойств страницы.</change>
-            <change>Улучшена работа с горячими клавишами.</change>
-            <change>Улучшения в интерфейсе панели с прикрепленными файлами.</change>
+            <change>Новый дизайн облака меток.</change>
+            <change>Добавлена возможность фильтрации меток.</change>
+            <change>Добавлена возможность отображения облака меток в виде списка.</change>
+            <change>На панели облака тегов добавлена кнопка для показа только установленных меток.</change>
+            <change>Добавлено контекстное меню для облака меток.</change>
+            <change>Новые векторные значки в интерфейсе.</change>
+            <change>Добавлена возможность использования векторных значков для страниц.</change>
+            <change>Улучшения в работе со стилями элементов списка на викистраницах.</change>
+            <change>Новый диалог настроек.</change>
+            <change>Добавлены новые значки для заметок.</change>
         </changes>
     </version>
 </versions>

@@ -4,3 +4,7 @@
 [submodule "depends/cyhunspell"]
 	path = depends/cyhunspell
 	url = https://github.com/Jenyay/cython_hunspell.git
+[submodule "depends/wxpython"]
+	path = depends/wxpython
+	url = https://github.com/Jenyay/wxpython
+	branch = wxPython-4.2.1-patched

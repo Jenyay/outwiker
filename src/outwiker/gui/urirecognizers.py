@@ -7,9 +7,13 @@ from abc import ABCMeta, abstractmethod
 from pathlib import Path
 from typing import Optional
 from urllib.parse import unquote
+import logging
 import os
 
 import idna
+
+
+logger = logging.getLogger('outwiker.gui.urirecognizers')
 
 
 class Recognizer(metaclass=ABCMeta):
@@ -52,7 +56,7 @@ class Recognizer(metaclass=ABCMeta):
         """
         Remove 'file://' protocol
         """
-        fileprotocol = u"file://"
+        fileprotocol = "file://"
         if href.startswith(fileprotocol):
             return href[len(fileprotocol):]
 
@@ -86,7 +90,8 @@ class URLRecognizer(Recognizer):
 class AnchorRecognizerBase(Recognizer, metaclass=ABCMeta):
     def _recognizeAnchor(self, href: str, basepath: str) -> Optional[str]:
         anchor = None
-        if (href.startswith(basepath) and
+        logger.debug("AnchorRecognizerBase. href= '%s'; basepath = '%s'", href, basepath)
+        if (href.lower().startswith(basepath.lower()) and
                 len(href) > len(basepath) and
                 href[len(basepath)] == "#"):
             anchor = href[len(basepath):]
@@ -105,10 +110,15 @@ class AnchorRecognizerIE(AnchorRecognizerBase):
     '''
 
     def _recognize(self, href: str) -> Optional[str]:
+        logger.debug("AnchorRecognizerIE. href= '%s'; _basepath = '%s'", href, self._basepath)
         if href.startswith('/'):
             href = href[1:]
 
-        return self._recognizeAnchor(href, self._basepath)
+        basepath = self._basepath
+        if basepath.startswith("//"):
+            basepath = basepath[2:]
+
+        return self._recognizeAnchor(href, basepath)
 
 
 class AnchorRecognizerEdge(AnchorRecognizerIE):
@@ -188,7 +198,7 @@ class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
         """
         Find page by href like page://..
         """
-        protocol = u"page://"
+        protocol = "page://"
         page = None
 
         # Если есть якорь, то отсечем его
@@ -214,7 +224,7 @@ class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
 
         return page
 
-    def _recognize(self, href: str) -> str:
+    def _recognize(self, href: str):
         page = (self._findPageByProtocol(href) or
                 self._findPageByPath(href))
         return page

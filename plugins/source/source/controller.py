@@ -2,11 +2,11 @@
 
 import os.path
 
-from outwiker.api.gui.preferences import PreferencePanelInfo
 from outwiker.api.gui.defines import TOOLBAR_PLUGINS
 from outwiker.api.pages.wiki import WikiWikiPage
 from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS
 from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo, ButtonInfo
+from outwiker.api.gui.defines import PREF_PANEL_PLUGINS
 
 from .i18n import get_
 from .preferencepanel import PreferencePanel
@@ -43,14 +43,15 @@ class Controller:
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
         self._initialize_guicontroller()
 
-    def _initialize_guicontroller(self):
-        imagesPath = os.path.join(self._plugin.pluginPath, "images")
+    def _get_image_full_path(self, fname):
+        return os.path.join(self._plugin.pluginPath, "images", fname)
 
+    def _initialize_guicontroller(self):
         action_gui_info = [
             ActionGUIInfo(
                 InsertSourceAction(self._application),
                 MENU_WIKI_COMMANDS,
-                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "source.png")),
+                ButtonInfo(TOOLBAR_PLUGINS, self._get_image_full_path("source.svg")),
             ),
         ]
 
@@ -82,7 +83,9 @@ class Controller:
         Добавление страницы с настройками
         """
         prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
-
-        panelName = _("Source [Plugin]")
-        panelsList = [PreferencePanelInfo(prefPanel, panelName)]
-        dialog.appendPreferenceGroup(panelName, panelsList)
+        dialog.addPage(
+            prefPanel,
+            _("Source [Plugin]"),
+            parent_page_tag=PREF_PANEL_PLUGINS,
+            icon_fname=self._get_image_full_path("source.svg"),
+        )

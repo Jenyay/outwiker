@@ -24,6 +24,7 @@ from outwiker.core.pagetitletester import (
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
 from outwiker.core.tree_commands import getAlternativeTitle
+from outwiker.core.notestreeloader import NotesTreeLoader
 from outwiker.core.treetools import testreadonly
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.longprocessrunner import LongProcessRunner
@@ -48,7 +49,7 @@ def removePage(page: "outwiker.core.tree.WikiPage"):
     if (
         MessageBox(
             _(
-                'Remove page "{}" and all subpages?\nAll attached files will also be deleted.'
+                'Remove page "{}" and all subpages?\nAll attachments will also be deleted.'
             ).format(page.title),
             _("Remove page?"),
             wx.YES_NO | wx.ICON_QUESTION,
@@ -84,11 +85,11 @@ def openWikiWithDialog(parent, readonly=False):
 def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
     def threadFunc(path, readonly):
         try:
-            return WikiDocument.load(path, readonly)
+            return NotesTreeLoader().loadNotesTree(path, readonly)
         except Exception as e:
             return e
 
-    logger.debug("Opening notes tree from: {}".format(path))
+    logger.debug("Opening notes tree from: %s", path)
     if not os.path.exists(path):
         _canNotLoadWikiMessage(path)
         return None
@@ -101,7 +102,7 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
 
     # The path may be changed in event handlers
     path = preWikiOpenParams.path
-    logger.debug("Notes tree path after onPreWikiOpen: {}".format(path))
+    logger.debug("Notes tree path after onPreWikiOpen: %s", path)
 
     # Если передан путь до файла настроек (а не до папки с вики),
     # то оставим только папку
@@ -133,7 +134,7 @@ def _canNotLoadWikiMessage(path):
     """
     Вывести сообщение о том, что невоможно открыть вики
     """
-    logger.warning("Can't load notes tree: {}".format(path))
+    logger.warning("Can't load notes tree: %s", path)
     text = _("Can't load notes tree:\n") + path
     showError(Application.mainWindow, text)
 
@@ -156,7 +157,7 @@ def _rootFormatErrorHandle(path, readonly):
     # Попробуем открыть вики еще раз
     try:
         # Загрузить вики
-        wikiroot = WikiDocument.load(os.path.realpath(path), readonly)
+        wikiroot = NotesTreeLoader().loadNotesTree(os.path.realpath(path), readonly)
         Application.wikiroot = wikiroot
     except IOError:
         _canNotLoadWikiMessage(path)

@@ -1,9 +1,9 @@
 [General]
 type = wiki
 tags = настройки
-order = 9
+order = 10
 creationdatetime = 2020-05-10 10:54:57.722478
-datetime = 2020-05-11 19:43:31.067200
+datetime = 2023-07-19 15:08:43.368729
 uid = settings_editor_spell_checking
 alias = Редактор - Проверка орфографии
 

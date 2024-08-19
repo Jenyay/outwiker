@@ -5,10 +5,10 @@ import wx
 
 from outwiker.app.services.messages import showError
 from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW, PAGE_MODE_HTML
-from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
+from outwiker.pages.wiki.htmlcodeview import HtmlCodeView
 from outwiker.utilites.textfile import readTextFile
 
 from .actions.openhtmlcode import WikiOpenHtmlCodeAction
@@ -194,7 +194,7 @@ class BaseWikiPageView(BaseHtmlPanel):
 
     def __createHtmlCodePanel(self, parentSizer):
         # Окно для просмотра получившегося кода HTML
-        self.htmlCodeWindow = HtmlTextEditor(self.notebook)
+        self.htmlCodeWindow = HtmlCodeView(self.notebook)
         self.htmlCodeWindow.SetReadOnly(True)
         parentSizer.Add(self.htmlCodeWindow, 1, wx.TOP | wx.BOTTOM | wx.EXPAND, 2)
 

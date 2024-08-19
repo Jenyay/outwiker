@@ -1,6 +1,6 @@
-__version__ = (3, 2, 0, 923)
-__status__ = 'dev'
-__api_version__ = (3, 924)
+__version__ = (3, 3, 0, 940)
+__status__ = ''
+__api_version__ = (3, 934)
 
 
 def getVersionStr() -> str:

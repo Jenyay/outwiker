@@ -8,6 +8,7 @@ from io import StringIO
 from outwiker.actions.polyactionsid import *
 from outwiker.app.services.texteditor import insertCurrentDate
 from outwiker.core.standardcolors import StandardColors
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.defines import RECENT_COLORS_COUNT
 from outwiker.utilites.collections import update_recent
@@ -16,9 +17,11 @@ from . import defines
 from .wikieditor import WikiEditor
 from .wikiconfig import WikiConfig
 from .basewikipageview import BaseWikiPageView
-from .tableactions import (getInsertTableActionFunc,
-                           getInsertTableRowsActionFunc,
-                           getInsertTableCellActionFunc)
+from .tableactions import (
+    getInsertTableActionFunc,
+    getInsertTableRowsActionFunc,
+    getInsertTableCellActionFunc,
+)
 from .wikistyleutils import turnBlockOrInline, selectColor
 
 from .actions.fontsizebig import WikiFontSizeBigAction
@@ -75,10 +78,11 @@ class WikiPageView(BaseWikiPageView):
 
         Перегрузка метода из BaseTextPanel
         """
-        fname_quotes = ['"{}"'.format(fname) if ' ' in fname else fname
-                for fname in fnames]
+        fname_quotes = [
+            '"{}"'.format(fname) if " " in fname else fname for fname in fnames
+        ]
 
-        return ' '.join(['Attach:{}'.format(fname) for fname in fname_quotes])
+        return " ".join(["Attach:{}".format(fname) for fname in fname_quotes])
 
     @property
     def commandsMenu(self):
@@ -157,20 +161,22 @@ class WikiPageView(BaseWikiPageView):
 
         self.toolsMenu.AppendSeparator()
 
-        self.toolsMenu.AppendSubMenu(self._headingMenu, _(u"Heading"))
-        self.toolsMenu.AppendSubMenu(self._fontMenu, _(u"Font"))
-        self.toolsMenu.AppendSubMenu(self._alignMenu, _(u"Alignment"))
+        self.toolsMenu.AppendSubMenu(self._headingMenu, _("Heading"))
+        self.toolsMenu.AppendSubMenu(self._fontMenu, _("Font"))
+        self.toolsMenu.AppendSubMenu(self._alignMenu, _("Alignment"))
 
-        self.toolsMenu.AppendSubMenu(self._formatMenu, _(u"Formatting"))
-        self.mainWindow.menuController.addMenu(defines.MENU_WIKI_FORMAT,
-                                               self._formatMenu)
+        self.toolsMenu.AppendSubMenu(self._formatMenu, _("Formatting"))
+        self.mainWindow.menuController.addMenu(
+            defines.MENU_WIKI_FORMAT, self._formatMenu
+        )
 
-        self.toolsMenu.AppendSubMenu(self._tableMenu, _(u"Tables"))
-        self.toolsMenu.AppendSubMenu(self._listMenu, _(u"Lists"))
+        self.toolsMenu.AppendSubMenu(self._tableMenu, _("Tables"))
+        self.toolsMenu.AppendSubMenu(self._listMenu, _("Lists"))
 
-        self.toolsMenu.AppendSubMenu(self._commandsMenu, _(u"Commands"))
-        self.mainWindow.menuController.addMenu(defines.MENU_WIKI_COMMANDS,
-                                               self._commandsMenu)
+        self.toolsMenu.AppendSubMenu(self._commandsMenu, _("Commands"))
+        self.mainWindow.menuController.addMenu(
+            defines.MENU_WIKI_COMMANDS, self._commandsMenu
+        )
 
         self.__addCommandsTools()
 
@@ -188,28 +194,28 @@ class WikiPageView(BaseWikiPageView):
     def __addCommandsTools(self):
         # Команда(:attachlist:)
         self._application.actionController.appendMenuItem(
-            WikiAttachListAction.stringId,
-            self.commandsMenu)
+            WikiAttachListAction.stringId, self.commandsMenu
+        )
 
         # Команда(:childlist:)
         self._application.actionController.appendMenuItem(
-            WikiChildListAction.stringId,
-            self.commandsMenu)
+            WikiChildListAction.stringId, self.commandsMenu
+        )
 
         # Команда(:include:)
         self._application.actionController.appendMenuItem(
-            WikiIncludeAction.stringId,
-            self.commandsMenu)
+            WikiIncludeAction.stringId, self.commandsMenu
+        )
 
         # Команда(:crdate:))
         self._application.actionController.appendMenuItem(
-            WikiDateCreationAction.stringId,
-            self.commandsMenu)
+            WikiDateCreationAction.stringId, self.commandsMenu
+        )
 
         # Команда(:eddate:))
         self._application.actionController.appendMenuItem(
-            WikiDateEditionAction.stringId,
-            self.commandsMenu)
+            WikiDateEditionAction.stringId, self.commandsMenu
+        )
 
     def __addFontTools(self):
         """
@@ -221,124 +227,143 @@ class WikiPageView(BaseWikiPageView):
 
         # Полужирный шрифт
         actionController.getAction(BOLD_STR_ID).setFunc(
-            lambda param: self.turnText(u"'''", u"'''"))
+            lambda param: self.turnText("'''", "'''")
+        )
 
         actionController.appendMenuItem(BOLD_STR_ID, menu)
         actionController.appendToolbarButton(
             BOLD_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_bold.svg"),
+            fullUpdate=False,
+        )
 
         # Курсивный шрифт
         actionController.getAction(ITALIC_STR_ID).setFunc(
-            lambda param: self.turnText(u"''", u"''"))
+            lambda param: self.turnText("''", "''")
+        )
 
         actionController.appendMenuItem(ITALIC_STR_ID, menu)
         actionController.appendToolbarButton(
             ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_italic.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_italic.svg"),
+            fullUpdate=False,
+        )
 
         # Полужирный курсивный шрифт
         actionController.getAction(BOLD_ITALIC_STR_ID).setFunc(
-            lambda param: self.turnText(u"''''", u"''''"))
+            lambda param: self.turnText("''''", "''''")
+        )
 
         actionController.appendMenuItem(BOLD_ITALIC_STR_ID, menu)
         actionController.appendToolbarButton(
             BOLD_ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold_italic.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_bold_italic.svg"),
+            fullUpdate=False,
+        )
 
         # Подчеркнутый шрифт
         actionController.getAction(UNDERLINE_STR_ID).setFunc(
-            lambda param: self.turnText(u"{+", u"+}"))
+            lambda param: self.turnText("{+", "+}")
+        )
 
         actionController.appendMenuItem(UNDERLINE_STR_ID, menu)
         actionController.appendToolbarButton(
             UNDERLINE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_underline.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_underline.svg"),
+            fullUpdate=False,
+        )
 
         # Зачеркнутый шрифт
         actionController.getAction(STRIKE_STR_ID).setFunc(
-            lambda param: self.turnText(u"{-", u"-}"))
+            lambda param: self.turnText("{-", "-}")
+        )
 
         actionController.appendMenuItem(STRIKE_STR_ID, menu)
         actionController.appendToolbarButton(
             STRIKE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_strikethrough.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_strikethrough.svg"),
+            fullUpdate=False,
+        )
 
         # Нижний индекс
         actionController.getAction(SUBSCRIPT_STR_ID).setFunc(
-            lambda param: self.turnText(u"'_", u"_'"))
+            lambda param: self.turnText("'_", "_'")
+        )
 
         actionController.appendMenuItem(SUBSCRIPT_STR_ID, menu)
         actionController.appendToolbarButton(
             SUBSCRIPT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_subscript.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_subscript.svg"),
+            fullUpdate=False,
+        )
 
         # Верхний индекс
         actionController.getAction(SUPERSCRIPT_STR_ID).setFunc(
-            lambda param: self.turnText(u"'^", u"^'"))
+            lambda param: self.turnText("'^", "^'")
+        )
 
         actionController.appendMenuItem(SUPERSCRIPT_STR_ID, menu)
         actionController.appendToolbarButton(
             SUPERSCRIPT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_superscript.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_superscript.svg"),
+            fullUpdate=False,
+        )
 
         # Крупный шрифт
         actionController.appendMenuItem(WikiFontSizeBigAction.stringId, menu)
         actionController.appendToolbarButton(
             WikiFontSizeBigAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "text_big.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_big.svg"),
+            fullUpdate=False,
+        )
 
         # Мелкий шрифт
         actionController.appendMenuItem(WikiFontSizeSmallAction.stringId, menu)
         actionController.appendToolbarButton(
             WikiFontSizeSmallAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "text_small.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_small.svg"),
+            fullUpdate=False,
+        )
 
         # Text color
-        actionController.getAction(
-            TEXT_COLOR_STR_ID).setFunc(self._setTextColor)
+        actionController.getAction(TEXT_COLOR_STR_ID).setFunc(self._setTextColor)
         actionController.appendMenuItem(TEXT_COLOR_STR_ID, menu)
         actionController.appendToolbarButton(
             TEXT_COLOR_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_color.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_color.svg"),
+            fullUpdate=False,
+        )
 
         # Text background color
         actionController.getAction(TEXT_BACKGROUND_COLOR_STR_ID).setFunc(
-            self._setTextBackgroundColor)
+            self._setTextBackgroundColor
+        )
         actionController.appendMenuItem(TEXT_BACKGROUND_COLOR_STR_ID, menu)
         actionController.appendToolbarButton(
             TEXT_BACKGROUND_COLOR_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_color_background.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_color_background.svg"),
+            fullUpdate=False,
+        )
 
         # Text style
         actionController.appendMenuItem(WikiStyleOnlyAction.stringId, menu)
         actionController.appendToolbarButton(
             WikiStyleOnlyAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "text_style.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_style.svg"),
+            fullUpdate=False,
+        )
 
         # Advanced text style
         actionController.appendMenuItem(WikiStyleAdvancedAction.stringId, menu)
@@ -350,47 +375,55 @@ class WikiPageView(BaseWikiPageView):
 
         # Выравнивание по левому краю
         actionController.getAction(ALIGN_LEFT_STR_ID).setFunc(
-            lambda param: self.turnText(u"%left%", u""))
+            lambda param: self.turnText("%left%", "")
+        )
 
         actionController.appendMenuItem(ALIGN_LEFT_STR_ID, menu)
         actionController.appendToolbarButton(
             ALIGN_LEFT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_left.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_align_left.svg"),
+            fullUpdate=False,
+        )
 
         # Выравнивание по центру
         actionController.getAction(ALIGN_CENTER_STR_ID).setFunc(
-            lambda param: self.turnText(u"%center%", u""))
+            lambda param: self.turnText("%center%", "")
+        )
 
         actionController.appendMenuItem(ALIGN_CENTER_STR_ID, menu)
         actionController.appendToolbarButton(
             ALIGN_CENTER_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_center.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_align_center.svg"),
+            fullUpdate=False,
+        )
 
         # Выравнивание по правому краю
         actionController.getAction(ALIGN_RIGHT_STR_ID).setFunc(
-            lambda param: self.turnText(u"%right%", u""))
+            lambda param: self.turnText("%right%", "")
+        )
 
         actionController.appendMenuItem(ALIGN_RIGHT_STR_ID, menu)
         actionController.appendToolbarButton(
             ALIGN_RIGHT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_right.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_align_right.svg"),
+            fullUpdate=False,
+        )
 
         # Выравнивание по ширине
         actionController.getAction(ALIGN_JUSTIFY_STR_ID).setFunc(
-            lambda param: self.turnText(u"%justify%", u""))
+            lambda param: self.turnText("%justify%", "")
+        )
 
         actionController.appendMenuItem(ALIGN_JUSTIFY_STR_ID, menu)
         actionController.appendToolbarButton(
             ALIGN_JUSTIFY_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_justify.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_align_justify.svg"),
+            fullUpdate=False,
+        )
 
     def __addHTools(self):
         """
@@ -401,64 +434,76 @@ class WikiPageView(BaseWikiPageView):
         actionController = self._application.actionController
 
         actionController.getAction(HEADING_1_STR_ID).setFunc(
-            lambda param: self._setHeading(u"!! "))
+            lambda param: self._setHeading("!! ")
+        )
 
         actionController.getAction(HEADING_2_STR_ID).setFunc(
-            lambda param: self._setHeading(u"!!! "))
+            lambda param: self._setHeading("!!! ")
+        )
 
         actionController.getAction(HEADING_3_STR_ID).setFunc(
-            lambda param: self._setHeading(u"!!!! "))
+            lambda param: self._setHeading("!!!! ")
+        )
 
         actionController.getAction(HEADING_4_STR_ID).setFunc(
-            lambda param: self._setHeading(u"!!!!! "))
+            lambda param: self._setHeading("!!!!! ")
+        )
 
         actionController.getAction(HEADING_5_STR_ID).setFunc(
-            lambda param: self._setHeading(u"!!!!!! "))
+            lambda param: self._setHeading("!!!!!! ")
+        )
 
         actionController.getAction(HEADING_6_STR_ID).setFunc(
-            lambda param: self._setHeading(u"!!!!!!! "))
+            lambda param: self._setHeading("!!!!!!! ")
+        )
 
         actionController.appendMenuItem(HEADING_1_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_1_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_1.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_heading_1.svg"),
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_2_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_2_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_2.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_heading_2.svg"),
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_3_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_3_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_3.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_heading_3.svg"),
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_4_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_4_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_4.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_heading_4.svg"),
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_5_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_5_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_5.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_heading_5.svg"),
+            fullUpdate=False,
+        )
 
         actionController.appendMenuItem(HEADING_6_STR_ID, menu)
         actionController.appendToolbarButton(
             HEADING_6_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_6.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_heading_6.svg"),
+            fullUpdate=False,
+        )
 
     def __addListTools(self):
         """
@@ -470,29 +515,34 @@ class WikiPageView(BaseWikiPageView):
 
         # Ненумерованный список
         actionController.getAction(LIST_BULLETS_STR_ID).setFunc(
-            lambda param: self._turnList("*"))
+            lambda param: self._turnList("*")
+        )
 
         actionController.appendMenuItem(LIST_BULLETS_STR_ID, menu)
         actionController.appendToolbarButton(
             LIST_BULLETS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_bullets.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_list_bullets.svg"),
+            fullUpdate=False,
+        )
 
         # Нумерованный список
         actionController.getAction(LIST_NUMBERS_STR_ID).setFunc(
-            lambda param: self._turnList("#"))
+            lambda param: self._turnList("#")
+        )
 
         actionController.appendMenuItem(LIST_NUMBERS_STR_ID, menu)
         actionController.appendToolbarButton(
             LIST_NUMBERS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_numbers.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("text_list_numbers.svg"),
+            fullUpdate=False,
+        )
 
         # Уменьшить уровень вложенности
         actionController.getAction(LIST_DECREASE_LEVEL_STR_ID).setFunc(
-            lambda param: self._decreaseNestingListItems())
+            lambda param: self._decreaseNestingListItems()
+        )
 
         actionController.appendMenuItem(LIST_DECREASE_LEVEL_STR_ID, menu)
 
@@ -509,51 +559,60 @@ class WikiPageView(BaseWikiPageView):
 
         # Форматированный текст
         actionController.getAction(PREFORMAT_STR_ID).setFunc(
-            lambda param: self.turnText(u"[@", u"@]"))
+            lambda param: self.turnText("[@", "@]")
+        )
         actionController.appendMenuItem(PREFORMAT_STR_ID, menu)
 
         # Comment
         actionController.getAction(COMMENT_STR_ID).setFunc(
-            lambda param: self.turnText(u"<!--", u"-->"))
+            lambda param: self.turnText("<!--", "-->")
+        )
         actionController.appendMenuItem(COMMENT_STR_ID, menu)
         actionController.appendToolbarButton(
             COMMENT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "comment.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("comment.svg"),
+            fullUpdate=False,
+        )
 
         # Quote
         actionController.getAction(QUOTE_STR_ID).setFunc(
-            lambda param: self.turnText(u'[>', u'<]'))
+            lambda param: self.turnText("[>", "<]")
+        )
 
         actionController.appendMenuItem(QUOTE_STR_ID, menu)
         actionController.appendToolbarButton(
             QUOTE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "quote.png"),
-            fullUpdate=False)
+            os.path.join(self.imagesDir, "quote.svg"),
+            fullUpdate=False,
+        )
 
         # Mark
         actionController.getAction(MARK_STR_ID).setFunc(
-            lambda param: self.turnText(u'[!', u'!]'))
+            lambda param: self.turnText("[!", "!]")
+        )
 
         actionController.appendMenuItem(MARK_STR_ID, menu)
         actionController.appendToolbarButton(
             MARK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "mark.png"),
-            fullUpdate=False)
+            os.path.join(self.imagesDir, "mark.svg"),
+            fullUpdate=False,
+        )
 
         # Monospace font
         actionController.getAction(CODE_STR_ID).setFunc(
-            lambda param: self.turnText(u'@@', u'@@'))
+            lambda param: self.turnText("@@", "@@")
+        )
 
         actionController.appendMenuItem(CODE_STR_ID, menu)
         actionController.appendToolbarButton(
             CODE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "code.png"),
-            fullUpdate=False)
+            os.path.join(self.imagesDir, "code.svg"),
+            fullUpdate=False,
+        )
 
         # Multiline block
         actionController.appendMenuItem(MultilineBlockAction.stringId, menu)
@@ -571,70 +630,81 @@ class WikiPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             WikiThumbAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "images.png"),
-            fullUpdate=False)
-
-        # Вставка ссылок
-        actionController.getAction(LINK_STR_ID).setFunc(
-            lambda param: insertLink(self._application))
-
-        actionController.appendMenuItem(LINK_STR_ID, menu)
-        actionController.appendToolbarButton(
-            LINK_STR_ID,
-            toolbar,
-            os.path.join(self.imagesDir, "link.png"),
-            fullUpdate=False)
-
-        # Вставка якоря
-        actionController.getAction(ANCHOR_STR_ID).setFunc(
-            lambda param: self.turnText(u"[[#", u"]]"))
-
-        actionController.appendMenuItem(ANCHOR_STR_ID, menu)
-        actionController.appendToolbarButton(
-            ANCHOR_STR_ID,
-            toolbar,
-            os.path.join(self.imagesDir, "anchor.png"),
-            fullUpdate=False)
-
-        # Вставка горизонтальной линии
-        actionController.getAction(HORLINE_STR_ID).setFunc(
-            lambda param: self.replaceText(u"----"))
-
-        actionController.appendMenuItem(HORLINE_STR_ID, menu)
-        actionController.appendToolbarButton(
-            HORLINE_STR_ID,
-            toolbar,
-            os.path.join(self.imagesDir, "text_horizontalrule.png"),
-            fullUpdate=False)
-
-        # Вставка разрыва строки
-        actionController.getAction(LINE_BREAK_STR_ID).setFunc(
-            lambda param: self.replaceText(u"[[<<]]"))
-
-        actionController.appendMenuItem(LINE_BREAK_STR_ID, menu)
-        actionController.appendToolbarButton(
-            LINE_BREAK_STR_ID,
-            toolbar,
-            os.path.join(self.imagesDir, "linebreak.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("thumb.svg"),
+            fullUpdate=False,
+        )
 
         # Текущая дата
         actionController.getAction(CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow,
-                                            self.codeEditor))
+            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
+        )
 
         actionController.appendMenuItem(CURRENT_DATE, menu)
         actionController.appendToolbarButton(
             CURRENT_DATE,
             toolbar,
-            os.path.join(self.imagesDir, "date.png"),
-            fullUpdate=False)
+            getBuiltinImagePath("date.svg"),
+            fullUpdate=False,
+        )
+
+        # Вставка якоря
+        actionController.getAction(ANCHOR_STR_ID).setFunc(
+            lambda param: self.turnText("[[#", "]]")
+        )
+
+        actionController.appendMenuItem(ANCHOR_STR_ID, menu)
+        actionController.appendToolbarButton(
+            ANCHOR_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "anchor.svg"),
+            fullUpdate=False,
+        )
+
+        # Вставка ссылок
+        actionController.getAction(LINK_STR_ID).setFunc(
+            lambda param: insertLink(self._application)
+        )
+
+        actionController.appendMenuItem(LINK_STR_ID, menu)
+        actionController.appendToolbarButton(
+            LINK_STR_ID,
+            toolbar,
+            getBuiltinImagePath("link.svg"),
+            fullUpdate=False,
+        )
+        
+        # Вставка горизонтальной линии
+        actionController.getAction(HORLINE_STR_ID).setFunc(
+            lambda param: self.replaceText("----")
+        )
+
+        actionController.appendMenuItem(HORLINE_STR_ID, menu)
+        actionController.appendToolbarButton(
+            HORLINE_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "text_horline.svg"),
+            fullUpdate=False,
+        )
+
+        # Вставка разрыва строки
+        actionController.getAction(LINE_BREAK_STR_ID).setFunc(
+            lambda param: self.replaceText("[[<<]]")
+        )
+
+        actionController.appendMenuItem(LINE_BREAK_STR_ID, menu)
+        actionController.appendToolbarButton(
+            LINE_BREAK_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "linebreak.svg"),
+            fullUpdate=False,
+        )
 
         self.toolsMenu.AppendSeparator()
 
         # Преобразовать некоторые символы в и их HTML-представление
         actionController.getAction(HTML_ESCAPE_STR_ID).setFunc(
-            lambda param: self.escapeHtml())
+            lambda param: self.escapeHtml()
+        )
         actionController.appendMenuItem(HTML_ESCAPE_STR_ID, menu)
 
     def __addTableTools(self):
@@ -647,9 +717,9 @@ class WikiPageView(BaseWikiPageView):
 
         # Вставить таблицу
         actionController.getAction(TABLE_STR_ID).setFunc(
-            getInsertTableActionFunc(self._application,
-                                     self._application.mainWindow,
-                                     self)
+            getInsertTableActionFunc(
+                self._application, self._application.mainWindow, self
+            )
         )
 
         actionController.appendMenuItem(TABLE_STR_ID, menu)
@@ -657,13 +727,14 @@ class WikiPageView(BaseWikiPageView):
             TABLE_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "table.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Вставить строки таблицы
         actionController.getAction(TABLE_ROW_STR_ID).setFunc(
-            getInsertTableRowsActionFunc(self._application,
-                                         self._application.mainWindow,
-                                         self)
+            getInsertTableRowsActionFunc(
+                self._application, self._application.mainWindow, self
+            )
         )
 
         actionController.appendMenuItem(TABLE_ROW_STR_ID, menu)
@@ -671,13 +742,14 @@ class WikiPageView(BaseWikiPageView):
             TABLE_ROW_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "table_insert_row.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
         # Вставить ячейку таблицы
         actionController.getAction(TABLE_CELL_STR_ID).setFunc(
-            getInsertTableCellActionFunc(self._application,
-                                         self._application.mainWindow,
-                                         self)
+            getInsertTableCellActionFunc(
+                self._application, self._application.mainWindow, self
+            )
         )
 
         actionController.appendMenuItem(TABLE_CELL_STR_ID, menu)
@@ -685,7 +757,8 @@ class WikiPageView(BaseWikiPageView):
             TABLE_CELL_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "table_insert_cell.png"),
-            fullUpdate=False)
+            fullUpdate=False,
+        )
 
     def _addSeparator(self):
         toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_WIKI_GENERAL]
@@ -702,7 +775,7 @@ class WikiPageView(BaseWikiPageView):
 
         for n in range(first_line, last_line + 1):
             line = editor.GetLine(n)
-            if line.startswith(u'*') or line.startswith(u'#'):
+            if line.startswith("*") or line.startswith("#"):
                 newline = line[1:]
                 newline = newline.lstrip()
                 editor.SetLine(n, newline)
@@ -727,14 +800,14 @@ class WikiPageView(BaseWikiPageView):
         old_sel_end = editor.GetSelectionEnd()
         first_line, last_line = editor.GetSelectionLines()
 
-        prefix_regex = re.compile('^(!!+\\s+)*', re.U | re.M)
+        prefix_regex = re.compile("^(!!+\\s+)*", re.U | re.M)
 
         editor.BeginUndoAction()
 
         for n in range(first_line, last_line + 1):
             line = editor.GetLine(n)
             if line.startswith(prefix):
-                newline = line[len(prefix):]
+                newline = line[len(prefix) :]
             else:
                 newline = prefix_regex.sub(prefix, line, 1)
             editor.SetLine(n, newline)
@@ -758,7 +831,7 @@ class WikiPageView(BaseWikiPageView):
         text = editor.GetText()
 
         if len(text) == 0:
-            text = symbol + u" "
+            text = symbol + " "
             position = len(text)
 
             editor.SetText(text)
@@ -778,7 +851,7 @@ class WikiPageView(BaseWikiPageView):
         else:
             lastLine += endSelection
 
-        selectedText = text[firstLine: lastLine]
+        selectedText = text[firstLine:lastLine]
         lines = selectedText.splitlines()
 
         buf = StringIO()
@@ -787,18 +860,18 @@ class WikiPageView(BaseWikiPageView):
 
         for n, line in enumerate(lines):
             if n != 0:
-                buf.write(u"\n")
+                buf.write("\n")
 
             buf.write(symbol)
             if not line.startswith(symbol):
-                buf.write(u" ")
+                buf.write(" ")
 
             buf.write(line)
             appendSymbols = len(symbol)
 
         if len(lines) == 0:
             buf.write(symbol)
-            buf.write(u" ")
+            buf.write(" ")
             appendSymbols = len(symbol) + 1
 
         result = buf.getvalue()
@@ -811,55 +884,50 @@ class WikiPageView(BaseWikiPageView):
             position = firstLine + len(result)
             editor.SetSelection(firstLine, position)
         elif startSelection == endSelection:
-            editor.SetSelection(startSelection + appendSymbols,
-                                endSelection + appendSymbols)
+            editor.SetSelection(
+                startSelection + appendSymbols, endSelection + appendSymbols
+            )
 
     def _setTextColor(self, param):
         config = GeneralGuiConfig(self._application.config)
         recent_colors = config.recentTextColors.value
 
-        color = selectColor(self, _('Select text color'), recent_colors)
+        color = selectColor(self, _("Select text color"), recent_colors)
 
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
         if color:
-            recent_colors = update_recent(recent_colors,
-                                          color.lower(),
-                                          RECENT_COLORS_COUNT)
+            recent_colors = update_recent(
+                recent_colors, color.lower(), RECENT_COLORS_COUNT
+            )
 
             config.recentTextColors.value = recent_colors
 
-            color_str = (StandardColors[color]
-                         if color in StandardColors
-                         else color)
+            color_str = StandardColors[color] if color in StandardColors else color
 
-            text_begin = '%{color}%'.format(color=color_str)
-            text_end = '%%'
+            text_begin = "%{color}%".format(color=color_str)
+            text_end = "%%"
             turnBlockOrInline(editor, text_begin, text_end)
 
     def _setTextBackgroundColor(self, param):
         config = GeneralGuiConfig(self._application.config)
         recent_colors = config.recentBackgroundColors.value
 
-        color = selectColor(self,
-                            _('Select text background color'),
-                            recent_colors)
+        color = selectColor(self, _("Select text background color"), recent_colors)
 
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
         if color:
-            recent_colors = update_recent(recent_colors,
-                                          color.lower(),
-                                          RECENT_COLORS_COUNT)
+            recent_colors = update_recent(
+                recent_colors, color.lower(), RECENT_COLORS_COUNT
+            )
 
             config.recentBackgroundColors.value = recent_colors
 
-            color_str = (StandardColors[color]
-                         if color in StandardColors
-                         else color)
+            color_str = StandardColors[color] if color in StandardColors else color
 
-            if color_str.startswith('#') or color_str.startswith('rgb('):
-                text_begin = '%bgcolor={color}%'.format(color=color_str)
+            if color_str.startswith("#") or color_str.startswith("rgb("):
+                text_begin = "%bgcolor={color}%".format(color=color_str)
             else:
-                text_begin = '%bg-{color}%'.format(color=color_str)
+                text_begin = "%bg-{color}%".format(color=color_str)
 
-            text_end = '%%'
+            text_end = "%%"
             turnBlockOrInline(editor, text_begin, text_end)

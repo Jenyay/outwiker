@@ -4,12 +4,12 @@ import wx
 
 from outwiker.gui.preferences import configelements
 from outwiker.gui.guiconfig import TrayConfig
-from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import BasePrefPanel
 
 
 class TrayPanel(BasePrefPanel):
     def __init__(self, parent, application):
-        super(TrayPanel, self).__init__(parent)
+        super().__init__(parent)
         self._minimize_button_actions = [_('Minimize window'), _('Hide to tray') ]
         self._close_button_actions = [_('Close window'), _('Minimize window'), _('Hide to tray') ]
 

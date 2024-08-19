@@ -3,23 +3,28 @@
 import logging
 import os
 import os.path
-import configparser
 import shutil
 import datetime
+from abc import ABCMeta
 from functools import cmp_to_key, reduce
-from typing import Optional, Union
+from typing import final, List, Optional, Union
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
 from .event import Event
-from .exceptions import (ClearConfigError, RootFormatError, DuplicateTitle,
-                         ReadonlyException, TreeException)
-from .tagscommands import parseTagsList
-from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
-from .defines import (PAGE_CONTENT_FILE,
-                      PAGE_OPT_FILE,
-                      REGISTRY_FILE,
-                      CONFIG_GENERAL_SECTION)
+from .exceptions import (
+    ClearConfigError,
+    DuplicateTitle,
+    ReadonlyException,
+    TreeException,
+)
+from .sortfunctions import sortAlphabeticalFunction
+from .defines import (
+    PAGE_CONTENT_FILE,
+    PAGE_OPT_FILE,
+    REGISTRY_FILE,
+    CONFIG_GENERAL_SECTION,
+)
 from .iconcontroller import IconController
 from .system import getIconsDirList
 from .registrynotestree import NotesTreeRegistry, PickleSaver
@@ -27,61 +32,60 @@ from . import events
 from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 
-logger = logging.getLogger('core')
+logger = logging.getLogger("core")
 
 
-class RootWikiPage:
+class BasePage(metaclass=ABCMeta):
     """
-    Класс для корня вики
+    Base class for note page or for root page
     """
-    contentFile = PAGE_CONTENT_FILE
 
-    def __init__(self, path, readonly=False):
-        """
-        readonly - True, если страница предназначена только для чтения
-        """
-        # Путь до страницы
+    def __init__(self, path: str, readonly: bool = False):
+        # Path to page
         self._path = path
-        self._parent = None
-        self._children = []
+        self._parent: Optional[BasePage] = None
+        self._children: List[WikiPage] = []
         self.readonly = readonly
 
         configpath = os.path.join(path, PAGE_OPT_FILE)
-        if (not self.readonly and
-                os.path.exists(configpath) and
-                not os.access(configpath, os.W_OK)):
+        if (
+            not self.readonly
+            and os.path.exists(configpath)
+            and not os.access(configpath, os.W_OK)
+        ):
             self.readonly = True
 
-        self._params = RootWikiPage._readParams(self.path, self.readonly)
+        self._params = BasePage.readParams(self.path, self.readonly)
         self._datetime = self._getDateTime()
 
-    def __bool__(self):
-        return True
-
     @staticmethod
-    def _readParams(path, readonly=False):
+    def readParams(path: str, readonly: bool = False) -> PageConfig:
         return PageConfig(os.path.join(path, PAGE_OPT_FILE), readonly)
 
     @property
-    def params(self):
+    def params(self) -> PageConfig:
         return self._params
 
     @property
-    def path(self):
+    def path(self) -> str:
         return self._path
 
     @property
-    def parent(self) -> Optional[Union['RootWikiPage', 'WikiPage']]:
+    def parent(self) -> Optional["BasePage"]:
         return self._parent
 
     @property
-    def children(self):
+    def children(self) -> List["WikiPage"]:
         return self._children[:]
 
+    @children.setter
+    def children(self, children: List["WikiPage"]):
+        self._children = children
+
     @property
-    def root(self):
+    def root(self) -> "BasePage":
         """
-        Найти корень дерева по странице
+        Return root of notes tree
         """
         result = self
         while result.parent is not None:
@@ -98,12 +102,12 @@ class RootWikiPage:
 
         self._params.save()
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._children)
 
-    def __getitem__(self, path: str) -> Optional[Union['RootWikiPage', 'WikiPage']]:
+    def __getitem__(self, path: str) -> Optional[Union["BasePage", "WikiPage"]]:
         """
-        Получить нужную страницу по относительному пути в дереве
+        Get pae by relative path in tree
         """
         if len(path) == 0:
             return None
@@ -117,18 +121,20 @@ class RootWikiPage:
 
         # Разделим путь по составным частям
         titles = path.split("/")
-        page: Optional[Union['RootWikiPage', 'WikiPage']] = self
+        page = self
 
         for title in titles:
             found = False
             if title == "..":
                 page = page.parent
-                found = (page is not None)
+                found = page is not None
             else:
                 title_lower = title.lower()
                 for child in page.children:
-                    if (child.title.lower() == title_lower or
-                            child.display_title.lower() == title_lower):
+                    if (
+                        child.title.lower() == title_lower
+                        or child.display_title.lower() == title_lower
+                    ):
                         page = child
                         found = True
 
@@ -140,7 +146,7 @@ class RootWikiPage:
 
     def sortChildrenAlphabetical(self):
         """
-        Отсортировать дочерние страницы по алфавиту
+        Sort children pages alphabetical
         """
         self._children.sort(key=cmp_to_key(sortAlphabeticalFunction))
 
@@ -164,8 +170,12 @@ class RootWikiPage:
         Изменить порядок дочерних элементов
         Дочернюю страницу page переместить на уровень neworder
         """
-        if self.readonly:
-            raise ReadonlyException
+        oldorder = self._children.index(page)
+        if oldorder == neworder:
+            return
+
+        if page.readonly:
+            raise ReadonlyException(page)
 
         realorder = neworder
 
@@ -175,7 +185,6 @@ class RootWikiPage:
         if realorder >= len(self.children):
             realorder = len(self.children) - 1
 
-        oldorder = self._children.index(page)
         if oldorder != realorder:
             self.removeFromChildren(page)
             self._children.insert(realorder, page)
@@ -188,13 +197,13 @@ class RootWikiPage:
 
     def addToChildren(self, page, order):
         """
-        Добавить страницу к дочерним страницам
+        Add the page to children
         """
         self._children.insert(order, page)
 
     def removeFromChildren(self, page):
         """
-        Удалить страницу из дочерних страниц
+        Remove the page from children
         """
         self._children.remove(page)
 
@@ -224,7 +233,7 @@ class RootWikiPage:
             # Если дата не установлена, то возвратим дату последнего
             # изменения файла с контентом, при этом запишем эту дату в
             # файл настроек
-            contentpath = os.path.join(self.path, RootWikiPage.contentFile)
+            contentpath = os.path.join(self.path, PAGE_CONTENT_FILE)
             if os.path.exists(contentpath):
                 time = os.path.getmtime(contentpath)
                 date = datetime.datetime.fromtimestamp(time)
@@ -257,42 +266,16 @@ class RootWikiPage:
         self.datetime = datetime.datetime.now()
 
     def update(self):
-        '''
+        """
         Update page content if needed.
         The method can raise EnvironmentError.
-        '''
-
-    def loadChildren(self):
         """
-        Загрузить дочерние узлы
-        """
-        try:
-            entries = os.listdir(self.path)
-        except OSError:
-            raise IOError
-
-        self._children = []
-
-        for name in entries:
-            fullpath = os.path.join(self.path, name)
-
-            if not name.startswith("__") and os.path.isdir(fullpath):
-                try:
-                    page = WikiPage.load(fullpath, self, self.root.readonly)
-                except Exception as e:
-                    text = 'Error reading page {}'.format(fullpath)
-                    logging.error(text)
-                    logging.error(u'    ' + str(e))
-                    continue
-
-                self._children.append(page)
-
-        self._children.sort(key=cmp_to_key(sortOrderFunction))
 
 
-class WikiDocument(RootWikiPage):
+@final
+class WikiDocument(BasePage):
     def __init__(self, path, readonly=False):
-        RootWikiPage.__init__(self, path, readonly)
+        BasePage.__init__(self, path, readonly)
         self._selectedPage = None
         self._createEvents()
         self.bookmarks = Bookmarks(self, self._params)
@@ -385,30 +368,10 @@ class WikiDocument(RootWikiPage):
             realpath = os.path.join(path, PAGE_OPT_FILE)
 
         try:
-            fp = open(realpath, "w", encoding='utf8')
+            fp = open(realpath, "w", encoding="utf8")
             fp.close()
         except IOError:
             raise ClearConfigError
-
-    @staticmethod
-    def load(path, readonly=False):
-        """
-        Загрузить корневую страницу вики.
-        Использовать этот метод вместо конструктора
-        """
-        logger.debug('Wiki document loading started')
-        try:
-            root = WikiDocument(path, readonly)
-        except configparser.Error:
-            raise RootFormatError
-
-        logger.debug('Children notes loading started')
-        root.loadChildren()
-        logger.debug('Children notes loading ended')
-
-        root.onTreeUpdate(root)
-        logger.debug('Wiki document loading ended')
-        return root
 
     def save(self):
         super().save()
@@ -431,7 +394,7 @@ class WikiDocument(RootWikiPage):
 
     @selectedPage.setter
     def selectedPage(self, page):
-        if isinstance(page, type(self)) or page is None:
+        if page is None or page.getTypeString() == WikiDocument.getTypeString():
             # Экземпляр класса WikiDocument выбирать нельзя
             self._selectedPage = None
         else:
@@ -442,11 +405,11 @@ class WikiDocument(RootWikiPage):
 
     @property
     def subpath(self):
-        return u"/"
+        return "/"
 
     @property
     def display_subpath(self):
-        return u"/"
+        return "/"
 
     @property
     def title(self):
@@ -458,17 +421,18 @@ class WikiDocument(RootWikiPage):
 
     @staticmethod
     def getTypeString():
-        return u"document"
+        return "document"
 
     @property
     def registry(self):
         return self._registry
 
 
-class WikiPage(RootWikiPage):
+class WikiPage(BasePage, metaclass=ABCMeta):
     """
     Страница в дереве.
     """
+
     paramTags = "tags"
     paramType = "type"
 
@@ -484,13 +448,16 @@ class WikiPage(RootWikiPage):
 
         path -- путь до страницы
         """
-        if not RootWikiPage.testDublicate(parent, title):
-            logger.error('Duplicate page title in the parent page. Title: {}. Parent: {}'.format(
-                title, parent.subpath))
+        if not BasePage.testDublicate(parent, title):
+            logger.error(
+                "Duplicate page title in the parent page. Title: %s. Parent: %s",
+                title,
+                parent.subpath,
+            )
             raise DuplicateTitle
 
-        RootWikiPage.__init__(self, path, readonly)
-        self._DEFAULT_ATTACH_SUBDIR = ''
+        BasePage.__init__(self, path, readonly)
+        self._DEFAULT_ATTACH_SUBDIR = ""
         self._attach_subdir = self._DEFAULT_ATTACH_SUBDIR
         self._title = title
         self._parent = parent
@@ -498,13 +465,16 @@ class WikiPage(RootWikiPage):
         if len(self._alias) == 0:
             self._alias = None
 
+    def __bool__(self):
+        return True
+
     @property
     def currentAttachSubdir(self) -> str:
         return self._attach_subdir
 
     @currentAttachSubdir.setter
     def currentAttachSubdir(self, value: str):
-        if not value or value == '.':
+        if not value or value == ".":
             value = self._DEFAULT_ATTACH_SUBDIR
 
         self._attach_subdir = value
@@ -525,9 +495,6 @@ class WikiPage(RootWikiPage):
         """
         Изменить положение страницы (порядок)
         """
-        if self.readonly:
-            raise ReadonlyException
-
         self.parent.changeChildOrder(self, neworder)
 
     @property
@@ -536,8 +503,11 @@ class WikiPage(RootWikiPage):
 
     @alias.setter
     def alias(self, value):
+        if self._alias == value:
+            return
+
         if self.readonly:
-            raise ReadonlyException
+            raise ReadonlyException(self)
 
         if self._alias == value:
             return
@@ -570,8 +540,11 @@ class WikiPage(RootWikiPage):
 
     @title.setter
     def title(self, newtitle):
+        if self._title == newtitle:
+            return
+
         if self.readonly:
-            raise ReadonlyException
+            raise ReadonlyException(self)
 
         oldtitle = self.title
         oldpath = self.path
@@ -596,8 +569,7 @@ class WikiPage(RootWikiPage):
         self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TITLE)
 
     def canRename(self, newtitle):
-        return (self.title.lower() == newtitle.lower() or
-                self.parent[newtitle] is None)
+        return self.title.lower() == newtitle.lower() or self.parent[newtitle] is None
 
     @staticmethod
     def _renamePaths(page, newPath):
@@ -606,7 +578,7 @@ class WikiPage(RootWikiPage):
         """
         oldPath = page.path
         page._path = newPath
-        page._params = RootWikiPage._readParams(page.path)
+        page._params = BasePage.readParams(page.path)
 
         for child in page.children:
             newChildPath = child.path.replace(oldPath, newPath, 1)
@@ -616,11 +588,11 @@ class WikiPage(RootWikiPage):
         """
         Переместить запись к другому родителю
         """
-        if self.readonly or newparent.readonly:
-            raise ReadonlyException
-
         if self._parent == newparent:
             return
+
+        if self.readonly or newparent.readonly:
+            raise ReadonlyException(self)
 
         if self.isChild(newparent):
             # Нельзя быть родителем своего родителя(предка)
@@ -671,7 +643,7 @@ class WikiPage(RootWikiPage):
         Метод возвращает полный путь
         """
         path, title = os.path.split(pagepath)
-        template = u"__{title}_{number}"
+        template = "__{title}_{number}"
         number = 0
         newname = template.format(title=title, number=number)
 
@@ -683,22 +655,22 @@ class WikiPage(RootWikiPage):
 
     @property
     def icon(self):
-        '''
+        """
         Return page icon.
-        '''
+        """
         return self.iconController.get_icon(self)
 
     @icon.setter
     def icon(self, iconpath):
-        '''
+        """
         Set page icon.
-        '''
+        """
         return self.iconController.set_icon(self, iconpath)
 
     @property
     def tags(self):
         """
-        Получить список тегов для страницы(список строк)
+        Получить список тегов для страницы (список строк)
         """
         result = [tag.lower() for tag in self._tags]
         result.sort()
@@ -708,43 +680,21 @@ class WikiPage(RootWikiPage):
     def tags(self, tags):
         """
         Установить теги для страницы
-        tags - список тегов(список строк)
+        tags - список тегов (список строк)
         """
-        if self.readonly:
-            raise ReadonlyException
-
         lowertags = [tag.lower() for tag in tags]
         # Избавимся от дубликатов
         newtagset = set(lowertags)
         newtags = list(newtagset)
 
         if newtagset != set(self._tags):
+            if self.readonly:
+                raise ReadonlyException(self)
+
             self._tags = newtags
             self.save()
             self.updateDateTime()
             self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TAGS)
-
-    @staticmethod
-    def load(path, parent, readonly=False):
-        """
-        Загрузить страницу.
-        Использовать этот метод вместо конструктора,
-        когда надо загрузить страницу
-        """
-        from .factoryselector import FactorySelector
-
-        title = os.path.basename(path)
-        params = RootWikiPage._readParams(path, readonly)
-
-        # Получим тип страницы по параметрам
-        pageType = FactorySelector.getFactory(
-            params.typeOption.value).getPageType()
-
-        page = pageType(path, title, parent, readonly)
-        page._tags = WikiPage.getTags(params)
-        page.loadChildren()
-
-        return page
 
     def save(self):
         """
@@ -789,35 +739,20 @@ class WikiPage(RootWikiPage):
         self.parent.saveChildrenParams()
         self.root.onPageCreate(self)
 
-    @staticmethod
-    def getTags(configParser):
-        """
-        Выделить теги из строки конфигурационного файла
-        """
-        try:
-            tagsString = configParser.get(CONFIG_GENERAL_SECTION,
-                                          WikiPage.paramTags)
-        except configparser.NoOptionError:
-            return []
-
-        tags = parseTagsList(tagsString)
-
-        return tags
-
     @property
     def content(self):
         """
         Прочитать файл-содержимое страницы
         """
         text = ""
-        path = os.path.join(self.path, RootWikiPage.contentFile)
+        path = os.path.join(self.path, PAGE_CONTENT_FILE)
 
         if os.path.exists(path):
             try:
                 text = readTextFile(path)
-                text = text.replace('\r\n', '\n')
+                text = text.replace("\r\n", "\n")
             except Exception as e:
-                logger.error("Can't read page content for {}".format(path))
+                logger.error("Can't read page content for %s", path)
                 logger.error(str(e))
 
         params = events.PostContentReadingParams(text)
@@ -829,16 +764,16 @@ class WikiPage(RootWikiPage):
     @content.setter
     def content(self, text):
         if self.readonly:
-            raise ReadonlyException
+            raise ReadonlyException(self)
 
-        text = text.replace('\r\n', '\n')
+        text = text.replace("\r\n", "\n")
 
         params = events.PreContentWritingParams(text)
         self.root.onPreContentWriting(self, params)
         text = params.content
 
-        if text != self.content or text == u"":
-            path = os.path.join(self.path, RootWikiPage.contentFile)
+        if text != self.content or text == "":
+            path = os.path.join(self.path, PAGE_CONTENT_FILE)
 
             writeTextFile(path, text)
             self.updateDateTime()
@@ -868,9 +803,6 @@ class WikiPage(RootWikiPage):
 
     @property
     def display_subpath(self):
-        '''
-        Added in outwiker.core 1.3
-        '''
         result = self.display_title
         page = self.parent
 
@@ -885,7 +817,7 @@ class WikiPage(RootWikiPage):
         Удалить страницу
         """
         if self.readonly:
-            raise ReadonlyException
+            raise ReadonlyException(self)
 
         oldpath = self.path
         tempname = self._getTempName(oldpath)
@@ -901,8 +833,9 @@ class WikiPage(RootWikiPage):
         self._removePageFromTree(self)
 
         # Если выбранная страница была удалена
-        if (oldSelectedPage is not None and
-                (oldSelectedPage == self or self.isChild(oldSelectedPage))):
+        if oldSelectedPage is not None and (
+            oldSelectedPage == self or self.isChild(oldSelectedPage)
+        ):
             # Новая выбранная страница взамен старой
             newselpage = oldSelectedPage
             while newselpage.parent is not None and newselpage.isRemoved:

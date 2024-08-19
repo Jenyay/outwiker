@@ -166,7 +166,7 @@ class GlobalSearch:
 
         if page is None:
             page = SearchPageFactory().create(root, searchAlias, [])
-            page.icon = getBuiltinImagePath("global_search.png")
+            page.icon = getBuiltinImagePath("global_search.svg")
 
         page.phrase = phrase
         page.searchTags = [tag for tag in tags]

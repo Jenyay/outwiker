@@ -52,7 +52,7 @@ class Starter:
         if self._commandLine is None or self._commandLine.wikipath is None:
             self.__openRecentWiki()
         else:
-            logger.debug('Open wiki {}'.format(self._commandLine.wikipath))
+            logger.debug('Open wiki "%s"', self._commandLine.wikipath)
             openWiki(self._commandLine.wikipath, self._commandLine.readonly)
 
         if self._commandLine is not None:

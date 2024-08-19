@@ -141,7 +141,7 @@ class CommandSource(Command):
         return encoding
 
     def _getStyle(self, params_dict):
-        from .pygments.styles import STYLE_MAP
+        from source_plugin_libs.pygments.styles import STYLE_MAP
 
         if (
             STYLE_PARAM_NAME not in params_dict
@@ -163,8 +163,8 @@ class CommandSource(Command):
         Раскраска исходников. Возвращает получившийся HTML и добавляет
         нужные стили в заголовок страницы
         """
-        from .pygments import highlight
-        from .pygments import formatters
+        from pygments import highlight
+        from pygments import formatters
 
         lexermaker = LexerMaker()
         lexer = lexermaker.getLexer(params_dict)

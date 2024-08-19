@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import List
+from typing import Collection, List
 
 import wx
 
@@ -20,6 +20,12 @@ class TagsCloudPanel(wx.Panel):
         self._createGUI()
         self._controller = TagsPanelController(self, application)
         self._pageListPopup = None
+
+    def updateParamsFromConfig(self):
+        config = TagsConfig(self._application.config)
+        self._tagscloud.setFontSize(config.minFontSize.value, config.maxFontSize.value)
+        self._tagscloud.setMode(config.tagsCloudMode.value)
+        self._tagscloud.enableTooltips(config.enableTooltips.value)
 
     def _getPageListColumns(self) -> List[BaseColumn]:
         colFactory = ColumnsFactory()
@@ -79,18 +85,31 @@ class TagsCloudPanel(wx.Panel):
     def mark(self, tag, marked=True):
         self._tagscloud.mark(tag, marked)
 
+    def mark_list(self, tags: Collection[str], marked: bool = True):
+        self._tagscloud.mark_list(tags, marked)
+
     def setTags(self, tags):
         self._tagscloud.setTags(tags)
 
-    def updateTagLabels(self):
-        self._tagscloud.updateTagLabels()
-
     def _createGUI(self):
-        self._tagscloud = TagsCloud(self)
-        mainSizer = wx.FlexGridSizer(1, 1, 0)
+        config = TagsConfig(self._application.config)
+        min_font_size = config.minFontSize.value
+        max_font_size = config.maxFontSize.value
+        mode = config.tagsCloudMode.value
+        enable_tooltips = config.enableTooltips.value
+
+        self._tagscloud = TagsCloud(
+            self,
+            min_font_size=min_font_size,
+            max_font_size=max_font_size,
+            mode=mode,
+            enable_tooltips=enable_tooltips,
+            enable_active_tags_filter=True
+        )
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
-        mainSizer.Add(self._tagscloud, 0, wx.EXPAND)
+        mainSizer.Add(self._tagscloud, flag=wx.EXPAND)
         self.SetSizer(mainSizer)
 
     def SetBackgroundColour(self, colour):

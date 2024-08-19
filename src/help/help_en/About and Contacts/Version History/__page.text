@@ -1,4 +1,44 @@
-!!! [=3.0 (July 2020)=]
+!!! [=3.3 (August 2024)=]
+
+* Changed tags cloud design.
+* Added the ability to filter tags.
+* Added the ability to display the tags cloud as a list.
+* On tags cloud panel add a button to show applied tags only.
+* Added context menu for tags cloud.
+* Use new vector icons for buttons.
+* Added the ability to use vector icons for pages.
+* New preferences dialog.
+* Improvements in working with list item styles on wiki pages.
+* Added new icons for pages.
+
+
+!!! [=3.2 (August 2023)=]
+
+* Added the ability to create folders in attached files.
+* Added the ability to navigate to subfolders in the attachments panel.
+* Added the ability to insert links to files in attached subfolders.
+* Added page search in preview mode.
+* Added the support of nested subfolders for the (:include:) wiki command..
+* Added the support of nested subfolders for the %thumb% wiki command.
+* Implemented highlighting the %thumb% wiki command on wiki pages.
+* Changed design of the dialog about overwriting of attached files.
+* Improved design of links to attached files and other pages.
+* Added a new subdir parameter to (:attachlist:) wiki command.
+* Improved (:childlist:) and (:attachlist:) wiki commands result design.
+* Added new CSS classes to generated HTML code.
+* Added the ability to show hidden folders in attachments.
+* Added settings for the Minimize and Close buttons.
+* Added information about selected attachments to the status bar.
+* Added the ability to set the style of list item bullets on a wiki page.
+* Migrate to wxPython 4.2.1.
+
+!!! [=3.1 (April 2022)=]
+
+* Improve dialog for creation notes and edit notes properties.
+* Improve work with hotkeys.
+* Improve attachments panel GUI.
+
+!!! [=3.0 (May 2021)=]
 
 * Now you can use any symbols in the notes title.
 * New toolbars.

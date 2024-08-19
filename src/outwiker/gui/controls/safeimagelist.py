@@ -4,10 +4,8 @@ from pathlib import Path
 from typing import Union
 
 import wx
-from wx.svg import SVGimage
 
-from outwiker.core.exceptions import InvalidImageFormat
-from outwiker.core.images import isSVG, isImage
+from outwiker.gui.images import readImage
 
 
 class SafeImageList(wx.ImageList):
@@ -30,16 +28,7 @@ class SafeImageList(wx.ImageList):
 
     def AddFromFile(self, fname: Union[str, Path]) -> int:
         fname = str(fname)
-        if isImage(fname):
-            bitmap = wx.Bitmap(fname)
-        elif isSVG(fname):
-            with open(fname, 'rb') as fp:
-                data = fp.read()
-                svg = SVGimage.CreateFromBytes(data)
-            bitmap = svg.ConvertToScaledBitmap((self._width, self._height))
-        else:
-            raise InvalidImageFormat(fname)
-
+        bitmap = readImage(fname, self._width, self._height)
         return self.Add(bitmap)
 
     def _correctSize(self, bitmap):

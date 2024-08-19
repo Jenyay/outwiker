@@ -6,6 +6,8 @@ from abc import abstractmethod, ABCMeta
 import wx
 
 from outwiker.gui.controls.safeimagelist import SafeImageList
+from outwiker.gui.images import readImage
+from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
 
 
 class BaseFileIcons(metaclass=ABCMeta):
@@ -29,14 +31,14 @@ class BaseFileIcons(metaclass=ABCMeta):
     def initialize(self):
         from outwiker.core.system import getBuiltinImagePath
 
-        self._imageList.Add(wx.Bitmap(getBuiltinImagePath(
-            "file_icon_default.png"), wx.BITMAP_TYPE_ANY))
+        self._imageList.Add(
+                readImage(getBuiltinImagePath("file_icon_default.svg"), ICONS_WIDTH, ICONS_HEIGHT))
 
         self._imageList.Add(
-            wx.Bitmap(getBuiltinImagePath("folder.png"), wx.BITMAP_TYPE_ANY))
+            readImage(getBuiltinImagePath("folder.svg"), ICONS_WIDTH, ICONS_HEIGHT))
 
         self._imageList.Add(
-            wx.Bitmap(getBuiltinImagePath("arrow_go_to_parent.png"), wx.BITMAP_TYPE_ANY))
+            readImage(getBuiltinImagePath("arrow_go_to_parent.svg"), ICONS_WIDTH, ICONS_HEIGHT))
 
     def getFileImage(self, filepath):
         if self.imageListCount == 0:
@@ -120,7 +122,7 @@ class UnixFileIcons(BaseFileIcons):
         imagePath = getBuiltinImagePath(iconfolder, filename)
 
         if os.path.exists(imagePath):
-            return wx.Bitmap(imagePath, wx.BITMAP_TYPE_ANY)
+            return readImage(imagePath, ICONS_WIDTH, ICONS_HEIGHT)
 
         return None
 

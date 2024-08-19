@@ -9,7 +9,7 @@ from outwiker.gui.theme import Theme
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
-class ToasterController(object):
+class ToasterController:
     def __init__(self, parent, application):
         self._parent = parent
         self._application = application
@@ -36,14 +36,15 @@ class ToasterController(object):
         return (x, y)
 
     def destroy(self):
-        toasterbox = tb.ToasterBox(
-            self._parent,
-            tbstyle=tb.TB_COMPLEX,
-            closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
-        )
-        toasterbox.CleanList()
-        tb.winlist = []
         self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
+        if not self._application.testMode:
+            toasterbox = tb.ToasterBox(
+                self._parent,
+                tbstyle=tb.TB_COMPLEX,
+                closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
+            )
+            toasterbox.CleanList()
+            tb.winlist = []
 
     def showError(self, message):
         title = _('Error')
@@ -69,26 +70,27 @@ class ToasterController(object):
                     title,
                     captionBackgroundColor,
                     captionForegroundColor):
+        if not self._application.testMode:
+            toasterbox = tb.ToasterBox(
+                self._parent,
+                tbstyle=tb.TB_COMPLEX,
+                closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
+            )
 
-        toasterbox = tb.ToasterBox(
-            self._parent,
-            tbstyle=tb.TB_COMPLEX,
-            closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
-        )
+            parent = toasterbox.GetToasterBoxWindow()
+            panel = InfoPanel(parent,
+                              message, title,
+                              captionBackgroundColor, captionForegroundColor)
+            parent.SetBackgroundColour(self._theme.colorToasterBackground)
+            toasterbox.AddPanel(panel)
+            toasterbox.SetPopupPauseTime(self.toaster_delay)
 
-        parent = toasterbox.GetToasterBoxWindow()
-        panel = InfoPanel(parent,
-                          message, title,
-                          captionBackgroundColor, captionForegroundColor)
-        parent.SetBackgroundColour(self._theme.colorToasterBackground)
-        toasterbox.AddPanel(panel)
-        toasterbox.SetPopupPauseTime(self.toaster_delay)
+            width, height = panel.GetSize()
+            toasterbox.SetPopupSize((width, height))
+            x, y = self._calcPopupPos(width, height)
+            toasterbox.SetPopupPosition((x, y))
+            toasterbox.Play()
 
-        width, height = panel.GetSize()
-        toasterbox.SetPopupSize((width, height))
-        x, y = self._calcPopupPos(width, height)
-        toasterbox.SetPopupPosition((x, y))
-        toasterbox.Play()
         self.counter.incShowCount()
 
 

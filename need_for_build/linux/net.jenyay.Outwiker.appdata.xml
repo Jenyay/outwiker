@@ -6,7 +6,11 @@
   <name>Outwiker</name>
   <launchable type="desktop-id">net.jenyay.Outwiker.desktop</launchable>
   <summary>Personal wiki and outliner.</summary>
-  <description><p>OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors. OutWiker's main difference from the other similar programs is keeping the tree of notes in the form of directories on disk, and encouraging changing the base by external sources and programs.</p></description>
+  <description>
+    <p>
+      OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors. OutWiker's main difference from the other similar programs is keeping the tree of notes in the form of directories on disk, and encouraging changing the base by external sources and programs.
+    </p>
+  </description>
   <categories>
     <category>Office</category>
   </categories>
@@ -34,7 +38,15 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="3.2.0.923" date="2023-05-04"/>
+    <release version="3.3.0.940" date="2024-08-15" />
+    <release version="3.3.0.938" date="2024-06-22" />
+    <release version="3.3.0.936" date="2024-03-07" />
+    <release version="3.3.0.934" date="2024-01-27" />
+    <release version="3.3.0.932" date="2023-12-24" />
+    <release version="3.3.0.930" date="2023-11-18" />
+    <release version="3.3.0.928" date="2023-09-30" />
+    <release version="3.2.0.926" date="2023-08-10" />
+    <release version="3.2.0.924" date="2023-06-17" />
     <release version="3.2.0.922" date="2023-05-03" />
     <release version="3.2.0.920" date="2023-03-05" />
     <release version="3.2.0.918" date="2023-01-07" />

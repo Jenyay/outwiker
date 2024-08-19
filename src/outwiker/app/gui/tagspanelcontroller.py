@@ -3,6 +3,7 @@
 import wx
 from functools import cmp_to_key
 
+from outwiker.app.gui.tagpopupmenu import TagPopupMenu
 from outwiker.app.services.messages import showError
 
 from outwiker.core.tagslist import TagsList
@@ -10,8 +11,7 @@ from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
-from outwiker.gui.guiconfig import TagsConfig
-from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
+from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN, EVT_TAG_RIGHT_UP, EVT_TAG_ADD, EVT_TAG_REMOVE
 
 
 class TagsPanelController:
@@ -19,6 +19,7 @@ class TagsPanelController:
         self.__tagsPanel = tagsPanel
         self.__application = application
         self.__currentTags = None
+        self.__tagPopupMenu = None
 
         self.__bindAppEvents()
 
@@ -26,19 +27,21 @@ class TagsPanelController:
         self.__application.onEndTreeUpdate += self.__onEndUpdate
         self.__application.onPageSelect += self.__onPageSelect
 
-        self.__tagsPanel.Bind(EVT_PAGE_CLICK, self.__onPageClick)
-        self.__tagsPanel.Bind(EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
-        self.__tagsPanel.Bind(EVT_TAG_MIDDLE_CLICK, self.__onTagMiddleClick)
-        self.__tagsPanel.Bind(wx.EVT_CLOSE, self.__onClose)
+        self.__tagsPanel.Bind(EVT_PAGE_CLICK, handler=self.__onPageClick)
+        self.__tagsPanel.Bind(EVT_TAG_LEFT_DOWN, handler=self.__onTagLeftClick)
+        self.__tagsPanel.Bind(EVT_TAG_RIGHT_UP, handler=self.__onTagRightClick)
+        self.__tagsPanel.Bind(EVT_TAG_ADD, handler=self.__onTagAdd)
+        self.__tagsPanel.Bind(EVT_TAG_REMOVE, handler=self.__onTagRemove)
+        self.__tagsPanel.Bind(wx.EVT_CLOSE, handler=self.__onClose)
 
         self.updateTags()
 
     def __onClose(self, event):
         self.__tagsPanel.Unbind(EVT_PAGE_CLICK, handler=self.__onPageClick)
-        self.__tagsPanel.Unbind(EVT_TAG_LEFT_CLICK,
-                                handler=self.__onTagLeftClick)
-        self.__tagsPanel.Unbind(EVT_TAG_MIDDLE_CLICK,
-                                handler=self.__onTagMiddleClick)
+        self.__tagsPanel.Unbind(EVT_TAG_LEFT_DOWN, handler=self.__onTagLeftClick)
+        self.__tagsPanel.Unbind(EVT_TAG_RIGHT_UP, handler=self.__onTagRightClick)
+        self.__tagsPanel.Unbind(EVT_TAG_ADD, handler=self.__onTagAdd)
+        self.__tagsPanel.Unbind(EVT_TAG_REMOVE, handler=self.__onTagRemove)
         self.__tagsPanel.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
 
         self.__application.onStartTreeUpdate -= self.__onStartUpdate
@@ -57,19 +60,28 @@ class TagsPanelController:
         self.__bindAppEvents()
         self.updateTags()
 
-    def __runAction(self, action, tagname):
-        if action == TagsConfig.ACTION_MARK_TOGGLE:
-            self.__toggleMarkTag(tagname)
-        else:
-            self.__showPopup(tagname)
-
-    def __showPopup(self, tagname):
+    def __showPopupTagsWindow(self, tagname):
         pages = self.__currentTags[tagname][:]
         pages.sort(key=cmp_to_key(sortAlphabeticalFunction))
-
         self.__tagsPanel.showPopup(pages)
 
-    def __toggleMarkTag(self, tagname):
+    def __onTagLeftClick(self, event):
+        """
+        Клик левой кнопкой мыши по тегу
+        """
+        assert self.__currentTags is not None
+        self.__showPopupTagsWindow(event.text)
+
+    def __onTagRightClick(self, event):
+        """
+        Клик левой кнопкой мыши по тегу
+        """
+        assert self.__currentTags is not None
+
+        self.__tagPopupMenu = TagPopupMenu(self.__application.mainWindow, event.text, self.__application)
+        self.__tagsPanel.PopupMenu(self.__tagPopupMenu.menu)
+
+    def __onTagAdd(self, event):
         selectedPage = self.__application.selectedPage
         if selectedPage is None:
             return
@@ -79,26 +91,19 @@ class TagsPanelController:
                       _('Page is opened as read-only'))
             return
 
-        if tagname in selectedPage.tags:
-            removeTag(selectedPage, tagname)
-        else:
-            appendTag(selectedPage, tagname)
+        appendTag(selectedPage, event.text)
 
-    def __onTagLeftClick(self, event):
-        """
-        Клик левой кнопкой мыши по тегу
-        """
-        assert self.__currentTags is not None
-        action = TagsConfig(self.__application.config).leftClickAction.value
-        self.__runAction(action, event.text)
+    def __onTagRemove(self, event):
+        selectedPage = self.__application.selectedPage
+        if selectedPage is None:
+            return
 
-    def __onTagMiddleClick(self, event):
-        """
-        Клик средней кнопкой мыши по тегу
-        """
-        assert self.__currentTags is not None
-        action = TagsConfig(self.__application.config).middleClickAction.value
-        self.__runAction(action, event.text)
+        if selectedPage.readonly:
+            showError(self.__application.mainWindow,
+                      _('Page is opened as read-only'))
+            return
+
+        removeTag(selectedPage, event.text)
 
     def __onPageClick(self, event):
         assert event.page is not None
@@ -122,6 +127,7 @@ class TagsPanelController:
 
     def __onPreferencesDialogClose(self, dialog):
         self.updateTags()
+        self.__tagsPanel.updateParamsFromConfig()
 
     def __onPageSelect(self, page):
         self.__markTags()
@@ -162,12 +168,9 @@ class TagsPanelController:
             self.__tagsPanel.setTags(tags)
             self.__currentTags = tags
             self.__markTags()
-        else:
-            self.__tagsPanel.updateTagLabels()
 
     def __markTags(self):
         self.__tagsPanel.clearMarks()
 
         if self.__application.selectedPage is not None:
-            for tag in self.__application.selectedPage.tags:
-                self.__tagsPanel.mark(tag)
+            self.__tagsPanel.mark_list(self.__application.selectedPage.tags)

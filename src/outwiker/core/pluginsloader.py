@@ -20,7 +20,7 @@ from outwiker.core.appinfo import AppInfo
 from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.utilites.textfile import readTextFile
 
-logger = logging.getLogger('outwiker.core.pluginsloader')
+logger = logging.getLogger("outwiker.core.pluginsloader")
 
 
 class InvalidPlugin:
@@ -28,10 +28,10 @@ class InvalidPlugin:
     Class with the information about plugin with errors
     """
 
-    def __init__(self, name, description, version=u'', url=None):
+    def __init__(self, name, description, version="", url=None):
         self.name = name
         self.description = description
-        self.version = version if version is not None else u''
+        self.version = version if version is not None else ""
         self.url = url
 
 
@@ -41,6 +41,7 @@ class EnabledPlugins(collections.UserDict):
     value.initialize() is called when new key is added.
     value.destroy() is called when key is deleted.
     """
+
     def __setitem__(self, key, value):
         value.initialize()
         super(EnabledPlugins, self).__setitem__(key, value)
@@ -70,8 +71,9 @@ class PluginsLoader:
         self.__disabledPlugins = {}
 
         # View for all successful loaded plugins
-        self.__loadedPlugins = collections.ChainMap(self.__plugins,
-                                                    self.__disabledPlugins)
+        self.__loadedPlugins = collections.ChainMap(
+            self.__plugins, self.__disabledPlugins
+        )
 
         # The list of the InvalidPlugin instance.
         self.__invalidPlugins = []
@@ -132,13 +134,13 @@ class PluginsLoader:
         self.__invalidPlugins.clear()
 
     def disable(self, plugin_name):
-        """ Disable plugin_name """
+        """Disable plugin_name"""
         if plugin_name in self.__plugins:
             assert plugin_name not in self.__disabledPlugins
             self.__disabledPlugins[plugin_name] = self.__plugins.pop(plugin_name)
 
     def enable(self, plugin_name):
-        """ Enable plugin_name """
+        """Enable plugin_name"""
         if plugin_name in self.__disabledPlugins:
             assert plugin_name not in self.__plugins
             self.__plugins[plugin_name] = self.__disabledPlugins.pop(plugin_name)
@@ -191,11 +193,10 @@ class PluginsLoader:
         """
         assert dirlist is not None
 
-        logger.debug(u'Plugins loading started')
+        logger.debug("Plugins loading started")
 
         for currentDir in reversed(dirlist):
             if os.path.exists(currentDir):
-
                 # Add currentDir to sys.path
                 fullpath = os.path.abspath(currentDir)
                 if fullpath not in sys.path:
@@ -203,21 +204,24 @@ class PluginsLoader:
 
                 # Get list of submodules in currentDir
                 # only folders with __init__.py can be submodules
-                packagesList = [pkg_name for _, pkg_name, is_pkg in
-                                pkgutil.iter_modules([currentDir]) if is_pkg]
+                packagesList = [
+                    pkg_name
+                    for _, pkg_name, is_pkg in pkgutil.iter_modules([currentDir])
+                    if is_pkg
+                ]
 
                 for packageName in packagesList:
                     packagePath = os.path.join(currentDir, packageName)
                     self.__importPackage(packagePath)
 
-        logger.debug(u'Plugins loading ended')
+        logger.debug("Plugins loading ended")
 
     def __loadPluginInfo(self, plugin_fname):
         if not os.path.exists(plugin_fname):
             return None
 
         xml_content = readTextFile(plugin_fname)
-        language = ''
+        language = ""
         appinfo = AppInfoFactory.fromString(xml_content, language)
         return appinfo
 
@@ -245,65 +249,62 @@ class PluginsLoader:
         join = os.path.join
         packageName = os.path.basename(packagePath)
 
-        logger.debug(u'Trying to load the plug-in: {}'.format(
-            packageName))
+        logger.debug("Trying to load the plug-in: %s", packageName)
 
         # Check module 'plugin.py' name in package
-        modules = [module for __, module, is_pkg
-                   in pkgutil.iter_modules([packagePath])
-                   if not is_pkg]
+        modules = [
+            module
+            for __, module, is_pkg in pkgutil.iter_modules([packagePath])
+            if not is_pkg
+        ]
 
-        if 'plugin' not in modules:
-            logger.error('plugin.py was not found in the package {}'.format(
-                packagePath))
+        if "plugin" not in modules:
+            logger.error("plugin.py was not found in the package %s", packagePath)
             return
 
         # Checking information from plugin.xml file
-        plugin_fname = join(packagePath,
-                            PLUGIN_INFO_FILE_NAME)
+        plugin_fname = join(packagePath, PLUGIN_INFO_FILE_NAME)
         try:
             appinfo = self.__loadPluginInfo(plugin_fname)
         except EnvironmentError:
-            error = _(u'Plug-in "{}". Can\'t read "{}" file').format(
-                packageName, PLUGIN_INFO_FILE_NAME)
+            error = _('Plug-in "{}". Can\'t read "{}" file').format(
+                packageName, PLUGIN_INFO_FILE_NAME
+            )
 
             self._print(error)
-            self.__invalidPlugins.append(InvalidPlugin(packageName,
-                                                       error))
+            self.__invalidPlugins.append(InvalidPlugin(packageName, error))
             return
 
         versions_result = self.__checkPackageVersions(appinfo)
 
-        pluginname = (appinfo.app_name
-                      if (appinfo is not None and
-                          appinfo.app_name is not None)
-                      else packageName)
+        pluginname = (
+            appinfo.app_name
+            if (appinfo is not None and appinfo.app_name is not None)
+            else packageName
+        )
 
         package_version = appinfo.version if appinfo is not None else None
-        pluginversion = (str(package_version)
-                         if package_version is not None
-                         else None)
+        pluginversion = str(package_version) if package_version is not None else None
 
         if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
-            error = _(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(pluginname)
+            error = _('Plug-in "{}" is outdated. Please, update the plug-in.').format(
+                pluginname
+            )
             self._print(error)
 
             self.__invalidPlugins.append(
-                InvalidPlugin(pluginname,
-                              error,
-                              pluginversion)
+                InvalidPlugin(pluginname, error, pluginversion)
             )
             return
         elif versions_result == pv.OUTWIKER_MUST_BE_UPGRADED:
             error = _(
-                u'Plug-in "{}" is designed for a newer version OutWiker. Please, install a new OutWiker version.').format(
-                pluginname)
+                'Plug-in "{}" is designed for a newer version OutWiker. Please, install a new OutWiker version.'
+            ).format(pluginname)
             self._print(error)
 
             self.__invalidPlugins.append(
-                InvalidPlugin(pluginname,
-                              error,
-                              pluginversion))
+                InvalidPlugin(pluginname, error, pluginversion)
+            )
             return
 
         # List of import errors strings
@@ -312,23 +313,21 @@ class PluginsLoader:
 
         # Try to find plugin in package and
         # add the instance of the class list
-        plugin = self.__loadPlugin(packageName + '.plugin', errors)
+        plugin = self.__loadPlugin(packageName + ".plugin", errors)
         if plugin:
             plugin.version = pluginversion
 
         # The errors should be printed if no plugins in the package
         if not plugin and errors:
-            error = u"\n\n".join(errors)
+            error = "\n\n".join(errors)
             self._print(error)
-            self._print(u"**********\n")
+            self._print("**********\n")
 
             self.__invalidPlugins.append(
-                InvalidPlugin(appinfo.app_name,
-                              error,
-                              str(package_version)))
+                InvalidPlugin(appinfo.app_name, error, str(package_version))
+            )
         else:
-            logger.debug(u'Successfully loaded plug-in: {}'.format(
-                packageName))
+            logger.debug("Successfully loaded plug-in: %s", packageName)
 
     def __loadPlugin(self, module, errors):
         """
@@ -348,8 +347,7 @@ class PluginsLoader:
             options = PluginsConfig(self.__application.config)
 
             # del magic attributes to save time
-            attributes = [attr for attr in dir(module)
-                          if not attr.startswith("__")]
+            attributes = [attr for attr in dir(module) if not attr.startswith("__")]
 
             for name in attributes:
                 plugin = self.__createPlugin(module, name)
@@ -362,11 +360,11 @@ class PluginsLoader:
                     rez = plugin
 
         except BaseException as e:
-            errors.append("*** Plug-in {package} loading error ***\n{package}/\n{error}\n{traceback}".format(
-                package=module,
-                error=str(e),
-                traceback=traceback.format_exc()
-            ))
+            errors.append(
+                "*** Plug-in {package} loading error ***\n{package}/\n{error}\n{traceback}".format(
+                    package=module, error=str(e), traceback=traceback.format_exc()
+                )
+            )
 
         return rez
 
@@ -382,9 +380,7 @@ class PluginsLoader:
             instance of name class or None
         """
         obj = getattr(module, name)
-        if (isinstance(obj, type) and
-                issubclass(obj, Plugin) and
-                obj != Plugin):
+        if isinstance(obj, type) and issubclass(obj, Plugin) and obj != Plugin:
             return obj(self.__application)
 
     def reload(self, pluginname):
@@ -437,7 +433,7 @@ class PluginsLoader:
 
         xml_content = pkgutil.get_data(module, PLUGIN_INFO_FILE_NAME)
         if xml_content:
-            language = ''
+            language = ""
             return AppInfoFactory.fromString(xml_content.decode(), language)
 
         return None

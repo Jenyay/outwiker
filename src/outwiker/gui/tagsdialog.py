@@ -7,7 +7,6 @@ from .tagsselector import TagsSelector
 
 
 class TagsDialog(wx.Dialog):
-
     def __init__(self, parent, application):
         super(TagsDialog, self).__init__(
             parent,
@@ -27,7 +26,7 @@ class TagsDialog(wx.Dialog):
         self.__tagsSelector.setTagsList(tagslist)
 
     def __createControls(self):
-        self.__tagsSelector = TagsSelector(self)
+        self.__tagsSelector = TagsSelector(self, enable_active_tags_filter=False)
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
         mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
@@ -48,3 +47,12 @@ class TagsDialog(wx.Dialog):
     @property
     def tags(self):
         return self.__tagsSelector.tags
+
+    def setTagsCloudFontSize(self, minFontSize: int, maxFontSize: int):
+        self.__tagsSelector.setFontSize(minFontSize, maxFontSize)
+
+    def setTagsCloudMode(self, mode: str):
+        self.__tagsSelector.setMode(mode)
+
+    def enableTagsCloudTooltips(self, enable: bool = True):
+        self.__tagsSelector.enableTooltips(enable)

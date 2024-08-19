@@ -15,7 +15,7 @@ class NotesTreeCtrl(wx.TreeCtrl):
         treeStyle = (wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
         super().__init__(parent, style=treeStyle)
 
-        self.defaultIcon = getBuiltinImagePath('page.png')
+        self.defaultIcon = getBuiltinImagePath('page.svg')
         self.iconHeight = ICON_HEIGHT
 
         # Картинки для дерева
@@ -126,10 +126,15 @@ class NotesTreeCtrl(wx.TreeCtrl):
             return self._iconsCache.getDefaultImageId()
 
         icon = os.path.abspath(icon)
-        imageId = self._iconsCache.add(icon)
+        page_path = os.path.abspath(page.path)
 
-        if imageId is None:
-            imageId = self._iconsCache.getDefaultImageId()
+        if icon.startswith(page_path):
+            imageId = self._iconsCache.replace(icon)
+        else:
+            imageId = self._iconsCache.add(icon)
+
+        # if imageId is None:
+        #     imageId = self._iconsCache.getDefaultImageId()
 
         return imageId
 
