@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import abstractmethod
+import json
 import logging
 import os
 import urllib.request
@@ -50,7 +51,54 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
 
     def _createRender(self):
         import wx.html2
-        return wx.html2.WebView.New(self, backend=wx.html2.WebViewBackendEdge)
+        render = wx.html2.WebView.New(self, backend=wx.html2.WebViewBackendEdge)
+        render.AddScriptMessageHandler('wx_msg')
+        render.Bind(wx.html2.EVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, self._handleMessage)
+
+        js_code = """
+        document 
+            .addEventListener("keydown", 
+                function (event) { 
+                    let key = event.key;
+                    if (key.startsWith("Arrow")) {
+                        key = key.replace("Arrow", "");
+                    }
+
+                    if (key == "Control" || key == "Shift" || key == "Alt") {
+                        return;
+                    }
+
+                    let eventBody = { "key": key, "ctrl": false, "shift": false, "alt": false };
+
+                    if (event.shiftKey) {
+                        eventBody.shift = true;
+                    }
+                    if (event.altKey) {
+                        eventBody.alt = true;
+                    }
+                    if (event.ctrlKey) {
+                        eventBody.ctrl = true;
+                    }
+
+                   window.wx_msg.postMessage(JSON.stringify(eventBody));
+                }); 
+"""
+        render.AddUserScript(js_code, wx.html2.WEBVIEW_INJECT_AT_DOCUMENT_START)
+
+        return render
+
+    def _handleMessage(self, event):
+        obj = json.loads(event.GetString())
+        print(obj)
+        # key_event = wx.KeyEvent()
+        # key_event.SetUnicodeKey(ord(obj["key"]))
+        # key_event.SetAltDown(obj["alt"])
+        # key_event.SetShiftDown(obj["shift"])
+        # key_event.SetControlDown(obj["ctrl"])
+        # key_event.ResumePropagation(50)
+        # key_event.SetEventType(wx.wxEVT_KEY_DOWN)
+
+        # wx.PostEvent(self.GetParent(), key_event)
 
     def getBasePath(self) -> str:
         return self._basepath
