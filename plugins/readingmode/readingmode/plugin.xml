@@ -7,7 +7,7 @@
 	<description>Переключение OutWiker в режим для чтения.</description>
 
 	<requirements>
-		<api>3.922</api>
+		<api>4.942</api>
 	</requirements>
 
 
@@ -19,5 +19,5 @@
 		<name>Роман Соболев</name>
 	</author>
 
-	<version number="1.3.1"/>
+	<version number="1.3.2"/>
 </info>

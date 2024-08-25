@@ -7,7 +7,7 @@
 	<website lang="ru">https://jenyay.net/Outwiker/Contents</website>
 
     <requirements>
-		<api>3.922</api>
+		<api>4.942</api>
 	</requirements>
 
 	<author>
@@ -22,5 +22,5 @@
 		<website>https://jenyay.net</website>
 	</author>
 
-	<version number="1.3.1"/>
+	<version number="1.3.2"/>
 </info>

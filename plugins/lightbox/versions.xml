@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.4.2">
+		<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.4.2.zip">
+			<requirements>
+                <api>4.942</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Migrate to new API.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на новый API.</change>
+		</changes>
+	</version>
+
 	<version number="1.4.1" date="2023-05-03">
 		<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.4.1.zip">
 			<requirements>

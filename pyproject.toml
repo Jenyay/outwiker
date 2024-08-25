@@ -1,6 +1,6 @@
 [project]
 name = "outwiker"
-version = "3.3.0.940"
+version = "4.0.0.941"
 description = "A cross-platform software for keeping your notes in a tree"
 authors = [
 	{name = "Eugene Ilin (aka Jenyay)", email = "jenyay.ilin@gmail.com"},
@@ -18,7 +18,7 @@ dependencies = [
 	"rcssmin>=1.1"
 ]
 classifiers=[
-	"Development Status :: 5 - Production/Stable",
+	"Development Status :: 3 - Alpha",
 	"License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
 	"Natural Language :: English",
 	"Natural Language :: Russian",
