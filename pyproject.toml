@@ -11,10 +11,10 @@ keywords = ["outliner", "notepad", "notes", "wiki"]
 requires-python = ">=3.8"
 dependencies = [
 	"wxPython==4.2.1",
-	"Pillow==10.3.0",
+	"Pillow==10.4.0",
 	"idna>=2.10",
-	"pyparsing==3.1.2",
-	"psutil>=5.9.8",
+	"pyparsing==3.1.3",
+	"psutil>=6.0.0",
 	"rcssmin>=1.1"
 ]
 classifiers=[
