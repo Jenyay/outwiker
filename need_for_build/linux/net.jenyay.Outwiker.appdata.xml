@@ -19,25 +19,26 @@
   <update_contact>jenyay.ilin@gmail.com</update_contact>
   <screenshots>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.2_en_01.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_01.png</image>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.2_en_02.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_02.png</image>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.2_en_03.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_03.png</image>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.2_en_04.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_04.png</image>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.2_en_05.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_05.png</image>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.2_en_06.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_06.png</image>
     </screenshot>
   </screenshots>
   <releases>
+    <release version="4.0.0.941" date="2024-08-25" />
     <release version="3.3.0.940" date="2024-08-15" />
     <release version="3.3.0.938" date="2024-06-22" />
     <release version="3.3.0.936" date="2024-03-07" />
