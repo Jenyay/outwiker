@@ -8,7 +8,7 @@ from outwiker.core.tree import WikiPage
 from outwiker.pages.text.textpanel import TextPanel
 
 
-class TextWikiPage (WikiPage):
+class TextWikiPage(WikiPage):
     """
     Класс текстовых страниц
     """
@@ -21,7 +21,7 @@ class TextWikiPage (WikiPage):
         return "text"
 
 
-class TextPageFactory (PageFactory):
+class TextPageFactory(PageFactory):
     """
     Фабрика для создания текстовой страницы и ее представления
     """

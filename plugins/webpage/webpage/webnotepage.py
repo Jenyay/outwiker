@@ -10,7 +10,6 @@ from shutil import copytree
 
 from outwiker.api.app.tree import replaceTitleDangerousSymbols
 from outwiker.api.core.config import StringOption, BooleanOption
-from outwiker.api.core.defines import PAGE_RESULT_HTML
 from outwiker.api.core.tree import PageFactory
 from outwiker.api.core.tree import WikiPage
 
@@ -51,12 +50,6 @@ class WebNotePage(WikiPage):
     def getTypeString():
         """Return page string identifier."""
         return "web"
-
-    def getHtmlPath(self):
-        """
-        Получить путь до результирующего файла HTML
-        """
-        return os.path.join(self.path, PAGE_RESULT_HTML)
 
     @property
     def source(self):

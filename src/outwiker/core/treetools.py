@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Union
 
 
+from outwiker.api.core.defines import PAGE_RESULT_HTML
 from outwiker.app.services.messages import showError
 from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
@@ -81,3 +82,7 @@ def findPage(application, page_id):
         return application.wikiroot[page_id]
     else:
         return application.pageUidDepot[page_id]
+
+
+def getPageHtmlPath(page):
+    return os.path.join(page.path, PAGE_RESULT_HTML)

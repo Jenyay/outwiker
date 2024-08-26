@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
+from outwiker.api.core.tree import getPageHtmlPath
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.event import pagetype
 from outwiker.core.events import (PreprocessingParams,
@@ -68,7 +69,7 @@ class HtmlPageController:
         self._updatePage(page)
 
     def _updatePage(self, page):
-        path = page.getHtmlPath()
+        path = getPageHtmlPath(page)
         html = self._makeHtml(page)
         writeTextFile(path, html)
 

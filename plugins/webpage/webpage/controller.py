@@ -5,7 +5,7 @@ import os
 import os.path
 import sys
 
-from outwiker.api.core.tree import addPageFactory, removePageFactory
+from outwiker.api.core.tree import addPageFactory, getPageHtmlPath, removePageFactory
 from outwiker.api.core.text import writeTextFile
 
 from .webnotepage import WebPageFactory, WebNotePage
@@ -151,7 +151,7 @@ class Controller:
             self._application.mainWindow.pagePanel.pageView.updateHtml()
 
     def _updatePage(self, page):
-        path = page.getHtmlPath()
+        path = getPageHtmlPath(page)
         html = self.generateHtml(page)
         writeTextFile(path, html)
 

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
-
-from outwiker.api.core.defines import PAGE_RESULT_HTML
 from outwiker.api.core.tree import WikiPage, PageFactory
 
 from .markdownpageview import MarkdownPageView
@@ -20,12 +17,6 @@ class MarkdownPage(WikiPage):
     @staticmethod
     def getTypeString():
         return "markdown"
-
-    def getHtmlPath(self):
-        """
-        Получить путь до результирующего файла HTML
-        """
-        return os.path.join(self.path, PAGE_RESULT_HTML)
 
 
 class MarkdownPageFactory(PageFactory):

@@ -4,6 +4,7 @@ import os
 
 import wx
 
+from outwiker.api.core.tree import getPageHtmlPath
 from outwiker.core.style import Style
 from outwiker.core.event import pagetype
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
@@ -108,7 +109,7 @@ class WikiPageController:
                 params.disableOutput = True
 
     def _updatePage(self, page):
-        path = page.getHtmlPath()
+        path = getPageHtmlPath(page)
         cache = HtmlCache(page, self._application)
 
         # Проверим, можно ли прочитать уже готовый HTML

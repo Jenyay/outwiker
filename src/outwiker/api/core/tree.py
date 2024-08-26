@@ -49,6 +49,10 @@ def findPage(application, page_id):
     return _treetools.findPage(application, page_id)
 
 
+def getPageHtmlPath(page):
+    return _treetools.getPageHtmlPath(page)
+
+
 def addPageFactory(new_factory) -> None:
     return _fselector.addPageFactory(new_factory)
 

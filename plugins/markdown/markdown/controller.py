@@ -6,7 +6,7 @@ from outwiker.api.core.events import pagetype
 from outwiker.api.core.text import writeTextFile
 from outwiker.api.core.pagecontentcache import PageContentCache, WikiHashCalculator
 from outwiker.api.core.pagestyle import getPageStyle
-from outwiker.api.core.tree import addPageFactory, removePageFactory
+from outwiker.api.core.tree import addPageFactory, getPageHtmlPath, removePageFactory
 
 from .colorizercontroller import ColorizerController
 from .markdownhtmlgenerator import MarkdownHtmlGenerator
@@ -86,7 +86,7 @@ class Controller:
         self._updatePage(page)
 
     def _updatePage(self, page):
-        path = page.getHtmlPath()
+        path = getPageHtmlPath(page)
         cache = self._getPageContentCache(page)
 
         # Проверим, можно ли прочитать уже готовый HTML

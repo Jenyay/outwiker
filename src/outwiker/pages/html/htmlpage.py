@@ -3,10 +3,7 @@
 Необходимые классы для создания страниц с HTML
 """
 
-import os
-
 from outwiker.core.config import BooleanOption
-from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.events import PAGE_UPDATE_CONTENT
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
@@ -58,12 +55,6 @@ class HtmlWikiPage (WikiPage):
     @staticmethod
     def getTypeString():
         return "html"
-
-    def getHtmlPath(self):
-        """
-        Получить путь до результирующего файла HTML
-        """
-        return os.path.join(self.path, PAGE_RESULT_HTML)
 
 
 class HtmlPageFactory (PageFactory):

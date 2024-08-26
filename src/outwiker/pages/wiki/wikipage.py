@@ -3,9 +3,6 @@
 Необходимые классы для создания страниц с HTML
 """
 
-import os
-
-from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
 from outwiker.gui.hotkey import HotKey
@@ -59,12 +56,6 @@ class WikiWikiPage(WikiPage):
     @staticmethod
     def getTypeString():
         return PAGE_TYPE_STRING
-
-    def getHtmlPath(self):
-        """
-        Получить путь до результирующего файла HTML
-        """
-        return os.path.join(self.path, PAGE_RESULT_HTML)
 
 
 class WikiPageFactory(PageFactory):
