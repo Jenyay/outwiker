@@ -6,7 +6,7 @@ from typing import Callable, List
 
 from .exceptions import ReadonlyException
 from .tree import BasePage, WikiPage
-from .tree_commands import getAlternativeTitle
+from .treetools import getAlternativeTitle
 
 # Functions to calculate new page order
 
