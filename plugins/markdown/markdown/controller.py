@@ -65,11 +65,11 @@ class Controller:
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(MarkdownPageFactory())
 
-    @pagetype(MarkdownPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewCreate(self, page):
         self._colorizerController.initialize(page)
 
-    @pagetype(MarkdownPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewDestroy(self, page):
         self._colorizerController.clear()
 
@@ -77,7 +77,7 @@ class Controller:
         if params.pageType == PAGE_TYPE_STRING:
             params.dialog.showAppearancePanel()
 
-    @pagetype(MarkdownPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageUpdateNeeded(self, page, params):
         if page.readonly:
             return

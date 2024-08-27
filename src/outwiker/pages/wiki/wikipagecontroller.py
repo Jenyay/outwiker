@@ -70,13 +70,13 @@ class WikiPageController:
 
         dialog.appendPreferenceGroup(_("Wiki Page"), [prefPanelInfo], PREF_PANEL_WIKI)
 
-    @pagetype(WikiWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewCreate(self, page):
         if not self._application.testMode:
             self._colorizerController.initialize(page)
         self._application.mainWindow.pagePanel.pageView.SetFocus()
 
-    @pagetype(WikiWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewDestroy(self, page):
         if not self._application.testMode:
             self._colorizerController.clear()
@@ -92,7 +92,7 @@ class WikiPageController:
             HtmlCache(page, self._application).resetHash()
         self._updatePage(page)
 
-    @pagetype(WikiWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onTextEditorKeyDown(
         self,
         page: outwiker.core.tree.WikiPage,

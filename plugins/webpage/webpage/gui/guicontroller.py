@@ -59,7 +59,7 @@ class GuiController:
 
         self._removeGui()
 
-    @pagetype(WebNotePage)
+    @pagetype(PAGE_TYPE_STRING)
     def _onPageSelect(self, page):
         self._application.actionController.check(
             DisableScriptsAction.stringId, page.disableScripts
@@ -71,7 +71,7 @@ class GuiController:
         if page.getTypeString() == PAGE_TYPE_STRING:
             self._addWebPageGui()
 
-    @pagetype(WebNotePage)
+    @pagetype(PAGE_TYPE_STRING)
     def _onPageViewDestroy(self, page):
         self._removeGui()
         self._createMenu()

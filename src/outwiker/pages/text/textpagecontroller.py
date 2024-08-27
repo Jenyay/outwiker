@@ -2,7 +2,6 @@
 
 from outwiker.core.event import pagetype
 from outwiker.gui.simplespellcontroller import SimpleSpellController
-from .textpage import TextPageFactory, TextWikiPage
 from .defines import PAGE_TYPE_STRING
 
 
@@ -29,13 +28,13 @@ class TextPageController:
         if not self._application.testMode:
             self._spellController.clear()
 
-    @pagetype(TextWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewCreate(self, page):
         assert page is not None
         if not self._application.testMode:
             self._spellController.initialize(page)
 
-    @pagetype(TextWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewDestroy(self, page):
         assert page is not None
         if not self._application.testMode:

@@ -48,13 +48,13 @@ class HtmlPageController:
         if params.pageType == PAGE_TYPE_STRING:
             params.dialog.showAppearancePanel()
 
-    @pagetype(HtmlWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewCreate(self, page):
         assert page is not None
         if not self._application.testMode:
             self._spellController.initialize(page)
 
-    @pagetype(HtmlWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewDestroy(self, page):
         assert page is not None
         if not self._application.testMode:
@@ -63,7 +63,7 @@ class HtmlPageController:
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(HtmlPageFactory())
 
-    @pagetype(HtmlWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageUpdateNeeded(self, page, params):
         if page.readonly:
             return
