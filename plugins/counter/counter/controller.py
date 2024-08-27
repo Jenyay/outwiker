@@ -6,11 +6,9 @@ import wx
 
 from outwiker.api.core.exceptions import ReadonlyException
 from outwiker.api.core.tree import testreadonly
-from outwiker.api.gui.actions import (ActionsGUIController, ActionGUIInfo,
-                                      ButtonInfo)
+from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo, ButtonInfo
 from outwiker.api.gui.defines import TOOLBAR_PLUGINS
-from outwiker.api.pages.wiki import WikiWikiPage
-from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS, PAGE_TYPE_STRING
 
 from .i18n import get_
 from .commandcounter import CommandCounter
@@ -23,6 +21,7 @@ class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
+
     def __init__(self, plugin, application):
         """
         plugin - Владелец контроллера(экземпляр класса PluginSource)
@@ -33,7 +32,7 @@ class Controller:
 
         self._GUIController = ActionsGUIController(
             self._application,
-            WikiWikiPage.getTypeString(),
+            PAGE_TYPE_STRING,
         )
 
     def initialize(self):
@@ -48,14 +47,14 @@ class Controller:
         self._initialize_guicontroller()
 
     def _initialize_guicontroller(self):
-        imagesPath = os.path.join(self._plugin.pluginPath, 'images')
+        imagesPath = os.path.join(self._plugin.pluginPath, "images")
 
         action_gui_info = [
-            ActionGUIInfo(InsertCounterAction(self._application, self),
-                          MENU_WIKI_COMMANDS,
-                          ButtonInfo(TOOLBAR_PLUGINS,
-                                     os.path.join(imagesPath, 'counter.svg'))
-                          ),
+            ActionGUIInfo(
+                InsertCounterAction(self._application, self),
+                MENU_WIKI_COMMANDS,
+                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "counter.svg")),
+            ),
         ]
 
         if self._application.mainWindow is not None:
@@ -88,9 +87,9 @@ class Controller:
 
         dlg = InsertDialog(self._application.mainWindow)
 
-        dlgController = InsertDialogController(dlg,
-                                               self._application.config,
-                                               self._application.selectedPage)
+        dlgController = InsertDialogController(
+            dlg, self._application.config, self._application.selectedPage
+        )
 
         resultDlg = dlgController.showDialog()
 

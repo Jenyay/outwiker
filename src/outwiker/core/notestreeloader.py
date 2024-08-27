@@ -12,7 +12,7 @@ from outwiker.core.tree import WikiDocument, BasePage, WikiPage
 from outwiker.core.sortfunctions import sortOrderFunction
 
 
-logger = logging.getLogger('notesTreeLoader')
+logger = logging.getLogger("notesTreeLoader")
 
 
 class NotesTreeLoader:
@@ -21,18 +21,18 @@ class NotesTreeLoader:
         Загрузить корневую страницу вики.
         Использовать этот метод вместо конструктора
         """
-        logger.debug('Wiki document loading started')
+        logger.debug("Wiki document loading started")
         try:
             root = WikiDocument(path, readonly)
         except configparser.Error:
             raise RootFormatError
 
-        logger.debug('Children notes loading started')
+        logger.debug("Children notes loading started")
         self._loadChildren(root)
-        logger.debug('Children notes loading ended')
+        logger.debug("Children notes loading ended")
 
         root.onTreeUpdate(root)
-        logger.debug('Wiki document loading ended')
+        logger.debug("Wiki document loading ended")
         return root
 
     def _loadChildren(self, parentPage):
@@ -51,11 +51,13 @@ class NotesTreeLoader:
 
             if not name.startswith("__") and os.path.isdir(fullpath):
                 try:
-                    page = self._loadPage(fullpath, parentPage, parentPage.root.readonly)
+                    page = self._loadPage(
+                        fullpath, parentPage, parentPage.root.readonly
+                    )
                 except Exception as e:
-                    text = 'Error reading page {}'.format(fullpath)
+                    text = "Error reading page {}".format(fullpath)
                     logging.error(text)
-                    logging.error('    ' + str(e))
+                    logging.error("    " + str(e))
                     continue
 
                 children.append(page)
@@ -75,11 +77,8 @@ class NotesTreeLoader:
         title = os.path.basename(path)
         params = BasePage.readParams(path, readonly)
 
-        # Получим тип страницы по параметрам
-        pageType = FactorySelector.getFactory(
-            params.typeOption.value).getPageType()
-
-        page = pageType(path, title, parent, readonly)
+        factory = FactorySelector.getFactory(params.typeOption.value)
+        page = factory.createPage(parent, title, path, readonly)
         page._tags = self._getTags(params)
         self._loadChildren(page)
 
@@ -90,8 +89,7 @@ class NotesTreeLoader:
         Выделить теги из строки конфигурационного файла
         """
         try:
-            tagsString = configParser.get(CONFIG_GENERAL_SECTION,
-                                          WikiPage.paramTags)
+            tagsString = configParser.get(CONFIG_GENERAL_SECTION, WikiPage.paramTags)
         except configparser.NoOptionError:
             return []
 

@@ -112,17 +112,15 @@ class CustomEvents:
         return self._events[key]
 
 
-def pagetype(pagecls):
+def pagetype(page_type_string):
     """
     The decorator to filter events. The function will be called for
-    pages of the pagecls type.
-
-    Added in outwiker.core version 1.1
+    pages with the page_type_string type.
     """
 
     def decorator(func):
         def event_func(self, page, *args, **kwargs):
-            if page is not None and pagecls.getTypeString() == page.getTypeString():
+            if page is not None and page_type_string == page.getTypeString():
                 return func(self, page, *args, **kwargs)
 
         return event_func

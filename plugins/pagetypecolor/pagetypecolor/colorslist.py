@@ -30,7 +30,7 @@ class ColorsList(object):
         self._application.onPageDialogPageFactoriesNeeded(None, eventParams)
 
         for factory in eventParams.pageFactories:
-            typeString = factory.getTypeString()
+            typeString = factory.getPageTypeString()
 
             if typeString not in self._colors:
                 color_param = StringOption(

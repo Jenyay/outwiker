@@ -12,6 +12,7 @@ from .colorizercontroller import ColorizerController
 from .markdownhtmlgenerator import MarkdownHtmlGenerator
 from .markdownpage import MarkdownPageFactory, MarkdownPage
 from .i18n import get_
+from .defines import PAGE_TYPE_STRING
 
 
 class Controller:
@@ -24,7 +25,7 @@ class Controller:
         self._application = application
 
         self._colorizerController = ColorizerController(
-            self._application, MarkdownPage.getTypeString()
+            self._application, PAGE_TYPE_STRING
         )
 
     def initialize(self):
@@ -50,7 +51,7 @@ class Controller:
         """
         Вызывается при отключении плагина
         """
-        removePageFactory(MarkdownPageFactory().getTypeString())
+        removePageFactory(PAGE_TYPE_STRING)
         self._application.onPageDialogPageFactoriesNeeded -= (
             self.__onPageDialogPageFactoriesNeeded
         )
@@ -73,7 +74,7 @@ class Controller:
         self._colorizerController.clear()
 
     def __onPageDialogPageTypeChanged(self, page, params):
-        if params.pageType == MarkdownPage.getTypeString():
+        if params.pageType == PAGE_TYPE_STRING:
             params.dialog.showAppearancePanel()
 
     @pagetype(MarkdownPage)

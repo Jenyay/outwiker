@@ -44,16 +44,16 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(type(test_page), WebNotePage)
 
         self.assertEqual(
-            type(FactorySelector.getFactory(WebNotePage.getTypeString())),
+            type(FactorySelector.getFactory(test_page.getTypeString())),
             WebPageFactory)
 
         self.loader.clear()
-        self.assertEqual(type(FactorySelector.getFactory(WebNotePage.getTypeString())),
+        self.assertEqual(type(FactorySelector.getFactory(test_page.getTypeString())),
                          UnknownPageTypeFactory)
 
         self.loader.load(self.dirlist)
 
-        self.assertEqual(type(FactorySelector.getFactory(WebNotePage.getTypeString())),
+        self.assertEqual(type(FactorySelector.getFactory(test_page.getTypeString())),
                          WebPageFactory)
 
     def testClear_01(self):

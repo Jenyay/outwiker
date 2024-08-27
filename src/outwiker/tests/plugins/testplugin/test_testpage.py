@@ -39,17 +39,23 @@ class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
         test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual(type(test_page), plugin.TestPage)
 
-        self.assertEqual(type(FactorySelector.getFactory(plugin.TestPage.getTypeString())),
-                         plugin.TestPageFactory)
+        self.assertEqual(
+            type(FactorySelector.getFactory(test_page.getTypeString())),
+            plugin.TestPageFactory,
+        )
 
         self.loader.clear()
-        self.assertEqual(type(FactorySelector.getFactory(plugin.TestPage.getTypeString())),
-                         UnknownPageTypeFactory)
+        self.assertEqual(
+            type(FactorySelector.getFactory(test_page.getTypeString())),
+            UnknownPageTypeFactory,
+        )
 
         self.loader.load(self.dirlist)
 
-        self.assertEqual(type(FactorySelector.getFactory(plugin.TestPage.getTypeString())),
-                         plugin.TestPageFactory)
+        self.assertEqual(
+            type(FactorySelector.getFactory(test_page.getTypeString())),
+            plugin.TestPageFactory,
+        )
 
     def testPageView(self):
         plugin = self.loader["TestPage"]

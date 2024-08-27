@@ -18,6 +18,9 @@ from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
 
 
+TEST_PAGE_TYPE_STRING = "testpage"
+
+
 class FactorySelectorTest(unittest.TestCase):
     def setUp(self):
         self.path = "testdata/samplewiki"
@@ -66,7 +69,7 @@ class FactorySelectorTest(unittest.TestCase):
             ExamplePageFactory)
 
     def testRemoveFactory_01(self):
-        FactorySelector.removeFactory(WikiPageFactory().getTypeString())
+        FactorySelector.removeFactory(WikiPageFactory().getPageTypeString())
 
         wikiroot = loadNotesTree(self.path)
 
@@ -78,7 +81,7 @@ class FactorySelectorTest(unittest.TestCase):
     def testRemoveFactory_02(self):
         wikiroot = loadNotesTree(self.path)
 
-        FactorySelector.removeFactory(WikiPageFactory().getTypeString())
+        FactorySelector.removeFactory(WikiPageFactory().getPageTypeString())
 
         wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
@@ -93,9 +96,8 @@ class ExamplePage(WikiPage):
     def __init__(self, path, title, parent, readonly=False):
         WikiPage.__init__(self, path, title, parent, readonly)
 
-    @staticmethod
-    def getTypeString():
-        return "testpage"
+    def getTypeString(self):
+        return TEST_PAGE_TYPE_STRING
 
 
 class ExamplePageFactory(PageFactory):
@@ -115,11 +117,17 @@ class ExamplePageFactory(PageFactory):
         """
         return "Test Page"
 
-    def getPageView(self, parent):
+    def getPageView(self, parent, application):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        return TextPanel(parent)
+        return TextPanel(parent, application)
 
     def getPrefPanels(self, parent):
         return []
+
+    def getPageTypeString(self):
+        return TEST_PAGE_TYPE_STRING
+
+    def createPage(self, parent, title, path, readonly=False):
+        return ExamplePage(path, title, parent, readonly)

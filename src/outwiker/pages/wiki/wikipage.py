@@ -53,8 +53,7 @@ class WikiWikiPage(WikiPage):
     def __init__(self, path, title, parent, readonly=False):
         super().__init__(path, title, parent, readonly)
 
-    @staticmethod
-    def getTypeString():
+    def getTypeString(self):
         return PAGE_TYPE_STRING
 
 
@@ -62,10 +61,6 @@ class WikiPageFactory(PageFactory):
     """
     Фабрика для создания викистраниц и их представлений
     """
-
-    def getPageType(self):
-        return WikiWikiPage
-
     @property
     def title(self):
         """
@@ -91,3 +86,9 @@ class WikiPageFactory(PageFactory):
     def removeActions(application):
         [application.actionController.removeAction(actionTuple.action_type.stringId)
          for actionTuple in wiki_actions]
+
+    def getPageTypeString(self):
+        return PAGE_TYPE_STRING
+
+    def createPage(self, parent, title, path, readonly=False):
+        return WikiWikiPage(path, title, parent, readonly)

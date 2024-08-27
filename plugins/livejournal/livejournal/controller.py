@@ -2,8 +2,7 @@
 
 import os.path
 
-from outwiker.api.pages.wiki import WikiWikiPage
-from outwiker.api.pages.wiki.defines import MENU_WIKI
+from outwiker.api.pages.wiki.defines import MENU_WIKI, PAGE_TYPE_STRING
 from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo, ButtonInfo
 
 from .i18n import get_
@@ -19,7 +18,7 @@ class Controller:
 
         self._GUIController = ActionsGUIController(
             self._application,
-            WikiWikiPage.getTypeString(),
+            PAGE_TYPE_STRING,
         )
 
     def initialize(self):

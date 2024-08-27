@@ -9,21 +9,21 @@ from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.config import StringOption, IntegerOption
 from outwiker.core.tagscommands import parseTagsList, getTagsString
 from outwiker.core.events import PAGE_UPDATE_CONTENT
+from outwiker.pages.search.defines import PAGE_TYPE_STRING
 
 from .searchpanel import SearchPanel
 
 
-class SearchWikiPage (WikiPage):
+class SearchWikiPage(WikiPage):
     """
     Класс HTML-страниц
     """
 
     def __init__(self, path, title, parent, readonly=False):
-        WikiPage.__init__(self, path, title, parent, readonly)
+        super().__init__(path, title, parent, readonly)
 
-        self.paramsSection = u"Search"
-        phraseOption = StringOption(
-            self.params, self.paramsSection, u"phrase", u"")
+        self.paramsSection = "Search"
+        phraseOption = StringOption(self.params, self.paramsSection, "phrase", "")
 
         # Искомая фраза
         self._phrase = phraseOption.value
@@ -35,9 +35,8 @@ class SearchWikiPage (WikiPage):
         # Стратегия для поиска
         self._strategy = self._getStrategy()
 
-    @staticmethod
-    def getTypeString():
-        return u"search"
+    def getTypeString(self):
+        return PAGE_TYPE_STRING
 
     @property
     def phrase(self):
@@ -50,8 +49,7 @@ class SearchWikiPage (WikiPage):
         """
         self._phrase = phrase
 
-        phraseOption = StringOption(
-            self.params, self.paramsSection, u"phrase", u"")
+        phraseOption = StringOption(self.params, self.paramsSection, "phrase", "")
         try:
             phraseOption.value = phrase
         except ReadonlyException:
@@ -64,8 +62,7 @@ class SearchWikiPage (WikiPage):
         """
         Загрузить список тегов из настроек страницы
         """
-        tagsOption = StringOption(
-            self.params, self.paramsSection, u"tags", u"")
+        tagsOption = StringOption(self.params, self.paramsSection, "tags", "")
         tags = parseTagsList(tagsOption.value)
         return tags
 
@@ -81,8 +78,7 @@ class SearchWikiPage (WikiPage):
         self._searchTags = tags
         tags_str = getTagsString(tags)
 
-        tagsOption = StringOption(
-            self.params, self.paramsSection, u"tags", u"")
+        tagsOption = StringOption(self.params, self.paramsSection, "tags", "")
 
         try:
             tagsOption.value = tags_str
@@ -93,8 +89,7 @@ class SearchWikiPage (WikiPage):
         Application.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
 
     def _getStrategy(self):
-        strategyOption = IntegerOption(
-            self.params, self.paramsSection, u"strategy", 0)
+        strategyOption = IntegerOption(self.params, self.paramsSection, "strategy", 0)
         return self._strategyByCode(strategyOption.value)
 
     def _strategyByCode(self, code):
@@ -115,8 +110,7 @@ class SearchWikiPage (WikiPage):
             strategyCode = 0
 
         self._strategy = strategy
-        strategyOption = IntegerOption(
-            self.params, self.paramsSection, u"strategy", 0)
+        strategyOption = IntegerOption(self.params, self.paramsSection, "strategy", 0)
 
         try:
             strategyOption.value = strategyCode
@@ -127,20 +121,19 @@ class SearchWikiPage (WikiPage):
         Application.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
 
 
-class SearchPageFactory (PageFactory):
+class SearchPageFactory(PageFactory):
     """
     Фабрика для создания страниц поиска и их представлений
     """
-
-    def getPageType(self):
-        return SearchWikiPage
-
     @property
     def title(self):
         """
         Название страницы, показываемое пользователю
         """
-        return _(u"Search Page")
+        return _("Search Page")
+
+    def getPageTypeString(self):
+        return PAGE_TYPE_STRING
 
     def getPageView(self, parent, application):
         """
@@ -148,10 +141,13 @@ class SearchPageFactory (PageFactory):
         """
         return SearchPanel(parent, application)
 
+    def createPage(self, parent, title, path, readonly=False):
+        return SearchWikiPage(path, title, parent, readonly)
+
 
 class GlobalSearch:
     @staticmethod
-    def create(root, phrase=u"", tags=[], strategy=AllTagsSearchStrategy):
+    def create(root, phrase="", tags=[], strategy=AllTagsSearchStrategy):
         """
         Создать страницу с поиском. Если страница существует,
         то сделать ее активной
@@ -160,7 +156,7 @@ class GlobalSearch:
         page = None
 
         for child_page in root.children:
-            if child_page.getTypeString() == SearchWikiPage.getTypeString():
+            if child_page.getTypeString() == PAGE_TYPE_STRING:
                 page = child_page
                 break
 

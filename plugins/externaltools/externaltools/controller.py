@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.pages.wiki import WikiWikiPage
-from outwiker.api.pages.wiki.defines import MENU_WIKI
+from outwiker.api.pages.wiki.defines import MENU_WIKI, PAGE_TYPE_STRING
 from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo
 from outwiker.api.gui.defines import PREF_PANEL_PLUGINS
 
@@ -34,7 +33,7 @@ class Controller:
 
         self._GUIController = ActionsGUIController(
             self._application,
-            WikiWikiPage.getTypeString(),
+            PAGE_TYPE_STRING,
         )
 
     def initialize(self):

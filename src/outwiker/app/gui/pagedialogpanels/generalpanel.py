@@ -225,7 +225,7 @@ class GeneralController(BasePageDialogController):
         return self._iconsController.setPageProperties(page)
 
     def saveParams(self):
-        self._config.recentCreatedPageType.value = self.selectedFactory.getTypeString()
+        self._config.recentCreatedPageType.value = self.selectedFactory.getPageTypeString()
         self._config.newPageOrderCalculator.value = (
             self._generalPanel.orderCombo.GetSelection()
         )
@@ -350,12 +350,12 @@ class GeneralController(BasePageDialogController):
         """
         typeCombo = self._generalPanel.typeCombo
         for n in range(typeCombo.GetCount()):
-            if typeCombo.GetClientData(n).getTypeString() == pageTypeString:
+            if typeCombo.GetClientData(n).getPageTypeString() == pageTypeString:
                 typeCombo.SetSelection(n)
 
     def __onPageTypeChanged(self, event):
         eventParams = PageDialogPageTypeChangedParams(
-            self._dialog, self.selectedFactory.getPageType().getTypeString()
+            self._dialog, self.selectedFactory.getPageTypeString()
         )
 
         self._application.onPageDialogPageTypeChanged(

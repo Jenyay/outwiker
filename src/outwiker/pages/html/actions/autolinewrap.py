@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
+from ..defines import PAGE_TYPE_STRING
 
 
 class HtmlAutoLineWrap(BaseAction):
@@ -20,5 +21,5 @@ class HtmlAutoLineWrap(BaseAction):
         return _("Auto line wrap for HTML pages")
 
     def run(self, checked):
-        assert self._application.selectedPage.getTypeString() == "html"
+        assert self._application.selectedPage.getTypeString() == PAGE_TYPE_STRING
         self._application.selectedPage.autoLineWrap = checked

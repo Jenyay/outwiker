@@ -13,6 +13,7 @@ from outwiker.api.core.config import StringOption, BooleanOption
 from outwiker.api.core.tree import PageFactory
 from outwiker.api.core.tree import WikiPage
 
+from .defines import PAGE_TYPE_STRING
 from .gui.webpageview import WebPageView
 
 # Directory for images, scripts, css etc.
@@ -46,10 +47,9 @@ class WebNotePage(WikiPage):
         self.DISABLE_SCRIPTS_PARAM = "disable_scripts"
         self.DISABLE_SCRIPTS_DEFAULT = True
 
-    @staticmethod
-    def getTypeString():
+    def getTypeString(self):
         """Return page string identifier."""
-        return "web"
+        return PAGE_TYPE_STRING
 
     @property
     def source(self):
@@ -97,11 +97,6 @@ class WebNotePage(WikiPage):
 
 class WebPageFactory(PageFactory):
     """Factory for WebNotePage creation."""
-
-    def getPageType(self):
-        """Return type of the page."""
-        return WebNotePage
-
     @property
     def title(self):
         """Return page title for the page dialog."""
@@ -168,3 +163,9 @@ class WebPageFactory(PageFactory):
             index += 1
 
         return newTitle
+
+    def getPageTypeString(self):
+        return PAGE_TYPE_STRING
+
+    def createPage(self, parent, title, path, readonly=False):
+        return WebNotePage(path, title, parent, readonly)

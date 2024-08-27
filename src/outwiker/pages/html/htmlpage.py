@@ -9,6 +9,7 @@ from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
 from outwiker.gui.actioninfo import ActionInfo
 from outwiker.gui.hotkey import HotKey
+from outwiker.pages.html.defines import PAGE_TYPE_STRING
 from outwiker.pages.html.htmlpageview import HtmlPageView
 
 from .actions.autolinewrap import HtmlAutoLineWrap
@@ -26,7 +27,7 @@ class HtmlWikiPage (WikiPage):
     """
 
     def __init__(self, path, title, parent, readonly=False):
-        WikiPage.__init__(self, path, title, parent, readonly)
+        super().__init__(path, title, parent, readonly)
 
         self.__autoLineWrapSection = "General"
         self.__autoLineWrapParam = "LineWrap"
@@ -52,9 +53,8 @@ class HtmlWikiPage (WikiPage):
         option.value = value
         self.root.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
 
-    @staticmethod
-    def getTypeString():
-        return "html"
+    def getTypeString(self):
+        return PAGE_TYPE_STRING
 
 
 class HtmlPageFactory (PageFactory):
@@ -74,9 +74,6 @@ class HtmlPageFactory (PageFactory):
         [application.actionController.removeAction(actionTuple.action_type.stringId)
          for actionTuple in html_actions]
 
-    def getPageType(self):
-        return HtmlWikiPage
-
     @property
     def title(self):
         """
@@ -89,3 +86,9 @@ class HtmlPageFactory (PageFactory):
         Вернуть контрол, который будет отображать и редактировать страницу
         """
         return HtmlPageView(parent, application)
+
+    def getPageTypeString(self):
+        return PAGE_TYPE_STRING
+
+    def createPage(self, parent, title, path, readonly=False):
+        return HtmlWikiPage(path, title, parent, readonly)

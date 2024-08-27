@@ -15,6 +15,7 @@ from outwiker.gui.simplespellcontroller import SimpleSpellController
 from outwiker.utilites.textfile import writeTextFile, readTextFile
 
 from .htmlpage import HtmlWikiPage, HtmlPageFactory
+from .defines import PAGE_TYPE_STRING
 
 
 class HtmlPageController:
@@ -24,7 +25,7 @@ class HtmlPageController:
         self._application = application
         self._spellController = SimpleSpellController(
             self._application,
-            HtmlWikiPage.getTypeString())
+            PAGE_TYPE_STRING)
 
     def initialize(self):
         self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
@@ -44,7 +45,7 @@ class HtmlPageController:
             self._spellController.clear()
 
     def __onPageDialogPageTypeChanged(self, page, params):
-        if params.pageType == HtmlWikiPage.getTypeString():
+        if params.pageType == PAGE_TYPE_STRING:
             params.dialog.showAppearancePanel()
 
     @pagetype(HtmlWikiPage)
