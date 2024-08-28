@@ -14,9 +14,7 @@ class TestPage(WikiPage):
 
     def __init__(self, path, title, parent, readonly=False):
         super().__init__(path, title, parent, readonly)
-
-    def getTypeString(self):
-        return PAGE_TYPE_STRING
+        self._typeString = PAGE_TYPE_STRING
 
 
 class TestPageFactory(PageFactory):

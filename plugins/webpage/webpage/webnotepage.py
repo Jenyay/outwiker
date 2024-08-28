@@ -34,7 +34,8 @@ class WebNotePage(WikiPage):
         title - page title.
         parent - parent page.
         """
-        super(WebNotePage, self).__init__(path, title, parent, readonly)
+        super().__init__(path, title, parent, readonly)
+        self._typeString = PAGE_TYPE_STRING
 
         self.PARAMS_SECTION = "WebPage"
 
@@ -46,10 +47,6 @@ class WebNotePage(WikiPage):
 
         self.DISABLE_SCRIPTS_PARAM = "disable_scripts"
         self.DISABLE_SCRIPTS_DEFAULT = True
-
-    def getTypeString(self):
-        """Return page string identifier."""
-        return PAGE_TYPE_STRING
 
     @property
     def source(self):

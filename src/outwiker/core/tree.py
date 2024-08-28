@@ -46,6 +46,7 @@ class BasePage(metaclass=ABCMeta):
         self._parent: Optional[BasePage] = None
         self._children: List[WikiPage] = []
         self.readonly = readonly
+        self._typeString = None
 
         configpath = os.path.join(path, PAGE_OPT_FILE)
         if (
@@ -57,6 +58,9 @@ class BasePage(metaclass=ABCMeta):
 
         self._params = BasePage.readParams(self.path, self.readonly)
         self._datetime = self._getDateTime()
+
+    def getTypeString(self) -> Optional[str]:
+        return self._typeString
 
     @staticmethod
     def readParams(path: str, readonly: bool = False) -> PageConfig:
@@ -275,11 +279,12 @@ class BasePage(metaclass=ABCMeta):
 @final
 class WikiDocument(BasePage):
     def __init__(self, path, readonly=False):
-        BasePage.__init__(self, path, readonly)
+        super().__init__(path, readonly)
         self._selectedPage = None
         self._createEvents()
         self.bookmarks = Bookmarks(self, self._params)
         self._registry = NotesTreeRegistry(self._getRegistrySaver(self._path))
+        self._typeString = "document"
 
     def _getRegistrySaver(self, path):
         registry_path = os.path.join(path, REGISTRY_FILE)
@@ -419,9 +424,6 @@ class WikiDocument(BasePage):
     def display_title(self):
         return self.title
 
-    def getTypeString(self) -> str:
-        return "document"
-
     @property
     def registry(self):
         return self._registry
@@ -436,9 +438,6 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     paramType = "type"
 
     iconController = IconController(getIconsDirList()[0])
-
-    def getTypeString(self) -> Optional[str]:
-        return None
 
     def __init__(self, path, title, parent, readonly=False):
         """

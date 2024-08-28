@@ -21,6 +21,7 @@ class SearchWikiPage(WikiPage):
 
     def __init__(self, path, title, parent, readonly=False):
         super().__init__(path, title, parent, readonly)
+        self._typeString = PAGE_TYPE_STRING
 
         self.paramsSection = "Search"
         phraseOption = StringOption(self.params, self.paramsSection, "phrase", "")
@@ -34,9 +35,6 @@ class SearchWikiPage(WikiPage):
 
         # Стратегия для поиска
         self._strategy = self._getStrategy()
-
-    def getTypeString(self):
-        return PAGE_TYPE_STRING
 
     @property
     def phrase(self):
