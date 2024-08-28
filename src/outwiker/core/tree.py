@@ -46,7 +46,6 @@ class BasePage(metaclass=ABCMeta):
         self._parent: Optional[BasePage] = None
         self._children: List[WikiPage] = []
         self.readonly = readonly
-        self._typeString = None
 
         configpath = os.path.join(path, PAGE_OPT_FILE)
         if (
@@ -453,7 +452,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
             )
             raise DuplicateTitle
 
-        BasePage.__init__(self, path, readonly)
+        super().__init__(path, readonly)
         self._DEFAULT_ATTACH_SUBDIR = ""
         self._attach_subdir = self._DEFAULT_ATTACH_SUBDIR
         self._title = title
