@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
 
 
-from outwiker.api.core.tree import getPageHtmlPath
-from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.event import pagetype
-from outwiker.core.events import (PreprocessingParams,
-                                  PreHtmlImprovingParams,
-                                  PostprocessingParams,
-                                  )
+from outwiker.core.events import (
+    PostprocessingParams,
+    PreHtmlImprovingParams,
+    PreprocessingParams,
+)
+from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
+from outwiker.core.treetools import getPageHtmlPath
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.gui.simplespellcontroller import SimpleSpellController
-from outwiker.utilites.textfile import writeTextFile, readTextFile
+from outwiker.utilites.textfile import readTextFile, writeTextFile
 
-from .htmlpage import HtmlPageFactory
 from .defines import PAGE_TYPE_STRING
+from .htmlpage import HtmlPageFactory
 
 
 class HtmlPageController:

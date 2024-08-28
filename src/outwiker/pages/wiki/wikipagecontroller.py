@@ -4,23 +4,21 @@ import os
 
 import wx
 
-from outwiker.api.core.tree import getPageHtmlPath
-from outwiker.core.style import Style
 from outwiker.core.event import pagetype
+import outwiker.core.events
+from outwiker.core.style import Style
+import outwiker.core.tree
+from outwiker.core.treetools import getPageHtmlPath
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.utilites.textfile import writeTextFile
 
+from .defines import PAGE_TYPE_STRING, PREF_PANEL_WIKI
+from .listautocomplete import listComplete_wiki
+from .wikicolorizercontroller import WikiColorizerController
 from .wikipage import WikiPageFactory
 from .wikipreferences import WikiPrefGeneralPanel
-from .wikicolorizercontroller import WikiColorizerController
-from .listautocomplete import listComplete_wiki
-from .defines import PREF_PANEL_WIKI, PAGE_TYPE_STRING
-
-# For type hints
-import outwiker.core.tree
-import outwiker.core.events
 
 
 class WikiPageController:
