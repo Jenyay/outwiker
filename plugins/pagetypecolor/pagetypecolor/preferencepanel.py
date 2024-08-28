@@ -55,7 +55,7 @@ class PreferencePanel(BasePrefPanel):
             label, colorPicker = self._createLabelAndColorPicker(
                 factory.title, mainSizer
             )
-            self._colorPickers[factory.getTypeString()] = colorPicker
+            self._colorPickers[factory.getPageTypeString()] = colorPicker
 
         self.SetSizer(mainSizer)
 
