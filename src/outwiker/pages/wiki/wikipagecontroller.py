@@ -12,7 +12,7 @@ from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.utilites.textfile import writeTextFile
 
-from .wikipage import WikiWikiPage, WikiPageFactory
+from .wikipage import WikiPageFactory
 from .wikipreferences import WikiPrefGeneralPanel
 from .wikicolorizercontroller import WikiColorizerController
 from .listautocomplete import listComplete_wiki

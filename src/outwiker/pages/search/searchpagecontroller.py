@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .searchpage import SearchPageFactory, SearchWikiPage
+from .searchpage import SearchPageFactory
 from .defines import PAGE_TYPE_STRING
 
 
