@@ -3,7 +3,6 @@
 import os.path
 import re
 
-from outwiker.api.core.tree import WikiDocument
 from outwiker.api.core.text import readTextFile, writeTextFile
 
 from .exporterfactory import ExporterFactory
@@ -190,7 +189,7 @@ class BranchExporter:
         imagesonly - из вложений оставлять только картинки?
         alwaysOverwrite - перезаписывать существующие файлы?
         """
-        if page.getTypeString() != WikiDocument.getTypeString():
+        if page.getTypeString() != "document":
             try:
                 exporter = ExporterFactory.getExporter(page)
                 exportname = self.__nameGenerator.getName(page)

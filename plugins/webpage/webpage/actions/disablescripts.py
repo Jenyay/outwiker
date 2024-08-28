@@ -3,8 +3,8 @@
 from outwiker.api.gui.actions import BaseAction
 from outwiker.api.core.events import PageUpdateNeededParams
 
-from webpage.webnotepage import WebNotePage
 from webpage.i18n import get_
+from ..defines import PAGE_TYPE_STRING
 
 
 class DisableScriptsAction(BaseAction):
@@ -26,10 +26,7 @@ class DisableScriptsAction(BaseAction):
         return _("WebPage. Enable / disable scripts on downloaded page.")
 
     def run(self, checked):
-        assert (
-            self._application.selectedPage.getTypeString()
-            == WebNotePage.getTypeString()
-        )
+        assert self._application.selectedPage.getTypeString() == PAGE_TYPE_STRING
 
         self._application.selectedPage.disableScripts = checked
         self._application.onPageUpdateNeeded(

@@ -2,8 +2,6 @@
 
 import os.path
 
-from outwiker.api.core.tree import WikiDocument
-
 
 class LongNameGenerator:
     """
@@ -23,7 +21,7 @@ class LongNameGenerator:
         return self.__getExportName(self._root, page)
 
     def __getExportName(self, root, page):
-        if root.getTypeString() == WikiDocument.getTypeString():
+        if root.getTypeString() == "document":
             exportname = (
                 os.path.basename(root.path) + "_" + page.subpath.replace("/", "_")
             )
