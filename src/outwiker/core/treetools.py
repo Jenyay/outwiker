@@ -9,9 +9,9 @@ from pathlib import Path
 from typing import Union
 
 
-from outwiker.api.core.defines import PAGE_RESULT_HTML
 from outwiker.app.services.messages import showError
 from outwiker.core.application import Application
+from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.tree import WikiDocument
 from outwiker.core.notestreeloader import NotesTreeLoader
 from outwiker.core.exceptions import ReadonlyException
