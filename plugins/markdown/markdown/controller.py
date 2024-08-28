@@ -6,12 +6,13 @@ from outwiker.api.core.events import pagetype
 from outwiker.api.core.text import writeTextFile
 from outwiker.api.core.pagecontentcache import PageContentCache, WikiHashCalculator
 from outwiker.api.core.pagestyle import getPageStyle
-from outwiker.api.core.tree import addPageFactory, removePageFactory
+from outwiker.api.core.tree import addPageFactory, getPageHtmlPath, removePageFactory
 
 from .colorizercontroller import ColorizerController
 from .markdownhtmlgenerator import MarkdownHtmlGenerator
 from .markdownpage import MarkdownPageFactory, MarkdownPage
 from .i18n import get_
+from .defines import PAGE_TYPE_STRING
 
 
 class Controller:
@@ -24,7 +25,7 @@ class Controller:
         self._application = application
 
         self._colorizerController = ColorizerController(
-            self._application, MarkdownPage.getTypeString()
+            self._application, PAGE_TYPE_STRING
         )
 
     def initialize(self):
@@ -50,7 +51,7 @@ class Controller:
         """
         Вызывается при отключении плагина
         """
-        removePageFactory(MarkdownPageFactory().getTypeString())
+        removePageFactory(PAGE_TYPE_STRING)
         self._application.onPageDialogPageFactoriesNeeded -= (
             self.__onPageDialogPageFactoriesNeeded
         )
@@ -64,19 +65,19 @@ class Controller:
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(MarkdownPageFactory())
 
-    @pagetype(MarkdownPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewCreate(self, page):
         self._colorizerController.initialize(page)
 
-    @pagetype(MarkdownPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewDestroy(self, page):
         self._colorizerController.clear()
 
     def __onPageDialogPageTypeChanged(self, page, params):
-        if params.pageType == MarkdownPage.getTypeString():
+        if params.pageType == PAGE_TYPE_STRING:
             params.dialog.showAppearancePanel()
 
-    @pagetype(MarkdownPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageUpdateNeeded(self, page, params):
         if page.readonly:
             return
@@ -86,7 +87,7 @@ class Controller:
         self._updatePage(page)
 
     def _updatePage(self, page):
-        path = page.getHtmlPath()
+        path = getPageHtmlPath(page)
         cache = self._getPageContentCache(page)
 
         # Проверим, можно ли прочитать уже готовый HTML

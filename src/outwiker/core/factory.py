@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 from typing import Callable, List
 
 from .exceptions import ReadonlyException
 from .tree import BasePage, WikiPage
-from .tree_commands import getAlternativeTitle
+from .treetools import getAlternativeTitle
 
 # Functions to calculate new page order
 
@@ -59,8 +59,7 @@ class PageFactory(metaclass=ABCMeta):
         title = getAlternativeTitle(alias, siblings)
         path = os.path.join(parent.path, title)
 
-        pageType = self.getPageType()
-        page = pageType(path, title, parent)
+        page = self.createPage(parent, title, path)
         order = order_calculator(parent, alias, tags)
         parent.addToChildren(page, order)
 
@@ -75,14 +74,8 @@ class PageFactory(metaclass=ABCMeta):
 
         return page
 
+    @property
     @abstractmethod
-    def getPageType(self):
-        """
-        Метод возвращает тип создаваемой страницы (не экземпляр страницы)
-        """
-        raise NotImplementedError
-
-    @abstractproperty
     def title(self) -> str:
         """
         Название страницы, показываемое пользователю
@@ -96,5 +89,10 @@ class PageFactory(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def getTypeString(self) -> str:
-        return self.getPageType().getTypeString()
+    @abstractmethod
+    def getPageTypeString(self) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def createPage(self, parent, title, path, readonly=False):
+        raise NotImplementedError

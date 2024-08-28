@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from .searchpage import SearchPageFactory, SearchWikiPage
+from .searchpage import SearchPageFactory
+from .defines import PAGE_TYPE_STRING
 
 
 class SearchPageController(object):
@@ -29,5 +30,5 @@ class SearchPageController(object):
         params.addPageFactory(SearchPageFactory())
 
     def __onPageDialogPageTypeChanged(self, page, params):
-        if params.pageType == SearchWikiPage.getTypeString():
+        if params.pageType == PAGE_TYPE_STRING:
             params.dialog.hideAppearancePanel()

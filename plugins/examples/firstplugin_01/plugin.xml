@@ -3,6 +3,6 @@
     <name>FirstPlugin</name>
     <requirements>
         <os>Windows, Linux</os>
-        <api>2.835</api>
+		<api>4.942</api>
     </requirements>
 </info>

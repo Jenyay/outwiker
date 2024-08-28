@@ -114,7 +114,6 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             "outwiker.gui.controls.filestreectrl",
             "outwiker.gui.images",
             "outwiker.core.attachfilters",
-            "outwiker.core.commands",
             "outwiker.utilites.actionsguicontroller",
             "outwiker.utilites.text",
             "PIL.Image",

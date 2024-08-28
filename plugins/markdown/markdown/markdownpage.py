@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import os
-
-from outwiker.api.core.defines import PAGE_RESULT_HTML
 from outwiker.api.core.tree import WikiPage, PageFactory
 
-from .markdownpageview import MarkdownPageView
+from .defines import PAGE_TYPE_STRING
 from .i18n import get_
+from .markdownpageview import MarkdownPageView
 
 
 class MarkdownPage(WikiPage):
@@ -15,23 +13,13 @@ class MarkdownPage(WikiPage):
     """
 
     def __init__(self, path, title, parent, readonly=False):
-        super(MarkdownPage, self).__init__(path, title, parent, readonly)
+        super().__init__(path, title, parent, readonly)
 
-    @staticmethod
-    def getTypeString():
-        return "markdown"
-
-    def getHtmlPath(self):
-        """
-        Получить путь до результирующего файла HTML
-        """
-        return os.path.join(self.path, PAGE_RESULT_HTML)
+    def getTypeString(self) -> str:
+        return PAGE_TYPE_STRING
 
 
 class MarkdownPageFactory(PageFactory):
-    def getPageType(self):
-        return MarkdownPage
-
     @property
     def title(self):
         """
@@ -45,3 +33,9 @@ class MarkdownPageFactory(PageFactory):
         Вернуть контрол, который будет отображать и редактировать страницу
         """
         return MarkdownPageView(parent, application)
+
+    def getPageTypeString(self):
+        return PAGE_TYPE_STRING
+
+    def createPage(self, parent, title, path, readonly=False):
+        return MarkdownPage(path, title, parent, readonly)

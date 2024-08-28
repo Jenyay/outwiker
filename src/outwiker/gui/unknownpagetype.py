@@ -96,7 +96,7 @@ class UnknownPageTypeFactory (PageFactory):
 
         self._pageTypeString = pageTypeString
 
-    def getPageType(self):
+    def _getPageType(self):
         typeName = self._pageTypeString + 'PageType'
         attributes = {'getTypeString':
                       staticmethod(lambda: self._pageTypeString)}
@@ -109,6 +109,12 @@ class UnknownPageTypeFactory (PageFactory):
 
     def getPageView(self, parent, application):
         return UnknownPageTypePanel(parent, application)
+
+    def getPageTypeString(self):
+        return self._pageTypeString
+
+    def createPage(self, parent, title, path, readonly=False):
+        return self._getPageType()(path, title, parent, readonly)
 
 
 class UnknownPage (WikiPage):

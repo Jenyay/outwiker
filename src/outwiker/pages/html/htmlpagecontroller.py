@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 
 
-from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.event import pagetype
-from outwiker.core.events import (PreprocessingParams,
-                                  PreHtmlImprovingParams,
-                                  PostprocessingParams,
-                                  )
+from outwiker.core.events import (
+    PostprocessingParams,
+    PreHtmlImprovingParams,
+    PreprocessingParams,
+)
+from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
+from outwiker.core.treetools import getPageHtmlPath
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.gui.simplespellcontroller import SimpleSpellController
-from outwiker.utilites.textfile import writeTextFile, readTextFile
+from outwiker.utilites.textfile import readTextFile, writeTextFile
 
-from .htmlpage import HtmlWikiPage, HtmlPageFactory
+from .defines import PAGE_TYPE_STRING
+from .htmlpage import HtmlPageFactory
 
 
 class HtmlPageController:
@@ -23,7 +26,7 @@ class HtmlPageController:
         self._application = application
         self._spellController = SimpleSpellController(
             self._application,
-            HtmlWikiPage.getTypeString())
+            PAGE_TYPE_STRING)
 
     def initialize(self):
         self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
@@ -43,16 +46,16 @@ class HtmlPageController:
             self._spellController.clear()
 
     def __onPageDialogPageTypeChanged(self, page, params):
-        if params.pageType == HtmlWikiPage.getTypeString():
+        if params.pageType == PAGE_TYPE_STRING:
             params.dialog.showAppearancePanel()
 
-    @pagetype(HtmlWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewCreate(self, page):
         assert page is not None
         if not self._application.testMode:
             self._spellController.initialize(page)
 
-    @pagetype(HtmlWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewDestroy(self, page):
         assert page is not None
         if not self._application.testMode:
@@ -61,14 +64,14 @@ class HtmlPageController:
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(HtmlPageFactory())
 
-    @pagetype(HtmlWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageUpdateNeeded(self, page, params):
         if page.readonly:
             return
         self._updatePage(page)
 
     def _updatePage(self, page):
-        path = page.getHtmlPath()
+        path = getPageHtmlPath(page)
         html = self._makeHtml(page)
         writeTextFile(path, html)
 

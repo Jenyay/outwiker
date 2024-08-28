@@ -4,22 +4,21 @@ import os
 
 import wx
 
-from outwiker.core.style import Style
 from outwiker.core.event import pagetype
+import outwiker.core.events
+from outwiker.core.style import Style
+import outwiker.core.tree
+from outwiker.core.treetools import getPageHtmlPath
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.utilites.textfile import writeTextFile
 
-from .wikipage import WikiWikiPage, WikiPageFactory
-from .wikipreferences import WikiPrefGeneralPanel
-from .wikicolorizercontroller import WikiColorizerController
+from .defines import PAGE_TYPE_STRING, PREF_PANEL_WIKI
 from .listautocomplete import listComplete_wiki
-from .defines import PREF_PANEL_WIKI
-
-# For type hints
-import outwiker.core.tree
-import outwiker.core.events
+from .wikicolorizercontroller import WikiColorizerController
+from .wikipage import WikiPageFactory
+from .wikipreferences import WikiPrefGeneralPanel
 
 
 class WikiPageController:
@@ -28,7 +27,7 @@ class WikiPageController:
     def __init__(self, application):
         self._application = application
         self._colorizerController = WikiColorizerController(
-            self._application, WikiWikiPage.getTypeString()
+            self._application, PAGE_TYPE_STRING
         )
 
     def initialize(self):
@@ -60,7 +59,7 @@ class WikiPageController:
             self._colorizerController.clear()
 
     def __onPageDialogPageTypeChanged(self, page, params):
-        if params.pageType == WikiWikiPage.getTypeString():
+        if params.pageType == PAGE_TYPE_STRING:
             params.dialog.showAppearancePanel()
 
     def __onPreferencesDialogCreate(self, dialog):
@@ -69,13 +68,13 @@ class WikiPageController:
 
         dialog.appendPreferenceGroup(_("Wiki Page"), [prefPanelInfo], PREF_PANEL_WIKI)
 
-    @pagetype(WikiWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewCreate(self, page):
         if not self._application.testMode:
             self._colorizerController.initialize(page)
         self._application.mainWindow.pagePanel.pageView.SetFocus()
 
-    @pagetype(WikiWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onPageViewDestroy(self, page):
         if not self._application.testMode:
             self._colorizerController.clear()
@@ -84,18 +83,14 @@ class WikiPageController:
         params.addPageFactory(WikiPageFactory())
 
     def __onPageUpdateNeeded(self, page, params):
-        if (
-            page is None
-            or page.getTypeString() != WikiWikiPage.getTypeString()
-            or page.readonly
-        ):
+        if page is None or page.getTypeString() != PAGE_TYPE_STRING or page.readonly:
             return
 
         if not params.allowCache:
             HtmlCache(page, self._application).resetHash()
         self._updatePage(page)
 
-    @pagetype(WikiWikiPage)
+    @pagetype(PAGE_TYPE_STRING)
     def __onTextEditorKeyDown(
         self,
         page: outwiker.core.tree.WikiPage,
@@ -108,7 +103,7 @@ class WikiPageController:
                 params.disableOutput = True
 
     def _updatePage(self, page):
-        path = page.getHtmlPath()
+        path = getPageHtmlPath(page)
         cache = HtmlCache(page, self._application)
 
         # Проверим, можно ли прочитать уже готовый HTML

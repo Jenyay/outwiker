@@ -20,17 +20,19 @@ class FactorySelector:
     Класс, который выбирает нужную фабрику для каждой страницы
     """
 
-    _factories = {factory.getTypeString(): factory
-                  for factory
-                  in [WikiPageFactory(),
-                      HtmlPageFactory(),
-                      TextPageFactory(),
-                      SearchPageFactory()]}
+    _factories = {
+        factory.getPageTypeString(): factory
+        for factory in [
+            WikiPageFactory(),
+            HtmlPageFactory(),
+            TextPageFactory(),
+            SearchPageFactory(),
+        ]
+    }
 
     @staticmethod
     def getFactories():
-        return sorted(FactorySelector._factories.values(),
-                      key=lambda x: x.title)
+        return sorted(FactorySelector._factories.values(), key=lambda x: x.title)
 
     @staticmethod
     def getFactory(page_type):
@@ -38,8 +40,9 @@ class FactorySelector:
         Найти фабрику, которая работает с переданным типом страницы
         (со страницей данного типа). Или вернуть фабрику по умолчанию
         """
-        return FactorySelector._factories.get(page_type,
-                                              UnknownPageTypeFactory(page_type))
+        return FactorySelector._factories.get(
+            page_type, UnknownPageTypeFactory(page_type)
+        )
 
     @staticmethod
     def reset():
@@ -49,12 +52,15 @@ class FactorySelector:
         Это не конструктор. В случае изменения списка фабрик,
         установленных по умолчанию, нужно изменять этот метод.
         """
-        FactorySelector._factories = {factory.getTypeString(): factory
-                                      for factory
-                                      in [WikiPageFactory(),
-                                          HtmlPageFactory(),
-                                          TextPageFactory(),
-                                          SearchPageFactory()]}
+        FactorySelector._factories = {
+            factory.getPageTypeString(): factory
+            for factory in [
+                WikiPageFactory(),
+                HtmlPageFactory(),
+                TextPageFactory(),
+                SearchPageFactory(),
+            ]
+        }
 
     @staticmethod
     def addFactory(new_factory):
@@ -63,7 +69,7 @@ class FactorySelector:
         создаваемый тип страниц, в то же время фабрика может заменить
         существующую фабрику.
         """
-        FactorySelector._factories[new_factory.getTypeString()] = new_factory
+        FactorySelector._factories[new_factory.getPageTypeString()] = new_factory
 
     @staticmethod
     def removeFactory(typeString):

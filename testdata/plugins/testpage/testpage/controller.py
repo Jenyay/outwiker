@@ -1,30 +1,28 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.factoryselector import FactorySelector
 
 from .testnotespage import TestPageFactory
 
 
-class Controller (object):
+class Controller:
     """
     Класс отвечает за основную работу интерфейса плагина
     """
-    def __init__ (self, plugin, application):
-        """
-        """
+
+    def __init__(self, plugin, application):
+        """ """
         self._plugin = plugin
         self._application = application
 
-
-    def initialize (self):
+    def initialize(self):
         """
         Инициализация контроллера при активации плагина. Подписка на нужные события
         """
-        FactorySelector.addFactory (TestPageFactory())
+        FactorySelector.addFactory(TestPageFactory())
 
-
-    def destroy (self):
+    def destroy(self):
         """
         Вызывается при отключении плагина
         """
-        FactorySelector.removeFactory (TestPageFactory().getTypeString())
+        FactorySelector.removeFactory(TestPageFactory().getPageTypeString())

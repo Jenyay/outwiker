@@ -5,29 +5,29 @@
 
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
+from outwiker.pages.text.defines import PAGE_TYPE_STRING
 from outwiker.pages.text.textpanel import TextPanel
 
 
-class TextWikiPage (WikiPage):
+class TextWikiPage(WikiPage):
     """
     Класс текстовых страниц
     """
 
     def __init__(self, path, title, parent, readonly=False):
-        WikiPage.__init__(self, path, title, parent, readonly)
+        super().__init__(path, title, parent, readonly)
 
-    @staticmethod
-    def getTypeString():
-        return "text"
+    def getTypeString(self):
+        return PAGE_TYPE_STRING
 
 
-class TextPageFactory (PageFactory):
+class TextPageFactory(PageFactory):
     """
     Фабрика для создания текстовой страницы и ее представления
     """
 
-    def getPageType(self):
-        return TextWikiPage
+    def getPageTypeString(self):
+        return PAGE_TYPE_STRING
 
     @property
     def title(self):
@@ -41,3 +41,6 @@ class TextPageFactory (PageFactory):
         Вернуть контрол, который будет отображать и редактировать страницу
         """
         return TextPanel(parent, application)
+
+    def createPage(self, parent, title, path, readonly=False):
+        return TextWikiPage(path, title, parent, readonly)

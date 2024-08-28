@@ -2,7 +2,7 @@
 <info>
 	<name>TestImport</name>
     <requirements>
-        <api>3.868</api>
+		<api>4.942</api>
     </requirements>
 
 	<description>Test plug-in.</description>

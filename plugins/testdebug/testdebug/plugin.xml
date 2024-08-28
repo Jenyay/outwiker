@@ -7,8 +7,8 @@
 	<website lang="ru">http://jenyay.net/Outwiker/DebugPlugin</website>
 
 	<requirements>
-		<api>3.868</api>
+		<api>4.942</api>
 	</requirements>
 
-	<version number="0.5"/>
+	<version number="0.6"/>
 </info>

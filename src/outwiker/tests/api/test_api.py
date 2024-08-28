@@ -6,14 +6,6 @@ def test_old_plugins_imports():
     from outwiker.actions.showhidetree import ShowHideTreeAction
     from outwiker.core.attachfilters import (getImagesOnlyFilter, getHiddenFilter, getDirOnlyFilter, andFilter, orFilter, notFilter)
     from outwiker.core.attachment import Attachment
-    from outwiker.core.commands import MessageBox
-    from outwiker.core.commands import copyTextToClipboard
-    from outwiker.core.commands import getClipboardText
-    from outwiker.core.commands import insertCurrentDate
-    from outwiker.core.commands import isImage
-    from outwiker.core.commands import openWiki
-    from outwiker.core.commands import testPageTitle, renamePage
-    from outwiker.core.commands import testreadonly
     from outwiker.core.config import Config
     from outwiker.core.config import StringOption, IntegerOption, ListOption, BooleanOption
     from outwiker.core.defines import PAGE_ATTACH_DIR

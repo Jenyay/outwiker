@@ -15,6 +15,11 @@ from outwiker.pages.wiki.wikipage import WikiWikiPage
 from outwiker.pages.html.htmlpage import HtmlWikiPage
 from outwiker.pages.search.searchpage import SearchWikiPage
 
+from outwiker.pages.text.defines import PAGE_TYPE_STRING as TEXT_TS
+from outwiker.pages.wiki.defines import PAGE_TYPE_STRING as WIKI_TS
+from outwiker.pages.html.defines import PAGE_TYPE_STRING as HTML_TS
+from outwiker.pages.search.defines import PAGE_TYPE_STRING as SEARCH_TS
+
 from outwiker.tests.utils import removeDir
 
 
@@ -42,19 +47,19 @@ class ReadonlyLoadTest (unittest.TestCase):
 
     def testPageType2(self):
         self.assertEqual(self.root["Типы страниц/HTML-страница"].getTypeString(),
-                         HtmlWikiPage.getTypeString())
+                         HTML_TS)
 
         self.assertEqual(self.root["Типы страниц/wiki-страница"].getTypeString(),
-                         WikiWikiPage.getTypeString())
+                         WIKI_TS)
 
         self.assertEqual(self.root["Типы страниц/wiki-страница"].getTypeString(),
-                         WikiWikiPage.getTypeString())
+                         WIKI_TS)
 
         self.assertEqual(self.root["Типы страниц/Страница поиска"].getTypeString(),
-                         SearchWikiPage.getTypeString())
+                         SEARCH_TS)
 
         self.assertEqual (self.root["Типы страниц/Текстовая страница"].getTypeString(),
-                          TextWikiPage.getTypeString())
+                          TEXT_TS)
 
 
     def testPagesAccess (self):
@@ -115,11 +120,11 @@ class ReadonlyLoadTest (unittest.TestCase):
 
 
     def testTypes (self):
-        self.assertEqual (self.root["Страница 1"].getTypeString(), "html")
-        self.assertEqual (self.root["Страница 1/Страница 2"].getTypeString(), "text")
-        self.assertEqual (self.root["Страница 3"].getTypeString(), "html")
-        self.assertEqual (self.root["page 4"].getTypeString(), "text")
-        self.assertEqual (self.root["Страница 1/Страница 2/Страница 5"].getTypeString(), "text")
+        self.assertEqual (self.root["Страница 1"].getTypeString(), HTML_TS)
+        self.assertEqual (self.root["Страница 1/Страница 2"].getTypeString(), TEXT_TS)
+        self.assertEqual (self.root["Страница 3"].getTypeString(), HTML_TS)
+        self.assertEqual (self.root["page 4"].getTypeString(), TEXT_TS)
+        self.assertEqual (self.root["Страница 1/Страница 2/Страница 5"].getTypeString(), TEXT_TS)
 
 
     def testChildren (self):

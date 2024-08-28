@@ -3,6 +3,7 @@
 import logging
 import wx
 
+from outwiker.core.treetools import getPageHtmlPath
 from outwiker.app.services.messages import showError
 from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW, PAGE_MODE_HTML
 from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
@@ -257,7 +258,7 @@ class BaseWikiPageView(BaseHtmlPanel):
             return
 
         try:
-            path = self._currentpage.getHtmlPath()
+            path = getPageHtmlPath(self._currentpage)
             html = readTextFile(path)
 
             self.htmlCodeWindow.SetReadOnly(False)

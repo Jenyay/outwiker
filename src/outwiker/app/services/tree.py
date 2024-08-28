@@ -23,7 +23,7 @@ from outwiker.core.pagetitletester import (
 )
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
-from outwiker.core.tree_commands import getAlternativeTitle
+from outwiker.core.treetools import getAlternativeTitle
 from outwiker.core.notestreeloader import NotesTreeLoader
 from outwiker.core.treetools import testreadonly
 from outwiker.gui.dialogs.messagebox import MessageBox

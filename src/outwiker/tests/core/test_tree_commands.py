@@ -4,7 +4,7 @@ Test for the outwiker.test.commands.getAlternativeTitle
 
 import pytest
 
-import outwiker.core.tree_commands as tc
+import outwiker.core.treetools as tt
 
 
 @pytest.mark.parametrize('title, siblings, expected', [
@@ -35,5 +35,5 @@ import outwiker.core.tree_commands as tc
     ('Проверка...', ['Проверка___'], 'Проверка___ (1)'),
 ])
 def test_getAlternativeTitle(title, siblings, expected):
-    newtitle = tc.getAlternativeTitle(title, siblings)
+    newtitle = tt.getAlternativeTitle(title, siblings)
     assert newtitle == expected

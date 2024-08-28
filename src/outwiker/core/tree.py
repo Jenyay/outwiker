@@ -394,7 +394,7 @@ class WikiDocument(BasePage):
 
     @selectedPage.setter
     def selectedPage(self, page):
-        if page is None or page.getTypeString() == WikiDocument.getTypeString():
+        if page is None or page.getTypeString() == self.getTypeString():
             # Экземпляр класса WikiDocument выбирать нельзя
             self._selectedPage = None
         else:
@@ -419,8 +419,7 @@ class WikiDocument(BasePage):
     def display_title(self):
         return self.title
 
-    @staticmethod
-    def getTypeString():
+    def getTypeString(self) -> str:
         return "document"
 
     @property
@@ -438,9 +437,8 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     iconController = IconController(getIconsDirList()[0])
 
-    @staticmethod
-    def getTypeString():
-        return "base"
+    def getTypeString(self) -> Optional[str]:
+        return None
 
     def __init__(self, path, title, parent, readonly=False):
         """

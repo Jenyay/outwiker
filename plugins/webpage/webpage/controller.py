@@ -5,7 +5,7 @@ import os
 import os.path
 import sys
 
-from outwiker.api.core.tree import addPageFactory, removePageFactory
+from outwiker.api.core.tree import addPageFactory, getPageHtmlPath, removePageFactory
 from outwiker.api.core.text import writeTextFile
 
 from .webnotepage import WebPageFactory, WebNotePage
@@ -23,6 +23,7 @@ from .misc import onPrepareHtmlEventString
 from .events import PrepareHtmlEventParams
 from .htmlprocessors.disablescripts import disableScripts
 from .htmlprocessors.maxieversion import maxIEVersion
+from .defines import PAGE_TYPE_STRING
 
 
 logger = logging.getLogger("webpage")
@@ -86,12 +87,11 @@ class Controller:
 
         if (
             self._application.selectedPage is not None
-            and self._application.selectedPage.getTypeString()
-            == WebNotePage.getTypeString()
+            and self._application.selectedPage.getTypeString() == PAGE_TYPE_STRING
         ):
             self._spellController.clear()
 
-        removePageFactory(WebPageFactory().getTypeString())
+        removePageFactory(PAGE_TYPE_STRING)
 
     def _registerHtmlProcessors(self):
         for proc in self._htmlProcessors:
@@ -131,27 +131,27 @@ class Controller:
     def _onPageDialogPageFactoriesNeeded(self, page, params):
         if (
             params.pageForEdit is not None
-            and params.pageForEdit.getTypeString() == WebNotePage.getTypeString()
+            and params.pageForEdit.getTypeString() == PAGE_TYPE_STRING
         ):
             params.addPageFactory(WebPageFactory())
 
     def _onPageViewCreate(self, page):
         assert page is not None
-        if page.getTypeString() == WebNotePage.getTypeString():
+        if page.getTypeString() == PAGE_TYPE_STRING:
             self._spellController.initialize(page)
 
     def _onPageViewDestroy(self, page):
         assert page is not None
-        if page.getTypeString() == WebNotePage.getTypeString():
+        if page.getTypeString() == PAGE_TYPE_STRING:
             self._spellController.clear()
 
     def _onPageUpdateNeeded(self, page, params):
-        if page is not None and page.getTypeString() == WebNotePage.getTypeString():
+        if page is not None and page.getTypeString() == PAGE_TYPE_STRING:
             self._updatePage(page)
             self._application.mainWindow.pagePanel.pageView.updateHtml()
 
     def _updatePage(self, page):
-        path = page.getHtmlPath()
+        path = getPageHtmlPath(page)
         html = self.generateHtml(page)
         writeTextFile(path, html)
 

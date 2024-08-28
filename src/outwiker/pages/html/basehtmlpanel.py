@@ -6,6 +6,7 @@ import os
 import wx
 import wx.aui
 
+from outwiker.core.treetools import getPageHtmlPath
 from outwiker.app.actions.search import (
     SearchAction,
     SearchNextAction,
@@ -321,7 +322,7 @@ class BaseHtmlPanel(BaseTextPanel):
         setStatusText(STATUSBAR_MESSAGE_ITEM, _("Page loading. Please wait…"))
 
         try:
-            path = self._currentpage.getHtmlPath()
+            path = getPageHtmlPath(self._currentpage)
             if not os.path.exists(path):
                 self._updatePage()
 

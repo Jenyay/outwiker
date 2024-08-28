@@ -4,4 +4,5 @@ from outwiker.pages.wiki.defines import (PAGE_TYPE_STRING,
                                          TOOLBAR_WIKI_FONT,
                                          TOOLBAR_WIKI_GENERAL,
                                          TOOLBAR_WIKI_HEADING,
-                                         TOOLBAR_WIKI_TABLE)
+                                         TOOLBAR_WIKI_TABLE,
+                                         PAGE_TYPE_STRING)

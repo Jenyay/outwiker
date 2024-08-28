@@ -5,6 +5,7 @@ import unittest
 
 import wx
 
+from outwiker.api.core.tree import getPageHtmlPath
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -68,7 +69,7 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertTrue(os.path.exists(path))
-        self.assertTrue(os.path.exists(page.getHtmlPath()))
+        self.assertTrue(os.path.exists(getPageHtmlPath(page)))
 
     def testSingle_02(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница", [])
@@ -84,7 +85,7 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertTrue(os.path.exists(path))
-        self.assertTrue(os.path.exists(page.getHtmlPath()))
+        self.assertTrue(os.path.exists(getPageHtmlPath(page)))
 
     def testSingle_03(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница", [])
@@ -114,7 +115,7 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertTrue(os.path.exists(path))
-        self.assertTrue(os.path.exists(page.getHtmlPath()))
+        self.assertTrue(os.path.exists(getPageHtmlPath(page)))
 
         Tester.dialogTester.append(self.__selectDefault)
         self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
@@ -139,8 +140,8 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue(os.path.exists(fname_1))
         self.assertTrue(os.path.exists(fname_2))
-        self.assertTrue(os.path.exists(self.wikiroot["Викистраница 1"].getHtmlPath()))
-        self.assertTrue(os.path.exists(self.wikiroot["Викистраница 2"].getHtmlPath()))
+        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"])))
+        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 2"])))
 
     def testMulti_02(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница 1", [])
@@ -157,8 +158,8 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue(os.path.exists(fname_1))
         self.assertTrue(os.path.exists(fname_2))
-        self.assertTrue(os.path.exists(self.wikiroot["Викистраница 1"].getHtmlPath()))
-        self.assertTrue(os.path.exists(self.wikiroot["Викистраница 1/Викистраница 2"].getHtmlPath()))
+        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"])))
+        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1/Викистраница 2"])))
 
     def testMulti_03(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница 1", [])
@@ -175,8 +176,8 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue(os.path.exists(fname_1))
         self.assertTrue(os.path.exists(fname_2))
-        self.assertTrue(os.path.exists(self.wikiroot["Викистраница 1"].getHtmlPath()))
-        self.assertTrue(os.path.exists(self.wikiroot["Викистраница 1/Викистраница 2"].getHtmlPath()))
+        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"])))
+        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1/Викистраница 2"])))
 
     def testMulti_04(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница 1", [])
@@ -195,7 +196,7 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue(os.path.exists(fname_1))
         self.assertFalse(os.path.exists(fname_2))
-        self.assertTrue(os.path.exists(self.wikiroot["Викистраница 1"].getHtmlPath()))
+        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"])))
 
     def testMultitype_01(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница", [])
@@ -215,4 +216,4 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertTrue(os.path.exists(path))
-        self.assertTrue(os.path.exists(page.getHtmlPath()))
+        self.assertTrue(os.path.exists(getPageHtmlPath(page)))

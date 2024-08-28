@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.pages.wiki import WikiWikiPage
-from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.api.pages.wiki.defines import MENU_WIKI_COMMANDS, PAGE_TYPE_STRING
 from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo
 
 from .lightboxcommand import LightboxCommand
@@ -14,7 +13,7 @@ class Controller:
 
         self._GUIController = ActionsGUIController(
             self._application,
-            WikiWikiPage.getTypeString(),
+            PAGE_TYPE_STRING,
         )
 
     def initialize(self):
