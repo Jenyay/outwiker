@@ -37,7 +37,7 @@ class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
         wikiroot = loadNotesTree(path)
 
         test_page = wikiroot["Типы страниц/TestPage"]
-        self.assertEqual(type(test_page), plugin.TestPage)
+        self.assertEqual(test_page.getTypeString(), plugin.TestPageFactory().getPageTypeString())
 
         self.assertEqual(
             type(FactorySelector.getFactory(test_page.getTypeString())),

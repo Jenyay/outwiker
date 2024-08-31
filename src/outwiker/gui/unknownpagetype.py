@@ -3,7 +3,7 @@
 import wx
 
 from outwiker.core.factory import PageFactory
-from outwiker.core.tree import WikiPage
+from outwiker.core.tree import PageAdapter, WikiPage
 
 from outwiker.gui.basepagepanel import BasePagePanel
 
@@ -85,7 +85,7 @@ class UnknownPageTypePanel(BasePagePanel):
         pass
 
 
-class UnknownPageTypeFactory (PageFactory):
+class UnknownPageTypeFactory(PageFactory):
     """
     The fabric to create UnknownPageTypePanel
     """
@@ -96,12 +96,11 @@ class UnknownPageTypeFactory (PageFactory):
 
         self._pageTypeString = pageTypeString
 
-    def _getPageType(self):
-        typeName = self._pageTypeString + 'PageType'
-        attributes = {'getTypeString':
-                      staticmethod(lambda: self._pageTypeString)}
-        pagetype = type(typeName, (UnknownPage, ), attributes)
-        return pagetype
+    # def _getPageType(self):
+    #     typeName = self._pageTypeString + 'PageType'
+    #     attributes = {'getTypeString': lambda: self._pageTypeString}
+    #     pagetype = type(typeName, (UnknownPage, ), attributes)
+    #     return pagetype
 
     @property
     def title(self):
@@ -113,10 +112,9 @@ class UnknownPageTypeFactory (PageFactory):
     def getPageTypeString(self):
         return self._pageTypeString
 
-    def createPage(self, parent, title, path, readonly=False):
-        return self._getPageType()(path, title, parent, readonly)
+    def createPageAdapter(self, page):
+        return UnknownPageAdapter(page)
 
 
-class UnknownPage (WikiPage):
-    def __init__(self, path, title, parent, readonly=False):
-        WikiPage.__init__(self, path, title, parent, readonly=True)
+class UnknownPageAdapter(PageAdapter):
+    pass

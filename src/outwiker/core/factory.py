@@ -59,7 +59,8 @@ class PageFactory(metaclass=ABCMeta):
         title = getAlternativeTitle(alias, siblings)
         path = os.path.join(parent.path, title)
 
-        page = self.createPage(parent, title, path)
+        # page = self.createPage(parent, title, path)
+        page = WikiPage(path, title, parent)
         order = order_calculator(parent, alias, tags)
         parent.addToChildren(page, order)
 
@@ -72,6 +73,7 @@ class PageFactory(metaclass=ABCMeta):
         if title != alias:
             page.alias = alias
 
+        page.setTypeString(self.getPageTypeString())
         return page
 
     @property
@@ -94,5 +96,5 @@ class PageFactory(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def createPage(self, parent, title, path, readonly=False):
+    def createPageAdapter(self, page):
         raise NotImplementedError

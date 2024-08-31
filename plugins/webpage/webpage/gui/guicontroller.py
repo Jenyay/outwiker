@@ -12,7 +12,6 @@ from outwiker.api.pages.html.actions import SwitchCodeResultAction
 from outwiker.api.pages.html.guitools import insertLink, insertTable, insertTableRows
 
 from ..i18n import get_
-from ..webnotepage import WebNotePage
 
 from ..actions.downloadaction import (
     CreateChildWebPageAction,
@@ -24,6 +23,7 @@ from ..actions.disablescripts import DisableScriptsAction
 from ..actions.copysourceurl import CopySourceURLToClipboardAction
 from ..defines import PAGE_TYPE_STRING
 from ..misc import polyActions
+from ..webnotepage import WebPageFactory
 from .defines import TOOLBAR_WEBPAGE
 
 
@@ -61,8 +61,9 @@ class GuiController:
 
     @pagetype(PAGE_TYPE_STRING)
     def _onPageSelect(self, page):
+        page_adapter = WebPageFactory().createPageAdapter(page)
         self._application.actionController.check(
-            DisableScriptsAction.stringId, page.disableScripts
+            DisableScriptsAction.stringId, page_adapter.disableScripts
         )
 
     def _onPageViewCreate(self, page):

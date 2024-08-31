@@ -10,10 +10,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.style import Style
 from outwiker.core.config import StringOption
 
-from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.html.htmlpage import HtmlWikiPage
-from outwiker.pages.search.searchpage import SearchWikiPage
+from outwiker.pages.text.textpage import TextPageFactory
 
 from outwiker.pages.text.defines import PAGE_TYPE_STRING as TEXT_TS
 from outwiker.pages.wiki.defines import PAGE_TYPE_STRING as WIKI_TS
@@ -35,17 +32,7 @@ class ReadonlyLoadTest (unittest.TestCase):
     def testLoadWiki(self):
         self.assertEqual(len(self.root), 6)
 
-    def testPageType1(self):
-        self.assertEqual(
-            type(self.root["Типы страниц/HTML-страница"]), HtmlWikiPage)
-        self.assertEqual(
-            type(self.root["Типы страниц/wiki-страница"]), WikiWikiPage)
-        self.assertEqual(
-            type(self.root["Типы страниц/Страница поиска"]), SearchWikiPage)
-        self.assertEqual(
-            type(self.root["Типы страниц/Текстовая страница"]), TextWikiPage)
-
-    def testPageType2(self):
+    def testPageType(self):
         self.assertEqual(self.root["Типы страниц/HTML-страница"].getTypeString(),
                          HTML_TS)
 

@@ -6,7 +6,7 @@
 from outwiker.core.config import BooleanOption
 from outwiker.core.events import PAGE_UPDATE_CONTENT
 from outwiker.core.factory import PageFactory
-from outwiker.core.tree import WikiPage
+from outwiker.core.tree import PageAdapter
 from outwiker.gui.actioninfo import ActionInfo
 from outwiker.gui.hotkey import HotKey
 from outwiker.pages.html.defines import PAGE_TYPE_STRING
@@ -21,15 +21,13 @@ html_actions = [
 ]
 
 
-class HtmlWikiPage(WikiPage):
+class HtmlPageAdapter(PageAdapter):
     """
     Класс HTML-страниц
     """
 
-    def __init__(self, path, title, parent, readonly=False):
-        super().__init__(path, title, parent, readonly)
-        self._typeString = PAGE_TYPE_STRING
-
+    def __init__(self, page):
+        super().__init__(page)
         self.__autoLineWrapSection = "General"
         self.__autoLineWrapParam = "LineWrap"
 
@@ -52,7 +50,7 @@ class HtmlWikiPage(WikiPage):
             self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True
         )
         option.value = value
-        self.root.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
+        self.root.onPageUpdate(self.page, change=PAGE_UPDATE_CONTENT)
 
 
 class HtmlPageFactory(PageFactory):
@@ -95,5 +93,5 @@ class HtmlPageFactory(PageFactory):
     def getPageTypeString(self):
         return PAGE_TYPE_STRING
 
-    def createPage(self, parent, title, path, readonly=False):
-        return HtmlWikiPage(path, title, parent, readonly)
+    def createPageAdapter(self, page):
+        return HtmlPageAdapter(page)

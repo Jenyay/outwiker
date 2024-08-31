@@ -12,7 +12,7 @@ from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.text.textpanel import TextPanel
-from outwiker.core.tree import WikiPage
+from outwiker.core.tree import PageAdapter, WikiPage
 from outwiker.core.factory import PageFactory
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
@@ -89,13 +89,10 @@ class FactorySelectorTest(unittest.TestCase):
             UnknownPageTypeFactory)
 
 
-class ExamplePage(WikiPage):
+class ExamplePageAdapter(PageAdapter):
     """
     Класс тестовых страниц
     """
-    def __init__(self, path, title, parent, readonly=False):
-        WikiPage.__init__(self, path, title, parent, readonly)
-
     def getTypeString(self):
         return TEST_PAGE_TYPE_STRING
 
@@ -107,9 +104,6 @@ class ExamplePageFactory(PageFactory):
     которая на самом деле является той же текстовой страницей,
     что и TextWikiPage.
     """
-    def getPageType(self):
-        return ExamplePage
-
     @property
     def title(self):
         """
@@ -129,5 +123,5 @@ class ExamplePageFactory(PageFactory):
     def getPageTypeString(self):
         return TEST_PAGE_TYPE_STRING
 
-    def createPage(self, parent, title, path, readonly=False):
-        return ExamplePage(path, title, parent, readonly)
+    def createPageAdapter(self, page):
+        return ExamplePageAdapter(page)

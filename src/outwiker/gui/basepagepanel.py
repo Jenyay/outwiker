@@ -116,8 +116,13 @@ class BasePagePanel(ScrolledPanel):
 
     @page.setter
     def page(self, page):
+        from outwiker.core.factoryselector import FactorySelector
         self.Save()
-        self._currentpage = page
+        if page is not None:
+            factory = FactorySelector.getFactory(page.getTypeString())
+            self._currentpage = factory.createPageAdapter(page)
+        else:
+            self._currentpage = None
 
         if page is not None and not os.path.exists(page.path):
             return

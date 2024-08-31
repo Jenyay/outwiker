@@ -8,7 +8,7 @@ import sys
 from outwiker.api.core.tree import addPageFactory, getPageHtmlPath, removePageFactory
 from outwiker.api.core.text import writeTextFile
 
-from .webnotepage import WebPageFactory, WebNotePage
+from .webnotepage import WebPageFactory
 from .spellcontroller import WebPageSpellController
 from .i18n import get_
 from .gui.guicontroller import GuiController

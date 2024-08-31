@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.tree import WikiPage
+from outwiker.core.tree import PageAdapter
 from outwiker.core.search import AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.application import Application
@@ -14,14 +14,13 @@ from outwiker.pages.search.defines import PAGE_TYPE_STRING
 from .searchpanel import SearchPanel
 
 
-class SearchWikiPage(WikiPage):
+class SearchPageAdapter(PageAdapter):
     """
     Класс HTML-страниц
     """
 
-    def __init__(self, path, title, parent, readonly=False):
-        super().__init__(path, title, parent, readonly)
-        self._typeString = PAGE_TYPE_STRING
+    def __init__(self, page):
+        super().__init__(page)
 
         self.paramsSection = "Search"
         phraseOption = StringOption(self.params, self.paramsSection, "phrase", "")
@@ -139,8 +138,8 @@ class SearchPageFactory(PageFactory):
         """
         return SearchPanel(parent, application)
 
-    def createPage(self, parent, title, path, readonly=False):
-        return SearchWikiPage(path, title, parent, readonly)
+    def createPageAdapter(self, page):
+        return SearchPageAdapter(page)
 
 
 class GlobalSearch:
@@ -158,13 +157,15 @@ class GlobalSearch:
                 page = child_page
                 break
 
+        factory = SearchPageFactory()
         if page is None:
-            page = SearchPageFactory().create(root, searchAlias, [])
+            page = factory.create(root, searchAlias, [])
             page.icon = getBuiltinImagePath("global_search.svg")
 
-        page.phrase = phrase
-        page.searchTags = [tag for tag in tags]
-        page.strategy = strategy
-        page.root.selectedPage = page
+        page_adapter = factory.createPageAdapter(page)
+        page_adapter.phrase = phrase
+        page_adapter.searchTags = [tag for tag in tags]
+        page_adapter.strategy = strategy
 
+        page.root.selectedPage = page
         return page

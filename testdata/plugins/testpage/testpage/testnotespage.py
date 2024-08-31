@@ -1,20 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.factory import PageFactory
-from outwiker.core.tree import WikiPage
+from outwiker.api.core.tree import PageAdapter, PageFactory
 
 from .testpageview import TestPageView
 from .defines import PAGE_TYPE_STRING
 
 
-class TestPage(WikiPage):
-    """
-    Класс тестовых страниц
-    """
-
-    def __init__(self, path, title, parent, readonly=False):
-        super().__init__(path, title, parent, readonly)
-        self._typeString = PAGE_TYPE_STRING
+class TestPageAdapter(PageAdapter):
+    pass
 
 
 class TestPageFactory(PageFactory):
@@ -40,5 +33,5 @@ class TestPageFactory(PageFactory):
     def getPageTypeString(self):
         return PAGE_TYPE_STRING
 
-    def createPage(self, parent, title, path, readonly=False):
-        return TestPage(path, title, parent, readonly)
+    def createPageAdapter(self, page):
+        return TestPageAdapter(page)

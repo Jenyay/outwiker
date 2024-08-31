@@ -46,6 +46,7 @@ class BasePage(metaclass=ABCMeta):
         self._parent: Optional[BasePage] = None
         self._children: List[WikiPage] = []
         self.readonly = readonly
+        self._typeString = None
 
         configpath = os.path.join(path, PAGE_OPT_FILE)
         if (
@@ -59,7 +60,14 @@ class BasePage(metaclass=ABCMeta):
         self._datetime = self._getDateTime()
 
     def getTypeString(self) -> Optional[str]:
+        if self._typeString is None:
+            self._typeString = self._params.typeOption.value
+
         return self._typeString
+
+    def setTypeString(self, typeString):
+        self._typeString = typeString
+        self.save()
 
     @staticmethod
     def readParams(path: str, readonly: bool = False) -> PageConfig:
@@ -460,6 +468,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self._alias = self.params.aliasOption.value
         if len(self._alias) == 0:
             self._alias = None
+        self._tags = []
 
     def __bool__(self):
         return True
@@ -860,3 +869,184 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         Проверить, что страница удалена
         """
         return self not in self.parent.children
+
+
+class PageAdapter:
+    def __init__(self, page) -> None:
+            self._page = page
+
+    @property
+    def page(self):
+        return self._page
+
+    def getTypeString(self) -> Optional[str]:
+        return self._page.getTypeString()
+
+    @property
+    def params(self) -> PageConfig:
+        return self._page.params
+
+    @property
+    def path(self) -> str:
+        return self._page.path
+
+    @property
+    def parent(self) -> Optional[BasePage]:
+        return self._page.parent
+
+    @property
+    def children(self) -> List[WikiPage]:
+        return self._page.children
+
+    @children.setter
+    def children(self, children: List[WikiPage]):
+        self._page.children = children
+
+    @property
+    def root(self) -> BasePage:
+        return self._page.root
+
+    def save(self):
+        self._page.save()
+
+    def __len__(self) -> int:
+        return len(self._page)
+
+    def __getitem__(self, path: str) -> Optional[Union[BasePage, WikiPage]]:
+        return self._page[path]
+
+    def sortChildrenAlphabetical(self):
+        self._page.sortChildrenAlphabetical()
+
+    def changeChildOrder(self, page, neworder):
+        self._page.changeChildOrder(page, neworder)
+
+    def saveChildrenParams(self):
+        self._page.saveChildrenParams()
+
+    def addToChildren(self, page, order):
+        self._page.addToChildren(page, order)
+
+    def removeFromChildren(self, page):
+        self._page.removeFromChildren(page)
+
+    def isChild(self, page):
+        return self._page.isChild(page)
+
+    @property
+    def datetime(self):
+        return self._page.datetime
+
+    @datetime.setter
+    def datetime(self, date):
+        self._page.datetime = date
+
+    @property
+    def creationdatetime(self):
+        return self._page.creationdatetime
+
+    @creationdatetime.setter
+    def creationdatetime(self, date):
+        self._page.creationdatetime = date
+
+    def updateDateTime(self):
+        self._page.updateDateTime()
+
+    def update(self):
+        self._page.update()
+
+    @property
+    def currentAttachSubdir(self) -> str:
+        return self._page.currentAttachSubdir
+
+    @currentAttachSubdir.setter
+    def currentAttachSubdir(self, value: str):
+        self._page.currentAttachSubdir = value
+
+    def isCurrentAttachSubdirRoot(self):
+        return self._page.isCurrentAttachSubdirRoot()
+
+    @property
+    def order(self):
+        return self._page.order
+
+    @order.setter
+    def order(self, neworder):
+        self._page.order = neworder
+
+    @property
+    def alias(self):
+        return self._page.alias
+
+    @alias.setter
+    def alias(self, value):
+        self._page.alias = value
+
+    @property
+    def display_title(self):
+        return self._page.display_title
+
+    @display_title.setter
+    def display_title(self, value):
+        self._page.display_title = value
+
+    @property
+    def title(self):
+        return self._page.title
+
+    @title.setter
+    def title(self, newtitle):
+        self._page.title = newtitle
+
+    def canRename(self, newtitle):
+        return self._page.canRename(newtitle)
+
+    def moveTo(self, newparent):
+        self._page.moveTo(newparent)
+
+    @property
+    def icon(self):
+        return self._page.icon
+
+    @icon.setter
+    def icon(self, iconpath):
+        self._page.icon = iconpath
+
+    @property
+    def tags(self):
+        return self._page.tags
+
+    @tags.setter
+    def tags(self, tags):
+        self._page.tags = tags
+
+    @property
+    def content(self):
+        return self._page.content
+
+    @content.setter
+    def content(self, text):
+        self._page.content = text
+
+    @property
+    def textContent(self):
+        return self._page.textContent
+
+    @property
+    def subpath(self):
+        return self._page.subpath
+
+    @property
+    def display_subpath(self):
+        return self._page.display_subpath
+
+    def remove(self):
+        self._page.remove()
+
+    @property
+    def isRemoved(self):
+        return self._page.isRemoved
+
+    @property
+    def readonly(self):
+        return self._page.readonly
