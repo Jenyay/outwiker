@@ -8,7 +8,7 @@ from typing import List
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
 from outwiker.core.exceptions import RootFormatError
 from outwiker.core.tagscommands import parseTagsList
-from outwiker.core.tree import WikiDocument, BasePage, WikiPage
+from outwiker.core.tree import WikiDocument, WikiPage
 from outwiker.core.sortfunctions import sortOrderFunction
 
 
@@ -72,13 +72,7 @@ class NotesTreeLoader:
         Использовать этот метод вместо конструктора,
         когда надо загрузить страницу
         """
-        # from .factoryselector import FactorySelector
-
         title = os.path.basename(path)
-        # params = BasePage.readParams(path, readonly)
-
-        # factory = FactorySelector.getFactory(params.typeOption.value)
-        # page = factory.createPage(parent, title, path, readonly)
         page = WikiPage(path, title, parent, readonly)
         page._tags = self._getTags(page.params)
         self._loadChildren(page)

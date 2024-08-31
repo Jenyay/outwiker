@@ -17,19 +17,22 @@ from outwiker.core.system import getOS, getConfigPath
 from outwiker.core.system import getSpecialDirList
 
 
-logger = logging.getLogger('outwiker')
+logger = logging.getLogger("outwiker")
 
 
 def print_info():
-    logger.debug('Current OutWiker API version: {}.{}'.format(
-        outwiker.__api_version__[0], outwiker.__api_version__[1]))
-    logger.debug('Python version: {}'.format(sys.version))
-    logger.debug('wxPython version: {}'.format(wx.__version__))
-    logger.debug('Current locale: {}'.format(locale.setlocale(locale.LC_ALL, None)))
-    logger.debug('Decimal point: "{}"'.format(locale.localeconv()['decimal_point']))
-    logger.debug('Current working directory: {}'.format(os.getcwd()))
-    for n, dirname in enumerate(getSpecialDirList('')):
-        logger.debug('Special directory [{}]: {}'.format(n, dirname))
+    logger.debug(
+        "Current OutWiker API version: {}.{}".format(
+            outwiker.__api_version__[0], outwiker.__api_version__[1]
+        )
+    )
+    logger.debug("Python version: {}".format(sys.version))
+    logger.debug("wxPython version: {}".format(wx.__version__))
+    logger.debug("Current locale: {}".format(locale.setlocale(locale.LC_ALL, None)))
+    logger.debug('Decimal point: "{}"'.format(locale.localeconv()["decimal_point"]))
+    logger.debug("Current working directory: {}".format(os.getcwd()))
+    for n, dirname in enumerate(getSpecialDirList("")):
+        logger.debug("Special directory [{}]: {}".format(n, dirname))
 
 
 if __name__ == "__main__":
@@ -55,7 +58,7 @@ if __name__ == "__main__":
     except StarterExit:
         sys.exit(0)
 
-    logger.debug('Run GUI mode')
+    logger.debug("Run GUI mode")
 
     outwiker_app.initMainWindow()
 
@@ -67,4 +70,4 @@ if __name__ == "__main__":
     outwiker_app.showMainWindow(starter.allowMinimizingMainWindow)
     outwiker_app.MainLoop()
 
-    logger.debug('Exit')
+    logger.debug("Exit")

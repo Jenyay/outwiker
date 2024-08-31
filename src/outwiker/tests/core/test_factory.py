@@ -7,12 +7,13 @@
 import unittest
 
 from outwiker.api.core.tree import loadNotesTree
+from outwiker.core.init import init_page_factories
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.text.textpanel import TextPanel
-from outwiker.core.tree import PageAdapter, WikiPage
+from outwiker.core.tree import PageAdapter
 from outwiker.core.factory import PageFactory
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
@@ -27,6 +28,7 @@ class FactorySelectorTest(unittest.TestCase):
         self.addEventsCount = 0
         self.removeEventCount = 0
         self.eventFactory = None
+        init_page_factories()
 
     def tearDown(self):
         FactorySelector.reset()
