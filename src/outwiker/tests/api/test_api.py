@@ -1,7 +1,4 @@
 def test_old_plugins_imports():
-    # Don't used in the last version
-    from outwiker.actions.close import CloseAction
-
     from outwiker.actions.showhideattaches import ShowHideAttachesAction
     from outwiker.actions.showhidetree import ShowHideTreeAction
     from outwiker.core.attachfilters import (getImagesOnlyFilter, getHiddenFilter, getDirOnlyFilter, andFilter, orFilter, notFilter)
@@ -80,7 +77,6 @@ def test_old_plugins_imports():
     from outwiker.pages.wiki.thumbnails import Thumbnails
     from outwiker.pages.wiki.wikiconfig import WikiConfig
     from outwiker.pages.wiki.wikieditor import WikiEditor
-    from outwiker.pages.wiki.wikipage import WikiWikiPage
     from outwiker.utilites.actionsguicontroller import (ActionsGUIController, ActionGUIInfo, ButtonInfo)
     from outwiker.utilites.text import positionInside
     from outwiker.utilites.textfile import readTextFile, writeTextFile
