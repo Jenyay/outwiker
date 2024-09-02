@@ -292,17 +292,24 @@ class ListOption(BaseOption):
     но разделитель можно изменять
     """
 
-    def __init__(self, config, section, param, defaultValue, separator=";"):
+    def __init__(self, config, section, param, defaultValue, separator=";", strip=False):
         super().__init__(config, section, param, defaultValue)
-        self.__separator = separator
+        self._separator = separator
+        self._strip = strip
 
     def _loadValue(self) -> List[str]:
         line = self.config.get(self.section, self.param)
-        items = line.split(self.__separator)
+        items = line.split(self._separator)
+        if self._strip:
+            items = [item.strip() for item in items]
         return items
 
     def _prepareToWrite(self, value: List[str]) -> str:
-        return self.__separator.join(value)
+        if self._strip:
+            new_value = [item.strip() for item in value]
+        else:
+            new_value = value
+        return self._separator.join(new_value)
 
 
 class IntegerOption(BaseOption):
