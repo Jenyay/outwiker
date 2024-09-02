@@ -29,7 +29,7 @@ class WikiPagesTest(unittest.TestCase):
         self.root = loadNotesTree(self.path)
 
     def testLoadWiki(self):
-        self.assertEqual(len(self.root), 6)
+        self.assertEqual(len(self.root), 7)
 
     def testInvalidEncoding(self):
         self.root["invalid encoding"].content
@@ -134,6 +134,7 @@ class WikiPagesTest(unittest.TestCase):
         self.assertEqual(len(self.root["Страница 3"].tags), 2)
 
         self.assertEqual(len(self.root["page 4"].tags), 0)
+        self.assertEqual(len(self.root["page 5"].tags), 0)
 
     def testTypes(self):
         self.assertEqual(self.root["Страница 1"].getTypeString(), HTML_TS)

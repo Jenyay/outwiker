@@ -440,10 +440,6 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     """
     Страница в дереве.
     """
-
-    paramTags = "tags"
-    paramType = "type"
-
     iconController = IconController(getIconsDirList()[0])
 
     def __init__(self, path, title, parent, readonly=False):
@@ -465,7 +461,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self._attach_subdir = self._DEFAULT_ATTACH_SUBDIR
         self._title = title
         self._parent = parent
-        self._tags = self.params.tagsOption.value
+        self._tags = [tag for tag in self.params.tagsOption.value if tag]
         self._alias = self.params.aliasOption.value
         if len(self._alias) == 0:
             self._alias = None
@@ -719,19 +715,8 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         """
         # Тип
         self._params.typeOption.value = self.getTypeString()
-
-        # Теги
-        self._saveTags()
-
-        # Порядок страницы
+        self._params.tagsOption.value = self._tags
         self._params.orderOption.value = self.order
-
-    def _saveTags(self):
-        tags = reduce(lambda full, tag: full + ", " + tag, self._tags, "")
-
-        # Удалим начальные ", "
-        tags = tags[2:]
-        self._params.set(CONFIG_GENERAL_SECTION, WikiPage.paramTags, tags)
 
     def initAfterCreating(self, tags):
         """
@@ -873,7 +858,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
 class PageAdapter:
     def __init__(self, page) -> None:
-            self._page = page
+        self._page = page
 
     @property
     def page(self):

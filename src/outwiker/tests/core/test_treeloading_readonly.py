@@ -30,7 +30,7 @@ class ReadonlyLoadTest (unittest.TestCase):
         self.root = loadNotesTree(self.path, readonly=True)
 
     def testLoadWiki(self):
-        self.assertEqual(len(self.root), 6)
+        self.assertEqual(len(self.root), 7)
 
     def testPageType(self):
         self.assertEqual(self.root["Типы страниц/HTML-страница"].getTypeString(),
