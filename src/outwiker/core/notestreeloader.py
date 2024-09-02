@@ -3,13 +3,11 @@ import logging
 import os
 import os.path
 from functools import cmp_to_key
-from typing import List
 
-from outwiker.core.defines import CONFIG_GENERAL_SECTION
 from outwiker.core.exceptions import RootFormatError
-from outwiker.core.tagscommands import parseTagsList
 from outwiker.core.tree import WikiDocument, WikiPage
 from outwiker.core.sortfunctions import sortOrderFunction
+from .defines import PAGE_OPT_FILE
 
 
 logger = logging.getLogger("notesTreeLoader")
@@ -48,8 +46,11 @@ class NotesTreeLoader:
 
         for name in entries:
             fullpath = os.path.join(parentPage.path, name)
+            config_path = os.path.join(fullpath, PAGE_OPT_FILE)
 
-            if not name.startswith("__") and os.path.isdir(fullpath):
+            if (not name.startswith("__") and 
+                    os.path.isdir(fullpath) and 
+                    os.path.exists(config_path)):
                 try:
                     page = self._loadPage(
                         fullpath, parentPage, parentPage.root.readonly
@@ -74,20 +75,5 @@ class NotesTreeLoader:
         """
         title = os.path.basename(path)
         page = WikiPage(path, title, parent, readonly)
-        page._tags = self._getTags(page.params)
         self._loadChildren(page)
-
         return page
-
-    def _getTags(self, configParser) -> List[str]:
-        """
-        Выделить теги из строки конфигурационного файла
-        """
-        try:
-            tagsString = configParser.get(CONFIG_GENERAL_SECTION, WikiPage.paramTags)
-        except configparser.NoOptionError:
-            return []
-
-        tags = parseTagsList(tagsString)
-
-        return tags

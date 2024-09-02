@@ -406,6 +406,7 @@ class PageConfig(Config):
     aliasParamName = "alias"
     iconParamName = "icon"
     typeParamName = "type"
+    tagsParamName = "tags"
 
     def __init__(self, fname, readonly=False):
         super().__init__(fname, readonly)
@@ -434,4 +435,9 @@ class PageConfig(Config):
 
         self.iconOption = StringOption(
             self, PageConfig.sectionName, PageConfig.iconParamName, ""
+        )
+
+        self.tagsOption = ListOption(
+            self, PageConfig.sectionName, PageConfig.tagsParamName,
+            defaultValue=[], separator=",", strip=True
         )

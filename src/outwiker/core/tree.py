@@ -465,10 +465,10 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self._attach_subdir = self._DEFAULT_ATTACH_SUBDIR
         self._title = title
         self._parent = parent
+        self._tags = self.params.tagsOption.value
         self._alias = self.params.aliasOption.value
         if len(self._alias) == 0:
             self._alias = None
-        self._tags = []
 
     def __bool__(self):
         return True
