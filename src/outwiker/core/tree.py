@@ -23,7 +23,6 @@ from .defines import (
     PAGE_CONTENT_FILE,
     PAGE_OPT_FILE,
     REGISTRY_FILE,
-    CONFIG_GENERAL_SECTION,
 )
 from .iconcontroller import IconController
 from .system import getIconsDirList
