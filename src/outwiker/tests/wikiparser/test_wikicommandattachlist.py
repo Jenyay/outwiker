@@ -10,9 +10,9 @@ from typing import List
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
+from outwiker.core.thumbnails import Thumbnails
 from outwiker.pages.wiki.parser.commands.attachlist import AttachListCommand
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 from outwiker.tests.utils import removeDir

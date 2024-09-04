@@ -3,7 +3,7 @@
 import os.path
 
 from outwiker.core.thumbmakerpil import ThumbmakerPil
-from ..thumbnails import Thumbnails
+from outwiker.core.thumbnails import Thumbnails
 from outwiker.core.attachment import Attachment
 
 

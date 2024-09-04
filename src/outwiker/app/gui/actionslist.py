@@ -10,7 +10,7 @@ from outwiker.app.actions.clipboard import (
     CopyPagePathAction,
     CopyPageTitleAction,
 )
-from outwiker.actions.close import CloseAction
+from outwiker.app.actions.close import CloseAction
 from outwiker.app.actions.editpageprop import EditPagePropertiesAction
 from outwiker.app.actions.exit import ExitAction
 from outwiker.app.actions.fullscreen import FullScreenAction
