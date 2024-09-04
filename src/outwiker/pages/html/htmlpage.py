@@ -6,7 +6,7 @@
 from outwiker.core.config import BooleanOption
 from outwiker.core.events import PAGE_UPDATE_CONTENT
 from outwiker.core.factory import PageFactory
-from outwiker.core.tree import WikiPage
+from outwiker.core.tree import PageAdapter
 from outwiker.gui.actioninfo import ActionInfo
 from outwiker.gui.hotkey import HotKey
 from outwiker.pages.html.defines import PAGE_TYPE_STRING
@@ -21,14 +21,13 @@ html_actions = [
 ]
 
 
-class HtmlWikiPage (WikiPage):
+class HtmlPageAdapter(PageAdapter):
     """
     Класс HTML-страниц
     """
 
-    def __init__(self, path, title, parent, readonly=False):
-        super().__init__(path, title, parent, readonly)
-
+    def __init__(self, page):
+        super().__init__(page)
         self.__autoLineWrapSection = "General"
         self.__autoLineWrapParam = "LineWrap"
 
@@ -37,9 +36,9 @@ class HtmlWikiPage (WikiPage):
         """
         Добавлять ли теги <br> и <p> вместо разрывов строк?
         """
-        option = BooleanOption(self.params,
-                               self.__autoLineWrapSection,
-                               self.__autoLineWrapParam, True)
+        option = BooleanOption(
+            self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True
+        )
         return option.value
 
     @autoLineWrap.setter
@@ -47,39 +46,43 @@ class HtmlWikiPage (WikiPage):
         """
         Добавлять ли теги <br> и <p> вместо разрывов строк?
         """
-        option = BooleanOption(self.params,
-                               self.__autoLineWrapSection,
-                               self.__autoLineWrapParam, True)
+        option = BooleanOption(
+            self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True
+        )
         option.value = value
-        self.root.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
-
-    def getTypeString(self):
-        return PAGE_TYPE_STRING
+        self.root.onPageUpdate(self.page, change=PAGE_UPDATE_CONTENT)
 
 
-class HtmlPageFactory (PageFactory):
+class HtmlPageFactory(PageFactory):
     """
     Фабрика для создания HTML-страниц и их представлений
     """
+
     @staticmethod
     def registerActions(application):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        [application.actionController.register(actionTuple.action_type(application), actionTuple.hotkey)
-         for actionTuple in html_actions]
+        [
+            application.actionController.register(
+                actionTuple.action_type(application), actionTuple.hotkey
+            )
+            for actionTuple in html_actions
+        ]
 
     @staticmethod
     def removeActions(application):
-        [application.actionController.removeAction(actionTuple.action_type.stringId)
-         for actionTuple in html_actions]
+        [
+            application.actionController.removeAction(actionTuple.action_type.stringId)
+            for actionTuple in html_actions
+        ]
 
     @property
     def title(self):
         """
         Название страницы, показываемое пользователю
         """
-        return _(u"HTML Page")
+        return _("HTML Page")
 
     def getPageView(self, parent, application):
         """
@@ -90,5 +93,5 @@ class HtmlPageFactory (PageFactory):
     def getPageTypeString(self):
         return PAGE_TYPE_STRING
 
-    def createPage(self, parent, title, path, readonly=False):
-        return HtmlWikiPage(path, title, parent, readonly)
+    def createPageAdapter(self, page):
+        return HtmlPageAdapter(page)

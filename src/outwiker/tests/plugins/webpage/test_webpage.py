@@ -37,11 +37,12 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(self.loader), 1)
 
     def testCreate(self):
-        from webpage.webnotepage import WebPageFactory, WebNotePage
+        from webpage.webnotepage import WebPageFactory
 
+        factory = WebPageFactory()
         wikiroot = createNotesTree(self.path)
-        test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
-        self.assertEqual(type(test_page), WebNotePage)
+        test_page = factory.create(wikiroot, "Страница 1", [])
+        self.assertEqual(test_page.getTypeString(), factory.getPageTypeString())
 
         self.assertEqual(
             type(FactorySelector.getFactory(test_page.getTypeString())),

@@ -179,6 +179,7 @@ class ConfigOptionsTest(unittest.TestCase):
             fp.write("list10=\n")
             fp.write("list11=|\n")
             fp.write("list12=элемент 1|\n")
+            fp.write("list13=элемент 1 , элемент 2, элемент 3\n")
 
             fp.write("jsonval_01={}\n")
             fp.write('jsonval_02="строка"\n')
@@ -412,6 +413,15 @@ class ConfigOptionsTest(unittest.TestCase):
         opt12 = ListOption(self.config, "Test", "list12", [], separator="|")
         self.assertEqual(opt12.value, ["элемент 1", ""])
 
+    def testListOptionStrip(self):
+        opt13_1 = ListOption(self.config, "Test", "list13", [], separator=",", strip=False)
+        self.assertEqual(opt13_1.value,
+                         ["элемент 1 ", " элемент 2", " элемент 3"])
+
+        opt13_2 = ListOption(self.config, "Test", "list13", [], separator=",", strip=True)
+        self.assertEqual(opt13_2.value,
+                         ["элемент 1", "элемент 2", "элемент 3"])
+
     def testSaveListOption1(self):
         testlist = ["элемент 1", "элемент 2", "элемент 3"]
 
@@ -465,6 +475,21 @@ class ConfigOptionsTest(unittest.TestCase):
         newopt = ListOption(newconfig, "Test", "savelist", [], separator="|")
 
         self.assertEqual(newopt.value, testlist)
+
+        stringopt = StringOption(newconfig, "Test", "savelist", "")
+        self.assertEqual(stringopt.value.strip(),
+                         "элемент 1|элемент 2|элемент 3")
+
+    def testSaveListOptionStrip(self):
+        testlist = [" элемент 1 ", " элемент 2", "элемент 3 "]
+
+        opt = ListOption(self.config, "Test", "savelist", [], separator="|", strip=True)
+        opt.value = testlist
+
+        newconfig = Config(self.path)
+        newopt = ListOption(newconfig, "Test", "savelist", [], separator="|")
+
+        self.assertEqual(newopt.value, ["элемент 1", "элемент 2", "элемент 3"])
 
         stringopt = StringOption(newconfig, "Test", "savelist", "")
         self.assertEqual(stringopt.value.strip(),

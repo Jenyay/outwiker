@@ -10,7 +10,7 @@ from outwiker.api.core.tree import addPageFactory, getPageHtmlPath, removePageFa
 
 from .colorizercontroller import ColorizerController
 from .markdownhtmlgenerator import MarkdownHtmlGenerator
-from .markdownpage import MarkdownPageFactory, MarkdownPage
+from .markdownpage import MarkdownPageFactory
 from .i18n import get_
 from .defines import PAGE_TYPE_STRING
 

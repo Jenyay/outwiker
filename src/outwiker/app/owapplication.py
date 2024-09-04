@@ -12,6 +12,7 @@ import wx
 from outwiker.app.core.logredirector import LogRedirector
 from outwiker.app.gui.mainwindow import MainWindow
 from outwiker.core.i18n import initLocale
+from outwiker.core.init import init_page_factories
 from outwiker.core.system import getPluginsDirList
 from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.guiconfig import TrayConfig
@@ -33,6 +34,7 @@ class OutWikerApplication(wx.App):
 
         self._locale = initLocale(self._application.config)
         self._initLocale()
+        init_page_factories()
 
     def _initLocale(self):
         # Fix a locale problem with Python 3.8 and wxPython 4.1

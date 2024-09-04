@@ -9,10 +9,7 @@ from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import StringOption
 
-from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
-from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.html.htmlpage import HtmlWikiPage
-from outwiker.pages.search.searchpage import SearchWikiPage
+from outwiker.pages.text.textpage import TextPageFactory
 
 from outwiker.pages.text.defines import PAGE_TYPE_STRING as TEXT_TS
 from outwiker.pages.wiki.defines import PAGE_TYPE_STRING as WIKI_TS
@@ -32,7 +29,7 @@ class WikiPagesTest(unittest.TestCase):
         self.root = loadNotesTree(self.path)
 
     def testLoadWiki(self):
-        self.assertEqual(len(self.root), 6)
+        self.assertEqual(len(self.root), 7)
 
     def testInvalidEncoding(self):
         self.root["invalid encoding"].content
@@ -81,20 +78,7 @@ class WikiPagesTest(unittest.TestCase):
     def testAccessRoot(self):
         self.assertEqual(self.root["Страница 1"]["/"], self.root)
 
-    def testPageType1(self):
-        self.assertEqual(type(self.root["Типы страниц/HTML-страница"]),
-                         HtmlWikiPage)
-
-        self.assertEqual(type(self.root["Типы страниц/wiki-страница"]),
-                         WikiWikiPage)
-
-        self.assertEqual(type(self.root["Типы страниц/Страница поиска"]),
-                         SearchWikiPage)
-
-        self.assertEqual(type(self.root["Типы страниц/Текстовая страница"]),
-                         TextWikiPage)
-
-    def testPageType2(self):
+    def testPageType(self):
         self.assertEqual(self.root["Типы страниц/HTML-страница"].getTypeString(),
                          HTML_TS)
 
@@ -150,6 +134,7 @@ class WikiPagesTest(unittest.TestCase):
         self.assertEqual(len(self.root["Страница 3"].tags), 2)
 
         self.assertEqual(len(self.root["page 4"].tags), 0)
+        self.assertEqual(len(self.root["page 5"].tags), 0)
 
     def testTypes(self):
         self.assertEqual(self.root["Страница 1"].getTypeString(), HTML_TS)

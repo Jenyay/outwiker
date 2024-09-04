@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
-from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.pages.search.searchpage import SearchPageFactory
-from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 
 def addPageFactory(new_factory) -> None:
@@ -20,15 +16,7 @@ class FactorySelector:
     Класс, который выбирает нужную фабрику для каждой страницы
     """
 
-    _factories = {
-        factory.getPageTypeString(): factory
-        for factory in [
-            WikiPageFactory(),
-            HtmlPageFactory(),
-            TextPageFactory(),
-            SearchPageFactory(),
-        ]
-    }
+    _factories = {}
 
     @staticmethod
     def getFactories():
@@ -40,9 +28,10 @@ class FactorySelector:
         Найти фабрику, которая работает с переданным типом страницы
         (со страницей данного типа). Или вернуть фабрику по умолчанию
         """
-        return FactorySelector._factories.get(
-            page_type, UnknownPageTypeFactory(page_type)
-        )
+        if page_type in FactorySelector._factories:
+            return FactorySelector._factories[page_type]
+        else:
+            return UnknownPageTypeFactory(page_type)
 
     @staticmethod
     def reset():
@@ -52,15 +41,7 @@ class FactorySelector:
         Это не конструктор. В случае изменения списка фабрик,
         установленных по умолчанию, нужно изменять этот метод.
         """
-        FactorySelector._factories = {
-            factory.getPageTypeString(): factory
-            for factory in [
-                WikiPageFactory(),
-                HtmlPageFactory(),
-                TextPageFactory(),
-                SearchPageFactory(),
-            ]
-        }
+        FactorySelector._factories = {}
 
     @staticmethod
     def addFactory(new_factory):

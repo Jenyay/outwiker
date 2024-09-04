@@ -3,7 +3,7 @@
 from outwiker.core.pluginbase import Plugin
 
 from .controller import Controller
-from .testnotespage import TestPage, TestPageFactory
+from .testnotespage import TestPageFactory
 from .testpageview import TestPageView
 
 
@@ -25,15 +25,15 @@ class PluginName(Plugin):
 
     @property
     def name(self):
-        return u"TestPage"
+        return "TestPage"
 
     @property
     def description(self):
-        return _(u"Plugin description")
+        return _("Plugin description")
 
     @property
     def url(self):
-        return _(u"http://jenyay.net")
+        return _("http://jenyay.net")
 
     def initialize(self):
         self.__controller.initialize()
@@ -46,11 +46,6 @@ class PluginName(Plugin):
         self.__controller.destroy()
 
     #############################################
-
-    @property
-    def TestPage(self):
-        return TestPage
-
     @property
     def TestPageFactory(self):
         return TestPageFactory

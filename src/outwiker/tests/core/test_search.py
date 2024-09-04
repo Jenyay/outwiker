@@ -8,7 +8,7 @@ from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.search import (Searcher,
                                   AllTagsSearchStrategy,
                                   AnyTagSearchStrategy)
-from outwiker.pages.search.searchpage import GlobalSearch
+from outwiker.pages.search.searchpage import GlobalSearch, SearchPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 from outwiker.tests.utils import removeDir
 from outwiker.pages.text.textpage import TextPageFactory
@@ -317,46 +317,50 @@ class SearchPageTest(unittest.TestCase):
 
     def testCreateDefaultPage(self):
         page = GlobalSearch.create(self.wikiroot)
-
         self.assertNotEqual(page, None)
+
+        page_adapter = SearchPageFactory().createPageAdapter(page)
         self.assertEqual(self.wikiroot.selectedPage, page)
-        self.assertEqual(page.phrase, "")
-        self.assertEqual(len(page.searchTags), 0)
-        self.assertEqual(page.strategy, AllTagsSearchStrategy)
+        self.assertEqual(page_adapter.phrase, "")
+        self.assertEqual(len(page_adapter.searchTags), 0)
+        self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testCreateSearchTagsPage(self):
         page = GlobalSearch.create(self.wikiroot, tags=["Метка 1", "Метка 2"])
-
         self.assertNotEqual(page, None)
+
+        page_adapter = SearchPageFactory().createPageAdapter(page)
         self.assertEqual(self.wikiroot.selectedPage, page)
-        self.assertEqual(page.phrase, "")
-        self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("Метка 1" in page.searchTags)
-        self.assertTrue("Метка 2" in page.searchTags)
-        self.assertEqual(page.strategy, AllTagsSearchStrategy)
+        self.assertEqual(page_adapter.phrase, "")
+        self.assertEqual(len(page_adapter.searchTags), 2)
+        self.assertTrue("метка 1" in page_adapter.searchTags)
+        self.assertTrue("метка 2" in page_adapter.searchTags)
+        self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testCreateSearchPhrasePage(self):
         page = GlobalSearch.create(self.wikiroot, phrase="декабрь")
-
         self.assertNotEqual(page, None)
+
+        page_adapter = SearchPageFactory().createPageAdapter(page)
         self.assertEqual(self.wikiroot.selectedPage, page)
-        self.assertEqual(page.phrase, "декабрь")
-        self.assertEqual(len(page.searchTags), 0)
-        self.assertEqual(page.strategy, AllTagsSearchStrategy)
+        self.assertEqual(page_adapter.phrase, "декабрь")
+        self.assertEqual(len(page_adapter.searchTags), 0)
+        self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testCreateSearchAllPage(self):
         page = GlobalSearch.create(self.wikiroot,
                                    phrase="декабрь",
                                    tags=["Метка 1", "Метка 2"],
                                    strategy=AllTagsSearchStrategy)
-
         self.assertNotEqual(page, None)
+
+        page_adapter = SearchPageFactory().createPageAdapter(page)
         self.assertEqual(self.wikiroot.selectedPage, page)
-        self.assertEqual(page.phrase, "декабрь")
-        self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("Метка 1" in page.searchTags)
-        self.assertTrue("Метка 2" in page.searchTags)
-        self.assertEqual(page.strategy, AllTagsSearchStrategy)
+        self.assertEqual(page_adapter.phrase, "декабрь")
+        self.assertEqual(len(page_adapter.searchTags), 2)
+        self.assertTrue("метка 1" in page_adapter.searchTags)
+        self.assertTrue("метка 2" in page_adapter.searchTags)
+        self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testLoadSearchPage(self):
         newpage = GlobalSearch.create(self.wikiroot,
@@ -367,13 +371,14 @@ class SearchPageTest(unittest.TestCase):
 
         wiki = loadNotesTree(self.path)
         page = wiki[search_title]
+        page_adapter = SearchPageFactory().createPageAdapter(page)
 
         self.assertNotEqual(page, None)
-        self.assertEqual(page.phrase, "декабрь")
-        self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("метка 1" in page.searchTags)
-        self.assertTrue("метка 2" in page.searchTags)
-        self.assertEqual(page.strategy, AllTagsSearchStrategy)
+        self.assertEqual(page_adapter.phrase, "декабрь")
+        self.assertEqual(len(page_adapter.searchTags), 2)
+        self.assertTrue("метка 1" in page_adapter.searchTags)
+        self.assertTrue("метка 2" in page_adapter.searchTags)
+        self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testManySearchPages1(self):
         GlobalSearch.create(self.wikiroot)
@@ -386,14 +391,15 @@ class SearchPageTest(unittest.TestCase):
 
         wiki = loadNotesTree(self.path)
         page = wiki[search_title]
+        page_adapter = SearchPageFactory().createPageAdapter(page)
 
         self.assertEqual(wiki[search_title + " 2"], None)
         self.assertNotEqual(page, None)
-        self.assertEqual(page.phrase, "декабрь")
-        self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("метка 1" in page.searchTags)
-        self.assertTrue("метка 2" in page.searchTags)
-        self.assertEqual(page.strategy, AllTagsSearchStrategy)
+        self.assertEqual(page_adapter.phrase, "декабрь")
+        self.assertEqual(len(page_adapter.searchTags), 2)
+        self.assertTrue("метка 1" in page_adapter.searchTags)
+        self.assertTrue("метка 2" in page_adapter.searchTags)
+        self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testManySearchPages2(self):
         TextPageFactory().create(self.wikiroot, '# Search', [])
@@ -405,13 +411,14 @@ class SearchPageTest(unittest.TestCase):
 
         wiki = loadNotesTree(self.path)
         page = wiki['_ Search' + " (1)"]
+        page_adapter = SearchPageFactory().createPageAdapter(page)
 
         self.assertNotEqual(page, None)
-        self.assertEqual(page.phrase, "декабрь")
-        self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("метка 1" in page.searchTags)
-        self.assertTrue("метка 2" in page.searchTags)
-        self.assertEqual(page.strategy, AllTagsSearchStrategy)
+        self.assertEqual(page_adapter.phrase, "декабрь")
+        self.assertEqual(len(page_adapter.searchTags), 2)
+        self.assertTrue("метка 1" in page_adapter.searchTags)
+        self.assertTrue("метка 2" in page_adapter.searchTags)
+        self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testManySearchPages3(self):
         factory = TextPageFactory()
@@ -427,13 +434,14 @@ class SearchPageTest(unittest.TestCase):
 
         wiki = loadNotesTree(self.path)
         page = wiki['_ Search' + " (4)"]
-
         self.assertNotEqual(page, None)
-        self.assertEqual(page.phrase, "декабрь")
-        self.assertEqual(len(page.searchTags), 2)
-        self.assertTrue("метка 1" in page.searchTags)
-        self.assertTrue("метка 2" in page.searchTags)
-        self.assertEqual(page.strategy, AllTagsSearchStrategy)
+
+        page_adapter = SearchPageFactory().createPageAdapter(page)
+        self.assertEqual(page_adapter.phrase, "декабрь")
+        self.assertEqual(len(page_adapter.searchTags), 2)
+        self.assertTrue("метка 1" in page_adapter.searchTags)
+        self.assertTrue("метка 2" in page_adapter.searchTags)
+        self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testSetPhrase(self):
         """
@@ -441,80 +449,88 @@ class SearchPageTest(unittest.TestCase):
         """
         page = GlobalSearch.create(self.wikiroot)
         search_title = page.title
+        page_adapter = SearchPageFactory().createPageAdapter(page)
 
-        self.assertEqual(page.phrase, "")
-        self.assertEqual(page.searchTags, [])
+        self.assertEqual(page_adapter.phrase, "")
+        self.assertEqual(page_adapter.searchTags, [])
 
         # Поменяем параметры через свойства
-        page.phrase = "Абырвалг"
-        self.assertEqual(page.phrase, "Абырвалг")
+        page_adapter.phrase = "Абырвалг"
+        self.assertEqual(page_adapter.phrase, "Абырвалг")
 
         # Загрузим вики и прочитаем установленные параметры
         wiki = loadNotesTree(self.path)
         searchPage = wiki[search_title]
-
         self.assertNotEqual(searchPage, None)
-        self.assertEqual(searchPage.phrase, "Абырвалг")
+
+        page_adapter2 = SearchPageFactory().createPageAdapter(searchPage)
+        self.assertEqual(page_adapter2.phrase, "Абырвалг")
 
     def testSetTags(self):
         """
         Тест на то, что сохраняется искомая фраза
         """
         page = GlobalSearch.create(self.wikiroot)
+        page_adapter = SearchPageFactory().createPageAdapter(page)
         search_title = page.title
 
-        self.assertEqual(page.phrase, "")
-        self.assertEqual(page.searchTags, [])
+        self.assertEqual(page_adapter.phrase, "")
+        self.assertEqual(page_adapter.searchTags, [])
 
         # Поменяем параметры через свойства
-        page.searchTags = ["тег1", "тег2"]
-        self.assertEqual(page.searchTags, ["тег1", "тег2"])
+        page_adapter.searchTags = ["тег1", "тег2"]
+        self.assertEqual(page_adapter.searchTags, ["тег1", "тег2"])
 
         # Загрузим вики и прочитаем установленные параметры
         wiki = loadNotesTree(self.path)
         searchPage = wiki[search_title]
-
         self.assertNotEqual(searchPage, None)
-        self.assertEqual(searchPage.searchTags, ["тег1", "тег2"])
+
+        page_adapter2 = SearchPageFactory().createPageAdapter(searchPage)
+        self.assertEqual(page_adapter2.searchTags, ["тег1", "тег2"])
 
     def testSetStrategy1(self):
         """
         Тест на то, что сохраняется искомая фраза
         """
         page = GlobalSearch.create(self.wikiroot)
+        page_adapter = SearchPageFactory().createPageAdapter(page)
         search_title = page.title
 
-        self.assertEqual(page.phrase, "")
-        self.assertEqual(page.searchTags, [])
+        self.assertEqual(page_adapter.phrase, "")
+        self.assertEqual(page_adapter.searchTags, [])
 
         # Поменяем параметры через свойства
-        page.strategy = AllTagsSearchStrategy
-        self.assertEqual(page.strategy, AllTagsSearchStrategy)
+        page_adapter.strategy = AllTagsSearchStrategy
+        self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
         # Загрузим вики и прочитаем установленные параметры
         wiki = loadNotesTree(self.path)
         searchPage = wiki[search_title]
-
         self.assertNotEqual(searchPage, None)
-        self.assertEqual(searchPage.strategy, AllTagsSearchStrategy)
+
+        page_adapter2 = SearchPageFactory().createPageAdapter(searchPage)
+        self.assertEqual(page_adapter2.strategy, AllTagsSearchStrategy)
 
     def testSetStrategy2(self):
         """
         Тест на то, что сохраняется искомая фраза
         """
         page = GlobalSearch.create(self.wikiroot)
+        page_adapter = SearchPageFactory().createPageAdapter(page)
         search_title = page.title
 
-        self.assertEqual(page.phrase, "")
-        self.assertEqual(page.searchTags, [])
+        self.assertEqual(page_adapter.phrase, "")
+        self.assertEqual(page_adapter.searchTags, [])
 
         # Поменяем параметры через свойства
-        page.strategy = AnyTagSearchStrategy
-        self.assertEqual(page.strategy, AnyTagSearchStrategy)
+        page_adapter.strategy = AnyTagSearchStrategy
+        self.assertEqual(page_adapter.strategy, AnyTagSearchStrategy)
 
         # Загрузим вики и прочитаем установленные параметры
         wiki = loadNotesTree(self.path)
         searchPage = wiki[search_title]
-
         self.assertNotEqual(searchPage, None)
-        self.assertEqual(searchPage.strategy, AnyTagSearchStrategy)
+
+        page_adapter2 = SearchPageFactory().createPageAdapter(searchPage)
+        self.assertEqual(page_adapter2.strategy, AnyTagSearchStrategy)

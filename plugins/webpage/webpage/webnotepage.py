@@ -11,7 +11,7 @@ from shutil import copytree
 from outwiker.api.app.tree import replaceTitleDangerousSymbols
 from outwiker.api.core.config import StringOption, BooleanOption
 from outwiker.api.core.tree import PageFactory
-from outwiker.api.core.tree import WikiPage
+from outwiker.api.core.tree import PageAdapter
 
 from .defines import PAGE_TYPE_STRING
 from .gui.webpageview import WebPageView
@@ -22,11 +22,11 @@ STATIC_DIR_NAME = "__download"
 logger = logging.getLogger("webpage")
 
 
-class WebNotePage(WikiPage):
+class WebPageAdapter(PageAdapter):
 
-    """Class of WebPage."""
+    """Adapter class for WebPage."""
 
-    def __init__(self, path, title, parent, readonly=False):
+    def __init__(self, page):
         """
         Constructor.
 
@@ -34,7 +34,7 @@ class WebNotePage(WikiPage):
         title - page title.
         parent - parent page.
         """
-        super(WebNotePage, self).__init__(path, title, parent, readonly)
+        super().__init__(page)
 
         self.PARAMS_SECTION = "WebPage"
 
@@ -46,10 +46,6 @@ class WebNotePage(WikiPage):
 
         self.DISABLE_SCRIPTS_PARAM = "disable_scripts"
         self.DISABLE_SCRIPTS_DEFAULT = True
-
-    def getTypeString(self):
-        """Return page string identifier."""
-        return PAGE_TYPE_STRING
 
     @property
     def source(self):
@@ -167,5 +163,5 @@ class WebPageFactory(PageFactory):
     def getPageTypeString(self):
         return PAGE_TYPE_STRING
 
-    def createPage(self, parent, title, path, readonly=False):
-        return WebNotePage(path, title, parent, readonly)
+    def createPageAdapter(self, page):
+        return WebPageAdapter(page)

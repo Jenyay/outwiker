@@ -1,22 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.core.tree import WikiPage, PageFactory
+from outwiker.api.core.tree import PageAdapter, PageFactory
 
 from .defines import PAGE_TYPE_STRING
 from .i18n import get_
 from .markdownpageview import MarkdownPageView
 
 
-class MarkdownPage(WikiPage):
-    """
-    Класс тестовых страниц
-    """
-
-    def __init__(self, path, title, parent, readonly=False):
-        super().__init__(path, title, parent, readonly)
-
-    def getTypeString(self) -> str:
-        return PAGE_TYPE_STRING
+class MarkdownPageAdapter(PageAdapter):
+    pass
 
 
 class MarkdownPageFactory(PageFactory):
@@ -37,5 +29,5 @@ class MarkdownPageFactory(PageFactory):
     def getPageTypeString(self):
         return PAGE_TYPE_STRING
 
-    def createPage(self, parent, title, path, readonly=False):
-        return MarkdownPage(path, title, parent, readonly)
+    def createPageAdapter(self, page):
+        return MarkdownPageAdapter(page)

@@ -12,11 +12,16 @@ from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_OPT_FILE
-from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
-from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
-from outwiker.pages.search.searchpage import SearchPageFactory, SearchWikiPage
-from outwiker.pages.wiki.wikipage import WikiPageFactory, WikiWikiPage
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.search.searchpage import SearchPageFactory
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.utils import removeDir
+
+from outwiker.pages.text.defines import PAGE_TYPE_STRING as TEXT_TS
+from outwiker.pages.wiki.defines import PAGE_TYPE_STRING as WIKI_TS
+from outwiker.pages.html.defines import PAGE_TYPE_STRING as HTML_TS
+from outwiker.pages.search.defines import PAGE_TYPE_STRING as SEARCH_TS
 
 
 class TextPageCreationTest(unittest.TestCase):
@@ -162,25 +167,25 @@ class TextPageCreationTest(unittest.TestCase):
                                             "Текстовая страница",
                                             [])
 
-        self.assertEqual(TextWikiPage, type(textPage))
+        self.assertEqual(TEXT_TS, textPage.getTypeString())
 
         wikiPage = WikiPageFactory().create(self.wikiroot,
                                             "Вики-страница",
                                             [])
 
-        self.assertEqual(WikiWikiPage, type(wikiPage))
+        self.assertEqual(WIKI_TS, wikiPage.getTypeString())
 
         htmlPage = HtmlPageFactory().create(self.wikiroot,
                                             "HTML-страница",
                                             [])
 
-        self.assertEqual(HtmlWikiPage, type(htmlPage))
+        self.assertEqual(HTML_TS, htmlPage.getTypeString())
 
         searchPage = SearchPageFactory().create(self.wikiroot,
                                                 "Поисковая страница",
                                                 [])
 
-        self.assertEqual(SearchWikiPage, type(searchPage))
+        self.assertEqual(SEARCH_TS, searchPage.getTypeString())
 
     def testIcon(self):
         wiki = loadNotesTree(self.path)

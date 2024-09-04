@@ -4,7 +4,7 @@
 """
 
 from outwiker.core.factory import PageFactory
-from outwiker.core.tree import WikiPage
+from outwiker.core.tree import PageAdapter
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.actioninfo import ActionInfo
 
@@ -45,16 +45,8 @@ wiki_actions = [
 ]
 
 
-class WikiWikiPage(WikiPage):
-    """
-    Класс wiki-страниц
-    """
-
-    def __init__(self, path, title, parent, readonly=False):
-        super().__init__(path, title, parent, readonly)
-
-    def getTypeString(self):
-        return PAGE_TYPE_STRING
+class WikiPageAdapter(PageAdapter):
+    pass
 
 
 class WikiPageFactory(PageFactory):
@@ -90,5 +82,5 @@ class WikiPageFactory(PageFactory):
     def getPageTypeString(self):
         return PAGE_TYPE_STRING
 
-    def createPage(self, parent, title, path, readonly=False):
-        return WikiWikiPage(path, title, parent, readonly)
+    def createPageAdapter(self, page):
+        return WikiPageAdapter(page)
