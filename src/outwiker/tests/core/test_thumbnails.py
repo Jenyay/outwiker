@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import unittest
 import os
 import os.path
 from tempfile import mkdtemp
+import unittest
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.pages.wiki.thumbnails import Thumbnails
-from outwiker.tests.utils import removeDir
-from outwiker.pages.wiki.parserfactory import ParserFactory
-from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
+from outwiker.core.thumbnails import Thumbnails
+from outwiker.pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.tests.utils import removeDir
 
 
 class ThumbnailsTest(unittest.TestCase):
@@ -22,7 +22,7 @@ class ThumbnailsTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -37,9 +37,11 @@ class ThumbnailsTest(unittest.TestCase):
 
         self.assertEqual(
             thumbDir,
-            os.path.join(Attachment(self.parser.page).getAttachPath(),
-                         Thumbnails.thumbDir),
-            thumbDir)
+            os.path.join(
+                Attachment(self.parser.page).getAttachPath(), Thumbnails.thumbDir
+            ),
+            thumbDir,
+        )
 
     def testThumbnails2(self):
         thumb = Thumbnails(self.parser.page)
@@ -65,9 +67,11 @@ class ThumbnailsTest(unittest.TestCase):
 
         self.assertEqual(
             thumbDir,
-            os.path.join(Attachment(self.parser.page).getAttachPath(),
-                         Thumbnails.thumbDir),
-            thumbDir)
+            os.path.join(
+                Attachment(self.parser.page).getAttachPath(), Thumbnails.thumbDir
+            ),
+            thumbDir,
+        )
 
     def testThumbnails2_attach(self):
         fname = "accept.png"
