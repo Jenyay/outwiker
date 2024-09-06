@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import logging
 import os
 from typing import Optional
 
@@ -8,6 +9,8 @@ import wx
 from outwiker.core.defines import ICON_HEIGHT
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.imagelistcache import ImageListCache
+
+logger = logging.getLogger("outwiker.gui.controls.notestreectrl")
 
 
 class NotesTreeCtrl(wx.TreeCtrl):
@@ -128,14 +131,14 @@ class NotesTreeCtrl(wx.TreeCtrl):
         icon = os.path.abspath(icon)
         page_path = os.path.abspath(page.path)
 
-        if icon.startswith(page_path):
-            imageId = self._iconsCache.replace(icon)
-        else:
-            imageId = self._iconsCache.add(icon)
-
-        # if imageId is None:
-        #     imageId = self._iconsCache.getDefaultImageId()
-
+        try:
+            if icon.startswith(page_path):
+                imageId = self._iconsCache.replace(icon)
+            else:
+                imageId = self._iconsCache.add(icon)
+        except Exception:
+            logger.error("Invalid icon file: %s", icon)
+            imageId = self._iconsCache.getDefaultImageId()
         return imageId
 
     def updateIcon(self, page):
