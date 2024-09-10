@@ -4,8 +4,8 @@ import unittest
 import os.path
 
 from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.core.thumbnails import Thumbnails
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
