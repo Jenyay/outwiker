@@ -2,7 +2,7 @@
 
 import logging
 import os
-from typing import Optional
+from typing import Any, Optional, List
 
 import wx
 
@@ -10,15 +10,35 @@ from outwiker.core.defines import ICON_HEIGHT
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.imagelistcache import ImageListCache
 
-logger = logging.getLogger("outwiker.gui.controls.notestreectrl")
+logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
+
+class _NotesTreeItem:
+    def __init__(self) -> None:
+        self._children: List["_NotesTreeItem"] = []
+        self._title = ""
+        self._data: Any = None
+        self._icon = -1
+        self._bold = False
+        self._italic = False
+        self._fontColor = wx.Colour(0, 0, 0)
+        self._backColor = wx.Colour(0, 0, 0)
+        self._expanded = False
 
 
 class NotesTreeCtrl2(wx.Control):
     def __init__(self, parent: wx.Window):
         super().__init__(parent)
+        self._iconHeight = ICON_HEIGHT
+        self._lineHeight = self._iconHeight + 6
+        self._indent = 16
+        self._fontSize = 12
+        self._linesGap = 3
+        self._expandCtrlWidth = 8
+        self._expandCtrlHeight = 8
+        self._expandCtrlLeftGap = 3
+        self._expandCtrlRightGap = 3
 
         self.defaultIcon = getBuiltinImagePath('page.svg')
-        self.iconHeight = ICON_HEIGHT
 
         # Картинки для дерева
         self._iconsCache = ImageListCache(self.defaultIcon)
@@ -30,6 +50,8 @@ class NotesTreeCtrl2(wx.Control):
 
         # Имя опции для сохранения развернутости страницы
         self.pageOptionExpand = 'Expand'
+
+        self._items: List[_NotesTreeItem] = []
 
         self.Bind(wx.EVT_CLOSE, self._onClose)
 
