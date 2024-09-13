@@ -26,7 +26,7 @@ from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
 from outwiker.core.system import getBuiltinImagePath
 
-from outwiker.gui.controls.notestreectrl import NotesTreeCtrl
+from outwiker.gui.controls.notestreectrl2 import NotesTreeCtrl2
 from outwiker.gui.dialogs.messagebox import MessageBox
 
 
@@ -42,7 +42,7 @@ class NotesTree(wx.Panel):
             parent=self, style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE
         )
 
-        self.treeCtrl = NotesTreeCtrl(self)
+        self.treeCtrl = NotesTreeCtrl2(self)
 
         self.SetSize((256, 260))
         self.__do_layout()
