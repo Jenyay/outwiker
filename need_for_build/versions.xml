@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.941" status="dev">
+    <version number="4.0.0.943" status="dev">
         <changes>
         </changes>
 
@@ -8,95 +8,13 @@
         </changes>
     </version>
 
-    <version number="3.3.0.940" date="2024-08-15">
+    <version number="4.0.0.942" status="alpha" date="2024-09-14">
         <changes>
-            <change>Release.</change>
+            <change>New plugin's API.</change>
         </changes>
 
         <changes lang="ru">
-            <change>Выпуск стабильнйо версии.</change>
-        </changes>
-    </version>
-
-    <version number="3.3.0.938" status="beta" date="2024-06-22">
-        <changes>
-			<change>Added new vector icons for plugins.</change>
-			<change>Updated used libraries.</change>
-        </changes>
-
-        <changes lang="ru">
-			<change>Добавлены новые значки для плагинов.</change>
-			<change>Обновлены используемые библиотеки.</change>
-        </changes>
-    </version>
-
-    <version number="3.3.0.936" status="beta" date="2024-03-07">
-        <changes>
-			<change>Added the ability for remapping for Ctr+C, Ctrl+V, Ctrl+X, Ctrl+A, Ctrl+Z, Ctrl+Y hot keys.</change>
-			<change>Use new vector icons for buttons.</change>
-			<change>Added new icons for pages.</change>
-        </changes>
-
-        <changes lang="ru">
-			<change>Возможность переназначать горячие клавиши Ctr+C, Ctrl+V, Ctrl+X, Ctrl+A, Ctrl+Z, Ctrl+Y.</change>
-			<change>Новые векторные значки в интерфейсе.</change>
-			<change>Добавлены новые значки для заметок.</change>
-        </changes>
-    </version>
-
-    <version number="3.3.0.934" status="beta" date="2024-01-27">
-        <changes>
-			<change>Use new vector icons for buttons.</change>
-			<change>Added the ability to use vector icons for pages.</change>
-			<change>New preferences dialog.</change>
-        </changes>
-
-        <changes lang="ru">
-			<change>Новые векторные значки в интерфейсе.</change>
-			<change>Добавлена возможность использования векторных значков для страниц.</change>
-			<change>Новый диалог настроек.</change>
-        </changes>
-    </version>
-
-    <version number="3.3.0.932" status="beta" date="2023-12-24">
-		<changes>
-			<change>On tags cloud panel add a button to show applied tags only.</change>
-			<change>Added context menu for tags cloud.</change>
-			<change>Updated the German localization.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>На панели облака тегов добавлена кнопка для показа только установленных меток.</change>
-			<change>Добавлено контекстное меню для облака тегов.</change>
-			<change>Обновлена немецкая локализация.</change>
-		</changes>
-    </version>
-
-    <version number="3.3.0.930" status="beta" date="2023-11-18">
-        <changes>
-			<change>Tags cloud GUI improvements.</change>
-			<change>Bug fixes.</change>
-        </changes>
-
-        <changes lang="ru">
-			<change>Улучшения в интерфейсе облака меток.</change>
-			<change>Исправление ошибок.</change>
-        </changes>
-    </version>
-
-    <version number="3.3.0.928" status="beta" date="2023-09-30">
-		<changes>
-			<change>Changed tags cloud design.</change>
-			<change>Added the ability to filter tags.</change>
-			<change>Added the ability to display the tags cloud as a list.</change>
-			<change>Improvements in working with list item styles.</change>
-        </changes>
-
-		<changes lang="ru">
-			<change>Новый дизайн облака меток.</change>
-			<change>Добавлена возможность фильтрации меток.</change>
-			<change>Добавлена возможность отображения облака меток в виде списка.</change>
-			<change>Улучшения в работе со стилями элементов списка.</change>
+            <change>Новый API для плагинов.</change>
         </changes>
     </version>
 </versions>
