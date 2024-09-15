@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="4.0.0.943" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="4.0.0.942" status="alpha" date="2024-09-14">
         <changes>
             <change>New plugin's API.</change>
