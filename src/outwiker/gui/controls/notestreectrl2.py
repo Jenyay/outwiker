@@ -416,8 +416,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         pages.reverse()
         for page in pages:
             self.expand(page)
-        # self._calculateItemsPositions()
-        # self.Update()
+        self._calculateItemsPositions()
+        self.Update()
 
     def expand(self, page):
         item = self.getTreeItem(page)
@@ -439,27 +439,16 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Update()
 
     @property
-    def selectedPage(self):
-        page = None
-
-        # item = self.GetSelection()
-        # if item.IsOk():
-        #     page = self.GetItemData(item)
-
-        #     # Проверка того, что выбрали не корневой элемент
-        #     if page.parent is None:
-        #         page = None
-
-        return page
+    def selectedPage(self) -> Optional[BasePage]:
+        for page, item in self._pageCache.items():
+            if item.isSelected():
+                return page
+        return None
 
     @selectedPage.setter
-    def selectedPage(self, newSelPage):
-        # if newSelPage is None:
-        #     item = self.GetRootItem()
-        # else:
-        #     self.expandToPage(newSelPage)
-        #     item = self.getTreeItem(newSelPage)
+    def selectedPage(self, newSelectedPage: Optional[BasePage]):
+        for page, item in self._pageCache.items():
+            item.select(page is newSelectedPage)
 
-        # if item is not None:
-        #     self.SelectItem(item)
-        pass
+        self._calculateItemsPositions()
+        self.Update()
