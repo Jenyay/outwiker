@@ -2,7 +2,7 @@
 
 import logging
 import os
-from typing import Dict, Optional, List
+from typing import Dict, Optional, List, Tuple
 
 from outwiker.core.tree import BasePage, WikiDocument, WikiPage
 import wx
@@ -13,8 +13,11 @@ from outwiker.gui.imagelistcache import ImageListCache
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
 
+
 class NotesTreeItem:
-    def __init__(self, title: str, page: BasePage, parent: Optional["NotesTreeItem"]) -> None:
+    def __init__(
+        self, title: str, page: BasePage, parent: Optional["NotesTreeItem"]
+    ) -> None:
         self._title = title
         self._page = page
         self._depth = parent.getDepth() + 1 if parent is not None else 0
@@ -67,7 +70,7 @@ class NotesTreeItem:
     def insertChild(self, index: int, child: "NotesTreeItem") -> "NotesTreeItem":
         if index < 0:
             index = 0
-        if index >= len(self._children):
+        if index > len(self._children):
             index = len(self._children)
 
         self._children.insert(index, child)
@@ -75,6 +78,13 @@ class NotesTreeItem:
 
     def getChildren(self) -> List["NotesTreeItem"]:
         return self._children
+
+    def _print(self):
+        expand = "[-]" if self._expanded else "[+]"
+        line = f"{'   ' * self._depth}{expand} {self._title} {self._line}"
+        print(line)
+        for child in self._children:
+            child._print()
 
 
 class _NotesTreeItemPositionCalculator:
@@ -122,9 +132,7 @@ class _ItemsPainter:
         self._title_font_normal = wx.NullFont
         self._title_font_selected = wx.NullFont
 
-    def draw(self, item: NotesTreeItem):
-        x = 0
-        y = item.getLine() * self._lineHeight
+    def draw(self, item: NotesTreeItem, x, y):
         self._drawBackground(item, x, y)
         self._drawTitle(item, x, y)
 
@@ -136,7 +144,7 @@ class _ItemsPainter:
             self._dc.SetTextForeground(self._font_color_normal)
             self._dc.SetTextBackground(self._back_color_normal)
 
-        self._dc.DrawText(item.getTitle(), x, y)
+        self._dc.DrawText(item.getTitle(), x + self._indent * item.getDepth(), y)
 
     def _drawBackground(self, item: NotesTreeItem, x: int, y: int):
         width = self._window.GetClientSize()[0]
@@ -167,7 +175,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._lineHeight = ICON_HEIGHT + 6
         self.SetScrollRate(0, 0)
 
-        self.defaultIcon = getBuiltinImagePath('page.svg')
+        self.defaultIcon = getBuiltinImagePath("page.svg")
 
         # Картинки для дерева
         self._iconsCache = ImageListCache(self.defaultIcon)
@@ -177,7 +185,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._pageCache: Dict[BasePage, NotesTreeItem] = {}
 
         # Имя опции для сохранения развернутости страницы
-        self.pageOptionExpand = 'Expand'
+        self.pageOptionExpand = "Expand"
 
         self._rootItems: List[NotesTreeItem] = []
         self._lineCount = 0
@@ -189,32 +197,70 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         calculator = _NotesTreeItemPositionCalculator()
         for root_item in self._rootItems:
             calculator.run(root_item)
-        self.SetScrollbars(0, self._lineHeight, 0, calculator.getLastLine() + 1)
-        logger.debug("Calculate tree items positions. Items count: %d", calculator.getLastLine())
+
+        self._updateScrollBars(calculator.getLastLine() + 1)
+
+    def _updateScrollBars(self, linesCount):
+        self.SetScrollbars(5, self._lineHeight, 0, linesCount, 0, 0)
 
     def _onPaint(self, event):
         with wx.PaintDC(self) as dc:
             with _ItemsPainter(self, dc, self._lineHeight) as painter:
-                back_color = self.GetBackgroundColour()
-                dc.SetBrush(wx.Brush(back_color))
-                dc.SetPen(wx.Pen(back_color))
-                width, height = self.GetClientSize()
-                dc.DrawRectangle(0, 0, width, height)
-                for root_item in self._rootItems:
-                    self._paintTree(painter, root_item)
+                # back_color = self.GetBackgroundColour()
+                # dc.SetBrush(wx.Brush(back_color))
+                # dc.SetPen(wx.Pen(back_color))
+                # width, height = self.GetClientSize()
+                # dc.DrawRectangle(0, 0, width, height)
 
-    def _paintTree(self, painter: _ItemsPainter, root_item: NotesTreeItem):
-        painter.draw(root_item)
-        for item in root_item._children:
-            self._paintTree(painter, item)
+                # vbX, vbY = self.GetViewStart()
+                # print(vbX, vbY)
+                # upd = wx.RegionIterator(self.GetUpdateRegion())
+                # while upd.HaveRects():
+                #     rect = upd.GetRect()
+                #     print(rect)
+                #     # Repaint this rectangle
+                #     # PaintRectangle(rect, dc)
+                #     upd.Next()
+
+                interval_x = self._getScrolledX()
+                interval_y = self._getScrolledY()
+                for root_item in self._rootItems:
+                    self._paintTree(root_item, painter, interval_x, interval_y)
+                    # root_item._print()
+
+    def _getScrolledX(self) -> Tuple[int, int]:
+        xmin = self.GetScrollPos(wx.HORIZONTAL) * self.GetScrollPixelsPerUnit()[0]
+        xmax = xmin + self.GetClientSize()[0]
+        return (xmin, xmax)
+
+    def _getScrolledY(self) -> Tuple[int, int]:
+        ymin = self.GetScrollPos(wx.VERTICAL) * self.GetScrollPixelsPerUnit()[1]
+        ymax = ymin + self.GetClientSize()[1]
+        return (ymin, ymax)
+
+    def _paintTree(
+        self,
+        root_item: NotesTreeItem,
+        painter: _ItemsPainter,
+        interval_x: Tuple[int, int],
+        interval_y: Tuple[int, int],
+    ):
+        x = 0
+        y = root_item.getLine() * self._lineHeight
+        if y >= interval_y[0] and y <= interval_y[1]:
+            painter.draw(root_item, x, y - interval_y[0])
+
+        if root_item.isExpanded():
+            for item in root_item._children:
+                self._paintTree(item, painter, interval_x, interval_y)
 
     def _onClose(self, event):
         self._iconsCache.clear()
 
     def _createRootNotesTreeItem(self, rootPage: WikiDocument) -> "NotesTreeItem":
         rootname = os.path.basename(rootPage.path)
-        return (NotesTreeItem(rootname, rootPage, None)
-                .setImageId(self._iconsCache.getDefaultImageId())
+        return NotesTreeItem(rootname, rootPage, None).setImageId(
+            self._iconsCache.getDefaultImageId()
         )
 
     def _createNotesTreeItem(self, page: WikiPage) -> "NotesTreeItem":
@@ -224,9 +270,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         parent_item = self._pageCache[parent_page]
 
-        new_item = (NotesTreeItem(title, page, parent_item)
-                .setImageId(self._loadIcon(page))
-                )
+        new_item = NotesTreeItem(title, page, parent_item).setImageId(self._loadIcon(page)).expand(self._getPageExpandState(page))
 
         return new_item
 
@@ -246,6 +290,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
             self.selectedPage = rootPage.selectedPage
             self.expand(rootPage)
+            self._calculateItemsPositions()
+            self.Update()
 
     def _appendChildren(self, parentPage):
         """
@@ -361,24 +407,24 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         Развернуть ветви до того уровня, чтобы появился элемент для page
         """
         # Список родительских страниц, которые нужно добавить в дерево
-        # pages = []
-        # currentPage = page.parent
-        # while currentPage is not None:
-        #     pages.append(currentPage)
-        #     currentPage = currentPage.parent
+        pages = []
+        currentPage = page.parent
+        while currentPage is not None:
+            pages.append(currentPage)
+            currentPage = currentPage.parent
 
-        # pages.reverse()
-        # for page in pages:
-        #     self.expand(page)
-        self._calculateItemsPositions()
-        self.Update()
+        pages.reverse()
+        for page in pages:
+            self.expand(page)
+        # self._calculateItemsPositions()
+        # self.Update()
 
     def expand(self, page):
         item = self.getTreeItem(page)
         if item is not None:
             item.expand()
-        self._calculateItemsPositions()
-        self.Update()
+        # self._calculateItemsPositions()
+        # self.Update()
 
     def createPage(self, newpage):
         # if newpage.parent in self._pageCache:
