@@ -25,6 +25,7 @@ class NotesTreeItem:
         self._parent: Optional["NotesTreeItem"] = parent
         self._children: List["NotesTreeItem"] = []
         self._imageId = -1
+        self._extraImageIds: List[int] = []
         self._bold = False
         self._italic = False
         self._fontColor = wx.Colour(0, 0, 0)
@@ -79,12 +80,18 @@ class NotesTreeItem:
     def getChildren(self) -> List["NotesTreeItem"]:
         return self._children
 
-    def _print(self):
+    def getExtraImageIds(self) -> List[int]:
+        return self._extraImageIds
+
+    def _print_tree(self):
         expand = "[-]" if self._expanded else "[+]"
         line = f"{'   ' * self._depth}{expand} {self._title} {self._line}"
         print(line)
         for child in self._children:
-            child._print()
+            child._print_tree()
+
+    def __repr__(self):
+        return f"{self._title}"
 
 
 class _NotesTreeItemPositionCalculator:
@@ -102,27 +109,53 @@ class _NotesTreeItemPositionCalculator:
         return self._line
 
 
-class _ItemsPainter:
-    def __init__(self, window: wx.Window, dc: wx.PaintDC, lineHeight: int) -> None:
-        self._window = window
-        self._dc = dc
-
+class _ItemsViewInfo:
+    def __init__(self) -> None:
         # Sizes
-        self._lineHeight = lineHeight
-        self._iconHeight = ICON_HEIGHT
-        self._indent = 16
-        self._fontSize = 12
-        self._linesGap = 3
-        self._expandCtrlWidth = 8
-        self._expandCtrlHeight = 8
-        self._expandCtrlLeftGap = 3
-        self._expandCtrlRightGap = 3
+        self.line_height = ICON_HEIGHT + 6
+        self.icon_height = ICON_HEIGHT
+        self.icon_width = ICON_HEIGHT
+        self.font_size = 12
+        self.root_left_margin = 4
+        # self.vline_left_margin = self.icon_width // 2
+        self.depth_indent = self.icon_width // 2 + 8
+        self.icon_left_margin = 8
+        self.extra_icons_left_margin = 3
+        self.title_left_margin = 4
+        self.expand_ctrl_width = 8
+        self.expand_ctrl_height = 8
+        # self.expand_ctrl_center_x = self.vline_left_margin
 
         # Colors
-        self._back_color_normal = wx.WHITE
-        self._back_color_selected = wx.BLUE
-        self._font_color_normal = wx.BLACK
-        self._font_color_selected = wx.WHITE
+        self.back_color_normal = wx.WHITE
+        self.back_color_selected = wx.BLUE
+        self.font_color_normal = wx.BLACK
+        self.font_color_selected = wx.WHITE
+
+    def getTitleX(self, depth: int, extraIconsCount: int) -> int:
+        return self.getExtraIconsRight(depth, extraIconsCount) + self.title_left_margin
+
+    def getIconX(self, depth) -> int:
+        return self.root_left_margin + depth * self.depth_indent
+
+    def getExtraIconsLeft(self, depth) -> int:
+        return self.getIconX(depth) + self.icon_width + self.extra_icons_left_margin
+
+    def getExtraIconsRight(self, depth: int, extraIconsCount: int) -> int:
+        return (
+            self.getIconX(depth)
+            + self.icon_width
+            + (self.extra_icons_left_margin + self.icon_width) * extraIconsCount
+        )
+
+
+class _ItemsPainter:
+    def __init__(
+        self, window: wx.Window, dc: wx.PaintDC, view_info: _ItemsViewInfo
+    ) -> None:
+        self._window = window
+        self._dc = dc
+        self._view_info = view_info
 
         # Pens, brushes etc
         self._back_brush_normal = wx.NullBrush
@@ -138,13 +171,16 @@ class _ItemsPainter:
 
     def _drawTitle(self, item: NotesTreeItem, x: int, y: int):
         if item.isSelected():
-            self._dc.SetTextForeground(self._font_color_selected)
-            self._dc.SetTextBackground(self._back_color_selected)
+            self._dc.SetTextForeground(self._view_info.font_color_selected)
+            self._dc.SetTextBackground(self._view_info.back_color_selected)
         else:
-            self._dc.SetTextForeground(self._font_color_normal)
-            self._dc.SetTextBackground(self._back_color_normal)
+            self._dc.SetTextForeground(self._view_info.font_color_normal)
+            self._dc.SetTextBackground(self._view_info.back_color_normal)
 
-        self._dc.DrawText(item.getTitle(), x + self._indent * item.getDepth(), y)
+        title_x = self._view_info.getTitleX(
+            item.getDepth(), len(item.getExtraImageIds())
+        )
+        self._dc.DrawText(item.getTitle(), title_x, y)
 
     def _drawBackground(self, item: NotesTreeItem, x: int, y: int):
         width = self._window.GetClientSize()[0]
@@ -156,13 +192,13 @@ class _ItemsPainter:
             self._dc.SetBrush(self._back_brush_normal)
 
         self._dc.SetPen(wx.WHITE_PEN)
-        self._dc.DrawRectangle(x, y, width, self._lineHeight)
+        self._dc.DrawRectangle(x, y, width, self._view_info.line_height)
 
     def __enter__(self):
-        self._back_brush_normal = wx.Brush(self._back_color_normal)
-        self._back_brush_selected = wx.Brush(self._back_color_selected)
-        self._back_pen_normal = wx.Pen(self._back_color_normal)
-        self._back_pen_selected = wx.Pen(self._back_color_selected)
+        self._back_brush_normal = wx.Brush(self._view_info.back_color_normal)
+        self._back_brush_selected = wx.Brush(self._view_info.back_color_selected)
+        self._back_pen_normal = wx.Pen(self._view_info.back_color_normal)
+        self._back_pen_selected = wx.Pen(self._view_info.back_color_selected)
         return self
 
     def __exit__(self, type, value, traceback):
@@ -172,7 +208,7 @@ class _ItemsPainter:
 class NotesTreeCtrl2(wx.ScrolledWindow):
     def __init__(self, parent: wx.Window):
         super().__init__(parent)
-        self._lineHeight = ICON_HEIGHT + 6
+        self._view_info = _ItemsViewInfo()
         self.SetScrollRate(0, 0)
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
@@ -193,6 +229,37 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_CLOSE, self._onClose)
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
 
+        self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftButtonDown)
+        self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
+        self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightButtonDown)
+        self.Bind(wx.EVT_RIGHT_UP, handler=self._onRightButtonUp)
+        self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
+
+    def _onLeftButtonDown(self, event):
+        item = self._getItemByY(event.GetY())
+
+    def _onLeftButtonUp(self, event):
+        pass
+
+    def _onRightButtonDown(self, event):
+        pass
+
+    def _onRightButtonUp(self, event):
+        pass
+
+    def _onLeftDblClick(self, event):
+        pass
+
+    def _getItemByY(self, y: int) -> Optional[NotesTreeItem]:
+        y += self._getScrollY()
+        for item in self._pageCache.values():
+            y_min = item.getLine() * self._view_info.line_height
+            y_max = y_min + self._view_info.line_height
+            if y >= y_min and y <= y_max:
+                return item
+
+        return None
+
     def _calculateItemsPositions(self):
         calculator = _NotesTreeItemPositionCalculator()
         for root_item in self._rootItems:
@@ -201,11 +268,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._updateScrollBars(calculator.getLastLine() + 1)
 
     def _updateScrollBars(self, linesCount):
-        self.SetScrollbars(5, self._lineHeight, 0, linesCount, 0, 0)
+        self.SetScrollbars(5, self._view_info.line_height, 0, linesCount, 0, 0)
 
     def _onPaint(self, event):
         with wx.PaintDC(self) as dc:
-            with _ItemsPainter(self, dc, self._lineHeight) as painter:
+            with _ItemsPainter(self, dc, self._view_info) as painter:
                 # back_color = self.GetBackgroundColour()
                 # dc.SetBrush(wx.Brush(back_color))
                 # dc.SetPen(wx.Pen(back_color))
@@ -226,17 +293,23 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 interval_y = self._getScrolledY()
                 for root_item in self._rootItems:
                     self._paintTree(root_item, painter, interval_x, interval_y)
-                    # root_item._print()
+                    # root_item._print_tree()
 
     def _getScrolledX(self) -> Tuple[int, int]:
-        xmin = self.GetScrollPos(wx.HORIZONTAL) * self.GetScrollPixelsPerUnit()[0]
+        xmin = self._getScrollX()
         xmax = xmin + self.GetClientSize()[0]
         return (xmin, xmax)
 
     def _getScrolledY(self) -> Tuple[int, int]:
-        ymin = self.GetScrollPos(wx.VERTICAL) * self.GetScrollPixelsPerUnit()[1]
+        ymin = self._getScrollY()
         ymax = ymin + self.GetClientSize()[1]
         return (ymin, ymax)
+
+    def _getScrollX(self) -> int:
+        return self.GetScrollPos(wx.HORIZONTAL) * self.GetScrollPixelsPerUnit()[0]
+
+    def _getScrollY(self) -> int:
+        return self.GetScrollPos(wx.VERTICAL) * self.GetScrollPixelsPerUnit()[1]
 
     def _paintTree(
         self,
@@ -246,7 +319,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         interval_y: Tuple[int, int],
     ):
         x = 0
-        y = root_item.getLine() * self._lineHeight
+        y = root_item.getLine() * self._view_info.line_height
         if y >= interval_y[0] and y <= interval_y[1]:
             painter.draw(root_item, x, y - interval_y[0])
 
@@ -270,7 +343,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         parent_item = self._pageCache[parent_page]
 
-        new_item = NotesTreeItem(title, page, parent_item).setImageId(self._loadIcon(page)).expand(self._getPageExpandState(page))
+        new_item = (
+            NotesTreeItem(title, page, parent_item)
+            .setImageId(self._loadIcon(page))
+            .expand(self._getPageExpandState(page))
+        )
 
         return new_item
 
