@@ -24,7 +24,7 @@ class NotesTreeItem:
         self._line = 0
         self._parent: Optional["NotesTreeItem"] = parent
         self._children: List["NotesTreeItem"] = []
-        self._imageId = -1
+        self._iconImageId = -1
         self._extraImageIds: List[int] = []
         self._bold = False
         self._italic = False
@@ -50,8 +50,11 @@ class NotesTreeItem:
         self._children.append(child)
         return self
 
-    def setImageId(self, imageId) -> "NotesTreeItem":
-        self._imageId = imageId
+    def getIconImageId(self) -> int:
+        return self._iconImageId
+
+    def setIconImageId(self, imageId: int) -> "NotesTreeItem":
+        self._iconImageId = imageId
         return self
 
     def isExpanded(self) -> bool:
@@ -135,15 +138,15 @@ class _ItemsViewInfo:
     def getTitleX(self, depth: int, extraIconsCount: int) -> int:
         return self.getExtraIconsRight(depth, extraIconsCount) + self.title_left_margin
 
-    def getIconX(self, depth) -> int:
+    def getIconLeft(self, depth) -> int:
         return self.root_left_margin + depth * self.depth_indent
 
     def getExtraIconsLeft(self, depth) -> int:
-        return self.getIconX(depth) + self.icon_width + self.extra_icons_left_margin
+        return self.getIconLeft(depth) + self.icon_width + self.extra_icons_left_margin
 
     def getExtraIconsRight(self, depth: int, extraIconsCount: int) -> int:
         return (
-            self.getIconX(depth)
+            self.getIconLeft(depth)
             + self.icon_width
             + (self.extra_icons_left_margin + self.icon_width) * extraIconsCount
         )
@@ -151,10 +154,11 @@ class _ItemsViewInfo:
 
 class _ItemsPainter:
     def __init__(
-        self, window: wx.Window, dc: wx.PaintDC, view_info: _ItemsViewInfo
+            self, window: wx.Window, dc: wx.PaintDC, image_list: wx.ImageList, view_info: _ItemsViewInfo
     ) -> None:
         self._window = window
         self._dc = dc
+        self._image_list = image_list
         self._view_info = view_info
 
         # Pens, brushes etc
@@ -167,6 +171,7 @@ class _ItemsPainter:
 
     def draw(self, item: NotesTreeItem, x, y):
         self._drawBackground(item, x, y)
+        self._drawIcon(item, x, y)
         self._drawTitle(item, x, y)
 
     def _drawTitle(self, item: NotesTreeItem, x: int, y: int):
@@ -193,6 +198,12 @@ class _ItemsPainter:
 
         self._dc.SetPen(wx.WHITE_PEN)
         self._dc.DrawRectangle(x, y, width, self._view_info.line_height)
+
+    def _drawIcon(self, item: NotesTreeItem, x: int, y: int):
+        bitmap = self._image_list.GetBitmap(item.getIconImageId())
+        left = self._view_info.getIconLeft(item.getDepth())
+        top = y + (self._view_info.line_height - self._view_info.icon_height) // 2
+        self._dc.DrawBitmap(bitmap, left, top)
 
     def __enter__(self):
         self._back_brush_normal = wx.Brush(self._view_info.back_color_normal)
@@ -272,7 +283,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _onPaint(self, event):
         with wx.PaintDC(self) as dc:
-            with _ItemsPainter(self, dc, self._view_info) as painter:
+            with _ItemsPainter(self, dc, self._iconsCache.getImageList(), self._view_info) as painter:
                 # back_color = self.GetBackgroundColour()
                 # dc.SetBrush(wx.Brush(back_color))
                 # dc.SetPen(wx.Pen(back_color))
@@ -332,7 +343,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _createRootNotesTreeItem(self, rootPage: WikiDocument) -> "NotesTreeItem":
         rootname = os.path.basename(rootPage.path)
-        return NotesTreeItem(rootname, rootPage, None).setImageId(
+        return NotesTreeItem(rootname, rootPage, None).setIconImageId(
             self._iconsCache.getDefaultImageId()
         )
 
@@ -345,7 +356,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         new_item = (
             NotesTreeItem(title, page, parent_item)
-            .setImageId(self._loadIcon(page))
+            .setIconImageId(self._loadIcon(page))
             .expand(self._getPageExpandState(page))
         )
 
