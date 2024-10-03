@@ -118,13 +118,14 @@ class _ItemsViewInfo:
         self.line_height = ICON_HEIGHT + 6
         self.icon_height = ICON_HEIGHT
         self.icon_width = ICON_HEIGHT
-        self.font_size = 12
+        self.font_size = 10
         self.root_left_margin = 4
         # self.vline_left_margin = self.icon_width // 2
         self.depth_indent = self.icon_width // 2 + 8
         self.icon_left_margin = 8
         self.extra_icons_left_margin = 3
-        self.title_left_margin = 4
+        self.title_left_margin = 8
+        self.title_right_margin = 4
         self.expand_ctrl_width = 8
         self.expand_ctrl_height = 8
         # self.expand_ctrl_center_x = self.vline_left_margin
@@ -135,7 +136,7 @@ class _ItemsViewInfo:
         self.font_color_normal = wx.BLACK
         self.font_color_selected = wx.WHITE
 
-    def getTitleX(self, depth: int, extraIconsCount: int) -> int:
+    def getTitleLeft(self, depth: int, extraIconsCount: int) -> int:
         return self.getExtraIconsRight(depth, extraIconsCount) + self.title_left_margin
 
     def getIconLeft(self, depth) -> int:
@@ -143,6 +144,9 @@ class _ItemsViewInfo:
 
     def getExtraIconsLeft(self, depth) -> int:
         return self.getIconLeft(depth) + self.icon_width + self.extra_icons_left_margin
+
+    def getSelectionLeft(self, depth: int, extraIconsCount: int) -> int:
+        return self.getExtraIconsRight(depth, extraIconsCount) + self.title_left_margin // 2
 
     def getExtraIconsRight(self, depth: int, extraIconsCount: int) -> int:
         return (
@@ -168,9 +172,25 @@ class _ItemsPainter:
         self._back_pen_selected = wx.NullBrush
         self._title_font_normal = wx.NullFont
         self._title_font_selected = wx.NullFont
+        self._text_height = None
+
+    def __enter__(self):
+        self._back_brush_normal = wx.Brush(self._view_info.back_color_normal)
+        self._back_brush_selected = wx.Brush(self._view_info.back_color_selected)
+        self._back_pen_normal = wx.Pen(self._view_info.back_color_normal)
+        self._back_pen_selected = wx.Pen(self._view_info.back_color_selected)
+        self._title_font_normal = wx.Font(wx.FontInfo(self._view_info.font_size))
+        self._title_font_selected = wx.Font(wx.FontInfo(self._view_info.font_size))
+        self._dc.SetFont(self._title_font_normal)
+        self._text_height = self._dc.GetTextExtent("W").GetHeight()
+        return self
+
+    def __exit__(self, type, value, traceback):
+        pass
 
     def draw(self, item: NotesTreeItem, x, y):
         self._drawBackground(item, x, y)
+        self._drawSelection(item, x, y)
         self._drawIcon(item, x, y)
         self._drawTitle(item, x, y)
 
@@ -178,26 +198,35 @@ class _ItemsPainter:
         if item.isSelected():
             self._dc.SetTextForeground(self._view_info.font_color_selected)
             self._dc.SetTextBackground(self._view_info.back_color_selected)
+            self._dc.SetFont(self._title_font_selected)
         else:
             self._dc.SetTextForeground(self._view_info.font_color_normal)
             self._dc.SetTextBackground(self._view_info.back_color_normal)
+            self._dc.SetFont(self._title_font_normal)
 
-        title_x = self._view_info.getTitleX(
+        title_x = self._view_info.getTitleLeft(
             item.getDepth(), len(item.getExtraImageIds())
         )
-        self._dc.DrawText(item.getTitle(), title_x, y)
+        top = y + (self._view_info.line_height - self._text_height) // 2
+        self._dc.DrawText(item.getTitle(), title_x, top)
 
     def _drawBackground(self, item: NotesTreeItem, x: int, y: int):
         width = self._window.GetClientSize()[0]
-        if item.isSelected():
-            self._dc.SetPen(self._back_pen_selected)
-            self._dc.SetBrush(self._back_brush_selected)
-        else:
-            self._dc.SetPen(self._back_pen_normal)
-            self._dc.SetBrush(self._back_brush_normal)
-
-        self._dc.SetPen(wx.WHITE_PEN)
+        self._dc.SetPen(self._back_pen_normal)
+        self._dc.SetBrush(self._back_brush_normal)
         self._dc.DrawRectangle(x, y, width, self._view_info.line_height)
+
+    def _drawSelection(self, item: NotesTreeItem, x: int, y: int):
+        if not item.isSelected():
+            return
+
+        self._dc.SetPen(self._back_pen_selected)
+        self._dc.SetBrush(self._back_brush_selected)
+
+        extraIconsCount = len(item.getExtraImageIds()) 
+        left = self._getSelectionLeft(item, extraIconsCount)
+        width = self._getSelectionWidth(item)
+        self._dc.DrawRectangle(left, y, width, self._view_info.line_height)
 
     def _drawIcon(self, item: NotesTreeItem, x: int, y: int):
         bitmap = self._image_list.GetBitmap(item.getIconImageId())
@@ -205,15 +234,14 @@ class _ItemsPainter:
         top = y + (self._view_info.line_height - self._view_info.icon_height) // 2
         self._dc.DrawBitmap(bitmap, left, top)
 
-    def __enter__(self):
-        self._back_brush_normal = wx.Brush(self._view_info.back_color_normal)
-        self._back_brush_selected = wx.Brush(self._view_info.back_color_selected)
-        self._back_pen_normal = wx.Pen(self._view_info.back_color_normal)
-        self._back_pen_selected = wx.Pen(self._view_info.back_color_selected)
-        return self
+    def _getTextWidth(self, text: str) -> int:
+        return self._dc.GetTextExtent(text).GetWidth()
 
-    def __exit__(self, type, value, traceback):
-        pass
+    def _getSelectionLeft(self, item: NotesTreeItem, extraIconsCount: int) -> int:
+        return self._view_info.getSelectionLeft(item.getDepth(), extraIconsCount)
+
+    def _getSelectionWidth(self, item: NotesTreeItem) -> int:
+        return (self._view_info.title_left_margin // 2) + self._getTextWidth(item.getTitle()) + self._view_info.title_right_margin
 
 
 class NotesTreeCtrl2(wx.ScrolledWindow):
