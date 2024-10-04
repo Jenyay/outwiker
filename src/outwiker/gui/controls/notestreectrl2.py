@@ -117,16 +117,15 @@ class NotesTreeItem:
 
 
 class _NotesTreeItemPropertiesCalculator:
-    def __init__(self, dc: wx.DC, view_info: "_ItemsViewInfo") -> None:
+    def __init__(self, view_info: "_ItemsViewInfo") -> None:
         self._line = 0
-        self._dc = dc
         self._view_info = view_info
 
     def run(self, item: NotesTreeItem):
         parent = item.getParent()
         item.setLine(self._line)
         item.setVisible(parent is None or (parent.isVisible() and parent.isExpanded()))
-        item.setTextWidth(self._getTextWidth(item.getTitle()))
+        item.setTextWidth(self._view_info.getTextWidth(item.getTitle()))
         self._line += 1
         if item.isExpanded():
             for item in item.getChildren():
@@ -135,14 +134,11 @@ class _NotesTreeItemPropertiesCalculator:
     def getLastLine(self) -> int:
         return self._line
 
-    def _getTextWidth(self, text: str) -> int:
-        title_font = wx.Font(wx.FontInfo(self._view_info.font_size))
-        self._dc.SetFont(title_font)
-        return self._dc.GetTextExtent(text).GetWidth()
-
 
 class _ItemsViewInfo:
-    def __init__(self) -> None:
+    def __init__(self, window: wx.Window) -> None:
+        self._window = window
+
         # Sizes
         self.line_height = ICON_HEIGHT + 6
         self.icon_height = ICON_HEIGHT
@@ -165,24 +161,40 @@ class _ItemsViewInfo:
         self.font_color_normal = wx.BLACK
         self.font_color_selected = wx.WHITE
 
-    def getTitleLeft(self, depth: int, extraIconsCount: int) -> int:
-        return self.getExtraIconsRight(depth, extraIconsCount) + self.title_left_margin
+        self._dc = wx.ClientDC(self._window)
+        self._title_font = wx.Font(wx.FontInfo(self.font_size))
+        self._dc.SetFont(self._title_font)
 
-    def getIconLeft(self, depth) -> int:
-        return self.root_left_margin + depth * self.depth_indent
+    def getTextWidth(self, text: str) -> int:
+        return self._dc.GetTextExtent(text).GetWidth()
 
-    def getExtraIconsLeft(self, depth) -> int:
-        return self.getIconLeft(depth) + self.icon_width + self.extra_icons_left_margin
+    def getTitleLeft(self, item: NotesTreeItem) -> int:
+        return self.getExtraIconsRight(item) + self.title_left_margin
 
-    def getSelectionLeft(self, depth: int, extraIconsCount: int) -> int:
-        return self.getExtraIconsRight(depth, extraIconsCount) + self.title_left_margin // 2
+    def getIconLeft(self, item: NotesTreeItem) -> int:
+        return self.root_left_margin + item.getDepth() * self.depth_indent
 
-    def getExtraIconsRight(self, depth: int, extraIconsCount: int) -> int:
+    def getExtraIconsLeft(self, item) -> int:
+        return self.getIconLeft(item) + self.icon_width + self.extra_icons_left_margin
+
+    def getSelectionLeft(self, item: NotesTreeItem) -> int:
+        return self.getExtraIconsRight(item) + self.title_left_margin // 2
+
+    def getSelectionWidth(self, item: NotesTreeItem):
+        return (self.title_left_margin // 2) + self.getTextWidth(item.getTitle()) + self.title_right_margin
+
+    def getSelectionRight(self, item: NotesTreeItem) -> int:
+        return self.getSelectionLeft(item) + self.getSelectionWidth(item)
+
+    def getExtraIconsRight(self, item: NotesTreeItem) -> int:
         return (
-            self.getIconLeft(depth)
+            self.getIconLeft(item)
             + self.icon_width
-            + (self.extra_icons_left_margin + self.icon_width) * extraIconsCount
+            + (self.extra_icons_left_margin + self.icon_width) * self._getExtraIconsCount(item)
         )
+
+    def _getExtraIconsCount(self, item: NotesTreeItem) -> int:
+        return len(item.getExtraImageIds())
 
 
 class _ItemsPainter:
@@ -241,9 +253,7 @@ class _ItemsPainter:
             self._dc.SetTextBackground(self._view_info.back_color_normal)
             self._dc.SetFont(self._title_font_normal)
 
-        title_x = self._view_info.getTitleLeft(
-            item.getDepth(), len(item.getExtraImageIds())
-        )
+        title_x = self._view_info.getTitleLeft(item)
         top = y + (self._view_info.line_height - self._text_height) // 2
         self._dc.DrawText(item.getTitle(), x + title_x, top)
 
@@ -260,31 +270,21 @@ class _ItemsPainter:
         self._dc.SetPen(self._back_pen_selected)
         self._dc.SetBrush(self._back_brush_selected)
 
-        extraIconsCount = len(item.getExtraImageIds()) 
-        left = self._getSelectionLeft(item, extraIconsCount)
-        width = self._getSelectionWidth(item)
+        left = self._view_info.getSelectionLeft(item)
+        width = self._view_info.getSelectionWidth(item)
         self._dc.DrawRectangle(x + left, y, width, self._view_info.line_height)
 
     def _drawIcon(self, item: NotesTreeItem, x: int, y: int):
         bitmap = self._image_list.GetBitmap(item.getIconImageId())
-        left = x + self._view_info.getIconLeft(item.getDepth())
+        left = x + self._view_info.getIconLeft(item)
         top = y + (self._view_info.line_height - self._view_info.icon_height) // 2
         self._dc.DrawBitmap(bitmap, left, top)
-
-    def _getTextWidth(self, text: str) -> int:
-        return self._dc.GetTextExtent(text).GetWidth()
-
-    def _getSelectionLeft(self, item: NotesTreeItem, extraIconsCount: int) -> int:
-        return self._view_info.getSelectionLeft(item.getDepth(), extraIconsCount)
-
-    def _getSelectionWidth(self, item: NotesTreeItem) -> int:
-        return (self._view_info.title_left_margin // 2) + self._getTextWidth(item.getTitle()) + self._view_info.title_right_margin
 
 
 class NotesTreeCtrl2(wx.ScrolledWindow):
     def __init__(self, parent: wx.Window):
         super().__init__(parent)
-        self._view_info = _ItemsViewInfo()
+        self._view_info = _ItemsViewInfo(parent)
         self.SetScrollRate(0, 0)
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
@@ -340,12 +340,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         return None
 
     def _calculateItemsProperties(self):
-        with wx.ClientDC(self) as dc:
-            calculator = _NotesTreeItemPropertiesCalculator(dc, self._view_info)
-            for root_item in self._rootItems:
-                calculator.run(root_item)
+        calculator = _NotesTreeItemPropertiesCalculator(self._view_info)
+        for root_item in self._rootItems:
+            calculator.run(root_item)
 
-        widths = [self._view_info.getTitleLeft(item.getDepth(), len(item.getExtraImageIds())) + item.getTextWidth() + self._view_info.title_right_margin for item in self._getVisibleItems()]
+        widths = [self._view_info.getTitleLeft(item) + item.getTextWidth() + self._view_info.title_right_margin for item in self._getVisibleItems()]
         max_width = max(widths)
         self.SetScrollbars(1, self._view_info.line_height, max_width, calculator.getLastLine() + 1, 0, 0)
 
