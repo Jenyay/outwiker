@@ -32,6 +32,8 @@ class NotesTreeItem:
         self._backColor = wx.Colour(0, 0, 0)
         self._expanded = False
         self._selected = False
+        self._visible = False
+        self._textWidth = 0
 
     def getTitle(self) -> str:
         return self._title
@@ -86,6 +88,23 @@ class NotesTreeItem:
     def getExtraImageIds(self) -> List[int]:
         return self._extraImageIds
 
+    def isVisible(self) -> bool:
+        return self._visible
+
+    def setVisible(self, visible=True):
+        self._visible = visible
+        return self
+
+    def getParent(self) -> Optional["NotesTreeItem"]:
+        return self._parent
+
+    def getTextWidth(self) -> int:
+        return self._textWidth
+
+    def setTextWidth(self, value) -> "NotesTreeItem":
+        self._textWidth = value
+        return self
+
     def _print_tree(self):
         expand = "[-]" if self._expanded else "[+]"
         line = f"{'   ' * self._depth}{expand} {self._title} {self._line}"
@@ -97,19 +116,29 @@ class NotesTreeItem:
         return f"{self._title}"
 
 
-class _NotesTreeItemPositionCalculator:
-    def __init__(self) -> None:
+class _NotesTreeItemPropertiesCalculator:
+    def __init__(self, dc: wx.DC, view_info: "_ItemsViewInfo") -> None:
         self._line = 0
+        self._dc = dc
+        self._view_info = view_info
 
-    def run(self, root_item: NotesTreeItem):
-        root_item.setLine(self._line)
+    def run(self, item: NotesTreeItem):
+        parent = item.getParent()
+        item.setLine(self._line)
+        item.setVisible(parent is None or (parent.isVisible() and parent.isExpanded()))
+        item.setTextWidth(self._getTextWidth(item.getTitle()))
         self._line += 1
-        if root_item.isExpanded():
-            for item in root_item.getChildren():
+        if item.isExpanded():
+            for item in item.getChildren():
                 self.run(item)
 
     def getLastLine(self) -> int:
         return self._line
+
+    def _getTextWidth(self, text: str) -> int:
+        title_font = wx.Font(wx.FontInfo(self._view_info.font_size))
+        self._dc.SetFont(title_font)
+        return self._dc.GetTextExtent(text).GetWidth()
 
 
 class _ItemsViewInfo:
@@ -189,10 +218,18 @@ class _ItemsPainter:
         pass
 
     def draw(self, item: NotesTreeItem, x, y):
-        self._drawBackground(item, x, y)
-        self._drawSelection(item, x, y)
-        self._drawIcon(item, x, y)
-        self._drawTitle(item, x, y)
+        if item.isVisible():
+            self._drawBackground(item, x, y)
+            self._drawSelection(item, x, y)
+            self._drawIcon(item, x, y)
+            self._drawTitle(item, x, y)
+
+    def fillBackground(self):
+        back_color = self._view_info.back_color_normal
+        self._dc.SetBrush(wx.Brush(back_color))
+        self._dc.SetPen(wx.Pen(back_color))
+        width, height = self._window.GetClientSize()
+        self._dc.DrawRectangle(0, 0, width, height)
 
     def _drawTitle(self, item: NotesTreeItem, x: int, y: int):
         if item.isSelected():
@@ -208,7 +245,7 @@ class _ItemsPainter:
             item.getDepth(), len(item.getExtraImageIds())
         )
         top = y + (self._view_info.line_height - self._text_height) // 2
-        self._dc.DrawText(item.getTitle(), title_x, top)
+        self._dc.DrawText(item.getTitle(), x + title_x, top)
 
     def _drawBackground(self, item: NotesTreeItem, x: int, y: int):
         width = self._window.GetClientSize()[0]
@@ -226,11 +263,11 @@ class _ItemsPainter:
         extraIconsCount = len(item.getExtraImageIds()) 
         left = self._getSelectionLeft(item, extraIconsCount)
         width = self._getSelectionWidth(item)
-        self._dc.DrawRectangle(left, y, width, self._view_info.line_height)
+        self._dc.DrawRectangle(x + left, y, width, self._view_info.line_height)
 
     def _drawIcon(self, item: NotesTreeItem, x: int, y: int):
         bitmap = self._image_list.GetBitmap(item.getIconImageId())
-        left = self._view_info.getIconLeft(item.getDepth())
+        left = x + self._view_info.getIconLeft(item.getDepth())
         top = y + (self._view_info.line_height - self._view_info.icon_height) // 2
         self._dc.DrawBitmap(bitmap, left, top)
 
@@ -274,6 +311,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_RIGHT_UP, handler=self._onRightButtonUp)
         self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
 
+    def _getVisibleItems(self) -> List[NotesTreeItem]:
+        return [item for item in self._pageCache.values() if item.isVisible()]
+
     def _onLeftButtonDown(self, event):
         item = self._getItemByY(event.GetY())
 
@@ -299,25 +339,19 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         return None
 
-    def _calculateItemsPositions(self):
-        calculator = _NotesTreeItemPositionCalculator()
-        for root_item in self._rootItems:
-            calculator.run(root_item)
+    def _calculateItemsProperties(self):
+        with wx.ClientDC(self) as dc:
+            calculator = _NotesTreeItemPropertiesCalculator(dc, self._view_info)
+            for root_item in self._rootItems:
+                calculator.run(root_item)
 
-        self._updateScrollBars(calculator.getLastLine() + 1)
-
-    def _updateScrollBars(self, linesCount):
-        self.SetScrollbars(5, self._view_info.line_height, 0, linesCount, 0, 0)
+        widths = [self._view_info.getTitleLeft(item.getDepth(), len(item.getExtraImageIds())) + item.getTextWidth() + self._view_info.title_right_margin for item in self._getVisibleItems()]
+        max_width = max(widths)
+        self.SetScrollbars(1, self._view_info.line_height, max_width, calculator.getLastLine() + 1, 0, 0)
 
     def _onPaint(self, event):
         with wx.PaintDC(self) as dc:
             with _ItemsPainter(self, dc, self._iconsCache.getImageList(), self._view_info) as painter:
-                # back_color = self.GetBackgroundColour()
-                # dc.SetBrush(wx.Brush(back_color))
-                # dc.SetPen(wx.Pen(back_color))
-                # width, height = self.GetClientSize()
-                # dc.DrawRectangle(0, 0, width, height)
-
                 # vbX, vbY = self.GetViewStart()
                 # print(vbX, vbY)
                 # upd = wx.RegionIterator(self.GetUpdateRegion())
@@ -330,9 +364,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
+                painter.fillBackground()
                 for root_item in self._rootItems:
                     self._paintTree(root_item, painter, interval_x, interval_y)
-                    # root_item._print_tree()
 
     def _getScrolledX(self) -> Tuple[int, int]:
         xmin = self._getScrollX()
@@ -360,7 +394,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         x = 0
         y = root_item.getLine() * self._view_info.line_height
         if y >= interval_y[0] and y <= interval_y[1]:
-            painter.draw(root_item, x, y - interval_y[0])
+            painter.draw(root_item, x - interval_x[0], y - interval_y[0])
 
         if root_item.isExpanded():
             for item in root_item._children:
@@ -373,7 +407,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         rootname = os.path.basename(rootPage.path)
         return NotesTreeItem(rootname, rootPage, None).setIconImageId(
             self._iconsCache.getDefaultImageId()
-        )
+        ).setVisible()
 
     def _createNotesTreeItem(self, page: WikiPage) -> "NotesTreeItem":
         title = page.display_title
@@ -406,8 +440,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
             self.selectedPage = rootPage.selectedPage
             self.expand(rootPage)
-            self._calculateItemsPositions()
-            self.Update()
+            self._updateItems()
+
+    def _updateItems(self):
+        self._calculateItemsProperties()
+        self.Update()
 
     def _appendChildren(self, parentPage):
         """
@@ -532,15 +569,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         pages.reverse()
         for page in pages:
             self.expand(page)
-        self._calculateItemsPositions()
-        self.Update()
+        self._updateItems()
 
     def expand(self, page):
         item = self.getTreeItem(page)
         if item is not None:
             item.expand()
-        # self._calculateItemsPositions()
-        # self.Update()
+        self._updateItems()
 
     def createPage(self, newpage):
         # if newpage.parent in self._pageCache:
@@ -551,8 +586,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         #     assert item.IsOk()
 
         #     self.expand(newpage)
-        self._calculateItemsPositions()
-        self.Update()
+        self._updateItems()
 
     @property
     def selectedPage(self) -> Optional[BasePage]:
@@ -566,5 +600,4 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         for page, item in self._pageCache.items():
             item.select(page is newSelectedPage)
 
-        self._calculateItemsPositions()
-        self.Update()
+        self._updateItems()
