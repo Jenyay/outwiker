@@ -6,10 +6,14 @@ from typing import Dict, Optional, List, Tuple
 
 from outwiker.core.tree import BasePage, WikiDocument, WikiPage
 import wx
+import wx.lib.newevent
 
 from outwiker.core.defines import ICON_HEIGHT
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.imagelistcache import ImageListCache
+
+
+NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
 
@@ -105,6 +109,9 @@ class NotesTreeItem:
         self._textWidth = value
         return self
 
+    def getPage(self) -> BasePage:
+        return self._page
+
     def _print_tree(self):
         expand = "[-]" if self._expanded else "[+]"
         line = f"{'   ' * self._depth}{expand} {self._title} {self._line}"
@@ -140,11 +147,12 @@ class _ItemsViewInfo:
         self._window = window
 
         # Sizes
+        self.left_margin = 4
+        self.top_margin = 4
         self.line_height = ICON_HEIGHT + 6
         self.icon_height = ICON_HEIGHT
         self.icon_width = ICON_HEIGHT
         self.font_size = 10
-        self.root_left_margin = 4
         # self.vline_left_margin = self.icon_width // 2
         self.depth_indent = self.icon_width // 2 + 8
         self.icon_left_margin = 8
@@ -172,7 +180,7 @@ class _ItemsViewInfo:
         return self.getExtraIconsRight(item) + self.title_left_margin
 
     def getIconLeft(self, item: NotesTreeItem) -> int:
-        return self.root_left_margin + item.getDepth() * self.depth_indent
+        return self.left_margin + item.getDepth() * self.depth_indent
 
     def getExtraIconsLeft(self, item) -> int:
         return self.getIconLeft(item) + self.icon_width + self.extra_icons_left_margin
@@ -181,7 +189,11 @@ class _ItemsViewInfo:
         return self.getExtraIconsRight(item) + self.title_left_margin // 2
 
     def getSelectionWidth(self, item: NotesTreeItem):
-        return (self.title_left_margin // 2) + self.getTextWidth(item.getTitle()) + self.title_right_margin
+        return (
+            (self.title_left_margin // 2)
+            + self.getTextWidth(item.getTitle())
+            + self.title_right_margin
+        )
 
     def getSelectionRight(self, item: NotesTreeItem) -> int:
         return self.getSelectionLeft(item) + self.getSelectionWidth(item)
@@ -190,8 +202,22 @@ class _ItemsViewInfo:
         return (
             self.getIconLeft(item)
             + self.icon_width
-            + (self.extra_icons_left_margin + self.icon_width) * self._getExtraIconsCount(item)
+            + (self.extra_icons_left_margin + self.icon_width)
+            * self._getExtraIconsCount(item)
         )
+
+    def getItemTop(self, item: NotesTreeItem) -> int:
+        return item.getLine() * self.line_height + self.top_margin
+
+    def getItemBottom(self, item: NotesTreeItem) -> int:
+        return self.getItemTop(item) + self.line_height
+
+    def isPointInItem(self, item: NotesTreeItem, x, y) -> bool:
+        top = self.getItemTop(item)
+        bottom = self.getItemBottom(item)
+        left = self.getIconLeft(item)
+        right = self.getSelectionRight(item)
+        return y >= top and y <= bottom and x >= left and x <= right
 
     def _getExtraIconsCount(self, item: NotesTreeItem) -> int:
         return len(item.getExtraImageIds())
@@ -199,7 +225,11 @@ class _ItemsViewInfo:
 
 class _ItemsPainter:
     def __init__(
-            self, window: wx.Window, dc: wx.PaintDC, image_list: wx.ImageList, view_info: _ItemsViewInfo
+        self,
+        window: wx.Window,
+        dc: wx.PaintDC,
+        image_list: wx.ImageList,
+        view_info: _ItemsViewInfo,
     ) -> None:
         self._window = window
         self._dc = dc
@@ -315,12 +345,31 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         return [item for item in self._pageCache.values() if item.isVisible()]
 
     def _onLeftButtonDown(self, event):
-        item = self._getItemByY(event.GetY())
+        x = event.GetX() + self._getScrollX()
+        y = event.GetY() + self._getScrollY()
+        item = self._getItemByY(y)
+        if item is not None:
+            isPointInItem = self._view_info.isPointInItem(item, x, y)
+            if isPointInItem:
+                oldSelectedItem = self._getSelectedItem()
+                if oldSelectedItem is not None:
+                    oldSelectedItem.select(False)
+                item.select()
+                event = NotesTreeSelChangedEvent(page=item.getPage())
+                wx.PostEvent(self.GetParent(), event)
+                self.Refresh()
 
     def _onLeftButtonUp(self, event):
         pass
 
     def _onRightButtonDown(self, event):
+        # item = self._getItemByY(event.GetY())
+        # if item is not None:
+        #     isPointInItem = self._view_info.isPointInItem(
+        #         item, event.GetX(), event.GetY()
+        #     )
+        #     if isPointInItem:
+        #         print(item)
         pass
 
     def _onRightButtonUp(self, event):
@@ -330,10 +379,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         pass
 
     def _getItemByY(self, y: int) -> Optional[NotesTreeItem]:
-        y += self._getScrollY()
         for item in self._pageCache.values():
-            y_min = item.getLine() * self._view_info.line_height
-            y_max = y_min + self._view_info.line_height
+            y_min = self._view_info.getItemTop(item)
+            y_max = self._view_info.getItemBottom(item)
             if y >= y_min and y <= y_max:
                 return item
 
@@ -344,13 +392,27 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         for root_item in self._rootItems:
             calculator.run(root_item)
 
-        widths = [self._view_info.getTitleLeft(item) + item.getTextWidth() + self._view_info.title_right_margin for item in self._getVisibleItems()]
+        widths = [
+            self._view_info.getTitleLeft(item)
+            + item.getTextWidth()
+            + self._view_info.title_right_margin
+            for item in self._getVisibleItems()
+        ]
         max_width = max(widths)
-        self.SetScrollbars(1, self._view_info.line_height, max_width, calculator.getLastLine() + 1, 0, 0)
+        self.SetScrollbars(
+            1,
+            self._view_info.line_height,
+            max_width,
+            calculator.getLastLine() + 1,
+            0,
+            0,
+        )
 
     def _onPaint(self, event):
         with wx.PaintDC(self) as dc:
-            with _ItemsPainter(self, dc, self._iconsCache.getImageList(), self._view_info) as painter:
+            with _ItemsPainter(
+                self, dc, self._iconsCache.getImageList(), self._view_info
+            ) as painter:
                 # vbX, vbY = self.GetViewStart()
                 # print(vbX, vbY)
                 # upd = wx.RegionIterator(self.GetUpdateRegion())
@@ -391,7 +453,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         interval_y: Tuple[int, int],
     ):
         x = 0
-        y = root_item.getLine() * self._view_info.line_height
+        y = self._view_info.getItemTop(root_item)
         if y >= interval_y[0] and y <= interval_y[1]:
             painter.draw(root_item, x - interval_x[0], y - interval_y[0])
 
@@ -404,9 +466,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _createRootNotesTreeItem(self, rootPage: WikiDocument) -> "NotesTreeItem":
         rootname = os.path.basename(rootPage.path)
-        return NotesTreeItem(rootname, rootPage, None).setIconImageId(
-            self._iconsCache.getDefaultImageId()
-        ).setVisible()
+        return (
+            NotesTreeItem(rootname, rootPage, None)
+            .setIconImageId(self._iconsCache.getDefaultImageId())
+            .setVisible()
+        )
 
     def _createNotesTreeItem(self, page: WikiPage) -> "NotesTreeItem":
         title = page.display_title
@@ -586,6 +650,12 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         #     self.expand(newpage)
         self._updateItems()
+
+    def _getSelectedItem(self) -> Optional[NotesTreeItem]:
+        for item in self._pageCache.values():
+            if item.isSelected():
+                return item
+        return None
 
     @property
     def selectedPage(self) -> Optional[BasePage]:

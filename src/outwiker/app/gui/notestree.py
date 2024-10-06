@@ -26,7 +26,10 @@ from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
 from outwiker.core.system import getBuiltinImagePath
 
-from outwiker.gui.controls.notestreectrl2 import NotesTreeCtrl2
+from outwiker.gui.controls.notestreectrl2 import (
+    NotesTreeCtrl2,
+    EVT_NOTES_TREE_SEL_CHANGED,
+)
 from outwiker.gui.dialogs.messagebox import MessageBox
 
 
@@ -119,7 +122,7 @@ class NotesTree(wx.Panel):
         Подписка на события интерфейса
         """
         # События, связанные с деревом
-        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.__onSelChanged)
+        self.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
         self.Bind(wx.EVT_TREE_ITEM_MIDDLE_CLICK, self.__onMiddleClick)
 
         # Перетаскивание элементов
@@ -242,7 +245,7 @@ class NotesTree(wx.Panel):
         self._application.onPageCreate -= self.__onPageCreate
         self._application.onPageSelect -= self.__onPageSelect
         self._application.onPageOrderChange -= self.__onPageOrderChange
-        self.Unbind(wx.EVT_TREE_SEL_CHANGED, handler=self.__onSelChanged)
+        self.Unbind(EVT_NOTES_TREE_SEL_CHANGED, handler=self.__onSelChanged)
 
     def __onEndTreeUpdate(self, _root):
         self.__bindUpdateEvents()
@@ -253,7 +256,7 @@ class NotesTree(wx.Panel):
         self._application.onPageCreate += self.__onPageCreate
         self._application.onPageSelect += self.__onPageSelect
         self._application.onPageOrderChange += self.__onPageOrderChange
-        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.__onSelChanged)
+        self.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
 
     def __onBeginDrag(self, event):
         event.Allow()
@@ -366,7 +369,7 @@ class NotesTree(wx.Panel):
             getBuiltinImagePath("node-delete.svg"),
             False,
         )
-        
+
         self.toolbar.AddSeparator()
 
         actionController.appendToolbarButton(
