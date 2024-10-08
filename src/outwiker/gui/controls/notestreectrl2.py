@@ -154,7 +154,7 @@ class _ItemsViewInfo:
         self.icon_width = ICON_HEIGHT
         self.font_size = 10
         # self.vline_left_margin = self.icon_width // 2
-        self.depth_indent = self.icon_width // 2 + 8
+        self.depth_indent = self.icon_width // 2 + 16
         self.icon_left_margin = 8
         self.extra_icons_left_margin = 3
         self.title_left_margin = 8
@@ -168,6 +168,7 @@ class _ItemsViewInfo:
         self.back_color_selected = wx.BLUE
         self.font_color_normal = wx.BLACK
         self.font_color_selected = wx.WHITE
+        self.lines_color = wx.BLACK
 
         self._dc = wx.ClientDC(self._window)
         self._title_font = wx.Font(wx.FontInfo(self.font_size))
@@ -181,6 +182,9 @@ class _ItemsViewInfo:
 
     def getIconLeft(self, item: NotesTreeItem) -> int:
         return self.left_margin + item.getDepth() * self.depth_indent
+
+    def getIconCenter(self, item: NotesTreeItem) -> int:
+        return self.getIconLeft(item) + self.icon_width // 2
 
     def getExtraIconsLeft(self, item) -> int:
         return self.getIconLeft(item) + self.icon_width + self.extra_icons_left_margin
@@ -211,6 +215,9 @@ class _ItemsViewInfo:
 
     def getItemBottom(self, item: NotesTreeItem) -> int:
         return self.getItemTop(item) + self.line_height
+
+    def getItemCenterVertical(self, item: NotesTreeItem) -> int:
+        return (self.getItemTop(item) + self.getItemBottom(item)) // 2
 
     def isPointInItem(self, item: NotesTreeItem, x, y) -> bool:
         top = self.getItemTop(item)
@@ -243,6 +250,7 @@ class _ItemsPainter:
         self._back_pen_selected = wx.NullBrush
         self._title_font_normal = wx.NullFont
         self._title_font_selected = wx.NullFont
+        self._tree_line_pen = wx.NullPen
         self._text_height = None
 
     def __enter__(self):
@@ -252,6 +260,7 @@ class _ItemsPainter:
         self._back_pen_selected = wx.Pen(self._view_info.back_color_selected)
         self._title_font_normal = wx.Font(wx.FontInfo(self._view_info.font_size))
         self._title_font_selected = wx.Font(wx.FontInfo(self._view_info.font_size))
+        self._tree_line_pen = wx.Pen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
         self._dc.SetFont(self._title_font_normal)
         self._text_height = self._dc.GetTextExtent("W").GetHeight()
         return self
@@ -263,6 +272,7 @@ class _ItemsPainter:
         if item.isVisible():
             self._drawBackground(item, x, y)
             self._drawSelection(item, x, y)
+            self._drawTreeLines(item, x, y)
             self._drawIcon(item, x, y)
             self._drawTitle(item, x, y)
 
@@ -272,6 +282,17 @@ class _ItemsPainter:
         self._dc.SetPen(wx.Pen(back_color))
         width, height = self._window.GetClientSize()
         self._dc.DrawRectangle(0, 0, width, height)
+
+    def _drawTreeLines(self, item: NotesTreeItem, x: int, y: int):
+        parentItem = item.getParent()
+        if parentItem is None:
+            return
+        left = self._view_info.getIconCenter(parentItem) + x
+        right = self._view_info.getIconLeft(item) + x
+        top = self._view_info.getItemBottom(parentItem) + y
+        centerV = self._view_info.getItemCenterVertical(item) + y
+        points = [(left, top, left, centerV), (left, centerV, right, centerV)]
+        self._dc.DrawLineList(points, pens=self._tree_line_pen)
 
     def _drawTitle(self, item: NotesTreeItem, x: int, y: int):
         if item.isSelected():
@@ -283,15 +304,15 @@ class _ItemsPainter:
             self._dc.SetTextBackground(self._view_info.back_color_normal)
             self._dc.SetFont(self._title_font_normal)
 
-        title_x = self._view_info.getTitleLeft(item)
-        top = y + (self._view_info.line_height - self._text_height) // 2
-        self._dc.DrawText(item.getTitle(), x + title_x, top)
+        title_x = self._view_info.getTitleLeft(item) + x
+        top = self._view_info.getItemTop(item) + (self._view_info.line_height - self._text_height) // 2 + y
+        self._dc.DrawText(item.getTitle(), title_x, top)
 
     def _drawBackground(self, item: NotesTreeItem, x: int, y: int):
         width = self._window.GetClientSize()[0]
         self._dc.SetPen(self._back_pen_normal)
         self._dc.SetBrush(self._back_brush_normal)
-        self._dc.DrawRectangle(x, y, width, self._view_info.line_height)
+        self._dc.DrawRectangle(x, self._view_info.getItemTop(item) + y, width, self._view_info.line_height)
 
     def _drawSelection(self, item: NotesTreeItem, x: int, y: int):
         if not item.isSelected():
@@ -302,12 +323,12 @@ class _ItemsPainter:
 
         left = self._view_info.getSelectionLeft(item)
         width = self._view_info.getSelectionWidth(item)
-        self._dc.DrawRectangle(x + left, y, width, self._view_info.line_height)
+        self._dc.DrawRectangle(x + left, self._view_info.getItemTop(item) + y, width, self._view_info.line_height)
 
     def _drawIcon(self, item: NotesTreeItem, x: int, y: int):
         bitmap = self._image_list.GetBitmap(item.getIconImageId())
-        left = x + self._view_info.getIconLeft(item)
-        top = y + (self._view_info.line_height - self._view_info.icon_height) // 2
+        left = self._view_info.getIconLeft(item) + x
+        top = self._view_info.getItemTop(item) + (self._view_info.line_height - self._view_info.icon_height) // 2 + y
         self._dc.DrawBitmap(bitmap, left, top)
 
 
@@ -452,10 +473,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         interval_x: Tuple[int, int],
         interval_y: Tuple[int, int],
     ):
-        x = 0
         y = self._view_info.getItemTop(root_item)
         if y >= interval_y[0] and y <= interval_y[1]:
-            painter.draw(root_item, x - interval_x[0], y - interval_y[0])
+            painter.draw(root_item, -interval_x[0], -interval_y[0])
 
         if root_item.isExpanded():
             for item in root_item._children:
