@@ -270,9 +270,7 @@ class _ItemsPainter:
 
     def draw(self, item: NotesTreeItem, x, y):
         if item.isVisible():
-            self._drawBackground(item, x, y)
             self._drawSelection(item, x, y)
-            self._drawTreeLines(item, x, y)
             self._drawIcon(item, x, y)
             self._drawTitle(item, x, y)
 
@@ -283,7 +281,7 @@ class _ItemsPainter:
         width, height = self._window.GetClientSize()
         self._dc.DrawRectangle(0, 0, width, height)
 
-    def _drawTreeLines(self, item: NotesTreeItem, x: int, y: int):
+    def drawTreeLines(self, item: NotesTreeItem, x: int, y: int):
         parentItem = item.getParent()
         if parentItem is None:
             return
@@ -307,12 +305,6 @@ class _ItemsPainter:
         title_x = self._view_info.getTitleLeft(item) + x
         top = self._view_info.getItemTop(item) + (self._view_info.line_height - self._text_height) // 2 + y
         self._dc.DrawText(item.getTitle(), title_x, top)
-
-    def _drawBackground(self, item: NotesTreeItem, x: int, y: int):
-        width = self._window.GetClientSize()[0]
-        self._dc.SetPen(self._back_pen_normal)
-        self._dc.SetBrush(self._back_brush_normal)
-        self._dc.DrawRectangle(x, self._view_info.getItemTop(item) + y, width, self._view_info.line_height)
 
     def _drawSelection(self, item: NotesTreeItem, x: int, y: int):
         if not item.isSelected():
@@ -376,9 +368,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 if oldSelectedItem is not None:
                     oldSelectedItem.select(False)
                 item.select()
+                self.Refresh()
                 event = NotesTreeSelChangedEvent(page=item.getPage())
                 wx.PostEvent(self.GetParent(), event)
-                self.Refresh()
 
     def _onLeftButtonUp(self, event):
         pass
@@ -447,8 +439,15 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
                 painter.fillBackground()
-                for root_item in self._rootItems:
-                    self._paintTree(root_item, painter, interval_x, interval_y)
+                for item in self._pageCache.values():
+                    x = -interval_x[0]
+                    y = -interval_y[0]
+                    item_top = self._view_info.getItemTop(item)
+                    if item.isVisible():
+                        painter.drawTreeLines(item, x, y)
+
+                        if item_top >= interval_y[0] and item_top <= interval_y[1]:
+                            painter.draw(item, x, y)
 
     def _getScrolledX(self) -> Tuple[int, int]:
         xmin = self._getScrollX()
@@ -465,21 +464,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _getScrollY(self) -> int:
         return self.GetScrollPos(wx.VERTICAL) * self.GetScrollPixelsPerUnit()[1]
-
-    def _paintTree(
-        self,
-        root_item: NotesTreeItem,
-        painter: _ItemsPainter,
-        interval_x: Tuple[int, int],
-        interval_y: Tuple[int, int],
-    ):
-        y = self._view_info.getItemTop(root_item)
-        if y >= interval_y[0] and y <= interval_y[1]:
-            painter.draw(root_item, -interval_x[0], -interval_y[0])
-
-        if root_item.isExpanded():
-            for item in root_item._children:
-                self._paintTree(item, painter, interval_x, interval_y)
 
     def _onClose(self, event):
         self._iconsCache.clear()
