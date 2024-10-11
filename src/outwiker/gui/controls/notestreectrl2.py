@@ -10,6 +10,7 @@ import wx.lib.newevent
 
 from outwiker.core.defines import ICON_HEIGHT
 from outwiker.core.system import getBuiltinImagePath
+from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.imagelistcache import ImageListCache
 
 
@@ -84,6 +85,7 @@ class NotesTreeItem:
             index = len(self._children)
 
         self._children.insert(index, child)
+        child.setParent(self)
         return self
 
     def getChildren(self) -> List["NotesTreeItem"]:
@@ -102,6 +104,10 @@ class NotesTreeItem:
     def getParent(self) -> Optional["NotesTreeItem"]:
         return self._parent
 
+    def setParent(self, parent: "NotesTreeItem") -> "NotesTreeItem":
+        self._parent = parent
+        return self
+
     def getTextWidth(self) -> int:
         return self._textWidth
 
@@ -112,12 +118,16 @@ class NotesTreeItem:
     def getPage(self) -> BasePage:
         return self._page
 
+    def hasChildren(self):
+        return bool(self._children)
+
     def _print_tree(self):
         expand = "[-]" if self._expanded else "[+]"
         line = f"{'   ' * self._depth}{expand} {self._title} {self._line}"
-        print(line)
-        for child in self._children:
-            child._print_tree()
+        if self.isVisible():
+            print(line)
+            for child in self._children:
+                child._print_tree()
 
     def __repr__(self):
         return f"{self._title}"
@@ -159,8 +169,8 @@ class _ItemsViewInfo:
         self.extra_icons_left_margin = 3
         self.title_left_margin = 8
         self.title_right_margin = 4
-        self.expand_ctrl_width = 8
-        self.expand_ctrl_height = 8
+        self.expand_ctrl_width = 9
+        self.expand_ctrl_height = 9
         # self.expand_ctrl_center_x = self.vline_left_margin
 
         # Colors
@@ -219,15 +229,37 @@ class _ItemsViewInfo:
     def getItemCenterVertical(self, item: NotesTreeItem) -> int:
         return (self.getItemTop(item) + self.getItemBottom(item)) // 2
 
-    def isPointInItem(self, item: NotesTreeItem, x, y) -> bool:
+    def isPointInSelection(self, item: NotesTreeItem, x, y) -> bool:
         top = self.getItemTop(item)
         bottom = self.getItemBottom(item)
         left = self.getIconLeft(item)
         right = self.getSelectionRight(item)
         return y >= top and y <= bottom and x >= left and x <= right
 
+    def isPointInExpandCtrl(self, item: NotesTreeItem, x, y) -> bool:
+        top = self.getExpandCtrlTop(item)
+        bottom = self.getExpandCtrlBottom(item)
+        left = self.getExpandCtrlLeft(item)
+        right = self.getExpandCtrlRight(item)
+        return y >= top and y <= bottom and x >= left and x <= right
+
     def _getExtraIconsCount(self, item: NotesTreeItem) -> int:
         return len(item.getExtraImageIds())
+
+    def getTreeGridLeft(self, item: NotesTreeItem) -> int:
+        return self.getIconLeft(item) - self.depth_indent + self.icon_width // 2
+
+    def getExpandCtrlLeft(self, item: NotesTreeItem) -> int:
+        return self.getTreeGridLeft(item) - self.expand_ctrl_width // 2
+
+    def getExpandCtrlRight(self, item: NotesTreeItem) -> int:
+        return self.getTreeGridLeft(item) + self.expand_ctrl_width // 2
+
+    def getExpandCtrlTop(self, item: NotesTreeItem) -> int:
+        return self.getItemCenterVertical(item) - self.expand_ctrl_height // 2
+
+    def getExpandCtrlBottom(self, item: NotesTreeItem) -> int:
+        return self.getItemCenterVertical(item) + self.expand_ctrl_height // 2
 
 
 class _ItemsPainter:
@@ -242,6 +274,9 @@ class _ItemsPainter:
         self._dc = dc
         self._image_list = image_list
         self._view_info = view_info
+        self._expand_ctrl_images = SafeImageList(self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height)
+        self._expanded_img = self._expand_ctrl_images.AddFromFile(getBuiltinImagePath("expanded.svg"))
+        self._collapsed_img = self._expand_ctrl_images.AddFromFile(getBuiltinImagePath("collapsed.svg"))
 
         # Pens, brushes etc
         self._back_brush_normal = wx.NullBrush
@@ -268,11 +303,12 @@ class _ItemsPainter:
     def __exit__(self, type, value, traceback):
         pass
 
-    def draw(self, item: NotesTreeItem, x, y):
+    def draw(self, item: NotesTreeItem, dx, dy):
         if item.isVisible():
-            self._drawSelection(item, x, y)
-            self._drawIcon(item, x, y)
-            self._drawTitle(item, x, y)
+            self._drawSelection(item, dx, dy)
+            self._drawIcon(item, dx, dy)
+            self._drawTitle(item, dx, dy)
+            self._drawExpandCtrl(item, dx, dy)
 
     def fillBackground(self):
         back_color = self._view_info.back_color_normal
@@ -281,18 +317,28 @@ class _ItemsPainter:
         width, height = self._window.GetClientSize()
         self._dc.DrawRectangle(0, 0, width, height)
 
-    def drawTreeLines(self, item: NotesTreeItem, x: int, y: int):
+    def drawTreeLines(self, item: NotesTreeItem, dx: int, dy: int):
         parentItem = item.getParent()
         if parentItem is None:
             return
-        left = self._view_info.getIconCenter(parentItem) + x
-        right = self._view_info.getIconLeft(item) + x
-        top = self._view_info.getItemBottom(parentItem) + y
-        centerV = self._view_info.getItemCenterVertical(item) + y
+
+        left = self._view_info.getTreeGridLeft(item) + dx
+        right = self._view_info.getIconLeft(item) + dx
+        top = self._view_info.getItemBottom(parentItem) + dy
+        centerV = self._view_info.getItemCenterVertical(item) + dy
         points = [(left, top, left, centerV), (left, centerV, right, centerV)]
         self._dc.DrawLineList(points, pens=self._tree_line_pen)
 
-    def _drawTitle(self, item: NotesTreeItem, x: int, y: int):
+    def _drawExpandCtrl(self, item: NotesTreeItem, dx, dy):
+        if item.getChildren():
+            left = self._view_info.getExpandCtrlLeft(item) + dx
+            top = self._view_info.getExpandCtrlTop(item) + dy
+            # self._dc.DrawRectangle(left, top, self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height)
+            # if item.isExpanded():
+            bitmap = self._expand_ctrl_images.GetBitmap(self._expanded_img if item.isExpanded() else self._collapsed_img)
+            self._dc.DrawBitmap(bitmap, left, top)
+
+    def _drawTitle(self, item: NotesTreeItem, dx: int, dy: int):
         if item.isSelected():
             self._dc.SetTextForeground(self._view_info.font_color_selected)
             self._dc.SetTextBackground(self._view_info.back_color_selected)
@@ -302,11 +348,11 @@ class _ItemsPainter:
             self._dc.SetTextBackground(self._view_info.back_color_normal)
             self._dc.SetFont(self._title_font_normal)
 
-        title_x = self._view_info.getTitleLeft(item) + x
-        top = self._view_info.getItemTop(item) + (self._view_info.line_height - self._text_height) // 2 + y
+        title_x = self._view_info.getTitleLeft(item) + dx
+        top = self._view_info.getItemTop(item) + (self._view_info.line_height - self._text_height) // 2 + dy
         self._dc.DrawText(item.getTitle(), title_x, top)
 
-    def _drawSelection(self, item: NotesTreeItem, x: int, y: int):
+    def _drawSelection(self, item: NotesTreeItem, dx: int, dy: int):
         if not item.isSelected():
             return
 
@@ -315,12 +361,12 @@ class _ItemsPainter:
 
         left = self._view_info.getSelectionLeft(item)
         width = self._view_info.getSelectionWidth(item)
-        self._dc.DrawRectangle(x + left, self._view_info.getItemTop(item) + y, width, self._view_info.line_height)
+        self._dc.DrawRectangle(dx + left, self._view_info.getItemTop(item) + dy, width, self._view_info.line_height)
 
-    def _drawIcon(self, item: NotesTreeItem, x: int, y: int):
+    def _drawIcon(self, item: NotesTreeItem, dx: int, dy: int):
         bitmap = self._image_list.GetBitmap(item.getIconImageId())
-        left = self._view_info.getIconLeft(item) + x
-        top = self._view_info.getItemTop(item) + (self._view_info.line_height - self._view_info.icon_height) // 2 + y
+        left = self._view_info.getIconLeft(item) + dx
+        top = self._view_info.getItemTop(item) + (self._view_info.line_height - self._view_info.icon_height) // 2 + dy
         self._dc.DrawBitmap(bitmap, left, top)
 
 
@@ -362,8 +408,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         y = event.GetY() + self._getScrollY()
         item = self._getItemByY(y)
         if item is not None:
-            isPointInItem = self._view_info.isPointInItem(item, x, y)
-            if isPointInItem:
+            if item.hasChildren() and self._view_info.isPointInExpandCtrl(item, x, y):
+                self.expand(item.getPage(), not item.isExpanded())
+                # self._updateItems()
+                # self._rootItems[0]._print_tree()
+                return
+
+            if self._view_info.isPointInSelection(item, x, y):
                 oldSelectedItem = self._getSelectedItem()
                 if oldSelectedItem is not None:
                     oldSelectedItem.select(False)
@@ -376,13 +427,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         pass
 
     def _onRightButtonDown(self, event):
-        # item = self._getItemByY(event.GetY())
-        # if item is not None:
-        #     isPointInItem = self._view_info.isPointInItem(
-        #         item, event.GetX(), event.GetY()
-        #     )
-        #     if isPointInItem:
-        #         print(item)
         pass
 
     def _onRightButtonUp(self, event):
@@ -440,14 +484,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 interval_y = self._getScrolledY()
                 painter.fillBackground()
                 for item in self._pageCache.values():
-                    x = -interval_x[0]
-                    y = -interval_y[0]
+                    dx = -interval_x[0]
+                    dy = -interval_y[0]
                     item_top = self._view_info.getItemTop(item)
                     if item.isVisible():
-                        painter.drawTreeLines(item, x, y)
+                        painter.drawTreeLines(item, dx, dy)
 
                         if item_top >= interval_y[0] and item_top <= interval_y[1]:
-                            painter.draw(item, x, y)
+                            painter.draw(item, dx, dy)
 
     def _getScrolledX(self) -> Tuple[int, int]:
         xmin = self._getScrollX()
@@ -511,7 +555,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _updateItems(self):
         self._calculateItemsProperties()
-        self.Update()
+        self.Refresh()
 
     def _appendChildren(self, parentPage):
         """
@@ -638,11 +682,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self.expand(page)
         self._updateItems()
 
-    def expand(self, page):
+    def expand(self, page, expanded=True):
         item = self.getTreeItem(page)
         if item is not None:
-            item.expand()
-        self._updateItems()
+            item.expand(expanded)
+            self._updateItems()
 
     def createPage(self, newpage):
         # if newpage.parent in self._pageCache:
