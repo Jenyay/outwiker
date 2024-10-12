@@ -1,7 +1,7 @@
 version: 4.0.0.xxx.{build}
 image:
     - Visual Studio 2022
-    - Ubuntu2004
+    - Ubuntu2204
 environment:
     PY_PYTHON: 3.12
     PY_DIR: C:\Python312-x64
@@ -29,7 +29,7 @@ install:
     - sh: python -m pip install pipenv
     - sh: pipenv run python -m pip install --upgrade pip
     - sh: pipenv run python -m pip install attrdict
-    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.2
+    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-22.04 wxPython==4.2.2
     - sh: pipenv run python -m pip install -e .
     - sh: pipenv run python -m pip install -e ./owbuildtools
     - sh: pipenv install --dev -v
