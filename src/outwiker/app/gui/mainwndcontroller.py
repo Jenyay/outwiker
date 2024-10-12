@@ -266,7 +266,7 @@ class MainWndController:
         """
         self.updateTitle()
         self.updateStatusBar()
-        self.updateColors()
+        # self.updateColors()
 
     ###################################################
     # Активировать/дизактивировать интерфейс
@@ -322,24 +322,24 @@ class MainWndController:
 
         self._mainWindow.SetSize(xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
-        self.updateColors()
+        # self.updateColors()
         self._mainWindow.Layout()
         self._mainWindow.Thaw()
 
-    def updateColors(self):
-        config = self._mainWindow.mainWindowConfig
-        panels = [
-            self._mainWindow.treePanel,
-            self._mainWindow.attachPanel,
-            self._mainWindow.tagsCloudPanel,
-            # self._mainWindow.pagePanel,
-        ]
+    # def updateColors(self):
+    #     config = self._mainWindow.mainWindowConfig
+    #     panels = [
+    #         self._mainWindow.treePanel,
+    #         self._mainWindow.attachPanel,
+    #         self._mainWindow.tagsCloudPanel,
+    #         # self._mainWindow.pagePanel,
+    #     ]
 
-        for panel in panels:
-            panel.setBackgroundColour(config.mainPanesBackgroundColor.value)
-            panel.setForegroundColour(config.mainPanesTextColor.value)
+    #     for panel in panels:
+    #         panel.setBackgroundColour(config.mainPanesBackgroundColor.value)
+    #         panel.setForegroundColour(config.mainPanesTextColor.value)
 
-        self._mainWindow.Refresh()
+    #     self._mainWindow.Refresh()
 
     ###################################################
     # Список последних открытых вики

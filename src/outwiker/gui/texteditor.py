@@ -114,10 +114,10 @@ class TextEditor(TextEditorBase):
         faceName = self._config.fontName.value
         isBold = self._config.fontIsBold.value
         isItalic = self._config.fontIsItalic.value
-        fontColor = self._config.fontColor.value
-        backColor = self._config.backColor.value
-        selBackColor = self._config.selBackColor.value
-        marginBackColor = self._config.marginBackColor.value
+        # fontColor = self._config.fontColor.value
+        # backColor = self._config.backColor.value
+        # selBackColor = self._config.selBackColor.value
+        # marginBackColor = self._config.marginBackColor.value
 
         self.textCtrl.SetUseTabs(not self._config.tabUseSpaces.value)
 
@@ -127,14 +127,14 @@ class TextEditor(TextEditorBase):
         self.textCtrl.StyleSetFaceName(wx.stc.STC_STYLE_DEFAULT, faceName)
         self.textCtrl.StyleSetBold(wx.stc.STC_STYLE_DEFAULT, isBold)
         self.textCtrl.StyleSetItalic(wx.stc.STC_STYLE_DEFAULT, isItalic)
-        self.textCtrl.StyleSetForeground(wx.stc.STC_STYLE_DEFAULT, fontColor)
-        self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_DEFAULT, backColor)
-        self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_LINENUMBER, marginBackColor)
+        # self.textCtrl.StyleSetForeground(wx.stc.STC_STYLE_DEFAULT, fontColor)
+        # self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_DEFAULT, backColor)
+        # self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_LINENUMBER, marginBackColor)
 
-        self.textCtrl.SetSelBackground(1, selBackColor)
+        # self.textCtrl.SetSelBackground(1, selBackColor)
 
-        self.textCtrl.SetCaretForeground(fontColor)
-        self.textCtrl.SetCaretLineBackground(backColor)
+        # self.textCtrl.SetCaretForeground(fontColor)
+        # self.textCtrl.SetCaretLineBackground(backColor)
 
         self._setHotKeys()
 
