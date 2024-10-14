@@ -29,6 +29,7 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.notestreectrl2 import (
     NotesTreeCtrl2,
     EVT_NOTES_TREE_SEL_CHANGED,
+    EVT_NOTES_TREE_EXPAND_CHANGED,
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -121,8 +122,6 @@ class NotesTree(wx.Panel):
         """
         Подписка на события интерфейса
         """
-        # События, связанные с деревом
-        self.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
         self.Bind(wx.EVT_TREE_ITEM_MIDDLE_CLICK, self.__onMiddleClick)
 
         # Перетаскивание элементов
@@ -135,9 +134,8 @@ class NotesTree(wx.Panel):
         # Показ всплывающего меню
         self.treeCtrl.Bind(wx.EVT_TREE_ITEM_MENU, self.__onPopupMenu)
 
-        # Сворачивание/разворачивание элементов
-        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
-        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.__onTreeStateChanged)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeStateChanged)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
         self.treeCtrl.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.__onTreeItemActivated)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
@@ -176,22 +174,10 @@ class NotesTree(wx.Panel):
         editPage(self, page)
 
     def __onTreeStateChanged(self, event):
-        item = event.GetItem()
-        assert item.IsOk()
-        page = self.treeCtrl.GetItemData(item)
-        self.__saveItemState(item)
-
-        for child in page.children:
-            self.treeCtrl.appendChildren(child)
-
-    def __saveItemState(self, itemid):
-        assert itemid.IsOk()
-
-        page = self.treeCtrl.GetItemData(itemid)
+        page = event.page
+        expanded = event.expanded
         if page.readonly:
             return
-
-        expanded = self.treeCtrl.IsExpanded(itemid)
 
         page_registry = page.root.registry.get_page_registry(page)
         page_registry.set(self.pageOptionExpand, expanded)
@@ -245,7 +231,7 @@ class NotesTree(wx.Panel):
         self._application.onPageCreate -= self.__onPageCreate
         self._application.onPageSelect -= self.__onPageSelect
         self._application.onPageOrderChange -= self.__onPageOrderChange
-        self.Unbind(EVT_NOTES_TREE_SEL_CHANGED, handler=self.__onSelChanged)
+        self.treeCtrl.Unbind(EVT_NOTES_TREE_SEL_CHANGED, handler=self.__onSelChanged)
 
     def __onEndTreeUpdate(self, _root):
         self.__bindUpdateEvents()
@@ -256,7 +242,7 @@ class NotesTree(wx.Panel):
         self._application.onPageCreate += self.__onPageCreate
         self._application.onPageSelect += self.__onPageSelect
         self._application.onPageOrderChange += self.__onPageOrderChange
-        self.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
 
     def __onBeginDrag(self, event):
         event.Allow()
