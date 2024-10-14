@@ -55,7 +55,21 @@ class NotesTreeItem:
 
     def addChild(self, child: "NotesTreeItem") -> "NotesTreeItem":
         self._children.append(child)
+        child.setParent(self)
         return self
+
+    def insertChild(self, index: int, child: "NotesTreeItem") -> "NotesTreeItem":
+        if index < 0:
+            index = 0
+        if index > len(self._children):
+            index = len(self._children)
+
+        self._children.insert(index, child)
+        child.setParent(self)
+        return self
+
+    def getChildren(self) -> List["NotesTreeItem"]:
+        return self._children
 
     def getIconImageId(self) -> int:
         return self._iconImageId
@@ -77,19 +91,6 @@ class NotesTreeItem:
     def select(self, selected=True):
         self._selected = selected
         return self
-
-    def insertChild(self, index: int, child: "NotesTreeItem") -> "NotesTreeItem":
-        if index < 0:
-            index = 0
-        if index > len(self._children):
-            index = len(self._children)
-
-        self._children.insert(index, child)
-        child.setParent(self)
-        return self
-
-    def getChildren(self) -> List["NotesTreeItem"]:
-        return self._children
 
     def getExtraImageIds(self) -> List[int]:
         return self._extraImageIds
@@ -123,7 +124,7 @@ class NotesTreeItem:
 
     def _print_tree(self):
         expand = "[-]" if self._expanded else "[+]"
-        line = f"{'   ' * self._depth}{expand} {self._title} {self._line}"
+        line = f"{'   ' * self._depth}{expand} {self._title} {self._line} {self._visible=} {self._parent=}"
         if self.isVisible():
             print(line)
             for child in self._children:
@@ -140,13 +141,16 @@ class _NotesTreeItemPropertiesCalculator:
 
     def run(self, item: NotesTreeItem):
         parent = item.getParent()
-        item.setLine(self._line)
-        item.setVisible(parent is None or (parent.isVisible() and parent.isExpanded()))
-        item.setTextWidth(self._view_info.getTextWidth(item.getTitle()))
-        self._line += 1
-        if item.isExpanded():
-            for item in item.getChildren():
-                self.run(item)
+        visible = parent is None or (parent.isVisible() and parent.isExpanded()) 
+        item.setVisible(visible)
+
+        if visible:
+            item.setLine(self._line)
+            item.setTextWidth(self._view_info.getTextWidth(item.getTitle()))
+            self._line += 1
+        # if item.isExpanded():
+        for item in item.getChildren():
+            self.run(item)
 
     def getLastLine(self) -> int:
         return self._line
@@ -410,8 +414,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         if item is not None:
             if item.hasChildren() and self._view_info.isPointInExpandCtrl(item, x, y):
                 self.expand(item.getPage(), not item.isExpanded())
-                # self._updateItems()
-                # self._rootItems[0]._print_tree()
                 return
 
             if self._view_info.isPointInSelection(item, x, y):
