@@ -107,7 +107,7 @@ class NotesTree(wx.Panel):
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
 
     def __onWikiOpen(self, root):
-        self.treeCtrl.treeUpdate(root)
+        self.treeCtrl.setRoot(root)
 
     def __onPageUpdate(self, page, **kwargs):
         change = kwargs["change"]
@@ -235,7 +235,7 @@ class NotesTree(wx.Panel):
 
     def __onEndTreeUpdate(self, _root):
         self.__bindUpdateEvents()
-        self.treeCtrl.treeUpdate(self._application.wikiroot)
+        self.treeCtrl.setRoot(self._application.wikiroot)
 
     def __bindUpdateEvents(self):
         self._application.onTreeUpdate += self.__onTreeUpdate
@@ -269,7 +269,7 @@ class NotesTree(wx.Panel):
         self.dragItem = None
 
     def __onTreeUpdate(self, sender):
-        self.treeCtrl.treeUpdate(sender.root)
+        self.treeCtrl.setRoot(sender.root)
 
     def __onPageSelect(self, page):
         """

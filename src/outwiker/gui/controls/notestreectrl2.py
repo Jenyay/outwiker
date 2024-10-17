@@ -408,27 +408,38 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _getVisibleItems(self) -> List[NotesTreeItem]:
         return [item for item in self._pageCache.values() if item.isVisible()]
 
+    def _onExpandCollapseItem(self, item):
+        # print(f"Expand / Collapse item {item.getTitle()}")
+        page = item.getPage()
+        expanded = not item.isExpanded()
+        self.expand(page, expanded)
+        event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
+        wx.PostEvent(self, event)
+        # self._rootItems[0]._print_tree()
+
+    def _onSelectItem(self, item):
+        oldSelectedItem = self._getSelectedItem()
+        if oldSelectedItem is not None:
+            oldSelectedItem.select(False)
+        item.select()
+        self.Refresh()
+        event = NotesTreeSelChangedEvent(page=item.getPage())
+        wx.PostEvent(self, event)
+
     def _onLeftButtonDown(self, event):
         x = event.GetX() + self._getScrollX()
         y = event.GetY() + self._getScrollY()
         item = self._getItemByY(y)
-        if item is not None:
-            if item.hasChildren() and self._view_info.isPointInExpandCtrl(item, x, y):
-                page = item.getPage()
-                expanded = not item.isExpanded()
-                self.expand(page, expanded)
-                event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
-                wx.PostEvent(self, event)
-                return
+        if item is None:
+            return
 
-            if self._view_info.isPointInSelection(item, x, y):
-                oldSelectedItem = self._getSelectedItem()
-                if oldSelectedItem is not None:
-                    oldSelectedItem.select(False)
-                item.select()
-                self.Refresh()
-                event = NotesTreeSelChangedEvent(page=item.getPage())
-                wx.PostEvent(self, event)
+        if item.hasChildren() and self._view_info.isPointInExpandCtrl(item, x, y):
+            self._onExpandCollapseItem(item)
+            return
+
+        if self._view_info.isPointInSelection(item, x, y):
+            self._onSelectItem(item)
+            return
 
     def _onLeftButtonUp(self, event):
         pass
@@ -444,11 +455,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _getItemByY(self, y: int) -> Optional[NotesTreeItem]:
         for item in self._pageCache.values():
-            y_min = self._view_info.getItemTop(item)
-            y_max = self._view_info.getItemBottom(item)
-            if y >= y_min and y <= y_max:
-                return item
-
+            if item.isVisible():
+                y_min = self._view_info.getItemTop(item)
+                y_max = self._view_info.getItemBottom(item)
+                if y >= y_min and y <= y_max:
+                    return item
         return None
 
     def _calculateItemsProperties(self):
@@ -519,7 +530,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _onClose(self, event):
         self._iconsCache.clear()
 
-    def _createRootNotesTreeItem(self, rootPage: WikiDocument) -> "NotesTreeItem":
+    def _createRootNotesTreeItem(self, rootPage: BasePage) -> "NotesTreeItem":
         rootname = os.path.basename(rootPage.path)
         return (
             NotesTreeItem(rootname, rootPage, None)
@@ -542,25 +553,36 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         return new_item
 
-    def treeUpdate(self, rootPage):
-        """
-        Обновить дерево
-        """
+    def clear(self, update=True):
         self._iconsCache.clear()
         self._pageCache.clear()
         self._rootItems.clear()
+        if update:
+            self.updateTree()
+
+    def addRoot(self, rootPage: BasePage, update=True):
+        assert rootPage is not None
+        root_item = self._createRootNotesTreeItem(rootPage)
+        self._rootItems.append(root_item)
+        self._pageCache[rootPage] = root_item
+        if update:
+            self.updateTree()
+
+    def setRoot(self, rootPage: BasePage):
+        """
+        Обновить дерево
+        """
+        self.clear(update=False)
 
         if rootPage is not None:
-            root_item = self._createRootNotesTreeItem(rootPage)
-            self._rootItems.append(root_item)
-            self._pageCache[rootPage] = root_item
+            self.addRoot(rootPage, update=False)
             self._appendChildren(rootPage)
 
+            self.expand(rootPage, update=False)
             self.selectedPage = rootPage.selectedPage
-            self.expand(rootPage)
-            self._updateItems()
+            self.updateTree()
 
-    def _updateItems(self):
+    def updateTree(self):
         self._calculateItemsProperties()
         self.Refresh()
 
@@ -573,24 +595,23 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         if grandParentExpanded:
             for child in parentPage.children:
-                if child not in self._pageCache:
-                    self._insertChild(child)
+                self.insertPage(child)
 
         if self._getPageExpandState(parentPage):
-            self.expand(parentPage)
+            self.expand(parentPage, update=False)
 
-    def _insertChild(self, childPage):
+    def insertPage(self, page):
         """
-        Вставить одну дочерниюю страницу (childPage) в ветвь
+        Вставить одну дочерниюю страницу (page) в ветвь
         """
-        parentItem = self.getTreeItem(childPage.parent)
+        parentItem = self.getTreeItem(page.parent)
         assert parentItem is not None
 
-        childItem = self._createNotesTreeItem(childPage)
-        parentItem.insertChild(childPage.order, childItem)
+        childItem = self._createNotesTreeItem(page)
+        parentItem.insertChild(page.order, childItem)
 
-        self._pageCache[childPage] = childItem
-        self._appendChildren(childPage)
+        self._pageCache[page] = childItem
+        self._appendChildren(page)
 
         return childItem
 
@@ -687,13 +708,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         pages.reverse()
         for page in pages:
             self.expand(page)
-        self._updateItems()
+        self.updateTree()
 
-    def expand(self, page, expanded=True):
+    def expand(self, page, expanded=True, update=True):
         item = self.getTreeItem(page)
         if item is not None:
             item.expand(expanded)
-            self._updateItems()
+            if update:
+                self.updateTree()
 
     def createPage(self, newpage):
         # if newpage.parent in self._pageCache:
@@ -704,7 +726,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         #     assert item.IsOk()
 
         #     self.expand(newpage)
-        self._updateItems()
+        self.updateTree()
 
     def _getSelectedItem(self) -> Optional[NotesTreeItem]:
         for item in self._pageCache.values():
@@ -724,4 +746,4 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         for page, item in self._pageCache.items():
             item.select(page is newSelectedPage)
 
-        self._updateItems()
+        self.updateTree()
