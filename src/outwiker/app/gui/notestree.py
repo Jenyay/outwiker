@@ -25,6 +25,7 @@ from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
 from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
 from outwiker.core.system import getBuiltinImagePath
+from outwiker.core.tree import BasePage
 
 from outwiker.gui.controls.notestreectrl2 import (
     NotesTreeCtrl2,
@@ -107,7 +108,7 @@ class NotesTree(wx.Panel):
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
 
     def __onWikiOpen(self, root):
-        self.treeCtrl.setRoot(root)
+        self._setRoot(root)
 
     def __onPageUpdate(self, page, **kwargs):
         change = kwargs["change"]
@@ -181,6 +182,10 @@ class NotesTree(wx.Panel):
 
         page_registry = page.root.registry.get_page_registry(page)
         page_registry.set(self.pageOptionExpand, expanded)
+        if expanded:
+            for child in page.children:
+                self._appendChildren(child)
+            self.treeCtrl.updateTree()
 
     def __onPopupMenu(self, event):
         self.popupPage = None
@@ -235,7 +240,7 @@ class NotesTree(wx.Panel):
 
     def __onEndTreeUpdate(self, _root):
         self.__bindUpdateEvents()
-        self.treeCtrl.setRoot(self._application.wikiroot)
+        self._setRoot(self._application.wikiroot)
 
     def __bindUpdateEvents(self):
         self._application.onTreeUpdate += self.__onTreeUpdate
@@ -269,7 +274,7 @@ class NotesTree(wx.Panel):
         self.dragItem = None
 
     def __onTreeUpdate(self, sender):
-        self.treeCtrl.setRoot(sender.root)
+        self._setRoot(sender.root)
 
     def __onPageSelect(self, page):
         """
@@ -416,9 +421,9 @@ class NotesTree(wx.Panel):
         if selectedPage is None:
             return
 
-        item = self.treeCtrl.getTreeItem(selectedPage)
-        if not self.treeCtrl.IsVisible(item):
-            self.treeCtrl.ScrollTo(item)
+        # item = self.treeCtrl.getTreeItem(selectedPage)
+        # if not self.treeCtrl.IsVisible(item):
+        #     self.treeCtrl.ScrollTo(item)
 
     def __updatePage(self, page):
         """
@@ -444,6 +449,49 @@ class NotesTree(wx.Panel):
 
     def expand(self, page):
         self.treeCtrl.expand(page)
+
+    def _setRoot(self, rootPage: BasePage):
+        """
+        Обновить дерево
+        """
+        self.treeCtrl.clear(update=False)
+
+        if rootPage is not None:
+            self.treeCtrl.addRoot(rootPage, update=False)
+            self.treeCtrl.expand(rootPage, update=False)
+            self._appendChildren(rootPage)
+            self.treeCtrl.selectedPage = rootPage.selectedPage
+            self.treeCtrl.updateTree()
+
+    def _appendChildren(self, parentPage: BasePage):
+        """
+        Добавить детей в дерево
+        parentPage - родительская страница, куда добавляем дочерние страницы
+        """
+        grandParentExpanded = self._getPageExpandState(parentPage.parent)
+
+        if grandParentExpanded:
+            for child in parentPage.children:
+                self.treeCtrl.insertPage(child, update=False)
+                self._appendChildren(child)
+
+        if self._getPageExpandState(parentPage):
+            self.treeCtrl.expand(parentPage, update=False)
+
+    def _getPageExpandState(self, page: Optional[BasePage]):
+        """
+        Проверить состояние "раскрытости" страницы
+        """
+        if page is None:
+            return True
+
+        if page.parent is None:
+            return True
+
+        page_registry = page.root.registry.get_page_registry(page)
+        expanded = page_registry.getbool(self.pageOptionExpand, default=False)
+
+        return expanded
 
 
 class NotesTreeDropFilesTarget(BaseDropFilesTarget):

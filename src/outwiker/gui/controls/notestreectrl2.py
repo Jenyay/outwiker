@@ -409,13 +409,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         return [item for item in self._pageCache.values() if item.isVisible()]
 
     def _onExpandCollapseItem(self, item):
-        # print(f"Expand / Collapse item {item.getTitle()}")
         page = item.getPage()
         expanded = not item.isExpanded()
         self.expand(page, expanded)
         event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
         wx.PostEvent(self, event)
-        # self._rootItems[0]._print_tree()
 
     def _onSelectItem(self, item):
         oldSelectedItem = self._getSelectedItem()
@@ -568,52 +566,24 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         if update:
             self.updateTree()
 
-    def setRoot(self, rootPage: BasePage):
-        """
-        Обновить дерево
-        """
-        self.clear(update=False)
-
-        if rootPage is not None:
-            self.addRoot(rootPage, update=False)
-            self._appendChildren(rootPage)
-
-            self.expand(rootPage, update=False)
-            self.selectedPage = rootPage.selectedPage
-            self.updateTree()
-
     def updateTree(self):
         self._calculateItemsProperties()
         self.Refresh()
 
-    def _appendChildren(self, parentPage):
-        """
-        Добавить детей в дерево
-        parentPage - родительская страница, куда добавляем дочерние страницы
-        """
-        grandParentExpanded = self._getItemExpandState(parentPage.parent)
-
-        if grandParentExpanded:
-            for child in parentPage.children:
-                self.insertPage(child)
-
-        if self._getPageExpandState(parentPage):
-            self.expand(parentPage, update=False)
-
-    def insertPage(self, page):
+    def insertPage(self, page: WikiPage, update=True):
         """
         Вставить одну дочерниюю страницу (page) в ветвь
         """
-        parentItem = self.getTreeItem(page.parent)
-        assert parentItem is not None
+        if page not in self._pageCache:
+            parentItem = self._getTreeItem(page.parent)
+            assert parentItem is not None
 
-        childItem = self._createNotesTreeItem(page)
-        parentItem.insertChild(page.order, childItem)
+            item = self._createNotesTreeItem(page)
+            parentItem.insertChild(page.order, item)
+            self._pageCache[page] = item
 
-        self._pageCache[page] = childItem
-        self._appendChildren(page)
-
-        return childItem
+        if update:
+            self.updateTree()
 
     def removePageItem(self, page):
         """
@@ -622,7 +592,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         # for child in page.children:
         #     self.removePageItem(child)
 
-        # item = self.getTreeItem(page)
+        # item = self._getTreeItem(page)
         # if item is not None:
         #     del self._pageCache[page]
         #     self.Delete(item)
@@ -660,19 +630,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         # self.SetItemImage(self._pageCache[page], icon_id)
         pass
 
-    def _getItemExpandState(self, page):
-        """
-        Проверить, раскрыт ли элемент в дереве для страницы page
-        """
-        if page is None:
-            return True
-
-        if page.parent is None:
-            return True
-
-        return self._pageCache[page].isExpanded()
-
-    def _getPageExpandState(self, page):
+    def _getPageExpandState(self, page: Optional[BasePage]):
         """
         Проверить состояние "раскрытости" страницы
         """
@@ -687,7 +645,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         return expanded
 
-    def getTreeItem(self, page: BasePage) -> Optional[NotesTreeItem]:
+    def _getTreeItem(self, page: Optional[BasePage]) -> Optional[NotesTreeItem]:
         """
         Получить элемент дерева по странице.
         Если для страницы не создан элемент дерева, возвращается None
@@ -711,7 +669,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.updateTree()
 
     def expand(self, page, expanded=True, update=True):
-        item = self.getTreeItem(page)
+        item = self._getTreeItem(page)
         if item is not None:
             item.expand(expanded)
             if update:

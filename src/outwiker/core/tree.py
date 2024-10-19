@@ -93,7 +93,7 @@ class BasePage(metaclass=ABCMeta):
         self._children = children
 
     @property
-    def root(self) -> "BasePage":
+    def root(self) -> "WikiDocument":
         """
         Return root of notes tree
         """
