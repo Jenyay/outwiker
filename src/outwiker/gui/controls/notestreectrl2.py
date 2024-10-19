@@ -471,14 +471,19 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             + self._view_info.title_right_margin
             for item in self._getVisibleItems()
         ]
-        max_width = max(widths)
+        max_scroll_x = max(widths)
+        max_scroll_y = calculator.getLastLine() + 1
+
+        old_scroll_pos_x = self.GetScrollPos(wx.HORIZONTAL)
+        old_scroll_pos_y = self.GetScrollPos(wx.VERTICAL)
+
         self.SetScrollbars(
             1,
             self._view_info.line_height,
-            max_width,
-            calculator.getLastLine() + 1,
-            0,
-            0,
+            max_scroll_x,
+            max_scroll_y, 
+            old_scroll_pos_x,
+            old_scroll_pos_y,
         )
 
     def _onPaint(self, event):
