@@ -4,7 +4,7 @@ import logging
 import os
 from typing import Dict, Optional, List, Tuple
 
-from outwiker.core.tree import BasePage, WikiDocument, WikiPage
+from outwiker.core.tree import BasePage, WikiPage
 import wx
 import wx.lib.newevent
 
@@ -59,18 +59,18 @@ class NotesTreeItem:
         child.setParent(self)
         return self
 
-    def insertChild(self, index: int, child: "NotesTreeItem") -> "NotesTreeItem":
-        if index < 0:
-            index = 0
-        if index > len(self._children):
-            index = len(self._children)
+    # def insertChild(self, index: int, child: "NotesTreeItem") -> "NotesTreeItem":
+    #     if index < 0:
+    #         index = 0
+    #     if index > len(self._children):
+    #         index = len(self._children)
 
-        self._children.insert(index, child)
-        child.setParent(self)
-        return self
+    #     self._children.insert(index, child)
+    #     child.setParent(self)
+    #     return self
 
     def getChildren(self) -> List["NotesTreeItem"]:
-        return self._children
+        return sorted(self._children, key=lambda item: item.getPage().order)
 
     def getIconImageId(self) -> int:
         return self._iconImageId
@@ -491,16 +491,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             with _ItemsPainter(
                 self, dc, self._iconsCache.getImageList(), self._view_info
             ) as painter:
-                # vbX, vbY = self.GetViewStart()
-                # print(vbX, vbY)
-                # upd = wx.RegionIterator(self.GetUpdateRegion())
-                # while upd.HaveRects():
-                #     rect = upd.GetRect()
-                #     print(rect)
-                #     # Repaint this rectangle
-                #     # PaintRectangle(rect, dc)
-                #     upd.Next()
-
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
                 painter.fillBackground()
@@ -575,7 +565,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._calculateItemsProperties()
         self.Refresh()
 
-    def insertPage(self, page: WikiPage, update=True):
+    def addPage(self, page: WikiPage, update=True):
         """
         Вставить одну дочерниюю страницу (page) в ветвь
         """
@@ -584,11 +574,26 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             assert parentItem is not None
 
             item = self._createNotesTreeItem(page)
-            parentItem.insertChild(page.order, item)
+            parentItem.addChild(item)
             self._pageCache[page] = item
 
         if update:
             self.updateTree()
+
+    def scrollToPage(self, page: Optional[BasePage]):
+        if page is None:
+            return
+
+        item = self._pageCache.get(page)
+        if item is not None:
+            scroll_x = 0
+            scroll_y = item.getLine() - 1
+            if scroll_y < 0:
+                scroll_y = 0
+
+            print(scroll_x, scroll_y)
+            self.SetScrollPos(wx.HORIZONTAL, scroll_x, refresh=False)
+            self.SetScrollPos(wx.VERTICAL, scroll_y)
 
     def removePageItem(self, page):
         """
@@ -710,3 +715,4 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             item.select(page is newSelectedPage)
 
         self.updateTree()
+        self.scrollToPage(newSelectedPage)

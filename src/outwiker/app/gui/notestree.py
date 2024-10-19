@@ -306,7 +306,7 @@ class NotesTree(wx.Panel):
         """
         Изменение порядка страниц
         """
-        self.__updatePage(sender)
+        self.treeCtrl.updateTree()
 
     @property
     def selectedPage(self):
@@ -404,48 +404,11 @@ class NotesTree(wx.Panel):
         for action in actions:
             actionController.removeToolbarButton(action.stringId)
 
-    def getTreeItem(
-        self, page: "outwiker.core.tree.WikiPage"
-    ) -> Optional[wx.TreeItemId]:
-        """
-        Получить элемент дерева по странице.
-        Если для страницы не создан элемент дерева, возвращается None
-        """
-        return self.treeCtrl.getTreeItem(page)
-
-    def __scrollToCurrentPage(self):
+    def _scrollToCurrentPage(self):
         """
         Если текущая страница вылезла за пределы видимости, то прокрутить к ней
         """
-        selectedPage = self._application.selectedPage
-        if selectedPage is None:
-            return
-
-        # item = self.treeCtrl.getTreeItem(selectedPage)
-        # if not self.treeCtrl.IsVisible(item):
-        #     self.treeCtrl.ScrollTo(item)
-
-    def __updatePage(self, page):
-        """
-        Обновить страницу (удалить из списка и добавить снова)
-        """
-        # Отпишемся от обновлений страниц, чтобы не изменять выбранную страницу
-        self.__unbindUpdateEvents()
-        self.Freeze()
-
-        try:
-            self.treeCtrl.removePageItem(page)
-
-            item = self.treeCtrl.insertChild(page)
-
-            if page.root.selectedPage == page:
-                # Если обновляем выбранную страницу
-                self.treeCtrl.SelectItem(item)
-
-            self.__scrollToCurrentPage()
-        finally:
-            self.Thaw()
-            self.__bindUpdateEvents()
+        self.treeCtrl.scrollToPage(self._application.selectedPage)
 
     def expand(self, page):
         self.treeCtrl.expand(page)
@@ -472,7 +435,7 @@ class NotesTree(wx.Panel):
 
         if grandParentExpanded:
             for child in parentPage.children:
-                self.treeCtrl.insertPage(child, update=False)
+                self.treeCtrl.addPage(child, update=False)
                 self._appendChildren(child)
 
         if self._getPageExpandState(parentPage):
