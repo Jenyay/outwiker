@@ -31,7 +31,8 @@ from outwiker.gui.controls.notestreectrl2 import (
     NotesTreeCtrl2,
     EVT_NOTES_TREE_SEL_CHANGED,
     EVT_NOTES_TREE_EXPAND_CHANGED,
-    EVT_NOTES_TREE_RIGHT_BUTTON_UP
+    EVT_NOTES_TREE_RIGHT_BUTTON_UP,
+    EVT_NOTES_TREE_ITEM_ACTIVATE
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -138,7 +139,7 @@ class NotesTree(wx.Panel):
 
         self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeStateChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
-        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.__onTreeItemActivated)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_ITEM_ACTIVATE, self.__onTreeItemActivated)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -168,12 +169,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.removePageItem(page)
 
     def __onTreeItemActivated(self, event):
-        item = event.GetItem()
-        if not item.IsOk():
-            return
-
-        page = self.treeCtrl.GetItemData(item)
-        editPage(self, page)
+        editPage(self, event.page)
 
     def __onTreeStateChanged(self, event):
         page = event.page

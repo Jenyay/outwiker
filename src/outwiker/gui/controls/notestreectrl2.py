@@ -17,6 +17,7 @@ from outwiker.gui.imagelistcache import ImageListCache
 NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
 NotesTreeItemExpandChangedEvent, EVT_NOTES_TREE_EXPAND_CHANGED = wx.lib.newevent.NewEvent()
 NotesTreeRightButtonUpEvent, EVT_NOTES_TREE_RIGHT_BUTTON_UP = wx.lib.newevent.NewEvent()
+NotesTreeItemActivateEvent, EVT_NOTES_TREE_ITEM_ACTIVATE = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
 
@@ -444,11 +445,18 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         item = self._getItemByY(y)
         if item is None:
             return
+
         event = NotesTreeRightButtonUpEvent(page=item.getPage())
         wx.PostEvent(self, event)
 
     def _onLeftDblClick(self, event):
-        pass
+        y = event.GetY() + self._getScrollY()
+        item = self._getItemByY(y)
+        if item is None:
+            return
+
+        event = NotesTreeItemActivateEvent(page=item.getPage())
+        wx.PostEvent(self, event)
 
     def _getItemByY(self, y: int) -> Optional[NotesTreeItem]:
         for item in self._pageCache.values():
