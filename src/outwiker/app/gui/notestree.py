@@ -32,7 +32,8 @@ from outwiker.gui.controls.notestreectrl2 import (
     EVT_NOTES_TREE_SEL_CHANGED,
     EVT_NOTES_TREE_EXPAND_CHANGED,
     EVT_NOTES_TREE_RIGHT_BUTTON_UP,
-    EVT_NOTES_TREE_ITEM_ACTIVATE
+    EVT_NOTES_TREE_MIDDLE_BUTTON_UP,
+    EVT_NOTES_TREE_ITEM_ACTIVATE,
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -125,7 +126,7 @@ class NotesTree(wx.Panel):
         """
         Подписка на события интерфейса
         """
-        self.Bind(wx.EVT_TREE_ITEM_MIDDLE_CLICK, self.__onMiddleClick)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_MIDDLE_BUTTON_UP, self.__onMiddleClick)
 
         # Перетаскивание элементов
         self.treeCtrl.Bind(wx.EVT_TREE_BEGIN_DRAG, self.__onBeginDrag)
@@ -144,12 +145,7 @@ class NotesTree(wx.Panel):
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
     def __onMiddleClick(self, event):
-        item = event.GetItem()
-        if not item.IsOk():
-            return
-
-        page = self.treeCtrl.GetItemData(item)
-        self._application.mainWindow.tabsController.openInTab(page, True)
+        self._application.mainWindow.tabsController.openInTab(event.page, True)
 
     def __onClose(self, _event):
         self._dropTarget.destroy()

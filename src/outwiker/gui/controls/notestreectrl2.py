@@ -17,6 +17,7 @@ from outwiker.gui.imagelistcache import ImageListCache
 NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
 NotesTreeItemExpandChangedEvent, EVT_NOTES_TREE_EXPAND_CHANGED = wx.lib.newevent.NewEvent()
 NotesTreeRightButtonUpEvent, EVT_NOTES_TREE_RIGHT_BUTTON_UP = wx.lib.newevent.NewEvent()
+NotesTreeMiddleButtonUpEvent, EVT_NOTES_TREE_MIDDLE_BUTTON_UP = wx.lib.newevent.NewEvent()
 NotesTreeItemActivateEvent, EVT_NOTES_TREE_ITEM_ACTIVATE = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
@@ -398,6 +399,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
         self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightButtonDown)
         self.Bind(wx.EVT_RIGHT_UP, handler=self._onRightButtonUp)
+        self.Bind(wx.EVT_MIDDLE_UP, handler=self._onMiddleButtonUp)
         self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
 
     def _getVisibleItems(self) -> List[NotesTreeItem]:
@@ -447,6 +449,15 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             return
 
         event = NotesTreeRightButtonUpEvent(page=item.getPage())
+        wx.PostEvent(self, event)
+
+    def _onMiddleButtonUp(self, event):
+        y = event.GetY() + self._getScrollY()
+        item = self._getItemByY(y)
+        if item is None:
+            return
+
+        event = NotesTreeMiddleButtonUpEvent(page=item.getPage())
         wx.PostEvent(self, event)
 
     def _onLeftDblClick(self, event):
