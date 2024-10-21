@@ -31,6 +31,7 @@ from outwiker.gui.controls.notestreectrl2 import (
     NotesTreeCtrl2,
     EVT_NOTES_TREE_SEL_CHANGED,
     EVT_NOTES_TREE_EXPAND_CHANGED,
+    EVT_NOTES_TREE_RIGHT_BUTTON_UP
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -133,7 +134,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.__onEndLabelEdit)
 
         # Показ всплывающего меню
-        self.treeCtrl.Bind(wx.EVT_TREE_ITEM_MENU, self.__onPopupMenu)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_RIGHT_BUTTON_UP, self.__onPopupMenu)
 
         self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeStateChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
@@ -189,11 +190,7 @@ class NotesTree(wx.Panel):
 
     def __onPopupMenu(self, event):
         self.popupPage = None
-        popupItem = event.GetItem()
-        if not popupItem.IsOk():
-            return
-
-        popupPage = self.treeCtrl.GetItemData(popupItem)
+        popupPage = event.page
         self.popupMenu = PagePopupMenu(self, popupPage, self._application)
         self.PopupMenu(self.popupMenu.menu)
 

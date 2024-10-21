@@ -16,19 +16,18 @@ from outwiker.gui.imagelistcache import ImageListCache
 
 NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
 NotesTreeItemExpandChangedEvent, EVT_NOTES_TREE_EXPAND_CHANGED = wx.lib.newevent.NewEvent()
+NotesTreeRightButtonUpEvent, EVT_NOTES_TREE_RIGHT_BUTTON_UP = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
 
 
 class NotesTreeItem:
-    def __init__(
-        self, title: str, page: BasePage, parent: Optional["NotesTreeItem"]
-    ) -> None:
-        self._title = title
+    def __init__(self, page: BasePage) -> None:
+        self._title = ""
         self._page = page
-        self._depth = parent.getDepth() + 1 if parent is not None else 0
+        self._parent: Optional["NotesTreeItem"] = None
+        self._depth = 0
         self._line = 0
-        self._parent: Optional["NotesTreeItem"] = parent
         self._children: List["NotesTreeItem"] = []
         self._iconImageId = -1
         self._extraImageIds: List[int] = []
@@ -44,6 +43,10 @@ class NotesTreeItem:
     def getTitle(self) -> str:
         return self._title
 
+    def setTitle(self, value) -> "NotesTreeItem":
+        self._title = value
+        return self
+
     def getDepth(self) -> int:
         return self._depth
 
@@ -58,16 +61,6 @@ class NotesTreeItem:
         self._children.append(child)
         child.setParent(self)
         return self
-
-    # def insertChild(self, index: int, child: "NotesTreeItem") -> "NotesTreeItem":
-    #     if index < 0:
-    #         index = 0
-    #     if index > len(self._children):
-    #         index = len(self._children)
-
-    #     self._children.insert(index, child)
-    #     child.setParent(self)
-    #     return self
 
     def getChildren(self) -> List["NotesTreeItem"]:
         return sorted(self._children, key=lambda item: item.getPage().order)
@@ -108,6 +101,7 @@ class NotesTreeItem:
 
     def setParent(self, parent: "NotesTreeItem") -> "NotesTreeItem":
         self._parent = parent
+        self._depth = parent.getDepth() + 1 if parent is not None else 0
         return self
 
     def getTextWidth(self) -> int:
@@ -446,7 +440,12 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         pass
 
     def _onRightButtonUp(self, event):
-        pass
+        y = event.GetY() + self._getScrollY()
+        item = self._getItemByY(y)
+        if item is None:
+            return
+        event = NotesTreeRightButtonUpEvent(page=item.getPage())
+        wx.PostEvent(self, event)
 
     def _onLeftDblClick(self, event):
         pass
@@ -525,26 +524,39 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _createRootNotesTreeItem(self, rootPage: BasePage) -> "NotesTreeItem":
         rootname = os.path.basename(rootPage.path)
+        item = NotesTreeItem(rootPage)
+
         return (
-            NotesTreeItem(rootname, rootPage, None)
+            item
+            .setTitle(rootname)
             .setIconImageId(self._iconsCache.getDefaultImageId())
             .setVisible()
         )
 
     def _createNotesTreeItem(self, page: WikiPage) -> "NotesTreeItem":
-        title = page.display_title
+        new_item = NotesTreeItem(page)
+        return self._updateItemProperties(new_item)
+
+    def _updateItemProperties(self, item: "NotesTreeItem"):
+        page = item.getPage()
+
+        assert page is not None
         parent_page = page.parent
-        assert parent_page is not None
+        if parent_page is not None:
+            title = page.display_title
+            parent_item = self._pageCache.get(parent_page)
+            item.setParent(parent_item)
+            item.setTitle(title)
+            item.expand(self._getPageExpandState(page))
+            item.setIconImageId(self._loadIcon(page))
+        return item
 
-        parent_item = self._pageCache[parent_page]
-
-        new_item = (
-            NotesTreeItem(title, page, parent_item)
-            .setIconImageId(self._loadIcon(page))
-            .expand(self._getPageExpandState(page))
-        )
-
-        return new_item
+    def updateItem(self, page: WikiPage, update=True):
+        item = self._pageCache.get(page)
+        assert item is not None
+        self._updateItemProperties(item)
+        if update:
+            self.updateTree()
 
     def clear(self, update=True):
         self._iconsCache.clear()
