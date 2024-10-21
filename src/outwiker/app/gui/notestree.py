@@ -115,19 +115,13 @@ class NotesTree(wx.Panel):
 
     def __onPageUpdate(self, page, **kwargs):
         change = kwargs["change"]
-        if change & PAGE_UPDATE_ICON:
-            self.treeCtrl.updateIcon(page)
-
-        if change & PAGE_UPDATE_TITLE:
-            item = self.treeCtrl.getTreeItem(page)
-            self.treeCtrl.SetItemText(item, page.display_title)
+        if (change & PAGE_UPDATE_ICON) or (change & PAGE_UPDATE_TITLE):
+            self.treeCtrl.updateItem(page)
 
     def __BindGuiEvents(self):
         """
         Подписка на события интерфейса
         """
-        self.treeCtrl.Bind(EVT_NOTES_TREE_MIDDLE_BUTTON_UP, self.__onMiddleClick)
-
         # Перетаскивание элементов
         self.treeCtrl.Bind(wx.EVT_TREE_BEGIN_DRAG, self.__onBeginDrag)
         self.treeCtrl.Bind(wx.EVT_TREE_END_DRAG, self.__onEndDrag)
@@ -135,11 +129,10 @@ class NotesTree(wx.Panel):
         # Переименование элемента
         self.treeCtrl.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.__onEndLabelEdit)
 
-        # Показ всплывающего меню
-        self.treeCtrl.Bind(EVT_NOTES_TREE_RIGHT_BUTTON_UP, self.__onPopupMenu)
-
-        self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeStateChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_RIGHT_BUTTON_UP, self.__onPopupMenu)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_MIDDLE_BUTTON_UP, self.__onMiddleClick)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeStateChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_ITEM_ACTIVATE, self.__onTreeItemActivated)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
@@ -150,7 +143,7 @@ class NotesTree(wx.Panel):
     def __onClose(self, _event):
         self._dropTarget.destroy()
         self.__UnBindApplicationEvents()
-        self.treeCtrl.DeleteAllItems()
+        self.treeCtrl.clear()
         self._removeButtons()
         self.toolbar.ClearTools()
         self.Destroy()
@@ -159,7 +152,9 @@ class NotesTree(wx.Panel):
         """
         Обработка создания страницы
         """
-        self.treeCtrl.createPage(newpage)
+        self.treeCtrl.addPage(newpage)
+        self.treeCtrl.expand(newpage, update=False)
+        self.treeCtrl.expand(newpage.parent, update=True)
 
     def __onPageRemove(self, page):
         self.treeCtrl.removePageItem(page)
@@ -413,7 +408,8 @@ class NotesTree(wx.Panel):
             self.treeCtrl.expand(rootPage, update=False)
             self._appendChildren(rootPage)
             self.treeCtrl.selectedPage = rootPage.selectedPage
-            self.treeCtrl.updateTree()
+
+        self.treeCtrl.updateTree()
 
     def _appendChildren(self, parentPage: BasePage):
         """
@@ -451,7 +447,7 @@ class NotesTreeDropFilesTarget(BaseDropFilesTarget):
     Class to drop files to notes in the notes tree panel.
     """
 
-    def __init__(self, application, targetWindow: wx.TreeCtrl, notesTree: NotesTree):
+    def __init__(self, application, targetWindow: NotesTreeCtrl2, notesTree: NotesTree):
         super().__init__(application, targetWindow)
         self._notesTree = notesTree
 

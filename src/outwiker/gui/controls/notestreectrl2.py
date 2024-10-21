@@ -145,7 +145,6 @@ class _NotesTreeItemPropertiesCalculator:
             item.setLine(self._line)
             item.setTextWidth(self._view_info.getTextWidth(item.getTitle()))
             self._line += 1
-        # if item.isExpanded():
         for item in item.getChildren():
             self.run(item)
 
@@ -397,7 +396,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftButtonDown)
         self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
-        self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightButtonDown)
         self.Bind(wx.EVT_RIGHT_UP, handler=self._onRightButtonUp)
         self.Bind(wx.EVT_MIDDLE_UP, handler=self._onMiddleButtonUp)
         self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
@@ -437,9 +435,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             return
 
     def _onLeftButtonUp(self, event):
-        pass
-
-    def _onRightButtonDown(self, event):
         pass
 
     def _onRightButtonUp(self, event):
@@ -715,17 +710,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             item.expand(expanded)
             if update:
                 self.updateTree()
-
-    def createPage(self, newpage):
-        # if newpage.parent in self._pageCache:
-        #     self.insertChild(newpage)
-
-        #     assert newpage in self._pageCache
-        #     item = self._pageCache[newpage]
-        #     assert item.IsOk()
-
-        #     self.expand(newpage)
-        self.updateTree()
 
     def _getSelectedItem(self) -> Optional[NotesTreeItem]:
         for item in self._pageCache.values():
