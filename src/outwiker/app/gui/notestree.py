@@ -34,6 +34,7 @@ from outwiker.gui.controls.notestreectrl2 import (
     EVT_NOTES_TREE_RIGHT_BUTTON_UP,
     EVT_NOTES_TREE_MIDDLE_BUTTON_UP,
     EVT_NOTES_TREE_ITEM_ACTIVATE,
+    EVT_NOTES_TREE_END_ITEM_EDIT,
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -126,9 +127,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.Bind(wx.EVT_TREE_BEGIN_DRAG, self.__onBeginDrag)
         self.treeCtrl.Bind(wx.EVT_TREE_END_DRAG, self.__onEndDrag)
 
-        # Переименование элемента
-        self.treeCtrl.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.__onEndLabelEdit)
-
+        self.treeCtrl.Bind(EVT_NOTES_TREE_END_ITEM_EDIT, self.__onEndLabelEdit)
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_RIGHT_BUTTON_UP, self.__onPopupMenu)
         self.treeCtrl.Bind(EVT_NOTES_TREE_MIDDLE_BUTTON_UP, self.__onMiddleClick)
@@ -193,24 +192,10 @@ class NotesTree(wx.Panel):
             showError(mainWindow, _("You can't rename the root element"))
             return
 
-        selectedItem = self.treeCtrl.getTreeItem(pageToRename)
-        if not selectedItem.IsOk():
-            return
-
-        self.treeCtrl.EditLabel(selectedItem)
+        self.treeCtrl.editItem(pageToRename)
 
     def __onEndLabelEdit(self, event):
-        if event.IsEditCancelled():
-            return
-
-        # Новый заголовок
-        label = event.GetLabel().strip()
-
-        item = event.GetItem()
-        page = self.treeCtrl.GetItemData(item)
-        # Не доверяем переименовывать элементы системе
-        event.Veto()
-        renamePage(page, label)
+        renamePage(event.page, event.new_title)
 
     def __onStartTreeUpdate(self, _root):
         self.__unbindUpdateEvents()

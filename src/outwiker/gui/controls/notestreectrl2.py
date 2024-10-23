@@ -15,10 +15,15 @@ from outwiker.gui.imagelistcache import ImageListCache
 
 
 NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
-NotesTreeItemExpandChangedEvent, EVT_NOTES_TREE_EXPAND_CHANGED = wx.lib.newevent.NewEvent()
+NotesTreeItemExpandChangedEvent, EVT_NOTES_TREE_EXPAND_CHANGED = (
+    wx.lib.newevent.NewEvent()
+)
 NotesTreeRightButtonUpEvent, EVT_NOTES_TREE_RIGHT_BUTTON_UP = wx.lib.newevent.NewEvent()
-NotesTreeMiddleButtonUpEvent, EVT_NOTES_TREE_MIDDLE_BUTTON_UP = wx.lib.newevent.NewEvent()
+NotesTreeMiddleButtonUpEvent, EVT_NOTES_TREE_MIDDLE_BUTTON_UP = (
+    wx.lib.newevent.NewEvent()
+)
 NotesTreeItemActivateEvent, EVT_NOTES_TREE_ITEM_ACTIVATE = wx.lib.newevent.NewEvent()
+NotesTreeEndItemEditEvent, EVT_NOTES_TREE_END_ITEM_EDIT = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
 
@@ -138,7 +143,7 @@ class _NotesTreeItemPropertiesCalculator:
 
     def run(self, item: NotesTreeItem):
         parent = item.getParent()
-        visible = parent is None or (parent.isVisible() and parent.isExpanded()) 
+        visible = parent is None or (parent.isVisible() and parent.isExpanded())
         item.setVisible(visible)
 
         if visible:
@@ -274,9 +279,15 @@ class _ItemsPainter:
         self._dc = dc
         self._image_list = image_list
         self._view_info = view_info
-        self._expand_ctrl_images = SafeImageList(self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height)
-        self._expanded_img = self._expand_ctrl_images.AddFromFile(getBuiltinImagePath("expanded.svg"))
-        self._collapsed_img = self._expand_ctrl_images.AddFromFile(getBuiltinImagePath("collapsed.svg"))
+        self._expand_ctrl_images = SafeImageList(
+            self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height
+        )
+        self._expanded_img = self._expand_ctrl_images.AddFromFile(
+            getBuiltinImagePath("expanded.svg")
+        )
+        self._collapsed_img = self._expand_ctrl_images.AddFromFile(
+            getBuiltinImagePath("collapsed.svg")
+        )
 
         # Pens, brushes etc
         self._back_brush_normal = wx.NullBrush
@@ -335,7 +346,9 @@ class _ItemsPainter:
             top = self._view_info.getExpandCtrlTop(item) + dy
             # self._dc.DrawRectangle(left, top, self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height)
             # if item.isExpanded():
-            bitmap = self._expand_ctrl_images.GetBitmap(self._expanded_img if item.isExpanded() else self._collapsed_img)
+            bitmap = self._expand_ctrl_images.GetBitmap(
+                self._expanded_img if item.isExpanded() else self._collapsed_img
+            )
             self._dc.DrawBitmap(bitmap, left, top)
 
     def _drawTitle(self, item: NotesTreeItem, dx: int, dy: int):
@@ -349,7 +362,11 @@ class _ItemsPainter:
             self._dc.SetFont(self._title_font_normal)
 
         title_x = self._view_info.getTitleLeft(item) + dx
-        top = self._view_info.getItemTop(item) + (self._view_info.line_height - self._text_height) // 2 + dy
+        top = (
+            self._view_info.getItemTop(item)
+            + (self._view_info.line_height - self._text_height) // 2
+            + dy
+        )
         self._dc.DrawText(item.getTitle(), title_x, top)
 
     def _drawSelection(self, item: NotesTreeItem, dx: int, dy: int):
@@ -361,12 +378,21 @@ class _ItemsPainter:
 
         left = self._view_info.getSelectionLeft(item)
         width = self._view_info.getSelectionWidth(item)
-        self._dc.DrawRectangle(dx + left, self._view_info.getItemTop(item) + dy, width, self._view_info.line_height)
+        self._dc.DrawRectangle(
+            dx + left,
+            self._view_info.getItemTop(item) + dy,
+            width,
+            self._view_info.line_height,
+        )
 
     def _drawIcon(self, item: NotesTreeItem, dx: int, dy: int):
         bitmap = self._image_list.GetBitmap(item.getIconImageId())
         left = self._view_info.getIconLeft(item) + dx
-        top = self._view_info.getItemTop(item) + (self._view_info.line_height - self._view_info.icon_height) // 2 + dy
+        top = (
+            self._view_info.getItemTop(item)
+            + (self._view_info.line_height - self._view_info.icon_height) // 2
+            + dy
+        )
         self._dc.DrawBitmap(bitmap, left, top)
 
 
@@ -391,12 +417,21 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._rootItems: List[NotesTreeItem] = []
         self._lineCount = 0
 
+        self._editItemTextCtrl = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
+        self._editItemTextCtrl.Hide()
+        self._currentEditItem: Optional[NotesTreeItem] = None
+
+        self._editItemTextCtrl.Bind(wx.EVT_TEXT_ENTER, handler=self._onEditItemEnter)
+        self._editItemTextCtrl.Bind(wx.EVT_CHAR, handler=self._onEditItemChar)
+
         self.Bind(wx.EVT_CLOSE, self._onClose)
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
 
         self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftButtonDown)
         self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
+        self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightButtonDown)
         self.Bind(wx.EVT_RIGHT_UP, handler=self._onRightButtonUp)
+        self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleButtonDown)
         self.Bind(wx.EVT_MIDDLE_UP, handler=self._onMiddleButtonUp)
         self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
 
@@ -419,7 +454,18 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         event = NotesTreeSelChangedEvent(page=item.getPage())
         wx.PostEvent(self, event)
 
+    def _onEditItemEnter(self, event):
+        self._completeItemEdit()
+
+    def _onEditItemChar(self, event):
+        keycode = event.GetUnicodeKey()
+        if keycode == wx.WXK_ESCAPE:
+            self._cancelItemEdit()
+
+        event.Skip()
+
     def _onLeftButtonDown(self, event):
+        self._completeItemEdit()
         x = event.GetX() + self._getScrollX()
         y = event.GetY() + self._getScrollY()
         item = self._getItemByY(y)
@@ -437,6 +483,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _onLeftButtonUp(self, event):
         pass
 
+    def _onRightButtonDown(self, event):
+        self._completeItemEdit()
+
     def _onRightButtonUp(self, event):
         y = event.GetY() + self._getScrollY()
         item = self._getItemByY(y)
@@ -445,6 +494,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         event = NotesTreeRightButtonUpEvent(page=item.getPage())
         wx.PostEvent(self, event)
+
+    def _onMiddleButtonDown(self, event):
+        self._completeItemEdit()
 
     def _onMiddleButtonUp(self, event):
         y = event.GetY() + self._getScrollY()
@@ -456,6 +508,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         wx.PostEvent(self, event)
 
     def _onLeftDblClick(self, event):
+        self._completeItemEdit()
         y = event.GetY() + self._getScrollY()
         item = self._getItemByY(y)
         if item is None:
@@ -494,7 +547,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             1,
             self._view_info.line_height,
             max_scroll_x,
-            max_scroll_y, 
+            max_scroll_y,
             old_scroll_pos_x,
             old_scroll_pos_y,
         )
@@ -541,8 +594,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         item = NotesTreeItem(rootPage)
 
         return (
-            item
-            .setTitle(rootname)
+            item.setTitle(rootname)
             .setIconImageId(self._iconsCache.getDefaultImageId())
             .setVisible()
         )
@@ -617,9 +669,48 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             if scroll_y < 0:
                 scroll_y = 0
 
-            print(scroll_x, scroll_y)
             self.SetScrollPos(wx.HORIZONTAL, scroll_x, refresh=False)
             self.SetScrollPos(wx.VERTICAL, scroll_y)
+
+    def _beginItemEdit(self, item: NotesTreeItem):
+        y_gap = 3
+        self._currentEditItem = item
+
+        scroll_x = self._getScrollX()
+        scroll_y = self._getScrollY()
+        x_min = self._view_info.getSelectionLeft(item)
+        y_min = self._view_info.getItemTop(item)
+        y_max = self._view_info.getItemBottom(item)
+
+        width = self.GetClientSize().GetWidth() - x_min
+        height = y_max - y_min + 2 * y_gap
+
+        self._editItemTextCtrl.SetSize(
+            x_min - scroll_x, y_min - y_gap - scroll_y, width, height
+        )
+        title = item.getTitle()
+        self._editItemTextCtrl.SetValue(title)
+        self._editItemTextCtrl.SetSelection(0, len(title))
+        self._editItemTextCtrl.Show()
+        self._editItemTextCtrl.SetFocus()
+
+    def _cancelItemEdit(self):
+        self._editItemTextCtrl.Hide()
+        self._currentEditItem = None
+
+    def _completeItemEdit(self):
+        if self._currentEditItem is not None:
+            event = NotesTreeEndItemEditEvent(
+                page=self._currentEditItem.getPage(),
+                new_title=self._editItemTextCtrl.GetValue(),
+            )
+            wx.PostEvent(self, event)
+            self._cancelItemEdit()
+
+    def editItem(self, page: WikiPage):
+        item = self._pageCache.get(page)
+        if item is not None:
+            self._beginItemEdit(item)
 
     def removePageItem(self, page):
         """
