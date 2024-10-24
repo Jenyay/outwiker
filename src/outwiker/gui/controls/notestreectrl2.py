@@ -447,6 +447,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _onSelectItem(self, item):
         oldSelectedItem = self._getSelectedItem()
+        if oldSelectedItem == item:
+            return
+
         if oldSelectedItem is not None:
             oldSelectedItem.select(False)
         item.select()
