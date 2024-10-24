@@ -272,7 +272,7 @@ class _ItemsPainter:
     def __init__(
         self,
         window: wx.Window,
-        dc: wx.PaintDC,
+        dc: wx.DC,
         image_list: wx.ImageList,
         view_info: _ItemsViewInfo,
     ) -> None:
@@ -418,6 +418,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._rootItems: List[NotesTreeItem] = []
         self._lineCount = 0
 
+        self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+
+        # Rename items
         self._editItemTextCtrl = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         self._editItemTextCtrl.Hide()
         self._currentEditItem: Optional[NotesTreeItem] = None
@@ -425,13 +428,16 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._editItemCencelled = False
         self._editItemTimer = wx.Timer()
 
+        # Rename items event handlers
         self._editItemTextCtrl.Bind(wx.EVT_TEXT_ENTER, handler=self._onEditItemEnter)
         self._editItemTextCtrl.Bind(wx.EVT_CHAR, handler=self._onEditItemChar)
         self._editItemTimer.Bind(wx.EVT_TIMER, handler=self._onEditTimer)
 
+        # Misc event handlers
         self.Bind(wx.EVT_CLOSE, self._onClose)
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
 
+        # Items mouse events
         self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftButtonDown)
         self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
         self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightButtonDown)
@@ -570,7 +576,10 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         )
 
     def _onPaint(self, event):
-        with wx.PaintDC(self) as dc:
+        with wx.BufferedPaintDC(self) as dc:
+            # bmp = wx.Bitmap();
+            # bmp.CreateWithDIPSize(self.GetClientSize(), self.GetDPIScaleFactor())
+            # mem_dc = wx.MemoryDC(bmp)
             with _ItemsPainter(
                 self, dc, self._iconsCache.getImageList(), self._view_info
             ) as painter:
@@ -586,6 +595,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
                         if item_top >= interval_y[0] and item_top <= interval_y[1]:
                             painter.draw(item, dx, dy)
+
+                # size = dc.GetSize()
+                # dc.Blit(0, 0, size.GetWidth(), size.GetHeight(), mem_dc, 0, 0)
 
     def _getScrolledX(self) -> Tuple[int, int]:
         xmin = self._getScrollX()
