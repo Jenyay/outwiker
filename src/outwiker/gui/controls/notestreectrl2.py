@@ -2,6 +2,7 @@
 
 import logging
 import os
+from datetime import datetime
 from typing import Dict, Optional, List, Tuple
 
 from outwiker.core.tree import BasePage, WikiPage
@@ -420,9 +421,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._editItemTextCtrl = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         self._editItemTextCtrl.Hide()
         self._currentEditItem: Optional[NotesTreeItem] = None
+        self._editClickDelay_ms = 300
+        self._editItemCencelled = False
+        self._editItemTimer = wx.Timer()
 
         self._editItemTextCtrl.Bind(wx.EVT_TEXT_ENTER, handler=self._onEditItemEnter)
         self._editItemTextCtrl.Bind(wx.EVT_CHAR, handler=self._onEditItemChar)
+        self._editItemTimer.Bind(wx.EVT_TIMER, handler=self._onEditTimer)
 
         self.Bind(wx.EVT_CLOSE, self._onClose)
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
@@ -438,6 +443,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _getVisibleItems(self) -> List[NotesTreeItem]:
         return [item for item in self._pageCache.values() if item.isVisible()]
 
+    def _onEditTimer(self, event):
+        self._editItemTimer.Stop()
+        if not self._editItemCencelled:
+            item = self._getSelectedItem()
+            if item is not None:
+                self._beginItemEdit(item)
+
     def _onExpandCollapseItem(self, item):
         page = item.getPage()
         expanded = not item.isExpanded()
@@ -445,11 +457,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
         wx.PostEvent(self, event)
 
-    def _onSelectItem(self, item):
-        oldSelectedItem = self._getSelectedItem()
-        if oldSelectedItem == item:
-            return
-
+    def _onSelectItem(self, item: NotesTreeItem, oldSelectedItem: Optional[NotesTreeItem]):
         if oldSelectedItem is not None:
             oldSelectedItem.select(False)
         item.select()
@@ -480,7 +488,12 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             return
 
         if self._view_info.isPointInSelection(item, x, y):
-            self._onSelectItem(item)
+            oldSelectedItem = self._getSelectedItem()
+            if oldSelectedItem != item:
+                self._onSelectItem(item, oldSelectedItem)
+            else:
+                self._editItemCencelled = False
+                self._editItemTimer.StartOnce(self._editClickDelay_ms)
             return
 
     def _onLeftButtonUp(self, event):
@@ -511,6 +524,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         wx.PostEvent(self, event)
 
     def _onLeftDblClick(self, event):
+        self._editItemCencelled = True
         self._completeItemEdit()
         y = event.GetY() + self._getScrollY()
         item = self._getItemByY(y)
