@@ -183,8 +183,7 @@ class _ItemsViewInfo:
         self.line_height = ICON_HEIGHT + 6
         self.icon_height = ICON_HEIGHT
         self.icon_width = ICON_HEIGHT
-        self.font_size = 10
-        # self.vline_left_margin = self.icon_width // 2
+        self.font_size = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize()
         self.depth_indent = self.icon_width // 2 + 16
         self.icon_left_margin = 8
         self.extra_icons_left_margin = 3
@@ -192,7 +191,6 @@ class _ItemsViewInfo:
         self.title_right_margin = 4
         self.expand_ctrl_width = 9
         self.expand_ctrl_height = 9
-        # self.expand_ctrl_center_x = self.vline_left_margin
 
         # Colors
         self.back_color_normal = wx.WHITE
@@ -360,8 +358,6 @@ class _ItemsPainter:
         if item.getChildren():
             left = self._view_info.getExpandCtrlLeft(item) + dx
             top = self._view_info.getExpandCtrlTop(item) + dy
-            # self._dc.DrawRectangle(left, top, self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height)
-            # if item.isExpanded():
             bitmap = self._expand_ctrl_images.GetBitmap(
                 self._expanded_img if item.isExpanded() else self._collapsed_img
             )
