@@ -431,6 +431,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         # Rename items event handlers
         self._editItemTextCtrl.Bind(wx.EVT_TEXT_ENTER, handler=self._onEditItemEnter)
         self._editItemTextCtrl.Bind(wx.EVT_CHAR, handler=self._onEditItemChar)
+        self._editItemTextCtrl.Bind(wx.EVT_KILL_FOCUS, handler=self._onEditItemComplete)
         self._editItemTimer.Bind(wx.EVT_TIMER, handler=self._onEditTimer)
 
         # Misc event handlers
@@ -472,6 +473,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         wx.PostEvent(self, event)
 
     def _onEditItemEnter(self, event):
+        self._completeItemEdit()
+
+    def _onEditItemComplete(self, event):
         self._completeItemEdit()
 
     def _onEditItemChar(self, event):
@@ -724,8 +728,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._editItemTextCtrl.SetFocus()
 
     def _cancelItemEdit(self):
-        self._editItemTextCtrl.Hide()
         self._currentEditItem = None
+        self._editItemTextCtrl.Hide()
 
     def _completeItemEdit(self):
         if self._currentEditItem is not None:
