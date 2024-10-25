@@ -107,7 +107,7 @@ class NotesTreeItem:
     def getParent(self) -> Optional["NotesTreeItem"]:
         return self._parent
 
-    def setParent(self, parent: "NotesTreeItem") -> "NotesTreeItem":
+    def setParent(self, parent: Optional["NotesTreeItem"]) -> "NotesTreeItem":
         self._parent = parent
         self._depth = parent.getDepth() + 1 if parent is not None else 0
         return self
@@ -745,17 +745,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         if item is not None:
             self._beginItemEdit(item)
 
-    def removePageItem(self, page):
-        """
-        Удалить элемент, соответствующий странице и все его дочерние страницы
-        """
-        # for child in page.children:
-        #     self.removePageItem(child)
-
-        # item = self._getTreeItem(page)
-        # if item is not None:
-        #     del self._pageCache[page]
-        #     self.Delete(item)
+    def _getAllPageChildren(self, parent_item: NotesTreeItem, children: List[BasePage]):
+        children_items = parent_item._children
+        children += [item.getPage() for item in children_items]
+        for child_item in children_items:
+            self._getAllPageChildren(child_item, children)
 
     def _loadIcon(self, page):
         """

@@ -92,7 +92,6 @@ class NotesTree(wx.Panel):
         self._application.onPageCreate += self.__onPageCreate
         self._application.onPageOrderChange += self.__onPageOrderChange
         self._application.onPageSelect += self.__onPageSelect
-        self._application.onPageRemove += self.__onPageRemove
         self._application.onPageUpdate += self.__onPageUpdate
         self._application.onStartTreeUpdate += self.__onStartTreeUpdate
         self._application.onEndTreeUpdate += self.__onEndTreeUpdate
@@ -106,7 +105,6 @@ class NotesTree(wx.Panel):
         self._application.onPageCreate -= self.__onPageCreate
         self._application.onPageOrderChange -= self.__onPageOrderChange
         self._application.onPageSelect -= self.__onPageSelect
-        self._application.onPageRemove -= self.__onPageRemove
         self._application.onPageUpdate -= self.__onPageUpdate
         self._application.onStartTreeUpdate -= self.__onStartTreeUpdate
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
@@ -154,9 +152,6 @@ class NotesTree(wx.Panel):
         self.treeCtrl.addPage(newpage)
         self.treeCtrl.expand(newpage, update=False)
         self.treeCtrl.expand(newpage.parent, update=True)
-
-    def __onPageRemove(self, page):
-        self.treeCtrl.removePageItem(page)
 
     def __onTreeItemActivated(self, event):
         editPage(self, event.page)
