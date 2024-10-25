@@ -2,7 +2,6 @@
 
 import logging
 import os
-from datetime import datetime
 from typing import Dict, Optional, List, Tuple
 
 from outwiker.core.tree import BasePage, WikiPage
@@ -43,6 +42,8 @@ class NotesTreeItem:
         self._italic = False
         self._fontColor = wx.Colour(0, 0, 0)
         self._backColor = wx.Colour(0, 0, 0)
+        self._italic = False
+        self._bold = False
         self._expanded = False
         self._selected = False
         self._visible = False
@@ -124,6 +125,20 @@ class NotesTreeItem:
 
     def hasChildren(self):
         return bool(self._children)
+
+    def isItalic(self):
+        return self._italic
+
+    def setItalic(self, italic=True) -> "NotesTreeItem":
+        self._italic = italic
+        return self
+
+    def isBold(self):
+        return self._bold
+
+    def setBold(self, bold=True) -> "NotesTreeItem":
+        self._bold = bold
+        return self
 
     def _print_tree(self):
         expand = "[-]" if self._expanded else "[+]"
@@ -353,14 +368,18 @@ class _ItemsPainter:
             self._dc.DrawBitmap(bitmap, left, top)
 
     def _drawTitle(self, item: NotesTreeItem, dx: int, dy: int):
+        current_font = self._title_font_selected if item.isSelected() else self._title_font_normal
+        current_font.SetStyle(wx.FONTSTYLE_ITALIC if item.isItalic() else wx.FONTSTYLE_NORMAL)
+        current_font.SetWeight(wx.FONTWEIGHT_BOLD if item.isBold() else wx.FONTWEIGHT_NORMAL)
+
         if item.isSelected():
             self._dc.SetTextForeground(self._view_info.font_color_selected)
             self._dc.SetTextBackground(self._view_info.back_color_selected)
-            self._dc.SetFont(self._title_font_selected)
         else:
             self._dc.SetTextForeground(self._view_info.font_color_normal)
             self._dc.SetTextBackground(self._view_info.back_color_normal)
-            self._dc.SetFont(self._title_font_normal)
+
+        self._dc.SetFont(current_font)
 
         title_x = self._view_info.getTitleLeft(item) + dx
         top = (
@@ -581,9 +600,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _onPaint(self, event):
         with wx.BufferedPaintDC(self) as dc:
-            # bmp = wx.Bitmap();
-            # bmp.CreateWithDIPSize(self.GetClientSize(), self.GetDPIScaleFactor())
-            # mem_dc = wx.MemoryDC(bmp)
             with _ItemsPainter(
                 self, dc, self._iconsCache.getImageList(), self._view_info
             ) as painter:
@@ -599,9 +615,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
                         if item_top >= interval_y[0] and item_top <= interval_y[1]:
                             painter.draw(item, dx, dy)
-
-                # size = dc.GetSize()
-                # dc.Blit(0, 0, size.GetWidth(), size.GetHeight(), mem_dc, 0, 0)
 
     def _getScrolledX(self) -> Tuple[int, int]:
         xmin = self._getScrollX()
@@ -648,6 +661,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             item.setTitle(title)
             item.expand(self._getPageExpandState(page))
             item.setIconImageId(self._loadIcon(page))
+            item.setItalic(page.readonly)
         return item
 
     def updateItem(self, page: WikiPage, update=True):
@@ -773,16 +787,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             logger.error("Invalid icon file: %s", icon)
             imageId = self._iconsCache.getDefaultImageId()
         return imageId
-
-    def updateIcon(self, page):
-        # if page not in self._pageCache:
-        #     # Если нет этой страницы в дереве, то не важно,
-        #     # изменилась иконка или нет
-        #     return
-
-        # icon_id = self._loadIcon(page)
-        # self.SetItemImage(self._pageCache[page], icon_id)
-        pass
 
     def _getPageExpandState(self, page: Optional[BasePage]):
         """
