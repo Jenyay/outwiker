@@ -24,6 +24,7 @@ NotesTreeMiddleButtonUpEvent, EVT_NOTES_TREE_MIDDLE_BUTTON_UP = (
 )
 NotesTreeItemActivateEvent, EVT_NOTES_TREE_ITEM_ACTIVATE = wx.lib.newevent.NewEvent()
 NotesTreeEndItemEditEvent, EVT_NOTES_TREE_END_ITEM_EDIT = wx.lib.newevent.NewEvent()
+NotesTreeDropItemEvent, EVT_NOTES_TREE_DROP_ITEM = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
 
@@ -251,6 +252,13 @@ class _ItemsViewInfo:
     def isPointInSelection(self, item: NotesTreeItem, x, y) -> bool:
         top = self.getItemTop(item)
         bottom = self.getItemBottom(item)
+        left = self.getSelectionLeft(item)
+        right = self.getSelectionRight(item)
+        return y >= top and y <= bottom and x >= left and x <= right
+
+    def isPointInItem(self, item: NotesTreeItem, x, y) -> bool:
+        top = self.getItemTop(item)
+        bottom = self.getItemBottom(item)
         left = self.getIconLeft(item)
         right = self.getSelectionRight(item)
         return y >= top and y <= bottom and x >= left and x <= right
@@ -449,6 +457,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._editItemTextCtrl.Bind(wx.EVT_KILL_FOCUS, handler=self._onEditItemComplete)
         self._editItemTimer.Bind(wx.EVT_TIMER, handler=self._onEditTimer)
 
+        # Drag items
+        self._dragItem: Optional[NotesTreeItem] = None
+        self._dragMode = False
+        self._mouseLeftDownXY: Optional[Tuple[int, int]] = None
+
         # Misc event handlers
         self.Bind(wx.EVT_CLOSE, self._onClose)
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
@@ -461,6 +474,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleButtonDown)
         self.Bind(wx.EVT_MIDDLE_UP, handler=self._onMiddleButtonUp)
         self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
+        self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
 
     def _getVisibleItems(self) -> List[NotesTreeItem]:
         return [item for item in self._pageCache.values() if item.isVisible()]
@@ -500,6 +514,21 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         event.Skip()
 
+    def _resetDragMode(self):
+        self._dragMode = False
+        self._mouseLeftDownXY = None
+        self._dragItem = None
+
+    def _dropItem(self, srcItem: NotesTreeItem, destItem: NotesTreeItem):
+        event = NotesTreeDropItemEvent(srcPage = srcItem.getPage(),
+                                       destPage = destItem.getPage())
+        wx.PostEvent(self, event)
+
+    def _onMouseMove(self, event):
+        if self._dragItem is not None and event.LeftIsDown():
+            self._dragMode = True
+        event.Skip()
+
     def _onLeftButtonDown(self, event):
         self._completeItemEdit()
         x = event.GetX() + self._getScrollX()
@@ -512,6 +541,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self._onExpandCollapseItem(item)
             return
 
+        if self._view_info.isPointInItem(item, x, y):
+            self._mouseLeftDownXY = (x, y)
+            self._dragItem = item
+            self._dragMode = False
+
     def _onLeftButtonUp(self, event):
         self._completeItemEdit()
         x = event.GetX() + self._getScrollX()
@@ -519,6 +553,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         item = self._getItemByY(y)
         if item is None:
             return
+
+        if self._dragMode:
+            assert self._dragItem is not None
+            self._dropItem(self._dragItem, item)
+            self._resetDragMode()
+            return
+
+        self._resetDragMode()
 
         if self._view_info.isPointInSelection(item, x, y):
             oldSelectedItem = self._getSelectedItem()

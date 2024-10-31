@@ -35,6 +35,7 @@ from outwiker.gui.controls.notestreectrl2 import (
     EVT_NOTES_TREE_MIDDLE_BUTTON_UP,
     EVT_NOTES_TREE_ITEM_ACTIVATE,
     EVT_NOTES_TREE_END_ITEM_EDIT,
+    EVT_NOTES_TREE_DROP_ITEM,
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -122,15 +123,13 @@ class NotesTree(wx.Panel):
         Подписка на события интерфейса
         """
         # Перетаскивание элементов
-        self.treeCtrl.Bind(wx.EVT_TREE_BEGIN_DRAG, self.__onBeginDrag)
-        self.treeCtrl.Bind(wx.EVT_TREE_END_DRAG, self.__onEndDrag)
-
         self.treeCtrl.Bind(EVT_NOTES_TREE_END_ITEM_EDIT, self.__onEndLabelEdit)
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_RIGHT_BUTTON_UP, self.__onPopupMenu)
         self.treeCtrl.Bind(EVT_NOTES_TREE_MIDDLE_BUTTON_UP, self.__onMiddleClick)
         self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeStateChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_ITEM_ACTIVATE, self.__onTreeItemActivated)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_DROP_ITEM, self.__onTreeItemDrop)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -213,29 +212,12 @@ class NotesTree(wx.Panel):
         self._application.onPageOrderChange += self.__onPageOrderChange
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
 
-    def __onBeginDrag(self, event):
-        event.Allow()
-        self.dragItem = event.GetItem()
-        self.treeCtrl.SetFocus()
-
-    def __onEndDrag(self, event):
-        if self.dragItem is not None:
-            # Элемент, на который перетащили другой элемент(self.dragItem)
-            endDragItem = event.GetItem()
-
-            # Перетаскиваемая станица
-            draggedPage = self.treeCtrl.GetItemData(self.dragItem)
-
-            # Будущий родитель для страницы
-            if endDragItem.IsOk():
-                newParent = self.treeCtrl.GetItemData(endDragItem)
-
-                # Moving page to itself is ignored
-                if newParent != draggedPage:
-                    movePage(draggedPage, newParent)
-                    self.treeCtrl.expand(newParent)
-
-        self.dragItem = None
+    def __onTreeItemDrop(self, event):
+        draggedPage = event.srcPage
+        newParent = event.destPage
+        if newParent != draggedPage:
+            movePage(draggedPage, newParent)
+            self.treeCtrl.expand(newParent)
 
     def __onTreeUpdate(self, sender):
         self._setRoot(sender.root)
