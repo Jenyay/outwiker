@@ -512,6 +512,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self._onExpandCollapseItem(item)
             return
 
+    def _onLeftButtonUp(self, event):
+        self._completeItemEdit()
+        x = event.GetX() + self._getScrollX()
+        y = event.GetY() + self._getScrollY()
+        item = self._getItemByY(y)
+        if item is None:
+            return
+
         if self._view_info.isPointInSelection(item, x, y):
             oldSelectedItem = self._getSelectedItem()
             if oldSelectedItem != item:
@@ -520,9 +528,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 self._editItemCencelled = False
                 self._editItemTimer.StartOnce(self._editClickDelay_ms)
             return
-
-    def _onLeftButtonUp(self, event):
-        pass
 
     def _onRightButtonDown(self, event):
         self._completeItemEdit()
