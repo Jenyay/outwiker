@@ -520,8 +520,10 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._dragItem = None
 
     def _dropItem(self, srcItem: NotesTreeItem, destItem: NotesTreeItem):
+        order: Optional[int] = None
         event = NotesTreeDropItemEvent(srcPage = srcItem.getPage(),
-                                       destPage = destItem.getPage())
+                                       destPage = destItem.getPage(),
+                                       order = order)
         wx.PostEvent(self, event)
 
     def _onMouseMove(self, event):
@@ -614,6 +616,16 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 if y >= y_min and y <= y_max:
                     return item
         return None
+
+    def HitTest(self, point: Tuple[int, int]) -> Optional[BasePage]:
+        x = point[0] + self._getScrollX()
+        y = point[1] + self._getScrollY()
+        item = self._getItemByY(y)
+        if item is None:
+            return None
+
+        if x >= self._view_info.getIconLeft(item) and x <= self._view_info.getSelectionRight(item):
+            return item.getPage()
 
     def _calculateItemsProperties(self):
         calculator = _NotesTreeItemPropertiesCalculator(self._view_info)

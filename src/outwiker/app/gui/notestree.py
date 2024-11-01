@@ -415,27 +415,22 @@ class NotesTreeDropFilesTarget(BaseDropFilesTarget):
 
     def OnDropFiles(self, x, y, files):
         correctedFiles = self.correctFileNames(files)
-        flags_mask = wx.TREE_HITTEST_ONITEMICON | wx.TREE_HITTEST_ONITEMLABEL
-        item, flags = self.targetWindow.HitTest((x, y))
+        page = self.targetWindow.HitTest((x, y))
+        if page is not None:
+            file_names = [os.path.basename(fname) for fname in correctedFiles]
 
-        if flags & flags_mask:
-            page = self._notesTree.getPageByItemId(item)
-            if page is not None:
-                file_names = [os.path.basename(fname) for fname in correctedFiles]
+            text = _("Attach files to the note '{title}'?\n\n{files}").format(
+                title=page.display_title, files="\n".join(file_names)
+            )
 
-                text = _("Attach files to the note '{title}'?\n\n{files}").format(
-                    title=page.display_title, files="\n".join(file_names)
+            if (
+                MessageBox(
+                    text,
+                    _("Attach files to the note?"),
+                    wx.YES_NO | wx.ICON_QUESTION,
                 )
-
-                if (
-                    MessageBox(
-                        text,
-                        _("Attach files to the note?"),
-                        wx.YES_NO | wx.ICON_QUESTION,
-                    )
-                    == wx.YES
-                ):
-                    attachFiles(self._application.mainWindow, page, correctedFiles)
-                return True
-
+                == wx.YES
+            ):
+                attachFiles(self._application.mainWindow, page, correctedFiles)
+            return True
         return False
