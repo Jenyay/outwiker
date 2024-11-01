@@ -75,6 +75,9 @@ class NotesTreeItem:
     def getChildren(self) -> List["NotesTreeItem"]:
         return sorted(self._children, key=lambda item: item.getPage().order)
 
+    def getChildrenCount(self) -> int:
+        return len(self._children)
+
     def getIconImageId(self) -> int:
         return self._iconImageId
 
@@ -483,6 +486,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MIDDLE_UP, handler=self._onMiddleButtonUp)
         self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
         self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
+
+    # Used in tests only
+    def getRootItem(self, n: int) -> NotesTreeItem:
+        return self._rootItems[n]
+
+    # Used in tests only
+    def getTreeItem(self, page: WikiPage) -> Optional[NotesTreeItem]:
+        return self._pageCache.get(page)
 
     def _getVisibleItems(self) -> List[NotesTreeItem]:
         return [item for item in self._pageCache.values() if item.isVisible()]
@@ -905,15 +916,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 return item
         return None
 
-    @property
-    def selectedPage(self) -> Optional[BasePage]:
+    def getSelectedPage(self) -> Optional[BasePage]:
         for page, item in self._pageCache.items():
             if item.isSelected():
                 return page
         return None
 
-    @selectedPage.setter
-    def selectedPage(self, newSelectedPage: Optional[BasePage]):
+    def setSelectedPage(self, newSelectedPage: Optional[BasePage]):
         for page, item in self._pageCache.items():
             item.select(page is newSelectedPage)
 

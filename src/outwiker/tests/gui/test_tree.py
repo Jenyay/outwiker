@@ -37,7 +37,7 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
 
         self.application.wikiroot = self.wikiroot
-        tree = self.mainWindow.treePanel.panel
+        tree = self._getTreeCtrl()
 
         self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 1"]), None)
         self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2"]), None)
@@ -92,7 +92,7 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
 
         self.application.wikiroot = self.wikiroot
-        tree = self.mainWindow.treePanel.panel
+        tree = self._getTreeCtrl()
 
         self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
 
@@ -113,11 +113,11 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.wikiroot = self.wikiroot
 
-        rootitem = tree.GetRootItem()
-        self.assertEqual(tree.GetItemText(rootitem),
+        rootitem = tree.getRootItem(0)
+        self.assertEqual(rootitem.getTitle(),
                           os.path.basename(self.wikiroot.path))
-        self.assertEqual(tree.GetChildrenCount(rootitem), 0)
-        self.assertEqual(tree.GetItemData(rootitem), self.wikiroot)
+        self.assertEqual(rootitem.getChildrenCount(), 0)
+        self.assertEqual(rootitem.getPage(), self.wikiroot)
 
     def testAddPage(self):
         tree = self._getTreeCtrl()
@@ -125,14 +125,14 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
 
         TextPageFactory().create(self.wikiroot, "Страница 1", [])
-        rootitem = tree.GetRootItem()
-        childitem, cookie = tree.GetFirstChild(rootitem)
+        rootitem = tree.getRootItem(0)
+        childitem = rootitem.getChildren()[0]
 
-        self.assertEqual(tree.GetChildrenCount(rootitem), 1)
+        self.assertEqual(len(rootitem.getChildren()), 1)
 
-        self.assertEqual(tree.GetItemText(childitem), "Страница 1")
-        self.assertEqual(tree.GetChildrenCount(childitem), 0)
-        self.assertEqual(tree.GetItemData(childitem), self.wikiroot["Страница 1"])
+        self.assertEqual(childitem.getTitle(), "Страница 1")
+        self.assertEqual(len(childitem.getChildren()), 0)
+        self.assertEqual(childitem.getPage(), self.wikiroot["Страница 1"])
 
     def testAddMorePages(self):
         tree = self._getTreeCtrl()
@@ -146,7 +146,7 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
-        rootitem = tree.GetRootItem()
+        rootitem = tree.getRootItem(0)
         self.assertEqual(tree.GetChildrenCount(rootitem, True), 5)
         self.assertEqual(tree.GetChildrenCount(rootitem, False), 2)
 
@@ -177,19 +177,19 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
-        rootitem = tree.GetRootItem()
+        rootitem = tree.getRootItem(0)
         self.assertEqual(tree.GetChildrenCount(rootitem, True), 5)
         self.assertEqual(tree.GetChildrenCount(rootitem, False), 2)
 
         self.wikiroot["Страница 2/Страница 3"].remove()
 
-        newrootitem = tree.GetRootItem()
+        newrootitem = tree.getRootItem(0)
         self.assertEqual(tree.GetChildrenCount(newrootitem, True), 3)
         self.assertEqual(tree.GetChildrenCount(newrootitem, False), 2)
 
         self.wikiroot["Страница 2"].remove()
 
-        newrootitem2 = tree.GetRootItem()
+        newrootitem2 = tree.getRootItem(0)
         self.assertEqual(tree.GetChildrenCount(newrootitem2, True), 2)
         self.assertEqual(tree.GetChildrenCount(newrootitem2, False), 1)
 
@@ -207,15 +207,15 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.wikiroot.selectedPage = self.wikiroot["Страница 1"]
 
-        selItem = tree.GetSelection()
-        self.assertEqual(tree.GetItemData(selItem), self.wikiroot.selectedPage)
-        self.assertEqual(tree.GetItemData(selItem), self.wikiroot["Страница 1"])
+        selPage = tree.getSelectedPage()
+        self.assertEqual(selPage, self.wikiroot.selectedPage)
+        self.assertEqual(selPage, self.wikiroot["Страница 1"])
 
         self.wikiroot.selectedPage = self.wikiroot["Страница 2/Страница 3"]
 
-        selItem = tree.GetSelection()
-        self.assertEqual(tree.GetItemData(selItem), self.wikiroot.selectedPage)
-        self.assertEqual(tree.GetItemData(selItem), self.wikiroot["Страница 2/Страница 3"])
+        selPage = tree.getSelectedPage()
+        self.assertEqual(selPage, self.wikiroot.selectedPage)
+        self.assertEqual(selPage, self.wikiroot["Страница 2/Страница 3"])
 
     def testOrder1(self):
         tree = self._getTreeCtrl()
@@ -231,7 +231,7 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.wikiroot["Страница 2"].order -= 1
 
-        rootitem = tree.GetRootItem()
+        rootitem = tree.getRootItem(0)
         page2Item, cookie = tree.GetFirstChild(rootitem)
 
         self.assertEqual(tree.GetChildrenCount(page2Item, False), 1)
@@ -271,7 +271,7 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(tree.GetItemData(selItem), self.wikiroot["Страница 2"])
         self.assertEqual(self.wikiroot.selectedPage, self.wikiroot["Страница 2"])
 
-        rootitem = tree.GetRootItem()
+        rootitem = tree.getRootItem(0)
         page2Item, cookie = tree.GetFirstChild(rootitem)
 
         self.assertEqual(tree.GetChildrenCount(page2Item, False), 1)
@@ -299,14 +299,14 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.wikiroot["Страница 2"].title = "Переименованная страница"
 
-        rootitem = tree.GetRootItem()
-        firstItem, cookie = tree.GetFirstChild(rootitem)
-        newPageItem = tree.GetNextSibling(firstItem)
+        rootitem = tree.getRootItem(0)
+        firstItem = rootitem.getChildren()[0]
+        newPageItem = rootitem.getChildren()[1]
 
+        self.assertEqual(newPageItem.getPage(), self.wikiroot["Переименованная страница"])
+        self.assertEqual(newPageItem.getTitle(), "Переименованная страница")
         self.assertEqual(tree.GetChildrenCount(newPageItem, False), 1)
         self.assertEqual(tree.GetChildrenCount(newPageItem, True), 2)
-        self.assertEqual(tree.GetItemData(newPageItem), self.wikiroot["Переименованная страница"])
-        self.assertEqual(tree.GetItemText(newPageItem), "Переименованная страница")
 
     def testInvalidIcon(self):
         tree = self._getTreeCtrl()

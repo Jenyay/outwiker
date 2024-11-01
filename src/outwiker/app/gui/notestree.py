@@ -255,11 +255,11 @@ class NotesTree(wx.Panel):
 
     @property
     def selectedPage(self):
-        return self.treeCtrl.selectedPage
+        return self.treeCtrl.getSelectedPage()
 
     @selectedPage.setter
     def selectedPage(self, newSelPage):
-        self.treeCtrl.selectedPage = newSelPage
+        self.treeCtrl.setSelectedPage(newSelPage)
 
     def _do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)
