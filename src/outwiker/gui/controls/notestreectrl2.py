@@ -184,7 +184,9 @@ class _ItemsViewInfo:
         self.line_height = ICON_HEIGHT + 6
         self.icon_height = ICON_HEIGHT
         self.icon_width = ICON_HEIGHT
-        self.font_size = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize()
+        self.font_size = wx.SystemSettings.GetFont(
+            wx.SYS_DEFAULT_GUI_FONT
+        ).GetPointSize()
         self.depth_indent = self.icon_width // 2 + 16
         self.icon_left_margin = 8
         self.extra_icons_left_margin = 3
@@ -372,9 +374,15 @@ class _ItemsPainter:
             self._dc.DrawBitmap(bitmap, left, top)
 
     def _drawTitle(self, item: NotesTreeItem, dx: int, dy: int):
-        current_font = self._title_font_selected if item.isSelected() else self._title_font_normal
-        current_font.SetStyle(wx.FONTSTYLE_ITALIC if item.isItalic() else wx.FONTSTYLE_NORMAL)
-        current_font.SetWeight(wx.FONTWEIGHT_BOLD if item.isBold() else wx.FONTWEIGHT_NORMAL)
+        current_font = (
+            self._title_font_selected if item.isSelected() else self._title_font_normal
+        )
+        current_font.SetStyle(
+            wx.FONTSTYLE_ITALIC if item.isItalic() else wx.FONTSTYLE_NORMAL
+        )
+        current_font.SetWeight(
+            wx.FONTWEIGHT_BOLD if item.isBold() else wx.FONTWEIGHT_NORMAL
+        )
 
         if item.isSelected():
             self._dc.SetTextForeground(self._view_info.font_color_selected)
@@ -493,7 +501,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
         wx.PostEvent(self, event)
 
-    def _onSelectItem(self, item: NotesTreeItem, oldSelectedItem: Optional[NotesTreeItem]):
+    def _onSelectItem(
+        self, item: NotesTreeItem, oldSelectedItem: Optional[NotesTreeItem]
+    ):
         if oldSelectedItem is not None:
             oldSelectedItem.select(False)
         item.select()
@@ -521,9 +531,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _dropItem(self, srcItem: NotesTreeItem, destItem: NotesTreeItem):
         order: Optional[int] = None
-        event = NotesTreeDropItemEvent(srcPage = srcItem.getPage(),
-                                       destPage = destItem.getPage(),
-                                       order = order)
+        event = NotesTreeDropItemEvent(
+            srcPage=srcItem.getPage(), destPage=destItem.getPage(), order=order
+        )
         wx.PostEvent(self, event)
 
     def _onMouseMove(self, event):
@@ -624,7 +634,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         if item is None:
             return None
 
-        if x >= self._view_info.getIconLeft(item) and x <= self._view_info.getSelectionRight(item):
+        if (x >= self._view_info.getIconLeft(item)
+                and x <= self._view_info.getSelectionRight(item)):
             return item.getPage()
 
     def _calculateItemsProperties(self):
@@ -638,7 +649,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             + self._view_info.title_right_margin
             for item in self._getVisibleItems()
         ]
-        max_scroll_x = max(widths)
+        max_scroll_x = max(widths) if widths else 0
         max_scroll_y = calculator.getLastLine() + 1
 
         old_scroll_pos_x = self.GetScrollPos(wx.HORIZONTAL)

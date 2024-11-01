@@ -55,9 +55,8 @@ class NotesTree(wx.Panel):
         self.treeCtrl = NotesTreeCtrl2(self)
 
         self.SetSize((256, 260))
-        self.__do_layout()
+        self._do_layout()
 
-        self.dragItem = None
         self.popupPage = None
         self.popupMenu = None
 
@@ -67,8 +66,8 @@ class NotesTree(wx.Panel):
         # Имя опции для сохранения развернутости страницы
         self.pageOptionExpand = "Expand"
 
-        self.__BindApplicationEvents()
-        self.__BindGuiEvents()
+        self._bindApplicationEvents()
+        self._bindGuiEvents()
         self._dropTarget = NotesTreeDropFilesTarget(
             self._application, self.treeCtrl, self
         )
@@ -84,7 +83,7 @@ class NotesTree(wx.Panel):
     def getPageByItemId(self, item_id: wx.TreeItemId) -> "outwiker.core.tree.WikiPage":
         return self.treeCtrl.GetItemData(item_id)
 
-    def __BindApplicationEvents(self):
+    def _bindApplicationEvents(self):
         """
         Подписка на события контроллера
         """
@@ -118,7 +117,7 @@ class NotesTree(wx.Panel):
         if (change & PAGE_UPDATE_ICON) or (change & PAGE_UPDATE_TITLE):
             self.treeCtrl.updateItem(page)
 
-    def __BindGuiEvents(self):
+    def _bindGuiEvents(self):
         """
         Подписка на события интерфейса
         """
@@ -262,7 +261,7 @@ class NotesTree(wx.Panel):
     def selectedPage(self, newSelPage):
         self.treeCtrl.selectedPage = newSelPage
 
-    def __do_layout(self):
+    def _do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableRow(1)
         mainSizer.AddGrowableCol(0)
