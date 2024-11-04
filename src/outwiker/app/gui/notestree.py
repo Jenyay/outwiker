@@ -259,10 +259,11 @@ class NotesTree(wx.Panel):
 
     @selectedPage.setter
     def selectedPage(self, newSelPage):
-        if not self.treeCtrl.pageInTree(newSelPage):
-            self._addTreeItemsToPage(newSelPage)
+        if newSelPage is not None:
+            if not self.treeCtrl.pageInTree(newSelPage):
+                self._addTreeItemsToPage(newSelPage)
 
-        self.treeCtrl.expandToPage(newSelPage)
+            self.treeCtrl.expandToPage(newSelPage)
         self.treeCtrl.setSelectedPage(newSelPage)
 
     def _addTreeItemsToPage(self, page: WikiPage):
