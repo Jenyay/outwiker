@@ -774,8 +774,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         """
         if page not in self._pageCache:
             parentItem = self._getTreeItem(page.parent)
-            if parentItem is None:
-                print(page.path)
             assert parentItem is not None
 
             item = self._createNotesTreeItem(page)

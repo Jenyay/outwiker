@@ -126,7 +126,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_RIGHT_BUTTON_UP, self.__onPopupMenu)
         self.treeCtrl.Bind(EVT_NOTES_TREE_MIDDLE_BUTTON_UP, self.__onMiddleClick)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeStateChanged)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeExpandChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_ITEM_ACTIVATE, self.__onTreeItemActivated)
         self.treeCtrl.Bind(EVT_NOTES_TREE_DROP_ITEM, self.__onTreeItemDrop)
 
@@ -154,7 +154,10 @@ class NotesTree(wx.Panel):
     def __onTreeItemActivated(self, event):
         editPage(self, event.page)
 
-    def __onTreeStateChanged(self, event):
+    def __onTreeExpandChanged(self, event):
+        if self._application.wikiroot is None:
+            return
+
         page = event.page
         expanded = event.expanded
         if page.readonly:
