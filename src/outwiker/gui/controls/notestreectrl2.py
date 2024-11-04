@@ -585,11 +585,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self._resetDragMode()
 
-        if self._view_info.isPointInSelection(item, x, y):
+        if self._view_info.isPointInItem(item, x, y):
             oldSelectedItem = self._getSelectedItem()
             if oldSelectedItem != item:
                 self._onSelectItem(item, oldSelectedItem)
-            else:
+            elif self._view_info.isPointInSelection(item, x, y):
                 self._editItemCencelled = False
                 self._editItemTimer.StartOnce(self._editClickDelay_ms)
             return
