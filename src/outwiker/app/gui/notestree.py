@@ -384,9 +384,6 @@ class NotesTree(wx.Panel):
                 self.treeCtrl.addPage(child, update=False)
                 self._appendChildren(child)
 
-        if self._getPageExpandState(parentPage):
-            self.treeCtrl.expand(parentPage, update=False)
-
     def _getPageExpandState(self, page: Optional[BasePage]):
         """
         Проверить состояние "раскрытости" страницы

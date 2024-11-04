@@ -508,9 +508,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _onExpandCollapseItem(self, item):
         page = item.getPage()
         expanded = not item.isExpanded()
-        self.expand(page, expanded)
-        event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
-        wx.PostEvent(self, event)
+        self.expand(page, expanded, True)
+        # event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
+        # wx.PostEvent(self, event)
 
     def _onSelectItem(
         self, item: NotesTreeItem, oldSelectedItem: Optional[NotesTreeItem]
@@ -773,6 +773,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         """
         if page not in self._pageCache:
             parentItem = self._getTreeItem(page.parent)
+            if parentItem is None:
+                print(page.path)
             assert parentItem is not None
 
             item = self._createNotesTreeItem(page)
@@ -900,13 +902,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         pages.reverse()
         for page in pages:
-            self.expand(page)
-        self.updateTree()
+            self.expand(page, True)
 
     def expand(self, page, expanded=True, update=True):
         item = self._getTreeItem(page)
         if item is not None:
             item.expand(expanded)
+            event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
+            wx.PostEvent(self, event)
             if update:
                 self.updateTree()
 
