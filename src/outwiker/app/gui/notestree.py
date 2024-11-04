@@ -2,7 +2,7 @@
 
 import os
 import os.path
-from typing import Optional
+from typing import List, Optional
 
 import wx
 
@@ -25,7 +25,7 @@ from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
 from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
 from outwiker.core.system import getBuiltinImagePath
-from outwiker.core.tree import BasePage
+from outwiker.core.tree import BasePage, WikiPage
 
 from outwiker.gui.controls.notestreectrl2 import (
     NotesTreeCtrl2,
@@ -259,7 +259,27 @@ class NotesTree(wx.Panel):
 
     @selectedPage.setter
     def selectedPage(self, newSelPage):
+        if not self.treeCtrl.pageInTree(newSelPage):
+            self._addTreeItemsToPage(newSelPage)
+
+        self.treeCtrl.expandToPage(newSelPage)
         self.treeCtrl.setSelectedPage(newSelPage)
+
+    def _addTreeItemsToPage(self, page: WikiPage):
+        current_page = page
+        pages: List[WikiPage] = page.children[:]
+        while current_page is not None and not self.treeCtrl.pageInTree(current_page):
+            parent = current_page.parent
+            if parent is not None:
+                pages = parent.children + pages
+            else:
+                pages.insert(0, current_page)
+            current_page = parent
+
+        for page in pages:
+            self.treeCtrl.addPage(page, update=False)
+
+        self.treeCtrl.updateTree()
 
     def _do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)

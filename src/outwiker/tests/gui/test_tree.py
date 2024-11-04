@@ -115,18 +115,14 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         tree = self._getTreeCtrl()
 
         self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
-
         self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
-
         self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3"]), None)
 
         self.application.selectedPage = self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
 
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
-
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
-
         self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3"]), None)
+        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
+        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
 
     def testTreeLoadingEmpty(self):
         tree = self._getTreeCtrl()
@@ -238,16 +234,15 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testOrder1(self):
         tree = self._getTreeCtrl()
 
-        self.application.wikiroot = self.wikiroot
-
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
         factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
-
         self.wikiroot["Страница 2"].order -= 1
+
+        self.application.wikiroot = self.wikiroot
 
         rootitem = tree.getRootItem(0)
         page2Item = rootitem.getChildren()[0]

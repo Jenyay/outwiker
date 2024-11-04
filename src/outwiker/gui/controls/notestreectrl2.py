@@ -495,6 +495,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def getTreeItem(self, page: WikiPage) -> Optional[NotesTreeItem]:
         return self._pageCache.get(page)
 
+    def pageInTree(self, page: Optional[WikiPage]) -> bool:
+        return page in self._pageCache
+
     def _getVisibleItems(self) -> List[NotesTreeItem]:
         return [item for item in self._pageCache.values() if item.isVisible()]
 
@@ -509,8 +512,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         page = item.getPage()
         expanded = not item.isExpanded()
         self.expand(page, expanded, True)
-        # event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
-        # wx.PostEvent(self, event)
 
     def _onSelectItem(
         self, item: NotesTreeItem, oldSelectedItem: Optional[NotesTreeItem]
