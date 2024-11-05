@@ -160,11 +160,11 @@ class NotesTree(wx.Panel):
 
         page = event.page
         expanded = event.expanded
-        if page.readonly:
-            return
 
-        page_registry = page.root.registry.get_page_registry(page)
-        page_registry.set(self.pageOptionExpand, expanded)
+        if not page.readonly:
+            page_registry = page.root.registry.get_page_registry(page)
+            page_registry.set(self.pageOptionExpand, expanded)
+
         if expanded:
             for child in page.children:
                 self._appendChildren(child)
@@ -402,27 +402,27 @@ class NotesTree(wx.Panel):
         Добавить детей в дерево
         parentPage - родительская страница, куда добавляем дочерние страницы
         """
-        grandParentExpanded = self._getPageExpandState(parentPage.parent)
+        grandParentExpanded = self.treeCtrl.isExpanded(parentPage.parent)
 
         if grandParentExpanded:
             for child in parentPage.children:
                 self.treeCtrl.addPage(child, update=False)
                 self._appendChildren(child)
 
-    def _getPageExpandState(self, page: Optional[BasePage]):
-        """
-        Проверить состояние "раскрытости" страницы
-        """
-        if page is None:
-            return True
+    # def _getPageExpandState(self, page: Optional[BasePage]):
+    #     """
+    #     Проверить состояние "раскрытости" страницы
+    #     """
+    #     if page is None:
+    #         return True
 
-        if page.parent is None:
-            return True
+    #     if page.parent is None:
+    #         return True
 
-        page_registry = page.root.registry.get_page_registry(page)
-        expanded = page_registry.getbool(self.pageOptionExpand, default=False)
+    #     page_registry = page.root.registry.get_page_registry(page)
+    #     expanded = page_registry.getbool(self.pageOptionExpand, default=False)
 
-        return expanded
+    #     return expanded
 
 
 class NotesTreeDropFilesTarget(BaseDropFilesTarget):

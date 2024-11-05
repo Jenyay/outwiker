@@ -498,6 +498,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def pageInTree(self, page: Optional[WikiPage]) -> bool:
         return page in self._pageCache
 
+    def isExpanded(self, page: Optional[BasePage]) -> bool:
+        if page is None:
+            return False
+
+        item = self._pageCache.get(page)
+        return item is not None and item.isExpanded()
+
     def _getVisibleItems(self) -> List[NotesTreeItem]:
         return [item for item in self._pageCache.values() if item.isVisible()]
 
