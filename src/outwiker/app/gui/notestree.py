@@ -220,6 +220,7 @@ class NotesTree(wx.Panel):
         if newParent != draggedPage:
             movePage(draggedPage, newParent)
             self.treeCtrl.expand(newParent)
+            self.treeCtrl.setSelectedPage(self._application.selectedPage)
 
     def __onTreeUpdate(self, sender):
         self._setRoot(sender.root)
