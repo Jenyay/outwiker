@@ -500,7 +500,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def isExpanded(self, page: Optional[BasePage]) -> bool:
         if page is None:
-            return False
+            return True
 
         item = self._pageCache.get(page)
         return item is not None and item.isExpanded()
@@ -766,6 +766,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def addRoot(self, rootPage: BasePage, update=True):
         assert rootPage is not None
         root_item = self._createRootNotesTreeItem(rootPage)
+        root_item.expand(True)
         self._rootItems.append(root_item)
         self._pageCache[rootPage] = root_item
         if update:

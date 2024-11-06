@@ -391,7 +391,6 @@ class NotesTree(wx.Panel):
 
         if rootPage is not None:
             self.treeCtrl.addRoot(rootPage, update=False)
-            self.treeCtrl.expand(rootPage, update=False)
             self._appendChildren(rootPage)
             self.treeCtrl.selectedPage = rootPage.selectedPage
 
@@ -408,21 +407,6 @@ class NotesTree(wx.Panel):
             for child in parentPage.children:
                 self.treeCtrl.addPage(child, update=False)
                 self._appendChildren(child)
-
-    # def _getPageExpandState(self, page: Optional[BasePage]):
-    #     """
-    #     Проверить состояние "раскрытости" страницы
-    #     """
-    #     if page is None:
-    #         return True
-
-    #     if page.parent is None:
-    #         return True
-
-    #     page_registry = page.root.registry.get_page_registry(page)
-    #     expanded = page_registry.getbool(self.pageOptionExpand, default=False)
-
-    #     return expanded
 
 
 class NotesTreeDropFilesTarget(BaseDropFilesTarget):
