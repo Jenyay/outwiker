@@ -363,6 +363,8 @@ class _ItemsPainter:
         left = self._view_info.getTreeGridLeft(item) + dx
         right = self._view_info.getIconLeft(item) + dx
         top = self._view_info.getItemBottom(parentItem) + dy
+        if top < 0:
+            top = 0
         centerV = self._view_info.getItemCenterVertical(item) + dy
         points = [(left, top, left, centerV), (left, centerV, right, centerV)]
         self._dc.DrawLineList(points, pens=self._tree_line_pen)
@@ -696,7 +698,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                     dy = -interval_y[0]
                     item_top = self._view_info.getItemTop(item)
                     if item.isVisible():
-                        painter.drawTreeLines(item, dx, dy)
+                        if item_top >= interval_y[0]:
+                            painter.drawTreeLines(item, dx, dy)
 
                         if item_top >= interval_y[0] and item_top <= interval_y[1]:
                             painter.draw(item, dx, dy)
