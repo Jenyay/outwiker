@@ -6,6 +6,7 @@ import unittest
 
 import wx
 
+from outwiker.core.tree import BasePage
 from outwiker.gui.controls.notestreectrl2 import NotesTreeItem
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
@@ -73,6 +74,45 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
         factory.create(self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
+
+        self.application.wikiroot = self.wikiroot
+        tree = self._getTreeCtrl()
+
+        # Разворот 1
+        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5"]), None)
+        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None)
+
+        tree.expand(self.wikiroot["Страница 1"])
+        wx.SafeYield()
+        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None)
+
+        # Разворот 2
+        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
+        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+
+        tree.expand(self.wikiroot["Страница 2"])
+        wx.SafeYield()
+
+        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
+        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+
+        # Разворот 3
+        tree.expand(self.wikiroot["Страница 2/Страница 3"])
+        wx.SafeYield()
+
+        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+
+    def testExpandReadOnly(self):
+        factory = TextPageFactory()
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
+        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
+        factory.create(self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", [])
+        factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
+        factory.create(self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
+
+        self._setReadOnly(self.wikiroot, True)
 
         self.application.wikiroot = self.wikiroot
         tree = self._getTreeCtrl()
@@ -327,3 +367,8 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         assert os.path.exists(icon_name)
 
         page.icon = icon_name
+
+    def _setReadOnly(self, page: BasePage, readonly: bool = True):
+        page.readonly = readonly
+        for child in page.children:
+            self._setReadOnly(child, readonly)
