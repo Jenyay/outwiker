@@ -41,8 +41,8 @@ class NotesTreeItem:
         self._extraImageIds: List[int] = []
         self._bold = False
         self._italic = False
-        self._fontColor = wx.Colour(0, 0, 0)
-        self._backColor = wx.Colour(0, 0, 0)
+        self._fontColor = None
+        self._backColor = None
         self._italic = False
         self._bold = False
         self._expanded = False
@@ -199,11 +199,14 @@ class _ItemsViewInfo:
         self.expand_ctrl_height = 9
 
         # Colors
-        self.back_color_normal = wx.WHITE
-        self.back_color_selected = wx.BLUE
-        self.font_color_normal = wx.BLACK
-        self.font_color_selected = wx.WHITE
-        self.lines_color = wx.BLACK
+        self.back_color = window.GetBackgroundColour()
+        self.fore_color = window.GetForegroundColour()
+
+        self.back_color_normal = self.back_color
+        self.back_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
+        self.font_color_normal = self.fore_color
+        self.font_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
+        self.lines_color = self.fore_color
 
         self._dc = wx.ClientDC(self._window)
         self._title_font = wx.Font(wx.FontInfo(self.font_size))
@@ -436,7 +439,7 @@ class _ItemsPainter:
 class NotesTreeCtrl2(wx.ScrolledWindow):
     def __init__(self, parent: wx.Window):
         super().__init__(parent)
-        self._view_info = _ItemsViewInfo(parent)
+        self._view_info = _ItemsViewInfo(self)
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
 
@@ -492,6 +495,17 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
         self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
+
+    def _updateViewInfo(self):
+        self._view_info = _ItemsViewInfo(self)
+
+    def SetBackgroundColour(self, colour):
+        super().SetBackgroundColour(colour)
+        self._updateViewInfo()
+
+    def SetForegroundColour(self, colour):
+        super().SetForegroundColour(colour)
+        self._updateViewInfo()
 
     # Used in tests only
     def getRootItem(self, n: int) -> NotesTreeItem:
