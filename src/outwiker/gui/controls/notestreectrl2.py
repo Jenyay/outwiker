@@ -437,7 +437,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def __init__(self, parent: wx.Window):
         super().__init__(parent)
         self._view_info = _ItemsViewInfo(parent)
-        self.SetScrollRate(0, 0)
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
 
@@ -455,6 +454,10 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._lineCount = 0
 
         self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+
+        # Scroll speed
+        self._mouseWheelDeltaX = 3
+        self._mouseWheelDeltaY = 3
 
         # Rename items
         self._editItemTextCtrl = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
@@ -488,6 +491,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MIDDLE_UP, handler=self._onMiddleButtonUp)
         self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
         self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
+        self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
 
     # Used in tests only
     def getRootItem(self, n: int) -> NotesTreeItem:
@@ -509,6 +513,24 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _getVisibleItems(self) -> List[NotesTreeItem]:
         return [item for item in self._pageCache.values() if item.isVisible()]
+
+    def _onMouseWheel(self, event):
+        event.StopPropagation()
+        scroll_x, scroll_y = self.GetViewStart()
+
+        delta_x = 0
+        delta_y = 0
+
+        if event.GetModifiers() & wx.MOD_SHIFT:
+            delta_x = self._mouseWheelDeltaX
+            if event.GetWheelRotation() > 0:
+                delta_x *= -1
+        else:
+            delta_y = self._mouseWheelDeltaY
+            if event.GetWheelRotation() > 0:
+                delta_y *= -1
+
+        self.Scroll(scroll_x + delta_x, scroll_y + delta_y)
 
     def _onEditTimer(self, event):
         self._editItemTimer.Stop()
@@ -670,19 +692,21 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             + self._view_info.title_right_margin
             for item in self._getVisibleItems()
         ]
-        max_scroll_x = max(widths) if widths else 0
+        hor_step = 10
+        max_scroll_x = (max(widths) if widths else 0) // hor_step
         max_scroll_y = calculator.getLastLine() + 1
 
         old_scroll_pos_x = self.GetScrollPos(wx.HORIZONTAL)
         old_scroll_pos_y = self.GetScrollPos(wx.VERTICAL)
 
         self.SetScrollbars(
-            1,
+            hor_step,
             self._view_info.line_height,
             max_scroll_x,
             max_scroll_y,
             old_scroll_pos_x,
             old_scroll_pos_y,
+            noRefresh=True
         )
 
     def _onPaint(self, event):
