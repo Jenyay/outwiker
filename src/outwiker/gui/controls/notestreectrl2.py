@@ -195,8 +195,8 @@ class _ItemsViewInfo:
         self.extra_icons_left_margin = 3
         self.title_left_margin = 8
         self.title_right_margin = 4
-        self.expand_ctrl_width = 9
-        self.expand_ctrl_height = 9
+        self.expand_ctrl_width = 11
+        self.expand_ctrl_height = 11
 
         # Colors
         self.back_color = window.GetBackgroundColour()
