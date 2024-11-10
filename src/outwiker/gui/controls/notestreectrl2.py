@@ -530,7 +530,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _onMouseWheel(self, event):
         event.StopPropagation()
-        scroll_x, scroll_y = self.GetViewStart()
+        scroll_x_src, scroll_y_src = self.GetViewStart()
 
         delta_x = 0
         delta_y = 0
@@ -544,7 +544,15 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             if event.GetWheelRotation() > 0:
                 delta_y *= -1
 
-        self.Scroll(scroll_x + delta_x, scroll_y + delta_y)
+        scroll_x = scroll_x_src + delta_x
+        scroll_y = scroll_y_src + delta_y
+        if scroll_x < 0:
+            scroll_x = 0
+
+        if scroll_y < 0:
+            scroll_y = 0
+
+        self.Scroll(scroll_x, scroll_y)
 
     def _onEditTimer(self, event):
         self._editItemTimer.Stop()
