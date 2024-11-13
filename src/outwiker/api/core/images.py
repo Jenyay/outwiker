@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Union
 
 import outwiker.core.images as _images
-import outwiker.core.iconmaker as _iconmaker
+import outwiker.gui.iconmaker as _iconmaker
 
 from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
 
