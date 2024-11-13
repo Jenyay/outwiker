@@ -2,7 +2,6 @@ from pathlib import Path
 from typing import Union
 
 import outwiker.core.images as _images
-import outwiker.gui.iconmaker as _iconmaker
 
 from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
 
@@ -16,7 +15,3 @@ def isImage(fname: Union[Path, str]) -> bool:
 
 def isSVG(fname: Union[Path, str]) -> bool:
     return _images.isSVG(fname)
-
-
-def createIcon(fname_in, fname_out) -> None:
-    return _iconmaker.IconMaker().create(fname_in, fname_out)
