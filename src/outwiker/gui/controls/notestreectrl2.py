@@ -8,10 +8,10 @@ from outwiker.core.tree import BasePage, WikiPage
 import wx
 import wx.lib.newevent
 
-from outwiker.core.defines import ICON_HEIGHT
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.imagelistcache import ImageListCache
+from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
 
 
 NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
@@ -184,9 +184,9 @@ class _ItemsViewInfo:
         # Sizes
         self.left_margin = 4
         self.top_margin = 4
-        self.line_height = ICON_HEIGHT + 6
-        self.icon_height = ICON_HEIGHT
-        self.icon_width = ICON_HEIGHT
+        self.icon_height = ICONS_HEIGHT
+        self.line_height = self.icon_height + 6
+        self.icon_width = ICONS_WIDTH
         self.font_size = wx.SystemSettings.GetFont(
             wx.SYS_DEFAULT_GUI_FONT
         ).GetPointSize()
@@ -444,7 +444,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.defaultIcon = getBuiltinImagePath("page.svg")
 
         # Картинки для дерева
-        self._iconsCache = ImageListCache(self.defaultIcon)
+        self._iconsCache = ImageListCache(self.defaultIcon,
+                                          self._view_info.icon_width,
+                                          self._view_info.icon_height)
 
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице
         # Словарь. Ключ - страница, значение - элемент дерева NotesTreeItem

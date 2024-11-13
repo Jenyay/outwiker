@@ -3,13 +3,15 @@
 from typing import Dict
 
 from .controls.safeimagelist import SafeImageList
-from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
 from outwiker.gui.images import readImage
 
 
 class ImageListCache:
-    def __init__(self, defaultImage: str):
-        self._defaultImage = readImage(defaultImage, ICONS_WIDTH, ICONS_HEIGHT)
+    def __init__(self, defaultImage: str, width: int, height: int):
+        self._width = width
+        self._height = height
+
+        self._defaultImage = readImage(defaultImage, width, height)
         assert self._defaultImage.IsOk()
 
         self._imagelist = SafeImageList(self._defaultImage.Width,
@@ -26,7 +28,7 @@ class ImageListCache:
         if fname in self._iconsCache:
             return self._iconsCache[fname]
 
-        image = readImage(fname, ICONS_WIDTH, ICONS_HEIGHT)
+        image = readImage(fname, self._width, self._height)
 
         imageId = 0
         if image.IsOk():
@@ -45,7 +47,7 @@ class ImageListCache:
             return self.add(fname)
 
         imageId = self._iconsCache[fname]
-        bitmap = readImage(fname, ICONS_WIDTH, ICONS_HEIGHT)
+        bitmap = readImage(fname, self._width, self._height)
 
         if not bitmap.IsOk():
             return imageId

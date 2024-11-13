@@ -10,7 +10,7 @@ def test_empty():
     wx.Log.SetLogLevel(0)
 
     defaultImage = 'testdata/images/new.png'
-    cache = ImageListCache(defaultImage)
+    cache = ImageListCache(defaultImage, 16, 16)
 
     imageList = cache.getImageList()
     assert imageList.GetImageCount() == 1
@@ -25,7 +25,7 @@ def test_single():
     wx.Log.SetLogLevel(0)
 
     defaultImage = 'testdata/images/new.png'
-    cache = ImageListCache(defaultImage)
+    cache = ImageListCache(defaultImage, 16, 16)
 
     index = cache.add('testdata/images/16x16.png')
 
@@ -42,7 +42,7 @@ def test_error_not_exists():
     wx.Log.SetLogLevel(0)
 
     defaultImage = 'testdata/images/new.png'
-    cache = ImageListCache(defaultImage)
+    cache = ImageListCache(defaultImage, 16, 16)
 
     index = cache.add('testdata/images/not_exists.png')
 
@@ -59,7 +59,7 @@ def test_error_invalid_file():
     wx.Log.SetLogLevel(0)
 
     defaultImage = 'testdata/images/new.png'
-    cache = ImageListCache(defaultImage)
+    cache = ImageListCache(defaultImage, 16, 16)
 
     index = cache.add('testdata/images/invalid.png')
 
@@ -76,7 +76,7 @@ def test_duplicate():
     wx.Log.SetLogLevel(0)
 
     defaultImage = 'testdata/images/new.png'
-    cache = ImageListCache(defaultImage)
+    cache = ImageListCache(defaultImage, 16, 16)
 
     cache.add('testdata/images/16x16.png')
     index = cache.add('testdata/images/16x16.png')
