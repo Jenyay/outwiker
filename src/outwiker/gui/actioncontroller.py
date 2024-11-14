@@ -5,7 +5,7 @@ from typing import List, Optional, Tuple, Dict
 
 import wx
 from outwiker.core.system import getBuiltinImagePath
-from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH
+from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 
 from outwiker.gui.images import readImage
 from outwiker.gui.controls.toolbar2 import ToolBar2
@@ -58,8 +58,8 @@ class ActionController:
     def __init__(self, mainWindow: wx.Window, config):
         self._mainWindow = mainWindow
         self._config = config
-        self._image_width = ICONS_WIDTH
-        self._image_height = ICONS_HEIGHT
+        self._image_width = BUTTON_ICON_WIDTH
+        self._image_height = BUTTON_ICON_HEIGHT
 
         # Словарь для хранения информации о действиях
         # Ключ - строковый идентификатор действия,
