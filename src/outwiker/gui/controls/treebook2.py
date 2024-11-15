@@ -5,6 +5,7 @@ import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
 from outwiker.gui.imagelistcache import ImageListCache
+from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
 
 
 class Treebook2(wx.SplitterWindow):
@@ -36,7 +37,8 @@ class Treebook2(wx.SplitterWindow):
         self._current_page = page
 
     def _create_gui(self):
-        self._iconsCache = ImageListCache(self._default_icon)
+        self._iconsCache = ImageListCache(self._default_icon, ICONS_WIDTH, ICONS_HEIGHT)
+
         self._tree = wx.TreeCtrl(
             self,
             style=wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_HAS_BUTTONS | wx.TR_NO_LINES,

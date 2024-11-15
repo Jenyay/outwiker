@@ -5,7 +5,7 @@ import os.path
 import shutil
 import logging
 
-from outwiker.core.iconmaker import IconMaker
+from outwiker.gui.iconmaker import IconMaker
 from outwiker.core.images import convert_name_to_svg, isImage, isSVG
 
 logger = logging.getLogger("outwiker.core.iconscollection")

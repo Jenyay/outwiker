@@ -8,6 +8,7 @@ import wx.lib.newevent
 import outwiker.gui.controls.ultimatelistctrl as ULC
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.imagelistcache import ImageListCache
+from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
 from .pagelist_columns import BaseColumn
 
 # For type hints
@@ -28,7 +29,7 @@ class PageList(wx.Panel):
         self._columns = []                     # type: List[BaseColumn]
         self._pages = []                       # type: List[outwiker.core.tree.WikiPage]
         self._defaultIcon = getBuiltinImagePath('page.svg')
-        self._imageList = ImageListCache(self._defaultIcon)
+        self._imageList = ImageListCache(self._defaultIcon, ICONS_WIDTH, ICONS_HEIGHT)
 
         self._propagationLevel = 15
         self.SetBackgroundColour(wx.Colour(255, 255, 255))

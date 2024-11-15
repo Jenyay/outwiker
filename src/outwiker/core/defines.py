@@ -6,11 +6,6 @@ Various names and constants
 import os.path
 
 
-# Page icon size
-ICON_WIDTH = 16
-ICON_HEIGHT = 16
-
-
 # Files for pages
 # Page content
 PAGE_CONTENT_FILE = "__page.text"
