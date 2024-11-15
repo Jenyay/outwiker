@@ -3,7 +3,7 @@
 import os
 from tempfile import mkdtemp
 
-from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
+from outwiker.gui.iconscollection import IconsCollection, DuplicateGroupError
 
 from outwiker.tests.utils import removeDir, getImageSize
 from outwiker.tests.basetestcases import BaseWxTestCase

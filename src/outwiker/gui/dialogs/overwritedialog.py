@@ -7,7 +7,7 @@ from datetime import datetime
 import wx
 
 from outwiker.core.system import getImagesDir
-from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
+from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 from outwiker.gui.images import readImage
 from outwiker.gui.testeddialog import TestedDialog
 
@@ -53,12 +53,18 @@ class OverwriteDialog(TestedDialog):
         self._createButtons()
         self._createFileInfoPanels()
 
-        fname_font = wx.Font(wx.FontInfo(wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize() + 2).Bold())
-        self.textLabel = wx.StaticText(self,
-                                       label="File name",
-                                       style=wx.ALIGN_CENTRE)
+        fname_font = wx.Font(
+            wx.FontInfo(
+                wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize() + 2
+            ).Bold()
+        )
+        self.textLabel = wx.StaticText(self, label="File name", style=wx.ALIGN_CENTRE)
         self.textLabel.SetFont(fname_font)
-        arrowBmp = readImage(os.path.join(getImagesDir(), 'arrow_right.svg'), ICONS_WIDTH, ICONS_HEIGHT)
+        arrowBmp = readImage(
+            os.path.join(getImagesDir(), "arrow_right.svg"),
+            BUTTON_ICON_WIDTH,
+            BUTTON_ICON_HEIGHT,
+        )
         self._arrow = wx.StaticBitmap(self, bitmap=arrowBmp)
 
     def _do_layout(self):
@@ -71,47 +77,43 @@ class OverwriteDialog(TestedDialog):
         information_sizer.AddGrowableCol(2)
         information_sizer.AddGrowableRow(0)
 
-        information_sizer.Add(self.newFileBox,
-                       flag=wx.ALL | wx.EXPAND,
-                       border=4)
+        information_sizer.Add(self.newFileBox, flag=wx.ALL | wx.EXPAND, border=4)
 
-        information_sizer.Add(self._arrow,
-                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border=4)
+        information_sizer.Add(
+            self._arrow, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4
+        )
 
-        information_sizer.Add(self.oldFileBox,
-                       flag=wx.ALL | wx.EXPAND,
-                       border=4)
+        information_sizer.Add(self.oldFileBox, flag=wx.ALL | wx.EXPAND, border=4)
 
         buttons_sizer = self._createButtonsSizer()
 
-        main_sizer.Add(self.textLabel,
-                       flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL,
-                       border=4)
+        main_sizer.Add(
+            self.textLabel, flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, border=4
+        )
 
-        main_sizer.Add(information_sizer,
-                       flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL,
-                       border=4)
+        main_sizer.Add(
+            information_sizer,
+            flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL,
+            border=4,
+        )
 
-        main_sizer.Add(buttons_sizer,
-                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                       border=4)
+        main_sizer.Add(
+            buttons_sizer,
+            flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+            border=4,
+        )
 
         self.SetSizer(main_sizer)
         self.Fit()
 
     def _createFileInfoPanels(self):
-        self.newFileBox = wx.StaticBoxSizer(wx.VERTICAL,
-                                            self,
-                                            _("New file"))
+        self.newFileBox = wx.StaticBoxSizer(wx.VERTICAL, self, _("New file"))
         self._newFileSizeLabel = wx.StaticText(self)
         self._newFileDateLabel = wx.StaticText(self)
         self.newFileBox.Add(self._newFileSizeLabel, flag=wx.ALL, border=4)
         self.newFileBox.Add(self._newFileDateLabel, flag=wx.ALL, border=4)
 
-        self.oldFileBox = wx.StaticBoxSizer(wx.VERTICAL,
-                                            self,
-                                            _("Exiting file"))
+        self.oldFileBox = wx.StaticBoxSizer(wx.VERTICAL, self, _("Exiting file"))
         self._oldFileSizeLabel = wx.StaticText(self)
         self._oldFileDateLabel = wx.StaticText(self)
 
@@ -135,8 +137,7 @@ class OverwriteDialog(TestedDialog):
         return buttons_sizer
 
     def _setNewFileInfo(self, info: stat_result):
-        size_label = _('{size:_d} bytes').format(
-            size=info.st_size).replace('_', ' ')
+        size_label = _("{size:_d} bytes").format(size=info.st_size).replace("_", " ")
 
         date = datetime.fromtimestamp(info.st_mtime)
         date_label = "{date:%c}".format(date=date)
@@ -145,8 +146,7 @@ class OverwriteDialog(TestedDialog):
         self._newFileDateLabel.SetLabel(date_label)
 
     def _setOldFileInfo(self, info: stat_result):
-        size_label = _('{size:_d} bytes').format(
-            size=info.st_size).replace('_', ' ')
+        size_label = _("{size:_d} bytes").format(size=info.st_size).replace("_", " ")
 
         date = datetime.fromtimestamp(info.st_mtime)
         date_label = "{date:%c}".format(date=date)
@@ -154,10 +154,9 @@ class OverwriteDialog(TestedDialog):
         self._oldFileSizeLabel.SetLabel(size_label)
         self._oldFileDateLabel.SetLabel(date_label)
 
-    def ShowDialog(self,
-                   text: str,
-                   old_file_stat: stat_result,
-                   new_file_stat: stat_result):
+    def ShowDialog(
+        self, text: str, old_file_stat: stat_result, new_file_stat: stat_result
+    ):
         """
         Показать диалог, если нужно спросить, что делать с файлом.
         Этот метод вызывается вместо Show/ShowModal.
