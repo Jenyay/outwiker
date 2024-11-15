@@ -3,15 +3,15 @@
 import wx
 
 from outwiker.core.system import getBuiltinImagePath
-from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
+from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 from outwiker.gui.images import readImage
 
 
 class SearchReplacePanel(wx.Panel):
     def __init__(self, parent):
         super(SearchReplacePanel, self).__init__(
-            parent,
-            style=wx.TAB_TRAVERSAL | wx.RAISED_BORDER)
+            parent, style=wx.TAB_TRAVERSAL | wx.RAISED_BORDER
+        )
 
         self._mainSizer = None
 
@@ -19,11 +19,12 @@ class SearchReplacePanel(wx.Panel):
         self._bindEvents()
 
         # Список элементов, относящихся к замене
-        self._replaceGui = [self._replaceLabel,
-                            self._replaceText,
-                            self._replaceBtn,
-                            self._replaceAllBtn,
-                            ]
+        self._replaceGui = [
+            self._replaceLabel,
+            self._replaceText,
+            self._replaceBtn,
+            self._replaceAllBtn,
+        ]
 
         self.setReplaceGuiVisible(False)
 
@@ -74,12 +75,10 @@ class SearchReplacePanel(wx.Panel):
 
     def _createGui(self):
         # Поле для ввода искомой фразы
-        self._searchText = wx.TextCtrl(self, -1, "",
-                                       style=wx.TE_PROCESS_ENTER)
+        self._searchText = wx.TextCtrl(self, -1, "", style=wx.TE_PROCESS_ENTER)
 
         # Текст для замены
-        self._replaceText = wx.TextCtrl(self, -1, "",
-                                        style=wx.TE_PROCESS_ENTER)
+        self._replaceText = wx.TextCtrl(self, -1, "", style=wx.TE_PROCESS_ENTER)
 
         # Элементы интерфейса, связанные с поиском
         self._findLabel = wx.StaticText(self, -1, _("Find what: "))
@@ -106,7 +105,10 @@ class SearchReplacePanel(wx.Panel):
         self._closeBtn = wx.BitmapButton(
             self,
             -1,
-            readImage(getBuiltinImagePath("close.svg"), ICONS_WIDTH, ICONS_WIDTH))
+            readImage(
+                getBuiltinImagePath("close.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+            ),
+        )
 
         self._layout()
 
@@ -115,28 +117,50 @@ class SearchReplacePanel(wx.Panel):
         self._mainSizer.AddGrowableCol(1)
 
         # Элементы интерфейса для поиска
-        self._mainSizer.Add(self._findLabel, 0, wx.ALL |
-                            wx.ALIGN_CENTER_VERTICAL, border=2)
-        self._mainSizer.Add(self._searchText, 0, wx.ALL |
-                            wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, border=2)
-        self._mainSizer.Add(self._nextSearchBtn, 0, wx.ALL |
-                            wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=1)
-        self._mainSizer.Add(self._prevSearchBtn, 0, wx.ALL |
-                            wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=1)
-        self._mainSizer.Add(self._closeBtn, 0, wx.ALL |
-                            wx.ALIGN_CENTER_VERTICAL, border=1)
-        self._mainSizer.Add(self._resultLabel, 0, wx.ALL |
-                            wx.ALIGN_CENTER_VERTICAL, border=2)
+        self._mainSizer.Add(
+            self._findLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        self._mainSizer.Add(
+            self._searchText, 0, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        self._mainSizer.Add(
+            self._nextSearchBtn,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=1,
+        )
+        self._mainSizer.Add(
+            self._prevSearchBtn,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=1,
+        )
+        self._mainSizer.Add(
+            self._closeBtn, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=1
+        )
+        self._mainSizer.Add(
+            self._resultLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
 
         # Элементы интерфейса для замены
-        self._mainSizer.Add(self._replaceLabel, 0, wx.ALL |
-                            wx.ALIGN_CENTER_VERTICAL, border=2)
-        self._mainSizer.Add(self._replaceText, 0, wx.ALL |
-                            wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, border=2)
-        self._mainSizer.Add(self._replaceBtn, 0, wx.ALL |
-                            wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=1)
-        self._mainSizer.Add(self._replaceAllBtn, 0, wx.ALL |
-                            wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=1)
+        self._mainSizer.Add(
+            self._replaceLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        self._mainSizer.Add(
+            self._replaceText,
+            0,
+            wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
+        self._mainSizer.Add(
+            self._replaceBtn, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=1
+        )
+        self._mainSizer.Add(
+            self._replaceAllBtn,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=1,
+        )
 
         self.SetSizer(self._mainSizer)
         self.Layout()

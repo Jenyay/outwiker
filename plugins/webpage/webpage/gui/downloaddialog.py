@@ -8,7 +8,7 @@ from shutil import rmtree
 
 import wx
 
-from outwiker.api.core.images import createIcon
+from outwiker.api.gui.images import createIcon
 from outwiker.api.app.clipboard import getClipboardText
 from outwiker.api.core.tags import TagsList
 from outwiker.api.gui.dialogs import TestedDialog, MessageBox, TestedFileDialog

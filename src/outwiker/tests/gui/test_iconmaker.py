@@ -6,9 +6,9 @@ from os.path import join, exists
 
 from PIL import Image
 
-from outwiker.core.iconmaker import IconMaker
+from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
+from outwiker.gui.iconmaker import IconMaker
 from outwiker.tests.utils import removeDir
-from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 
 
 class IconMakerTest(unittest.TestCase):
@@ -30,7 +30,7 @@ class IconMakerTest(unittest.TestCase):
         self.assertTrue(exists(fname_out))
 
         with Image.open(fname_out) as img:
-            self.assertEqual(img.size, (ICON_WIDTH, ICON_HEIGHT))
+            self.assertEqual(img.size, (ICONS_WIDTH, ICONS_HEIGHT))
 
     def test_overwrite(self):
         fname_in = 'testdata/images/icon.png'
@@ -42,7 +42,7 @@ class IconMakerTest(unittest.TestCase):
 
         with Image.open(fname_out) as img:
             self.assertTrue(exists(fname_out))
-            self.assertEqual(img.size, (ICON_WIDTH, ICON_HEIGHT))
+            self.assertEqual(img.size, (ICONS_WIDTH, ICONS_HEIGHT))
 
     def test_resize(self):
         fnames_in = [
@@ -67,4 +67,4 @@ class IconMakerTest(unittest.TestCase):
             iconmaker.create(fname, fname_out)
             with Image.open(fname_out) as img:
                 self.assertTrue(exists(fname_out), fname)
-                self.assertEqual(img.size, (ICON_WIDTH, ICON_HEIGHT), fname)
+                self.assertEqual(img.size, (ICONS_WIDTH, ICONS_HEIGHT), fname)

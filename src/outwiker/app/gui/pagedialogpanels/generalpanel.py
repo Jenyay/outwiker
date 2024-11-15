@@ -21,19 +21,19 @@ from outwiker.core.events import (
     PageDialogPageFactoriesNeededParams,
     PageDialogNewPageOrderChangedParams,
 )
-from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH
-from outwiker.gui.images import readImage
-from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
-from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig, TagsConfig
-from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 from outwiker.core.system import getIconsDirList, getBuiltinImagePath
-from outwiker.core.iconscollection import IconsCollection
 from outwiker.core.recenticonslist import RecentIconsList
-from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT, ICON_DEFAULT
+from outwiker.core.defines import ICON_DEFAULT
 from outwiker.core.events import (
     PageDialogPageIconChangedParams,
     IconsGroupsListInitParams,
 )
+from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH
+from outwiker.gui.iconscollection import IconsCollection
+from outwiker.gui.images import readImage
+from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
+from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig, TagsConfig
+from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 from outwiker.gui.controls.switchthemed import EVT_SWITCH
 from outwiker.gui.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
 from outwiker.gui.dialogs.messagebox import MessageBox
@@ -584,8 +584,8 @@ class IconsController(BasePageDialogController):
         if fname is None:
             return None
 
-        neww = ICON_WIDTH
-        newh = ICON_HEIGHT
+        neww = ICONS_WIDTH
+        newh = ICONS_HEIGHT
 
         wx.Log.EnableLogging(False)
         image = readImage(fname, ICONS_WIDTH, ICONS_HEIGHT).ConvertToImage()
