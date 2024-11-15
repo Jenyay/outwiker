@@ -127,11 +127,13 @@ class TagLabel2:
         self._em = self._calc_em()
 
         self._height = self._em2px(1.0)
+        if self._height % 2 == 0:
+            self._height += 1
         self._margin_left = self._em2px(0.4)
         self._margin_right = self._em2px(0.2)
 
-        self._center_y = int(self._height / 2)
-        self._arc_width = int(self._height / 2)
+        self._center_y = self._height // 2
+        self._arc_width = self._height // 2
         self._text_left = self._arc_width + self._margin_left
 
         self._button_border_x = self._text_left - self._em2px(0.1)
@@ -237,9 +239,9 @@ class TagLabel2:
         button_border_color = self._get_button_border_color()
         dc.SetBrush(wx.Brush(button_back_color))
         dc.SetPen(wx.Pen(button_back_color))
-        dc.DrawEllipse(0, 0, self._height, self._height)
+        # dc.DrawEllipse(0, 0, self._height, self._height - 1)
         dc.DrawRectangle(
-            self._arc_width, 0, self._button_border_x - self._arc_width - 1, self._height - 1
+            self._arc_width, 0, self._button_border_x - self._arc_width, self._height - 1
         )
         dc.SetPen(wx.Pen(button_border_color, 1))
         dc.DrawEllipticArc(0, 0, self._height, self._height - 1, 90, 270)
