@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="4.0.0.945" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="4.0.0.944" status="alpha" date="2024-11-16">
         <changes>
             <change>New the notes tree.</change>
