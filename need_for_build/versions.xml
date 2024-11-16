@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.943" status="dev">
+    <version number="4.0.0.944" status="alpha" date="2024-11-16">
         <changes>
+            <change>New the notes tree.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Новое дерево заметок.</change>
         </changes>
     </version>
 
