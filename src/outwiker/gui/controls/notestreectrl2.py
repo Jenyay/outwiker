@@ -49,7 +49,7 @@ class NotesTreeItem:
         self._selected = False
         self._visible = False
         self._textWidth = 0
-        self._hovered = False
+        self._dropHovered = False
 
     def getTitle(self) -> str:
         return self._title
@@ -145,11 +145,11 @@ class NotesTreeItem:
         self._bold = bold
         return self
 
-    def isHovered(self) -> bool:
-        return self._hovered
+    def isDropHovered(self) -> bool:
+        return self._dropHovered
 
-    def setHovered(self, hovered: bool) -> "NotesTreeItem":
-        self._hovered = hovered
+    def setDropHovered(self, hovered: bool) -> "NotesTreeItem":
+        self._dropHovered = hovered
         return self
 
     def _print_tree(self):
@@ -198,7 +198,7 @@ class _ItemsViewInfo:
         self.left_margin = 4
         self.top_margin = 4
         self.icon_height = ICONS_HEIGHT
-        self.line_height = self.icon_height + 6
+        self.line_height = self.icon_height + 12
         self.icon_width = ICONS_WIDTH
         self.font_size = wx.SystemSettings.GetFont(
             wx.SYS_DEFAULT_GUI_FONT
@@ -210,6 +210,7 @@ class _ItemsViewInfo:
         self.title_right_margin = 4
         self.expand_ctrl_width = 11
         self.expand_ctrl_height = 11
+        self.selection_margin_vertical = 2
 
         # Colors
         self.back_color = window.GetBackgroundColour()
@@ -220,9 +221,9 @@ class _ItemsViewInfo:
         self.font_color_normal = self.fore_color
         self.font_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
         self.lines_color = self.fore_color
-        self.hover_color = wx.Colour(self.back_color_selected.GetRed(),
-                                     self.back_color_selected.GetGreen(),
-                                     self.back_color_selected.GetBlue(), 80)
+        self.drop_hover_color = wx.Colour(self.back_color_selected.GetRed(),
+                                          self.back_color_selected.GetGreen(),
+                                          self.back_color_selected.GetBlue(), 80)
 
         self._dc = wx.ClientDC(self._window)
         self._title_font = wx.Font(wx.FontInfo(self.font_size))
@@ -246,15 +247,24 @@ class _ItemsViewInfo:
     def getSelectionLeft(self, item: NotesTreeItem) -> int:
         return self.getExtraIconsRight(item) + self.title_left_margin // 2
 
-    def getSelectionWidth(self, item: NotesTreeItem):
+    def getSelectionWidth(self, item: NotesTreeItem) -> int:
         return (
             (self.title_left_margin // 2)
             + self.getTextWidth(item.getTitle())
             + self.title_right_margin
         )
 
+    def getSelectionHeight(self, item: NotesTreeItem) -> int:
+        return self.getSelectionBottom(item) - self.getSelectionTop(item)
+
     def getSelectionRight(self, item: NotesTreeItem) -> int:
         return self.getSelectionLeft(item) + self.getSelectionWidth(item)
+
+    def getSelectionTop(self, item: NotesTreeItem) -> int:
+        return self.getItemTop(item) + self.selection_margin_vertical
+
+    def getSelectionBottom(self, item: NotesTreeItem) -> int:
+        return self.getItemBottom(item) - self.selection_margin_vertical
 
     def getExtraIconsRight(self, item: NotesTreeItem) -> int:
         return (
@@ -274,8 +284,8 @@ class _ItemsViewInfo:
         return (self.getItemTop(item) + self.getItemBottom(item)) // 2
 
     def isPointInSelection(self, item: NotesTreeItem, x, y) -> bool:
-        top = self.getItemTop(item)
-        bottom = self.getItemBottom(item)
+        top = self.getSelectionTop(item)
+        bottom = self.getSelectionBottom(item)
         left = self.getSelectionLeft(item)
         right = self.getSelectionRight(item)
         return y >= top and y <= bottom and x >= left and x <= right
@@ -345,7 +355,8 @@ class _ItemsPainter:
         self._title_font_normal = wx.NullFont
         self._title_font_selected = wx.NullFont
         self._tree_line_pen = wx.NullPen
-        self._hover_pen = wx.NullPen
+        self._drop_hover_pen = wx.NullPen
+        self._drop_hover_brush = wx.NullBrush
         self._text_height = None
 
     def __enter__(self):
@@ -354,8 +365,8 @@ class _ItemsPainter:
         self._back_pen_normal = wx.Pen(self._view_info.back_color_normal)
         self._back_pen_selected = wx.Pen(self._view_info.back_color_selected)
 
-        self._hover_pen = wx.Pen(self._view_info.hover_color, style=wx.PENSTYLE_SOLID)
-        self._hover_brush = wx.Brush(self._view_info.hover_color)
+        self._drop_hover_pen = wx.Pen(self._view_info.drop_hover_color, style=wx.PENSTYLE_SOLID)
+        self._drop_hover_brush = wx.Brush(self._view_info.drop_hover_color)
 
         self._title_font_normal = wx.Font(wx.FontInfo(self._view_info.font_size))
         self._title_font_selected = wx.Font(wx.FontInfo(self._view_info.font_size))
@@ -375,7 +386,7 @@ class _ItemsPainter:
             self._drawSelection(item, dx, dy)
             self._drawIcon(item, dx, dy)
             self._drawTitle(item, dx, dy)
-            self._drawHover(item, dx, dy)
+            self._drawDropHover(item, dx, dy)
             self._drawExpandCtrl(item, dx, dy)
 
     def fillBackground(self):
@@ -436,21 +447,21 @@ class _ItemsPainter:
         )
         self._dc.DrawText(item.getTitle(), title_x, top)
 
-    def _drawHover(self, item: NotesTreeItem, dx: int, dy: int):
-        if item.isHovered():
+    def _drawDropHover(self, item: NotesTreeItem, dx: int, dy: int):
+        if item.isDropHovered():
             left = self._view_info.getIconLeft(item) + dx
             right = self._view_info.getSelectionRight(item) + dx
-            top = self._view_info.getItemTop(item) + dy
-            bottom = self._view_info.getItemBottom(item) + dy
-            self._gc.SetBrush(self._hover_brush)
-            self._gc.SetPen(self._hover_pen)
+            top = self._view_info.getSelectionTop(item) + dy
+            bottom = self._view_info.getSelectionBottom(item) + dy
+            self._gc.SetBrush(self._drop_hover_brush)
+            self._gc.SetPen(self._drop_hover_pen)
             self._gc.DrawRectangle(left, top, right - left, bottom - top)
 
     def _drawBackground(self, item: NotesTreeItem, dx: int, dy: int):
         left = self._view_info.getIconLeft(item) + dx
         right = self._view_info.getSelectionRight(item) + dx
-        top = self._view_info.getItemTop(item) + dy
-        bottom = self._view_info.getItemBottom(item) + dy
+        top = self._view_info.getSelectionTop(item) + dy
+        bottom = self._view_info.getSelectionBottom(item) + dy
         self._gc.SetBrush(self._back_brush_normal)
         self._gc.SetPen(self._back_pen_normal)
         self._gc.DrawRectangle(left, top, right - left, bottom - top)
@@ -464,11 +475,12 @@ class _ItemsPainter:
 
         left = self._view_info.getSelectionLeft(item)
         width = self._view_info.getSelectionWidth(item)
+        height = self._view_info.getSelectionHeight(item)
         self._dc.DrawRectangle(
             dx + left,
-            self._view_info.getItemTop(item) + dy,
+            self._view_info.getSelectionTop(item) + dy,
             width,
-            self._view_info.line_height,
+            height,
         )
 
     def _drawIcon(self, item: NotesTreeItem, dx: int, dy: int):
@@ -499,7 +511,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._pageCache: Dict[BasePage, NotesTreeItem] = {}
         self._visibleItems: List[NotesTreeItem] = []
 
-        self._hoveredItem: Optional[NotesTreeItem] = None
+        self._dropHoveredItem: Optional[NotesTreeItem] = None
 
         # Имя опции для сохранения развернутости страницы
         self.pageOptionExpand = "Expand"
@@ -638,9 +650,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         event.Skip()
 
     def _resetDragMode(self):
-        if self._hoveredItem is not None:
-            self._hoveredItem.setHovered(False)
-            self._refreshItem(self._hoveredItem)
+        if self._dropHoveredItem is not None:
+            self._dropHoveredItem.setDropHovered(False)
+            self._refreshItem(self._dropHoveredItem)
 
         self._dragMode = False
         self._mouseLeftDownXY = None
@@ -663,16 +675,16 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         if self._dragMode:
             y = event.GetY() + self._getScrollY()
-            oldHoveredItem = self._hoveredItem
-            self._hoveredItem = self._getItemByY(y)
+            oldHoveredItem = self._dropHoveredItem
+            self._dropHoveredItem = self._getItemByY(y)
 
-            if oldHoveredItem is not self._hoveredItem:
+            if oldHoveredItem is not self._dropHoveredItem:
                 if oldHoveredItem is not None:
-                    oldHoveredItem.setHovered(False)
+                    oldHoveredItem.setDropHovered(False)
                     self._refreshItem(oldHoveredItem)
-                if self._hoveredItem is not None and self._dragItem is not self._hoveredItem:
-                    self._hoveredItem.setHovered(True)
-                    self._refreshItem(self._hoveredItem)
+                if self._dropHoveredItem is not None and self._dragItem is not self._dropHoveredItem:
+                    self._dropHoveredItem.setDropHovered(True)
+                    self._refreshItem(self._dropHoveredItem)
 
     def _onLeftButtonDown(self, event):
         self._completeItemEdit()
