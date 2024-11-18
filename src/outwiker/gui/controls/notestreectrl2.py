@@ -666,11 +666,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             oldHoveredItem = self._hoveredItem
             self._hoveredItem = self._getItemByY(y)
 
-            if oldHoveredItem is not self._hoveredItem and self._dragItem is not self._hoveredItem:
+            if oldHoveredItem is not self._hoveredItem:
                 if oldHoveredItem is not None:
                     oldHoveredItem.setHovered(False)
                     self._refreshItem(oldHoveredItem)
-                if self._hoveredItem is not None:
+                if self._hoveredItem is not None and self._dragItem is not self._hoveredItem:
                     self._hoveredItem.setHovered(True)
                     self._refreshItem(self._hoveredItem)
 
