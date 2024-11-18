@@ -160,6 +160,7 @@ class _NotesTreeItemPropertiesCalculator:
     def __init__(self, view_info: "_ItemsViewInfo") -> None:
         self._line = 0
         self._view_info = view_info
+        self._visibleItems: List[NotesTreeItem] = []
 
     def run(self, item: NotesTreeItem):
         parent = item.getParent()
@@ -170,11 +171,15 @@ class _NotesTreeItemPropertiesCalculator:
             item.setLine(self._line)
             item.setTextWidth(self._view_info.getTextWidth(item.getTitle()))
             self._line += 1
+            self._visibleItems.append(item)
         for item in item.getChildren():
             self.run(item)
 
     def getLastLine(self) -> int:
         return self._line
+
+    def getVisibleItems(self) -> List[NotesTreeItem]:
+        return self._visibleItems
 
 
 class _ItemsViewInfo:
@@ -451,6 +456,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице
         # Словарь. Ключ - страница, значение - элемент дерева NotesTreeItem
         self._pageCache: Dict[BasePage, NotesTreeItem] = {}
+        self._visibleItems: List[NotesTreeItem] = []
 
         # Имя опции для сохранения развернутости страницы
         self.pageOptionExpand = "Expand"
@@ -526,9 +532,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         item = self._pageCache.get(page)
         return item is not None and item.isExpanded()
-
-    def _getVisibleItems(self) -> List[NotesTreeItem]:
-        return [item for item in self._pageCache.values() if item.isVisible()]
 
     def _onMouseWheel(self, event):
         event.StopPropagation()
@@ -686,12 +689,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         wx.PostEvent(self, event)
 
     def _getItemByY(self, y: int) -> Optional[NotesTreeItem]:
-        for item in self._pageCache.values():
-            if item.isVisible():
-                y_min = self._view_info.getItemTop(item)
-                y_max = self._view_info.getItemBottom(item)
-                if y >= y_min and y <= y_max:
-                    return item
+        for item in self._visibleItems:
+            y_min = self._view_info.getItemTop(item)
+            y_max = self._view_info.getItemBottom(item)
+            if y >= y_min and y <= y_max:
+                return item
         return None
 
     def HitTest(self, point: Tuple[int, int]) -> Optional[BasePage]:
@@ -709,12 +711,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         calculator = _NotesTreeItemPropertiesCalculator(self._view_info)
         for root_item in self._rootItems:
             calculator.run(root_item)
+            self._visibleItems = calculator.getVisibleItems()
 
         widths = [
             self._view_info.getTitleLeft(item)
             + item.getTextWidth()
             + self._view_info.title_right_margin
-            for item in self._getVisibleItems()
+            for item in self._visibleItems
         ]
         hor_step = 10
         max_scroll_x = (max(widths) if widths else 0) // hor_step
@@ -741,16 +744,15 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
                 painter.fillBackground()
-                for item in self._pageCache.values():
+                for item in self._visibleItems:
                     dx = -interval_x[0]
                     dy = -interval_y[0]
                     item_top = self._view_info.getItemTop(item)
-                    if item.isVisible():
-                        if item_top >= interval_y[0]:
-                            painter.drawTreeLines(item, dx, dy)
+                    if item_top >= interval_y[0]:
+                        painter.drawTreeLines(item, dx, dy)
 
-                        if item_top >= interval_y[0] and item_top <= interval_y[1]:
-                            painter.draw(item, dx, dy)
+                    if item_top >= interval_y[0] and item_top <= interval_y[1]:
+                        painter.draw(item, dx, dy)
 
     def _getScrolledX(self) -> Tuple[int, int]:
         xmin = self._getScrollX()
@@ -811,6 +813,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._iconsCache.clear()
         self._pageCache.clear()
         self._rootItems.clear()
+        self._visibleItems.clear()
         if update:
             self.updateTree()
 
