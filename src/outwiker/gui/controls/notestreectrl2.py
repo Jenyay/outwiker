@@ -469,33 +469,26 @@ class _ItemsPainter:
         )
         self._dc.DrawText(item.getTitle(), title_x, top)
 
-    # def _drawDropHover(self, item: NotesTreeItem, dx: int, dy: int):
-    #     if item.isDropHovered():
-    #         left = self._view_info.getIconLeft(item) + dx
-    #         right = self._view_info.getSelectionRight(item) + dx
-    #         top = self._view_info.getSelectionTop(item) + dy
-    #         bottom = self._view_info.getSelectionBottom(item) + dy
-    #         self._gc.SetBrush(self._drop_hover_brush)
-    #         self._gc.SetPen(self._drop_hover_pen)
-    #         self._gc.DrawRectangle(left, top, right - left, bottom - top)
-
     def _drawBackground(self, item: NotesTreeItem, dx: int, dy: int):
         left = self._view_info.getIconLeft(item) + dx
         right = self._view_info.getSelectionRight(item) + dx
         top = self._view_info.getSelectionTop(item) + dy
         bottom = self._view_info.getSelectionBottom(item) + dy
+        width = right - left
+        height = bottom - top
+
+        self._gc.SetBrush(self._back_brush_normal)
+        self._gc.SetPen(self._back_pen_normal)
+        self._gc.DrawRectangle(left, top, width, height)
 
         if item.isHovered():
             self._gc.SetBrush(self._back_brush_hovered)
             self._gc.SetPen(self._back_pen_hovered)
+            self._gc.DrawRectangle(left, top, width, height)
         elif item.isDropHovered():
             self._gc.SetBrush(self._drop_hover_brush)
             self._gc.SetPen(self._drop_hover_pen)
-        else:
-            self._gc.SetBrush(self._back_brush_normal)
-            self._gc.SetPen(self._back_pen_normal)
-
-        self._gc.DrawRectangle(left, top, right - left, bottom - top)
+            self._gc.DrawRectangle(left, top, width, height)
 
     def _drawSelection(self, item: NotesTreeItem, dx: int, dy: int):
         if not item.isSelected():
