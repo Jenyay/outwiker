@@ -198,7 +198,7 @@ class _ItemsViewInfo:
         self.left_margin = 4
         self.top_margin = 4
         self.icon_height = ICONS_HEIGHT
-        self.line_height = self.icon_height + 12
+        self.line_height = self.icon_height + 10
         self.icon_width = ICONS_WIDTH
         self.font_size = wx.SystemSettings.GetFont(
             wx.SYS_DEFAULT_GUI_FONT
@@ -526,8 +526,12 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._mouseWheelDeltaY = 3
 
         # Rename items
+        self._editItemFont = wx.Font()
+        self._editItemFont.SetPointSize(self._view_info.font_size)
+
         self._editItemTextCtrl = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         self._editItemTextCtrl.Hide()
+        self._editItemTextCtrl.SetFont(self._editItemFont)
         self._currentEditItem: Optional[NotesTreeItem] = None
         self._editClickDelay_ms = 300
         self._editItemCencelled = False
@@ -950,20 +954,20 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self.SetScrollPos(wx.VERTICAL, scroll_y)
 
     def _beginItemEdit(self, item: NotesTreeItem):
-        y_gap = 3
         self._currentEditItem = item
 
         scroll_x = self._getScrollX()
         scroll_y = self._getScrollY()
         x_min = self._view_info.getSelectionLeft(item)
-        y_min = self._view_info.getItemTop(item)
-        y_max = self._view_info.getItemBottom(item)
+        y_min = self._view_info.getSelectionTop(item)
+        y_max = self._view_info.getSelectionBottom(item)
 
-        width = self.GetClientSize().GetWidth() - x_min
-        height = y_max - y_min + 2 * y_gap
+        width = self.GetClientSize().GetWidth() - x_min - 2
+        textCtrlHeight = self._editItemTextCtrl.GetSize().GetHeight()
+        y = y_min + abs(y_max - y_min - textCtrlHeight) // 2
 
         self._editItemTextCtrl.SetSize(
-            x_min - scroll_x, y_min - y_gap - scroll_y, width, height
+            x_min - scroll_x, y - scroll_y, width, -1
         )
         title = item.getTitle()
         self._editItemTextCtrl.SetValue(title)
