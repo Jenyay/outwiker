@@ -50,6 +50,7 @@ class NotesTreeItem:
         self._visible = False
         self._textWidth = 0
         self._dropHovered = False
+        self._hovered = False
 
     def getTitle(self) -> str:
         return self._title
@@ -152,6 +153,13 @@ class NotesTreeItem:
         self._dropHovered = hovered
         return self
 
+    def isHovered(self) -> bool:
+        return self._hovered
+
+    def setHovered(self, hovered: bool) -> "NotesTreeItem":
+        self._hovered = hovered
+        return self
+
     def _print_tree(self):
         expand = "[-]" if self._expanded else "[+]"
         line = f"{'   ' * self._depth}{expand} {self._title} {self._line} {self._visible=} {self._parent=}"
@@ -218,12 +226,18 @@ class _ItemsViewInfo:
 
         self.back_color_normal = self.back_color
         self.back_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
+        # self.back_color_hovered = wx.Colour(230, 243, 255)
+        self.back_color_hovered = wx.Colour(self.back_color_selected.GetRed(),
+                                            self.back_color_selected.GetGreen(),
+                                            self.back_color_selected.GetBlue(), 30)
+
         self.font_color_normal = self.fore_color
         self.font_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
         self.lines_color = self.fore_color
+        # self.drop_hover_color = wx.Colour(128, 193, 255)
         self.drop_hover_color = wx.Colour(self.back_color_selected.GetRed(),
                                           self.back_color_selected.GetGreen(),
-                                          self.back_color_selected.GetBlue(), 80)
+                                          self.back_color_selected.GetBlue(), 100)
 
         self._dc = wx.ClientDC(self._window)
         self._title_font = wx.Font(wx.FontInfo(self.font_size))
@@ -350,10 +364,15 @@ class _ItemsPainter:
         # Pens, brushes etc
         self._back_brush_normal = wx.NullBrush
         self._back_brush_selected = wx.NullBrush
+        self._back_brush_hovered = wx.NullBrush
+
         self._back_pen_normal = wx.NullBrush
         self._back_pen_selected = wx.NullBrush
+        self._back_pen_hovered = wx.NullBrush
+
         self._title_font_normal = wx.NullFont
         self._title_font_selected = wx.NullFont
+
         self._tree_line_pen = wx.NullPen
         self._drop_hover_pen = wx.NullPen
         self._drop_hover_brush = wx.NullBrush
@@ -362,8 +381,11 @@ class _ItemsPainter:
     def __enter__(self):
         self._back_brush_normal = wx.Brush(self._view_info.back_color_normal)
         self._back_brush_selected = wx.Brush(self._view_info.back_color_selected)
+        self._back_brush_hovered = wx.Brush(self._view_info.back_color_hovered)
+
         self._back_pen_normal = wx.Pen(self._view_info.back_color_normal)
         self._back_pen_selected = wx.Pen(self._view_info.back_color_selected)
+        self._back_pen_hovered = wx.Pen(self._view_info.back_color_hovered)
 
         self._drop_hover_pen = wx.Pen(self._view_info.drop_hover_color, style=wx.PENSTYLE_SOLID)
         self._drop_hover_brush = wx.Brush(self._view_info.drop_hover_color)
@@ -386,7 +408,7 @@ class _ItemsPainter:
             self._drawSelection(item, dx, dy)
             self._drawIcon(item, dx, dy)
             self._drawTitle(item, dx, dy)
-            self._drawDropHover(item, dx, dy)
+            # self._drawDropHover(item, dx, dy)
             self._drawExpandCtrl(item, dx, dy)
 
     def fillBackground(self):
@@ -447,23 +469,32 @@ class _ItemsPainter:
         )
         self._dc.DrawText(item.getTitle(), title_x, top)
 
-    def _drawDropHover(self, item: NotesTreeItem, dx: int, dy: int):
-        if item.isDropHovered():
-            left = self._view_info.getIconLeft(item) + dx
-            right = self._view_info.getSelectionRight(item) + dx
-            top = self._view_info.getSelectionTop(item) + dy
-            bottom = self._view_info.getSelectionBottom(item) + dy
-            self._gc.SetBrush(self._drop_hover_brush)
-            self._gc.SetPen(self._drop_hover_pen)
-            self._gc.DrawRectangle(left, top, right - left, bottom - top)
+    # def _drawDropHover(self, item: NotesTreeItem, dx: int, dy: int):
+    #     if item.isDropHovered():
+    #         left = self._view_info.getIconLeft(item) + dx
+    #         right = self._view_info.getSelectionRight(item) + dx
+    #         top = self._view_info.getSelectionTop(item) + dy
+    #         bottom = self._view_info.getSelectionBottom(item) + dy
+    #         self._gc.SetBrush(self._drop_hover_brush)
+    #         self._gc.SetPen(self._drop_hover_pen)
+    #         self._gc.DrawRectangle(left, top, right - left, bottom - top)
 
     def _drawBackground(self, item: NotesTreeItem, dx: int, dy: int):
         left = self._view_info.getIconLeft(item) + dx
         right = self._view_info.getSelectionRight(item) + dx
         top = self._view_info.getSelectionTop(item) + dy
         bottom = self._view_info.getSelectionBottom(item) + dy
-        self._gc.SetBrush(self._back_brush_normal)
-        self._gc.SetPen(self._back_pen_normal)
+
+        if item.isHovered():
+            self._gc.SetBrush(self._back_brush_hovered)
+            self._gc.SetPen(self._back_pen_hovered)
+        elif item.isDropHovered():
+            self._gc.SetBrush(self._drop_hover_brush)
+            self._gc.SetPen(self._drop_hover_pen)
+        else:
+            self._gc.SetBrush(self._back_brush_normal)
+            self._gc.SetPen(self._back_pen_normal)
+
         self._gc.DrawRectangle(left, top, right - left, bottom - top)
 
     def _drawSelection(self, item: NotesTreeItem, dx: int, dy: int):
@@ -512,6 +543,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._visibleItems: List[NotesTreeItem] = []
 
         self._dropHoveredItem: Optional[NotesTreeItem] = None
+        self._hoveredItem: Optional[NotesTreeItem] = None
 
         # Имя опции для сохранения развернутости страницы
         self.pageOptionExpand = "Expand"
@@ -673,7 +705,25 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _onMouseMove(self, event):
         event.Skip()
+        if self._processMoveDragMode(event):
+            return
 
+        self._processMove(event)
+
+    def _processMove(self, event):
+        x = event.GetX() + self._getScrollX()
+        y = event.GetY() + self._getScrollY()
+        oldHoveredItem = self._hoveredItem
+        self._hoveredItem = self._getItemByXY(x, y)
+        if oldHoveredItem is not self._hoveredItem:
+            if oldHoveredItem is not None:
+                oldHoveredItem.setHovered(False)
+                self._refreshItem(oldHoveredItem)
+            if self._hoveredItem is not None:
+                self._hoveredItem.setHovered(True)
+                self._refreshItem(self._hoveredItem)
+
+    def _processMoveDragMode(self, event):
         if self._dragItem is not None and event.LeftIsDown():
             self._dragMode = True
             self.SetCursor(wx.StockCursor(wx.CURSOR_HAND))
@@ -692,6 +742,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 if self._dropHoveredItem is not None and self._dragItem is not self._dropHoveredItem:
                     self._dropHoveredItem.setDropHovered(True)
                     self._refreshItem(self._dropHoveredItem)
+        return self._dragMode
 
     def _onLeftButtonDown(self, event):
         self._completeItemEdit()
@@ -780,7 +831,18 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             y_max = self._view_info.getItemBottom(item)
             if y >= y_min and y <= y_max:
                 return item
+            if y_min > y:
+                break
         return None
+
+    def _getItemByXY(self, x: int, y: int) -> Optional[NotesTreeItem]:
+        item = self._getItemByY(y)
+        if item is None:
+            return None
+
+        x_min = self._view_info.getIconLeft(item)
+        x_max = self._view_info.getSelectionRight(item)
+        return item if x >= x_min and x <= x_max else None
 
     def HitTest(self, point: Tuple[int, int]) -> Optional[BasePage]:
         x = point[0] + self._getScrollX()
