@@ -704,6 +704,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._processMove(event)
 
     def _processMove(self, event):
+        if self._editItemTextCtrl.IsShown():
+            return
+
         x = event.GetX() + self._getScrollX()
         y = event.GetY() + self._getScrollY()
         oldHoveredItem = self._hoveredItem
@@ -1022,10 +1025,10 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         width = self.GetClientSize().GetWidth() - x_min - 2
         textCtrlHeight = self._editItemTextCtrl.GetSize().GetHeight()
-        y = y_min + abs(y_max - y_min - textCtrlHeight) // 2
+        y = y_min + (y_max - y_min - textCtrlHeight) // 2
 
         self._editItemTextCtrl.SetSize(
-            x_min - scroll_x, y - scroll_y, width, -1
+            x_min - scroll_x, y - scroll_y, width, wx.DefaultCoord
         )
         title = item.getTitle()
         self._editItemTextCtrl.SetValue(title)
