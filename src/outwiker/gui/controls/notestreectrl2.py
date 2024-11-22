@@ -219,6 +219,7 @@ class _ItemsViewInfo:
         self.expand_ctrl_width = 11
         self.expand_ctrl_height = 11
         self.selection_margin_vertical = 2
+        self.order_marker_weight = 3
 
         # Colors
         self.back_color = window.GetBackgroundColour()
@@ -226,7 +227,6 @@ class _ItemsViewInfo:
 
         self.back_color_normal = self.back_color
         self.back_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
-        # self.back_color_hovered = wx.Colour(230, 243, 255)
         self.back_color_hovered = wx.Colour(self.back_color_selected.GetRed(),
                                             self.back_color_selected.GetGreen(),
                                             self.back_color_selected.GetBlue(), 30)
@@ -234,10 +234,11 @@ class _ItemsViewInfo:
         self.font_color_normal = self.fore_color
         self.font_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
         self.lines_color = self.fore_color
-        # self.drop_hover_color = wx.Colour(128, 193, 255)
         self.drop_hover_color = wx.Colour(self.back_color_selected.GetRed(),
                                           self.back_color_selected.GetGreen(),
                                           self.back_color_selected.GetBlue(), 100)
+
+        self.order_between_color = self.fore_color
 
         self._dc = wx.ClientDC(self._window)
         self._title_font = wx.Font(wx.FontInfo(self.font_size))
@@ -349,6 +350,7 @@ class _ItemsPainter:
         self._dc = dc
         self._image_list = image_list
         self._view_info = view_info
+
         self._gc = wx.GraphicsContext.Create(dc)
 
         self._expand_ctrl_images = SafeImageList(
@@ -374,8 +376,12 @@ class _ItemsPainter:
         self._title_font_selected = wx.NullFont
 
         self._tree_line_pen = wx.NullPen
+
         self._drop_hover_pen = wx.NullPen
         self._drop_hover_brush = wx.NullBrush
+
+        self._order_line_pen = wx.NullPen
+
         self._text_height = None
 
     def __enter__(self):
@@ -394,6 +400,7 @@ class _ItemsPainter:
         self._title_font_selected = wx.Font(wx.FontInfo(self._view_info.font_size))
 
         self._tree_line_pen = wx.Pen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
+        self._order_line_pen = wx.Pen(self._view_info.order_between_color, width = self._view_info.order_marker_weight)
 
         self._dc.SetFont(self._title_font_normal)
         self._text_height = self._dc.GetTextExtent("W").GetHeight()
@@ -408,7 +415,6 @@ class _ItemsPainter:
             self._drawSelection(item, dx, dy)
             self._drawIcon(item, dx, dy)
             self._drawTitle(item, dx, dy)
-            # self._drawDropHover(item, dx, dy)
             self._drawExpandCtrl(item, dx, dy)
 
     def fillBackground(self):
@@ -431,6 +437,10 @@ class _ItemsPainter:
         centerV = self._view_info.getItemCenterVertical(item) + dy
         points = [(left, top, left, centerV), (left, centerV, right, centerV)]
         self._dc.DrawLineList(points, pens=self._tree_line_pen)
+
+    def drawOrderMarker(self, xmin: int, xmax: int, y: int, dx: int, dy: int):
+        self._dc.SetPen(self._order_line_pen)
+        self._dc.DrawLine(xmin + dx + 1, y + dy, xmax + dx - 1, y + dy)
 
     def _drawExpandCtrl(self, item: NotesTreeItem, dx, dy):
         if item.getChildren():
@@ -572,6 +582,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._dragItem: Optional[NotesTreeItem] = None
         self._dragMode = False
         self._mouseLeftDownXY: Optional[Tuple[int, int]] = None
+        self._orderBeforeItem: Optional[NotesTreeItem] = None
+        self._orderAfterItem: Optional[NotesTreeItem] = None
+        self._orderBetweenGap = 3
 
         # Misc event handlers
         self.Bind(wx.EVT_CLOSE, self._onClose)
@@ -738,7 +751,61 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 if self._dropHoveredItem is not None and self._dragItem is not self._dropHoveredItem:
                     self._dropHoveredItem.setDropHovered(True)
                     self._refreshItem(self._dropHoveredItem)
+
+            self._processOrderDrag(self._dropHoveredItem, y)
         return self._dragMode
+
+    def _processOrderDrag(self, item: Optional[NotesTreeItem], mouseY: int):
+        oldBeforeItem = self._orderBeforeItem
+        oldAfterItem = self._orderAfterItem
+
+        self._orderBeforeItem = None
+        self._orderAfterItem = None
+
+        if item is not None and item.getParent() is not None:
+            topItem = self._view_info.getItemTop(item)
+            bottomItem = self._view_info.getItemBottom(item)
+            if mouseY >= topItem and mouseY <= topItem + self._orderBetweenGap:
+                self._orderBeforeItem = item
+                self._orderAfterItem = None
+            elif mouseY >= bottomItem - self._orderBetweenGap and mouseY <= bottomItem:
+                self._orderAfterItem = item
+                self._orderBeforeItem = None
+
+        if oldBeforeItem is not self._orderBeforeItem and oldBeforeItem is not None:
+            self._refreshItem(oldBeforeItem)
+
+        if oldAfterItem is not self._orderAfterItem and oldAfterItem is not None:
+            self._refreshItem(oldAfterItem)
+
+        if self._orderBeforeItem is not None:
+            self._drawOrderMarkerBefore(self._orderBeforeItem)
+
+        if self._orderAfterItem is not None:
+            self._drawOrderMarkerAfter(self._orderAfterItem)
+
+    def _drawOrderMarkerBefore(self, item: NotesTreeItem):
+        y = self._view_info.getItemTop(item)
+        xmin = self._view_info.getIconLeft(item)
+        xmax = self._view_info.getSelectionRight(item)
+        self._drawOrderMarker(xmin, xmax, y + self._view_info.order_marker_weight)
+
+    def _drawOrderMarkerAfter(self, item: NotesTreeItem):
+        y = self._view_info.getItemBottom(item)
+        xmin = self._view_info.getIconLeft(item)
+        xmax = self._view_info.getSelectionRight(item)
+        self._drawOrderMarker(xmin, xmax, y - self._view_info.order_marker_weight)
+
+    def _drawOrderMarker(self, xmin: int, xmax: int, y: int):
+        with wx.ClientDC(self) as dc:
+            with _ItemsPainter(
+                self, dc, self._iconsCache.getImageList(), self._view_info
+            ) as painter:
+                interval_x = self._getScrolledX()
+                interval_y = self._getScrolledY()
+                dx = -interval_x[0]
+                dy = -interval_y[0]
+                painter.drawOrderMarker(xmin, xmax, y, dx, dy)
 
     def _onLeftButtonDown(self, event):
         self._completeItemEdit()
