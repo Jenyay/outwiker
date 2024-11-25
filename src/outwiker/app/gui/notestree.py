@@ -231,7 +231,8 @@ class NotesTree(wx.Panel):
         assert beforePage is not None or afterPage is not None
         newParent = beforePage.parent if beforePage is not None else afterPage.parent
         newOrder = beforePage.order if beforePage is not None else afterPage.order + 1
-        # print("Tree item change order:", srcPage.display_title, "->" ,newParent.display_title, "->", newOrder)
+        srcPage.moveTo(newParent)
+        srcPage.order = newOrder
 
     def __onTreeUpdate(self, sender):
         self._setRoot(sender.root)
