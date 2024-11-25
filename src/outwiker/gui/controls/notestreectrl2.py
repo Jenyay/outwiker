@@ -25,6 +25,9 @@ NotesTreeMiddleButtonUpEvent, EVT_NOTES_TREE_MIDDLE_BUTTON_UP = (
 NotesTreeItemActivateEvent, EVT_NOTES_TREE_ITEM_ACTIVATE = wx.lib.newevent.NewEvent()
 NotesTreeEndItemEditEvent, EVT_NOTES_TREE_END_ITEM_EDIT = wx.lib.newevent.NewEvent()
 NotesTreeDropItemEvent, EVT_NOTES_TREE_DROP_ITEM = wx.lib.newevent.NewEvent()
+NotesTreeChangeOrderItemEvent, EVT_NOTES_TREE_CHANGE_ORDER_ITEM = (
+    wx.lib.newevent.NewEvent()
+)
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
 
@@ -227,16 +230,24 @@ class _ItemsViewInfo:
 
         self.back_color_normal = self.back_color
         self.back_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
-        self.back_color_hovered = wx.Colour(self.back_color_selected.GetRed(),
-                                            self.back_color_selected.GetGreen(),
-                                            self.back_color_selected.GetBlue(), 30)
+        self.back_color_hovered = wx.Colour(
+            self.back_color_selected.GetRed(),
+            self.back_color_selected.GetGreen(),
+            self.back_color_selected.GetBlue(),
+            30,
+        )
 
         self.font_color_normal = self.fore_color
-        self.font_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
+        self.font_color_selected = wx.SystemSettings.GetColour(
+            wx.SYS_COLOUR_HIGHLIGHTTEXT
+        )
         self.lines_color = self.fore_color
-        self.drop_hover_color = wx.Colour(self.back_color_selected.GetRed(),
-                                          self.back_color_selected.GetGreen(),
-                                          self.back_color_selected.GetBlue(), 100)
+        self.drop_hover_color = wx.Colour(
+            self.back_color_selected.GetRed(),
+            self.back_color_selected.GetGreen(),
+            self.back_color_selected.GetBlue(),
+            100,
+        )
 
         self.order_between_color = self.fore_color
 
@@ -393,14 +404,19 @@ class _ItemsPainter:
         self._back_pen_selected = wx.Pen(self._view_info.back_color_selected)
         self._back_pen_hovered = wx.Pen(self._view_info.back_color_hovered)
 
-        self._drop_hover_pen = wx.Pen(self._view_info.drop_hover_color, style=wx.PENSTYLE_SOLID)
+        self._drop_hover_pen = wx.Pen(
+            self._view_info.drop_hover_color, style=wx.PENSTYLE_SOLID
+        )
         self._drop_hover_brush = wx.Brush(self._view_info.drop_hover_color)
 
         self._title_font_normal = wx.Font(wx.FontInfo(self._view_info.font_size))
         self._title_font_selected = wx.Font(wx.FontInfo(self._view_info.font_size))
 
         self._tree_line_pen = wx.Pen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
-        self._order_line_pen = wx.Pen(self._view_info.order_between_color, width = self._view_info.order_marker_weight)
+        self._order_line_pen = wx.Pen(
+            self._view_info.order_between_color,
+            width=self._view_info.order_marker_weight,
+        )
 
         self._dc.SetFont(self._title_font_normal)
         self._text_height = self._dc.GetTextExtent("W").GetHeight()
@@ -536,9 +552,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.defaultIcon = getBuiltinImagePath("page.svg")
 
         # Картинки для дерева
-        self._iconsCache = ImageListCache(self.defaultIcon,
-                                          self._view_info.icon_width,
-                                          self._view_info.icon_height)
+        self._iconsCache = ImageListCache(
+            self.defaultIcon, self._view_info.icon_width, self._view_info.icon_height
+        )
 
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице
         # Словарь. Ключ - страница, значение - элемент дерева NotesTreeItem
@@ -702,10 +718,26 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
 
     def _dropItem(self, srcItem: NotesTreeItem, destItem: NotesTreeItem):
-        order: Optional[int] = None
-        event = NotesTreeDropItemEvent(
-            srcPage=srcItem.getPage(), destPage=destItem.getPage(), order=order
-        )
+        event = None
+
+        if self._orderBeforeItem is not None or self._orderAfterItem is not None:
+            beforePage = (
+                self._orderBeforeItem.getPage()
+                if self._orderBeforeItem is not None
+                else None
+            )
+            afterPage = (
+                self._orderAfterItem.getPage()
+                if self._orderAfterItem is not None
+                else None
+            )
+            event = NotesTreeChangeOrderItemEvent(
+                srcPage=srcItem.getPage(), beforePage=beforePage, afterPage=afterPage
+            )
+        else:
+            event = NotesTreeDropItemEvent(
+                srcPage=srcItem.getPage(), destPage=destItem.getPage()
+            )
         wx.PostEvent(self, event)
         self._resetDragMode()
 
@@ -748,7 +780,10 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 if oldHoveredItem is not None:
                     oldHoveredItem.setDropHovered(False)
                     self._refreshItem(oldHoveredItem)
-                if self._dropHoveredItem is not None and self._dragItem is not self._dropHoveredItem:
+                if (
+                    self._dropHoveredItem is not None
+                    and self._dragItem is not self._dropHoveredItem
+                ):
                     self._dropHoveredItem.setDropHovered(True)
                     self._refreshItem(self._dropHoveredItem)
 
@@ -914,8 +949,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         if item is None:
             return None
 
-        if (x >= self._view_info.getIconLeft(item)
-                and x <= self._view_info.getSelectionRight(item)):
+        if x >= self._view_info.getIconLeft(
+            item
+        ) and x <= self._view_info.getSelectionRight(item):
             return item.getPage()
 
     def _calculateItemsProperties(self):
@@ -944,7 +980,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             max_scroll_y,
             old_scroll_pos_x,
             old_scroll_pos_y,
-            noRefresh=True
+            noRefresh=True,
         )
 
     def _refreshItem(self, item: NotesTreeItem):

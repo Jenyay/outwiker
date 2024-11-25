@@ -36,6 +36,7 @@ from outwiker.gui.controls.notestreectrl2 import (
     EVT_NOTES_TREE_ITEM_ACTIVATE,
     EVT_NOTES_TREE_END_ITEM_EDIT,
     EVT_NOTES_TREE_DROP_ITEM,
+    EVT_NOTES_TREE_CHANGE_ORDER_ITEM,
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -129,6 +130,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeExpandChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_ITEM_ACTIVATE, self.__onTreeItemActivated)
         self.treeCtrl.Bind(EVT_NOTES_TREE_DROP_ITEM, self.__onTreeItemDrop)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_CHANGE_ORDER_ITEM, self.__onTreeItemChangeOrder)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -221,6 +223,15 @@ class NotesTree(wx.Panel):
             movePage(draggedPage, newParent)
             self.treeCtrl.expand(newParent)
             self.treeCtrl.setSelectedPage(self._application.selectedPage)
+
+    def __onTreeItemChangeOrder(self, event):
+        srcPage = event.srcPage
+        beforePage = event.beforePage
+        afterPage = event.afterPage
+        assert beforePage is not None or afterPage is not None
+        newParent = beforePage.parent if beforePage is not None else afterPage.parent
+        newOrder = beforePage.order if beforePage is not None else afterPage.order + 1
+        # print("Tree item change order:", srcPage.display_title, "->" ,newParent.display_title, "->", newOrder)
 
     def __onTreeUpdate(self, sender):
         self._setRoot(sender.root)
