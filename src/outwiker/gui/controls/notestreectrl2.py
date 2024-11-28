@@ -1086,7 +1086,10 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def updateTree(self):
         self._calculateItemsProperties()
+        self._hoveredItem = None
+        self._dropHoveredItem = None
         self.Refresh()
+        self.Update()
 
     def addPage(self, page: WikiPage, update=True):
         """
