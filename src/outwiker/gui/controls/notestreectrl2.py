@@ -616,6 +616,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftDblClick)
         self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
+        self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
 
     def _updateViewInfo(self):
         self._view_info = _ItemsViewInfo(self)
@@ -645,6 +646,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         item = self._pageCache.get(page)
         return item is not None and item.isExpanded()
+
+    def _onMouseLeaveWindow(self, event):
+        if self._hoveredItem is not None:
+            oldHoveredItem = self._hoveredItem
+            self._hoveredItem.setHovered(False)
+            self._hoveredItem = None
+            self._refreshItem(oldHoveredItem)
 
     def _onMouseWheel(self, event):
         event.StopPropagation()
@@ -1086,8 +1094,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def updateTree(self):
         self._calculateItemsProperties()
-        self._hoveredItem = None
-        self._dropHoveredItem = None
+        if self._hoveredItem is not None:
+            self._hoveredItem.setHovered(False)
+            self._hoveredItem = None
+
+        if self._dropHoveredItem is not None:
+            self._dropHoveredItem.setDropHovered(False)
+            self._dropHoveredItem = None
+
         self.Refresh()
         self.Update()
 
