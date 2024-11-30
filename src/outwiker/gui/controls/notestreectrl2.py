@@ -28,6 +28,7 @@ NotesTreeDropItemEvent, EVT_NOTES_TREE_DROP_ITEM = wx.lib.newevent.NewEvent()
 NotesTreeChangeOrderItemEvent, EVT_NOTES_TREE_CHANGE_ORDER_ITEM = (
     wx.lib.newevent.NewEvent()
 )
+NotesTreeItemsPreparingEvent, EVT_NOTES_TREE_ITEMS_PREPARING = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
 
@@ -975,6 +976,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         for root_item in self._rootItems:
             calculator.run(root_item)
             self._visibleItems = calculator.getVisibleItems()
+
+        event = NotesTreeItemsPreparingEvent(visibleItems=self._visibleItems)
+        wx.PostEvent(self, event)
 
         widths = [
             self._view_info.getTitleLeft(item)

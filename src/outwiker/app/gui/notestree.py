@@ -23,7 +23,7 @@ from outwiker.app.gui.dropfiles import BaseDropFilesTarget
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
-from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
+from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE, NotesTreeItemsPreparingParams
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tree import BasePage, WikiPage
 
@@ -37,6 +37,7 @@ from outwiker.gui.controls.notestreectrl2 import (
     EVT_NOTES_TREE_END_ITEM_EDIT,
     EVT_NOTES_TREE_DROP_ITEM,
     EVT_NOTES_TREE_CHANGE_ORDER_ITEM,
+    EVT_NOTES_TREE_ITEMS_PREPARING,
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -131,6 +132,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.Bind(EVT_NOTES_TREE_ITEM_ACTIVATE, self.__onTreeItemActivated)
         self.treeCtrl.Bind(EVT_NOTES_TREE_DROP_ITEM, self.__onTreeItemDrop)
         self.treeCtrl.Bind(EVT_NOTES_TREE_CHANGE_ORDER_ITEM, self.__onTreeItemChangeOrder)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_ITEMS_PREPARING, self.__onTreeItemsPreparing)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -236,6 +238,12 @@ class NotesTree(wx.Panel):
 
     def __onTreeUpdate(self, sender):
         self._setRoot(sender.root)
+
+    def __onTreeItemsPreparing(self, event):
+        visibleItems = event.visibleItems
+        page = self._application.selectedPage
+        params = NotesTreeItemsPreparingParams(visibleItems)
+        self._application.onNotesTreeItemsPreparing(page, params)
 
     def __onPageSelect(self, page):
         """

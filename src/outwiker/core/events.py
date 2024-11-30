@@ -390,3 +390,11 @@ class AttachSelectionChangedParams:
     """
     # Current selected attachments
     selection: List[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class NotesTreeItemsPreparingParams:
+    """
+    Parameters for onNotesTreeChangeOrderItem
+    """
+    visible_items: List["NotesTreeItem"] = field(default_factory=list)

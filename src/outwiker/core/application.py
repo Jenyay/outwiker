@@ -361,6 +361,12 @@ class ApplicationParams:
         #     params - instance of the AttachSelectionChangedParams class
         self.onAttachSelectionChanged = Event()
 
+        # Event occurs after list of visible the notes tree items
+        # Parameters:
+        #    page - current (selection) page
+        #    params - instance of the NotesTreeItemsPreparingParams class
+        self.onNotesTreeItemsPreparing = Event()
+
     def init(self, fullConfigPath):
         """
         Initialize config and locale

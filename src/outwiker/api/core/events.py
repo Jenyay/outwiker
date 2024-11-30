@@ -32,4 +32,5 @@ from outwiker.core.events import (PAGE_UPDATE_CONTENT, PAGE_UPDATE_ICON,
                                   TextEditorCaretMoveParams,
                                   BeginAttachRenamingParams,
                                   AttachSelectionChangedParams,
+                                  NotesTreeItemsPreparingParams,
                                   )
