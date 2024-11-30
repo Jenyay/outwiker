@@ -7,10 +7,13 @@ from outwiker.app.services.tree import openWiki
 from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.app.gui.emptypageview import ClosedTreePanel
 from outwiker.app.gui.tabsctrl import TabsCtrl
+from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.system import getOS, getBuiltinImagePath
 from outwiker.core.treetools import pageExists
 from outwiker.gui.rootpagepanel import RootPagePanel
+from outwiker.gui.images import readImage
+
 
 
 class CurrentPagePanel(wx.Panel):
@@ -28,14 +31,14 @@ class CurrentPagePanel(wx.Panel):
         # Флаг обозначает, что выполняется метод Save
         self.__saveProcessing = False
 
-        self.grayStarImage = getBuiltinImagePath("star_gray.png")
-        self.goldStarImage = getBuiltinImagePath("star.png")
+        self._bookmarkInactiveImg = readImage(getBuiltinImagePath("bookmark.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
+        self._bookmarkActiveImg = readImage(getBuiltinImagePath("bookmark_active.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
 
         self.tabsCtrl = TabsCtrl(self)
         self.bookmarkButton = wx.BitmapButton(
             self,
             -1,
-            wx.Bitmap(getBuiltinImagePath("star_gray.png"), wx.BITMAP_TYPE_ANY),
+            self._bookmarkInactiveImg,
         )
 
         self.__set_properties()
@@ -106,7 +109,7 @@ class CurrentPagePanel(wx.Panel):
         self.bookmarkButton.Enable(page is not None)
 
     def __updateBookmarkBtn(self):
-        imagePath = self.grayStarImage
+        image = self._bookmarkInactiveImg
         tooltip = _("Add to Bookmarks")
 
         page = self._application.selectedPage
@@ -114,10 +117,10 @@ class CurrentPagePanel(wx.Panel):
         if page is not None and page.root.bookmarks.pageMarked(
             self._application.selectedPage
         ):
-            imagePath = self.goldStarImage
+            image = self._bookmarkActiveImg
             tooltip = _("Remove from Bookmarks")
 
-        self.bookmarkButton.SetBitmapLabel(wx.Bitmap(imagePath, wx.BITMAP_TYPE_ANY))
+        self.bookmarkButton.SetBitmapLabel(image)
         self.bookmarkButton.SetToolTip(tooltip)
 
     def __onBookmarksChanged(self, bookmarks):
