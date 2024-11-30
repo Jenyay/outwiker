@@ -124,15 +124,15 @@ class NotesTree(wx.Panel):
         Подписка на события интерфейса
         """
         # Перетаскивание элементов
-        self.treeCtrl.Bind(EVT_NOTES_TREE_END_ITEM_EDIT, self.__onEndLabelEdit)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_RIGHT_BUTTON_UP, self.__onPopupMenu)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_MIDDLE_BUTTON_UP, self.__onMiddleClick)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, self.__onTreeExpandChanged)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_ITEM_ACTIVATE, self.__onTreeItemActivated)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_DROP_ITEM, self.__onTreeItemDrop)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_CHANGE_ORDER_ITEM, self.__onTreeItemChangeOrder)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_ITEMS_PREPARING, self.__onTreeItemsPreparing)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_END_ITEM_EDIT, handler=self.__onEndLabelEdit)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, handler=self.__onSelChanged)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_RIGHT_BUTTON_UP, handler=self.__onPopupMenu)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_MIDDLE_BUTTON_UP, handler=self.__onMiddleClick)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, handler=self.__onTreeExpandChanged)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_ITEM_ACTIVATE, handler=self.__onTreeItemActivated)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_DROP_ITEM, handler=self.__onTreeItemDrop)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_CHANGE_ORDER_ITEM, handler=self.__onTreeItemChangeOrder)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_ITEMS_PREPARING, handler=self.__onTreeItemsPreparing)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -172,7 +172,6 @@ class NotesTree(wx.Panel):
         if expanded:
             for child in page.children:
                 self._appendChildren(child)
-            self.treeCtrl.updateTree()
 
     def __onPopupMenu(self, event):
         self.popupPage = None
@@ -223,7 +222,7 @@ class NotesTree(wx.Panel):
         newParent = event.destPage
         if newParent != draggedPage:
             movePage(draggedPage, newParent)
-            self.treeCtrl.expand(newParent)
+            self.treeCtrl.expand(newParent, update=False)
             self.treeCtrl.setSelectedPage(self._application.selectedPage)
 
     def __onTreeItemChangeOrder(self, event):
@@ -237,7 +236,9 @@ class NotesTree(wx.Panel):
         srcPage.order = newOrder
 
     def __onTreeUpdate(self, sender):
+        # self.treeCtrl.Unbind(EVT_NOTES_TREE_EXPAND_CHANGED, handler=self.__onTreeExpandChanged)
         self._setRoot(sender.root)
+        # self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, handler=self.__onTreeExpandChanged)
 
     def __onTreeItemsPreparing(self, event):
         visibleItems = event.visibleItems
@@ -287,7 +288,7 @@ class NotesTree(wx.Panel):
             if not self.treeCtrl.pageInTree(newSelPage):
                 self._addTreeItemsToPage(newSelPage)
 
-            self.treeCtrl.expandToPage(newSelPage)
+            self.treeCtrl.expandToPage(newSelPage, update=False)
         self.treeCtrl.setSelectedPage(newSelPage)
 
     def _addTreeItemsToPage(self, page: WikiPage):
@@ -412,7 +413,6 @@ class NotesTree(wx.Panel):
         if rootPage is not None:
             self.treeCtrl.addRoot(rootPage, update=False)
             self._appendChildren(rootPage)
-            self.treeCtrl.selectedPage = rootPage.selectedPage
 
         self.treeCtrl.updateTree()
 

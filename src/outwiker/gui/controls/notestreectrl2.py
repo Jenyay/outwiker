@@ -699,7 +699,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _onExpandCollapseItem(self, item):
         page = item.getPage()
         expanded = not item.isExpanded()
-        self.expand(page, expanded, True)
+        self.expand(page, expanded, update=True)
 
     def _onSelectItem(
         self, item: NotesTreeItem, oldSelectedItem: Optional[NotesTreeItem]
@@ -1237,7 +1237,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         """
         return self._pageCache.get(page)
 
-    def expandToPage(self, page):
+    def expandToPage(self, page, update=True):
         """
         Развернуть ветви до того уровня, чтобы появился элемент для page
         """
@@ -1250,7 +1250,10 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         pages.reverse()
         for page in pages:
-            self.expand(page, True)
+            self.expand(page, True, update=False)
+
+        if update:
+            self.updateTree()
 
     def expand(self, page, expanded=True, update=True):
         item = self._getTreeItem(page)
@@ -1258,6 +1261,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             item.expand(expanded)
             event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
             wx.PostEvent(self, event)
+            wx.SafeYield()
             if update:
                 self.updateTree()
 
