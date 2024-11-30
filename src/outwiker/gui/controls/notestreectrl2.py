@@ -206,14 +206,23 @@ class _ItemsViewInfo:
         self._window = window
 
         # Sizes
-        self.left_margin = 4
-        self.top_margin = 4
         self.icon_height = ICONS_HEIGHT
-        self.line_height = self.icon_height + 10
         self.icon_width = ICONS_WIDTH
         self.font_size = wx.SystemSettings.GetFont(
             wx.SYS_DEFAULT_GUI_FONT
         ).GetPointSize()
+
+        self._dc = wx.ClientDC(self._window)
+        self._title_font = wx.Font(wx.FontInfo(self.font_size))
+        self._dc.SetFont(self._title_font)
+
+        self.line_height = self.icon_height + 10
+        title_height = self.getTextHeight("Yy")
+        if self.line_height <= title_height + 4:
+            self.line_height = title_height + 10
+
+        self.left_margin = 4
+        self.top_margin = 4
         self.depth_indent = self.icon_width // 2 + 16
         self.icon_left_margin = 8
         self.extra_icons_left_margin = 3
@@ -251,12 +260,11 @@ class _ItemsViewInfo:
 
         self.order_between_color = self.fore_color
 
-        self._dc = wx.ClientDC(self._window)
-        self._title_font = wx.Font(wx.FontInfo(self.font_size))
-        self._dc.SetFont(self._title_font)
-
     def getTextWidth(self, text: str) -> int:
         return self._dc.GetTextExtent(text).GetWidth()
+
+    def getTextHeight(self, text: str) -> int:
+        return self._dc.GetTextExtent(text).GetHeight()
 
     def getTitleLeft(self, item: NotesTreeItem) -> int:
         return self.getExtraIconsRight(item) + self.title_left_margin
