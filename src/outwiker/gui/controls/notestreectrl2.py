@@ -1000,7 +1000,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             max_scroll_y,
             old_scroll_pos_x,
             old_scroll_pos_y,
-            noRefresh=True,
+            noRefresh=False,
         )
 
     def _refreshItem(self, item: NotesTreeItem):
@@ -1105,7 +1105,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self.updateTree()
 
     def updateTree(self):
-        self._calculateItemsProperties()
         if self._hoveredItem is not None:
             self._hoveredItem.setHovered(False)
             self._hoveredItem = None
@@ -1114,12 +1113,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self._dropHoveredItem.setDropHovered(False)
             self._dropHoveredItem = None
 
+        self._calculateItemsProperties()
         self.Refresh()
         self.Update()
 
     def addPage(self, page: WikiPage, update=True):
         """
-        Вставить одну дочерниюю страницу (page) в ветвь
+        Вставить одну дочернюю страницу (page) в ветвь
         """
         if page not in self._pageCache:
             parentItem = self._getTreeItem(page.parent)
@@ -1143,8 +1143,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             if scroll_y < 0:
                 scroll_y = 0
 
-            self.SetScrollPos(wx.HORIZONTAL, scroll_x, refresh=False)
-            self.SetScrollPos(wx.VERTICAL, scroll_y)
+            self.Scroll(scroll_x, scroll_y)
 
     def _beginItemEdit(self, item: NotesTreeItem):
         self._currentEditItem = item

@@ -151,7 +151,7 @@ class NotesTree(wx.Panel):
         """
         Обработка создания страницы
         """
-        self.treeCtrl.addPage(newpage)
+        self.treeCtrl.addPage(newpage, update=False)
         self.treeCtrl.expand(newpage, update=False)
         self.treeCtrl.expand(newpage.parent, update=True)
 
@@ -236,9 +236,7 @@ class NotesTree(wx.Panel):
         srcPage.order = newOrder
 
     def __onTreeUpdate(self, sender):
-        # self.treeCtrl.Unbind(EVT_NOTES_TREE_EXPAND_CHANGED, handler=self.__onTreeExpandChanged)
         self._setRoot(sender.root)
-        # self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, handler=self.__onTreeExpandChanged)
 
     def __onTreeItemsPreparing(self, event):
         visibleItems = event.visibleItems
