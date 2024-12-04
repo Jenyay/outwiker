@@ -45,8 +45,8 @@ class NotesTreeItem:
         self._extraImageIds: List[int] = []
         self._bold = False
         self._italic = False
-        self._fontColor = None
-        self._backColor = None
+        self._fontColor: Optional[wx.Colour] = None
+        self._backColor: Optional[wx.Colour] = None
         self._italic = False
         self._bold = False
         self._expanded = False
@@ -55,6 +55,13 @@ class NotesTreeItem:
         self._textWidth = 0
         self._dropHovered = False
         self._hovered = False
+
+    def getFontColor(self) -> Optional[wx.Colour]:
+        return self._fontColor
+
+    def setFontColor(self, color: Optional[wx.Colour]):
+        self._fontColor = color
+        return self
 
     def getTitle(self) -> str:
         return self._title
@@ -190,6 +197,10 @@ class _NotesTreeItemPropertiesCalculator:
         if visible:
             item.setLine(self._line)
             item.setTextWidth(self._view_info.getTextWidth(item.getTitle()))
+            titleColor = wx.Colour(item.getPage().params.titleColorOption.value)
+            if titleColor.IsOk():
+                item.setFontColor(titleColor)
+
             self._line += 1
             self._visibleItems.append(item)
         for item in item.getChildren():
@@ -493,6 +504,10 @@ class _ItemsPainter:
         else:
             self._dc.SetTextForeground(self._view_info.font_color_normal)
             self._dc.SetTextBackground(self._view_info.back_color_normal)
+
+        titleColor = item.getFontColor()
+        if titleColor is not None and titleColor.IsOk():
+            self._dc.SetTextForeground(titleColor)
 
         self._dc.SetFont(current_font)
 

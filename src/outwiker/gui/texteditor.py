@@ -6,6 +6,7 @@ import os.path
 from typing import List
 
 import wx
+import wx.stc
 import wx.lib.newevent
 
 import outwiker.core.system
