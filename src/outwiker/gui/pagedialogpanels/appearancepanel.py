@@ -118,11 +118,11 @@ class AppearanceController(BasePageDialogController):
             return False
 
         oldTitleColor = wx.Colour(page.params.titleColorOption.value)
-        titleColor = self._appearancePanel.titleColorBox.GetSelectedColor()
-        if oldTitleColor != titleColor:
+        newTitleColor = self._appearancePanel.titleColorBox.GetSelectedColor()
+        if oldTitleColor != newTitleColor:
             page.params.titleColorOption.value = (
-                titleColor.GetAsString(wx.C2S_HTML_SYNTAX)
-                if titleColor is not None
+                newTitleColor.GetAsString(wx.C2S_HTML_SYNTAX)
+                if newTitleColor is not None
                 else ""
             )
             page.root.onPageUpdate(page, change=PAGE_UPDATE_COLOR)

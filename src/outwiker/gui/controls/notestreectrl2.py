@@ -200,6 +200,8 @@ class _NotesTreeItemPropertiesCalculator:
             titleColor = wx.Colour(item.getPage().params.titleColorOption.value)
             if titleColor.IsOk():
                 item.setFontColor(titleColor)
+            else:
+                item.setFontColor(None)
 
             self._line += 1
             self._visibleItems.append(item)
@@ -505,9 +507,9 @@ class _ItemsPainter:
             self._dc.SetTextForeground(self._view_info.font_color_normal)
             self._dc.SetTextBackground(self._view_info.back_color_normal)
 
-        titleColor = item.getFontColor()
-        if titleColor is not None and titleColor.IsOk():
-            self._dc.SetTextForeground(titleColor)
+            titleColor = item.getFontColor()
+            if titleColor is not None and titleColor.IsOk():
+                self._dc.SetTextForeground(titleColor)
 
         self._dc.SetFont(current_font)
 
