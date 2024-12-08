@@ -23,7 +23,7 @@ from outwiker.app.gui.dropfiles import BaseDropFilesTarget
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
-from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE, NotesTreeItemsPreparingParams
+from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE, PAGE_UPDATE_COLOR, NotesTreeItemsPreparingParams
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tree import BasePage, WikiPage
 
@@ -116,7 +116,7 @@ class NotesTree(wx.Panel):
 
     def __onPageUpdate(self, page, **kwargs):
         change = kwargs["change"]
-        if (change & PAGE_UPDATE_ICON) or (change & PAGE_UPDATE_TITLE):
+        if (change & PAGE_UPDATE_ICON) or (change & PAGE_UPDATE_TITLE) or (change & PAGE_UPDATE_COLOR):
             self.treeCtrl.updateItem(page)
 
     def _bindGuiEvents(self):

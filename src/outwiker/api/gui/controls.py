@@ -6,6 +6,7 @@ from outwiker.gui.controls.texteditorbase import TextEditorBase
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
+from outwiker.gui.controls.colorcombobox import ColorComboBox
 
 from outwiker.core.system import getOS as _getOS
 

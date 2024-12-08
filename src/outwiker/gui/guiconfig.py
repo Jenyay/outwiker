@@ -1032,6 +1032,11 @@ class PageDialogConfig:
     RECENT_NEW_PAGE_ORDER_CALCULATOR_PARAM = "PageOrderCalculator"
     RECENT_NEW_PAGE_ORDER_CALCULATOR_DEFAULT = 1
 
+    PAGE_TITLE_COLORS_PARAM = "PAgeTitleColors"
+    PAGE_TITLE_COLORS_DEFAULT = "#FF0000;#800080;#FFA500;#FFD700;#5733FF;#A133FF;#FF5733;#40E0D0;#003366;#006400;#8B0000;#4B0082;#654321".split(
+        ";"
+    )
+
     def __init__(self, config):
         self.config = config
 
@@ -1068,6 +1073,14 @@ class PageDialogConfig:
             GeneralGuiConfig.GENERAL_SECTION,
             self.RECENT_NEW_PAGE_ORDER_CALCULATOR_PARAM,
             self.RECENT_NEW_PAGE_ORDER_CALCULATOR_DEFAULT,
+        )
+
+        self.PageTitleColors = ListOption(
+            self.config,
+            GeneralGuiConfig.GENERAL_SECTION,
+            self.PAGE_TITLE_COLORS_PARAM,
+            self.PAGE_TITLE_COLORS_DEFAULT,
+            separator=";",
         )
 
 
