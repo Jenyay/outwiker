@@ -163,7 +163,7 @@ class AppearanceController(BasePageDialogController):
         if currentPage is not None:
             names.append(_("Do not change"))
 
-        names.append(_("Default"))
+        names.append(_("Default style"))
         style_names = [os.path.basename(style) for style in styleslist]
 
         names += style_names

@@ -2,9 +2,6 @@ from typing import List, Optional
 import wx
 import wx.adv
 
-_ = globals().get("_", lambda txt: txt)
-
-
 class ColorComboBox(wx.adv.OwnerDrawnComboBox):
     def __init__(self, parent):
         super().__init__(parent, style=wx.CB_READONLY)
@@ -79,6 +76,8 @@ class ColorComboBox(wx.adv.OwnerDrawnComboBox):
 
 
 if __name__ == "__main__":
+    global _
+    _ = lambda txt: txt
 
     class MyApp(wx.App):
         def OnInit(self):
