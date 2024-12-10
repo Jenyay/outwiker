@@ -9,6 +9,7 @@ import wx
 import wx.lib.newevent
 
 from outwiker.core.system import getBuiltinImagePath
+from outwiker.gui.colors import rgb_to_lab, lab_to_rgb
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.imagelistcache import ImageListCache
 from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
@@ -489,6 +490,22 @@ class _ItemsPainter:
             )
             self._dc.DrawBitmap(bitmap, left, top)
 
+    def _getContrastColor(self, color: wx.Colour, backColor: wx.Colour) -> wx.Colour:
+        L, a, b = rgb_to_lab((color.red, color.green, color.blue))
+        L_back = rgb_to_lab((backColor.red, backColor.green, backColor.blue))[0]
+        if L_back < 70:
+            L += 80
+        else:
+            L -= 80
+
+        if L < 0:
+            L = 0
+        elif L > 100:
+            L = 100
+
+        r, g, b = lab_to_rgb((L, a, b))
+        return wx.Colour(r, g, b)
+
     def _drawTitle(self, item: NotesTreeItem, dx: int, dy: int):
         current_font = (
             self._title_font_selected if item.isSelected() else self._title_font_normal
@@ -500,16 +517,20 @@ class _ItemsPainter:
             wx.FONTWEIGHT_BOLD if item.isBold() else wx.FONTWEIGHT_NORMAL
         )
 
+        customTitleColor = item.getFontColor()
         if item.isSelected():
-            self._dc.SetTextForeground(self._view_info.font_color_selected)
             self._dc.SetTextBackground(self._view_info.back_color_selected)
+            if customTitleColor is not None and customTitleColor.IsOk():
+                contrastColor = self._getContrastColor(customTitleColor, self._view_info.back_color_selected)
+                self._dc.SetTextForeground(contrastColor)
+            else:
+                self._dc.SetTextForeground(self._view_info.font_color_selected)
         else:
-            self._dc.SetTextForeground(self._view_info.font_color_normal)
             self._dc.SetTextBackground(self._view_info.back_color_normal)
-
-            titleColor = item.getFontColor()
-            if titleColor is not None and titleColor.IsOk():
-                self._dc.SetTextForeground(titleColor)
+            if customTitleColor is not None and customTitleColor.IsOk():
+                self._dc.SetTextForeground(customTitleColor)
+            else:
+                self._dc.SetTextForeground(self._view_info.font_color_normal)
 
         self._dc.SetFont(current_font)
 
