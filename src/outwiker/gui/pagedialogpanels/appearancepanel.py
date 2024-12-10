@@ -6,13 +6,14 @@ from typing import List
 
 import wx
 
-from outwiker.core.tree import WikiPage
-from outwiker.gui.dialogs.messagebox import MessageBox
+from outwiker.core.events import PageDialogPageStyleChangedParams, PAGE_UPDATE_COLOR
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
-from outwiker.core.events import PageDialogPageStyleChangedParams, PAGE_UPDATE_COLOR
+from outwiker.core.tree import WikiPage
 from outwiker.gui.controls.colorcombobox import ColorComboBox
+from outwiker.gui.defines import MAX_TITLE_COLORS_COUNT
+from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 
@@ -71,6 +72,7 @@ class AppearanceController(BasePageDialogController):
 
         self._currentPage = None
         self._stylesList = None
+        self._maxTitleColorsCount = MAX_TITLE_COLORS_COUNT
 
         self.config = PageDialogConfig(self._application.config)
         self._initTitleColorsList()
@@ -103,7 +105,8 @@ class AppearanceController(BasePageDialogController):
         pageTitleColors = self._getColorsAsStrings(
             self._appearancePanel.titleColorBox.GetColors()
         )
-        self.config.PageTitleColors.value = pageTitleColors
+
+        self.config.PageTitleColors.value = pageTitleColors[:self._maxTitleColorsCount]
 
     def setPageProperties(self, page: WikiPage):
         """
