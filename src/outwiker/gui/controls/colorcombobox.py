@@ -34,14 +34,19 @@ class ColorComboBox(wx.adv.OwnerDrawnComboBox):
         assert index >= 1
         self.Insert("", index, color)
 
-    def OnDrawItem(self, dc, rect, item, flags):
+    def _drawText(self, text: str, dc: wx.DC, rect: wx.Rect):
+        text_height = dc.GetTextExtent(text).GetHeight()
+        y = (rect.GetHeight() - text_height) // 2
+        dc.DrawText(text, rect.x + 5, rect.y + y)
+
+    def OnDrawItem(self, dc: wx.DC, rect: wx.Rect, item: int, flags: int):
         if item == wx.NOT_FOUND:
             return
 
         if item == 0:
-            dc.DrawText(_("Default color"), rect.x + 5, rect.y + 2)
+            self._drawText(_("Default color"), dc, rect)
         elif item == self.GetCount() - 1:
-            dc.DrawText(_("Select color..."), rect.x + 5, rect.y + 2)
+            self._drawText(_("Select color..."), dc, rect)
         else:
             color = self.GetClientData(item)
             dc.SetBrush(wx.Brush(color))
