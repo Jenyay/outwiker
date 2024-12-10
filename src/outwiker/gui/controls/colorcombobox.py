@@ -51,7 +51,7 @@ class ColorComboBox(wx.adv.OwnerDrawnComboBox):
             color = self.GetClientData(item)
             dc.SetBrush(wx.Brush(color))
             dc.SetPen(wx.Pen(color))
-            dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)
+            dc.DrawRectangle(rect.x + 2, rect.y + 2, rect.width - 4, rect.height - 4)
 
             if flags & wx.adv.ODCB_PAINTING_SELECTED:
                 dc.SetBrush(wx.TRANSPARENT_BRUSH)
@@ -74,7 +74,7 @@ class ColorComboBox(wx.adv.OwnerDrawnComboBox):
         return index
 
     def OnMeasureItem(self, item):
-        return 20
+        return 24
 
     def OnMeasureItemWidth(self, item):
         return 150

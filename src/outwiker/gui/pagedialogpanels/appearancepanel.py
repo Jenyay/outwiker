@@ -2,7 +2,7 @@
 
 import os
 import os.path
-from typing import List
+from typing import List, Optional
 
 import wx
 
@@ -73,6 +73,7 @@ class AppearanceController(BasePageDialogController):
         self._currentPage = None
         self._stylesList = None
         self._maxTitleColorsCount = MAX_TITLE_COLORS_COUNT
+        self._oldTitleColor: Optional[wx.Colour] = None
 
         self.config = PageDialogConfig(self._application.config)
         self._initTitleColorsList()
@@ -105,6 +106,14 @@ class AppearanceController(BasePageDialogController):
         pageTitleColors = self._getColorsAsStrings(
             self._appearancePanel.titleColorBox.GetColors()
         )
+
+        newTitleColor = self._appearancePanel.titleColorBox.GetSelectedColor()
+        if newTitleColor != self._oldTitleColor:
+            selectedIndex = self._appearancePanel.titleColorBox.GetSelection() - 1
+            if selectedIndex > 1:
+                color = pageTitleColors[selectedIndex]
+                pageTitleColors.pop(selectedIndex)
+                pageTitleColors.insert(0, color)
 
         self.config.PageTitleColors.value = pageTitleColors[:self._maxTitleColorsCount]
 
@@ -139,6 +148,7 @@ class AppearanceController(BasePageDialogController):
         self._initStyleList(currentPage)
         titleColor = wx.Colour(currentPage.params.titleColorOption.value)
         if titleColor.IsOk():
+            self._oldTitleColor = titleColor
             titleColorIndex = self._appearancePanel.titleColorBox.FindColor(titleColor)
             if titleColorIndex is not None:
                 self._appearancePanel.titleColorBox.SetSelection(titleColorIndex)
