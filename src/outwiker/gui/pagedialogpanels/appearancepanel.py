@@ -5,6 +5,7 @@ import os.path
 from typing import List, Optional
 
 import wx
+import wx.adv
 
 from outwiker.core.events import PageDialogPageStyleChangedParams, PAGE_UPDATE_COLOR
 from outwiker.core.style import Style
@@ -33,7 +34,7 @@ class AppearancePanel(wx.Panel):
 
     def _createStyleGui(self):
         self.styleText = wx.StaticText(self, label=_("Page style"))
-        self.styleCombo = wx.ComboBox(
+        self.styleCombo = wx.adv.OwnerDrawnComboBox(
             self, choices=[], style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY
         )
         self.styleCombo.SetMinSize((200, -1))
