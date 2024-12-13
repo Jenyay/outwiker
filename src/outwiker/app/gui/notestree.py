@@ -2,7 +2,7 @@
 
 import os
 import os.path
-from typing import List, Optional
+from typing import List
 
 import wx
 
@@ -27,6 +27,7 @@ from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE, PAGE_UPDAT
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tree import BasePage, WikiPage
 
+from outwiker.gui.guiconfig import TreeConfig
 from outwiker.gui.controls.notestreectrl2 import (
     NotesTreeCtrl2,
     EVT_NOTES_TREE_SEL_CHANGED,
@@ -49,12 +50,14 @@ class NotesTree(wx.Panel):
         # Переключатель устанавливается в True,
         # если "внезапно" изменяется текущая страница
         self._externalPageSelect = False
+        self._treeConfig = TreeConfig(application.config)
 
         self.toolbar = wx.ToolBar(
             parent=self, style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE
         )
 
         self.treeCtrl = NotesTreeCtrl2(self)
+        self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
 
         self.SetSize((256, 260))
         self._do_layout()

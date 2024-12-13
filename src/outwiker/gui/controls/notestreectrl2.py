@@ -219,17 +219,14 @@ class _NotesTreeItemPropertiesCalculator:
 class _ItemsViewInfo:
     def __init__(self, window: wx.Window) -> None:
         self._window = window
+        self._dc = wx.ClientDC(self._window)
 
         # Sizes
         self.icon_height = ICONS_HEIGHT
         self.icon_width = ICONS_WIDTH
-        self.font_size = wx.SystemSettings.GetFont(
-            wx.SYS_DEFAULT_GUI_FONT
-        ).GetPointSize()
 
-        self._dc = wx.ClientDC(self._window)
-        self._title_font = wx.Font(wx.FontInfo(self.font_size))
-        self._dc.SetFont(self._title_font)
+        self._font_size = self._get_default_font()
+        self._update_font()
 
         self.line_height = self.icon_height + 10
         title_height = self.getTextHeight("Yy")
@@ -252,7 +249,6 @@ class _ItemsViewInfo:
         self.back_color = window.GetBackgroundColour()
         self.fore_color = window.GetForegroundColour()
 
-        self.back_color_normal = self.back_color
         self.back_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
         self.back_color_hovered = wx.Colour(
             self.back_color_selected.GetRed(),
@@ -261,11 +257,9 @@ class _ItemsViewInfo:
             30,
         )
 
-        self.font_color_normal = self.fore_color
         self.font_color_selected = wx.SystemSettings.GetColour(
             wx.SYS_COLOUR_HIGHLIGHTTEXT
         )
-        self.lines_color = self.fore_color
         self.drop_hover_color = wx.Colour(
             self.back_color_selected.GetRed(),
             self.back_color_selected.GetGreen(),
@@ -273,7 +267,47 @@ class _ItemsViewInfo:
             100,
         )
 
-        self.order_between_color = self.fore_color
+    @property
+    def back_color(self) -> wx.Colour:
+        return self._back_color
+
+    @back_color.setter
+    def back_color(self, value: wx.Colour):
+        self._back_color = value
+        self.back_color_normal = self._back_color
+
+    @property
+    def fore_color(self) -> wx.Colour:
+        return self._fore_color
+
+    @fore_color.setter
+    def fore_color(self, value: wx.Colour):
+        self._fore_color = value
+        self.font_color_normal = self._fore_color
+        self.lines_color = self._fore_color
+        self.order_between_color = self._fore_color
+
+    def _update_font(self):
+        self._title_font = wx.Font(wx.FontInfo(self._font_size))
+        self._dc.SetFont(self._title_font)
+
+    def _get_default_font(self) -> int:
+        return wx.SystemSettings.GetFont(
+            wx.SYS_DEFAULT_GUI_FONT
+        ).GetPointSize()
+
+    @property
+    def font_size(self) -> Optional[int]:
+        return self._font_size
+
+    @font_size.setter
+    def font_size(self, value: Optional[int]):
+        if value is None:
+            self._font_size = self._get_default_font()
+        else:
+            self._font_size = value
+
+        self._update_font()
 
     def getTextWidth(self, text: str) -> int:
         return self._dc.GetTextExtent(text).GetWidth()
@@ -665,16 +699,25 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
 
-    def _updateViewInfo(self):
-        self._view_info = _ItemsViewInfo(self)
+    # def _updateViewInfo(self):
+    #     self._view_info = _ItemsViewInfo(self)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
-        self._updateViewInfo()
+        self._view_info.back_color = colour
+        # self._updateViewInfo()
 
     def SetForegroundColour(self, colour):
         super().SetForegroundColour(colour)
-        self._updateViewInfo()
+        self._view_info.fore_color = colour
+        # self._updateViewInfo()
+
+    def setFontSize(self, fontSize: Optional[int], update = True):
+        self._view_info.font_size = fontSize
+        self._editItemFont.SetPointSize(self._view_info.font_size)
+
+        if update:
+            self.updateTree()
 
     # Used in tests only
     def getRootItem(self, n: int) -> NotesTreeItem:
