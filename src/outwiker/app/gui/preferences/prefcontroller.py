@@ -20,6 +20,7 @@ from outwiker.app.gui.preferences.tagspanel import TagsPanel
 from outwiker.app.gui.preferences.attachpanel import AttachPanel
 from outwiker.app.gui.preferences.colorspanel import ColorsPanel
 from outwiker.app.gui.preferences.formatspanel import FormatsPanel
+from outwiker.app.gui.preferences.notestreepanel import NotesTreePanel
 
 from outwiker.core.event import EVENT_PRIORITY_MAX_CORE, EVENT_PRIORITY_MIN_CORE
 from outwiker.core.exceptions import PreferencesException
@@ -120,6 +121,7 @@ class PrefController:
         """
         generalPage = GeneralPanel(self._dialog.treeBook, self._application)
         mainWindowPage = MainWindowPanel(self._dialog.treeBook, self._application)
+        notesTreePage = NotesTreePanel(self._dialog.treeBook, self._application)
         colorsPage = ColorsPanel(self._dialog.treeBook, self._application)
         trayPage = TrayPanel(self._dialog.treeBook, self._application)
         htmlRenderPage = HtmlRenderPanel(self._dialog.treeBook, self._application)
@@ -131,6 +133,7 @@ class PrefController:
         interfacePanelsList = [
             PreferencePanelInfo(generalPage, _("General")),
             PreferencePanelInfo(mainWindowPage, _("Main window")),
+            PreferencePanelInfo(notesTreePage, _("Notes tree")),
             PreferencePanelInfo(colorsPage, _("Colors")),
             PreferencePanelInfo(trayPage, _("Tray icon")),
             PreferencePanelInfo(htmlRenderPage, _("Preview")),

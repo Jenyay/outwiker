@@ -100,6 +100,7 @@ class NotesTree(wx.Panel):
         self._application.onPageUpdate += self.__onPageUpdate
         self._application.onStartTreeUpdate += self.__onStartTreeUpdate
         self._application.onEndTreeUpdate += self.__onEndTreeUpdate
+        self._application.onPreferencesDialogClose += self.__onPreferences
 
     def __UnBindApplicationEvents(self):
         """
@@ -113,6 +114,10 @@ class NotesTree(wx.Panel):
         self._application.onPageUpdate -= self.__onPageUpdate
         self._application.onStartTreeUpdate -= self.__onStartTreeUpdate
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
+        self._application.onPreferencesDialogClose -= self.__onPreferences
+
+    def __onPreferences(self, dialog):
+        self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
 
     def __onWikiOpen(self, root):
         self._setRoot(root)

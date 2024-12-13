@@ -699,25 +699,21 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
 
-    # def _updateViewInfo(self):
-    #     self._view_info = _ItemsViewInfo(self)
-
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
         self._view_info.back_color = colour
-        # self._updateViewInfo()
 
     def SetForegroundColour(self, colour):
         super().SetForegroundColour(colour)
         self._view_info.fore_color = colour
-        # self._updateViewInfo()
 
     def setFontSize(self, fontSize: Optional[int], update = True):
-        self._view_info.font_size = fontSize
-        self._editItemFont.SetPointSize(self._view_info.font_size)
+        if self._view_info.font_size != fontSize:
+            self._view_info.font_size = fontSize
+            self._editItemFont.SetPointSize(self._view_info.font_size)
 
-        if update:
-            self.updateTree()
+            if update:
+                self.updateTree()
 
     # Used in tests only
     def getRootItem(self, n: int) -> NotesTreeItem:
