@@ -12,7 +12,12 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.colors import rgb_to_lab, lab_to_rgb
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.imagelistcache import ImageListCache
-from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
+from outwiker.gui.defines import (
+    ICONS_WIDTH,
+    ICONS_HEIGHT,
+    NOTES_TREE_MIN_FONT_SIZE,
+    NOTES_TREE_MAX_FONT_SIZE,
+)
 
 
 NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
@@ -29,7 +34,11 @@ NotesTreeDropItemEvent, EVT_NOTES_TREE_DROP_ITEM = wx.lib.newevent.NewEvent()
 NotesTreeChangeOrderItemEvent, EVT_NOTES_TREE_CHANGE_ORDER_ITEM = (
     wx.lib.newevent.NewEvent()
 )
-NotesTreeItemsPreparingEvent, EVT_NOTES_TREE_ITEMS_PREPARING = wx.lib.newevent.NewEvent()
+NotesTreeItemsPreparingEvent, EVT_NOTES_TREE_ITEMS_PREPARING = (
+    wx.lib.newevent.NewEvent()
+)
+
+NotesTreeScaleEvent, EVT_NOTES_TREE_SCALE = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger("outwiker.gui.controls.notestreectrl2")
 
@@ -225,13 +234,8 @@ class _ItemsViewInfo:
         self.icon_height = ICONS_HEIGHT
         self.icon_width = ICONS_WIDTH
 
-        self._font_size = self._get_default_font()
+        self._font_size = self.get_default_font_size()
         self._update_font()
-
-        self.line_height = self.icon_height + 10
-        title_height = self.getTextHeight("Yy")
-        if self.line_height <= title_height + 4:
-            self.line_height = title_height + 10
 
         self.left_margin = 4
         self.top_margin = 4
@@ -267,6 +271,12 @@ class _ItemsViewInfo:
             100,
         )
 
+    def _update_line_height(self):
+        self.line_height = self.icon_height + 10
+        title_height = self.getTextHeight("Yy")
+        if self.line_height <= title_height + 4:
+            self.line_height = title_height + 10
+
     @property
     def back_color(self) -> wx.Colour:
         return self._back_color
@@ -290,11 +300,10 @@ class _ItemsViewInfo:
     def _update_font(self):
         self._title_font = wx.Font(wx.FontInfo(self._font_size))
         self._dc.SetFont(self._title_font)
+        self._update_line_height()
 
-    def _get_default_font(self) -> int:
-        return wx.SystemSettings.GetFont(
-            wx.SYS_DEFAULT_GUI_FONT
-        ).GetPointSize()
+    def get_default_font_size(self) -> int:
+        return wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize()
 
     @property
     def font_size(self) -> Optional[int]:
@@ -303,7 +312,7 @@ class _ItemsViewInfo:
     @font_size.setter
     def font_size(self, value: Optional[int]):
         if value is None:
-            self._font_size = self._get_default_font()
+            self._font_size = self.get_default_font_size()
         else:
             self._font_size = value
 
@@ -555,7 +564,9 @@ class _ItemsPainter:
         if item.isSelected():
             self._dc.SetTextBackground(self._view_info.back_color_selected)
             if customTitleColor is not None and customTitleColor.IsOk():
-                contrastColor = self._getContrastColor(customTitleColor, self._view_info.back_color_selected)
+                contrastColor = self._getContrastColor(
+                    customTitleColor, self._view_info.back_color_selected
+                )
                 self._dc.SetTextForeground(contrastColor)
             else:
                 self._dc.SetTextForeground(self._view_info.font_color_selected)
@@ -707,7 +718,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         super().SetForegroundColour(colour)
         self._view_info.fore_color = colour
 
-    def setFontSize(self, fontSize: Optional[int], update = True):
+    def setFontSize(self, fontSize: Optional[int], update=True):
         if self._view_info.font_size != fontSize:
             self._view_info.font_size = fontSize
             self._editItemFont.SetPointSize(self._view_info.font_size)
@@ -742,6 +753,32 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _onMouseWheel(self, event):
         event.StopPropagation()
+        if event.GetModifiers() & wx.MOD_CONTROL:
+            self._scrollSize(event)
+        else:
+            self._scrollTree(event)
+
+    def _scrollSize(self, event):
+        old_font_size = self._view_info.font_size
+        if old_font_size is None:
+            old_font_size = self._view_info.get_default_font_size()
+
+        new_font_size = old_font_size
+        if event.GetWheelRotation() > 0:
+            new_font_size = old_font_size + 1
+        elif event.GetWheelRotation() < 0:
+            new_font_size = old_font_size - 1
+
+        if new_font_size < NOTES_TREE_MIN_FONT_SIZE:
+            new_font_size = NOTES_TREE_MIN_FONT_SIZE
+        elif new_font_size > NOTES_TREE_MAX_FONT_SIZE:
+            new_font_size = NOTES_TREE_MAX_FONT_SIZE
+
+        self.setFontSize(new_font_size)
+        scaleEvent = NotesTreeScaleEvent(fontSize=new_font_size)
+        wx.PostEvent(self, scaleEvent)
+
+    def _scrollTree(self, event):
         scroll_x_src, scroll_y_src = self.GetViewStart()
 
         delta_x = 0

@@ -4,14 +4,13 @@ import wx
 
 from outwiker.gui.guiconfig import TreeConfig
 from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.defines import NOTES_TREE_MIN_FONT_SIZE, NOTES_TREE_MAX_FONT_SIZE
 
 
 class NotesTreePanel(BasePrefPanel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._config = TreeConfig(application.config)
-        self._min_font_size = 4
-        self._max_font_size = 40
         self._createGUI()
 
         self.LoadState()
@@ -28,7 +27,8 @@ class NotesTreePanel(BasePrefPanel):
         self._fontSizeLabel = wx.StaticText(self, label=_("Font size"))
 
         font_size_items = [
-            str(n) for n in range(self._min_font_size, self._max_font_size + 1)
+            str(n)
+            for n in range(NOTES_TREE_MIN_FONT_SIZE, NOTES_TREE_MAX_FONT_SIZE + 1)
         ]
         font_size_items.insert(0, _("Default size"))
         self._fontSizeComboBox = wx.ComboBox(
@@ -53,10 +53,14 @@ class NotesTreePanel(BasePrefPanel):
         Load state from config
         """
         font_size = self._config.fontSize.value
-        if font_size is None or font_size < self._min_font_size or font_size > self._max_font_size:
+        if (
+            font_size is None
+            or font_size < NOTES_TREE_MIN_FONT_SIZE
+            or font_size > NOTES_TREE_MAX_FONT_SIZE
+        ):
             self._fontSizeComboBox.SetSelection(0)
         else:
-            index = 1 + font_size - self._min_font_size
+            index = 1 + font_size - NOTES_TREE_MIN_FONT_SIZE
             self._fontSizeComboBox.SetSelection(index)
 
     def Save(self):
@@ -67,5 +71,5 @@ class NotesTreePanel(BasePrefPanel):
         if font_size_index == 0:
             self._config.fontSize.value = None
         else:
-            font_size = font_size_index - 1 + self._min_font_size
+            font_size = font_size_index - 1 + NOTES_TREE_MIN_FONT_SIZE
             self._config.fontSize.value = font_size

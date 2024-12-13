@@ -39,6 +39,7 @@ from outwiker.gui.controls.notestreectrl2 import (
     EVT_NOTES_TREE_DROP_ITEM,
     EVT_NOTES_TREE_CHANGE_ORDER_ITEM,
     EVT_NOTES_TREE_ITEMS_PREPARING,
+    EVT_NOTES_TREE_SCALE
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -141,8 +142,12 @@ class NotesTree(wx.Panel):
         self.treeCtrl.Bind(EVT_NOTES_TREE_DROP_ITEM, handler=self.__onTreeItemDrop)
         self.treeCtrl.Bind(EVT_NOTES_TREE_CHANGE_ORDER_ITEM, handler=self.__onTreeItemChangeOrder)
         self.treeCtrl.Bind(EVT_NOTES_TREE_ITEMS_PREPARING, handler=self.__onTreeItemsPreparing)
+        self.treeCtrl.Bind(EVT_NOTES_TREE_SCALE, handler=self.__onTreeScale)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
+
+    def __onTreeScale(self, event):
+        self._treeConfig.fontSize.value = event.fontSize
 
     def __onMiddleClick(self, event):
         self._application.mainWindow.tabsController.openInTab(event.page, True)
