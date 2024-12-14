@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.947" status="dev">
+    <version number="4.0.0.948" status="alpha" date="2024-12-14">
         <changes>
+            <change>Added the ability to change the order of notes using the mouse.</change>
+            <change>Added the ability to change the color of notes in the notes tree.</change>
+            <change>Added the ability to change the font size in the notes tree.</change>
+            <change>Added the ability to scale the notes tree using the mouse wheel.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлена возможность изменения порядка следования заметок с помощью мыши.</change>
+            <change>Добавлена возможность изменения цвета заметок в дереве заметок.</change>
+            <change>Добавлена возможность изменения размера шрифта в дереве заметок.</change>
+            <change>Добавлена возможность масштабирования дерева заметок с помощью колесика мыши.</change>
         </changes>
     </version>
 
