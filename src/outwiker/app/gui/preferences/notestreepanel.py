@@ -34,7 +34,7 @@ class NotesTreePanel(BasePrefPanel):
         self._fontSizeComboBox = wx.ComboBox(
             self, choices=font_size_items, style=wx.CB_DROPDOWN | wx.CB_READONLY
         )
-        self._fontSizeComboBox.SetMinSize((150, -1))
+        self._fontSizeComboBox.SetMinSize((200, -1))
 
         self._fontSizeSizer = wx.FlexGridSizer(cols=2)
         self._fontSizeSizer.AddGrowableCol(1)
