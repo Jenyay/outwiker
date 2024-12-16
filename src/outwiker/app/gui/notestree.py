@@ -406,12 +406,6 @@ class NotesTree(wx.Panel):
         for action in actions:
             actionController.removeToolbarButton(action.stringId)
 
-    def _scrollToCurrentPage(self):
-        """
-        Если текущая страница вылезла за пределы видимости, то прокрутить к ней
-        """
-        self.treeCtrl.scrollToPage(self._application.selectedPage)
-
     def expand(self, page):
         self.treeCtrl.expand(page)
 

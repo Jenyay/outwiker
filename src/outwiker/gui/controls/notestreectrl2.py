@@ -1250,8 +1250,17 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         if page is None:
             return
 
+        line_height = self._view_info.line_height
+        client_height = self.GetClientSize().GetHeight()
+        items_count = client_height // line_height
+        top_item = self.GetScrollPos(wx.VERTICAL)
+        bottom_item = top_item + items_count
+
         item = self._pageCache.get(page)
-        if item is not None:
+
+        if item is not None and (
+            item.getLine() < top_item or item.getLine() >= bottom_item
+        ):
             scroll_x = 0
             scroll_y = item.getLine() - 1
             if scroll_y < 0:
@@ -1391,8 +1400,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         return None
 
     def setSelectedPage(self, newSelectedPage: Optional[BasePage]):
-        for page, item in self._pageCache.items():
-            item.select(page is newSelectedPage)
+        if self.getSelectedPage() != newSelectedPage:
+            for page, item in self._pageCache.items():
+                item.select(page is newSelectedPage)
 
-        self.updateTree()
-        self.scrollToPage(newSelectedPage)
+            self.updateTree()
+            self.scrollToPage(newSelectedPage)
