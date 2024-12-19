@@ -322,6 +322,14 @@ def getBuiltinImagePath(*relative_image_name: str) -> str:
     return find_svg(path)
 
 
+def getExtraIconPath(relative_image_name: str) -> str:
+    '''
+    Return absolute path to image file from "images/extraicons" directory
+    '''
+    path = os.path.abspath(os.path.join(getImagesDir(), "extraicons", relative_image_name))
+    return find_svg(path)
+
+
 def getTemplatesDir() -> str:
     return op.join(getCurrentDir(), STYLES_FOLDER_NAME)
 

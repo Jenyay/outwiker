@@ -52,7 +52,7 @@ class NotesTreeItem:
         self._line = 0
         self._children: List["NotesTreeItem"] = []
         self._iconImageId = -1
-        self._extraImageIds: List[int] = []
+        self._extraIconIds: List[int] = []
         self._bold = False
         self._italic = False
         self._fontColor: Optional[wx.Colour] = None
@@ -122,8 +122,12 @@ class NotesTreeItem:
         self._selected = selected
         return self
 
-    def getExtraImageIds(self) -> List[int]:
-        return self._extraImageIds
+    def getExtraIconIds(self) -> List[int]:
+        return self._extraIconIds[:]
+
+    def addExtraIconId(self, imageId: int) -> "NotesTreeItem":
+        self._extraIconIds.append(imageId)
+        return self
 
     def isVisible(self) -> bool:
         return self._visible
@@ -234,6 +238,9 @@ class _ItemsViewInfo:
         self.icon_height = ICONS_HEIGHT
         self.icon_width = ICONS_WIDTH
 
+        self.extra_icon_width = (self.icon_width * 2) // 3
+        self.extra_icon_height = (self.icon_height * 2) // 3
+
         self._font_size = self.get_default_font_size()
         self._update_font()
 
@@ -334,7 +341,7 @@ class _ItemsViewInfo:
         return self.getIconLeft(item) + self.icon_width // 2
 
     def getExtraIconsLeft(self, item) -> int:
-        return self.getIconLeft(item) + self.icon_width + self.extra_icons_left_margin
+        return self.getIconLeft(item) + self.extra_icon_width + self.extra_icons_left_margin
 
     def getSelectionLeft(self, item: NotesTreeItem) -> int:
         return self.getExtraIconsRight(item) + self.title_left_margin // 2
@@ -397,7 +404,7 @@ class _ItemsViewInfo:
         return y >= top and y <= bottom and x >= left and x <= right
 
     def _getExtraIconsCount(self, item: NotesTreeItem) -> int:
-        return len(item.getExtraImageIds())
+        return len(item.getExtraIconIds())
 
     def getTreeGridLeft(self, item: NotesTreeItem) -> int:
         return self.getIconLeft(item) - self.depth_indent + self.icon_width // 2
@@ -643,9 +650,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
 
-        # Картинки для дерева
+        # Main icons for notes
         self._iconsCache = ImageListCache(
             self.defaultIcon, self._view_info.icon_width, self._view_info.icon_height
+        )
+
+        # Default icon is not used
+        self._extraIconsCache = ImageListCache(
+            self.defaultIcon, self._view_info.extra_icon_width, self._view_info.extra_icon_height
         )
 
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице
@@ -717,6 +729,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def SetForegroundColour(self, colour):
         super().SetForegroundColour(colour)
         self._view_info.fore_color = colour
+
+    def addExtraIcon(self, fileName: str) -> int:
+        return self._extraIconsCache.add(fileName)
 
     def setFontSize(self, fontSize: Optional[int], update=True):
         if self._view_info.font_size != fontSize:

@@ -23,8 +23,13 @@ from outwiker.app.gui.dropfiles import BaseDropFilesTarget
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
-from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE, PAGE_UPDATE_COLOR, NotesTreeItemsPreparingParams
-from outwiker.core.system import getBuiltinImagePath
+from outwiker.core.events import (
+    PAGE_UPDATE_ICON,
+    PAGE_UPDATE_TITLE,
+    PAGE_UPDATE_COLOR,
+    NotesTreeItemsPreparingParams,
+)
+from outwiker.core.system import getBuiltinImagePath, getExtraIconPath
 from outwiker.core.tree import BasePage, WikiPage
 
 from outwiker.gui.guiconfig import TreeConfig
@@ -39,7 +44,8 @@ from outwiker.gui.controls.notestreectrl2 import (
     EVT_NOTES_TREE_DROP_ITEM,
     EVT_NOTES_TREE_CHANGE_ORDER_ITEM,
     EVT_NOTES_TREE_ITEMS_PREPARING,
-    EVT_NOTES_TREE_SCALE
+    EVT_NOTES_TREE_SCALE,
+    NotesTreeItem,
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 
@@ -57,17 +63,18 @@ class NotesTree(wx.Panel):
             parent=self, style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE
         )
 
+        # Extra icons for notes tree
+        self._EXTRA_ICON_BOOKMARK = 0
+        self._pagesExtraIconIds: List[int] = []
+
         self.treeCtrl = NotesTreeCtrl2(self)
-        self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
+        self._initTreeCtrl()
 
         self.SetSize((256, 260))
         self._do_layout()
 
         self.popupPage = None
         self.popupMenu = None
-
-        # Секция настроек куда сохраняем развернутость страницы
-        self.pageOptionsSection = "Tree"
 
         # Имя опции для сохранения развернутости страницы
         self.pageOptionExpand = "Expand"
@@ -76,6 +83,12 @@ class NotesTree(wx.Panel):
         self._bindGuiEvents()
         self._dropTarget = NotesTreeDropFilesTarget(
             self._application, self.treeCtrl, self
+        )
+
+    def _initTreeCtrl(self):
+        self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
+        self._pagesExtraIconIds.append(
+            self.treeCtrl.addExtraIcon(getExtraIconPath("bookmark.svg"))
         )
 
     def SetBackgroundColour(self, colour):
@@ -125,23 +138,36 @@ class NotesTree(wx.Panel):
 
     def __onPageUpdate(self, page, **kwargs):
         change = kwargs["change"]
-        if (change & PAGE_UPDATE_ICON) or (change & PAGE_UPDATE_TITLE) or (change & PAGE_UPDATE_COLOR):
+        if (
+            (change & PAGE_UPDATE_ICON)
+            or (change & PAGE_UPDATE_TITLE)
+            or (change & PAGE_UPDATE_COLOR)
+        ):
             self.treeCtrl.updateItem(page)
 
     def _bindGuiEvents(self):
         """
         Подписка на события интерфейса
         """
-        # Перетаскивание элементов
         self.treeCtrl.Bind(EVT_NOTES_TREE_END_ITEM_EDIT, handler=self.__onEndLabelEdit)
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, handler=self.__onSelChanged)
         self.treeCtrl.Bind(EVT_NOTES_TREE_RIGHT_BUTTON_UP, handler=self.__onPopupMenu)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_MIDDLE_BUTTON_UP, handler=self.__onMiddleClick)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_EXPAND_CHANGED, handler=self.__onTreeExpandChanged)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_ITEM_ACTIVATE, handler=self.__onTreeItemActivated)
+        self.treeCtrl.Bind(
+            EVT_NOTES_TREE_MIDDLE_BUTTON_UP, handler=self.__onMiddleClick
+        )
+        self.treeCtrl.Bind(
+            EVT_NOTES_TREE_EXPAND_CHANGED, handler=self.__onTreeExpandChanged
+        )
+        self.treeCtrl.Bind(
+            EVT_NOTES_TREE_ITEM_ACTIVATE, handler=self.__onTreeItemActivated
+        )
         self.treeCtrl.Bind(EVT_NOTES_TREE_DROP_ITEM, handler=self.__onTreeItemDrop)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_CHANGE_ORDER_ITEM, handler=self.__onTreeItemChangeOrder)
-        self.treeCtrl.Bind(EVT_NOTES_TREE_ITEMS_PREPARING, handler=self.__onTreeItemsPreparing)
+        self.treeCtrl.Bind(
+            EVT_NOTES_TREE_CHANGE_ORDER_ITEM, handler=self.__onTreeItemChangeOrder
+        )
+        self.treeCtrl.Bind(
+            EVT_NOTES_TREE_ITEMS_PREPARING, handler=self.__onTreeItemsPreparing
+        )
         self.treeCtrl.Bind(EVT_NOTES_TREE_SCALE, handler=self.__onTreeScale)
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
@@ -253,9 +279,15 @@ class NotesTree(wx.Panel):
 
     def __onTreeItemsPreparing(self, event):
         visibleItems = event.visibleItems
+        self._updateBookmarkExtraIcon(visibleItems)
+
         page = self._application.selectedPage
         params = NotesTreeItemsPreparingParams(visibleItems)
         self._application.onNotesTreeItemsPreparing(page, params)
+
+    def _updateBookmarkExtraIcon(self, visibleItems: List[NotesTreeItem]):
+        for item in visibleItems:
+            pass
 
     def __onPageSelect(self, page):
         """
