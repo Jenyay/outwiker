@@ -23,6 +23,7 @@ from outwiker.app.gui.dropfiles import BaseDropFilesTarget
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
+from outwiker.core.bookmarks import Bookmarks
 from outwiker.core.events import (
     PAGE_UPDATE_ICON,
     PAGE_UPDATE_TITLE,
@@ -115,6 +116,7 @@ class NotesTree(wx.Panel):
         self._application.onStartTreeUpdate += self.__onStartTreeUpdate
         self._application.onEndTreeUpdate += self.__onEndTreeUpdate
         self._application.onPreferencesDialogClose += self.__onPreferences
+        self._application.onBookmarksChanged += self.__onBookmarkChanged
 
     def __UnBindApplicationEvents(self):
         """
@@ -129,6 +131,7 @@ class NotesTree(wx.Panel):
         self._application.onStartTreeUpdate -= self.__onStartTreeUpdate
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
         self._application.onPreferencesDialogClose -= self.__onPreferences
+        self._application.onBookmarksChanged -= self.__onBookmarkChanged
 
     def __onPreferences(self, dialog):
         self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
@@ -279,15 +282,21 @@ class NotesTree(wx.Panel):
 
     def __onTreeItemsPreparing(self, event):
         visibleItems = event.visibleItems
-        self._updateBookmarkExtraIcon(visibleItems)
+        self._updateExtraIcons(visibleItems)
 
         page = self._application.selectedPage
         params = NotesTreeItemsPreparingParams(visibleItems)
         self._application.onNotesTreeItemsPreparing(page, params)
 
-    def _updateBookmarkExtraIcon(self, visibleItems: List[NotesTreeItem]):
+    def _updateExtraIcons(self, visibleItems: List[NotesTreeItem]):
+        wikiroot = self._application.wikiroot
+        if wikiroot is None:
+            return
+
         for item in visibleItems:
-            pass
+            item.clearExtraIcons()
+            if wikiroot.bookmarks.pageMarked(item.getPage()):
+                item.addExtraIconId(self._pagesExtraIconIds[self._EXTRA_ICON_BOOKMARK])
 
     def __onPageSelect(self, page):
         """
@@ -319,6 +328,9 @@ class NotesTree(wx.Panel):
         """
         Изменение порядка страниц
         """
+        self.treeCtrl.updateTree()
+
+    def __onBookmarkChanged(self, bookmarks: Bookmarks):
         self.treeCtrl.updateTree()
 
     @property

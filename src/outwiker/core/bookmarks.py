@@ -4,22 +4,23 @@ from .event import Event
 from .config import StringListSection
 
 
-class Bookmarks(object):
+class Bookmarks:
     """
     Класс, хранящий избранные страницы внутри вики
     """
+
     def __init__(self, wikiroot, config):
         """
         wikiroot -- корень вики
         config -- экземпляр класса Config, который будет хранить настройки
         """
         self.root = wikiroot
-        self.configSection = u"Bookmarks"
-        self.configOption = u"bookmark_"
+        self.configSection = "Bookmarks"
+        self.configOption = "bookmark_"
 
         self.__bookmarksConfig = StringListSection(
-            config,
-            self.configSection, self.configOption)
+            config, self.configSection, self.configOption
+        )
 
         # Страницы в закладках
         self.__pages = self.__bookmarksConfig.value

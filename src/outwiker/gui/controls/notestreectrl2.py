@@ -129,6 +129,10 @@ class NotesTreeItem:
         self._extraIconIds.append(imageId)
         return self
 
+    def clearExtraIcons(self) -> "NotesTreeItem":
+        self._extraIconIds.clear()
+        return self
+
     def isVisible(self) -> bool:
         return self._visible
 
@@ -248,8 +252,8 @@ class _ItemsViewInfo:
         self.top_margin = 4
         self.depth_indent = self.icon_width // 2 + 16
         self.icon_left_margin = 8
-        self.extra_icons_left_margin = 3
-        self.title_left_margin = 8
+        self.extra_icons_left_margin = 2
+        self.title_left_margin = 4
         self.title_right_margin = 4
         self.expand_ctrl_width = 11
         self.expand_ctrl_height = 11
@@ -340,8 +344,20 @@ class _ItemsViewInfo:
     def getIconCenter(self, item: NotesTreeItem) -> int:
         return self.getIconLeft(item) + self.icon_width // 2
 
-    def getExtraIconsLeft(self, item) -> int:
-        return self.getIconLeft(item) + self.extra_icon_width + self.extra_icons_left_margin
+    def getIconRight(self, item: NotesTreeItem) -> int:
+        return self.getIconLeft(item) + self.icon_width
+
+    def getExtraIconLeft(self, item: NotesTreeItem, n: int) -> int:
+        return self.getIconRight(item) + self.extra_icons_left_margin + (
+            self.extra_icon_width + self.extra_icons_left_margin
+        ) * n
+
+    def getExtraIconsRight(self, item: NotesTreeItem) -> int:
+        return (
+            self.getIconRight(item)
+            + (self.extra_icons_left_margin + self.extra_icon_width)
+            * self._getExtraIconsCount(item)
+        )
 
     def getSelectionLeft(self, item: NotesTreeItem) -> int:
         return self.getExtraIconsRight(item) + self.title_left_margin // 2
@@ -364,14 +380,6 @@ class _ItemsViewInfo:
 
     def getSelectionBottom(self, item: NotesTreeItem) -> int:
         return self.getItemBottom(item) - self.selection_margin_vertical
-
-    def getExtraIconsRight(self, item: NotesTreeItem) -> int:
-        return (
-            self.getIconLeft(item)
-            + self.icon_width
-            + (self.extra_icons_left_margin + self.icon_width)
-            * self._getExtraIconsCount(item)
-        )
 
     def getItemTop(self, item: NotesTreeItem) -> int:
         return item.getLine() * self.line_height + self.top_margin
@@ -428,11 +436,13 @@ class _ItemsPainter:
         window: wx.Window,
         dc: wx.DC,
         image_list: wx.ImageList,
+        extra_image_list: wx.ImageList,
         view_info: _ItemsViewInfo,
     ) -> None:
         self._window = window
         self._dc = dc
         self._image_list = image_list
+        self._extra_image_list = extra_image_list
         self._view_info = view_info
 
         self._gc = wx.GraphicsContext.Create(dc)
@@ -503,6 +513,7 @@ class _ItemsPainter:
             self._drawBackground(item, dx, dy)
             self._drawSelection(item, dx, dy)
             self._drawIcon(item, dx, dy)
+            self._drawExtraIcons(item, dx, dy)
             self._drawTitle(item, dx, dy)
             self._drawExpandCtrl(item, dx, dy)
 
@@ -642,6 +653,17 @@ class _ItemsPainter:
         )
         self._dc.DrawBitmap(bitmap, left, top)
 
+    def _drawExtraIcons(self, item: NotesTreeItem, dx: int, dy: int):
+        for n, icon_id in enumerate(item.getExtraIconIds()):
+            bitmap = self._extra_image_list.GetBitmap(icon_id)
+            left = self._view_info.getExtraIconLeft(item, n) + dx
+            top = (
+                self._view_info.getItemTop(item)
+                + (self._view_info.line_height - self._view_info.extra_icon_height) // 2
+                + dy
+            )
+            self._dc.DrawBitmap(bitmap, left, top)
+
 
 class NotesTreeCtrl2(wx.ScrolledWindow):
     def __init__(self, parent: wx.Window):
@@ -657,7 +679,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         # Default icon is not used
         self._extraIconsCache = ImageListCache(
-            self.defaultIcon, self._view_info.extra_icon_width, self._view_info.extra_icon_height
+            self.defaultIcon,
+            self._view_info.extra_icon_width,
+            self._view_info.extra_icon_height,
         )
 
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице
@@ -980,7 +1004,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _drawOrderMarker(self, xmin: int, xmax: int, y: int):
         with wx.ClientDC(self) as dc:
             with _ItemsPainter(
-                self, dc, self._iconsCache.getImageList(), self._view_info
+                self,
+                dc,
+                self._iconsCache.getImageList(),
+                self._extraIconsCache.getImageList(),
+                self._view_info,
             ) as painter:
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
@@ -1135,7 +1163,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _refreshItem(self, item: NotesTreeItem):
         with wx.ClientDC(self) as dc:
             with _ItemsPainter(
-                self, dc, self._iconsCache.getImageList(), self._view_info
+                self, dc, self._iconsCache.getImageList(), self._extraIconsCache.getImageList(), self._view_info
             ) as painter:
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
@@ -1146,7 +1174,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _onPaint(self, event):
         with wx.BufferedPaintDC(self) as dc:
             with _ItemsPainter(
-                self, dc, self._iconsCache.getImageList(), self._view_info
+                self, dc, self._iconsCache.getImageList(), self._extraIconsCache.getImageList(), self._view_info
             ) as painter:
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
@@ -1245,6 +1273,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._calculateItemsProperties()
         self.Refresh()
         self.Update()
+        wx.SafeYield()
 
     def addPage(self, page: WikiPage, update=True):
         """
