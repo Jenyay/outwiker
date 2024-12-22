@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-14 14:46+0300\n"
+"POT-Creation-Date: 2024-12-22 20:40+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1325,11 +1325,11 @@ msgstr ""
 "Can't save config.\n"
 "%s"
 
-#: outwiker/app/gui/notestree.py:204 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:262 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
-#: outwiker/app/gui/notestree.py:458
+#: outwiker/app/gui/notestree.py:514
 #, python-brace-format
 msgid ""
 "Attach files to the note '{title}'?\n"
@@ -1340,7 +1340,7 @@ msgstr ""
 "\n"
 "{files}"
 
-#: outwiker/app/gui/notestree.py:465
+#: outwiker/app/gui/notestree.py:521
 msgid "Attach files to the note?"
 msgstr "Attach files to the note?"
 
@@ -2134,6 +2134,10 @@ msgstr "weather"
 #: outwiker/core/defines.py:104
 msgid "list"
 msgstr "list"
+
+#: outwiker/core/defines.py:105
+msgid "bookmarks"
+msgstr "bookmarks"
 
 #: outwiker/core/htmlimproverfactory.py:27
 msgid "Line Breaks (<br/>)"

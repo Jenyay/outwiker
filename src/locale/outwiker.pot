@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-14 14:46+0300\n"
+"POT-Creation-Date: 2024-12-22 20:40+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1329,11 +1329,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: outwiker/app/gui/notestree.py:204 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:262 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr ""
 
-#: outwiker/app/gui/notestree.py:458
+#: outwiker/app/gui/notestree.py:514
 #, python-brace-format
 msgid ""
 "Attach files to the note '{title}'?\n"
@@ -1341,7 +1341,7 @@ msgid ""
 "{files}"
 msgstr ""
 
-#: outwiker/app/gui/notestree.py:465
+#: outwiker/app/gui/notestree.py:521
 msgid "Attach files to the note?"
 msgstr ""
 
@@ -2110,6 +2110,10 @@ msgstr ""
 
 #: outwiker/core/defines.py:104
 msgid "list"
+msgstr ""
+
+#: outwiker/core/defines.py:105
+msgid "bookmarks"
 msgstr ""
 
 #: outwiker/core/htmlimproverfactory.py:27
