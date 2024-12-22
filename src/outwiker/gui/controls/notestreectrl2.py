@@ -52,7 +52,7 @@ class NotesTreeItem:
         self._line = 0
         self._children: List["NotesTreeItem"] = []
         self._iconImageId = -1
-        self._extraIconIds: List[int] = []
+        self._extraIconIds: List[Tuple[str, int]] = []
         self._bold = False
         self._italic = False
         self._fontColor: Optional[wx.Colour] = None
@@ -122,11 +122,11 @@ class NotesTreeItem:
         self._selected = selected
         return self
 
-    def getExtraIconIds(self) -> List[int]:
+    def getExtraIcons(self) -> List[Tuple[str, int]]:
         return self._extraIconIds[:]
 
-    def addExtraIconId(self, imageId: int) -> "NotesTreeItem":
-        self._extraIconIds.append(imageId)
+    def addExtraIconId(self, title: str, imageId: int) -> "NotesTreeItem":
+        self._extraIconIds.append((title, imageId))
         return self
 
     def clearExtraIcons(self) -> "NotesTreeItem":
@@ -412,7 +412,7 @@ class _ItemsViewInfo:
         return y >= top and y <= bottom and x >= left and x <= right
 
     def _getExtraIconsCount(self, item: NotesTreeItem) -> int:
-        return len(item.getExtraIconIds())
+        return len(item.getExtraIcons())
 
     def getTreeGridLeft(self, item: NotesTreeItem) -> int:
         return self.getIconLeft(item) - self.depth_indent + self.icon_width // 2
@@ -654,7 +654,7 @@ class _ItemsPainter:
         self._dc.DrawBitmap(bitmap, left, top)
 
     def _drawExtraIcons(self, item: NotesTreeItem, dx: int, dy: int):
-        for n, icon_id in enumerate(item.getExtraIconIds()):
+        for n, (title, icon_id) in enumerate(item.getExtraIcons()):
             bitmap = self._extra_image_list.GetBitmap(icon_id)
             left = self._view_info.getExtraIconLeft(item, n) + dx
             top = (

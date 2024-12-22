@@ -2,7 +2,7 @@
 
 import os
 import os.path
-from typing import List
+from typing import List, Tuple
 
 import wx
 
@@ -66,8 +66,13 @@ class NotesTree(wx.Panel):
 
         # Extra icons for notes tree
         self._EXTRA_ICON_BOOKMARK = 0
+        self._EXTRA_ICON_BOOKMARK_TITLE = "bookmark"
+
         self._EXTRA_ICON_READONLY = 1
-        self._pagesExtraIconIds: List[int] = []
+        self._EXTRA_ICON_READONLY_TITLE = "readonly"
+
+        # (title, iconId)
+        self._pagesExtraIcons: List[Tuple[str, int]] = []
 
         self.treeCtrl = NotesTreeCtrl2(self)
         self._initTreeCtrl()
@@ -89,11 +94,17 @@ class NotesTree(wx.Panel):
 
     def _initTreeCtrl(self):
         self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
-        self._pagesExtraIconIds.append(
-            self.treeCtrl.addExtraIcon(getExtraIconPath("bookmark.svg"))
+        self._pagesExtraIcons.append(
+            (
+                self._EXTRA_ICON_BOOKMARK_TITLE,
+                self.treeCtrl.addExtraIcon(getExtraIconPath("bookmark.svg")),
+            )
         )
-        self._pagesExtraIconIds.append(
-            self.treeCtrl.addExtraIcon(getExtraIconPath("lock.svg"))
+        self._pagesExtraIcons.append(
+            (
+                self._EXTRA_ICON_READONLY_TITLE,
+                self.treeCtrl.addExtraIcon(getExtraIconPath("lock.svg")),
+            )
         )
 
     def SetBackgroundColour(self, colour):
@@ -136,6 +147,20 @@ class NotesTree(wx.Panel):
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
         self._application.onPreferencesDialogClose -= self.__onPreferences
         self._application.onBookmarksChanged -= self.__onBookmarkChanged
+
+    def __bindUpdateEvents(self):
+        self._application.onTreeUpdate += self.__onTreeUpdate
+        self._application.onPageCreate += self.__onPageCreate
+        self._application.onPageSelect += self.__onPageSelect
+        self._application.onPageOrderChange += self.__onPageOrderChange
+        self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
+
+    def __unbindUpdateEvents(self):
+        self._application.onTreeUpdate -= self.__onTreeUpdate
+        self._application.onPageCreate -= self.__onPageCreate
+        self._application.onPageSelect -= self.__onPageSelect
+        self._application.onPageOrderChange -= self.__onPageOrderChange
+        self.treeCtrl.Unbind(EVT_NOTES_TREE_SEL_CHANGED, handler=self.__onSelChanged)
 
     def __onPreferences(self, dialog):
         self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
@@ -245,23 +270,9 @@ class NotesTree(wx.Panel):
     def __onStartTreeUpdate(self, _root):
         self.__unbindUpdateEvents()
 
-    def __unbindUpdateEvents(self):
-        self._application.onTreeUpdate -= self.__onTreeUpdate
-        self._application.onPageCreate -= self.__onPageCreate
-        self._application.onPageSelect -= self.__onPageSelect
-        self._application.onPageOrderChange -= self.__onPageOrderChange
-        self.treeCtrl.Unbind(EVT_NOTES_TREE_SEL_CHANGED, handler=self.__onSelChanged)
-
     def __onEndTreeUpdate(self, _root):
         self.__bindUpdateEvents()
         self._setRoot(self._application.wikiroot)
-
-    def __bindUpdateEvents(self):
-        self._application.onTreeUpdate += self.__onTreeUpdate
-        self._application.onPageCreate += self.__onPageCreate
-        self._application.onPageSelect += self.__onPageSelect
-        self._application.onPageOrderChange += self.__onPageOrderChange
-        self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
 
     def __onTreeItemDrop(self, event):
         draggedPage = event.srcPage
@@ -300,10 +311,10 @@ class NotesTree(wx.Panel):
         for item in visibleItems:
             item.clearExtraIcons()
             if wikiroot.bookmarks.pageMarked(item.getPage()):
-                item.addExtraIconId(self._pagesExtraIconIds[self._EXTRA_ICON_BOOKMARK])
+                item.addExtraIconId(*self._pagesExtraIcons[self._EXTRA_ICON_BOOKMARK])
 
             if item.getPage().readonly:
-                item.addExtraIconId(self._pagesExtraIconIds[self._EXTRA_ICON_READONLY])
+                item.addExtraIconId(*self._pagesExtraIcons[self._EXTRA_ICON_READONLY])
 
     def __onPageSelect(self, page):
         """
