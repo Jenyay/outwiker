@@ -66,6 +66,7 @@ class NotesTree(wx.Panel):
 
         # Extra icons for notes tree
         self._EXTRA_ICON_BOOKMARK = 0
+        self._EXTRA_ICON_READONLY = 1
         self._pagesExtraIconIds: List[int] = []
 
         self.treeCtrl = NotesTreeCtrl2(self)
@@ -90,6 +91,9 @@ class NotesTree(wx.Panel):
         self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
         self._pagesExtraIconIds.append(
             self.treeCtrl.addExtraIcon(getExtraIconPath("bookmark.svg"))
+        )
+        self._pagesExtraIconIds.append(
+            self.treeCtrl.addExtraIcon(getExtraIconPath("lock.svg"))
         )
 
     def SetBackgroundColour(self, colour):
@@ -297,6 +301,9 @@ class NotesTree(wx.Panel):
             item.clearExtraIcons()
             if wikiroot.bookmarks.pageMarked(item.getPage()):
                 item.addExtraIconId(self._pagesExtraIconIds[self._EXTRA_ICON_BOOKMARK])
+
+            if item.getPage().readonly:
+                item.addExtraIconId(self._pagesExtraIconIds[self._EXTRA_ICON_READONLY])
 
     def __onPageSelect(self, page):
         """

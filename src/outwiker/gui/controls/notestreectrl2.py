@@ -1234,7 +1234,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             item.setTitle(title)
             item.expand(self._getPageExpandState(page))
             item.setIconImageId(self._loadIcon(page))
-            item.setItalic(page.readonly)
         return item
 
     def updateItem(self, page: WikiPage, update=True):
