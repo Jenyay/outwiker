@@ -506,7 +506,7 @@ class _ItemsPainter:
         return self
 
     def __exit__(self, type, value, traceback):
-        pass
+        self._dc = None
 
     def draw(self, item: NotesTreeItem, dx, dy):
         if item.isVisible():
@@ -516,6 +516,7 @@ class _ItemsPainter:
             self._drawExtraIcons(item, dx, dy)
             self._drawTitle(item, dx, dy)
             self._drawExpandCtrl(item, dx, dy)
+            self._gc.Flush()
 
     def fillBackground(self):
         back_color = self._view_info.back_color_normal
@@ -1134,7 +1135,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             calculator.run(root_item)
             self._visibleItems = calculator.getVisibleItems()
 
-        event = NotesTreeItemsPreparingEvent(visibleItems=self._visibleItems)
+        event = NotesTreeItemsPreparingEvent(items=self._visibleItems)
         wx.PostEvent(self, event)
 
         widths = [
@@ -1236,13 +1237,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             item.setIconImageId(self._loadIcon(page))
         return item
 
-    def updateItem(self, page: WikiPage, update=True):
-        item = self._pageCache.get(page)
-        assert item is not None
-        self._updateItemProperties(item)
-        if update:
-            self.updateTree()
-
     def clear(self, update=True):
         self._iconsCache.clear()
         self._pageCache.clear()
@@ -1259,6 +1253,15 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._pageCache[rootPage] = root_item
         if update:
             self.updateTree()
+
+    def updateItem(self, page: WikiPage):
+        item = self._pageCache.get(page)
+        assert item is not None
+        self._updateItemProperties(item)
+        event = NotesTreeItemsPreparingEvent(items=[item])
+        wx.PostEvent(self, event)
+        wx.SafeYield()
+        self._refreshItem(item)
 
     def updateTree(self):
         if self._hoveredItem is not None:

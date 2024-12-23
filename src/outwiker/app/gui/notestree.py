@@ -23,7 +23,6 @@ from outwiker.app.gui.dropfiles import BaseDropFilesTarget
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
-from outwiker.core.bookmarks import Bookmarks
 from outwiker.core.events import (
     PAGE_UPDATE_ICON,
     PAGE_UPDATE_TITLE,
@@ -297,19 +296,19 @@ class NotesTree(wx.Panel):
         self._setRoot(sender.root)
 
     def __onTreeItemsPreparing(self, event):
-        visibleItems = event.visibleItems
-        self._updateExtraIcons(visibleItems)
+        items = event.items
+        self._updateExtraIcons(items)
 
         page = self._application.selectedPage
-        params = NotesTreeItemsPreparingParams(visibleItems)
+        params = NotesTreeItemsPreparingParams(items)
         self._application.onNotesTreeItemsPreparing(page, params)
 
-    def _updateExtraIcons(self, visibleItems: List[NotesTreeItem]):
+    def _updateExtraIcons(self, items: List[NotesTreeItem]):
         wikiroot = self._application.wikiroot
         if wikiroot is None:
             return
 
-        for item in visibleItems:
+        for item in items:
             item.clearExtraIcons()
             if wikiroot.bookmarks.pageMarked(item.getPage()):
                 item.addExtraIconId(*self._pagesExtraIcons[self._EXTRA_ICON_BOOKMARK])
@@ -350,7 +349,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.updateTree()
 
     def __onBookmarkChanged(self, params: BookmarksChangedParams):
-        self.treeCtrl.updateTree()
+        self.treeCtrl.updateItem(params.page)
 
     @property
     def selectedPage(self):
