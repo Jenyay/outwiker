@@ -613,10 +613,11 @@ class _ItemsPainter:
         bottom = self._view_info.getSelectionBottom(item) + dy
         width = right - left
         height = bottom - top
+        window_width = self._window.GetClientSize().GetWidth()
 
         self._gc.SetBrush(self._back_brush_normal)
         self._gc.SetPen(self._back_pen_normal)
-        self._gc.DrawRectangle(left, top, width, height)
+        self._gc.DrawRectangle(left, top, window_width - left, height)
 
         if item.isHovered():
             self._gc.SetBrush(self._back_brush_hovered)
