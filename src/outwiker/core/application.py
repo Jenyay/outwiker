@@ -78,7 +78,7 @@ class ApplicationParams:
 
         # Changings in the bookmarks list event
         # Parameters:
-        #     bookmarks - Bookmarks class instance
+        #     params - instance of BookmarksChangedParams
         self.onBookmarksChanged = Event()
 
         # Removing the page event

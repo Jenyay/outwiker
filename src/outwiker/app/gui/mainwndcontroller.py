@@ -207,7 +207,7 @@ class MainWndController:
         self._application.onWikiOpen -= self._onWikiOpen
         self._application.onPageUpdate -= self._onPageUpdate
 
-    def _onBookmarksChanged(self, event):
+    def _onBookmarksChanged(self, params):
         self.bookmarks.updateBookmarks()
 
     def _onTreeUpdate(self, sender):

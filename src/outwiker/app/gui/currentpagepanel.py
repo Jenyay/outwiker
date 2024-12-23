@@ -123,7 +123,7 @@ class CurrentPagePanel(wx.Panel):
         self.bookmarkButton.SetBitmapLabel(image)
         self.bookmarkButton.SetToolTip(tooltip)
 
-    def __onBookmarksChanged(self, bookmarks):
+    def __onBookmarksChanged(self, params):
         self.__updateBookmarkBtn()
 
     def __updatePageView(self, page):

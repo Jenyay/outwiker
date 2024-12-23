@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from .event import Event
+from .events import BookmarksChangedParams
 from .config import StringListSection
 
 
@@ -29,10 +30,10 @@ class Bookmarks:
         # Параметр - экземпляр класса Bookmarks
         self.onBookmarksChanged = Event()
 
-        wikiroot.onPageRemove += self.onPageRemove
-        wikiroot.onPageRename += self.onPageRename
+        wikiroot.onPageRemove += self._onPageRemove
+        wikiroot.onPageRename += self._onPageRename
 
-    def onPageRemove(self, page):
+    def _onPageRemove(self, page):
         """
         Обработчик события при удалении страниц
         """
@@ -40,7 +41,7 @@ class Bookmarks:
         if self.pageMarked(page):
             self.remove(page)
 
-    def onPageRename(self, page, oldSubpath):
+    def _onPageRename(self, page, oldSubpath):
         for n in range(len(self.__pages)):
             subpath = self.__pages[n]
             if subpath.startswith(oldSubpath):
@@ -60,14 +61,24 @@ class Bookmarks:
 
         self.__pages.append(page.subpath)
         self.save()
-        self.onBookmarksChanged(self)
+        event_params = BookmarksChangedParams(
+            bookmarks=self,
+            page=page,
+            action=BookmarksChangedParams.ACTION_ADD_TO_BOOKMARKS,
+        )
+        self.onBookmarksChanged(event_params)
 
     def save(self):
         self.__bookmarksConfig.value = self.__pages
 
     def remove(self, page):
         self.__pages.remove(page.subpath)
-        self.onBookmarksChanged(self)
+        event_params = BookmarksChangedParams(
+            bookmarks=self,
+            page=page,
+            action=BookmarksChangedParams.ACTION_REMOVE_FROM_BOOKMARKS,
+        )
+        self.onBookmarksChanged(event_params)
         self.save()
 
     def pageMarked(self, page):

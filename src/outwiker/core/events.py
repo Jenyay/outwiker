@@ -401,3 +401,11 @@ class NotesTreeItemsPreparingParams:
     Parameters for onNotesTreeChangeOrderItem
     """
     visible_items: List["NotesTreeItem"] = field(default_factory=list)
+
+@dataclass(frozen=True)
+class BookmarksChangedParams:
+    ACTION_ADD_TO_BOOKMARKS = 1
+    ACTION_REMOVE_FROM_BOOKMARKS = 2
+    bookmarks: "outwiker.core.Bookmarks" = None
+    page: "WikiPage" = None
+    action: int = 0

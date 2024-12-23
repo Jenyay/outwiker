@@ -4,6 +4,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
+from outwiker.core.events import BookmarksChangedParams
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.tests.utils import removeDir
@@ -33,9 +34,9 @@ class BookmarksTest(unittest.TestCase):
         Application.wikiroot = None
         removeDir(self.path)
 
-    def onBookmark(self, bookmarks):
+    def onBookmark(self, params: BookmarksChangedParams):
         self.bookmarkCount += 1
-        self.bookmarkSender = bookmarks
+        self.bookmarkSender = params.bookmarks
 
     def testAddToBookmarks(self):
         # По умолчанию закладок нет

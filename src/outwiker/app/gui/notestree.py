@@ -28,6 +28,7 @@ from outwiker.core.events import (
     PAGE_UPDATE_ICON,
     PAGE_UPDATE_TITLE,
     PAGE_UPDATE_COLOR,
+    BookmarksChangedParams,
     NotesTreeItemsPreparingParams,
 )
 from outwiker.core.system import getBuiltinImagePath, getExtraIconPath
@@ -348,7 +349,7 @@ class NotesTree(wx.Panel):
         """
         self.treeCtrl.updateTree()
 
-    def __onBookmarkChanged(self, bookmarks: Bookmarks):
+    def __onBookmarkChanged(self, params: BookmarksChangedParams):
         self.treeCtrl.updateTree()
 
     @property
