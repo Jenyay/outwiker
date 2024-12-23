@@ -6,7 +6,7 @@ from outwiker.app.gui.pagedialogpanels.generalpanel import (
     GeneralPanel,
     GeneralController,
 )
-from outwiker.gui.pagedialogpanels.appearancepanel import (
+from outwiker.app.gui.pagedialogpanels.appearancepanel import (
     AppearancePanel,
     AppearanceController,
 )
