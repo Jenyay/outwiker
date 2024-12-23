@@ -480,6 +480,7 @@ class NotesTree(wx.Panel):
         if rootPage is not None:
             self.treeCtrl.addRoot(rootPage, update=False)
             self._appendChildren(rootPage)
+            self.treeCtrl.setSelectedPage(self._application.selectedPage)
 
         self.treeCtrl.updateTree()
 

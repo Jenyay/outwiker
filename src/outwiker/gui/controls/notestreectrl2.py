@@ -98,6 +98,9 @@ class NotesTreeItem:
     def getChildren(self) -> List["NotesTreeItem"]:
         return sorted(self._children, key=lambda item: item.getPage().order)
 
+    def hasChilden(self) -> bool:
+        return len(self._children) != 0
+
     def getChildrenCount(self) -> int:
         return len(self._children)
 
@@ -544,7 +547,7 @@ class _ItemsPainter:
         self._dc.DrawLine(xmin + dx + 1, y + dy, xmax + dx - 1, y + dy)
 
     def _drawExpandCtrl(self, item: NotesTreeItem, dx, dy):
-        if item.getChildren():
+        if item.hasChildren():
             left = self._view_info.getExpandCtrlLeft(item) + dx
             top = self._view_info.getExpandCtrlTop(item) + dy
             bitmap = self._expand_ctrl_images.GetBitmap(
