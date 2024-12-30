@@ -10,10 +10,10 @@ class PluginNameLoadingTest(PluginLoadingMixin, unittest.TestCase):
         """
         Must return path to plugin
         """
-        return "plugins/pluginname"
+        return "plugins/recenteditedpages"
 
     def getPluginName(self):
         """
         Must return plugin name
         """
-        return "PluginName"
+        return "RecentEditedPages"

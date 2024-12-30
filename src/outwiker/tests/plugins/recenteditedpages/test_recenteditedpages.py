@@ -11,12 +11,12 @@ from outwiker.tests.utils import removeDir
 
 
 class PluginNameTest(unittest.TestCase):
-    """Тесты плагина PluginName"""
+    """Tests for the RecentEditedPages plug-in"""
 
     def setUp(self):
         self.__createWiki()
 
-        dirlist = ["plugins/pluginname"]
+        dirlist = ["plugins/recenteditedpages"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
@@ -27,7 +27,7 @@ class PluginNameTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = self.path = mkdtemp(prefix='Абырвалг абыр PluginName')
+        self.path = self.path = mkdtemp(prefix='Абырвалг абыр RecentEditedPages')
         removeDir(self.path)
 
         self.rootwiki = WikiDocument.create(self.path)
