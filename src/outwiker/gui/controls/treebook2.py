@@ -163,7 +163,10 @@ class BasePrefPanel(ScrolledPanel):
         return checkBox
 
     def _createSection(
-        self, main_sizer: wx.Sizer, title: str
+        self,
+        main_sizer: wx.Sizer,
+        title: str,
+        cols: int = 2,
     ) -> Tuple[wx.StaticBox, wx.Sizer]:
         """
         Create StaticBox for options
@@ -171,9 +174,9 @@ class BasePrefPanel(ScrolledPanel):
         staticBox = wx.StaticBox(self, label=title)
         staticBoxSizer = wx.StaticBoxSizer(staticBox, wx.VERTICAL)
 
-        colorsSizer = wx.FlexGridSizer(cols=2)
-        colorsSizer.AddGrowableCol(0)
-        colorsSizer.AddGrowableCol(1)
+        colorsSizer = wx.FlexGridSizer(cols=cols)
+        for n in range(cols):
+            colorsSizer.AddGrowableCol(n)
 
         staticBoxSizer.Add(colorsSizer, flag=wx.EXPAND)
         main_sizer.Add(staticBoxSizer, flag=wx.EXPAND | wx.ALL, border=2)

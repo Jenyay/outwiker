@@ -5,6 +5,7 @@ import wx
 from outwiker.gui.guiconfig import TreeConfig
 from outwiker.gui.controls.treebook2 import BasePrefPanel
 from outwiker.gui.defines import NOTES_TREE_MIN_FONT_SIZE, NOTES_TREE_MAX_FONT_SIZE
+from outwiker.gui.preferences.configelements import BooleanElement
 
 
 class NotesTreePanel(BasePrefPanel):
@@ -21,7 +22,17 @@ class NotesTreePanel(BasePrefPanel):
         main_sizer.AddGrowableCol(0)
 
         self._createFontSizeGUI(main_sizer)
+        self._createExtraIconsGUI(main_sizer)
         self.SetSizer(main_sizer)
+
+    def _createExtraIconsGUI(self, main_sizer):
+        sizer = self._createSection(main_sizer, _("Extra icons"), cols=1)[1]
+        self._extraIconBookmarksCheckBox = self._createCheckBox(
+            _("Show bookmark icon"), sizer
+        )
+        self._extraIconReadonlyCheckBox = self._createCheckBox(
+            _("Show read-only icon"), sizer
+        )
 
     def _createFontSizeGUI(self, main_sizer):
         self._fontSizeLabel = wx.StaticText(self, label=_("Font size"))
@@ -53,6 +64,7 @@ class NotesTreePanel(BasePrefPanel):
         Load state from config
         """
         font_size = self._config.fontSize.value
+
         if (
             font_size is None
             or font_size < NOTES_TREE_MIN_FONT_SIZE
@@ -62,6 +74,13 @@ class NotesTreePanel(BasePrefPanel):
         else:
             index = 1 + font_size - NOTES_TREE_MIN_FONT_SIZE
             self._fontSizeComboBox.SetSelection(index)
+
+        self.extraIconBookmark = BooleanElement(
+            self._config.extraIconBookmark, self._extraIconBookmarksCheckBox
+        )
+        self.readOnlyIcon = BooleanElement(
+            self._config.extraIconReadOnly, self._extraIconReadonlyCheckBox
+        )
 
     def Save(self):
         """
@@ -73,3 +92,6 @@ class NotesTreePanel(BasePrefPanel):
         else:
             font_size = font_size_index - 1 + NOTES_TREE_MIN_FONT_SIZE
             self._config.fontSize.value = font_size
+
+        self.extraIconBookmark.save()
+        self.readOnlyIcon.save()

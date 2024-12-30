@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-22 20:40+0300\n"
+"POT-Creation-Date: 2024-12-30 20:11+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1220,6 +1220,7 @@ msgstr "Новое имя метки"
 
 #: outwiker/app/gui/dialogs/renametagdialog.py:85
 #: outwiker/app/gui/dialogs/renametagdialog.py:90
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:129
 #: outwiker/app/gui/pagedialogpanels/generalpanel.py:510
 #: outwiker/app/gui/preferences/iconsetpanel.py:227
 #: outwiker/app/gui/preferences/iconsetpanel.py:284
@@ -1228,7 +1229,6 @@ msgstr "Новое имя метки"
 #: outwiker/app/gui/preferences/iconsetpanel.py:342
 #: outwiker/core/textprinter.py:98
 #: outwiker/gui/controls/toastercontroller.py:50
-#: outwiker/gui/pagedialogpanels/appearancepanel.py:129
 #: outwiker/pages/html/basehtmlpanel.py:339
 msgid "Error"
 msgstr "Ошибка"
@@ -1336,7 +1336,7 @@ msgstr ""
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
-#: outwiker/app/gui/notestree.py:514
+#: outwiker/app/gui/notestree.py:518
 #, python-brace-format
 msgid ""
 "Attach files to the note '{title}'?\n"
@@ -1347,7 +1347,7 @@ msgstr ""
 "\n"
 "{files}"
 
-#: outwiker/app/gui/notestree.py:521
+#: outwiker/app/gui/notestree.py:525
 msgid "Attach files to the note?"
 msgstr "Прикрепить файлы к заметке?"
 
@@ -1359,6 +1359,26 @@ msgstr "Страница \"%s\" не найдена"
 #: outwiker/app/gui/pagedialog.py:101
 msgid "Create Page"
 msgstr "Создать страницу"
+
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:31
+msgid "Title color"
+msgstr "Цвет заголовка"
+
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:36
+msgid "Page style"
+msgstr "Стиль страницы"
+
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:129
+msgid "Can't set page style\n"
+msgstr "Ошибка установки стиля страницы\n"
+
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:178
+msgid "Do not change"
+msgstr "Не изменять"
+
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:180
+msgid "Default style"
+msgstr "Стиль по умолчанию"
 
 #: outwiker/app/gui/pagedialogpanels/generalpanel.py:106
 #: outwiker/gui/controls/pagelist_columns.py:196
@@ -1704,12 +1724,24 @@ msgstr "Относительный путь до текущей страницы
 msgid "Main window title format"
 msgstr "Формат заголовка главного окна"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:27
+#: outwiker/app/gui/preferences/notestreepanel.py:29
+msgid "Extra icons"
+msgstr "Дополнительные значки"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:31
+msgid "Show bookmark icon"
+msgstr "Показывать значок закладки"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:34
+msgid "Show read-only icon"
+msgstr "Показывать значок \"только для чтения\""
+
+#: outwiker/app/gui/preferences/notestreepanel.py:38
 #: outwiker/pages/wiki/fontsizeselector.py:35
 msgid "Font size"
 msgstr "Размер шрифта"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:33
+#: outwiker/app/gui/preferences/notestreepanel.py:44
 msgid "Default size"
 msgstr "Размер по умолчанию"
 
@@ -2411,26 +2443,6 @@ msgstr "Пользовательский значок"
 #: outwiker/gui/iconlistctrl.py:141
 msgid "Default icon"
 msgstr "Значок по умолчанию"
-
-#: outwiker/gui/pagedialogpanels/appearancepanel.py:31
-msgid "Title color"
-msgstr "Цвет заголовка"
-
-#: outwiker/gui/pagedialogpanels/appearancepanel.py:36
-msgid "Page style"
-msgstr "Стиль страницы"
-
-#: outwiker/gui/pagedialogpanels/appearancepanel.py:129
-msgid "Can't set page style\n"
-msgstr "Ошибка установки стиля страницы\n"
-
-#: outwiker/gui/pagedialogpanels/appearancepanel.py:178
-msgid "Do not change"
-msgstr "Не изменять"
-
-#: outwiker/gui/pagedialogpanels/appearancepanel.py:180
-msgid "Default style"
-msgstr "Стиль по умолчанию"
 
 #: outwiker/gui/rootpagepanel.py:73
 msgid "Create new page..."

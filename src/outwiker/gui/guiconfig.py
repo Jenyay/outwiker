@@ -890,6 +890,13 @@ class TreeConfig:
     FONT_SIZE_SECTION = "TreeFontSize"
     FONT_SIZE_DEFAULT = None
 
+    # Extra icons
+    EXTRA_ICON_BOOKMARK_SECTION = "ExtraIconBookmark"
+    EXTRA_ICON_BOOKMARK_DEFAULT = True
+
+    EXTRA_ICON_READ_ONLY_SECTION = "ExtraIconReadOnly"
+    EXTRA_ICON_READ_ONLY_DEFAULT = True
+
     def __init__(self, config):
         self.config = config
 
@@ -920,6 +927,21 @@ class TreeConfig:
             MainWindowConfig.MAIN_WINDOW_SECTION,
             TreeConfig.FONT_SIZE_SECTION,
             TreeConfig.FONT_SIZE_DEFAULT,
+        )
+
+        # Extra icons
+        self.extraIconBookmark = BooleanOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.EXTRA_ICON_BOOKMARK_SECTION,
+            self.EXTRA_ICON_BOOKMARK_DEFAULT,
+        )
+
+        self.extraIconReadOnly = BooleanOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.EXTRA_ICON_READ_ONLY_SECTION,
+            self.EXTRA_ICON_READ_ONLY_DEFAULT,
         )
 
 

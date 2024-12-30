@@ -308,12 +308,15 @@ class NotesTree(wx.Panel):
         if wikiroot is None:
             return
 
+        enableBookmarkExtraIcons = self._treeConfig.extraIconBookmark.value
+        enableReadOnlyExtraIcons = self._treeConfig.extraIconReadOnly.value
+
         for item in items:
             item.clearExtraIcons()
-            if wikiroot.bookmarks.pageMarked(item.getPage()):
+            if enableBookmarkExtraIcons and wikiroot.bookmarks.pageMarked(item.getPage()):
                 item.addExtraIconId(*self._pagesExtraIcons[self._EXTRA_ICON_BOOKMARK])
 
-            if item.getPage().readonly:
+            if enableReadOnlyExtraIcons and item.getPage().readonly:
                 item.addExtraIconId(*self._pagesExtraIcons[self._EXTRA_ICON_READONLY])
 
     def __onPageSelect(self, page):
