@@ -132,6 +132,7 @@ class NotesTree(wx.Panel):
         self._application.onEndTreeUpdate += self.__onEndTreeUpdate
         self._application.onPreferencesDialogClose += self.__onPreferences
         self._application.onBookmarksChanged += self.__onBookmarkChanged
+        self._application.onForceNotesTreeItemsUpdate += self.__onForceNotesTreeItemsUpdate
 
     def __UnBindApplicationEvents(self):
         """
@@ -147,12 +148,14 @@ class NotesTree(wx.Panel):
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
         self._application.onPreferencesDialogClose -= self.__onPreferences
         self._application.onBookmarksChanged -= self.__onBookmarkChanged
+        self._application.onForceNotesTreeItemsUpdate -= self.__onForceNotesTreeItemsUpdate
 
     def __bindUpdateEvents(self):
         self._application.onTreeUpdate += self.__onTreeUpdate
         self._application.onPageCreate += self.__onPageCreate
         self._application.onPageSelect += self.__onPageSelect
         self._application.onPageOrderChange += self.__onPageOrderChange
+        self._application.onForceNotesTreeItemsUpdate += self.__onForceNotesTreeItemsUpdate
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
 
     def __unbindUpdateEvents(self):
@@ -160,7 +163,12 @@ class NotesTree(wx.Panel):
         self._application.onPageCreate -= self.__onPageCreate
         self._application.onPageSelect -= self.__onPageSelect
         self._application.onPageOrderChange -= self.__onPageOrderChange
+        self._application.onForceNotesTreeItemsUpdate -= self.__onForceNotesTreeItemsUpdate
         self.treeCtrl.Unbind(EVT_NOTES_TREE_SEL_CHANGED, handler=self.__onSelChanged)
+
+    def __onForceNotesTreeItemsUpdate(self, page, params):
+        for forced_page in params.pages:
+            self.treeCtrl.updateItem(forced_page)
 
     def __onPreferences(self, dialog):
         self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)

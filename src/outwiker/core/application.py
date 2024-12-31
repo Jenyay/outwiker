@@ -367,6 +367,12 @@ class ApplicationParams:
         #    params - instance of the NotesTreeItemsPreparingParams class
         self.onNotesTreeItemsPreparing = Event()
 
+        # The event denotes that the notes tree items should be updated:
+        # Parameters:
+        #    page - current (selection) page
+        #    params - instance of the ForceNotesTreeItemsUpdate class
+        self.onForceNotesTreeItemsUpdate = Event()
+
     def init(self, fullConfigPath):
         """
         Initialize config and locale

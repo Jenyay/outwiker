@@ -1264,7 +1264,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._updateItemProperties(item)
         event = NotesTreeItemsPreparingEvent(items=[item])
         wx.PostEvent(self, event)
-        wx.SafeYield()
+        wx.YieldIfNeeded()
         self._refreshItem(item)
 
     def updateTree(self):
@@ -1279,7 +1279,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._calculateItemsProperties()
         self.Refresh()
         self.Update()
-        wx.SafeYield()
+        wx.YieldIfNeeded()
 
     def addPage(self, page: WikiPage, update=True):
         """
@@ -1433,7 +1433,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             item.expand(expanded)
             event = NotesTreeItemExpandChangedEvent(page=page, expanded=expanded)
             wx.PostEvent(self, event)
-            wx.SafeYield()
+            wx.YieldIfNeeded()
             if update:
                 self.updateTree()
 
