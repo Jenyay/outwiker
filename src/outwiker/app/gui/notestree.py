@@ -2,7 +2,7 @@
 
 import os
 import os.path
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 import wx
 
@@ -322,10 +322,10 @@ class NotesTree(wx.Panel):
         for item in items:
             item.clearExtraIcons()
             if enableBookmarkExtraIcons and wikiroot.bookmarks.pageMarked(item.getPage()):
-                item.addExtraIconId(*self._pagesExtraIcons[self._EXTRA_ICON_BOOKMARK])
+                item.addExtraIcon(*self._pagesExtraIcons[self._EXTRA_ICON_BOOKMARK])
 
             if enableReadOnlyExtraIcons and item.getPage().readonly:
-                item.addExtraIconId(*self._pagesExtraIcons[self._EXTRA_ICON_READONLY])
+                item.addExtraIcon(*self._pagesExtraIcons[self._EXTRA_ICON_READONLY])
 
     def __onPageSelect(self, page):
         """
@@ -482,7 +482,7 @@ class NotesTree(wx.Panel):
     def expand(self, page):
         self.treeCtrl.expand(page)
 
-    def _setRoot(self, rootPage: BasePage):
+    def _setRoot(self, rootPage: Optional[BasePage]):
         """
         Обновить дерево
         """
@@ -492,8 +492,8 @@ class NotesTree(wx.Panel):
             self.treeCtrl.addRoot(rootPage, update=False)
             self._appendChildren(rootPage)
             self.treeCtrl.setSelectedPage(self._application.selectedPage)
-
-        self.treeCtrl.updateTree()
+        else:
+            self.treeCtrl.updateTree()
 
     def _appendChildren(self, parentPage: BasePage):
         """

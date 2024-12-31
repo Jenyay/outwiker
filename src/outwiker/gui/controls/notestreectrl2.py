@@ -128,7 +128,7 @@ class NotesTreeItem:
     def getExtraIcons(self) -> List[Tuple[str, str]]:
         return self._extraIconIds[:]
 
-    def addExtraIconId(self, title: str, image: str) -> "NotesTreeItem":
+    def addExtraIcon(self, title: str, image: str) -> "NotesTreeItem":
         self._extraIconIds.append((title, image))
         return self
 
@@ -1142,6 +1142,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         event = NotesTreeItemsPreparingEvent(items=self._visibleItems)
         wx.PostEvent(self, event)
+        wx.YieldIfNeeded()
 
         widths = [
             self._view_info.getTitleLeft(item)
@@ -1280,7 +1281,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._calculateItemsProperties()
         self.Refresh()
         self.Update()
-        wx.YieldIfNeeded()
 
     def addPage(self, page: WikiPage, update=True):
         """

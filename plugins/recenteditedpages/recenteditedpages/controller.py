@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os.path
 from datetime import datetime
 from typing import List, Set
 
@@ -12,6 +13,7 @@ from outwiker.api.core.events import (
 from outwiker.api.gui.controls import NotesTreeItem
 
 from .i18n import get_
+from .defines import IMAGES_DIR
 
 
 class Controller:
@@ -22,6 +24,8 @@ class Controller:
 
         # Set of marked subpaths of pages
         self._markedPages: Set[str] = set()
+        self._EXTRA_ICON_RECENT = "recent"
+        self._extraIconFile = os.path.join(self._plugin.pluginPath, IMAGES_DIR, "recent.svg")
 
     def initialize(self):
         global _
@@ -67,4 +71,5 @@ class Controller:
                 and page_datetime.day == now.day
             ):
                 item.setFontColor(nowColor)
+                item.addExtraIcon(self._EXTRA_ICON_RECENT, self._extraIconFile)
                 self._markedPages.add(item.getPage().subpath)
