@@ -19,6 +19,7 @@ PLUGINS_LIST = [
     "markdown",
     "pagetypecolor",
     "readingmode",
+    "recenteditedpages",
     "sessions",
     "snippets",
     "source",
