@@ -52,7 +52,7 @@ class NotesTreeItem:
         self._line = 0
         self._children: List["NotesTreeItem"] = []
         self._iconImageId = -1
-        self._extraIconIds: List[Tuple[str, int]] = []
+        self._extraIconIds: List[Tuple[str, str]] = []
         self._bold = False
         self._italic = False
         self._fontColor: Optional[wx.Colour] = None
@@ -125,11 +125,11 @@ class NotesTreeItem:
         self._selected = selected
         return self
 
-    def getExtraIcons(self) -> List[Tuple[str, int]]:
+    def getExtraIcons(self) -> List[Tuple[str, str]]:
         return self._extraIconIds[:]
 
-    def addExtraIconId(self, title: str, imageId: int) -> "NotesTreeItem":
-        self._extraIconIds.append((title, imageId))
+    def addExtraIconId(self, title: str, image: str) -> "NotesTreeItem":
+        self._extraIconIds.append((title, image))
         return self
 
     def clearExtraIcons(self) -> "NotesTreeItem":
@@ -438,8 +438,8 @@ class _ItemsPainter:
         self,
         window: wx.Window,
         dc: wx.DC,
-        image_list: wx.ImageList,
-        extra_image_list: wx.ImageList,
+        image_list: ImageListCache,
+        extra_image_list: ImageListCache,
         view_info: _ItemsViewInfo,
     ) -> None:
         self._window = window
@@ -649,7 +649,7 @@ class _ItemsPainter:
         )
 
     def _drawIcon(self, item: NotesTreeItem, dx: int, dy: int):
-        bitmap = self._image_list.GetBitmap(item.getIconImageId())
+        bitmap = self._image_list.getImageList().GetBitmap(item.getIconImageId())
         left = self._view_info.getIconLeft(item) + dx
         top = (
             self._view_info.getItemTop(item)
@@ -659,8 +659,9 @@ class _ItemsPainter:
         self._dc.DrawBitmap(bitmap, left, top)
 
     def _drawExtraIcons(self, item: NotesTreeItem, dx: int, dy: int):
-        for n, (title, icon_id) in enumerate(item.getExtraIcons()):
-            bitmap = self._extra_image_list.GetBitmap(icon_id)
+        for n, (title, image) in enumerate(item.getExtraIcons()):
+            icon_id = self._extra_image_list.add(image)
+            bitmap = self._extra_image_list.getImageList().GetBitmap(icon_id)
             left = self._view_info.getExtraIconLeft(item, n) + dx
             top = (
                 self._view_info.getItemTop(item)
@@ -1011,8 +1012,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             with _ItemsPainter(
                 self,
                 dc,
-                self._iconsCache.getImageList(),
-                self._extraIconsCache.getImageList(),
+                self._iconsCache,
+                self._extraIconsCache,
                 self._view_info,
             ) as painter:
                 interval_x = self._getScrolledX()
@@ -1168,7 +1169,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _refreshItem(self, item: NotesTreeItem):
         with wx.ClientDC(self) as dc:
             with _ItemsPainter(
-                self, dc, self._iconsCache.getImageList(), self._extraIconsCache.getImageList(), self._view_info
+                self, dc, self._iconsCache, self._extraIconsCache, self._view_info
             ) as painter:
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
@@ -1179,7 +1180,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _onPaint(self, event):
         with wx.BufferedPaintDC(self) as dc:
             with _ItemsPainter(
-                self, dc, self._iconsCache.getImageList(), self._extraIconsCache.getImageList(), self._view_info
+                self, dc, self._iconsCache, self._extraIconsCache, self._view_info
             ) as painter:
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()

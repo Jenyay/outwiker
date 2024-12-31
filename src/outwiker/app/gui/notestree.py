@@ -72,7 +72,7 @@ class NotesTree(wx.Panel):
         self._EXTRA_ICON_READONLY_TITLE = "readonly"
 
         # (title, iconId)
-        self._pagesExtraIcons: List[Tuple[str, int]] = []
+        self._pagesExtraIcons: List[Tuple[str, str]] = []
 
         self.treeCtrl = NotesTreeCtrl2(self)
         self._initTreeCtrl()
@@ -97,13 +97,13 @@ class NotesTree(wx.Panel):
         self._pagesExtraIcons.append(
             (
                 self._EXTRA_ICON_BOOKMARK_TITLE,
-                self.treeCtrl.addExtraIcon(getExtraIconPath("bookmark.svg")),
+                getExtraIconPath("bookmark.svg"),
             )
         )
         self._pagesExtraIcons.append(
             (
                 self._EXTRA_ICON_READONLY_TITLE,
-                self.treeCtrl.addExtraIcon(getExtraIconPath("lock.svg")),
+                getExtraIconPath("lock.svg"),
             )
         )
 
