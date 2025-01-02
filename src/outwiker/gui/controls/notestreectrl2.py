@@ -218,11 +218,6 @@ class _NotesTreeItemPropertiesCalculator:
         if visible:
             item.setLine(self._line)
             item.setTextWidth(self._view_info.getTextWidth(item.getTitle()))
-            titleColor = wx.Colour(item.getPage().params.titleColorOption.value)
-            if titleColor.IsOk():
-                item.setFontColor(titleColor)
-            else:
-                item.setFontColor(None)
 
             self._line += 1
             self._visibleItems.append(item)
@@ -1241,6 +1236,12 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             item.setTitle(title)
             item.expand(self._getPageExpandState(page))
             item.setIconImageId(self._loadIcon(page))
+
+            titleColor = wx.Colour(page.params.titleColorOption.value)
+            if titleColor.IsOk():
+                item.setFontColor(titleColor)
+            else:
+                item.setFontColor(None)
         return item
 
     def clear(self, update=True):
