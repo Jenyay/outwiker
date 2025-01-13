@@ -172,6 +172,7 @@ class NotesTree(wx.Panel):
 
     def __onPreferences(self, dialog):
         self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
+        self.treeCtrl.updateTree()
 
     def __onWikiOpen(self, root):
         self._setRoot(root)

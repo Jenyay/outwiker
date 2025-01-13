@@ -11,10 +11,12 @@ from outwiker.api.core.events import (
     ForceNotesTreeItemsUpdate,
 )
 from outwiker.api.gui.controls import NotesTreeItem
+from outwiker.api.gui.defines import PREF_PANEL_PLUGINS
 
 from .i18n import get_
 from .defines import IMAGES_DIR
-
+from .preferencepanel import PreferencePanel
+from .config import RecentPagesConfig
 
 class Controller:
     def __init__(self, plugin, application):
@@ -34,6 +36,7 @@ class Controller:
         self._application.onNotesTreeItemsPreparing += self._onNotesTreeItemsPreparing
         self._application.onPageUpdate += self._onPageUpdate
         self._application.onTreeUpdate += self._onTreeUpdate
+        self._application.onPreferencesDialogCreate += self._onPreferencesDialogCreate
 
     def destroy(self):
         """
@@ -42,6 +45,19 @@ class Controller:
         self._application.onNotesTreeItemsPreparing -= self._onNotesTreeItemsPreparing
         self._application.onPageUpdate -= self._onPageUpdate
         self._application.onTreeUpdate -= self._onTreeUpdate
+        self._application.onPreferencesDialogCreate -= self._onPreferencesDialogCreate
+
+    def _get_image_full_path(self, fname):
+        return os.path.join(self._plugin.pluginPath, "images", fname)
+
+    def _onPreferencesDialogCreate(self, dialog):
+        prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
+        dialog.addPage(
+            prefPanel,
+            _("RecentEditedPages [Plugin]"),
+            parent_page_tag=PREF_PANEL_PLUGINS,
+            icon_fname=self._get_image_full_path("recent.svg"),
+        )
 
     def _onTreeUpdate(self, sender):
         self._markedPages.clear()
@@ -60,6 +76,12 @@ class Controller:
         self._markItems(params.visible_items)
 
     def _markItems(self, items: List[NotesTreeItem]):
+        config = RecentPagesConfig(self._application.config)
+        colorize = config.colorizePage.value
+        addExtraIcon = config.addExtraIcon.value
+        if not colorize and not addExtraIcon:
+            return
+
         nowColor = wx.Colour(0, 0, 255)
         now = datetime.now()
         for item in items:
@@ -70,6 +92,10 @@ class Controller:
                 and page_datetime.month == now.month
                 and page_datetime.day == now.day
             ):
-                item.setFontColor(nowColor)
-                item.addExtraIcon(self._EXTRA_ICON_RECENT, self._extraIconFile)
                 self._markedPages.add(item.getPage().subpath)
+
+                if colorize:
+                    item.setFontColor(nowColor)
+
+                if addExtraIcon:
+                    item.addExtraIcon(self._EXTRA_ICON_RECENT, self._extraIconFile)

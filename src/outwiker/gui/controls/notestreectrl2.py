@@ -1134,6 +1134,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         for root_item in self._rootItems:
             calculator.run(root_item)
             self._visibleItems = calculator.getVisibleItems()
+            for item in self._visibleItems:
+                self._updateItemProperties(item)
 
         event = NotesTreeItemsPreparingEvent(items=self._visibleItems)
         wx.PostEvent(self, event)
