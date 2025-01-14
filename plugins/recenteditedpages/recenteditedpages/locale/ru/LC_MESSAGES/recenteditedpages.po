@@ -5,31 +5,49 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Plugin name\n"
+"Project-Id-Version: RecentEditedPages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 21:56+0400\n"
-"PO-Revision-Date: 2014-06-25 21:58+0300\n"
+"POT-Creation-Date: 2025-01-14 09:39+0300\n"
+"PO-Revision-Date: 2025-01-14 09:47+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: \n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
-"Language: ru_RU\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: actions.py:22
-msgid "Menu Item Title"
-msgstr "Название пункта меню"
+#: controller.py:57
+msgid "RecentEditedPages [Plugin]"
+msgstr "RecentEditedPages [Плагин]"
 
-#: actions.py:27
-msgid "Description"
-msgstr "Описание"
+#: plugin.py:32
+msgid "Marks for recent edited pages"
+msgstr "Помечает последние измененные страницы"
 
-#: plugin.py:42
-msgid "Plugin description"
-msgstr "Описание плагина"
+#: plugin.py:36
+msgid "https://jenyay.net/Outwiker/RecentEditedPagesEn"
+msgstr "https://jenyay.net/Outwiker/RecentEditedPages"
 
-#: plugin.py:52
-msgid "http://jenyay.net"
-msgstr "http://jenyay.net"
+#: preferencepanel.py:26
+msgid "Highlight pages"
+msgstr "Подсвечивать страницы"
+
+#: preferencepanel.py:27
+msgid "Add extra icon"
+msgstr "Добавлять дополнительный значок"
+
+#~ msgid "Menu Item Title"
+#~ msgstr "Название пункта меню"
+
+#~ msgid "Description"
+#~ msgstr "Описание"
+
+#~ msgid "Plugin description"
+#~ msgstr "Описание плагина"
+
+#~ msgid "http://jenyay.net"
+#~ msgstr "http://jenyay.net"
