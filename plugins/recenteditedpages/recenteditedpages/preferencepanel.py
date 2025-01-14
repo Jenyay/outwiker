@@ -20,18 +20,31 @@ class PreferencePanel(BasePrefPanel):
         _ = get_()
 
         self._createGui()
+        self.Layout()
 
     def _createGui(self):
         mainSizer = wx.FlexGridSizer(cols=1)
+        mainSizer.AddGrowableCol(0)
+        # Hightlight
         self._colorizeCheckBox = self._createCheckBox(_("Highlight pages"), mainSizer)
-        self._addExtraIconCheckBox = self._createCheckBox(_("Add extra icon"), mainSizer)
 
+        # Hightlight color picker
+        colorPickerSizer = wx.FlexGridSizer(cols=2)
+        colorPickerSizer.AddGrowableCol(0)
+        colorPickerSizer.AddGrowableCol(1)
+        self._highlightColor = self._createLabelAndColorPicker(_("Highlight color"), colorPickerSizer)[1]
+        mainSizer.Add(colorPickerSizer, flag=wx.EXPAND | wx.ALL, border=2)
+
+        # Extra icon
+        self._addExtraIconCheckBox = self._createCheckBox(_("Add extra icon"), mainSizer)
         self.SetSizer(mainSizer)
 
     def LoadState(self):
         self._colorizeCheckBox.SetValue(self._config.colorizePage.value)
         self._addExtraIconCheckBox.SetValue(self._config.addExtraIcon.value)
+        self._highlightColor.SetColour(wx.Colour(self._config.highlightColor.value))
 
     def Save(self):
         self._config.colorizePage.value = self._colorizeCheckBox.GetValue()
         self._config.addExtraIcon.value = self._addExtraIconCheckBox.GetValue()
+        self._config.highlightColor.value = self._highlightColor.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)

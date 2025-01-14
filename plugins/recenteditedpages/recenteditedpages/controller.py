@@ -82,7 +82,7 @@ class Controller:
         if not colorize and not addExtraIcon:
             return
 
-        nowColor = wx.Colour(0, 0, 255)
+        nowColor = wx.Colour(config.highlightColor.value)
         now = datetime.now()
         for item in items:
             page_datetime = item.getPage().datetime
