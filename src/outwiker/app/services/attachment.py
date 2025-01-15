@@ -71,6 +71,7 @@ def renameAttach(parent: wx.Window,
         showError(parent, text)
         return False
 
+    page.updateDateTime()
     return True
 
 
