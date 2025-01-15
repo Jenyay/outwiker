@@ -6,7 +6,6 @@ from typing import List, Set
 import wx
 
 from outwiker.api.core.events import (
-    PAGE_UPDATE_CONTENT,
     NotesTreeItemsPreparingParams,
     ForceNotesTreeItemsUpdate,
 )
@@ -35,6 +34,7 @@ class Controller:
 
         self._application.onNotesTreeItemsPreparing += self._onNotesTreeItemsPreparing
         self._application.onPageUpdate += self._onPageUpdate
+        self._application.onAttachListChanged += self._onAttachListChanged
         self._application.onTreeUpdate += self._onTreeUpdate
         self._application.onPreferencesDialogCreate += self._onPreferencesDialogCreate
 
@@ -44,6 +44,7 @@ class Controller:
         """
         self._application.onNotesTreeItemsPreparing -= self._onNotesTreeItemsPreparing
         self._application.onPageUpdate -= self._onPageUpdate
+        self._application.onAttachListChanged -= self._onAttachListChanged
         self._application.onTreeUpdate -= self._onTreeUpdate
         self._application.onPreferencesDialogCreate -= self._onPreferencesDialogCreate
 
@@ -62,8 +63,14 @@ class Controller:
     def _onTreeUpdate(self, sender):
         self._markedPages.clear()
 
+    def _onAttachListChanged(self, page, params):
+        self._pageUpated(page)
+
     def _onPageUpdate(self, page, change):
-        if change == PAGE_UPDATE_CONTENT and page.subpath not in self._markedPages:
+        self._pageUpated(page)
+
+    def _pageUpated(self, page):
+        if page.subpath not in self._markedPages:
             self._application.onForceNotesTreeItemsUpdate(
                 self._application.selectedPage,
                 ForceNotesTreeItemsUpdate(pages=[page])
