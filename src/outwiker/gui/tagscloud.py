@@ -70,6 +70,7 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Bind(wx.EVT_SIZE, self.__onSize)
         self._tags_panel.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self._tags_panel.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
+        self._tags_panel.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
         self._tags_panel.Bind(wx.EVT_SCROLLWIN, handler=self._onScroll)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
@@ -105,6 +106,10 @@ class TagsCloud(wx.Panel):
             self._prevLabelHovered.setHover(False)
             self._tags_panel.UnsetToolTip()
             self._prevLabelHovered = None
+
+    def _onMouseLeaveWindow(self, event):
+        if self._prevLabelHovered is not None:
+            self._prevLabelHovered.setHover(False)
 
     def _onMouseMove(self, event):
         # Don't repaint labels during scroll
