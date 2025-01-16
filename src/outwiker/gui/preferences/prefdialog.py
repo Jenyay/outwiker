@@ -9,7 +9,8 @@ import wx
 
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.testeddialog import TestedDialog
-from outwiker.gui.controls.treebook2 import Treebook2, BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
+from outwiker.gui.controls.treebook2 import Treebook2
 
 
 class PrefDialog(TestedDialog):

@@ -4,7 +4,7 @@ import wx
 
 from outwiker.gui.preferences import configelements
 from outwiker.gui.guiconfig import TrayConfig
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class TrayPanel(BasePrefPanel):

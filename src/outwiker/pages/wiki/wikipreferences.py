@@ -6,7 +6,7 @@ from outwiker.gui.preferences.configelements import BooleanElement, IntegerEleme
 from outwiker.core.application import Application
 from .wikiconfig import WikiConfig
 from .emptycontent import EmptyContent
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class WikiPrefGeneralPanel(BasePrefPanel):

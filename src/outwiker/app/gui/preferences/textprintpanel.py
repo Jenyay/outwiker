@@ -5,7 +5,7 @@ import wx
 from outwiker.core.config import FontOption
 from outwiker.gui.preferences import configelements
 from outwiker.gui.guiconfig import TextPrintConfig
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class TextPrintPanel(BasePrefPanel):

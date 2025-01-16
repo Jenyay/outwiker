@@ -5,7 +5,7 @@ import wx
 from outwiker.core.system import getCurrentDir, getOS
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 from outwiker.gui.guiconfig import PluginsConfig
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class PluginsPanel(BasePrefPanel):

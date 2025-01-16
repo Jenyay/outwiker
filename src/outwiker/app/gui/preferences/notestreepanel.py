@@ -3,9 +3,9 @@
 import wx
 
 from outwiker.gui.guiconfig import TreeConfig
-from outwiker.gui.controls.treebook2 import BasePrefPanel
 from outwiker.gui.defines import NOTES_TREE_MIN_FONT_SIZE, NOTES_TREE_MAX_FONT_SIZE
 from outwiker.gui.preferences.configelements import BooleanElement
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class NotesTreePanel(BasePrefPanel):

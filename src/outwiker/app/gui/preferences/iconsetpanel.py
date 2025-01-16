@@ -6,7 +6,6 @@ from outwiker.gui.images import readImage
 import wx
 
 from outwiker.core.system import getBuiltinImagePath, getIconsDirList
-from outwiker.gui.controls.treebook2 import BasePrefPanel
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.defines import (
     ICONS_WIDTH,
@@ -18,6 +17,7 @@ from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.iconlistctrl import IconListCtrl
 from outwiker.gui.iconscollection import IconsCollection, DuplicateGroupError
 from outwiker.gui.testeddialog import TestedFileDialog
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class IconsetPanel(BasePrefPanel):
