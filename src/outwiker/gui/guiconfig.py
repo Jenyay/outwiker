@@ -111,6 +111,11 @@ class GeneralGuiConfig:
         ";"
     )
 
+    RECENT_GUI_COLORS_PARAM = "recent_gui_colors"
+    RECENT_GUI_COLORS_DEFAULT = "#000000;#FFFFFF;#ff0000;#00ff00;#0000ff;#8a2be2;#7fff00;#d2691e;#6495ed;#dc143c;#00ffff;#a9a9a9;#ff8c00;#ff1493;#ffd700;#adff2f;#ffff00".split(
+        ";"
+    )
+
     # Toaster delay in milliseconds
     TOASTER_DELAY_PARAM = "ToasterDelay"
     TOASTER_DELAY_DEFAULT = 7000
@@ -213,6 +218,14 @@ class GeneralGuiConfig:
             self.GENERAL_SECTION,
             self.RECENT_BACKGROUND_COLORS_PARAM,
             self.RECENT_BACKGROUND_COLORS_DEFAULT,
+            separator=";",
+        )
+
+        self.recentGuiColors = ListOption(
+            self.config,
+            self.GENERAL_SECTION,
+            self.RECENT_GUI_COLORS_PARAM,
+            self.RECENT_GUI_COLORS_DEFAULT,
             separator=";",
         )
 

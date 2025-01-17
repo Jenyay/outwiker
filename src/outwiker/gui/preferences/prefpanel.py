@@ -4,6 +4,7 @@ import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
 from outwiker.gui.controls.treebook2 import Treebook2
+from outwiker.gui.controls.colorcombobox import ColorComboBox
 
 
 class BasePrefPanel(ScrolledPanel):
@@ -43,6 +44,16 @@ class BasePrefPanel(ScrolledPanel):
 
         self._addLabelAndControlToSizer(sizer, label, colorPicker)
         return (label, colorPicker)
+
+    def _createLabelAndColorComboBox(
+        self, title: str, sizer: wx.Sizer
+    ) -> Tuple[wx.StaticText, ColorComboBox]:
+        label = wx.StaticText(self, label=title)
+        colorComboBox = ColorComboBox(self)
+        colorComboBox.SetMinSize((200, -1))
+
+        self._addLabelAndControlToSizer(sizer, label, colorComboBox)
+        return (label, colorComboBox)
 
     def _createCheckBox(self, title: str, sizer: wx.Sizer) -> wx.CheckBox:
         checkBox = wx.CheckBox(self, label=title)

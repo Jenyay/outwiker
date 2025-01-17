@@ -61,6 +61,17 @@ class ColorComboBox(wx.adv.OwnerDrawnComboBox):
     def GetSelectedColor(self) -> Optional[wx.Colour]:
         return self.GetClientData(self.GetSelection())
 
+    def SetSelectedColor(self, color: Optional[wx.Colour]):
+        if color is not None and color.IsOk():
+            colorIndex = self.FindColor(color)
+            if colorIndex is not None:
+                self.SetSelection(colorIndex)
+            else:
+                self.InsertColor(1, color)
+                self.SetSelection(1)
+        else:
+            self.SetSelection(0)
+
     def GetColors(self) -> List[wx.Colour]:
         return [self.GetClientData(index) for index in range(1, self.GetCount() - 1)]
 

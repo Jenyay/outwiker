@@ -150,12 +150,7 @@ class AppearanceController(BasePageDialogController):
         titleColor = wx.Colour(currentPage.params.titleColorOption.value)
         if titleColor.IsOk():
             self._oldTitleColor = titleColor
-            titleColorIndex = self._appearancePanel.titleColorBox.FindColor(titleColor)
-            if titleColorIndex is not None:
-                self._appearancePanel.titleColorBox.SetSelection(titleColorIndex)
-            else:
-                self._appearancePanel.titleColorBox.InsertColor(1, titleColor)
-                self._appearancePanel.titleColorBox.SetSelection(1)
+            self._appearancePanel.titleColorBox.SetSelectedColor(titleColor)
 
     def clear(self):
         self._dialog = None
