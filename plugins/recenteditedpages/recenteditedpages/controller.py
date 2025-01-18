@@ -55,7 +55,7 @@ class Controller:
         prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
         dialog.addPage(
             prefPanel,
-            _("RecentEditedPages [Plugin]"),
+            _("RecentEditedPages"),
             parent_page_tag=PREF_PANEL_PLUGINS,
             icon_fname=self._get_image_full_path("recent.svg"),
         )
