@@ -1,6 +1,6 @@
 [project]
 name = "outwiker"
-version = "4.0.0.949"
+version = "4.0.0.950"
 description = "A cross-platform software for keeping your notes in a tree"
 authors = [
 	{name = "Eugene Ilin (aka Jenyay)", email = "jenyay.ilin@gmail.com"},
