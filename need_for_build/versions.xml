@@ -1,10 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.949" status="dev">
+    <version number="4.0.0.950" status="alpha" date="2025-01-20">
         <changes>
+            <change>Add an additional icon to the notes tree to indicate that the note has been bookmarked.</change>
+            <change>Add an additional icon to the notes tree to indicate that the note is open in read-only mode.</change>
+            <change>Add a new plugin RecentEditedPages.</change>
+            <change>Add new builtin icons for notes with bookmarks.</change>
+            <change>Fix minor interface display bugs.</change>
         </changes>
 
         <changes lang="ru">
+            <change>В дереве заметок добавлен дополнительный значок, обозначающий, что заметка добавлена в закладки.</change>
+            <change>В дереве заметок добавлен дополнительный значок, обозначающий, что заметка открыта в режиме только для чтения.</change>
+            <change>Добавлен новый плагин RecentEditedPages.</change>
+            <change>Добавлены новые встроенные значки с закладками для заметок.</change>
+            <change>Мелкие исправления в отображении интерфейса.</change>
         </changes>
     </version>
 
