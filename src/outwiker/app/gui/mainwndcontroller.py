@@ -215,13 +215,13 @@ class MainWndController:
         Событие при обновлении дерева
         """
         self.bookmarks.updateBookmarks()
-        self.updateTitle()
-        self.updateStatusBar()
+        self._updateTitle()
+        self._updateStatusBar()
 
     def _onPageUpdate(self, page, **kwargs):
         if kwargs["change"] & PAGE_UPDATE_TITLE:
-            self.updateTitle()
-            self.updateStatusBar()
+            self._updateTitle()
+            self._updateStatusBar()
             self.bookmarks.updateBookmarks()
 
     def _onWikiOpen(self, wikiroot):
@@ -241,8 +241,8 @@ class MainWndController:
 
         self.enableGui()
         self.bookmarks.updateBookmarks()
-        self.updateTitle()
-        self.updateStatusBar()
+        self._updateTitle()
+        self._updateStatusBar()
 
     ###################################################
     # Обработка событий
@@ -251,8 +251,8 @@ class MainWndController:
         """
         Обработчик события выбора страницы в дереве
         """
-        self.updateTitle()
-        self.updateStatusBar()
+        self._updateTitle()
+        self._updateStatusBar()
         self._updateBookmarksState()
 
     def _updateBookmarksState(self):
@@ -264,9 +264,9 @@ class MainWndController:
         """
         Обработчик события изменения настроек главного окна
         """
-        self.updateTitle()
-        self.updateStatusBar()
-        self.updateColors()
+        self._updateTitle()
+        self._updateStatusBar()
+        self._updateColors()
 
     ###################################################
     # Активировать/дизактивировать интерфейс
@@ -287,14 +287,14 @@ class MainWndController:
         for action in self._disabledActions:
             self._application.actionController.enableTools(action.stringId, enabled)
 
-    def updateTitle(self):
+    def _updateTitle(self):
         """
         Обновить заголовок главного окна в зависимости от шаблона
             и текущей страницы
         """
         self._mainWindow.SetTitle(getMainWindowTitle(self._application))
 
-    def updateStatusBar(self):
+    def _updateStatusBar(self):
         dateFormat = self._generalConfig.dateTimeFormat.value
         text = ""
 
@@ -322,11 +322,11 @@ class MainWndController:
 
         self._mainWindow.SetSize(xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
-        self.updateColors()
+        self._updateColors()
         self._mainWindow.Layout()
         self._mainWindow.Thaw()
 
-    def updateColors(self):
+    def _updateColors(self):
         config = self._mainWindow.mainWindowConfig
         panels = [
             self._mainWindow.treePanel,
@@ -338,10 +338,10 @@ class MainWndController:
             backColor = wx.Colour(config.mainPanesBackgroundColor.value)
             textColor = wx.Colour(config.mainPanesTextColor.value)
             if not backColor.IsOk():
-                backColor = wx.Colour(255, 255, 255)
+                backColor = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
 
             if not textColor.IsOk():
-                textColor = wx.Colour(0, 0, 0)
+                textColor = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
 
             panel.setBackgroundColour(backColor)
             panel.setForegroundColour(textColor)
