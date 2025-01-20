@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="4.0.0.951" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="4.0.0.950" status="alpha" date="2025-01-20">
         <changes>
             <change>Add an additional icon to the notes tree to indicate that the note has been bookmarked.</change>
