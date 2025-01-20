@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.preferences import configelements
+# from outwiker.gui.preferences import configelements
 from outwiker.gui.guiconfig import MainWindowConfig, GeneralGuiConfig
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
@@ -37,27 +37,32 @@ class ColorsPanel(BasePrefPanel):
         sizer = self._createSection(main_sizer, _("Main window"))[1]
 
         # Panels background color
-        self.panelsBackgroundColorPicker = self._createLabelAndColorPicker(
+        self.panelsBackgroundColorPicker = self._createLabelAndColorComboBox(
             _("Main panels background color"), sizer
         )[1]
+        self.panelsBackgroundColorPicker.AddColors(self._recentGuiColors)
 
         # Panels text color
-        self.panelsTextColorPicker = self._createLabelAndColorPicker(
+        self.panelsTextColorPicker = self._createLabelAndColorComboBox(
             _("Main panels text color"), sizer
         )[1]
+        self.panelsTextColorPicker.AddColors(self._recentGuiColors)
 
     def LoadState(self):
         # Main panels
-        self.panelsBackgroundColor = configelements.ColourElement(
-            self._mainWindowConfig.mainPanesBackgroundColor,
-            self.panelsBackgroundColorPicker,
-        )
-
-        self.panelsTextColor = configelements.ColourElement(
-            self._mainWindowConfig.mainPanesTextColor, self.panelsTextColorPicker
-        )
+        self.panelsBackgroundColorPicker.SetSelectedColor(wx.Colour(self._mainWindowConfig.mainPanesBackgroundColor.value))
+        self.panelsTextColorPicker.SetSelectedColor(wx.Colour(self._mainWindowConfig.mainPanesTextColor.value))
 
     def Save(self):
         # Main panels
-        self.panelsBackgroundColor.save()
-        self.panelsTextColor.save()
+        backgroundColor = self.panelsBackgroundColorPicker.GetSelectedColor()
+        if backgroundColor is not None:
+            self._mainWindowConfig.mainPanesBackgroundColor.value = backgroundColor.GetAsString(wx.C2S_HTML_SYNTAX)
+        else:
+            self._mainWindowConfig.mainPanesBackgroundColor.value = None
+
+        textColor = self.panelsTextColorPicker.GetSelectedColor()
+        if textColor is not None:
+            self._mainWindowConfig.mainPanesTextColor.value = textColor.GetAsString(wx.C2S_HTML_SYNTAX)
+        else:
+            self._mainWindowConfig.mainPanesTextColor.value = None
