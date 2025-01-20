@@ -332,12 +332,19 @@ class MainWndController:
             self._mainWindow.treePanel,
             self._mainWindow.attachPanel,
             self._mainWindow.tagsCloudPanel,
-            # self._mainWindow.pagePanel,
         ]
 
         for panel in panels:
-            panel.setBackgroundColour(config.mainPanesBackgroundColor.value)
-            panel.setForegroundColour(config.mainPanesTextColor.value)
+            backColor = wx.Colour(config.mainPanesBackgroundColor.value)
+            textColor = wx.Colour(config.mainPanesTextColor.value)
+            if not backColor.IsOk():
+                backColor = wx.Colour(255, 255, 255)
+
+            if not textColor.IsOk():
+                textColor = wx.Colour(0, 0, 0)
+
+            panel.setBackgroundColour(backColor)
+            panel.setForegroundColour(textColor)
 
         self._mainWindow.Refresh()
 

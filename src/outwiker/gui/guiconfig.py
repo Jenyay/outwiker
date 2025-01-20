@@ -800,10 +800,10 @@ class MainWindowConfig:
     STATUSBAR_VISIBLE_DEFAULT = True
 
     MAIN_PANES_BACKGROUND_COLOR_SECTION = "main_panes_background_color"
-    MAIN_PANES_BACKGROUND_COLOR_DEFAULT = "#ffffff"
+    MAIN_PANES_BACKGROUND_COLOR_DEFAULT = ""
 
     MAIN_PANES_TEXT_COLOR_SECTION = "main_panes_text_color"
-    MAIN_PANES_TEXT_COLOR_DEFAULT = "#000000"
+    MAIN_PANES_TEXT_COLOR_DEFAULT = ""
 
     def __init__(self, config):
         self.config = config
