@@ -7,7 +7,7 @@ from pathlib import Path
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.core.attachment import Attachment
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.defines import PAGE_ATTACH_DIR
@@ -17,6 +17,7 @@ from outwiker.tests.utils import removeDir
 
 class AttachmentTest(unittest.TestCase):
     def setUp(self):
+        self._application = ApplicationParams()
         # Количество срабатываний особытий при обновлении страницы
         self.pageUpdateCount = 0
         self.pageUpdateSender = None
@@ -38,7 +39,7 @@ class AttachmentTest(unittest.TestCase):
         self.fullFilesPath = [os.path.join(self.filesPath, fname)
                               for fname in self.files]
 
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
     def tearDown(self):
         removeDir(self.path)
@@ -78,7 +79,7 @@ class AttachmentTest(unittest.TestCase):
     def testEvent(self):
         self.pageUpdateCount = 0
 
-        Application.onAttachListChanged += self.onAttachListChanged
+        self._application.onAttachListChanged += self.onAttachListChanged
 
         attach = Attachment(self.page)
 
@@ -93,7 +94,7 @@ class AttachmentTest(unittest.TestCase):
         self.assertEqual(self.pageUpdateCount, 2)
         self.assertEqual(self.pageUpdateSender, self.page)
 
-        Application.onAttachListChanged -= self.onAttachListChanged
+        self._application.onAttachListChanged -= self.onAttachListChanged
 
     def testAttachFull1(self):
         attach = Attachment(self.page)
@@ -180,7 +181,7 @@ class AttachmentTest(unittest.TestCase):
 
         attach.attach(self.fullFilesPath)
 
-        Application.onAttachListChanged += self.onAttachListChanged
+        self._application.onAttachListChanged += self.onAttachListChanged
 
         attach.removeAttach([self.files[0]])
 
@@ -196,7 +197,7 @@ class AttachmentTest(unittest.TestCase):
         self.assertEqual(self.pageUpdateCount, 2)
         self.assertEqual(self.pageUpdateSender, self.page)
 
-        Application.onAttachListChanged -= self.onAttachListChanged
+        self._application.onAttachListChanged -= self.onAttachListChanged
 
     def testRemoveAttaches1(self):
         attach = Attachment(self.page)

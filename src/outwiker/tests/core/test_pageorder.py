@@ -8,7 +8,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.core.config import PageConfig
 from outwiker.core.config import IntegerOption
 from outwiker.tests.utils import removeDir
@@ -24,17 +24,18 @@ class PageOrderTest(unittest.TestCase):
         # Количество срабатываний особытий при изменении порядка страниц
         self.orderUpdateCount = 0
         self.orderUpdateSender = None
+        self._application = ApplicationParams()
 
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = createNotesTree(self.path)
-        Application.onPageOrderChange += self.onPageOrder
-        Application.wikiroot = None
+        self._application.onPageOrderChange += self.onPageOrder
+        self._application.wikiroot = None
 
     def tearDown(self):
-        Application.onPageOrderChange -= self.onPageOrder
-        Application.wikiroot = None
+        self._application.onPageOrderChange -= self.onPageOrder
+        self._application.wikiroot = None
         removeDir(self.path)
 
     def onPageOrder(self, sender):
@@ -349,7 +350,7 @@ class PageOrderTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 3", [])
         TextPageFactory().create(self.wikiroot, "Страница 4", [])
 
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         # Перемещаем вниз,хотя страница и так в самом низу
         self.wikiroot["Страница 4"].order += 1
@@ -374,7 +375,7 @@ class PageOrderTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 3", [])
         TextPageFactory().create(self.wikiroot, "Страница 4", [])
 
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         # Перемещаем вверх,хотя страница и так в самом верху
         self.wikiroot["Страница 1"].order -= 1
@@ -399,7 +400,7 @@ class PageOrderTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 3", [])
         TextPageFactory().create(self.wikiroot, "Страница 4", [])
 
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         # Перемещаем вниз,хотя страница и так в самом низу
         self.wikiroot["Страница 1"].order += 1
@@ -425,7 +426,7 @@ class PageOrderTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 3", [])
         TextPageFactory().create(self.wikiroot, "Страница 4", [])
 
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         # Перемещаем вниз,хотя страница и так в самом низу
         self.wikiroot["Страница 1"].order += 2
@@ -451,7 +452,7 @@ class PageOrderTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 3", [])
         TextPageFactory().create(self.wikiroot, "Страница 4", [])
 
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         # Перемещаем вниз,хотя страница и так в самом низу
         self.wikiroot["Страница 1"].order = 2

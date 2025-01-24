@@ -6,7 +6,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.core.exceptions import DuplicateTitle
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
@@ -14,6 +14,7 @@ from outwiker.tests.utils import removeDir
 
 class RenameTest(unittest.TestCase):
     def setUp(self):
+        self._application = ApplicationParams()
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = createNotesTree(self.path)
@@ -31,14 +32,14 @@ class RenameTest(unittest.TestCase):
         self.treeUpdateCount = 0
         self.eventSender = None
 
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
     def __onPageRename(self, page, oldSubpath):
         self.treeUpdateCount += 1
         self.eventSender = page
 
     def tearDown(self):
-        Application.wikiroot = None
+        self._application.wikiroot = None
         removeDir(self.path)
 
     def testRename1(self):
@@ -52,8 +53,8 @@ class RenameTest(unittest.TestCase):
         self.assertTrue(os.path.exists(self.wikiroot["Страница 1 new"].path))
 
     def testEvent(self):
-        Application.onPageRename += self.__onPageRename
-        Application.wikiroot = self.wikiroot
+        self._application.onPageRename += self.__onPageRename
+        self._application.wikiroot = self.wikiroot
 
         page = self.wikiroot["Страница 1"]
         page.title = "Страница 1 new"
@@ -61,17 +62,17 @@ class RenameTest(unittest.TestCase):
         self.assertEqual(self.treeUpdateCount, 1)
         self.assertEqual(self.eventSender, self.wikiroot["Страница 1 new"])
         self.assertEqual(self.eventSender, page)
-        Application.onPageRename -= self.__onPageRename
+        self._application.onPageRename -= self.__onPageRename
 
     def testNoEvent(self):
-        Application.onPageRename += self.__onPageRename
+        self._application.onPageRename += self.__onPageRename
 
         page = self.wikiroot["Страница 1"]
         page.title = "Страница 1 new"
 
         self.assertEqual(self.treeUpdateCount, 0)
         self.assertEqual(self.eventSender, None)
-        Application.onPageRename -= self.__onPageRename
+        self._application.onPageRename -= self.__onPageRename
 
     def testInvalidRename(self):
         def rename(page, newtitle):

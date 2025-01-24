@@ -4,7 +4,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
@@ -12,6 +12,7 @@ from outwiker.tests.utils import removeDir
 
 class ParserImagesTest (unittest.TestCase):
     def setUp(self):
+        self._application = ApplicationParams()
         self.encoding = "utf8"
 
         self.filesPath = "testdata/samplefiles/"
@@ -25,7 +26,7 @@ class ParserImagesTest (unittest.TestCase):
         self.__createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, self._application.config)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

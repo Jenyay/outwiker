@@ -9,7 +9,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.exceptions import DuplicateTitle, TreeException
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.core.attachment import Attachment
 
 from outwiker.pages.text.textpage import TextPageFactory
@@ -25,6 +25,7 @@ class MoveTest(unittest.TestCase):
         # Количество срабатываний особытий при обновлении страницы
         self.treeUpdateCount = 0
         self.treeUpdateSender = None
+        self._application = ApplicationParams()
 
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
@@ -40,11 +41,11 @@ class MoveTest(unittest.TestCase):
         factory.create(self.wiki, "страница 4", [])
         factory.create(self.wiki, "страница 444", [])
 
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
     def tearDown(self):
         removeDir(self.path)
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
     def onTreeUpdate(self, sender):
         self.treeUpdateCount += 1
@@ -52,9 +53,9 @@ class MoveTest(unittest.TestCase):
 
     def test1(self):
         self.treeUpdateCount = 0
-        Application.wikiroot = self.wiki
+        self._application.wikiroot = self.wiki
 
-        Application.onTreeUpdate += self.onTreeUpdate
+        self._application.onTreeUpdate += self.onTreeUpdate
 
         self.wiki["Страница 1/Страница 5"].moveTo(self.wiki)
 
@@ -67,13 +68,13 @@ class MoveTest(unittest.TestCase):
         self.assertEqual(self.wiki["Страница 5"].parent, self.wiki)
         self.assertEqual(self.wiki["Страница 5"].subpath, "Страница 5")
 
-        Application.onTreeUpdate += self.onTreeUpdate
+        self._application.onTreeUpdate += self.onTreeUpdate
 
     def testNoEvent(self):
         self.treeUpdateCount = 0
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
-        Application.onTreeUpdate += self.onTreeUpdate
+        self._application.onTreeUpdate += self.onTreeUpdate
 
         self.wiki["Страница 1/Страница 5"].moveTo(self.wiki)
 
@@ -86,7 +87,7 @@ class MoveTest(unittest.TestCase):
         self.assertEqual(self.wiki["Страница 5"].parent, self.wiki)
         self.assertEqual(self.wiki["Страница 5"].subpath, "Страница 5")
 
-        Application.onTreeUpdate += self.onTreeUpdate
+        self._application.onTreeUpdate += self.onTreeUpdate
 
     def test2(self):
         self.wiki["Страница 1"].moveTo(self.wiki["Страница 2/Страница 3"])

@@ -4,7 +4,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
@@ -13,6 +13,7 @@ import outwiker.core.cssclasses as css
 
 class ParserFormatTest(unittest.TestCase):
     def setUp(self):
+        self._application = ApplicationParams()
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
@@ -21,7 +22,7 @@ class ParserFormatTest(unittest.TestCase):
         self.__createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, self._application.config)
 
     def tearDown(self):
         removeDir(self.path)

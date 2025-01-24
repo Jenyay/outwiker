@@ -5,14 +5,15 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.history import History, HistoryEmptyException
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
 
 class HistoryTest(unittest.TestCase):
     def setUp(self):
-        # Количество срабатываний особытий при обновлении страницы
+        self._application = ApplicationParams()
+        # Количество срабатываний событий при обновлении страницы
         self.treeUpdateCount = 0
         self.treeUpdateSender = None
 
@@ -28,11 +29,11 @@ class HistoryTest(unittest.TestCase):
         factory.create(self.wiki["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(self.wiki["Страница 1"], "Страница 5", [])
 
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
     def tearDown(self):
         removeDir(self.path)
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
     def testEmpty(self):
         history = History()
