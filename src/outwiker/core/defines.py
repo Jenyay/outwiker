@@ -30,7 +30,7 @@ VERSIONS_LANG = "versions_lang"
 
 PLUGIN_INFO_FILE_NAME = "plugin.xml"
 
-# Keys for Application.sharedData
+# Keys for ApplicationParams.sharedData
 # Anchor for transition during the opening other page
 APP_DATA_KEY_ANCHOR = "__anchor"
 

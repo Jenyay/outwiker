@@ -3,7 +3,6 @@
 import re
 from string import Template
 
-from outwiker.core.application import Application
 from outwiker.gui.guiconfig import HtmlRenderConfig
 import outwiker.core.cssclasses as css
 
@@ -31,7 +30,7 @@ class MyTemplate(Template):
 class HtmlTemplate:
     """Класс для генерации HTML-страницы на основе шаблона."""
 
-    def __init__(self, template):
+    def __init__(self, application, template):
         """
         template - текст шаблона
 
@@ -39,7 +38,7 @@ class HtmlTemplate:
         описанном в http://docs.python.org/library/string.html#template-strings
         за исключением того, что в шаблоне $$ не заменяется на $
         """
-        self.config = HtmlRenderConfig(Application.config)
+        self.config = HtmlRenderConfig(application.config)
 
         self.fontsize = self.config.fontSize.value
         self.fontfamily = self.config.fontName.value

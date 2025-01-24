@@ -80,9 +80,9 @@ class HtmlPageController:
         stylepath = style.getPageStyle(page)
 
         try:
-            tpl = HtmlTemplate(readTextFile(stylepath))
+            tpl = HtmlTemplate(self._application, readTextFile(stylepath))
         except EnvironmentError:
-            tpl = HtmlTemplate(readTextFile(style.getDefaultStyle()))
+            tpl = HtmlTemplate(self._application, readTextFile(style.getDefaultStyle()))
 
         content = self._changeContentByEvent(
             page,

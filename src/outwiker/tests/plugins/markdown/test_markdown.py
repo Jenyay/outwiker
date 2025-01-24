@@ -3,7 +3,7 @@
 import unittest
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -14,9 +14,10 @@ class MarkdownTest(unittest.TestCase):
     """Markdown plug-in tests"""
 
     def setUp(self):
+        self._application = ApplicationParams()
         self.__createWiki()
         dirlist = ["plugins/markdown"]
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self._application)
         self.loader.load(dirlist)
 
     def tearDown(self):
@@ -37,7 +38,7 @@ class MarkdownTest(unittest.TestCase):
         from markdown.markdownhtmlgenerator import MarkdownHtmlGenerator
         self.testPage.content = text
 
-        generator = MarkdownHtmlGenerator(self.testPage)
+        generator = MarkdownHtmlGenerator(self._application, self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
         return result
 

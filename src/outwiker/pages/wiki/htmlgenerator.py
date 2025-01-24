@@ -54,7 +54,7 @@ class HtmlGenerator:
         head = parser.head
 
         # Create final HTML file
-        tpl = HtmlTemplate(readTextFile(stylepath))
+        tpl = HtmlTemplate(Application, readTextFile(stylepath))
         result = tpl.substitute(content=text,
                                 userhead=head,
                                 title=self.page.display_title)
