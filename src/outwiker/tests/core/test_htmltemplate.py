@@ -34,7 +34,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         templatepath = os.path.join(getTemplatesDir(),
                                     "__default",
                                     "__style.html")
-        tpl = HtmlTemplate(readTextFile(templatepath).strip())
+        tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
         self.assertIn(result_right, result.replace("\r\n", "\n"))
@@ -45,7 +45,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         result_right = "  бла-бла-бла"
 
-        tpl = HtmlTemplate(style)
+        tpl = HtmlTemplate(self.application, style)
         result = tpl.substitute(content=content)
 
         self.assertEqual(result, result_right)
@@ -56,7 +56,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         result_right = "  бла-бла-бла $unknown"
 
-        tpl = HtmlTemplate(style)
+        tpl = HtmlTemplate(self.application, style)
         result = tpl.substitute(content=content)
 
         self.assertEqual(result, result_right)
@@ -67,7 +67,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         result_right = " бла-бла-бла"
 
-        tpl = HtmlTemplate(style)
+        tpl = HtmlTemplate(self.application, style)
         result = tpl.substitute(content=content)
 
         self.assertEqual(result, result_right)
@@ -78,7 +78,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         result_right = " бла-бла-бла $"
 
-        tpl = HtmlTemplate(style)
+        tpl = HtmlTemplate(self.application, style)
         result = tpl.substitute(content=content)
 
         self.assertEqual(result, result_right)
@@ -89,7 +89,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         result_right = " бла-бла-бла $$"
 
-        tpl = HtmlTemplate(style)
+        tpl = HtmlTemplate(self.application, style)
         result = tpl.substitute(content=content)
 
         self.assertEqual(result, result_right)
@@ -100,7 +100,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         result_right = " бла-бла-бла $$ $unknown"
 
-        tpl = HtmlTemplate(style)
+        tpl = HtmlTemplate(self.application, style)
         result = tpl.substitute(content=content)
 
         self.assertEqual(result, result_right)
@@ -111,7 +111,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         result_right = "бла-бла-бла "
 
-        tpl = HtmlTemplate(style)
+        tpl = HtmlTemplate(self.application, style)
         result = tpl.substitute(content=content)
 
         self.assertEqual(result, result_right)
@@ -122,7 +122,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         result_right = "бла-бла-бла Заголовок"
 
-        tpl = HtmlTemplate(style)
+        tpl = HtmlTemplate(self.application, style)
         result = tpl.substitute(content=content, title='Заголовок')
 
         self.assertEqual(result, result_right)
@@ -134,7 +134,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         templatepath = os.path.join(getTemplatesDir(),
                                     "__default",
                                     "__style.html")
-        tpl = HtmlTemplate(readTextFile(templatepath).strip())
+        tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
         self.assertIn("font-family:Arial;", result)
@@ -145,7 +145,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         templatepath = os.path.join(getTemplatesDir(),
                                     "__default",
                                     "__style.html")
-        tpl = HtmlTemplate(readTextFile(templatepath).strip())
+        tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
         self.assertIn("font-size:20pt;", result)
@@ -160,7 +160,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         templatepath = os.path.join(getTemplatesDir(),
                                     "__default",
                                     "__style.html")
-        tpl = HtmlTemplate(readTextFile(templatepath).strip())
+        tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
         self.assertTrue(style in result, result)
@@ -177,7 +177,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         templatepath = os.path.join(getTemplatesDir(),
                                     "__default",
                                     "__style.html")
-        tpl = HtmlTemplate(readTextFile(templatepath).strip())
+        tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
         self.assertTrue(style in result, result)
@@ -208,7 +208,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         templatepath = os.path.join(getTemplatesDir(),
                                     "__default",
                                     "__style.html")
-        tpl = HtmlTemplate(readTextFile(templatepath).strip())
+        tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
 
         result = tpl.substitute(BrHtmlImprover().run(src))
         self.assertIn(expectedResult, result)
@@ -226,7 +226,7 @@ Attach:file.odt<br>
         templatepath = os.path.join(getTemplatesDir(),
                                     "__default",
                                     "__style.html")
-        tpl = HtmlTemplate(readTextFile(templatepath).strip())
+        tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
 
         result = tpl.substitute(BrHtmlImprover().run(src))
         self.assertIn(expectedResult, result)
