@@ -26,7 +26,7 @@ from outwiker.pages.wiki.parser.tokenlinejoin import LineJoinFactory
 from outwiker.pages.wiki.parser.tokencommand import CommandFactory
 
 from outwiker.core.attachment import Attachment
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
@@ -53,6 +53,7 @@ class TokenNamesTest(unittest.TestCase):
     """
 
     def setUp(self):
+        self._application = ApplicationParams()
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
     def tearDown(self):
@@ -79,7 +80,7 @@ class TokenNamesTest(unittest.TestCase):
         Attachment(self.testPage).attach(fullFilesPath)
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, self._application.config)
 
     def _checkToken(self, testtoken, text, validname):
         tokens_result = testtoken.scanString(text)

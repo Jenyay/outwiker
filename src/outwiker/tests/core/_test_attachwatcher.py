@@ -9,7 +9,7 @@ import wx
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.core.attachwatcher import AttachWatcher
 from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseWxTestCase
@@ -20,7 +20,7 @@ class AttachWatcherTest(BaseWxTestCase):
         super().setUp()
         self._eventCount = 0
         self._period_ms = 50
-        self._application = Application
+        self._application = ApplicationParams()
         self._application.onAttachListChanged += self._onAttachListChanged
 
         # Path to path with files

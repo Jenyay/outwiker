@@ -5,7 +5,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import StringOption
 
@@ -25,6 +25,7 @@ class WikiPagesTest(unittest.TestCase):
     """
 
     def setUp(self):
+        self._application = ApplicationParams()
         self.path = "testdata/samplewiki"
         self.root = loadNotesTree(self.path)
 
@@ -231,7 +232,8 @@ class TextPageAttachmentTest(unittest.TestCase):
     Тест для проверки работы с прикрепленными файлами
     """
     def setUp(self):
-        # Количество срабатываний особытий при обновлении страницы
+        self._application = ApplicationParams()
+        # Количество срабатываний событий при обновлении страницы
         self.pageUpdateCount = 0
         self.pageUpdateSender = None
 
@@ -239,7 +241,7 @@ class TextPageAttachmentTest(unittest.TestCase):
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = createNotesTree(self.path)
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
@@ -254,7 +256,7 @@ class TextPageAttachmentTest(unittest.TestCase):
     def testEvent(self):
         self.pageUpdateCount = 0
 
-        Application.onAttachListChanged += self.onAttachListChanged
+        self._application.onAttachListChanged += self.onAttachListChanged
 
         page1 = "Страница 1"
         page3 = "Страница 2/Страница 3"
@@ -275,7 +277,7 @@ class TextPageAttachmentTest(unittest.TestCase):
         self.assertEqual(self.pageUpdateCount, 2)
         self.assertEqual(self.pageUpdateSender, self.wikiroot[page3])
 
-        Application.onAttachListChanged -= self.onAttachListChanged
+        self._application.onAttachListChanged -= self.onAttachListChanged
 
     def onAttachListChanged(self, sender, params):
         self.pageUpdateCount += 1
