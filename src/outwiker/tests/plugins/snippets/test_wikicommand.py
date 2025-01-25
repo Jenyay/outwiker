@@ -25,7 +25,7 @@ class SnippetsWikiCommandTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.loader.load(plugins_dir)
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, self.application.config)
+        self.parser = factory.make(self.testPage, self.application)
 
         from snippets.utils import getSnippetsDir
         root_snippets_dir = getSnippetsDir()

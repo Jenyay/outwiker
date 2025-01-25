@@ -4,7 +4,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parser.commands.table import TableCommand
@@ -13,11 +13,12 @@ from outwiker.tests.utils import removeDir
 
 class WikiCommandTableTest (unittest.TestCase):
     def setUp(self):
+        self._application = ApplicationParams()
         self.__createWiki()
         self.testPage = self.wikiroot['Страница 1']
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

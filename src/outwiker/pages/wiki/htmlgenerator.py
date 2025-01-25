@@ -35,7 +35,7 @@ class HtmlGenerator:
 
         # Create parser
         factory = ParserFactory()
-        parser = factory.make(self.page, Application.config)
+        parser = factory.make(self.page, Application)
 
         config = HtmlRenderConfig(Application.config)
 

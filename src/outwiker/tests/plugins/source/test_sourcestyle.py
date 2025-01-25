@@ -47,7 +47,7 @@ def hello (count):
         self.application.config.remove_section(self.config.section)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, self.application.config)
+        self.parser = self.factory.make(self.testPage, self.application)
 
     def tearDown(self):
         self.config.tabWidth.value = 4

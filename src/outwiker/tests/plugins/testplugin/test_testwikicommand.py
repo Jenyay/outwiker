@@ -25,7 +25,7 @@ class PluginWikiCommandTest(unittest.TestCase):
         loader.load(dirlist)
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, Application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

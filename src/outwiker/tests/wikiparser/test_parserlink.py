@@ -32,7 +32,7 @@ class ParserLinkTest(unittest.TestCase):
         self._createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, self._application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def _createWiki(self):
         # Здесь будет создаваться вики

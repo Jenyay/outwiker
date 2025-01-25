@@ -19,7 +19,7 @@ class ThumbnailsTest(unittest.TestCase):
         self._application = ApplicationParams()
         self.filesPath = "testdata/samplefiles/"
         self.__createWiki()
-        self.parser = ParserFactory().make(self.testPage, self._application.config)
+        self.parser = ParserFactory().make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

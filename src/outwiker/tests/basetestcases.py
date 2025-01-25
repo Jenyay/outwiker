@@ -140,7 +140,6 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.loader.load(dirlist)
 
     def __createWiki(self):
-        # Здесь будет создаваться вики
         WikiPageFactory().create(self.wikiroot, "Викистраница", [])
         TextPageFactory().create(self.wikiroot, "Текст", [])
         HtmlPageFactory().create(self.wikiroot, "HTML", [])

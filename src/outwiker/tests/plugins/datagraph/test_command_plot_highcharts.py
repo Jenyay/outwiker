@@ -8,6 +8,7 @@ from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
+# from outwiker.core.application import ApplicationParams
 from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -17,21 +18,20 @@ from outwiker.tests.utils import removeDir
 
 class CommandPlotHighchartsTest(unittest.TestCase):
     def setUp(self):
+        self._application = Application
         dirlist = ["plugins/datagraph", "plugins/htmlheads"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self._application)
         self.loader.load(dirlist)
 
         self.path = mkdtemp(prefix='Абырвалг абыр')
         self.wikiroot = createNotesTree(self.path)
         self.page = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
-        Application.wikiroot = None
-
-        self.parser = ParserFactory().make(self.page, Application.config)
+        self._application.wikiroot = None
 
     def tearDown(self):
         self.loader.clear()
-        Application.wikiroot = None
+        self._application.wikiroot = None
         removeDir(self.path)
 
     def testEmpty(self):

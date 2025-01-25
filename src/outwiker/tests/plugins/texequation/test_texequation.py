@@ -25,7 +25,7 @@ class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.loader.load(dirlist)
 
         self.testPage = self.wikiroot["Страница 1"]
-        self.parser = ParserFactory().make(self.testPage, self.application.config)
+        self.parser = ParserFactory().make(self.testPage, self.application)
 
     def tearDown(self):
         self.loader.clear()

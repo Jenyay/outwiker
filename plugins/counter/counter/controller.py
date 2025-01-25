@@ -24,7 +24,7 @@ class Controller:
 
     def __init__(self, plugin, application):
         """
-        plugin - Владелец контроллера(экземпляр класса PluginSource)
+        plugin - Владелец контроллера (экземпляр класса PluginSource)
         application - экземпляр класса ApplicationParams
         """
         self._plugin = plugin
@@ -88,7 +88,7 @@ class Controller:
         dlg = InsertDialog(self._application.mainWindow)
 
         dlgController = InsertDialogController(
-            dlg, self._application.config, self._application.selectedPage
+            dlg, self._application, self._application.selectedPage
         )
 
         resultDlg = dlgController.showDialog()

@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
@@ -16,24 +16,25 @@ from outwiker.tests.utils import removeDir
 class DiagrammerTest(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
+        self._application = ApplicationParams()
 
         self.filesPath = "testdata/samplefiles/"
         self.__createWiki()
 
         dirlist = ["plugins/diagrammer"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self._application)
         self.loader.load(dirlist)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, Application.config)
+        self.parser = self.factory.make(self.testPage, self._application)
 
         self.thumbDir = os.path.join("__attach", "__thumb")
         self.thumbFullPath = os.path.join(self.testPage.path, self.thumbDir)
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -114,7 +115,7 @@ class DiagrammerTest(unittest.TestCase):
         self.assertTrue(os.path.exists(self.thumbFullPath))
 
     def testShapes_01(self):
-        template = 'a{n}[shape = {shape}]'
+        template = "a{n}[shape = {shape}]"
         shapes = [
             "actor",
             "beginpoint",
@@ -144,7 +145,7 @@ class DiagrammerTest(unittest.TestCase):
         for n, shape in zip(list(range(len(shapes))), shapes):
             lines.append(template.format(n=n, shape=shape))
 
-        lines .append("(:diagramend:)")
+        lines.append("(:diagramend:)")
         text = "\n".join(lines)
 
         validResult = '<img src="{}/__diagram_'.format(self.thumbDir)
@@ -155,31 +156,34 @@ class DiagrammerTest(unittest.TestCase):
         self.assertNotIn("<b>", result)
 
     def testShapes_02(self):
-        shapes = sorted([
-            "actor",
-            "beginpoint",
-            "box",
-            "circle",
-            "cloud",
-            "diamond",
-            "dots",
-            "ellipse",
-            "endpoint",
-            "mail",
-            "minidiamond",
-            "none",
-            "note",
-            "roundedbox",
-            "square",
-            "textbox",
-            "flowchart.database",
-            "flowchart.input",
-            "flowchart.loopin",
-            "flowchart.loopout",
-            "flowchart.terminator",
-        ])
+        shapes = sorted(
+            [
+                "actor",
+                "beginpoint",
+                "box",
+                "circle",
+                "cloud",
+                "diamond",
+                "dots",
+                "ellipse",
+                "endpoint",
+                "mail",
+                "minidiamond",
+                "none",
+                "note",
+                "roundedbox",
+                "square",
+                "textbox",
+                "flowchart.database",
+                "flowchart.input",
+                "flowchart.loopin",
+                "flowchart.loopout",
+                "flowchart.terminator",
+            ]
+        )
 
         from diagrammer.diagramrender import DiagramRender
+
         diagramShapers = DiagramRender.shapes
 
         self.assertEqual(shapes, diagramShapers)

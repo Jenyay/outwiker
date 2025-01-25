@@ -5,7 +5,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
@@ -14,17 +14,18 @@ from outwiker.tests.utils import removeDir
 class CommandExecTest (unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
+        self._application = ApplicationParams()
 
         self.__createWiki()
         self.testPage = self.wikiroot['Страница 1']
 
         dirlist = ['plugins/externaltools']
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self._application)
         self.loader.load(dirlist)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, Application.config)
+        self.parser = self.factory.make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики
