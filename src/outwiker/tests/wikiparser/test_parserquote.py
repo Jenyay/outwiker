@@ -19,7 +19,7 @@ class ParserQuoteTest(unittest.TestCase):
 
         self.__createWiki()
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, self._application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def tearDown(self):
         removeDir(self.path)

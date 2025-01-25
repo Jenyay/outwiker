@@ -28,7 +28,7 @@ class ParserAlignTest (unittest.TestCase):
         self.__createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, self._application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

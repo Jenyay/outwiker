@@ -32,7 +32,7 @@ class SourcePluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.defaultLanguage.remove_option()
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, self.application.config)
+        self.parser = self.factory.make(self.testPage, self.application)
 
     def tearDown(self):
         self.config.tabWidth.value = 4

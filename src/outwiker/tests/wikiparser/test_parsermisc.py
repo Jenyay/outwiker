@@ -21,7 +21,7 @@ class ParserMiscTest (unittest.TestCase):
         self.__createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, self._application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики
@@ -47,6 +47,6 @@ class ParserMiscTest (unittest.TestCase):
         pagetitle = "Страница 666"
 
         WikiPageFactory().create(self.wikiroot, pagetitle, [])
-        parser = Parser(self.wikiroot[pagetitle], self._application.config)
+        parser = Parser(self.wikiroot[pagetitle], self._application)
 
         parser.toHtml("Attach:bla-bla-bla")

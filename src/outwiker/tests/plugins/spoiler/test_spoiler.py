@@ -25,7 +25,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.loader.load(dirlist)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, self.application.config)
+        self.parser = self.factory.make(self.testPage, self.application)
 
     def tearDown(self):
         self.loader.clear()

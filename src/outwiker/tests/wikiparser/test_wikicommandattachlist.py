@@ -28,7 +28,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
         self.testPage = self.wikiroot["Страница 1"]
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, Application)
 
         filesPath = "testdata/samplefiles/"
         self.files = [
