@@ -53,7 +53,7 @@ class SearchPageAdapter(PageAdapter):
             # Ничего страшного, если поисковая фраза не сохранится
             pass
 
-        Application.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
+        Application.onPageUpdate(self.page, change=PAGE_UPDATE_CONTENT)
 
     def _getSearchTags(self):
         """
@@ -83,7 +83,7 @@ class SearchPageAdapter(PageAdapter):
             # Ну не сохранятся искомые теги, ничего страшного
             pass
 
-        Application.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
+        Application.onPageUpdate(self.page, change=PAGE_UPDATE_CONTENT)
 
     def _getStrategy(self):
         strategyOption = IntegerOption(self.params, self.paramsSection, "strategy", 0)
