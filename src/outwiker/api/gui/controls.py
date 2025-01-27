@@ -12,9 +12,9 @@ from outwiker.gui.controls.notestreectrl2 import NotesTreeItem
 from outwiker.core.system import getOS as _getOS
 
 
-def getHtmlRender(parent):
-    return _getOS().getHtmlRender(parent)
+def getHtmlRender(parent, application):
+    return _getOS().getHtmlRender(parent, application)
 
 
-def getHtmlRenderForPage(parent):
-    return _getOS().getHtmlRenderForPage(parent)
+def getHtmlRenderForPage(parent, application):
+    return _getOS().getHtmlRenderForPage(parent, application)

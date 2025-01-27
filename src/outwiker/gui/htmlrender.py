@@ -6,7 +6,6 @@ import wx
 
 import outwiker.core
 from outwiker.app.services.messages import showError
-from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams
 from outwiker.core.system import getOS
 from outwiker.gui.controls.searchreplacepanel import SearchReplacePanel
@@ -18,9 +17,11 @@ class HtmlRenderBase(wx.Panel):
     Базовый класс для HTML-рендеров
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super().__init__(parent)
 
+        self._parent = parent
+        self._application = application
         self._render = self._createRender()
         self._searchPanel = SearchReplacePanel(self)
         self._searchPanelController = getOS().getHtmlRenderSearchController(self._searchPanel, self)
@@ -78,7 +79,7 @@ class HtmlRenderBase(wx.Panel):
             outwiker.core.system.getOS().startFile(href)
         except OSError:
             text = _("Can't execute file '%s'") % (href)
-            showError(Application.mainWindow, text)
+            showError(self._parent, text)
 
     def _getLinkProtocol(self, link):
         """

@@ -7,6 +7,7 @@ import wx
 from outwiker.gui.controls.colorpicker import ColorPicker, EVT_COLOURSELECT
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.system import getOS
+from outwiker.core.application import Application
 from .csseditor import CSSEditor
 
 
@@ -198,7 +199,7 @@ class StyleDialog(TestedDialog):
                                border=4)
 
         # HTML browser
-        self._browser = getOS().getHtmlRender(self)
+        self._browser = getOS().getHtmlRender(self, Application)
         paramsPreviewSizer.Add(self._browser,
                                flag=wx.EXPAND | wx.ALL,
                                border=4)
