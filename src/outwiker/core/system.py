@@ -140,7 +140,7 @@ class Windows(System):
     def getHtmlRender(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderie import HtmlRenderIEGeneral
             return HtmlRenderIEGeneral(parent, application)
@@ -148,7 +148,7 @@ class Windows(System):
     def getHtmlRenderForPage(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderie import HtmlRenderIEForPage
             return HtmlRenderIEForPage(parent, application)
@@ -222,7 +222,7 @@ class Unix(System):
     def getHtmlRender(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKitGeneral
             return HtmlRenderWebKitGeneral(parent, application)
@@ -230,7 +230,7 @@ class Unix(System):
     def getHtmlRenderForPage(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKitForPage
             return HtmlRenderWebKitForPage(parent, application)

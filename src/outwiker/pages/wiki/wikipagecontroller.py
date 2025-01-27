@@ -112,7 +112,7 @@ class WikiPageController:
 
         style = Style()
         stylepath = style.getPageStyle(page)
-        generator = HtmlGenerator(page)
+        generator = HtmlGenerator(page, self._application)
 
         html = generator.makeHtml(stylepath)
         writeTextFile(path, html)

@@ -54,7 +54,7 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_cp1251.cs"  encoding="cp1251":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
@@ -70,7 +70,7 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_cp1251.cs"  encoding="utf8":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
@@ -88,7 +88,7 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_cp1251.cs"  encoding="blablabla":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
@@ -106,7 +106,7 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_utf8.py"  encoding="blablabla":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(

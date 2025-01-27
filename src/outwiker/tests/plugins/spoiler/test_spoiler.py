@@ -40,7 +40,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("bla-bla-bla" in result)
@@ -50,7 +50,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("бла-бла-бла" in result)
@@ -63,7 +63,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
             self.testPage.content = text
 
-            generator = HtmlGenerator(self.testPage)
+            generator = HtmlGenerator(self.testPage, self.application)
             result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
             self.assertTrue("бла-бла-бла" in result)
@@ -74,7 +74,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("бла-бла-бла" in result)
@@ -85,7 +85,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("бла-бла-бла" in result)
@@ -97,7 +97,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("бла-бла-бла" in result)
@@ -109,7 +109,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("бла-бла-бла" in result)
@@ -122,7 +122,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("бла-бла-бла" in result)
@@ -134,7 +134,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("бла-бла-бла" in result)

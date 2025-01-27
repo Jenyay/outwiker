@@ -51,7 +51,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_utf8.py" lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)
@@ -64,7 +64,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="Attach:source_utf8.py" lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)
@@ -77,7 +77,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="  source_utf8.py  " lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)
@@ -90,7 +90,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="  Attach:source_utf8.py  " lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)
@@ -103,7 +103,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_utf8.py" lang="text":)(:sourceend:)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)
@@ -116,7 +116,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_utf8.py" lang="text":)bla-bla-bla(:sourceend:)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)
@@ -133,7 +133,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_utf8.py" lang="python":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
@@ -150,7 +150,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_utf8.py":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
@@ -167,7 +167,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_utf8.py" lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
@@ -185,7 +185,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="source_utf8111.py" lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue('source_utf8111.py' in result, result)
@@ -201,7 +201,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="subdir 1/subdir 2/source_utf8.py" lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)
@@ -219,7 +219,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = r'(:source file="subdir 1\subdir 2\source_utf8.py" lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)
@@ -237,7 +237,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = '(:source file="Attach:subdir 1/subdir 2/source_utf8.py" lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)
@@ -255,7 +255,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         content = r'(:source file="Attach:subdir 1\subdir 2\source_utf8.py" lang="text":)'
         self.testPage.content = content
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("__correctSysPath()" in result)

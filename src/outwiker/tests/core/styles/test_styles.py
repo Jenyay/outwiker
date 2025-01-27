@@ -228,5 +228,5 @@ $invalidkey
 </HTML>
 """)
 
-        generator = HtmlGenerator(page)
+        generator = HtmlGenerator(page, Application)
         generator.makeHtml(Style().getPageStyle(page))

@@ -53,7 +53,7 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("бла-бла-бла" in result)
@@ -65,7 +65,7 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("бла-бла-бла" in result)
