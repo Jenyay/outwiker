@@ -63,7 +63,7 @@ class WikiPageController:
             params.dialog.showAppearancePanel()
 
     def __onPreferencesDialogCreate(self, dialog):
-        panel = WikiPrefGeneralPanel(dialog.treeBook)
+        panel = WikiPrefGeneralPanel(dialog.treeBook, self._application)
         prefPanelInfo = PreferencePanelInfo(panel, _("General"))
 
         dialog.appendPreferenceGroup(_("Wiki Page"), [prefPanelInfo], PREF_PANEL_WIKI)
