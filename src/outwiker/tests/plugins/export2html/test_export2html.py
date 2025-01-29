@@ -5,7 +5,6 @@ import unittest
 
 from outwiker.api.core.tree import loadNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
 from outwiker.utilites.textfile import readTextFile
 from outwiker.core.defines import PAGE_RESULT_HTML
 
@@ -24,17 +23,17 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         dirlist = ["plugins/export2html"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
         removeDir(self.outputdir)
 
         os.mkdir(self.outputdir)
 
-        Application.wikiroot = None
+        self.application.wikiroot = None
 
     def tearDown(self):
-        Application.wikiroot = None
+        self.application.wikiroot = None
         removeDir(self.outputdir)
         self.destroyApplication()
 
@@ -614,7 +613,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = LongNameGenerator(self.root[pagename])
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, Application)
+            self.root[pagename], namegenerator, self.application)
 
         result = branchExporter.export(
             outdir=self.outputdir,
@@ -690,7 +689,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         wikiname = "samplewiki"
         namegenerator = LongNameGenerator(self.root)
-        branchExporter = BranchExporter(self.root, namegenerator, Application)
+        branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         result = branchExporter.export(
             outdir=self.outputdir,
@@ -735,7 +734,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = TitleNameGenerator(self.outputdir)
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, Application)
+            self.root[pagename], namegenerator, self.application)
 
         result = branchExporter.export(
             outdir=self.outputdir,
@@ -812,7 +811,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = TitleNameGenerator(self.outputdir)
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, Application)
+            self.root[pagename], namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -839,7 +838,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = TitleNameGenerator(self.outputdir)
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, Application)
+            self.root[pagename], namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -866,7 +865,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = LongNameGenerator(self.root[pagename])
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, Application)
+            self.root[pagename], namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -909,7 +908,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = TitleNameGenerator(self.outputdir)
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, Application)
+            self.root[pagename], namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -945,9 +944,9 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from export2html.longnamegenerator import LongNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        Application.wikiroot = self.root
+        self.application.wikiroot = self.root
         namegenerator = LongNameGenerator(self.root)
-        branchExporter = BranchExporter(self.root, namegenerator, Application)
+        branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -971,9 +970,9 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        Application.wikiroot = self.root
+        self.application.wikiroot = self.root
         namegenerator = TitleNameGenerator(self.outputdir)
-        branchExporter = BranchExporter(self.root, namegenerator, Application)
+        branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -992,9 +991,9 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        Application.wikiroot = self.root
+        self.application.wikiroot = self.root
         namegenerator = TitleNameGenerator(self.outputdir)
-        branchExporter = BranchExporter(self.root, namegenerator, Application)
+        branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -1016,9 +1015,9 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        Application.wikiroot = self.root
+        self.application.wikiroot = self.root
         namegenerator = TitleNameGenerator(self.outputdir)
-        branchExporter = BranchExporter(self.root, namegenerator, Application)
+        branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -1040,9 +1039,9 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        Application.wikiroot = self.root
+        self.application.wikiroot = self.root
         namegenerator = TitleNameGenerator(self.outputdir)
-        branchExporter = BranchExporter(self.root, namegenerator, Application)
+        branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -1064,9 +1063,9 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        Application.wikiroot = self.root
+        self.application.wikiroot = self.root
         namegenerator = TitleNameGenerator(self.outputdir)
-        branchExporter = BranchExporter(self.root, namegenerator, Application)
+        branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
@@ -1088,9 +1087,9 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        Application.wikiroot = self.root
+        self.application.wikiroot = self.root
         namegenerator = TitleNameGenerator(self.outputdir)
-        branchExporter = BranchExporter(self.root, namegenerator, Application)
+        branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
             outdir=self.outputdir,
