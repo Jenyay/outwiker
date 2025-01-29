@@ -4,7 +4,6 @@ from abc import ABCMeta, abstractmethod
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from outwiker.core.application import Application
 
 
 class CommandDateBase(Command, metaclass=ABCMeta):
@@ -38,7 +37,7 @@ class CommandDateBase(Command, metaclass=ABCMeta):
         if self.FORMAT_PARAM in paramsDict:
             formatStr = paramsDict[self.FORMAT_PARAM]
         else:
-            formatStr = GeneralGuiConfig(Application.config).dateTimeFormat.value
+            formatStr = GeneralGuiConfig(self.parser.application.config).dateTimeFormat.value
 
         date = self._getDate()
         # Avoidance for bug in Python: https://bugs.python.org/issue8305
