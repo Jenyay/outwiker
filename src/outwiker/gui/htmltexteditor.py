@@ -17,8 +17,8 @@ from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 class HtmlTextEditor(TextEditor):
     _htmlDictIsCopied = False
 
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, application):
+        super().__init__(parent, application)
 
     def setDefaultSettings(self):
         super().setDefaultSettings()

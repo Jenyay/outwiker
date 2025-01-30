@@ -10,11 +10,10 @@ from .wikiconfig import WikiConfig
 
 
 class WikiEditor(TextEditor):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
+        super().__init__(parent, application)
         self._colorizeSyntax = True
         self._styles = {}
-
-        super().__init__(parent)
 
     def __createStyles(self, config):
         self._styles = {}

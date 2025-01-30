@@ -57,7 +57,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self.imagesDir = getImagesDir()
 
         self.notebook = wx.aui.AuiNotebook(self, style=wx.aui.AUI_NB_BOTTOM)
-        self._codeEditor = self.getTextEditor()(self.notebook)
+        self._codeEditor = self.getTextEditor()(self.notebook, self._application)
 
         self.htmlWindow = parent.borrowHtmlRender(self.notebook)
         self.htmlWindow.Show()
