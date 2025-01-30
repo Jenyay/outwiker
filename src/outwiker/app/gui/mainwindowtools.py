@@ -3,8 +3,6 @@
 import os.path
 from typing import Optional
 
-from outwiker.core.application import Application
-
 
 def getMainWindowTitle(application):
     template = application.mainWindow.mainWindowConfig.titleFormat.value
@@ -27,37 +25,37 @@ def getMainWindowTitle(application):
     return result
 
 
-def addStatusBarItem(name: str, width: int = -1, position: Optional[int] = None) -> None:
-    if Application.mainWindow:
-        Application.mainWindow.statusbar.addItem(name, width, position)
+def addStatusBarItem(mainWindow, name: str, width: int = -1, position: Optional[int] = None) -> None:
+    if mainWindow:
+        mainWindow.statusbar.addItem(name, width, position)
 
 
-def setStatusText(item_name: str, text: str) -> None:
+def setStatusText(mainWindow, item_name: str, text: str) -> None:
     """
     Установить текст статусбара.
     text - текст
     index - номер ячейки статусбара
     """
-    if Application.mainWindow:
-        Application.mainWindow.statusbar.setStatusText(item_name, text)
+    if mainWindow:
+        mainWindow.statusbar.setStatusText(item_name, text)
 
 
-def _showHideMainPanel(application, panel, visible):
+def _showHideMainPanel(mainWindow, panel, visible):
     if visible:
         panel.pane.Show()
     else:
         panel.pane.Hide()
 
-    application.mainWindow.auiManager.Update()
+    mainWindow.auiManager.Update()
 
 
-def showHideAttachPanel(application, visible):
-    _showHideMainPanel(application, application.mainWindow.attachPanel, visible)
+def showHideAttachPanel(mainWindow, visible):
+    _showHideMainPanel(mainWindow, mainWindow.attachPanel, visible)
 
 
-def showHideTagsPanel(application, visible):
-    _showHideMainPanel(application, application.mainWindow.tagsCloudPanel, visible)
+def showHideTagsPanel(mainWindow, visible):
+    _showHideMainPanel(mainWindow, mainWindow.tagsCloudPanel, visible)
 
 
-def showHideNotesTreePanel(application, visible):
-    _showHideMainPanel(application, application.mainWindow.treePanel, visible)
+def showHideNotesTreePanel(mainWindow, visible):
+    _showHideMainPanel(mainWindow, mainWindow.treePanel, visible)

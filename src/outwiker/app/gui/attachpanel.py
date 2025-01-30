@@ -74,7 +74,7 @@ class AttachPanel(wx.Panel):
 
         self._bindGuiEvents()
         self._bindAppEvents()
-        addStatusBarItem(self._ATTACH_STATUS_ITEM, position=1)
+        addStatusBarItem(self._application.mainWindow, self._ATTACH_STATUS_ITEM, position=1)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -545,7 +545,7 @@ class AttachPanel(wx.Panel):
             elif len(full_path) > 0:
                 text = self._getStatusTextForManyFiles(full_path)
 
-        setStatusText(self._ATTACH_STATUS_ITEM, text)
+        setStatusText(self._application.mainWindow, self._ATTACH_STATUS_ITEM, text)
         self._sendAttachSelectedEvent()
 
     def _getStatusTextForSingleFile(self, fname_full: str, root_path: str) -> str:

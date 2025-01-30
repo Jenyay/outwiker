@@ -51,7 +51,6 @@ from outwiker.gui.autosavetimer import AutosaveTimer
 from outwiker.gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.defines import (
     MENU_FILE,
-    TOOLBAR_GENERAL,
     CLOSE_BUTTON_ACTION_CLOSE,
     CLOSE_BUTTON_ACTION_MINIMIZE,
     CLOSE_BUTTON_ACTION_HIDE_TO_TRAY,
@@ -306,7 +305,7 @@ class MainWndController:
                 self._application.selectedPage.datetime, dateFormat
             )
 
-        setStatusText(STATUSBAR_PAGE_DATETIME_ITEM, text)
+        setStatusText(self._application.mainWindow, STATUSBAR_PAGE_DATETIME_ITEM, text)
 
     def loadMainWindowParams(self):
         """
