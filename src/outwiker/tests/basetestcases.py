@@ -91,7 +91,7 @@ class BaseOutWikerGUIMixin(BaseOutWikerMixin):
         self.outwiker_app.use_fake_html_render = True
         self.outwiker_app.enableActionsGui = enableActionsGui
         self.outwiker_app.initMainWindow()
-        self.mainWindow = self.outwiker_app.mainWnd
+        self.mainWindow = self.outwiker_app.getMainWindow()
 
         generalConfig = GeneralGuiConfig(self.application.config)
         generalConfig.askBeforeExit.value = False

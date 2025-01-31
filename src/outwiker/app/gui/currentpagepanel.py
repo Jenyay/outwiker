@@ -290,7 +290,7 @@ class CurrentPagePanel(wx.Panel):
 
     def __reloadWiki(self):
         self._application.selectedPage = None
-        openWiki(self._application.wikiroot.path)
+        openWiki(self._application.wikiroot.path, self._application)
 
     def __onForceSave(self):
         self.Save()

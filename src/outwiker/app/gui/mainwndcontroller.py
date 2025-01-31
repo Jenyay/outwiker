@@ -373,4 +373,5 @@ class MainWndController:
         """
         Выбор пункта меню с недавно открытыми файлами
         """
-        openWiki(self._recentId[event.Id])
+        assert self._application is not None
+        openWiki(self._recentId[event.Id], self._application)
