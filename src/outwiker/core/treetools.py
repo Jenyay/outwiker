@@ -8,9 +8,9 @@ from typing import List
 from pathlib import Path
 from typing import Union
 
+import wx
 
 from outwiker.app.services.messages import showError
-from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.tree import WikiDocument
 from outwiker.core.notestreeloader import NotesTreeLoader
@@ -53,7 +53,7 @@ def testreadonly(func):
             else:
                 logger.debug("ReadonlyException for unknown page: %s (%s)")
 
-            showError(Application.mainWindow,
+            showError(wx.GetApp().getMainWindow(),
                       _("Page is opened as read-only"))
 
     return readOnlyWrap
