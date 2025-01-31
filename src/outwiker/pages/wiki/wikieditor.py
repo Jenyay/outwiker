@@ -4,7 +4,6 @@ from functools import reduce
 
 import wx.stc
 
-from outwiker.core.application import Application
 from outwiker.gui.texteditor import TextEditor
 from .wikiconfig import WikiConfig
 
@@ -99,7 +98,7 @@ class WikiEditor(TextEditor):
 
     def setDefaultSettings(self):
         super().setDefaultSettings()
-        config = WikiConfig(Application.config)
+        config = WikiConfig(self._application.config)
 
         self.__createStyles(config)
 
