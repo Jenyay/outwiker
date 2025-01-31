@@ -6,7 +6,7 @@ from typing import Optional
 import wx
 
 from outwiker.core.treetools import generateLink
-from outwiker.core.application import Application, ApplicationParams
+from outwiker.core.application import ApplicationParams
 from outwiker.core.attachment import Attachment
 
 from .messages import showError

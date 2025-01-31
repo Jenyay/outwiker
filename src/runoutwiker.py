@@ -11,7 +11,7 @@ import wx
 import outwiker
 from outwiker.app.owapplication import OutWikerApplication
 from outwiker.app.core.starter import Starter, StarterExit
-from outwiker.core.application import Application
+from outwiker.core.application import ApplicationParams
 from outwiker.core.defines import APP_DATA_DEBUG
 from outwiker.core.system import getOS, getConfigPath
 from outwiker.core.system import getSpecialDirList
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     getOS().migrateConfig()
 
     config_path = getConfigPath()
-    application = Application
+    application = ApplicationParams()
     application.init(config_path)
 
     outwiker_app = OutWikerApplication(application)

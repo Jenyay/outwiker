@@ -515,6 +515,3 @@ class ApplicationParams:
         if hasattr(self, name) and isinstance(getattr(self, name), Event):
             return getattr(self, name)
         return self.customEvents.get(name)
-
-
-Application = ApplicationParams()
