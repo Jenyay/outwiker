@@ -7,30 +7,30 @@ import os.path
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
-# from outwiker.core.application import ApplicationParams
 from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class CommandPlotHighchartsTest(unittest.TestCase):
+class CommandPlotHighchartsTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
-        self._application = Application
         dirlist = ["plugins/datagraph", "plugins/htmlheads"]
+        self.initApplication()
 
-        self.loader = PluginsLoader(self._application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
         self.path = mkdtemp(prefix='Абырвалг абыр')
         self.wikiroot = createNotesTree(self.path)
         self.page = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
-        self._application.wikiroot = None
+        self.application.wikiroot = None
 
     def tearDown(self):
+        self.application.wikiroot = None
         self.loader.clear()
-        self._application.wikiroot = None
+        self.destroyApplication()
         removeDir(self.path)
 
     def testEmpty(self):
@@ -38,7 +38,7 @@ class CommandPlotHighchartsTest(unittest.TestCase):
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         attachpath = Attachment(self.page).getAttachPath()
@@ -74,7 +74,7 @@ excanvas.min.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         attachpath = Attachment(self.page).getAttachPath()
@@ -112,7 +112,7 @@ jquery.min.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         attachpath = Attachment(self.page).getAttachPath()
@@ -150,7 +150,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         attachpath = Attachment(self.page).getAttachPath()
@@ -189,7 +189,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         attachpath = Attachment(self.page).getAttachPath()
@@ -228,7 +228,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
@@ -245,7 +245,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
@@ -262,7 +262,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
@@ -279,7 +279,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
@@ -296,7 +296,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"data"', result)
@@ -312,7 +312,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"data"', result)
@@ -328,7 +328,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
@@ -345,7 +345,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[10.0, 10.0], [20.0, 20.0], [30.0, 30.0], [40.0, 40.0]'
@@ -362,7 +362,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"data"', result)
@@ -378,7 +378,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"data"', result)
@@ -394,7 +394,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[0.5, 0.5], [1.5, 1.5], [2.0, 2.0], [4.0, 4.0]'
@@ -411,7 +411,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
@@ -428,7 +428,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"data"', result)
@@ -444,7 +444,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"data"', result)
@@ -460,7 +460,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"data"', result)
@@ -476,7 +476,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"data"', result)
@@ -492,7 +492,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
@@ -509,7 +509,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text1 = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
@@ -528,7 +528,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '"text": null'
@@ -545,7 +545,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text1 = '"text": "\\u041e\\u0441\\u044c X"'
@@ -564,7 +564,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text1 = '"text": "\\u041e\\u0441\\u044c X"'
@@ -583,7 +583,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text1 = '"min": -2.0'
@@ -606,7 +606,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"min"', result)
@@ -622,7 +622,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text1 = '"min": -2.0'
@@ -640,7 +640,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text1 = '"max": -2.0'
@@ -658,7 +658,7 @@ highcharts.js
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text1 = '"min": -2.1'
@@ -680,7 +680,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text1 = '"min": -0.2'
@@ -699,7 +699,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"type"', result)
@@ -714,7 +714,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"type": "datetime"', result)
@@ -729,7 +729,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"type": "datetime"', result)
@@ -744,7 +744,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"color": "#aabbcc"', result)
@@ -760,7 +760,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"text": "Abyrvalg"', result)
@@ -775,7 +775,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
         self.assertIn('"tooltip": {"enabled": false}', result)
 
@@ -789,7 +789,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
         self.assertIn('"tooltip": {"enabled": true}', result)
 
@@ -803,7 +803,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
         self.assertIn('"tooltip": {"enabled": false}', result)
 
@@ -817,7 +817,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
         self.assertIn('"tooltip": {"enabled": true}', result)
 
@@ -831,7 +831,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"name": "abyrvalg"', result)
@@ -846,7 +846,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
         self.assertTrue('"legend": {"enabled": false, "symbolWidth": 60}' in result or
                         '"legend": {"symbolWidth": 60, "enabled": false}' in result)
@@ -861,7 +861,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
         self.assertTrue('"legend": {"enabled": true, "symbolWidth": 60}' in result or
                         '"legend": {"symbolWidth": 60, "enabled": true}' in result)
@@ -876,7 +876,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
         self.assertTrue('"legend": {"enabled": false, "symbolWidth": 60}' in result or
                         '"legend": {"symbolWidth": 60, "enabled": false}' in result)
@@ -891,7 +891,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
         self.assertTrue('"legend": {"enabled": true, "symbolWidth": 60}' in result or
                         '"legend": {"symbolWidth": 60, "enabled": true}' in result)
@@ -909,7 +909,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
@@ -929,7 +929,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[4.0, 40.0]'
@@ -949,7 +949,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[4.0, 40.0]'
@@ -969,7 +969,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         text = '[4.0, 40.0]'
@@ -986,7 +986,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"name": "abyrvalg"', result)
@@ -1001,7 +1001,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"name": "abyrvalg"', result)
@@ -1016,7 +1016,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"dashStyle": "solid"', result)
@@ -1031,7 +1031,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"dashStyle": "dot"', result)
@@ -1046,7 +1046,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"dashStyle": "dot"', result)
@@ -1061,7 +1061,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"dashStyle": "solid"', result)
@@ -1076,7 +1076,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"dashStyle": "shortdashdot"', result)
@@ -1091,7 +1091,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"dashStyle": "solid"', result)
@@ -1108,7 +1108,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"dashStyle": "longdashdotdot"', result)
@@ -1123,7 +1123,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"dashStyle": "longdashdot"', result)
@@ -1138,7 +1138,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"dashStyle": "solid"', result)
@@ -1153,7 +1153,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"tickInterval"', result)
@@ -1168,7 +1168,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"tickInterval"', result)
@@ -1183,7 +1183,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"tickInterval"', result)
@@ -1198,7 +1198,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('"tickInterval": 1.0', result)
@@ -1213,7 +1213,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"tickInterval"', result)
@@ -1228,7 +1228,7 @@ x.max = 0.2
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertNotIn('"tickInterval"', result)
@@ -1251,7 +1251,7 @@ curve.data.colsep=",\\s*"
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('10.0', result)
@@ -1276,7 +1276,7 @@ curve.data.colsep=","
 
         self.page.content = text
 
-        generator = HtmlGenerator(self.page, self._application)
+        generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
         self.assertIn('10.0', result)

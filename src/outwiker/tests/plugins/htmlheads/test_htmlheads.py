@@ -5,19 +5,18 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
-# from outwiker.core.application import ApplicationParams
 from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class HtmlHeadsTest(unittest.TestCase):
+class HtmlHeadsTest(BaseOutWikerGUIMixin, unittest.TestCase):
     def setUp(self):
+        self.initApplication()
         self.maxDiff = None
-        self._application = Application
 
         self.filesPath = "testdata/samplefiles/"
         self.__createWiki()
@@ -25,11 +24,11 @@ class HtmlHeadsTest(unittest.TestCase):
 
         dirlist = ["plugins/htmlheads"]
 
-        self.loader = PluginsLoader(self._application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, self._application)
+        self.parser = self.factory.make(self.testPage, self.application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики
@@ -42,6 +41,7 @@ class HtmlHeadsTest(unittest.TestCase):
     def tearDown(self):
         removeDir(self.path)
         self.loader.clear()
+        self.destroyApplication()
 
     def testPluginLoad(self):
         self.assertEqual(len(self.loader), 1)
@@ -51,7 +51,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn("<title>Бла-бла-бла</title>", result)
@@ -61,7 +61,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn("<title>Бла-бла-бла бла-бла</title>", result)
@@ -71,7 +71,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn(
@@ -83,7 +83,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn(
@@ -95,7 +95,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('<meta name="description" content=""/>', result)
@@ -105,7 +105,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
@@ -115,7 +115,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
@@ -125,7 +125,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('<meta name="keywords" content=""/>', result)
@@ -135,7 +135,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
@@ -149,7 +149,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
@@ -163,7 +163,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertNotIn("(:htmlhead:)", result)
@@ -173,7 +173,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn("""<style>body {color: blue};</style>""", result)
@@ -184,7 +184,7 @@ class HtmlHeadsTest(unittest.TestCase):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage, self._application)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn("""<style>body {color: blue};</style>""", result)

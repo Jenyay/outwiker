@@ -3,18 +3,20 @@
 import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class ParamsParsingTest(unittest.TestCase):
+class ParamsParsingTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
         dirlist = ["plugins/datagraph"]
+        self.initApplication()
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
     def tearDown(self):
         self.loader.clear()
+        self.destroyApplication()
 
     def testParamsParsing_01(self):
         from datagraph.commands import PlotCommand

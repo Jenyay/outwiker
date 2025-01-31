@@ -22,7 +22,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
 
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
         html = dlg.getHTML()
 
         self.assertIsNone(dlg.getTextColor())

@@ -8,7 +8,6 @@ from tempfile import mkdtemp
 from typing import List
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.thumbnails import Thumbnails
 from outwiker.pages.wiki.parser.commands.attachlist import AttachListCommand
@@ -28,7 +27,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
         self.testPage = self.wikiroot["Страница 1"]
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application)
+        self.parser = factory.make(self.testPage, self.application)
 
         filesPath = "testdata/samplefiles/"
         self.files = [
