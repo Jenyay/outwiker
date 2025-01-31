@@ -95,7 +95,7 @@ class Controller:
             return
 
         stylepath = getPageStyle(page)
-        generator = MarkdownHtmlGenerator(page)
+        generator = MarkdownHtmlGenerator(self._application, page)
 
         html = generator.makeHtml(stylepath)
         writeTextFile(path, html)

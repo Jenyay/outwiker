@@ -9,8 +9,8 @@ from outwiker.api.gui.controls import TextEditorBase
 
 
 class SnippetEditor(TextEditorBase):
-    def __init__(self, parent):
-        super(SnippetEditor, self).__init__(parent)
+    def __init__(self, parent, application):
+        super().__init__(parent, application)
 
         self.STYLE_VARIABLE = 1
         self.STYLE_COMMENT = 2

@@ -14,17 +14,18 @@ from outwiker.tests.utils import removeDir
 class CounterTest(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
+        self._application = Application()
 
         self.filesPath = "testdata/samplefiles/"
         self.__createWiki()
 
         dirlist = ["plugins/counter"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self._application)
         self.loader.load(dirlist)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, Application.config)
+        self.parser = self.factory.make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики
@@ -50,7 +51,7 @@ class CounterTest(unittest.TestCase):
         self.assertEqual(result, validResult)
 
         # Проверим, что для нового парсера счетчик сбрасывается
-        parser2 = self.factory.make(self.testPage, Application.config)
+        parser2 = self.factory.make(self.testPage, self._application)
 
         result2 = parser2.toHtml(text)
         self.assertEqual(result2, validResult)
@@ -63,7 +64,7 @@ class CounterTest(unittest.TestCase):
         self.assertEqual(result, validResult)
 
         # Проверим, что для нового парсера счетчик сбрасывается
-        parser2 = self.factory.make(self.testPage, Application.config)
+        parser2 = self.factory.make(self.testPage, self._application)
 
         result2 = parser2.toHtml(text)
         self.assertEqual(result2, validResult)

@@ -12,7 +12,7 @@ from outwiker.core.pageuiddepot import PageUidDepot
 logger = logging.getLogger('outwiker.core.application')
 
 
-class ApplicationParams:
+class Application:
     def __init__(self):
         # Opened wiki
         self.__wikiroot = None
@@ -515,6 +515,3 @@ class ApplicationParams:
         if hasattr(self, name) and isinstance(getattr(self, name), Event):
             return getattr(self, name)
         return self.customEvents.get(name)
-
-
-Application = ApplicationParams()

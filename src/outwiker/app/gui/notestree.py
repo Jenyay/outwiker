@@ -236,7 +236,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.expand(newpage.parent, update=True)
 
     def __onTreeItemActivated(self, event):
-        editPage(self, event.page)
+        editPage(self, event.page, self._application)
 
     def __onTreeExpandChanged(self, event):
         if self._application.wikiroot is None:

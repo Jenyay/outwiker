@@ -90,13 +90,13 @@ class ClosedTreePanel(BasePagePanel):
             self._recentlySizer.ShowItems(False)
 
     def _onCreateNotes(self, _event):
-        createNewWiki(self._application.mainWindow)
+        createNewWiki(self._application.mainWindow, self._application)
 
     def _onOpenNotes(self, _event):
         openWikiWithDialog(self._application.mainWindow, False)
 
     def _onOpenSelectedNotesTree(self, _event):
-        openWiki(self._recentlyListBox.GetStringSelection())
+        openWiki(self._recentlyListBox.GetStringSelection(), self._application)
 
     def UpdateView(self, page):
         pass

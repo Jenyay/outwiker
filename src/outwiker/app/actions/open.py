@@ -22,4 +22,4 @@ class OpenAction (BaseAction):
         return _("Open tree notes")
 
     def run(self, params):
-        openWikiWithDialog(self._application.mainWindow, False)
+        openWikiWithDialog(self._application.mainWindow, self._application, False)

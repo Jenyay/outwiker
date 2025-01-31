@@ -52,7 +52,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = None
 
         Tester.dialogTester.append(self._selectFile)
-        openWikiWithDialog(self.application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, self.application, False)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertIsNotNone(self.application.wikiroot)
@@ -69,7 +69,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = wikiroot2
 
         Tester.dialogTester.append(self._selectFile)
-        openWikiWithDialog(self.application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, self.application, False)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertIsNotNone(self.application.wikiroot)
@@ -80,7 +80,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
 
         Tester.dialogTester.append(self._selectFile)
-        openWikiWithDialog(self.application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, self.application, False)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertIsNotNone(self.application.wikiroot)
@@ -95,7 +95,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
 
         Tester.dialogTester.append(self._selectFile)
-        openWikiWithDialog(self.application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, self.application, False)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertIsNotNone(self.application.wikiroot)
@@ -107,7 +107,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
 
         Tester.dialogTester.append(self._selectInvalidFile)
-        openWikiWithDialog(self.application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, self.application, False)
 
         self.assertIsNotNone(self.application.wikiroot)
         self.assertIsNotNone(self.application.selectedPage)
@@ -118,7 +118,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Tester.dialogTester.append(self._selectFile)
         # from pudb import set_trace; set_trace()
-        openWikiWithDialog(self.application.mainWindow, True)
+        openWikiWithDialog(self.application.mainWindow, self.application, True)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertIsNotNone(self.application.wikiroot)
@@ -128,14 +128,14 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_openwiki_01(self):
         self.application.wikiroot = None
-        openWiki(self.wikiroot.path)
+        openWiki(self.wikiroot.path, self.application)
 
         self.assertIsNotNone(self.application.wikiroot)
         self.assertIsNone(self.application.selectedPage)
 
     def test_openwiki_02(self):
         self.application.wikiroot = None
-        openWiki(os.path.join(self.wikiroot.path, "__page.opt"))
+        openWiki(os.path.join(self.wikiroot.path, "__page.opt"), self.application)
 
         self.assertIsNotNone(self.application.wikiroot)
         self.assertIsNone(self.application.selectedPage)

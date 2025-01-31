@@ -6,24 +6,26 @@ from tempfile import mkdtemp
 from outwiker.api.pages.wiki.wikipage import createWikiPage
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
-from outwiker.core.application import Application
 from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class PluginNameTest(unittest.TestCase):
+class PluginNameTest(BaseOutWikerGUIMixin, unittest.TestCase):
     """Tests for the RecentEditedPages plug-in"""
 
     def setUp(self):
+        self.initApplication()
         self.__createWiki()
 
         dirlist = ["plugins/recenteditedpages"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
     def tearDown(self):
-        removeDir(self.path)
         self.loader.clear()
+        self.destroyApplication()
+        removeDir(self.path)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

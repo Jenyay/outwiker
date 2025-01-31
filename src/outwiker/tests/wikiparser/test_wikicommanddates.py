@@ -29,7 +29,7 @@ class WikiCommandDatesTest (BaseOutWikerMixin, TestCase):
         self.testPage.datetime = datetime(2015, 9, 21, 12, 10, 20)
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, self.application.config)
+        self.parser = factory.make(self.testPage, self.application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

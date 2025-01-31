@@ -5,7 +5,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.app.gui.tagspanelcontroller import TagsPanelController
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.tagslist import TagsList
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
@@ -30,7 +30,7 @@ class TagsPanelTest(unittest.TestCase):
         removeDir(self.path)
 
     def testCreateTagsPanelController(self):
-        application = ApplicationParams()
+        application = Application()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
 
@@ -46,7 +46,7 @@ class TagsPanelTest(unittest.TestCase):
         self.assertEqual(panel.marks, [])
 
     def testSelectPage1(self):
-        application = ApplicationParams()
+        application = Application()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
         TagsPanelController(panel, application)
@@ -65,7 +65,7 @@ class TagsPanelTest(unittest.TestCase):
         self.assertEqual(panel.marks, [])
 
     def testSelectPage2(self):
-        application = ApplicationParams()
+        application = Application()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
         TagsPanelController(panel, application)
@@ -77,7 +77,7 @@ class TagsPanelTest(unittest.TestCase):
         self.assertEqual(panel.marks, [])
 
     def testTagsChange(self):
-        application = ApplicationParams()
+        application = Application()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
         TagsPanelController(panel, application)
@@ -91,7 +91,7 @@ class TagsPanelTest(unittest.TestCase):
         self.assertTrue("тег 666" in panel.marks)
 
     def testChangeTags(self):
-        application = ApplicationParams()
+        application = Application()
         application.wikiroot = self.wikiroot
         panel = FakeTagsPanel()
         TagsPanelController(panel, application)
@@ -105,7 +105,7 @@ class TagsPanelTest(unittest.TestCase):
         self.assertTrue("бла-бла-бла" in panel.tags)
 
     def testPageRemove(self):
-        application = ApplicationParams()
+        application = Application()
         application.wikiroot = self.wikiroot
 
         panel = FakeTagsPanel()
@@ -119,7 +119,7 @@ class TagsPanelTest(unittest.TestCase):
         self.assertTrue("тег 4" in panel.tags)
 
     def testPageCreate(self):
-        application = ApplicationParams()
+        application = Application()
         application.wikiroot = self.wikiroot
 
         panel = FakeTagsPanel()
@@ -134,7 +134,7 @@ class TagsPanelTest(unittest.TestCase):
         self.assertTrue("тег 4" in panel.tags)
 
     def testClear(self):
-        application = ApplicationParams()
+        application = Application()
         application.wikiroot = self.wikiroot
 
         panel = FakeTagsPanel()

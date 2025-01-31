@@ -4,5 +4,5 @@ from outwiker.gui.controls.texteditorbase import TextEditorBase
 
 
 class CSSEditor(TextEditorBase):
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, application):
+        super().__init__(parent, application)

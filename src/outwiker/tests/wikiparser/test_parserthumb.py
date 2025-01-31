@@ -26,7 +26,7 @@ class ParserThumbTest(BaseOutWikerMixin, TestCase):
         self.__wikiconfig = WikiConfig(self.application.config)
         self.__wikiconfig.thumbSizeOptions.value = WikiConfig.THUMB_SIZE_DEFAULT
 
-        self.parser = factory.make(self.testPage, self.application.config)
+        self.parser = factory.make(self.testPage, self.application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

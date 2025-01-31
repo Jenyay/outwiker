@@ -51,7 +51,6 @@ from outwiker.gui.autosavetimer import AutosaveTimer
 from outwiker.gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.defines import (
     MENU_FILE,
-    TOOLBAR_GENERAL,
     CLOSE_BUTTON_ACTION_CLOSE,
     CLOSE_BUTTON_ACTION_MINIMIZE,
     CLOSE_BUTTON_ACTION_HIDE_TO_TRAY,
@@ -67,7 +66,7 @@ class MainWndController:
     def __init__(self, parent, application):
         """
         parent - instance of the MainWindow class
-        application - instance of the ApplicationParams class
+        application - instance of the Application class
         """
         self._mainWindow = parent
         self._application = application
@@ -306,7 +305,7 @@ class MainWndController:
                 self._application.selectedPage.datetime, dateFormat
             )
 
-        setStatusText(STATUSBAR_PAGE_DATETIME_ITEM, text)
+        setStatusText(self._application.mainWindow, STATUSBAR_PAGE_DATETIME_ITEM, text)
 
     def loadMainWindowParams(self):
         """
@@ -374,4 +373,5 @@ class MainWndController:
         """
         Выбор пункта меню с недавно открытыми файлами
         """
-        openWiki(self._recentId[event.Id])
+        assert self._application is not None
+        openWiki(self._recentId[event.Id], self._application)

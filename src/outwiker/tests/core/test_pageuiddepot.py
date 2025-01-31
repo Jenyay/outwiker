@@ -15,6 +15,7 @@ class PageUidDepotTest(unittest.TestCase):
     """Тест класса PageUidDepot"""
 
     def setUp(self):
+        self._application = Application()
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
@@ -29,10 +30,10 @@ class PageUidDepotTest(unittest.TestCase):
                        [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
     def tearDown(self):
-        Application.wikiroot = None
+        self._application.wikiroot = None
         removeDir(self.path)
 
     def testEmpty(self):
@@ -230,79 +231,79 @@ class PageUidDepotTest(unittest.TestCase):
         page = self.wikiroot["Страница 2/Страница 3"]
         uid = depot.createUid(page)
 
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
-        self.assertEqual(Application.pageUidDepot[uid].title, "Страница 3")
+        self.assertEqual(self._application.pageUidDepot[uid].title, "Страница 3")
 
     def testApplication_02(self):
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         page = self.wikiroot["Страница 2/Страница 3"]
-        uid = Application.pageUidDepot.createUid(page)
+        uid = self._application.pageUidDepot.createUid(page)
 
-        Application.wikiroot = None
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = None
+        self._application.wikiroot = self.wikiroot
 
-        self.assertEqual(Application.pageUidDepot[uid].title, "Страница 3")
+        self.assertEqual(self._application.pageUidDepot[uid].title, "Страница 3")
 
     def testApplicationRenamePage(self):
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         page = self.wikiroot["Страница 2/Страница 3"]
-        uid = Application.pageUidDepot.createUid(page)
+        uid = self._application.pageUidDepot.createUid(page)
 
         page.title = "Новый заголовок"
-        self.assertEqual(Application.pageUidDepot[uid].title,
+        self.assertEqual(self._application.pageUidDepot[uid].title,
                          "Новый заголовок")
 
     def testApplicationRemovePage(self):
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         page = self.wikiroot["Страница 2/Страница 3"]
-        uid = Application.pageUidDepot.createUid(page)
+        uid = self._application.pageUidDepot.createUid(page)
 
         page.remove()
-        self.assertEqual(Application.pageUidDepot[uid], None)
+        self.assertEqual(self._application.pageUidDepot[uid], None)
 
     def testApplicationMovePage(self):
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
         page = self.wikiroot["Страница 2/Страница 3"]
-        uid = Application.pageUidDepot.createUid(page)
+        uid = self._application.pageUidDepot.createUid(page)
 
         page.moveTo(self.wikiroot)
-        self.assertEqual(Application.pageUidDepot[uid].title, "Страница 3")
-        self.assertEqual(Application.pageUidDepot[uid].parent, self.wikiroot)
+        self.assertEqual(self._application.pageUidDepot[uid].title, "Страница 3")
+        self.assertEqual(self._application.pageUidDepot[uid].parent, self.wikiroot)
 
     def testGenerateLink_01(self):
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
         page = self.wikiroot["Страница 2/Страница 3"]
-        uid = Application.pageUidDepot.createUid(page)
+        uid = self._application.pageUidDepot.createUid(page)
 
-        link = generateLink(Application, page)
+        link = generateLink(self._application, page)
         self.assertIn("page://", link)
         self.assertIn(uid, link)
 
     def testGenerateLink_02(self):
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
         page = self.wikiroot["Страница 2/Страница 3"]
 
         newUid = "Абырвалг"
-        Application.pageUidDepot.changeUid(page, newUid)
+        self._application.pageUidDepot.changeUid(page, newUid)
 
-        link = generateLink(Application, page)
+        link = generateLink(self._application, page)
         self.assertIn("page://", link)
         self.assertIn("абырвалг", link)
 
     def testGenerateLink_03(self):
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
         page = self.wikiroot["Страница 2/Страница 3"]
-        Application.pageUidDepot.createUid(page)
+        self._application.pageUidDepot.createUid(page)
 
         newUid = "Абырвалг"
-        Application.pageUidDepot.changeUid(page, newUid)
+        self._application.pageUidDepot.changeUid(page, newUid)
 
-        link = generateLink(Application, page)
+        link = generateLink(self._application, page)
         self.assertIn("page://", link)
         self.assertIn("абырвалг", link)
 

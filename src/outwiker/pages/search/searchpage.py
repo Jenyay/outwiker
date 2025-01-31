@@ -3,7 +3,6 @@
 from outwiker.core.tree import PageAdapter
 from outwiker.core.search import AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.core.system import getBuiltinImagePath
-from outwiker.core.application import Application
 from outwiker.core.factory import PageFactory
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.config import StringOption, IntegerOption
@@ -53,7 +52,7 @@ class SearchPageAdapter(PageAdapter):
             # Ничего страшного, если поисковая фраза не сохранится
             pass
 
-        Application.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
+        self.page.root.onPageUpdate(self.page, change=PAGE_UPDATE_CONTENT)
 
     def _getSearchTags(self):
         """
@@ -83,7 +82,7 @@ class SearchPageAdapter(PageAdapter):
             # Ну не сохранятся искомые теги, ничего страшного
             pass
 
-        Application.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
+        self.page.root.onPageUpdate(self.page, change=PAGE_UPDATE_CONTENT)
 
     def _getStrategy(self):
         strategyOption = IntegerOption(self.params, self.paramsSection, "strategy", 0)
@@ -115,7 +114,7 @@ class SearchPageAdapter(PageAdapter):
             # Ничего страшного
             pass
 
-        Application.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
+        self.page.root.onPageUpdate(self.page, change=PAGE_UPDATE_CONTENT)
 
 
 class SearchPageFactory(PageFactory):

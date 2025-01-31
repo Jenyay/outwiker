@@ -13,6 +13,7 @@ import outwiker.core.cssclasses as css
 
 class ParserFormatTest(unittest.TestCase):
     def setUp(self):
+        self._application = Application()
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
@@ -21,7 +22,7 @@ class ParserFormatTest(unittest.TestCase):
         self.__createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def tearDown(self):
         removeDir(self.path)

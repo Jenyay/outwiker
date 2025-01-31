@@ -9,26 +9,26 @@ def getMainWindowTitle(application) -> str:
     return _tools.getMainWindowTitle(application)
 
 
-def addStatusBarItem(name: str, width: int = -1, position: Optional[int] = None) -> None:
-    return _tools.addStatusBarItem(name, width, position)
+def addStatusBarItem(mainWindow, name: str, width: int = -1, position: Optional[int] = None) -> None:
+    return _tools.addStatusBarItem(mainWindow, name, width, position)
 
 
-def setStatusText(item_name: str, text: str) -> None:
+def setStatusText(mainWindow, item_name: str, text: str) -> None:
     """
     Установить текст статусбара.
     text - текст
     index - номер ячейки статусбара
     """
-    return _tools.setStatusText(item_name, text)
+    return _tools.setStatusText(mainWindow, item_name, text)
 
 
-def showHideAttachPanel(application, visible: bool) -> None:
-    return _tools.showHideAttachPanel(application, visible)
+def showHideAttachPanel(mainWindow, visible: bool) -> None:
+    return _tools.showHideAttachPanel(mainWindow, visible)
 
 
-def showHideTagsPanel(application, visible: bool) -> None:
-    return _tools.showHideTagsPanel(application, visible)
+def showHideTagsPanel(mainWindow, visible: bool) -> None:
+    return _tools.showHideTagsPanel(mainWindow, visible)
 
 
-def showHideNotesTreePanel(application, visible: bool) -> None:
-    return _tools.showHideNotesTreePanel(application, visible)
+def showHideNotesTreePanel(mainWindow, visible: bool) -> None:
+    return _tools.showHideNotesTreePanel(mainWindow, visible)

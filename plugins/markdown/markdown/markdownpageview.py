@@ -275,7 +275,7 @@ class MarkdownPageView(BaseWikiPageView):
 
         # Текущая дата
         actionController.getAction(polyactions.CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
+            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor, self._application)
         )
 
         actionController.appendMenuItem(polyactions.CURRENT_DATE, menu)

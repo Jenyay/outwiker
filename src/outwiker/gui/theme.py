@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 
 
 class Theme:
@@ -24,5 +24,5 @@ class Theme:
         self.roundRadius = 0
 
 
-def get_theme(application: ApplicationParams) -> Theme:
+def get_theme(application: Application) -> Theme:
     return Theme()

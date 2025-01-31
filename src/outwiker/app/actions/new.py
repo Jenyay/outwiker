@@ -22,4 +22,4 @@ class NewAction(BaseAction):
         return _("Create a new tree notes")
 
     def run(self, params):
-        createNewWiki(self._application.mainWindow)
+        createNewWiki(self._application.mainWindow, self._application)

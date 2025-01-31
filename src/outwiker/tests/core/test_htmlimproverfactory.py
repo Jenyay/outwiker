@@ -20,29 +20,30 @@ class ExampleImprover2(HtmlImprover):
 
 class HtmlImproverFactoryTest(unittest.TestCase):
     def setUp(self):
-        Application.onPrepareHtmlImprovers.clear()
+        self._application = Application()
+        self._application.onPrepareHtmlImprovers.clear()
 
     def tearDown(self):
-        Application.onPrepareHtmlImprovers.clear()
+        self._application.onPrepareHtmlImprovers.clear()
 
     def test_type(self):
-        factory = HtmlImproverFactory(Application)
+        factory = HtmlImproverFactory(self._application)
         self.assertEqual(type(factory['brimprover']), BrHtmlImprover)
         self.assertEqual(type(factory['pimprover']), BrHtmlImprover)
         self.assertEqual(type(factory['test1']), BrHtmlImprover)
         self.assertEqual(type(factory['test2']), BrHtmlImprover)
 
     def test_type_default(self):
-        improver = HtmlImproverFactory(Application)['']
+        improver = HtmlImproverFactory(self._application)['']
         self.assertEqual(type(improver), BrHtmlImprover)
 
     def test_type_None(self):
-        improver = HtmlImproverFactory(Application)[None]
+        improver = HtmlImproverFactory(self._application)[None]
         self.assertEqual(type(improver), BrHtmlImprover)
 
     def test_add_improvers(self):
-        Application.onPrepareHtmlImprovers += self._addTestImprovers
-        factory = HtmlImproverFactory(Application)
+        self._application.onPrepareHtmlImprovers += self._addTestImprovers
+        factory = HtmlImproverFactory(self._application)
 
         self.assertEqual(type(factory['test1']), ExampleImprover1)
         self.assertEqual(type(factory['test2']), ExampleImprover2)

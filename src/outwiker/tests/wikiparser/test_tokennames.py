@@ -53,6 +53,7 @@ class TokenNamesTest(unittest.TestCase):
     """
 
     def setUp(self):
+        self._application = Application()
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
     def tearDown(self):
@@ -79,7 +80,7 @@ class TokenNamesTest(unittest.TestCase):
         Attachment(self.testPage).attach(fullFilesPath)
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def _checkToken(self, testtoken, text, validname):
         tokens_result = testtoken.scanString(text)

@@ -4,6 +4,7 @@ from typing import Mapping, Optional, Iterable, Union
 
 import wx
 
+from outwiker.core.application import Application
 from outwiker.gui.controls.colorpicker import ColorPicker, EVT_COLOURSELECT
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.system import getOS
@@ -13,6 +14,7 @@ from .csseditor import CSSEditor
 class StyleDialog(TestedDialog):
     def __init__(self,
                  parent: wx.Window,
+                 application: Application,
                  title: str,
                  styles: Mapping[str, str],
                  example_html: str,
@@ -23,6 +25,7 @@ class StyleDialog(TestedDialog):
         super().__init__(parent,
                          title=title,
                          style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        self._application = application
         self.NONE_STYLE = _('None')
         self.CSS_STYLE_NAME = '__outwiker_preview'
         self._styles = styles
@@ -185,7 +188,7 @@ class StyleDialog(TestedDialog):
 
         # Custom CSS
         self._custom_CSS_check = wx.CheckBox(self, label=_('Custom CSS'))
-        self._custom_CSS_editor = CSSEditor(self)
+        self._custom_CSS_editor = CSSEditor(self, self._application)
         self._custom_CSS_editor.SetMinSize((-1, 100))
 
         paramsSizer.Add(self._custom_CSS_check, flag=wx.ALIGN_CENTER_VERTICAL)
@@ -198,7 +201,7 @@ class StyleDialog(TestedDialog):
                                border=4)
 
         # HTML browser
-        self._browser = getOS().getHtmlRender(self)
+        self._browser = getOS().getHtmlRender(self, self._application)
         paramsPreviewSizer.Add(self._browser,
                                flag=wx.EXPAND | wx.ALL,
                                border=4)

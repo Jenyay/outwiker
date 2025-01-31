@@ -4,22 +4,24 @@ import os.path
 from tempfile import mkdtemp
 import unittest
 
-from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class RealTest(unittest.TestCase):
+class RealTest(BaseOutWikerGUIMixin, unittest.TestCase):
     def setUp(self):
+        self.initApplication()
         self.plugindirlist = ['plugins/webpage']
         self._staticDirName = '__download'
         self._tempDir = mkdtemp(prefix='Абырвалг абыр')
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(self.plugindirlist)
 
     def tearDown(self):
         self.loader.clear()
+        self.destroyApplication()
         removeDir(self._tempDir)
 
     def testDownloading_beautifulsoup(self):

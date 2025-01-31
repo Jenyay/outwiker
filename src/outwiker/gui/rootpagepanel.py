@@ -80,7 +80,7 @@ class ButtonsPanel(wx.Panel):
         self.SetSizer(buttonsSizer)
 
     def _onNewPage(self, event):
-        createChildPage(self._application.mainWindow, None)
+        createChildPage(self._application.mainWindow, None, self._application)
 
 
 class NotesTreePathPanel(wx.Panel):

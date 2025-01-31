@@ -61,7 +61,7 @@ class BaseWxTestCase(unittest.TestCase):
 class BaseOutWikerMixin(WikiTestMixin):
     def initApplication(self, lang='en'):
         self._config_path = self._getConfigPath()
-        self.application = Application
+        self.application = Application()
         self.application.clear()
         self.application.init(self._config_path)
         self.application.testMode = True
@@ -91,7 +91,7 @@ class BaseOutWikerGUIMixin(BaseOutWikerMixin):
         self.outwiker_app.use_fake_html_render = True
         self.outwiker_app.enableActionsGui = enableActionsGui
         self.outwiker_app.initMainWindow()
-        self.mainWindow = self.outwiker_app.mainWnd
+        self.mainWindow = self.outwiker_app.getMainWindow()
 
         generalConfig = GeneralGuiConfig(self.application.config)
         generalConfig.askBeforeExit.value = False
@@ -140,7 +140,6 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.loader.load(dirlist)
 
     def __createWiki(self):
-        # Здесь будет создаваться вики
         WikiPageFactory().create(self.wikiroot, "Викистраница", [])
         TextPageFactory().create(self.wikiroot, "Текст", [])
         HtmlPageFactory().create(self.wikiroot, "HTML", [])

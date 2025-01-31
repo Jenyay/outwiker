@@ -13,7 +13,7 @@ from outwiker.gui.guiconfig import GeneralGuiConfig
 logger = logging.getLogger('outwiker.app.core.starter')
 
 
-class StarterExit(BaseException):
+class StarterExit(Exception):
     """
     Исключение бросается, если нужно прервать выполнение программы
     """
@@ -53,7 +53,7 @@ class Starter:
             self.__openRecentWiki()
         else:
             logger.debug('Open wiki "%s"', self._commandLine.wikipath)
-            openWiki(self._commandLine.wikipath, self._commandLine.readonly)
+            openWiki(self._commandLine.wikipath, self._application, self._commandLine.readonly)
 
         if self._commandLine is not None:
             page = findPage(self._application, self._commandLine.page_id)
@@ -92,4 +92,4 @@ class Starter:
 
         if openRecent and len(self._application.recentWiki) > 0:
             logger.debug('Open recently used wiki')
-            openWiki(self._application.recentWiki[0])
+            openWiki(self._application.recentWiki[0], self._application)

@@ -6,17 +6,19 @@ import os.path
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class GraphBuilderTest(unittest.TestCase):
+
+class GraphBuilderTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
+        self.initApplication()
         dirlist = ["plugins/datagraph"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
         self._defaultWidth = '700'
@@ -25,11 +27,12 @@ class GraphBuilderTest(unittest.TestCase):
         self.path = mkdtemp(prefix='Абырвалг абыр')
         self.wikiroot = createNotesTree(self.path)
         self.page = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
-        Application.wikiroot = None
+        self.application.wikiroot = None
 
     def tearDown(self):
         self.loader.clear()
-        Application.wikiroot = None
+        self.application.wikiroot = None
+        self.destroyApplication()
         removeDir(self.path)
 
     def testEmpty(self):

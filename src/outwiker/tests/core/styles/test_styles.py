@@ -7,7 +7,6 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.style import Style
-from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.pages.html.htmlpage import HtmlPageFactory
@@ -38,15 +37,15 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         self._testStylePath = os.path.join(
             self._exampleStyleDir, self._styleFname)
 
-        Application.wikiroot = self.wikiroot
-        Application.onPageUpdate += self.onPageUpdate
+        self.application.wikiroot = self.wikiroot
+        self.application.onPageUpdate += self.onPageUpdate
 
     def onPageUpdate(self, sender, **kwargs):
         self._pageUpdateCount += 1
         self._pageUpdateSender = sender
 
     def tearDown(self):
-        Application.onPageUpdate -= self.onPageUpdate
+        self.application.onPageUpdate -= self.onPageUpdate
         removeDir(self.path)
         self.destroyApplication()
 
@@ -228,5 +227,5 @@ $invalidkey
 </HTML>
 """)
 
-        generator = HtmlGenerator(page)
+        generator = HtmlGenerator(page, self.application)
         generator.makeHtml(Style().getPageStyle(page))

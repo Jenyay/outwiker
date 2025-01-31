@@ -137,21 +137,21 @@ class Windows(System):
         windll.ole32.CoTaskMemFree(p_path)
         return path
 
-    def getHtmlRender(self, parent):
+    def getHtmlRender(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderie import HtmlRenderIEGeneral
-            return HtmlRenderIEGeneral(parent)
+            return HtmlRenderIEGeneral(parent, application)
 
-    def getHtmlRenderForPage(self, parent):
+    def getHtmlRenderForPage(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderie import HtmlRenderIEForPage
-            return HtmlRenderIEForPage(parent)
+            return HtmlRenderIEForPage(parent, application)
 
     def getHtmlRenderSearchController(self, searchPanel, htmlRender):
         from outwiker.gui.controls.htmlsearchpanelcontrollerwindows import HtmlSearchPanelControllerWindows
@@ -219,21 +219,21 @@ class Unix(System):
     def fileIcons(self):
         return UnixFileIcons()
 
-    def getHtmlRender(self, parent):
+    def getHtmlRender(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKitGeneral
-            return HtmlRenderWebKitGeneral(parent)
+            return HtmlRenderWebKitGeneral(parent, application)
 
-    def getHtmlRenderForPage(self, parent):
+    def getHtmlRenderForPage(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKitForPage
-            return HtmlRenderWebKitForPage(parent)
+            return HtmlRenderWebKitForPage(parent, application)
 
     def getSpellChecker(self, langlist, folders):
         """

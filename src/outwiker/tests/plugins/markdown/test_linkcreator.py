@@ -3,14 +3,18 @@
 import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class LinkCreatorTest (unittest.TestCase):
+class LinkCreatorTest (BaseOutWikerGUIMixin, unittest.TestCase):
     def setUp(self):
+        self.initApplication()
         dirlist = ["plugins/markdown"]
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
+
+    def tearDown(self) -> None:
+        self.destroyApplication()
 
     def test_empty_01(self):
         from markdown.links.linkcreator import LinkCreator

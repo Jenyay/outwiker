@@ -13,6 +13,7 @@ import outwiker.core.cssclasses as css
 
 class ParserTableTest (unittest.TestCase):
     def setUp(self):
+        self._application = Application()
         self.maxDiff = None
         self.encoding = "utf8"
         self.filesPath = "testdata/samplefiles/"
@@ -20,7 +21,7 @@ class ParserTableTest (unittest.TestCase):
         self.__createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

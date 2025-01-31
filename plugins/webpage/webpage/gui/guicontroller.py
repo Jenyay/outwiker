@@ -761,7 +761,7 @@ class GuiController:
         # Текущая дата
         self._application.actionController.getAction(polyactions.CURRENT_DATE).setFunc(
             lambda param: insertCurrentDate(
-                self._application.mainWindow, self.codeEditor
+                self._application.mainWindow, self.codeEditor, self._application
             )
         )
 

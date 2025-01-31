@@ -34,7 +34,7 @@ class CurrentPagePanel(wx.Panel):
         self._bookmarkInactiveImg = readImage(getBuiltinImagePath("bookmark.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
         self._bookmarkActiveImg = readImage(getBuiltinImagePath("bookmark_active.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
 
-        self.tabsCtrl = TabsCtrl(self)
+        self.tabsCtrl = TabsCtrl(self, self._application)
         self.bookmarkButton = wx.BitmapButton(
             self,
             -1,
@@ -290,7 +290,7 @@ class CurrentPagePanel(wx.Panel):
 
     def __reloadWiki(self):
         self._application.selectedPage = None
-        openWiki(self._application.wikiroot.path)
+        openWiki(self._application.wikiroot.path, self._application)
 
     def __onForceSave(self):
         self.Save()
@@ -303,7 +303,7 @@ class CurrentPagePanel(wx.Panel):
         assert not self.__htmlRenderorrowed
 
         if self.__htmlRender is None:
-            self.__htmlRender = getOS().getHtmlRenderForPage(new_parent)
+            self.__htmlRender = getOS().getHtmlRenderForPage(new_parent, self._application)
         else:
             self.__htmlRender.Awake()
             self.__htmlRender.Reparent(new_parent)

@@ -18,19 +18,20 @@ class PageAliasTest(unittest.TestCase):
     def setUp(self):
         self.updateCount = 0
         self.updateSender = None
+        self._application = Application()
 
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = createNotesTree(self.path)
         self.page = TextPageFactory().create(self.wikiroot, 'Страница 1', [])
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = self.wikiroot
 
-        Application.onPageUpdate += self._onPageUpdate
+        self._application.onPageUpdate += self._onPageUpdate
 
     def tearDown(self):
-        Application.onTreeUpdate -= self._onPageUpdate
-        Application.wikiroot = None
+        self._application.onTreeUpdate -= self._onPageUpdate
+        self._application.wikiroot = None
         removeDir(self.path)
 
     def _onPageUpdate(self, sender, **kwargs):
@@ -80,8 +81,8 @@ class PageAliasTest(unittest.TestCase):
 
     def test_alias_03(self):
         self.page.alias = 'Псевдоним'
-        Application.wikiroot = None
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = None
+        self._application.wikiroot = self.wikiroot
 
         newwiki = loadNotesTree(self.path)
         page = newwiki['Страница 1']
@@ -93,8 +94,8 @@ class PageAliasTest(unittest.TestCase):
     def test_alias_04(self):
         self.page.alias = 'Псевдоним'
         self.page.save()
-        Application.wikiroot = None
-        Application.wikiroot = self.wikiroot
+        self._application.wikiroot = None
+        self._application.wikiroot = self.wikiroot
 
         newwiki = loadNotesTree(self.path)
         page = newwiki['Страница 1']

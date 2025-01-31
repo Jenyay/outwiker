@@ -10,7 +10,6 @@ import wx.stc
 import wx.lib.newevent
 
 import outwiker.core.system
-from outwiker.core.application import Application
 from outwiker.core.spellchecker.spellchecker import SpellChecker
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from outwiker.core.events import (
@@ -31,11 +30,11 @@ ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
 class TextEditor(TextEditorBase):
     _fontConfigSection = "Font"
 
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, application):
+        super().__init__(parent, application)
         self.SPELL_ERROR_INDICATOR = wx.stc.STC_INDIC_SQUIGGLE
 
-        self._config = EditorConfig(Application.config)
+        self._config = EditorConfig(self._application.config)
 
         self._enableSpellChecking = True
         self._spellChecker = None
@@ -68,7 +67,7 @@ class TextEditor(TextEditorBase):
         self._lastEdit = datetime.now() - self._DELAY * 2
 
         self.__showlinenumbers = self._config.lineNumbers.value
-        self.dropTarget = EditorFilesDropTarget(Application, self)
+        self.dropTarget = EditorFilesDropTarget(self._application, self)
 
         self.setDefaultSettings()
         self.__bindEvents()
@@ -226,10 +225,10 @@ class TextEditor(TextEditorBase):
 
     def _onStyleNeeded(self, _event):
         if not self._styleSet and datetime.now() - self._lastEdit >= self._DELAY:
-            page = Application.selectedPage
+            page = self._application.selectedPage
             text = self._getTextForParse()
             params = EditorStyleNeededParams(self, text, self._enableSpellChecking)
-            Application.onEditorStyleNeeded(page, params)
+            self._application.onEditorStyleNeeded(page, params)
             self._styleSet = True
 
     def _onApplyStyle(self, event: ApplyStyleEvent):
@@ -276,11 +275,11 @@ class TextEditor(TextEditorBase):
         point = self.textCtrl.ScreenToClient(event.GetPosition())
         pos_byte = self.textCtrl.PositionFromPoint(point)
 
-        popupMenu = TextEditorMenu(Application)
+        popupMenu = TextEditorMenu(self._application)
         self._appendSpellMenuItems(popupMenu, pos_byte)
 
-        Application.onEditorPopupMenu(
-            Application.selectedPage,
+        self._application.onEditorPopupMenu(
+            self._application.selectedPage,
             EditorPopupMenuParams(self, popupMenu, point, pos_byte),
         )
 
@@ -354,7 +353,7 @@ class TextEditor(TextEditorBase):
             event.CmdDown(),
             event.MetaDown(),
         )
-        Application.onTextEditorKeyDown(Application.selectedPage, eventParams)
+        self._application.onTextEditorKeyDown(self._application.selectedPage, eventParams)
 
         if not eventParams.disableOutput:
             super().onKeyDown(event)
@@ -377,7 +376,7 @@ class TextEditor(TextEditorBase):
             event_params = TextEditorCaretMoveParams(
                 self, new_start_selection, new_end_selection
             )
-            Application.onTextEditorCaretMove(Application.selectedPage, event_params)
+            self._application.onTextEditorCaretMove(self._application.selectedPage, event_params)
 
     def _onMouseLeftDown(self, event):
         self._checkCaretMoving()

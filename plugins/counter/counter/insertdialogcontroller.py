@@ -13,14 +13,15 @@ class InsertDialogController:
     Класс для управления диалогом InsertDialog
     """
 
-    def __init__(self, dialog, config, page):
+    def __init__(self, dialog, application, page):
         """
         dialog - экземпляр класса InsertDialog, который надо будет показать пользователю.
         config - экземпляр класса Config
         page - текущая страница, для которой показывается диалог
         """
         self._dialog = dialog
-        self._config = CounterConfig(config)
+        self._application = application
+        self._config = CounterConfig(self._application.config)
         self._page = page
 
         countersList = self._getCountersList(self._page)
@@ -39,7 +40,7 @@ class InsertDialogController:
         return result
 
     def _getCountersList(self, page):
-        parser = ParserFactory().make(page, self._config)
+        parser = ParserFactory().make(page, self._application)
         parser.addCommand(NameHarvester(parser))
         parser.toHtml(page.content)
 

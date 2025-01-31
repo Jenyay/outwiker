@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.application import Application
 from .parser.wikiparser import Parser
 from .parser.commands.include import IncludeCommand
 from .parser.commands.childlist import ChildListCommand
@@ -24,15 +23,15 @@ class ParserFactory:
                            ]
 
 
-    def make(self, page, config):
+    def make(self, page, application):
         """
         Создать парсер
         page - страница, для которой создается парсер,
         config - экземпляр класса, хранящий настройки
         """
-        parser = Parser(page, config)
+        parser = Parser(page, application)
         self._addCommands(parser)
-        Application.onWikiParserPrepare(parser)
+        application.onWikiParserPrepare(parser)
         return parser
 
 

@@ -6,6 +6,7 @@ import os
 import os.path
 import sys
 from gettext import NullTranslations
+from typing import Optional
 
 import wx
 
@@ -52,22 +53,25 @@ class OutWikerApplication(wx.App):
         NullTranslations().install()
         return True
 
+    def getMainWindow(self) -> Optional[MainWindow]:
+        return self._mainWindow
+
     def initMainWindow(self):
         self._initLocale()
-        self.mainWnd = MainWindow(self._application)
-        self.SetTopWindow(self.mainWnd)
+        self._mainWindow = MainWindow(self._application)
+        self.SetTopWindow(self._mainWindow)
 
-        self._application.mainWindow = self.mainWnd
+        self._application.mainWindow = self._mainWindow
         self._application.actionController = ActionController(
-            self.mainWnd, self._application.config)
+            self._mainWindow, self._application.config)
         self._application.actionController.enableGui(self.enableActionsGui)
 
         self._registerActions(self._application)
-        self.mainWnd.createGui()
+        self._mainWindow.createGui()
 
     def destroyMainWindow(self):
-        self.mainWnd.Destroy()
-        self.mainWnd = None
+        self._mainWindow.Destroy()
+        self._mainWindow = None
         self._application.mainWindow = None
         self._application = None
 
@@ -78,11 +82,11 @@ class OutWikerApplication(wx.App):
         config = TrayConfig(self._application.config)
 
         if config.startIconized.value and allowMinimizingMainWindow:
-            self.mainWnd.hideToTray()
+            self._mainWindow.hideToTray()
         else:
-            self.mainWnd.Show()
+            self._mainWindow.Show()
 
-        self.mainWnd.updateTrayIcon()
+        self._mainWindow.updateTrayIcon()
 
     def initLogger(self, debugMode=False):
         level = logging.DEBUG if debugMode else logging.WARNING
@@ -96,7 +100,7 @@ class OutWikerApplication(wx.App):
 
     def _onEndSession(self, event):
         self.Unbind(wx.EVT_QUERY_END_SESSION, handler=self._onEndSession)
-        self.mainWnd.Destroy()
+        self._mainWindow.Destroy()
 
     def getLogFileName(self, configPath):
         return os.path.join(os.path.split(configPath)[0], self.logFileName)

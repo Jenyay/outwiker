@@ -13,8 +13,9 @@ from outwiker.tests.utils import removeDir
 
 class RemovePagesTest(unittest.TestCase):
     def setUp(self):
+        self._application = Application()
         self.path = mkdtemp(prefix='Абырвалг абыр')
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -33,10 +34,10 @@ class RemovePagesTest(unittest.TestCase):
                        [])
 
         self.pageRemoveCount = 0
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
     def tearDown(self):
-        Application.wikiroot = None
+        self._application.wikiroot = None
         removeDir(self.path)
 
     def onPageRemove(self, bookmarks):
@@ -46,8 +47,8 @@ class RemovePagesTest(unittest.TestCase):
         self.pageRemoveCount += 1
 
     def testRemove1(self):
-        Application.onPageRemove += self.onPageRemove
-        Application.wikiroot = self.wikiroot
+        self._application.onPageRemove += self.onPageRemove
+        self._application.wikiroot = self.wikiroot
 
         # Удаляем страницу из корня
         page6 = self.wikiroot["Страница 6"]
@@ -70,34 +71,34 @@ class RemovePagesTest(unittest.TestCase):
         self.assertTrue(page4.isRemoved)
         self.assertEqual(self.pageRemoveCount, 3)
 
-        Application.onPageRemove -= self.onPageRemove
+        self._application.onPageRemove -= self.onPageRemove
 
     def testRemove2(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 2"]
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.wikiroot["Страница 2"]
 
         self.wikiroot["Страница 2"].remove()
 
-        self.assertEqual(Application.selectedPage, None)
+        self.assertEqual(self._application.selectedPage, None)
 
     def testRemove3(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 2/Страница 3/Страница 4"]
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.wikiroot["Страница 2/Страница 3/Страница 4"]
 
         self.wikiroot["Страница 2"].remove()
 
-        self.assertEqual(Application.selectedPage, None)
+        self.assertEqual(self._application.selectedPage, None)
 
     def testRemove4(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
 
         self.wikiroot["Страница 2"].remove()
 
-        self.assertEqual(Application.selectedPage, None)
+        self.assertEqual(self._application.selectedPage, None)
 
     def testRemoveNoEvent(self):
-        Application.onPageRemove += self.onPageRemove
+        self._application.onPageRemove += self.onPageRemove
 
         # Удаляем страницу из корня
         page6 = self.wikiroot["Страница 6"]
@@ -107,7 +108,7 @@ class RemovePagesTest(unittest.TestCase):
         self.assertTrue(page6.isRemoved)
         self.assertEqual(self.pageRemoveCount, 0)
 
-        Application.onPageRemove -= self.onPageRemove
+        self._application.onPageRemove -= self.onPageRemove
 
     def testIsRemoved(self):
         """

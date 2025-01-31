@@ -108,7 +108,7 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
         # Очистим содержимое, чтобы использовать EmptyContent
         self.testPage.content = ""
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(text in result)
@@ -122,7 +122,7 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
         # Очистим содержимое, чтобы использовать EmptyContent
         self.testPage.content = ""
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("image.jpg" in result)
@@ -131,7 +131,7 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
         text = 'Бла-бла-бла(:footer:)Подвал 1(:footerend:)'
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('Бла-бла-бла<br/>\nПодвал 1\n</body>',
@@ -141,7 +141,7 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
         text = 'Бла-бла-бла(:footer:)Подвал 1(:footerend:)(:footer:)Подвал 2(:footerend:)11111'
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('Бла-бла-бла11111<br/>\nПодвал 1Подвал 2\n</body>',
@@ -151,7 +151,7 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
         text = 'Бла-бла-бла(:head:)Заголовок 1(:headend:)'
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('Заголовок 1\n</head>',
@@ -164,7 +164,7 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
 '''
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('Заголовок 1Заголовок 2\n</head>',

@@ -32,7 +32,7 @@ class SourcePluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.config.defaultLanguage.remove_option()
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, self.application.config)
+        self.parser = self.factory.make(self.testPage, self.application)
 
     def tearDown(self):
         self.config.tabWidth.value = 4
@@ -49,7 +49,7 @@ class SourcePluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue("bla-bla-bla" in result)
@@ -70,7 +70,7 @@ class SourcePluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn(
@@ -93,7 +93,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -120,7 +120,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -148,7 +148,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -175,7 +175,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -203,7 +203,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -231,7 +231,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -272,7 +272,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -310,7 +310,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -339,7 +339,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -368,7 +368,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -397,7 +397,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
@@ -428,7 +428,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = """<span class="normal"> 1</span>

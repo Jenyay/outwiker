@@ -57,7 +57,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self.imagesDir = getImagesDir()
 
         self.notebook = wx.aui.AuiNotebook(self, style=wx.aui.AUI_NB_BOTTOM)
-        self._codeEditor = self.getTextEditor()(self.notebook)
+        self._codeEditor = self.getTextEditor()(self.notebook, self._application)
 
         self.htmlWindow = parent.borrowHtmlRender(self.notebook)
         self.htmlWindow.Show()
@@ -303,14 +303,14 @@ class BaseHtmlPanel(BaseTextPanel):
     def _updatePage(self):
         assert self._currentpage is not None
 
-        setStatusText(STATUSBAR_MESSAGE_ITEM, _("Page rendered. Please wait…"))
+        setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, _("Page rendered. Please wait…"))
         self._application.onHtmlRenderingBegin(self._currentpage, self.htmlWindow)
 
         self._application.onPageUpdateNeeded(
             self._currentpage, PageUpdateNeededParams(True)
         )
 
-        setStatusText(STATUSBAR_MESSAGE_ITEM, "")
+        setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, "")
         self._application.onHtmlRenderingEnd(self._currentpage, self.htmlWindow)
 
     def _updateHtmlWindow(self):
@@ -319,7 +319,7 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         assert self._currentpage is not None
 
-        setStatusText(STATUSBAR_MESSAGE_ITEM, _("Page loading. Please wait…"))
+        setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, _("Page loading. Please wait…"))
 
         try:
             path = getPageHtmlPath(self._currentpage)
@@ -340,7 +340,7 @@ class BaseHtmlPanel(BaseTextPanel):
                 wx.ICON_ERROR | wx.OK,
             )
 
-        setStatusText(STATUSBAR_MESSAGE_ITEM, "")
+        setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, "")
 
     def _enableAllTools(self):
         """

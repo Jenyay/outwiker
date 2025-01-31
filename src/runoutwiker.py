@@ -39,7 +39,7 @@ if __name__ == "__main__":
     getOS().migrateConfig()
 
     config_path = getConfigPath()
-    application = Application
+    application = Application()
     application.init(config_path)
 
     outwiker_app = OutWikerApplication(application)

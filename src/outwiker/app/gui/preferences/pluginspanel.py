@@ -37,7 +37,7 @@ class PluginsPanel(BasePrefPanel):
         normal_color, visited_color, rollover_color = self.__downloadLink.GetColours()
         self.__downloadLink.SetColours(normal_color, normal_color, normal_color)
 
-        self.pluginsInfo = getOS().getHtmlRender(self)
+        self.pluginsInfo = getOS().getHtmlRender(self, self._application)
 
         self.__layout()
 

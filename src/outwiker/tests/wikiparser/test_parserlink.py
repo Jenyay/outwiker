@@ -16,6 +16,7 @@ from outwiker.tests.utils import removeDir
 
 class ParserLinkTest(unittest.TestCase):
     def setUp(self):
+        self._application = Application()
         self.filesPath = "testdata/samplefiles/"
 
         self.url1 = "http://example.com"
@@ -31,7 +32,7 @@ class ParserLinkTest(unittest.TestCase):
         self._createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def _createWiki(self):
         # Здесь будет создаваться вики
