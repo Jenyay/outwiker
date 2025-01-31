@@ -1,5 +1,6 @@
 from typing import Optional
 import outwiker.app.services.clipboard as _clipboard
+from outwiker.api.core import Application
 
 
 def copyTextToClipboard(text: str) -> bool:
@@ -24,11 +25,11 @@ def copyAttachPathToClipboard(page, is_current_page: bool = False) -> bool:
     return _clipboard.copyAttachPathToClipboard(page, is_current_page)
 
 
-def copyLinkToClipboard(page) -> bool:
+def copyLinkToClipboard(page, application: Application) -> bool:
     """
     Копировать ссылку на страницу в буфер обмена
     """
-    return _clipboard.copyLinkToClipboard(page)
+    return _clipboard.copyLinkToClipboard(page, application)
 
 
 def copyTitleToClipboard(page) -> bool:

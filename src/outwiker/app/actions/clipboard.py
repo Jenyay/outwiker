@@ -124,7 +124,7 @@ class CopyPageLinkAction(BaseAction):
         if page is None:
             return
 
-        if copyLinkToClipboard(page):
+        if copyLinkToClipboard(page, self._application):
             title = _('Copied to clipboard')
             text = _('Link to the page has been copied to the clipboard')
             showInfo(self._application.mainWindow, title, text)

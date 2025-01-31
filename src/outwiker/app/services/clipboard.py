@@ -6,7 +6,7 @@ from typing import Optional
 import wx
 
 from outwiker.core.treetools import generateLink
-from outwiker.core.application import Application
+from outwiker.core.application import Application, ApplicationParams
 from outwiker.core.attachment import Attachment
 
 from .messages import showError
@@ -14,14 +14,14 @@ from .messages import showError
 
 def copyTextToClipboard(text: str) -> bool:
     if not wx.TheClipboard.Open():
-        showError(Application.mainWindow, _("Can't open clipboard"))
+        showError(wx.GetApp().getMainWindow(), _("Can't open clipboard"))
         return False
 
     data = wx.TextDataObject(text)
 
     result = True
     if not wx.TheClipboard.SetData(data):
-        showError(Application.mainWindow, _("Can't copy text to clipboard"))
+        showError(wx.GetApp().getMainWindow(), _("Can't copy text to clipboard"))
         result = False
 
     wx.TheClipboard.Flush()
@@ -31,7 +31,7 @@ def copyTextToClipboard(text: str) -> bool:
 
 def getClipboardText() -> Optional[str]:
     if not wx.TheClipboard.Open():
-        showError(Application.mainWindow, _("Can't open clipboard"))
+        showError(wx.GetApp().getMainWindow(), _("Can't open clipboard"))
         return
 
     data = wx.TextDataObject()
@@ -66,13 +66,13 @@ def copyAttachPathToClipboard(page, is_current_page: bool = False) -> bool:
     return copyTextToClipboard(path)
 
 
-def copyLinkToClipboard(page) -> bool:
+def copyLinkToClipboard(page, application: ApplicationParams) -> bool:
     """
     Копировать ссылку на страницу в буфер обмена
     """
     assert page is not None
 
-    link = generateLink(Application, page)
+    link = generateLink(application, page)
     if link is not None:
         return copyTextToClipboard(link)
 
