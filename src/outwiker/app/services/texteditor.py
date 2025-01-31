@@ -4,12 +4,12 @@ from datetime import datetime
 
 import wx
 
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
-def insertCurrentDate(parent, editor, application: ApplicationParams) -> None:
+def insertCurrentDate(parent, editor, application: Application) -> None:
     """
     Вызвать диалог для выбора формата даты и вставить в редактор текущую дату согласно выбранному формату.
 

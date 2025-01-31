@@ -1,1 +1,1 @@
-from outwiker.core.application import ApplicationParams as Application
+from outwiker.core.application import Application

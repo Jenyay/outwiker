@@ -4,7 +4,7 @@ import unittest
 
 from outwiker.core.htmlimprover import BrHtmlImprover
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.htmlimprover import HtmlImprover
 
 
@@ -20,7 +20,7 @@ class ExampleImprover2(HtmlImprover):
 
 class HtmlImproverFactoryTest(unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self._application.onPrepareHtmlImprovers.clear()
 
     def tearDown(self):

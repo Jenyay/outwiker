@@ -4,7 +4,7 @@ from typing import Mapping, Optional, Iterable, Union
 
 import wx
 
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.gui.controls.colorpicker import ColorPicker, EVT_COLOURSELECT
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.system import getOS
@@ -14,7 +14,7 @@ from .csseditor import CSSEditor
 class StyleDialog(TestedDialog):
     def __init__(self,
                  parent: wx.Window,
-                 application: ApplicationParams,
+                 application: Application,
                  title: str,
                  styles: Mapping[str, str],
                  example_html: str,

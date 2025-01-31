@@ -6,7 +6,7 @@ from pathlib import Path
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -16,7 +16,7 @@ from outwiker.tests.utils import removeDir
 
 class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self.initApplication()
         self.encoding = "utf8"
 

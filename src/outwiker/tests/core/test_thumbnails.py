@@ -6,7 +6,7 @@ from tempfile import mkdtemp
 import unittest
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.thumbnails import Thumbnails
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -16,7 +16,7 @@ from outwiker.tests.utils import removeDir
 
 class ThumbnailsTest(unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self.filesPath = "testdata/samplefiles/"
         self.__createWiki()
         self.parser = ParserFactory().make(self.testPage, self._application)

@@ -6,7 +6,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
@@ -15,7 +15,7 @@ from outwiker.tests.utils import removeDir
 class LightboxPluginTest(unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
-        self._application = ApplicationParams()
+        self._application = Application()
 
         self.__createWiki()
 

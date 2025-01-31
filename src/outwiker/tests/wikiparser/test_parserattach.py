@@ -6,7 +6,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
@@ -14,7 +14,7 @@ from outwiker.tests.utils import removeDir
 
 class ParserAttachTest(unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self.filesPath = "testdata/samplefiles/"
         self.__createWiki()
 

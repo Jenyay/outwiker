@@ -6,7 +6,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.exceptions import DuplicateTitle
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
@@ -14,7 +14,7 @@ from outwiker.tests.utils import removeDir
 
 class RenameTest(unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = createNotesTree(self.path)

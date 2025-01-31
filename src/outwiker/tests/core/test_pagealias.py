@@ -4,7 +4,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
@@ -18,7 +18,7 @@ class PageAliasTest(unittest.TestCase):
     def setUp(self):
         self.updateCount = 0
         self.updateSender = None
-        self._application = ApplicationParams()
+        self._application = Application()
 
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')

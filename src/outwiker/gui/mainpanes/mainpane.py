@@ -13,7 +13,7 @@ class MainPane(metaclass=ABCMeta):
     def __init__(self, parent, auiManager, application):
         """
         parent - родитель панели
-        application - экземпляр outwiker.core.application.ApplicationParams
+        application - экземпляр outwiker.core.application.Application
         """
         self._parent = parent
         self._auiManager = auiManager

@@ -9,7 +9,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.event import Event, CustomEvents
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.events import (PAGE_UPDATE_CONTENT,
                                   PAGE_UPDATE_TAGS,
                                   PAGE_UPDATE_ICON)
@@ -241,7 +241,7 @@ class EventTest(unittest.TestCase):
 
 class EventsTest(unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self._application.wikiroot = None
         self.path = mkdtemp(prefix='Абырвалг абыр')
 

@@ -12,7 +12,7 @@ from outwiker.core.pageuiddepot import PageUidDepot
 logger = logging.getLogger('outwiker.core.application')
 
 
-class ApplicationParams:
+class Application:
     def __init__(self):
         # Opened wiki
         self.__wikiroot = None

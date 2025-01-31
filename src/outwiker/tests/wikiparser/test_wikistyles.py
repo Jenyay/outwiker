@@ -5,7 +5,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.parser.tokenwikistyle import StyleGenerator
@@ -19,7 +19,7 @@ class WikiStylesBlockTest(unittest.TestCase):
         self.wikiroot = createNotesTree(self.path)
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница", [])
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, ApplicationParams())
+        self.parser = factory.make(self.testPage, Application())
 
     def tearDown(self):
         removeDir(self.path)
@@ -205,7 +205,7 @@ class WikiStylesInlineTest(unittest.TestCase):
         self.wikiroot = createNotesTree(self.path)
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница", [])
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, ApplicationParams())
+        self.parser = factory.make(self.testPage, Application())
 
     def tearDown(self):
         removeDir(self.path)

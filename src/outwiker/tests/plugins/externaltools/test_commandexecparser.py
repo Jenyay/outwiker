@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -17,7 +17,7 @@ from outwiker.tests.utils import removeDir
 class CommandExecParserTest(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
-        self._application = ApplicationParams()
+        self._application = Application()
 
         self.__createWiki()
         self.testPage = self.wikiroot["Страница 1"]

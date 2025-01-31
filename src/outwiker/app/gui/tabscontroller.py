@@ -14,7 +14,7 @@ class TabsController:
     def __init__(self, tabsCtrl, application):
         """
         tabsCtrl - экземпляр класса TabsCtrl
-        application - экземпляр класса ApplicationParams
+        application - экземпляр класса Application
         """
         self._tabsCtrl = tabsCtrl
         self._application = application

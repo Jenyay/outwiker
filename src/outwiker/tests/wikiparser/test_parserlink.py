@@ -6,7 +6,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -16,7 +16,7 @@ from outwiker.tests.utils import removeDir
 
 class ParserLinkTest(unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self.filesPath = "testdata/samplefiles/"
 
         self.url1 = "http://example.com"

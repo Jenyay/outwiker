@@ -5,7 +5,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import StringOption
 
@@ -25,7 +25,7 @@ class WikiPagesTest(unittest.TestCase):
     """
 
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self.path = "testdata/samplewiki"
         self.root = loadNotesTree(self.path)
 
@@ -232,7 +232,7 @@ class TextPageAttachmentTest(unittest.TestCase):
     Тест для проверки работы с прикрепленными файлами
     """
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         # Количество срабатываний событий при обновлении страницы
         self.pageUpdateCount = 0
         self.pageUpdateSender = None

@@ -11,7 +11,7 @@ import wx
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.app.owapplication import OutWikerApplication
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
@@ -61,7 +61,7 @@ class BaseWxTestCase(unittest.TestCase):
 class BaseOutWikerMixin(WikiTestMixin):
     def initApplication(self, lang='en'):
         self._config_path = self._getConfigPath()
-        self.application = ApplicationParams()
+        self.application = Application()
         self.application.clear()
         self.application.init(self._config_path)
         self.application.testMode = True

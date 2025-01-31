@@ -7,7 +7,7 @@ from typing import Optional
 import wx
 
 from outwiker.app.services.messages import showError
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
 from outwiker.core.exceptions import (
     ReadonlyException,
@@ -62,7 +62,7 @@ def removePage(page: "outwiker.core.tree.WikiPage"):
             showError(wx.GetApp().getMainWindow(), _("Can't remove page"))
 
 
-def openWikiWithDialog(parent, application: ApplicationParams, readonly=False):
+def openWikiWithDialog(parent, application: Application, readonly=False):
     """
     Показать диалог открытия вики и вернуть открытую wiki
     parent -- родительское окно
@@ -82,7 +82,7 @@ def openWikiWithDialog(parent, application: ApplicationParams, readonly=False):
     return wikiroot
 
 
-def openWiki(path: str, application: ApplicationParams, readonly: bool = False) -> Optional[WikiDocument]:
+def openWiki(path: str, application: Application, readonly: bool = False) -> Optional[WikiDocument]:
     def threadFunc(path, readonly):
         try:
             return NotesTreeLoader().loadNotesTree(path, readonly)
@@ -281,7 +281,7 @@ def movePage(page, newParent):
         )
 
 
-def createNewWiki(parentwnd: wx.Window, application: ApplicationParams):
+def createNewWiki(parentwnd: wx.Window, application: Application):
     """
     Создать новую вики
     parentwnd - окно-владелец диалога выбора файла

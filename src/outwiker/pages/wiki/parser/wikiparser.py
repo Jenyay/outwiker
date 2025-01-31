@@ -4,7 +4,7 @@ import traceback
 
 from outwiker.core.htmlformatter import HtmlFormatter
 from outwiker.core.thumbnails import Thumbnails
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 import outwiker.core.cssclasses as css
 
 from .markup import Markup
@@ -33,7 +33,7 @@ from .tokenmultilineblock import MultilineBlockFactory
 
 
 class Parser:
-    def __init__(self, page, application: ApplicationParams):
+    def __init__(self, page, application: Application):
         self.page = page
         self.application = application
         self.config = application.config

@@ -7,7 +7,7 @@ from typing import List
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.pages.wiki.parser.commands.childlist import ChildListCommand
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
@@ -15,7 +15,7 @@ from outwiker.tests.utils import removeDir
 
 class WikiChildListCommandTest (unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self.__createWiki()
 
         factory = ParserFactory()

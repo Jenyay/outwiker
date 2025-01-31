@@ -8,7 +8,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.config import PageConfig
 from outwiker.core.config import IntegerOption
 from outwiker.tests.utils import removeDir
@@ -24,7 +24,7 @@ class PageOrderTest(unittest.TestCase):
         # Количество срабатываний особытий при изменении порядка страниц
         self.orderUpdateCount = 0
         self.orderUpdateSender = None
-        self._application = ApplicationParams()
+        self._application = Application()
 
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')

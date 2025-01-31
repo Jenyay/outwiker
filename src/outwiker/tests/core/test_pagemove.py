@@ -9,7 +9,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.exceptions import DuplicateTitle, TreeException
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 
 from outwiker.pages.text.textpage import TextPageFactory
@@ -25,7 +25,7 @@ class MoveTest(unittest.TestCase):
         # Количество срабатываний особытий при обновлении страницы
         self.treeUpdateCount = 0
         self.treeUpdateSender = None
-        self._application = ApplicationParams()
+        self._application = Application()
 
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')

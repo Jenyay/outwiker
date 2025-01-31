@@ -3,14 +3,14 @@
 import wx
 
 from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.history import History
 
 import outwiker.gui.controls.flatnotebook as fnb
 
 
 class TabsCtrl(wx.Panel):
-    def __init__(self, parent, application: ApplicationParams):
+    def __init__(self, parent, application: Application):
         super().__init__(parent)
         self._application = application
 

@@ -5,7 +5,7 @@ from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, generateLink
 from outwiker.core.pageuiddepot import PageUidDepot
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
@@ -15,7 +15,7 @@ class PageUidDepotTest(unittest.TestCase):
     """Тест класса PageUidDepot"""
 
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 

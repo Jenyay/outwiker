@@ -4,7 +4,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
@@ -13,7 +13,7 @@ import outwiker.core.cssclasses as css
 
 class ParserListTest (unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         self.encoding = "utf8"
 
         self.filesPath = "testdata/samplefiles/"

@@ -6,13 +6,13 @@ from tempfile import mkdtemp
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.events import BookmarksChangedParams
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.tests.utils import removeDir
 
 
 class BookmarksTest(unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 

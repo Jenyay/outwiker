@@ -66,7 +66,7 @@ class MainWndController:
     def __init__(self, parent, application):
         """
         parent - instance of the MainWindow class
-        application - instance of the ApplicationParams class
+        application - instance of the Application class
         """
         self._mainWindow = parent
         self._application = application

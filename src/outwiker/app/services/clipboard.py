@@ -6,7 +6,7 @@ from typing import Optional
 import wx
 
 from outwiker.core.treetools import generateLink
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 
 from .messages import showError
@@ -66,7 +66,7 @@ def copyAttachPathToClipboard(page, is_current_page: bool = False) -> bool:
     return copyTextToClipboard(path)
 
 
-def copyLinkToClipboard(page, application: ApplicationParams) -> bool:
+def copyLinkToClipboard(page, application: Application) -> bool:
     """
     Копировать ссылку на страницу в буфер обмена
     """

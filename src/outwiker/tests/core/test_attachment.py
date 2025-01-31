@@ -7,7 +7,7 @@ from pathlib import Path
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.defines import PAGE_ATTACH_DIR
@@ -17,7 +17,7 @@ from outwiker.tests.utils import removeDir
 
 class AttachmentTest(unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         # Количество срабатываний особытий при обновлении страницы
         self.pageUpdateCount = 0
         self.pageUpdateSender = None

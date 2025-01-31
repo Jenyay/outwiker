@@ -4,14 +4,14 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
 
 class TreeSortTest(unittest.TestCase):
     def setUp(self):
-        self._application = ApplicationParams()
+        self._application = Application()
         # Количество срабатываний событий при обновлении страницы
         self.treeUpdateCount = 0
         self.treeUpdateSender = None
