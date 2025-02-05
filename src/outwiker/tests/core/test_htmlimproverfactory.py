@@ -4,8 +4,8 @@ import unittest
 
 from outwiker.core.htmlimprover import BrHtmlImprover
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
-from outwiker.core.application import Application
 from outwiker.core.htmlimprover import HtmlImprover
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class ExampleImprover1(HtmlImprover):
@@ -18,32 +18,31 @@ class ExampleImprover2(HtmlImprover):
         pass
 
 
-class HtmlImproverFactoryTest(unittest.TestCase):
+class HtmlImproverFactoryTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self._application = Application()
-        self._application.onPrepareHtmlImprovers.clear()
+        self.initApplication()
 
     def tearDown(self):
-        self._application.onPrepareHtmlImprovers.clear()
+        self.destroyApplication()
 
     def test_type(self):
-        factory = HtmlImproverFactory(self._application)
+        factory = HtmlImproverFactory(self.application)
         self.assertEqual(type(factory['brimprover']), BrHtmlImprover)
         self.assertEqual(type(factory['pimprover']), BrHtmlImprover)
         self.assertEqual(type(factory['test1']), BrHtmlImprover)
         self.assertEqual(type(factory['test2']), BrHtmlImprover)
 
     def test_type_default(self):
-        improver = HtmlImproverFactory(self._application)['']
+        improver = HtmlImproverFactory(self.application)['']
         self.assertEqual(type(improver), BrHtmlImprover)
 
     def test_type_None(self):
-        improver = HtmlImproverFactory(self._application)[None]
+        improver = HtmlImproverFactory(self.application)[None]
         self.assertEqual(type(improver), BrHtmlImprover)
 
     def test_add_improvers(self):
-        self._application.onPrepareHtmlImprovers += self._addTestImprovers
-        factory = HtmlImproverFactory(self._application)
+        self.application.onPrepareHtmlImprovers += self._addTestImprovers
+        factory = HtmlImproverFactory(self.application)
 
         self.assertEqual(type(factory['test1']), ExampleImprover1)
         self.assertEqual(type(factory['test2']), ExampleImprover2)
