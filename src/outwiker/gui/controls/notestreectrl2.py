@@ -1271,12 +1271,12 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def updateItem(self, page: WikiPage):
         item = self._pageCache.get(page)
-        assert item is not None
-        self._updateItemProperties(item)
-        event = NotesTreeItemsPreparingEvent(items=[item])
-        wx.PostEvent(self, event)
-        wx.YieldIfNeeded()
-        self._refreshItem(item)
+        if item is not None:
+            self._updateItemProperties(item)
+            event = NotesTreeItemsPreparingEvent(items=[item])
+            wx.PostEvent(self, event)
+            wx.YieldIfNeeded()
+            self._refreshItem(item)
 
     def updateTree(self):
         if self._hoveredItem is not None:
