@@ -493,8 +493,8 @@ class NotesTree(wx.Panel):
             self.treeCtrl.addRoot(rootPage, update=False)
             self._appendChildren(rootPage)
             self.treeCtrl.setSelectedPage(self._application.selectedPage)
-        else:
-            self.treeCtrl.updateTree()
+
+        self.treeCtrl.updateTree()
 
     def _appendChildren(self, parentPage: BasePage):
         """
