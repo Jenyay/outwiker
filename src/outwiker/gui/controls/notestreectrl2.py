@@ -692,6 +692,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self._dropHoveredItem: Optional[NotesTreeItem] = None
         self._hoveredItem: Optional[NotesTreeItem] = None
+        self._leftButtonDownItem: Optional[NotesTreeItem] = None
 
         # Имя опции для сохранения развернутости страницы
         self.pageOptionExpand = "Expand"
@@ -789,6 +790,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             oldHoveredItem = self._hoveredItem
             self._hoveredItem.setHovered(False)
             self._hoveredItem = None
+            self._leftButtonDownItem = None
             self._refreshItem(oldHoveredItem)
 
     def _onMouseWheel(self, event):
@@ -1033,6 +1035,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self._mouseLeftDownXY = (x, y)
             self._dragItem = item
             self._dragMode = False
+            self._leftButtonDownItem = item
 
     def _onLeftButtonUp(self, event):
         self._completeItemEdit()
@@ -1044,23 +1047,26 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         if item is None:
             self._resetDragMode()
+            self._leftButtonDownItem = None
             return
 
         if self._dragMode:
             assert self._dragItem is not None
             self._dropItem(self._dragItem, item)
             self._resetDragMode()
+            self._leftButtonDownItem = None
             return
 
         self._resetDragMode()
 
-        if self._view_info.isPointInItem(item, x, y):
+        if self._view_info.isPointInItem(item, x, y) and self._leftButtonDownItem == item:
             oldSelectedItem = self._getSelectedItem()
             if oldSelectedItem != item:
                 self._onSelectItem(item, oldSelectedItem)
             elif self._view_info.isPointInSelection(item, x, y):
                 self._editItemCencelled = False
                 self._editItemTimer.StartOnce(self._editClickDelay_ms)
+            self._leftButtonDownItem = None
             return
 
     def _onRightButtonDown(self, event):
