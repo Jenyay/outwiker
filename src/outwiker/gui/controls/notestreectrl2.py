@@ -1464,5 +1464,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             for page, item in self._pageCache.items():
                 item.select(page is newSelectedPage)
 
-            self.updateTree()
-            self.scrollToPage(newSelectedPage)
+        if newSelectedPage is None:
+            self._rootItems[0].select(True)
+
+        self.updateTree()
+        self.scrollToPage(newSelectedPage)
