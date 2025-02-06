@@ -49,6 +49,7 @@ serverinfo.py
 *.log
 .vscode
 Pipfile.lock
+uv.lock
 .pytest_cache
 __cache.tmp
 .mypy_cache

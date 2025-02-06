@@ -23,7 +23,7 @@ classifiers=[
 requires-python = ">=3.8"
 dependencies = [
 	'colorama>=0.4',
-	'outwiker>=3.3'
+	#'outwiker>=4.0'
 ]
 
 
