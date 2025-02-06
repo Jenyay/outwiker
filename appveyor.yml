@@ -28,12 +28,12 @@ install:
     - cmd: choco install innosetup -y
     - sh: python3 -m pip install uv
     - sh: python3 -m uv venv
-    - sh: source .venv/bin/activate
-    - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
-    - sh: uv sync --dev
-    - sh: uv pip install -e ./owbuildtools
-    - sh: uv pip install -e .
-    - sh: uv pip list
+    #- sh: source .venv/bin/activate
+    - sh: python3 -m uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
+    - sh: python3 -m uv sync --dev
+    - sh: python3 -m uv pip install -e ./owbuildtools
+    - sh: python3 -m uv pip install -e .
+    - sh: python3 -m uv pip list
     #- cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% run python -m pip install --upgrade pip
     #- cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% run python -m pip install attrdict
     #- cmd: py -%PY_PYTHON% -m pipenv install --dev -v
@@ -49,11 +49,11 @@ install:
     #- sh: pipenv install --dev -v
 build_script:
     - cmd: uv run inv win
-    - cmd: uv run inv win --is-stable
+    #- cmd: uv run inv win --is-stable
     #- cmd: py -%PY_PYTHON% -m pipenv run inv win
     #- cmd: py -%PY_PYTHON% -m pipenv run inv win --is-stable
 test_script:
-  - sh: uv run inv test -p src/outwiker/tests
+  - sh: python3 -m uv run inv test -p src/outwiker/tests
     #- cmd: py -%PY_PYTHON% -m pipenv run inv test -p src/outwiker/tests
     #- sh: xvfb-run pipenv run inv test -p src/outwiker/tests
 artifacts:
