@@ -22,6 +22,7 @@ install:
     - uv venv --python %PY_PYTHON%
     - cmd: .venv/Scripts/activate
     - sh: sh .venv/Scripts/activate
+    - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
     - uv sync --dev
     - uv pip install -e ./owbuildtools
     - uv pip list
