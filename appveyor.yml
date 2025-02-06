@@ -28,7 +28,7 @@ install:
     - cmd: choco install innosetup -y
     - sh: python3 -m pip install uv
     - sh: python3 -m uv venv
-    - sh: sh .venv/bin/activate
+    - sh: source .venv/bin/activate
     - sh: python3 -m uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
     - sh: python3 -m uv sync --dev
     - sh: python3 -m uv pip install -e ./owbuildtools
