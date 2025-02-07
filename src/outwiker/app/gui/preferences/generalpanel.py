@@ -58,8 +58,6 @@ class GeneralPanel(BasePrefPanel):
         self._addStaticLine(main_sizer)
         self._createHistoryGui(main_sizer, self.generalConfig)
         self._addStaticLine(main_sizer)
-        # self._createTemplatesGui(main_sizer, self.generalConfig)
-        # self._addStaticLine(main_sizer)
         self._createToasterDelayGui(main_sizer, self.generalConfig)
         self._createOpenPageTabGui(main_sizer)
         self._createLanguageGui(main_sizer)
@@ -80,7 +78,7 @@ class GeneralPanel(BasePrefPanel):
         Создать элементы, связанные с автосохранением
         """
         autosaveLabel = wx.StaticText(
-            self, -1, _("Autosave interval in seconds(0 - disabled)")
+            self, -1, _("Autosave interval in seconds (0 - disabled)")
         )
         self.autosaveSpin = wx.SpinCtrl(
             self,
@@ -127,50 +125,6 @@ class GeneralPanel(BasePrefPanel):
         )
 
         main_sizer.Add(toasterDelaySizer, 1, wx.EXPAND, 0)
-
-    # def _createTemplatesGui(self, main_sizer, generalConfig):
-    #     """
-    #     Create GUI for selection date and time format
-    #     and new page title template
-    #     """
-    #     # Config values
-    #     initial_date_format = generalConfig.dateTimeFormat.value
-    #     initial_page_title = generalConfig.pageTitleTemplate.value
-
-    #     # Create labels
-    #     dateTimeLabel = wx.StaticText(self, label=_("Date and time format"))
-    #     pageTitleTemplateLabel = wx.StaticText(self, label=_("New page title template"))
-
-    #     hintBitmap = wx.Bitmap(getBuiltinImagePath("wand.png"))
-
-    #     # Create main controls
-    #     self.dateTimeFormatCtrl = DateTimeFormatCtrl(
-    #         self, hintBitmap, initial_date_format
-    #     )
-
-    #     self.pageTitleTemplateCtrl = DateTimeFormatCtrl(
-    #         self, hintBitmap, initial_page_title
-    #     )
-
-    #     # Create common sizer
-    #     templateSizer = wx.FlexGridSizer(cols=2)
-    #     templateSizer.AddGrowableCol(1)
-
-    #     templateSizer.Add(
-    #         dateTimeLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-    #     )
-    #     templateSizer.Add(
-    #         self.dateTimeFormatCtrl, flag=wx.TOP | wx.BOTTOM | wx.EXPAND, border=2
-    #     )
-
-    #     templateSizer.Add(
-    #         pageTitleTemplateLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-    #     )
-    #     templateSizer.Add(
-    #         self.pageTitleTemplateCtrl, flag=wx.TOP | wx.BOTTOM | wx.EXPAND, border=2
-    #     )
-
-    #     main_sizer.Add(templateSizer, flag=wx.EXPAND)
 
     def _createMiscGui(self, main_sizer):
         """
@@ -345,14 +299,6 @@ class GeneralPanel(BasePrefPanel):
             self.generalConfig.askBeforeExit, self.askBeforeExitCheckBox
         )
 
-        # self.dateTimeFormat = configelements.StringElement(
-        #     self.generalConfig.dateTimeFormat, self.dateTimeFormatCtrl
-        # )
-
-        # self.pageTitleTemplate = configelements.StringElement(
-        #     self.generalConfig.pageTitleTemplate, self.pageTitleTemplateCtrl
-        # )
-
         # Автосохранение
         self.autosaveInterval = configelements.IntegerElement(
             self.generalConfig.autosaveInterval,
@@ -392,8 +338,6 @@ class GeneralPanel(BasePrefPanel):
         self.iconsHistoryLength.save()
         self.autoopen.save()
         self.autosaveInterval.save()
-        # self.dateTimeFormat.save()
-        # self.pageTitleTemplate.save()
         self._saveLanguage()
         self._savePageTab()
         self.generalConfig.toasterDelay.value = self.toasterDelaySpin.GetValue() * 1000

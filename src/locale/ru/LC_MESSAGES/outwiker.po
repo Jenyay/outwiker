@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-30 20:11+0300\n"
+"POT-Creation-Date: 2025-02-07 15:41+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -44,27 +44,27 @@ msgstr "Добавить страницу того же уровня…"
 msgid "Add sibling page"
 msgstr "Добавить страницу того же уровня"
 
-#: outwiker/app/actions/applystyle.py:27
+#: outwiker/app/actions/applystyle.py:28
 msgid "Set Style to Branch…"
 msgstr "Установить стиль для ветки…"
 
-#: outwiker/app/actions/applystyle.py:31 outwiker/app/actions/applystyle.py:59
+#: outwiker/app/actions/applystyle.py:32 outwiker/app/actions/applystyle.py:63
 msgid "Set Style to Branch"
 msgstr "Установить стиль для ветки"
 
-#: outwiker/app/actions/applystyle.py:60
+#: outwiker/app/actions/applystyle.py:64
 msgid "Please wait..."
 msgstr "Пожалуйста, подождите..."
 
-#: outwiker/app/actions/applystyle.py:90
+#: outwiker/app/actions/applystyle.py:93
 msgid "Set style to branch"
 msgstr "Установить стиль для ветки"
 
-#: outwiker/app/actions/applystyle.py:93
+#: outwiker/app/actions/applystyle.py:95
 msgid "Style"
 msgstr "Стиль"
 
-#: outwiker/app/actions/applystyle.py:119
+#: outwiker/app/actions/applystyle.py:122
 #: outwiker/pages/wiki/gui/listitemstyledialog.py:74
 msgid "Default"
 msgstr "По умолчанию"
@@ -97,8 +97,8 @@ msgstr "Запустить выбранные вложения"
 msgid "You did not select an attachment to execute"
 msgstr "Не выбрано ни одно вложение для запуска"
 
-#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrenderie.py:261
-#: outwiker/gui/htmlrenderie.py:339
+#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrenderie.py:260
+#: outwiker/gui/htmlrenderie.py:338
 #, python-format
 msgid "Can't execute attachment '%s'"
 msgstr "Ошибка запуска вложения '%s'"
@@ -244,7 +244,7 @@ msgstr "Закрыть дерево заметок"
 msgid "Page Properties…"
 msgstr "Свойства страницы…"
 
-#: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:121
+#: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:120
 msgid "Edit page properties"
 msgstr "Редактировать свойства страницы"
 
@@ -272,7 +272,7 @@ msgstr "Глобальный поиск…"
 msgid "Create or open page for global search"
 msgstr "Создать или открыть страницу для глобального поиска"
 
-#: outwiker/app/actions/globalsearch.py:36 outwiker/app/gui/pagedialog.py:58
+#: outwiker/app/actions/globalsearch.py:36 outwiker/app/gui/pagedialog.py:57
 msgid "Can't create page"
 msgstr "Невозможно создать страницу"
 
@@ -1227,7 +1227,7 @@ msgstr "Новое имя метки"
 #: outwiker/app/gui/preferences/iconsetpanel.py:291
 #: outwiker/app/gui/preferences/iconsetpanel.py:298
 #: outwiker/app/gui/preferences/iconsetpanel.py:342
-#: outwiker/core/textprinter.py:98
+#: outwiker/core/textprinter.py:97
 #: outwiker/gui/controls/toastercontroller.py:50
 #: outwiker/pages/html/basehtmlpanel.py:339
 msgid "Error"
@@ -1321,7 +1321,7 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: outwiker/app/gui/mainwndcontroller.py:238
+#: outwiker/app/gui/mainwndcontroller.py:237
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1332,11 +1332,11 @@ msgstr ""
 "Невозможно сохранить настройки.\n"
 "%s"
 
-#: outwiker/app/gui/notestree.py:262 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:271 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
-#: outwiker/app/gui/notestree.py:518
+#: outwiker/app/gui/notestree.py:527
 #, python-brace-format
 msgid ""
 "Attach files to the note '{title}'?\n"
@@ -1347,16 +1347,16 @@ msgstr ""
 "\n"
 "{files}"
 
-#: outwiker/app/gui/notestree.py:525
+#: outwiker/app/gui/notestree.py:534
 msgid "Attach files to the note?"
 msgstr "Прикрепить файлы к заметке?"
 
-#: outwiker/app/gui/pagedialog.py:25
+#: outwiker/app/gui/pagedialog.py:24
 #, python-format
 msgid "Page \"%s\" not found"
 msgstr "Страница \"%s\" не найдена"
 
-#: outwiker/app/gui/pagedialog.py:101
+#: outwiker/app/gui/pagedialog.py:100
 msgid "Create Page"
 msgstr "Создать страницу"
 
@@ -1372,11 +1372,11 @@ msgstr "Стиль страницы"
 msgid "Can't set page style\n"
 msgstr "Ошибка установки стиля страницы\n"
 
-#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:178
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:173
 msgid "Do not change"
 msgstr "Не изменять"
 
-#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:180
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:175
 msgid "Default style"
 msgstr "Стиль по умолчанию"
 
@@ -1436,20 +1436,20 @@ msgstr "Запустить вложение"
 msgid "Double clicking or pressing Enter on an attached file"
 msgstr "Двойной клик или нажатие клавиши Enter на вложении"
 
-#: outwiker/app/gui/preferences/attachpanel.py:46
+#: outwiker/app/gui/preferences/attachpanel.py:44
 msgid "Show hidden folders"
 msgstr "Показывать скрытые папки"
 
-#: outwiker/app/gui/preferences/colorspanel.py:29
+#: outwiker/app/gui/preferences/colorspanel.py:37
 #: outwiker/app/gui/preferences/prefcontroller.py:135
 msgid "Main window"
 msgstr "Главное окно"
 
-#: outwiker/app/gui/preferences/colorspanel.py:33
+#: outwiker/app/gui/preferences/colorspanel.py:41
 msgid "Main panels background color"
 msgstr "Цвет фона основных панелей"
 
-#: outwiker/app/gui/preferences/colorspanel.py:38
+#: outwiker/app/gui/preferences/colorspanel.py:47
 msgid "Main panels text color"
 msgstr "Цвет текста основных панелей"
 
@@ -1525,43 +1525,43 @@ msgstr "Последний используемый"
 msgid "Preview"
 msgstr "Просмотр"
 
-#: outwiker/app/gui/preferences/generalpanel.py:83
-msgid "Autosave interval in seconds(0 - disabled)"
-msgstr "Период автосохранения (0 - отключено)"
+#: outwiker/app/gui/preferences/generalpanel.py:81
+msgid "Autosave interval in seconds (0 - disabled)"
+msgstr "Интервал автосохранения в секундах (0 - отключено)"
 
-#: outwiker/app/gui/preferences/generalpanel.py:105
+#: outwiker/app/gui/preferences/generalpanel.py:103
 msgid "Toaster delay in seconds"
 msgstr "Задержка окна сообщений в секундах"
 
-#: outwiker/app/gui/preferences/generalpanel.py:180
+#: outwiker/app/gui/preferences/generalpanel.py:134
 msgid "Ask before exit"
 msgstr "Спрашивать подтверждение перед выходом"
 
-#: outwiker/app/gui/preferences/generalpanel.py:192
+#: outwiker/app/gui/preferences/generalpanel.py:146
 msgid "Length of recently used icons history"
 msgstr "Размер истории последних используемых значков"
 
-#: outwiker/app/gui/preferences/generalpanel.py:206
+#: outwiker/app/gui/preferences/generalpanel.py:160
 msgid "Length of recently opened files history"
 msgstr "Размер истории последних открытых файлов"
 
-#: outwiker/app/gui/preferences/generalpanel.py:219
+#: outwiker/app/gui/preferences/generalpanel.py:173
 msgid "Automatically open the recent file"
 msgstr "При запуске открывать последний открытый файл"
 
-#: outwiker/app/gui/preferences/generalpanel.py:252
+#: outwiker/app/gui/preferences/generalpanel.py:206
 msgid "Language(restart required)"
 msgstr "Язык (требуется перезапуск)"
 
-#: outwiker/app/gui/preferences/generalpanel.py:257
+#: outwiker/app/gui/preferences/generalpanel.py:211
 msgid "Help with translation"
 msgstr "Помочь с переводом"
 
-#: outwiker/app/gui/preferences/generalpanel.py:284
+#: outwiker/app/gui/preferences/generalpanel.py:238
 msgid "Default opening page mode"
 msgstr "Режим открытия страниц по умолчанию"
 
-#: outwiker/app/gui/preferences/generalpanel.py:373
+#: outwiker/app/gui/preferences/generalpanel.py:319
 msgid "Auto"
 msgstr "Авто"
 
@@ -1610,11 +1610,11 @@ msgstr "Число"
 msgid "String"
 msgstr "Строка"
 
-#: outwiker/app/gui/preferences/htmlrenderpanel.py:32
+#: outwiker/app/gui/preferences/htmlrenderpanel.py:30
 msgid "Paragraphs separator"
 msgstr "Разделитель параграфов"
 
-#: outwiker/app/gui/preferences/htmlrenderpanel.py:42
+#: outwiker/app/gui/preferences/htmlrenderpanel.py:37
 msgid "Additional styles (CSS):"
 msgstr "Дополнительные стили (CSS):"
 
@@ -1810,7 +1810,7 @@ msgid "User's iconset"
 msgstr "Значки пользователя"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:203
-#: outwiker/gui/controls/treebook2.py:48
+#: outwiker/gui/controls/treebook2.py:47
 msgid "Preferences"
 msgstr "Параметры"
 
@@ -1957,7 +1957,7 @@ msgstr ""
 "{} -> {}\n"
 "{}"
 
-#: outwiker/app/services/attachment.py:103
+#: outwiker/app/services/attachment.py:104
 #, python-brace-format
 msgid ""
 "File not exists\n"
@@ -1966,11 +1966,11 @@ msgstr ""
 "Файл не существует\n"
 "{0}"
 
-#: outwiker/app/services/attachment.py:166
+#: outwiker/app/services/attachment.py:167
 msgid "Can't create directory: {}"
 msgstr "Ошибка создания папки: {}"
 
-#: outwiker/app/services/attachment.py:177
+#: outwiker/app/services/attachment.py:178
 #, python-brace-format
 msgid ""
 "Error copying files\n"
@@ -1979,11 +1979,11 @@ msgstr ""
 "Ошибка копирования файлов\n"
 "{0}"
 
-#: outwiker/app/services/attachment.py:184
+#: outwiker/app/services/attachment.py:185
 msgid "New folder"
 msgstr "Новая папка"
 
-#: outwiker/app/services/attachment.py:206
+#: outwiker/app/services/attachment.py:207
 msgid "Can't create folder {} for attachments"
 msgstr "Ошибка создания папки {} для вложений"
 
@@ -2236,7 +2236,7 @@ msgstr ""
 "Плагин \"{}\" разработан для более новой версии OutWiker. Пожалуйста, "
 "установите новую версию OutWiker."
 
-#: outwiker/core/textprinter.py:97
+#: outwiker/core/textprinter.py:96
 msgid "Printing error"
 msgstr "Ошибка печати"
 
@@ -2424,14 +2424,14 @@ msgstr "Пропустить все"
 msgid "{size:_d} bytes"
 msgstr "{size:_d} байт"
 
-#: outwiker/gui/htmlrender.py:80 outwiker/gui/htmlrenderwebkit.py:261
-#: outwiker/gui/htmlrenderwebkit.py:339
+#: outwiker/gui/htmlrender.py:81 outwiker/gui/htmlrenderwebkit.py:260
+#: outwiker/gui/htmlrenderwebkit.py:338
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Ошибка запуска файла '%s'"
 
-#: outwiker/gui/htmlrenderie.py:283 outwiker/gui/htmlrenderwebkit.py:179
-#: outwiker/gui/htmlrenderwebkit.py:283
+#: outwiker/gui/htmlrenderie.py:282 outwiker/gui/htmlrenderwebkit.py:178
+#: outwiker/gui/htmlrenderwebkit.py:282
 #, python-format
 msgid "Can't read file %s"
 msgstr "Ошибка чтения файла %s"
@@ -2480,11 +2480,11 @@ msgstr "Заголовочные ячейки в первой строке"
 msgid "Insert rows"
 msgstr "Вставить строки"
 
-#: outwiker/gui/tagscloud.py:130
+#: outwiker/gui/tagscloud.py:135
 msgid "Number of notes: {}"
 msgstr "Количество заметок: {}"
 
-#: outwiker/gui/tagscloud.py:223
+#: outwiker/gui/tagscloud.py:228
 msgid "Applied tags only"
 msgstr "Только установленные теги"
 
@@ -2586,11 +2586,11 @@ msgstr "Дата последнего изменения: {0}"
 msgid "Tags: "
 msgstr "Метки: "
 
-#: outwiker/pages/search/searchpage.py:130
+#: outwiker/pages/search/searchpage.py:129
 msgid "Search Page"
 msgstr "Страница поиска"
 
-#: outwiker/pages/search/searchpage.py:152
+#: outwiker/pages/search/searchpage.py:151
 msgid "# Search"
 msgstr "# Поиск"
 
@@ -2888,23 +2888,23 @@ msgstr "Элемент списка"
 msgid "Invisible"
 msgstr "Невидимый"
 
-#: outwiker/pages/wiki/gui/styledialog.py:26
+#: outwiker/pages/wiki/gui/styledialog.py:29
 msgid "None"
 msgstr "Нет"
 
-#: outwiker/pages/wiki/gui/styledialog.py:137
+#: outwiker/pages/wiki/gui/styledialog.py:140
 msgid "Style name"
 msgstr "Имя стиля"
 
-#: outwiker/pages/wiki/gui/styledialog.py:155
+#: outwiker/pages/wiki/gui/styledialog.py:158
 msgid "Text color"
 msgstr "Цвет текста"
 
-#: outwiker/pages/wiki/gui/styledialog.py:171
+#: outwiker/pages/wiki/gui/styledialog.py:174
 msgid "Text background"
 msgstr "Фон текста"
 
-#: outwiker/pages/wiki/gui/styledialog.py:187
+#: outwiker/pages/wiki/gui/styledialog.py:190
 msgid "Custom CSS"
 msgstr "Дополнительные стили CSS"
 
@@ -2998,6 +2998,9 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Autosave interval in seconds(0 - disabled)"
+#~ msgstr "Период автосохранения (0 - отключено)"
 
 #~ msgid "Select All"
 #~ msgstr "Выделить всё"
@@ -3336,9 +3339,6 @@ msgstr "[[ссылка | комментарий]]"
 
 #~ msgid "Hour (12-hour clock) as a decimal number [01,12]"
 #~ msgstr "Часы (в интервале 01-12)"
-
-#~ msgid "Autosave interval in seconds (0 - disabled)"
-#~ msgstr "Интервал автосохранения в секундах (0 - отключено)"
 
 #~ msgid "Recent files history length (restart required)"
 #~ msgstr "Длина истории открытых файлов (требуется перезапуск)"

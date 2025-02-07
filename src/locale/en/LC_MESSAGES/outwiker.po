@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-30 20:11+0300\n"
+"POT-Creation-Date: 2025-02-07 15:41+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -44,27 +44,27 @@ msgstr "Add Sibling Page…"
 msgid "Add sibling page"
 msgstr "Add sibling page"
 
-#: outwiker/app/actions/applystyle.py:27
+#: outwiker/app/actions/applystyle.py:28
 msgid "Set Style to Branch…"
 msgstr "Set Style to Branch…"
 
-#: outwiker/app/actions/applystyle.py:31 outwiker/app/actions/applystyle.py:59
+#: outwiker/app/actions/applystyle.py:32 outwiker/app/actions/applystyle.py:63
 msgid "Set Style to Branch"
 msgstr "Set Style to Branch"
 
-#: outwiker/app/actions/applystyle.py:60
+#: outwiker/app/actions/applystyle.py:64
 msgid "Please wait..."
 msgstr "Please wait..."
 
-#: outwiker/app/actions/applystyle.py:90
+#: outwiker/app/actions/applystyle.py:93
 msgid "Set style to branch"
 msgstr "Set style to branch"
 
-#: outwiker/app/actions/applystyle.py:93
+#: outwiker/app/actions/applystyle.py:95
 msgid "Style"
 msgstr "Style"
 
-#: outwiker/app/actions/applystyle.py:119
+#: outwiker/app/actions/applystyle.py:122
 #: outwiker/pages/wiki/gui/listitemstyledialog.py:74
 msgid "Default"
 msgstr "Default"
@@ -97,8 +97,8 @@ msgstr "Execute selected attachments"
 msgid "You did not select an attachment to execute"
 msgstr "You did not select an attachment to execute"
 
-#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrenderie.py:261
-#: outwiker/gui/htmlrenderie.py:339
+#: outwiker/app/actions/attachexecute.py:44 outwiker/gui/htmlrenderie.py:260
+#: outwiker/gui/htmlrenderie.py:338
 #, python-format
 msgid "Can't execute attachment '%s'"
 msgstr "Can't execute attachment '%s'"
@@ -244,7 +244,7 @@ msgstr "Close a tree notes"
 msgid "Page Properties…"
 msgstr "Page Properties…"
 
-#: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:121
+#: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:120
 msgid "Edit page properties"
 msgstr "Edit page properties"
 
@@ -272,7 +272,7 @@ msgstr "Global Search…"
 msgid "Create or open page for global search"
 msgstr "Create or open page for global search"
 
-#: outwiker/app/actions/globalsearch.py:36 outwiker/app/gui/pagedialog.py:58
+#: outwiker/app/actions/globalsearch.py:36 outwiker/app/gui/pagedialog.py:57
 msgid "Can't create page"
 msgstr "Can't create page"
 
@@ -1220,7 +1220,7 @@ msgstr "New tag name"
 #: outwiker/app/gui/preferences/iconsetpanel.py:291
 #: outwiker/app/gui/preferences/iconsetpanel.py:298
 #: outwiker/app/gui/preferences/iconsetpanel.py:342
-#: outwiker/core/textprinter.py:98
+#: outwiker/core/textprinter.py:97
 #: outwiker/gui/controls/toastercontroller.py:50
 #: outwiker/pages/html/basehtmlpanel.py:339
 msgid "Error"
@@ -1314,7 +1314,7 @@ msgstr ""
 "Can't save config\n"
 "%s"
 
-#: outwiker/app/gui/mainwndcontroller.py:238
+#: outwiker/app/gui/mainwndcontroller.py:237
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1325,11 +1325,11 @@ msgstr ""
 "Can't save config.\n"
 "%s"
 
-#: outwiker/app/gui/notestree.py:262 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:271 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
-#: outwiker/app/gui/notestree.py:518
+#: outwiker/app/gui/notestree.py:527
 #, python-brace-format
 msgid ""
 "Attach files to the note '{title}'?\n"
@@ -1340,16 +1340,16 @@ msgstr ""
 "\n"
 "{files}"
 
-#: outwiker/app/gui/notestree.py:525
+#: outwiker/app/gui/notestree.py:534
 msgid "Attach files to the note?"
 msgstr "Attach files to the note?"
 
-#: outwiker/app/gui/pagedialog.py:25
+#: outwiker/app/gui/pagedialog.py:24
 #, python-format
 msgid "Page \"%s\" not found"
 msgstr "Page \"%s\" not found"
 
-#: outwiker/app/gui/pagedialog.py:101
+#: outwiker/app/gui/pagedialog.py:100
 msgid "Create Page"
 msgstr "Create Page"
 
@@ -1365,11 +1365,11 @@ msgstr "Page style"
 msgid "Can't set page style\n"
 msgstr "Can't set page style\n"
 
-#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:178
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:173
 msgid "Do not change"
 msgstr "Do not change"
 
-#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:180
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:175
 msgid "Default style"
 msgstr "Default style"
 
@@ -1429,20 +1429,20 @@ msgstr "Execute attachment"
 msgid "Double clicking or pressing Enter on an attached file"
 msgstr "Double clicking or pressing Enter on an attached file"
 
-#: outwiker/app/gui/preferences/attachpanel.py:46
+#: outwiker/app/gui/preferences/attachpanel.py:44
 msgid "Show hidden folders"
 msgstr "Show hidden folders"
 
-#: outwiker/app/gui/preferences/colorspanel.py:29
+#: outwiker/app/gui/preferences/colorspanel.py:37
 #: outwiker/app/gui/preferences/prefcontroller.py:135
 msgid "Main window"
 msgstr "Main window"
 
-#: outwiker/app/gui/preferences/colorspanel.py:33
+#: outwiker/app/gui/preferences/colorspanel.py:41
 msgid "Main panels background color"
 msgstr "Main panels background color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:38
+#: outwiker/app/gui/preferences/colorspanel.py:47
 msgid "Main panels text color"
 msgstr "Main panels text color"
 
@@ -1518,43 +1518,43 @@ msgstr "Recent used"
 msgid "Preview"
 msgstr "Preview"
 
-#: outwiker/app/gui/preferences/generalpanel.py:83
-msgid "Autosave interval in seconds(0 - disabled)"
-msgstr "Autosave interval in seconds(0 - disabled)"
+#: outwiker/app/gui/preferences/generalpanel.py:81
+msgid "Autosave interval in seconds (0 - disabled)"
+msgstr "Autosave interval in seconds (0 - disabled)"
 
-#: outwiker/app/gui/preferences/generalpanel.py:105
+#: outwiker/app/gui/preferences/generalpanel.py:103
 msgid "Toaster delay in seconds"
 msgstr "Toaster delay in seconds"
 
-#: outwiker/app/gui/preferences/generalpanel.py:180
+#: outwiker/app/gui/preferences/generalpanel.py:134
 msgid "Ask before exit"
 msgstr "Ask before exit"
 
-#: outwiker/app/gui/preferences/generalpanel.py:192
+#: outwiker/app/gui/preferences/generalpanel.py:146
 msgid "Length of recently used icons history"
 msgstr "Length of recently used icons history"
 
-#: outwiker/app/gui/preferences/generalpanel.py:206
+#: outwiker/app/gui/preferences/generalpanel.py:160
 msgid "Length of recently opened files history"
 msgstr "Length of recently opened files history"
 
-#: outwiker/app/gui/preferences/generalpanel.py:219
+#: outwiker/app/gui/preferences/generalpanel.py:173
 msgid "Automatically open the recent file"
 msgstr "Automatically open the recent file"
 
-#: outwiker/app/gui/preferences/generalpanel.py:252
+#: outwiker/app/gui/preferences/generalpanel.py:206
 msgid "Language(restart required)"
 msgstr "Language(restart required)"
 
-#: outwiker/app/gui/preferences/generalpanel.py:257
+#: outwiker/app/gui/preferences/generalpanel.py:211
 msgid "Help with translation"
 msgstr "Help with translation"
 
-#: outwiker/app/gui/preferences/generalpanel.py:284
+#: outwiker/app/gui/preferences/generalpanel.py:238
 msgid "Default opening page mode"
 msgstr "Default opening page mode"
 
-#: outwiker/app/gui/preferences/generalpanel.py:373
+#: outwiker/app/gui/preferences/generalpanel.py:319
 msgid "Auto"
 msgstr "Auto"
 
@@ -1603,11 +1603,11 @@ msgstr "Number"
 msgid "String"
 msgstr "String"
 
-#: outwiker/app/gui/preferences/htmlrenderpanel.py:32
+#: outwiker/app/gui/preferences/htmlrenderpanel.py:30
 msgid "Paragraphs separator"
 msgstr "Paragraphs separator"
 
-#: outwiker/app/gui/preferences/htmlrenderpanel.py:42
+#: outwiker/app/gui/preferences/htmlrenderpanel.py:37
 msgid "Additional styles (CSS):"
 msgstr "Additional styles (CSS):"
 
@@ -1803,7 +1803,7 @@ msgid "User's iconset"
 msgstr "User's iconset"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:203
-#: outwiker/gui/controls/treebook2.py:48
+#: outwiker/gui/controls/treebook2.py:47
 msgid "Preferences"
 msgstr "Preferences"
 
@@ -1950,7 +1950,7 @@ msgstr ""
 "{} -> {}\n"
 "{}"
 
-#: outwiker/app/services/attachment.py:103
+#: outwiker/app/services/attachment.py:104
 #, python-brace-format
 msgid ""
 "File not exists\n"
@@ -1959,11 +1959,11 @@ msgstr ""
 "File not exists\n"
 "{0}"
 
-#: outwiker/app/services/attachment.py:166
+#: outwiker/app/services/attachment.py:167
 msgid "Can't create directory: {}"
 msgstr "Can't create directory: {}"
 
-#: outwiker/app/services/attachment.py:177
+#: outwiker/app/services/attachment.py:178
 #, python-brace-format
 msgid ""
 "Error copying files\n"
@@ -1972,11 +1972,11 @@ msgstr ""
 "Error copying files\n"
 "{0}"
 
-#: outwiker/app/services/attachment.py:184
+#: outwiker/app/services/attachment.py:185
 msgid "New folder"
 msgstr "New folder"
 
-#: outwiker/app/services/attachment.py:206
+#: outwiker/app/services/attachment.py:207
 msgid "Can't create folder {} for attachments"
 msgstr "Can't create folder {} for attachments"
 
@@ -2228,7 +2228,7 @@ msgstr ""
 "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
 "new OutWiker version."
 
-#: outwiker/core/textprinter.py:97
+#: outwiker/core/textprinter.py:96
 msgid "Printing error"
 msgstr "Printing error"
 
@@ -2416,14 +2416,14 @@ msgstr "Skip all"
 msgid "{size:_d} bytes"
 msgstr "{size:_d} bytes"
 
-#: outwiker/gui/htmlrender.py:80 outwiker/gui/htmlrenderwebkit.py:261
-#: outwiker/gui/htmlrenderwebkit.py:339
+#: outwiker/gui/htmlrender.py:81 outwiker/gui/htmlrenderwebkit.py:260
+#: outwiker/gui/htmlrenderwebkit.py:338
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Can't execute file '%s'"
 
-#: outwiker/gui/htmlrenderie.py:283 outwiker/gui/htmlrenderwebkit.py:179
-#: outwiker/gui/htmlrenderwebkit.py:283
+#: outwiker/gui/htmlrenderie.py:282 outwiker/gui/htmlrenderwebkit.py:178
+#: outwiker/gui/htmlrenderwebkit.py:282
 #, python-format
 msgid "Can't read file %s"
 msgstr "Can't read file %s"
@@ -2472,11 +2472,11 @@ msgstr "Header cells for first row"
 msgid "Insert rows"
 msgstr "Insert rows"
 
-#: outwiker/gui/tagscloud.py:130
+#: outwiker/gui/tagscloud.py:135
 msgid "Number of notes: {}"
 msgstr "Number of notes: {}"
 
-#: outwiker/gui/tagscloud.py:223
+#: outwiker/gui/tagscloud.py:228
 msgid "Applied tags only"
 msgstr "Applied tags only"
 
@@ -2578,11 +2578,11 @@ msgstr "Last modified date: {0}"
 msgid "Tags: "
 msgstr "Tags: "
 
-#: outwiker/pages/search/searchpage.py:130
+#: outwiker/pages/search/searchpage.py:129
 msgid "Search Page"
 msgstr "Search Page"
 
-#: outwiker/pages/search/searchpage.py:152
+#: outwiker/pages/search/searchpage.py:151
 msgid "# Search"
 msgstr "# Search"
 
@@ -2880,23 +2880,23 @@ msgstr "List item"
 msgid "Invisible"
 msgstr "Invisible"
 
-#: outwiker/pages/wiki/gui/styledialog.py:26
+#: outwiker/pages/wiki/gui/styledialog.py:29
 msgid "None"
 msgstr "None"
 
-#: outwiker/pages/wiki/gui/styledialog.py:137
+#: outwiker/pages/wiki/gui/styledialog.py:140
 msgid "Style name"
 msgstr "Style name"
 
-#: outwiker/pages/wiki/gui/styledialog.py:155
+#: outwiker/pages/wiki/gui/styledialog.py:158
 msgid "Text color"
 msgstr "Text color"
 
-#: outwiker/pages/wiki/gui/styledialog.py:171
+#: outwiker/pages/wiki/gui/styledialog.py:174
 msgid "Text background"
 msgstr "Text background"
 
-#: outwiker/pages/wiki/gui/styledialog.py:187
+#: outwiker/pages/wiki/gui/styledialog.py:190
 msgid "Custom CSS"
 msgstr "Custom CSS"
 
@@ -2990,6 +2990,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Autosave interval in seconds(0 - disabled)"
+#~ msgstr "Autosave interval in seconds(0 - disabled)"
 
 #~ msgid "Select All"
 #~ msgstr "Select All"
@@ -3329,9 +3332,6 @@ msgstr "[[link | comment]]"
 
 #~ msgid "Hour (12-hour clock) as a decimal number [01,12]"
 #~ msgstr "Hour (12-hour clock) as a decimal number [01,12]"
-
-#~ msgid "Autosave interval in seconds (0 - disabled)"
-#~ msgstr "Autosave interval in seconds (0 - disabled)"
 
 #~ msgid "Recent files history length (restart required)"
 #~ msgstr "Recent files history length (restart required)"
