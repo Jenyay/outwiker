@@ -53,7 +53,7 @@ build_script:
     #- cmd: py -%PY_PYTHON% -m pipenv run inv win
     #- cmd: py -%PY_PYTHON% -m pipenv run inv win --is-stable
 test_script:
-  - sh: python3 -m uv run --active inv test -p src/outwiker/tests
+  - sh: xvfb-run python3 -m uv run --active inv test -p src/outwiker/tests
     #- cmd: py -%PY_PYTHON% -m pipenv run inv test -p src/outwiker/tests
     #- sh: xvfb-run pipenv run inv test -p src/outwiker/tests
 artifacts:
