@@ -122,7 +122,10 @@ class MainWndController:
         datetime_width = self._mainWindowConfig.datetimeStatusWidth.value
         self._mainWindow.statusbar.addItem(STATUSBAR_PAGE_DATETIME_ITEM, datetime_width)
 
-        self.init()
+        self._bindAppEvents()
+        self._mainWindow.Bind(wx.EVT_CLOSE, handler=self._onClose)
+        self._mainWindow.Bind(wx.EVT_ICONIZE, handler=self._onIconize)
+
         self._createAcceleratorTable()
 
     def _createAcceleratorTable(self):
@@ -137,14 +140,6 @@ class MainWndController:
             ]
         )
         self._mainWindow.SetAcceleratorTable(aTable)
-
-    def init(self):
-        """
-        Начальные установки для главного окна
-        """
-        self._bindAppEvents()
-        self._mainWindow.Bind(wx.EVT_CLOSE, handler=self._onClose)
-        self._mainWindow.Bind(wx.EVT_ICONIZE, handler=self._onIconize)
 
     def _onClose(self, event):
         event.Veto()

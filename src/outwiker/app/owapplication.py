@@ -49,7 +49,6 @@ class OutWikerApplication(wx.App):
                 locale.setlocale(locale.LC_ALL, 'C')
 
     def OnInit(self):
-        self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
         NullTranslations().install()
         return True
 
@@ -97,10 +96,6 @@ class OutWikerApplication(wx.App):
 
         redirector.init()
         wx.Log.SetLogLevel(0)
-
-    def _onEndSession(self, event):
-        self.Unbind(wx.EVT_QUERY_END_SESSION, handler=self._onEndSession)
-        self._mainWindow.Destroy()
 
     def getLogFileName(self, configPath):
         return os.path.join(os.path.split(configPath)[0], self.logFileName)

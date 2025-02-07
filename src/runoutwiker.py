@@ -42,14 +42,14 @@ if __name__ == "__main__":
     application = Application()
     application.init(config_path)
 
-    outwiker_app = OutWikerApplication(application)
-
     try:
         starter = Starter(application)
     except StarterExit:
         sys.exit(1)
 
     application.sharedData[APP_DATA_DEBUG] = starter.isDebugMode
+
+    outwiker_app = OutWikerApplication(application)
     outwiker_app.initLogger(starter.isDebugMode)
     print_info()
 
