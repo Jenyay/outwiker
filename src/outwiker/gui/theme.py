@@ -1,28 +1,42 @@
-# -*- coding=utf-8 -*-
+from outwiker.core.event import Event
 
-import wx
 
-from outwiker.core.application import Application
+def defaultValue(default_value):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            val = func(*args, **kwargs)
+            return default_value if val is None or val == "" or val == "None" else val
+        return wrapper
+    return decorator
 
 
 class Theme:
     def __init__(self):
-        self.colorBorder = wx.Colour(0, 0, 0)
-        self.colorBorderSelected = wx.Colour(0, 0, 255)
-        self.colorBackground = wx.Colour(255, 255, 255)
-        self.colorBackgroundSelected = wx.Colour(81, 139, 219)
-        self.colorShadow = wx.Colour(200, 200, 200)
-        self.colorTextNormal = wx.Colour(0, 0, 0)
-        self.colorTextSelected = wx.Colour(255, 255, 255)
-        self.colorStaticLine = self.colorBackgroundSelected
-        self.colorErrorBackground = wx.Colour("#c80003")
-        self.colorErrorForeground = wx.Colour("#E3E3E3")
-        self.colorInfoBackground = wx.Colour("#1989FF")
-        self.colorInfoForeground = wx.Colour("#E3E3E3")
-        self.colorToasterBackground = wx.Colour(255, 255, 255)
-        self.colorHyperlink = wx.Colour(0, 0, 255)
-        self.roundRadius = 0
+        self._colorHyperlink = None
+
+        # Event occurs after theme changing
+        # Parameters:
+        #    params - instance of the onThemeChangedParams class
+        self.onThemeChanged = Event()
+
+    @property
+    @defaultValue("#0000FF")
+    def colorHyperlink(self):
+        return self._colorHyperlink
+
+    def clear(self):
+        self.onThemeChanged.clear()
+
+    def loadFromConfig(self, config):
+        pass
+
+    def sendEvent(self):
+        self.onThemeChanged(self)
 
 
-def get_theme(application: Application) -> Theme:
-    return Theme()
+class onThemeChangedParams:
+    """
+    Parameters for onThemeChanged event
+    """
+    def __init__(self, theme: Theme) -> None:
+        self.theme = theme

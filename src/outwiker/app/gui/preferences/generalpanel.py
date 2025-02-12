@@ -7,18 +7,17 @@ from outwiker.gui.preferences import configelements
 from outwiker.core.defines import URL_TRANSLATE
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
-from outwiker.gui.theme import get_theme
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class GeneralPanel(BasePrefPanel):
     def __init__(self, parent, application):
         super().__init__(parent)
+        self._application = application
 
         self.generalConfig = GeneralGuiConfig(application.config)
         self.mainWindowConfig = MainWindowConfig(application.config)
         self.i18nConfig = outwiker.core.i18n.I18nConfig(application.config)
-        self._theme = get_theme(application)
 
         self.MIN_AUTOSAVE_INTERVAL = 0
         self.MAX_AUTOSAVE_INTERVAL = 3600
@@ -210,10 +209,12 @@ class GeneralPanel(BasePrefPanel):
         self.helpTranslateHyperLink = HyperLinkCtrl(
             self, label=_("Help with translation"), URL=URL_TRANSLATE
         )
+
+        hyperlinkColor = wx.Colour(self._application.theme.colorHyperlink)
         self.helpTranslateHyperLink.SetColours(
-            self._theme.colorHyperlink,
-            self._theme.colorHyperlink,
-            self._theme.colorHyperlink,
+            hyperlinkColor,
+            hyperlinkColor,
+            hyperlinkColor,
         )
 
         main_sizer.Add(languageSizer, flag=wx.EXPAND)
