@@ -8,6 +8,7 @@ from outwiker.core.defines import URL_TRANSLATE
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
+from outwiker.gui.theme import Theme
 
 
 class GeneralPanel(BasePrefPanel):
@@ -210,7 +211,7 @@ class GeneralPanel(BasePrefPanel):
             self, label=_("Help with translation"), URL=URL_TRANSLATE
         )
 
-        hyperlinkColor = wx.Colour(self._application.theme.colorHyperlink)
+        hyperlinkColor = wx.Colour(self._application.theme.get(Theme.SECTION_GENERAL, Theme.GENERAL_HYPERLINK_COLOR))
         self.helpTranslateHyperLink.SetColours(
             hyperlinkColor,
             hyperlinkColor,

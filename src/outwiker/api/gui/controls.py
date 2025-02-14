@@ -8,6 +8,7 @@ from outwiker.gui.tagsselector import TagsSelector
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 from outwiker.gui.controls.colorcombobox import ColorComboBox
 from outwiker.gui.controls.notestreectrl2 import NotesTreeItem
+from outwiker.gui.theme import Theme
 
 from outwiker.core.system import getOS as _getOS
 

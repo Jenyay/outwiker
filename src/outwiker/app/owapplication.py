@@ -57,6 +57,8 @@ class OutWikerApplication(wx.App):
 
     def initMainWindow(self):
         self._initLocale()
+        self._application.theme.loadSystemParams()
+        self._application.theme.loadFromConfig(self._application.config)
         self._mainWindow = MainWindow(self._application)
         self.SetTopWindow(self._mainWindow)
 
