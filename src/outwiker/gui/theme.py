@@ -1,7 +1,13 @@
+from typing import Any, Dict, Optional, Tuple
+import logging
+
 import wx
 
-from typing import Dict, Optional, Tuple
 from outwiker.core.event import Event
+from outwiker.gui.guiconfig import MainWindowConfig
+
+
+logger = logging.getLogger("outwiker.gui.theme")
 
 
 class Theme:
@@ -15,7 +21,7 @@ class Theme:
 
     # General section
     GENERAL_BACKGROUND_COLOR = "MainBackgroundColor"
-    GENERAL_FONT_COLOR = "MainFontColor"
+    GENERAL_TEXT_COLOR = "MainFontColor"
     GENERAL_HYPERLINK_COLOR = "HyperlinkColor"
 
     # Tree section
@@ -23,6 +29,7 @@ class Theme:
     TREE_SELECTION_FONT_COLOR = "SelectionFontColor"
     TREE_HIGHLIGHTING_COLOR = "HighlightingColor"
     TREE_HIGHLIGHTING_FONT_COLOR = "HighlightingFontColor"
+    TREE_FONT_SIZE = "FontSize"
 
     # Render
     RENDER_STYLES = "Styles"
@@ -34,8 +41,9 @@ class Theme:
     EDITOR_FIELD_COLOR = "FieldColor"
 
     def __init__(self):
-        self._data: Dict[str, Tuple[Optional[str], str]] = {}
+        self._data: Dict[str, Tuple[Optional[Any], Any]] = {}
         self._initDefaults()
+        self._changed = False
 
         # Event occurs after theme changing
         # Parameters:
@@ -44,22 +52,23 @@ class Theme:
 
     def _initDefaults(self):
         self.addParam(self.SECTION_GENERAL, self.GENERAL_BACKGROUND_COLOR, "#FFFFFF")
-        self.addParam(self.SECTION_GENERAL, self.GENERAL_FONT_COLOR, "#000000")
+        self.addParam(self.SECTION_GENERAL, self.GENERAL_TEXT_COLOR, "#000000")
         self.addParam(self.SECTION_GENERAL, self.GENERAL_HYPERLINK_COLOR, "#0000FF")
 
         self.addParam(self.SECTION_TREE, self.TREE_SELECTION_COLOR, "#0000FF")
         self.addParam(self.SECTION_TREE, self.TREE_SELECTION_FONT_COLOR, "#FFFFFF")
         self.addParam(self.SECTION_TREE, self.TREE_HIGHLIGHTING_COLOR, "#E1EFFA")
         self.addParam(self.SECTION_TREE, self.TREE_HIGHLIGHTING_FONT_COLOR, "#000000")
+        self.addParam(self.SECTION_TREE, self.TREE_FONT_SIZE, None)
 
-    def addParam(self, section: str, param: str, defaultValue: str):
+    def addParam(self, section: str, param: str, defaultValue: Any):
         fullName = self._getFullName(section, param)
         self._data[fullName] = (defaultValue, defaultValue)
 
     def _getFullName(self, section: str, param: str) -> str:
         return f"{section}/{param}"
 
-    def get(self, section: str, param: str) -> str:
+    def get(self, section: str, param: str) -> Any:
         fullName = self._getFullName(section, param)
         data = self._data[fullName]
         val = data[0]
@@ -71,12 +80,16 @@ class Theme:
             defaultValue if value is None or value == "" or value == "None" else value
         )
 
-    def set(self, section: str, param: str, val: str):
+    def set(self, section: str, param: str, val: Any):
         fullName = self._getFullName(section, param)
         default_value = self._data[fullName][1]
-        self._data[fullName] = (val, default_value)
+        old_val = self.get(section, param)
+        if old_val != self._selectVal(val, default_value):
+            self._data[fullName] = (val, default_value)
+            self._changed = True
 
     def clear(self):
+        self._changed = False
         self.onThemeChanged.clear()
 
     def loadSystemParams(self):
@@ -87,6 +100,7 @@ class Theme:
                 wx.C2S_HTML_SYNTAX
             ),
         )
+
         self.addParam(
             self.SECTION_TREE,
             self.TREE_SELECTION_FONT_COLOR,
@@ -95,11 +109,22 @@ class Theme:
             ),
         )
 
+        self.addParam(
+            self.SECTION_TREE,
+            self.TREE_FONT_SIZE,
+            wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize()
+        )
+
     def loadFromConfig(self, config):
-        pass
+        mainWindowConfig = MainWindowConfig(config)
+        self.set(self.SECTION_GENERAL, self.GENERAL_BACKGROUND_COLOR, mainWindowConfig.mainPanesBackgroundColor.value)
+        self.set(self.SECTION_GENERAL, self.GENERAL_TEXT_COLOR, mainWindowConfig.mainPanesTextColor.value)
 
     def sendEvent(self):
-        self.onThemeChanged(self)
+        if self._changed:
+            logger.debug("Theme changed")
+            self.onThemeChanged(self)
+            self._changed = False
 
 
 class onThemeChangedParams:

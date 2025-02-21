@@ -119,9 +119,6 @@ class NotesTree(wx.Panel):
         return self.treeCtrl.GetItemData(item_id)
 
     def _bindApplicationEvents(self):
-        """
-        Подписка на события контроллера
-        """
         self._application.onWikiOpen += self.__onWikiOpen
         self._application.onTreeUpdate += self.__onTreeUpdate
         self._application.onPageCreate += self.__onPageCreate
@@ -135,9 +132,6 @@ class NotesTree(wx.Panel):
         self._application.onForceNotesTreeItemsUpdate += self.__onForceNotesTreeItemsUpdate
 
     def __UnBindApplicationEvents(self):
-        """
-        Отписка от событий контроллера
-        """
         self._application.onWikiOpen -= self.__onWikiOpen
         self._application.onTreeUpdate -= self.__onTreeUpdate
         self._application.onPageCreate -= self.__onPageCreate
