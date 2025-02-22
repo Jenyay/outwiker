@@ -1,4 +1,4 @@
-# Install to /app unless otherwise specified, such as `make PREFIX=/app`
+#abef24b5c4c9173828aa1b99247669712ca13c1за3 Install to /app unless otherwise specified, such as `make PREFIX=/app`
 PREFIX=/app
 
 # What to run to install various files
@@ -47,7 +47,6 @@ install:
 	$(INSTALL_DIR) $(SRC_DIR)/styles $(OUTWIKER_DIR)
 	$(INSTALL_DIR) $(SRC_DIR)/textstyles $(OUTWIKER_DIR)
 	$(INSTALL) $(SRC_DIR)/runoutwiker.py $(OUTWIKER_DIR)
-	$(INSTALL) Pipfile $(OUTWIKER_DIR)
 	$(INSTALL) "copyright.txt" $(OUTWIKER_DIR)
 	$(INSTALL) "README" $(OUTWIKER_DIR)
 	$(INSTALL) $(NFB_LINUX_DIR)/outwiker_flatpak $(INSTALL_PATH)/bin/outwiker
