@@ -289,7 +289,7 @@ class _ItemsViewInfo:
 
     @property
     def font_color_selected(self) -> wx.Colour:
-        return wx.Colour(self._theme.get(Theme.SECTION_TREE, Theme.SELECTION_FONT_COLOR))
+        return wx.Colour(self._theme.get(Theme.SECTION_TREE, Theme.SELECTION_TEXT_COLOR))
 
     @property
     def back_color_hovered(self) -> wx.Colour:

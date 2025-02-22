@@ -24,11 +24,12 @@ class Theme:
     TEXT_COLOR = "FontColor"
     HYPERLINK_COLOR = "HyperlinkColor"
     SELECTION_COLOR = "SelectionColor"
-    SELECTION_FONT_COLOR = "SelectionFontColor"
+    SELECTION_TEXT_COLOR = "SelectionTextColor"
+    SHADOW_COLOR = "ShadowColor"
 
     # Tree section
     HIGHLIGHTING_COLOR = "HighlightingColor"
-    HIGHLIGHTING_FONT_COLOR = "HighlightingFontColor"
+    HIGHLIGHTING_TEXT_COLOR = "HighlightingTextColor"
 
     # Render
     # RENDER_STYLES = "Styles"
@@ -41,6 +42,18 @@ class Theme:
         self._initDefaults()
         self._changed = False
 
+        self.colorBorder = "#000000"
+        self.colorBorderSelected = "#0000FF"
+        self.colorShadow = "#AAAAAA"
+        self.colorTextNormal = "#000000"
+        self.colorErrorBackground = "#c80003"
+        self.colorErrorForeground = "#E3E3E3"
+        self.colorInfoBackground = "#1989FF"
+        self.colorInfoForeground = "#E3E3E3"
+        self.colorToasterBackground = "#FFFFFF"
+        self.colorStaticLine = self.colorBackgroundSelected
+        self.roundRadius = 0
+
         # Event occurs after theme changing
         # Parameters:
         #    params - instance of the onThemeChangedParams class
@@ -51,12 +64,29 @@ class Theme:
         self.addParam(self.SECTION_GENERAL, self.TEXT_COLOR, "#000000")
         self.addParam(self.SECTION_GENERAL, self.HYPERLINK_COLOR, "#0000FF")
         self.addParam(self.SECTION_GENERAL, self.SELECTION_COLOR, "#0000FF")
-        self.addParam(self.SECTION_GENERAL, self.SELECTION_FONT_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_GENERAL, self.SHADOW_COLOR, "#AAAAAA")
 
         self.addParam(self.SECTION_TREE, self.SELECTION_COLOR, "#0000FF")
-        self.addParam(self.SECTION_TREE, self.SELECTION_FONT_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_TREE, self.SELECTION_TEXT_COLOR, "#FFFFFF")
         self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_COLOR, "#E1EFFA")
-        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_FONT_COLOR, "#000000")
+        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_TEXT_COLOR, "#000000")
+
+    @property
+    def colorBackground(self):
+        return self.get(self.SECTION_GENERAL, self.BACKGROUND_COLOR)
+
+    @property
+    def colorBackgroundSelected(self):
+        return self.get(self.SECTION_GENERAL, self.SELECTION_COLOR)
+
+    @property
+    def colorText(self):
+        return self.get(self.SECTION_GENERAL, self.TEXT_COLOR)
+
+    @property
+    def colorTextSelected(self):
+        return self.get(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR)
 
     @property
     def changed(self):
@@ -114,7 +144,7 @@ class Theme:
 
         self.addParam(
             self.SECTION_GENERAL,
-            self.SELECTION_FONT_COLOR,
+            self.SELECTION_TEXT_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
@@ -122,8 +152,8 @@ class Theme:
 
         self.addParam(
             self.SECTION_TREE,
-            self.SELECTION_FONT_COLOR,
-            self.getDefaults(self.SECTION_GENERAL, self.SELECTION_FONT_COLOR),
+            self.SELECTION_TEXT_COLOR,
+            self.getDefaults(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR),
         )
 
     def loadFromConfig(self, config):

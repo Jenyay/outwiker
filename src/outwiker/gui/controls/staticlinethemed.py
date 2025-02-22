@@ -16,8 +16,8 @@ class StaticLineThemed(wx.StaticLine):
 
     def SetTheme(self, theme):
         self._theme = theme
-        if self._theme is not None:
-            self._color = self._theme.colorStaticLine
+        # if self._theme is not None:
+        #     self._color = self._theme.colorStaticLine
 
         self.SetBackgroundColour(self._color)
         if self.IsVertical():

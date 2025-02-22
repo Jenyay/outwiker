@@ -7,11 +7,8 @@ from outwiker.gui.controls.popupwindow import PopupWindow
 
 
 class IconsListPopup(PopupWindow):
-    def __init__(self, parent):
-        super().__init__(parent)
-
     def createGUI(self):
-        self._iconsPanel = IconsPanel(self)
+        self._iconsPanel = IconsPanel(self, self._theme)
         sizer = wx.FlexGridSizer(cols=1)
         sizer.AddGrowableCol(0)
         sizer.AddGrowableRow(0)
