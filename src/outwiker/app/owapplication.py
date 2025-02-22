@@ -28,6 +28,8 @@ class OutWikerApplication(wx.App):
     """
 
     def __init__(self, application: Application):
+        # Disable dark theme for GTK in Linux
+        os.environ['GTK_THEME'] = ':light'
         super().__init__()
 
         self.logFileName = 'outwiker.log'
@@ -62,8 +64,6 @@ class OutWikerApplication(wx.App):
 
     def initMainWindow(self):
         self._initLocale()
-        # self._application.theme.loadSystemParams()
-        # self._application.theme.loadFromConfig(self._application.config)
         self._mainWindow = MainWindow(self._application)
         self.SetTopWindow(self._mainWindow)
 
