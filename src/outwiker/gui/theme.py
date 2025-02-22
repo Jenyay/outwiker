@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Tuple
 import logging
 
 import wx
@@ -41,7 +41,7 @@ class Theme:
     EDITOR_FIELD_COLOR = "FieldColor"
 
     def __init__(self):
-        self._data: Dict[str, Tuple[Optional[Any], Any]] = {}
+        self._data: Dict[str, Tuple[Any, Any]] = {}
         self._initDefaults()
         self._changed = False
 
@@ -61,6 +61,10 @@ class Theme:
         self.addParam(self.SECTION_TREE, self.TREE_HIGHLIGHTING_FONT_COLOR, "#000000")
         self.addParam(self.SECTION_TREE, self.TREE_FONT_SIZE, None)
 
+    @property
+    def changed(self):
+        return self._changed
+
     def addParam(self, section: str, param: str, defaultValue: Any):
         fullName = self._getFullName(section, param)
         self._data[fullName] = (defaultValue, defaultValue)
@@ -79,6 +83,10 @@ class Theme:
         return (
             defaultValue if value is None or value == "" or value == "None" else value
         )
+
+    def getDefaults(self, section: str, param: str) -> Any:
+        fullName = self._getFullName(section, param)
+        return self._data[fullName][1]
 
     def set(self, section: str, param: str, val: Any):
         fullName = self._getFullName(section, param)
