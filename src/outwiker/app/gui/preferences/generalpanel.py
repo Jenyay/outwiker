@@ -211,7 +211,9 @@ class GeneralPanel(BasePrefPanel):
             self, label=_("Help with translation"), URL=URL_TRANSLATE
         )
 
-        hyperlinkColor = wx.Colour(self._application.theme.get(Theme.SECTION_GENERAL, Theme.GENERAL_HYPERLINK_COLOR))
+        hyperlinkColor = wx.Colour(
+            self._application.theme.get(Theme.SECTION_GENERAL, Theme.HYPERLINK_COLOR)
+        )
         self.helpTranslateHyperLink.SetColours(
             hyperlinkColor,
             hyperlinkColor,
@@ -236,9 +238,9 @@ class GeneralPanel(BasePrefPanel):
         pageTabSizer.AddGrowableCol(1)
         pageTabSizer.AddGrowableRow(0)
 
-        pageTabLabel, self.pageTabComboBox = self._createLabelAndComboBox(
+        self.pageTabComboBox = self._createLabelAndComboBox(
             _("Default opening page mode"), pageTabSizer
-        )
+        )[1]
 
         self.pageTabComboBox.SetMinSize((self.PAGE_TAB_COMBO_WIDTH, -1))
         self._fillPageTabComboBox()

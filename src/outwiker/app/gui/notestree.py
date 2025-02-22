@@ -74,7 +74,7 @@ class NotesTree(wx.Panel):
         # (title, iconId)
         self._pagesExtraIcons: List[Tuple[str, str]] = []
 
-        self.treeCtrl = NotesTreeCtrl2(self)
+        self.treeCtrl = NotesTreeCtrl2(self, self._application.theme)
         self._initTreeCtrl()
 
         self.SetSize((256, 260))
@@ -106,14 +106,6 @@ class NotesTree(wx.Panel):
                 getExtraIconPath("lock.svg"),
             )
         )
-
-    def SetBackgroundColour(self, colour):
-        super().SetBackgroundColour(colour)
-        self.treeCtrl.SetBackgroundColour(colour)
-
-    def SetForegroundColour(self, colour):
-        super().SetForegroundColour(colour)
-        self.treeCtrl.SetForegroundColour(colour)
 
     def getPageByItemId(self, item_id: wx.TreeItemId) -> "outwiker.core.tree.WikiPage":
         return self.treeCtrl.GetItemData(item_id)

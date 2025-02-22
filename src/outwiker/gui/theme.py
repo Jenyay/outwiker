@@ -20,25 +20,21 @@ class Theme:
     SECTION_WIKI_EDITOR = "WikiEditor"
 
     # General section
-    GENERAL_BACKGROUND_COLOR = "MainBackgroundColor"
-    GENERAL_TEXT_COLOR = "MainFontColor"
-    GENERAL_HYPERLINK_COLOR = "HyperlinkColor"
+    BACKGROUND_COLOR = "BackgroundColor"
+    TEXT_COLOR = "FontColor"
+    HYPERLINK_COLOR = "HyperlinkColor"
+    SELECTION_COLOR = "SelectionColor"
+    SELECTION_FONT_COLOR = "SelectionFontColor"
 
     # Tree section
-    TREE_SELECTION_COLOR = "SelectionColor"
-    TREE_SELECTION_FONT_COLOR = "SelectionFontColor"
-    TREE_HIGHLIGHTING_COLOR = "HighlightingColor"
-    TREE_HIGHLIGHTING_FONT_COLOR = "HighlightingFontColor"
-    TREE_FONT_SIZE = "FontSize"
+    HIGHLIGHTING_COLOR = "HighlightingColor"
+    HIGHLIGHTING_FONT_COLOR = "HighlightingFontColor"
 
     # Render
-    RENDER_STYLES = "Styles"
+    # RENDER_STYLES = "Styles"
 
     # Editor
-    EDITOR_BACKGROUND_COLOR = "BackgroundColor"
-    EDITOR_FONT_COLOR = "FontColor"
-    EDITOR_SELECTION_COLOR = "SelectionColor"
-    EDITOR_FIELD_COLOR = "FieldColor"
+    # FIELD_COLOR = "FieldColor"
 
     def __init__(self):
         self._data: Dict[str, Tuple[Any, Any]] = {}
@@ -51,15 +47,16 @@ class Theme:
         self.onThemeChanged = Event()
 
     def _initDefaults(self):
-        self.addParam(self.SECTION_GENERAL, self.GENERAL_BACKGROUND_COLOR, "#FFFFFF")
-        self.addParam(self.SECTION_GENERAL, self.GENERAL_TEXT_COLOR, "#000000")
-        self.addParam(self.SECTION_GENERAL, self.GENERAL_HYPERLINK_COLOR, "#0000FF")
+        self.addParam(self.SECTION_GENERAL, self.BACKGROUND_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_GENERAL, self.TEXT_COLOR, "#000000")
+        self.addParam(self.SECTION_GENERAL, self.HYPERLINK_COLOR, "#0000FF")
+        self.addParam(self.SECTION_GENERAL, self.SELECTION_COLOR, "#0000FF")
+        self.addParam(self.SECTION_GENERAL, self.SELECTION_FONT_COLOR, "#FFFFFF")
 
-        self.addParam(self.SECTION_TREE, self.TREE_SELECTION_COLOR, "#0000FF")
-        self.addParam(self.SECTION_TREE, self.TREE_SELECTION_FONT_COLOR, "#FFFFFF")
-        self.addParam(self.SECTION_TREE, self.TREE_HIGHLIGHTING_COLOR, "#E1EFFA")
-        self.addParam(self.SECTION_TREE, self.TREE_HIGHLIGHTING_FONT_COLOR, "#000000")
-        self.addParam(self.SECTION_TREE, self.TREE_FONT_SIZE, None)
+        self.addParam(self.SECTION_TREE, self.SELECTION_COLOR, "#0000FF")
+        self.addParam(self.SECTION_TREE, self.SELECTION_FONT_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_COLOR, "#E1EFFA")
+        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_FONT_COLOR, "#000000")
 
     @property
     def changed(self):
@@ -102,8 +99,8 @@ class Theme:
 
     def loadSystemParams(self):
         self.addParam(
-            self.SECTION_TREE,
-            self.TREE_SELECTION_COLOR,
+            self.SECTION_GENERAL,
+            self.SELECTION_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
@@ -111,7 +108,13 @@ class Theme:
 
         self.addParam(
             self.SECTION_TREE,
-            self.TREE_SELECTION_FONT_COLOR,
+            self.SELECTION_COLOR,
+            self.getDefaults(self.SECTION_GENERAL, self.SELECTION_COLOR),
+        )
+
+        self.addParam(
+            self.SECTION_GENERAL,
+            self.SELECTION_FONT_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
@@ -119,14 +122,14 @@ class Theme:
 
         self.addParam(
             self.SECTION_TREE,
-            self.TREE_FONT_SIZE,
-            wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize()
+            self.SELECTION_FONT_COLOR,
+            self.getDefaults(self.SECTION_GENERAL, self.SELECTION_FONT_COLOR),
         )
 
     def loadFromConfig(self, config):
         mainWindowConfig = MainWindowConfig(config)
-        self.set(self.SECTION_GENERAL, self.GENERAL_BACKGROUND_COLOR, mainWindowConfig.mainPanesBackgroundColor.value)
-        self.set(self.SECTION_GENERAL, self.GENERAL_TEXT_COLOR, mainWindowConfig.mainPanesTextColor.value)
+        self.set(self.SECTION_GENERAL, self.BACKGROUND_COLOR, mainWindowConfig.mainPanesBackgroundColor.value)
+        self.set(self.SECTION_GENERAL, self.TEXT_COLOR, mainWindowConfig.mainPanesTextColor.value)
 
     def sendEvent(self):
         if self._changed:
