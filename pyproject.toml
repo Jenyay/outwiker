@@ -71,3 +71,6 @@ Repository = "https://github.com/Jenyay/outwiker"
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta:__legacy__"
+
+[project.scripts]
+outwiker = "outwiker.__main__:main"
