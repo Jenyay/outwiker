@@ -211,7 +211,7 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
 
     def build(self):
         params = self.get_params()
-        command = "pyinstaller runoutwiker.py " + " ".join(params)
+        command = "pyinstaller outwiker/__main__.py " + " ".join(params)
         with self.context.cd(self._src_dir):
             self.context.run(command)
 
@@ -268,7 +268,7 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
 
     def build(self):
         params = self.get_params()
-        command = "cxfreeze runoutwiker.py " + " ".join(params)
+        command = "cxfreeze outwiker/__main__.py " + " ".join(params)
         with self.context.cd(self._src_dir):
             self.context.run(command)
 
