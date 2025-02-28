@@ -13,7 +13,7 @@ class ToasterController:
     def __init__(self, parent, application):
         self._parent = parent
         self._application = application
-        self._theme = Theme()
+        self._theme = self._application.theme
         self._config = GeneralGuiConfig(application.config)
         self._updateSettings()
 
@@ -48,8 +48,8 @@ class ToasterController:
 
     def showError(self, message):
         title = _('Error')
-        captionBackgroundColor = self._theme.colorErrorBackground
-        captionForegroundColor = self._theme.colorErrorForeground
+        captionBackgroundColor = self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_ERROR_CAPTION_BACKGROUND_COLOR)
+        captionForegroundColor = self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_ERROR_CAPTION_TEXT_COLOR)
         self.showMessage(message,
                          title,
                          captionBackgroundColor,
@@ -57,8 +57,8 @@ class ToasterController:
         self.counter.incShowErrorCount()
 
     def showInfo(self, title, message):
-        captionBackgroundColor = self._theme.colorInfoBackground
-        captionForegroundColor = self._theme.colorInfoForeground
+        captionBackgroundColor = self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_INFO_CAPTION_BACKGROUND_COLOR)
+        captionForegroundColor = self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_INFO_CAPTION_TEXT_COLOR)
         self.showMessage(message,
                          title,
                          captionBackgroundColor,
@@ -81,7 +81,7 @@ class ToasterController:
             panel = InfoPanel(parent,
                               message, title,
                               captionBackgroundColor, captionForegroundColor)
-            parent.SetBackgroundColour(self._theme.colorToasterBackground)
+            parent.SetBackgroundColour(self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_BACKGROUND_COLOR))
             toasterbox.AddPanel(panel)
             toasterbox.SetPopupPauseTime(self.toaster_delay)
 

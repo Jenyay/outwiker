@@ -115,7 +115,7 @@ def run(c, args=''):
     Run OutWiker from sources
     '''
     with c.cd("src"):
-        c.run('{} runoutwiker.py {}'.format(getPython(), args))
+        c.run('{} -m outwiker {}'.format(getPython(), args))
 
 
 @task(iterable=['params'])

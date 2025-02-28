@@ -1,4 +1,4 @@
-# Install to /app unless otherwise specified, such as `make PREFIX=/app`
+#abef24b5c4c9173828aa1b99247669712ca13c1за3 Install to /app unless otherwise specified, such as `make PREFIX=/app`
 PREFIX=/app
 
 # What to run to install various files

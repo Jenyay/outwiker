@@ -12,6 +12,8 @@ import wx
 
 from outwiker.app.core.logredirector import LogRedirector
 from outwiker.app.gui.mainwindow import MainWindow
+from outwiker.app.gui.themecontroller import ThemeController
+from outwiker.core.application import Application
 from outwiker.core.i18n import initLocale
 from outwiker.core.init import init_page_factories
 from outwiker.core.system import getPluginsDirList
@@ -25,7 +27,9 @@ class OutWikerApplication(wx.App):
     OutWiker application class
     """
 
-    def __init__(self, application):
+    def __init__(self, application: Application):
+        # Disable dark theme for GTK in Linux
+        os.environ['GTK_THEME'] = ':light'
         super().__init__()
 
         self.logFileName = 'outwiker.log'
@@ -36,6 +40,9 @@ class OutWikerApplication(wx.App):
         self._locale = initLocale(self._application.config)
         self._initLocale()
         init_page_factories()
+        self._themeController = ThemeController(self._application)
+        self._themeController.setTheme(self._application.theme)
+        self._themeController.loadParams()
 
     def _initLocale(self):
         # Fix a locale problem with Python 3.8 and wxPython 4.1

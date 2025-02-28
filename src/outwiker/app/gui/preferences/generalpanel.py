@@ -7,18 +7,18 @@ from outwiker.gui.preferences import configelements
 from outwiker.core.defines import URL_TRANSLATE
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
-from outwiker.gui.theme import get_theme
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
+from outwiker.gui.theme import Theme
 
 
 class GeneralPanel(BasePrefPanel):
     def __init__(self, parent, application):
         super().__init__(parent)
+        self._application = application
 
         self.generalConfig = GeneralGuiConfig(application.config)
         self.mainWindowConfig = MainWindowConfig(application.config)
         self.i18nConfig = outwiker.core.i18n.I18nConfig(application.config)
-        self._theme = get_theme(application)
 
         self.MIN_AUTOSAVE_INTERVAL = 0
         self.MAX_AUTOSAVE_INTERVAL = 3600
@@ -210,10 +210,14 @@ class GeneralPanel(BasePrefPanel):
         self.helpTranslateHyperLink = HyperLinkCtrl(
             self, label=_("Help with translation"), URL=URL_TRANSLATE
         )
+
+        hyperlinkColor = wx.Colour(
+            self._application.theme.get(Theme.SECTION_GENERAL, Theme.HYPERLINK_COLOR)
+        )
         self.helpTranslateHyperLink.SetColours(
-            self._theme.colorHyperlink,
-            self._theme.colorHyperlink,
-            self._theme.colorHyperlink,
+            hyperlinkColor,
+            hyperlinkColor,
+            hyperlinkColor,
         )
 
         main_sizer.Add(languageSizer, flag=wx.EXPAND)
@@ -234,9 +238,9 @@ class GeneralPanel(BasePrefPanel):
         pageTabSizer.AddGrowableCol(1)
         pageTabSizer.AddGrowableRow(0)
 
-        pageTabLabel, self.pageTabComboBox = self._createLabelAndComboBox(
+        self.pageTabComboBox = self._createLabelAndComboBox(
             _("Default opening page mode"), pageTabSizer
-        )
+        )[1]
 
         self.pageTabComboBox.SetMinSize((self.PAGE_TAB_COMBO_WIDTH, -1))
         self._fillPageTabComboBox()

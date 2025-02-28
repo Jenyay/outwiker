@@ -210,8 +210,8 @@ class MainWindow(wx.Frame):
         self._createToolbars()
 
         logger.debug("MainWindow. Create the MainWndController")
-        self.controller = MainWndController(self, self._application)
-        self.controller.loadMainWindowParams()
+        self.__mainWndController = MainWndController(self, self._application)
+        self.__mainWndController.loadMainWindowParams()
 
         logger.debug("MainWindow. Create the MainPanesController")
         self.__panesController = MainPanesController(self._application, self)
@@ -244,8 +244,8 @@ class MainWindow(wx.Frame):
 
         self.__panesController.loadPanesSize()
         self._addActionsGui()
-        self.controller.enableGui()
-        self.controller.updateRecentMenu()
+        self.__mainWndController.enableGui()
+        self.__mainWndController.updateRecentMenu()
         self.__panesController.updateViewMenu()
         self.treePanel.panel.addButtons()
         self.toaster = ToasterController(self, self._application)
@@ -610,7 +610,7 @@ class MainWindow(wx.Frame):
         self._destroyCoreControllers()
 
         self.trayController.destroy()
-        self.controller.destroy()
+        self.__mainWndController.destroy()
 
         self.auiManager.UnInit()
         self.auiManager.Destroy()
@@ -684,7 +684,7 @@ class MainWindow(wx.Frame):
         """
         Возврат из полноэкранного режима
         """
-        self.controller.loadMainWindowParams()
+        self.__mainWndController.loadMainWindowParams()
         # The bug (?) in wxPython under Ubuntu spoils check items after
         # full screen mode
         if getOS().name != "unix":

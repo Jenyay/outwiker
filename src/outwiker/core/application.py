@@ -8,6 +8,7 @@ from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.pageuiddepot import PageUidDepot
+from outwiker.gui.theme import Theme
 
 logger = logging.getLogger('outwiker.core.application')
 
@@ -26,6 +27,7 @@ class Application:
         self.actionController = None
         self.plugins = PluginsLoader(self)
         self.pageUidDepot = PageUidDepot()
+        self.__theme = Theme()
 
         # Set to True for unit tests
         self.testMode = False
@@ -380,12 +382,14 @@ class Application:
         self.fullConfigPath = fullConfigPath
         self.config = Config(fullConfigPath)
         self.recentWiki = RecentWiki(self.config)
+        self.__theme.loadFromConfig(self.config)
 
     def clear(self):
         if self.wikiroot is not None:
             self.__unbindWikiEvents(self.wikiroot)
 
         self._unbindAllEvents()
+        self.__theme.clear()
         self.wikiroot = None
         self.config = None
         self.mainWindow = None
@@ -398,6 +402,10 @@ class Application:
 
         for key in list(self.customEvents.getKeys()):
             self.customEvents.clear(key)
+
+    @property
+    def theme(self) -> Theme:
+        return self.__theme
 
     @property
     def wikiroot(self):

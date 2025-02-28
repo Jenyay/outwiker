@@ -18,6 +18,7 @@ from outwiker.gui.defines import (
     NOTES_TREE_MIN_FONT_SIZE,
     NOTES_TREE_MAX_FONT_SIZE,
 )
+from outwiker.gui.theme import Theme
 
 
 NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
@@ -232,8 +233,9 @@ class _NotesTreeItemPropertiesCalculator:
 
 
 class _ItemsViewInfo:
-    def __init__(self, window: wx.Window) -> None:
+    def __init__(self, window: wx.Window, theme: Theme) -> None:
         self._window = window
+        self._theme = theme
         self._dc = wx.ClientDC(self._window)
 
         # Sizes
@@ -258,21 +260,6 @@ class _ItemsViewInfo:
         self.selection_margin_vertical = 2
         self.order_marker_weight = 3
 
-        # Colors
-        self.back_color = window.GetBackgroundColour()
-        self.fore_color = window.GetForegroundColour()
-
-        self.back_color_selected = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
-        self.back_color_hovered = wx.Colour(
-            self.back_color_selected.GetRed(),
-            self.back_color_selected.GetGreen(),
-            self.back_color_selected.GetBlue(),
-            30,
-        )
-
-        self.font_color_selected = wx.SystemSettings.GetColour(
-            wx.SYS_COLOUR_HIGHLIGHTTEXT
-        )
         self.drop_hover_color = wx.Colour(
             self.back_color_selected.GetRed(),
             self.back_color_selected.GetGreen(),
@@ -280,31 +267,39 @@ class _ItemsViewInfo:
             100,
         )
 
+    @property
+    def back_color(self) -> wx.Colour:
+        return wx.Colour(self._theme.get(Theme.SECTION_GENERAL, Theme.BACKGROUND_COLOR))
+
+    @property
+    def font_color_normal(self) -> wx.Colour:
+        return wx.Colour(self._theme.get(Theme.SECTION_GENERAL, Theme.TEXT_COLOR))
+
+    @property
+    def lines_color(self) -> wx.Colour:
+        return wx.Colour(self._theme.get(Theme.SECTION_GENERAL, Theme.TEXT_COLOR))
+
+    @property
+    def order_between_color(self) -> wx.Colour:
+        return wx.Colour(self._theme.get(Theme.SECTION_GENERAL, Theme.TEXT_COLOR))
+
+    @property
+    def back_color_selected(self) -> wx.Colour:
+        return wx.Colour(self._theme.get(Theme.SECTION_TREE, Theme.SELECTION_COLOR))
+
+    @property
+    def font_color_selected(self) -> wx.Colour:
+        return wx.Colour(self._theme.get(Theme.SECTION_TREE, Theme.SELECTION_TEXT_COLOR))
+
+    @property
+    def back_color_hovered(self) -> wx.Colour:
+        return wx.Colour(self._theme.get(Theme.SECTION_TREE, Theme.HIGHLIGHTING_COLOR))
+
     def _update_line_height(self):
         self.line_height = self.icon_height + 10
         title_height = self.getTextHeight("Yy")
         if self.line_height <= title_height + 4:
             self.line_height = title_height + 10
-
-    @property
-    def back_color(self) -> wx.Colour:
-        return self._back_color
-
-    @back_color.setter
-    def back_color(self, value: wx.Colour):
-        self._back_color = value
-        self.back_color_normal = self._back_color
-
-    @property
-    def fore_color(self) -> wx.Colour:
-        return self._fore_color
-
-    @fore_color.setter
-    def fore_color(self, value: wx.Colour):
-        self._fore_color = value
-        self.font_color_normal = self._fore_color
-        self.lines_color = self._fore_color
-        self.order_between_color = self._fore_color
 
     def _update_font(self):
         self._title_font = wx.Font(wx.FontInfo(self._font_size))
@@ -477,11 +472,11 @@ class _ItemsPainter:
         self._text_height = None
 
     def __enter__(self):
-        self._back_brush_normal = wx.Brush(self._view_info.back_color_normal)
+        self._back_brush_normal = wx.Brush(self._view_info.back_color)
         self._back_brush_selected = wx.Brush(self._view_info.back_color_selected)
         self._back_brush_hovered = wx.Brush(self._view_info.back_color_hovered)
 
-        self._back_pen_normal = wx.Pen(self._view_info.back_color_normal)
+        self._back_pen_normal = wx.Pen(self._view_info.back_color)
         self._back_pen_selected = wx.Pen(self._view_info.back_color_selected)
         self._back_pen_hovered = wx.Pen(self._view_info.back_color_hovered)
 
@@ -517,7 +512,7 @@ class _ItemsPainter:
             self._gc.Flush()
 
     def fillBackground(self):
-        back_color = self._view_info.back_color_normal
+        back_color = self._view_info.back_color
         self._dc.SetBrush(wx.Brush(back_color))
         self._dc.SetPen(wx.Pen(back_color))
         width, height = self._window.GetClientSize()
@@ -588,7 +583,7 @@ class _ItemsPainter:
             else:
                 self._dc.SetTextForeground(self._view_info.font_color_selected)
         else:
-            self._dc.SetTextBackground(self._view_info.back_color_normal)
+            self._dc.SetTextBackground(self._view_info.back_color)
             if customTitleColor is not None and customTitleColor.IsOk():
                 self._dc.SetTextForeground(customTitleColor)
             else:
@@ -667,9 +662,10 @@ class _ItemsPainter:
 
 
 class NotesTreeCtrl2(wx.ScrolledWindow):
-    def __init__(self, parent: wx.Window):
+    def __init__(self, parent: wx.Window, theme: Theme) -> None:
         super().__init__(parent)
-        self._view_info = _ItemsViewInfo(self)
+        self._theme = theme
+        self._view_info = _ItemsViewInfo(self, self._theme)
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
 
@@ -748,13 +744,13 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
 
-    def SetBackgroundColour(self, colour):
-        super().SetBackgroundColour(colour)
-        self._view_info.back_color = colour
+    # def SetBackgroundColour(self, colour):
+    #     super().SetBackgroundColour(colour)
+    #     self._view_info.back_color = colour
 
-    def SetForegroundColour(self, colour):
-        super().SetForegroundColour(colour)
-        self._view_info.fore_color = colour
+    # def SetForegroundColour(self, colour):
+    #     super().SetForegroundColour(colour)
+    #     self._view_info.fore_color = colour
 
     def addExtraIcon(self, fileName: str) -> int:
         return self._extraIconsCache.add(fileName)
