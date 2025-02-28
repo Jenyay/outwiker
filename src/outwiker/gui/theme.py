@@ -18,6 +18,7 @@ class Theme:
     SECTION_EDITOR = "Editor"
     SECTION_HTML_EDITOR = "HtmlEditor"
     SECTION_WIKI_EDITOR = "WikiEditor"
+    SECTION_NOTIFICATION = "Notification"
 
     # General section
     BACKGROUND_COLOR = "BackgroundColor"
@@ -26,10 +27,22 @@ class Theme:
     SELECTION_COLOR = "SelectionColor"
     SELECTION_TEXT_COLOR = "SelectionTextColor"
     SHADOW_COLOR = "ShadowColor"
+    CONTROL_BORDER_COLOR = "ControlBorderColor"
+    CONTROL_BORDER_SELECTED_COLOR = "ControlBorderSelectedColor"
+    STATIC_LINE_COLOR = "StaticLineColor"
+    ROUND_RADIUS = "RoundRadius"
 
     # Tree section
     HIGHLIGHTING_COLOR = "HighlightingColor"
     HIGHLIGHTING_TEXT_COLOR = "HighlightingTextColor"
+
+    # Notification
+    NOTIFICATION_BACKGROUND_COLOR = "BackgroundColor"
+    NOTIFICATION_TEXT_COLOR = "TextColor"
+    NOTIFICATION_ERROR_CAPTION_BACKGROUND_COLOR = "ErrorCaptionBackgroundColor"
+    NOTIFICATION_ERROR_CAPTION_TEXT_COLOR = "ErrorCaptionTextColor"
+    NOTIFICATION_INFO_CAPTION_BACKGROUND_COLOR = "InfoCaptionBackgroundColor"
+    NOTIFICATION_INFO_CAPTION_TEXT_COLOR = "InfoCaptionTextColor"
 
     # Render
     # RENDER_STYLES = "Styles"
@@ -41,18 +54,6 @@ class Theme:
         self._data: Dict[str, Tuple[Any, Any]] = {}
         self._initDefaults()
         self._changed = False
-
-        self.colorBorder = "#000000"
-        self.colorBorderSelected = "#0000FF"
-        self.colorShadow = "#AAAAAA"
-        self.colorTextNormal = "#000000"
-        self.colorErrorBackground = "#c80003"
-        self.colorErrorForeground = "#E3E3E3"
-        self.colorInfoBackground = "#1989FF"
-        self.colorInfoForeground = "#E3E3E3"
-        self.colorToasterBackground = "#FFFFFF"
-        self.colorStaticLine = self.colorBackgroundSelected
-        self.roundRadius = 0
 
         # Event occurs after theme changing
         # Parameters:
@@ -66,11 +67,22 @@ class Theme:
         self.addParam(self.SECTION_GENERAL, self.SELECTION_COLOR, "#0000FF")
         self.addParam(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR, "#FFFFFF")
         self.addParam(self.SECTION_GENERAL, self.SHADOW_COLOR, "#AAAAAA")
+        self.addParam(self.SECTION_GENERAL, self.CONTROL_BORDER_COLOR, "#000000")
+        self.addParam(self.SECTION_GENERAL, self.CONTROL_BORDER_SELECTED_COLOR, "#0000FF")
+        self.addParam(self.SECTION_GENERAL, self.STATIC_LINE_COLOR, "#AAAAAA")
+        self.addParam(self.SECTION_GENERAL, self.ROUND_RADIUS, 0)
 
         self.addParam(self.SECTION_TREE, self.SELECTION_COLOR, "#0000FF")
         self.addParam(self.SECTION_TREE, self.SELECTION_TEXT_COLOR, "#FFFFFF")
         self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_COLOR, "#E1EFFA")
         self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_TEXT_COLOR, "#000000")
+
+        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_BACKGROUND_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_TEXT_COLOR, "#000000")
+        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_ERROR_CAPTION_BACKGROUND_COLOR, "#C80003")
+        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_ERROR_CAPTION_TEXT_COLOR, "#E3E3E3")
+        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_INFO_CAPTION_BACKGROUND_COLOR, "#1989FF")
+        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_INFO_CAPTION_TEXT_COLOR, "#E3E3E3")
 
     @property
     def colorBackground(self):
@@ -160,6 +172,8 @@ class Theme:
         mainWindowConfig = MainWindowConfig(config)
         self.set(self.SECTION_GENERAL, self.BACKGROUND_COLOR, mainWindowConfig.mainPanesBackgroundColor.value)
         self.set(self.SECTION_GENERAL, self.TEXT_COLOR, mainWindowConfig.mainPanesTextColor.value)
+        self.set(self.SECTION_NOTIFICATION, self.NOTIFICATION_BACKGROUND_COLOR, mainWindowConfig.mainPanesBackgroundColor.value)
+        self.set(self.SECTION_NOTIFICATION, self.NOTIFICATION_TEXT_COLOR, mainWindowConfig.mainPanesTextColor.value)
 
     def sendEvent(self):
         if self._changed:

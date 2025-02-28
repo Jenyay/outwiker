@@ -10,5 +10,5 @@ class StickyButtonThemed(StickyButton):
         self.SetColorToggled(theme.colorBackgroundSelected)
         self.SetColorTextNormal(theme.colorText)
         self.SetColorTextToggled(theme.colorTextSelected)
-        self.SetColorShadow(theme.colorShadow)
-        self.SetRoundRadius(theme.roundRadius)
+        self.SetColorShadow(theme.get(Theme.SECTION_GENERAL, Theme.SHADOW_COLOR))
+        self.SetRoundRadius(theme.get(Theme.SECTION_GENERAL, Theme.ROUND_RADIUS))
