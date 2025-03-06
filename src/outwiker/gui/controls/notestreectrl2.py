@@ -289,7 +289,9 @@ class _ItemsViewInfo:
 
     @property
     def font_color_selected(self) -> wx.Colour:
-        return wx.Colour(self._theme.get(Theme.SECTION_TREE, Theme.SELECTION_TEXT_COLOR))
+        return wx.Colour(
+            self._theme.get(Theme.SECTION_TREE, Theme.SELECTION_TEXT_COLOR)
+        )
 
     @property
     def back_color_hovered(self) -> wx.Colour:
@@ -341,16 +343,16 @@ class _ItemsViewInfo:
         return self.getIconLeft(item) + self.icon_width
 
     def getExtraIconLeft(self, item: NotesTreeItem, n: int) -> int:
-        return self.getIconRight(item) + self.extra_icons_left_margin + (
-            self.extra_icon_width + self.extra_icons_left_margin
-        ) * n
-
-    def getExtraIconsRight(self, item: NotesTreeItem) -> int:
         return (
             self.getIconRight(item)
-            + (self.extra_icons_left_margin + self.extra_icon_width)
-            * self._getExtraIconsCount(item)
+            + self.extra_icons_left_margin
+            + (self.extra_icon_width + self.extra_icons_left_margin) * n
         )
+
+    def getExtraIconsRight(self, item: NotesTreeItem) -> int:
+        return self.getIconRight(item) + (
+            self.extra_icons_left_margin + self.extra_icon_width
+        ) * self._getExtraIconsCount(item)
 
     def getSelectionLeft(self, item: NotesTreeItem) -> int:
         return self.getExtraIconsRight(item) + self.title_left_margin // 2
@@ -853,6 +855,15 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         expanded = not item.isExpanded()
         self.expand(page, expanded, update=True)
 
+        # Select collapsed page if current selected page in collapsed branch
+        oldSelectedItem = self._getSelectedItem()
+        if (
+            not expanded
+            and oldSelectedItem is not None
+            and page.isChild(oldSelectedItem.getPage())
+        ):
+            self._onSelectItem(item, oldSelectedItem)
+
     def _onSelectItem(
         self, item: NotesTreeItem, oldSelectedItem: Optional[NotesTreeItem]
     ):
@@ -1055,7 +1066,10 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self._resetDragMode()
 
-        if self._view_info.isPointInItem(item, x, y) and self._leftButtonDownItem == item:
+        if (
+            self._view_info.isPointInItem(item, x, y)
+            and self._leftButtonDownItem == item
+        ):
             oldSelectedItem = self._getSelectedItem()
             if oldSelectedItem != item:
                 self._onSelectItem(item, oldSelectedItem)
