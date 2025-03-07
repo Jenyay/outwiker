@@ -46,6 +46,10 @@ classifiers=[
 
 dynamic = ["version"]
 
+[project.urls]
+Repository = "https://github.com/Jenyay/outwiker.git"
+Issues = "https://github.com/Jenyay/outwiker/issues"
+
 [dependency-groups]
 dev = [
     "invoke==2.2.0",
@@ -57,12 +61,14 @@ dev = [
     "colorama==0.4.6",
     "sphinx>=7.1",
     "lief==0.15.1",
-#"owbuildtools @ file:///${PROJECT_ROOT}/owbuildtools",
+    "owbuildtools",
 ]
-
 
 [tool.uv]
 default-groups = ["dev"]
+
+[tool.uv.sources]
+owbuildtools = { path = "owbuildtools", editable = true }
 
 [project.urls]
 Homepage = "https://jenyay.net/Outwiker/English"
