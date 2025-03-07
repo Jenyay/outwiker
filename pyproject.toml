@@ -46,6 +46,10 @@ classifiers=[
 
 dynamic = ["version"]
 
+[project.urls]
+Repository = "https://github.com/Jenyay/outwiker.git"
+Issues = "https://github.com/Jenyay/outwiker/issues"
+
 [dependency-groups]
 dev = [
     "invoke==2.2.0",
