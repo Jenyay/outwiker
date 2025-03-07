@@ -252,9 +252,8 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
 
     def get_params(self):
         params = [
-            "-OO",
-            "-c",
-            "-s",
+            "--optimize=2",
+            "--silent",
             "--base-name Win32GUI",
             '--target-dir "{}"'.format(self._dist_dir),
             "--target-name outwiker",
@@ -270,6 +269,7 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
         params = self.get_params()
         command = "cxfreeze outwiker/__main__.py " + " ".join(params)
         with self.context.cd(self._src_dir):
+            print_info(command)
             self.context.run(command)
 
         self._remove_files()

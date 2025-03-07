@@ -57,8 +57,7 @@ dev = [
     "colorama==0.4.6",
     "sphinx>=7.1",
     "lief==0.15.1",
-    #owbuildtools = {editable = true, path = "./owbuildtools"}
-    #"outwiker = {editable = true, path = '.'}"
+    #"owbuildtools @ file:///${PROJECT_ROOT}/owbuildtools",
 ]
 
 
