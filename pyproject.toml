@@ -1,6 +1,5 @@
 [project]
 name = "outwiker"
-version = "4.0.0.951"
 description = "A cross-platform software for keeping your notes in a tree"
 authors = [
 	{name = "Eugene Ilin (aka Jenyay)", email = "jenyay.ilin@gmail.com"},
@@ -45,6 +44,8 @@ classifiers=[
 	"Topic :: Text Processing :: Markup",
 ]
 
+dynamic = ["version"]
+
 [dependency-groups]
 dev = [
     "invoke==2.2.0",
@@ -60,6 +61,7 @@ dev = [
     #"outwiker = {editable = true, path = '.'}"
 ]
 
+
 [tool.uv]
 default-groups = ["dev"]
 
@@ -74,3 +76,13 @@ build-backend = "setuptools.build_meta:__legacy__"
 
 [project.scripts]
 outwiker = "outwiker.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["outwiker.tests*"]
+
+[tool.setuptools.exclude-package-data]
+outwiker = ["tests*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "outwiker.__version_str__"}
