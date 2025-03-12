@@ -55,10 +55,13 @@ class IconsCollection:
         """
         Fill _groups and _groupsCover
         """
-        self._groups = {}
-        self._groupsCover = {}
+        self._groups = {self._rootGroupName: []}
+        self._groupsCover = {self._rootGroupName: None}
 
-        rootFiles = [self._rootGroupName] + os.listdir(rootFolder)
+        rootFiles = [self._rootGroupName]
+
+        if os.path.exists(rootFolder):
+            rootFiles += os.listdir(rootFolder)
 
         for itemname in rootFiles:
             fullpath = os.path.join(rootFolder, itemname)

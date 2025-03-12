@@ -138,7 +138,6 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
         return [
             "help",
             "iconset",
-            "images",
             "locale",
             "spell",
             "styles",
@@ -260,7 +259,7 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
             "--includes {}".format(",".join(self.get_includes())),
             "--excludes {}".format(",".join(self.get_excludes())),
             "--include-files {}".format(",".join(self.get_includes_dirs())),
-            "--icon images/outwiker.ico",
+            "--icon outwiker/data/images/outwiker.ico",
         ]
 
         return params

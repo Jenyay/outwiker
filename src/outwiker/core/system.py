@@ -17,6 +17,7 @@ from uuid import UUID
 
 import wx
 
+import outwiker
 from outwiker.core.images import find_svg
 
 from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
@@ -32,6 +33,7 @@ from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    DEFAULT_CONFIG_DIR,
                                    DEFAULT_CONFIG_NAME,
+                                   DATA_FOLDER_NAME,
                                    )
 
 
@@ -267,6 +269,10 @@ def getCurrentDir() -> str:
     return current_dir
 
 
+def getMainModulePath() -> str:
+    return str(Path(outwiker.__file__).parent.resolve())
+
+
 def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     """
     Вернуть полный путь до файла настроек.
@@ -310,8 +316,12 @@ def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     return confPath
 
 
+def getMainModuleDataPath() -> str:
+    return os.path.join(getMainModulePath(), DATA_FOLDER_NAME)
+
+
 def getImagesDir() -> str:
-    return op.join(getCurrentDir(), IMAGES_FOLDER_NAME)
+    return op.join(getMainModuleDataPath(), IMAGES_FOLDER_NAME)
 
 
 def getBuiltinImagePath(*relative_image_name: str) -> str:
@@ -383,17 +393,19 @@ def getSpecialDirList(dirname,
     стилей и т.п., расположение которых зависит от расположения файла настроек)
     """
     # Директория рядом с запускаемым файлом
-    programSpecialDir = op.abspath(op.join(getCurrentDir(), dirname))
+    programSpecialDir = op.abspath(getCurrentDir())
+
+    # Data directory in outwiker module directory
+    moduleDataDir = getMainModuleDataPath()
 
     # Директория рядом с файлом настроек
     configdir = op.dirname(getConfigPath(configDirName, configFileName))
-    specialDir = op.abspath(op.join(configdir, dirname))
 
-    dirlist = [programSpecialDir]
-    if programSpecialDir != specialDir:
-        dirlist.append(specialDir)
+    dirlist = [moduleDataDir, programSpecialDir]
+    if programSpecialDir != configdir:
+        dirlist.append(configdir)
 
-    return dirlist
+    return [os.path.join(parent, dirname) for parent in dirlist]
 
 
 def openInNewWindow(path, args=[]):

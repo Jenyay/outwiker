@@ -13,7 +13,7 @@ from outwiker.app.owapplication import OutWikerApplication
 from outwiker.app.core.starter import Starter, StarterExit
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_DEBUG
-from outwiker.core.system import getOS, getConfigPath
+from outwiker.core.system import getOS, getConfigPath, getMainModulePath
 from outwiker.core.system import getSpecialDirList
 
 
@@ -31,6 +31,7 @@ def print_info():
     logger.debug("Current locale: {}".format(locale.setlocale(locale.LC_ALL, None)))
     logger.debug('Decimal point: "{}"'.format(locale.localeconv()["decimal_point"]))
     logger.debug("Current working directory: {}".format(os.getcwd()))
+    logger.debug("Main module directory: {}".format(getMainModulePath()))
     for n, dirname in enumerate(getSpecialDirList("")):
         logger.debug("Special directory [{}]: {}".format(n, dirname))
 

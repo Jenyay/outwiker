@@ -6,11 +6,11 @@ import os.path
 from .defines import CUSTOM_DICT_LANG
 
 
-class DictsFinder (object):
+class DictsFinder:
     """
     Class for searching spell dictionaries in many folders
     """
-    dictExtensions = [u".aff", u".dic"]
+    dictExtensions = [".aff", ".dic"]
 
     def __init__(self, dirlist):
         self._dirlist = dirlist
@@ -40,6 +40,9 @@ class DictsFinder (object):
 
     def _findLangs(self, path):
         langs = set()
+        if not os.path.exists(path):
+            return langs
+
         for fname in os.listdir(path):
             if fname.endswith(self.dictExtensions[0]):
                 lang = fname[:-len(self.dictExtensions[0])]
