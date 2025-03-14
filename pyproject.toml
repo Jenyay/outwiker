@@ -47,8 +47,9 @@ classifiers=[
 dynamic = ["version"]
 
 [project.urls]
-Repository = "https://github.com/Jenyay/outwiker.git"
-Issues = "https://github.com/Jenyay/outwiker/issues"
+Homepage = "https://jenyay.net/Outwiker/English"
+Documentation = "https://outwiker.readthedocs.io/"
+Repository = "https://github.com/Jenyay/outwiker"
 
 [dependency-groups]
 dev = [
@@ -64,17 +65,11 @@ dev = [
     "owbuildtools",
 ]
 
-
 [tool.uv]
 default-groups = ["dev"]
 
 [tool.uv.sources]
 owbuildtools = { path = "owbuildtools", editable = true }
-
-[project.urls]
-Homepage = "https://jenyay.net/Outwiker/English"
-Documentation = "https://outwiker.readthedocs.io/"
-Repository = "https://github.com/Jenyay/outwiker"
 
 [build-system]
 requires = ["setuptools", "wheel"]
