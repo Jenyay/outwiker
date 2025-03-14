@@ -16,8 +16,8 @@ dependencies = [
 	"psutil>=6.0.0",
 	"rcssmin>=1.1",
     "attrdict3==2.0.2",
-    "cacheman @ file:///${PROJECT_ROOT}/depends/cacheman",
-    "cyhunspell @ file:///${PROJECT_ROOT}/depends/cyhunspell",
+    "cacheman",
+    "cyhunspell",
 ]
 classifiers=[
 	"Development Status :: 3 - Alpha",
@@ -69,7 +69,12 @@ dev = [
 default-groups = ["dev"]
 
 [tool.uv.sources]
-owbuildtools = { path = "owbuildtools", editable = true }
+owbuildtools = { path = "./owbuildtools", editable = true }
+#cacheman = { git = "https://github.com/Jenyay/py_cache_manager" }
+#cyhunspell = { git = "https://github.com/Jenyay/cython_hunspell" }
+cyhunspell = { path = "./depends/cyhunspell" }
+cacheman = { path = "./depends/cacheman" }
+
 
 [build-system]
 requires = ["setuptools", "wheel"]
@@ -81,6 +86,9 @@ outwiker = "outwiker.__main__:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 exclude = ["outwiker.tests*"]
+
+[tool.setuptools.package-data]
+outwiker = ["data/**/*"]
 
 [tool.setuptools.exclude-package-data]
 outwiker = ["tests*"]
