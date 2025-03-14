@@ -30,6 +30,7 @@ class OutWikerApplication(wx.App):
     def __init__(self, application: Application):
         # Disable dark theme for GTK in Linux
         os.environ['GTK_THEME'] = ':light'
+        os.environ['WEBKIT_DISABLE_DMABUF_RENDERER'] = '1'
         super().__init__()
 
         self.logFileName = 'outwiker.log'
