@@ -20,14 +20,7 @@ install:
 	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/256x256/apps
 	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/scalable/apps
 	mkdir -p $(DESTDIR)/usr/share/pixmaps/
-	cp -r $(SRC_DIR)/help $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/iconset $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/images $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/locale $(OUTWIKER_DIR)
 	cp -r $(SRC_DIR)/outwiker $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/spell $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/styles $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/textstyles $(OUTWIKER_DIR)
 	mkdir -p $(OUTWIKER_DIR)/plugins
 	cp $(SRC_DIR)/runoutwiker.py $(OUTWIKER_DIR)
 	cp "copyright.txt" $(OUTWIKER_DIR)

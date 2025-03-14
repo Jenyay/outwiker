@@ -136,12 +136,6 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
 
     def get_includes_dirs(self):
         return [
-            "help",
-            "iconset",
-            "locale",
-            "spell",
-            "styles",
-            "textstyles",
             "plugins",
         ]
 
