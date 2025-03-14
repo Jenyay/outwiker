@@ -341,7 +341,7 @@ def getExtraIconPath(relative_image_name: str) -> str:
 
 
 def getTemplatesDir() -> str:
-    return op.join(getCurrentDir(), STYLES_FOLDER_NAME)
+    return op.join(getMainModuleDataPath(), STYLES_FOLDER_NAME)
 
 
 def getExeFile() -> str:
