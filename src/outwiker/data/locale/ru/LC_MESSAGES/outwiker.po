@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 15:41+0300\n"
+"POT-Creation-Date: 2025-03-14 18:32+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -12,8 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 3.5\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: ../../..\n"
+"X-Poedit-Basepath: ../../../../..\n"
+"X-Poedit-SearchPath-0: outwiker/data\n"
+"X-Poedit-SearchPath-1: .\n"
 
 #: outwiker/app/actions/about.py:18
 msgid "About…"
@@ -1221,7 +1222,7 @@ msgstr "Новое имя метки"
 #: outwiker/app/gui/dialogs/renametagdialog.py:85
 #: outwiker/app/gui/dialogs/renametagdialog.py:90
 #: outwiker/app/gui/pagedialogpanels/appearancepanel.py:129
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:510
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:512
 #: outwiker/app/gui/preferences/iconsetpanel.py:227
 #: outwiker/app/gui/preferences/iconsetpanel.py:284
 #: outwiker/app/gui/preferences/iconsetpanel.py:291
@@ -1321,7 +1322,7 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: outwiker/app/gui/mainwndcontroller.py:237
+#: outwiker/app/gui/mainwndcontroller.py:232
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1332,11 +1333,11 @@ msgstr ""
 "Невозможно сохранить настройки.\n"
 "%s"
 
-#: outwiker/app/gui/notestree.py:271 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:257 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
-#: outwiker/app/gui/notestree.py:527
+#: outwiker/app/gui/notestree.py:513
 #, python-brace-format
 msgid ""
 "Attach files to the note '{title}'?\n"
@@ -1347,7 +1348,7 @@ msgstr ""
 "\n"
 "{files}"
 
-#: outwiker/app/gui/notestree.py:534
+#: outwiker/app/gui/notestree.py:520
 msgid "Attach files to the note?"
 msgstr "Прикрепить файлы к заметке?"
 
@@ -1380,47 +1381,47 @@ msgstr "Не изменять"
 msgid "Default style"
 msgstr "Стиль по умолчанию"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:106
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:108
 #: outwiker/gui/controls/pagelist_columns.py:196
 #: outwiker/pages/search/sortstrategies.py:64
 msgid "Title"
 msgstr "Заголовок"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:113
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:115
 msgid "Page icon"
 msgstr "Значок страницы"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:118
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:120
 #: outwiker/gui/unknownpagetype.py:28
 msgid "Page type"
 msgstr "Тип страницы"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:124
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:126
 msgid "New page position"
 msgstr "Положение новой страницы"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:166
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:168
 msgid "Top of the list"
 msgstr "Начало списка"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:167
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:169
 msgid "End of the list"
 msgstr "Конец списка"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:168
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:170
 msgid "Alphabetically"
 msgstr "По алфавиту"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:434
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:436
 #: outwiker/app/gui/preferences/iconsetpanel.py:175
 msgid "Not in groups"
 msgstr "Без групп"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:466
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:468
 msgid "Recent"
 msgstr "Последнее"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:509
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:511
 msgid "Can't set page icon\n"
 msgstr "Ошибка установки значка страницы\n"
 
@@ -1557,11 +1558,11 @@ msgstr "Язык (требуется перезапуск)"
 msgid "Help with translation"
 msgstr "Помочь с переводом"
 
-#: outwiker/app/gui/preferences/generalpanel.py:238
+#: outwiker/app/gui/preferences/generalpanel.py:242
 msgid "Default opening page mode"
 msgstr "Режим открытия страниц по умолчанию"
 
-#: outwiker/app/gui/preferences/generalpanel.py:319
+#: outwiker/app/gui/preferences/generalpanel.py:323
 msgid "Auto"
 msgstr "Авто"
 
@@ -2109,75 +2110,75 @@ msgstr "проверка"
 msgid "Can't create wiki\n"
 msgstr "Невозможно создать вики\n"
 
-#: outwiker/core/defines.py:86
+#: outwiker/core/defines.py:87
 msgid "versions_lang"
 msgstr "ru"
 
-#: outwiker/core/defines.py:89
+#: outwiker/core/defines.py:90
 msgid "awards"
 msgstr "награды"
 
-#: outwiker/core/defines.py:90
+#: outwiker/core/defines.py:91
 msgid "battery"
 msgstr "батарейка"
 
-#: outwiker/core/defines.py:91
+#: outwiker/core/defines.py:92
 msgid "books"
 msgstr "книги"
 
-#: outwiker/core/defines.py:92
+#: outwiker/core/defines.py:93
 msgid "computer"
 msgstr "компьютер"
 
-#: outwiker/core/defines.py:93
+#: outwiker/core/defines.py:94
 msgid "emotions"
 msgstr "эмоции"
 
-#: outwiker/core/defines.py:94
+#: outwiker/core/defines.py:95
 msgid "flags"
 msgstr "флаги"
 
-#: outwiker/core/defines.py:95
+#: outwiker/core/defines.py:96
 msgid "folders"
 msgstr "папки"
 
-#: outwiker/core/defines.py:96
+#: outwiker/core/defines.py:97
 msgid "food"
 msgstr "продукты"
 
-#: outwiker/core/defines.py:97
+#: outwiker/core/defines.py:98
 msgid "internet"
 msgstr "интернет"
 
-#: outwiker/core/defines.py:98
+#: outwiker/core/defines.py:99
 msgid "money"
 msgstr "деньги"
 
-#: outwiker/core/defines.py:99
+#: outwiker/core/defines.py:100
 msgid "people"
 msgstr "люди"
 
-#: outwiker/core/defines.py:100
+#: outwiker/core/defines.py:101
 msgid "signs"
 msgstr "знаки"
 
-#: outwiker/core/defines.py:101
+#: outwiker/core/defines.py:102
 msgid "software"
 msgstr "программы"
 
-#: outwiker/core/defines.py:102
+#: outwiker/core/defines.py:103
 msgid "tags"
 msgstr "ярлыки"
 
-#: outwiker/core/defines.py:103
+#: outwiker/core/defines.py:104
 msgid "weather"
 msgstr "погода"
 
-#: outwiker/core/defines.py:104
+#: outwiker/core/defines.py:105
 msgid "list"
 msgstr "список"
 
-#: outwiker/core/defines.py:105
+#: outwiker/core/defines.py:106
 msgid "bookmarks"
 msgstr "закладки"
 
@@ -2185,7 +2186,7 @@ msgstr "закладки"
 msgid "Line Breaks (<br/>)"
 msgstr "Разрывы строк (<br/>)"
 
-#: outwiker/core/i18n.py:129
+#: outwiker/core/i18n.py:124
 msgid "LANGUAGE_DEFAULT"
 msgstr "LANGUAGE_RUSSIAN"
 
@@ -2436,11 +2437,11 @@ msgstr "Ошибка запуска файла '%s'"
 msgid "Can't read file %s"
 msgstr "Ошибка чтения файла %s"
 
-#: outwiker/gui/iconlistctrl.py:139
+#: outwiker/gui/iconlistctrl.py:140
 msgid "Custom icon"
 msgstr "Пользовательский значок"
 
-#: outwiker/gui/iconlistctrl.py:141
+#: outwiker/gui/iconlistctrl.py:142
 msgid "Default icon"
 msgstr "Значок по умолчанию"
 
@@ -3393,8 +3394,8 @@ msgstr "[[ссылка | комментарий]]"
 #~ "!! First Wiki Page\n"
 #~ "\n"
 #~ "                       This is the first page. You can use a text "
-#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay."
-#~ "net | link]] and others.\n"
+#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://"
+#~ "jenyay.net | link]] and others.\n"
 #~ "                       "
 #~ msgstr ""
 #~ "!! Первая викистраница\n"
