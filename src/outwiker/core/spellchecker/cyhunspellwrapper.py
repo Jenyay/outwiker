@@ -70,14 +70,6 @@ class CyHunspellWrapper:
         logger.debug("Add custom dictionary: %s", customDictPath)
 
         dic_folder = os.path.dirname(customDictPath)
-        if not os.path.exists(dic_folder):
-            logger.debug("Dictionary directory not extists and will be created: %s.", dic_folder)
-            try:
-                os.makedirs(dic_folder)
-            except OSError:
-                logger.error("Can't create dictionary directory: %s", dic_folder)
-                return
-
         dic_file_name = os.path.basename(customDictPath)
         dic_name = dic_file_name[:-4]
         dic_file = customDictPath
