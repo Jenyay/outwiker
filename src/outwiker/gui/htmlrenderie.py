@@ -123,8 +123,6 @@ class HtmlRenderIEBase(HtmlRenderBase):
         href = event.GetURL()
         curr_href = self.render.GetCurrentURL()
 
-        print(nav_id, href, curr_href, self.canOpenUrl)
-
         logger.debug(
             "_onNavigating (%d). href=%s; curr_href=%s; canOpenUrl=%r",
             nav_id,
