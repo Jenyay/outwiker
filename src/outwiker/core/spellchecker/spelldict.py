@@ -5,7 +5,7 @@ import logging
 from typing import List
 
 
-logger = logging.getLogger("outwiker.core.spellchecker.dicfile")
+logger = logging.getLogger("outwiker.core.spellchecker.spelldict")
 
 
 def get_words_from_dic_file(dic_file: str) -> List[str]:

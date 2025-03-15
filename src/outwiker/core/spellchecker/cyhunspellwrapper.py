@@ -17,7 +17,7 @@ from .spelldict import (
 logger = logging.getLogger("outwiker.core.spellchecker.cyhunspell")
 
 
-class CyHunspellWrapper(object):
+class CyHunspellWrapper:
     """
     Wrapper around the Cyhunspell library
     """
@@ -70,6 +70,14 @@ class CyHunspellWrapper(object):
         logger.debug("Add custom dictionary: %s", customDictPath)
 
         dic_folder = os.path.dirname(customDictPath)
+        if not os.path.exists(dic_folder):
+            logger.debug("Dictionary directory not extists and will be created: %s.", dic_folder)
+            try:
+                os.makedirs(dic_folder)
+            except OSError:
+                logger.error("Can't create dictionary directory: %s", dic_folder)
+                return
+
         dic_file_name = os.path.basename(customDictPath)
         dic_name = dic_file_name[:-4]
         dic_file = customDictPath
@@ -91,6 +99,7 @@ class CyHunspellWrapper(object):
             self._customDicts.append((key, dic_file))
         except IOError:
             logger.error("Can't create custom dictionary: %s", customDictPath)
+            return
 
     def check(self, word: str):
         if not self._checkers:
