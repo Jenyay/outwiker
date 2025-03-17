@@ -438,6 +438,9 @@ class IconsController(BasePageDialogController):
                     title = self._localize(groupname)
 
                 iconslist = collection.getIcons(groupname)
+                if not iconslist:
+                    continue
+
                 cover = collection.getCover(groupname)
                 if cover is None:
                     cover = self._default_group_cover
