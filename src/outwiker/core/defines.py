@@ -79,6 +79,8 @@ DEFAULT_CONFIG_DIR = "outwiker"
 # Имя файла настроек по умолчанию
 DEFAULT_CONFIG_NAME = "outwiker.ini"
 
+OUTWIKER_PATH_ENV_VAR = "OUTWIKER_PATH"
+
 
 # To translate this words with xgettext
 if __name__ == "__main__":

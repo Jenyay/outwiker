@@ -34,6 +34,7 @@ from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    DEFAULT_CONFIG_DIR,
                                    DEFAULT_CONFIG_NAME,
                                    DATA_FOLDER_NAME,
+                                   OUTWIKER_PATH_ENV_VAR,
                                    )
 
 
@@ -392,16 +393,24 @@ def getSpecialDirList(dirname,
     Возвращает список "специальных" директорий (директорий для плагинов,
     стилей и т.п., расположение которых зависит от расположения файла настроек)
     """
-    # Директория рядом с запускаемым файлом
-    programSpecialDir = op.abspath(getCurrentDir())
+    dirlist = []
 
     # Data directory in outwiker module directory
     moduleDataDir = getMainModuleDataPath()
+    dirlist.append(moduleDataDir)
+
+    # Директория рядом с запускаемым файлом
+    programSpecialDir = op.abspath(getCurrentDir())
+    dirlist.append(programSpecialDir)
+
+    # Путь из переменной окружения OUTWIKER_PATH
+    custom_path = os.environ.get(OUTWIKER_PATH_ENV_VAR, '')
+    if custom_path:
+        dirlist.append(custom_path)
 
     # Директория рядом с файлом настроек
     configdir = op.dirname(getConfigPath(configDirName, configFileName))
 
-    dirlist = [moduleDataDir, programSpecialDir]
     if programSpecialDir != configdir:
         dirlist.append(configdir)
 

@@ -12,7 +12,7 @@ import outwiker
 from outwiker.app.owapplication import OutWikerApplication
 from outwiker.app.core.starter import Starter, StarterExit
 from outwiker.core.application import Application
-from outwiker.core.defines import APP_DATA_DEBUG
+from outwiker.core.defines import APP_DATA_DEBUG, OUTWIKER_PATH_ENV_VAR
 from outwiker.core.system import getOS, getConfigPath, getMainModulePath
 from outwiker.core.system import getSpecialDirList
 
@@ -26,14 +26,15 @@ def print_info():
             outwiker.__api_version__[0], outwiker.__api_version__[1]
         )
     )
-    logger.debug("Python version: {}".format(sys.version))
-    logger.debug("wxPython version: {}".format(wx.__version__))
-    logger.debug("Current locale: {}".format(locale.setlocale(locale.LC_ALL, None)))
-    logger.debug('Decimal point: "{}"'.format(locale.localeconv()["decimal_point"]))
-    logger.debug("Current working directory: {}".format(os.getcwd()))
-    logger.debug("Main module directory: {}".format(getMainModulePath()))
+    logger.debug("Python version: %s", sys.version)
+    logger.debug("wxPython version: %s", wx.__version__)
+    logger.debug("Current locale: %s", locale.setlocale(locale.LC_ALL, None))
+    logger.debug('Decimal point: "%s"', locale.localeconv()["decimal_point"])
+    logger.debug("Current working directory: %s", os.getcwd())
+    logger.debug("Main module directory: %s", getMainModulePath())
+    logger.debug("%s=%s", OUTWIKER_PATH_ENV_VAR, os.environ.get(OUTWIKER_PATH_ENV_VAR))
     for n, dirname in enumerate(getSpecialDirList("")):
-        logger.debug("Special directory [{}]: {}".format(n, dirname))
+        logger.debug("Special directory [%d]: %s", n, dirname)
 
 
 def main():
