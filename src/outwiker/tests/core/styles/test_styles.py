@@ -56,7 +56,7 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         style = Style()
         defaultStyle = style.getDefaultStyle()
         self.assertEqual(os.path.abspath(defaultStyle),
-                         os.path.abspath("src/styles/__default/__style.html"))
+                         os.path.abspath("src/outwiker/data/styles/__default/__style.html"))
 
     def testStylePageDefault(self):
         """

@@ -16,7 +16,7 @@ class SpellCheckerTest (unittest.TestCase):
 
         if not os.path.exists(self._pathToDicts):
             os.mkdir(self._pathToDicts)
-        self._dictsSrc = os.path.join('src', 'spell')
+        self._dictsSrc = os.path.join('src', 'outwiker', 'data', 'spell')
 
     def tearDown(self):
         removeDir(self._pathToDicts)
