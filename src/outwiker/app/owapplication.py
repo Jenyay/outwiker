@@ -91,8 +91,13 @@ class OutWikerApplication(wx.App):
                 locale.setlocale(locale.LC_ALL, "C")
 
     def OnInit(self):
+        self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
         NullTranslations().install()
         return True
+
+    def _onEndSession(self, event):
+        self.Unbind(wx.EVT_QUERY_END_SESSION, handler=self._onEndSession)
+        self._mainWindow.Destroy()
 
     def getMainWindow(self) -> Optional[MainWindow]:
         return self._mainWindow
