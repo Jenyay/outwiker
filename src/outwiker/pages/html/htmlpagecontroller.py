@@ -89,7 +89,8 @@ class HtmlPageController:
             PreprocessingParams(page.content),
             self._application.onPreprocessing)
 
-        if page.autoLineWrap:
+        pageAdapter = HtmlPageFactory().createPageAdapter(page)
+        if pageAdapter.autoLineWrap:
             content = self._changeContentByEvent(
                 page,
                 PreHtmlImprovingParams(content),
