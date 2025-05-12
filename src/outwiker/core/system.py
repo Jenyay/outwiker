@@ -14,6 +14,7 @@ import logging
 from pathlib import Path
 from typing import List, Union
 from uuid import UUID
+from functools import lru_cache 
 
 import wx
 
@@ -270,6 +271,7 @@ def getCurrentDir() -> str:
     return current_dir
 
 
+@lru_cache 
 def getMainModulePath() -> str:
     return str(Path(outwiker.__file__).parent.resolve())
 
@@ -317,14 +319,17 @@ def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     return confPath
 
 
+@lru_cache 
 def getMainModuleDataPath() -> str:
     return os.path.join(getMainModulePath(), DATA_FOLDER_NAME)
 
 
+@lru_cache 
 def getImagesDir() -> str:
     return op.join(getMainModuleDataPath(), IMAGES_FOLDER_NAME)
 
 
+@lru_cache 
 def getBuiltinImagePath(*relative_image_name: str) -> str:
     '''
     Return absolute path to image file from "images" directory
