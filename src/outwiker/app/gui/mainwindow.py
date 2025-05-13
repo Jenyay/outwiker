@@ -5,6 +5,8 @@ import logging
 import wx
 import wx.aui
 
+from line_profiler import profile
+
 from outwiker.app.actions.about import AboutAction
 from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.app.actions.addchildpage import AddChildPageAction
@@ -144,6 +146,7 @@ class MainWindow(wx.Frame):
 
         self.menuController.createSubMenu(guidefines.MENU_HELP, _("Help"))
 
+    @profile
     def _createToolbars(self):
         toolbars_menu = self.menuController.createSubMenu(
             guidefines.MENU_TOOLBARS, _("Toolbars"), guidefines.MENU_VIEW
@@ -173,6 +176,7 @@ class MainWindow(wx.Frame):
         [controller.clear() for controller in self._coreControllers]
         self._coreControllers = []
 
+    @profile
     def createGui(self):
         """
         Создать пункты меню, кнопки на панелях инструментов и т.п.
@@ -516,6 +520,7 @@ class MainWindow(wx.Frame):
         if self.auiManager:
             self.auiManager.Update()
 
+    @profile
     def _createAuiPanes(self):
         """
         Создание плавающих панелей

@@ -32,12 +32,14 @@ from outwiker.core.system import getBuiltinImagePath, getOS
 
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.guiconfig import AttachConfig, GeneralGuiConfig
+from line_profiler import profile
 
 
 logger = logging.getLogger('outwiker.gui.attachpanel')
 
 
 class AttachPanel(wx.Panel):
+    @profile
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
@@ -191,6 +193,7 @@ class AttachPanel(wx.Panel):
         for action in self._localHotKeys:
             actionController.removeHotkey(action.stringId)
 
+    @profile
     def _createGui(self, parent):
         toolbar = wx.ToolBar(parent, wx.ID_ANY, style=wx.TB_DOCKABLE)
         actionController = self._application.actionController

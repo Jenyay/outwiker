@@ -8,6 +8,7 @@ from gettext import NullTranslations
 from tempfile import NamedTemporaryFile, mkdtemp
 
 import wx
+from line_profiler import profile
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.app.owapplication import OutWikerApplication
@@ -84,6 +85,7 @@ class BaseOutWikerMixin(WikiTestMixin):
 
 
 class BaseOutWikerGUIMixin(BaseOutWikerMixin):
+    @profile
     def initApplication(self, lang='en', enableActionsGui=False):
         super().initApplication(lang)
 
@@ -99,6 +101,7 @@ class BaseOutWikerGUIMixin(BaseOutWikerMixin):
 
         Tester.dialogTester.clear()
 
+    @profile
     def destroyApplication(self):
         Tester.dialogTester.clear()
         self.outwiker_app.destroyMainWindow()

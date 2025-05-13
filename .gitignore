@@ -54,3 +54,4 @@ uv.lock
 __cache.tmp
 .mypy_cache
 .flatpak-builder
+profile_output*

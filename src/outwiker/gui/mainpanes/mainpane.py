@@ -3,6 +3,7 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
 
 import wx.aui
+from line_profiler import profile
 
 
 class MainPane(metaclass=ABCMeta):
@@ -10,6 +11,7 @@ class MainPane(metaclass=ABCMeta):
     Базовый класс для хранения основных панелей главного окна
     """
 
+    @profile
     def __init__(self, parent, auiManager, application):
         """
         parent - родитель панели

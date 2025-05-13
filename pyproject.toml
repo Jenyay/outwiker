@@ -62,6 +62,7 @@ dev = [
     "colorama==0.4.6",
     "sphinx>=7.1",
     "lief==0.15.1",
+    "line-profiler==4.2.0",
     "owbuildtools",
 ]
 
