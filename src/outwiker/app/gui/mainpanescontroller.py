@@ -19,9 +19,20 @@ class MainPanesController:
                           ShowHideTagsAction,
                           ShowHideAttachesAction]
 
-        self._panels = [self.__application.mainWindow.treePanel,
-                        self.__application.mainWindow.tagsCloudPanel,
-                        self.__application.mainWindow.attachPanel]
+        self._panels = [
+                        # self.__application.mainWindow.treePanel,
+                        # self.__application.mainWindow.tagsCloudPanel,
+                        # self.__application.mainWindow.attachPanel,
+                        ]
+
+        if self.__mainWindow.treePanel is not None:
+            self._panels.append(self.__mainWindow.treePanel)
+
+        if self.__mainWindow.tagsCloudPanel is not None:
+            self._panels.append(self.__mainWindow.tagsCloudPanel)
+
+        if self.__mainWindow.attachPanel is not None:
+            self._panels.append(self.__mainWindow.attachPanel)
 
         self.auiManager.SetDockSizeConstraint(0.8, 0.8)
         self.auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
@@ -103,19 +114,23 @@ class MainPanesController:
         Установить флажки напротив нужных пунктов меню "Вид",
         относящихся к панелям
         """
-        self.__application.actionController.check(
-            ShowHideAttachesAction.stringId,
-            self.__mainWindow.attachPanel.isShown()
-        )
+        if self.__mainWindow.attachPanel is not None:
+            self.__application.actionController.check(
+                ShowHideAttachesAction.stringId,
+                self.__mainWindow.attachPanel.isShown()
+            )
 
-        self.__application.actionController.check(
-            ShowHideTreeAction.stringId,
-            self.__mainWindow.treePanel.isShown()
-        )
 
-        self.__application.actionController.check(
-            ShowHideTagsAction.stringId,
-            self.__mainWindow.tagsCloudPanel.isShown()
-        )
+        if self.__mainWindow.treePanel is not None:
+            self.__application.actionController.check(
+                ShowHideTreeAction.stringId,
+                self.__mainWindow.treePanel.isShown()
+            )
+
+        if self.__mainWindow.tagsCloudPanel is not None:
+            self.__application.actionController.check(
+                ShowHideTagsAction.stringId,
+                self.__mainWindow.tagsCloudPanel.isShown()
+            )
 
         self.auiManager.Update()

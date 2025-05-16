@@ -5,7 +5,7 @@ import logging
 import wx
 import wx.aui
 
-from line_profiler import profile
+# from line_profiler import profile
 
 from outwiker.app.actions.about import AboutAction
 from outwiker.app.actions.addbookmark import AddBookmarkAction
@@ -85,6 +85,7 @@ from outwiker.pages.wiki.wikipagecontroller import WikiPageController
 from outwiker.pages.html.htmlpagecontroller import HtmlPageController
 from outwiker.pages.text.textpagecontroller import TextPageController
 from outwiker.pages.search.searchpagecontroller import SearchPageController
+import outwiker.core.defines as defines
 
 
 logger = logging.getLogger("outwiker.app.gui.mainwindow")
@@ -95,6 +96,9 @@ class MainWindow(wx.Frame):
         super().__init__(None)
         logger.debug("MainWindow initializing begin")
         self._application = application
+        self._treePanel = None
+        self._attachPanel = None
+        self._tagsCloudPanel = None
 
         # Variables to accurate watch for main window state
         self._realSize = None
@@ -108,6 +112,18 @@ class MainWindow(wx.Frame):
         self.__stdEventLoop = False
 
         logger.debug("MainWindow initializing end")
+
+    @property
+    def treePanel(self):
+        return self._treePanel
+
+    @property
+    def attachPanel(self):
+        return self._attachPanel
+
+    @property
+    def tagsCloudPanel(self):
+        return self._tagsCloudPanel
 
     def updateTrayIcon(self):
         self.trayController.updateTrayIcon()
@@ -146,7 +162,7 @@ class MainWindow(wx.Frame):
 
         self.menuController.createSubMenu(guidefines.MENU_HELP, _("Help"))
 
-    @profile
+    # @profile
     def _createToolbars(self):
         toolbars_menu = self.menuController.createSubMenu(
             guidefines.MENU_TOOLBARS, _("Toolbars"), guidefines.MENU_VIEW
@@ -176,7 +192,7 @@ class MainWindow(wx.Frame):
         [controller.clear() for controller in self._coreControllers]
         self._coreControllers = []
 
-    @profile
+    # @profile
     def createGui(self):
         """
         Создать пункты меню, кнопки на панелях инструментов и т.п.
@@ -251,7 +267,8 @@ class MainWindow(wx.Frame):
         self.__mainWndController.enableGui()
         self.__mainWndController.updateRecentMenu()
         self.__panesController.updateViewMenu()
-        self.treePanel.panel.addButtons()
+        if self.treePanel is not None:
+            self.treePanel.panel.addButtons()
         self.toaster = ToasterController(self, self._application)
 
         if self.mainWindowConfig.fullscreen.value:
@@ -520,7 +537,7 @@ class MainWindow(wx.Frame):
         if self.auiManager:
             self.auiManager.Update()
 
-    @profile
+    # @profile
     def _createAuiPanes(self):
         """
         Создание плавающих панелей
@@ -528,15 +545,21 @@ class MainWindow(wx.Frame):
         self.pagePanel = PageMainPane(
             self._mainContentPanel, self.auiManager, self._application
         )
-        self.treePanel = TreeMainPane(
-            self._mainContentPanel, self.auiManager, self._application
-        )
-        self.attachPanel = AttachMainPane(
-            self._mainContentPanel, self.auiManager, self._application
-        )
-        self.tagsCloudPanel = TagsCloudMainPane(
-            self._mainContentPanel, self.auiManager, self._application
-        )
+
+        if self._application.sharedData.get(defines.APP_DATA_CREATE_TREE_PANEL, True):
+            self._treePanel = TreeMainPane(
+                self._mainContentPanel, self.auiManager, self._application
+            )
+
+        if self._application.sharedData.get(defines.APP_DATA_CREATE_ATTACH_PANEL, True):
+            self._attachPanel = AttachMainPane(
+                self._mainContentPanel, self.auiManager, self._application
+            )
+
+        if self._application.sharedData.get(defines.APP_DATA_CREATE_TAGS_PANEL, True):
+            self._tagsCloudPanel = TagsCloudMainPane(
+                self._mainContentPanel, self.auiManager, self._application
+            )
 
     def _createStatusBar(self):
         """

@@ -1,6 +1,7 @@
 # coding: utf-8
 
 import wx
+# from line_profiler import profile
 
 from outwiker.app.services.tree import (openWiki,
                                         createNewWiki,
@@ -18,6 +19,7 @@ class ClosedTreePanel(BasePagePanel):
         super().__init__(parent, application)
         self._createGUI()
 
+    # @profile
     def _createGUI(self):
         # Button to create new notes tree
         self._createNotesTreeButton = wx.Button(

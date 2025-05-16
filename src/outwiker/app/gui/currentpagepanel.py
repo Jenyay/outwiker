@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import wx
-from line_profiler import profile
+# from line_profiler import profile
 
 from outwiker.app.services.messages import showError
 from outwiker.app.services.tree import openWiki
@@ -18,7 +18,7 @@ from outwiker.gui.images import readImage
 
 
 class CurrentPagePanel(wx.Panel):
-    @profile
+    # @profile
     def __init__(self, parent, application):
         super().__init__(parent, style=wx.TAB_TRAVERSAL)
         self._application = application

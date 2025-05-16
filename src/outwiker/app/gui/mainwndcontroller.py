@@ -272,8 +272,11 @@ class MainWndController:
         enabled = self._application.wikiroot is not None
 
         self._enableTools(enabled)
-        self._mainWindow.treePanel.panel.Enable(enabled)
-        self._mainWindow.attachPanel.panel.Enable(enabled)
+        if self._mainWindow.treePanel is not None:
+            self._mainWindow.treePanel.panel.Enable(enabled)
+
+        if self._mainWindow.attachPanel is not None:
+            self._mainWindow.attachPanel.panel.Enable(enabled)
 
         self._updateBookmarksState()
 
@@ -329,6 +332,8 @@ class MainWndController:
         ]
 
         for panel in panels:
+            if panel is None:
+                continue
             backColor = wx.Colour(config.mainPanesBackgroundColor.value)
             textColor = wx.Colour(config.mainPanesTextColor.value)
             if not backColor.IsOk():

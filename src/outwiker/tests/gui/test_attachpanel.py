@@ -17,7 +17,7 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
 
     def setUp(self):
-        self.initApplication()
+        self.initApplication(createAttachPanel=True)
         self.wikiroot = self.createWiki()
 
         factory = TextPageFactory()

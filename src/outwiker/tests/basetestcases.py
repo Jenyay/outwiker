@@ -8,7 +8,7 @@ from gettext import NullTranslations
 from tempfile import NamedTemporaryFile, mkdtemp
 
 import wx
-from line_profiler import profile
+# from line_profiler import profile
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.app.owapplication import OutWikerApplication
@@ -24,6 +24,7 @@ from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from .utils import removeDir
+import outwiker.core.defines as defines
 
 
 NullTranslations().install()
@@ -32,7 +33,8 @@ NullTranslations().install()
 class WikiTestMixin:
     def createWiki(self) -> WikiDocument:
         wikipath = mkdtemp(
-            prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
+            prefix="OutWiker_Абырвалг абырвалг_" + str(self.__class__.__name__)
+        )
         return createNotesTree(wikipath)
 
     def destroyWiki(self, wikiroot):
@@ -42,7 +44,7 @@ class WikiTestMixin:
 class BaseWxTestCase(unittest.TestCase):
     def setUp(self):
         self._wxapp = wx.App()
-        locale.setlocale(locale.LC_ALL, '')
+        locale.setlocale(locale.LC_ALL, "")
         self.mainWindow = None
 
     def tearDown(self):
@@ -60,7 +62,7 @@ class BaseWxTestCase(unittest.TestCase):
 
 
 class BaseOutWikerMixin(WikiTestMixin):
-    def initApplication(self, lang='en'):
+    def initApplication(self, lang="en"):
         self._config_path = self._getConfigPath()
         self.application = Application()
         self.application.clear()
@@ -80,14 +82,30 @@ class BaseOutWikerMixin(WikiTestMixin):
             os.remove(self._config_path)
 
     def _getConfigPath(self):
-        with NamedTemporaryFile(prefix='outwiker_config_', delete=False) as tmp_fp:
+        with NamedTemporaryFile(prefix="outwiker_config_", delete=False) as tmp_fp:
             return tmp_fp.name
 
 
 class BaseOutWikerGUIMixin(BaseOutWikerMixin):
-    @profile
-    def initApplication(self, lang='en', enableActionsGui=False):
+    # @profile
+    def initApplication(
+        self,
+        lang="en",
+        enableActionsGui=False,
+        createTreePanel=False,
+        createAttachPanel=False,
+        createTagsPanel=False,
+    ):
         super().initApplication(lang)
+        self.application.sharedData[defines.APP_DATA_CREATE_TREE_PANEL] = (
+            createTreePanel
+        )
+        self.application.sharedData[defines.APP_DATA_CREATE_ATTACH_PANEL] = (
+            createAttachPanel
+        )
+        self.application.sharedData[defines.APP_DATA_CREATE_TAGS_PANEL] = (
+            createTagsPanel
+        )
 
         self.outwiker_app = OutWikerApplication(self.application)
         self.outwiker_app.use_fake_html_render = True
@@ -101,7 +119,7 @@ class BaseOutWikerGUIMixin(BaseOutWikerMixin):
 
         Tester.dialogTester.clear()
 
-    @profile
+    # @profile
     def destroyApplication(self):
         Tester.dialogTester.clear()
         self.outwiker_app.destroyMainWindow()
@@ -194,7 +212,8 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.loader.disable(self.getPluginName())
 
         action = self.application.actionController.getAction(
-            SwitchCodeResultAction.stringId)
+            SwitchCodeResultAction.stringId
+        )
         action.run(None)
         self.loader.clear()
 
@@ -204,7 +223,8 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.loader.disable(self.getPluginName())
 
         action = self.application.actionController.getAction(
-            SwitchCodeResultAction.stringId)
+            SwitchCodeResultAction.stringId
+        )
         action.run(None)
         self.loader.clear()
 
@@ -214,7 +234,8 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.loader.clear()
 
         action = self.application.actionController.getAction(
-            SwitchCodeResultAction.stringId)
+            SwitchCodeResultAction.stringId
+        )
         action.run(None)
 
     def testDestroy_10(self):
@@ -223,5 +244,6 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.loader.clear()
 
         action = self.application.actionController.getAction(
-            SwitchCodeResultAction.stringId)
+            SwitchCodeResultAction.stringId
+        )
         action.run(None)

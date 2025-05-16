@@ -14,7 +14,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(createTreePanel=True)
         self.wikiroot = self.createWiki()
 
     def tearDown(self):

@@ -9,7 +9,7 @@ from gettext import NullTranslations
 from typing import Optional
 
 import wx
-from line_profiler import profile
+# from line_profiler import profile
 
 from outwiker.app.core.logredirector import LogRedirector
 from outwiker.app.gui.mainwindow import MainWindow
@@ -103,7 +103,7 @@ class OutWikerApplication(wx.App):
     def getMainWindow(self) -> Optional[MainWindow]:
         return self._mainWindow
 
-    @profile
+    # @profile
     def initMainWindow(self):
         self._initLocale()
         self._mainWindow = MainWindow(self._application)
