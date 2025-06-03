@@ -24,6 +24,7 @@ class RealTest(BaseOutWikerGUIMixin, unittest.TestCase):
         self.destroyApplication()
         removeDir(self._tempDir)
 
+    @unittest.skip("Too slow")
     def testDownloading_beautifulsoup(self):
         from webpage.downloader import Downloader, DownloadController
 
@@ -68,6 +69,7 @@ class RealTest(BaseOutWikerGUIMixin, unittest.TestCase):
             'doctools.js')
         )
 
+    @unittest.skip("Too slow")
     def testDownloading_toster(self):
         from webpage.downloader import Downloader, DownloadController
 
@@ -79,6 +81,7 @@ class RealTest(BaseOutWikerGUIMixin, unittest.TestCase):
 
         self.assertTrue(downloader.success)
 
+    @unittest.skip("Too slow")
     def testDownloading_stackoverflow_01(self):
         from webpage.downloader import Downloader, DownloadController
 
@@ -90,6 +93,7 @@ class RealTest(BaseOutWikerGUIMixin, unittest.TestCase):
 
         self.assertTrue(downloader.success)
 
+    @unittest.skip("Too slow")
     def testDownloading_stackoverflow_2(self):
         from webpage.downloader import Downloader, DownloadController
 

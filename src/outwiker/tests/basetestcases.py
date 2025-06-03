@@ -2,12 +2,14 @@
 
 import locale
 import os
+from typing import Dict, Any
 import unittest
 from abc import ABCMeta, abstractmethod
 from gettext import NullTranslations
 from tempfile import NamedTemporaryFile, mkdtemp
 
 import wx
+
 # from line_profiler import profile
 
 from outwiker.api.core.tree import createNotesTree
@@ -150,8 +152,14 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
     def isEnabledActionsGui(self) -> bool:
         return False
 
+    def getInitApplicationParams(self) -> Dict[str, Any]:
+        return {}
+
     def setUp(self):
-        self.initApplication(enableActionsGui=self.isEnabledActionsGui())
+        self.initApplication(
+            enableActionsGui=self.isEnabledActionsGui(),
+            **self.getInitApplicationParams(),
+        )
         self.wikiroot = self.createWiki()
         self.__createWiki()
 

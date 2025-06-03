@@ -16,7 +16,7 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """WebPage plugin tests"""
 
     def setUp(self):
-        self.initApplication()
+        self.initApplication(createTreePanel=True)
 
         self.dirlist = ["plugins/webpage"]
         self.path = mkdtemp(
