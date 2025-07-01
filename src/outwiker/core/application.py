@@ -8,6 +8,8 @@ from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.pageuiddepot import PageUidDepot
+from outwiker.core.spellchecker.spellcheckerscollection import SpellCheckersCollection
+from outwiker.core.system import getSpellDirList
 from outwiker.gui.theme import Theme
 
 logger = logging.getLogger('outwiker.core.application')
@@ -27,6 +29,7 @@ class Application:
         self.actionController = None
         self.plugins = PluginsLoader(self)
         self.pageUidDepot = PageUidDepot()
+        self.spellCheckers = None
         self.__theme = Theme()
 
         # Set to True for unit tests
@@ -382,6 +385,7 @@ class Application:
         self.fullConfigPath = fullConfigPath
         self.config = Config(fullConfigPath)
         self.recentWiki = RecentWiki(self.config)
+        self.spellCheckers = SpellCheckersCollection(getSpellDirList())
         self.__theme.loadFromConfig(self.config)
 
     def clear(self):
@@ -393,6 +397,7 @@ class Application:
         self.wikiroot = None
         self.config = None
         self.mainWindow = None
+        self.spellCheckers = None
 
     def _unbindAllEvents(self):
         for member_name in sorted(dir(self)):

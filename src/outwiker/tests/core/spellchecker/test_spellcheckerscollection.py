@@ -32,6 +32,7 @@ def _copy_dict_from(lang, src_dict_path, dst_path_to_dicts):
     shutil.copy(fname_dic, dst_path_to_dicts)
     shutil.copy(fname_aff, dst_path_to_dicts)
 
+
 def test_empty_collection(spell_collection: SpellCheckersCollection):
     langlist = ["ru_RU", "en_US"]
     assert not spell_collection.isCreated(langlist)
@@ -71,3 +72,10 @@ def test_other_lang(spell_collection: SpellCheckersCollection):
     checker_1 = spell_collection.getSpellChecker(langlist_1)
     checker_2 = spell_collection.getSpellChecker(langlist_2)
     assert checker_1 is not checker_2
+
+
+def test_clear(spell_collection: SpellCheckersCollection):
+    langlist = ["ru_RU", "en_US"]
+    spell_collection.getSpellChecker(langlist)
+    spell_collection.clear()
+    assert not spell_collection.isCreated(langlist)

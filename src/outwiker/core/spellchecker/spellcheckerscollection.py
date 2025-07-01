@@ -28,3 +28,6 @@ class SpellCheckersCollection:
     def isCreated(self, langlist: List[str]):
         key = self._getKey(langlist)
         return key in self._spellcheckers
+
+    def clear(self):
+        self._spellcheckers.clear()

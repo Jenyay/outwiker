@@ -2,16 +2,12 @@
 
 import math
 from datetime import datetime, timedelta
-import os.path
 from typing import List
 
 import wx
 import wx.stc
 import wx.lib.newevent
 
-import outwiker.core.system
-from outwiker.core.spellchecker.spellchecker import SpellChecker
-from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from outwiker.core.events import (
     EditorPopupMenuParams,
     TextEditorKeyDownParams,
@@ -37,7 +33,6 @@ class TextEditor(TextEditorBase):
         self._config = EditorConfig(self._application.config)
 
         self._enableSpellChecking = True
-        self.__spellChecker = None
 
         self.SPELL_ERROR_INDICATOR = 0
 
@@ -254,18 +249,8 @@ class TextEditor(TextEditorBase):
             self._styleSet = True
 
     def getSpellChecker(self):
-        if self.__spellChecker is None:
-            langlist = self._getDictsFromConfig()
-            spellDirList = outwiker.core.system.getSpellDirList()
-
-            spellChecker = SpellChecker(langlist, spellDirList)
-            spellChecker.addCustomDict(
-                os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME)
-            )
-
-            self.__spellChecker = spellChecker
-
-        return self.__spellChecker
+        langlist = self._getDictsFromConfig()
+        return self._application.spellCheckers.getSpellChecker(langlist)
 
     def _getDictsFromConfig(self):
         dictsStr = self._config.spellCheckerDicts.value
