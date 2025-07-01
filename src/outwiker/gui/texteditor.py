@@ -37,7 +37,7 @@ class TextEditor(TextEditorBase):
         self._config = EditorConfig(self._application.config)
 
         self._enableSpellChecking = True
-        self._spellChecker = None
+        self.__spellChecker = None
 
         self.SPELL_ERROR_INDICATOR = 0
 
@@ -254,7 +254,7 @@ class TextEditor(TextEditorBase):
             self._styleSet = True
 
     def getSpellChecker(self):
-        if self._spellChecker is None:
+        if self.__spellChecker is None:
             langlist = self._getDictsFromConfig()
             spellDirList = outwiker.core.system.getSpellDirList()
 
@@ -263,9 +263,9 @@ class TextEditor(TextEditorBase):
                 os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME)
             )
 
-            self._spellChecker = spellChecker
+            self.__spellChecker = spellChecker
 
-        return self._spellChecker
+        return self.__spellChecker
 
     def _getDictsFromConfig(self):
         dictsStr = self._config.spellCheckerDicts.value

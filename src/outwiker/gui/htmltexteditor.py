@@ -17,6 +17,7 @@ class HtmlTextEditor(TextEditor):
     _htmlDictIsCopied = False
 
     def __init__(self, parent, application):
+        self.__spellChecker = None
         super().__init__(parent, application)
 
     def setDefaultSettings(self):
@@ -132,12 +133,15 @@ class HtmlTextEditor(TextEditor):
             self.SetSelection(newPos, newPos)
 
     def getSpellChecker(self):
+        if self.__spellChecker is not None:
+            return self.__spellChecker
+
         langlist = self._getDictsFromConfig() + ["html"]
         spellDirList = getSpellDirList()
 
-        spellChecker = SpellChecker(langlist, spellDirList)
-        spellChecker.addCustomDict(
+        self.__spellChecker = SpellChecker(langlist, spellDirList)
+        self.__spellChecker.addCustomDict(
             os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME)
         )
 
-        return spellChecker
+        return self.__spellChecker
