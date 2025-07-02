@@ -1,16 +1,16 @@
 import os
-from typing import Any, Dict, List
+from typing import Dict, List
 
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from .spellchecker import SpellChecker
 
 
-class SpellCheckersCollection:
+class SpellCheckersFactory:
     def __init__(self, spell_dir_list: List[str]) -> None:
         self._spell_dir_list = spell_dir_list
-        self._spellcheckers: Dict[str, Any] = {}
+        self._spellcheckers: Dict[str, SpellChecker] = {}
 
-    def getSpellChecker(self, langlist: List[str]):
+    def getSpellChecker(self, langlist: List[str]) -> SpellChecker:
         key = self._getKey(langlist)
         if key in self._spellcheckers:
             return self._spellcheckers[key]

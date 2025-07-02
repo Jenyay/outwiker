@@ -116,6 +116,23 @@ class SpellCheckerTest (unittest.TestCase):
         checker2.addCustomDict(os.path.join(self._pathToDicts, dictname))
         self.assertTrue(checker2.check(word))
 
+    def testUserDictNoLang(self):
+        word = 'ывпывапыяа'
+        dictname = 'mydict.dic'
+
+        self._copyDict('ru_RU')
+        checker = SpellChecker([], [self._pathToDicts])
+        checker.addCustomDict(os.path.join(self._pathToDicts, dictname))
+
+        self.assertFalse(checker.check(word))
+
+        checker.addToCustomDict(0, word)
+        self.assertTrue(checker.check(word))
+
+        checker2 = SpellChecker([], [self._pathToDicts])
+        checker2.addCustomDict(os.path.join(self._pathToDicts, dictname))
+        self.assertTrue(checker2.check(word))
+
     def testUserDict_02(self):
         word = 'ывпывапыяа'
         dictname1 = 'mydict_1.dic'

@@ -2,7 +2,7 @@
 
 import os.path
 import logging
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 import hunspell
 
@@ -22,42 +22,43 @@ class CyHunspellWrapper:
     Wrapper around the Cyhunspell library
     """
 
-    def __init__(self, langlist: List[str], folders: List[str]):
+    def __init__(self, dict_folders: List[str]):
         """
         langlist - list of the languages ("ru_RU", "en_US", etc)
         """
-        logger.debug("Initialize HunspellWrapper spell checker")
+        self._dict_folers = dict_folders
 
         # Key - language (en_US, ru_RU etc),
         # value - instance of the HunSpell class
-        self._checkers = {}
+        self._checkers: Dict[str, hunspell.Hunspell] = {}
 
         # Index - number of the dictionary,
         # value - tuple: (key for self._checkers, path to .dic file)
         self._customDicts: List[Tuple[str, str]] = []
 
-        dictsFinder = DictsFinder(folders)
+    def addLanguage(self, lang: str):
+        logger.debug("Add dictionary to HunspellWrapper spell checker")
+        dictsFinder = DictsFinder(self._dict_folers)
 
-        for lang in langlist:
-            checker = None
+        checker = None
 
-            for path in dictsFinder.getFoldersForLang(lang):
-                dic_file = os.path.join(path, lang + ".dic")
-                aff_file = os.path.join(path, lang + ".aff")
+        for path in dictsFinder.getFoldersForLang(lang):
+            dic_file = os.path.join(path, lang + ".dic")
+            aff_file = os.path.join(path, lang + ".aff")
 
-                if (
-                    checker is None
-                    and os.path.exists(dic_file)
-                    and os.path.exists(aff_file)
-                ):
-                    checker = hunspell.Hunspell(
-                        lang, hunspell_data_dir=path, system_encoding="UTF-8"
-                    )
+            if (
+                checker is None
+                and os.path.exists(dic_file)
+                and os.path.exists(aff_file)
+            ):
+                checker = hunspell.Hunspell(
+                    lang, hunspell_data_dir=path, system_encoding="UTF-8"
+                )
 
-                logger.debug("Add dictionary: %s", dic_file)
+            logger.debug("Add dictionary: %s", dic_file)
 
-            if checker is not None:
-                self._checkers[lang] = checker
+        if checker is not None:
+            self._checkers[lang] = checker
 
     def addToCustomDict(self, dictIndex: int, word: str):
         key, dic_file = self._customDicts[dictIndex]

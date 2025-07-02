@@ -9,18 +9,19 @@ class SpellChecker:
     Class for checking a word with dictionaries
     """
 
-    def __init__(self, langlist, folders):
+    def __init__(self, langlist, dict_folders):
         """
         langlist - list of a languages for checking
             (for example ["ru_RU", "en_US"])
         folders - list of paths to dictionaries
         """
-        self._realChecker = getOS().getSpellChecker(langlist, folders)
-
         self._wordRegex = re.compile(r'(?:(?:\w-\w)|\w)+')
         self._digitRegex = re.compile(r'\d')
-
         self._skipWordsWithNumbers = True
+
+        self._realChecker = getOS().getSpellChecker(dict_folders)
+        for lang in langlist:
+            self._realChecker.addLanguage(lang)
 
     @property
     def skipWordsWithNumbers(self):

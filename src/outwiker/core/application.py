@@ -8,7 +8,7 @@ from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.pageuiddepot import PageUidDepot
-from outwiker.core.spellchecker.spellcheckerscollection import SpellCheckersCollection
+from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
 from outwiker.core.system import getSpellDirList
 from outwiker.gui.theme import Theme
 
@@ -385,7 +385,7 @@ class Application:
         self.fullConfigPath = fullConfigPath
         self.config = Config(fullConfigPath)
         self.recentWiki = RecentWiki(self.config)
-        self.spellCheckers = SpellCheckersCollection(getSpellDirList())
+        self.spellCheckers = SpellCheckersFactory(getSpellDirList())
         self.__theme.loadFromConfig(self.config)
 
     def clear(self):

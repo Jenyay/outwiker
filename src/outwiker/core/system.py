@@ -161,11 +161,11 @@ class Windows(System):
         from outwiker.gui.controls.htmlsearchpanelcontrollerwindows import HtmlSearchPanelControllerWindows
         return HtmlSearchPanelControllerWindows(searchPanel, htmlRender)
 
-    def getSpellChecker(self, langlist, folders):
+    def getSpellChecker(self, folders):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
-        return CyHunspellWrapper(langlist, folders)
+        return CyHunspellWrapper(folders)
 
     @property
     def windowIconFile(self) -> str:
@@ -239,11 +239,11 @@ class Unix(System):
             from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKitForPage
             return HtmlRenderWebKitForPage(parent, application)
 
-    def getSpellChecker(self, langlist, folders):
+    def getSpellChecker(self, folders):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
-        return CyHunspellWrapper(langlist, folders)
+        return CyHunspellWrapper(folders)
 
     @property
     def windowIconFile(self) -> str:
