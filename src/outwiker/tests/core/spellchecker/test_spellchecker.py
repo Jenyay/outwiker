@@ -108,12 +108,12 @@ class SpellCheckerTest (unittest.TestCase):
         self.assertTrue(checker.check('Проверка'))
         self.assertFalse(checker.check(word))
 
-        checker.addCustomDict(os.path.join(self._pathToDicts, dictname))
-        checker.addToCustomDict(0, word)
+        checker.setCustomDict(os.path.join(self._pathToDicts, dictname))
+        checker.addToCustomDict(word)
         self.assertTrue(checker.check(word))
 
         checker2 = SpellChecker(['ru_RU'], [self._pathToDicts])
-        checker2.addCustomDict(os.path.join(self._pathToDicts, dictname))
+        checker2.setCustomDict(os.path.join(self._pathToDicts, dictname))
         self.assertTrue(checker2.check(word))
 
     def testUserDictNoLang(self):
@@ -122,39 +122,16 @@ class SpellCheckerTest (unittest.TestCase):
 
         self._copyDict('ru_RU')
         checker = SpellChecker([], [self._pathToDicts])
-        checker.addCustomDict(os.path.join(self._pathToDicts, dictname))
+        checker.setCustomDict(os.path.join(self._pathToDicts, dictname))
 
         self.assertFalse(checker.check(word))
 
-        checker.addToCustomDict(0, word)
+        checker.addToCustomDict(word)
         self.assertTrue(checker.check(word))
 
         checker2 = SpellChecker([], [self._pathToDicts])
-        checker2.addCustomDict(os.path.join(self._pathToDicts, dictname))
+        checker2.setCustomDict(os.path.join(self._pathToDicts, dictname))
         self.assertTrue(checker2.check(word))
-
-    def testUserDict_02(self):
-        word = 'ывпывапыяа'
-        dictname1 = 'mydict_1.dic'
-        dictname2 = 'mydict_2.dic'
-
-        self._copyDict('ru_RU')
-        checker = SpellChecker(['ru_RU'], [self._pathToDicts])
-        self.assertTrue(checker.check('Проверка'))
-        self.assertFalse(checker.check(word))
-
-        checker.addCustomDict(os.path.join(self._pathToDicts, dictname1))
-        checker.addCustomDict(os.path.join(self._pathToDicts, dictname2))
-        checker.addToCustomDict(1, word)
-        self.assertTrue(checker.check(word))
-
-        checker2 = SpellChecker(['ru_RU'], [self._pathToDicts])
-        checker2.addCustomDict(os.path.join(self._pathToDicts, dictname1))
-        self.assertFalse(checker2.check(word))
-
-        checker3 = SpellChecker(['ru_RU'], [self._pathToDicts])
-        checker3.addCustomDict(os.path.join(self._pathToDicts, dictname2))
-        self.assertTrue(checker3.check(word))
 
     def testFindErrors_01(self):
         self._copyDict('ru_RU')

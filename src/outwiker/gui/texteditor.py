@@ -283,7 +283,7 @@ class TextEditor(TextEditorBase):
             self.__addWordToDict(self._spellErrorText.lower())
 
     def __addWordToDict(self, word):
-        self.getSpellChecker().addToCustomDict(0, word)
+        self.getSpellChecker().addToCustomDict(word)
         self._spellErrorText = None
         self._styleSet = False
 

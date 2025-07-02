@@ -2,7 +2,7 @@
 
 import os.path
 import logging
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import hunspell
 
@@ -32,9 +32,8 @@ class CyHunspellWrapper:
         # value - instance of the HunSpell class
         self._checkers: Dict[str, hunspell.Hunspell] = {}
 
-        # Index - number of the dictionary,
-        # value - tuple: (key for self._checkers, path to .dic file)
-        self._customDicts: List[Tuple[str, str]] = []
+        # tuple: (key for self._checkers, path to .dic file)
+        self._customDict: Optional[Tuple[str, str]] = None
 
     def addLanguage(self, lang: str):
         logger.debug("Add dictionary to HunspellWrapper spell checker")
@@ -60,14 +59,18 @@ class CyHunspellWrapper:
         if checker is not None:
             self._checkers[lang] = checker
 
-    def addToCustomDict(self, dictIndex: int, word: str):
-        key, dic_file = self._customDicts[dictIndex]
+    def addToCustomDict(self, word: str):
+        if self._customDict is None:
+            logger.warn("Custom dictionary is not set")
+            return
+
+        key, dic_file = self._customDict
         assert key in self._checkers
 
         self._checkers[key].add(word)
         add_word_to_dic_file(dic_file, word)
 
-    def addCustomDict(self, customDictPath: str):
+    def setCustomDict(self, customDictPath: str):
         logger.debug("Add custom dictionary: %s", customDictPath)
 
         dic_folder = os.path.dirname(customDictPath)
@@ -89,12 +92,12 @@ class CyHunspellWrapper:
                 dic_name, hunspell_data_dir=dic_folder, system_encoding="UTF-8"
             )
             self._checkers[key] = checker
-            self._customDicts.append((key, dic_file))
+            self._customDict = (key, dic_file)
         except IOError:
             logger.error("Can't create custom dictionary: %s", customDictPath)
             return
 
-    def check(self, word: str):
+    def check(self, word: str) -> bool:
         if not self._checkers:
             return True
 
@@ -104,7 +107,7 @@ class CyHunspellWrapper:
 
         return False
 
-    def getSuggest(self, word: str):
+    def getSuggest(self, word: str) -> List[str]:
         suggest_set = set()
         for checker in self._checkers.values():
             try:

@@ -16,16 +16,16 @@ class SpellCheckersFactory:
             return self._spellcheckers[key]
 
         spellChecker = SpellChecker(langlist, self._spell_dir_list)
-        spellChecker.addCustomDict(
+        spellChecker.setCustomDict(
             os.path.join(self._spell_dir_list[-1], CUSTOM_DICT_FILE_NAME)
         )
         self._spellcheckers[key] = spellChecker
         return spellChecker
 
-    def _getKey(self, langlist: List[str]):
+    def _getKey(self, langlist: List[str]) -> str:
         return ";".join(sorted([lang.lower() for lang in langlist]))
 
-    def isCreated(self, langlist: List[str]):
+    def isCreated(self, langlist: List[str]) -> bool:
         key = self._getKey(langlist)
         return key in self._spellcheckers
 

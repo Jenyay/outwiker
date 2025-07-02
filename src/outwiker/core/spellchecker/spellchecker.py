@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from typing import List, Tuple
 import re
 from outwiker.core.system import getOS
 
@@ -31,33 +32,29 @@ class SpellChecker:
     def skipWordsWithNumbers(self, value):
         self._skipWordsWithNumbers = value
 
-    def check(self, word):
+    def check(self, word) -> bool:
         """
         Return True if word is contained in the dictionaries
             or False otherwise
         """
-        isValid = False
-
         if self._skipWordsWithNumbers:
             match = self._digitRegex.search(word)
             if match is not None:
-                isValid = True
+                # Skip words with numbers
+                return True
 
-        if not isValid:
-            isValid = self._realChecker.check(word)
+        return self._realChecker.check(word)
 
-        return isValid
+    def setCustomDict(self, path):
+        self._realChecker.setCustomDict(path)
 
-    def addCustomDict(self, path):
-        self._realChecker.addCustomDict(path)
+    def addToCustomDict(self, word):
+        self._realChecker.addToCustomDict(word)
 
-    def addToCustomDict(self, dictIndex, word):
-        self._realChecker.addToCustomDict(dictIndex, word)
-
-    def getSuggest(self, word):
+    def getSuggest(self, word) -> List[str]:
         return self._realChecker.getSuggest(word)
 
-    def findErrors(self, text):
+    def findErrors(self, text) -> List[Tuple[str, int, int]]:
         """
         Return list of tuples with positions of invalid words:
             (word, error_start, error_end)
