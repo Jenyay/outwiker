@@ -6,6 +6,7 @@ from typing import Dict, List, Optional, Tuple
 
 import hunspell
 
+from .basespellcheckerwrapper import BaseSpellCheckerWrapper
 from .dictsfinder import DictsFinder
 from .spelldict import (
     create_new_dic_file,
@@ -17,7 +18,7 @@ from .spelldict import (
 logger = logging.getLogger("outwiker.core.spellchecker.cyhunspell")
 
 
-class CyHunspellWrapper:
+class CyHunspellWrapper(BaseSpellCheckerWrapper):
     """
     Wrapper around the Cyhunspell library
     """
