@@ -2,12 +2,12 @@
 
 import os.path
 import logging
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional
 
 import hunspell
 
-from .basespellcheckerwrapper import BaseSpellCheckerWrapper
 from .dictsfinder import DictsFinder
+from .basespellcheckerwrapper import BaseSpellCheckerWrapper
 from .spelldict import (
     create_new_dic_file,
     create_new_aff_file,
@@ -24,19 +24,12 @@ class CyHunspellWrapper(BaseSpellCheckerWrapper):
     """
 
     def __init__(self, dict_folders: List[str]):
-        """
-        langlist - list of the languages ("ru_RU", "en_US", etc)
-        """
         self._dict_folers = dict_folders
+        self._checker: Optional[hunspell.Hunspell] = None
+        self._customDictChecker: Optional[hunspell.Hunspell] = None
+        self._customDictPath: Optional[str] = None
 
-        # Key - language (en_US, ru_RU etc),
-        # value - instance of the HunSpell class
-        self._checkers: Dict[str, hunspell.Hunspell] = {}
-
-        # tuple: (key for self._checkers, path to .dic file)
-        self._customDict: Optional[Tuple[str, str]] = None
-
-    def addLanguage(self, lang: str):
+    def setLanguage(self, lang: str):
         logger.debug("Add dictionary to HunspellWrapper spell checker")
         dictsFinder = DictsFinder(self._dict_folers)
 
@@ -58,18 +51,17 @@ class CyHunspellWrapper(BaseSpellCheckerWrapper):
             logger.debug("Add dictionary: %s", dic_file)
 
         if checker is not None:
-            self._checkers[lang] = checker
+            self._checker = checker
 
     def addToCustomDict(self, word: str):
-        if self._customDict is None:
+        if self._customDictChecker is None:
             logger.warn("Custom dictionary is not set")
             return
 
-        key, dic_file = self._customDict
-        assert key in self._checkers
+        assert self._customDictPath is not None, "Custom dictionary path is not set"
 
-        self._checkers[key].add(word)
-        add_word_to_dic_file(dic_file, word)
+        self._customDictChecker.add(word)
+        add_word_to_dic_file(self._customDictPath, word)
 
     def setCustomDict(self, customDictPath: str):
         logger.debug("Add custom dictionary: %s", customDictPath)
@@ -80,11 +72,6 @@ class CyHunspellWrapper(BaseSpellCheckerWrapper):
         dic_file = customDictPath
         aff_file = customDictPath[:-4] + ".aff"
 
-        key = "{}:{}".format(dic_name, customDictPath)
-        if key in self._checkers:
-            logger.debug("Dictionary already added: %s", customDictPath)
-            return
-
         try:
             create_new_dic_file(dic_file)
             create_new_aff_file(aff_file)
@@ -92,25 +79,37 @@ class CyHunspellWrapper(BaseSpellCheckerWrapper):
             checker = hunspell.Hunspell(
                 dic_name, hunspell_data_dir=dic_folder, system_encoding="UTF-8"
             )
-            self._checkers[key] = checker
-            self._customDict = (key, dic_file)
+            self._customDictChecker = checker
+            self._customDictPath = customDictPath
         except IOError:
             logger.error("Can't create custom dictionary: %s", customDictPath)
             return
 
     def check(self, word: str) -> bool:
-        if not self._checkers:
+        checkers = self._getCheckers()
+        if not checkers:
             return True
 
-        for checker in self._checkers.values():
+        for checker in checkers:
             if checker.spell(word):
                 return True
 
         return False
 
+    def _getCheckers(self) -> List[hunspell.Hunspell]:
+        checkers = []
+        if self._checker is not None:
+            checkers.append(self._checker)
+
+        if self._customDictChecker is not None:
+            checkers.append(self._customDictChecker)
+
+        return checkers
+
     def getSuggest(self, word: str) -> List[str]:
         suggest_set = set()
-        for checker in self._checkers.values():
+        checkers = self._getCheckers()
+        for checker in checkers:
             try:
                 suggest_set |= set(checker.suggest(word))
             except UnicodeEncodeError:

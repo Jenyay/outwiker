@@ -1,11 +1,10 @@
-
 from abc import ABCMeta, abstractmethod
 from typing import List
 
 
-class BaseSpellCheckerWrapper (metaclass=ABCMeta):
+class BaseSpellCheckerWrapper(metaclass=ABCMeta):
     @abstractmethod
-    def addLanguage(self, lang: str):
+    def setLanguage(self, lang: str):
         pass
 
     @abstractmethod

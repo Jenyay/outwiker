@@ -13,7 +13,9 @@ class SpellCheckersFactory:
         self._spell_dir_list = spell_dir_list
         self._spellcheckers: Dict[str, BaseSpellCheckerWrapper] = {}
 
-    def getSpellChecker(self, langlist: List[str], use_custom_dict: bool = True) -> SpellChecker:
+    def getSpellChecker(
+        self, langlist: List[str], use_custom_dict: bool = True
+    ) -> SpellChecker:
         checkers = []
         for lang in langlist:
             key = self._getKey(lang)
@@ -21,7 +23,7 @@ class SpellCheckersFactory:
                 checker = self._spellcheckers[key]
             else:
                 checker = getOS().getSpellChecker(self._spell_dir_list)
-                checker.addLanguage(lang)
+                checker.setLanguage(lang)
                 self._spellcheckers[key] = checker
 
             checkers.append(checker)

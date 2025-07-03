@@ -8,14 +8,19 @@ from .basespellcheckerwrapper import BaseSpellCheckerWrapper
 
 logger = logging.getLogger("outwiker.core.spellchecker.spellchecker")
 
+
 class SpellChecker:
     """
     Class for checking a word with dictionaries
     """
 
-    def __init__(self, real_checkers: List[BaseSpellCheckerWrapper], custom_dict_checker: Optional[BaseSpellCheckerWrapper] = None) -> None:
-        self._wordRegex = re.compile(r'(?:(?:\w-\w)|\w)+')
-        self._digitRegex = re.compile(r'\d')
+    def __init__(
+        self,
+        real_checkers: List[BaseSpellCheckerWrapper],
+        custom_dict_checker: Optional[BaseSpellCheckerWrapper] = None,
+    ) -> None:
+        self._wordRegex = re.compile(r"(?:(?:\w-\w)|\w)+")
+        self._digitRegex = re.compile(r"\d")
         self._skipWordsWithNumbers = True
         self._realCheckers = real_checkers
         self._customDictChecker = custom_dict_checker
@@ -49,7 +54,9 @@ class SpellChecker:
                 # Skip words with numbers
                 return True
 
-        checkers = self._realCheckers + ([self._customDictChecker] if self._customDictChecker else [])
+        checkers = self._realCheckers + (
+            [self._customDictChecker] if self._customDictChecker else []
+        )
         if not checkers:
             return True
 
