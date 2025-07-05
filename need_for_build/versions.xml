@@ -1,10 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.951" status="dev">
+    <version number="4.0.0.952" status="alpha" date="2025-07-05">
         <changes>
+            <change>Minor bugs fixed.</change>
+            <change>Improvements to main panel color settings.</change>
+            <change>Data folders in the Windows build moved to lib/outwiker/data (except plugins).</change>
+            <change>OUTWIKER_PATH environment variable added for user data folder.</change>
+            <change>Runtime updated in the Flatpak package.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Исправлены мелкие ошибки.</change>
+            <change>Улучшения в настройке цветов главных панелей.</change>
+            <change>Папки с данными в сборке под Windows перемещены в lib/outwiker/data (кроме plugins).</change>
+            <change>Добавлена переменная окружения OUTWIKER_PATH для пользовательской папки с данными.</change>
+            <change>Обновлен runtime в пакете Flatpak.</change>
         </changes>
     </version>
 
