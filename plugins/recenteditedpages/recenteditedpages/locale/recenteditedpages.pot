@@ -1,0 +1,45 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: RecentEditedPages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-18 12:30+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: controller.py:58
+msgid "RecentEditedPages"
+msgstr ""
+
+#: plugin.py:32
+msgid "Marks for recent edited pages"
+msgstr ""
+
+#: plugin.py:36
+msgid "https://jenyay.net/Outwiker/RecentEditedPagesEn"
+msgstr ""
+
+#: preferencepanel.py:29
+msgid "Highlight pages"
+msgstr ""
+
+#: preferencepanel.py:35
+msgid "Highlight color"
+msgstr ""
+
+#: preferencepanel.py:39
+msgid "Add extra icon"
+msgstr ""

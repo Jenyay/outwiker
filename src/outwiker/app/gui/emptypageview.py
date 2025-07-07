@@ -1,6 +1,7 @@
 # coding: utf-8
 
 import wx
+# from line_profiler import profile
 
 from outwiker.app.services.tree import (openWiki,
                                         createNewWiki,
@@ -18,6 +19,7 @@ class ClosedTreePanel(BasePagePanel):
         super().__init__(parent, application)
         self._createGUI()
 
+    # @profile
     def _createGUI(self):
         # Button to create new notes tree
         self._createNotesTreeButton = wx.Button(
@@ -90,13 +92,13 @@ class ClosedTreePanel(BasePagePanel):
             self._recentlySizer.ShowItems(False)
 
     def _onCreateNotes(self, _event):
-        createNewWiki(self._application.mainWindow)
+        createNewWiki(self._application.mainWindow, self._application)
 
     def _onOpenNotes(self, _event):
         openWikiWithDialog(self._application.mainWindow, False)
 
     def _onOpenSelectedNotesTree(self, _event):
-        openWiki(self._recentlyListBox.GetStringSelection())
+        openWiki(self._recentlyListBox.GetStringSelection(), self._application)
 
     def UpdateView(self, page):
         pass

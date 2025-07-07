@@ -20,8 +20,9 @@ logger = logging.getLogger("TeXEquation")
 
 
 class ToolsPanel(wx.Panel):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super().__init__(parent)
+        self._application = application
 
         self._oldEquationHash = ""
         self._template_fname = str(
@@ -35,7 +36,7 @@ class ToolsPanel(wx.Panel):
         self.createGUI()
 
     def createGUI(self):
-        self._htmlRender = getHtmlRender(self)
+        self._htmlRender = getHtmlRender(self, self._application)
         self._htmlRender.Disable()
 
         mainSizer = wx.FlexGridSizer(cols=1)
@@ -94,7 +95,7 @@ class ToolsPane(MainPane):
         self.panel.beginRename(page)
 
     def _createPanel(self):
-        return ToolsPanel(self.parent)
+        return ToolsPanel(self.parent, self.application)
 
     def _createConfig(self):
         return TeXConfig(self.application.config)

@@ -14,17 +14,18 @@ from outwiker.tests.utils import removeDir
 class CommandExecTest (unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
+        self._application = Application()
 
         self.__createWiki()
         self.testPage = self.wikiroot['Страница 1']
 
         dirlist = ['plugins/externaltools']
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self._application)
         self.loader.load(dirlist)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, Application.config)
+        self.parser = self.factory.make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

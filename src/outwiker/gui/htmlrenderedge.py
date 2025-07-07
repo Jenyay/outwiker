@@ -11,8 +11,7 @@ import urllib.error
 import wx
 
 import outwiker.core.system
-import outwiker.core.commands
-from outwiker.core.application import Application
+from outwiker.app.services.messages import showError
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR
 from outwiker.gui.defines import ID_KEY_CTRL, ID_MOUSE_LEFT
 from outwiker.utilites.textfile import readTextFile
@@ -31,8 +30,8 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
     A base class for HTML render. Engine - Edge.
     '''
 
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, application):
+        super().__init__(parent, application)
         self._basepath = None
         self.canOpenUrl = set()
         self._navigate_id = 1
@@ -211,8 +210,8 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
     HTML render for using as note page render. Engine - Edge.
     '''
 
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, application):
+        super().__init__(parent, application)
         self._currentPage = None
 
     @property
@@ -231,9 +230,9 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
 
         # Add anchor for references
         anchor = None
-        if APP_DATA_KEY_ANCHOR in Application.sharedData:
-            anchor = Application.sharedData[APP_DATA_KEY_ANCHOR]
-            del Application.sharedData[APP_DATA_KEY_ANCHOR]
+        if APP_DATA_KEY_ANCHOR in self._application.sharedData:
+            anchor = self._application.sharedData[APP_DATA_KEY_ANCHOR]
+            del self._application.sharedData[APP_DATA_KEY_ANCHOR]
 
         self.canOpenUrl.add(fname)
         if anchor is not None:
@@ -259,7 +258,7 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
             basepath = self.getBasePath()
 
             url = URLRecognizer(basepath).recognize(href)
-            page = PageRecognizerEdge(basepath, Application).recognize(href)
+            page = PageRecognizerEdge(basepath, self._application).recognize(href)
             filename = FileRecognizerEdge(basepath).recognize(href)
             anchor = AnchorRecognizerEdge(basepath).recognize(href)
 
@@ -301,17 +300,17 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
                                      filename,
                                      anchor)
 
-        Application.onLinkClick(self._currentPage, params)
+        self._application.onLinkClick(self._currentPage, params)
         if params.process:
             return True
 
         if page is not None and anchor is not None:
-            Application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
+            self._application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
 
         if url is not None:
             self.openUrl(url)
         elif page is not None and modifier == ID_KEY_CTRL:
-            Application.mainWindow.tabsController.openInTab(page, True)
+            self._application.mainWindow.tabsController.openInTab(page, True)
         elif page is not None:
             self._currentPage.root.selectedPage = page
         elif filename is not None:
@@ -319,7 +318,7 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
                 text = _("Can't execute file '%s'") % filename
-                outwiker.core.commands.showError(Application.mainWindow, text)
+                showError(self._application.mainWindow, text)
         elif anchor is not None:
             return False
 
@@ -331,8 +330,8 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
     HTML render for common using. Engine - Edge.
     '''
 
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, application):
+        super().__init__(parent, application)
 
     def LoadPage(self, fname):
         logger.debug('LoadPage({nav_id}). fname={fname}'.format(nav_id=self._navigate_id, fname=fname))
@@ -402,7 +401,7 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
                 text = _(u"Can't execute file '%s'") % filename
-                outwiker.core.commands.showError(Application.mainWindow, text)
+                showError(self._application.mainWindow, text)
         elif anchor is not None:
             return False
 

@@ -3,7 +3,7 @@
 import os.path
 
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.system import getCurrentDir, openInNewWindow
+from outwiker.core.system import openInNewWindow, getMainModuleDataPath
 
 
 class OpenHelpParams:
@@ -31,7 +31,7 @@ class OpenHelpAction(BaseAction):
     def run(self, params):
         help_dir = "help"
         current_help = _("help_en")
-        path = os.path.join(getCurrentDir(),
+        path = os.path.join(getMainModuleDataPath(),
                             help_dir,
                             current_help)
 

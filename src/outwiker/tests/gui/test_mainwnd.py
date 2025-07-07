@@ -10,7 +10,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class MainWndTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication()
+        self.initApplication(createTreePanel=True, createAttachPanel=True, createTagsPanel=True)
         self.wikiroot = self.createWiki()
 
         factory = TextPageFactory()

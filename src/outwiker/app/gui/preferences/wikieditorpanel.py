@@ -3,7 +3,7 @@
 import wx
 
 from outwiker.gui.editorstyleslist import EditorStylesList
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 

@@ -1,10 +1,82 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.943" status="dev">
+    <version number="4.0.0.953" status="dev">
         <changes>
         </changes>
 
         <changes lang="ru">
+        </changes>
+    </version>
+
+    <version number="4.0.0.952" status="alpha" date="2025-07-05">
+        <changes>
+            <change>Minor bugs fixed.</change>
+            <change>Improvements to main panel color settings.</change>
+            <change>Data folders in the Windows build moved to lib/outwiker/data (except plugins).</change>
+            <change>OUTWIKER_PATH environment variable added for user data folder.</change>
+            <change>Runtime updated in the Flatpak package.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Исправлены мелкие ошибки.</change>
+            <change>Улучшения в настройке цветов главных панелей.</change>
+            <change>Папки с данными в сборке под Windows перемещены в lib/outwiker/data (кроме plugins).</change>
+            <change>Добавлена переменная окружения OUTWIKER_PATH для пользовательской папки с данными.</change>
+            <change>Обновлен runtime в пакете Flatpak.</change>
+        </changes>
+    </version>
+
+    <version number="4.0.0.950" status="alpha" date="2025-01-20">
+        <changes>
+            <change>Add an additional icon to the notes tree to indicate that the note has been bookmarked.</change>
+            <change>Add an additional icon to the notes tree to indicate that the note is open in read-only mode.</change>
+            <change>Add a new plugin RecentEditedPages.</change>
+            <change>Add new builtin icons for notes with bookmarks.</change>
+            <change>Fix minor interface display bugs.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>В дереве заметок добавлен дополнительный значок, обозначающий, что заметка добавлена в закладки.</change>
+            <change>В дереве заметок добавлен дополнительный значок, обозначающий, что заметка открыта в режиме только для чтения.</change>
+            <change>Добавлен новый плагин RecentEditedPages.</change>
+            <change>Добавлены новые встроенные значки с закладками для заметок.</change>
+            <change>Мелкие исправления в отображении интерфейса.</change>
+        </changes>
+    </version>
+
+    <version number="4.0.0.948" status="alpha" date="2024-12-14">
+        <changes>
+            <change>Added the ability to change the order of notes using the mouse.</change>
+            <change>Added the ability to change the color of notes in the notes tree.</change>
+            <change>Added the ability to change the font size in the notes tree.</change>
+            <change>Added the ability to scale the notes tree using the mouse wheel.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена возможность изменения порядка следования заметок с помощью мыши.</change>
+            <change>Добавлена возможность изменения цвета заметок в дереве заметок.</change>
+            <change>Добавлена возможность изменения размера шрифта в дереве заметок.</change>
+            <change>Добавлена возможность масштабирования дерева заметок с помощью колесика мыши.</change>
+        </changes>
+    </version>
+
+    <version number="4.0.0.946" status="alpha" date="2024-11-23">
+        <changes>
+            <change>Changes in the design of the notes tree.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Изменения в дизайне дерева заметок.</change>
+        </changes>
+    </version>
+
+    <version number="4.0.0.944" status="alpha" date="2024-11-16">
+        <changes>
+            <change>New notes tree.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Новое дерево заметок.</change>
         </changes>
     </version>
 

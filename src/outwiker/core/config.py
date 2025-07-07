@@ -292,7 +292,9 @@ class ListOption(BaseOption):
     но разделитель можно изменять
     """
 
-    def __init__(self, config, section, param, defaultValue, separator=";", strip=False):
+    def __init__(
+        self, config, section, param, defaultValue, separator=";", strip=False
+    ):
         super().__init__(config, section, param, defaultValue)
         self._separator = separator
         self._strip = strip
@@ -407,6 +409,7 @@ class PageConfig(Config):
     iconParamName = "icon"
     typeParamName = "type"
     tagsParamName = "tags"
+    titleColorParamName = "titlecolor"
 
     def __init__(self, fname, readonly=False):
         super().__init__(fname, readonly)
@@ -438,6 +441,14 @@ class PageConfig(Config):
         )
 
         self.tagsOption = ListOption(
-            self, PageConfig.sectionName, PageConfig.tagsParamName,
-            defaultValue=[], separator=",", strip=True
+            self,
+            PageConfig.sectionName,
+            PageConfig.tagsParamName,
+            defaultValue=[],
+            separator=",",
+            strip=True,
+        )
+
+        self.titleColorOption = StringOption(
+            self, PageConfig.sectionName, PageConfig.titleColorParamName, ""
         )

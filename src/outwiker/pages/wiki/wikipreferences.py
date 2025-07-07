@@ -3,18 +3,18 @@
 import wx
 
 from outwiker.gui.preferences.configelements import BooleanElement, IntegerElement
-from outwiker.core.application import Application
 from .wikiconfig import WikiConfig
 from .emptycontent import EmptyContent
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class WikiPrefGeneralPanel(BasePrefPanel):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super().__init__(parent)
+        self._application = application
 
         self.__createGui()
-        self.config = WikiConfig(Application.config)
+        self.config = WikiConfig(self._application.config)
 
     def __createGui(self):
         # Show generated HTML code?
@@ -98,7 +98,7 @@ class WikiPrefGeneralPanel(BasePrefPanel):
             self.config.thumbSizeOptions, self.thumbSize, 1, 10000)
 
         # Шаблон для пустых страниц
-        emptycontent = EmptyContent(Application.config)
+        emptycontent = EmptyContent(self._application.config)
         self.emptyTplTextCtrl.SetValue(emptycontent.content)
 
         # Стиль ссылок по умолчанию
@@ -115,11 +115,11 @@ class WikiPrefGeneralPanel(BasePrefPanel):
 
         self.config.colorizeSyntax.value = self.colorizeWiki.GetValue()
 
-        emptycontent = EmptyContent(Application.config)
+        emptycontent = EmptyContent(self._application.config)
         emptycontent.content = self.emptyTplTextCtrl.GetValue()
         self.config.linkStyleOptions.value = self.linkStyleCombo.GetSelection()
 
         if changed:
-            currpage = Application.wikiroot.selectedPage
-            Application.wikiroot.selectedPage = None
-            Application.wikiroot.selectedPage = currpage
+            currpage = self._application.wikiroot.selectedPage
+            self._application.wikiroot.selectedPage = None
+            self._application.wikiroot.selectedPage = currpage

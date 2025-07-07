@@ -80,16 +80,17 @@ class HtmlPageController:
         stylepath = style.getPageStyle(page)
 
         try:
-            tpl = HtmlTemplate(readTextFile(stylepath))
+            tpl = HtmlTemplate(self._application, readTextFile(stylepath))
         except EnvironmentError:
-            tpl = HtmlTemplate(readTextFile(style.getDefaultStyle()))
+            tpl = HtmlTemplate(self._application, readTextFile(style.getDefaultStyle()))
 
         content = self._changeContentByEvent(
             page,
             PreprocessingParams(page.content),
             self._application.onPreprocessing)
 
-        if page.autoLineWrap:
+        pageAdapter = HtmlPageFactory().createPageAdapter(page)
+        if pageAdapter.autoLineWrap:
             content = self._changeContentByEvent(
                 page,
                 PreHtmlImprovingParams(content),

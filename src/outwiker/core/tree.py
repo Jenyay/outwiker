@@ -6,7 +6,7 @@ import os.path
 import shutil
 import datetime
 from abc import ABCMeta
-from functools import cmp_to_key, reduce
+from functools import cmp_to_key
 from typing import final, List, Optional, Union
 
 from .config import PageConfig

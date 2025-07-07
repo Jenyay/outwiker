@@ -1,4 +1,4 @@
-# Install to /app unless otherwise specified, such as `make PREFIX=/app`
+#abef24b5c4c9173828aa1b99247669712ca13c1за3 Install to /app unless otherwise specified, such as `make PREFIX=/app`
 PREFIX=/app
 
 # What to run to install various files
@@ -20,7 +20,7 @@ OUTWIKER_DIR=/app/bin/net.jenyay.Outwiker
 SRC_DIR=src
 NFB_LINUX_DIR=need_for_build/linux/
 PLUGINS_DIR=plugins
-PLUGINS=autorenamer counter datagraph diagrammer export2html externaltools hackpage htmlformatter htmlheads lightbox livejournal markdown pagetypecolor readingmode sessions snippets source spoiler statistics tableofcontents texequation thumbgallery webpage
+PLUGINS=autorenamer counter datagraph diagrammer export2html externaltools hackpage htmlformatter htmlheads lightbox livejournal markdown pagetypecolor readingmode recenteditedpages sessions snippets source spoiler statistics tableofcontents texequation thumbgallery webpage
 
 all:
 
@@ -38,16 +38,8 @@ install:
 	$(MAKE_DIR) $(INSTALL_PATH)/share/icons/hicolor/128x128/apps
 	$(MAKE_DIR) $(INSTALL_PATH)/share/icons/hicolor/256x256/apps
 	$(MAKE_DIR) $(INSTALL_PATH)/share/icons/hicolor/scalable/apps
-	$(INSTALL_DIR) $(SRC_DIR)/help $(OUTWIKER_DIR)
-	$(INSTALL_DIR) $(SRC_DIR)/iconset $(OUTWIKER_DIR)
-	$(INSTALL_DIR) $(SRC_DIR)/images $(OUTWIKER_DIR)
-	$(INSTALL_DIR) $(SRC_DIR)/locale $(OUTWIKER_DIR)
 	$(INSTALL_DIR) $(SRC_DIR)/outwiker $(OUTWIKER_DIR)
-	$(INSTALL_DIR) $(SRC_DIR)/spell $(OUTWIKER_DIR)
-	$(INSTALL_DIR) $(SRC_DIR)/styles $(OUTWIKER_DIR)
-	$(INSTALL_DIR) $(SRC_DIR)/textstyles $(OUTWIKER_DIR)
 	$(INSTALL) $(SRC_DIR)/runoutwiker.py $(OUTWIKER_DIR)
-	$(INSTALL) Pipfile $(OUTWIKER_DIR)
 	$(INSTALL) "copyright.txt" $(OUTWIKER_DIR)
 	$(INSTALL) "README" $(OUTWIKER_DIR)
 	$(INSTALL) $(NFB_LINUX_DIR)/outwiker_flatpak $(INSTALL_PATH)/bin/outwiker

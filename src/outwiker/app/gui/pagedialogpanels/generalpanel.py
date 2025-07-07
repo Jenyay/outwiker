@@ -37,6 +37,7 @@ from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogControlle
 from outwiker.gui.controls.switchthemed import EVT_SWITCH
 from outwiker.gui.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
 from outwiker.gui.dialogs.messagebox import MessageBox
+from outwiker.gui.theme import Theme
 
 
 class IconsGroupInfo:
@@ -58,8 +59,9 @@ class GeneralPanel(wx.Panel):
     Класс панели, расположенной на вкладке "Общее"
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, theme: Theme):
         super().__init__(parent)
+        self._theme = theme
         self._POPUP_WIDTH = 500
         self._POPUP_HEIGHT = 350
 
@@ -111,7 +113,7 @@ class GeneralPanel(wx.Panel):
         self.iconBtn = wx.BitmapButton(self)
         self.iconBtn.SetMinSize((40, -1))
         self.iconBtn.SetToolTip(_("Page icon"))
-        self.iconsPopup = IconsListPopup(self)
+        self.iconsPopup = IconsListPopup(self, self._theme)
         self.iconsPopup.SetSize((self._POPUP_WIDTH, self._POPUP_HEIGHT))
 
         # Page type
@@ -436,6 +438,9 @@ class IconsController(BasePageDialogController):
                     title = self._localize(groupname)
 
                 iconslist = collection.getIcons(groupname)
+                if not iconslist:
+                    continue
+
                 cover = collection.getCover(groupname)
                 if cover is None:
                     cover = self._default_group_cover

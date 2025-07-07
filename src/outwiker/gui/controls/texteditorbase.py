@@ -15,8 +15,9 @@ from outwiker.gui.texteditorhelper import TextEditorHelper
 
 
 class TextEditorBase(wx.Panel):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super().__init__(parent, style=0)
+        self._application = application
         self.textCtrl = StyledTextCtrl(self, -1)
 
         # Used to fix text encoding after clipboard pasting
@@ -240,7 +241,7 @@ class TextEditorBase(wx.Panel):
         selectedtext = self.textCtrl.GetSelectedText()
         text = self.textCtrl.GetText()
 
-        printer = TextPrinter(self)
+        printer = TextPrinter(self, self._application)
         printer.printout(text if len(selectedtext) == 0 else selectedtext)
 
     def getPosChar(self, posBytes):

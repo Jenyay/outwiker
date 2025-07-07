@@ -31,6 +31,7 @@ class TagsCloud(wx.Panel):
         self._mode = mode
         self._enable_tooltips = enable_tooltips
         self._enable_active_tags_filter = enable_active_tags_filter
+        self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
 
         self._scroll_start_time = None
         self._scroll_timeout_musec = 200e3
@@ -69,6 +70,7 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Bind(wx.EVT_SIZE, self.__onSize)
         self._tags_panel.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self._tags_panel.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
+        self._tags_panel.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
         self._tags_panel.Bind(wx.EVT_SCROLLWIN, handler=self._onScroll)
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
@@ -104,6 +106,10 @@ class TagsCloud(wx.Panel):
             self._prevLabelHovered.setHover(False)
             self._tags_panel.UnsetToolTip()
             self._prevLabelHovered = None
+
+    def _onMouseLeaveWindow(self, event):
+        if self._prevLabelHovered is not None:
+            self._prevLabelHovered.setHover(False)
 
     def _onMouseMove(self, event):
         # Don't repaint labels during scroll
@@ -168,22 +174,6 @@ class TagsCloud(wx.Panel):
     def _onMiddleUp(self, event):
         self._callTagEvent(event, "onMiddleUp")
 
-    # def _onRightMouseClick(self, event):
-    #     event.Skip()
-    #     x, y = self._getMouseCoord(event)
-    #     label = self._findLabel(x, y)
-    #     if label is not None:
-    #         label_x, label_y = label.getPosition()
-    #         label.onRightMouseClick(x - label_x, y - label_y)
-
-    # def _onMiddleMouseClick(self, event):
-    #     event.Skip()
-    #     x, y = self._getMouseCoord(event)
-    #     label = self._findLabel(x, y)
-    #     if label is not None:
-    #         label_x, label_y = label.getPosition()
-    #         label.onMiddleMouseClick(x - label_x, y - label_y)
-
     def _getScrolledY(self) -> Tuple[int, int]:
         ymin = self._tags_panel.GetScrollPos(wx.VERTICAL) * self._tags_panel.GetScrollPixelsPerUnit()[1]
         ymax = ymin + self._tags_panel.GetClientSize()[1]
@@ -203,7 +193,7 @@ class TagsCloud(wx.Panel):
                 break
 
     def _onPaint(self, event):
-        with wx.PaintDC(self._tags_panel) as dc:
+        with wx.BufferedPaintDC(self._tags_panel) as dc:
             back_color = self.GetBackgroundColour()
             dc.SetBrush(wx.Brush(back_color))
             dc.SetPen(wx.Pen(back_color))

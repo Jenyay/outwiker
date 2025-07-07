@@ -74,6 +74,7 @@ Name: "plugins\livejournal"; Description: "Livejournal"; Types: full custom
 Name: "plugins\markdown"; Description: "Markdown"; Types: full custom
 Name: "plugins\pagetypecolor"; Description: "PageTypeColor"; Types: full custom
 Name: "plugins\readingmode"; Description: "ReadingMode"; Types: full custom
+Name: "plugins\recenteditedpages"; Description: "RecentEditedPages"; Types: full custom
 Name: "plugins\sessions"; Description: "Sessions"; Types: full custom
 Name: "plugins\snippets"; Description: "Snippets"; Types: full custom
 Name: "plugins\source"; Description: "Source"; Types: full custom
@@ -105,6 +106,7 @@ Source: "outwiker_exe\plugins\livejournal\*"; DestDir: "{app}\plugins\livejourna
 Source: "outwiker_exe\plugins\markdown\*"; DestDir: "{app}\plugins\markdown\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\markdown
 Source: "outwiker_exe\plugins\pagetypecolor\*"; DestDir: "{app}\plugins\pagetypecolor\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\pagetypecolor
 Source: "outwiker_exe\plugins\readingmode\*"; DestDir: "{app}\plugins\readingmode\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\readingmode
+Source: "outwiker_exe\plugins\recenteditedpages\*"; DestDir: "{app}\plugins\recenteditedpages\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\recenteditedpages
 Source: "outwiker_exe\plugins\sessions\*"; DestDir: "{app}\plugins\sessions\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\sessions
 Source: "outwiker_exe\plugins\snippets\*"; DestDir: "{app}\plugins\snippets\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\snippets
 Source: "outwiker_exe\plugins\source\*"; DestDir: "{app}\plugins\source\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\source

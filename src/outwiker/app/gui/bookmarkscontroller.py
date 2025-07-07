@@ -48,10 +48,10 @@ class BookmarksController:
 
                 menu_bookmarks.Append(control_id, label, "", wx.ITEM_NORMAL)
                 self.mainWndController.mainWindow.Bind(wx.EVT_MENU,
-                                                       self.__onSelectBookmark,
+                                                       self._onSelectBookmark,
                                                        id=control_id)
 
-    def __onSelectBookmark(self, event):
+    def _onSelectBookmark(self, event):
         subpath = self._bookmarksId[event.Id]
         page = self._application.wikiroot[subpath]
 

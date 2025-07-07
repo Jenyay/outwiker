@@ -6,8 +6,8 @@ from .htmlrender import HtmlRenderBase
 
 
 class HtmlRenderFake(HtmlRenderBase):
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, application):
+        super().__init__(parent, application)
 
     def _createRender(self):
         return wx.Panel(self)

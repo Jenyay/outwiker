@@ -2,7 +2,6 @@ import os.path
 from typing import List, Optional, Tuple, Dict
 
 import wx
-from wx.lib.scrolledpanel import ScrolledPanel
 
 from outwiker.gui.imagelistcache import ImageListCache
 from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
@@ -15,8 +14,8 @@ class Treebook2(wx.SplitterWindow):
         self._current_page: Optional[wx.Panel] = None
         self._default_leftSize = 300
         self._create_gui()
-        self._pages: List[BasePrefPanel] = []
-        self._tagged_pages: Dict[str, Tuple[wx.TreeItemId, BasePrefPanel]] = {}
+        self._pages: List[wx.Window] = []
+        self._tagged_pages: Dict[str, Tuple[wx.TreeItemId, wx.Window]] = {}
 
         self._tree.Bind(wx.EVT_TREE_SEL_CHANGED, handler=self._onSelected)
 
@@ -117,64 +116,3 @@ class Treebook2(wx.SplitterWindow):
             imageId = self._iconsCache.getDefaultImageId()
 
         return imageId
-
-
-class BasePrefPanel(ScrolledPanel):
-    def __init__(self, treeBook: Treebook2):
-        style = wx.TAB_TRAVERSAL | wx.HSCROLL | wx.VSCROLL
-        super().__init__(treeBook.GetParentPanel(), style=style)
-
-    def LoadState(self):
-        pass
-
-    def Save(self):
-        pass
-
-    def Cancel(self):
-        pass
-
-    def _addLabelAndControlToSizer(
-        self, sizer: wx.Sizer, label: wx.StaticText, control: wx.Control
-    ):
-        sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-
-    def _createLabelAndComboBox(
-        self, title: str, sizer: wx.Sizer
-    ) -> Tuple[wx.StaticText, wx.ComboBox]:
-        label = wx.StaticText(self, label=title)
-        combobox = wx.ComboBox(self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
-
-        self._addLabelAndControlToSizer(sizer, label, combobox)
-        return (label, combobox)
-
-    def _createLabelAndColorPicker(
-        self, title: str, sizer: wx.Sizer
-    ) -> Tuple[wx.StaticText, wx.ColourPickerCtrl]:
-        label = wx.StaticText(self, label=title)
-        colorPicker = wx.ColourPickerCtrl(self)
-
-        self._addLabelAndControlToSizer(sizer, label, colorPicker)
-        return (label, colorPicker)
-
-    def _createCheckBox(self, title: str, sizer: wx.Sizer) -> wx.CheckBox:
-        checkBox = wx.CheckBox(self, label=title)
-        sizer.Add(checkBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        return checkBox
-
-    def _createSection(
-        self, main_sizer: wx.Sizer, title: str
-    ) -> Tuple[wx.StaticBox, wx.Sizer]:
-        """
-        Create StaticBox for options
-        """
-        staticBox = wx.StaticBox(self, label=title)
-        staticBoxSizer = wx.StaticBoxSizer(staticBox, wx.VERTICAL)
-
-        colorsSizer = wx.FlexGridSizer(cols=2)
-        colorsSizer.AddGrowableCol(0)
-        colorsSizer.AddGrowableCol(1)
-
-        staticBoxSizer.Add(colorsSizer, flag=wx.EXPAND)
-        main_sizer.Add(staticBoxSizer, flag=wx.EXPAND | wx.ALL, border=2)
-        return (staticBox, colorsSizer)

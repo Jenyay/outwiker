@@ -1,6 +1,8 @@
-__version__ = (4, 0, 0, 943)
+__version__ = (4, 0, 0, 953)
 __status__ = 'dev'
-__api_version__ = (4, 944)
+__api_version__ = (4, 951)
+
+__version_str__ = ".".join([str(n) for n in __version__])
 
 
 def getVersionStr() -> str:

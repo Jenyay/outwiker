@@ -16,7 +16,7 @@ class SnippetsVarDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.loader.load(plugins_dir)
 
         from snippets.gui.variablesdialog import VariablesDialog
-        self._dialog = VariablesDialog(mainWnd)
+        self._dialog = VariablesDialog(mainWnd, self.application)
 
     def tearDown(self):
         self._dialog.Destroy()

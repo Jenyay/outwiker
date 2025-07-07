@@ -10,7 +10,7 @@ from outwiker.core.spellchecker.dictsfinder import DictsFinder
 from outwiker.core.spellchecker.spelldict import (get_words_from_dic_file,
                                                   write_to_dic_file)
 from outwiker.gui.guiconfig import EditorConfig
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class SpellPanel(BasePrefPanel):

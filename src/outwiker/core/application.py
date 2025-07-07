@@ -8,11 +8,14 @@ from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.pageuiddepot import PageUidDepot
+from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
+from outwiker.core.system import getSpellDirList
+from outwiker.gui.theme import Theme
 
 logger = logging.getLogger('outwiker.core.application')
 
 
-class ApplicationParams:
+class Application:
     def __init__(self):
         # Opened wiki
         self.__wikiroot = None
@@ -26,6 +29,8 @@ class ApplicationParams:
         self.actionController = None
         self.plugins = PluginsLoader(self)
         self.pageUidDepot = PageUidDepot()
+        self.spellCheckers = None
+        self.__theme = Theme()
 
         # Set to True for unit tests
         self.testMode = False
@@ -78,7 +83,7 @@ class ApplicationParams:
 
         # Changings in the bookmarks list event
         # Parameters:
-        #     bookmark - Bookmarks class instance
+        #     params - instance of BookmarksChangedParams
         self.onBookmarksChanged = Event()
 
         # Removing the page event
@@ -361,6 +366,18 @@ class ApplicationParams:
         #     params - instance of the AttachSelectionChangedParams class
         self.onAttachSelectionChanged = Event()
 
+        # Event occurs after list of visible the notes tree items
+        # Parameters:
+        #    page - current (selection) page
+        #    params - instance of the NotesTreeItemsPreparingParams class
+        self.onNotesTreeItemsPreparing = Event()
+
+        # The event denotes that the notes tree items should be updated:
+        # Parameters:
+        #    page - current (selection) page
+        #    params - instance of the ForceNotesTreeItemsUpdate class
+        self.onForceNotesTreeItemsUpdate = Event()
+
     def init(self, fullConfigPath):
         """
         Initialize config and locale
@@ -368,15 +385,19 @@ class ApplicationParams:
         self.fullConfigPath = fullConfigPath
         self.config = Config(fullConfigPath)
         self.recentWiki = RecentWiki(self.config)
+        self.spellCheckers = SpellCheckersFactory(getSpellDirList())
+        self.__theme.loadFromConfig(self.config)
 
     def clear(self):
         if self.wikiroot is not None:
             self.__unbindWikiEvents(self.wikiroot)
 
         self._unbindAllEvents()
+        self.__theme.clear()
         self.wikiroot = None
         self.config = None
         self.mainWindow = None
+        self.spellCheckers = None
 
     def _unbindAllEvents(self):
         for member_name in sorted(dir(self)):
@@ -386,6 +407,10 @@ class ApplicationParams:
 
         for key in list(self.customEvents.getKeys()):
             self.customEvents.clear(key)
+
+    @property
+    def theme(self) -> Theme:
+        return self.__theme
 
     @property
     def wikiroot(self):
@@ -503,6 +528,3 @@ class ApplicationParams:
         if hasattr(self, name) and isinstance(getattr(self, name), Event):
             return getattr(self, name)
         return self.customEvents.get(name)
-
-
-Application = ApplicationParams()

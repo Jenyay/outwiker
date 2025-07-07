@@ -2,7 +2,7 @@ OUTWIKER_DIR=$(DESTDIR)/usr/share/outwiker
 SRC_DIR=src
 NFB_LINUX_DIR=need_for_build/linux/
 PLUGINS_DIR=plugins
-PLUGINS=autorenamer counter datagraph diagrammer export2html externaltools hackpage htmlformatter htmlheads lightbox livejournal markdown pagetypecolor readingmode sessions snippets source spoiler statistics tableofcontents texequation thumbgallery webpage
+PLUGINS=autorenamer counter datagraph diagrammer export2html externaltools hackpage htmlformatter htmlheads lightbox livejournal markdown pagetypecolor readingmode recenteditedpages sessions snippets source spoiler statistics tableofcontents texequation thumbgallery webpage
 
 all:
 
@@ -20,14 +20,7 @@ install:
 	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/256x256/apps
 	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/scalable/apps
 	mkdir -p $(DESTDIR)/usr/share/pixmaps/
-	cp -r $(SRC_DIR)/help $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/iconset $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/images $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/locale $(OUTWIKER_DIR)
 	cp -r $(SRC_DIR)/outwiker $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/spell $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/styles $(OUTWIKER_DIR)
-	cp -r $(SRC_DIR)/textstyles $(OUTWIKER_DIR)
 	mkdir -p $(OUTWIKER_DIR)/plugins
 	cp $(SRC_DIR)/runoutwiker.py $(OUTWIKER_DIR)
 	cp "copyright.txt" $(OUTWIKER_DIR)

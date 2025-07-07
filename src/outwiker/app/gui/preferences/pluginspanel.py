@@ -5,7 +5,7 @@ import wx
 from outwiker.core.system import getCurrentDir, getOS
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 from outwiker.gui.guiconfig import PluginsConfig
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class PluginsPanel(BasePrefPanel):
@@ -37,7 +37,7 @@ class PluginsPanel(BasePrefPanel):
         normal_color, visited_color, rollover_color = self.__downloadLink.GetColours()
         self.__downloadLink.SetColours(normal_color, normal_color, normal_color)
 
-        self.pluginsInfo = getOS().getHtmlRender(self)
+        self.pluginsInfo = getOS().getHtmlRender(self, self._application)
 
         self.__layout()
 

@@ -24,4 +24,5 @@ class EditPagePropertiesAction(BaseAction):
     def run(self, params):
         if self._application.selectedPage is not None:
             editPage(self._application.mainWindow,
-                     self._application.selectedPage)
+                     self._application.selectedPage,
+                     self._application)

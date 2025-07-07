@@ -22,16 +22,16 @@ PAGE_UPDATE_STYLE = 8
 # Changed page style
 PAGE_UPDATE_TITLE = 16
 
+# Changed page style
+PAGE_UPDATE_COLOR = 32
+
 
 class LinkClickParams:
     """
     Set of parameters for the onLinkClick event
     """
-    def __init__(self,
-                 link=u'',
-                 button=ID_MOUSE_LEFT,
-                 modifier=0,
-                 linktype=None):
+
+    def __init__(self, link="", button=ID_MOUSE_LEFT, modifier=0, linktype=None):
         """
         link - clicked link
 
@@ -65,7 +65,8 @@ class HoverLinkParams:
     """
     Set of parameters for the onHoverLink event
     """
-    def __init__(self, link=None, text=u''):
+
+    def __init__(self, link=None, text=""):
         """
         link - link under cursor (or None)
         text - text which will be showed in status bar.
@@ -79,6 +80,7 @@ class PreprocessingParams:
     """
     Set of parameters for the onPreprocessing event
     """
+
     def __init__(self, result):
         """
         result - resulted code (wiki or HTML) for which will be generated
@@ -92,6 +94,7 @@ class PostprocessingParams:
     """
     Set of parameters for the onPostprocessing event
     """
+
     def __init__(self, result):
         """
         result - resulted HTML code.
@@ -105,6 +108,7 @@ class PreHtmlImprovingParams:
     """
     Set of parameters for the onPreHtmlImproving event
     """
+
     def __init__(self, result):
         """
         result - HTML code after wiki parsing.
@@ -117,6 +121,7 @@ class EditorPopupMenuParams:
     """
     Set of parameters for the onEditorPopupMenu event
     """
+
     def __init__(self, editor, menu, point, pos_byte):
         """
         editor - text editor
@@ -134,6 +139,7 @@ class PageDialogInitParams:
     """
     Set of parameters for the onPageDialogInit event
     """
+
     def __init__(self, dialog):
         self.dialog = dialog
 
@@ -142,6 +148,7 @@ class PageDialogDestroyParams:
     """
     Set of parameters for the onPageDialogDestroy event
     """
+
     def __init__(self, dialog):
         self.dialog = dialog
 
@@ -150,6 +157,7 @@ class PageDialogPageTypeChangedParams:
     """
     Set of parameters for the onPageDialogPageTypeChanged event
     """
+
     def __init__(self, dialog, pageType):
         self.dialog = dialog
         self.pageType = pageType
@@ -159,6 +167,7 @@ class PageDialogPageTitleChangedParams:
     """
     Set of parameters for the onPageDialogPageTitleChanged event
     """
+
     def __init__(self, dialog, pageTitle):
         self.dialog = dialog
         self.pageTitle = pageTitle
@@ -168,6 +177,7 @@ class PageDialogNewPageOrderChangedParams:
     """
     Set of parameters for the onPageDialogNewPageOrderChanged event
     """
+
     def __init__(self, dialog, orderCalculator):
         self.dialog = dialog
         self.orderCalculator = orderCalculator
@@ -177,6 +187,7 @@ class PageDialogPageStyleChangedParams:
     """
     Set of parameters for the onPageDialogPageStyleChanged event
     """
+
     def __init__(self, dialog, pageStyle):
         self.dialog = dialog
         self.pageStyle = pageStyle
@@ -186,6 +197,7 @@ class PageDialogPageIconChangedParams:
     """
     Set of parameters for the onPageDialogPageIconChanged event
     """
+
     def __init__(self, dialog, pageIcon):
         self.dialog = dialog
         self.pageIcon = pageIcon
@@ -195,6 +207,7 @@ class PageDialogPageTagsChangedParams:
     """
     Set of parameters for the onPageDialogPageTagsChanged event
     """
+
     def __init__(self, dialog, pageTags):
         self.dialog = dialog
         self.pageTags = pageTags
@@ -221,6 +234,7 @@ class EditorStyleNeededParams:
     """
     Set of parameters for the onEditorStyleNeeded event
     """
+
     def __init__(self, editor, text, enableSpellChecking):
         self.editor = editor
         self.text = text
@@ -231,6 +245,7 @@ class PageUpdateNeededParams:
     """
     Set of parameters for the onPageUpdateNeededParams event
     """
+
     def __init__(self, allowCache=True):
         self.allowCache = allowCache
 
@@ -239,6 +254,7 @@ class PreWikiOpenParams:
     """
     Set of parameters for the onPreWikiOpen event
     """
+
     def __init__(self, path, readonly):
         self.path = path
         self.readonly = readonly
@@ -249,6 +265,7 @@ class PostWikiOpenParams:
     """
     Set of parameters for the onPostWikiOpen event
     """
+
     def __init__(self, path, readonly, success):
         self.path = path
         self.readonly = readonly
@@ -259,6 +276,7 @@ class PostWikiCloseParams:
     """
     Set of parameters for the onPostWikiClose event
     """
+
     def __init__(self, path):
         self.path = path
 
@@ -267,6 +285,7 @@ class IconsGroupsListInitParams:
     """
     Set of parameters for the onIconsGroupsListInit event
     """
+
     def __init__(self, groupsList):
         """
         groupsList - list of the outwiker.gui.iconspanel.IconsGroupInfo.
@@ -278,6 +297,7 @@ class PageModeChangeParams:
     """
     Set of parameters for theon PageModeChange event
     """
+
     def __init__(self, pagemode):
         """
         pagemode - constant from outwiker.core.defines (or other place):
@@ -290,6 +310,7 @@ class AttachListChangedParams:
     """
     Parameters set for the onAttachListChanged event
     """
+
     def __init__(self):
         pass
 
@@ -298,23 +319,27 @@ class AttachSubdirChangedParams:
     """
     Parameters set for the onAttachSubdirChanged event
     """
+
     def __init__(self):
         pass
 
 
 class TextEditorKeyDownParams:
-    '''
+    """
     Parameters set for onTextEditorKeyDown event
-    '''
-    def __init__(self,
-                 editor: 'outwiker.gui.texteditor.TextEditor',
-                 keyCode: int,
-                 keyUnicode: int,
-                 ctrl: bool,
-                 shift: bool,
-                 alt: bool,
-                 cmd: bool,
-                 meta: bool):
+    """
+
+    def __init__(
+        self,
+        editor: "outwiker.gui.texteditor.TextEditor",
+        keyCode: int,
+        keyUnicode: int,
+        ctrl: bool,
+        shift: bool,
+        alt: bool,
+        cmd: bool,
+        meta: bool,
+    ):
         self.editor = editor
         self.keyCode = keyCode
         self.keyUnicode = keyUnicode
@@ -335,39 +360,44 @@ class TextEditorKeyDownParams:
 
 
 class PreWikiCloseParams:
-    '''
+    """
     Parameters set for onPreWikiClose event
-    '''
-    def __init__(self, wikiroot: 'outwiker.core.tree.WikiDocument'):
+    """
+
+    def __init__(self, wikiroot: "outwiker.core.tree.WikiDocument"):
         self.wikiroot = wikiroot
         self.abortClose = False
 
 
 class PostContentReadingParams:
-    '''
+    """
     Parameters set for onPostContentReading event
-    '''
+    """
+
     def __init__(self, content):
         self.content = content
 
 
 class PreContentWritingParams:
-    '''
+    """
     Parameters set for onPreContentWriting event
-    '''
+    """
+
     def __init__(self, content):
         self.content = content
 
 
 class TextEditorCaretMoveParams:
-    '''
+    """
     Parameters for onTextEditorCaretMove event
-    '''
-    def __init__(self,
-                 editor: 'outwiker.gui.texteditor.TextEditor',
-                 startSelection: int,
-                 endSelection: int
-                 ):
+    """
+
+    def __init__(
+        self,
+        editor: "outwiker.gui.texteditor.TextEditor",
+        startSelection: int,
+        endSelection: int,
+    ):
         self.editor = editor
         self.startSelection = startSelection
         self.endSelection = endSelection
@@ -378,6 +408,7 @@ class BeginAttachRenamingParams:
     """
     Parameters for onBeginAttachRenaming
     """
+
     # Name of renamed attached file or directory.
     # Rename selected item if renamed_item is None.
     renamed_item: Optional[str] = None
@@ -388,5 +419,32 @@ class AttachSelectionChangedParams:
     """
     Parameters for onAttachSelectionChanged
     """
+
     # Current selected attachments
     selection: List[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class NotesTreeItemsPreparingParams:
+    """
+    Parameters for onNotesTreeChangeOrderItem
+    """
+
+    visible_items: List["NotesTreeItem"] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class BookmarksChangedParams:
+    ACTION_ADD_TO_BOOKMARKS = 1
+    ACTION_REMOVE_FROM_BOOKMARKS = 2
+    bookmarks: "outwiker.core.Bookmarks" = None
+    page: "WikiPage" = None
+    action: int = 0
+
+
+@dataclass(frozen=True)
+class ForceNotesTreeItemsUpdate:
+    """
+    Parameters for onForceNotesTreeItemsUpdate
+    """
+    pages: List["outwiker.core.tree.BaseWikiPage"] = field(default_factory=list)

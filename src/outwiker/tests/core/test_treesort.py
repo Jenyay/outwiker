@@ -11,10 +11,11 @@ from outwiker.tests.utils import removeDir
 
 class TreeSortTest(unittest.TestCase):
     def setUp(self):
-        # Количество срабатываний особытий при обновлении страницы
+        self._application = Application()
+        # Количество срабатываний событий при обновлении страницы
         self.treeUpdateCount = 0
         self.treeUpdateSender = None
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
@@ -41,7 +42,7 @@ class TreeSortTest(unittest.TestCase):
         self.wikiroot["Страница 7"].order = 7
 
     def tearDown(self):
-        Application.wikiroot = None
+        self._application.wikiroot = None
         removeDir(self.path)
 
     def testSortAlphabetical1(self):
@@ -77,26 +78,26 @@ class TreeSortTest(unittest.TestCase):
         self.assertEqual(7, self.wikiroot["Страница 8"].order)
 
     def testSortAlphabeticalEvent(self):
-        Application.wikiroot = self.wikiroot
-        Application.onEndTreeUpdate += self.onEndTreeUpdate
+        self._application.wikiroot = self.wikiroot
+        self._application.onEndTreeUpdate += self.onEndTreeUpdate
 
         self.wikiroot.sortChildrenAlphabetical()
 
-        Application.onEndTreeUpdate -= self.onEndTreeUpdate
+        self._application.onEndTreeUpdate -= self.onEndTreeUpdate
 
         self.assertEqual(1, self.treeUpdateCount)
         self.assertEqual(self.wikiroot, self.treeUpdateSender)
 
     def testSortAlphabeticalNoEvent(self):
         """
-        Не устанавливает свойство Application.wikiroot, поэтому событие не
+        Не устанавливает свойство self._application.wikiroot, поэтому событие не
  должно срабатывать
         """
-        Application.onEndTreeUpdate += self.onEndTreeUpdate
+        self._application.onEndTreeUpdate += self.onEndTreeUpdate
 
         self.wikiroot.sortChildrenAlphabetical()
 
-        Application.onEndTreeUpdate -= self.onEndTreeUpdate
+        self._application.onEndTreeUpdate -= self.onEndTreeUpdate
 
         self.assertEqual(0, self.treeUpdateCount)
         self.assertEqual(None, self.treeUpdateSender)
@@ -128,12 +129,12 @@ class TreeSortTest(unittest.TestCase):
         self.wikiroot["Страница 1/Вложенная страница 3"].order = 6
         self.wikiroot["Страница 1/Вложенная страница 7"].order = 7
 
-        Application.wikiroot = self.wikiroot
-        Application.onEndTreeUpdate += self.onEndTreeUpdate
+        self._application.wikiroot = self.wikiroot
+        self._application.onEndTreeUpdate += self.onEndTreeUpdate
 
         self.wikiroot["Страница 1"].sortChildrenAlphabetical()
 
-        Application.onEndTreeUpdate -= self.onEndTreeUpdate
+        self._application.onEndTreeUpdate -= self.onEndTreeUpdate
 
         self.assertEqual(1, self.treeUpdateCount)
         self.assertEqual(self.wikiroot, self.treeUpdateSender)
@@ -161,11 +162,11 @@ class TreeSortTest(unittest.TestCase):
         self.wikiroot["Страница 1/Вложенная страница 3"].order = 6
         self.wikiroot["Страница 1/Вложенная страница 7"].order = 7
 
-        Application.onEndTreeUpdate += self.onEndTreeUpdate
+        self._application.onEndTreeUpdate += self.onEndTreeUpdate
 
         self.wikiroot["Страница 1"].sortChildrenAlphabetical()
 
-        Application.onEndTreeUpdate -= self.onEndTreeUpdate
+        self._application.onEndTreeUpdate -= self.onEndTreeUpdate
 
         self.assertEqual(0, self.treeUpdateCount)
         self.assertEqual(None, self.treeUpdateSender)

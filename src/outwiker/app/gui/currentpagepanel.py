@@ -1,19 +1,24 @@
 # -*- coding: utf-8 -*-
 
 import wx
+# from line_profiler import profile
 
 from outwiker.app.services.messages import showError
 from outwiker.app.services.tree import openWiki
 from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.app.gui.emptypageview import ClosedTreePanel
 from outwiker.app.gui.tabsctrl import TabsCtrl
+from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.system import getOS, getBuiltinImagePath
 from outwiker.core.treetools import pageExists
 from outwiker.gui.rootpagepanel import RootPagePanel
+from outwiker.gui.images import readImage
+
 
 
 class CurrentPagePanel(wx.Panel):
+    # @profile
     def __init__(self, parent, application):
         super().__init__(parent, style=wx.TAB_TRAVERSAL)
         self._application = application
@@ -28,14 +33,14 @@ class CurrentPagePanel(wx.Panel):
         # Флаг обозначает, что выполняется метод Save
         self.__saveProcessing = False
 
-        self.grayStarImage = getBuiltinImagePath("star_gray.png")
-        self.goldStarImage = getBuiltinImagePath("star.png")
+        self._bookmarkInactiveImg = readImage(getBuiltinImagePath("bookmark.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
+        self._bookmarkActiveImg = readImage(getBuiltinImagePath("bookmark_active.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
 
-        self.tabsCtrl = TabsCtrl(self)
+        self.tabsCtrl = TabsCtrl(self, self._application)
         self.bookmarkButton = wx.BitmapButton(
             self,
             -1,
-            wx.Bitmap(getBuiltinImagePath("star_gray.png"), wx.BITMAP_TYPE_ANY),
+            self._bookmarkInactiveImg,
         )
 
         self.__set_properties()
@@ -106,7 +111,7 @@ class CurrentPagePanel(wx.Panel):
         self.bookmarkButton.Enable(page is not None)
 
     def __updateBookmarkBtn(self):
-        imagePath = self.grayStarImage
+        image = self._bookmarkInactiveImg
         tooltip = _("Add to Bookmarks")
 
         page = self._application.selectedPage
@@ -114,13 +119,13 @@ class CurrentPagePanel(wx.Panel):
         if page is not None and page.root.bookmarks.pageMarked(
             self._application.selectedPage
         ):
-            imagePath = self.goldStarImage
+            image = self._bookmarkActiveImg
             tooltip = _("Remove from Bookmarks")
 
-        self.bookmarkButton.SetBitmapLabel(wx.Bitmap(imagePath, wx.BITMAP_TYPE_ANY))
+        self.bookmarkButton.SetBitmapLabel(image)
         self.bookmarkButton.SetToolTip(tooltip)
 
-    def __onBookmarksChanged(self, bookmarks):
+    def __onBookmarksChanged(self, params):
         self.__updateBookmarkBtn()
 
     def __updatePageView(self, page):
@@ -287,7 +292,7 @@ class CurrentPagePanel(wx.Panel):
 
     def __reloadWiki(self):
         self._application.selectedPage = None
-        openWiki(self._application.wikiroot.path)
+        openWiki(self._application.wikiroot.path, self._application)
 
     def __onForceSave(self):
         self.Save()
@@ -300,7 +305,7 @@ class CurrentPagePanel(wx.Panel):
         assert not self.__htmlRenderorrowed
 
         if self.__htmlRender is None:
-            self.__htmlRender = getOS().getHtmlRenderForPage(new_parent)
+            self.__htmlRender = getOS().getHtmlRenderForPage(new_parent, self._application)
         else:
             self.__htmlRender.Awake()
             self.__htmlRender.Reparent(new_parent)

@@ -5,8 +5,8 @@ import wx
 from outwiker.gui.preferences import configelements
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
-from outwiker.gui.controls.treebook2 import BasePrefPanel
 from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class FormatsPanel(BasePrefPanel):

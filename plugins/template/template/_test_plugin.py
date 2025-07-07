@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.api.pages.wiki.wikipage import createWikiPage
 from outwiker.core.pluginsloader import PluginsLoader
@@ -15,7 +16,7 @@ class PluginNameTest(unittest.TestCase):
     def setUp(self):
         self.__createWiki()
 
-        dirlist = ["../plugins/pluginname"]
+        dirlist = ["plugins/pluginname"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
@@ -26,7 +27,7 @@ class PluginNameTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = "../test/testwiki"
+        self.path = self.path = mkdtemp(prefix='Абырвалг абыр PluginName')
         removeDir(self.path)
 
         self.rootwiki = WikiDocument.create(self.path)

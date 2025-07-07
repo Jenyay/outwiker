@@ -3,6 +3,7 @@ from typing import Optional
 import wx
 
 import outwiker.app.services.tree as _tree
+from outwiker.api.core import Application
 from outwiker.core.tree import WikiDocument, WikiPage
 
 
@@ -10,16 +11,16 @@ def removePage(page: WikiPage) -> None:
     return _tree.removePage(page)
 
 
-def openWikiWithDialog(parent: wx.Window, readonly=False) -> Optional[WikiDocument]:
+def openWikiWithDialog(parent: wx.Window, application: Application, readonly=False) -> Optional[WikiDocument]:
     """
     Показать диалог открытия вики и вернуть открытую wiki
     parent -- родительское окно
     """
-    return _tree.openWikiWithDialog(parent, readonly)
+    return _tree.openWikiWithDialog(parent, application, readonly)
 
 
-def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
-    return _tree.openWiki(path, readonly)
+def openWiki(path: str, application: Application, readonly: bool = False) -> Optional[WikiDocument]:
+    return _tree.openWiki(path, application, readonly)
 
 
 def testPageTitle(title) -> bool:
@@ -59,9 +60,9 @@ def movePage(page, newParent) -> None:
     return _tree.movePage(page, newParent)
 
 
-def createNewWiki(parentwnd: wx.Window):
+def createNewWiki(parentwnd: wx.Window, application: Application):
     """
     Создать новую вики
     parentwnd - окно-владелец диалога выбора файла
     """
-    return _tree.createNewWiki(parentwnd)
+    return _tree.createNewWiki(parentwnd, application)

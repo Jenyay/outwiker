@@ -630,7 +630,7 @@ class HtmlPageView(BaseHtmlPanel):
         
         # Текущая дата
         actionController.getAction(CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor)
+            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor, self._application)
         )
 
         actionController.appendMenuItem(CURRENT_DATE, menu)

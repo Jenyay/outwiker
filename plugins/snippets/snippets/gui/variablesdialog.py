@@ -27,13 +27,14 @@ class VariablesDialog(TestedDialog):
     Dialog to enter variables and preview result
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super().__init__(
             parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         )
         global _
         _ = get_()
 
+        self._application = application
         self._shortTemplateName = None
         self._createGUI()
         self.SetTitle("Snippet variables")
@@ -50,11 +51,11 @@ class VariablesDialog(TestedDialog):
         self._notebook = wx.Notebook(self)
 
         # Result panel
-        self._resultEditor = TextEditorBase(self._notebook)
+        self._resultEditor = TextEditorBase(self._notebook, self._application)
         self._notebook.AddPage(self._resultEditor, _("Preview"))
 
         # Snippet panel
-        self._snippetEditor = SnippetEditor(self._notebook)
+        self._snippetEditor = SnippetEditor(self._notebook, self._application)
         self._notebook.AddPage(self._snippetEditor, _("Snippet"))
 
         # Checkbox for wiki command
@@ -161,7 +162,7 @@ class VariablesDialogController(object):
         self._config = SnippetsConfig(self._application.config)
         self._recentSnippetPath = None
 
-        self._dialog = VariablesDialog(self._application.mainWindow)
+        self._dialog = VariablesDialog(self._application.mainWindow, application)
         self._dialog.ok_button.Bind(wx.EVT_BUTTON, handler=self._onOk)
         self._dialog.Bind(EVT_VAR_CHANGE, handler=self._onVarChange)
         self._dialog.SetClientSize(

@@ -19,7 +19,7 @@ class WikiCommandsTest (BaseOutWikerMixin, TestCase):
         self.__createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, self.application.config)
+        self.parser = factory.make(self.testPage, self.application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики
@@ -216,7 +216,7 @@ content: Контент"""
     def testCommandTest7(self):
         factory = ParserFactory()
 
-        parser = factory.make(self.testPage, self.application.config)
+        parser = factory.make(self.testPage, self.application)
         parser.addCommand(ExampleCommand(parser))
 
         text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)
@@ -257,7 +257,7 @@ content: Контент"""
     def testExceptionCommand(self):
         factory = ParserFactory()
 
-        parser = factory.make(self.testPage, self.application.config)
+        parser = factory.make(self.testPage, self.application)
         parser.addCommand(ExceptionCommand(parser))
 
         text = """(:exception:)"""

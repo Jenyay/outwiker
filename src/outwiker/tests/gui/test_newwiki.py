@@ -30,7 +30,7 @@ class NewWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testCreate_01(self):
         Tester.dialogTester.append(self._selectFile)
-        createNewWiki(self.application.mainWindow)
+        createNewWiki(self.application.mainWindow, self.application)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertIsNotNone(self.application.wikiroot)

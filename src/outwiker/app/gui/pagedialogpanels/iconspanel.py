@@ -12,10 +12,10 @@ class IconsPanel(wx.Panel):
     Class of the panel in the "Icon" tab.
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, theme: Theme):
         super().__init__(parent)
         self._groupsButtonHeight = 32
-        self._theme = Theme()
+        self._theme = theme
         self._createGui()
 
     def _createGui(self):

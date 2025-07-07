@@ -40,6 +40,10 @@ APP_DATA_DISABLE_MINIMIZING = "__disableMinimizing"
 
 APP_DATA_DISABLE_PLUGINS = "__disablePlugins"
 
+APP_DATA_CREATE_TREE_PANEL = "__createTreePanel"
+APP_DATA_CREATE_ATTACH_PANEL = "__createAttachPanel"
+APP_DATA_CREATE_TAGS_PANEL = "__createTagsPanel"
+
 ICONS_STD_PREFIX = "__std_"
 ICONS_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "ico", "svg"]
 IMAGES_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "webp"]
@@ -47,6 +51,7 @@ ICON_DEFAULT = ICONS_STD_PREFIX + "_default.svg"
 RECENT_ICONS_SECTION = "RecentIcons"
 RECENT_ICONS_PARAM_NAME = "icon"
 
+DATA_FOLDER_NAME = "data"
 ICONS_FOLDER_NAME = "iconset"
 IMAGES_FOLDER_NAME = "images"
 STYLES_FOLDER_NAME = "styles"
@@ -78,6 +83,8 @@ DEFAULT_CONFIG_DIR = "outwiker"
 # Имя файла настроек по умолчанию
 DEFAULT_CONFIG_NAME = "outwiker.ini"
 
+OUTWIKER_PATH_ENV_VAR = "OUTWIKER_PATH"
+
 
 # To translate this words with xgettext
 if __name__ == "__main__":
@@ -102,3 +109,4 @@ if __name__ == "__main__":
     _("tags")
     _("weather")
     _("list")
+    _("bookmarks")

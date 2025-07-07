@@ -4,7 +4,7 @@ import wx
 
 from outwiker.gui.editorstyleslist import EditorStylesList
 from outwiker.gui.guiconfig import HtmlEditorStylesConfig
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class HtmlEditorPanel(BasePrefPanel):

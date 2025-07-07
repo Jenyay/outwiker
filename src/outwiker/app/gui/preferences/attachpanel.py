@@ -3,7 +3,7 @@
 import wx
 
 from outwiker.gui.guiconfig import AttachConfig
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class AttachPanel(BasePrefPanel):
@@ -13,8 +13,8 @@ class AttachPanel(BasePrefPanel):
         self.ACTIONS_COMBOBOX_WIDTH = 200
 
         self._actions = [
-            (_('Insert link to attachment'), AttachConfig.ACTION_INSERT_LINK),
-            (_('Execute attachment'), AttachConfig.ACTION_OPEN),
+            (_("Insert link to attachment"), AttachConfig.ACTION_INSERT_LINK),
+            (_("Execute attachment"), AttachConfig.ACTION_OPEN),
         ]
 
         self._config = AttachConfig(application.config)
@@ -33,20 +33,20 @@ class AttachPanel(BasePrefPanel):
         actionsSizer = wx.FlexGridSizer(cols=2)
         actionsSizer.AddGrowableCol(0)
 
-        doubleClickActionLabel, self.doubleClickActionCombo = self._createLabelAndComboBox(
-            _('Double clicking or pressing Enter on an attached file'),
-            actionsSizer)
+        self.doubleClickActionCombo = self._createLabelAndComboBox(
+            _("Double clicking or pressing Enter on an attached file"), actionsSizer
+        )[1]
 
-        self.doubleClickActionCombo.SetMinSize(
-            (self.ACTIONS_COMBOBOX_WIDTH, -1))
+        self.doubleClickActionCombo.SetMinSize((self.ACTIONS_COMBOBOX_WIDTH, -1))
         mainSizer.Add(actionsSizer, 0, wx.EXPAND | wx.ALL, border=2)
 
     def _createShowHiddenDirsGui(self, mainSizer):
-        self._showHiddenDirsCheckBox = wx.CheckBox(self,
-                                                   label=_('Show hidden folders'))
-        mainSizer.Add(self._showHiddenDirsCheckBox,
-                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                      border=2)
+        self._showHiddenDirsCheckBox = wx.CheckBox(self, label=_("Show hidden folders"))
+        mainSizer.Add(
+            self._showHiddenDirsCheckBox,
+            flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+            border=2,
+        )
 
     def _fillActionsCombo(self):
         for action in self._actions:
@@ -65,8 +65,7 @@ class AttachPanel(BasePrefPanel):
     def _saveActionsState(self):
         doubleClickAction = self.doubleClickActionCombo.GetSelection()
 
-        assert (doubleClickAction >= 0 and
-                doubleClickAction < len(self._actions))
+        assert doubleClickAction >= 0 and doubleClickAction < len(self._actions)
         self._config.doubleClickAction.value = self._actions[doubleClickAction][1]
         self._config.showHiddenDirs.value = self._showHiddenDirsCheckBox.GetValue()
 

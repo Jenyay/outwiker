@@ -14,9 +14,10 @@ class MarkdownTest(unittest.TestCase):
     """Markdown plug-in tests"""
 
     def setUp(self):
+        self._application = Application()
         self.__createWiki()
         dirlist = ["plugins/markdown"]
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self._application)
         self.loader.load(dirlist)
 
     def tearDown(self):
@@ -37,7 +38,7 @@ class MarkdownTest(unittest.TestCase):
         from markdown.markdownhtmlgenerator import MarkdownHtmlGenerator
         self.testPage.content = text
 
-        generator = MarkdownHtmlGenerator(self.testPage)
+        generator = MarkdownHtmlGenerator(self._application, self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
         return result
 

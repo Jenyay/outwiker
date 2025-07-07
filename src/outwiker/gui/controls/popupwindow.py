@@ -4,6 +4,8 @@ from typing import Tuple
 
 import wx
 
+from outwiker.gui.theme import Theme
+
 
 def _getBestPosition(popupWindow, mainWindow) -> Tuple[int, int]:
     """
@@ -33,8 +35,9 @@ class PopupWindow(wx.PopupTransientWindow):
     Popup window with accurate position
     '''
 
-    def __init__(self, parent):
+    def __init__(self, parent, theme: Theme):
         super().__init__(parent, flags=wx.PU_CONTAINS_CONTROLS)
+        self._theme = theme
         self.createGUI()
 
     def createGUI(self):

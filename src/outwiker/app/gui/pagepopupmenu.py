@@ -63,16 +63,16 @@ class PagePopupMenu:
 
     def __onAddChild(self, _event):
         assert self.popupPage is not None
-        createChildPage(self.parent, self.popupPage)
+        createChildPage(self.parent, self.popupPage, self._application)
 
     def __onAddSibling(self, _event):
         assert self.popupPage is not None
-        createSiblingPage(self.parent, self.popupPage)
+        createSiblingPage(self.parent, self.popupPage, self._application)
 
     def __onPropertiesPopup(self, _event):
         assert self.popupPage is not None
         if self.popupPage.parent is not None:
-            editPage(self.parent, self.popupPage)
+            editPage(self.parent, self.popupPage, self._application)
 
     def __createPopupMenu(self, popupPage):
         self.popupPage = popupPage

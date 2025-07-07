@@ -5,14 +5,15 @@ import unittest
 from tempfile import NamedTemporaryFile
 
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class FileSourceTest(unittest.TestCase):
+class FileSourceTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
         dirlist = ["plugins/datagraph"]
+        self.initApplication()
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
         self._dataFile = NamedTemporaryFile(mode='w', delete=False, encoding='utf8')
@@ -20,6 +21,7 @@ class FileSourceTest(unittest.TestCase):
     def tearDown(self):
         self.loader.clear()
         self._dataFile.close()
+        self.destroyApplication()
         os.remove(self._dataFile.name)
         self._dataFile = None
 
@@ -346,15 +348,17 @@ class FileSourceTest(unittest.TestCase):
         self.assertEqual(len(items), 0)
 
 
-class StringSourceTest(unittest.TestCase):
+class StringSourceTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
         dirlist = ["plugins/datagraph"]
+        self.initApplication()
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
     def tearDown(self):
         self.loader.clear()
+        self.destroyApplication()
 
     def testStringSource_empty_01(self):
         from datagraph.datasources import StringSource

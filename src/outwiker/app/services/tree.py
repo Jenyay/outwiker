@@ -43,7 +43,7 @@ def removePage(page: "outwiker.core.tree.WikiPage"):
         raise ReadonlyException
 
     if page.parent is None:
-        showError(Application.mainWindow, _("You can't remove the root element"))
+        showError(wx.GetApp().getMainWindow(), _("You can't remove the root element"))
         return
 
     if (
@@ -59,10 +59,10 @@ def removePage(page: "outwiker.core.tree.WikiPage"):
         try:
             page.remove()
         except IOError:
-            showError(Application.mainWindow, _("Can't remove page"))
+            showError(wx.GetApp().getMainWindow(), _("Can't remove page"))
 
 
-def openWikiWithDialog(parent, readonly=False):
+def openWikiWithDialog(parent, application: Application, readonly=False):
     """
     Показать диалог открытия вики и вернуть открытую wiki
     parent -- родительское окно
@@ -77,12 +77,12 @@ def openWikiWithDialog(parent, readonly=False):
         if dialog.ShowModal() == wx.ID_OK:
             fullpath = dialog.GetPath()
             path = os.path.dirname(fullpath)
-            wikiroot = openWiki(path, readonly)
+            wikiroot = openWiki(path, application, readonly)
 
     return wikiroot
 
 
-def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
+def openWiki(path: str, application: Application, readonly: bool = False) -> Optional[WikiDocument]:
     def threadFunc(path, readonly):
         try:
             return NotesTreeLoader().loadNotesTree(path, readonly)
@@ -95,7 +95,7 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
         return None
 
     preWikiOpenParams = PreWikiOpenParams(path, readonly)
-    Application.onPreWikiOpen(Application.selectedPage, preWikiOpenParams)
+    application.onPreWikiOpen(application.selectedPage, preWikiOpenParams)
     if preWikiOpenParams.abortOpen:
         logger.debug("Opening notes tree aborted")
         return None
@@ -110,24 +110,24 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
         path = os.path.split(path)[0]
 
     runner = LongProcessRunner(
-        threadFunc, Application.mainWindow, _("Loading"), _("Opening notes tree...")
+        threadFunc, wx.GetApp().getMainWindow(), _("Loading"), _("Opening notes tree...")
     )
     result = runner.run(os.path.realpath(path), readonly)
 
     success = False
     if isinstance(result, RootFormatError):
-        _rootFormatErrorHandle(path, readonly)
+        _rootFormatErrorHandle(path, application, readonly)
     elif isinstance(result, Exception):
         logger.error(result)
         _canNotLoadWikiMessage(path)
     else:
-        Application.wikiroot = result
+        application.wikiroot = result
         success = True
 
     postWikiOpenParams = PostWikiOpenParams(path, readonly, success)
-    Application.onPostWikiOpen(Application.selectedPage, postWikiOpenParams)
+    application.onPostWikiOpen(application.selectedPage, postWikiOpenParams)
 
-    return Application.wikiroot
+    return application.wikiroot
 
 
 def _canNotLoadWikiMessage(path):
@@ -136,10 +136,10 @@ def _canNotLoadWikiMessage(path):
     """
     logger.warning("Can't load notes tree: %s", path)
     text = _("Can't load notes tree:\n") + path
-    showError(Application.mainWindow, text)
+    showError(wx.GetApp().getMainWindow(), text)
 
 
-def _rootFormatErrorHandle(path, readonly):
+def _rootFormatErrorHandle(path, application, readonly):
     """
     Обработчик исключения outwiker.core.exceptions.RootFormatError
     """
@@ -158,7 +158,7 @@ def _rootFormatErrorHandle(path, readonly):
     try:
         # Загрузить вики
         wikiroot = NotesTreeLoader().loadNotesTree(os.path.realpath(path), readonly)
-        Application.wikiroot = wikiroot
+        application.wikiroot = wikiroot
     except IOError:
         _canNotLoadWikiMessage(path)
 
@@ -232,7 +232,7 @@ def replaceTitleDangerousSymbols(title: str, replacement: str) -> str:
 @testreadonly
 def renamePage(page, newtitle):
     if page.parent is None:
-        showError(Application.mainWindow, _("You can't rename the root element"))
+        showError(wx.GetApp().getMainWindow(), _("You can't rename the root element"))
         return
 
     newtitle = newtitle.strip()
@@ -248,7 +248,7 @@ def renamePage(page, newtitle):
         page.title = real_title
     except OSError:
         showError(
-            Application.mainWindow,
+            wx.GetApp().getMainWindow(),
             _('Can\'t rename page "{}" to "{}"').format(page.display_title, newtitle),
         )
 
@@ -271,17 +271,17 @@ def movePage(page, newParent):
     except DuplicateTitle:
         # Невозможно переместить из-за дублирования имен
         showError(
-            Application.mainWindow,
+            wx.GetApp().getMainWindow(),
             _("Can't move page when page with that title already exists"),
         )
     except TreeException:
         # Невозможно переместить по другой причине
         showError(
-            Application.mainWindow, _("Can't move page: {}".format(page.display_title))
+            wx.GetApp().getMainWindow(), _("Can't move page: {}".format(page.display_title))
         )
 
 
-def createNewWiki(parentwnd):
+def createNewWiki(parentwnd: wx.Window, application: Application):
     """
     Создать новую вики
     parentwnd - окно-владелец диалога выбора файла
@@ -303,8 +303,8 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
                 firstPage = newwiki[newPageTitle]
                 firstPage.content = newPageContent
 
-                Application.wikiroot = newwiki
-                Application.wikiroot.selectedPage = firstPage
+                application.wikiroot = newwiki
+                application.wikiroot.selectedPage = firstPage
             except (IOError, OSError) as e:
                 # TODO: проверить под Windows
-                showError(Application.mainWindow, _("Can't create wiki\n") + e.filename)
+                showError(wx.GetApp().getMainWindow(), _("Can't create wiki\n") + e.filename)

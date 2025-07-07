@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from typing import List, Optional, Tuple
 import re
-from outwiker.core.system import getOS
+import logging
+
+from .basespellcheckerwrapper import BaseSpellCheckerWrapper
+
+logger = logging.getLogger("outwiker.core.spellchecker.spellchecker")
 
 
 class SpellChecker:
@@ -9,18 +14,16 @@ class SpellChecker:
     Class for checking a word with dictionaries
     """
 
-    def __init__(self, langlist, folders):
-        """
-        langlist - list of a languages for checking
-            (for example ["ru_RU", "en_US"])
-        folders - list of paths to dictionaries
-        """
-        self._realChecker = getOS().getSpellChecker(langlist, folders)
-
-        self._wordRegex = re.compile(r'(?:(?:\w-\w)|\w)+')
-        self._digitRegex = re.compile(r'\d')
-
+    def __init__(
+        self,
+        real_checkers: List[BaseSpellCheckerWrapper],
+        custom_dict_checker: Optional[BaseSpellCheckerWrapper] = None,
+    ) -> None:
+        self._wordRegex = re.compile(r"(?:(?:\w-\w)|\w)+")
+        self._digitRegex = re.compile(r"\d")
         self._skipWordsWithNumbers = True
+        self._realCheckers = real_checkers
+        self._customDictChecker = custom_dict_checker
 
     @property
     def skipWordsWithNumbers(self):
@@ -30,33 +33,54 @@ class SpellChecker:
     def skipWordsWithNumbers(self, value):
         self._skipWordsWithNumbers = value
 
-    def check(self, word):
+    # Used for tests only
+    @property
+    def realCheckers(self) -> List[BaseSpellCheckerWrapper]:
+        return self._realCheckers
+
+    # Used for tests only
+    @property
+    def customDictChecker(self) -> Optional[BaseSpellCheckerWrapper]:
+        return self._customDictChecker
+
+    def check(self, word) -> bool:
         """
         Return True if word is contained in the dictionaries
             or False otherwise
         """
-        isValid = False
-
         if self._skipWordsWithNumbers:
             match = self._digitRegex.search(word)
             if match is not None:
-                isValid = True
+                # Skip words with numbers
+                return True
 
-        if not isValid:
-            isValid = self._realChecker.check(word)
+        checkers = self._realCheckers + (
+            [self._customDictChecker] if self._customDictChecker else []
+        )
+        if not checkers:
+            return True
 
-        return isValid
+        for checker in checkers:
+            if checker.check(word):
+                return True
 
-    def addCustomDict(self, path):
-        self._realChecker.addCustomDict(path)
+        return False
 
-    def addToCustomDict(self, dictIndex, word):
-        self._realChecker.addToCustomDict(dictIndex, word)
+    def addToCustomDict(self, word):
+        if self._customDictChecker is None:
+            logger.warning("Custom dictionary checker is not set")
+            return
 
-    def getSuggest(self, word):
-        return self._realChecker.getSuggest(word)
+        self._customDictChecker.addToCustomDict(word)
 
-    def findErrors(self, text):
+    def getSuggest(self, word) -> List[str]:
+        suggestions = []
+        for checker in self._realCheckers:
+            suggestions.extend(checker.getSuggest(word))
+
+        return sorted(set(suggestions))
+
+    def findErrors(self, text) -> List[Tuple[str, int, int]]:
         """
         Return list of tuples with positions of invalid words:
             (word, error_start, error_end)

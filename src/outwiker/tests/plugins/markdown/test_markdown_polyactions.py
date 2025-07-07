@@ -2,7 +2,6 @@
 
 import unittest
 
-from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
 
 from outwiker.tests.actions.test_editor_polyactions import BaseEditorPolyactionsFixture
@@ -16,7 +15,7 @@ class MarkdownPolyactionsTest(BaseEditorPolyactionsFixture, unittest.TestCase):
 
     def _postInitApplication(self):
         dirlist = ["plugins/markdown"]
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
     def tearDown(self):
@@ -30,4 +29,4 @@ class MarkdownPolyactionsTest(BaseEditorPolyactionsFixture, unittest.TestCase):
                                             [])
 
     def _getEditor(self):
-        return Application.mainWindow.pagePanel.pageView.codeEditor
+        return self.application.mainWindow.pagePanel.pageView.codeEditor

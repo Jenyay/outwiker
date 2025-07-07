@@ -32,12 +32,14 @@ from outwiker.core.system import getBuiltinImagePath, getOS
 
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.guiconfig import AttachConfig, GeneralGuiConfig
+# from line_profiler import profile
 
 
 logger = logging.getLogger('outwiker.gui.attachpanel')
 
 
 class AttachPanel(wx.Panel):
+    # @profile
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
@@ -74,7 +76,7 @@ class AttachPanel(wx.Panel):
 
         self._bindGuiEvents()
         self._bindAppEvents()
-        addStatusBarItem(self._ATTACH_STATUS_ITEM, position=1)
+        addStatusBarItem(self._application.mainWindow, self._ATTACH_STATUS_ITEM, position=1)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -191,6 +193,7 @@ class AttachPanel(wx.Panel):
         for action in self._localHotKeys:
             actionController.removeHotkey(action.stringId)
 
+    # @profile
     def _createGui(self, parent):
         toolbar = wx.ToolBar(parent, wx.ID_ANY, style=wx.TB_DOCKABLE)
         actionController = self._application.actionController
@@ -545,7 +548,7 @@ class AttachPanel(wx.Panel):
             elif len(full_path) > 0:
                 text = self._getStatusTextForManyFiles(full_path)
 
-        setStatusText(self._ATTACH_STATUS_ITEM, text)
+        setStatusText(self._application.mainWindow, self._ATTACH_STATUS_ITEM, text)
         self._sendAttachSelectedEvent()
 
     def _getStatusTextForSingleFile(self, fname_full: str, root_path: str) -> str:

@@ -1,6 +1,5 @@
 [project]
 name = "outwiker"
-version = "4.0.0.942"
 description = "A cross-platform software for keeping your notes in a tree"
 authors = [
 	{name = "Eugene Ilin (aka Jenyay)", email = "jenyay.ilin@gmail.com"},
@@ -15,7 +14,10 @@ dependencies = [
 	"idna>=2.10",
 	"pyparsing==3.1.3",
 	"psutil>=6.0.0",
-	"rcssmin>=1.1"
+	"rcssmin>=1.1",
+    "attrdict3==2.0.2",
+    "cacheman",
+    "cyhunspell",
 ]
 classifiers=[
 	"Development Status :: 3 - Alpha",
@@ -41,13 +43,56 @@ classifiers=[
 	"Topic :: Text Editors",
 	"Topic :: Text Processing :: Markup",
 ]
-#dynamic = ["version"]
+
+dynamic = ["version"]
 
 [project.urls]
 Homepage = "https://jenyay.net/Outwiker/English"
 Documentation = "https://outwiker.readthedocs.io/"
 Repository = "https://github.com/Jenyay/outwiker"
 
+[dependency-groups]
+dev = [
+    "invoke==2.2.0",
+    "cx-freeze==7.2.7",
+    "pympler==1.1",
+    "pytest>=8.3.2",
+    "coverage>=7.6.1",
+    "jinja2>=3.1",
+    "colorama==0.4.6",
+    "sphinx>=7.1",
+    "lief==0.15.1",
+    "line-profiler==4.2.0",
+    "owbuildtools",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.uv.sources]
+owbuildtools = { path = "./owbuildtools", editable = true }
+#cacheman = { git = "https://github.com/Jenyay/py_cache_manager" }
+#cyhunspell = { git = "https://github.com/Jenyay/cython_hunspell" }
+cyhunspell = { path = "./depends/cyhunspell" }
+cacheman = { path = "./depends/cacheman" }
+
+
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta:__legacy__"
+
+[project.scripts]
+outwiker = "outwiker.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["outwiker.tests*"]
+
+[tool.setuptools.package-data]
+outwiker = ["data/**/*"]
+
+[tool.setuptools.exclude-package-data]
+outwiker = ["tests*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "outwiker.__version_str__"}

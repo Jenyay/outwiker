@@ -152,7 +152,7 @@ class WikiStyleAdvancedAction (BaseAction):
         title = _('Advanced style...')
         mainWindow = self._application.mainWindow
 
-        with StyleDialog(mainWindow, title, styles, example_html, tag) as dlg:
+        with StyleDialog(mainWindow, self._application, title, styles, example_html, tag) as dlg:
             dlg.setCustomTextColors(recent_text_colors)
             dlg.setCustomBackgroundColors(recent_background_colors)
 

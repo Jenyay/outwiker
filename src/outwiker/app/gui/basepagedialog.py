@@ -6,7 +6,7 @@ from outwiker.app.gui.pagedialogpanels.generalpanel import (
     GeneralPanel,
     GeneralController,
 )
-from outwiker.gui.pagedialogpanels.appearancepanel import (
+from outwiker.app.gui.pagedialogpanels.appearancepanel import (
     AppearancePanel,
     AppearanceController,
 )
@@ -17,7 +17,7 @@ from outwiker.gui.testeddialog import TestedDialog
 
 class BasePageDialog(TestedDialog):
     def __init__(self, parentWnd, currentPage, parentPage, application):
-        super(BasePageDialog, self).__init__(
+        super().__init__(
             parent=parentWnd, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         )
 
@@ -125,7 +125,7 @@ class BasePageDialog(TestedDialog):
         # Add general panel
         parent = self.getPanelsParent()
 
-        self._generalPanel = GeneralPanel(parent)
+        self._generalPanel = GeneralPanel(parent, self._application.theme)
         self.addPanel(self._generalPanel, _("General"))
 
         self._generalController = GeneralController(

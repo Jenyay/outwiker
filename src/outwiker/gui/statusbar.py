@@ -5,7 +5,7 @@ from typing import List, Optional
 
 import wx
 
-from outwiker.core.application import ApplicationParams
+from outwiker.core.application import Application
 from outwiker.gui.defines import STATUSBAR_MESSAGE_ITEM
 from outwiker.gui.guiconfig import MainWindowConfig
 
@@ -20,7 +20,7 @@ class StatusBarItemInfo:
 class StatusBarController:
     def __init__(self,
                  statusbar: wx.StatusBar,
-                 application: ApplicationParams):
+                 application: Application):
         self._statusbar = statusbar
         self._application = application
         self._mainWindowConfig = MainWindowConfig(self._application.config)

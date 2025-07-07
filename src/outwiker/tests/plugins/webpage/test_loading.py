@@ -18,3 +18,6 @@ class WebPageLoadingTest (PluginLoadingMixin, unittest.TestCase):
         по которому его можно найти в PluginsLoader
         """
         return "WebPage"
+
+    def getInitApplicationParams(self):
+        return {"createTreePanel": True}

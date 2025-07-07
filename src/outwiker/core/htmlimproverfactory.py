@@ -3,28 +3,28 @@
 from .htmlimprover import BrHtmlImprover
 
 
-class HtmlImproverInfo(object):
+class HtmlImproverInfo:
     """
     Information about single HtmlImprover
     """
+
     def __init__(self, key, obj, description):
         self.key = key
         self.obj = obj
         self.description = description
 
 
-class HtmlImproverFactory(object):
+class HtmlImproverFactory:
     """
     Collection of the HTML improvers
     """
+
     def __init__(self, application):
         self._improvers = {}
 
-        self._defaultImprover = u'brimprover'
+        self._defaultImprover = "brimprover"
 
-        self.add(self._defaultImprover,
-                 BrHtmlImprover(),
-                 _(u"Line Breaks (<br/>)"))
+        self.add(self._defaultImprover, BrHtmlImprover(), _("Line Breaks (<br/>)"))
 
         application.onPrepareHtmlImprovers(self)
 
@@ -33,9 +33,11 @@ class HtmlImproverFactory(object):
         self._improvers[key] = HtmlImproverInfo(key, obj, description)
 
     def __getitem__(self, name):
-        return (self._improvers[name].obj
-                if name in self._improvers
-                else self._improvers[self._defaultImprover].obj)
+        return (
+            self._improvers[name].obj
+            if name in self._improvers
+            else self._improvers[self._defaultImprover].obj
+        )
 
     @property
     def names(self):

@@ -5,7 +5,6 @@ import html
 import wx
 import wx.html
 
-from .application import Application
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.guiconfig import TextPrintConfig
 
@@ -14,10 +13,10 @@ class TextPrinter:
     """
     Интерфейс для печати текстовых страниц
     """
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         self.parent = parent
 
-        self.config = TextPrintConfig(Application.config)
+        self.config = TextPrintConfig(application.config)
 
         self.normalFont = self.config.fontName.value
         self.monoFont = self.config.fontName.value

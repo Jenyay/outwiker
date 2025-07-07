@@ -122,9 +122,10 @@ def getCustomStylesNames(dir_list):
     extension = '.css'
 
     for folder in dir_list:
-        styles += [fname[: -len(extension)]
-                   for fname
-                   in os.listdir(folder)
-                   if fname.endswith(extension)]
+        if os.path.exists(folder):
+            styles += [fname[: -len(extension)]
+                       for fname
+                       in os.listdir(folder)
+                       if fname.endswith(extension)]
 
     return list(set(styles))

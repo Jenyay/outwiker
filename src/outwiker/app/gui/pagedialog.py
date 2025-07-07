@@ -5,13 +5,12 @@ import wx
 from outwiker.app.services.messages import showError
 from outwiker.app.services.tree import renamePage
 from outwiker.app.gui.basepagedialog import BasePageDialog
-from outwiker.core.application import Application
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.treetools import pageExists, testreadonly
 
 
 @testreadonly
-def editPage(parentWnd, currentPage):
+def editPage(parentWnd, currentPage, application):
     """
     Вызвать диалог для редактирования страницы
     parentWnd - родительское окно
@@ -21,11 +20,11 @@ def editPage(parentWnd, currentPage):
         raise ReadonlyException
 
     if not pageExists(currentPage):
-        showError(Application.mainWindow,
+        showError(application.mainWindow,
                   _('Page "%s" not found') % currentPage.display_title)
         return
 
-    with EditPageDialog(parentWnd, currentPage, Application) as dlg:
+    with EditPageDialog(parentWnd, currentPage, application) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             renamePage(currentPage, dlg.pageTitle)
             if not dlg.setPageProperties(currentPage):
@@ -33,7 +32,7 @@ def editPage(parentWnd, currentPage):
 
 
 @testreadonly
-def createPageWithDialog(parentwnd, parentpage):
+def createPageWithDialog(parentwnd, parentpage, application):
     """
     Показать диалог настроек и создать страницу
     """
@@ -44,7 +43,7 @@ def createPageWithDialog(parentwnd, parentpage):
 
     page = None
 
-    with CreatePageDialog(parentwnd, parentpage, Application) as dlg:
+    with CreatePageDialog(parentwnd, parentpage, application) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             factory = dlg.selectedFactory
             alias = dlg.pageTitle
@@ -55,7 +54,7 @@ def createPageWithDialog(parentwnd, parentpage):
                 page = factory.create(
                     parentpage, alias, tags, order_calculator)
             except OSError:
-                showError(Application.mainWindow, _("Can't create page"))
+                showError(application.mainWindow, _("Can't create page"))
                 return None
 
             assert page is not None
@@ -67,32 +66,32 @@ def createPageWithDialog(parentwnd, parentpage):
     return page
 
 
-def createSiblingPage(parentwnd, page):
+def createSiblingPage(parentwnd, page, application):
     """
     Создать страницу, находящуюся на том же уровне, что и текущая страница
     parentwnd - окно, которое будет родителем для диалога создания страницы
     """
-    assert Application.wikiroot is not None
+    assert application.wikiroot is not None
 
     if page is None or page.parent is None:
-        parentpage = Application.wikiroot
+        parentpage = application.wikiroot
     else:
         parentpage = page.parent
 
-    createPageWithDialog(parentwnd, parentpage)
+    createPageWithDialog(parentwnd, parentpage, application)
 
 
-def createChildPage(parentwnd, page):
+def createChildPage(parentwnd, page, application):
     """
     Создать страницу, которая будет дочерней к текущей странице
     parentwnd - окно, которое будет родителем для диалога создания страницы
     """
-    assert Application.wikiroot is not None
+    assert application.wikiroot is not None
 
     if page is None:
-        page = Application.wikiroot
+        page = application.wikiroot
 
-    createPageWithDialog(parentwnd, page)
+    createPageWithDialog(parentwnd, page, application)
 
 
 class CreatePageDialog(BasePageDialog):

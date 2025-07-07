@@ -4,7 +4,7 @@ import wx
 from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST
 
 from outwiker.gui.guiconfig import TagsConfig
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 from outwiker.gui.controls.pagelist_columns import ColumnsFactory
 
 

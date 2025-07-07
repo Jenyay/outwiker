@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
 from functools import reduce
 
 import wx
@@ -8,17 +7,13 @@ import wx.stc
 
 from outwiker.gui.texteditor import TextEditor
 from outwiker.gui.guiconfig import HtmlEditorStylesConfig
-from outwiker.core.application import Application
-from outwiker.core.system import getSpellDirList
-from outwiker.core.spellchecker.spellchecker import SpellChecker
-from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 
 
 class HtmlTextEditor(TextEditor):
     _htmlDictIsCopied = False
 
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, application):
+        super().__init__(parent, application)
 
     def setDefaultSettings(self):
         super().setDefaultSettings()
@@ -85,7 +80,7 @@ class HtmlTextEditor(TextEditor):
         """
         Загрузить стили из конфига
         """
-        config = HtmlEditorStylesConfig(Application.config)
+        config = HtmlEditorStylesConfig(self._application.config)
 
         styles = {}
 
@@ -134,11 +129,4 @@ class HtmlTextEditor(TextEditor):
 
     def getSpellChecker(self):
         langlist = self._getDictsFromConfig() + ["html"]
-        spellDirList = getSpellDirList()
-
-        spellChecker = SpellChecker(langlist, spellDirList)
-        spellChecker.addCustomDict(
-            os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME)
-        )
-
-        return spellChecker
+        return self._application.spellCheckers.getSpellChecker(langlist)

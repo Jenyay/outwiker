@@ -4,6 +4,7 @@ import unittest
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
+from outwiker.core.events import BookmarksChangedParams
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.tests.utils import removeDir
@@ -11,6 +12,7 @@ from outwiker.tests.utils import removeDir
 
 class BookmarksTest(unittest.TestCase):
     def setUp(self):
+        self._application = Application()
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
@@ -27,15 +29,15 @@ class BookmarksTest(unittest.TestCase):
 
         self.bookmarkCount = 0
         self.bookmarkSender = None
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
     def tearDown(self):
-        Application.wikiroot = None
+        self._application.wikiroot = None
         removeDir(self.path)
 
-    def onBookmark(self, bookmarks):
+    def onBookmark(self, params: BookmarksChangedParams):
         self.bookmarkCount += 1
-        self.bookmarkSender = bookmarks
+        self.bookmarkSender = params.bookmarks
 
     def testAddToBookmarks(self):
         # По умолчанию закладок нет
@@ -76,8 +78,8 @@ class BookmarksTest(unittest.TestCase):
                          "Страница 2/Страница 3")
 
     def testBookmarkEvent(self):
-        Application.onBookmarksChanged += self.onBookmark
-        Application.wikiroot = self.wikiroot
+        self._application.onBookmarksChanged += self.onBookmark
+        self._application.wikiroot = self.wikiroot
 
         self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
         self.assertEqual(self.bookmarkCount, 1)
@@ -92,7 +94,7 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarkSender, self.wikiroot.bookmarks)
 
     def testBookmarkNoEvent(self):
-        Application.onBookmarksChanged += self.onBookmark
+        self._application.onBookmarksChanged += self.onBookmark
 
         self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
         self.assertEqual(self.bookmarkCount, 0)

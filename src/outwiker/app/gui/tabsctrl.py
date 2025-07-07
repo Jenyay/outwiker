@@ -10,8 +10,9 @@ import outwiker.gui.controls.flatnotebook as fnb
 
 
 class TabsCtrl(wx.Panel):
-    def __init__(self, parent):
-        super(TabsCtrl, self).__init__(parent)
+    def __init__(self, parent, application: Application):
+        super().__init__(parent)
+        self._application = application
 
         self._tabs = fnb.FlatNotebook(self,
                                       agwStyle=(
@@ -47,17 +48,17 @@ class TabsCtrl(wx.Panel):
         """
         history = self._getCurrentHistory()
         if history is None:
-            Application.actionController.enableTools(
+            self._application.actionController.enableTools(
                 HistoryBackAction.stringId,
                 False)
-            Application.actionController.enableTools(
+            self._application.actionController.enableTools(
                 HistoryForwardAction.stringId,
                 False)
         else:
-            Application.actionController.enableTools(
+            self._application.actionController.enableTools(
                 HistoryBackAction.stringId,
                 history.backLength != 0)
-            Application.actionController.enableTools(
+            self._application.actionController.enableTools(
                 HistoryForwardAction.stringId,
                 history.forwardLength != 0)
 
@@ -132,12 +133,12 @@ class TabsCtrl(wx.Panel):
 
     def HistoryBack(self):
         page = self._getCurrentHistory().back()
-        Application.selectedPage = page
+        self._application.selectedPage = page
         self._updateHistoryButtons()
 
     def HistoryForward(self):
         page = self._getCurrentHistory().forward()
-        Application.selectedPage = page
+        self._application.selectedPage = page
         self._updateHistoryButtons()
 
 

@@ -46,7 +46,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         controller = InsertDialogController(
             self._dlg,
-            self.application.config,
+            self.application,
             self.testPage)
 
         result = controller.showDialog()
@@ -72,7 +72,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.counterName = ""
@@ -86,7 +86,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.counterName = "    "
@@ -100,7 +100,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.counterName = "Имя счетчика"
@@ -114,7 +114,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.parentName = ""
@@ -128,7 +128,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.parentName = "     "
@@ -142,7 +142,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.parentName = "Имя счетчика"
@@ -156,7 +156,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.separator = "."
@@ -170,7 +170,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.separator = ":"
@@ -184,7 +184,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.separator = ":"
@@ -201,7 +201,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.reset = False
@@ -216,7 +216,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.reset = False
@@ -231,7 +231,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.reset = True
@@ -246,7 +246,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.reset = True
@@ -261,7 +261,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.reset = True
@@ -276,7 +276,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.reset = True
@@ -291,7 +291,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.step = 1
@@ -304,7 +304,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.step = 0
@@ -317,7 +317,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.step = -10
@@ -330,7 +330,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.step = 10
@@ -343,7 +343,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.hide = False
@@ -356,7 +356,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         controller = InsertDialogController(self._dlg,
-                                            self.application.config,
+                                            self.application,
                                             self.testPage)
 
         self._dlg.hide = True
@@ -371,7 +371,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         InsertDialogController(self._dlg,
-                               self.application.config,
+                               self.application,
                                self.testPage)
 
         self.assertEqual(self._dlg.countersList, [""])
@@ -382,7 +382,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         InsertDialogController(self._dlg,
-                               self.application.config,
+                               self.application,
                                self.testPage)
 
         self.assertEqual(self._dlg.countersList, ["", "Счетчик"])
@@ -393,7 +393,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         InsertDialogController(
-            self._dlg, self.application.config, self.testPage)
+            self._dlg, self.application, self.testPage)
 
         self.assertEqual(self._dlg.countersList, ["", "Счетчик"])
 
@@ -403,7 +403,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from counter.insertdialogcontroller import InsertDialogController
 
         InsertDialogController(
-            self._dlg, self.application.config, self.testPage)
+            self._dlg, self.application, self.testPage)
 
         self.assertEqual(self._dlg.countersList, ["", "Абырвалг", "Счетчик"])
 
@@ -412,7 +412,7 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         from counter.insertdialogcontroller import InsertDialogController
 
-        InsertDialogController(self._dlg, self.application.config, self.testPage)
+        InsertDialogController(self._dlg, self.application, self.testPage)
 
         self.assertEqual(self._dlg.countersList, ["", "Абырвалг", "Счетчик"])
 
@@ -421,6 +421,6 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         from counter.insertdialogcontroller import InsertDialogController
 
-        InsertDialogController(self._dlg, self.application.config, self.testPage)
+        InsertDialogController(self._dlg, self.application, self.testPage)
 
         self.assertEqual(self._dlg.countersList, ["", "Абырвалг", "Счетчик"])

@@ -2,11 +2,12 @@
 
 import os.path
 import logging
-from typing import List, Tuple
+from typing import List, Optional
 
 import hunspell
 
 from .dictsfinder import DictsFinder
+from .basespellcheckerwrapper import BaseSpellCheckerWrapper
 from .spelldict import (
     create_new_dic_file,
     create_new_aff_file,
@@ -17,56 +18,52 @@ from .spelldict import (
 logger = logging.getLogger("outwiker.core.spellchecker.cyhunspell")
 
 
-class CyHunspellWrapper(object):
+class CyHunspellWrapper(BaseSpellCheckerWrapper):
     """
     Wrapper around the Cyhunspell library
     """
 
-    def __init__(self, langlist: List[str], folders: List[str]):
-        """
-        langlist - list of the languages ("ru_RU", "en_US", etc)
-        """
-        logger.debug("Initialize HunspellWrapper spell checker")
+    def __init__(self, dict_folders: List[str]):
+        self._dict_folers = dict_folders
+        self._checker: Optional[hunspell.Hunspell] = None
+        self._customDictChecker: Optional[hunspell.Hunspell] = None
+        self._customDictPath: Optional[str] = None
 
-        # Key - language (en_US, ru_RU etc),
-        # value - instance of the HunSpell class
-        self._checkers = {}
+    def setLanguage(self, lang: str):
+        logger.debug("Add dictionary to HunspellWrapper spell checker")
+        dictsFinder = DictsFinder(self._dict_folers)
 
-        # Index - number of the dictionary,
-        # value - tuple: (key for self._checkers, path to .dic file)
-        self._customDicts: List[Tuple[str, str]] = []
+        checker = None
 
-        dictsFinder = DictsFinder(folders)
+        for path in dictsFinder.getFoldersForLang(lang):
+            dic_file = os.path.join(path, lang + ".dic")
+            aff_file = os.path.join(path, lang + ".aff")
 
-        for lang in langlist:
-            checker = None
+            if (
+                checker is None
+                and os.path.exists(dic_file)
+                and os.path.exists(aff_file)
+            ):
+                checker = hunspell.Hunspell(
+                    lang, hunspell_data_dir=path, system_encoding="UTF-8"
+                )
 
-            for path in dictsFinder.getFoldersForLang(lang):
-                dic_file = os.path.join(path, lang + ".dic")
-                aff_file = os.path.join(path, lang + ".aff")
+            logger.debug("Add dictionary: %s", dic_file)
 
-                if (
-                    checker is None
-                    and os.path.exists(dic_file)
-                    and os.path.exists(aff_file)
-                ):
-                    checker = hunspell.Hunspell(
-                        lang, hunspell_data_dir=path, system_encoding="UTF-8"
-                    )
+        if checker is not None:
+            self._checker = checker
 
-                logger.debug("Add dictionary: %s", dic_file)
+    def addToCustomDict(self, word: str):
+        if self._customDictChecker is None:
+            logger.warn("Custom dictionary is not set")
+            return
 
-            if checker is not None:
-                self._checkers[lang] = checker
+        assert self._customDictPath is not None, "Custom dictionary path is not set"
 
-    def addToCustomDict(self, dictIndex: int, word: str):
-        key, dic_file = self._customDicts[dictIndex]
-        assert key in self._checkers
+        self._customDictChecker.add(word)
+        add_word_to_dic_file(self._customDictPath, word)
 
-        self._checkers[key].add(word)
-        add_word_to_dic_file(dic_file, word)
-
-    def addCustomDict(self, customDictPath: str):
+    def setCustomDict(self, customDictPath: str):
         logger.debug("Add custom dictionary: %s", customDictPath)
 
         dic_folder = os.path.dirname(customDictPath)
@@ -75,11 +72,6 @@ class CyHunspellWrapper(object):
         dic_file = customDictPath
         aff_file = customDictPath[:-4] + ".aff"
 
-        key = "{}:{}".format(dic_name, customDictPath)
-        if key in self._checkers:
-            logger.debug("Dictionary already added: %s", customDictPath)
-            return
-
         try:
             create_new_dic_file(dic_file)
             create_new_aff_file(aff_file)
@@ -87,24 +79,37 @@ class CyHunspellWrapper(object):
             checker = hunspell.Hunspell(
                 dic_name, hunspell_data_dir=dic_folder, system_encoding="UTF-8"
             )
-            self._checkers[key] = checker
-            self._customDicts.append((key, dic_file))
+            self._customDictChecker = checker
+            self._customDictPath = customDictPath
         except IOError:
             logger.error("Can't create custom dictionary: %s", customDictPath)
+            return
 
-    def check(self, word: str):
-        if not self._checkers:
+    def check(self, word: str) -> bool:
+        checkers = self._getCheckers()
+        if not checkers:
             return True
 
-        for checker in self._checkers.values():
+        for checker in checkers:
             if checker.spell(word):
                 return True
 
         return False
 
-    def getSuggest(self, word: str):
+    def _getCheckers(self) -> List[hunspell.Hunspell]:
+        checkers = []
+        if self._checker is not None:
+            checkers.append(self._checker)
+
+        if self._customDictChecker is not None:
+            checkers.append(self._customDictChecker)
+
+        return checkers
+
+    def getSuggest(self, word: str) -> List[str]:
         suggest_set = set()
-        for checker in self._checkers.values():
+        checkers = self._getCheckers()
+        for checker in checkers:
             try:
                 suggest_set |= set(checker.suggest(word))
             except UnicodeEncodeError:

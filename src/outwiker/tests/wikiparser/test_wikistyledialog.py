@@ -22,7 +22,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
 
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
         html = dlg.getHTML()
 
         self.assertIsNone(dlg.getTextColor())
@@ -39,7 +39,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         styles = {}
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
 
         color = wx.Colour(10, 20, 30)
         dlg.setTextColor(color)
@@ -55,7 +55,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         styles = {}
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
 
         color = wx.Colour(10, 20, 30)
         dlg.setTextColor(color)
@@ -70,7 +70,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         styles = {}
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
 
         color = wx.Colour(10, 20, 30)
         dlg.setBackgroundColor(color)
@@ -86,7 +86,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         styles = {}
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
 
         color = wx.Colour(10, 20, 30)
         dlg.setBackgroundColor(color)
@@ -101,7 +101,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         styles = {}
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
 
         css = 'font-weight: bold;'
         dlg.setCustomCSS(css)
@@ -116,7 +116,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         styles = {}
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
 
         css = 'font-weight: bold;'
         dlg.setCustomCSS(css)
@@ -131,7 +131,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         styles = {'test': 'div.test {}'}
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
 
         dlg.setCustomStyleName('test')
 
@@ -145,7 +145,7 @@ class WikiStyleDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         styles = {'test': 'div.test {}'}
         example_html = '<div class="{css_class}">...</div>'
         tag = 'div'
-        dlg = StyleDialog(parent, title, styles, example_html, tag)
+        dlg = StyleDialog(parent, self.application, title, styles, example_html, tag)
 
         dlg.setCustomStyleName('test')
         dlg.disableCustomStyleName()

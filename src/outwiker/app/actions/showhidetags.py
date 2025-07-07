@@ -22,4 +22,4 @@ class ShowHideTagsAction(BaseAction):
         return _("Show / hide a tags panel")
 
     def run(self, params):
-        showHideTagsPanel(self._application, params)
+        showHideTagsPanel(self._application.mainWindow, params)

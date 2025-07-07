@@ -22,4 +22,4 @@ class OpenReadOnlyAction(BaseAction):
         return _("Open tree notes read only")
 
     def run(self, params):
-        openWikiWithDialog(self._application.mainWindow, True)
+        openWikiWithDialog(self._application.mainWindow, self._application, True)

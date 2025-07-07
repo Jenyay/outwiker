@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.controls.treebook2 import BasePrefPanel
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 from outwiker.gui.preferences import configelements
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.stcstyle import StcStyle

@@ -33,4 +33,4 @@ class ReloadWikiAction(BaseAction):
                 return
 
             self._application.mainWindow.destroyPagePanel(result == wx.YES)
-            openWiki(self._application.wikiroot.path)
+            openWiki(self._application.wikiroot.path, self._application)

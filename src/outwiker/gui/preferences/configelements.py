@@ -10,9 +10,7 @@ import wx
 
 
 class BaseElement(metaclass=ABCMeta):
-    def __init__(self,
-                 option,
-                 control: wx.Control):
+    def __init__(self, option, control: wx.Control):
         """
         option - опция из core.config
         """
@@ -46,7 +44,7 @@ class BaseElement(metaclass=ABCMeta):
         pass
 
 
-class StringElement (BaseElement):
+class StringElement(BaseElement):
     def _getGUIValue(self):
         """
         Получить значение из интерфейстного элемента
@@ -62,11 +60,12 @@ class StringElement (BaseElement):
         self.control.SetValue(self.option.value)
 
 
-class BooleanElement (BaseElement):
+class BooleanElement(BaseElement):
     """
     Булевская настройка.
     Элемент управления - wx.CheckBox
     """
+
     def _getGUIValue(self):
         """
         Получить значение из интерфейстного элемента
@@ -82,11 +81,12 @@ class BooleanElement (BaseElement):
         self.control.SetValue(self.option.value)
 
 
-class ColourElement (BaseElement):
+class ColourElement(BaseElement):
     """
     Настройка цвета.
     Элемент управления - wx.ColourPickerCtrl
     """
+
     def _getGUIValue(self):
         """
         Получить значение из интерфейстного элемента
@@ -102,7 +102,7 @@ class ColourElement (BaseElement):
         self.control.SetColour(self.option.value)
 
 
-class IntegerElement (BaseElement):
+class IntegerElement(BaseElement):
     """
     Настройка для целых чисел.
     Элемент управления - wx.SpinCtrl
@@ -147,7 +147,7 @@ class ComboBoxListElement(BaseElement):
         self.control.SetSelection(self.option.value)
 
 
-class FontElement (object):
+class FontElement(object):
     """
     Настройка для выбора шрифта
     Элемент управления - wx.FontPickerCtrl
@@ -184,11 +184,13 @@ class FontElement (object):
         fontIsItalic = self.option.italic.value
 
         font = wx.Font(
-            fontSize, wx.FONTFAMILY_DEFAULT,
+            fontSize,
+            wx.FONTFAMILY_DEFAULT,
             wx.FONTSTYLE_ITALIC if fontIsItalic else wx.FONTSTYLE_NORMAL,
             wx.FONTWEIGHT_BOLD if fontIsBold else wx.FONTWEIGHT_NORMAL,
             False,
             fontFaceName,
-            wx.FONTENCODING_DEFAULT)
+            wx.FONTENCODING_DEFAULT,
+        )
 
         self.control.SetSelectedFont(font)

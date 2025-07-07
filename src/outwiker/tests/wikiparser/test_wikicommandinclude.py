@@ -16,6 +16,7 @@ from outwiker.tests.utils import removeDir
 
 class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
+        self._application = Application()
         self.initApplication()
         self.encoding = "utf8"
 
@@ -23,7 +24,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         self.__createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

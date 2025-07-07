@@ -19,7 +19,7 @@ class WikiStylesBlockTest(unittest.TestCase):
         self.wikiroot = createNotesTree(self.path)
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница", [])
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, Application())
 
     def tearDown(self):
         removeDir(self.path)
@@ -205,7 +205,7 @@ class WikiStylesInlineTest(unittest.TestCase):
         self.wikiroot = createNotesTree(self.path)
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница", [])
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, Application())
 
     def tearDown(self):
         removeDir(self.path)

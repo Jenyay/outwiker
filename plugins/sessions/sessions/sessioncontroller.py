@@ -63,7 +63,7 @@ class SessionController:
             closeWiki(self._application)
 
         # Открыть новую вики
-        wiki = openWiki(os.path.abspath(session.path), session.readonly)
+        wiki = openWiki(os.path.abspath(session.path), self._application, session.readonly)
         if wiki is None:
             return
 

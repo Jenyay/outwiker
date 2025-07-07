@@ -51,7 +51,6 @@ from outwiker.gui.autosavetimer import AutosaveTimer
 from outwiker.gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.defines import (
     MENU_FILE,
-    TOOLBAR_GENERAL,
     CLOSE_BUTTON_ACTION_CLOSE,
     CLOSE_BUTTON_ACTION_MINIMIZE,
     CLOSE_BUTTON_ACTION_HIDE_TO_TRAY,
@@ -67,7 +66,7 @@ class MainWndController:
     def __init__(self, parent, application):
         """
         parent - instance of the MainWindow class
-        application - instance of the ApplicationParams class
+        application - instance of the Application class
         """
         self._mainWindow = parent
         self._application = application
@@ -123,7 +122,10 @@ class MainWndController:
         datetime_width = self._mainWindowConfig.datetimeStatusWidth.value
         self._mainWindow.statusbar.addItem(STATUSBAR_PAGE_DATETIME_ITEM, datetime_width)
 
-        self.init()
+        self._bindAppEvents()
+        self._mainWindow.Bind(wx.EVT_CLOSE, handler=self._onClose)
+        self._mainWindow.Bind(wx.EVT_ICONIZE, handler=self._onIconize)
+
         self._createAcceleratorTable()
 
     def _createAcceleratorTable(self):
@@ -138,14 +140,6 @@ class MainWndController:
             ]
         )
         self._mainWindow.SetAcceleratorTable(aTable)
-
-    def init(self):
-        """
-        Начальные установки для главного окна
-        """
-        self._bindAppEvents()
-        self._mainWindow.Bind(wx.EVT_CLOSE, handler=self._onClose)
-        self._mainWindow.Bind(wx.EVT_ICONIZE, handler=self._onIconize)
 
     def _onClose(self, event):
         event.Veto()
@@ -207,7 +201,7 @@ class MainWndController:
         self._application.onWikiOpen -= self._onWikiOpen
         self._application.onPageUpdate -= self._onPageUpdate
 
-    def _onBookmarksChanged(self, event):
+    def _onBookmarksChanged(self, params):
         self.bookmarks.updateBookmarks()
 
     def _onTreeUpdate(self, sender):
@@ -215,13 +209,13 @@ class MainWndController:
         Событие при обновлении дерева
         """
         self.bookmarks.updateBookmarks()
-        self.updateTitle()
-        self.updateStatusBar()
+        self._updateTitle()
+        self._updateStatusBar()
 
     def _onPageUpdate(self, page, **kwargs):
         if kwargs["change"] & PAGE_UPDATE_TITLE:
-            self.updateTitle()
-            self.updateStatusBar()
+            self._updateTitle()
+            self._updateStatusBar()
             self.bookmarks.updateBookmarks()
 
     def _onWikiOpen(self, wikiroot):
@@ -241,8 +235,8 @@ class MainWndController:
 
         self.enableGui()
         self.bookmarks.updateBookmarks()
-        self.updateTitle()
-        self.updateStatusBar()
+        self._updateTitle()
+        self._updateStatusBar()
 
     ###################################################
     # Обработка событий
@@ -251,8 +245,8 @@ class MainWndController:
         """
         Обработчик события выбора страницы в дереве
         """
-        self.updateTitle()
-        self.updateStatusBar()
+        self._updateTitle()
+        self._updateStatusBar()
         self._updateBookmarksState()
 
     def _updateBookmarksState(self):
@@ -264,9 +258,9 @@ class MainWndController:
         """
         Обработчик события изменения настроек главного окна
         """
-        self.updateTitle()
-        self.updateStatusBar()
-        self.updateColors()
+        self._updateTitle()
+        self._updateStatusBar()
+        self._updateColors()
 
     ###################################################
     # Активировать/дизактивировать интерфейс
@@ -278,8 +272,11 @@ class MainWndController:
         enabled = self._application.wikiroot is not None
 
         self._enableTools(enabled)
-        self._mainWindow.treePanel.panel.Enable(enabled)
-        self._mainWindow.attachPanel.panel.Enable(enabled)
+        if self._mainWindow.treePanel is not None:
+            self._mainWindow.treePanel.panel.Enable(enabled)
+
+        if self._mainWindow.attachPanel is not None:
+            self._mainWindow.attachPanel.panel.Enable(enabled)
 
         self._updateBookmarksState()
 
@@ -287,14 +284,14 @@ class MainWndController:
         for action in self._disabledActions:
             self._application.actionController.enableTools(action.stringId, enabled)
 
-    def updateTitle(self):
+    def _updateTitle(self):
         """
         Обновить заголовок главного окна в зависимости от шаблона
             и текущей страницы
         """
         self._mainWindow.SetTitle(getMainWindowTitle(self._application))
 
-    def updateStatusBar(self):
+    def _updateStatusBar(self):
         dateFormat = self._generalConfig.dateTimeFormat.value
         text = ""
 
@@ -306,7 +303,7 @@ class MainWndController:
                 self._application.selectedPage.datetime, dateFormat
             )
 
-        setStatusText(STATUSBAR_PAGE_DATETIME_ITEM, text)
+        setStatusText(self._application.mainWindow, STATUSBAR_PAGE_DATETIME_ITEM, text)
 
     def loadMainWindowParams(self):
         """
@@ -322,22 +319,31 @@ class MainWndController:
 
         self._mainWindow.SetSize(xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
-        self.updateColors()
+        self._updateColors()
         self._mainWindow.Layout()
         self._mainWindow.Thaw()
 
-    def updateColors(self):
+    def _updateColors(self):
         config = self._mainWindow.mainWindowConfig
         panels = [
             self._mainWindow.treePanel,
             self._mainWindow.attachPanel,
             self._mainWindow.tagsCloudPanel,
-            # self._mainWindow.pagePanel,
         ]
 
         for panel in panels:
-            panel.setBackgroundColour(config.mainPanesBackgroundColor.value)
-            panel.setForegroundColour(config.mainPanesTextColor.value)
+            if panel is None:
+                continue
+            backColor = wx.Colour(config.mainPanesBackgroundColor.value)
+            textColor = wx.Colour(config.mainPanesTextColor.value)
+            if not backColor.IsOk():
+                backColor = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
+
+            if not textColor.IsOk():
+                textColor = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
+
+            panel.setBackgroundColour(backColor)
+            panel.setForegroundColour(textColor)
 
         self._mainWindow.Refresh()
 
@@ -367,4 +373,5 @@ class MainWndController:
         """
         Выбор пункта меню с недавно открытыми файлами
         """
-        openWiki(self._recentId[event.Id])
+        assert self._application is not None
+        openWiki(self._recentId[event.Id], self._application)

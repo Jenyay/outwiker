@@ -3,8 +3,8 @@
 import wx
 
 from outwiker.gui.dialogs.messagebox import MessageBox
-from outwiker.gui.controls.treebook2 import BasePrefPanel
 from outwiker.gui.controls.hotkeyctrl import HotkeyCtrl, EVT_HOTKEY_EDIT
+from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
 class HotKeysPanel(BasePrefPanel):

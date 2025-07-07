@@ -30,6 +30,7 @@ class TextPageCreationTest(unittest.TestCase):
     """
 
     def setUp(self):
+        self._application = Application()
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
         self.eventcount = 0
@@ -68,10 +69,10 @@ class TextPageCreationTest(unittest.TestCase):
                       "testdata/images/icon.jpg",
                       "testdata/images/icon.ico"]
 
-        Application.wikiroot = None
+        self._application.wikiroot = None
 
     def tearDown(self):
-        Application.wikiroot = None
+        self._application.wikiroot = None
         os.chmod(self._getConfigPath(self.wikiroot),
                  stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
         os.chmod(self._getConfigPath(self.wikiroot["Страница 1"]),
@@ -105,25 +106,25 @@ class TextPageCreationTest(unittest.TestCase):
         )
 
     def testEventChangeContent(self):
-        Application.wikiroot = self.wikiroot
-        Application.onPageUpdate += self.onPageUpdate
+        self._application.wikiroot = self.wikiroot
+        self._application.onPageUpdate += self.onPageUpdate
 
         self.wikiroot["Страница 1"].content = "тарам-там-там"
         self.assertEqual(self.eventcount, 1)
 
-        Application.onPageUpdate -= self.onPageUpdate
+        self._application.onPageUpdate -= self.onPageUpdate
 
     def testNoEventChangeContent(self):
-        Application.onPageUpdate += self.onPageUpdate
+        self._application.onPageUpdate += self.onPageUpdate
 
         self.wikiroot["Страница 1"].content = "тарам-там-там"
         self.assertEqual(self.eventcount, 0)
 
-        Application.onPageUpdate -= self.onPageUpdate
+        self._application.onPageUpdate -= self.onPageUpdate
 
     def testEventChangeTags(self):
-        Application.wikiroot = self.wikiroot
-        Application.onPageUpdate += self.onPageUpdate
+        self._application.wikiroot = self.wikiroot
+        self._application.onPageUpdate += self.onPageUpdate
 
         self.wikiroot["Страница 1"].tags = ["метка 1", "метка 2", "метка 4"]
         self.assertEqual(self.eventcount, 1)
@@ -132,15 +133,15 @@ class TextPageCreationTest(unittest.TestCase):
         self.wikiroot["Страница 1"].tags = ["метка 1", "метка 2", "метка 4"]
         self.assertEqual(self.eventcount, 1)
 
-        Application.onPageUpdate -= self.onPageUpdate
+        self._application.onPageUpdate -= self.onPageUpdate
 
     def testNoEventChangeTags(self):
-        Application.onPageUpdate += self.onPageUpdate
+        self._application.onPageUpdate += self.onPageUpdate
 
         self.wikiroot["Страница 1"].tags = ["метка 1", "метка 2", "метка 4"]
         self.assertEqual(self.eventcount, 0)
 
-        Application.onPageUpdate -= self.onPageUpdate
+        self._application.onPageUpdate -= self.onPageUpdate
 
     def testAttach1(self):
         # Получить путь до прикрепленных файлов, не создавая ее

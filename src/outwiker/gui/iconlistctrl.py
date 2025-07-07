@@ -12,6 +12,7 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.iconcontroller import IconController
 from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH
 from outwiker.gui.images import readImage
+from outwiker.gui.theme import Theme
 
 IconSelectedEvent, EVT_ICON_SELECTED = NewEvent()
 IconDoubleClickEvent, EVT_ICON_DOUBLE_CLICK = NewEvent()
@@ -37,7 +38,7 @@ class IconButton:
         if theme is not None:
             self._normalBackground = theme.colorBackground
             self._selectedBackground = theme.colorBackgroundSelected
-            self._borderColor = theme.colorBorderSelected
+            self._borderColor = theme.get(Theme.SECTION_GENERAL, Theme.CONTROL_BORDER_SELECTED_COLOR)
 
         self._x = 0
         self._y = 0

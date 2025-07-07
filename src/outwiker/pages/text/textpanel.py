@@ -59,7 +59,7 @@ class TextPanel(BaseTextPanel):
         self.textEditor.SetFocus()
 
     def __createGui(self):
-        self.textEditor = TextPageEditor(self)
+        self.textEditor = TextPageEditor(self, self._application)
 
         mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
         mainSizer.Add(self.textEditor, 1, wx.EXPAND, 0)

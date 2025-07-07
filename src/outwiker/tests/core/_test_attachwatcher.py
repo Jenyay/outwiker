@@ -20,7 +20,7 @@ class AttachWatcherTest(BaseWxTestCase):
         super().setUp()
         self._eventCount = 0
         self._period_ms = 50
-        self._application = Application
+        self._application = Application()
         self._application.onAttachListChanged += self._onAttachListChanged
 
         # Path to path with files

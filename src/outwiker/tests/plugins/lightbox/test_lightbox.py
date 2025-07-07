@@ -15,16 +15,17 @@ from outwiker.tests.utils import removeDir
 class LightboxPluginTest(unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
+        self._application = Application()
 
         self.__createWiki()
 
         dirlist = ["plugins/lightbox"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self._application)
         self.loader.load(dirlist)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, Application.config)
+        self.parser = self.factory.make(self.testPage, self._application)
 
     def __createWiki(self):
         # Здесь будет создаваться вики

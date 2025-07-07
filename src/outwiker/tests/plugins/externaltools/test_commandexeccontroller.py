@@ -3,7 +3,6 @@
 import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams
 from outwiker.gui.tester import Tester
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
@@ -14,21 +13,21 @@ class CommandExecControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.initApplication()
         dirlist = ['plugins/externaltools']
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
         from externaltools.commandexec.commandcontroller import CommandController
-        self._controller = CommandController(Application)
+        self._controller = CommandController(self.application)
         self._controller.initialize()
 
         from externaltools.config import ExternalToolsConfig
-        ExternalToolsConfig(Application.config).clearAll()
+        ExternalToolsConfig(self.application.config).clearAll()
 
         Tester.dialogTester.clear()
 
     def tearDown(self):
         from externaltools.config import ExternalToolsConfig
-        ExternalToolsConfig(Application.config).clearAll()
+        ExternalToolsConfig(self.application.config).clearAll()
 
         self._controller.destroy()
         self.loader.clear()
@@ -195,7 +194,7 @@ class CommandExecControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testWarning_01(self):
         from externaltools.config import ExternalToolsConfig
-        config = ExternalToolsConfig(Application.config)
+        config = ExternalToolsConfig(self.application.config)
         config.execWarning = True
 
         params = LinkClickParams('exec://exec/?com1=sometools')
@@ -209,7 +208,7 @@ class CommandExecControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testWarning_02(self):
         from externaltools.config import ExternalToolsConfig
-        config = ExternalToolsConfig(Application.config)
+        config = ExternalToolsConfig(self.application.config)
         config.execWarning = False
 
         params = LinkClickParams('exec://exec/?com1=sometools')

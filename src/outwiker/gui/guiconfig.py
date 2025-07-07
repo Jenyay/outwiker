@@ -111,6 +111,11 @@ class GeneralGuiConfig:
         ";"
     )
 
+    RECENT_GUI_COLORS_PARAM = "recent_gui_colors"
+    RECENT_GUI_COLORS_DEFAULT = "#000000;#FFFFFF;#ff0000;#00ff00;#0000ff;#8a2be2;#7fff00;#d2691e;#6495ed;#dc143c;#00ffff;#a9a9a9;#ff8c00;#ff1493;#ffd700;#adff2f;#ffff00".split(
+        ";"
+    )
+
     # Toaster delay in milliseconds
     TOASTER_DELAY_PARAM = "ToasterDelay"
     TOASTER_DELAY_DEFAULT = 7000
@@ -213,6 +218,14 @@ class GeneralGuiConfig:
             self.GENERAL_SECTION,
             self.RECENT_BACKGROUND_COLORS_PARAM,
             self.RECENT_BACKGROUND_COLORS_DEFAULT,
+            separator=";",
+        )
+
+        self.recentGuiColors = ListOption(
+            self.config,
+            self.GENERAL_SECTION,
+            self.RECENT_GUI_COLORS_PARAM,
+            self.RECENT_GUI_COLORS_DEFAULT,
             separator=";",
         )
 
@@ -787,10 +800,10 @@ class MainWindowConfig:
     STATUSBAR_VISIBLE_DEFAULT = True
 
     MAIN_PANES_BACKGROUND_COLOR_SECTION = "main_panes_background_color"
-    MAIN_PANES_BACKGROUND_COLOR_DEFAULT = "#ffffff"
+    MAIN_PANES_BACKGROUND_COLOR_DEFAULT = ""
 
     MAIN_PANES_TEXT_COLOR_SECTION = "main_panes_text_color"
-    MAIN_PANES_TEXT_COLOR_DEFAULT = "#000000"
+    MAIN_PANES_TEXT_COLOR_DEFAULT = ""
 
     def __init__(self, config):
         self.config = config
@@ -887,6 +900,16 @@ class TreeConfig:
     PANE_OPTIONS_SECTION = "TreePane"
     PANE_OPTIONS_DEFAULT = ""
 
+    FONT_SIZE_SECTION = "TreeFontSize"
+    FONT_SIZE_DEFAULT = None
+
+    # Extra icons
+    EXTRA_ICON_BOOKMARK_SECTION = "ExtraIconBookmark"
+    EXTRA_ICON_BOOKMARK_DEFAULT = True
+
+    EXTRA_ICON_READ_ONLY_SECTION = "ExtraIconReadOnly"
+    EXTRA_ICON_READ_ONLY_DEFAULT = True
+
     def __init__(self, config):
         self.config = config
 
@@ -910,6 +933,28 @@ class TreeConfig:
             MainWindowConfig.MAIN_WINDOW_SECTION,
             TreeConfig.PANE_OPTIONS_SECTION,
             TreeConfig.PANE_OPTIONS_DEFAULT,
+        )
+
+        self.fontSize = IntegerOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            TreeConfig.FONT_SIZE_SECTION,
+            TreeConfig.FONT_SIZE_DEFAULT,
+        )
+
+        # Extra icons
+        self.extraIconBookmark = BooleanOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.EXTRA_ICON_BOOKMARK_SECTION,
+            self.EXTRA_ICON_BOOKMARK_DEFAULT,
+        )
+
+        self.extraIconReadOnly = BooleanOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.EXTRA_ICON_READ_ONLY_SECTION,
+            self.EXTRA_ICON_READ_ONLY_DEFAULT,
         )
 
 
@@ -1032,6 +1077,11 @@ class PageDialogConfig:
     RECENT_NEW_PAGE_ORDER_CALCULATOR_PARAM = "PageOrderCalculator"
     RECENT_NEW_PAGE_ORDER_CALCULATOR_DEFAULT = 1
 
+    PAGE_TITLE_COLORS_PARAM = "PAgeTitleColors"
+    PAGE_TITLE_COLORS_DEFAULT = "#FF0000;#800080;#FFA500;#FFD700;#5733FF;#A133FF;#FF5733;#40E0D0;#003366;#006400;#8B0000;#4B0082;#654321".split(
+        ";"
+    )
+
     def __init__(self, config):
         self.config = config
 
@@ -1068,6 +1118,14 @@ class PageDialogConfig:
             GeneralGuiConfig.GENERAL_SECTION,
             self.RECENT_NEW_PAGE_ORDER_CALCULATOR_PARAM,
             self.RECENT_NEW_PAGE_ORDER_CALCULATOR_DEFAULT,
+        )
+
+        self.PageTitleColors = ListOption(
+            self.config,
+            GeneralGuiConfig.GENERAL_SECTION,
+            self.PAGE_TITLE_COLORS_PARAM,
+            self.PAGE_TITLE_COLORS_DEFAULT,
+            separator=";",
         )
 
 

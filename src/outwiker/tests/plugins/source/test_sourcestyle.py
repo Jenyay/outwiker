@@ -47,7 +47,7 @@ def hello (count):
         self.application.config.remove_section(self.config.section)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, self.application.config)
+        self.parser = self.factory.make(self.testPage, self.application)
 
     def tearDown(self):
         self.config.tabWidth.value = 4
@@ -62,7 +62,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .c"
@@ -83,7 +83,7 @@ def hello (count):
 
         self.config.defaultStyle.value = "invalid_blablabla"
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .c"
@@ -104,7 +104,7 @@ def hello (count):
 
         self.config.defaultStyle.value = ""
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .c"
@@ -125,7 +125,7 @@ def hello (count):
 
         self.config.defaultStyle.value = "vim"
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-vim .c"
@@ -144,7 +144,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .c"
@@ -163,7 +163,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-vim .c"
@@ -183,7 +183,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-vim .c"
@@ -212,7 +212,7 @@ def hello (count):
 
         self.testPage.content = text
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .c"
@@ -231,7 +231,7 @@ def hello (count):
 
         self.config.defaultStyle.value = "invalid_blablabla"
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .c"
@@ -250,7 +250,7 @@ def hello (count):
 
         self.config.defaultStyle.value = ""
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .c"
@@ -267,7 +267,7 @@ def hello (count):
 
         self.config.defaultStyle.value = "vim"
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-vim .c"
@@ -283,7 +283,7 @@ def hello (count):
         self.testPage.content = text
         self.config.defaultStyle.value = "vim"
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-vim pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
@@ -299,7 +299,7 @@ def hello (count):
         self.testPage.content = text
         self.config.defaultStyle.value = "vim"
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
@@ -321,7 +321,7 @@ def hello (count):
         self.testPage.content = text
         self.config.defaultStyle.value = "vim"
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"
@@ -344,7 +344,7 @@ def hello (count):
         self.testPage.content = text
         self.config.defaultStyle.value = "vim"
 
-        generator = HtmlGenerator(self.testPage)
+        generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-vim-parentbg pre {padding: 0px; border: none; color: inherit; background-color: inherit; margin:0px; }"

@@ -14,9 +14,11 @@ import logging
 from pathlib import Path
 from typing import List, Union
 from uuid import UUID
+from functools import lru_cache 
 
 import wx
 
+import outwiker
 from outwiker.core.images import find_svg
 
 from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
@@ -32,6 +34,8 @@ from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    DEFAULT_CONFIG_DIR,
                                    DEFAULT_CONFIG_NAME,
+                                   DATA_FOLDER_NAME,
+                                   OUTWIKER_PATH_ENV_VAR,
                                    )
 
 
@@ -141,33 +145,33 @@ class Windows(System):
         import wx.html2 as webview
         return webview.WebView.IsBackendAvailable(webview.WebViewBackendEdge)
 
-    def getHtmlRender(self, parent):
+    def getHtmlRender(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderie import HtmlRenderIEGeneral
             from outwiker.gui.htmlrenderedge import HtmlRenderEdgeGeneral
-            return HtmlRenderEdgeGeneral(parent) if self._isEdgeEngineAvaible() else HtmlRenderIEGeneral(parent)
+            return HtmlRenderEdgeGeneral(parent, application) if self._isEdgeEngineAvaible() else HtmlRenderIEGeneral(parent, application)
 
-    def getHtmlRenderForPage(self, parent):
+    def getHtmlRenderForPage(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderie import HtmlRenderIEForPage
             from outwiker.gui.htmlrenderedge import HtmlRenderEdgeForPage
-            return HtmlRenderEdgeForPage(parent) if self._isEdgeEngineAvaible() else HtmlRenderIEForPage(parent)
+            return HtmlRenderEdgeForPage(parent, application) if self._isEdgeEngineAvaible() else HtmlRenderIEForPage(parent, application)
 
     def getHtmlRenderSearchController(self, searchPanel, htmlRender):
         from outwiker.gui.controls.htmlsearchpanelcontrollerwindows import HtmlSearchPanelControllerWindows
         return HtmlSearchPanelControllerWindows(searchPanel, htmlRender)
 
-    def getSpellChecker(self, langlist, folders):
+    def getSpellChecker(self, folders):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
-        return CyHunspellWrapper(langlist, folders)
+        return CyHunspellWrapper(folders)
 
     @property
     def windowIconFile(self) -> str:
@@ -225,27 +229,27 @@ class Unix(System):
     def fileIcons(self):
         return UnixFileIcons()
 
-    def getHtmlRender(self, parent):
+    def getHtmlRender(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKitGeneral
-            return HtmlRenderWebKitGeneral(parent)
+            return HtmlRenderWebKitGeneral(parent, application)
 
-    def getHtmlRenderForPage(self, parent):
+    def getHtmlRenderForPage(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
-            return HtmlRenderFake(parent)
+            return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKitForPage
-            return HtmlRenderWebKitForPage(parent)
+            return HtmlRenderWebKitForPage(parent, application)
 
-    def getSpellChecker(self, langlist, folders):
+    def getSpellChecker(self, folders):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
-        return CyHunspellWrapper(langlist, folders)
+        return CyHunspellWrapper(folders)
 
     @property
     def windowIconFile(self) -> str:
@@ -271,6 +275,11 @@ def getCurrentDir() -> str:
         # For sources executing
         current_dir = str(Path(__file__).parents[2].resolve())
     return current_dir
+
+
+@lru_cache 
+def getMainModulePath() -> str:
+    return str(Path(outwiker.__file__).parent.resolve())
 
 
 def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
@@ -316,10 +325,17 @@ def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     return confPath
 
 
+@lru_cache 
+def getMainModuleDataPath() -> str:
+    return os.path.join(getMainModulePath(), DATA_FOLDER_NAME)
+
+
+@lru_cache 
 def getImagesDir() -> str:
-    return op.join(getCurrentDir(), IMAGES_FOLDER_NAME)
+    return op.join(getMainModuleDataPath(), IMAGES_FOLDER_NAME)
 
 
+@lru_cache 
 def getBuiltinImagePath(*relative_image_name: str) -> str:
     '''
     Return absolute path to image file from "images" directory
@@ -328,8 +344,16 @@ def getBuiltinImagePath(*relative_image_name: str) -> str:
     return find_svg(path)
 
 
+def getExtraIconPath(relative_image_name: str) -> str:
+    '''
+    Return absolute path to image file from "images/extraicons" directory
+    '''
+    path = os.path.abspath(os.path.join(getImagesDir(), "extraicons", relative_image_name))
+    return find_svg(path)
+
+
 def getTemplatesDir() -> str:
-    return op.join(getCurrentDir(), STYLES_FOLDER_NAME)
+    return op.join(getMainModuleDataPath(), STYLES_FOLDER_NAME)
 
 
 def getExeFile() -> str:
@@ -380,18 +404,28 @@ def getSpecialDirList(dirname,
     Возвращает список "специальных" директорий (директорий для плагинов,
     стилей и т.п., расположение которых зависит от расположения файла настроек)
     """
+    dirlist = []
+
+    # Data directory in outwiker module directory
+    moduleDataDir = getMainModuleDataPath()
+    dirlist.append(moduleDataDir)
+
     # Директория рядом с запускаемым файлом
-    programSpecialDir = op.abspath(op.join(getCurrentDir(), dirname))
+    programSpecialDir = op.abspath(getCurrentDir())
+    dirlist.append(programSpecialDir)
+
+    # Путь из переменной окружения OUTWIKER_PATH
+    custom_path = os.environ.get(OUTWIKER_PATH_ENV_VAR, '')
+    if custom_path:
+        dirlist.append(custom_path)
 
     # Директория рядом с файлом настроек
     configdir = op.dirname(getConfigPath(configDirName, configFileName))
-    specialDir = op.abspath(op.join(configdir, dirname))
 
-    dirlist = [programSpecialDir]
-    if programSpecialDir != specialDir:
-        dirlist.append(specialDir)
+    if programSpecialDir != configdir:
+        dirlist.append(configdir)
 
-    return dirlist
+    return [os.path.join(parent, dirname) for parent in dirlist]
 
 
 def openInNewWindow(path, args=[]):
