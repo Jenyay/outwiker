@@ -43,7 +43,8 @@ build_script:
     - cmd: uv run inv win
 test_script:
     - sh: xvfb-run uv run --active inv test -p src/outwiker/tests
-    - cmd: uv run -v inv test -p src/outwiker/tests
+    #- cmd: uv run -v inv test -p src/outwiker/tests
+    - cmd: uv run pytest src/outwiker/tests
 artifacts:
     - path: build/*/versions.xml
       name: versions.xml
