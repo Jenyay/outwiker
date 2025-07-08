@@ -22,42 +22,45 @@ install:
     #- cmd: uv pip install -e ./owbuildtools
     - cmd: uv pip install -e .
     - cmd: uv pip list
-    - sh: python3 -m pip install uv
+    - sh: python3 -m pip install pipx
+    - sh: pipx ensurepath
+    - sh: pipx install uv
+    #- sh: export PATH="$HOME/.local/bin:$PATH"
     #- sh: python3 -m uv venv
     #- sh: python3 -m uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
     #- sh: python3 -m uv sync --dev --active
     #- sh: python3 -m uv pip install -e ./owbuildtools
     #- sh: python3 -m uv pip install -e .
     #- sh: python3 -m uv pip list
-    - sh: python3 -m uv venv --python 3.11
+    - sh: uv venv --python 3.11
     - sh: source .venv/bin/activate
-    - sh: python3 -m uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.2
-    - sh: python3 -m uv sync --dev
-    #- sh: python3 -m uv pip install -e ./owbuildtools
-    - sh: python3 -m uv pip install -e .
-    - sh: python3 -m uv pip list
-#build_script:
+    - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.2
+    - sh: uv sync --dev
+    - sh: uv pip install -e ./owbuildtools
+    - sh: uv pip install -e .
+    - sh: uv pip list
+build_script:
     #- cmd: uv run inv win
 test_script:
-    - sh: xvfb-run python3 -m uv run --active inv test -p src/outwiker/tests
+    - sh: xvfb-run uv run --active inv test -p src/outwiker/tests
     #- cmd: uv run -v inv test -p src/outwiker/tests
     #- cmd: uv run pytest src/outwiker/tests
-#artifacts:
-#    - path: build/*/versions.xml
-#      name: versions.xml
-#    - path: build\*\windows\*.zip
-#      name: windows_zip
-#    - path: build\*\windows\*.exe
-#      name: windows_installer
-#    - path: build\*\windows\*.7z
-#      name: windows_7z
-#    - path: build/*/linux/*.zip
-#      name: linux_zip
-#    - path: build/*/linux/*.7z
-#      name: linux_7z
-#    - path: build/*/linux/*.deb
-#      name: linux_deb
-#    - path: build/*/linux/*.AppImage
-#      name: linux_AppImage
-#    - path: build\*\plugins\*\*.zip
-#      name: plugins
+artifacts:
+    #- path: build/*/versions.xml
+    #  name: versions.xml
+    #- path: build\*\windows\*.zip
+    #  name: windows_zip
+    #- path: build\*\windows\*.exe
+    #  name: windows_installer
+    #- path: build\*\windows\*.7z
+    #  name: windows_7z
+    #- path: build/*/linux/*.zip
+    #  name: linux_zip
+    #- path: build/*/linux/*.7z
+    #  name: linux_7z
+    #- path: build/*/linux/*.deb
+    #  name: linux_deb
+    #- path: build/*/linux/*.AppImage
+    #  name: linux_AppImage
+    #- path: build\*\plugins\*\*.zip
+    #  name: plugins
