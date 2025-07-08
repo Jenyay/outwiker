@@ -26,12 +26,18 @@ install:
     - cmd: uv pip install -e .
     - cmd: uv pip list
     - sh: python3 -m pip install uv
-    - sh: python3 -m uv venv
-    - sh: python3 -m uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
-    - sh: python3 -m uv sync --dev --active
-    - sh: python3 -m uv pip install -e ./owbuildtools
-    - sh: python3 -m uv pip install -e .
-    - sh: python3 -m uv pip list
+    #- sh: python3 -m uv venv
+    #- sh: python3 -m uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
+    #- sh: python3 -m uv sync --dev --active
+    #- sh: python3 -m uv pip install -e ./owbuildtools
+    #- sh: python3 -m uv pip install -e .
+    #- sh: python3 -m uv pip list
+    - sh: python3 -m uv venv --python 3.11
+    - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
+    - sh: uv sync --dev --active
+    - sh: uv pip install -e ./owbuildtools
+    - sh: uv pip install -e .
+    - sh: uv pip list
 build_script:
     - cmd: uv run inv win
 test_script:
