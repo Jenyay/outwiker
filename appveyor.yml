@@ -4,27 +4,27 @@ image:
     - Ubuntu2004
 environment:
     PY_PYTHON: 3.8
-    PY_DIR: C:\Python38-x64
+    #PY_DIR: C:\Python38-x64
     PYTHONIOENCODING: utf_8
     PIPENV_IGNORE_VIRTUALENVS: 1
 stack: Python 3.8
 init:
-    - cmd: py --list
-    - cmd: set PATH=%PY_DIR%;%PY_DIR%\Scripts;%PATH%
-    - cmd: py -%PY_PYTHON% -m pip install uv==0.5.29
-    - cmd: py --list
-    - sh: sudo apt update --allow-releaseinfo-change
-    - sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libpng-dev libjpeg-dev libtiff-dev libsdl2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev libgstreamer1.0-0
-    - sh: sudo apt-get -y install libwebkit2gtk-4.0
-install:
+    - cmd: choco install innosetup uv -y
     - git submodule update --init --recursive
+    #- cmd: py --list
+    #- cmd: set PATH=%PY_DIR%;%PY_DIR%\Scripts;%PATH%
+    #- cmd: python -m pip install uv==0.5.29
+    #- cmd: py --list
     - cmd: uv venv --python %PY_PYTHON%
-    - cmd: .venv/Scripts/activate
+    #- cmd: .venv/Scripts/activate
     - cmd: uv sync --dev
     - cmd: uv pip install -e ./owbuildtools
     - cmd: uv pip install -e .
     - cmd: uv pip list
-    - cmd: choco install innosetup -y
+    - sh: sudo apt update --allow-releaseinfo-change
+    - sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libpng-dev libjpeg-dev libtiff-dev libsdl2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev libgstreamer1.0-0
+    - sh: sudo apt-get -y install libwebkit2gtk-4.0
+install:
     - sh: python3 -m pip install uv
     - sh: python3 -m uv venv
     - sh: python3 -m uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
@@ -35,8 +35,8 @@ install:
 build_script:
     - cmd: uv run inv win
 test_script:
-    - sh: xvfb-run python3 -m uv run --active inv test -p src/outwiker/tests
     - cmd: uv run inv test -p src/outwiker/tests
+    - sh: xvfb-run python3 -m uv run --active inv test -p src/outwiker/tests
 artifacts:
     - path: build/*/versions.xml
       name: versions.xml
