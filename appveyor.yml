@@ -20,7 +20,7 @@ install:
     - git submodule update --init --recursive
     - cmd: choco install innosetup uv -y
     - cmd: uv venv --python %PY_PYTHON%
-    #- cmd: .venv/Scripts/activate
+    - cmd: .venv/Scripts/activate
     - cmd: uv sync --dev
     - cmd: uv pip install -e ./owbuildtools
     - cmd: uv pip install -e .
@@ -33,7 +33,7 @@ install:
     #- sh: python3 -m uv pip install -e .
     #- sh: python3 -m uv pip list
     - sh: python3 -m uv venv --python 3.11
-    - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
+    - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.2
     - sh: uv sync --dev --active
     - sh: uv pip install -e ./owbuildtools
     - sh: uv pip install -e .
