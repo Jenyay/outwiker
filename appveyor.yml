@@ -13,12 +13,13 @@ init:
     #- cmd: set PATH=%PY_DIR%;%PY_DIR%\Scripts;%PATH%
     #- cmd: py -%PY_PYTHON% -m pip install uv==0.5.29
     #- cmd: py --list
+    - cmd: python -m pip install uv
     - sh: sudo apt update --allow-releaseinfo-change
     - sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libpng-dev libjpeg-dev libtiff-dev libsdl2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev libgstreamer1.0-0
     - sh: sudo apt-get -y install libwebkit2gtk-4.0
 install:
     - git submodule update --init --recursive
-    - cmd: choco install innosetup uv -y
+    - cmd: choco install innosetup -y
     - cmd: uv venv --python %PY_PYTHON%
     - cmd: .venv/Scripts/activate
     - cmd: uv sync --dev
@@ -32,17 +33,17 @@ install:
     #- sh: python3 -m uv pip install -e ./owbuildtools
     #- sh: python3 -m uv pip install -e .
     #- sh: python3 -m uv pip list
-    - sh: python3 -m uv venv --python 3.11
+    - sh: uv venv --python 3.11
     - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.2
-    - sh: uv sync --dev --active
+    - sh: uv sync --dev
     - sh: uv pip install -e ./owbuildtools
     - sh: uv pip install -e .
     - sh: uv pip list
 build_script:
     - cmd: uv run inv win
 test_script:
-    - sh: xvfb-run python3 -m uv run --active inv test -p src/outwiker/tests
-    - cmd: uv run inv test -p src/outwiker/tests
+    - sh: xvfb-run uv run --active inv test -p src/outwiker/tests
+    - cmd: uv run -v inv test -p src/outwiker/tests
 artifacts:
     - path: build/*/versions.xml
       name: versions.xml
