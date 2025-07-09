@@ -36,6 +36,7 @@ install:
     #- sh: python3 -m uv pip list
     - sh: uv venv --python 3.11
     - sh: source .venv/bin/activate
+    - sh: pip install uv
     - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.2
     - sh: uv sync --dev
     #- sh: uv pip install -e ./owbuildtools
