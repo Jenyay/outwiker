@@ -19,36 +19,19 @@ install:
     - cmd: uv venv --python %PY_PYTHON%
     - cmd: .venv/Scripts/activate
     - cmd: uv sync --dev
-    #- cmd: uv pip install -e ./owbuildtools
-    #- cmd: uv pip install -e .
     - cmd: uv pip list
-    #- sh: export PATH="$HOME/.local/bin:$PATH"
     - sh: python3 -m pip install uv
-    #- sh: python3 -m pip install pipx
-    #- sh: pipx ensurepath
-    #- sh: pipx install uv
-    #- sh: export PATH="$HOME/.local/bin:$PATH"
-    #- sh: python3 -m uv venv
-    #- sh: python3 -m uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.1
-    #- sh: python3 -m uv sync --dev --active
-    #- sh: python3 -m uv pip install -e ./owbuildtools
-    #- sh: python3 -m uv pip install -e .
-    #- sh: python3 -m uv pip list
     - sh: uv venv --python 3.11
     - sh: source .venv/bin/activate
     - sh: pip install uv
     - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.2
     - sh: uv sync --dev
-    #- sh: uv pip install -e ./owbuildtools
-    #- sh: uv pip install -e .
     - sh: uv pip list
 build_script:
     - cmd: uv run inv win
 test_script:
     - sh: xvfb-run uv run inv test -p src/outwiker/tests
-    #- sh: xvfb-run uv run --active inv test -p src/outwiker/tests
     - cmd: uv run inv test -p src/outwiker/tests
-    #- cmd: uv run pytest src/outwiker/tests
 artifacts:
     - path: build/*/versions.xml
       name: versions.xml
