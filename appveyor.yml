@@ -20,9 +20,9 @@ install:
     - cmd: .venv/Scripts/activate
     - cmd: uv sync --dev
     #- cmd: uv pip install -e ./owbuildtools
-    - cmd: uv pip install -e .
+    #- cmd: uv pip install -e .
     - cmd: uv pip list
-    - sh: export PATH="$HOME/.local/bin:$PATH"
+    #- sh: export PATH="$HOME/.local/bin:$PATH"
     - sh: python3 -m pip install uv
     #- sh: python3 -m pip install pipx
     #- sh: pipx ensurepath
@@ -40,12 +40,13 @@ install:
     - sh: uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 wxPython==4.2.2
     - sh: uv sync --dev
     #- sh: uv pip install -e ./owbuildtools
-    - sh: uv pip install -e .
+    #- sh: uv pip install -e .
     - sh: uv pip list
 build_script:
     - cmd: uv run inv win
 test_script:
-    - sh: xvfb-run uv run --active inv test -p src/outwiker/tests
+    - sh: xvfb-run uv run inv test -p src/outwiker/tests
+    #- sh: xvfb-run uv run --active inv test -p src/outwiker/tests
     - cmd: uv run inv test -p src/outwiker/tests
     #- cmd: uv run pytest src/outwiker/tests
 artifacts:
