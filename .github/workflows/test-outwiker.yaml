@@ -61,7 +61,7 @@ jobs:
         run: uv pip show wxPython && uv run python -c "import wx; print(wx.VERSION)"
 
       - name: Run tests
-        run: xvfb-run --server-args="-screen 0 1280x1024x24" uv run inv -p src/outwiker/tests/
+        run: xvfb-run --server-args="-screen 0 1280x1024x24" uv run inv test -p src/outwiker/tests/
 
   test-windows:
     runs-on: windows-latest
@@ -100,5 +100,5 @@ jobs:
         run: uv sync --dev
 
       - name: Run tests
-        run: uv run inv -p src/outwiker/tests/
+        run: uv run inv test -p src/outwiker/tests/
 
