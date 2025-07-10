@@ -33,7 +33,7 @@ jobs:
             libtiff-dev \
             libsdl2-dev \
             libnotify-dev \
-            freeglut3 \
+            freeglut3-dev \
             libhunspell-dev \
             libgstreamer1.0-0 \
             libgstreamer-plugins-base1.0-0 \
