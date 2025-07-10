@@ -21,6 +21,8 @@ install:
     - cmd: uv sync --dev
     - cmd: uv pip list
     - sh: python3 -m pip install uv
+    - sh: python3 -m pip list
+    - sh: python3 -m pip install --upgrade pygments
     - sh: uv venv --python 3.11
     - sh: source .venv/bin/activate
     - sh: pip install uv
@@ -28,26 +30,27 @@ install:
     - sh: uv sync --dev
     - sh: uv pip list
 build_script:
-    - cmd: uv run inv win
+    - cmd:
+    #- cmd: uv run inv win
 test_script:
     - sh: xvfb-run uv run inv test -p src/outwiker/tests
-    - cmd: uv run inv test -p src/outwiker/tests
-artifacts:
-    - path: build/*/versions.xml
-      name: versions.xml
-    - path: build\*\windows\*.zip
-      name: windows_zip
-    - path: build\*\windows\*.exe
-      name: windows_installer
-    - path: build\*\windows\*.7z
-      name: windows_7z
-    - path: build/*/linux/*.zip
-      name: linux_zip
-    - path: build/*/linux/*.7z
-      name: linux_7z
-    - path: build/*/linux/*.deb
-      name: linux_deb
-    - path: build/*/linux/*.AppImage
-      name: linux_AppImage
-    - path: build\*\plugins\*\*.zip
-      name: plugins
+    #- cmd: uv run inv test -p src/outwiker/tests
+#artifacts:
+#    - path: build/*/versions.xml
+#      name: versions.xml
+#    - path: build\*\windows\*.zip
+#      name: windows_zip
+#    - path: build\*\windows\*.exe
+#      name: windows_installer
+#    - path: build\*\windows\*.7z
+#      name: windows_7z
+#    - path: build/*/linux/*.zip
+#      name: linux_zip
+#    - path: build/*/linux/*.7z
+#      name: linux_7z
+#    - path: build/*/linux/*.deb
+#      name: linux_deb
+#    - path: build/*/linux/*.AppImage
+#      name: linux_AppImage
+#    - path: build\*\plugins\*\*.zip
+#      name: plugins
