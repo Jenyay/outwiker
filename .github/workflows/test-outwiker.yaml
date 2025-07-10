@@ -15,15 +15,26 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             build-essential \
+            dpkg-dev \
+            libssl-dev \
             gettext \
+            autopoint \
             autoconf \
             automake \
             libtool \
             pkg-config \
-            autopoint \
+            p7zip-full \
             xvfb \
             libgtk-3-0 \
+            ibus-gtk3 \
             libglu1-mesa \
+            libpng-dev \
+            libjpeg-dev \
+            libtiff-dev \
+            libsdl2-dev \
+            libnotify-dev \
+            freeglut3 \
+            libhunspell-dev \
             libgstreamer1.0-0 \
             libgstreamer-plugins-base1.0-0 \
             libsm6 \
