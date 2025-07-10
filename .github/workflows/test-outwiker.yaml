@@ -55,7 +55,7 @@ jobs:
           uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04 wxPython==4.2.2
 
       - name: Sync dependencies
-        run: uv sync --locked --all-extras --dev
+        run: uv sync --dev
 
       - name: Verify wxPython
         run: uv pip show wxPython && uv run python -c "import wx; print(wx.VERSION)"
@@ -97,7 +97,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
 
       - name: Sync dependencies
-        run: uv sync --locked --all-extras --dev
+        run: uv sync --dev
 
       - name: Run tests
         run: uv run inv -p src/outwiker/tests/

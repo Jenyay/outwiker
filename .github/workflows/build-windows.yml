@@ -38,7 +38,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
 
       - name: Sync dependencies
-        run: uv sync --locked --all-extras --dev
+        run: uv sync --dev
 
       - name: Build OutWiker (Windows)
         run: uv run inv win
