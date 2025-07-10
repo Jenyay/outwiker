@@ -1,7 +1,7 @@
 # .github/workflows/build-windows.yml
 name: OutWiker Build (Windows)
 
-on: [push, pull_request, workflow_dispatch]
+on: [workflow_dispatch]
 
 jobs:
   build-windows:
