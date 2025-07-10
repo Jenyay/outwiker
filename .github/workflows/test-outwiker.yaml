@@ -1,0 +1,104 @@
+name: OutWiker Tests (Linux & Windows with caching)
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            xvfb \
+            libgtk-3-0 \
+            libglu1-mesa \
+            libgstreamer1.0-0 \
+            libgstreamer-plugins-base1.0-0 \
+            libsm6 \
+            libxext6 \
+            libxrender1 \
+            xserver-xorg-core
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Cache uv environments
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            .venv
+          key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install wxPython
+        run: |
+          uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04 wxPython==4.2.2
+
+      - name: Sync dependencies
+        run: uv sync --locked --all-extras --dev
+
+      - name: Verify wxPython
+        run: uv pip show wxPython && uv run python -c "import wx; print(wx.VERSION)"
+
+      - name: Run tests
+        run: xvfb-run --server-args="-screen 0 1280x1024x24" uv run inv -p src/outwiker/tests/
+
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: windows-pip-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            windows-pip-
+
+      - name: Cache uv environments
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~\AppData\Local\uv
+            .venv
+          key: windows-uv-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            windows-uv-
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Sync dependencies
+        run: uv sync --locked --all-extras --dev
+
+      - name: Run tests
+        run: uv run inv -p src/outwiker/tests/
+

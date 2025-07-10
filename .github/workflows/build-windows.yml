@@ -1,0 +1,54 @@
+# .github/workflows/build-windows.yml
+name: OutWiker Build (Windows)
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: windows-pip-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            windows-pip-
+
+      - name: Cache uv environments
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~\AppData\Local\uv
+            .venv
+          key: windows-uv-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            windows-uv-
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Sync dependencies
+        run: uv sync --locked --all-extras --dev
+
+      - name: Build OutWiker (Windows)
+        run: uv run inv win
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: OutWiker-Windows-Build
+          path: |
+            build/*/windows/*.exe
+            build/*/windows/*.zip
+            build/*/windows/*.7z
+
