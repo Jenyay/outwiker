@@ -40,7 +40,8 @@ jobs:
             libsm6 \
             libxext6 \
             libxrender1 \
-            xserver-xorg-core
+            xserver-xorg-core \
+            libwebkit2gtk-4.1-0
 
       - name: Check autopoint
         run: which autopoint && autopoint --version
