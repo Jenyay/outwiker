@@ -68,7 +68,7 @@ def hello (count):
         innerString1 = ".highlight-default .c"
         innerString2 = ".highlight-default .c { color: #3D7B7B; font-style: italic } /* Comment */"
         innerString3 = '        <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString4 = '<span class="kn">import</span> <span class="nn">os</span>'
+        innerString4 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -89,7 +89,7 @@ def hello (count):
         innerString1 = ".highlight-default .c"
         innerString2 = ".highlight-default .c { color: #3D7B7B; font-style: italic } /* Comment */"
         innerString3 = '        <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString4 = '<span class="kn">import</span> <span class="nn">os</span>'
+        innerString4 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -110,7 +110,7 @@ def hello (count):
         innerString1 = ".highlight-default .c"
         innerString2 = ".highlight-default .c { color: #3D7B7B; font-style: italic } /* Comment */"
         innerString3 = '        <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString4 = '<span class="kn">import</span> <span class="nn">os</span>'
+        innerString4 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -131,7 +131,7 @@ def hello (count):
         innerString1 = ".highlight-vim .c"
         innerString2 = ".highlight-vim .c { color: #000080 } /* Comment */"
         innerString3 = '        <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString4 = '<span class="kn">import</span> <span class="nn">os</span>'
+        innerString4 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -150,7 +150,7 @@ def hello (count):
         innerString1 = ".highlight-default .c"
         innerString2 = ".highlight-default .c { color: #3D7B7B; font-style: italic } /* Comment */"
         innerString3 = '        <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString4 = '<span class="kn">import</span> <span class="nn">os</span>'
+        innerString4 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -169,7 +169,7 @@ def hello (count):
         innerString1 = ".highlight-vim .c"
         innerString2 = ".highlight-vim .c { color: #000080 } /* Comment */"
         innerString3 = '        <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString4 = '<span class="kn">import</span> <span class="nn">os</span>'
+        innerString4 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -189,7 +189,7 @@ def hello (count):
         innerString1 = ".highlight-vim .c"
         innerString2 = ".highlight-vim .c { color: #000080 } /* Comment */"
         innerString3 = '        <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString4 = '<span class="kn">import</span> <span class="nn">os</span>'
+        innerString4 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
         innerString5 = ".highlight-default .c"
         innerString6 = ".highlight-default .c { color: #3D7B7B; font-style: italic } /* Comment */"
         innerString7 = '<div class="highlight-default">'
