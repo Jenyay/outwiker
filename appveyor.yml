@@ -30,7 +30,7 @@ install:
     - sh: uv sync --dev
     - sh: uv pip list
 build_script:
-    - cmd:
+    - cmd: uv run inv plugins
     #- cmd: uv run inv win
 test_script:
     - sh: xvfb-run uv run inv test -p src/outwiker/tests
