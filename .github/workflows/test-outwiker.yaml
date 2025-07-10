@@ -22,7 +22,8 @@ jobs:
             libsm6 \
             libxext6 \
             libxrender1 \
-            xserver-xorg-core
+            xserver-xorg-core \
+            gettext
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
