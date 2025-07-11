@@ -42,6 +42,9 @@ class PluginSource(Plugin):
         if libs_path not in sys.path:
             sys.path.insert(0, libs_path)
 
+        from pygments.lexers._mapping import LEXERS
+        LEXERS["OneSLexer"] = ('1S', '1S', ('1s', '1c'), ('*.1s', '*.prm', '*.1cpp'), ('text/x-1s',))
+
     @property
     def name(self):
         return "Source"
