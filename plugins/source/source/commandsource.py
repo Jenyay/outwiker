@@ -163,8 +163,8 @@ class CommandSource(Command):
         Раскраска исходников. Возвращает получившийся HTML и добавляет
         нужные стили в заголовок страницы
         """
-        from pygments import highlight
-        from pygments import formatters
+        from source_plugin_libs.pygments import highlight
+        from source_plugin_libs.pygments import formatters
 
         lexermaker = LexerMaker()
         lexer = lexermaker.getLexer(params_dict)
