@@ -636,7 +636,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         session = controller.getCurrentSession()
 
-        self.assertEqual(session.path, os.path.abspath(self.wikiroot.path))
+        self.assertEqual(session.path, os.path.realpath(self.wikiroot.path))
         self.assertEqual(len(session.pages), 1)
         self.assertEqual(session.pages[0],
                          self._getPageLink(self.wikiroot["Страница 1"]))
@@ -655,7 +655,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         session = controller.getCurrentSession()
 
-        self.assertEqual(session.path, os.path.abspath(self.wikiroot.path))
+        self.assertEqual(session.path, os.path.realpath(self.wikiroot.path))
         self.assertEqual(len(session.pages), 2)
         self.assertEqual(session.pages[0],
                          self._getPageLink(self.wikiroot["Страница 1"]))
@@ -676,7 +676,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         session = controller.getCurrentSession()
 
-        self.assertEqual(session.path, os.path.abspath(self.wikiroot.path))
+        self.assertEqual(session.path, os.path.realpath(self.wikiroot.path))
         self.assertEqual(len(session.pages), 2)
         self.assertEqual(session.pages[0],
                          self._getPageLink(self.wikiroot["Страница 1"]))
@@ -700,7 +700,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         session = controller.getCurrentSession()
 
-        self.assertEqual(session.path, os.path.abspath(self.wikiroot.path))
+        self.assertEqual(session.path, os.path.realpath(self.wikiroot.path))
         self.assertEqual(len(session.pages), 2)
         self.assertEqual(session.pages[0], self.wikiroot["Страница 1"].subpath)
         self.assertEqual(session.pages[1], self.wikiroot["Страница 2"].subpath)
@@ -741,8 +741,8 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         controller.restore(session)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertEqual(tabsController.getTabsCount(), 2)
         self.assertEqual(tabsController.getSelection(), 1)
 
@@ -776,8 +776,8 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         controller.restore(session)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertEqual(tabsController.getTabsCount(), 4)
         self.assertEqual(tabsController.getSelection(), 2)
 
@@ -814,12 +814,12 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         controller.restore(session)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertFalse(self.application.wikiroot.readonly)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertEqual(tabsController.getTabsCount(), 4)
         self.assertEqual(tabsController.getSelection(), 2)
 
@@ -851,8 +851,8 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         controller.restore(session)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertEqual(tabsController.getTabsCount(), 2)
         self.assertEqual(tabsController.getSelection(), 1)
 
@@ -883,8 +883,8 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         controller.restore(session)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertEqual(tabsController.getTabsCount(), 2)
         self.assertEqual(tabsController.getSelection(), 1)
 
@@ -913,12 +913,12 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         controller.restore(session)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertTrue(self.application.wikiroot.readonly)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertEqual(tabsController.getTabsCount(), 4)
         self.assertEqual(tabsController.getSelection(), 2)
 
@@ -949,12 +949,12 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         controller.restore(session)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertTrue(self.application.wikiroot.readonly)
 
-        self.assertEqual(os.path.abspath(self.application.wikiroot.path),
-                         os.path.abspath(self.wikiroot.path))
+        self.assertEqual(os.path.realpath(self.application.wikiroot.path),
+                         os.path.realpath(self.wikiroot.path))
         self.assertEqual(tabsController.getTabsCount(), 4)
         self.assertEqual(tabsController.getSelection(), 2)
 
