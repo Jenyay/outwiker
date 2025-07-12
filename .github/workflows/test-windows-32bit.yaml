@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: C:\Users\runneradmin\AppData\Local\pip\Cache
-          key: windows-pip-${{ hashFiles('**/pyproject.toml') }}
+          key: windows-pip-python-3.8-32bit-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
             windows-pip-
 
@@ -34,7 +34,7 @@ jobs:
           path: |
             C:\Users\runneradmin\AppData\Local\uv
             .venv
-          key: windows-uv-${{ hashFiles('**/pyproject.toml') }}
+          key: windows-uv-python-3.8-32bit-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
             windows-uv-
 
