@@ -59,7 +59,8 @@ jobs:
           echo "OUTWIKER_VERSION=$OUTWIKER_VERSION" >> $GITHUB_ENV
 
       - name: Check OutWiker version
-        run: echo "OutWiker version: ${{ env.OUTWIKER_VERSION }}"
+        run: |
+          echo "OutWiker version: ${{ env.OUTWIKER_VERSION }}"
 
       - name: Build OutWiker (Windows)
         run: uv run inv win
