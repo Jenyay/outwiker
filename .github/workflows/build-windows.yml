@@ -54,7 +54,7 @@ jobs:
         run: echo "OUTWIKER_VERSION=$(uv run python -c 'import outwiker; print(outwiker.__version_str__)')" >> $GITHUB_ENV
 
       - name: Check OutWiker version
-        run: echo "OutWiker version: $OUTWIKER_VERSION"
+        run: echo "OutWiker version: ${{ env.OUTWIKER_VERSION }}"
 
       - name: Build OutWiker (Windows)
         run: uv run inv win
@@ -63,5 +63,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Unstable version with all plugins
-          path: build/$OUTWIKER_VERSION/windows/outwiker_win_unstable_all_plugins.zip
+          path: build/${{ env.OUTWIKER_VERSION }}/windows/outwiker_win_unstable_all_plugins.zip
 
