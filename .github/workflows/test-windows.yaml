@@ -1,4 +1,4 @@
-name: OutWiker Tests (Windows x64)
+name: OutWiker Tests (Windows 64bit)
 
 on: [push, pull_request, workflow_dispatch]
 
