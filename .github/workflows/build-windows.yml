@@ -69,8 +69,4 @@ jobs:
         with:
           name: outwiker_unstable_windows_${{ env.OUTWIKER_VERSION }}
           path: |
-            build/${{ env.OUTWIKER_VERSION }}/windows/*.zip
-            build/${{ env.OUTWIKER_VERSION }}/windows/*.7z
-            build/${{ env.OUTWIKER_VERSION }}/windows/*.exe
-            build/${{ env.OUTWIKER_VERSION }}/windows/outwiker_exe/
-
+            build/${{ env.OUTWIKER_VERSION }}/windows/*
