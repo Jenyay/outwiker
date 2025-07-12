@@ -42,8 +42,8 @@ jobs:
         uses: astral-sh/setup-uv@v6
 
       - name: Sync dependencies
-        run: C:\Python38\python.exe -m uv sync --dev --python "C:\Python38\python.exe"
+        run: uv sync --python "C:\Python38\python.exe" --dev
 
       - name: Run tests
-        run: C:\Python38\python.exe -m uv run inv test -p src/outwiker/tests/
+        run: uv run inv test -p src/outwiker/tests/
     
