@@ -68,8 +68,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: outwiker_unstable_windows_${{ env.OUTWIKER_VERSION }}
-          path: build/${{ env.OUTWIKER_VERSION }}/windows/*.zip
-          path: build/${{ env.OUTWIKER_VERSION }}/windows/*.7z
-          path: build/${{ env.OUTWIKER_VERSION }}/windows/*.exe
-          path: build/${{ env.OUTWIKER_VERSION }}/windows/outwiker_exe/
+          path: |
+            build/${{ env.OUTWIKER_VERSION }}/windows/*.zip
+            build/${{ env.OUTWIKER_VERSION }}/windows/*.7z
+            build/${{ env.OUTWIKER_VERSION }}/windows/*.exe
+            build/${{ env.OUTWIKER_VERSION }}/windows/outwiker_exe/
 
