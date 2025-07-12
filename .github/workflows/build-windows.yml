@@ -51,14 +51,13 @@ jobs:
         run: uv sync --python "C:\Python38\python.exe" --dev
 
       - name: Get OutWiker version
-        run: echo "OUTWIKER_VERSION=$(uv run python -c 'import outwiker; print(outwiker.__version_str__)')" >> $GITHUB_ENV
-
-      - name: Get OutWiker version
+        shell: bash
         run: |
           OUTWIKER_VERSION=$(uv run python -c "import outwiker; print(outwiker.__version_str__)")
           echo "OUTWIKER_VERSION=$OUTWIKER_VERSION" >> $GITHUB_ENV
 
       - name: Check OutWiker version
+        shell: bash
         run: |
           echo "OutWiker version: ${{ env.OUTWIKER_VERSION }}"
 
