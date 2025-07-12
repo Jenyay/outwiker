@@ -1,5 +1,4 @@
-# .github/workflows/build-windows.yml
-name: OutWiker Build (Windows)
+name: Build (Windows)
 
 on: [push, workflow_dispatch]
 
