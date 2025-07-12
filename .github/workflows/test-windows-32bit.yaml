@@ -13,9 +13,9 @@ jobs:
       - name: Download and install Python 3.8 32-bit
         run: |
           Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe" -OutFile "python-installer.exe"
-          Start-Process .\python-installer.exe -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1 TargetDir=C:\Python38" -Wait
-          echo "##[add-path]C:\Python38" >> $env:GITHUB_ENV
-          echo "##[set-env name=pythonLocation]C:\Python38" >> $env:GITHUB_ENV
+          Start-Process .\python-installer.exe -ArgumentList "/quiet InstallAllUsers=1 PrependPath=0 TargetDir=C:\Python38" -Wait
+          echo "C:\Python38" >> $env:GITHUB_PATH
+          echo "pythonLocation=C:\Python38" >> $env:GITHUB_ENV
 
       - name: Check Python version
         run: C:\Python38\python.exe --version
