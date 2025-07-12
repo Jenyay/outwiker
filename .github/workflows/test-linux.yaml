@@ -1,4 +1,4 @@
-name: OutWiker Tests (Linux & Windows with caching)
+name: OutWiker Tests (Linux)
 
 on: [push, pull_request, workflow_dispatch]
 
@@ -87,43 +87,3 @@ jobs:
 
       - name: Run tests
         run: xvfb-run --server-args="-screen 0 1280x1024x24" uv run inv test -p src/outwiker/tests/
-
-  test-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.8'
-
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~\AppData\Local\pip\Cache
-          key: windows-pip-${{ hashFiles('**/pyproject.toml') }}
-          restore-keys: |
-            windows-pip-
-
-      - name: Cache uv environments
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~\AppData\Local\uv
-            .venv
-          key: windows-uv-${{ hashFiles('**/pyproject.toml') }}
-          restore-keys: |
-            windows-uv-
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-
-      - name: Sync dependencies
-        run: uv sync --dev
-
-      - name: Run tests
-        run: uv run inv test -p src/outwiker/tests/
-
