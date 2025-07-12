@@ -67,6 +67,9 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Unstable version with all plugins
-          path: build/${{ env.OUTWIKER_VERSION }}/windows/outwiker_win_unstable_all_plugins.zip
+          name: outwiker_unstable_windows_${{ env.OUTWIKER_VERSION }}
+          path: build/${{ env.OUTWIKER_VERSION }}/windows/*.zip
+          path: build/${{ env.OUTWIKER_VERSION }}/windows/*.7z
+          path: build/${{ env.OUTWIKER_VERSION }}/windows/*.exe
+          path: build/${{ env.OUTWIKER_VERSION }}/windows/outwiker_exe/
 
