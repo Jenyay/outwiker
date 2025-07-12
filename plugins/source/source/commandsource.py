@@ -141,7 +141,7 @@ class CommandSource(Command):
         return encoding
 
     def _getStyle(self, params_dict):
-        from source_plugin_libs.pygments.styles import STYLE_MAP
+        from pygments.styles import STYLE_MAP
 
         if (
             STYLE_PARAM_NAME not in params_dict

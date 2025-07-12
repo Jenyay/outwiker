@@ -5,7 +5,7 @@ from typing import Union, Tuple, Iterator
 
 class LangList:
     def __init__(self, translate_func=None):
-        from source_plugin_libs.pygments.lexers._mapping import LEXERS
+        from pygments.lexers._mapping import LEXERS
 
         if translate_func is None:
             translate_func = self._empty_translate

@@ -137,7 +137,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="kn">import</span> <span class="nn">os.path</span>' in result)
+            '<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>' in result)
         self.assertTrue(
             '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' in result)
 
@@ -154,7 +154,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="kn">import</span> <span class="nn">os.path</span>' in result)
+            '<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>' in result)
         self.assertTrue(
             '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' in result)
 
@@ -171,7 +171,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="kn">import</span> <span class="nn">os.path</span>' not in result)
+            '<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>' not in result)
         self.assertTrue('import os.path' in result)
 
         self.assertTrue(
