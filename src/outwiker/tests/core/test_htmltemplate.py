@@ -132,7 +132,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         style = "$userstyle $userhead $content"
         custom_styles = ["p {color: red;}"]
 
-        result_right = "p {color: red;}  бла-бла-бла"
+        result_right = "p{color:red}  бла-бла-бла"
 
         tpl = HtmlTemplate(self.application, style)
         result = tpl.substitute(content=content, custom_styles=custom_styles)
@@ -175,7 +175,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
-        self.assertTrue(style in result, result)
+        self.assertTrue(HtmlTemplate.minimize_css(style) in result, result)
 
     def testChangeUserStyleRussian(self):
         style = ("p {background-color: maroon; " +
@@ -192,7 +192,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
-        self.assertTrue(style in result, result)
+        self.assertTrue(HtmlTemplate.minimize_css(style) in result, result)
 
     def testImproved1(self):
         src = """<ul><li>Несортированный список. Элемент 1</li><li>Несортированный список. Элемент 2</li><li>Несортированный список. Элемент 3</li><ol><li>Вложенный сортированный список. Элемент 1</li><li>Вложенный сортированный список. Элемент 2</li><li>Вложенный сортированный список. Элемент 3</li><li>Вложенный сортированный список. Элемент 4</li><ul><li>Совсем вложенный сортированный список. Элемент 1</li><li>Совсем вложенный сортированный список. Элемент 2</li></ul><li>Вложенный сортированный список. Элемент 5</li></ol><ul><li>Вложенный несортированный список. Элемент 1</li></ul></ul>"""

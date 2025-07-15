@@ -1,7 +1,3 @@
-# -*- coding=utf-8 -*-
-
-import rcssmin
-
 CSS_WIKI = 'ow-wiki'
 CSS_ERROR = 'ow-error'
 CSS_IMAGE = 'ow-image'
@@ -145,4 +141,4 @@ def getDefaultStyles() -> str:
 		}
     '''
 
-    return rcssmin.cssmin(css)
+    return css
