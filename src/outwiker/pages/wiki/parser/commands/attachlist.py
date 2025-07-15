@@ -8,6 +8,33 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.pages.wiki.parser.command import Command
 import outwiker.core.cssclasses as css
+from outwiker.pages.wiki.parser.wikiparser import Parser
+
+
+CSS_ID_STYLES = css.CSS_ATTACH_LIST
+CSS_STYLES = """ul.ow-attach-list {
+		  margin-left: 0px;
+		  padding-left: 0px;
+		}
+
+		.ow-attach-list ul {
+		  margin-left: 15px;
+		  padding-left: 10px;
+		  border-left: 1px dashed #ddd;
+		}
+
+		ul.ow-attach-list li {
+		  list-style: none;
+		  font-weight: normal;
+          background-image: none;
+          padding-left: 1.0rem;
+		}
+
+		.ow-attach-list a.ow-attach-dir {
+		  font-weight: bold;
+		  font-style: normal;
+		  transition: all 0.2s ease;
+		}"""
 
 
 class SimpleView:
@@ -18,7 +45,7 @@ class SimpleView:
         self._list_template = '<ul class="ow-attach-list">{title}<ul class="ow-attach-list">{content}</ul></ul>'
         self._item_template = '<li class="{css_class}"><a class="ow-link-attach {css_class}" href="{link}">{title}</a></li>'
 
-    def make(self, dirnames, fnames,  subdir):
+    def make(self, parser: Parser, dirnames: List[str], fnames: List[str], subdir: str):
         """
         fnames - имена файлов, которые нужно вывести (относительный путь)
         attach_path - путь до прикрепленных файлов (полный)
@@ -28,6 +55,7 @@ class SimpleView:
         content = ''.join(content_items)
         title = self._get_title(subdir)
 
+        parser.addStyle(CSS_ID_STYLES, CSS_STYLES)
         return self._list_template.format(content=content, title=title)
 
     def _get_title(self, subdir: str) -> str:
@@ -88,7 +116,7 @@ class AttachListCommand(Command):
         self._sortFiles(files, params_dict)
 
         view = SimpleView()
-        return view.make(dirs, files, subdir)
+        return view.make(self.parser, dirs, files, subdir)
 
     def separateDirFiles(self, attachlist: List[str], attachpath: Path) -> Tuple[List[str], List[str]]:
         """

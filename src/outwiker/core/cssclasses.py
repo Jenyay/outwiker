@@ -96,31 +96,6 @@ def getDefaultStyles() -> str:
 		  background-size: 75% auto;
 		}
 
-		/* Attachments list - (:attachlist:) wiki command */
-		ul.ow-attach-list {
-		  margin-left: 0px;
-		  padding-left: 0px;
-		}
-
-		.ow-attach-list ul {
-		  margin-left: 15px;
-		  padding-left: 10px;
-		  border-left: 1px dashed #ddd;
-		}
-
-		ul.ow-attach-list li {
-		  list-style: none;
-		  font-weight: normal;
-          background-image: none;
-          padding-left: 1.0rem;
-		}
-
-		.ow-attach-list a.ow-attach-dir {
-		  font-weight: bold;
-		  font-style: normal;
-		  transition: all 0.2s ease;
-		}
-
         span.ow-attach-error {
 		  font-style: italic;
           white-space: nowrap;
