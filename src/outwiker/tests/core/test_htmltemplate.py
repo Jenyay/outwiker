@@ -127,6 +127,18 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         self.assertEqual(result, result_right)
 
+    def test_text__custom_styles(self):
+        content = "бла-бла-бла"
+        style = "$userstyle $userhead $content"
+        custom_styles = ["p {color: red;}"]
+
+        result_right = "p {color: red;}  бла-бла-бла"
+
+        tpl = HtmlTemplate(self.application, style)
+        result = tpl.substitute(content=content, custom_styles=custom_styles)
+
+        self.assertEqual(result, result_right)
+
     def testChangeFontName(self):
         self.config.fontName.value = "Arial"
         content = "бла-бла-бла"

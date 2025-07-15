@@ -47,16 +47,21 @@ class HtmlTemplate:
         self.template = MyTemplate(template)
 
     def substitute(self, content, **kwargs):
-        if 'userhead' not in kwargs:
-            kwargs['userhead'] = ''
-        if 'title' not in kwargs:
-            kwargs['title'] = ''
+        if "userhead" not in kwargs:
+            kwargs["userhead"] = ""
+        if "title" not in kwargs:
+            kwargs["title"] = ""
+
+        # Remove empty styles
+        custom_styles = [
+            item for item in kwargs.get("custom_styles", []) + [self.userStyle] if item
+        ]
 
         return self.template.safe_substitute(
             content=content,
             fontsize=self.fontsize,
             fontfamily=self.fontfamily,
-            userstyle=self.userStyle,
+            userstyle="\n".join(custom_styles),
             defaultstyle=css.getDefaultStyles(),
-            **kwargs
+            **kwargs,
         )

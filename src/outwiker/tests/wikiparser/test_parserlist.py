@@ -9,9 +9,11 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
 import outwiker.core.cssclasses as css
+from outwiker.pages.wiki.parser.tokenlist import CSS_STYLE_UNORDER_LIST
+from .utils import get_styles_count
 
 
-class ParserListTest (unittest.TestCase):
+class ParserListTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
         self.encoding = "utf8"
@@ -25,7 +27,7 @@ class ParserListTest (unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -41,27 +43,27 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUnorderClasses(self):
         unorderListCSS = [
-            ('[]', css.CSS_LIST_ITEM_EMPTY),
-            ('[ ]', css.CSS_LIST_ITEM_TODO),
-            ('[/]', css.CSS_LIST_ITEM_INCOMPLETE),
-            ('[\\]', css.CSS_LIST_ITEM_INCOMPLETE),
-            ('[x]', css.CSS_LIST_ITEM_COMPLETE),
-            ('[X]', css.CSS_LIST_ITEM_COMPLETE),
-            ('[*]', css.CSS_LIST_ITEM_STAR),
-            ('[+]', css.CSS_LIST_ITEM_PLUS),
-            ('[-]', css.CSS_LIST_ITEM_MINUS),
-            ('[o]', css.CSS_LIST_ITEM_CIRCLE),
-            ('[O]', css.CSS_LIST_ITEM_CIRCLE),
-            ('[v]', css.CSS_LIST_ITEM_CHECK),
-            ('[V]', css.CSS_LIST_ITEM_CHECK),
-            ('[<]', css.CSS_LIST_ITEM_LT),
-            ('[>]', css.CSS_LIST_ITEM_GT),
-            ]
+            ("[]", css.CSS_LIST_ITEM_EMPTY),
+            ("[ ]", css.CSS_LIST_ITEM_TODO),
+            ("[/]", css.CSS_LIST_ITEM_INCOMPLETE),
+            ("[\\]", css.CSS_LIST_ITEM_INCOMPLETE),
+            ("[x]", css.CSS_LIST_ITEM_COMPLETE),
+            ("[X]", css.CSS_LIST_ITEM_COMPLETE),
+            ("[*]", css.CSS_LIST_ITEM_STAR),
+            ("[+]", css.CSS_LIST_ITEM_PLUS),
+            ("[-]", css.CSS_LIST_ITEM_MINUS),
+            ("[o]", css.CSS_LIST_ITEM_CIRCLE),
+            ("[O]", css.CSS_LIST_ITEM_CIRCLE),
+            ("[v]", css.CSS_LIST_ITEM_CHECK),
+            ("[V]", css.CSS_LIST_ITEM_CHECK),
+            ("[<]", css.CSS_LIST_ITEM_LT),
+            ("[>]", css.CSS_LIST_ITEM_GT),
+        ]
 
         for prefix, other_css in unorderListCSS:
             text = f"бла-бла-бла \n\n* {prefix} Строка 1\nбла-бла-бла"
@@ -69,41 +71,49 @@ class ParserListTest (unittest.TestCase):
 
             result = self.parser.toHtml(text)
             self.assertEqual(result, result_expected, result)
+            self.assertEqual(
+                get_styles_count(self.parser, other_css),
+                1,
+                f"Style {other_css} not found in {self.parser.styleItems}",
+            )
+            self.assertEqual(get_styles_count(self.parser, CSS_STYLE_UNORDER_LIST), 1)
 
     def testUnorderList2(self):
-        text = "бла-бла-бла \n\n*'''Строка 1'''\n* ''Строка 2''\n* Строка 3\nбла-бла-бла"
+        text = (
+            "бла-бла-бла \n\n*'''Строка 1'''\n* ''Строка 2''\n* Строка 3\nбла-бла-бла"
+        )
         result = f'бла-бла-бла \n\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><b>Строка 1</b></li><li class="{css.CSS_WIKI}"><i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUnorderList_multiline_no_spaces(self):
-        text = '''бла-бла-бла
+        text = """бла-бла-бла
 
 *[{Строка 1}]
 *[{Строка 2}]
 *[{Строка 3}]
-бла-бла-бла'''
+бла-бла-бла"""
 
-        result = f'''бла-бла-бла
+        result = f"""бла-бла-бла
 
-<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
+<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла"""
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUnorderList_multiline_spaces(self):
-        text = '''бла-бла-бла
+        text = """бла-бла-бла
 * [{Строка 1}]
 * [{Строка 2}]
 * [{Строка 3}]
-бла-бла-бла'''
+бла-бла-бла"""
 
-        result = f'''бла-бла-бла
-<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
+        result = f"""бла-бла-бла
+<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла"""
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUnorderMultilineList4(self):
-        text = '''бла-бла-бла
+        text = """бла-бла-бла
 
 * [{Строка 1
 
@@ -115,9 +125,9 @@ class ParserListTest (unittest.TestCase):
 
 ''Строка 2''}]
 * Строка 3
-бла-бла-бла'''
+бла-бла-бла"""
 
-        result = f'''бла-бла-бла
+        result = f"""бла-бла-бла
 
 <ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1
 
@@ -125,41 +135,41 @@ class ParserListTest (unittest.TestCase):
 тест</li><li class="{css.CSS_WIKI}">блабла
 
 
-<i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
+<i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла"""
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUnorderList_multiline_format_01(self):
-        text = '''бла-бла-бла
+        text = """бла-бла-бла
 * [{''Строка 1''}]
 * [{[[https://jenyay.net]]
 
 {-Строка 2-}
 }]
 * [{Строка 3}]
-бла-бла-бла'''
+бла-бла-бла"""
 
-        result = f'''бла-бла-бла
+        result = f"""бла-бла-бла
 <ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><i>Строка 1</i></li><li class="{css.CSS_WIKI}"><a class="{css.CSS_WIKI}" href="https://jenyay.net">https://jenyay.net</a>
 
-<strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
+<strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла"""
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testOrderList_multiline_spaces(self):
-        text = '''бла-бла-бла
+        text = """бла-бла-бла
 # [{Строка 1}]
 # [{Строка 2}]
 # [{Строка 3}]
-бла-бла-бла'''
+бла-бла-бла"""
 
-        result = f'''бла-бла-бла
-<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'''
+        result = f"""бла-бла-бла
+<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла"""
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testOrderMultilineList4(self):
-        text = '''бла-бла-бла
+        text = """бла-бла-бла
 
 # [{Строка 1
 
@@ -171,9 +181,9 @@ class ParserListTest (unittest.TestCase):
 
 ''Строка 2''}]
 # Строка 3
-бла-бла-бла'''
+бла-бла-бла"""
 
-        result = f'''бла-бла-бла
+        result = f"""бла-бла-бла
 
 <ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1
 
@@ -181,41 +191,41 @@ class ParserListTest (unittest.TestCase):
 тест</li><li class="{css.CSS_WIKI}">блабла
 
 
-<i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'''
+<i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла"""
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testOrderList_multiline_format_01(self):
-        text = '''бла-бла-бла
+        text = """бла-бла-бла
 # [{''Строка 1''}]
 # [{[[https://jenyay.net]]
 
 {-Строка 2-}
 }]
 # [{Строка 3}]
-бла-бла-бла'''
+бла-бла-бла"""
 
-        result = f'''бла-бла-бла
+        result = f"""бла-бла-бла
 <ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><i>Строка 1</i></li><li class="{css.CSS_WIKI}"><a class="{css.CSS_WIKI}" href="https://jenyay.net">https://jenyay.net</a>
 
-<strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'''
+<strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла"""
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUnorderListStrike(self):
-        text = '''бла-бла-бла
+        text = """бла-бла-бла
 *{-Строка 1-}
 * {-Строка 2-}
 * Строка 3
-бла-бла-бла'''
-        result = f'''бла-бла-бла
-<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><strike>Строка 1</strike></li><li class="{css.CSS_WIKI}"><strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла'''
+бла-бла-бла"""
+        result = f"""бла-бла-бла
+<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><strike>Строка 1</strike></li><li class="{css.CSS_WIKI}"><strike>Строка 2</strike></li><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла"""
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testOrderList1(self):
         text = "бла-бла-бла \n\n#Строка 1\n# Строка 2\n# Строка 3\nбла-бла-бла"
@@ -224,18 +234,20 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testOrderList2(self):
-        text = "бла-бла-бла \n\n#'''Строка 1'''\n# ''Строка 2''\n# Строка 3\nбла-бла-бла"
+        text = (
+            "бла-бла-бла \n\n#'''Строка 1'''\n# ''Строка 2''\n# Строка 3\nбла-бла-бла"
+        )
         result = f'бла-бла-бла \n\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}"><b>Строка 1</b></li><li class="{css.CSS_WIKI}"><i>Строка 2</i></li><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testOrderListStrike(self):
         text = "бла-бла-бла \n\n#{-Строка 1-}\n# {-Строка 2-}\n# Строка 3\nбла-бла-бла"
@@ -244,8 +256,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testEnclosureUnorderList1(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n** Вложенная строка 1\n**Вложенная строка 2\n* Строка 3\nбла-бла-бла"
@@ -254,8 +266,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testEnclosureOrderList1(self):
         text = "бла-бла-бла \n\n#Строка 1\n# Строка 2\n## Вложенная строка 1\n##Вложенная строка 2\n# Строка 3\nбла-бла-бла"
@@ -264,8 +276,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testEnclosureList1(self):
         text = """* Несортированный список. Элемент 1
@@ -285,8 +297,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testEnclosureList2(self):
         text = """* Строка 1
@@ -302,8 +314,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testManyUnorderList1(self):
         text = """бла-бла-бла
@@ -319,10 +331,7 @@ class ParserListTest (unittest.TestCase):
 
 <ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li></ul>\n<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 3</li></ul>бла-бла-бла"""
 
-        self.assertEqual(
-            self.parser.toHtml(text),
-            result,
-            self.parser.toHtml(text))
+        self.assertEqual(self.parser.toHtml(text), result, self.parser.toHtml(text))
 
     def testManyOrderList1(self):
         text = """бла-бла-бла
@@ -338,10 +347,7 @@ class ParserListTest (unittest.TestCase):
 
 <ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li></ol>\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 3</li></ol>бла-бла-бла"""
 
-        self.assertEqual(
-            self.parser.toHtml(text),
-            result,
-            self.parser.toHtml(text))
+        self.assertEqual(self.parser.toHtml(text), result, self.parser.toHtml(text))
 
     def testManyUnorderList2(self):
         text = "бла-бла-бла \n\n*Строка 1\n\n* Строка 2\n\n\n** Строка 3\nбла-бла-бла"
@@ -350,8 +356,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testManyOrderList2(self):
         text = "бла-бла-бла \n\n#Строка 1\n\n# Строка 2\n\n\n## Строка 3\nбла-бла-бла"
@@ -360,16 +366,14 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testManyList1(self):
         text = "бла-бла-бла \n\n#Строка 1\n\n# Строка 2\n\n\n** Строка 3\nбла-бла-бла"
         result = f'бла-бла-бла \n\n<ol class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 1</li><li class="{css.CSS_WIKI}">Строка 2</li></ol>\n<ul class="{css.CSS_WIKI}"><ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Строка 3</li></ul></ul>бла-бла-бла'
 
-        self.assertEqual(
-            self.parser.toHtml(text),
-            result)
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testSpaces1(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n* Строка 3\n\nбла-бла-бла"
@@ -378,8 +382,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSpaces2(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n* Строка 3\n\n\nбла-бла-бла"
@@ -388,8 +392,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSpaces3(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n* Строка 3\n\n\n\nбла-бла-бла"
@@ -398,8 +402,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testLineJoin1(self):
         text = """бла-бла-бла
@@ -426,8 +430,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testLineJoin3(self):
         text = """* Несортированный список. Элемент 1
@@ -452,8 +456,8 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testLineJoin4(self):
         text = """* Несортированный список. Элемент 1
@@ -483,5 +487,5 @@ class ParserListTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )

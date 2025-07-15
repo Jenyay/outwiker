@@ -10,6 +10,39 @@ from outwiker.pages.wiki.parser.tokenmultilineblock import MultilineBlockFactory
 import outwiker.core.cssclasses as css
 
 
+CSS_ID_STYLE_UNORDER_LIST = "ul.ow-wiki"
+CSS_STYLE_UNORDER_LIST = """ul.ow-wiki {
+            padding-left: 1rem;
+            list-style-type: none;
+        }
+
+        ul.ow-wiki > li.ow-wiki:before {
+          background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");
+          background-position: 0.0 0.0em;
+          background-size: 1.2em 1.2em;
+          background-repeat: no-repeat;
+
+          margin-right: 0px;
+          content: "";
+          height: 1.4em;
+          width: 1.5em;
+          vertical-align: middle;
+          display: inline-block;
+        }"""
+
+CSS_STYLE_EMPTY = """ul.ow-wiki li.ow-li-empty:before { background-image: none; }"""
+CSS_STYLE_TODO = """ul.ow-wiki li.ow-li-todo:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+Cjwvc3ZnPgoK"); }"""
+CSS_STYLE_INCOMPLETE = """ul.ow-wiki li.ow-li-incomplete:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+CjxwYXRoIGQ9Im0xLjc1ODUgMC4yNDQwMS0xLjQ4MDkgMS40ODkzIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjE4Ii8+Cjwvc3ZnPgo="); }"""
+CSS_STYLE_COMPLETE = """ul.ow-wiki li.ow-li-complete:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMS45ODU3bW0iIGhlaWdodD0iMS45ODU3bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEuOTg1NyAxLjk4NTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMi4xMDMgLTEyLjgzNykiPgo8cmVjdCB4PSIxMi4zNDUiIHk9IjEzLjA3OSIgd2lkdGg9IjEuNTE2NCIgaGVpZ2h0PSIxLjUxNjQiIGZpbGw9Im5vbmUiIGltYWdlLXJlbmRlcmluZz0iYXV0byIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xODM2MiIvPgo8L2c+CjxwYXRoIGQ9Im0wLjI2OTI1IDAuMjY5MjUgMS40NzI0IDEuNDcyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xOCIvPgo8cGF0aCBkPSJtMS43NTg1IDAuMjQ0MDEtMS40ODA5IDEuNDg5MyIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii4xOCIvPgo8L3N2Zz4K"); }"""
+CSS_STYLE_STAR = """ul.ow-wiki li.ow-li-star:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwNTMgMCAwIC45NDEwMSAtMTIuMTg5IC0xMi4wMzcpIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjIiPgo8cGF0aCBkPSJtMTMuMTIxIDEzLjE2NHYxLjM4MTUiLz4KPHBhdGggZD0ibTEzLjcxOSAxMy41MDktMS4xOTY0IDAuNjkwNzYiLz4KPHBhdGggZD0ibTEzLjcxOSAxNC4yLTEuMTk2NC0wLjY5MDc2Ii8+CjwvZz4KPC9zdmc+Cgo="); }"""
+CSS_STYLE_PLUS = """ul.ow-wiki li.ow-li-plus:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNiAwIDAgMSAtNy4wNTMyIC0xMi42NjMpIiBzdHJva2Utd2lkdGg9Ii4xOTM2NSI+CjxwYXRoIGQ9Im0xMi40MjIgMTMuNjYzaDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTkzNjUiLz4KPC9nPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgwIC42IC0xIDAgMTQuNjYzIC03LjA1MzIpIiBzdHJva2Utd2lkdGg9Ii4xOTM2NSI+CjxwYXRoIGQ9Im0xMi40MjIgMTMuNjYzaDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTkzNjUiLz4KPC9nPgo8L3N2Zz4K"); }"""
+CSS_STYLE_MINUS = """ul.ow-wiki li.ow-li-minus:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNiAwIDAgMSAtNy4wNTMyIC0xMi42NjMpIiBzdHJva2Utd2lkdGg9Ii4xOTM2NSI+CjxwYXRoIGQ9Im0xMi40MjIgMTMuNjYzaDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTkzNjUiLz4KPC9nPgo8L3N2Zz4K"); }"""
+CSS_STYLE_CIRCLE = """ul.ow-wiki li.ow-li-circle:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMzMzNDUgMCAwIC4zMjQ0OSAtMy41Mjg1IC0zLjY1MDUpIiBmaWxsPSJub25lIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjQiLz4KPC9nPgo8L3N2Zz4K"); }"""
+CSS_STYLE_CHECK = """ul.ow-wiki li.ow-li-check:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNzUwMSAwIDAgLjc5ODkgLTkuMTA2NSAtOS45MTc4KSI+CjxwYXRoIGQ9Im0xMi42MTcgMTMuNDA1IDAuNTk4NzcgMS4wMjM0IDEuMTIyNi0xLjY5MzIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMjU1cHgiLz4KPC9nPgo8L3N2Zz4K"); }"""
+CSS_STYLE_LT = """ul.ow-wiki li.ow-li-lt:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguNzMyMTcgMCAwIC42NTA2MyAtOC41ODM5IC04LjAzODkpIj4KPHBhdGggZD0ibTEzLjg2OSAxMy4yODQtMS4zNzU0IDAuNTU2NzIgMS4zNzY5IDAuNjUxMjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTc5NDdweCIvPgo8L2c+Cjwvc3ZnPgo="); }"""
+CSS_STYLE_GT = """ul.ow-wiki li.ow-li-gt:before { background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgtLjczMjE3IDAgMCAtLjY1MDYzIDEwLjU4NCAxMC4wMzIpIj4KPHBhdGggZD0ibTEzLjg2OSAxMy4yODQtMS4zNzU0IDAuNTU2NzIgMS4zNzY5IDAuNjUxMjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuMTc5NDdweCIvPgo8L2c+Cjwvc3ZnPgo="); }"""
+
+
 class ListFactory:
     @staticmethod
     def make(parser):
@@ -35,21 +68,21 @@ class ListToken:
     orderList = "#"
 
     unorderListCSS = [
-            ('[]', css.CSS_LIST_ITEM_EMPTY),
-            ('[ ]', css.CSS_LIST_ITEM_TODO),
-            ('[/]', css.CSS_LIST_ITEM_INCOMPLETE),
-            ('[\\]', css.CSS_LIST_ITEM_INCOMPLETE),
-            ('[x]', css.CSS_LIST_ITEM_COMPLETE),
-            ('[X]', css.CSS_LIST_ITEM_COMPLETE),
-            ('[*]', css.CSS_LIST_ITEM_STAR),
-            ('[+]', css.CSS_LIST_ITEM_PLUS),
-            ('[-]', css.CSS_LIST_ITEM_MINUS),
-            ('[o]', css.CSS_LIST_ITEM_CIRCLE),
-            ('[O]', css.CSS_LIST_ITEM_CIRCLE),
-            ('[v]', css.CSS_LIST_ITEM_CHECK),
-            ('[V]', css.CSS_LIST_ITEM_CHECK),
-            ('[<]', css.CSS_LIST_ITEM_LT),
-            ('[>]', css.CSS_LIST_ITEM_GT),
+            ('[]', css.CSS_LIST_ITEM_EMPTY, CSS_STYLE_EMPTY),
+            ('[ ]', css.CSS_LIST_ITEM_TODO, CSS_STYLE_TODO),
+            ('[/]', css.CSS_LIST_ITEM_INCOMPLETE, CSS_STYLE_INCOMPLETE),
+            ('[\\]', css.CSS_LIST_ITEM_INCOMPLETE, CSS_STYLE_INCOMPLETE),
+            ('[x]', css.CSS_LIST_ITEM_COMPLETE, CSS_STYLE_COMPLETE),
+            ('[X]', css.CSS_LIST_ITEM_COMPLETE, CSS_STYLE_COMPLETE),
+            ('[*]', css.CSS_LIST_ITEM_STAR, CSS_STYLE_STAR),
+            ('[+]', css.CSS_LIST_ITEM_PLUS, CSS_STYLE_PLUS),
+            ('[-]', css.CSS_LIST_ITEM_MINUS, CSS_STYLE_MINUS),
+            ('[o]', css.CSS_LIST_ITEM_CIRCLE, CSS_STYLE_CIRCLE),
+            ('[O]', css.CSS_LIST_ITEM_CIRCLE, CSS_STYLE_CIRCLE),
+            ('[v]', css.CSS_LIST_ITEM_CHECK, CSS_STYLE_CHECK),
+            ('[V]', css.CSS_LIST_ITEM_CHECK, CSS_STYLE_CHECK),
+            ('[<]', css.CSS_LIST_ITEM_LT, CSS_STYLE_LT),
+            ('[>]', css.CSS_LIST_ITEM_GT, CSS_STYLE_GT),
             ]
 
     def __init__(self, parser):
@@ -193,6 +226,7 @@ class ListToken:
             # Find classes for unorder lists
             text, other_css = self._processUnorderClasses(text)
             css_classes += other_css
+            self.parser.addStyle(CSS_ID_STYLE_UNORDER_LIST, CSS_STYLE_UNORDER_LIST)
 
         itemText = self.parser.parseListItemMarkup(text)
         return '<li class="{css_class}">{text}</li>'.format(text=itemText, css_class=' '.join(css_classes))
@@ -201,10 +235,11 @@ class ListToken:
         result_text = text
         classes: List[str] = []
 
-        for prefix, css_class in self.unorderListCSS:
+        for prefix, css_class, css_style in self.unorderListCSS:
             if text.startswith(prefix):
                 result_text = text[len(prefix):].strip()
                 classes.append(css_class)
+                self.parser.addStyle(css_class, css_style)
                 break
 
         return (result_text, classes)

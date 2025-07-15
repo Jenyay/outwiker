@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import traceback
+from typing import Dict, List
 
 from outwiker.core.htmlformatter import HtmlFormatter
 from outwiker.core.thumbnails import Thumbnails
@@ -43,9 +44,11 @@ class Parser:
         self.customProps = {}
 
         # Массив строк, которые надо добавить в заголовок страницы
-        self.__headers = []
+        self.__headers: List[str] = []
 
-        self.__footers = []
+        self.__footers: List[str] = []
+
+        self.__styles: Dict[str, str] = {}
 
         # Команды, которые обрабатывает парсер.
         # Формат команд: (:name params... :) content...(:nameend:)
@@ -273,6 +276,29 @@ class Parser:
         Return list of the strings for the <head> HTML tag.
         """
         return self.__headers
+
+    @property
+    def styles(self) -> str:
+        """
+        Returns a string with all styles added to the parser.
+        """
+        return "".join(self.__styles.values())
+
+    @property
+    def styleItems(self) -> List[str]:
+        """
+        Returns a list of styles added to the parser.
+        """
+        return list(self.__styles.values())
+
+    def addStyle(self, style_id: str, style: str):
+        """
+        Add a style to the parser.
+        :param style_id: Unique identifier for the style.
+        :param style: The CSS style string to be added.
+        """
+        if style_id not in self.__styles:
+            self.__styles[style_id] = style
 
     @property
     def footer(self):
