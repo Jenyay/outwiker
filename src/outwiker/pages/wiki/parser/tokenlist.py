@@ -224,9 +224,9 @@ class ListToken:
 
         if item[level - 1] == self.unorderList:
             # Find classes for unorder lists
+            self.parser.addStyle(CSS_ID_STYLE_UNORDER_LIST, CSS_STYLE_UNORDER_LIST)
             text, other_css = self._processUnorderClasses(text)
             css_classes += other_css
-            self.parser.addStyle(CSS_ID_STYLE_UNORDER_LIST, CSS_STYLE_UNORDER_LIST)
 
         itemText = self.parser.parseListItemMarkup(text)
         return '<li class="{css_class}">{text}</li>'.format(text=itemText, css_class=' '.join(css_classes))
