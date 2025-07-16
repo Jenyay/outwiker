@@ -1,14 +1,47 @@
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 import wx
 from wx.lib.newevent import NewEvent
 
 from outwiker.core.tagscommands import getTagsString, parseTagsList
+from outwiker.core.tagslist import TagsList
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
 
 
 TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()
+
+
+class TagsAutocompleter(wx.TextCompleterSimple):
+    def __init__(self, tagsList: TagsList):
+        super().__init__()
+        self._tags = sorted(tagsList.tags)
+
+    def GetCompletions(self, prefix: str) -> List[str]:
+        prefix_src = prefix
+        pos_comma = prefix.rfind(",")
+
+        # start of tag
+        prefix_last_tag = prefix[pos_comma + 1 :] if pos_comma >= 0 else prefix
+        prefix_last_tag_strip = prefix_last_tag.strip().lower()
+        if prefix_last_tag.strip() == "":
+            return []
+
+        # Leading spaces in prefix
+        space_count = len(prefix_last_tag) - len(prefix_last_tag.lstrip())
+
+        # Begin of the full entered text
+        begin = prefix_src[: pos_comma + 1] if pos_comma >= 0 else ""
+
+        # List of autocomplete samples
+        result = [
+            f"{begin}{' ' * space_count}{tag}"
+            for tag in self._tags
+            if tag.startswith(prefix_last_tag_strip) and tag != prefix_last_tag_strip
+        ]
+        return result
 
 
 class TagsSelector(wx.Panel):
@@ -34,13 +67,13 @@ class TagsSelector(wx.Panel):
         self._layout()
 
     @property
-    def tags(self):
+    def tags(self) -> List[str]:
         tagsString = self.tagsTextCtrl.GetValue().strip().lower()
         tags = parseTagsList(tagsString)
         return tags
 
     @tags.setter
-    def tags(self, tags):
+    def tags(self, tags: List[str]):
         tagsString = getTagsString(tags)
         self.tagsTextCtrl.SetValue(tagsString)
 
@@ -101,7 +134,9 @@ class TagsSelector(wx.Panel):
             pos = len(text)
             self.tagsTextCtrl.SetSelection(pos, pos)
 
-    def setTagsList(self, tagsList):
+    def setTagsList(self, tagsList: TagsList):
+        # self.tagsTextCtrl.AutoComplete(sorted(tagsList.tags))
+        self.tagsTextCtrl.AutoComplete(TagsAutocompleter(tagsList))
         self._tagsCloud.setTags(tagsList)
         self._updateTagsMark()
 

@@ -170,6 +170,7 @@ class GeneralController(BasePageDialogController):
             (ocf.orderCalculatorAlphabetically, _("Alphabetically")),
         ]
 
+        self._tagslist = TagsList(self._application.wikiroot)
         self._setTagsList()
 
         self._generalPanel.typeCombo.Bind(
@@ -336,7 +337,6 @@ class GeneralController(BasePageDialogController):
     def _setTagsList(self):
         assert self._application.wikiroot is not None
 
-        tagslist = TagsList(self._application.wikiroot)
         self._generalPanel.tagsSelector.setFontSize(
             self._tagsConfig.minFontSize.value, self._tagsConfig.maxFontSize.value
         )
@@ -344,7 +344,7 @@ class GeneralController(BasePageDialogController):
         self._generalPanel.tagsSelector.enableTooltips(
             self._tagsConfig.enableTooltips.value
         )
-        self._generalPanel.tagsSelector.setTagsList(tagslist)
+        self._generalPanel.tagsSelector.setTagsList(self._tagslist)
 
     def _setComboPageType(self, pageTypeString):
         """
