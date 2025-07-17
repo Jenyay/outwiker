@@ -5,10 +5,12 @@ from typing import List
 import wx
 from wx.lib.newevent import NewEvent
 
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagscommands import getTagsString, parseTagsList
 from outwiker.core.tagslist import TagsList
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
+
 
 
 TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()
@@ -57,6 +59,9 @@ class TagsSelector(wx.Panel):
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
         self.tagsTextCtrl.SetMinSize((250, -1))
 
+        tagBitmap = wx.Bitmap(getBuiltinImagePath("tag.png"))
+        self.tagsButton = wx.BitmapButton(self, bitmap=tagBitmap)
+
         self._tagsCloud = TagsCloud(
             self, use_buttons=False, enable_active_tags_filter=enable_active_tags_filter
         )
@@ -87,13 +92,15 @@ class TagsSelector(wx.Panel):
         self._tagsCloud.enableTooltips(enable)
 
     def _layout(self):
-        titleTextSizer = wx.FlexGridSizer(cols=2)
+        titleTextSizer = wx.FlexGridSizer(cols=3)
         titleTextSizer.AddGrowableCol(1)
+        titleTextSizer.AddGrowableRow(0)
 
         titleTextSizer.Add(
             self.label_tags, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4
         )
         titleTextSizer.Add(self.tagsTextCtrl, flag=wx.ALL | wx.EXPAND, border=0)
+        titleTextSizer.Add(self.tagsButton, flag=wx.ALIGN_RIGHT)
 
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
