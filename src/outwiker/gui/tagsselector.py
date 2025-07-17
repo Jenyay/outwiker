@@ -136,9 +136,9 @@ class TagsSelector(wx.Panel):
         titleTextSizer.AddGrowableRow(0)
 
         titleTextSizer.Add(
-            self.label_tags, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4
+            self.label_tags, flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, border=4
         )
-        titleTextSizer.Add(self.tagsTextCtrl, flag=wx.ALL | wx.EXPAND, border=0)
+        titleTextSizer.Add(self.tagsTextCtrl, flag=wx.LEFT | wx.EXPAND, border=4)
         titleTextSizer.Add(self.tagsButton, flag=wx.ALIGN_RIGHT)
 
         mainSizer = wx.FlexGridSizer(cols=1)
