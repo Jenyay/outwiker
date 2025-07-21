@@ -50,6 +50,8 @@ class PopupWindow(wx.PopupTransientWindow):
             self.SetPosition(position)
         else:
             self.SetPosition(_getBestPosition(self, mainWindow))
+
+        self.SetSize(self.GetMinSize())
         super().Popup()
 
 
