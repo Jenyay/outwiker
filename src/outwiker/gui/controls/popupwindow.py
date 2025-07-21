@@ -36,14 +36,14 @@ class PopupWindow(wx.PopupTransientWindow):
     '''
 
     def __init__(self, parent, theme: Theme):
-        super().__init__(parent, flags=wx.PU_CONTAINS_CONTROLS)
+        super().__init__(parent, flags=wx.PU_CONTAINS_CONTROLS | wx.BORDER_SIMPLE)
         self._theme = theme
         self.createGUI()
 
     def createGUI(self):
         pass
 
-    def Popup(self, mainWindow: wx.Window, position: Optional[Tuple[int, int]] = None):
+    def Popup(self, mainWindow: wx.Window, position: Optional[Tuple[int, int]] = None, size: Optional[Tuple[int, int]] = None):
         self.Dismiss()
         self.Layout()
         if position is not None:
@@ -51,7 +51,9 @@ class PopupWindow(wx.PopupTransientWindow):
         else:
             self.SetPosition(_getBestPosition(self, mainWindow))
 
-        self.SetSize(self.GetMinSize())
+        if size is not None:
+            self.SetSize(size)
+
         super().Popup()
 
 

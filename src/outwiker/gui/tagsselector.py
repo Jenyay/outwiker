@@ -22,6 +22,7 @@ class TagsPopupWindow(PopupWindow):
         self._tagsList: Optional[TagsList] = None
         super().__init__(parent, None)
         self.SetMinSize((350, 250))
+        self.SetSize(self.GetMinSize())
 
     def createGUI(self):
         self._tagsCloud = TagsCloud(
@@ -87,15 +88,13 @@ class TagsAutocompleter(wx.TextCompleterSimple):
 class TagsSelector(wx.Panel):
     def __init__(self, parent, enable_active_tags_filter: bool = True):
         super().__init__(parent)
+        self._popup_height = 250
 
-        self._tagsWidth = 350
-        self._tagsHeight = 150
         self._tagsList: Optional[TagsList] = None
 
         self.label_tags = wx.StaticText(self, -1, _("Tags (comma separated)"))
 
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
-        self.tagsTextCtrl.SetMinSize((250, -1))
 
         tagBitmap = wx.Bitmap(getBuiltinImagePath("tag.png"))
         self.tagsButton = wx.BitmapButton(self, bitmap=tagBitmap)
@@ -150,10 +149,14 @@ class TagsSelector(wx.Panel):
 
     def _onTagsButtonClick(self, event):
         button_screen_rect = self.tagsButton.GetScreenRect()
-        popup_width = self._tagsCloudPopup.GetRect().GetWidth()
-        x = button_screen_rect.x + button_screen_rect.width - popup_width
+        text_field_screen_rect = self.tagsTextCtrl.GetScreenRect()
+
+        x = text_field_screen_rect.x
         y = button_screen_rect.y + button_screen_rect.height
-        self._tagsCloudPopup.Popup(self, (x, y))
+        width = button_screen_rect.x + button_screen_rect.width - text_field_screen_rect.x
+        height = self._popup_height
+
+        self._tagsCloudPopup.Popup(self, (x, y), (width, height))
 
     def _onTagClick(self, event):
         tag_name = event.text

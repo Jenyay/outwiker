@@ -129,7 +129,7 @@ class GeneralPanel(wx.Panel):
         )
 
         # Tags
-        self.tagsSelector = TagsSelector(self)
+        self.tagsSelector = TagsSelector(self, enable_active_tags_filter=False)
 
     def popupIconsList(self):
         self.iconsPopup.Popup(self)
