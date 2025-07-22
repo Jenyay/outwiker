@@ -158,8 +158,7 @@ class BasePageDialog(TestedDialog):
         mainSizer.AddGrowableRow(0)
         mainSizer.Add(self._notebook, 0, wx.EXPAND, 0)
         self._createOkCancelButtons(mainSizer)
-        self.SetSizer(mainSizer)
-        self.Layout()
+        self.SetSizerAndFit(mainSizer)
 
     def saveParams(self):
         width, height = self.GetClientSize()

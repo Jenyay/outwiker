@@ -103,7 +103,6 @@ class GeneralPanel(wx.Panel):
         # Page title
         self.titleLabel = wx.StaticText(self, label=_("Title"))
         self.titleTextCtrl = wx.TextCtrl(self, value="")
-        self.titleTextCtrl.SetMinSize((350, -1))
 
         # Page icon
         self.iconBtn = wx.BitmapButton(self)
@@ -144,6 +143,8 @@ class GeneralPanel(wx.Panel):
     def setPageIcon(self, iconFileName):
         bitmap = readImage(iconFileName, ICONS_WIDTH, ICONS_HEIGHT)
         self.iconBtn.SetBitmapLabel(bitmap)
+        # Need in Windows
+        self.Layout()
 
 
 class GeneralController(BasePageDialogController):
