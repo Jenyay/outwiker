@@ -11,6 +11,9 @@ from outwiker.gui.defines import (TOOLBAR_GENERAL, TOOLBAR_PLUGINS,
                                   MENU_VIEW_GOTO,
                                   PREF_PANEL_INTERFACE,
                                   PREF_PANEL_PLUGINS,
-                                  PREF_PANEL_EDITOR
+                                  PREF_PANEL_EDITOR,
+                                  CONTROLS_MARGIN,
+                                  CONTROLS_HGAP,
+                                  CONTROLS_VGAP,
                                   )
 from outwiker.pages.wiki.defines import PREF_PANEL_WIKI

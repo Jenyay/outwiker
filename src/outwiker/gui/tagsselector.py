@@ -92,8 +92,6 @@ class TagsSelector(wx.Panel):
 
         self._tagsList: Optional[TagsList] = None
 
-        self.label_tags = wx.StaticText(self, -1, _("Tags (comma separated)"))
-
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
 
         tagBitmap = wx.Bitmap(getBuiltinImagePath("tag.png"))
@@ -130,19 +128,10 @@ class TagsSelector(wx.Panel):
         self._tagsCloudPopup.enableTooltips(enable)
 
     def _layout(self):
-        titleTextSizer = wx.FlexGridSizer(cols=3)
-        titleTextSizer.AddGrowableCol(1)
-        titleTextSizer.AddGrowableRow(0)
-
-        titleTextSizer.Add(
-            self.label_tags, flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, border=4
-        )
-        titleTextSizer.Add(self.tagsTextCtrl, flag=wx.LEFT | wx.EXPAND, border=4)
-        titleTextSizer.Add(self.tagsButton, flag=wx.ALIGN_RIGHT)
-
-        mainSizer = wx.FlexGridSizer(cols=1)
+        mainSizer = wx.FlexGridSizer(cols=2)
         mainSizer.AddGrowableCol(0)
-        mainSizer.Add(titleTextSizer, flag=wx.ALL | wx.EXPAND, border=4)
+        mainSizer.Add(self.tagsTextCtrl, flag=wx.EXPAND)
+        mainSizer.Add(self.tagsButton, flag=wx.ALIGN_RIGHT)
 
         self.SetSizer(mainSizer)
         self.Layout()
@@ -153,7 +142,9 @@ class TagsSelector(wx.Panel):
 
         x = text_field_screen_rect.x
         y = button_screen_rect.y + button_screen_rect.height
-        width = button_screen_rect.x + button_screen_rect.width - text_field_screen_rect.x
+        width = (
+            button_screen_rect.x + button_screen_rect.width - text_field_screen_rect.x
+        )
         height = self._popup_height
 
         self._tagsCloudPopup.Popup(self, (x, y), (width, height))
