@@ -10,7 +10,8 @@ import wx
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagslist import TagsList
 from outwiker.gui.controls.taglabel2 import TagLabel2
-from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST
+from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST, BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+from outwiker.gui.images import readImage
 
 
 class TagsCloud(wx.Panel):
@@ -224,7 +225,8 @@ class TagsCloud(wx.Panel):
         self._tags_panel.SetScrollRate(0, 0)
 
         self._search_ctrl = wx.SearchCtrl(self)
-        self._active_tags_flag = wx.BitmapToggleButton(self, label=wx.Bitmap(getBuiltinImagePath("tag_active.png")))
+        tagBitmap = readImage(getBuiltinImagePath("tag.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
+        self._active_tags_flag = wx.BitmapToggleButton(self, label=tagBitmap)
         self._active_tags_flag.SetToolTip(_("Applied tags only"))
         self._active_tags_flag.Show(self._enable_active_tags_filter)
 

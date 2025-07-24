@@ -11,6 +11,8 @@ from outwiker.core.tagslist import TagsList
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
 from outwiker.gui.controls.popupwindow import PopupWindow
+from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+from outwiker.gui.images import readImage
 
 
 TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()
@@ -94,7 +96,7 @@ class TagsSelector(wx.Panel):
 
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
 
-        tagBitmap = wx.Bitmap(getBuiltinImagePath("tag.png"))
+        tagBitmap = readImage(getBuiltinImagePath("tag.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
         self.tagsButton = wx.BitmapButton(self, bitmap=tagBitmap)
 
         self._tagsCloudPopup: TagsPopupWindow = TagsPopupWindow(
