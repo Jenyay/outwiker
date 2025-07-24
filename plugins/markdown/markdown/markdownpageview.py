@@ -109,7 +109,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.BOLD_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold.png"),
+            os.path.join(self.imagesDir, "text_bold.svg"),
             fullUpdate=False,
         )
 
@@ -122,7 +122,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_italic.png"),
+            os.path.join(self.imagesDir, "text_italic.svg"),
             fullUpdate=False,
         )
 
@@ -134,7 +134,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.BOLD_ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold_italic.png"),
+            os.path.join(self.imagesDir, "text_bold_italic.svg"),
             fullUpdate=False,
         )
 
@@ -146,7 +146,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.COMMENT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "comment.png"),
+            os.path.join(self.imagesDir, "comment.svg"),
             fullUpdate=False,
         )
 
@@ -189,7 +189,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.HEADING_1_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_1.png"),
+            os.path.join(self.imagesDir, "text_heading_1.svg"),
             fullUpdate=False,
         )
 
@@ -197,7 +197,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.HEADING_2_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_2.png"),
+            os.path.join(self.imagesDir, "text_heading_2.svg"),
             fullUpdate=False,
         )
 
@@ -205,7 +205,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.HEADING_3_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_3.png"),
+            os.path.join(self.imagesDir, "text_heading_3.svg"),
             fullUpdate=False,
         )
 
@@ -213,7 +213,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.HEADING_4_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_4.png"),
+            os.path.join(self.imagesDir, "text_heading_4.svg"),
             fullUpdate=False,
         )
 
@@ -221,7 +221,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.HEADING_5_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_5.png"),
+            os.path.join(self.imagesDir, "text_heading_5.svg"),
             fullUpdate=False,
         )
 
@@ -229,7 +229,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.HEADING_6_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_6.png"),
+            os.path.join(self.imagesDir, "text_heading_6.svg"),
             fullUpdate=False,
         )
 
@@ -245,7 +245,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.LINK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "link.png"),
+            os.path.join(self.imagesDir, "link.svg"),
             fullUpdate=False,
         )
 
@@ -282,7 +282,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.CURRENT_DATE,
             toolbar,
-            os.path.join(self.imagesDir, "date.png"),
+            os.path.join(self.imagesDir, "date.svg"),
             fullUpdate=False,
         )
 

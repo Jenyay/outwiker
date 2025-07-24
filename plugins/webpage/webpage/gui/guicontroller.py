@@ -273,7 +273,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.BOLD_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold.png"),
+            os.path.join(self.imagesDir, "text_bold.svg"),
             fullUpdate=False,
         )
 
@@ -288,7 +288,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_italic.png"),
+            os.path.join(self.imagesDir, "text_italic.svg"),
             fullUpdate=False,
         )
 
@@ -303,7 +303,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.BOLD_ITALIC_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_bold_italic.png"),
+            os.path.join(self.imagesDir, "text_bold_italic.svg"),
             fullUpdate=False,
         )
 
@@ -318,7 +318,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.UNDERLINE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_underline.png"),
+            os.path.join(self.imagesDir, "text_underline.svg"),
             fullUpdate=False,
         )
 
@@ -333,7 +333,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.STRIKE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_strikethrough.png"),
+            os.path.join(self.imagesDir, "text_strikethrough.svg"),
             fullUpdate=False,
         )
 
@@ -349,7 +349,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.SUBSCRIPT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_subscript.png"),
+            os.path.join(self.imagesDir, "text_subscript.svg"),
             fullUpdate=False,
         )
 
@@ -364,7 +364,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.SUPERSCRIPT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_superscript.png"),
+            os.path.join(self.imagesDir, "text_superscript.svg"),
             fullUpdate=False,
         )
 
@@ -386,7 +386,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.ALIGN_LEFT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_left.png"),
+            os.path.join(self.imagesDir, "text_align_left.svg"),
             fullUpdate=False,
         )
 
@@ -402,7 +402,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.ALIGN_CENTER_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_center.png"),
+            os.path.join(self.imagesDir, "text_align_center.svg"),
             fullUpdate=False,
         )
 
@@ -417,7 +417,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.ALIGN_RIGHT_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_right.png"),
+            os.path.join(self.imagesDir, "text_align_right.svg"),
             fullUpdate=False,
         )
 
@@ -433,7 +433,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.ALIGN_JUSTIFY_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_align_justify.png"),
+            os.path.join(self.imagesDir, "text_align_justify.svg"),
             fullUpdate=False,
         )
 
@@ -511,7 +511,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.LIST_BULLETS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_bullets.png"),
+            os.path.join(self.imagesDir, "text_list_bullets.svg"),
             fullUpdate=False,
         )
 
@@ -530,7 +530,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.LIST_NUMBERS_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_list_numbers.png"),
+            os.path.join(self.imagesDir, "text_list_numbers.svg"),
             fullUpdate=False,
         )
 
@@ -571,7 +571,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.HEADING_1_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_1.png"),
+            os.path.join(self.imagesDir, "text_heading_1.svg"),
             fullUpdate=False,
         )
 
@@ -581,7 +581,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.HEADING_2_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_2.png"),
+            os.path.join(self.imagesDir, "text_heading_2.svg"),
             fullUpdate=False,
         )
 
@@ -591,7 +591,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.HEADING_3_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_3.png"),
+            os.path.join(self.imagesDir, "text_heading_3.svg"),
             fullUpdate=False,
         )
 
@@ -601,7 +601,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.HEADING_4_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_4.png"),
+            os.path.join(self.imagesDir, "text_heading_4.svg"),
             fullUpdate=False,
         )
 
@@ -611,7 +611,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.HEADING_5_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_5.png"),
+            os.path.join(self.imagesDir, "text_heading_5.svg"),
             fullUpdate=False,
         )
 
@@ -621,7 +621,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.HEADING_6_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_heading_6.png"),
+            os.path.join(self.imagesDir, "text_heading_6.svg"),
             fullUpdate=False,
         )
 
@@ -648,7 +648,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.QUOTE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "quote.png"),
+            os.path.join(self.imagesDir, "quote.svg"),
             fullUpdate=False,
         )
 
@@ -661,7 +661,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.MARK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "mark.png"),
+            os.path.join(self.imagesDir, "mark.svg"),
             fullUpdate=False,
         )
 
@@ -709,7 +709,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.LINK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "link.png"),
+            os.path.join(self.imagesDir, "link.svg"),
             fullUpdate=False,
         )
 
@@ -724,7 +724,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.ANCHOR_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "anchor.png"),
+            os.path.join(self.imagesDir, "anchor.svg"),
             fullUpdate=False,
         )
 
@@ -754,7 +754,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.LINE_BREAK_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "linebreak.png"),
+            os.path.join(self.imagesDir, "linebreak.svg"),
             fullUpdate=False,
         )
 
@@ -771,7 +771,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.CURRENT_DATE,
             toolbar,
-            os.path.join(self.imagesDir, "date.png"),
+            os.path.join(self.imagesDir, "date.svg"),
             fullUpdate=False,
         )
 
