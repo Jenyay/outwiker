@@ -8,10 +8,12 @@
 		</download>
 		<changes>
 			<change>Update libraries.</change>
+			<change>Update icons.</change>
 		</changes>
 
 		<changes lang="ru">
 			<change>Обновление библиотек.</change>
+			<change>Обновление значков.</change>
 		</changes>
 	</version>
 

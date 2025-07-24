@@ -273,8 +273,8 @@ class PluginDebug(Plugin):
         images_dir = getImagesDir()
 
         iconslist = [
-            os.path.join(images_dir, 'add.png'),
-            os.path.join(images_dir, 'code.png'),
+            os.path.join(images_dir, 'add.svg'),
+            os.path.join(images_dir, 'code.svg'),
             os.path.join(images_dir, 'save.png'),
         ]
         title = '__Debug group__'

@@ -295,7 +295,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.CODE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "code.png"),
+            os.path.join(self.imagesDir, "code.svg"),
             fullUpdate=False,
         )
 
