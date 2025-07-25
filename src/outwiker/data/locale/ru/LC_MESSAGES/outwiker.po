@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -2168,7 +2168,7 @@ msgstr "программы"
 
 #: outwiker/core/defines.py:103
 msgid "tags"
-msgstr "ярлыки"
+msgstr "метки"
 
 #: outwiker/core/defines.py:104
 msgid "weather"
