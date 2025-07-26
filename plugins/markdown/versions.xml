@@ -3,7 +3,7 @@
 	<version number="1.8.2">
 		<download href="https://jenyay.net/uploads/Outwiker/Markdown/markdown-1.8.2.zip">
 			<requirements>
-                <api>4.951</api>
+                <api>4.954</api>
 			</requirements>
 		</download>
 		<changes>
