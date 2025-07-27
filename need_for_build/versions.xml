@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.953" status="dev">
+    <version number="4.0.0.954" status="alpha" date="2025-07-27">
         <changes>
+            <change>Redesigned the tag selection interface in dialogs.</change>
+            <change>When generating HTML code for wiki pages, some CSS styles are now added only when necessary.</change>
+            <change>Updated several icons.</change>
+            <change>Migrated to wxPython 4.2.2.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Переделан интерфейс для выбора меток в диалогах.</change>
+            <change>При генерации HTML-кода для викистраниц некоторое CSS-стили теперь добавляются только при необходимости.</change>
+            <change>Обновление некоторых значков.</change>
+            <change>Переход на wxPython 4.2.2.</change>
         </changes>
     </version>
 
