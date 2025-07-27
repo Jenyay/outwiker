@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="4.0.0.955" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="4.0.0.954" status="alpha" date="2025-07-27">
         <changes>
             <change>Redesigned the tag selection interface in dialogs.</change>
