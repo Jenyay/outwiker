@@ -338,7 +338,9 @@ class TextEditor(TextEditorBase):
             event.CmdDown(),
             event.MetaDown(),
         )
-        self._application.onTextEditorKeyDown(self._application.selectedPage, eventParams)
+        self._application.onTextEditorKeyDown(
+            self._application.selectedPage, eventParams
+        )
 
         if not eventParams.disableOutput:
             super().onKeyDown(event)
@@ -361,7 +363,9 @@ class TextEditor(TextEditorBase):
             event_params = TextEditorCaretMoveParams(
                 self, new_start_selection, new_end_selection
             )
-            self._application.onTextEditorCaretMove(self._application.selectedPage, event_params)
+            self._application.onTextEditorCaretMove(
+                self._application.selectedPage, event_params
+            )
 
     def _onMouseLeftDown(self, event):
         self._checkCaretMoving()
