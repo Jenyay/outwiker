@@ -7,8 +7,6 @@ from outwiker.app.services.messages import showError
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
 
-import outwiker.gui.controls.flatnotebook as fnb
-
 
 class TabsController:
     def __init__(self, tabsCtrl, application):
@@ -119,32 +117,34 @@ class TabsController:
         self._tabsCtrl.HistoryForward()
 
     def __bindGuiEvents(self):
-        self._tabsCtrl.Bind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED,
-            self.__onTabChanged)
-        self._tabsCtrl.Bind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING,
-            self.__onTabClose)
-        self._tabsCtrl.Bind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED,
-            self.__onTabDropped)
-        self._tabsCtrl.Bind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU,
-            self.__onPopupMenu)
+        # self._tabsCtrl.Bind(
+        #     fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED,
+        #     self.__onTabChanged)
+        # self._tabsCtrl.Bind(
+        #     fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING,
+        #     self.__onTabClose)
+        # self._tabsCtrl.Bind(
+        #     fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED,
+        #     self.__onTabDropped)
+        # self._tabsCtrl.Bind(
+        #     fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU,
+        #     self.__onPopupMenu)
+        pass
 
     def __unbindGuiEvents(self):
-        self._tabsCtrl.Unbind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED,
-            handler=self.__onTabChanged)
-        self._tabsCtrl.Unbind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING,
-            handler=self.__onTabClose)
-        self._tabsCtrl.Unbind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED,
-            handler=self.__onTabDropped)
-        self._tabsCtrl.Unbind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU,
-            handler=self.__onPopupMenu)
+        # self._tabsCtrl.Unbind(
+        #     fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED,
+        #     handler=self.__onTabChanged)
+        # self._tabsCtrl.Unbind(
+        #     fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING,
+        #     handler=self.__onTabClose)
+        # self._tabsCtrl.Unbind(
+        #     fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED,
+        #     handler=self.__onTabDropped)
+        # self._tabsCtrl.Unbind(
+        #     fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU,
+        #     handler=self.__onPopupMenu)
+        pass
 
     def __bindEvents(self):
         self._application.onWikiOpen += self.__onWikiOpen

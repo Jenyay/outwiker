@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from typing import List, Optional
 
 import wx
 
@@ -6,41 +7,43 @@ from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.core.application import Application
 from outwiker.core.history import History
 
-import outwiker.gui.controls.flatnotebook as fnb
-
 
 class TabsCtrl(wx.Panel):
     def __init__(self, parent, application: Application):
         super().__init__(parent)
         self._application = application
 
-        self._tabs = fnb.FlatNotebook(self,
-                                      agwStyle=(
-                                          fnb.FNB_FF2 |
-                                          fnb.FNB_MOUSE_MIDDLE_CLOSES_TABS |
-                                          fnb.FNB_X_ON_TAB |
-                                          fnb.FNB_DROPDOWN_TABS_LIST))
-        self._tabs.SetPadding(wx.Size(10, -1))
+        self._tabs_collection: List[TabInfo] = []
+        self._current_page_index = None
+
+        # self._tabs = fnb.FlatNotebook(self,
+        #                               agwStyle=(
+        #                                   fnb.FNB_FF2 |
+        #                                   fnb.FNB_MOUSE_MIDDLE_CLOSES_TABS |
+        #                                   fnb.FNB_X_ON_TAB |
+        #                                   fnb.FNB_DROPDOWN_TABS_LIST))
+        # self._tabs.SetPadding(wx.Size(10, -1))
         self.__layout()
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
-        self._tabs.SetBackgroundColour(colour)
-        self._tabs.SetTabAreaColour(colour)
+        # self._tabs.SetBackgroundColour(colour)
+        # self._tabs.SetTabAreaColour(colour)
 
     def SetForegroundColour(self, colour):
         super().SetForegroundColour(colour)
-        self._tabs.SetForegroundColour(colour)
+        # self._tabs.SetForegroundColour(colour)
 
     def __layout(self):
-        mainSizer = wx.FlexGridSizer(1, 0, 0, 0)
+        self.SetMinSize((-1, 48))
+        # mainSizer = wx.FlexGridSizer(1, 0, 0, 0)
 
-        mainSizer.AddGrowableCol(0)
-        mainSizer.AddGrowableRow(0)
+        # mainSizer.AddGrowableCol(0)
+        # mainSizer.AddGrowableRow(0)
 
-        mainSizer.Add(self._tabs, 0, wx.EXPAND)
-        self.SetSizer(mainSizer)
-        self.Layout()
+        # # mainSizer.Add(self._tabs, 0, wx.EXPAND)
+        # self.SetSizer(mainSizer)
+        # self.Layout()
 
     def _updateHistoryButtons(self):
         """
@@ -63,36 +66,42 @@ class TabsCtrl(wx.Panel):
                 history.forwardLength != 0)
 
     def AddPage(self, title, page):
-        blankWindow = TabWindow(self, page)
-        self._tabs.AddPage(blankWindow, title)
+        self._tabs_collection.append(TabInfo(page))
+        # blankWindow = TabInfo(page)
+        # self._tabs.AddPage(blankWindow, title)
 
     def InsertPage(self, index, title, page, select):
-        blankWindow = TabWindow(self, page)
-        self._tabs.InsertPage(index, blankWindow, title, select)
+        self._tabs_collection.insert(index, TabInfo(page))
+        # blankWindow = TabInfo(page)
+        # self._tabs.InsertPage(index, blankWindow, title, select)
         self._updateHistoryButtons()
 
     def Clear(self):
-        self._tabs.DeleteAllPages()
+        # self._tabs.DeleteAllPages()
         self._updateHistoryButtons()
 
-    def GetPageText(self, index):
-        return self._tabs.GetPageText(index)
+    # def GetPageText(self, index):
+        # return self._tabs.GetPageText(index)
+        # pass
 
     def RenameCurrentTab(self, title):
         page_index = self.GetSelection()
-        if page_index >= 0:
+        if page_index is not None:
             self.RenameTab(page_index, title)
 
     def RenameTab(self, index, title):
-        self._tabs.SetPageText(index, title)
+        # self._tabs.SetPageText(index, title)
+        pass
 
     def GetPage(self, index):
-        return self._tabs.GetPage(index).page
+        # return self._tabs.GetPage(index).page
+        pass
 
     def SetCurrentPage(self, page):
         page_index = self.GetSelection()
-        if page_index >= 0:
-            self._tabs.GetPage(page_index).page = page
+        if page_index is not None:
+            # self._tabs.GetPage(page_index).page = page
+            pass
 
         self._updateHistoryButtons()
 
@@ -102,33 +111,37 @@ class TabsCtrl(wx.Panel):
         """
         page_index = self.GetSelection()
 
-        if page_index >= 0:
-            return self._tabs.GetPage(page_index).history
+        if page_index is not None:
+            # return self._tabs.GetPage(page_index).history
+            pass
 
-    def GetSelection(self):
-        return self._tabs.GetSelection()
+    def GetSelection(self) -> Optional[int]:
+        # return self._tabs.GetSelection()
+        # pass
+        return self._current_page_index
 
     def GetPages(self):
         return [self.GetPage(index) for index in range(self.GetPageCount())]
 
     def GetPageCount(self):
-        return self._tabs.GetPageCount()
+        return len(self._tabs_collection)
 
     def SetSelection(self, index):
-        result = self._tabs.SetSelection(index)
+        # result = self._tabs.SetSelection(index)
         self._updateHistoryButtons()
-        return result
+        # return result
+        pass
 
     def DeletePage(self, index):
-        self._tabs.DeletePage(index)
+        # self._tabs.DeletePage(index)
         self._updateHistoryButtons()
 
     def NextPage(self):
-        self._tabs.AdvanceSelection(True)
+        # self._tabs.AdvanceSelection(True)
         self._updateHistoryButtons()
 
     def PreviousPage(self):
-        self._tabs.AdvanceSelection(False)
+        # self._tabs.AdvanceSelection(False)
         self._updateHistoryButtons()
 
     def HistoryBack(self):
@@ -142,13 +155,12 @@ class TabsCtrl(wx.Panel):
         self._updateHistoryButtons()
 
 
-class TabWindow(wx.Window):
+class TabInfo:
     """
     Класс окна, хранимого внутри владки с дополнительной информацией
     (текущая страница, история)
     """
-    def __init__(self, parent, page):
-        super(TabWindow, self).__init__(parent, size=(1, 1))
+    def __init__(self, page):
         self._history = History()
         self._history.goto(page)
 
