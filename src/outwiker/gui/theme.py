@@ -19,6 +19,7 @@ class Theme:
     SECTION_HTML_EDITOR = "HtmlEditor"
     SECTION_WIKI_EDITOR = "WikiEditor"
     SECTION_NOTIFICATION = "Notification"
+    SECTION_TABS = "Tabs"
 
     # General section
     BACKGROUND_COLOR = "BackgroundColor"
@@ -43,6 +44,11 @@ class Theme:
     NOTIFICATION_ERROR_CAPTION_TEXT_COLOR = "ErrorCaptionTextColor"
     NOTIFICATION_INFO_CAPTION_BACKGROUND_COLOR = "InfoCaptionBackgroundColor"
     NOTIFICATION_INFO_CAPTION_TEXT_COLOR = "InfoCaptionTextColor"
+
+    # Tabs
+    TABS_BACKGROUND_NORMAL_COLOR = "BackgroundNormalColor"
+    TABS_BACKGROUND_HOVER_COLOR = "BackgroundHoverColor"
+    TABS_BACKGROUND_SELECTED_COLOR = "BackgroundSelectedColor"
 
     # Render
     # RENDER_STYLES = "Styles"
@@ -83,6 +89,11 @@ class Theme:
         self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_ERROR_CAPTION_TEXT_COLOR, "#E3E3E3")
         self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_INFO_CAPTION_BACKGROUND_COLOR, "#1989FF")
         self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_INFO_CAPTION_TEXT_COLOR, "#E3E3E3")
+
+        # Tabs
+        self.addParam(self.SECTION_TREE, self.TABS_BACKGROUND_NORMAL_COLOR, "#AAAAAA")
+        self.addParam(self.SECTION_TREE, self.TABS_BACKGROUND_HOVER_COLOR, "#DDDDDD")
+        self.addParam(self.SECTION_TREE, self.TABS_BACKGROUND_SELECTED_COLOR, "#FFFFFF")
 
     @property
     def colorBackground(self):

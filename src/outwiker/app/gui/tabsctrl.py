@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
+import math
 from typing import List, Optional
 
+from outwiker.gui.theme import Theme
 import wx
 import wx.lib.newevent
 
@@ -12,10 +13,11 @@ from outwiker.core.history import History
 TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
 
 
-class TabsCtrl(wx.Panel):
-    def __init__(self, parent, application: Application):
+class TabsCtrl(wx.Control):
+    def __init__(self, parent: wx.Window, application: Application, theme: Theme):
         super().__init__(parent)
         self._application = application
+        self._theme = theme
 
         self._tabs_collection: List[TabInfo] = []
         self._current_page_index: Optional[int] = None
@@ -56,18 +58,18 @@ class TabsCtrl(wx.Panel):
         history = self._getCurrentHistory()
         if history is None:
             self._application.actionController.enableTools(
-                HistoryBackAction.stringId,
-                False)
+                HistoryBackAction.stringId, False
+            )
             self._application.actionController.enableTools(
-                HistoryForwardAction.stringId,
-                False)
+                HistoryForwardAction.stringId, False
+            )
         else:
             self._application.actionController.enableTools(
-                HistoryBackAction.stringId,
-                history.backLength != 0)
+                HistoryBackAction.stringId, history.backLength != 0
+            )
             self._application.actionController.enableTools(
-                HistoryForwardAction.stringId,
-                history.forwardLength != 0)
+                HistoryForwardAction.stringId, history.forwardLength != 0
+            )
 
     def AddPage(self, title, page):
         self._tabs_collection.append(TabInfo(page, title))
@@ -159,7 +161,6 @@ class TabsCtrl(wx.Panel):
         if index < len(self._tabs_collection):
             del self._tabs_collection[index]
 
-
         if is_delete_before:
             self._current_page_index -= 1
             return
@@ -225,6 +226,7 @@ class TabInfo:
     Класс окна, хранимого внутри владки с дополнительной информацией
     (текущая страница, история)
     """
+
     def __init__(self, page, title: str):
         self._title = title
         self._history = History()
@@ -249,3 +251,76 @@ class TabInfo:
     @title.setter
     def title(self, value: str):
         self._title = value
+
+
+class SingleTabGeometry:
+    def __init__(self):
+        # Coordinates inside a parent window
+        self.left = None
+        self.right = None
+        self.top = None
+        self.bottom = None
+
+        # Coordinates inside the tab
+        self.icon_left = None
+        self.icon_right = None
+        self.icon_top = None
+        self.icon_bottom = None
+
+        self.text_left = None
+        self.text_right = None
+
+        self.close_button_left = None
+        self.close_button_right = None
+        self.close_button_top = None
+        self.close_button_bottom = None
+
+
+class TabsGeometryCalculator:
+    def __init__(self) -> None:
+        self.min_width = 50
+        self.max_width = 250
+        self.vertical_margin = 4
+        self.horizontal_margin = 4
+        self.icon_size = 16
+        self.close_button_size = 10
+        self.gap_icon_text = 4
+        self.gap_text_close_button = 4
+        self.gap_tabs = 2
+
+    def calc(
+        self, tabs: List[TabInfo], parent_width: int, text_height: int
+    ) -> List[List[SingleTabGeometry]]:
+        tabs_count = len(tabs)
+        rows_count = 1
+        while (
+            width := int(math.floor(parent_width / (tabs_count / rows_count)))
+        ) < self.min_width + self.gap_tabs:
+            rows_count += 1
+
+        if width > self.max_width:
+            width = self.max_width
+
+        # Common geometry
+        height = 2 * self.vertical_margin + max(
+            text_height, self.icon_size, self.close_button_size
+        )
+        if height % 2 == 0:
+            height += 1
+        center_vertical = height // 2
+
+        icon_left = self.horizontal_margin
+        icon_right = icon_left + self.icon_size
+        icon_top = center_vertical - self.icon_size // 2
+        icon_bottom = icon_top + self.icon_size
+
+        close_button_right = width - self.horizontal_margin
+        close_button_left = close_button_right - self.close_button_size
+        close_button_top = center_vertical - self.close_button_size // 2
+        close_button_bottom = close_button_top + self.close_button_size
+
+        text_left = icon_right + self.gap_icon_text
+        text_right = close_button_left - self.gap_text_close_button
+
+        result: List[List[SingleTabGeometry]] = [[]]
+        return result

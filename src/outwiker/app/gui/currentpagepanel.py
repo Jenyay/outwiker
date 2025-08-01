@@ -36,7 +36,7 @@ class CurrentPagePanel(wx.Panel):
         self._bookmarkInactiveImg = readImage(getBuiltinImagePath("bookmark.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
         self._bookmarkActiveImg = readImage(getBuiltinImagePath("bookmark_active.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
 
-        self.tabsCtrl = TabsCtrl(self, self._application)
+        self.tabsCtrl = TabsCtrl(self, self._application, self._application.theme)
         self.bookmarkButton = wx.BitmapButton(
             self,
             -1,
