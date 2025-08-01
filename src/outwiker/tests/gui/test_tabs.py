@@ -3,6 +3,8 @@
 from os.path import basename
 import unittest
 
+import wx
+
 from outwiker.api.core.tree import loadNotesTree
 from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.pages.text.textpage import TextPageFactory
@@ -415,6 +417,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSaveAfterRemove(self):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Страница 1"]
+
         self._tabsController.cloneTab()
         self._tabsController.openInTab(self.wikiroot["Страница 2"], True)
         self._tabsController.cloneTab()
@@ -425,6 +428,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         otherwiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = otherwiki
+
         self.assertEqual(self._tabsController.getTabsCount(), 4)
         self.assertEqual(self._tabsController.getSelection(), 3)
         self.assertEqual(self._tabsController.getPage(0), otherwiki["Страница 2"])
@@ -520,11 +524,13 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 2"])
 
         self._tabsController.closeTab(1)
+
         self.assertEqual(self._tabsController.getTabsCount(), 1)
         self.assertEqual(self._tabsController.getPage(0), self.wikiroot["Страница 1"])
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 1"])
 
         self._tabsController.closeTab(0)
+
         self.assertEqual(self._tabsController.getTabsCount(), 1)
         self.assertEqual(self._tabsController.getPage(0), self.wikiroot["Страница 1"])
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 1"])
@@ -539,14 +545,17 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getSelection(), 0)
 
         self._tabsController.nextTab()
+
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 2"])
         self.assertEqual(self._tabsController.getSelection(), 1)
 
         self._tabsController.nextTab()
+
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 2/Страница 3"])
         self.assertEqual(self._tabsController.getSelection(), 2)
 
         self._tabsController.nextTab()
+
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 1"])
         self.assertEqual(self._tabsController.getSelection(), 0)
 

@@ -6,6 +6,7 @@ from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 from outwiker.app.services.messages import showError
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
+from .tabsctrl import EVT_TABSCTRL_PAGE_CHANGED
 
 
 class TabsController:
@@ -36,7 +37,8 @@ class TabsController:
 
         selectedTab = self._tabsCtrl.GetSelection()
 
-        self._tabsCtrl.InsertPage(selectedTab + 1,
+        tab_index = 0 if selectedTab is None else selectedTab + 1
+        self._tabsCtrl.InsertPage(tab_index,
                                   self.__getTitle(page),
                                   page,
                                   select)
@@ -46,6 +48,10 @@ class TabsController:
         """
         Закыть вкладку с индексом index
         """
+        tabs_count = self.getTabsCount()
+        if tabs_count == 1:
+            return
+
         if index < 0 or index >= self.getTabsCount():
             raise ValueError
 
@@ -117,9 +123,9 @@ class TabsController:
         self._tabsCtrl.HistoryForward()
 
     def __bindGuiEvents(self):
-        # self._tabsCtrl.Bind(
-        #     fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED,
-        #     self.__onTabChanged)
+        self._tabsCtrl.Bind(
+            EVT_TABSCTRL_PAGE_CHANGED,
+            self.__onTabChanged)
         # self._tabsCtrl.Bind(
         #     fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING,
         #     self.__onTabClose)
@@ -132,9 +138,9 @@ class TabsController:
         pass
 
     def __unbindGuiEvents(self):
-        # self._tabsCtrl.Unbind(
-        #     fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED,
-        #     handler=self.__onTabChanged)
+        self._tabsCtrl.Unbind(
+            EVT_TABSCTRL_PAGE_CHANGED,
+            handler=self.__onTabChanged)
         # self._tabsCtrl.Unbind(
         #     fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING,
         #     handler=self.__onTabClose)
@@ -183,8 +189,7 @@ class TabsController:
         self.__saveTabs()
 
     def __onTabChanged(self, event):
-        newindex = event.GetSelection()
-        page = self._tabsCtrl.GetPage(newindex)
+        page = event.page
         self._application.selectedPage = page
         self.__saveTabs()
 
@@ -261,7 +266,7 @@ class TabsController:
         self._tabsCtrl.RenameCurrentTab(
             self.__getTitle(
                 self._application.selectedPage))
-        self._tabsCtrl.SetCurrentPage(self._application.selectedPage)
+        self._tabsCtrl.SetCurrentPage(self._application.selectedPage, self.__getTitle(page))
         self.__checkInvalidTabs()
         self.__saveTabs()
 

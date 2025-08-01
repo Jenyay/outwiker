@@ -2,10 +2,14 @@
 from typing import List, Optional
 
 import wx
+import wx.lib.newevent
 
 from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.core.application import Application
 from outwiker.core.history import History
+
+
+TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
 
 
 class TabsCtrl(wx.Panel):
@@ -14,7 +18,7 @@ class TabsCtrl(wx.Panel):
         self._application = application
 
         self._tabs_collection: List[TabInfo] = []
-        self._current_page_index = None
+        self._current_page_index: Optional[int] = None
 
         # self._tabs = fnb.FlatNotebook(self,
         #                               agwStyle=(
@@ -66,23 +70,28 @@ class TabsCtrl(wx.Panel):
                 history.forwardLength != 0)
 
     def AddPage(self, title, page):
-        self._tabs_collection.append(TabInfo(page))
+        self._tabs_collection.append(TabInfo(page, title))
+        if len(self._tabs_collection) == 1:
+            self.SetSelection(0)
         # blankWindow = TabInfo(page)
         # self._tabs.AddPage(blankWindow, title)
 
     def InsertPage(self, index, title, page, select):
-        self._tabs_collection.insert(index, TabInfo(page))
-        # blankWindow = TabInfo(page)
-        # self._tabs.InsertPage(index, blankWindow, title, select)
-        self._updateHistoryButtons()
+        self._tabs_collection.insert(index, TabInfo(page, title))
+        if select:
+            self.SetSelection(index)
+        # self._updateHistoryButtons()
 
     def Clear(self):
         # self._tabs.DeleteAllPages()
-        self._updateHistoryButtons()
+        self.SetSelection(None)
+        self._tabs_collection.clear()
+        # self._updateHistoryButtons()
 
-    # def GetPageText(self, index):
+    def GetPageText(self, index):
+        # TODO: Cut off long page titles
+        return self._tabs_collection[index].title
         # return self._tabs.GetPageText(index)
-        # pass
 
     def RenameCurrentTab(self, title):
         page_index = self.GetSelection()
@@ -90,18 +99,20 @@ class TabsCtrl(wx.Panel):
             self.RenameTab(page_index, title)
 
     def RenameTab(self, index, title):
+        self._tabs_collection[index].title = title
         # self._tabs.SetPageText(index, title)
         pass
 
-    def GetPage(self, index):
+    def GetPage(self, index: Optional[int]):
         # return self._tabs.GetPage(index).page
-        pass
+        return self._tabs_collection[index].page if index is not None else None
 
-    def SetCurrentPage(self, page):
+    def SetCurrentPage(self, page, title):
         page_index = self.GetSelection()
         if page_index is not None:
+            self._tabs_collection[page_index].page = page
+            self._tabs_collection[page_index].title = title
             # self._tabs.GetPage(page_index).page = page
-            pass
 
         self._updateHistoryButtons()
 
@@ -112,12 +123,11 @@ class TabsCtrl(wx.Panel):
         page_index = self.GetSelection()
 
         if page_index is not None:
+            return self._tabs_collection[page_index].history
             # return self._tabs.GetPage(page_index).history
-            pass
 
     def GetSelection(self) -> Optional[int]:
         # return self._tabs.GetSelection()
-        # pass
         return self._current_page_index
 
     def GetPages(self):
@@ -126,23 +136,78 @@ class TabsCtrl(wx.Panel):
     def GetPageCount(self):
         return len(self._tabs_collection)
 
-    def SetSelection(self, index):
-        # result = self._tabs.SetSelection(index)
+    def SetSelection(self, index: Optional[int]):
+        # old_selected_page = self.GetPage(self._current_page_index)
+        # new_selected_page = self.GetPage(index)
+        # if old_selected_page is new_selected_page:
+        #     return
+
+        self._current_page_index = index
         self._updateHistoryButtons()
-        # return result
-        pass
+        page = self._tabs_collection[index].page if index is not None else None
+        event = TabsCtrlPageChangedEvent(selection=index, page=page)
+        wx.PostEvent(self, event)
+        wx.SafeYield()
 
     def DeletePage(self, index):
+        assert self._current_page_index is not None
         # self._tabs.DeletePage(index)
-        self._updateHistoryButtons()
+        old_selection = self._current_page_index
+        is_delete_selection = index == old_selection
+        is_delete_before = index < old_selection
+
+        if index < len(self._tabs_collection):
+            del self._tabs_collection[index]
+
+
+        if is_delete_before:
+            self._current_page_index -= 1
+            return
+
+        if is_delete_selection:
+            new_count = len(self._tabs_collection)
+            new_index = old_selection
+            if new_index >= new_count:
+                new_index = new_count - 1
+
+            if new_count == 0:
+                new_index = None
+
+            self.SetSelection(new_index)
+            # self._updateHistoryButtons()
 
     def NextPage(self):
+        count = len(self._tabs_collection)
+        old_selection = self._current_page_index
+        if old_selection is None and count != 0:
+            self.SetSelection(0)
+            return
+
+        if old_selection is not None and old_selection < count - 1:
+            self.SetSelection(old_selection + 1)
+
+        # After the last page switch to the first page
+        if old_selection is not None and old_selection == count - 1 and count > 1:
+            self.SetSelection(0)
+
         # self._tabs.AdvanceSelection(True)
-        self._updateHistoryButtons()
+        # self._updateHistoryButtons()
 
     def PreviousPage(self):
         # self._tabs.AdvanceSelection(False)
-        self._updateHistoryButtons()
+        # self._updateHistoryButtons()
+        count = len(self._tabs_collection)
+        old_selection = self._current_page_index
+        if old_selection is None and count != 0:
+            self.SetSelection(0)
+            return
+
+        if old_selection is not None and old_selection > 0:
+            self.SetSelection(old_selection - 1)
+
+        # After the first page switch to the last page
+        if old_selection is not None and old_selection == 0 and count > 1:
+            self.SetSelection(count - 1)
 
     def HistoryBack(self):
         page = self._getCurrentHistory().back()
@@ -160,7 +225,8 @@ class TabInfo:
     Класс окна, хранимого внутри владки с дополнительной информацией
     (текущая страница, история)
     """
-    def __init__(self, page):
+    def __init__(self, page, title: str):
+        self._title = title
         self._history = History()
         self._history.goto(page)
 
@@ -175,3 +241,11 @@ class TabInfo:
     @property
     def history(self):
         return self._history
+
+    @property
+    def title(self) -> str:
+        return self._title
+
+    @title.setter
+    def title(self, value: str):
+        self._title = value
