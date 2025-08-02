@@ -254,26 +254,28 @@ class TabInfo:
 
 
 class SingleTabGeometry:
-    def __init__(self):
+    def __init__(self) -> None:
+        self.title: Optional[str] = None
+
         # Coordinates inside a parent window
-        self.left = None
-        self.right = None
-        self.top = None
-        self.bottom = None
+        self.left: Optional[int] = None
+        self.right: Optional[int] = None
+        self.top: Optional[int] = None
+        self.bottom: Optional[int] = None
 
         # Coordinates inside the tab
-        self.icon_left = None
-        self.icon_right = None
-        self.icon_top = None
-        self.icon_bottom = None
+        self.icon_left: Optional[int] = None
+        self.icon_right: Optional[int] = None
+        self.icon_top: Optional[int] = None
+        self.icon_bottom: Optional[int] = None
 
-        self.text_left = None
-        self.text_right = None
+        self.text_left: Optional[int] = None
+        self.text_right: Optional[int] = None
 
-        self.close_button_left = None
-        self.close_button_right = None
-        self.close_button_top = None
-        self.close_button_bottom = None
+        self.close_button_left: Optional[int] = None
+        self.close_button_right: Optional[int] = None
+        self.close_button_top: Optional[int] = None
+        self.close_button_bottom: Optional[int] = None
 
 
 class TabsGeometryCalculator:
@@ -286,7 +288,19 @@ class TabsGeometryCalculator:
         self.close_button_size = 10
         self.gap_icon_text = 4
         self.gap_text_close_button = 4
-        self.gap_tabs = 2
+        self.vertical_gap_between_tabs = 2
+        self.horizontal_gap_between_tabs = 2
+        self._geometry: Optional[List[List[SingleTabGeometry]]] = None
+
+    @property
+    def geometry(self) -> Optional[List[List[SingleTabGeometry]]]:
+        return self._geometry
+
+    def _calc_width(self, parent_width: int, tabs_count: int, rows_count: int) -> int:
+        if tabs_count == 0:
+            return self.max_width
+
+        return int(math.floor(parent_width / (math.ceil(tabs_count / rows_count))))
 
     def calc(
         self, tabs: List[TabInfo], parent_width: int, text_height: int
@@ -294,14 +308,16 @@ class TabsGeometryCalculator:
         tabs_count = len(tabs)
         rows_count = 1
         while (
-            width := int(math.floor(parent_width / (tabs_count / rows_count)))
-        ) < self.min_width + self.gap_tabs:
+            width := self._calc_width(parent_width, tabs_count, rows_count)
+        ) < self.min_width + self.horizontal_gap_between_tabs:
             rows_count += 1
+
+        cols_count = parent_width // width
 
         if width > self.max_width:
             width = self.max_width
 
-        # Common geometry
+        # Shared geometry
         height = 2 * self.vertical_margin + max(
             text_height, self.icon_size, self.close_button_size
         )
@@ -322,5 +338,40 @@ class TabsGeometryCalculator:
         text_left = icon_right + self.gap_icon_text
         text_right = close_button_left - self.gap_text_close_button
 
-        result: List[List[SingleTabGeometry]] = [[]]
-        return result
+        self._geometry = []
+        current_row = -1
+        current_top = -(height + self.vertical_gap_between_tabs)
+        current_left = 0
+        for n, info in enumerate(tabs):
+            current_col = n % cols_count
+            if current_col == 0:
+                self._geometry.append([])
+                current_row += 1
+                current_left = 0
+                current_top += height + self.vertical_gap_between_tabs
+
+            geometry = SingleTabGeometry()
+
+            geometry.left = current_left
+            geometry.right = geometry.left + width
+            geometry.top = current_top
+            geometry.bottom = geometry.top + height
+
+            geometry.title = info.title
+            geometry.icon_left = icon_left
+            geometry.icon_right = icon_right
+            geometry.icon_top = icon_top
+            geometry.icon_bottom = icon_bottom
+
+            geometry.text_left = text_left
+            geometry.text_right = text_right
+
+            geometry.close_button_left = close_button_left
+            geometry.close_button_right = close_button_right
+            geometry.close_button_top = close_button_top
+            geometry.close_button_bottom = close_button_bottom
+
+            self._geometry[-1].append(geometry)
+            current_left += width + self.horizontal_gap_between_tabs
+
+        return self._geometry
