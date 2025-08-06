@@ -22,14 +22,11 @@ class TabsCtrl(wx.Control):
         self._tabs_collection: List[TabInfo] = []
         self._current_page_index: Optional[int] = None
 
-        # self._tabs = fnb.FlatNotebook(self,
-        #                               agwStyle=(
-        #                                   fnb.FNB_FF2 |
-        #                                   fnb.FNB_MOUSE_MIDDLE_CLOSES_TABS |
-        #                                   fnb.FNB_X_ON_TAB |
-        #                                   fnb.FNB_DROPDOWN_TABS_LIST))
-        # self._tabs.SetPadding(wx.Size(10, -1))
-        self.__layout()
+        self._geometry = TabsGeometryCalculator()
+        self._tab_render = TabRender(self._theme)
+        self.Bind(wx.EVT_PAINT, handler=self._onPaint)
+        self._current_rows_count = 0
+        self._layout()
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -40,16 +37,19 @@ class TabsCtrl(wx.Control):
         super().SetForegroundColour(colour)
         # self._tabs.SetForegroundColour(colour)
 
-    def __layout(self):
-        self.SetMinSize((-1, 48))
-        # mainSizer = wx.FlexGridSizer(1, 0, 0, 0)
+    def _layout(self):
+        text_height = 14
+        self._geometry.calc(
+            self._tabs_collection,
+            self.GetClientSize()[0],
+            text_height
+        )
+        self.SetMinSize((-1, self._geometry.full_height))
+        rows_count = self._geometry.rows_count
 
-        # mainSizer.AddGrowableCol(0)
-        # mainSizer.AddGrowableRow(0)
-
-        # # mainSizer.Add(self._tabs, 0, wx.EXPAND)
-        # self.SetSizer(mainSizer)
-        # self.Layout()
+        if rows_count != self._current_rows_count:
+            self._current_rows_count = rows_count
+            self.GetParent().Layout()
 
     def _updateHistoryButtons(self):
         """
@@ -75,6 +75,8 @@ class TabsCtrl(wx.Control):
         self._tabs_collection.append(TabInfo(page, title))
         if len(self._tabs_collection) == 1:
             self.SetSelection(0)
+
+        self._layout()
         # blankWindow = TabInfo(page)
         # self._tabs.AddPage(blankWindow, title)
 
@@ -82,28 +84,29 @@ class TabsCtrl(wx.Control):
         self._tabs_collection.insert(index, TabInfo(page, title))
         if select:
             self.SetSelection(index)
+
+        self._layout()
         # self._updateHistoryButtons()
 
     def Clear(self):
-        # self._tabs.DeleteAllPages()
         self.SetSelection(None)
         self._tabs_collection.clear()
+        self._layout()
         # self._updateHistoryButtons()
 
     def GetPageText(self, index):
-        # TODO: Cut off long page titles
         return self._tabs_collection[index].title
-        # return self._tabs.GetPageText(index)
 
     def RenameCurrentTab(self, title):
         page_index = self.GetSelection()
         if page_index is not None:
             self.RenameTab(page_index, title)
 
+        self._layout()
+
     def RenameTab(self, index, title):
         self._tabs_collection[index].title = title
-        # self._tabs.SetPageText(index, title)
-        pass
+        self._layout()
 
     def GetPage(self, index: Optional[int]):
         # return self._tabs.GetPage(index).page
@@ -163,6 +166,7 @@ class TabsCtrl(wx.Control):
 
         if is_delete_before:
             self._current_page_index -= 1
+            self._layout()
             return
 
         if is_delete_selection:
@@ -176,6 +180,7 @@ class TabsCtrl(wx.Control):
 
             self.SetSelection(new_index)
             # self._updateHistoryButtons()
+        self._layout()
 
     def NextPage(self):
         count = len(self._tabs_collection)
@@ -219,6 +224,23 @@ class TabsCtrl(wx.Control):
         page = self._getCurrentHistory().forward()
         self._application.selectedPage = page
         self._updateHistoryButtons()
+
+    def _onPaint(self, event: wx.PaintEvent):
+        """
+        Обработчик события перерисовки вкладок
+        """
+        dc = wx.BufferedPaintDC(self)
+        dc.SetBackground(wx.Brush(self._theme.colorBackground))
+        dc.Clear()
+
+        if self._geometry.geometry is None:
+            return
+
+        for row in self._geometry.geometry:
+            for tab in row:
+                self._tab_render.paint(dc, tab)
+
+        event.Skip()
 
 
 class TabInfo:
@@ -277,11 +299,15 @@ class SingleTabGeometry:
         self.close_button_top: Optional[int] = None
         self.close_button_bottom: Optional[int] = None
 
+    @property
+    def height(self):
+        return self.bottom - self.top if self.bottom is not None and self.top is not None else 0
+
 
 class TabsGeometryCalculator:
     def __init__(self) -> None:
-        self.min_width = 50
-        self.max_width = 250
+        self.min_width = 150
+        self.max_width = 450
         self.vertical_margin = 4
         self.horizontal_margin = 4
         self.icon_size = 16
@@ -295,6 +321,25 @@ class TabsGeometryCalculator:
     @property
     def geometry(self) -> Optional[List[List[SingleTabGeometry]]]:
         return self._geometry
+
+    @property
+    def full_height(self) -> int:
+        """ Return height of all rows of tabs """
+        if self._geometry is None:
+            return 0
+
+        if len(self._geometry) == 0:
+            return 0
+
+        return self._geometry[-1][0].bottom - self._geometry[0][0].top + 2 * self.vertical_gap_between_tabs
+
+    @property
+    def rows_count(self) -> int:
+        """ Return number of rows in the geometry """
+        if self._geometry is None:
+            return 0
+
+        return len(self._geometry)
 
     def _calc_width(self, parent_width: int, tabs_count: int, rows_count: int) -> int:
         if tabs_count == 0:
@@ -375,3 +420,73 @@ class TabsGeometryCalculator:
             current_left += width + self.horizontal_gap_between_tabs
 
         return self._geometry
+
+
+class TabRender:
+    def __init__(self, theme: Theme) -> None:
+        self._theme = theme
+
+    def get_text_height(self, dc: wx.DC):
+        text = "Wg"
+        return dc.GetTextExtent(text).GetHeight()
+
+    def _draw_icon(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+        assert tab.icon_left is not None
+        assert tab.icon_right is not None
+
+        icon_rect = wx.Rect(
+            tab.icon_left + tab.left,
+            tab.icon_top + tab.top,
+            tab.icon_right - tab.icon_left,
+            tab.icon_bottom - tab.icon_top,
+        )
+        dc.DrawRectangle(icon_rect)
+
+    def _draw_close_button(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+        assert tab.close_button_left is not None
+        assert tab.close_button_right is not None
+
+        close_rect = wx.Rect(
+            tab.close_button_left + tab.left,
+            tab.close_button_top + tab.top,
+            tab.close_button_right - tab.close_button_left,
+            tab.close_button_bottom - tab.close_button_top,
+        )
+        dc.DrawRectangle(close_rect)
+
+    def _trim_title(self, dc: wx.DC, title: str, max_width: int) -> str:
+        def _get_trimmed_title(title: str, cut_count: int) -> str:
+            if cut_count == 0:
+                return title
+            return title[:-cut_count] + "\u2026"
+
+        cut_count = 0
+        while dc.GetTextExtent(_get_trimmed_title(title, cut_count)).GetWidth() > max_width:
+            cut_count += 1
+
+        return _get_trimmed_title(title, cut_count)
+
+    def _draw_title(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+        assert tab.text_left is not None
+        assert tab.text_right is not None
+        assert tab.top is not None
+        assert tab.left is not None
+        assert tab.title is not None
+
+        text_height = self.get_text_height(dc)
+        text_top = tab.top + tab.height // 2 - text_height // 2
+        text_max_width = tab.text_right - tab.text_left
+        title = self._trim_title(dc, tab.title, text_max_width)
+        dc.DrawText(title, tab.text_left + tab.left, text_top)
+
+    def paint(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+        rect = wx.Rect(
+            tab.left, tab.top, tab.right - tab.left, tab.bottom - tab.top
+        )
+        dc.SetPen(wx.Pen(wx.Colour(0, 0, 0), 1))
+        dc.SetBrush(wx.Brush(self._theme.colorBackground))
+        dc.DrawRectangle(rect)
+
+        self._draw_icon(dc, tab)
+        self._draw_title(dc, tab)
+        self._draw_close_button(dc, tab)
