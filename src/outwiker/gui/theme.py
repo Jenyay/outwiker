@@ -91,9 +91,9 @@ class Theme:
         self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_INFO_CAPTION_TEXT_COLOR, "#E3E3E3")
 
         # Tabs
-        self.addParam(self.SECTION_TREE, self.TABS_BACKGROUND_NORMAL_COLOR, "#AAAAAA")
-        self.addParam(self.SECTION_TREE, self.TABS_BACKGROUND_HOVER_COLOR, "#DDDDDD")
-        self.addParam(self.SECTION_TREE, self.TABS_BACKGROUND_SELECTED_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_NORMAL_COLOR, "#D4D4CE")
+        self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_HOVER_COLOR, "#DDDDDD")
+        self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_SELECTED_COLOR, "#F3F3F0")
 
     @property
     def colorBackground(self):

@@ -12,6 +12,10 @@ from outwiker.core.history import History
 
 TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
 
+TAB_STATE_NORMAL = 0
+TAB_STATE_HOVER = 1
+TAB_STATE_SELECTED = 2
+
 
 class TabsCtrl(wx.Control):
     def __init__(self, parent: wx.Window, application: Application, theme: Theme):
@@ -129,10 +133,8 @@ class TabsCtrl(wx.Control):
 
         if page_index is not None:
             return self._tabs_collection[page_index].history
-            # return self._tabs.GetPage(page_index).history
 
     def GetSelection(self) -> Optional[int]:
-        # return self._tabs.GetSelection()
         return self._current_page_index
 
     def GetPages(self):
@@ -142,11 +144,6 @@ class TabsCtrl(wx.Control):
         return len(self._tabs_collection)
 
     def SetSelection(self, index: Optional[int]):
-        # old_selected_page = self.GetPage(self._current_page_index)
-        # new_selected_page = self.GetPage(index)
-        # if old_selected_page is new_selected_page:
-        #     return
-
         self._current_page_index = index
         self._updateHistoryButtons()
         page = self._tabs_collection[index].page if index is not None else None
@@ -236,9 +233,12 @@ class TabsCtrl(wx.Control):
         if self._geometry.geometry is None:
             return
 
+        n = 0
         for row in self._geometry.geometry:
             for tab in row:
-                self._tab_render.paint(dc, tab)
+                state = TAB_STATE_SELECTED if n == self._current_page_index else TAB_STATE_NORMAL
+                self._tab_render.paint(dc, tab, state)
+                n += 1
 
         event.Skip()
 
@@ -308,14 +308,14 @@ class TabsGeometryCalculator:
     def __init__(self) -> None:
         self.min_width = 150
         self.max_width = 450
-        self.vertical_margin = 4
-        self.horizontal_margin = 4
+        self.vertical_margin = 8
+        self.horizontal_margin = 8
         self.icon_size = 16
         self.close_button_size = 10
-        self.gap_icon_text = 4
-        self.gap_text_close_button = 4
-        self.vertical_gap_between_tabs = 2
-        self.horizontal_gap_between_tabs = 2
+        self.gap_icon_text = 8
+        self.gap_text_close_button = 6
+        self.vertical_gap_between_tabs = 4
+        self.horizontal_gap_between_tabs = 4
         self._geometry: Optional[List[List[SingleTabGeometry]]] = None
 
     @property
@@ -331,7 +331,7 @@ class TabsGeometryCalculator:
         if len(self._geometry) == 0:
             return 0
 
-        return self._geometry[-1][0].bottom - self._geometry[0][0].top + 2 * self.vertical_gap_between_tabs
+        return self._geometry[-1][0].bottom - self._geometry[0][0].top
 
     @property
     def rows_count(self) -> int:
@@ -425,6 +425,7 @@ class TabsGeometryCalculator:
 class TabRender:
     def __init__(self, theme: Theme) -> None:
         self._theme = theme
+        self._title_font = wx.NullFont
 
     def get_text_height(self, dc: wx.DC):
         text = "Wg"
@@ -466,7 +467,7 @@ class TabRender:
 
         return _get_trimmed_title(title, cut_count)
 
-    def _draw_title(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+    def _draw_title(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
         assert tab.text_left is not None
         assert tab.text_right is not None
         assert tab.top is not None
@@ -476,17 +477,37 @@ class TabRender:
         text_height = self.get_text_height(dc)
         text_top = tab.top + tab.height // 2 - text_height // 2
         text_max_width = tab.text_right - tab.text_left
+
+        dc.SetFont(self._title_font)
         title = self._trim_title(dc, tab.title, text_max_width)
         dc.DrawText(title, tab.text_left + tab.left, text_top)
 
-    def paint(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+    def _draw_tab(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
         rect = wx.Rect(
             tab.left, tab.top, tab.right - tab.left, tab.bottom - tab.top
         )
-        dc.SetPen(wx.Pen(wx.Colour(0, 0, 0), 1))
-        dc.SetBrush(wx.Brush(self._theme.colorBackground))
+
+        background_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BACKGROUND_NORMAL_COLOR)
+        if state == TAB_STATE_SELECTED:
+            background_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BACKGROUND_SELECTED_COLOR)
+        elif state == TAB_STATE_HOVER:
+            background_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BACKGROUND_HOVER_COLOR)
+
+        dc.SetPen(wx.Pen(wx.Colour("#b3b3b3"), 2))
+        dc.SetBrush(wx.Brush(background_color))
         dc.DrawRectangle(rect)
 
+    def paint(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
+        font_size = self.get_default_font_size()
+        self._title_font = wx.Font(wx.FontInfo(font_size))
+        self._title_font.SetWeight(
+            wx.FONTWEIGHT_BOLD if state == TAB_STATE_SELECTED else wx.FONTWEIGHT_NORMAL
+        )
+
+        self._draw_tab(dc, tab, state)
         self._draw_icon(dc, tab)
-        self._draw_title(dc, tab)
+        self._draw_title(dc, tab, state)
         self._draw_close_button(dc, tab)
+
+    def get_default_font_size(self) -> int:
+        return wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize()
