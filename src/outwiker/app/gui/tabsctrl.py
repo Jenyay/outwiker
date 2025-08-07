@@ -274,6 +274,7 @@ class TabInfo:
 
 class SingleTabGeometry:
     def __init__(self) -> None:
+        self.rounding_radius = 8
         self.title: Optional[str] = None
 
         # Coordinates inside a parent window
@@ -421,6 +422,8 @@ class TabsGeometryCalculator:
 class TabRender:
     def __init__(self, theme: Theme) -> None:
         self._theme = theme
+        self._brushes = wx.BrushList()
+        self._pens = wx.PenList()
         self._title_font = wx.NullFont
 
     def get_text_height(self, dc: wx.DC):
@@ -478,20 +481,51 @@ class TabRender:
         title = self._trim_title(dc, tab.title, text_max_width)
         dc.DrawText(title, tab.text_left + tab.left, text_top)
 
-    def _draw_tab(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
+    def _draw_background(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+        assert tab.left is not None
+        assert tab.right is not None
+        assert tab.top is not None
+        assert tab.bottom is not None
+
         rect = wx.Rect(
             tab.left, tab.top, tab.right - tab.left, tab.bottom - tab.top
         )
+        back_color = self._theme.colorBackground
+        dc.SetPen(self._pens.FindOrCreatePen(back_color))
+        dc.SetBrush(self._brushes.FindOrCreateBrush(back_color))
+        dc.DrawRectangle(rect)
 
+    def _draw_tab(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
+        assert tab.left is not None
+        assert tab.right is not None
+        assert tab.top is not None
+        assert tab.bottom is not None
+
+        # Get colors
+        border_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BORDER_COLOR)
         background_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BACKGROUND_NORMAL_COLOR)
         if state == TAB_STATE_SELECTED:
             background_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BACKGROUND_SELECTED_COLOR)
         elif state == TAB_STATE_HOVER:
             background_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BACKGROUND_HOVER_COLOR)
 
-        dc.SetPen(wx.Pen(wx.Colour("#b3b3b3"), 2))
-        dc.SetBrush(wx.Brush(background_color))
-        dc.DrawRectangle(rect)
+        dc.SetPen(self._pens.FindOrCreatePen(border_color, 2))
+        dc.SetBrush(self._brushes.FindOrCreateBrush(background_color, wx.BRUSHSTYLE_TRANSPARENT))
+
+        # Draw rounded tab
+        r = tab.rounding_radius
+        line_list = [
+                (tab.left + r, tab.top, tab.right - r, tab.top),
+                (tab.left, tab.top + r, tab.left, tab.bottom),
+                (tab.right, tab.top + r, tab.right, tab.bottom),
+                (tab.left, tab.bottom, tab.right, tab.bottom),
+                ]
+        dc.DrawLineList(line_list)
+        dc.DrawArc(tab.left + r, tab.top, tab.left, tab.top + r, tab.left + r, tab.top + r)
+        dc.DrawArc(tab.right, tab.top + r, tab.right - r, tab.top, tab.right - r, tab.top + r)
+
+        dc.SetBrush(self._brushes.FindOrCreateBrush(background_color))
+        dc.FloodFill((tab.left + tab.right) // 2, (tab.bottom + tab.top) // 2, border_color, wx.FLOOD_BORDER)
 
     def paint(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
         font_size = self.get_default_font_size()
@@ -500,6 +534,7 @@ class TabRender:
             wx.FONTWEIGHT_BOLD if state == TAB_STATE_SELECTED else wx.FONTWEIGHT_NORMAL
         )
 
+        self._draw_background(dc, tab)
         self._draw_tab(dc, tab, state)
         self._draw_icon(dc, tab)
         self._draw_title(dc, tab, state)
