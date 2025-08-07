@@ -23,37 +23,71 @@ class TabsCtrl(wx.Control):
         self._application = application
         self._theme = theme
 
+        self._lbutton_downed_tab: Optional[int] = None
+        self._lbutton_downed_close_button: Optional[int] = None
+        self._current_rows_count = 0
+
         self._tabs_collection: List[TabInfo] = []
         self._current_page_index: Optional[int] = None
 
         self._geometry = TabsGeometryCalculator()
         self._tab_render = TabRender(self._theme)
+
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
-        self._current_rows_count = 0
+        self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
+        self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftButtonDown)
+        self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
+
         self._layout()
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
-        # self._tabs.SetBackgroundColour(colour)
-        # self._tabs.SetTabAreaColour(colour)
 
     def SetForegroundColour(self, colour):
         super().SetForegroundColour(colour)
-        # self._tabs.SetForegroundColour(colour)
 
     def _layout(self):
         text_height = 14
-        self._geometry.calc(
-            self._tabs_collection,
-            self.GetClientSize()[0],
-            text_height
-        )
+        self._geometry.calc(self._tabs_collection, self.GetClientSize()[0], text_height)
         self.SetMinSize((-1, self._geometry.full_height))
         rows_count = self._geometry.rows_count
 
         if rows_count != self._current_rows_count:
             self._current_rows_count = rows_count
             self.GetParent().Layout()
+
+    def _onMouseLeaveWindow(self, event: wx.MouseEvent):
+        self._lbutton_downed_close_button = None
+        self._lbutton_downed_tab = None
+
+    def _onLeftButtonDown(self, event: wx.MouseEvent) -> None:
+        self._lbutton_downed_close_button = None
+        self._lbutton_downed_tab = None
+
+        tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
+        self._lbutton_downed_tab = tab_number
+
+    def _onLeftButtonUp(self, event: wx.MouseEvent) -> None:
+        tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
+        if (
+            tab_number is not None
+            and tab_number == self._lbutton_downed_tab
+            and tab_number != self._current_page_index
+        ):
+            self.SetSelection(tab_number)
+
+        self._lbutton_downed_close_button = None
+        self._lbutton_downed_tab = None
+
+    def _find_tab_by_coord(self, x: int, y: int) -> Optional[int]:
+        if self._geometry.geometry is None:
+            return None
+
+        for n, tab in enumerate(self._geometry.geometry):
+            if x >= tab.left and x <= tab.right and y >= tab.top and y <= tab.bottom:
+                return n
+
+        return None
 
     def _updateHistoryButtons(self):
         """
@@ -113,7 +147,6 @@ class TabsCtrl(wx.Control):
         self._layout()
 
     def GetPage(self, index: Optional[int]):
-        # return self._tabs.GetPage(index).page
         return self._tabs_collection[index].page if index is not None else None
 
     def SetCurrentPage(self, page, title):
@@ -121,7 +154,9 @@ class TabsCtrl(wx.Control):
         if page_index is not None:
             self._tabs_collection[page_index].page = page
             self._tabs_collection[page_index].title = title
-            # self._tabs.GetPage(page_index).page = page
+            assert self._geometry.geometry is not None
+            tab = self._geometry.geometry[page_index]
+            self.Refresh(False, wx.Rect(tab.left, tab.top, tab.width, tab.height))
 
         self._updateHistoryButtons()
 
@@ -153,7 +188,6 @@ class TabsCtrl(wx.Control):
 
     def DeletePage(self, index):
         assert self._current_page_index is not None
-        # self._tabs.DeletePage(index)
         old_selection = self._current_page_index
         is_delete_selection = index == old_selection
         is_delete_before = index < old_selection
@@ -176,7 +210,6 @@ class TabsCtrl(wx.Control):
                 new_index = None
 
             self.SetSelection(new_index)
-            # self._updateHistoryButtons()
         self._layout()
 
     def NextPage(self):
@@ -193,12 +226,7 @@ class TabsCtrl(wx.Control):
         if old_selection is not None and old_selection == count - 1 and count > 1:
             self.SetSelection(0)
 
-        # self._tabs.AdvanceSelection(True)
-        # self._updateHistoryButtons()
-
     def PreviousPage(self):
-        # self._tabs.AdvanceSelection(False)
-        # self._updateHistoryButtons()
         count = len(self._tabs_collection)
         old_selection = self._current_page_index
         if old_selection is None and count != 0:
@@ -234,7 +262,11 @@ class TabsCtrl(wx.Control):
             return
 
         for n, tab in enumerate(self._geometry.geometry):
-            state = TAB_STATE_SELECTED if n == self._current_page_index else TAB_STATE_NORMAL
+            state = (
+                TAB_STATE_SELECTED
+                if n == self._current_page_index
+                else TAB_STATE_NORMAL
+            )
             self._tab_render.paint(dc, tab, state)
 
         event.Skip()
@@ -299,7 +331,19 @@ class SingleTabGeometry:
 
     @property
     def height(self):
-        return self.bottom - self.top if self.bottom is not None and self.top is not None else 0
+        return (
+            self.bottom - self.top
+            if self.bottom is not None and self.top is not None
+            else 0
+        )
+
+    @property
+    def width(self):
+        return (
+            self.right - self.left
+            if self.right is not None and self.left is not None
+            else 0
+        )
 
 
 class TabsGeometryCalculator:
@@ -322,7 +366,7 @@ class TabsGeometryCalculator:
 
     @property
     def full_height(self) -> int:
-        """ Return height of all rows of tabs """
+        """Return height of all rows of tabs"""
         if self._geometry is None:
             return 0
 
@@ -333,7 +377,7 @@ class TabsGeometryCalculator:
 
     @property
     def rows_count(self) -> int:
-        """ Return number of rows in the geometry """
+        """Return number of rows in the geometry"""
         if self._geometry is None:
             return 0
 
@@ -461,7 +505,10 @@ class TabRender:
             return title[:-cut_count] + "\u2026"
 
         cut_count = 0
-        while dc.GetTextExtent(_get_trimmed_title(title, cut_count)).GetWidth() > max_width:
+        while (
+            dc.GetTextExtent(_get_trimmed_title(title, cut_count)).GetWidth()
+            > max_width
+        ):
             cut_count += 1
 
         return _get_trimmed_title(title, cut_count)
@@ -487,9 +534,7 @@ class TabRender:
         assert tab.top is not None
         assert tab.bottom is not None
 
-        rect = wx.Rect(
-            tab.left, tab.top, tab.right - tab.left, tab.bottom - tab.top
-        )
+        rect = wx.Rect(tab.left, tab.top, tab.right - tab.left, tab.bottom - tab.top)
         back_color = self._theme.colorBackground
         dc.SetPen(self._pens.FindOrCreatePen(back_color))
         dc.SetBrush(self._brushes.FindOrCreateBrush(back_color))
@@ -503,29 +548,46 @@ class TabRender:
 
         # Get colors
         border_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BORDER_COLOR)
-        background_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BACKGROUND_NORMAL_COLOR)
+        background_color = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_BACKGROUND_NORMAL_COLOR
+        )
         if state == TAB_STATE_SELECTED:
-            background_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BACKGROUND_SELECTED_COLOR)
+            background_color = self._theme.get(
+                Theme.SECTION_TABS, Theme.TABS_BACKGROUND_SELECTED_COLOR
+            )
         elif state == TAB_STATE_HOVER:
-            background_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_BACKGROUND_HOVER_COLOR)
+            background_color = self._theme.get(
+                Theme.SECTION_TABS, Theme.TABS_BACKGROUND_HOVER_COLOR
+            )
 
         dc.SetPen(self._pens.FindOrCreatePen(border_color, 2))
-        dc.SetBrush(self._brushes.FindOrCreateBrush(background_color, wx.BRUSHSTYLE_TRANSPARENT))
+        dc.SetBrush(
+            self._brushes.FindOrCreateBrush(background_color, wx.BRUSHSTYLE_TRANSPARENT)
+        )
 
         # Draw rounded tab
         r = tab.rounding_radius
         line_list = [
-                (tab.left + r, tab.top, tab.right - r, tab.top),
-                (tab.left, tab.top + r, tab.left, tab.bottom),
-                (tab.right, tab.top + r, tab.right, tab.bottom),
-                (tab.left, tab.bottom, tab.right, tab.bottom),
-                ]
+            (tab.left + r, tab.top, tab.right - r, tab.top),
+            (tab.left, tab.top + r, tab.left, tab.bottom),
+            (tab.right, tab.top + r, tab.right, tab.bottom),
+            (tab.left, tab.bottom, tab.right, tab.bottom),
+        ]
         dc.DrawLineList(line_list)
-        dc.DrawArc(tab.left + r, tab.top, tab.left, tab.top + r, tab.left + r, tab.top + r)
-        dc.DrawArc(tab.right, tab.top + r, tab.right - r, tab.top, tab.right - r, tab.top + r)
+        dc.DrawArc(
+            tab.left + r, tab.top, tab.left, tab.top + r, tab.left + r, tab.top + r
+        )
+        dc.DrawArc(
+            tab.right, tab.top + r, tab.right - r, tab.top, tab.right - r, tab.top + r
+        )
 
         dc.SetBrush(self._brushes.FindOrCreateBrush(background_color))
-        dc.FloodFill((tab.left + tab.right) // 2, (tab.bottom + tab.top) // 2, border_color, wx.FLOOD_BORDER)
+        dc.FloodFill(
+            (tab.left + tab.right) // 2,
+            (tab.bottom + tab.top) // 2,
+            border_color,
+            wx.FLOOD_BORDER,
+        )
 
     def paint(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
         font_size = self.get_default_font_size()
