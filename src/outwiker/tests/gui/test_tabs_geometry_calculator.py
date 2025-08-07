@@ -32,8 +32,8 @@ def test_single_line_max_width(calculator: TabsGeometryCalculator, tabs_count: i
     result = calculator.calc(tabs, parent_width, text_height)
 
     for n in range(tabs_count):
-        assert (result[0][n].right - result[0][n].left) == calculator.max_width
-        assert result[0][n].top == result[0][0].top
+        assert (result[n].right - result[n].left) == calculator.max_width
+        assert result[n].top == result[0].top
 
 
 def test_single_line_small_width(calculator: TabsGeometryCalculator):
@@ -47,8 +47,8 @@ def test_single_line_small_width(calculator: TabsGeometryCalculator):
     result = calculator.calc(tabs, parent_width, text_height)
 
     for n in range(tabs_count):
-        assert (result[0][n].right - result[0][n].left) < calculator.max_width
-        assert result[0][n].top == result[0][0].top
+        assert (result[n].right - result[n].left) < calculator.max_width
+        assert result[n].top == result[0].top
 
 
 def test_two_rows(calculator: TabsGeometryCalculator):
@@ -61,9 +61,8 @@ def test_two_rows(calculator: TabsGeometryCalculator):
 
     result = calculator.calc(tabs, parent_width, text_height)
 
-    assert len(result) == 2
-    assert len(result[0]) == 2
-    assert len(result[1]) == 1
+    assert len(result) == 3
 
     # Check vertical positioning
-    assert result[1][0].top > result[0][0].bottom
+    assert result[0].top == result[1].top
+    assert result[2].top > result[1].bottom

@@ -233,12 +233,9 @@ class TabsCtrl(wx.Control):
         if self._geometry.geometry is None:
             return
 
-        n = 0
-        for row in self._geometry.geometry:
-            for tab in row:
-                state = TAB_STATE_SELECTED if n == self._current_page_index else TAB_STATE_NORMAL
-                self._tab_render.paint(dc, tab, state)
-                n += 1
+        for n, tab in enumerate(self._geometry.geometry):
+            state = TAB_STATE_SELECTED if n == self._current_page_index else TAB_STATE_NORMAL
+            self._tab_render.paint(dc, tab, state)
 
         event.Skip()
 
@@ -316,10 +313,10 @@ class TabsGeometryCalculator:
         self.gap_text_close_button = 6
         self.vertical_gap_between_tabs = 4
         self.horizontal_gap_between_tabs = 4
-        self._geometry: Optional[List[List[SingleTabGeometry]]] = None
+        self._geometry: Optional[List[SingleTabGeometry]] = None
 
     @property
-    def geometry(self) -> Optional[List[List[SingleTabGeometry]]]:
+    def geometry(self) -> Optional[List[SingleTabGeometry]]:
         return self._geometry
 
     @property
@@ -331,7 +328,7 @@ class TabsGeometryCalculator:
         if len(self._geometry) == 0:
             return 0
 
-        return self._geometry[-1][0].bottom - self._geometry[0][0].top
+        return self._geometry[-1].bottom - self._geometry[0].top
 
     @property
     def rows_count(self) -> int:
@@ -349,7 +346,7 @@ class TabsGeometryCalculator:
 
     def calc(
         self, tabs: List[TabInfo], parent_width: int, text_height: int
-    ) -> List[List[SingleTabGeometry]]:
+    ) -> List[SingleTabGeometry]:
         tabs_count = len(tabs)
         rows_count = 1
         while (
@@ -390,7 +387,6 @@ class TabsGeometryCalculator:
         for n, info in enumerate(tabs):
             current_col = n % cols_count
             if current_col == 0:
-                self._geometry.append([])
                 current_row += 1
                 current_left = 0
                 current_top += height + self.vertical_gap_between_tabs
@@ -416,7 +412,7 @@ class TabsGeometryCalculator:
             geometry.close_button_top = close_button_top
             geometry.close_button_bottom = close_button_bottom
 
-            self._geometry[-1].append(geometry)
+            self._geometry.append(geometry)
             current_left += width + self.horizontal_gap_between_tabs
 
         return self._geometry
