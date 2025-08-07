@@ -37,6 +37,7 @@ class TabsCtrl(wx.Control):
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
         self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftButtonDown)
         self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
+        self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleButtonDown)
 
         self._layout()
 
@@ -78,6 +79,11 @@ class TabsCtrl(wx.Control):
 
         self._lbutton_downed_close_button = None
         self._lbutton_downed_tab = None
+
+    def _onMiddleButtonDown(self, event: wx.MouseEvent) -> None:
+        tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
+        if tab_number is not None:
+            self.DeletePage(tab_number)
 
     def _find_tab_by_coord(self, x: int, y: int) -> Optional[int]:
         if self._geometry.geometry is None:
