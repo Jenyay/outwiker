@@ -31,8 +31,9 @@ def test_single_line_max_width(calculator: TabsGeometryCalculator, tabs_count: i
 
     result = calculator.calc(tabs, parent_width, text_height)
 
+    min_width = calculator.max_width - calculator.horizontal_gap_between_tabs
     for n in range(tabs_count):
-        assert (result[n].right - result[n].left) == calculator.max_width
+        assert result[n].width <= calculator.max_width and result[n].width >= min_width
         assert result[n].top == result[0].top
 
 
@@ -49,6 +50,20 @@ def test_single_line_small_width(calculator: TabsGeometryCalculator):
     for n in range(tabs_count):
         assert (result[n].right - result[n].left) < calculator.max_width
         assert result[n].top == result[0].top
+
+
+def test_right_border(calculator: TabsGeometryCalculator):
+    tabs_count = 8
+    text_height = 12
+    parent_width = 5 * calculator.max_width
+    tabs: List[TabInfo] = []
+    for _ in range(tabs_count):
+        tabs.append(TabInfo(None, "title"))
+
+    result = calculator.calc(tabs, parent_width, text_height)
+
+    assert result[0].top == result[-1].top
+    assert result[-1].right <= parent_width
 
 
 def test_two_rows(calculator: TabsGeometryCalculator):

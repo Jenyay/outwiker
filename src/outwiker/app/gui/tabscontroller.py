@@ -135,7 +135,6 @@ class TabsController:
         # self._tabsCtrl.Bind(
         #     fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU,
         #     self.__onPopupMenu)
-        pass
 
     def __unbindGuiEvents(self):
         self._tabsCtrl.Unbind(
@@ -150,7 +149,6 @@ class TabsController:
         # self._tabsCtrl.Unbind(
         #     fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU,
         #     handler=self.__onPopupMenu)
-        pass
 
     def __bindEvents(self):
         self._application.onWikiOpen += self.__onWikiOpen

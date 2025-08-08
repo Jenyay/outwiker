@@ -393,7 +393,13 @@ class TabsGeometryCalculator:
         if tabs_count == 0:
             return self.max_width
 
-        return int(math.floor(parent_width / (math.ceil(tabs_count / rows_count))))
+        cols_count = math.ceil(tabs_count / rows_count)
+        if cols_count == 1:
+            parent_width_minus_gap = parent_width
+        else:
+            parent_width_minus_gap = parent_width - (cols_count - 1) * self.horizontal_gap_between_tabs
+
+        return int(math.floor(parent_width_minus_gap / cols_count))
 
     def calc(
         self, tabs: List[TabInfo], parent_width: int, text_height: int
@@ -402,7 +408,7 @@ class TabsGeometryCalculator:
         rows_count = 1
         while (
             width := self._calc_width(parent_width, tabs_count, rows_count)
-        ) < self.min_width + self.horizontal_gap_between_tabs:
+        ) < self.min_width:
             rows_count += 1
 
         cols_count = parent_width // width
