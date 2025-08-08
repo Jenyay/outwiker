@@ -38,6 +38,7 @@ class TabsCtrl(wx.Control):
         self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftButtonDown)
         self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
         self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleButtonDown)
+        self.Bind(wx.EVT_SIZE, handler=self._onSize)
 
         self._layout()
 
@@ -57,7 +58,11 @@ class TabsCtrl(wx.Control):
             self._current_rows_count = rows_count
             self.GetParent().Layout()
 
-    def _onMouseLeaveWindow(self, event: wx.MouseEvent):
+    def _onSize(self, event: wx.SizeEvent) -> None:
+        self._layout()
+        self.Refresh(False)
+
+    def _onMouseLeaveWindow(self, event: wx.MouseEvent) -> None:
         self._lbutton_downed_close_button = None
         self._lbutton_downed_tab = None
 
