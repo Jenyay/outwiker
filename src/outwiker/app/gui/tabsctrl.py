@@ -12,6 +12,7 @@ from outwiker.core.history import History
 
 
 TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
+TabsCtrlContextMenuEvent, EVT_TABSCTRL_CONTEXT_MENU = wx.lib.newevent.NewEvent()
 
 TAB_STATE_NORMAL = 0
 TAB_STATE_HOVER = 1
@@ -26,6 +27,8 @@ class TabsCtrl(wx.Control):
 
         self._lbutton_downed_tab: Optional[int] = None
         self._lbutton_downed_close_button: Optional[int] = None
+        self._rbutton_downed: Optional[int] = None
+
         self._current_rows_count = 0
 
         self._tabs_collection: List[TabInfo] = []
@@ -37,11 +40,18 @@ class TabsCtrl(wx.Control):
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
         self.Bind(wx.EVT_LEFT_DOWN, handler=self._onLeftButtonDown)
+        self.Bind(wx.EVT_RIGHT_UP, handler=self._onRightButtonUp)
+        self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightButtonDown)
         self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
         self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleButtonDown)
         self.Bind(wx.EVT_SIZE, handler=self._onSize)
 
         self._layout()
+
+    def _clear_buttons_status(self) -> None:
+        self._lbutton_downed_tab = None
+        self._lbutton_downed_close_button = None
+        self._rbutton_downed = None
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -64,12 +74,10 @@ class TabsCtrl(wx.Control):
         self.Refresh(False)
 
     def _onMouseLeaveWindow(self, event: wx.MouseEvent) -> None:
-        self._lbutton_downed_close_button = None
-        self._lbutton_downed_tab = None
+        self._clear_buttons_status()
 
     def _onLeftButtonDown(self, event: wx.MouseEvent) -> None:
-        self._lbutton_downed_close_button = None
-        self._lbutton_downed_tab = None
+        self._clear_buttons_status()
 
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
         self._lbutton_downed_tab = tab_number
@@ -83,10 +91,28 @@ class TabsCtrl(wx.Control):
         ):
             self.SetSelection(tab_number)
 
-        self._lbutton_downed_close_button = None
-        self._lbutton_downed_tab = None
+        self._clear_buttons_status()
+
+    def _onRightButtonDown(self, event: wx.MouseEvent) -> None:
+        tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
+        self._rbutton_downed = tab_number
+
+    def _onRightButtonUp(self, event: wx.MouseEvent) -> None:
+        old_tab_number = self._rbutton_downed
+        tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
+
+        self._clear_buttons_status()
+        if tab_number != old_tab_number:
+            return
+
+        page = self.GetPage(tab_number)
+        if page is not None:
+            new_event = TabsCtrlContextMenuEvent(page=page)
+            wx.PostEvent(self, new_event)
 
     def _onMiddleButtonDown(self, event: wx.MouseEvent) -> None:
+        self._clear_buttons_status()
+
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
         if tab_number is not None:
             self.DeletePage(tab_number)
