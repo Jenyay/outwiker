@@ -3,10 +3,12 @@ from outwiker.app.gui.tabsctrl import TabsGeometryCalculator, TabInfo
 
 import pytest
 
+from outwiker.gui.theme import Theme
+
 
 @pytest.fixture
 def calculator() -> TabsGeometryCalculator:
-    calculator = TabsGeometryCalculator()
+    calculator = TabsGeometryCalculator(Theme())
     calculator.min_width = 25 - calculator.horizontal_gap_between_tabs
     calculator.max_width = 100 - calculator.horizontal_gap_between_tabs
     return calculator

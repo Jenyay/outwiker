@@ -1,7 +1,9 @@
+import logging
 import math
+import os.path
 from typing import List, Optional
 
-from outwiker.core.tree import BasePage
+from outwiker.core.tree import WikiPage
 from outwiker.gui.theme import Theme
 import wx
 import wx.lib.newevent
@@ -9,6 +11,8 @@ import wx.lib.newevent
 from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.core.application import Application
 from outwiker.core.history import History
+from outwiker.core.system import getBuiltinImagePath
+from outwiker.gui.imagelistcache import ImageListCache
 
 
 TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
@@ -17,6 +21,9 @@ TabsCtrlContextMenuEvent, EVT_TABSCTRL_CONTEXT_MENU = wx.lib.newevent.NewEvent()
 TAB_STATE_NORMAL = 0
 TAB_STATE_HOVER = 1
 TAB_STATE_SELECTED = 2
+
+
+logger = logging.getLogger("outwiker.app.gui.tabsctrl2")
 
 
 class TabsCtrl(wx.Control):
@@ -34,7 +41,7 @@ class TabsCtrl(wx.Control):
         self._tabs_collection: List[TabInfo] = []
         self._current_page_index: Optional[int] = None
 
-        self._geometry = TabsGeometryCalculator()
+        self._geometry = TabsGeometryCalculator(self._theme)
         self._tab_render = TabRender(self._theme)
 
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
@@ -60,14 +67,17 @@ class TabsCtrl(wx.Control):
         super().SetForegroundColour(colour)
 
     def _layout(self):
-        text_height = 14
-        self._geometry.calc(self._tabs_collection, self.GetClientSize()[0], text_height)
+        self._calc_geometry()
         self.SetMinSize((-1, self._geometry.full_height))
         rows_count = self._geometry.rows_count
 
         if rows_count != self._current_rows_count:
             self._current_rows_count = rows_count
             self.GetParent().Layout()
+
+    def _calc_geometry(self):
+        text_height = 14
+        self._geometry.calc(self._tabs_collection, self.GetClientSize()[0], text_height)
 
     def _onSize(self, event: wx.SizeEvent) -> None:
         self._layout()
@@ -147,14 +157,14 @@ class TabsCtrl(wx.Control):
                 HistoryForwardAction.stringId, history.forwardLength != 0
             )
 
-    def AddPage(self, page: Optional[BasePage], title: str):
+    def AddPage(self, page: Optional[WikiPage], title: str):
         self._tabs_collection.append(TabInfo(page, title))
         if len(self._tabs_collection) == 1:
             self.SetSelection(0)
 
         self._layout()
 
-    def InsertPage(self, index, title, page, select):
+    def InsertPage(self, index: int, title: str, page: WikiPage, select: bool):
         self._tabs_collection.insert(index, TabInfo(page, title))
         if select:
             self.SetSelection(index)
@@ -185,12 +195,13 @@ class TabsCtrl(wx.Control):
     def GetPage(self, index: Optional[int]):
         return self._tabs_collection[index].page if index is not None else None
 
-    def SetCurrentPage(self, page: Optional[BasePage], title: str):
+    def SetCurrentPage(self, page: Optional[WikiPage], title: str):
         page_index = self.GetSelection()
         if page_index is not None:
             self._tabs_collection[page_index].page = page
             self._tabs_collection[page_index].title = title
             assert self._geometry.geometry is not None
+            self._calc_geometry()
             tab = self._geometry.geometry[page_index]
             self.Refresh(False, wx.Rect(tab.left, tab.top, tab.width, tab.height))
         elif page is not None:
@@ -312,22 +323,19 @@ class TabsCtrl(wx.Control):
 
 
 class TabInfo:
-    """
-    Класс окна, хранимого внутри владки с дополнительной информацией
-    (текущая страница, история)
-    """
-
     def __init__(self, page, title: str):
+        self._page = page
         self._title = title
         self._history = History()
         self._history.goto(page)
 
     @property
     def page(self):
-        return self._history.currentPage
+        return self._page
 
     @page.setter
     def page(self, page):
+        self._page = page
         self._history.goto(page)
 
     @property
@@ -341,12 +349,15 @@ class TabInfo:
     @title.setter
     def title(self, value: str):
         self._title = value
+        return self._page.icon if self._page is not None else None
 
 
 class SingleTabGeometry:
     def __init__(self) -> None:
         self.rounding_radius = 8
         self.title: Optional[str] = None
+        self.page_path: Optional[str] = None
+        self.icon: Optional[str] = None
 
         # Coordinates inside a parent window
         self.left: Optional[int] = None
@@ -386,12 +397,12 @@ class SingleTabGeometry:
 
 
 class TabsGeometryCalculator:
-    def __init__(self) -> None:
+    def __init__(self, theme: Theme) -> None:
+        self._theme = theme
         self.min_width = 150
         self.max_width = 450
         self.vertical_margin = 8
         self.horizontal_margin = 8
-        self.icon_size = 16
         self.close_button_size = 10
         self.gap_icon_text = 8
         self.gap_text_close_button = 6
@@ -450,17 +461,18 @@ class TabsGeometryCalculator:
             width = self.max_width
 
         # Shared geometry
+        icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
         height = 2 * self.vertical_margin + max(
-            text_height, self.icon_size, self.close_button_size
+            text_height, icon_size, self.close_button_size
         )
         if height % 2 == 0:
             height += 1
         center_vertical = height // 2
 
         icon_left = self.horizontal_margin
-        icon_right = icon_left + self.icon_size
-        icon_top = center_vertical - self.icon_size // 2
-        icon_bottom = icon_top + self.icon_size
+        icon_right = icon_left + icon_size
+        icon_top = center_vertical - icon_size // 2
+        icon_bottom = icon_top + icon_size
 
         close_button_right = width - self.horizontal_margin
         close_button_left = close_button_right - self.close_button_size
@@ -489,6 +501,8 @@ class TabsGeometryCalculator:
             geometry.bottom = geometry.top + height
 
             geometry.title = info.title
+            geometry.page_path = info.page.path if info.page is not None else None
+            geometry.icon = info.page.icon if info.page is not None else None
             geometry.icon_left = icon_left
             geometry.icon_right = icon_right
             geometry.icon_top = icon_top
@@ -515,21 +529,52 @@ class TabRender:
         self._pens = wx.PenList()
         self._title_font = wx.NullFont
 
+        # Main icons for notes
+        self._defaultIcon = getBuiltinImagePath("page.svg")
+        icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
+        self._iconsCache = ImageListCache(
+            self._defaultIcon, icon_size, icon_size
+        )
+
+    def _load_icon(self, icon: Optional[str], page_path: Optional[str]) -> Optional[int]:
+        """
+        Добавляет иконку страницы в ImageList и возвращает ее идентификатор.
+        Если иконки нет, то возвращает идентификатор иконки по умолчанию
+        """
+        if page_path is None:
+            return None
+
+        if not icon:
+            return self._iconsCache.getDefaultImageId()
+
+        icon = os.path.abspath(icon)
+        page_path = os.path.abspath(page_path)
+
+        try:
+            if icon.startswith(page_path):
+                imageId = self._iconsCache.replace(icon)
+            else:
+                imageId = self._iconsCache.add(icon)
+        except Exception:
+            logger.error("Invalid icon file: %s", icon)
+            imageId = self._iconsCache.getDefaultImageId()
+        return imageId
+
     def get_text_height(self, dc: wx.DC):
         text = "Wg"
         return dc.GetTextExtent(text).GetHeight()
 
     def _draw_icon(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
         assert tab.icon_left is not None
-        assert tab.icon_right is not None
+        assert tab.icon_top is not None
+        assert tab.left is not None
+        assert tab.top is not None
 
-        icon_rect = wx.Rect(
-            tab.icon_left + tab.left,
-            tab.icon_top + tab.top,
-            tab.icon_right - tab.icon_left,
-            tab.icon_bottom - tab.icon_top,
-        )
-        dc.DrawRectangle(icon_rect)
+        icon_id = self._load_icon(tab.icon, tab.page_path)
+        if icon_id is not None:
+            bitmap = self._iconsCache.getImageList().GetBitmap(icon_id)
+            assert bitmap.IsOk()
+            dc.DrawBitmap(bitmap, tab.icon_left + tab.left, tab.icon_top + tab.top)
 
     def _draw_close_button(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
         assert tab.close_button_left is not None

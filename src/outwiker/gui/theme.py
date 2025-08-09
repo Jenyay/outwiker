@@ -50,6 +50,7 @@ class Theme:
     TABS_BACKGROUND_HOVER_COLOR = "BackgroundHoverColor"
     TABS_BACKGROUND_SELECTED_COLOR = "BackgroundSelectedColor"
     TABS_BORDER_COLOR = "BorderColor"
+    TABS_ICON_SIZE = "IconSize"
 
     # Render
     # RENDER_STYLES = "Styles"
@@ -96,6 +97,7 @@ class Theme:
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_HOVER_COLOR, "#DDDDDD")
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_SELECTED_COLOR, "#F3F3F0")
         self.addParam(self.SECTION_TABS, self.TABS_BORDER_COLOR, "#B3B3B3")
+        self.addParam(self.SECTION_TABS, self.TABS_ICON_SIZE, 16)
 
     @property
     def colorBackground(self):
