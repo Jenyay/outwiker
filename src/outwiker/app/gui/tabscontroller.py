@@ -48,10 +48,6 @@ class TabsController:
         """
         Закыть вкладку с индексом index
         """
-        tabs_count = self.getTabsCount()
-        if tabs_count == 1:
-            return
-
         if index < 0 or index >= self.getTabsCount():
             raise ValueError
 
@@ -211,7 +207,7 @@ class TabsController:
 
         for tab in tabsList:
             page = wikiroot[tab]
-            self._tabsCtrl.AddPage(self.__getTitle(page), page)
+            self._tabsCtrl.AddPage(page, self.__getTitle(page))
 
         pageCount = self._tabsCtrl.GetPageCount()
 

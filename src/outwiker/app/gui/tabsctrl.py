@@ -1,6 +1,7 @@
 import math
 from typing import List, Optional
 
+from outwiker.core.tree import BasePage
 from outwiker.gui.theme import Theme
 import wx
 import wx.lib.newevent
@@ -120,14 +121,12 @@ class TabsCtrl(wx.Control):
                 HistoryForwardAction.stringId, history.forwardLength != 0
             )
 
-    def AddPage(self, title, page):
+    def AddPage(self, page: Optional[BasePage], title: str):
         self._tabs_collection.append(TabInfo(page, title))
         if len(self._tabs_collection) == 1:
             self.SetSelection(0)
 
         self._layout()
-        # blankWindow = TabInfo(page)
-        # self._tabs.AddPage(blankWindow, title)
 
     def InsertPage(self, index, title, page, select):
         self._tabs_collection.insert(index, TabInfo(page, title))
@@ -160,7 +159,7 @@ class TabsCtrl(wx.Control):
     def GetPage(self, index: Optional[int]):
         return self._tabs_collection[index].page if index is not None else None
 
-    def SetCurrentPage(self, page, title):
+    def SetCurrentPage(self, page: Optional[BasePage], title: str):
         page_index = self.GetSelection()
         if page_index is not None:
             self._tabs_collection[page_index].page = page
@@ -168,6 +167,9 @@ class TabsCtrl(wx.Control):
             assert self._geometry.geometry is not None
             tab = self._geometry.geometry[page_index]
             self.Refresh(False, wx.Rect(tab.left, tab.top, tab.width, tab.height))
+        elif page is not None:
+            assert len(self._tabs_collection) == 0
+            self.AddPage(page, title)
 
         self._updateHistoryButtons()
 

@@ -3,8 +3,6 @@
 from os.path import basename
 import unittest
 
-import wx
-
 from outwiker.api.core.tree import loadNotesTree
 from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.pages.text.textpage import TextPageFactory
@@ -486,7 +484,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getTabsCount(), 1)
 
         self._tabsController.closeTab(0)
-        self.assertEqual(self._tabsController.getTabsCount(), 1)
+        self.assertEqual(self._tabsController.getTabsCount(), 0)
 
     def testCloseTab1(self):
         self.application.wikiroot = self.wikiroot
@@ -529,11 +527,15 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getPage(0), self.wikiroot["Страница 1"])
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 1"])
 
-        self._tabsController.closeTab(0)
-
+    def testCloseLastTabAndSelectPage(self):
+        self.application.wikiroot = self.wikiroot
         self.assertEqual(self._tabsController.getTabsCount(), 1)
-        self.assertEqual(self._tabsController.getPage(0), self.wikiroot["Страница 1"])
-        self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 1"])
+
+        self._tabsController.closeTab(0)
+        self.assertEqual(self._tabsController.getTabsCount(), 0)
+
+        self.application.selectedPage = self.wikiroot["Страница 1"]
+        self.assertEqual(self._tabsController.getTabsCount(), 1)
 
     def testNextTab1(self):
         self.application.wikiroot = self.wikiroot
