@@ -51,6 +51,7 @@ class Theme:
     TABS_BACKGROUND_SELECTED_COLOR = "BackgroundSelectedColor"
     TABS_BORDER_COLOR = "BorderColor"
     TABS_ICON_SIZE = "IconSize"
+    TABS_CLOSE_BUTTON_SIZE = "CloseButtonSize"
 
     # Render
     # RENDER_STYLES = "Styles"
@@ -98,6 +99,7 @@ class Theme:
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_SELECTED_COLOR, "#F3F3F0")
         self.addParam(self.SECTION_TABS, self.TABS_BORDER_COLOR, "#B3B3B3")
         self.addParam(self.SECTION_TABS, self.TABS_ICON_SIZE, 16)
+        self.addParam(self.SECTION_TABS, self.TABS_CLOSE_BUTTON_SIZE, 16)
 
     @property
     def colorBackground(self):

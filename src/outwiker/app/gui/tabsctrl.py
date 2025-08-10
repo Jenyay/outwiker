@@ -13,6 +13,7 @@ from outwiker.core.application import Application
 from outwiker.core.history import History
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.imagelistcache import ImageListCache
+from outwiker.gui.images import readImage
 
 
 TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
@@ -429,7 +430,6 @@ class TabsGeometryCalculator:
         self.max_width = 450
         self.vertical_margin = 8
         self.horizontal_margin = 8
-        self.close_button_size = 10
         self.gap_icon_text = 8
         self.gap_text_close_button = 6
         self.vertical_gap_between_tabs = 4
@@ -488,8 +488,10 @@ class TabsGeometryCalculator:
 
         # Shared geometry
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
+        close_button_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE)
+
         height = 2 * self.vertical_margin + max(
-            text_height, icon_size, self.close_button_size
+            text_height, icon_size, close_button_size
         )
         if height % 2 == 0:
             height += 1
@@ -501,9 +503,9 @@ class TabsGeometryCalculator:
         icon_bottom = icon_top + icon_size
 
         close_button_right = width - self.horizontal_margin
-        close_button_left = close_button_right - self.close_button_size
-        close_button_top = center_vertical - self.close_button_size // 2
-        close_button_bottom = close_button_top + self.close_button_size
+        close_button_left = close_button_right - close_button_size
+        close_button_top = center_vertical - close_button_size // 2
+        close_button_bottom = close_button_top + close_button_size
 
         text_left = icon_right + self.gap_icon_text
         text_right = close_button_left - self.gap_text_close_button
@@ -554,6 +556,8 @@ class TabRender:
         self._brushes = wx.BrushList()
         self._pens = wx.PenList()
         self._title_font = wx.NullFont
+        close_botton_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE)
+        self._close_button_normal_bmp = readImage(getBuiltinImagePath("close_tab_normal.svg"), close_botton_size, close_botton_size)
 
         # Main icons for notes
         self._defaultIcon = getBuiltinImagePath("page.svg")
@@ -606,13 +610,14 @@ class TabRender:
         assert tab.close_button_left is not None
         assert tab.close_button_right is not None
 
-        close_rect = wx.Rect(
-            tab.close_button_left + tab.left,
-            tab.close_button_top + tab.top,
-            tab.close_button_right - tab.close_button_left,
-            tab.close_button_bottom - tab.close_button_top,
-        )
-        dc.DrawRectangle(close_rect)
+        dc.DrawBitmap(self._close_button_normal_bmp, tab.close_button_left + tab.left, tab.close_button_top + tab.top)
+        # close_rect = wx.Rect(
+        #     tab.close_button_left + tab.left,
+        #     tab.close_button_top + tab.top,
+        #     tab.close_button_right - tab.close_button_left,
+        #     tab.close_button_bottom - tab.close_button_top,
+        # )
+        # dc.DrawRectangle(close_rect)
 
     def _trim_title(self, dc: wx.DC, title: str, max_width: int) -> str:
         def _get_trimmed_title(title: str, cut_count: int) -> str:
