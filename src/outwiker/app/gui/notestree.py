@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
-import os.path
 from typing import List, Optional, Tuple
 
 import wx
@@ -13,13 +11,12 @@ from outwiker.app.actions.movepageup import MovePageUpAction
 from outwiker.app.actions.moving import GoToParentAction
 from outwiker.app.actions.removepage import RemovePageAction
 
-from outwiker.app.services.attachment import attachFiles
 from outwiker.app.services.messages import showError
 from outwiker.app.services.tree import renamePage, movePage
 
 from outwiker.app.actions.addchildpage import AddChildPageAction
 
-from outwiker.app.gui.dropfiles import BaseDropFilesTarget
+from outwiker.app.gui.dropfiles import PageItemsDropFilesTarget
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
@@ -88,7 +85,7 @@ class NotesTree(wx.Panel):
 
         self._bindApplicationEvents()
         self._bindGuiEvents()
-        self._dropTarget = NotesTreeDropFilesTarget(
+        self._dropTarget = PageItemsDropFilesTarget(
             self._application, self.treeCtrl
         )
 
@@ -493,30 +490,3 @@ class NotesTree(wx.Panel):
             for child in parentPage.children:
                 self.treeCtrl.addPage(child, update=False)
                 self._appendChildren(child)
-
-
-class NotesTreeDropFilesTarget(BaseDropFilesTarget):
-    """
-    Class to drop files to notes in the notes tree panel.
-    """
-    def OnDropFiles(self, x, y, files):
-        correctedFiles = self.correctFileNames(files)
-        page = self.targetWindow.HitTest((x, y))
-        if page is not None:
-            file_names = [os.path.basename(fname) for fname in correctedFiles]
-
-            text = _("Attach files to the note '{title}'?\n\n{files}").format(
-                title=page.display_title, files="\n".join(file_names)
-            )
-
-            if (
-                MessageBox(
-                    text,
-                    _("Attach files to the note?"),
-                    wx.YES_NO | wx.ICON_QUESTION,
-                )
-                == wx.YES
-            ):
-                attachFiles(self._application.mainWindow, page, correctedFiles)
-            return True
-        return False

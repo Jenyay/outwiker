@@ -1,8 +1,11 @@
-# -*- coding: utf-8 -*-
+import os
 
 from typing import List
 
 import wx
+
+from outwiker.app.services.attachment import attachFiles
+from outwiker.gui.dialogs.messagebox import MessageBox
 
 
 class BaseDropFilesTarget(wx.FileDropTarget):
@@ -44,3 +47,27 @@ class BaseDropFilesTarget(wx.FileDropTarget):
 
     def OnDropFiles(self, x: int, y: int, files: List[str]) -> bool:
         raise NotImplementedError
+
+
+class PageItemsDropFilesTarget(BaseDropFilesTarget):
+    def OnDropFiles(self, x, y, files):
+        correctedFiles = self.correctFileNames(files)
+        page = self.targetWindow.HitTest((x, y))
+        if page is not None:
+            file_names = [os.path.basename(fname) for fname in correctedFiles]
+
+            text = _("Attach files to the note '{title}'?\n\n{files}").format(
+                title=page.display_title, files="\n".join(file_names)
+            )
+
+            if (
+                MessageBox(
+                    text,
+                    _("Attach files to the note?"),
+                    wx.YES_NO | wx.ICON_QUESTION,
+                )
+                == wx.YES
+            ):
+                attachFiles(self._application.mainWindow, page, correctedFiles)
+            return True
+        return False

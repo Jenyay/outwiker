@@ -1,7 +1,7 @@
 import logging
 import math
 import os.path
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from outwiker.core.tree import WikiPage
 from outwiker.gui.theme import Theme
@@ -77,7 +77,8 @@ class TabsCtrl(wx.Control):
             self.GetParent().Layout()
 
     def _calc_geometry(self):
-        text_height = 14
+        dc = wx.ClientDC(self)
+        text_height = self._tab_render.get_text_height(dc)
         self._geometry.calc(self._tabs_collection, self.GetClientSize()[0], text_height)
 
     def _onSize(self, event: wx.SizeEvent) -> None:
@@ -93,7 +94,7 @@ class TabsCtrl(wx.Control):
         close_button_number = self._find_close_button_by_coord(event.GetX(), event.GetY())
         self._lbutton_downed_close_button = close_button_number
 
-        if close_button_number is not None:
+        if close_button_number is None:
             tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
             self._lbutton_downed_tab = tab_number
 
@@ -184,6 +185,9 @@ class TabsCtrl(wx.Control):
                 HistoryForwardAction.stringId, history.forwardLength != 0
             )
 
+    def HitTest(self, coord: Tuple[int, int]) -> Optional[WikiPage]:
+        return self.GetPage(self._find_tab_by_coord(coord[0], coord[1]))
+
     def AddPage(self, page: Optional[WikiPage], title: str):
         self._tabs_collection.append(TabInfo(page, title))
         if len(self._tabs_collection) == 1:
@@ -219,7 +223,7 @@ class TabsCtrl(wx.Control):
         self._tabs_collection[index].title = title
         self._layout()
 
-    def GetPage(self, index: Optional[int]):
+    def GetPage(self, index: Optional[int]) -> Optional[WikiPage]:
         return self._tabs_collection[index].page if index is not None else None
 
     def SetCurrentPage(self, page: Optional[WikiPage], title: str):

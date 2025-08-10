@@ -2,7 +2,10 @@
 
 import os.path
 
+import wx
+
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
+from outwiker.app.gui.dropfiles import PageItemsDropFilesTarget
 from outwiker.app.services.messages import showError
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
@@ -23,6 +26,10 @@ class TabsController:
 
         self._tabSelectedSection = CONFIG_GENERAL_SECTION
         self._tabSelectedOption = "selectedtab"
+
+        self._dropTarget = PageItemsDropFilesTarget(
+            self._application, self._tabsCtrl
+        )
 
         self.__bindEvents()
 
@@ -98,6 +105,7 @@ class TabsController:
         """
         Вызывать перед удалением контроллера
         """
+        self._dropTarget.destroy()
         self.__saveTabs()
         self.__unbindEvents()
 
