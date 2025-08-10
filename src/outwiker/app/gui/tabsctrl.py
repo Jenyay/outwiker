@@ -89,10 +89,21 @@ class TabsCtrl(wx.Control):
     def _onLeftButtonDown(self, event: wx.MouseEvent) -> None:
         self._clear_buttons_status()
 
-        tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
-        self._lbutton_downed_tab = tab_number
+        close_button_number = self._find_close_button_by_coord(event.GetX(), event.GetY())
+        self._lbutton_downed_close_button = close_button_number
+
+        if close_button_number is not None:
+            tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
+            self._lbutton_downed_tab = tab_number
 
     def _onLeftButtonUp(self, event: wx.MouseEvent) -> None:
+        close_button_number = self._find_close_button_by_coord(event.GetX(), event.GetY())
+
+        if close_button_number is not None and close_button_number == self._lbutton_downed_close_button:
+            self._clear_buttons_status()
+            self.DeletePage(close_button_number)
+            return
+
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
         if (
             tab_number is not None
@@ -133,6 +144,21 @@ class TabsCtrl(wx.Control):
 
         for n, tab in enumerate(self._geometry.geometry):
             if x >= tab.left and x <= tab.right and y >= tab.top and y <= tab.bottom:
+                return n
+
+        return None
+
+    def _find_close_button_by_coord(self, x: int, y: int) -> Optional[int]:
+        if self._geometry.geometry is None:
+            return None
+
+        for n, tab in enumerate(self._geometry.geometry):
+            button_left = tab.left + tab.close_button_left
+            button_right = tab.left + tab.close_button_right
+            button_top = tab.top + tab.close_button_top
+            button_bottom = tab.top + tab.close_button_bottom
+
+            if x >= button_left and x <= button_right and y >= button_top and y <= button_bottom:
                 return n
 
         return None
