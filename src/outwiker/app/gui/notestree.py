@@ -89,7 +89,7 @@ class NotesTree(wx.Panel):
         self._bindApplicationEvents()
         self._bindGuiEvents()
         self._dropTarget = NotesTreeDropFilesTarget(
-            self._application, self.treeCtrl, self
+            self._application, self.treeCtrl
         )
 
     def _initTreeCtrl(self):
@@ -499,11 +499,6 @@ class NotesTreeDropFilesTarget(BaseDropFilesTarget):
     """
     Class to drop files to notes in the notes tree panel.
     """
-
-    def __init__(self, application, targetWindow: NotesTreeCtrl2, notesTree: NotesTree):
-        super().__init__(application, targetWindow)
-        self._notesTree = notesTree
-
     def OnDropFiles(self, x, y, files):
         correctedFiles = self.correctFileNames(files)
         page = self.targetWindow.HitTest((x, y))
