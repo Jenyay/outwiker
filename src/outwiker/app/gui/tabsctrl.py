@@ -42,6 +42,7 @@ class TabsCtrl(wx.Control):
         self._tabs_collection: List[TabInfo] = []
         self._current_page_index: Optional[int] = None
 
+        self._brushes = wx.BrushList()
         self._geometry = TabsGeometryCalculator(self._theme)
         self._tab_render = TabRender(self._theme)
 
@@ -77,8 +78,8 @@ class TabsCtrl(wx.Control):
             self.GetParent().Layout()
 
     def _calc_geometry(self):
-        dc = wx.ClientDC(self)
-        text_height = self._tab_render.get_text_height(dc)
+        with wx.ClientDC(self) as dc:
+            text_height = self._tab_render.get_text_height(dc)
         self._geometry.calc(self._tabs_collection, self.GetClientSize()[0], text_height)
 
     def _onSize(self, event: wx.SizeEvent) -> None:
@@ -231,15 +232,19 @@ class TabsCtrl(wx.Control):
         if page_index is not None:
             self._tabs_collection[page_index].page = page
             self._tabs_collection[page_index].title = title
-            assert self._geometry.geometry is not None
-            self._calc_geometry()
-            tab = self._geometry.geometry[page_index]
-            self.Refresh(False, wx.Rect(tab.left, tab.top, tab.width, tab.height))
+            self._refresh_tab(page_index)
         elif page is not None:
             assert len(self._tabs_collection) == 0
             self.AddPage(page, title)
 
         self._updateHistoryButtons()
+
+    def _refresh_tab(self, page_index):
+        assert self._geometry.geometry is not None
+        if page_index is not None and page_index < len(self._tabs_collection):
+            self._calc_geometry()
+            tab = self._geometry.geometry[page_index]
+            self.Refresh(False, wx.Rect(tab.left, tab.top, tab.width, tab.height))
 
     def _getCurrentHistory(self):
         """
@@ -260,8 +265,16 @@ class TabsCtrl(wx.Control):
         return len(self._tabs_collection)
 
     def SetSelection(self, index: Optional[int]):
+        old_selection = self._current_page_index
         self._current_page_index = index
         self._updateHistoryButtons()
+
+        if old_selection is not None:
+            self._refresh_tab(old_selection)
+
+        if index is not None:
+            self._refresh_tab(index)
+
         page = self._tabs_collection[index].page if index is not None else None
         event = TabsCtrlPageChangedEvent(selection=index, page=page)
         wx.PostEvent(self, event)
@@ -335,20 +348,21 @@ class TabsCtrl(wx.Control):
         """
         Обработчик события перерисовки вкладок
         """
-        dc = wx.BufferedPaintDC(self)
-        dc.SetBackground(wx.Brush(self._theme.colorBackground))
-        dc.Clear()
+        with wx.BufferedPaintDC(self) as dc:
+            background_brush = self._brushes.FindOrCreateBrush(self._theme.colorBackground)
+            dc.SetBackground(background_brush)
+            dc.Clear()
 
-        if self._geometry.geometry is None:
-            return
+            if self._geometry.geometry is None:
+                return
 
-        for n, tab in enumerate(self._geometry.geometry):
-            state = (
-                TAB_STATE_SELECTED
-                if n == self._current_page_index
-                else TAB_STATE_NORMAL
-            )
-            self._tab_render.paint(dc, tab, state)
+            for n, tab in enumerate(self._geometry.geometry):
+                state = (
+                    TAB_STATE_SELECTED
+                    if n == self._current_page_index
+                    else TAB_STATE_NORMAL
+                )
+                self._tab_render.paint(dc, tab, state)
 
         event.Skip()
 
