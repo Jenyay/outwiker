@@ -68,10 +68,11 @@ class TabsCtrl(wx.Control):
         self._lbutton_downed_close_button = None
         self._rbutton_downed_tab = None
 
+        old_hovered_tab = self._hovered_tab
         if self._hovered_tab is not None or self._hovered_close_button is not None:
             self._hovered_tab = None
             self._hovered_close_button = None
-            self._refresh_tab(self._hovered_tab)
+            self._refresh_tab(old_hovered_tab)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
