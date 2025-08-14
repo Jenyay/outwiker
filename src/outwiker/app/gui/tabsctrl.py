@@ -138,6 +138,8 @@ class TabsCtrl(wx.Control):
             self.SetSelection(tab_number)
 
         self._clear_tabs_status()
+        self._hovered_tab = self._find_tab_by_coord(event.GetX(), event.GetY())
+        self._hovered_close_button = self._find_close_button_by_coord(event.GetX(), event.GetY())
 
     def _onRightButtonDown(self, event: wx.MouseEvent) -> None:
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
