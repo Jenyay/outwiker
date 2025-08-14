@@ -40,6 +40,7 @@ class TabsCtrl(wx.Control):
         self._lbutton_downed_close_button: Optional[int] = None
         self._rbutton_downed_tab: Optional[int] = None
         self._selected_tab: Optional[int] = None
+        self._hovered_tab: Optional[int] = None
 
         self._current_rows_count = 0
 
@@ -55,13 +56,18 @@ class TabsCtrl(wx.Control):
         self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
         self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleButtonDown)
         self.Bind(wx.EVT_SIZE, handler=self._onSize)
+        self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
 
         self._layout()
 
-    def _clear_buttons_status(self) -> None:
+    def _clear_tabs_status(self) -> None:
         self._lbutton_downed_tab = None
         self._lbutton_downed_close_button = None
         self._rbutton_downed_tab = None
+
+        if self._hovered_tab is not None:
+            self._refresh_tab(self._hovered_tab)
+            self._hovered_tab = None
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -88,10 +94,10 @@ class TabsCtrl(wx.Control):
         self.Refresh(False)
 
     def _onMouseLeaveWindow(self, event: wx.MouseEvent) -> None:
-        self._clear_buttons_status()
+        self._clear_tabs_status()
 
     def _onLeftButtonDown(self, event: wx.MouseEvent) -> None:
-        self._clear_buttons_status()
+        self._clear_tabs_status()
 
         close_button_number = self._find_close_button_by_coord(event.GetX(), event.GetY())
         self._lbutton_downed_close_button = close_button_number
@@ -104,7 +110,7 @@ class TabsCtrl(wx.Control):
         close_button_number = self._find_close_button_by_coord(event.GetX(), event.GetY())
 
         if close_button_number is not None and close_button_number == self._lbutton_downed_close_button:
-            self._clear_buttons_status()
+            self._clear_tabs_status()
             self.DeletePage(close_button_number)
             return
 
@@ -116,7 +122,7 @@ class TabsCtrl(wx.Control):
         ):
             self.SetSelection(tab_number)
 
-        self._clear_buttons_status()
+        self._clear_tabs_status()
 
     def _onRightButtonDown(self, event: wx.MouseEvent) -> None:
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
@@ -126,7 +132,7 @@ class TabsCtrl(wx.Control):
         old_tab_number = self._rbutton_downed_tab
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
 
-        self._clear_buttons_status()
+        self._clear_tabs_status()
         if tab_number != old_tab_number:
             return
 
@@ -136,11 +142,20 @@ class TabsCtrl(wx.Control):
             wx.PostEvent(self, new_event)
 
     def _onMiddleButtonDown(self, event: wx.MouseEvent) -> None:
-        self._clear_buttons_status()
+        self._clear_tabs_status()
 
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
         if tab_number is not None:
             self.DeletePage(tab_number)
+
+    def _onMouseMove(self, event: wx.MouseEvent) -> None:
+        old_hovered_tab = self._hovered_tab
+        self._hovered_tab = self._find_tab_by_coord(event.GetX(), event.GetY())
+        if old_hovered_tab != self._hovered_tab:
+            if old_hovered_tab is not None:
+                self._refresh_tab(old_hovered_tab)
+            if self._hovered_tab is not None:
+                self._refresh_tab(self._hovered_tab)
 
     def _find_tab_by_coord(self, x: int, y: int) -> Optional[int]:
         if self._geometry.geometry is None:
@@ -358,11 +373,17 @@ class TabsCtrl(wx.Control):
                 return
 
             for n, tab in enumerate(self._geometry.geometry):
-                state = (
-                    TAB_STATE_SELECTED
-                    if n == self._selected_tab
-                    else TAB_STATE_NORMAL
-                )
+                # state = (
+                #     TAB_STATE_SELECTED
+                #     if n == self._selected_tab
+                #     else TAB_STATE_NORMAL
+                # )
+                state = TAB_STATE_NORMAL
+                if n == self._selected_tab:
+                    state = TAB_STATE_SELECTED
+                elif n == self._hovered_tab:
+                    state = TAB_STATE_HOVER
+
                 self._tab_render.paint(dc, tab, state)
 
         event.Skip()
