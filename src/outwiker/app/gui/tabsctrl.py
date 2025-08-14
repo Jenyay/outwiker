@@ -33,14 +33,15 @@ class TabsCtrl(wx.Control):
         self._application = application
         self._theme = theme
 
+        self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+
+        self._tabs: List[TabInfo] = []
         self._lbutton_downed_tab: Optional[int] = None
         self._lbutton_downed_close_button: Optional[int] = None
-        self._rbutton_downed: Optional[int] = None
+        self._rbutton_downed_tab: Optional[int] = None
+        self._selected_tab: Optional[int] = None
 
         self._current_rows_count = 0
-
-        self._tabs_collection: List[TabInfo] = []
-        self._current_page_index: Optional[int] = None
 
         self._brushes = wx.BrushList()
         self._geometry = TabsGeometryCalculator(self._theme)
@@ -60,7 +61,7 @@ class TabsCtrl(wx.Control):
     def _clear_buttons_status(self) -> None:
         self._lbutton_downed_tab = None
         self._lbutton_downed_close_button = None
-        self._rbutton_downed = None
+        self._rbutton_downed_tab = None
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -80,7 +81,7 @@ class TabsCtrl(wx.Control):
     def _calc_geometry(self):
         with wx.ClientDC(self) as dc:
             text_height = self._tab_render.get_text_height(dc)
-        self._geometry.calc(self._tabs_collection, self.GetClientSize()[0], text_height)
+        self._geometry.calc(self._tabs, self.GetClientSize()[0], text_height)
 
     def _onSize(self, event: wx.SizeEvent) -> None:
         self._layout()
@@ -111,7 +112,7 @@ class TabsCtrl(wx.Control):
         if (
             tab_number is not None
             and tab_number == self._lbutton_downed_tab
-            and tab_number != self._current_page_index
+            and tab_number != self._selected_tab
         ):
             self.SetSelection(tab_number)
 
@@ -119,10 +120,10 @@ class TabsCtrl(wx.Control):
 
     def _onRightButtonDown(self, event: wx.MouseEvent) -> None:
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
-        self._rbutton_downed = tab_number
+        self._rbutton_downed_tab = tab_number
 
     def _onRightButtonUp(self, event: wx.MouseEvent) -> None:
-        old_tab_number = self._rbutton_downed
+        old_tab_number = self._rbutton_downed_tab
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
 
         self._clear_buttons_status()
@@ -190,14 +191,14 @@ class TabsCtrl(wx.Control):
         return self.GetPage(self._find_tab_by_coord(coord[0], coord[1]))
 
     def AddPage(self, page: Optional[WikiPage], title: str):
-        self._tabs_collection.append(TabInfo(page, title))
-        if len(self._tabs_collection) == 1:
+        self._tabs.append(TabInfo(page, title))
+        if len(self._tabs) == 1:
             self.SetSelection(0)
 
         self._layout()
 
     def InsertPage(self, index: int, title: str, page: WikiPage, select: bool):
-        self._tabs_collection.insert(index, TabInfo(page, title))
+        self._tabs.insert(index, TabInfo(page, title))
         if select:
             self.SetSelection(index)
 
@@ -206,12 +207,12 @@ class TabsCtrl(wx.Control):
 
     def Clear(self):
         self.SetSelection(None)
-        self._tabs_collection.clear()
+        self._tabs.clear()
         self._layout()
         # self._updateHistoryButtons()
 
     def GetPageText(self, index):
-        return self._tabs_collection[index].title
+        return self._tabs[index].title
 
     def RenameCurrentTab(self, title):
         page_index = self.GetSelection()
@@ -221,27 +222,27 @@ class TabsCtrl(wx.Control):
         self._layout()
 
     def RenameTab(self, index, title):
-        self._tabs_collection[index].title = title
+        self._tabs[index].title = title
         self._layout()
 
     def GetPage(self, index: Optional[int]) -> Optional[WikiPage]:
-        return self._tabs_collection[index].page if index is not None else None
+        return self._tabs[index].page if index is not None else None
 
     def SetCurrentPage(self, page: Optional[WikiPage], title: str):
         page_index = self.GetSelection()
         if page_index is not None:
-            self._tabs_collection[page_index].page = page
-            self._tabs_collection[page_index].title = title
+            self._tabs[page_index].page = page
+            self._tabs[page_index].title = title
             self._refresh_tab(page_index)
         elif page is not None:
-            assert len(self._tabs_collection) == 0
+            assert len(self._tabs) == 0
             self.AddPage(page, title)
 
         self._updateHistoryButtons()
 
     def _refresh_tab(self, page_index):
         assert self._geometry.geometry is not None
-        if page_index is not None and page_index < len(self._tabs_collection):
+        if page_index is not None and page_index < len(self._tabs):
             self._calc_geometry()
             tab = self._geometry.geometry[page_index]
             self.Refresh(False, wx.Rect(tab.left, tab.top, tab.width, tab.height))
@@ -253,20 +254,20 @@ class TabsCtrl(wx.Control):
         page_index = self.GetSelection()
 
         if page_index is not None:
-            return self._tabs_collection[page_index].history
+            return self._tabs[page_index].history
 
     def GetSelection(self) -> Optional[int]:
-        return self._current_page_index
+        return self._selected_tab
 
     def GetPages(self):
         return [self.GetPage(index) for index in range(self.GetPageCount())]
 
     def GetPageCount(self):
-        return len(self._tabs_collection)
+        return len(self._tabs)
 
     def SetSelection(self, index: Optional[int]):
-        old_selection = self._current_page_index
-        self._current_page_index = index
+        old_selection = self._selected_tab
+        self._selected_tab = index
         self._updateHistoryButtons()
 
         if old_selection is not None:
@@ -275,27 +276,27 @@ class TabsCtrl(wx.Control):
         if index is not None:
             self._refresh_tab(index)
 
-        page = self._tabs_collection[index].page if index is not None else None
+        page = self._tabs[index].page if index is not None else None
         event = TabsCtrlPageChangedEvent(selection=index, page=page)
         wx.PostEvent(self, event)
         wx.SafeYield()
 
     def DeletePage(self, index):
-        assert self._current_page_index is not None
-        old_selection = self._current_page_index
+        assert self._selected_tab is not None
+        old_selection = self._selected_tab
         is_delete_selection = index == old_selection
         is_delete_before = index < old_selection
 
-        if index < len(self._tabs_collection):
-            del self._tabs_collection[index]
+        if index < len(self._tabs):
+            del self._tabs[index]
 
         if is_delete_before:
-            self._current_page_index -= 1
+            self._selected_tab -= 1
             self._layout()
             return
 
         if is_delete_selection:
-            new_count = len(self._tabs_collection)
+            new_count = len(self._tabs)
             new_index = old_selection
             if new_index >= new_count:
                 new_index = new_count - 1
@@ -307,8 +308,8 @@ class TabsCtrl(wx.Control):
         self._layout()
 
     def NextPage(self):
-        count = len(self._tabs_collection)
-        old_selection = self._current_page_index
+        count = len(self._tabs)
+        old_selection = self._selected_tab
         if old_selection is None and count != 0:
             self.SetSelection(0)
             return
@@ -321,8 +322,8 @@ class TabsCtrl(wx.Control):
             self.SetSelection(0)
 
     def PreviousPage(self):
-        count = len(self._tabs_collection)
-        old_selection = self._current_page_index
+        count = len(self._tabs)
+        old_selection = self._selected_tab
         if old_selection is None and count != 0:
             self.SetSelection(0)
             return
@@ -359,7 +360,7 @@ class TabsCtrl(wx.Control):
             for n, tab in enumerate(self._geometry.geometry):
                 state = (
                     TAB_STATE_SELECTED
-                    if n == self._current_page_index
+                    if n == self._selected_tab
                     else TAB_STATE_NORMAL
                 )
                 self._tab_render.paint(dc, tab, state)
