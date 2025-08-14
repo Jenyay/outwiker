@@ -9,7 +9,7 @@ from outwiker.app.gui.dropfiles import PageItemsDropFilesTarget
 from outwiker.app.services.messages import showError
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
-from .tabsctrl import EVT_TABSCTRL_CONTEXT_MENU, EVT_TABSCTRL_PAGE_CHANGED
+from .tabsctrl import EVT_TABSCTRL_CONTEXT_MENU, EVT_TABSCTRL_PAGE_CHANGED, EVT_TABSCTRL_PAGE_DROPPED
 
 
 class TabsController:
@@ -123,16 +123,16 @@ class TabsController:
 
     def __bindGuiEvents(self):
         self._tabsCtrl.Bind(EVT_TABSCTRL_PAGE_CHANGED, self.__onTabChanged)
-        # self._tabsCtrl.Bind(
-        #     fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED,
-        #     self.__onTabDropped)
+        self._tabsCtrl.Bind(
+            EVT_TABSCTRL_PAGE_DROPPED,
+            self.__onTabDropped)
         self._tabsCtrl.Bind(EVT_TABSCTRL_CONTEXT_MENU, self.__onPopupMenu)
 
     def __unbindGuiEvents(self):
         self._tabsCtrl.Unbind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)
-        # self._tabsCtrl.Unbind(
-        #     fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED,
-        #     handler=self.__onTabDropped)
+        self._tabsCtrl.Unbind(
+            EVT_TABSCTRL_PAGE_DROPPED,
+            handler=self.__onTabDropped)
         self._tabsCtrl.Unbind(EVT_TABSCTRL_CONTEXT_MENU, handler=self.__onPopupMenu)
 
     def __bindEvents(self):

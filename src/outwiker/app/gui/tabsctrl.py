@@ -17,6 +17,7 @@ from outwiker.gui.images import readImage
 
 
 TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
+TabsCtrlPageDroppedEvent, EVT_TABSCTRL_PAGE_DROPPED = wx.lib.newevent.NewEvent()
 TabsCtrlContextMenuEvent, EVT_TABSCTRL_CONTEXT_MENU = wx.lib.newevent.NewEvent()
 
 TAB_STATE_NORMAL = 0
@@ -333,21 +334,20 @@ class TabsCtrl(wx.Control):
         wx.PostEvent(self, event)
         wx.SafeYield()
 
-    def DeletePage(self, index):
+    def DeletePage(self, index: int):
         assert self._selected_tab is not None
+
         old_selection = self._selected_tab
         is_delete_selection = index == old_selection
         is_delete_before = index < old_selection
+        page = self._tabs[index].page
 
         if index < len(self._tabs):
             del self._tabs[index]
 
         if is_delete_before:
             self._selected_tab -= 1
-            self.Recalculate()
-            return
-
-        if is_delete_selection:
+        elif is_delete_selection:
             new_count = len(self._tabs)
             new_index = old_selection
             if new_index >= new_count:
@@ -357,7 +357,10 @@ class TabsCtrl(wx.Control):
                 new_index = None
 
             self.SetSelection(new_index)
+
         self.Recalculate()
+        event = TabsCtrlPageDroppedEvent(page=page)
+        wx.PostEvent(self, event)
 
     def NextPage(self):
         count = len(self._tabs)
