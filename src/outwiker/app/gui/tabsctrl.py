@@ -24,6 +24,7 @@ TAB_STATE_HOVER = 1
 TAB_STATE_SELECTED = 2
 TAB_CLOSE_BUTTON_STATE_NORMAL = 0
 TAB_CLOSE_BUTTON_STATE_HOVER = 1
+TAB_CLOSE_BUTTON_STATE_DOWNED = 2
 
 
 logger = logging.getLogger("outwiker.app.gui.tabsctrl2")
@@ -61,7 +62,7 @@ class TabsCtrl(wx.Control):
         self.Bind(wx.EVT_SIZE, handler=self._onSize)
         self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
 
-        self._layout()
+        self.Recalculate()
 
     def _clear_tabs_status(self) -> None:
         self._lbutton_downed_tab = None
@@ -80,7 +81,7 @@ class TabsCtrl(wx.Control):
     def SetForegroundColour(self, colour):
         super().SetForegroundColour(colour)
 
-    def _layout(self):
+    def Recalculate(self):
         self._calc_geometry()
         self.SetMinSize((-1, self._geometry.full_height))
         rows_count = self._geometry.rows_count
@@ -95,7 +96,7 @@ class TabsCtrl(wx.Control):
         self._geometry.calc(self._tabs, self.GetClientSize()[0], text_height)
 
     def _onSize(self, event: wx.SizeEvent) -> None:
-        self._layout()
+        self.Recalculate()
         self.Refresh(False)
 
     def _onMouseLeaveWindow(self, event: wx.MouseEvent) -> None:
@@ -108,16 +109,17 @@ class TabsCtrl(wx.Control):
             event.GetX(), event.GetY()
         )
         self._lbutton_downed_close_button = close_button_number
+        self._hovered_tab = self._find_tab_by_coord(event.GetX(), event.GetY())
 
         if close_button_number is None:
             tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
             self._lbutton_downed_tab = tab_number
 
     def _onLeftButtonUp(self, event: wx.MouseEvent) -> None:
+        # Click on the close button
         close_button_number = self._find_close_button_by_coord(
             event.GetX(), event.GetY()
         )
-
         if (
             close_button_number is not None
             and close_button_number == self._lbutton_downed_close_button
@@ -126,6 +128,7 @@ class TabsCtrl(wx.Control):
             self.DeletePage(close_button_number)
             return
 
+        # Click on the tab
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
         if (
             tab_number is not None
@@ -169,14 +172,18 @@ class TabsCtrl(wx.Control):
             event.GetX(), event.GetY()
         )
 
+        old_downed_close_button = self._lbutton_downed_close_button
+        if self._hovered_close_button is None:
+            self._lbutton_downed_close_button = None
+
         if old_hovered_tab != self._hovered_tab:
             if old_hovered_tab is not None:
                 self._refresh_tab(old_hovered_tab)
             if self._hovered_tab is not None:
                 self._refresh_tab(self._hovered_tab)
-        elif (
-            self._hovered_tab is not None
-            and old_hovered_close_button != self._hovered_close_button
+        elif self._hovered_tab is not None and (
+            old_hovered_close_button != self._hovered_close_button
+            or old_downed_close_button != self._lbutton_downed_close_button
         ):
             self._refresh_tab(self._hovered_tab)
 
@@ -238,20 +245,20 @@ class TabsCtrl(wx.Control):
         if len(self._tabs) == 1:
             self.SetSelection(0)
 
-        self._layout()
+        self.Recalculate()
 
     def InsertPage(self, index: int, title: str, page: WikiPage, select: bool):
         self._tabs.insert(index, TabInfo(page, title))
         if select:
             self.SetSelection(index)
 
-        self._layout()
+        self.Recalculate()
         # self._updateHistoryButtons()
 
     def Clear(self):
         self.SetSelection(None)
         self._tabs.clear()
-        self._layout()
+        self.Recalculate()
         # self._updateHistoryButtons()
 
     def GetPageText(self, index):
@@ -262,11 +269,11 @@ class TabsCtrl(wx.Control):
         if page_index is not None:
             self.RenameTab(page_index, title)
 
-        self._layout()
+        self.Recalculate()
 
     def RenameTab(self, index, title):
         self._tabs[index].title = title
-        self._layout()
+        self.Recalculate()
 
     def GetPage(self, index: Optional[int]) -> Optional[WikiPage]:
         return self._tabs[index].page if index is not None else None
@@ -335,7 +342,7 @@ class TabsCtrl(wx.Control):
 
         if is_delete_before:
             self._selected_tab -= 1
-            self._layout()
+            self.Recalculate()
             return
 
         if is_delete_selection:
@@ -348,7 +355,7 @@ class TabsCtrl(wx.Control):
                 new_index = None
 
             self.SetSelection(new_index)
-        self._layout()
+        self.Recalculate()
 
     def NextPage(self):
         count = len(self._tabs)
@@ -412,6 +419,9 @@ class TabsCtrl(wx.Control):
                 close_button_state = TAB_CLOSE_BUTTON_STATE_NORMAL
                 if n == self._hovered_close_button:
                     close_button_state = TAB_CLOSE_BUTTON_STATE_HOVER
+
+                if n == self._lbutton_downed_close_button:
+                    close_button_state = TAB_CLOSE_BUTTON_STATE_DOWNED
 
                 self._tab_render.paint(dc, tab, state, close_button_state)
 
@@ -642,6 +652,11 @@ class TabRender:
             close_botton_size,
             close_botton_size,
         )
+        self._close_button_downed_bmp = readImage(
+            getBuiltinImagePath("close_tab_downed.svg"),
+            close_botton_size,
+            close_botton_size,
+        )
 
         # Main icons for notes
         self._defaultIcon = getBuiltinImagePath("page.svg")
@@ -701,6 +716,12 @@ class TabRender:
         if close_button_state == TAB_CLOSE_BUTTON_STATE_HOVER:
             dc.DrawBitmap(
                 self._close_button_hover_bmp,
+                tab.close_button_left + tab.left,
+                tab.close_button_top + tab.top,
+            )
+        elif close_button_state == TAB_CLOSE_BUTTON_STATE_DOWNED:
+            dc.DrawBitmap(
+                self._close_button_downed_bmp,
                 tab.close_button_left + tab.left,
                 tab.close_button_top + tab.top,
             )
