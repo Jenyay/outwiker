@@ -22,6 +22,8 @@ TabsCtrlContextMenuEvent, EVT_TABSCTRL_CONTEXT_MENU = wx.lib.newevent.NewEvent()
 TAB_STATE_NORMAL = 0
 TAB_STATE_HOVER = 1
 TAB_STATE_SELECTED = 2
+TAB_CLOSE_BUTTON_STATE_NORMAL = 0
+TAB_CLOSE_BUTTON_STATE_HOVER = 1
 
 
 logger = logging.getLogger("outwiker.app.gui.tabsctrl2")
@@ -41,6 +43,7 @@ class TabsCtrl(wx.Control):
         self._rbutton_downed_tab: Optional[int] = None
         self._selected_tab: Optional[int] = None
         self._hovered_tab: Optional[int] = None
+        self._hovered_close_button: Optional[int] = None
 
         self._current_rows_count = 0
 
@@ -65,9 +68,10 @@ class TabsCtrl(wx.Control):
         self._lbutton_downed_close_button = None
         self._rbutton_downed_tab = None
 
-        if self._hovered_tab is not None:
-            self._refresh_tab(self._hovered_tab)
+        if self._hovered_tab is not None or self._hovered_close_button is not None:
             self._hovered_tab = None
+            self._hovered_close_button = None
+            self._refresh_tab(self._hovered_tab)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -99,7 +103,9 @@ class TabsCtrl(wx.Control):
     def _onLeftButtonDown(self, event: wx.MouseEvent) -> None:
         self._clear_tabs_status()
 
-        close_button_number = self._find_close_button_by_coord(event.GetX(), event.GetY())
+        close_button_number = self._find_close_button_by_coord(
+            event.GetX(), event.GetY()
+        )
         self._lbutton_downed_close_button = close_button_number
 
         if close_button_number is None:
@@ -107,9 +113,14 @@ class TabsCtrl(wx.Control):
             self._lbutton_downed_tab = tab_number
 
     def _onLeftButtonUp(self, event: wx.MouseEvent) -> None:
-        close_button_number = self._find_close_button_by_coord(event.GetX(), event.GetY())
+        close_button_number = self._find_close_button_by_coord(
+            event.GetX(), event.GetY()
+        )
 
-        if close_button_number is not None and close_button_number == self._lbutton_downed_close_button:
+        if (
+            close_button_number is not None
+            and close_button_number == self._lbutton_downed_close_button
+        ):
             self._clear_tabs_status()
             self.DeletePage(close_button_number)
             return
@@ -151,11 +162,22 @@ class TabsCtrl(wx.Control):
     def _onMouseMove(self, event: wx.MouseEvent) -> None:
         old_hovered_tab = self._hovered_tab
         self._hovered_tab = self._find_tab_by_coord(event.GetX(), event.GetY())
+
+        old_hovered_close_button = self._hovered_close_button
+        self._hovered_close_button = self._find_close_button_by_coord(
+            event.GetX(), event.GetY()
+        )
+
         if old_hovered_tab != self._hovered_tab:
             if old_hovered_tab is not None:
                 self._refresh_tab(old_hovered_tab)
             if self._hovered_tab is not None:
                 self._refresh_tab(self._hovered_tab)
+        elif (
+            self._hovered_tab is not None
+            and old_hovered_close_button != self._hovered_close_button
+        ):
+            self._refresh_tab(self._hovered_tab)
 
     def _find_tab_by_coord(self, x: int, y: int) -> Optional[int]:
         if self._geometry.geometry is None:
@@ -177,7 +199,12 @@ class TabsCtrl(wx.Control):
             button_top = tab.top + tab.close_button_top
             button_bottom = tab.top + tab.close_button_bottom
 
-            if x >= button_left and x <= button_right and y >= button_top and y <= button_bottom:
+            if (
+                x >= button_left
+                and x <= button_right
+                and y >= button_top
+                and y <= button_bottom
+            ):
                 return n
 
         return None
@@ -365,7 +392,9 @@ class TabsCtrl(wx.Control):
         Обработчик события перерисовки вкладок
         """
         with wx.BufferedPaintDC(self) as dc:
-            background_brush = self._brushes.FindOrCreateBrush(self._theme.colorBackground)
+            background_brush = self._brushes.FindOrCreateBrush(
+                self._theme.colorBackground
+            )
             dc.SetBackground(background_brush)
             dc.Clear()
 
@@ -373,18 +402,17 @@ class TabsCtrl(wx.Control):
                 return
 
             for n, tab in enumerate(self._geometry.geometry):
-                # state = (
-                #     TAB_STATE_SELECTED
-                #     if n == self._selected_tab
-                #     else TAB_STATE_NORMAL
-                # )
                 state = TAB_STATE_NORMAL
                 if n == self._selected_tab:
                     state = TAB_STATE_SELECTED
                 elif n == self._hovered_tab:
                     state = TAB_STATE_HOVER
 
-                self._tab_render.paint(dc, tab, state)
+                close_button_state = TAB_CLOSE_BUTTON_STATE_NORMAL
+                if n == self._hovered_close_button:
+                    close_button_state = TAB_CLOSE_BUTTON_STATE_HOVER
+
+                self._tab_render.paint(dc, tab, state, close_button_state)
 
         event.Skip()
 
@@ -507,7 +535,9 @@ class TabsGeometryCalculator:
         if cols_count == 1:
             parent_width_minus_gap = parent_width
         else:
-            parent_width_minus_gap = parent_width - (cols_count - 1) * self.horizontal_gap_between_tabs
+            parent_width_minus_gap = (
+                parent_width - (cols_count - 1) * self.horizontal_gap_between_tabs
+            )
 
         return int(math.floor(parent_width_minus_gap / cols_count))
 
@@ -528,7 +558,9 @@ class TabsGeometryCalculator:
 
         # Shared geometry
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
-        close_button_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE)
+        close_button_size = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
+        )
 
         height = 2 * self.vertical_margin + max(
             text_height, icon_size, close_button_size
@@ -596,17 +628,28 @@ class TabRender:
         self._brushes = wx.BrushList()
         self._pens = wx.PenList()
         self._title_font = wx.NullFont
-        close_botton_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE)
-        self._close_button_normal_bmp = readImage(getBuiltinImagePath("close_tab_normal.svg"), close_botton_size, close_botton_size)
+        close_botton_size = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
+        )
+        self._close_button_normal_bmp = readImage(
+            getBuiltinImagePath("close_tab_normal.svg"),
+            close_botton_size,
+            close_botton_size,
+        )
+        self._close_button_hover_bmp = readImage(
+            getBuiltinImagePath("close_tab_hover.svg"),
+            close_botton_size,
+            close_botton_size,
+        )
 
         # Main icons for notes
         self._defaultIcon = getBuiltinImagePath("page.svg")
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
-        self._iconsCache = ImageListCache(
-            self._defaultIcon, icon_size, icon_size
-        )
+        self._iconsCache = ImageListCache(self._defaultIcon, icon_size, icon_size)
 
-    def _load_icon(self, icon: Optional[str], page_path: Optional[str]) -> Optional[int]:
+    def _load_icon(
+        self, icon: Optional[str], page_path: Optional[str]
+    ) -> Optional[int]:
         """
         Добавляет иконку страницы в ImageList и возвращает ее идентификатор.
         Если иконки нет, то возвращает идентификатор иконки по умолчанию
@@ -646,18 +689,26 @@ class TabRender:
             assert bitmap.IsOk()
             dc.DrawBitmap(bitmap, tab.icon_left + tab.left, tab.icon_top + tab.top)
 
-    def _draw_close_button(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+    def _draw_close_button(
+        self, dc: wx.DC, tab: SingleTabGeometry, close_button_state: int
+    ) -> None:
         assert tab.close_button_left is not None
-        assert tab.close_button_right is not None
+        assert tab.close_button_top is not None
+        assert tab.left is not None
+        assert tab.top is not None
 
-        dc.DrawBitmap(self._close_button_normal_bmp, tab.close_button_left + tab.left, tab.close_button_top + tab.top)
-        # close_rect = wx.Rect(
-        #     tab.close_button_left + tab.left,
-        #     tab.close_button_top + tab.top,
-        #     tab.close_button_right - tab.close_button_left,
-        #     tab.close_button_bottom - tab.close_button_top,
-        # )
-        # dc.DrawRectangle(close_rect)
+        if close_button_state == TAB_CLOSE_BUTTON_STATE_HOVER:
+            dc.DrawBitmap(
+                self._close_button_hover_bmp,
+                tab.close_button_left + tab.left,
+                tab.close_button_top + tab.top,
+            )
+        else:
+            dc.DrawBitmap(
+                self._close_button_normal_bmp,
+                tab.close_button_left + tab.left,
+                tab.close_button_top + tab.top,
+            )
 
     def _trim_title(self, dc: wx.DC, title: str, max_width: int) -> str:
         def _get_trimmed_title(title: str, cut_count: int) -> str:
@@ -750,18 +801,22 @@ class TabRender:
             wx.FLOOD_BORDER,
         )
 
-    def paint(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
+    def paint(
+        self, dc: wx.DC, tab: SingleTabGeometry, tab_state: int, close_button_state: int
+    ) -> None:
         font_size = self.get_default_font_size()
         self._title_font = wx.Font(wx.FontInfo(font_size))
         self._title_font.SetWeight(
-            wx.FONTWEIGHT_BOLD if state == TAB_STATE_SELECTED else wx.FONTWEIGHT_NORMAL
+            wx.FONTWEIGHT_BOLD
+            if tab_state == TAB_STATE_SELECTED
+            else wx.FONTWEIGHT_NORMAL
         )
 
         self._draw_background(dc, tab)
-        self._draw_tab(dc, tab, state)
+        self._draw_tab(dc, tab, tab_state)
         self._draw_icon(dc, tab)
-        self._draw_title(dc, tab, state)
-        self._draw_close_button(dc, tab)
+        self._draw_title(dc, tab, tab_state)
+        self._draw_close_button(dc, tab, close_button_state)
 
     def get_default_font_size(self) -> int:
         return wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize()
