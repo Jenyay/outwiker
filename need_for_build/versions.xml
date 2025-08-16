@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="4.0.0.957" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="4.0.0.956" status="alpha" date="2025-08-16">
         <changes>
             <change>New tabs that can be arranged in multiple rows.</change>
