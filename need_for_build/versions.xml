@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.955" status="dev">
+    <version number="4.0.0.956" status="alpha" date="2025-08-16">
         <changes>
+            <change>New tabs that can be arranged in multiple rows.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Новые вкладки, которые могут располагаться в несколько рядов.</change>
         </changes>
     </version>
 
