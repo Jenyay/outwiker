@@ -7,10 +7,15 @@ from outwiker.gui.theme import Theme
 
 
 @pytest.fixture
-def calculator() -> TabsGeometryCalculator:
-    calculator = TabsGeometryCalculator(Theme())
-    calculator.min_width = 25 - calculator.horizontal_gap_between_tabs
-    calculator.max_width = 100 - calculator.horizontal_gap_between_tabs
+def theme() -> Theme:
+    return Theme()
+
+
+@pytest.fixture
+def calculator(theme) -> TabsGeometryCalculator:
+    calculator = TabsGeometryCalculator(theme)
+    calculator.min_width = 25 - calculator.horizontal_gap_after_tab
+    calculator.max_width = 100 - calculator.horizontal_gap_after_tab
     return calculator
 
 
@@ -24,16 +29,22 @@ def test_empty(calculator: TabsGeometryCalculator):
 
 
 @pytest.mark.parametrize("tabs_count", [1, 2, 3, 4])
-def test_single_line_max_width(calculator: TabsGeometryCalculator, tabs_count: int):
+def test_single_line_max_width(
+    calculator: TabsGeometryCalculator, theme: Theme, tabs_count: int
+):
     text_height = 12
-    parent_width = 4 * calculator.max_width
+    parent_width = (
+        4 * calculator.max_width
+        + calculator.horizontal_gap_after_tab
+        + theme.get(Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE)
+    )
     tabs: List[TabInfo] = []
     for _ in range(tabs_count):
         tabs.append(TabInfo(None, "title"))
 
     result = calculator.calc(tabs, parent_width, text_height)
 
-    min_width = calculator.max_width - calculator.horizontal_gap_between_tabs
+    min_width = calculator.max_width - calculator.horizontal_gap_after_tab
     for n in range(tabs_count):
         assert result[n].width <= calculator.max_width and result[n].width >= min_width
         assert result[n].top == result[0].top
@@ -68,10 +79,10 @@ def test_right_border(calculator: TabsGeometryCalculator):
     assert result[-1].right <= parent_width
 
 
-def test_two_rows(calculator: TabsGeometryCalculator):
+def test_two_rows(calculator: TabsGeometryCalculator, theme: Theme):
     tabs_count = 3
     text_height = 12
-    parent_width = 55
+    parent_width = 55 + calculator.horizontal_gap_after_tab + theme.get(Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE)
     tabs: List[TabInfo] = []
     for _ in range(tabs_count):
         tabs.append(TabInfo(None, "title"))

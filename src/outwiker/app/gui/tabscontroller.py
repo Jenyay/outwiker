@@ -2,18 +2,22 @@
 
 import os.path
 
-import wx
-
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 from outwiker.app.gui.dropfiles import PageItemsDropFilesTarget
 from outwiker.app.services.messages import showError
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
-from .tabsctrl import EVT_TABSCTRL_CONTEXT_MENU, EVT_TABSCTRL_PAGE_CHANGED, EVT_TABSCTRL_PAGE_DROPPED
+from .tabsctrl import (
+    EVT_TABSCTRL_CONTEXT_MENU,
+    EVT_TABSCTRL_PAGE_CHANGED,
+    EVT_TABSCTRL_PAGE_DROPPED,
+    EVT_TABSCTRL_ADD_NEW_TAB,
+    TabsCtrl,
+)
 
 
 class TabsController:
-    def __init__(self, tabsCtrl, application):
+    def __init__(self, tabsCtrl: TabsCtrl, application):
         """
         tabsCtrl - экземпляр класса TabsCtrl
         application - экземпляр класса Application
@@ -27,9 +31,7 @@ class TabsController:
         self._tabSelectedSection = CONFIG_GENERAL_SECTION
         self._tabSelectedOption = "selectedtab"
 
-        self._dropTarget = PageItemsDropFilesTarget(
-            self._application, self._tabsCtrl
-        )
+        self._dropTarget = PageItemsDropFilesTarget(self._application, self._tabsCtrl)
 
         self.__bindEvents()
 
@@ -45,6 +47,21 @@ class TabsController:
 
         tab_index = 0 if selectedTab is None else selectedTab + 1
         self._tabsCtrl.InsertPage(tab_index, self.__getTitle(page), page, select)
+        self.__saveTabs()
+
+    def addNewTab(self, page, select):
+        """
+        Открыть страницу в новой вкладке (вкладку добавить в конец)
+        page - страница, которую надо открыть в новой вкладке
+        select - нужно ли сразу выбрать новую вкладку
+        """
+        assert page is None or page.root == self._application.wikiroot
+
+        # selectedTab = self._tabsCtrl.GetSelection()
+
+        # tab_index = 0 if selectedTab is None else selectedTab + 1
+        # self._tabsCtrl.InsertPage(tab_index, self.__getTitle(page), page, select)
+        self._tabsCtrl.AddPage(page, self.__getTitle(page), select)
         self.__saveTabs()
 
     def closeTab(self, index):
@@ -122,18 +139,16 @@ class TabsController:
         self._tabsCtrl.HistoryForward()
 
     def __bindGuiEvents(self):
-        self._tabsCtrl.Bind(EVT_TABSCTRL_PAGE_CHANGED, self.__onTabChanged)
-        self._tabsCtrl.Bind(
-            EVT_TABSCTRL_PAGE_DROPPED,
-            self.__onTabDropped)
-        self._tabsCtrl.Bind(EVT_TABSCTRL_CONTEXT_MENU, self.__onPopupMenu)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_PAGE_DROPPED, handler=self.__onTabDropped)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_CONTEXT_MENU, handler=self.__onPopupMenu)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
 
     def __unbindGuiEvents(self):
         self._tabsCtrl.Unbind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)
-        self._tabsCtrl.Unbind(
-            EVT_TABSCTRL_PAGE_DROPPED,
-            handler=self.__onTabDropped)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_PAGE_DROPPED, handler=self.__onTabDropped)
         self._tabsCtrl.Unbind(EVT_TABSCTRL_CONTEXT_MENU, handler=self.__onPopupMenu)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
 
     def __bindEvents(self):
         self._application.onWikiOpen += self.__onWikiOpen
@@ -143,7 +158,6 @@ class TabsController:
         self._application.onTreeUpdate += self.__onPageUpdate
         self._application.onPageRemove += self.__onPageUpdate
         self._application.onEndTreeUpdate += self.__onPageUpdate
-
         self.__bindGuiEvents()
 
     def __unbindEvents(self):
@@ -154,8 +168,10 @@ class TabsController:
         self._application.onTreeUpdate -= self.__onPageUpdate
         self._application.onPageRemove -= self.__onPageUpdate
         self._application.onEndTreeUpdate -= self.__onPageUpdate
-
         self.__unbindGuiEvents()
+
+    def __onAddNewTab(self, event):
+        self.addNewTab(self._application.selectedPage, True)
 
     def __onPopupMenu(self, event):
         popupPage = event.page

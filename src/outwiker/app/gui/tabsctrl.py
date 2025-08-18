@@ -20,6 +20,7 @@ from outwiker.gui.images import readImage
 TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
 TabsCtrlPageDroppedEvent, EVT_TABSCTRL_PAGE_DROPPED = wx.lib.newevent.NewEvent()
 TabsCtrlContextMenuEvent, EVT_TABSCTRL_CONTEXT_MENU = wx.lib.newevent.NewEvent()
+TabsCtrlAddNewTabEvent, EVT_TABSCTRL_ADD_NEW_TAB = wx.lib.newevent.NewEvent()
 
 TAB_STATE_NORMAL = 0
 TAB_STATE_HOVER = 1
@@ -27,6 +28,9 @@ TAB_STATE_SELECTED = 2
 TAB_CLOSE_BUTTON_STATE_NORMAL = 0
 TAB_CLOSE_BUTTON_STATE_HOVER = 1
 TAB_CLOSE_BUTTON_STATE_DOWNED = 2
+ADD_BUTTON_STATE_NORMAL = 0
+ADD_BUTTON_STATE_HOVER = 1
+ADD_BUTTON_STATE_DOWNED = 2
 
 
 logger = logging.getLogger("outwiker.app.gui.tabsctrl2")
@@ -47,6 +51,8 @@ class TabsCtrl(wx.Control):
         self._selected_tab: Optional[int] = None
         self._hovered_tab: Optional[int] = None
         self._hovered_close_button: Optional[int] = None
+
+        self._add_button_state = ADD_BUTTON_STATE_NORMAL
 
         self._current_rows_count = 0
 
@@ -70,6 +76,10 @@ class TabsCtrl(wx.Control):
         self._lbutton_downed_tab = None
         self._lbutton_downed_close_button = None
         self._rbutton_downed_tab = None
+
+        if self._add_button_state != ADD_BUTTON_STATE_NORMAL:
+            self._add_button_state = ADD_BUTTON_STATE_NORMAL
+            self._refresh_add_button()
 
         old_hovered_tab = self._hovered_tab
         if self._hovered_tab is not None or self._hovered_close_button is not None:
@@ -107,6 +117,10 @@ class TabsCtrl(wx.Control):
     def _onLeftButtonDown(self, event: wx.MouseEvent) -> None:
         self._clear_tabs_status()
 
+        if self._is_over_add_button(event.GetX(), event.GetY()):
+            self._add_button_state = ADD_BUTTON_STATE_DOWNED
+            return
+
         close_button_number = self._find_close_button_by_coord(
             event.GetX(), event.GetY()
         )
@@ -118,6 +132,16 @@ class TabsCtrl(wx.Control):
             self._lbutton_downed_tab = tab_number
 
     def _onLeftButtonUp(self, event: wx.MouseEvent) -> None:
+        # Click on the "Add new tab" button
+        if (
+            self._add_button_state == ADD_BUTTON_STATE_DOWNED
+            and self._is_over_add_button(event.GetX(), event.GetY())
+        ):
+            new_event = TabsCtrlAddNewTabEvent()
+            wx.PostEvent(self, new_event)
+            self._clear_tabs_status()
+            return
+
         # Click on the close button
         close_button_number = self._find_close_button_by_coord(
             event.GetX(), event.GetY()
@@ -178,10 +202,24 @@ class TabsCtrl(wx.Control):
             event.GetX(), event.GetY()
         )
 
+        # "Add new tab" button
+        old_add_button_state = self._add_button_state
+        is_add_button_hover = self._is_over_add_button(event.GetX(), event.GetY())
+        if old_add_button_state == ADD_BUTTON_STATE_NORMAL and is_add_button_hover:
+            self._add_button_state = ADD_BUTTON_STATE_HOVER
+            self._refresh_add_button()
+        elif (
+            old_add_button_state != ADD_BUTTON_STATE_NORMAL and not is_add_button_hover
+        ):
+            self._add_button_state = ADD_BUTTON_STATE_NORMAL
+            self._refresh_add_button()
+
+        # "Close" button
         old_downed_close_button = self._lbutton_downed_close_button
         if self._hovered_close_button is None:
             self._lbutton_downed_close_button = None
 
+        # Tab
         if old_hovered_tab != self._hovered_tab:
             if old_hovered_tab is not None:
                 self._refresh_tab(old_hovered_tab)
@@ -223,6 +261,22 @@ class TabsCtrl(wx.Control):
 
         return None
 
+    def _is_over_add_button(self, x: int, y: int) -> bool:
+        if self._geometry.geometry is None:
+            return False
+
+        assert self._geometry.add_button_left is not None
+        assert self._geometry.add_button_right is not None
+        assert self._geometry.add_button_top is not None
+        assert self._geometry.add_button_bottom is not None
+
+        return (
+            x >= self._geometry.add_button_left
+            and x <= self._geometry.add_button_right
+            and y >= self._geometry.add_button_top
+            and y <= self._geometry.add_button_bottom
+        )
+
     def _updateHistoryButtons(self):
         """
         Активировать или дезактивировать кнопки Вперед / Назад
@@ -246,10 +300,12 @@ class TabsCtrl(wx.Control):
     def HitTest(self, coord: Tuple[int, int]) -> Optional[WikiPage]:
         return self.GetPage(self._find_tab_by_coord(coord[0], coord[1]))
 
-    def AddPage(self, page: Optional[WikiPage], title: str):
+    def AddPage(self, page: Optional[WikiPage], title: str, select: bool = False):
         self._tabs.append(TabInfo(page, title))
         if len(self._tabs) == 1:
             self.SetSelection(0)
+        elif select:
+            self.SetSelection(len(self._tabs) - 1)
 
         self.Recalculate()
 
@@ -302,6 +358,17 @@ class TabsCtrl(wx.Control):
             self._calc_geometry()
             tab = self._geometry.geometry[page_index]
             self.Refresh(False, wx.Rect(tab.left, tab.top, tab.width, tab.height))
+
+    def _refresh_add_button(self):
+        self.Refresh(
+            False,
+            wx.Rect(
+                self._geometry.add_button_left,
+                self._geometry.add_button_top,
+                self._geometry.add_button_right - self._geometry.add_button_left,
+                self._geometry.add_button_bottom - self._geometry.add_button_top,
+            ),
+        )
 
     def _getCurrentHistory(self):
         """
@@ -431,7 +498,9 @@ class TabsCtrl(wx.Control):
                 if n == self._lbutton_downed_close_button:
                     close_button_state = TAB_CLOSE_BUTTON_STATE_DOWNED
 
-                self._tab_render.paint(dc, tab, state, close_button_state)
+                self._tab_render.draw_tab(dc, tab, state, close_button_state)
+
+            self._tab_render.draw_add_button(dc, self._geometry, self._add_button_state)
 
         event.Skip()
 
@@ -535,7 +604,12 @@ class TabsGeometryCalculator:
         self.gap_text_close_button = 6
         self.vertical_gap_between_tabs = 4
         self.horizontal_gap_after_tab = 4
+
         self._geometry: Optional[List[SingleTabGeometry]] = None
+        self.add_button_left: Optional[int] = None
+        self.add_button_right: Optional[int] = None
+        self.add_button_top: Optional[int] = None
+        self.add_button_bottom: Optional[int] = None
 
     @property
     def geometry(self) -> Optional[List[SingleTabGeometry]]:
@@ -584,13 +658,12 @@ class TabsGeometryCalculator:
         return width
 
     def _calc_rect(
-        self, parent_width: int, tabs_count: int, tab_height: int
+            self, parent_width: int, tabs_count: int, tab_height: int, add_button_size: int
     ) -> List[TabRect]:
         if tabs_count == 0:
             return []
 
-        add_button_height = tab_height
-        add_button_width = add_button_height
+        add_button_width = add_button_size
         max_width = parent_width - self.horizontal_gap_after_tab - add_button_width
         width = self._calc_width(tabs_count, max_width)
 
@@ -622,6 +695,9 @@ class TabsGeometryCalculator:
         close_button_size = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
         )
+        add_button_size = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE
+        )
 
         height = 2 * self.vertical_margin + max(
             text_height, icon_size, close_button_size
@@ -636,12 +712,12 @@ class TabsGeometryCalculator:
         if height % 2 == 0:
             height += 1
 
-        rect_list = self._calc_rect(parent_width, len(tabs), height)
+        center_vertical = height // 2
+        rect_list = self._calc_rect(parent_width, len(tabs), height, add_button_size)
 
         self._geometry = []
         for info, rect in zip(tabs, rect_list):
             geometry = SingleTabGeometry()
-            center_vertical = height // 2
 
             geometry.left = rect.left
             geometry.right = rect.right
@@ -668,6 +744,20 @@ class TabsGeometryCalculator:
 
             self._geometry.append(geometry)
 
+        # Calculate "Add new tab" button position
+        if self._geometry:
+            self.add_button_left = (
+                self._geometry[-1].right + self.horizontal_gap_after_tab
+            )
+            self.add_button_top = (
+                self._geometry[-1].top + center_vertical - add_button_size // 2
+            )
+        else:
+            self.add_button_left = 0
+            self.add_button_top = 0
+
+        self.add_button_right = self.add_button_left + add_button_size
+        self.add_button_bottom = self.add_button_top + add_button_size
         return self._geometry
 
 
@@ -677,23 +767,45 @@ class TabRender:
         self._brushes = wx.BrushList()
         self._pens = wx.PenList()
         self._title_font = wx.NullFont
-        close_botton_size = self._theme.get(
+
+        # "Close" button
+        close_button_size = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
         )
         self._close_button_normal_bmp = readImage(
             getBuiltinImagePath("close_tab_normal.svg"),
-            close_botton_size,
-            close_botton_size,
+            close_button_size,
+            close_button_size,
         )
         self._close_button_hover_bmp = readImage(
             getBuiltinImagePath("close_tab_hover.svg"),
-            close_botton_size,
-            close_botton_size,
+            close_button_size,
+            close_button_size,
         )
         self._close_button_downed_bmp = readImage(
             getBuiltinImagePath("close_tab_downed.svg"),
-            close_botton_size,
-            close_botton_size,
+            close_button_size,
+            close_button_size,
+        )
+
+        # "Add new tab" button
+        add_button_size = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE
+        )
+        self._add_button_normal_bmp = readImage(
+            getBuiltinImagePath("add_tab_normal.svg"),
+            add_button_size,
+            add_button_size,
+        )
+        self._add_button_hover_bmp = readImage(
+            getBuiltinImagePath("add_tab_hover.svg"),
+            add_button_size,
+            add_button_size,
+        )
+        self._add_button_downed_bmp = readImage(
+            getBuiltinImagePath("add_tab_downed.svg"),
+            add_button_size,
+            add_button_size,
         )
 
         # Main icons for notes
@@ -861,7 +973,7 @@ class TabRender:
             wx.FLOOD_BORDER,
         )
 
-    def paint(
+    def draw_tab(
         self, dc: wx.DC, tab: SingleTabGeometry, tab_state: int, close_button_state: int
     ) -> None:
         font_size = self.get_default_font_size()
@@ -877,6 +989,28 @@ class TabRender:
         self._draw_icon(dc, tab)
         self._draw_title(dc, tab, tab_state)
         self._draw_close_button(dc, tab, close_button_state)
+
+    def draw_add_button(
+        self, dc: wx.DC, geometry: TabsGeometryCalculator, add_button_state: int
+    ) -> None:
+        if add_button_state == ADD_BUTTON_STATE_HOVER:
+            dc.DrawBitmap(
+                self._add_button_hover_bmp,
+                geometry.add_button_left,
+                geometry.add_button_top,
+            )
+        elif add_button_state == ADD_BUTTON_STATE_DOWNED:
+            dc.DrawBitmap(
+                self._add_button_downed_bmp,
+                geometry.add_button_left,
+                geometry.add_button_top,
+            )
+        else:
+            dc.DrawBitmap(
+                self._add_button_normal_bmp,
+                geometry.add_button_left,
+                geometry.add_button_top,
+            )
 
     def get_default_font_size(self) -> int:
         return wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetPointSize()
