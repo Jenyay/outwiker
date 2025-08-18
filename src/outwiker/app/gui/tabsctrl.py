@@ -102,6 +102,8 @@ class TabsCtrl(wx.Control):
             self._current_rows_count = rows_count
             self.GetParent().Layout()
 
+        self.Refresh(False)
+
     def _calc_geometry(self):
         with wx.ClientDC(self) as dc:
             text_height = self._tab_render.get_text_height(dc)
@@ -109,7 +111,6 @@ class TabsCtrl(wx.Control):
 
     def _onSize(self, event: wx.SizeEvent) -> None:
         self.Recalculate()
-        self.Refresh(False)
 
     def _onMouseLeaveWindow(self, event: wx.MouseEvent) -> None:
         self._clear_tabs_status()
@@ -500,8 +501,6 @@ class TabsCtrl(wx.Control):
 
             self._tab_render.draw_add_button(dc, self._geometry, self._add_button_state)
 
-        event.Skip()
-
 
 class TabInfo:
     def __init__(self, page, title: str):
@@ -599,6 +598,7 @@ class TabsGeometryCalculator:
 
         self._geometry: Optional[List[SingleTabGeometry]] = None
         self.add_button: Optional[Rect] = None
+        self.rows_count = 0
 
     @property
     def geometry(self) -> Optional[List[SingleTabGeometry]]:
@@ -614,14 +614,6 @@ class TabsGeometryCalculator:
             return 0
 
         return self._geometry[-1].bottom - self._geometry[0].top
-
-    @property
-    def rows_count(self) -> int:
-        """Return number of rows in the geometry"""
-        if self._geometry is None:
-            return 0
-
-        return len(self._geometry)
 
     def _calc_width(self, tabs_count: int, max_width: int) -> int:
         if max_width <= self.min_width:
@@ -648,9 +640,9 @@ class TabsGeometryCalculator:
 
     def _calc_rect(
             self, parent_width: int, tabs_count: int, tab_height: int, add_button_size: int
-    ) -> List[Rect]:
+    ) -> Tuple[List[Rect], int]:
         if tabs_count == 0:
-            return []
+            return ([], 0)
 
         add_button_width = add_button_size
         max_width = parent_width - self.horizontal_gap_after_tab - add_button_width
@@ -660,10 +652,12 @@ class TabsGeometryCalculator:
         rect_list = []
         current_left = 0
         current_top = 0
+        rows_count = 1
         for n in range(tabs_count):
             if current_left + width > max_width:
                 current_left = 0
                 current_top += tab_height + self.vertical_gap_between_tabs
+                rows_count += 1
 
             rect = Rect(
                 current_left,
@@ -674,7 +668,7 @@ class TabsGeometryCalculator:
             rect_list.append(rect)
             current_left += width + self.horizontal_gap_after_tab
 
-        return rect_list
+        return (rect_list, rows_count)
 
     def calc(
         self, tabs: List[TabInfo], parent_width: int, text_height: int
@@ -702,7 +696,7 @@ class TabsGeometryCalculator:
             height += 1
 
         center_vertical = height // 2
-        rect_list = self._calc_rect(parent_width, len(tabs), height, add_button_size)
+        rect_list, self.rows_count = self._calc_rect(parent_width, len(tabs), height, add_button_size)
 
         self._geometry = []
         for info, rect in zip(tabs, rect_list):
