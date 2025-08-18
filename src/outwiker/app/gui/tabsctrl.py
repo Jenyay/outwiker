@@ -246,10 +246,10 @@ class TabsCtrl(wx.Control):
             return None
 
         for n, tab in enumerate(self._geometry.geometry):
-            button_left = tab.left + tab.close_button_left
-            button_right = tab.left + tab.close_button_right
-            button_top = tab.top + tab.close_button_top
-            button_bottom = tab.top + tab.close_button_bottom
+            button_left = tab.close_button.left
+            button_right = tab.close_button.right
+            button_top = tab.close_button.top
+            button_bottom = tab.close_button.bottom
 
             if (
                 x >= button_left
@@ -265,16 +265,13 @@ class TabsCtrl(wx.Control):
         if self._geometry.geometry is None:
             return False
 
-        assert self._geometry.add_button_left is not None
-        assert self._geometry.add_button_right is not None
-        assert self._geometry.add_button_top is not None
-        assert self._geometry.add_button_bottom is not None
+        assert self._geometry.add_button is not None
 
         return (
-            x >= self._geometry.add_button_left
-            and x <= self._geometry.add_button_right
-            and y >= self._geometry.add_button_top
-            and y <= self._geometry.add_button_bottom
+            x >= self._geometry.add_button.left
+            and x <= self._geometry.add_button.right
+            and y >= self._geometry.add_button.top
+            and y <= self._geometry.add_button.bottom
         )
 
     def _updateHistoryButtons(self):
@@ -360,13 +357,14 @@ class TabsCtrl(wx.Control):
             self.Refresh(False, wx.Rect(tab.left, tab.top, tab.width, tab.height))
 
     def _refresh_add_button(self):
+        assert self._geometry.add_button is not None
         self.Refresh(
             False,
             wx.Rect(
-                self._geometry.add_button_left,
-                self._geometry.add_button_top,
-                self._geometry.add_button_right - self._geometry.add_button_left,
-                self._geometry.add_button_bottom - self._geometry.add_button_top,
+                self._geometry.add_button.left,
+                self._geometry.add_button.top,
+                self._geometry.add_button.width,
+                self._geometry.add_button.height,
             ),
         )
 
@@ -540,7 +538,7 @@ class SingleTabGeometry:
         self.rounding_radius = 8
         self.title: Optional[str] = None
         self.page_path: Optional[str] = None
-        self.icon: Optional[str] = None
+        self.icon_file: Optional[str] = None
 
         # Coordinates inside a parent window
         self.left: Optional[int] = None
@@ -548,19 +546,11 @@ class SingleTabGeometry:
         self.top: Optional[int] = None
         self.bottom: Optional[int] = None
 
-        # Coordinates inside the tab
-        self.icon_left: Optional[int] = None
-        self.icon_right: Optional[int] = None
-        self.icon_top: Optional[int] = None
-        self.icon_bottom: Optional[int] = None
+        self.icon: Optional[Rect] = None
+        self.close_button: Optional[Rect] = None
 
         self.text_left: Optional[int] = None
         self.text_right: Optional[int] = None
-
-        self.close_button_left: Optional[int] = None
-        self.close_button_right: Optional[int] = None
-        self.close_button_top: Optional[int] = None
-        self.close_button_bottom: Optional[int] = None
 
     @property
     def height(self):
@@ -580,15 +570,17 @@ class SingleTabGeometry:
 
 
 @dataclass
-class TabRect:
+class Rect:
     left: int
     right: int
     top: int
     bottom: int
 
+    @property
     def width(self) -> int:
         return self.right - self.left
 
+    @property
     def height(self) -> int:
         return self.bottom - self.top
 
@@ -606,10 +598,7 @@ class TabsGeometryCalculator:
         self.horizontal_gap_after_tab = 4
 
         self._geometry: Optional[List[SingleTabGeometry]] = None
-        self.add_button_left: Optional[int] = None
-        self.add_button_right: Optional[int] = None
-        self.add_button_top: Optional[int] = None
-        self.add_button_bottom: Optional[int] = None
+        self.add_button: Optional[Rect] = None
 
     @property
     def geometry(self) -> Optional[List[SingleTabGeometry]]:
@@ -659,7 +648,7 @@ class TabsGeometryCalculator:
 
     def _calc_rect(
             self, parent_width: int, tabs_count: int, tab_height: int, add_button_size: int
-    ) -> List[TabRect]:
+    ) -> List[Rect]:
         if tabs_count == 0:
             return []
 
@@ -676,7 +665,7 @@ class TabsGeometryCalculator:
                 current_left = 0
                 current_top += tab_height + self.vertical_gap_between_tabs
 
-            rect = TabRect(
+            rect = Rect(
                 current_left,
                 current_left + width,
                 current_top,
@@ -726,38 +715,42 @@ class TabsGeometryCalculator:
 
             geometry.title = info.title
             geometry.page_path = info.page.path if info.page is not None else None
-            geometry.icon = info.page.icon if info.page is not None else None
-            geometry.icon_left = self.horizontal_margin
-            geometry.icon_right = geometry.icon_left + icon_size
-            geometry.icon_top = center_vertical - icon_size // 2
-            geometry.icon_bottom = geometry.icon_top + icon_size
+            geometry.icon_file = info.page.icon if info.page is not None else None
 
-            geometry.close_button_right = rect.width() - self.horizontal_margin
-            geometry.close_button_left = geometry.close_button_right - close_button_size
-            geometry.close_button_top = center_vertical - close_button_size // 2
-            geometry.close_button_bottom = geometry.close_button_top + close_button_size
+            icon_left = self.horizontal_margin + geometry.left
+            icon_right = icon_left + icon_size
+            icon_top = center_vertical - icon_size // 2 + geometry.top
+            icon_bottom = icon_top + icon_size
+            geometry.icon = Rect(icon_left, icon_right, icon_top, icon_bottom)
 
-            geometry.text_left = geometry.icon_right + self.gap_icon_text
+            close_button_right = rect.width - self.horizontal_margin + geometry.left
+            close_button_left = close_button_right - close_button_size
+            close_button_top = center_vertical - close_button_size // 2 + geometry.top
+            close_button_bottom = close_button_top + close_button_size
+            geometry.close_button = Rect(close_button_left, close_button_right, close_button_top, close_button_bottom)
+
+            geometry.text_left = geometry.icon.right + self.gap_icon_text
             geometry.text_right = (
-                geometry.close_button_left - self.gap_text_close_button
+                geometry.close_button.left - self.gap_text_close_button
             )
 
             self._geometry.append(geometry)
 
         # Calculate "Add new tab" button position
         if self._geometry:
-            self.add_button_left = (
+            add_button_left = (
                 self._geometry[-1].right + self.horizontal_gap_after_tab
             )
-            self.add_button_top = (
+            add_button_top = (
                 self._geometry[-1].top + center_vertical - add_button_size // 2
             )
         else:
-            self.add_button_left = 0
-            self.add_button_top = 0
+            add_button_left = 0
+            add_button_top = 0
 
-        self.add_button_right = self.add_button_left + add_button_size
-        self.add_button_bottom = self.add_button_top + add_button_size
+        add_button_right = add_button_left + add_button_size
+        add_button_bottom = add_button_top + add_button_size
+        self.add_button = Rect(add_button_left, add_button_right, add_button_top, add_button_bottom)
         return self._geometry
 
 
@@ -814,7 +807,7 @@ class TabRender:
         self._iconsCache = ImageListCache(self._defaultIcon, icon_size, icon_size)
 
     def _load_icon(
-        self, icon: Optional[str], page_path: Optional[str]
+        self, icon_file: Optional[str], page_path: Optional[str]
     ) -> Optional[int]:
         """
         Добавляет иконку страницы в ImageList и возвращает ее идентификатор.
@@ -823,19 +816,19 @@ class TabRender:
         if page_path is None:
             return None
 
-        if not icon:
+        if not icon_file:
             return self._iconsCache.getDefaultImageId()
 
-        icon = os.path.abspath(icon)
+        icon_file = os.path.abspath(icon_file)
         page_path = os.path.abspath(page_path)
 
         try:
-            if icon.startswith(page_path):
-                imageId = self._iconsCache.replace(icon)
+            if icon_file.startswith(page_path):
+                imageId = self._iconsCache.replace(icon_file)
             else:
-                imageId = self._iconsCache.add(icon)
+                imageId = self._iconsCache.add(icon_file)
         except Exception:
-            logger.error("Invalid icon file: %s", icon)
+            logger.error("Invalid icon file: %s", icon_file)
             imageId = self._iconsCache.getDefaultImageId()
         return imageId
 
@@ -844,42 +837,36 @@ class TabRender:
         return dc.GetTextExtent(text).GetHeight()
 
     def _draw_icon(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
-        assert tab.icon_left is not None
-        assert tab.icon_top is not None
-        assert tab.left is not None
-        assert tab.top is not None
+        assert tab.icon is not None
 
-        icon_id = self._load_icon(tab.icon, tab.page_path)
+        icon_id = self._load_icon(tab.icon_file, tab.page_path)
         if icon_id is not None:
             bitmap = self._iconsCache.getImageList().GetBitmap(icon_id)
             assert bitmap.IsOk()
-            dc.DrawBitmap(bitmap, tab.icon_left + tab.left, tab.icon_top + tab.top)
+            dc.DrawBitmap(bitmap, tab.icon.left, tab.icon.top)
 
     def _draw_close_button(
         self, dc: wx.DC, tab: SingleTabGeometry, close_button_state: int
     ) -> None:
-        assert tab.close_button_left is not None
-        assert tab.close_button_top is not None
-        assert tab.left is not None
-        assert tab.top is not None
+        assert tab.close_button is not None
 
         if close_button_state == TAB_CLOSE_BUTTON_STATE_HOVER:
             dc.DrawBitmap(
                 self._close_button_hover_bmp,
-                tab.close_button_left + tab.left,
-                tab.close_button_top + tab.top,
+                tab.close_button.left,
+                tab.close_button.top,
             )
         elif close_button_state == TAB_CLOSE_BUTTON_STATE_DOWNED:
             dc.DrawBitmap(
                 self._close_button_downed_bmp,
-                tab.close_button_left + tab.left,
-                tab.close_button_top + tab.top,
+                tab.close_button.left,
+                tab.close_button.top,
             )
         else:
             dc.DrawBitmap(
                 self._close_button_normal_bmp,
-                tab.close_button_left + tab.left,
-                tab.close_button_top + tab.top,
+                tab.close_button.left,
+                tab.close_button.top,
             )
 
     def _trim_title(self, dc: wx.DC, title: str, max_width: int) -> str:
@@ -900,17 +887,15 @@ class TabRender:
     def _draw_title(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
         assert tab.text_left is not None
         assert tab.text_right is not None
-        assert tab.top is not None
-        assert tab.left is not None
         assert tab.title is not None
 
         text_height = self.get_text_height(dc)
-        text_top = tab.top + tab.height // 2 - text_height // 2
+        text_top = tab.height // 2 - text_height // 2 + tab.top
         text_max_width = tab.text_right - tab.text_left
 
         dc.SetFont(self._title_font)
         title = self._trim_title(dc, tab.title, text_max_width)
-        dc.DrawText(title, tab.text_left + tab.left, text_top)
+        dc.DrawText(title, tab.text_left, text_top)
 
     def _draw_background(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
         assert tab.left is not None
@@ -918,7 +903,7 @@ class TabRender:
         assert tab.top is not None
         assert tab.bottom is not None
 
-        rect = wx.Rect(tab.left, tab.top, tab.right - tab.left, tab.bottom - tab.top)
+        rect = wx.Rect(tab.left, tab.top, tab.width, tab.height)
         back_color = self._theme.colorBackground
         dc.SetPen(self._pens.FindOrCreatePen(back_color))
         dc.SetBrush(self._brushes.FindOrCreateBrush(back_color))
@@ -996,20 +981,20 @@ class TabRender:
         if add_button_state == ADD_BUTTON_STATE_HOVER:
             dc.DrawBitmap(
                 self._add_button_hover_bmp,
-                geometry.add_button_left,
-                geometry.add_button_top,
+                geometry.add_button.left,
+                geometry.add_button.top,
             )
         elif add_button_state == ADD_BUTTON_STATE_DOWNED:
             dc.DrawBitmap(
                 self._add_button_downed_bmp,
-                geometry.add_button_left,
-                geometry.add_button_top,
+                geometry.add_button.left,
+                geometry.add_button.top,
             )
         else:
             dc.DrawBitmap(
                 self._add_button_normal_bmp,
-                geometry.add_button_left,
-                geometry.add_button_top,
+                geometry.add_button.left,
+                geometry.add_button.top,
             )
 
     def get_default_font_size(self) -> int:
