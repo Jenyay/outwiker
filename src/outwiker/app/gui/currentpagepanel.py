@@ -214,7 +214,7 @@ class CurrentPagePanel(wx.Panel):
         self.contentSizer.AddGrowableCol(0)
         tabsSizer = wx.FlexGridSizer(1, 0, 0, 0)
         tabsSizer.Add(self.bookmarkButton, flag=wx.ALIGN_TOP | wx.LEFT | wx.RIGHT, border=4)
-        tabsSizer.Add(self.tabsCtrl, 0, wx.EXPAND, 0)
+        tabsSizer.Add(self.tabsCtrl, flag=wx.EXPAND)
         tabsSizer.AddGrowableCol(1)
 
         mainSizer = wx.FlexGridSizer(0, 1, 0, 0)

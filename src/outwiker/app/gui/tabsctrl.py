@@ -36,9 +36,9 @@ ADD_BUTTON_STATE_DOWNED = 2
 logger = logging.getLogger("outwiker.app.gui.tabsctrl2")
 
 
-class TabsCtrl(wx.Control):
+class TabsCtrl(wx.Window):
     def __init__(self, parent: wx.Window, application: Application, theme: Theme):
-        super().__init__(parent)
+        super().__init__(parent, style=wx.BORDER_NONE)
         self._application = application
         self._theme = theme
 
@@ -107,7 +107,9 @@ class TabsCtrl(wx.Control):
     def _calc_geometry(self):
         with wx.ClientDC(self) as dc:
             text_height = self._tab_render.get_text_height(dc)
-        self._geometry.calc(self._tabs, self.GetClientSize()[0], text_height)
+        panel_width = self.GetClientSize()[0]
+        panel_height = self.GetClientSize()[1]
+        self._geometry.calc(self._tabs, panel_width, panel_height, text_height)
 
     def _onSize(self, event: wx.SizeEvent) -> None:
         self.Recalculate()
@@ -589,7 +591,7 @@ class TabsGeometryCalculator:
         self._theme = theme
         self.min_width = 150
         self.max_width = 450
-        self.vertical_margin = 8
+        self.vertical_margin = 3
         self.horizontal_margin = 8
         self.gap_icon_text = 8
         self.gap_text_close_button = 6
@@ -636,7 +638,7 @@ class TabsGeometryCalculator:
         return width
 
     def _calc_rect(
-            self, parent_width: int, tabs_count: int, tab_height: int, add_button_size: int
+            self, parent_width: int, parent_height: int, tabs_count: int, tab_height: int, add_button_size: int
     ) -> Tuple[List[Rect], int]:
         if tabs_count == 0:
             return ([], 0)
@@ -646,7 +648,7 @@ class TabsGeometryCalculator:
         width = self._calc_width(tabs_count, max_width)
 
         # Calculate tabs border
-        rect_list = []
+        rect_list: List[Rect] = []
         current_left = 0
         current_top = 0
         rows_count = 1
@@ -664,6 +666,13 @@ class TabsGeometryCalculator:
             )
             rect_list.append(rect)
             current_left += width + self.horizontal_gap_after_tab
+
+        # Move tabs to bottom of parent window
+        if rect_list and rect_list[-1].bottom - rect_list[0].top < parent_height:
+            delta = parent_height - (rect_list[-1].bottom - rect_list[0].top)
+            for rect in rect_list:
+                rect.top += delta
+                rect.bottom += delta
 
         return (rect_list, rows_count)
 
@@ -686,7 +695,7 @@ class TabsGeometryCalculator:
         return height 
 
     def calc(
-            self, tabs: List[TabInfo], parent_width: int, text_height: int
+            self, tabs: List[TabInfo], parent_width: int, parent_height: int, text_height: int
     ) -> List[SingleTabGeometry]:
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
         close_button_size = self._theme.get(
@@ -699,7 +708,7 @@ class TabsGeometryCalculator:
         height = self._calc_tab_height(text_height)
 
         center_vertical = height // 2
-        rect_list, self.rows_count = self._calc_rect(parent_width, len(tabs), height, add_button_size)
+        rect_list, self.rows_count = self._calc_rect(parent_width, parent_height, len(tabs), height, add_button_size)
 
         self._geometry = []
         for info, rect in zip(tabs, rect_list):
