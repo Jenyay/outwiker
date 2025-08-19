@@ -107,7 +107,7 @@ class TabsCtrl(wx.Control):
     def _calc_geometry(self):
         with wx.ClientDC(self) as dc:
             text_height = self._tab_render.get_text_height(dc)
-        self._geometry.calc(self, self._tabs, text_height)
+        self._geometry.calc(self._tabs, self.GetClientSize()[0], text_height)
 
     def _onSize(self, event: wx.SizeEvent) -> None:
         self.Recalculate()
@@ -686,10 +686,8 @@ class TabsGeometryCalculator:
         return height 
 
     def calc(
-            self, parent: wx.Window, tabs: List[TabInfo], text_height: int
+            self, tabs: List[TabInfo], parent_width: int, text_height: int
     ) -> List[SingleTabGeometry]:
-        parent_width = parent.GetClientSize()[0]
-
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
         close_button_size = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
