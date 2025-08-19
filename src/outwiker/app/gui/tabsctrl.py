@@ -107,7 +107,7 @@ class TabsCtrl(wx.Control):
     def _calc_geometry(self):
         with wx.ClientDC(self) as dc:
             text_height = self._tab_render.get_text_height(dc)
-        self._geometry.calc(self._tabs, self.GetClientSize()[0], text_height)
+        self._geometry.calc(self, self._tabs, text_height)
 
     def _onSize(self, event: wx.SizeEvent) -> None:
         self.Recalculate()
@@ -607,11 +607,8 @@ class TabsGeometryCalculator:
     @property
     def full_height(self) -> int:
         """Return height of all rows of tabs"""
-        if self._geometry is None:
-            return 0
-
-        if len(self._geometry) == 0:
-            return 0
+        if not self._geometry:
+            return self._calc_tab_height(text_height=14)
 
         return self._geometry[-1].bottom - self._geometry[0].top
 
@@ -670,10 +667,7 @@ class TabsGeometryCalculator:
 
         return (rect_list, rows_count)
 
-    def calc(
-        self, tabs: List[TabInfo], parent_width: int, text_height: int
-    ) -> List[SingleTabGeometry]:
-
+    def _calc_tab_height(self, text_height: int) -> int:
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
         close_button_size = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
@@ -683,17 +677,28 @@ class TabsGeometryCalculator:
         )
 
         height = 2 * self.vertical_margin + max(
-            text_height, icon_size, close_button_size
-        )
-        if height % 2 == 0:
-            height += 1
-
-        height = 2 * self.vertical_margin + max(
-            text_height, icon_size, close_button_size
+            text_height, icon_size, close_button_size, add_button_size
         )
 
         if height % 2 == 0:
             height += 1
+
+        return height 
+
+    def calc(
+            self, parent: wx.Window, tabs: List[TabInfo], text_height: int
+    ) -> List[SingleTabGeometry]:
+        parent_width = parent.GetClientSize()[0]
+
+        icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
+        close_button_size = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
+        )
+        add_button_size = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE
+        )
+
+        height = self._calc_tab_height(text_height)
 
         center_vertical = height // 2
         rect_list, self.rows_count = self._calc_rect(parent_width, len(tabs), height, add_button_size)
@@ -739,8 +744,8 @@ class TabsGeometryCalculator:
                 self._geometry[-1].top + center_vertical - add_button_size // 2
             )
         else:
-            add_button_left = 0
-            add_button_top = 0
+            add_button_left = self.horizontal_gap_after_tab
+            add_button_top = height // 2 - add_button_size // 2
 
         add_button_right = add_button_left + add_button_size
         add_button_bottom = add_button_top + add_button_size
