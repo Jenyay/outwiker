@@ -591,7 +591,7 @@ class TabsGeometryCalculator:
         self._theme = theme
         self.min_width = 150
         self.max_width = 450
-        self.vertical_margin = 3
+        self.vertical_margin = 5
         self.horizontal_margin = 8
         self.gap_icon_text = 8
         self.gap_text_close_button = 6
