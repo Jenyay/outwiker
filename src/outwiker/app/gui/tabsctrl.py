@@ -591,7 +591,7 @@ class TabsGeometryCalculator:
         self._theme = theme
         self.min_width = 150
         self.max_width = 450
-        self.vertical_margin = 5
+        self.vertical_margin = 3
         self.horizontal_margin = 8
         self.gap_icon_text = 8
         self.gap_text_close_button = 6
@@ -752,7 +752,7 @@ class TabsGeometryCalculator:
             )
         else:
             add_button_left = self.horizontal_gap_after_tab
-            add_button_top = height // 2 - add_button_size // 2
+            add_button_top = parent_height // 2 - add_button_size // 2
 
         add_button_right = add_button_left + add_button_size
         add_button_bottom = add_button_top + add_button_size
