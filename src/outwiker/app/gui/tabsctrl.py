@@ -21,6 +21,7 @@ TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
 TabsCtrlPageDroppedEvent, EVT_TABSCTRL_PAGE_DROPPED = wx.lib.newevent.NewEvent()
 TabsCtrlContextMenuEvent, EVT_TABSCTRL_CONTEXT_MENU = wx.lib.newevent.NewEvent()
 TabsCtrlAddNewTabEvent, EVT_TABSCTRL_ADD_NEW_TAB = wx.lib.newevent.NewEvent()
+TabsCtrlEndDragTabEvent, EVT_TABSCTRL_END_DRAG_TAB = wx.lib.newevent.NewEvent()
 
 TAB_STATE_NORMAL = 0
 TAB_STATE_HOVER = 1
@@ -44,6 +45,8 @@ class TabsCtrl(wx.Window):
 
         self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
 
+        # Min cursor moving to start drag tabs
+        self._drag_delta = 5
         self._tabs: List[TabInfo] = []
         self._lbutton_downed_tab: Optional[int] = None
         self._lbutton_downed_close_button: Optional[int] = None
@@ -51,6 +54,8 @@ class TabsCtrl(wx.Window):
         self._selected_tab: Optional[int] = None
         self._hovered_tab: Optional[int] = None
         self._hovered_close_button: Optional[int] = None
+        self._dragged_tab: Optional[int] = None
+        self._lbutton_down_coord: Optional[Tuple[int, int]] = None
 
         self._add_button_state = ADD_BUTTON_STATE_NORMAL
 
@@ -76,6 +81,8 @@ class TabsCtrl(wx.Window):
         self._lbutton_downed_tab = None
         self._lbutton_downed_close_button = None
         self._rbutton_downed_tab = None
+        self._dragged_tab = None
+        self._lbutton_down_coord = None
 
         if self._add_button_state != ADD_BUTTON_STATE_NORMAL:
             self._add_button_state = ADD_BUTTON_STATE_NORMAL
@@ -131,8 +138,8 @@ class TabsCtrl(wx.Window):
         self._hovered_tab = self._find_tab_by_coord(event.GetX(), event.GetY())
 
         if close_button_number is None:
-            tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
-            self._lbutton_downed_tab = tab_number
+            self._lbutton_downed_tab = self._hovered_tab
+            self._lbutton_down_coord = (event.GetX(), event.GetY())
 
     def _onLeftButtonUp(self, event: wx.MouseEvent) -> None:
         # Click on the "Add new tab" button
@@ -204,6 +211,27 @@ class TabsCtrl(wx.Window):
         self._hovered_close_button = self._find_close_button_by_coord(
             event.GetX(), event.GetY()
         )
+        # Is drag tab?
+        if event.LeftIsDown():
+            # Start grag?
+            if (
+                self._dragged_tab is None
+                and self._lbutton_downed_tab is not None
+                and (
+                    abs(event.GetX() - self._lbutton_down_coord[0]) >= self._drag_delta
+                    or abs(event.GetY() - self._lbutton_down_coord[1])
+                    >= self._drag_delta
+                )
+            ):
+                self._dragged_tab = self._lbutton_downed_tab
+                # print(f"Start drag tab: {self._dragged_tab}")
+                return
+            
+            if self._dragged_tab is not None:
+                if self._hovered_tab is not None and self._dragged_tab != self._hovered_tab:
+                    # print(f"Switch {self._dragged_tab} -> {self._hovered_tab}")
+                    pass
+                return
 
         # "Add new tab" button
         old_add_button_state = self._add_button_state
@@ -315,13 +343,13 @@ class TabsCtrl(wx.Window):
             self.SetSelection(index)
 
         self.Recalculate()
-        # self._updateHistoryButtons()
+        self._updateHistoryButtons()
 
     def Clear(self):
         self.SetSelection(None)
         self._tabs.clear()
         self.Recalculate()
-        # self._updateHistoryButtons()
+        self._updateHistoryButtons()
 
     def GetPageText(self, index):
         return self._tabs[index].title
@@ -638,7 +666,12 @@ class TabsGeometryCalculator:
         return width
 
     def _calc_rect(
-            self, parent_width: int, parent_height: int, tabs_count: int, tab_height: int, add_button_size: int
+        self,
+        parent_width: int,
+        parent_height: int,
+        tabs_count: int,
+        tab_height: int,
+        add_button_size: int,
     ) -> Tuple[List[Rect], int]:
         if tabs_count == 0:
             return ([], 0)
@@ -692,10 +725,14 @@ class TabsGeometryCalculator:
         if height % 2 == 0:
             height += 1
 
-        return height 
+        return height
 
     def calc(
-            self, tabs: List[TabInfo], parent_width: int, parent_height: int, text_height: int
+        self,
+        tabs: List[TabInfo],
+        parent_width: int,
+        parent_height: int,
+        text_height: int,
     ) -> List[SingleTabGeometry]:
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
         close_button_size = self._theme.get(
@@ -708,7 +745,9 @@ class TabsGeometryCalculator:
         height = self._calc_tab_height(text_height)
 
         center_vertical = height // 2
-        rect_list, self.rows_count = self._calc_rect(parent_width, parent_height, len(tabs), height, add_button_size)
+        rect_list, self.rows_count = self._calc_rect(
+            parent_width, parent_height, len(tabs), height, add_button_size
+        )
 
         self._geometry = []
         for info, rect in zip(tabs, rect_list):
@@ -733,7 +772,12 @@ class TabsGeometryCalculator:
             close_button_left = close_button_right - close_button_size
             close_button_top = center_vertical - close_button_size // 2 + geometry.top
             close_button_bottom = close_button_top + close_button_size
-            geometry.close_button = Rect(close_button_left, close_button_right, close_button_top, close_button_bottom)
+            geometry.close_button = Rect(
+                close_button_left,
+                close_button_right,
+                close_button_top,
+                close_button_bottom,
+            )
 
             geometry.text_left = geometry.icon.right + self.gap_icon_text
             geometry.text_right = (
@@ -744,9 +788,7 @@ class TabsGeometryCalculator:
 
         # Calculate "Add new tab" button position
         if self._geometry:
-            add_button_left = (
-                self._geometry[-1].right + self.horizontal_gap_after_tab
-            )
+            add_button_left = self._geometry[-1].right + self.horizontal_gap_after_tab
             add_button_top = (
                 self._geometry[-1].top + center_vertical - add_button_size // 2
             )
@@ -756,7 +798,9 @@ class TabsGeometryCalculator:
 
         add_button_right = add_button_left + add_button_size
         add_button_bottom = add_button_top + add_button_size
-        self.add_button = Rect(add_button_left, add_button_right, add_button_top, add_button_bottom)
+        self.add_button = Rect(
+            add_button_left, add_button_right, add_button_top, add_button_bottom
+        )
         return self._geometry
 
 
