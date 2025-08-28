@@ -57,10 +57,6 @@ class TabsController:
         """
         assert page is None or page.root == self._application.wikiroot
 
-        # selectedTab = self._tabsCtrl.GetSelection()
-
-        # tab_index = 0 if selectedTab is None else selectedTab + 1
-        # self._tabsCtrl.InsertPage(tab_index, self.__getTitle(page), page, select)
         self._tabsCtrl.AddPage(page, self.__getTitle(page), select)
         self.__saveTabs()
 
@@ -137,6 +133,10 @@ class TabsController:
         Перейти на предыдущую страницу на данной вкладке
         """
         self._tabsCtrl.HistoryForward()
+
+    # Used in tests
+    def movePage(self, index: int, new_index: int):
+        self._tabsCtrl.MovePage(index, new_index)
 
     def __bindGuiEvents(self):
         self._tabsCtrl.Bind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)

@@ -47,6 +47,7 @@ class TabsCtrl(wx.Window):
 
         # Min cursor moving to start drag tabs
         self._drag_delta = 5
+
         self._tabs: List[TabInfo] = []
         self._lbutton_downed_tab: Optional[int] = None
         self._lbutton_downed_close_button: Optional[int] = None
@@ -226,7 +227,7 @@ class TabsCtrl(wx.Window):
                 self._dragged_tab = self._lbutton_downed_tab
                 # print(f"Start drag tab: {self._dragged_tab}")
                 return
-            
+
             if self._dragged_tab is not None:
                 if self._hovered_tab is not None and self._dragged_tab != self._hovered_tab:
                     # print(f"Switch {self._dragged_tab} -> {self._hovered_tab}")
@@ -498,6 +499,9 @@ class TabsCtrl(wx.Window):
         page = self._getCurrentHistory().forward()
         self._application.selectedPage = page
         self._updateHistoryButtons()
+
+    def MovePage(self, index: int, new_index: int):
+        """Change tab position"""
 
     def _onPaint(self, event: wx.PaintEvent):
         """
