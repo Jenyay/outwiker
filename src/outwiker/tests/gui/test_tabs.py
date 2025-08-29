@@ -1073,3 +1073,37 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getPage(3).subpath, self._page_5.subpath)
         self.assertEqual(self._tabsController.getPage(4).subpath, self._page_1.subpath)
         self.assertEqual(self._tabsController.getSelection(), 3)
+
+    def test_MoveTab_LastTabToBeforeSelection_01(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+        self._tabsController.setSelection(2)
+
+        self._tabsController.movePage(4, 2)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 3)
+
+    def test_MoveTab_LastTabToBeforeSelection_02(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+        self._tabsController.setSelection(2)
+
+        self._tabsController.movePage(4, 0)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 3)

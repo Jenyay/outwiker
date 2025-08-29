@@ -10,8 +10,9 @@ from outwiker.core.defines import CONFIG_GENERAL_SECTION
 from .tabsctrl import (
     EVT_TABSCTRL_CONTEXT_MENU,
     EVT_TABSCTRL_PAGE_CHANGED,
-    EVT_TABSCTRL_PAGE_DROPPED,
     EVT_TABSCTRL_ADD_NEW_TAB,
+    EVT_TABSCTRL_END_DRAG_TAB,
+    EVT_TABSCTRL_CLOSED_TAB,
     TabsCtrl,
 )
 
@@ -67,7 +68,7 @@ class TabsController:
         if index < 0 or index >= self.getTabsCount():
             raise ValueError
 
-        self._tabsCtrl.DeletePage(index)
+        self._tabsCtrl.ClosePage(index)
 
     def getTabsCount(self):
         """
@@ -140,15 +141,17 @@ class TabsController:
 
     def __bindGuiEvents(self):
         self._tabsCtrl.Bind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)
-        self._tabsCtrl.Bind(EVT_TABSCTRL_PAGE_DROPPED, handler=self.__onTabDropped)
         self._tabsCtrl.Bind(EVT_TABSCTRL_CONTEXT_MENU, handler=self.__onPopupMenu)
         self._tabsCtrl.Bind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_END_DRAG_TAB, handler=self.__onMoveTab)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_CLOSED_TAB, handler=self.__onTabClosed)
 
     def __unbindGuiEvents(self):
         self._tabsCtrl.Unbind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)
-        self._tabsCtrl.Unbind(EVT_TABSCTRL_PAGE_DROPPED, handler=self.__onTabDropped)
         self._tabsCtrl.Unbind(EVT_TABSCTRL_CONTEXT_MENU, handler=self.__onPopupMenu)
         self._tabsCtrl.Unbind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_END_DRAG_TAB, handler=self.__onMoveTab)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_CLOSED_TAB, handler=self.__onTabClosed)
 
     def __bindEvents(self):
         self._application.onWikiOpen += self.__onWikiOpen
@@ -183,7 +186,10 @@ class TabsController:
         self._application.selectedPage = page
         self.__saveTabs()
 
-    def __onTabDropped(self, event):
+    def __onMoveTab(self, event):
+        self.__saveTabs()
+
+    def __onTabClosed(self, event):
         self.__saveTabs()
 
     def __loadTabs(self, wikiroot):
@@ -272,7 +278,7 @@ class TabsController:
             page = self.getPage(index)
 
             if (page is not None and page.isRemoved) and index != selectedIndex:
-                self._tabsCtrl.DeletePage(index)
+                self._tabsCtrl.ClosePage(index)
                 index -= 1
             elif page is None or page.display_title != self.getTabTitle(index):
                 self._tabsCtrl.RenameTab(index, self.__getTitle(page))

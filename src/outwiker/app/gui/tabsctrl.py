@@ -18,14 +18,16 @@ from outwiker.gui.images import readImage
 
 
 TabsCtrlPageChangedEvent, EVT_TABSCTRL_PAGE_CHANGED = wx.lib.newevent.NewEvent()
-TabsCtrlPageDroppedEvent, EVT_TABSCTRL_PAGE_DROPPED = wx.lib.newevent.NewEvent()
 TabsCtrlContextMenuEvent, EVT_TABSCTRL_CONTEXT_MENU = wx.lib.newevent.NewEvent()
 TabsCtrlAddNewTabEvent, EVT_TABSCTRL_ADD_NEW_TAB = wx.lib.newevent.NewEvent()
 TabsCtrlEndDragTabEvent, EVT_TABSCTRL_END_DRAG_TAB = wx.lib.newevent.NewEvent()
+TabsCtrlPageClosedEvent, EVT_TABSCTRL_CLOSED_TAB = wx.lib.newevent.NewEvent()
 
 TAB_STATE_NORMAL = 0
 TAB_STATE_HOVER = 1
-TAB_STATE_SELECTED = 2
+TAB_STATE_DOWNED = 2
+TAB_STATE_DRAGGED = 3
+TAB_STATE_SELECTED = 4
 TAB_CLOSE_BUTTON_STATE_NORMAL = 0
 TAB_CLOSE_BUTTON_STATE_HOVER = 1
 TAB_CLOSE_BUTTON_STATE_DOWNED = 2
@@ -162,7 +164,7 @@ class TabsCtrl(wx.Window):
             and close_button_number == self._lbutton_downed_close_button
         ):
             self._clear_tabs_status()
-            self.DeletePage(close_button_number)
+            self.ClosePage(close_button_number)
             return
 
         # Click on the tab
@@ -202,7 +204,7 @@ class TabsCtrl(wx.Window):
 
         tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
         if tab_number is not None:
-            self.DeletePage(tab_number)
+            self.ClosePage(tab_number)
 
     def _onMouseMove(self, event: wx.MouseEvent) -> None:
         old_hovered_tab = self._hovered_tab
@@ -225,12 +227,13 @@ class TabsCtrl(wx.Window):
                 )
             ):
                 self._dragged_tab = self._lbutton_downed_tab
-                # print(f"Start drag tab: {self._dragged_tab}")
+                self._lbutton_downed_tab = None
+                self.Recalculate()
                 return
 
             if self._dragged_tab is not None:
                 if self._hovered_tab is not None and self._dragged_tab != self._hovered_tab:
-                    # print(f"Switch {self._dragged_tab} -> {self._hovered_tab}")
+                    self.MovePage(self._dragged_tab, self._hovered_tab)
                     pass
                 return
 
@@ -434,7 +437,7 @@ class TabsCtrl(wx.Window):
         wx.PostEvent(self, event)
         wx.SafeYield()
 
-    def DeletePage(self, index: int):
+    def ClosePage(self, index: int):
         assert self._selected_tab is not None
 
         old_selection = self._selected_tab
@@ -459,7 +462,7 @@ class TabsCtrl(wx.Window):
             self.SetSelection(new_index)
 
         self.Recalculate()
-        event = TabsCtrlPageDroppedEvent(page=page)
+        event = TabsCtrlPageClosedEvent(page=page)
         wx.PostEvent(self, event)
 
     def NextPage(self):
@@ -502,6 +505,31 @@ class TabsCtrl(wx.Window):
 
     def MovePage(self, index: int, new_index: int):
         """Change tab position"""
+        if index == new_index:
+            return
+
+        assert self._selected_tab is not None
+
+        moved_tab = self._tabs[index]
+        old_selected_tab = self._selected_tab
+        move_selected = index == old_selected_tab
+
+        del self._tabs[index]
+        self._tabs.insert(new_index, moved_tab)
+        if move_selected:
+            self._selected_tab = new_index
+        elif index < old_selected_tab and new_index >= old_selected_tab:
+            self._selected_tab -= 1
+        elif index > old_selected_tab and new_index <= old_selected_tab:
+            self._selected_tab += 1
+
+        self._dragged_tab = new_index
+        self._hovered_tab = new_index
+
+        self.Recalculate()
+
+        event = TabsCtrlEndDragTabEvent()
+        wx.PostEvent(self, event)
 
     def _onPaint(self, event: wx.PaintEvent):
         """
@@ -521,6 +549,10 @@ class TabsCtrl(wx.Window):
                 state = TAB_STATE_NORMAL
                 if n == self._selected_tab:
                     state = TAB_STATE_SELECTED
+                elif n == self._dragged_tab:
+                    state = TAB_STATE_DRAGGED
+                elif n == self._lbutton_downed_tab:
+                    state = TAB_STATE_DOWNED
                 elif n == self._hovered_tab:
                     state = TAB_STATE_HOVER
 
@@ -981,6 +1013,14 @@ class TabRender:
         elif state == TAB_STATE_HOVER:
             background_color = self._theme.get(
                 Theme.SECTION_TABS, Theme.TABS_BACKGROUND_HOVER_COLOR
+            )
+        elif state == TAB_STATE_DRAGGED:
+            background_color = self._theme.get(
+                Theme.SECTION_TABS, Theme.TABS_BACKGROUND_DRAGGED_COLOR
+            )
+        elif state == TAB_STATE_DOWNED:
+            background_color = self._theme.get(
+                Theme.SECTION_TABS, Theme.TABS_BACKGROUND_DOWNED_COLOR
             )
 
         dc.SetPen(self._pens.FindOrCreatePen(border_color, 2))

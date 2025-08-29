@@ -48,6 +48,8 @@ class Theme:
     # Tabs
     TABS_BACKGROUND_NORMAL_COLOR = "BackgroundNormalColor"
     TABS_BACKGROUND_HOVER_COLOR = "BackgroundHoverColor"
+    TABS_BACKGROUND_DOWNED_COLOR = "BackgroundDownedColor"
+    TABS_BACKGROUND_DRAGGED_COLOR = "BackgroundDraggedColor"
     TABS_BACKGROUND_SELECTED_COLOR = "BackgroundSelectedColor"
     TABS_BORDER_COLOR = "BorderColor"
     TABS_ICON_SIZE = "IconSize"
@@ -97,6 +99,8 @@ class Theme:
         # Tabs
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_NORMAL_COLOR, "#D4D4CE")
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_HOVER_COLOR, "#DDDDDD")
+        self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_DOWNED_COLOR, "#AAAAAA")
+        self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_DRAGGED_COLOR, "#AAAAAA")
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_SELECTED_COLOR, "#F3F3F0")
         self.addParam(self.SECTION_TABS, self.TABS_BORDER_COLOR, "#B3B3B3")
         self.addParam(self.SECTION_TABS, self.TABS_ICON_SIZE, 16)
