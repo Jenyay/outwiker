@@ -59,14 +59,6 @@ class CurrentPagePanel(wx.Panel):
         self.Bind(wx.EVT_CLOSE, self.__onClose)
         self.__onPageSelect(None)
 
-    def SetBackgroundColour(self, colour):
-        super().SetBackgroundColour(colour)
-        self.tabsCtrl.SetBackgroundColour(colour)
-
-    def SetForegroundColour(self, colour):
-        super().SetForegroundColour(colour)
-        self.tabsCtrl.SetForegroundColour(colour)
-
     def SetFocus(self):
         if self.__pageView is not None:
             self.__pageView.SetFocus()

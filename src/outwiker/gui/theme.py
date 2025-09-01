@@ -56,12 +56,6 @@ class Theme:
     TABS_CLOSE_BUTTON_SIZE = "CloseButtonSize"
     TABS_ADD_BUTTON_SIZE = "AddButtonSize"
 
-    # Render
-    # RENDER_STYLES = "Styles"
-
-    # Editor
-    # FIELD_COLOR = "FieldColor"
-
     def __init__(self):
         self._data: Dict[str, Tuple[Any, Any]] = {}
         self._initDefaults()
@@ -80,7 +74,9 @@ class Theme:
         self.addParam(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR, "#FFFFFF")
         self.addParam(self.SECTION_GENERAL, self.SHADOW_COLOR, "#AAAAAA")
         self.addParam(self.SECTION_GENERAL, self.CONTROL_BORDER_COLOR, "#000000")
-        self.addParam(self.SECTION_GENERAL, self.CONTROL_BORDER_SELECTED_COLOR, "#0000FF")
+        self.addParam(
+            self.SECTION_GENERAL, self.CONTROL_BORDER_SELECTED_COLOR, "#0000FF"
+        )
         self.addParam(self.SECTION_GENERAL, self.STATIC_LINE_COLOR, "#AAAAAA")
         self.addParam(self.SECTION_GENERAL, self.ROUND_RADIUS, 0)
 
@@ -89,12 +85,32 @@ class Theme:
         self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_COLOR, "#E1EFFA")
         self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_TEXT_COLOR, "#000000")
 
-        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_BACKGROUND_COLOR, "#FFFFFF")
-        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_TEXT_COLOR, "#000000")
-        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_ERROR_CAPTION_BACKGROUND_COLOR, "#C80003")
-        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_ERROR_CAPTION_TEXT_COLOR, "#E3E3E3")
-        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_INFO_CAPTION_BACKGROUND_COLOR, "#1989FF")
-        self.addParam(self.SECTION_NOTIFICATION, self.NOTIFICATION_INFO_CAPTION_TEXT_COLOR, "#E3E3E3")
+        self.addParam(
+            self.SECTION_NOTIFICATION, self.NOTIFICATION_BACKGROUND_COLOR, "#FFFFFF"
+        )
+        self.addParam(
+            self.SECTION_NOTIFICATION, self.NOTIFICATION_TEXT_COLOR, "#000000"
+        )
+        self.addParam(
+            self.SECTION_NOTIFICATION,
+            self.NOTIFICATION_ERROR_CAPTION_BACKGROUND_COLOR,
+            "#C80003",
+        )
+        self.addParam(
+            self.SECTION_NOTIFICATION,
+            self.NOTIFICATION_ERROR_CAPTION_TEXT_COLOR,
+            "#E3E3E3",
+        )
+        self.addParam(
+            self.SECTION_NOTIFICATION,
+            self.NOTIFICATION_INFO_CAPTION_BACKGROUND_COLOR,
+            "#1989FF",
+        )
+        self.addParam(
+            self.SECTION_NOTIFICATION,
+            self.NOTIFICATION_INFO_CAPTION_TEXT_COLOR,
+            "#E3E3E3",
+        )
 
         # Tabs
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_NORMAL_COLOR, "#D4D4CE")
@@ -165,16 +181,21 @@ class Theme:
     def loadSystemParams(self):
         self.addParam(
             self.SECTION_GENERAL,
+            self.BACKGROUND_COLOR,
+            wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW),
+        )
+        self.addParam(
+            self.SECTION_GENERAL,
+            self.TEXT_COLOR,
+            wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT),
+        )
+
+        self.addParam(
+            self.SECTION_GENERAL,
             self.SELECTION_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
-        )
-
-        self.addParam(
-            self.SECTION_TREE,
-            self.SELECTION_COLOR,
-            self.getDefaults(self.SECTION_GENERAL, self.SELECTION_COLOR),
         )
 
         self.addParam(
@@ -193,10 +214,26 @@ class Theme:
 
     def loadFromConfig(self, config):
         mainWindowConfig = MainWindowConfig(config)
-        self.set(self.SECTION_GENERAL, self.BACKGROUND_COLOR, mainWindowConfig.mainPanesBackgroundColor.value)
-        self.set(self.SECTION_GENERAL, self.TEXT_COLOR, mainWindowConfig.mainPanesTextColor.value)
-        self.set(self.SECTION_NOTIFICATION, self.NOTIFICATION_BACKGROUND_COLOR, mainWindowConfig.mainPanesBackgroundColor.value)
-        self.set(self.SECTION_NOTIFICATION, self.NOTIFICATION_TEXT_COLOR, mainWindowConfig.mainPanesTextColor.value)
+        self.set(
+            self.SECTION_GENERAL,
+            self.BACKGROUND_COLOR,
+            mainWindowConfig.mainPanesBackgroundColor.value,
+        )
+        self.set(
+            self.SECTION_GENERAL,
+            self.TEXT_COLOR,
+            mainWindowConfig.mainPanesTextColor.value,
+        )
+        self.set(
+            self.SECTION_NOTIFICATION,
+            self.NOTIFICATION_BACKGROUND_COLOR,
+            mainWindowConfig.mainPanesBackgroundColor.value,
+        )
+        self.set(
+            self.SECTION_NOTIFICATION,
+            self.NOTIFICATION_TEXT_COLOR,
+            mainWindowConfig.mainPanesTextColor.value,
+        )
 
     def sendEvent(self):
         if self._changed:
