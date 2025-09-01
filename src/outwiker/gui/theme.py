@@ -182,12 +182,16 @@ class Theme:
         self.addParam(
             self.SECTION_GENERAL,
             self.BACKGROUND_COLOR,
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW),
+            wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW).GetAsString(
+                wx.C2S_HTML_SYNTAX
+            ),
         )
         self.addParam(
             self.SECTION_GENERAL,
             self.TEXT_COLOR,
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT),
+            wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT).GetAsString(
+                wx.C2S_HTML_SYNTAX
+            ),
         )
 
         self.addParam(
@@ -210,6 +214,12 @@ class Theme:
             self.SECTION_TREE,
             self.SELECTION_TEXT_COLOR,
             self.getDefaults(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR),
+        )
+
+        self.addParam(
+            self.SECTION_TREE,
+            self.SELECTION_COLOR,
+            self.getDefaults(self.SECTION_GENERAL, self.SELECTION_COLOR),
         )
 
     def loadFromConfig(self, config):
