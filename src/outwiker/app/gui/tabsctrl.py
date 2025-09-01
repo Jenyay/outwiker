@@ -67,6 +67,7 @@ class TabsCtrl(wx.Window):
         self._brushes = wx.BrushList()
         self._geometry = TabsGeometryCalculator(self._theme)
         self._tab_render = TabRender(self._theme)
+        self._text_height = self._get_text_height()
 
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
@@ -105,7 +106,7 @@ class TabsCtrl(wx.Window):
 
     def Recalculate(self):
         self._calc_geometry()
-        self.SetMinSize((-1, self._geometry.full_height))
+        self.SetMinSize((-1, self._geometry.get_full_height(self._text_height)))
         rows_count = self._geometry.rows_count
 
         if rows_count != self._current_rows_count:
@@ -115,11 +116,13 @@ class TabsCtrl(wx.Window):
         self.Refresh(False)
 
     def _calc_geometry(self):
-        with wx.ClientDC(self) as dc:
-            text_height = self._tab_render.get_text_height(dc)
         panel_width = self.GetClientSize()[0]
         panel_height = self.GetClientSize()[1]
-        self._geometry.calc(self._tabs, panel_width, panel_height, text_height)
+        self._geometry.calc(self._tabs, panel_width, panel_height, self._text_height)
+
+    def _get_text_height(self) -> int:
+        with wx.ClientDC(self) as dc:
+            return self._tab_render.get_text_height(dc)
 
     def _onSize(self, event: wx.SizeEvent) -> None:
         self.Recalculate()
@@ -538,6 +541,9 @@ class TabsCtrl(wx.Window):
         event = TabsCtrlEndDragTabEvent()
         wx.PostEvent(self, event)
 
+    def GetTabHeight(self):
+        return self._geometry.get_tab_height(self._text_height)
+
     def _onPaint(self, event: wx.PaintEvent):
         """
         Обработчик события перерисовки вкладок
@@ -677,11 +683,10 @@ class TabsGeometryCalculator:
     def geometry(self) -> Optional[List[SingleTabGeometry]]:
         return self._geometry
 
-    @property
-    def full_height(self) -> int:
+    def get_full_height(self, text_height: int) -> int:
         """Return height of all rows of tabs"""
         if not self._geometry:
-            return self._calc_tab_height(text_height=14)
+            return self.get_tab_height(text_height)
 
         return self._geometry[-1].bottom - self._geometry[0].top
 
@@ -752,7 +757,7 @@ class TabsGeometryCalculator:
 
         return (rect_list, rows_count)
 
-    def _calc_tab_height(self, text_height: int) -> int:
+    def get_tab_height(self, text_height: int) -> int:
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
         close_button_size = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
@@ -785,7 +790,7 @@ class TabsGeometryCalculator:
             Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE
         )
 
-        height = self._calc_tab_height(text_height)
+        height = self.get_tab_height(text_height)
 
         center_vertical = height // 2
         rect_list, self.rows_count = self._calc_rect(

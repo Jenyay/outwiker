@@ -42,6 +42,9 @@ class CurrentPagePanel(wx.Panel):
             -1,
             self._bookmarkInactiveImg,
         )
+        tab_height = self.tabsCtrl.GetTabHeight()
+        self.bookmarkButton.SetMinSize((tab_height, tab_height))
+        self.bookmarkButton.SetSize(tab_height, tab_height)
 
         self.__set_properties()
         self.__do_layout()
