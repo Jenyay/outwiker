@@ -260,6 +260,13 @@ class TabsCtrl(wx.Window):
                 self._refresh_tab(old_hovered_tab)
             if self._hovered_tab is not None:
                 self._refresh_tab(self._hovered_tab)
+
+            if self._hovered_tab is not None:
+                page = self._tabs[self._hovered_tab].page
+                tooltip = f"{page.display_title}"
+                self.SetToolTip(tooltip)
+            else:
+                self.UnsetToolTip()
         elif self._hovered_tab is not None and (
             old_hovered_close_button != self._hovered_close_button
             or old_downed_close_button != self._lbutton_downed_close_button
