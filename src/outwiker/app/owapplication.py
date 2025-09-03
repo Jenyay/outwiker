@@ -13,7 +13,6 @@ import wx
 
 from outwiker.app.core.logredirector import LogRedirector
 from outwiker.app.gui.mainwindow import MainWindow
-from outwiker.app.gui.themecontroller import ThemeController
 from outwiker.core.application import Application
 from outwiker.core.i18n import initLocale
 from outwiker.core.init import init_page_factories
@@ -45,9 +44,10 @@ class OutWikerApplication(wx.App):
         self._initLocale()
         self._create_custom_dirs()
         init_page_factories()
-        self._themeController = ThemeController(self._application)
-        self._themeController.setTheme(self._application.theme)
-        self._themeController.loadParams()
+
+        self._theme = self._application.theme
+        self._theme.loadSystemParams()
+        self._theme.loadFromConfig(self._application.config)
 
     def _create_custom_spell_dir(self):
         custom_dir = getSpellDirList()[-1]
