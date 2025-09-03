@@ -1,4 +1,4 @@
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Set, Tuple
 import logging
 
 import wx
@@ -59,7 +59,7 @@ class Theme:
     def __init__(self):
         self._data: Dict[str, Tuple[Any, Any]] = {}
         self._initDefaults()
-        self._changed = False
+        self._changed_sections: Set[str] = set()
 
         # Event occurs after theme changing
         # Parameters:
@@ -141,7 +141,11 @@ class Theme:
 
     @property
     def changed(self):
-        return self._changed
+        return len(self._changed_sections) != 0
+
+    @property
+    def changed_sections(self) -> Set[str]:
+        return self._changed_sections
 
     def addParam(self, section: str, param: str, defaultValue: Any):
         fullName = self._getFullName(section, param)
@@ -172,21 +176,21 @@ class Theme:
         old_val = self.get(section, param)
         if old_val != self._selectVal(val, default_value):
             self._data[fullName] = (val, default_value)
-            self._changed = True
+            self._changed_sections.add(section)
 
     def clear(self):
-        self._changed = False
+        self._changed_sections.clear()
         self.onThemeChanged.clear()
 
     def loadSystemParams(self):
-        self.addParam(
+        self.set(
             self.SECTION_GENERAL,
             self.BACKGROUND_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
         )
-        self.addParam(
+        self.set(
             self.SECTION_GENERAL,
             self.TEXT_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT).GetAsString(
@@ -194,7 +198,7 @@ class Theme:
             ),
         )
 
-        self.addParam(
+        self.set(
             self.SECTION_GENERAL,
             self.SELECTION_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT).GetAsString(
@@ -202,7 +206,7 @@ class Theme:
             ),
         )
 
-        self.addParam(
+        self.set(
             self.SECTION_GENERAL,
             self.SELECTION_TEXT_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT).GetAsString(
@@ -210,16 +214,16 @@ class Theme:
             ),
         )
 
-        self.addParam(
+        self.set(
             self.SECTION_TREE,
             self.SELECTION_TEXT_COLOR,
-            self.getDefaults(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR),
+            self.get(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR),
         )
 
-        self.addParam(
+        self.set(
             self.SECTION_TREE,
             self.SELECTION_COLOR,
-            self.getDefaults(self.SECTION_GENERAL, self.SELECTION_COLOR),
+            self.get(self.SECTION_GENERAL, self.SELECTION_COLOR),
         )
 
     def loadFromConfig(self, config):
@@ -246,16 +250,17 @@ class Theme:
         )
 
     def sendEvent(self):
-        if self._changed:
+        if self.changed:
             logger.debug("Theme changed")
-            self.onThemeChanged(self)
-            self._changed = False
+            self.onThemeChanged(ThemeChangedParams(self, self._changed_sections.copy()))
+            self._changed_sections.clear()
 
 
-class onThemeChangedParams:
+class ThemeChangedParams:
     """
     Parameters for onThemeChanged event
     """
 
-    def __init__(self, theme: Theme) -> None:
+    def __init__(self, theme: Theme, changed_sections: Set[str]) -> None:
         self.theme = theme
+        self.changed_sections = changed_sections

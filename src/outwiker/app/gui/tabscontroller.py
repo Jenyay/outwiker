@@ -5,8 +5,10 @@ import os.path
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 from outwiker.app.gui.dropfiles import PageItemsDropFilesTarget
 from outwiker.app.services.messages import showError
+from outwiker.core.application import Application
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
+from outwiker.gui.theme import Theme, ThemeChangedParams
 from .tabsctrl import (
     EVT_TABSCTRL_CONTEXT_MENU,
     EVT_TABSCTRL_PAGE_CHANGED,
@@ -18,13 +20,14 @@ from .tabsctrl import (
 
 
 class TabsController:
-    def __init__(self, tabsCtrl: TabsCtrl, application):
+    def __init__(self, tabsCtrl: TabsCtrl, application: Application):
         """
         tabsCtrl - экземпляр класса TabsCtrl
         application - экземпляр класса Application
         """
         self._tabsCtrl = tabsCtrl
         self._application = application
+        self._theme = self._application.theme
 
         self._tabsSection = "Tabs"
         self._tabsParamName = "tab_"
@@ -161,6 +164,7 @@ class TabsController:
         self._application.onTreeUpdate += self.__onPageUpdate
         self._application.onPageRemove += self.__onPageUpdate
         self._application.onEndTreeUpdate += self.__onPageUpdate
+        self._theme.onThemeChanged += self.__onThemeChanged
         self.__bindGuiEvents()
 
     def __unbindEvents(self):
@@ -171,6 +175,7 @@ class TabsController:
         self._application.onTreeUpdate -= self.__onPageUpdate
         self._application.onPageRemove -= self.__onPageUpdate
         self._application.onEndTreeUpdate -= self.__onPageUpdate
+        self._theme.onThemeChanged -= self.__onThemeChanged
         self.__unbindGuiEvents()
 
     def __onAddNewTab(self, event):
@@ -267,6 +272,10 @@ class TabsController:
         )
         self.__checkInvalidTabs()
         self.__saveTabs()
+
+    def __onThemeChanged(self, params: ThemeChangedParams):
+        if Theme.SECTION_GENERAL in params.changed_sections or Theme.SECTION_TABS in params.changed_sections:
+            self._tabsCtrl.Recalculate()
 
     def __checkInvalidTabs(self):
         """

@@ -45,7 +45,6 @@ from outwiker.gui.controls.notestreectrl2 import (
     EVT_NOTES_TREE_SCALE,
     NotesTreeItem,
 )
-from outwiker.gui.dialogs.messagebox import MessageBox
 
 
 class NotesTree(wx.Panel):

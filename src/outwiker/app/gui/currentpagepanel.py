@@ -8,20 +8,25 @@ from outwiker.app.services.tree import openWiki
 from outwiker.app.actions.addbookmark import AddBookmarkAction
 from outwiker.app.gui.emptypageview import ClosedTreePanel
 from outwiker.app.gui.tabsctrl import TabsCtrl
+from outwiker.core.application import Application
 from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.system import getOS, getBuiltinImagePath
 from outwiker.core.treetools import pageExists
 from outwiker.gui.rootpagepanel import RootPagePanel
 from outwiker.gui.images import readImage
+from outwiker.gui.theme import Theme, ThemeChangedParams
 
 
 
 class CurrentPagePanel(wx.Panel):
     # @profile
-    def __init__(self, parent, application):
+    def __init__(self, parent, application: Application):
         super().__init__(parent, style=wx.TAB_TRAVERSAL)
         self._application = application
+        self._theme = self._application.theme
+
+        self._updateTheme()
 
         self.__pageView = None
         self.__currentPage = None
@@ -36,7 +41,7 @@ class CurrentPagePanel(wx.Panel):
         self._bookmarkInactiveImg = readImage(getBuiltinImagePath("bookmark.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
         self._bookmarkActiveImg = readImage(getBuiltinImagePath("bookmark_active.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
 
-        self.tabsCtrl = TabsCtrl(self, self._application, self._application.theme)
+        self.tabsCtrl = TabsCtrl(self, self._application, self._theme)
         self.bookmarkButton = wx.BitmapButton(
             self,
             -1,
@@ -55,6 +60,7 @@ class CurrentPagePanel(wx.Panel):
         self._application.onPageSelect += self.__onPageSelect
         self._application.onBookmarksChanged += self.__onBookmarksChanged
         self._application.onForceSave += self.__onForceSave
+        self._theme.onThemeChanged += self.__onThemeChanged
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
         self.__onPageSelect(None)
@@ -76,6 +82,7 @@ class CurrentPagePanel(wx.Panel):
         self._application.onPageSelect -= self.__onPageSelect
         self._application.onForceSave -= self.__onForceSave
         self._application.onBookmarksChanged -= self.__onBookmarksChanged
+        self._theme.onThemeChanged -= self.__onThemeChanged
 
         if self.__pageView is not None:
             self.destroyPageView()
@@ -84,6 +91,13 @@ class CurrentPagePanel(wx.Panel):
             self.__htmlRender.Close()
             self.__htmlRender = None
         event.Skip()
+
+    def __onThemeChanged(self, params: ThemeChangedParams):
+        if Theme.SECTION_GENERAL in params.changed_sections:
+            self._updateTheme()
+
+    def _updateTheme(self):
+        self.SetBackgroundColour(self._theme.colorBackground)
 
     def __onWikiOpen(self, root):
         self.__wikiroot = root

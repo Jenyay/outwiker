@@ -19,6 +19,7 @@ class ThemeController:
         if self._theme is not None:
             self._theme.loadSystemParams()
             self._theme.loadFromConfig(self._application.config)
+            self._theme.sendEvent()
 
     def clear(self):
         if self._theme is not None:
