@@ -63,7 +63,7 @@ class Theme:
 
         # Event occurs after theme changing
         # Parameters:
-        #    params - instance of the onThemeChangedParams class
+        #    params - instance of the ThemeChangedParams class
         self.onThemeChanged = Event()
 
     def _initDefaults(self):
