@@ -31,7 +31,7 @@ class HtmlTextEditor(TextEditor):
             textCtrl.StyleSetSpec(key, styles[key])
             textCtrl.StyleSetSize(key, self.config.fontSize.value)
             textCtrl.StyleSetFaceName(key, self.config.fontName.value)
-            textCtrl.StyleSetBackground(key, self.config.backColor.value)
+            textCtrl.StyleSetBackground(key, self.sanitize_color(self.config.backColor))
 
         tags = """a abbr acronym address applet area b base basefont
             bdo big blockquote body br button caption center

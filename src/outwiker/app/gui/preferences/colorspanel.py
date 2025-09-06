@@ -3,9 +3,10 @@
 from typing import Dict, Optional, List
 import wx
 
+from outwiker.core.application import Application
 from outwiker.core.config import StringOption
 from outwiker.gui.controls.colorcombobox import ColorComboBox
-from outwiker.gui.guiconfig import MainWindowConfig, GeneralGuiConfig
+from outwiker.gui.guiconfig import EditorConfig, MainWindowConfig, GeneralGuiConfig
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
@@ -33,9 +34,10 @@ class ColorElement:
 
 
 class ColorsPanel(BasePrefPanel):
-    def __init__(self, parent, application):
+    def __init__(self, parent, application: Application):
         super().__init__(parent)
         self._mainWindowConfig = MainWindowConfig(application.config)
+        self._editorGuiConfig = EditorConfig(application.config)
         self._generalGuiConfig = GeneralGuiConfig(application.config)
 
         self._color_sections: Dict[str, List[ColorElement]] = {
@@ -48,7 +50,14 @@ class ColorsPanel(BasePrefPanel):
                     _("Main panels text color"),
                     self._mainWindowConfig.mainPanesTextColor,
                 ),
-            ]
+            ],
+
+            _("Editor"): [
+                ColorElement(_("Font color"), self._editorGuiConfig.fontColor),
+                ColorElement(_("Background color"), self._editorGuiConfig.backColor),
+                ColorElement(_("Background color of the selected text"), self._editorGuiConfig.selBackColor),
+                ColorElement(_("Page margin background color"), self._editorGuiConfig.marginBackColor),
+                ],
         }
 
         self._recentGuiColors = [
@@ -79,29 +88,12 @@ class ColorsPanel(BasePrefPanel):
                 ctrl.AddColors(self._recentGuiColors)
                 color_element.ctrl = ctrl
 
-        # sizer = self._createSection(main_sizer, _("Main window"))[1]
-
-        # # Panels background color
-        # self.panelsBackgroundColorPicker = self._createLabelAndColorComboBox(
-        #     _("Main panels background color"), sizer
-        # )[1]
-        # self.panelsBackgroundColorPicker.AddColors(self._recentGuiColors)
-
-        # # Panels text color
-        # self.panelsTextColorPicker = self._createLabelAndColorComboBox(
-        #     _("Main panels text color"), sizer
-        # )[1]
-        # self.panelsTextColorPicker.AddColors(self._recentGuiColors)
-
     def LoadState(self):
         for items in self._color_sections.values():
             for color_element in items:
                 color_element.ctrl.SetSelectedColor(
                     wx.Colour(color_element.config_param.value)
                 )
-        # Main panels
-        # self.panelsBackgroundColorPicker.SetSelectedColor(wx.Colour(self._mainWindowConfig.mainPanesBackgroundColor.value))
-        # self.panelsTextColorPicker.SetSelectedColor(wx.Colour(self._mainWindowConfig.mainPanesTextColor.value))
 
     def Save(self):
         for items in self._color_sections.values():
@@ -113,16 +105,3 @@ class ColorsPanel(BasePrefPanel):
                     )
                 else:
                     color_element.config_param.value = None
-
-        # Main panels
-        # backgroundColor = self.panelsBackgroundColorPicker.GetSelectedColor()
-        # if backgroundColor is not None:
-        #     self._mainWindowConfig.mainPanesBackgroundColor.value = backgroundColor.GetAsString(wx.C2S_HTML_SYNTAX)
-        # else:
-        #     self._mainWindowConfig.mainPanesBackgroundColor.value = None
-
-        # textColor = self.panelsTextColorPicker.GetSelectedColor()
-        # if textColor is not None:
-        #     self._mainWindowConfig.mainPanesTextColor.value = textColor.GetAsString(wx.C2S_HTML_SYNTAX)
-        # else:
-        #     self._mainWindowConfig.mainPanesTextColor.value = None

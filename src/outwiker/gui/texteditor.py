@@ -8,16 +8,18 @@ import wx
 import wx.stc
 import wx.lib.newevent
 
+from outwiker.core.config import StringOption
 from outwiker.core.events import (
     EditorPopupMenuParams,
     TextEditorKeyDownParams,
     TextEditorCaretMoveParams,
 )
+from outwiker.core.events import EditorStyleNeededParams
 from outwiker.gui.controls.texteditorbase import TextEditorBase
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.texteditormenu import TextEditorMenu
 from outwiker.gui.editorfilesdroptarget import EditorFilesDropTarget
-from outwiker.core.events import EditorStyleNeededParams
+from outwiker.gui.stcstyle import StcStyle
 
 
 ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
@@ -99,6 +101,9 @@ class TextEditor(TextEditorBase):
         self._updateMarginWidth()
         event.Skip()
 
+    def sanitize_color(self, param: StringOption):
+        return param.value if StcStyle.checkColorString(param.value) else param.defaultValue
+
     def setDefaultSettings(self):
         """
         Установить стили и настройки по умолчанию в контрол StyledTextCtrl
@@ -109,10 +114,11 @@ class TextEditor(TextEditorBase):
         faceName = self._config.fontName.value
         isBold = self._config.fontIsBold.value
         isItalic = self._config.fontIsItalic.value
-        fontColor = self._config.fontColor.value
-        backColor = self._config.backColor.value
-        selBackColor = self._config.selBackColor.value
-        marginBackColor = self._config.marginBackColor.value
+
+        fontColor = self.sanitize_color(self._config.fontColor)
+        backColor = self.sanitize_color(self._config.backColor)
+        selBackColor = self.sanitize_color(self._config.selBackColor)
+        marginBackColor = self.sanitize_color(self._config.marginBackColor)
 
         self.textCtrl.SetUseTabs(not self._config.tabUseSpaces.value)
 

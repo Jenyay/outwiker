@@ -3,8 +3,10 @@ import logging
 
 import wx
 
+from outwiker.core.config import StringOption
 from outwiker.core.event import Event
 from outwiker.gui.guiconfig import MainWindowConfig
+from outwiker.gui.stcstyle import StcStyle
 
 
 logger = logging.getLogger("outwiker.gui.theme")
@@ -147,6 +149,9 @@ class Theme:
     def changed_sections(self) -> Set[str]:
         return self._changed_sections
 
+    def _sanitize_color(self, param: StringOption):
+        return param.value if StcStyle.checkColorString(param.value) else param.defaultValue
+
     def addParam(self, section: str, param: str, defaultValue: Any):
         fullName = self._getFullName(section, param)
         self._data[fullName] = (defaultValue, defaultValue)
@@ -231,22 +236,22 @@ class Theme:
         self.set(
             self.SECTION_GENERAL,
             self.BACKGROUND_COLOR,
-            mainWindowConfig.mainPanesBackgroundColor.value,
+            self._sanitize_color(mainWindowConfig.mainPanesBackgroundColor),
         )
         self.set(
             self.SECTION_GENERAL,
             self.TEXT_COLOR,
-            mainWindowConfig.mainPanesTextColor.value,
+            self._sanitize_color(mainWindowConfig.mainPanesTextColor),
         )
         self.set(
             self.SECTION_NOTIFICATION,
             self.NOTIFICATION_BACKGROUND_COLOR,
-            mainWindowConfig.mainPanesBackgroundColor.value,
+            self._sanitize_color(mainWindowConfig.mainPanesBackgroundColor),
         )
         self.set(
             self.SECTION_NOTIFICATION,
             self.NOTIFICATION_TEXT_COLOR,
-            mainWindowConfig.mainPanesTextColor.value,
+            self._sanitize_color(mainWindowConfig.mainPanesTextColor),
         )
 
     def sendEvent(self):

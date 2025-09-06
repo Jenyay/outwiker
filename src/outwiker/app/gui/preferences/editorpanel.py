@@ -5,7 +5,6 @@ import wx
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
 from outwiker.gui.preferences import configelements
 from outwiker.gui.guiconfig import EditorConfig
-from outwiker.gui.stcstyle import StcStyle
 from outwiker.core.config import FontOption
 
 
@@ -52,28 +51,6 @@ class EditorPanel(BasePrefPanel):
         self.homeEndCombo.SetMinSize((200, -1))
         self.homeEndCombo.AppendItems([_("Line"), _("Paragraph")])
 
-        # Цвет шрифта
-        self.fontColorLabel = wx.StaticText(self, label=_("Font color"))
-        self.fontColorPicker = wx.ColourPickerCtrl(self)
-
-        # Цвет фона
-        self.backColorLabel = wx.StaticText(self, label=_("Background color"))
-        self.backColorPicker = wx.ColourPickerCtrl(self)
-
-        # Selected background text color
-        self.selBackColorLabel = wx.StaticText(
-            self, label=_("Background color of the selected text")
-        )
-
-        self.selBackColorPicker = wx.ColourPickerCtrl(self)
-
-        # Margin background color
-        self.marginBackColorLabel = wx.StaticText(
-            self, label=_("Page margin background color")
-        )
-
-        self.marginBackColorPicker = wx.ColourPickerCtrl(self)
-
     def __do_layout(self):
         # Шрифт
         fontSizer = wx.FlexGridSizer(rows=1, cols=0, vgap=0, hgap=0)
@@ -83,37 +60,6 @@ class EditorPanel(BasePrefPanel):
         )
         fontSizer.AddGrowableRow(0)
         fontSizer.AddGrowableCol(1)
-
-        # Цвета шрифта и фона
-        colorsSizer = wx.FlexGridSizer(cols=2, rows=0, vgap=0, hgap=0)
-        colorsSizer.AddGrowableCol(0)
-        colorsSizer.AddGrowableCol(1)
-
-        colorsSizer.Add(
-            self.fontColorLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-        )
-
-        colorsSizer.Add(self.fontColorPicker, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-
-        colorsSizer.Add(
-            self.backColorLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-        )
-
-        colorsSizer.Add(self.backColorPicker, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-
-        colorsSizer.Add(
-            self.selBackColorLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-        )
-
-        colorsSizer.Add(self.selBackColorPicker, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-
-        colorsSizer.Add(
-            self.marginBackColorLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-        )
-
-        colorsSizer.Add(
-            self.marginBackColorPicker, 0, wx.ALL | wx.ALIGN_RIGHT, border=2
-        )
 
         # Размер табуляции
         tabWidthSizer = wx.FlexGridSizer(cols=2, rows=0, vgap=0, hgap=0)
@@ -151,7 +97,6 @@ class EditorPanel(BasePrefPanel):
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
         mainSizer.Add(fontSizer, 1, wx.EXPAND, 0)
-        mainSizer.Add(colorsSizer, 1, wx.EXPAND, 0)
         mainSizer.Add(
             self.lineNumbersCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
@@ -195,41 +140,9 @@ class EditorPanel(BasePrefPanel):
         else:
             self.homeEndCombo.SetSelection(1)
 
-        if StcStyle.checkColorString(self.__config.fontColor.value):
-            self.fontColorPicker.SetColour(self.__config.fontColor.value)
-        else:
-            self.fontColorPicker.SetColour(wx.Color(0, 0, 0))
-
-        if StcStyle.checkColorString(self.__config.backColor.value):
-            self.backColorPicker.SetColour(self.__config.backColor.value)
-        else:
-            self.backColorPicker.SetColour(wx.Color(255, 255, 255))
-
-        if StcStyle.checkColorString(self.__config.selBackColor.value):
-            self.selBackColorPicker.SetColour(self.__config.selBackColor.value)
-        else:
-            self.selBackColorPicker.SetColour(wx.Color(192, 192, 192))
-
-        if StcStyle.checkColorString(self.__config.marginBackColor.value):
-            self.marginBackColorPicker.SetColour(self.__config.marginBackColor.value)
-        else:
-            self.marginBackColorPicker.SetColour(wx.Color(217, 217, 217))
-
     def Save(self):
         self.lineNumbers.save()
         self.tabUseSpaces.save()
         self.fontEditor.save()
         self.tabWidth.save()
         self.__config.homeEndKeys.value = self.homeEndCombo.GetSelection()
-        self.__config.fontColor.value = self.fontColorPicker.GetColour().GetAsString(
-            wx.C2S_HTML_SYNTAX
-        )
-        self.__config.backColor.value = self.backColorPicker.GetColour().GetAsString(
-            wx.C2S_HTML_SYNTAX
-        )
-        self.__config.selBackColor.value = (
-            self.selBackColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
-        )
-        self.__config.marginBackColor.value = (
-            self.marginBackColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
-        )
