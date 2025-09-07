@@ -666,8 +666,6 @@ class Rect:
 class TabsGeometryCalculator:
     def __init__(self, theme: Theme) -> None:
         self._theme = theme
-        self.min_width = 150
-        self.max_width = 450
         self.vertical_margin = 5
         self.horizontal_margin = 8
         self.gap_icon_text = 8
@@ -691,12 +689,25 @@ class TabsGeometryCalculator:
         return self._geometry[-1].bottom - self._geometry[0].top
 
     def _calc_width(self, tabs_count: int, max_width: int) -> int:
-        if max_width <= self.min_width:
-            width = self.min_width
+        min_tab_width = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MIN_WIDTH)
+        max_tab_width = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MAX_WIDTH)
+        icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
+        close_button_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE)
+
+        min_min_tab_width = icon_size + close_button_size + 2 * self.horizontal_margin + self.gap_icon_text + self.gap_text_close_button + 10
+
+        if min_tab_width < min_min_tab_width:
+            min_tab_width = min_min_tab_width
+
+        if max_tab_width < min_tab_width:
+            max_tab_width = min_tab_width
+
+        if max_width <= min_tab_width:
+            width = min_tab_width
         else:
             rows_count = 1
             width = 0
-            while width < self.min_width:
+            while width < min_tab_width:
                 cols_count = math.ceil(tabs_count / rows_count)
                 if cols_count == 1:
                     parent_width_minus_gap = max_width
@@ -707,8 +718,8 @@ class TabsGeometryCalculator:
 
                 width = int(math.floor(parent_width_minus_gap / cols_count))
 
-                if width > self.max_width:
-                    width = self.max_width
+                if width > max_tab_width:
+                    width = max_tab_width
                 rows_count += 1
 
         return width
@@ -973,8 +984,10 @@ class TabRender:
                 return title
             return title[:-cut_count] + "\u2026"
 
+        title_len = len(title)
         cut_count = 0
         while (
+            cut_count < title_len and
             dc.GetTextExtent(_get_trimmed_title(title, cut_count)).GetWidth()
             > max_width
         ):

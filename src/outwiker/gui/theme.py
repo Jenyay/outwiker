@@ -57,6 +57,8 @@ class Theme:
     TABS_ICON_SIZE = "IconSize"
     TABS_CLOSE_BUTTON_SIZE = "CloseButtonSize"
     TABS_ADD_BUTTON_SIZE = "AddButtonSize"
+    TABS_MIN_WIDTH = "MinWidth"
+    TABS_MAX_WIDTH = "MaxWidth"
 
     def __init__(self):
         self._data: Dict[str, Tuple[Any, Any]] = {}
@@ -124,6 +126,8 @@ class Theme:
         self.addParam(self.SECTION_TABS, self.TABS_ICON_SIZE, 16)
         self.addParam(self.SECTION_TABS, self.TABS_CLOSE_BUTTON_SIZE, 16)
         self.addParam(self.SECTION_TABS, self.TABS_ADD_BUTTON_SIZE, 20)
+        self.addParam(self.SECTION_TABS, self.TABS_MIN_WIDTH, 150)
+        self.addParam(self.SECTION_TABS, self.TABS_MAX_WIDTH, 450)
 
     @property
     def colorBackground(self):
@@ -188,14 +192,14 @@ class Theme:
         self.onThemeChanged.clear()
 
     def loadSystemParams(self):
-        self.set(
+        self.addParam(
             self.SECTION_GENERAL,
             self.BACKGROUND_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
         )
-        self.set(
+        self.addParam(
             self.SECTION_GENERAL,
             self.TEXT_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT).GetAsString(
@@ -203,7 +207,7 @@ class Theme:
             ),
         )
 
-        self.set(
+        self.addParam(
             self.SECTION_GENERAL,
             self.SELECTION_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT).GetAsString(
@@ -211,7 +215,7 @@ class Theme:
             ),
         )
 
-        self.set(
+        self.addParam(
             self.SECTION_GENERAL,
             self.SELECTION_TEXT_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT).GetAsString(
@@ -219,13 +223,13 @@ class Theme:
             ),
         )
 
-        self.set(
+        self.addParam(
             self.SECTION_TREE,
             self.SELECTION_TEXT_COLOR,
             self.get(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR),
         )
 
-        self.set(
+        self.addParam(
             self.SECTION_TREE,
             self.SELECTION_COLOR,
             self.get(self.SECTION_GENERAL, self.SELECTION_COLOR),
