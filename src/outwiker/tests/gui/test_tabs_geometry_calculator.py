@@ -9,9 +9,8 @@ from outwiker.gui.theme import Theme
 @pytest.fixture
 def theme() -> Theme:
     theme = Theme()
-    calculator = TabsGeometryCalculator(theme)
-    theme.set(Theme.SECTION_TABS, Theme.TABS_MIN_WIDTH, 50 - calculator.horizontal_gap_after_tab)
-    theme.set(Theme.SECTION_TABS, Theme.TABS_MAX_WIDTH, 150 - calculator.horizontal_gap_after_tab)
+    theme.set(Theme.SECTION_TABS, Theme.TABS_MIN_WIDTH, 50)
+    theme.set(Theme.SECTION_TABS, Theme.TABS_MAX_WIDTH, 150)
     return theme
 
 
