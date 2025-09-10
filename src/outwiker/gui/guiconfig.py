@@ -1243,3 +1243,73 @@ class TagsConfig:
             self.ENABLE_TOOLTIPS_PARAM,
             self.ENABLE_TOOLTIPS_DEFAULT,
         )
+
+
+class TabsConfig:
+    SECTION = "Tabs"
+
+    def __init__(self, config):
+        self.config = config
+
+        self.minTabWidth = IntegerOption(
+            self.config,
+            self.SECTION,
+            "MinTabWidth",
+            150,
+        )
+
+        self.maxTabWidth = IntegerOption(
+            self.config,
+            self.SECTION,
+            "MaxTabWidth",
+            450,
+        )
+
+        self.iconSize = IntegerOption(
+            self.config,
+            self.SECTION,
+            "IconSize",
+            16,
+        )
+
+        self.backColorNormal = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorNormal",
+            "#D4D4CE",
+        )
+
+        self.backColorHover = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorHover",
+            "#DDDDDD",
+        )
+
+        self.backColorDowned = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorDowned",
+            "#AAAAAA",
+        )
+
+        self.backColorDragged = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorDragged",
+            "#AAAAAA",
+        )
+
+        self.backColorSelected = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorSelected",
+            "#F3F3F0",
+        )
+
+        self.borderColor = StringOption(
+            self.config,
+            self.SECTION,
+            "BorderColor",
+            "#B3B3B3",
+        )

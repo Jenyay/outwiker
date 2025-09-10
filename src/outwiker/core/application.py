@@ -386,7 +386,6 @@ class Application:
         self.config = Config(fullConfigPath)
         self.recentWiki = RecentWiki(self.config)
         self.spellCheckers = SpellCheckersFactory(getSpellDirList())
-        self.__theme.loadFromConfig(self.config)
 
     def clear(self):
         if self.wikiroot is not None:

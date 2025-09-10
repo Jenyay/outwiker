@@ -1,12 +1,7 @@
 from typing import Any, Dict, Set, Tuple
 import logging
 
-import wx
-
-from outwiker.core.config import StringOption
 from outwiker.core.event import Event
-from outwiker.gui.guiconfig import MainWindowConfig
-from outwiker.gui.stcstyle import StcStyle
 
 
 logger = logging.getLogger("outwiker.gui.theme")
@@ -153,9 +148,6 @@ class Theme:
     def changed_sections(self) -> Set[str]:
         return self._changed_sections
 
-    def _sanitize_color(self, param: StringOption):
-        return param.value if StcStyle.checkColorString(param.value) else param.defaultValue
-
     def addParam(self, section: str, param: str, defaultValue: Any):
         fullName = self._getFullName(section, param)
         self._data[fullName] = (defaultValue, defaultValue)
@@ -190,73 +182,6 @@ class Theme:
     def clear(self):
         self._changed_sections.clear()
         self.onThemeChanged.clear()
-
-    def loadSystemParams(self):
-        self.addParam(
-            self.SECTION_GENERAL,
-            self.BACKGROUND_COLOR,
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW).GetAsString(
-                wx.C2S_HTML_SYNTAX
-            ),
-        )
-        self.addParam(
-            self.SECTION_GENERAL,
-            self.TEXT_COLOR,
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT).GetAsString(
-                wx.C2S_HTML_SYNTAX
-            ),
-        )
-
-        self.addParam(
-            self.SECTION_GENERAL,
-            self.SELECTION_COLOR,
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT).GetAsString(
-                wx.C2S_HTML_SYNTAX
-            ),
-        )
-
-        self.addParam(
-            self.SECTION_GENERAL,
-            self.SELECTION_TEXT_COLOR,
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT).GetAsString(
-                wx.C2S_HTML_SYNTAX
-            ),
-        )
-
-        self.addParam(
-            self.SECTION_TREE,
-            self.SELECTION_TEXT_COLOR,
-            self.get(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR),
-        )
-
-        self.addParam(
-            self.SECTION_TREE,
-            self.SELECTION_COLOR,
-            self.get(self.SECTION_GENERAL, self.SELECTION_COLOR),
-        )
-
-    def loadFromConfig(self, config):
-        mainWindowConfig = MainWindowConfig(config)
-        self.set(
-            self.SECTION_GENERAL,
-            self.BACKGROUND_COLOR,
-            self._sanitize_color(mainWindowConfig.mainPanesBackgroundColor),
-        )
-        self.set(
-            self.SECTION_GENERAL,
-            self.TEXT_COLOR,
-            self._sanitize_color(mainWindowConfig.mainPanesTextColor),
-        )
-        self.set(
-            self.SECTION_NOTIFICATION,
-            self.NOTIFICATION_BACKGROUND_COLOR,
-            self._sanitize_color(mainWindowConfig.mainPanesBackgroundColor),
-        )
-        self.set(
-            self.SECTION_NOTIFICATION,
-            self.NOTIFICATION_TEXT_COLOR,
-            self._sanitize_color(mainWindowConfig.mainPanesTextColor),
-        )
 
     def sendEvent(self):
         if self.changed:
