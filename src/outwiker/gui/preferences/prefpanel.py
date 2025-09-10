@@ -24,8 +24,8 @@ class BasePrefPanel(ScrolledPanel):
     def _addLabelAndControlToSizer(
         self, sizer: wx.Sizer, label: wx.StaticText, control: wx.Control
     ):
-        sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
+        sizer.Add(label, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        sizer.Add(control, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
 
     def _createLabelAndComboBox(
         self, title: str, sizer: wx.Sizer
@@ -72,10 +72,10 @@ class BasePrefPanel(ScrolledPanel):
         staticBox = wx.StaticBox(self, label=title)
         staticBoxSizer = wx.StaticBoxSizer(staticBox, wx.VERTICAL)
 
-        colorsSizer = wx.FlexGridSizer(cols=cols)
+        sizer = wx.FlexGridSizer(cols=cols)
         for n in range(cols):
-            colorsSizer.AddGrowableCol(n)
+            sizer.AddGrowableCol(n)
 
-        staticBoxSizer.Add(colorsSizer, flag=wx.EXPAND)
+        staticBoxSizer.Add(sizer, flag=wx.EXPAND)
         main_sizer.Add(staticBoxSizer, flag=wx.EXPAND | wx.ALL, border=2)
-        return (staticBox, colorsSizer)
+        return (staticBox, sizer)

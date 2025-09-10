@@ -6,7 +6,7 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.config import StringOption
 from outwiker.gui.controls.colorcombobox import ColorComboBox
-from outwiker.gui.guiconfig import EditorConfig, MainWindowConfig, GeneralGuiConfig
+from outwiker.gui.guiconfig import EditorConfig, MainWindowConfig, GeneralGuiConfig, TabsConfig
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
@@ -39,6 +39,7 @@ class ColorsPanel(BasePrefPanel):
         self._mainWindowConfig = MainWindowConfig(application.config)
         self._editorGuiConfig = EditorConfig(application.config)
         self._generalGuiConfig = GeneralGuiConfig(application.config)
+        self._tabsConfig = TabsConfig(application.config)
 
         self._color_sections: Dict[str, List[ColorElement]] = {
             _("Main window"): [
@@ -58,6 +59,15 @@ class ColorsPanel(BasePrefPanel):
                 ColorElement(_("Background color of the selected text"), self._editorGuiConfig.selBackColor),
                 ColorElement(_("Page margin background color"), self._editorGuiConfig.marginBackColor),
                 ],
+
+            _("Tabs"): [
+                ColorElement(_("Tab color"), self._tabsConfig.backColorNormal),
+                ColorElement(_("Сolor of the selected tab"), self._tabsConfig.backColorSelected),
+                ColorElement(_("Сolor of the tab under cursor"), self._tabsConfig.backColorHover),
+                ColorElement(_("Color of the pressed tab"), self._tabsConfig.backColorDowned),
+                ColorElement(_("Color of the dragged tab"), self._tabsConfig.backColorDragged),
+                ColorElement(_("Tab border color"), self._tabsConfig.borderColor),
+                ]
         }
 
         self._recentGuiColors = [
