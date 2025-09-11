@@ -21,6 +21,7 @@ from outwiker.app.gui.preferences.attachpanel import AttachPanel
 from outwiker.app.gui.preferences.colorspanel import ColorsPanel
 from outwiker.app.gui.preferences.formatspanel import FormatsPanel
 from outwiker.app.gui.preferences.notestreepanel import NotesTreePanel
+from outwiker.app.gui.preferences.tabspanel import TabsPanel
 
 from outwiker.core.event import EVENT_PRIORITY_MAX_CORE, EVENT_PRIORITY_MIN_CORE
 from outwiker.core.exceptions import PreferencesException
@@ -129,16 +130,18 @@ class PrefController:
         tagsPage = TagsPanel(self._dialog.treeBook, self._application)
         attachPage = AttachPanel(self._dialog.treeBook, self._application)
         formatsPage = FormatsPanel(self._dialog.treeBook, self._application)
+        tabsPage = TabsPanel(self._dialog.treeBook, self._application)
 
         interfacePanelsList = [
             PreferencePanelInfo(generalPage, _("General")),
             PreferencePanelInfo(mainWindowPage, _("Main window")),
             PreferencePanelInfo(notesTreePage, _("Notes tree")),
-            PreferencePanelInfo(colorsPage, _("Colors")),
-            PreferencePanelInfo(trayPage, _("Tray icon")),
-            PreferencePanelInfo(htmlRenderPage, _("Preview")),
+            PreferencePanelInfo(tabsPage, _("Tabs")),
             PreferencePanelInfo(tagsPage, _("Tags cloud")),
+            PreferencePanelInfo(trayPage, _("Tray icon")),
             PreferencePanelInfo(attachPage, _("Attachments")),
+            PreferencePanelInfo(htmlRenderPage, _("Preview")),
+            PreferencePanelInfo(colorsPage, _("Colors")),
             PreferencePanelInfo(hotkeysPage, _("Hotkeys")),
             PreferencePanelInfo(formatsPage, _("Formats")),
         ]

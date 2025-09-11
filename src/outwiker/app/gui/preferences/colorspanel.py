@@ -42,7 +42,7 @@ class ColorsPanel(BasePrefPanel):
         self._tabsConfig = TabsConfig(application.config)
 
         self._color_sections: Dict[str, List[ColorElement]] = {}
-        self._fillParms()
+        self._fillParams()
 
         self._recentGuiColors = [
             wx.Colour(color_txt)
@@ -55,7 +55,7 @@ class ColorsPanel(BasePrefPanel):
         self.LoadState()
         self.SetupScrolling()
 
-    def _fillParms(self):
+    def _fillParams(self):
         self.addColorParam(_("Main window"), _("Main panels background color"), self._mainWindowConfig.mainPanesBackgroundColor)
         self.addColorParam(_("Main window"), _("Main panels text color"), self._mainWindowConfig.mainPanesTextColor)
 
