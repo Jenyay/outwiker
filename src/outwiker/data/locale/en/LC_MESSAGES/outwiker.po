@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-10 21:02+0300\n"
+"POT-Creation-Date: 2025-09-11 17:30+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -131,7 +131,6 @@ msgstr "Open folder with attachments"
 
 #: outwiker/app/actions/attachopenfolder.py:38
 #: outwiker/app/actions/openpluginsfolder.py:32
-#, python-brace-format
 msgid "Can't open folder '{}'"
 msgstr "Can't open folder '{}'"
 
@@ -479,7 +478,7 @@ msgstr "Begin search and replace on page"
 #: outwiker/app/actions/switchto.py:63
 #: outwiker/app/gui/mainpanes/attachmainpane.py:40
 #: outwiker/app/gui/mainwindow.py:481
-#: outwiker/app/gui/preferences/prefcontroller.py:141
+#: outwiker/app/gui/preferences/prefcontroller.py:142
 #: outwiker/app/gui/preferences/wikieditorpanel.py:37
 #: outwiker/gui/controls/filestreectrl.py:84
 #: outwiker/pages/wiki/parser/commands/attachlist.py:62
@@ -535,7 +534,7 @@ msgid "Set focus to main panel"
 msgstr "Set focus to main panel"
 
 #: outwiker/app/actions/switchto.py:40
-#: outwiker/app/gui/preferences/prefcontroller.py:136
+#: outwiker/app/gui/preferences/prefcontroller.py:138
 msgid "Notes tree"
 msgstr "Notes tree"
 
@@ -814,7 +813,7 @@ msgid "Insert the current date"
 msgstr "Insert the current date"
 
 #: outwiker/app/gui/actionslist.py:391
-#: outwiker/app/gui/preferences/prefcontroller.py:164
+#: outwiker/app/gui/preferences/prefcontroller.py:167
 msgid "Spell checking"
 msgstr "Spell checking"
 
@@ -1074,8 +1073,8 @@ msgid "{count} file(s)  -  {size} KB"
 msgstr "{count} file(s)  -  {size} KB"
 
 #: outwiker/app/gui/basepagedialog.py:130 outwiker/app/gui/mainwindow.py:177
-#: outwiker/app/gui/preferences/prefcontroller.py:134
-#: outwiker/app/gui/preferences/prefcontroller.py:163
+#: outwiker/app/gui/preferences/prefcontroller.py:136
+#: outwiker/app/gui/preferences/prefcontroller.py:166
 #: outwiker/pages/wiki/wikipagecontroller.py:67
 msgid "General"
 msgstr "General"
@@ -1306,7 +1305,7 @@ msgid "Toolbars"
 msgstr "Toolbars"
 
 #: outwiker/app/gui/mainwindow.py:183
-#: outwiker/app/gui/preferences/prefcontroller.py:180
+#: outwiker/app/gui/preferences/prefcontroller.py:183
 msgid "Plugins"
 msgstr "Plugins"
 
@@ -1315,7 +1314,13 @@ msgid "Movement"
 msgstr "Movement"
 
 #: outwiker/app/gui/mainwindow.py:443
-#: outwiker/app/gui/preferences/colorspanel.py:63
+#: outwiker/app/gui/preferences/colorspanel.py:67
+#: outwiker/app/gui/preferences/colorspanel.py:68
+#: outwiker/app/gui/preferences/colorspanel.py:69
+#: outwiker/app/gui/preferences/colorspanel.py:70
+#: outwiker/app/gui/preferences/colorspanel.py:71
+#: outwiker/app/gui/preferences/colorspanel.py:72
+#: outwiker/app/gui/preferences/prefcontroller.py:139
 msgid "Tabs"
 msgstr "Tabs"
 
@@ -1441,61 +1446,65 @@ msgstr "Double clicking or pressing Enter on an attached file"
 msgid "Show hidden folders"
 msgstr "Show hidden folders"
 
-#: outwiker/app/gui/preferences/colorspanel.py:45
-#: outwiker/app/gui/preferences/prefcontroller.py:135
+#: outwiker/app/gui/preferences/colorspanel.py:59
+#: outwiker/app/gui/preferences/colorspanel.py:60
+#: outwiker/app/gui/preferences/prefcontroller.py:137
 msgid "Main window"
 msgstr "Main window"
 
-#: outwiker/app/gui/preferences/colorspanel.py:47
+#: outwiker/app/gui/preferences/colorspanel.py:59
 msgid "Main panels background color"
 msgstr "Main panels background color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:51
+#: outwiker/app/gui/preferences/colorspanel.py:60
 msgid "Main panels text color"
 msgstr "Main panels text color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:56
-#: outwiker/app/gui/preferences/prefcontroller.py:170
+#: outwiker/app/gui/preferences/colorspanel.py:62
+#: outwiker/app/gui/preferences/colorspanel.py:63
+#: outwiker/app/gui/preferences/colorspanel.py:64
+#: outwiker/app/gui/preferences/colorspanel.py:65
+#: outwiker/app/gui/preferences/prefcontroller.py:173
 msgid "Editor"
 msgstr "Editor"
 
-#: outwiker/app/gui/preferences/colorspanel.py:57
+#: outwiker/app/gui/preferences/colorspanel.py:62
 msgid "Font color"
 msgstr "Font color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:58
+#: outwiker/app/gui/preferences/colorspanel.py:63
 msgid "Background color"
 msgstr "Background color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:59
+#: outwiker/app/gui/preferences/colorspanel.py:64
 msgid "Background color of the selected text"
 msgstr "Background color of the selected text"
 
-#: outwiker/app/gui/preferences/colorspanel.py:60
+#: outwiker/app/gui/preferences/colorspanel.py:65
 msgid "Page margin background color"
 msgstr "Page margin background color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:64
+#: outwiker/app/gui/preferences/colorspanel.py:67
 msgid "Tab color"
 msgstr "Tab color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:65
+#: outwiker/app/gui/preferences/colorspanel.py:68
 msgid "Сolor of the selected tab"
 msgstr "Сolor of the selected tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:66
+#: outwiker/app/gui/preferences/colorspanel.py:69
 msgid "Сolor of the tab under cursor"
 msgstr "Сolor of the tab under cursor"
 
-#: outwiker/app/gui/preferences/colorspanel.py:67
+#: outwiker/app/gui/preferences/colorspanel.py:70
 msgid "Color of the pressed tab"
 msgstr "Color of the pressed tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:68
+#: outwiker/app/gui/preferences/colorspanel.py:71
 msgid "Color of the dragged tab"
 msgstr "Color of the dragged tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:69
+#: outwiker/app/gui/preferences/colorspanel.py:72
 msgid "Tab border color"
 msgstr "Tab border color"
 
@@ -1550,7 +1559,7 @@ msgid "Recent used"
 msgstr "Recent used"
 
 #: outwiker/app/gui/preferences/generalpanel.py:40
-#: outwiker/app/gui/preferences/prefcontroller.py:139
+#: outwiker/app/gui/preferences/prefcontroller.py:143
 #: outwiker/pages/html/basehtmlpanel.py:219
 msgid "Preview"
 msgstr "Preview"
@@ -1677,7 +1686,6 @@ msgid "Can't create directory for icons group"
 msgstr "Can't create directory for icons group"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:256
-#, python-brace-format
 msgid "New group{}"
 msgstr "New group{}"
 
@@ -1686,17 +1694,14 @@ msgid "Can't rename directory for icons group"
 msgstr "Can't rename directory for icons group"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:290
-#, python-brace-format
 msgid "Group with name \"{}\" exists already"
 msgstr "Group with name \"{}\" exists already"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:297
-#, python-brace-format
 msgid "Invalid group name \"{}\""
 msgstr "Invalid group name \"{}\""
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:332
-#, python-brace-format
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Remove group \"{}\" and all icons inside it?"
 
@@ -1799,47 +1804,47 @@ msgstr "Description"
 msgid "Site"
 msgstr "Site"
 
-#: outwiker/app/gui/preferences/prefcontroller.py:137
-msgid "Colors"
-msgstr "Colors"
-
-#: outwiker/app/gui/preferences/prefcontroller.py:138
-msgid "Tray icon"
-msgstr "Tray icon"
-
 #: outwiker/app/gui/preferences/prefcontroller.py:140
 msgid "Tags cloud"
 msgstr "Tags cloud"
 
-#: outwiker/app/gui/preferences/prefcontroller.py:142
+#: outwiker/app/gui/preferences/prefcontroller.py:141
+msgid "Tray icon"
+msgstr "Tray icon"
+
+#: outwiker/app/gui/preferences/prefcontroller.py:144
+msgid "Colors"
+msgstr "Colors"
+
+#: outwiker/app/gui/preferences/prefcontroller.py:145
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
-#: outwiker/app/gui/preferences/prefcontroller.py:143
+#: outwiker/app/gui/preferences/prefcontroller.py:146
 msgid "Formats"
 msgstr "Formats"
 
-#: outwiker/app/gui/preferences/prefcontroller.py:147
+#: outwiker/app/gui/preferences/prefcontroller.py:150
 msgid "Interface"
 msgstr "Interface"
 
-#: outwiker/app/gui/preferences/prefcontroller.py:165
+#: outwiker/app/gui/preferences/prefcontroller.py:168
 msgid "HTML editor"
 msgstr "HTML editor"
 
-#: outwiker/app/gui/preferences/prefcontroller.py:166
+#: outwiker/app/gui/preferences/prefcontroller.py:169
 msgid "Wiki editor"
 msgstr "Wiki editor"
 
-#: outwiker/app/gui/preferences/prefcontroller.py:189
+#: outwiker/app/gui/preferences/prefcontroller.py:192
 msgid "Text printout"
 msgstr "Text printout"
 
-#: outwiker/app/gui/preferences/prefcontroller.py:197
+#: outwiker/app/gui/preferences/prefcontroller.py:200
 msgid "User's iconset"
 msgstr "User's iconset"
 
-#: outwiker/app/gui/preferences/prefcontroller.py:203
+#: outwiker/app/gui/preferences/prefcontroller.py:206
 #: outwiker/gui/controls/treebook2.py:47
 msgid "Preferences"
 msgstr "Preferences"
@@ -1873,14 +1878,16 @@ msgid "As list"
 msgstr "As list"
 
 #: outwiker/app/gui/preferences/tagspanel.py:53
-msgid "Minimum font size"
-msgstr "Minimum font size"
+#| msgid "Minimum font size"
+msgid "Minimal font size"
+msgstr "Minimal font size"
 
-#: outwiker/app/gui/preferences/tagspanel.py:57
-msgid "Maximum font size"
-msgstr "Maximum font size"
+#: outwiker/app/gui/preferences/tagspanel.py:54
+#| msgid "Maximum font size"
+msgid "Maximal font size"
+msgstr "Maximal font size"
 
-#: outwiker/app/gui/preferences/tagspanel.py:70
+#: outwiker/app/gui/preferences/tagspanel.py:59
 msgid "Show tooltips"
 msgstr "Show tooltips"
 
@@ -1978,7 +1985,6 @@ msgid "Really exit?"
 msgstr "Really exit?"
 
 #: outwiker/app/services/attachment.py:69
-#, python-brace-format
 msgid ""
 "Error renaming file\n"
 "{} -> {}\n"
@@ -1998,7 +2004,6 @@ msgstr ""
 "{0}"
 
 #: outwiker/app/services/attachment.py:167
-#, python-brace-format
 msgid "Can't create directory: {}"
 msgstr "Can't create directory: {}"
 
@@ -2016,7 +2021,6 @@ msgid "New folder"
 msgstr "New folder"
 
 #: outwiker/app/services/attachment.py:207
-#, python-brace-format
 msgid "Can't create folder {} for attachments"
 msgstr "Can't create folder {} for attachments"
 
@@ -2042,7 +2046,6 @@ msgid "You can't remove the root element"
 msgstr "You can't remove the root element"
 
 #: outwiker/app/services/tree.py:52
-#, python-brace-format
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
 "All attachments will also be deleted."
@@ -2105,7 +2108,6 @@ msgid "The page title"
 msgstr "The page title"
 
 #: outwiker/app/services/tree.py:252
-#, python-brace-format
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Can't rename page \"{}\" to \"{}\""
 
@@ -2114,7 +2116,6 @@ msgid "Can't move page when page with that title already exists"
 msgstr "Can't move page when page with that title already exists"
 
 #: outwiker/app/services/tree.py:280
-#, python-brace-format
 msgid "Can't move page: {}"
 msgstr "Can't move page: {}"
 
@@ -2256,17 +2257,14 @@ msgstr ""
 "system"
 
 #: outwiker/core/pluginsloader.py:270
-#, python-brace-format
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr "Plug-in \"{}\". Can't read \"{}\" file"
 
 #: outwiker/core/pluginsloader.py:290
-#, python-brace-format
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr "Plug-in \"{}\" is outdated. Please, update the plug-in."
 
 #: outwiker/core/pluginsloader.py:301
-#, python-brace-format
 msgid ""
 "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
 "new OutWiker version."
@@ -2519,7 +2517,6 @@ msgid "Insert rows"
 msgstr "Insert rows"
 
 #: outwiker/gui/tagscloud.py:136
-#, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Number of notes: {}"
 
@@ -2528,7 +2525,6 @@ msgid "Applied tags only"
 msgstr "Applied tags only"
 
 #: outwiker/gui/texteditormenu.py:75 outwiker/gui/texteditormenu.py:80
-#, python-brace-format
 msgid "Add \"{}\" to dictionary"
 msgstr "Add \"{}\" to dictionary"
 
@@ -2580,7 +2576,6 @@ msgid "Page loading. Please wait…"
 msgstr "Page loading. Please wait…"
 
 #: outwiker/pages/html/basehtmlpanel.py:338
-#, python-brace-format
 msgid "Page loading error: {}"
 msgstr "Page loading error: {}"
 
@@ -2946,17 +2941,14 @@ msgid "Custom CSS"
 msgstr "Custom CSS"
 
 #: outwiker/pages/wiki/parser/commands/include.py:82
-#, python-brace-format
 msgid "Can't open file '{}'"
 msgstr "Can't open file '{}'"
 
 #: outwiker/pages/wiki/parser/commands/include.py:85
-#, python-brace-format
 msgid "Encoding error in file '{}'"
 msgstr "Encoding error in file '{}'"
 
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:74
-#, python-brace-format
 msgid "Can't create thumbnail for <b>\"{}\"</b>"
 msgstr "Can't create thumbnail for <b>\"{}\"</b>"
 
@@ -3227,11 +3219,11 @@ msgstr "[[link | comment]]"
 #~ msgstr "Google+ page"
 
 #~ msgid ""
-#~ "https://plus.google.com/u/0/b/"
-#~ "113404982971748285098/113404982971748285098/posts"
+#~ "https://plus.google.com/u/0/"
+#~ "b/113404982971748285098/113404982971748285098/posts"
 #~ msgstr ""
-#~ "https://plus.google.com/u/0/b/"
-#~ "113404982971748285098/113404982971748285098/posts"
+#~ "https://plus.google.com/u/0/"
+#~ "b/113404982971748285098/113404982971748285098/posts"
 
 #~ msgid "Livejournal community"
 #~ msgstr "Livejournal community"
@@ -3424,15 +3416,15 @@ msgstr "[[link | comment]]"
 #~ "!! First Wiki Page\n"
 #~ "\n"
 #~ "                       This is the first page. You can use a text "
-#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://"
-#~ "jenyay.net | link]] and others.\n"
+#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay."
+#~ "net | link]] and others.\n"
 #~ "                       "
 #~ msgstr ""
 #~ "!! First Wiki Page\n"
 #~ "\n"
 #~ "                       This is the first page. You can use a text "
-#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://"
-#~ "jenyay.net | link]] and others.\n"
+#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay."
+#~ "net | link]] and others.\n"
 #~ "                       "
 
 #~ msgid "Not in groups [custom]"

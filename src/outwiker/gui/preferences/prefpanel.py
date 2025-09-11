@@ -27,6 +27,15 @@ class BasePrefPanel(ScrolledPanel):
         sizer.Add(label, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         sizer.Add(control, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
 
+    def _createLabelAndSpin(
+        self, title: str, minVal: int, maxVal: int, sizer: wx.Sizer
+    ) -> Tuple[wx.StaticText, wx.SpinCtrl]:
+        label = wx.StaticText(self, label=title)
+        spin = wx.SpinCtrl(self, min=minVal, max=maxVal)
+        spin.SetMinSize((150, -1))
+        self._addLabelAndControlToSizer(sizer, label, spin)
+        return (label, spin)
+
     def _createLabelAndComboBox(
         self, title: str, sizer: wx.Sizer
     ) -> Tuple[wx.StaticText, wx.ComboBox]:
