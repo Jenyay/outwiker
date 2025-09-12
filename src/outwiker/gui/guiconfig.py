@@ -1265,6 +1265,20 @@ class TabsConfig:
             450,
         )
 
+        self.marginHorizontal = IntegerOption(
+            self.config,
+            self.SECTION,
+            "MarginHorizontal",
+            8,
+        )
+
+        self.marginVertical = IntegerOption(
+            self.config,
+            self.SECTION,
+            "MarginVertical",
+            5,
+        )
+
         self.iconSize = IntegerOption(
             self.config,
             self.SECTION,

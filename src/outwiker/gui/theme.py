@@ -54,6 +54,8 @@ class Theme:
     TABS_ADD_BUTTON_SIZE = "AddButtonSize"
     TABS_MIN_WIDTH = "MinWidth"
     TABS_MAX_WIDTH = "MaxWidth"
+    TABS_MARGIN_HORIZONTAL = "MarginHorizontal"
+    TABS_MARGIN_VERTICAL = "MarginVertical"
 
     def __init__(self):
         self._data: Dict[str, Tuple[Any, Any]] = {}
@@ -123,6 +125,8 @@ class Theme:
         self.addParam(self.SECTION_TABS, self.TABS_ADD_BUTTON_SIZE, 20)
         self.addParam(self.SECTION_TABS, self.TABS_MIN_WIDTH, 150)
         self.addParam(self.SECTION_TABS, self.TABS_MAX_WIDTH, 450)
+        self.addParam(self.SECTION_TABS, self.TABS_MARGIN_HORIZONTAL, 8)
+        self.addParam(self.SECTION_TABS, self.TABS_MARGIN_VERTICAL, 5)
 
     @property
     def colorBackground(self):

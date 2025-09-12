@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 17:30+0300\n"
+"POT-Creation-Date: 2025-09-12 17:37+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1861,6 +1861,25 @@ msgstr "Use dictionaries"
 msgid "Custom dictonary (one word per line)"
 msgstr "Custom dictonary (one word per line)"
 
+#: outwiker/app/gui/preferences/tabspanel.py:22
+#| msgid "Minimal font size"
+msgid "Minimal tab width"
+msgstr "Minimal tab width"
+
+#: outwiker/app/gui/preferences/tabspanel.py:23
+#| msgid "Maximal font size"
+msgid "Maximal tab width"
+msgstr "Maximal tab width"
+
+#: outwiker/app/gui/preferences/tabspanel.py:25
+#| msgid "Horizontal line"
+msgid "Horizontal margin"
+msgstr "Horizontal margin"
+
+#: outwiker/app/gui/preferences/tabspanel.py:26
+msgid "Vertical margin"
+msgstr "Vertical margin"
+
 #: outwiker/app/gui/preferences/tagspanel.py:30
 msgid "Headers in the popup window: "
 msgstr "Headers in the popup window: "
@@ -1878,12 +1897,10 @@ msgid "As list"
 msgstr "As list"
 
 #: outwiker/app/gui/preferences/tagspanel.py:53
-#| msgid "Minimum font size"
 msgid "Minimal font size"
 msgstr "Minimal font size"
 
 #: outwiker/app/gui/preferences/tagspanel.py:54
-#| msgid "Maximum font size"
 msgid "Maximal font size"
 msgstr "Maximal font size"
 
@@ -3493,9 +3510,6 @@ msgstr "[[link | comment]]"
 
 #~ msgid "Small font for wiki pages"
 #~ msgstr "Small font for wiki pages"
-
-#~ msgid "Horizontal line"
-#~ msgstr "Horizontal line"
 
 #~ msgid "Horizontal line for wiki pages"
 #~ msgstr "Horizontal line for wiki pages"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 17:30+0300\n"
+"POT-Creation-Date: 2025-09-12 17:37+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1868,6 +1868,22 @@ msgstr "Используемые словари"
 msgid "Custom dictonary (one word per line)"
 msgstr "Пользовательский словарь (одно слово на строку)"
 
+#: outwiker/app/gui/preferences/tabspanel.py:22
+msgid "Minimal tab width"
+msgstr "Минимальная ширина вкладки"
+
+#: outwiker/app/gui/preferences/tabspanel.py:23
+msgid "Maximal tab width"
+msgstr "Максимальная ширина вкладки"
+
+#: outwiker/app/gui/preferences/tabspanel.py:25
+msgid "Horizontal margin"
+msgstr "Поле по горизонтали"
+
+#: outwiker/app/gui/preferences/tabspanel.py:26
+msgid "Vertical margin"
+msgstr "Поле по вертикали"
+
 #: outwiker/app/gui/preferences/tagspanel.py:30
 msgid "Headers in the popup window: "
 msgstr "Заголовки во всплывающем окне: "
@@ -3503,10 +3519,6 @@ msgstr "[[ссылка | комментарий]]"
 
 #~ msgid "Equation for wiki pages"
 #~ msgstr "Формула "
-
-#, fuzzy
-#~ msgid "Horizontal line"
-#~ msgstr "&Горизонтальная линия"
 
 #, fuzzy
 #~ msgid "Horizontal line for wiki pages"

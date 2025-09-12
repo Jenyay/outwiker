@@ -666,8 +666,6 @@ class Rect:
 class TabsGeometryCalculator:
     def __init__(self, theme: Theme) -> None:
         self._theme = theme
-        self.vertical_margin = 5
-        self.horizontal_margin = 8
         self.gap_icon_text = 8
         self.gap_text_close_button = 6
         self.vertical_gap_between_tabs = 4
@@ -693,8 +691,9 @@ class TabsGeometryCalculator:
         max_tab_width = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MAX_WIDTH)
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
         close_button_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE)
+        horizontal_margin = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MARGIN_HORIZONTAL)
 
-        min_min_tab_width = icon_size + close_button_size + 2 * self.horizontal_margin + self.gap_icon_text + self.gap_text_close_button + 10
+        min_min_tab_width = icon_size + close_button_size + 2 * horizontal_margin + self.gap_icon_text + self.gap_text_close_button + 10
 
         if min_tab_width < min_min_tab_width:
             min_tab_width = min_min_tab_width
@@ -770,6 +769,8 @@ class TabsGeometryCalculator:
 
     def get_tab_height(self, text_height: int) -> int:
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
+        vertical_margin = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MARGIN_VERTICAL)
+
         close_button_size = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
         )
@@ -777,7 +778,7 @@ class TabsGeometryCalculator:
             Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE
         )
 
-        height = 2 * self.vertical_margin + max(
+        height = 2 * vertical_margin + max(
             text_height, icon_size, close_button_size, add_button_size
         )
 
@@ -794,6 +795,8 @@ class TabsGeometryCalculator:
         text_height: int,
     ) -> List[SingleTabGeometry]:
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
+        horizontal_margin = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MARGIN_HORIZONTAL)
+
         close_button_size = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
         )
@@ -821,13 +824,13 @@ class TabsGeometryCalculator:
             geometry.page_path = info.page.path if info.page is not None else None
             geometry.icon_file = info.page.icon if info.page is not None else None
 
-            icon_left = self.horizontal_margin + geometry.left
+            icon_left = horizontal_margin + geometry.left
             icon_right = icon_left + icon_size
             icon_top = center_vertical - icon_size // 2 + geometry.top
             icon_bottom = icon_top + icon_size
             geometry.icon = Rect(icon_left, icon_right, icon_top, icon_bottom)
 
-            close_button_right = rect.width - self.horizontal_margin + geometry.left
+            close_button_right = rect.width - horizontal_margin + geometry.left
             close_button_left = close_button_right - close_button_size
             close_button_top = center_vertical - close_button_size // 2 + geometry.top
             close_button_bottom = close_button_top + close_button_size

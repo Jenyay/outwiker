@@ -114,6 +114,18 @@ class ThemeController:
             tabsConfig.maxTabWidth.value,
         )
 
+        self._theme.set(
+            self._theme.SECTION_TABS,
+            self._theme.TABS_MARGIN_HORIZONTAL,
+            tabsConfig.marginHorizontal.value,
+        )
+
+        self._theme.set(
+            self._theme.SECTION_TABS,
+            self._theme.TABS_MARGIN_VERTICAL,
+            tabsConfig.marginVertical.value,
+        )
+
     def loadSystemParams(self):
         if self._theme is None:
             return

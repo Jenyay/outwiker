@@ -276,6 +276,7 @@ class TabsController:
     def __onThemeChanged(self, params: ThemeChangedParams):
         if Theme.SECTION_GENERAL in params.changed_sections or Theme.SECTION_TABS in params.changed_sections:
             self._tabsCtrl.Recalculate()
+            self._tabsCtrl.GetParent().Layout()
 
     def __checkInvalidTabs(self):
         """
