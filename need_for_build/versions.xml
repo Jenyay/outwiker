@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.957" status="dev">
+    <version number="4.0.0.958" status="alpha" date="2025-09-13">
         <changes>
+            <change>Added tab drag-and-drop functionality.</change>
+            <change>Added a button to create a new tab on the tab bar.</change>
+            <change>Added tab appearance settings.</change>
+            <change>In the settings dialog, color settings for different UI elements have been moved to the "Colors" tab.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлена возможность перетаскивания вкладок.</change>
+            <change>На панели вкладок добавлена кнопка для создания новой вкладки.</change>
+            <change>Добавлены настройки внешнего вида вкладок.</change>
+            <change>В диалоге настроек настройки цветов разных элементов интерфейса перенесены на вкладку "Цвета".</change>
         </changes>
     </version>
 
