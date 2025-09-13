@@ -50,19 +50,8 @@ class TagsPanel(BasePrefPanel):
         fontSizer = wx.FlexGridSizer(cols=2)
         fontSizer.AddGrowableCol(0)
 
-        minFontSizeLabel = wx.StaticText(self, label=_("Minimum font size"))
-        self._minFontSizeCtrl = wx.SpinCtrl(self, min=4, max=32)
-        self._minFontSizeCtrl.SetMinSize((150, -1))
-
-        maxFontSizeLabel = wx.StaticText(self, label=_("Maximum font size"))
-        self._maxFontSizeCtrl = wx.SpinCtrl(self, min=4, max=32)
-        self._maxFontSizeCtrl.SetMinSize((150, -1))
-
-        fontSizer.Add(minFontSizeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL, border=2)
-        fontSizer.Add(self._minFontSizeCtrl, flag=wx.ALIGN_RIGHT | wx.EXPAND | wx.ALL, border=2)
-
-        fontSizer.Add(maxFontSizeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL, border=2)
-        fontSizer.Add(self._maxFontSizeCtrl, flag=wx.ALIGN_RIGHT | wx.EXPAND | wx.ALL, border=2)
+        self._minFontSizeCtrl = self._createLabelAndSpin(_("Minimal font size"), 4, 32, fontSizer)[1]
+        self._maxFontSizeCtrl = self._createLabelAndSpin(_("Maximal font size"), 4, 32, fontSizer)[1]
 
         mainsizer.Add(fontSizer, 0, wx.EXPAND | wx.ALL, border=2)
 

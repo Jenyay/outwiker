@@ -55,3 +55,4 @@ __cache.tmp
 .mypy_cache
 .flatpak-builder
 profile_output*
+invoke.yaml

@@ -1,11 +1,14 @@
-from outwiker.gui.theme import Theme
+from typing import Optional, Set
+from outwiker.gui.theme import Theme, ThemeChangedParams
 
 class EventHandler:
     def __init__(self):
         self.call_count = 0
+        self.changed_sections: Optional[Set[str]] = None
 
-    def __call__(self, theme):
+    def __call__(self, params: ThemeChangedParams):
         self.call_count += 1
+        self.changed_sections = params.changed_sections
 
 
 def test_changed_init():
@@ -56,6 +59,7 @@ def test_event_changed():
     theme.set(Theme.SECTION_GENERAL, Theme.BACKGROUND_COLOR, "#123456")
     theme.sendEvent()
     assert handler.call_count == 1
+    assert Theme.SECTION_GENERAL in handler.changed_sections
 
 def test_event_not_changed():
     theme = Theme()

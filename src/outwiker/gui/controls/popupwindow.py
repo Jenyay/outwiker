@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Tuple
+from typing import Optional, Tuple
 
 import wx
 
@@ -36,17 +36,24 @@ class PopupWindow(wx.PopupTransientWindow):
     '''
 
     def __init__(self, parent, theme: Theme):
-        super().__init__(parent, flags=wx.PU_CONTAINS_CONTROLS)
+        super().__init__(parent, flags=wx.PU_CONTAINS_CONTROLS | wx.BORDER_SIMPLE)
         self._theme = theme
         self.createGUI()
 
     def createGUI(self):
         pass
 
-    def Popup(self, mainWindow):
+    def Popup(self, mainWindow: wx.Window, position: Optional[Tuple[int, int]] = None, size: Optional[Tuple[int, int]] = None):
         self.Dismiss()
         self.Layout()
-        self.SetPosition(_getBestPosition(self, mainWindow))
+        if position is not None:
+            self.SetPosition(position)
+        else:
+            self.SetPosition(_getBestPosition(self, mainWindow))
+
+        if size is not None:
+            self.SetSize(size)
+
         super().Popup()
 
 

@@ -8,9 +8,10 @@ from typing import List
 from outwiker.api.core.tree import createNotesTree
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.application import Application
-from outwiker.pages.wiki.parser.commands.childlist import ChildListCommand
+from outwiker.pages.wiki.parser.commands.childlist import ChildListCommand, CSS_STYLES
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
+from .utils import get_styles_count
 
 
 class WikiChildListCommandTest (unittest.TestCase):
@@ -73,6 +74,11 @@ class WikiChildListCommandTest (unittest.TestCase):
             '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
             '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
             ])
+
+    def test_styles(self):
+        text = "(:childlist:)(:childlistend:) (:childlist:)(:childlistend:)"
+        self.parser.toHtml(text)
+        self.assertEqual(get_styles_count(self.parser, CSS_STYLES), 1)
 
     def test3(self):
         text = "(:childlist:)"

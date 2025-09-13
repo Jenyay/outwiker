@@ -3,7 +3,7 @@
 import html
 
 import wx
-import wx.lib.newevent
+import wx.stc
 from wx.stc import StyledTextCtrl
 
 from outwiker.core.textprinter import TextPrinter

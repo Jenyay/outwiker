@@ -85,7 +85,7 @@ class ActionTabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getTabsCount(), 1)
 
         self._actionController.getAction(CloseTabAction.stringId).run(None)
-        self.assertEqual(self._tabsController.getTabsCount(), 1)
+        self.assertEqual(self._tabsController.getTabsCount(), 0)
 
     def testCloseTab(self):
         self.application.wikiroot = self.wikiroot
@@ -114,11 +114,7 @@ class ActionTabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
                          self.wikiroot["Страница 1"])
 
         self._actionController.getAction(CloseTabAction.stringId).run(None)
-        self.assertEqual(self._tabsController.getTabsCount(), 1)
-        self.assertEqual(self._tabsController.getPage(0),
-                         self.wikiroot["Страница 1"])
-        self.assertEqual(self.application.selectedPage,
-                         self.wikiroot["Страница 1"])
+        self.assertEqual(self._tabsController.getTabsCount(), 0)
 
     def testNextTab1(self):
         self.application.wikiroot = self.wikiroot

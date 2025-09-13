@@ -1,3 +1,11 @@
+from outwiker.core.config import StringOption
+from outwiker.gui.stcstyle import StcStyle
+
+
+def sanitize_color(param: StringOption):
+    return param.value if StcStyle.checkColorString(param.value) else param.defaultValue
+
+
 def rgb_to_xyz(rgb):
     r, g, b = rgb
     r = r / 255.0

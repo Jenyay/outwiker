@@ -38,7 +38,10 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="4.0.0.953" date="2025-07-05" />
+    <release version="4.0.0.959" date="2025-09-13" />
+    <release version="4.0.0.958" date="2025-09-13" />
+    <release version="4.0.0.956" date="2025-08-16" />
+    <release version="4.0.0.954" date="2025-07-27" />
     <release version="4.0.0.952" date="2025-07-05" />
     <release version="4.0.0.950" date="2025-01-20" />
     <release version="4.0.0.948" date="2024-12-14" />

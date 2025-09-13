@@ -28,7 +28,7 @@ from outwiker.core.events import (
     PageDialogPageIconChangedParams,
     IconsGroupsListInitParams,
 )
-from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH
+from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH, CONTROLS_HGAP, CONTROLS_VGAP
 from outwiker.gui.iconscollection import IconsCollection
 from outwiker.gui.images import readImage
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
@@ -38,6 +38,7 @@ from outwiker.gui.controls.switchthemed import EVT_SWITCH
 from outwiker.gui.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.theme import Theme
+from outwiker.gui.controls.marginsizer import MarginSizer
 
 
 class IconsGroupInfo:
@@ -69,49 +70,42 @@ class GeneralPanel(wx.Panel):
         self.__layout()
 
     def __layout(self):
-        # Page title
-        titleSizer = wx.FlexGridSizer(cols=3)
-        titleSizer.AddGrowableCol(1)
-        titleSizer.Add(
-            self.titleLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4
-        )
-        titleSizer.Add(self.titleTextCtrl, flag=wx.ALL | wx.EXPAND, border=4)
-        titleSizer.Add(self.iconBtn, flag=wx.ALL | wx.ALIGN_RIGHT, border=4)
+        generalSizer = wx.FlexGridSizer(cols=2, vgap=CONTROLS_VGAP, hgap=CONTROLS_HGAP)
+        generalSizer.AddGrowableCol(1)
 
-        # Page type
-        typeSizer = wx.FlexGridSizer(cols=2)
-        typeSizer.AddGrowableCol(1)
-        typeSizer.Add(self.typeLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
-        typeSizer.Add(self.typeCombo, flag=wx.ALL | wx.EXPAND, border=4)
+        # Page title and icon
+        titleAntIconSizer = wx.FlexGridSizer(cols=2)
+        titleAntIconSizer.AddGrowableCol(0)
 
-        # Page order
-        self.orderSizer = wx.FlexGridSizer(cols=2)
-        self.orderSizer.AddGrowableCol(1)
-        self.orderSizer.Add(
-            self.orderLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4
-        )
-        self.orderSizer.Add(self.orderCombo, flag=wx.ALL | wx.EXPAND, border=4)
+        titleAntIconSizer.Add(self.titleTextCtrl, flag=wx.EXPAND)
+        titleAntIconSizer.Add(self.iconBtn, flag=wx.ALIGN_RIGHT)
+        generalSizer.Add(self.titleLabel, flag=wx.ALIGN_CENTER_VERTICAL)
+        generalSizer.Add(titleAntIconSizer, flag=wx.EXPAND)
 
-        generalSizer = wx.FlexGridSizer(cols=1)
-        generalSizer.AddGrowableRow(3)
-        generalSizer.AddGrowableCol(0)
-        generalSizer.Add(titleSizer, flag=wx.EXPAND)
-        generalSizer.Add(typeSizer, flag=wx.EXPAND)
-        generalSizer.Add(self.orderSizer, flag=wx.EXPAND)
+        # Tags
+        generalSizer.Add(self.tagsLabel, flag=wx.ALIGN_CENTER_VERTICAL)
         generalSizer.Add(self.tagsSelector, flag=wx.EXPAND)
 
-        self.SetSizer(generalSizer)
+        # Page type
+        generalSizer.Add(self.typeLabel, flag=wx.ALIGN_CENTER_VERTICAL)
+        generalSizer.Add(self.typeCombo, flag=wx.EXPAND)
+
+        # Page order
+        generalSizer.Add(self.orderLabel, flag=wx.ALIGN_CENTER_VERTICAL)
+        generalSizer.Add(self.orderCombo, flag=wx.EXPAND)
+
+        marginSizer = MarginSizer()
+        marginSizer.Add(generalSizer)
+        self.SetSizer(marginSizer)
         self.Layout()
 
     def __createGeneralControls(self):
         # Page title
         self.titleLabel = wx.StaticText(self, label=_("Title"))
         self.titleTextCtrl = wx.TextCtrl(self, value="")
-        self.titleTextCtrl.SetMinSize((350, -1))
 
         # Page icon
         self.iconBtn = wx.BitmapButton(self)
-        self.iconBtn.SetMinSize((40, -1))
         self.iconBtn.SetToolTip(_("Page icon"))
         self.iconsPopup = IconsListPopup(self, self._theme)
         self.iconsPopup.SetSize((self._POPUP_WIDTH, self._POPUP_HEIGHT))
@@ -129,7 +123,8 @@ class GeneralPanel(wx.Panel):
         )
 
         # Tags
-        self.tagsSelector = TagsSelector(self)
+        self.tagsLabel = wx.StaticText(self, -1, _("Tags (comma separated)"))
+        self.tagsSelector = TagsSelector(self, enable_active_tags_filter=False)
 
     def popupIconsList(self):
         self.iconsPopup.Popup(self)
@@ -148,6 +143,8 @@ class GeneralPanel(wx.Panel):
     def setPageIcon(self, iconFileName):
         bitmap = readImage(iconFileName, ICONS_WIDTH, ICONS_HEIGHT)
         self.iconBtn.SetBitmapLabel(bitmap)
+        # Need in Windows
+        self.Layout()
 
 
 class GeneralController(BasePageDialogController):
@@ -170,6 +167,7 @@ class GeneralController(BasePageDialogController):
             (ocf.orderCalculatorAlphabetically, _("Alphabetically")),
         ]
 
+        self._tagslist = TagsList(self._application.wikiroot)
         self._setTagsList()
 
         self._generalPanel.typeCombo.Bind(
@@ -227,7 +225,9 @@ class GeneralController(BasePageDialogController):
         return self._iconsController.setPageProperties(page)
 
     def saveParams(self):
-        self._config.recentCreatedPageType.value = self.selectedFactory.getPageTypeString()
+        self._config.recentCreatedPageType.value = (
+            self.selectedFactory.getPageTypeString()
+        )
         self._config.newPageOrderCalculator.value = (
             self._generalPanel.orderCombo.GetSelection()
         )
@@ -251,7 +251,8 @@ class GeneralController(BasePageDialogController):
         title = self._getDefaultTitle()
         self._generalPanel.titleTextCtrl.SetValue(title)
         self._generalPanel.titleTextCtrl.SelectAll()
-        self._generalPanel.orderSizer.ShowItems(True)
+        self._generalPanel.orderCombo.Show()
+        self._generalPanel.orderLabel.Show()
         self._generalPanel.Layout()
 
         self.__onPageTypeChanged(None)
@@ -278,7 +279,8 @@ class GeneralController(BasePageDialogController):
         # Установить тип страницы
         self._setComboPageType(currentPage.getTypeString())
         self._generalPanel.typeCombo.Disable()
-        self._generalPanel.orderSizer.ShowItems(False)
+        self._generalPanel.orderCombo.Hide()
+        self._generalPanel.orderLabel.Hide()
         self._generalPanel.Layout()
         self.__onPageTypeChanged(None)
 
@@ -336,7 +338,6 @@ class GeneralController(BasePageDialogController):
     def _setTagsList(self):
         assert self._application.wikiroot is not None
 
-        tagslist = TagsList(self._application.wikiroot)
         self._generalPanel.tagsSelector.setFontSize(
             self._tagsConfig.minFontSize.value, self._tagsConfig.maxFontSize.value
         )
@@ -344,7 +345,7 @@ class GeneralController(BasePageDialogController):
         self._generalPanel.tagsSelector.enableTooltips(
             self._tagsConfig.enableTooltips.value
         )
-        self._generalPanel.tagsSelector.setTagsList(tagslist)
+        self._generalPanel.tagsSelector.setTagsList(self._tagslist)
 
     def _setComboPageType(self, pageTypeString):
         """

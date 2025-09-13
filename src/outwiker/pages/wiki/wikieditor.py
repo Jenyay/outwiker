@@ -98,11 +98,11 @@ class WikiEditor(TextEditor):
 
     def setDefaultSettings(self):
         super().setDefaultSettings()
-        config = WikiConfig(self._application.config)
+        wiki_config = WikiConfig(self._application.config)
 
-        self.__createStyles(config)
+        self.__createStyles(wiki_config)
 
-        self._colorizeSyntax = config.colorizeSyntax.value
+        self._colorizeSyntax = wiki_config.colorizeSyntax.value
 
         self.textCtrl.SetLexer(wx.stc.STC_LEX_CONTAINER)
         self.textCtrl.SetModEventMask(
@@ -113,7 +113,7 @@ class WikiEditor(TextEditor):
             self.textCtrl.StyleSetSpec(styleid, style)
             self.textCtrl.StyleSetSize(styleid, self.config.fontSize.value)
             self.textCtrl.StyleSetFaceName(styleid, self.config.fontName.value)
-            self.textCtrl.StyleSetBackground(styleid, self.config.backColor.value)
+            self.textCtrl.StyleSetBackground(styleid, self.sanitize_color(self.config.backColor))
 
         self.textCtrl.StyleSetSpec(
             self.STYLE_HEADING_ID, self._styles[self.STYLE_HEADING_ID]
@@ -125,7 +125,7 @@ class WikiEditor(TextEditor):
             self.STYLE_HEADING_ID, self.config.fontName.value
         )
         self.textCtrl.StyleSetBackground(
-            self.STYLE_HEADING_ID, self.config.backColor.value
+            self.STYLE_HEADING_ID, self.sanitize_color(self.config.backColor)
         )
 
     @property

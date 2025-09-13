@@ -3,6 +3,8 @@
 import re
 from string import Template
 
+import rcssmin
+
 from outwiker.gui.guiconfig import HtmlRenderConfig
 import outwiker.core.cssclasses as css
 
@@ -47,16 +49,25 @@ class HtmlTemplate:
         self.template = MyTemplate(template)
 
     def substitute(self, content, **kwargs):
-        if 'userhead' not in kwargs:
-            kwargs['userhead'] = ''
-        if 'title' not in kwargs:
-            kwargs['title'] = ''
+        if "userhead" not in kwargs:
+            kwargs["userhead"] = ""
+        if "title" not in kwargs:
+            kwargs["title"] = ""
+
+        custom_styles_str = "\n".join(kwargs.get("custom_styles", []) + [self.userStyle])
+        custom_styles_str = HtmlTemplate.minimize_css(custom_styles_str)
+
+        default_styles = HtmlTemplate.minimize_css(css.getDefaultStyles())
 
         return self.template.safe_substitute(
             content=content,
             fontsize=self.fontsize,
             fontfamily=self.fontfamily,
-            userstyle=self.userStyle,
-            defaultstyle=css.getDefaultStyles(),
-            **kwargs
+            userstyle=custom_styles_str,
+            defaultstyle=default_styles,
+            **kwargs,
         )
+
+    @staticmethod
+    def minimize_css(css_text: str) -> str:
+        return rcssmin.cssmin(css_text)

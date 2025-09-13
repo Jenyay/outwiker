@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import wx
-import wx.stc
 
 from outwiker.actions.polyactionsid import (
     CLIPBOARD_COPY_ID,

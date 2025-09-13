@@ -746,14 +746,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
 
-    # def SetBackgroundColour(self, colour):
-    #     super().SetBackgroundColour(colour)
-    #     self._view_info.back_color = colour
-
-    # def SetForegroundColour(self, colour):
-    #     super().SetForegroundColour(colour)
-    #     self._view_info.fore_color = colour
-
     def addExtraIcon(self, fileName: str) -> int:
         return self._extraIconsCache.add(fileName)
 

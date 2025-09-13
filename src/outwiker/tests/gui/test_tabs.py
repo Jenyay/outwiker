@@ -5,6 +5,7 @@ import unittest
 
 from outwiker.api.core.tree import loadNotesTree
 from outwiker.app.actions.history import HistoryBackAction, HistoryForwardAction
+from outwiker.app.gui.tabscontroller import TabsController
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
@@ -15,14 +16,14 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.wikiroot = self.createWiki()
 
         factory = TextPageFactory()
-        factory.create(self.wikiroot, "Страница 1", [])
-        factory.create(self.wikiroot, "Страница 2", [])
-        factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-        factory.create(
+        self._page_1 = factory.create(self.wikiroot, "Страница 1", [])
+        self._page_2 = factory.create(self.wikiroot, "Страница 2", [])
+        self._page_3 = factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
+        self._page_4 = factory.create(
             self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
-        factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
+        self._page_5 = factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
-        self._tabsController = self.application.mainWindow.tabsController
+        self._tabsController: TabsController = self.application.mainWindow.tabsController
 
     def tearDown(self):
         self.destroyApplication()
@@ -415,6 +416,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSaveAfterRemove(self):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Страница 1"]
+
         self._tabsController.cloneTab()
         self._tabsController.openInTab(self.wikiroot["Страница 2"], True)
         self._tabsController.cloneTab()
@@ -425,6 +427,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         otherwiki = loadNotesTree(self.wikiroot.path)
         self.application.wikiroot = otherwiki
+
         self.assertEqual(self._tabsController.getTabsCount(), 4)
         self.assertEqual(self._tabsController.getSelection(), 3)
         self.assertEqual(self._tabsController.getPage(0), otherwiki["Страница 2"])
@@ -482,7 +485,7 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getTabsCount(), 1)
 
         self._tabsController.closeTab(0)
-        self.assertEqual(self._tabsController.getTabsCount(), 1)
+        self.assertEqual(self._tabsController.getTabsCount(), 0)
 
     def testCloseTab1(self):
         self.application.wikiroot = self.wikiroot
@@ -520,14 +523,20 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 2"])
 
         self._tabsController.closeTab(1)
+
         self.assertEqual(self._tabsController.getTabsCount(), 1)
         self.assertEqual(self._tabsController.getPage(0), self.wikiroot["Страница 1"])
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 1"])
 
-        self._tabsController.closeTab(0)
+    def testCloseLastTabAndSelectPage(self):
+        self.application.wikiroot = self.wikiroot
         self.assertEqual(self._tabsController.getTabsCount(), 1)
-        self.assertEqual(self._tabsController.getPage(0), self.wikiroot["Страница 1"])
-        self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 1"])
+
+        self._tabsController.closeTab(0)
+        self.assertEqual(self._tabsController.getTabsCount(), 0)
+
+        self.application.selectedPage = self.wikiroot["Страница 1"]
+        self.assertEqual(self._tabsController.getTabsCount(), 1)
 
     def testNextTab1(self):
         self.application.wikiroot = self.wikiroot
@@ -539,14 +548,17 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getSelection(), 0)
 
         self._tabsController.nextTab()
+
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 2"])
         self.assertEqual(self._tabsController.getSelection(), 1)
 
         self._tabsController.nextTab()
+
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 2/Страница 3"])
         self.assertEqual(self._tabsController.getSelection(), 2)
 
         self._tabsController.nextTab()
+
         self.assertEqual(self.application.selectedPage, self.wikiroot["Страница 1"])
         self.assertEqual(self._tabsController.getSelection(), 0)
 
@@ -881,3 +893,217 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue(info_back.menuItem.IsEnabled())
         self.assertFalse(info_forward.menuItem.IsEnabled())
+
+    def test_MoveTab_NotChange(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+
+        self._tabsController.movePage(0, 0)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 0)
+
+    def test_MoveTab_MoveFirstSelectedToNeighboring(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+
+        self._tabsController.movePage(0, 1)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 1)
+
+    def test_MoveTab_MoveFirstSelected_02(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+
+        self._tabsController.movePage(0, 2)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 2)
+
+    def test_MoveTab_FirstSelectedToLastPosition(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+
+        self._tabsController.movePage(0, 4)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 4)
+
+    def test_MoveTab_SecondSelectedToFirstPosition(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+        self._tabsController.setSelection(1)
+
+        self._tabsController.movePage(1, 0)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 0)
+
+    def test_MoveTab_SecondSelectedToLastPosition(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+        self._tabsController.setSelection(1)
+
+        self._tabsController.movePage(1, 4)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 4)
+
+    def test_MoveTab_SecondTabToFirstPosition(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+
+        self._tabsController.movePage(1, 0)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 1)
+
+    def test_MoveTab_SecondTabToLastPosition(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+
+        self._tabsController.movePage(1, 4)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 0)
+
+    def test_MoveTab_LastTabToFirstPosition(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+
+        self._tabsController.movePage(4, 0)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 1)
+
+    def test_MoveTab_LastSelectedTabToFirstPosition(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+        self._tabsController.setSelection(4)
+
+        self._tabsController.movePage(4, 0)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 0)
+
+    def test_MoveTab_FirstTabToLastPositionSelectedLast(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+        self._tabsController.setSelection(4)
+
+        self._tabsController.movePage(0, 4)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 3)
+
+    def test_MoveTab_LastTabToBeforeSelection_01(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+        self._tabsController.setSelection(2)
+
+        self._tabsController.movePage(4, 2)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 3)
+
+    def test_MoveTab_LastTabToBeforeSelection_02(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self._page_1
+        self._tabsController.addNewTab(self._page_2, False)
+        self._tabsController.addNewTab(self._page_3, False)
+        self._tabsController.addNewTab(self._page_4, False)
+        self._tabsController.addNewTab(self._page_5, False)
+        self._tabsController.setSelection(2)
+
+        self._tabsController.movePage(4, 0)
+        self.assertEqual(self._tabsController.getPage(0).subpath, self._page_5.subpath)
+        self.assertEqual(self._tabsController.getPage(1).subpath, self._page_1.subpath)
+        self.assertEqual(self._tabsController.getPage(2).subpath, self._page_2.subpath)
+        self.assertEqual(self._tabsController.getPage(3).subpath, self._page_3.subpath)
+        self.assertEqual(self._tabsController.getPage(4).subpath, self._page_4.subpath)
+        self.assertEqual(self._tabsController.getSelection(), 3)

@@ -339,58 +339,58 @@ class EditorConfig:
 
     FONT_SECTION = "Font"
 
-    SHOW_LINE_NUMBERS_SECTION = "ShowLineNumbers"
+    SHOW_LINE_NUMBERS_PARAM = "ShowLineNumbers"
     SHOW_LINE_NUMBERS_DEFAULT = False
 
-    TAB_WIDTH_SECTION = "TabWidth"
+    TAB_WIDTH_PARAM = "TabWidth"
     TAB_WIDTH_DEFAULT = 4
 
-    TAB_USE_SPACES_SECTION = "TabUseSpaces"
+    TAB_USE_SPACES_PARAM = "TabUseSpaces"
     TAB_USE_SPACES_DEFAULT = False
 
-    FONT_SIZE_SECTION = "size"
+    FONT_SIZE_PARAM = "size"
     FONT_SIZE_DEFAULT = 10
 
-    FONT_NAME_SECTION = "FaceName"
+    FONT_NAME_PARAM = "FaceName"
     FONT_NAME_DEFAULT = ""
 
-    FONT_BOLD_SECTION = "bold"
+    FONT_BOLD_PARAM = "bold"
     FONT_BOLD_DEFAULT = False
 
-    FONT_ITALIC_SECTION = "italic"
+    FONT_ITALIC_PARAM = "italic"
     FONT_ITALIC_DEFAULT = False
 
     # Поведение клавиш Home / End.
     HOME_END_OF_LINE = 0
     HOME_END_OF_PARAGRAPH = 1
 
-    HOME_END_KEYS_SECTION = "HomeEndKeys"
+    HOME_END_KEYS_PARAM = "HomeEndKeys"
     HOME_END_KEYS_DEFAULT = HOME_END_OF_LINE
 
     # Цвет шрифта
-    FONT_COLOR_SECTION = "FontColor"
+    FONT_COLOR_PARAM = "FontColor"
     FONT_COLOR_DEFAULT = "#000000"
 
     # Цвет фона
-    BACK_COLOR_SECTION = "BackColor"
+    BACK_COLOR_PARAM = "BackColor"
     BACK_COLOR_DEFAULT = "#FFFFFF"
 
     # Selected text background color
-    SEL_BACK_COLOR_SECTION = "SelBackColor"
+    SEL_BACK_COLOR_PARAM = "SelBackColor"
     SEL_BACK_COLOR_DEFAULT = "#C0C0C0"
 
     # Margin background color
-    MARGIN_BACK_COLOR_SECTION = "MarginBackColor"
+    MARGIN_BACK_COLOR_PARAM = "MarginBackColor"
     MARGIN_BACK_COLOR_DEFAULT = "#C4C4C4"
 
     # Spell checker
-    SPELL_DICTS_SECTION = "dictionaries"
+    SPELL_DICTS_PARAM = "dictionaries"
     SPELL_DICT_DEFAULT = "en_US, ru_RU, ru_RU_yo, uk_UA"
 
-    SPELL_ENABLE_SECTION = "SpellChecking"
+    SPELL_ENABLE_PARAM = "SpellChecking"
     SPELL_ENABLE_DEFAULT = True
 
-    SPELL_SKIP_DIGITS_SECTION = "SpellSkipDigits"
+    SPELL_SKIP_DIGITS_PARAM = "SpellSkipDigits"
     SPELL_SKIP_DIGITS_DEFAULT = True
 
     def __init__(self, config):
@@ -400,7 +400,7 @@ class EditorConfig:
         self.lineNumbers = BooleanOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.SHOW_LINE_NUMBERS_SECTION,
+            EditorConfig.SHOW_LINE_NUMBERS_PARAM,
             EditorConfig.SHOW_LINE_NUMBERS_DEFAULT,
         )
 
@@ -408,7 +408,7 @@ class EditorConfig:
         self.tabWidth = IntegerOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.TAB_WIDTH_SECTION,
+            EditorConfig.TAB_WIDTH_PARAM,
             EditorConfig.TAB_WIDTH_DEFAULT,
         )
 
@@ -416,7 +416,7 @@ class EditorConfig:
         self.tabUseSpaces = BooleanOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.TAB_USE_SPACES_SECTION,
+            EditorConfig.TAB_USE_SPACES_PARAM,
             EditorConfig.TAB_USE_SPACES_DEFAULT,
         )
 
@@ -424,7 +424,7 @@ class EditorConfig:
         self.fontSize = IntegerOption(
             self.config,
             EditorConfig.FONT_SECTION,
-            EditorConfig.FONT_SIZE_SECTION,
+            EditorConfig.FONT_SIZE_PARAM,
             EditorConfig.FONT_SIZE_DEFAULT,
         )
 
@@ -432,21 +432,21 @@ class EditorConfig:
         self.fontName = StringOption(
             self.config,
             EditorConfig.FONT_SECTION,
-            EditorConfig.FONT_NAME_SECTION,
+            EditorConfig.FONT_NAME_PARAM,
             EditorConfig.FONT_NAME_DEFAULT,
         )
 
         self.fontIsBold = BooleanOption(
             self.config,
             EditorConfig.FONT_SECTION,
-            EditorConfig.FONT_BOLD_SECTION,
+            EditorConfig.FONT_BOLD_PARAM,
             EditorConfig.FONT_BOLD_DEFAULT,
         )
 
         self.fontIsItalic = BooleanOption(
             self.config,
             EditorConfig.FONT_SECTION,
-            EditorConfig.FONT_ITALIC_SECTION,
+            EditorConfig.FONT_ITALIC_PARAM,
             EditorConfig.FONT_ITALIC_DEFAULT,
         )
 
@@ -454,56 +454,56 @@ class EditorConfig:
         self.homeEndKeys = IntegerOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.HOME_END_KEYS_SECTION,
+            EditorConfig.HOME_END_KEYS_PARAM,
             EditorConfig.HOME_END_KEYS_DEFAULT,
         )
 
         self.fontColor = StringOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.FONT_COLOR_SECTION,
+            EditorConfig.FONT_COLOR_PARAM,
             EditorConfig.FONT_COLOR_DEFAULT,
         )
 
         self.backColor = StringOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.BACK_COLOR_SECTION,
+            EditorConfig.BACK_COLOR_PARAM,
             EditorConfig.BACK_COLOR_DEFAULT,
         )
 
         self.selBackColor = StringOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.SEL_BACK_COLOR_SECTION,
+            EditorConfig.SEL_BACK_COLOR_PARAM,
             EditorConfig.SEL_BACK_COLOR_DEFAULT,
         )
 
         self.marginBackColor = StringOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.MARGIN_BACK_COLOR_SECTION,
+            EditorConfig.MARGIN_BACK_COLOR_PARAM,
             EditorConfig.MARGIN_BACK_COLOR_DEFAULT,
         )
 
         self.spellCheckerDicts = StringOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.SPELL_DICTS_SECTION,
+            EditorConfig.SPELL_DICTS_PARAM,
             EditorConfig.SPELL_DICT_DEFAULT,
         )
 
         self.spellEnabled = BooleanOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.SPELL_ENABLE_SECTION,
+            EditorConfig.SPELL_ENABLE_PARAM,
             EditorConfig.SPELL_ENABLE_DEFAULT,
         )
 
         self.spellSkipDigits = BooleanOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            EditorConfig.SPELL_SKIP_DIGITS_SECTION,
+            EditorConfig.SPELL_SKIP_DIGITS_PARAM,
             EditorConfig.SPELL_SKIP_DIGITS_DEFAULT,
         )
 
@@ -515,25 +515,25 @@ class HtmlEditorStylesConfig:
 
     HTML_STYLES_SECTION = "EditorStyles"
 
-    STYLE_TAG_SECTION = "tag"
+    STYLE_TAG_PARAM = "tag"
     STYLE_TAG_DEFAULT = StcStyle.parse("fore:#000080,bold")
 
-    STYLE_TAG_UNKNOWN_SECTION = "tag_unknown"
+    STYLE_TAG_UNKNOWN_PARAM = "tag_unknown"
     STYLE_TAG_UNKNOWN_DEFAULT = StcStyle.parse("fore:#FF0000")
 
-    STYLE_ATTRIBUTE_SECTION = "attribute"
+    STYLE_ATTRIBUTE_PARAM = "attribute"
     STYLE_ATTRIBUTE_DEFAULT = StcStyle.parse("fore:#008080")
 
-    STYLE_ATTRIBUTE_UNKNOWN_SECTION = "attribute_unknown"
+    STYLE_ATTRIBUTE_UNKNOWN_PARAM = "attribute_unknown"
     STYLE_ATTRIBUTE_UNKNOWN_DEFAULT = StcStyle.parse("fore:#FF0000")
 
-    STYLE_NUMBER_SECTION = "number"
+    STYLE_NUMBER_PARAM = "number"
     STYLE_NUMBER_DEFAULT = StcStyle.parse("fore:#000000")
 
-    STYLE_STRING_SECTION = "string"
+    STYLE_STRING_PARAM = "string"
     STYLE_STRING_DEFAULT = StcStyle.parse("fore:#0000FF")
 
-    STYLE_COMMENT_SECTION = "comment"
+    STYLE_COMMENT_PARAM = "comment"
     STYLE_COMMENT_DEFAULT = StcStyle.parse("fore:#12B535")
 
     def __init__(self, config):
@@ -542,49 +542,49 @@ class HtmlEditorStylesConfig:
         self.tag = StcStyleOption(
             self.config,
             HtmlEditorStylesConfig.HTML_STYLES_SECTION,
-            HtmlEditorStylesConfig.STYLE_TAG_SECTION,
+            HtmlEditorStylesConfig.STYLE_TAG_PARAM,
             HtmlEditorStylesConfig.STYLE_TAG_DEFAULT,
         )
 
         self.tagUnknown = StcStyleOption(
             self.config,
             HtmlEditorStylesConfig.HTML_STYLES_SECTION,
-            HtmlEditorStylesConfig.STYLE_TAG_UNKNOWN_SECTION,
+            HtmlEditorStylesConfig.STYLE_TAG_UNKNOWN_PARAM,
             HtmlEditorStylesConfig.STYLE_TAG_UNKNOWN_DEFAULT,
         )
 
         self.attribute = StcStyleOption(
             self.config,
             HtmlEditorStylesConfig.HTML_STYLES_SECTION,
-            HtmlEditorStylesConfig.STYLE_ATTRIBUTE_SECTION,
+            HtmlEditorStylesConfig.STYLE_ATTRIBUTE_PARAM,
             HtmlEditorStylesConfig.STYLE_ATTRIBUTE_DEFAULT,
         )
 
         self.attributeUnknown = StcStyleOption(
             self.config,
             HtmlEditorStylesConfig.HTML_STYLES_SECTION,
-            HtmlEditorStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_SECTION,
+            HtmlEditorStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_PARAM,
             HtmlEditorStylesConfig.STYLE_ATTRIBUTE_UNKNOWN_DEFAULT,
         )
 
         self.number = StcStyleOption(
             self.config,
             HtmlEditorStylesConfig.HTML_STYLES_SECTION,
-            HtmlEditorStylesConfig.STYLE_NUMBER_SECTION,
+            HtmlEditorStylesConfig.STYLE_NUMBER_PARAM,
             HtmlEditorStylesConfig.STYLE_NUMBER_DEFAULT,
         )
 
         self.string = StcStyleOption(
             self.config,
             HtmlEditorStylesConfig.HTML_STYLES_SECTION,
-            HtmlEditorStylesConfig.STYLE_STRING_SECTION,
+            HtmlEditorStylesConfig.STYLE_STRING_PARAM,
             HtmlEditorStylesConfig.STYLE_STRING_DEFAULT,
         )
 
         self.comment = StcStyleOption(
             self.config,
             HtmlEditorStylesConfig.HTML_STYLES_SECTION,
-            HtmlEditorStylesConfig.STYLE_COMMENT_SECTION,
+            HtmlEditorStylesConfig.STYLE_COMMENT_PARAM,
             HtmlEditorStylesConfig.STYLE_COMMENT_DEFAULT,
         )
 
@@ -668,31 +668,31 @@ class TextPrintConfig:
 
     PRINT_SECTION = "Print"
 
-    FONT_NAME_SECTION = "FontFaceName"
+    FONT_NAME_PARAM = "FontFaceName"
     FONT_NAME_DEFAULT = "Arial"
 
-    FONT_SIZE_SECTION = "FontSize"
+    FONT_SIZE_PARAM = "FontSize"
     FONT_SIZE_DEFAULT = 10
 
-    FONT_BOLD_SECTION = "FontBold"
+    FONT_BOLD_PARAM = "FontBold"
     FONT_BOLD_DEFAULT = False
 
-    FONT_ITALIC_SECTION = "FontItalic"
+    FONT_ITALIC_PARAM = "FontItalic"
     FONT_ITALIC_DEFAULT = False
 
-    PAPPER_SIZE_SECTION = "PaperId"
+    PAPPER_SIZE_PARAM = "PaperId"
     PAPPER_SIZE_DEFAULT = wx.PAPER_A4
 
-    MARGIN_TOP_SECTION = "MarginTop"
+    MARGIN_TOP_PARAM = "MarginTop"
     MARGIN_TOP_DEFAULT = 20
 
-    MARGIN_BOTTOM_SECTION = "MarginBottom"
+    MARGIN_BOTTOM_PARAM = "MarginBottom"
     MARGIN_BOTTOM_DEFAULT = 20
 
-    MARGIN_LEFT_SECTION = "MarginLeft"
+    MARGIN_LEFT_PARAM = "MarginLeft"
     MARGIN_LEFT_DEFAULT = 20
 
-    MARGIN_RIGHT_SECTION = "MarginRight"
+    MARGIN_RIGHT_PARAM = "MarginRight"
     MARGIN_RIGHT_DEFAULT = 20
 
     def __init__(self, config):
@@ -702,63 +702,63 @@ class TextPrintConfig:
         self.fontName = StringOption(
             self.config,
             TextPrintConfig.PRINT_SECTION,
-            TextPrintConfig.FONT_NAME_SECTION,
+            TextPrintConfig.FONT_NAME_PARAM,
             TextPrintConfig.FONT_NAME_DEFAULT,
         )
 
         self.fontSize = IntegerOption(
             self.config,
             TextPrintConfig.PRINT_SECTION,
-            TextPrintConfig.FONT_SIZE_SECTION,
+            TextPrintConfig.FONT_SIZE_PARAM,
             TextPrintConfig.FONT_SIZE_DEFAULT,
         )
 
         self.fontIsBold = BooleanOption(
             self.config,
             TextPrintConfig.PRINT_SECTION,
-            TextPrintConfig.FONT_BOLD_SECTION,
+            TextPrintConfig.FONT_BOLD_PARAM,
             TextPrintConfig.FONT_BOLD_DEFAULT,
         )
 
         self.fontIsItalic = BooleanOption(
             self.config,
             TextPrintConfig.PRINT_SECTION,
-            TextPrintConfig.FONT_ITALIC_SECTION,
+            TextPrintConfig.FONT_ITALIC_PARAM,
             TextPrintConfig.FONT_ITALIC_DEFAULT,
         )
 
         self.paperId = IntegerOption(
             self.config,
             TextPrintConfig.PRINT_SECTION,
-            TextPrintConfig.PAPPER_SIZE_SECTION,
+            TextPrintConfig.PAPPER_SIZE_PARAM,
             TextPrintConfig.PAPPER_SIZE_DEFAULT,
         )
 
         self.marginTop = IntegerOption(
             self.config,
             TextPrintConfig.PRINT_SECTION,
-            TextPrintConfig.MARGIN_TOP_SECTION,
+            TextPrintConfig.MARGIN_TOP_PARAM,
             TextPrintConfig.MARGIN_TOP_DEFAULT,
         )
 
         self.marginBottom = IntegerOption(
             self.config,
             TextPrintConfig.PRINT_SECTION,
-            TextPrintConfig.MARGIN_BOTTOM_SECTION,
+            TextPrintConfig.MARGIN_BOTTOM_PARAM,
             TextPrintConfig.MARGIN_BOTTOM_DEFAULT,
         )
 
         self.marginLeft = IntegerOption(
             self.config,
             TextPrintConfig.PRINT_SECTION,
-            TextPrintConfig.MARGIN_LEFT_SECTION,
+            TextPrintConfig.MARGIN_LEFT_PARAM,
             TextPrintConfig.MARGIN_LEFT_DEFAULT,
         )
 
         self.marginRight = IntegerOption(
             self.config,
             TextPrintConfig.PRINT_SECTION,
-            TextPrintConfig.MARGIN_RIGHT_SECTION,
+            TextPrintConfig.MARGIN_RIGHT_PARAM,
             TextPrintConfig.MARGIN_RIGHT_DEFAULT,
         )
 
@@ -770,39 +770,39 @@ class MainWindowConfig:
 
     MAIN_WINDOW_SECTION = "MainWindow"
 
-    TITLE_FORMAT_SECTION = "Title"
+    TITLE_FORMAT_PARAM = "Title"
     TITLE_FORMAT_DEFAULT = "{page} - {file} - OutWiker"
 
-    WIDTH_SECTION = "width"
+    WIDTH_PARAM = "width"
     WIDTH_DEFAULT = 800
 
-    HEIGHT_SECTION = "height"
+    HEIGHT_PARAM = "height"
     HEIGHT_DEFAULT = 680
 
-    XPOS_SECTION = "xpos"
+    XPOS_PARAM = "xpos"
     XPOS_DEFAULT = 0
 
-    YPOS_SECTION = "ypos"
+    YPOS_PARAM = "ypos"
     YPOS_DEFAULT = 0
 
-    FULLSCREEN_SECTION = "fullscreen"
+    FULLSCREEN_PARAM = "fullscreen"
     FULLSCREEN_DEFAULT = False
 
-    MAXIMIZED_SECTION = "maximized"
+    MAXIMIZED_PARAM = "maximized"
     MAXIMIZED_DEFAULT = False
 
     # Размер области в статусной панели для показа даты изменения текущей
     # страницы
-    DATETIME_STATUS_WIDTH_SECTION = "datetime_status_width"
+    DATETIME_STATUS_WIDTH_PARAM = "datetime_status_width"
     DATETIME_STATUS_WIDTH_DEFAULT = 250
 
-    STATUSBAR_VISIBLE_SECTION = "statusbar_visible"
+    STATUSBAR_VISIBLE_PARAM = "statusbar_visible"
     STATUSBAR_VISIBLE_DEFAULT = True
 
-    MAIN_PANES_BACKGROUND_COLOR_SECTION = "main_panes_background_color"
+    MAIN_PANES_BACKGROUND_COLOR_PARAM = "main_panes_background_color"
     MAIN_PANES_BACKGROUND_COLOR_DEFAULT = ""
 
-    MAIN_PANES_TEXT_COLOR_SECTION = "main_panes_text_color"
+    MAIN_PANES_TEXT_COLOR_PARAM = "main_panes_text_color"
     MAIN_PANES_TEXT_COLOR_DEFAULT = ""
 
     def __init__(self, config):
@@ -811,77 +811,77 @@ class MainWindowConfig:
         self.titleFormat = StringOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.TITLE_FORMAT_SECTION,
+            self.TITLE_FORMAT_PARAM,
             self.TITLE_FORMAT_DEFAULT,
         )
 
         self.width = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.WIDTH_SECTION,
+            self.WIDTH_PARAM,
             self.WIDTH_DEFAULT,
         )
 
         self.height = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.HEIGHT_SECTION,
+            self.HEIGHT_PARAM,
             self.HEIGHT_DEFAULT,
         )
 
         self.xPos = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.XPOS_SECTION,
+            self.XPOS_PARAM,
             self.XPOS_DEFAULT,
         )
 
         self.yPos = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.YPOS_SECTION,
+            self.YPOS_PARAM,
             self.YPOS_DEFAULT,
         )
 
         self.fullscreen = BooleanOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.FULLSCREEN_SECTION,
+            self.FULLSCREEN_PARAM,
             self.FULLSCREEN_DEFAULT,
         )
 
         self.maximized = BooleanOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.MAXIMIZED_SECTION,
+            self.MAXIMIZED_PARAM,
             self.MAXIMIZED_DEFAULT,
         )
 
         self.datetimeStatusWidth = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.DATETIME_STATUS_WIDTH_SECTION,
+            self.DATETIME_STATUS_WIDTH_PARAM,
             self.DATETIME_STATUS_WIDTH_DEFAULT,
         )
 
         self.statusbar_visible = BooleanOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.STATUSBAR_VISIBLE_SECTION,
+            self.STATUSBAR_VISIBLE_PARAM,
             self.STATUSBAR_VISIBLE_DEFAULT,
         )
 
         self.mainPanesBackgroundColor = StringOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.MAIN_PANES_BACKGROUND_COLOR_SECTION,
+            self.MAIN_PANES_BACKGROUND_COLOR_PARAM,
             self.MAIN_PANES_BACKGROUND_COLOR_DEFAULT,
         )
 
         self.mainPanesTextColor = StringOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.MAIN_PANES_TEXT_COLOR_SECTION,
+            self.MAIN_PANES_TEXT_COLOR_PARAM,
             self.MAIN_PANES_TEXT_COLOR_DEFAULT,
         )
 
@@ -891,23 +891,23 @@ class TreeConfig:
     Класс для хранения настроек панели с деревом
     """
 
-    WIDTH_SECTION = "TreeWidth"
+    WIDTH_PARAM = "TreeWidth"
     WIDTH_DEFAULT = 250
 
-    HEIGHT_SECTION = "TreeHeight"
+    HEIGHT_PARAM = "TreeHeight"
     HEIGHT_DEFAULT = 250
 
-    PANE_OPTIONS_SECTION = "TreePane"
+    PANE_OPTIONS_PARAM = "TreePane"
     PANE_OPTIONS_DEFAULT = ""
 
-    FONT_SIZE_SECTION = "TreeFontSize"
+    FONT_SIZE_PARAM = "TreeFontSize"
     FONT_SIZE_DEFAULT = None
 
     # Extra icons
-    EXTRA_ICON_BOOKMARK_SECTION = "ExtraIconBookmark"
+    EXTRA_ICON_BOOKMARK_PARAM = "ExtraIconBookmark"
     EXTRA_ICON_BOOKMARK_DEFAULT = True
 
-    EXTRA_ICON_READ_ONLY_SECTION = "ExtraIconReadOnly"
+    EXTRA_ICON_READ_ONLY_PARAM = "ExtraIconReadOnly"
     EXTRA_ICON_READ_ONLY_DEFAULT = True
 
     def __init__(self, config):
@@ -916,14 +916,14 @@ class TreeConfig:
         self.width = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            TreeConfig.WIDTH_SECTION,
+            TreeConfig.WIDTH_PARAM,
             TreeConfig.WIDTH_DEFAULT,
         )
 
         self.height = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            TreeConfig.HEIGHT_SECTION,
+            TreeConfig.HEIGHT_PARAM,
             TreeConfig.HEIGHT_DEFAULT,
         )
 
@@ -931,14 +931,14 @@ class TreeConfig:
         self.pane = StringOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            TreeConfig.PANE_OPTIONS_SECTION,
+            TreeConfig.PANE_OPTIONS_PARAM,
             TreeConfig.PANE_OPTIONS_DEFAULT,
         )
 
         self.fontSize = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            TreeConfig.FONT_SIZE_SECTION,
+            TreeConfig.FONT_SIZE_PARAM,
             TreeConfig.FONT_SIZE_DEFAULT,
         )
 
@@ -946,14 +946,14 @@ class TreeConfig:
         self.extraIconBookmark = BooleanOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.EXTRA_ICON_BOOKMARK_SECTION,
+            self.EXTRA_ICON_BOOKMARK_PARAM,
             self.EXTRA_ICON_BOOKMARK_DEFAULT,
         )
 
         self.extraIconReadOnly = BooleanOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.EXTRA_ICON_READ_ONLY_SECTION,
+            self.EXTRA_ICON_READ_ONLY_PARAM,
             self.EXTRA_ICON_READ_ONLY_DEFAULT,
         )
 
@@ -963,13 +963,13 @@ class AttachConfig:
     Класс для хранения настроек панели с вложенными файлами
     """
 
-    WIDTH_SECTION = "AttachesWidth"
+    WIDTH_PARAM = "AttachesWidth"
     WIDTH_DEFAULT = 250
 
-    HEIGHT_SECTION = "AttachesHeight"
+    HEIGHT_PARAM = "AttachesHeight"
     HEIGHT_DEFAULT = 150
 
-    PANE_OPTIONS_SECTION = "AttachesPane"
+    PANE_OPTIONS_PARAM = "AttachesPane"
     PANE_OPTIONS_DEFAULT = ""
 
     ACTION_INSERT_LINK = 0
@@ -987,21 +987,21 @@ class AttachConfig:
         self.width = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.WIDTH_SECTION,
+            self.WIDTH_PARAM,
             self.WIDTH_DEFAULT,
         )
 
         self.height = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.HEIGHT_SECTION,
+            self.HEIGHT_PARAM,
             self.HEIGHT_DEFAULT,
         )
 
         self.pane = StringOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.PANE_OPTIONS_SECTION,
+            self.PANE_OPTIONS_PARAM,
             self.PANE_OPTIONS_DEFAULT,
         )
 
@@ -1025,13 +1025,13 @@ class TagsCloudConfig:
     Класс для хранения настроек панели с облагом тегов
     """
 
-    WIDTH_SECTION = "TagsCloudWidth"
+    WIDTH_PARAM = "TagsCloudWidth"
     WIDTH_DEFAULT = 250
 
-    HEIGHT_SECTION = "TagsCloudHeight"
+    HEIGHT_PARAM = "TagsCloudHeight"
     HEIGHT_DEFAULT = 170
 
-    PANE_OPTIONS_SECTION = "TagsCloudPane"
+    PANE_OPTIONS_PARAM = "TagsCloudPane"
     PANE_OPTIONS_DEFAULT = ""
 
     def __init__(self, config):
@@ -1040,14 +1040,14 @@ class TagsCloudConfig:
         self.width = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.WIDTH_SECTION,
+            self.WIDTH_PARAM,
             self.WIDTH_DEFAULT,
         )
 
         self.height = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.HEIGHT_SECTION,
+            self.HEIGHT_PARAM,
             self.HEIGHT_DEFAULT,
         )
 
@@ -1055,20 +1055,20 @@ class TagsCloudConfig:
         self.pane = StringOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.PANE_OPTIONS_SECTION,
+            self.PANE_OPTIONS_PARAM,
             self.PANE_OPTIONS_DEFAULT,
         )
 
 
 class PageDialogConfig:
-    WIDTH_SECTION = "PageDialogWidth"
+    WIDTH_PARAM = "PageDialogWidth"
     WIDTH_DEFAULT = 500
 
-    HEIGHT_SECTION = "PageDialogHeight"
+    HEIGHT_PARAM = "PageDialogHeight"
     HEIGHT_DEFAULT = 350
 
     # Последний используемый стиль
-    RECENT_STYLE_SECTION = "RecentStyle"
+    RECENT_STYLE_PARAM = "RecentStyle"
     RECENT_STYLE_DEFAULT = ""
 
     RECENT_CREATED_PAGE_TYPE_PARAM = "RecentCreatedPageType"
@@ -1088,21 +1088,21 @@ class PageDialogConfig:
         self.width = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.WIDTH_SECTION,
+            self.WIDTH_PARAM,
             self.WIDTH_DEFAULT,
         )
 
         self.height = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.HEIGHT_SECTION,
+            self.HEIGHT_PARAM,
             self.HEIGHT_DEFAULT,
         )
 
         self.recentStyle = StringOption(
             self.config,
             GeneralGuiConfig.GENERAL_SECTION,
-            self.RECENT_STYLE_SECTION,
+            self.RECENT_STYLE_PARAM,
             self.RECENT_STYLE_DEFAULT,
         )
 
@@ -1130,13 +1130,13 @@ class PageDialogConfig:
 
 
 class PrefDialogConfig:
-    WIDTH_SECTION = "PrefDialogWidth"
+    WIDTH_PARAM = "PrefDialogWidth"
     WIDTH_DEFAULT = 800
 
-    HEIGHT_SECTION = "PrefDialogHeight"
+    HEIGHT_PARAM = "PrefDialogHeight"
     HEIGHT_DEFAULT = 500
 
-    TREE_WIDTH_SECTION = "PrefDialogTreeWidth"
+    TREE_WIDTH_PARAM = "PrefDialogTreeWidth"
     TREE_WIDTH_DEFAULT = 300
 
     def __init__(self, config):
@@ -1145,21 +1145,21 @@ class PrefDialogConfig:
         self.width = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.WIDTH_SECTION,
+            self.WIDTH_PARAM,
             self.WIDTH_DEFAULT,
         )
 
         self.height = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.HEIGHT_SECTION,
+            self.HEIGHT_PARAM,
             self.HEIGHT_DEFAULT,
         )
 
         self.treeWidth = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.TREE_WIDTH_SECTION,
+            self.TREE_WIDTH_PARAM,
             self.TREE_WIDTH_DEFAULT,
         )
 
@@ -1171,25 +1171,25 @@ class TagsConfig:
 
     SECTION = "Tags"
 
-    POPUP_HEADERS_SECTION = "PopupHeaders"
+    POPUP_HEADERS_PARAM = "PopupHeaders"
     POPUP_HEADERS_DEFAULT = ""
 
-    POPUP_WIDTH_SECTION = "TagsPopupWidth"
+    POPUP_WIDTH_PARAM = "TagsPopupWidth"
     POPUP_WIDTH_DEFAULT = 825
 
-    POPUP_HEIGHT_SECTION = "TagsPopupHeight"
+    POPUP_HEIGHT_PARAM = "TagsPopupHeight"
     POPUP_HEIGHT_DEFAULT = 200
 
-    MIN_FONT_SIZE_SECTION = "MinFontSize"
+    MIN_FONT_SIZE_PARAM = "MinFontSize"
     MIN_FONT_SIZE_DEFAULT = 8
 
-    MAX_FONT_SIZE_SECTION = "MaxFontSize"
+    MAX_FONT_SIZE_PARAM = "MaxFontSize"
     MAX_FONT_SIZE_DEFAULT = 16
 
-    TAGS_CLOUD_MODE_SECTION = "TagsCloudMode"
+    TAGS_CLOUD_MODE_PARAM = "TagsCloudMode"
     TAGS_CLOUD_MODE_DEFAULT = TAGS_CLOUD_MODE_CONTINUOUS
 
-    ENABLE_TOOLTIPS_SECTION = "EnableTooltips"
+    ENABLE_TOOLTIPS_PARAM = "EnableTooltips"
     ENABLE_TOOLTIPS_DEFAULT = True
 
     def __init__(self, config):
@@ -1198,48 +1198,132 @@ class TagsConfig:
         self.popupHeaders = StringOption(
             self.config,
             self.SECTION,
-            self.POPUP_HEADERS_SECTION,
+            self.POPUP_HEADERS_PARAM,
             self.POPUP_HEADERS_DEFAULT,
         )
 
         self.popupWidth = IntegerOption(
             self.config,
             self.SECTION,
-            self.POPUP_WIDTH_SECTION,
+            self.POPUP_WIDTH_PARAM,
             self.POPUP_WIDTH_DEFAULT,
         )
 
         self.popupHeight = IntegerOption(
             self.config,
             self.SECTION,
-            self.POPUP_HEIGHT_SECTION,
+            self.POPUP_HEIGHT_PARAM,
             self.POPUP_HEIGHT_DEFAULT,
         )
 
         self.minFontSize = IntegerOption(
             self.config,
             self.SECTION,
-            self.MIN_FONT_SIZE_SECTION,
+            self.MIN_FONT_SIZE_PARAM,
             self.MIN_FONT_SIZE_DEFAULT,
         )
 
         self.maxFontSize = IntegerOption(
             self.config,
             self.SECTION,
-            self.MAX_FONT_SIZE_SECTION,
+            self.MAX_FONT_SIZE_PARAM,
             self.MAX_FONT_SIZE_DEFAULT,
         )
 
         self.tagsCloudMode = StringOption(
             self.config,
             self.SECTION,
-            self.TAGS_CLOUD_MODE_SECTION,
+            self.TAGS_CLOUD_MODE_PARAM,
             self.TAGS_CLOUD_MODE_DEFAULT,
         )
 
         self.enableTooltips = BooleanOption(
             self.config,
             self.SECTION,
-            self.ENABLE_TOOLTIPS_SECTION,
+            self.ENABLE_TOOLTIPS_PARAM,
             self.ENABLE_TOOLTIPS_DEFAULT,
+        )
+
+
+class TabsConfig:
+    SECTION = "Tabs"
+
+    def __init__(self, config):
+        self.config = config
+
+        self.minTabWidth = IntegerOption(
+            self.config,
+            self.SECTION,
+            "MinTabWidth",
+            150,
+        )
+
+        self.maxTabWidth = IntegerOption(
+            self.config,
+            self.SECTION,
+            "MaxTabWidth",
+            450,
+        )
+
+        self.marginHorizontal = IntegerOption(
+            self.config,
+            self.SECTION,
+            "MarginHorizontal",
+            8,
+        )
+
+        self.marginVertical = IntegerOption(
+            self.config,
+            self.SECTION,
+            "MarginVertical",
+            5,
+        )
+
+        self.iconSize = IntegerOption(
+            self.config,
+            self.SECTION,
+            "IconSize",
+            16,
+        )
+
+        self.backColorNormal = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorNormal",
+            "#D4D4CE",
+        )
+
+        self.backColorHover = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorHover",
+            "#DDDDDD",
+        )
+
+        self.backColorDowned = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorDowned",
+            "#AAAAAA",
+        )
+
+        self.backColorDragged = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorDragged",
+            "#AAAAAA",
+        )
+
+        self.backColorSelected = StringOption(
+            self.config,
+            self.SECTION,
+            "BackColorSelected",
+            "#F3F3F0",
+        )
+
+        self.borderColor = StringOption(
+            self.config,
+            self.SECTION,
+            "BorderColor",
+            "#B3B3B3",
         )

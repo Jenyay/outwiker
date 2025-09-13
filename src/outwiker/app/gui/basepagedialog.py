@@ -11,6 +11,7 @@ from outwiker.app.gui.pagedialogpanels.appearancepanel import (
     AppearanceController,
 )
 from outwiker.core.events import PageDialogInitParams, PageDialogDestroyParams
+from outwiker.gui.defines import CONTROLS_MARGIN
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.testeddialog import TestedDialog
 
@@ -157,8 +158,7 @@ class BasePageDialog(TestedDialog):
         mainSizer.AddGrowableRow(0)
         mainSizer.Add(self._notebook, 0, wx.EXPAND, 0)
         self._createOkCancelButtons(mainSizer)
-        self.SetSizer(mainSizer)
-        self.Layout()
+        self.SetSizerAndFit(mainSizer)
 
     def saveParams(self):
         width, height = self.GetClientSize()
@@ -168,7 +168,7 @@ class BasePageDialog(TestedDialog):
     def _createOkCancelButtons(self, sizer):
         # Создание кнопок Ok/Cancel
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
-        sizer.Add(buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border=2)
+        sizer.Add(buttonsSizer, flag=wx.ALIGN_RIGHT | wx.TOP | wx.BOTTOM, border=CONTROLS_MARGIN)
         self.Bind(wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
 
     @property

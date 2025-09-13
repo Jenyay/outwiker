@@ -1,10 +1,52 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.953" status="dev">
+    <version number="4.0.0.959" status="dev">
         <changes>
         </changes>
 
         <changes lang="ru">
+        </changes>
+    </version>
+
+    <version number="4.0.0.958" status="alpha" date="2025-09-13">
+        <changes>
+            <change>Added tab drag-and-drop functionality.</change>
+            <change>Added a button to create a new tab on the tab bar.</change>
+            <change>Added tab appearance settings.</change>
+            <change>In the settings dialog, color settings for different UI elements have been moved to the "Colors" tab.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена возможность перетаскивания вкладок.</change>
+            <change>На панели вкладок добавлена кнопка для создания новой вкладки.</change>
+            <change>Добавлены настройки внешнего вида вкладок.</change>
+            <change>В диалоге настроек настройки цветов разных элементов интерфейса перенесены на вкладку "Цвета".</change>
+        </changes>
+    </version>
+
+    <version number="4.0.0.956" status="alpha" date="2025-08-16">
+        <changes>
+            <change>New tabs that can be arranged in multiple rows.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Новые вкладки, которые могут располагаться в несколько рядов.</change>
+        </changes>
+    </version>
+
+    <version number="4.0.0.954" status="alpha" date="2025-07-27">
+        <changes>
+            <change>Redesigned the tag selection interface in dialogs.</change>
+            <change>When generating HTML code for wiki pages, some CSS styles are now added only when necessary.</change>
+            <change>Updated several icons.</change>
+            <change>Migrated to wxPython 4.2.2.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Переделан интерфейс для выбора меток в диалогах.</change>
+            <change>При генерации HTML-кода для викистраниц некоторое CSS-стили теперь добавляются только при необходимости.</change>
+            <change>Обновление некоторых значков.</change>
+            <change>Переход на wxPython 4.2.2.</change>
         </changes>
     </version>
 

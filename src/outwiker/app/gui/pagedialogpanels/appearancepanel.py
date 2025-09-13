@@ -13,7 +13,8 @@ from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
 from outwiker.core.tree import WikiPage
 from outwiker.gui.controls.colorcombobox import ColorComboBox
-from outwiker.gui.defines import MAX_TITLE_COLORS_COUNT
+from outwiker.gui.controls.marginsizer import MarginSizer
+from outwiker.gui.defines import CONTROLS_HGAP, CONTROLS_VGAP, MAX_TITLE_COLORS_COUNT
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
@@ -40,28 +41,22 @@ class AppearancePanel(wx.Panel):
         self.styleCombo.SetMinSize((200, -1))
 
     def _layout(self):
-        mainSizer = wx.FlexGridSizer(cols=2)
+        mainSizer = wx.FlexGridSizer(cols=2, vgap=CONTROLS_VGAP, hgap=CONTROLS_HGAP)
         mainSizer.AddGrowableCol(1)
 
         # Page style
-        mainSizer.Add(self.styleText, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
-        mainSizer.Add(
-            self.styleCombo,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-            border=4,
-        )
+        mainSizer.Add(self.styleText, flag=wx.ALIGN_CENTER_VERTICAL)
+        mainSizer.Add(self.styleCombo, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
 
         # Title color
+        mainSizer.Add(self.titleColorText, flag=wx.ALIGN_CENTER_VERTICAL)
         mainSizer.Add(
-            self.titleColorText, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4
-        )
-        mainSizer.Add(
-            self.titleColorBox,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-            border=4,
+            self.titleColorBox, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT
         )
 
-        self.SetSizer(mainSizer)
+        marginSizer = MarginSizer()
+        marginSizer.Add(mainSizer)
+        self.SetSizer(marginSizer)
         self.Layout()
 
 
@@ -116,7 +111,7 @@ class AppearanceController(BasePageDialogController):
                 pageTitleColors.pop(selectedIndex)
                 pageTitleColors.insert(0, color)
 
-        self.config.PageTitleColors.value = pageTitleColors[:self._maxTitleColorsCount]
+        self.config.PageTitleColors.value = pageTitleColors[: self._maxTitleColorsCount]
 
     def setPageProperties(self, page: WikiPage):
         """

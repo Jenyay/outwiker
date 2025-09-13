@@ -60,7 +60,7 @@ class HtmlGenerator:
         # Create final HTML file
         tpl = HtmlTemplate(self._application, readTextFile(stylepath))
         result = tpl.substitute(
-            content=text, userhead=head, title=self._page.display_title
+            content=text, userhead=head, title=self._page.display_title, custom_styles=parser.styleItems
         )
 
         result = self._changeContentByEvent(

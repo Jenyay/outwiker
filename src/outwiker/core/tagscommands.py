@@ -22,7 +22,7 @@ def getTagsString(tags: List[str]) -> str:
     return ", ".join(tags)
 
 
-def removeTag(page, tag):
+def removeTag(page, tag: str):
     """
     Удалить тег из страницы
     """
@@ -38,7 +38,7 @@ def removeTag(page, tag):
     page.tags = pageTags
 
 
-def appendTag(page, tag):
+def appendTag(page, tag: str):
     pageTags = page.tags[:]
     pageTags.append(tag)
     page.tags = pageTags

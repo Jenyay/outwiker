@@ -3,27 +3,39 @@
 import os.path
 
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
+from outwiker.app.gui.dropfiles import PageItemsDropFilesTarget
 from outwiker.app.services.messages import showError
+from outwiker.core.application import Application
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
-
-import outwiker.gui.controls.flatnotebook as fnb
+from outwiker.gui.theme import Theme, ThemeChangedParams
+from .tabsctrl import (
+    EVT_TABSCTRL_CONTEXT_MENU,
+    EVT_TABSCTRL_PAGE_CHANGED,
+    EVT_TABSCTRL_ADD_NEW_TAB,
+    EVT_TABSCTRL_END_DRAG_TAB,
+    EVT_TABSCTRL_CLOSED_TAB,
+    TabsCtrl,
+)
 
 
 class TabsController:
-    def __init__(self, tabsCtrl, application):
+    def __init__(self, tabsCtrl: TabsCtrl, application: Application):
         """
         tabsCtrl - экземпляр класса TabsCtrl
         application - экземпляр класса Application
         """
         self._tabsCtrl = tabsCtrl
         self._application = application
+        self._theme = self._application.theme
 
         self._tabsSection = "Tabs"
         self._tabsParamName = "tab_"
 
         self._tabSelectedSection = CONFIG_GENERAL_SECTION
         self._tabSelectedOption = "selectedtab"
+
+        self._dropTarget = PageItemsDropFilesTarget(self._application, self._tabsCtrl)
 
         self.__bindEvents()
 
@@ -33,15 +45,23 @@ class TabsController:
         page - страница, которую надо открыть в новой вкладке
         select - нужно ли сразу выбрать новую вкладку
         """
-        assert (page is None or
-                page.root == self._application.wikiroot)
+        assert page is None or page.root == self._application.wikiroot
 
         selectedTab = self._tabsCtrl.GetSelection()
 
-        self._tabsCtrl.InsertPage(selectedTab + 1,
-                                  self.__getTitle(page),
-                                  page,
-                                  select)
+        tab_index = 0 if selectedTab is None else selectedTab + 1
+        self._tabsCtrl.InsertPage(tab_index, self.__getTitle(page), page, select)
+        self.__saveTabs()
+
+    def addNewTab(self, page, select):
+        """
+        Открыть страницу в новой вкладке (вкладку добавить в конец)
+        page - страница, которую надо открыть в новой вкладке
+        select - нужно ли сразу выбрать новую вкладку
+        """
+        assert page is None or page.root == self._application.wikiroot
+
+        self._tabsCtrl.AddPage(page, self.__getTitle(page), select)
         self.__saveTabs()
 
     def closeTab(self, index):
@@ -51,7 +71,7 @@ class TabsController:
         if index < 0 or index >= self.getTabsCount():
             raise ValueError
 
-        self._tabsCtrl.DeletePage(index)
+        self._tabsCtrl.ClosePage(index)
 
     def getTabsCount(self):
         """
@@ -96,13 +116,13 @@ class TabsController:
         self._tabsCtrl.PreviousPage()
 
     def __createStringListConfig(self, config):
-        return StringListSection(
-            config, self._tabsSection, self._tabsParamName)
+        return StringListSection(config, self._tabsSection, self._tabsParamName)
 
     def destroy(self):
         """
         Вызывать перед удалением контроллера
         """
+        self._dropTarget.destroy()
         self.__saveTabs()
         self.__unbindEvents()
 
@@ -118,33 +138,23 @@ class TabsController:
         """
         self._tabsCtrl.HistoryForward()
 
+    # Used in tests
+    def movePage(self, index: int, new_index: int):
+        self._tabsCtrl.MovePage(index, new_index)
+
     def __bindGuiEvents(self):
-        self._tabsCtrl.Bind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED,
-            self.__onTabChanged)
-        self._tabsCtrl.Bind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING,
-            self.__onTabClose)
-        self._tabsCtrl.Bind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED,
-            self.__onTabDropped)
-        self._tabsCtrl.Bind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU,
-            self.__onPopupMenu)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_CONTEXT_MENU, handler=self.__onPopupMenu)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_END_DRAG_TAB, handler=self.__onMoveTab)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_CLOSED_TAB, handler=self.__onTabClosed)
 
     def __unbindGuiEvents(self):
-        self._tabsCtrl.Unbind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED,
-            handler=self.__onTabChanged)
-        self._tabsCtrl.Unbind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING,
-            handler=self.__onTabClose)
-        self._tabsCtrl.Unbind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_DROPPED,
-            handler=self.__onTabDropped)
-        self._tabsCtrl.Unbind(
-            fnb.EVT_FLATNOTEBOOK_PAGE_CONTEXT_MENU,
-            handler=self.__onPopupMenu)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_CONTEXT_MENU, handler=self.__onPopupMenu)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_END_DRAG_TAB, handler=self.__onMoveTab)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_CLOSED_TAB, handler=self.__onTabClosed)
 
     def __bindEvents(self):
         self._application.onWikiOpen += self.__onWikiOpen
@@ -154,7 +164,7 @@ class TabsController:
         self._application.onTreeUpdate += self.__onPageUpdate
         self._application.onPageRemove += self.__onPageUpdate
         self._application.onEndTreeUpdate += self.__onPageUpdate
-
+        self._theme.onThemeChanged += self.__onThemeChanged
         self.__bindGuiEvents()
 
     def __unbindEvents(self):
@@ -165,38 +175,33 @@ class TabsController:
         self._application.onTreeUpdate -= self.__onPageUpdate
         self._application.onPageRemove -= self.__onPageUpdate
         self._application.onEndTreeUpdate -= self.__onPageUpdate
-
+        self._theme.onThemeChanged -= self.__onThemeChanged
         self.__unbindGuiEvents()
 
+    def __onAddNewTab(self, event):
+        self.addNewTab(self._application.selectedPage, True)
+
     def __onPopupMenu(self, event):
-        popupPage = self.getPage(event.GetSelection())
+        popupPage = event.page
         popupMenu = PagePopupMenu(self._tabsCtrl, popupPage, self._application)
         self._tabsCtrl.PopupMenu(popupMenu.menu)
 
-    def __onTabClose(self, event):
-        tabsCount = self._tabsCtrl.GetPageCount()
-
-        if tabsCount == 1:
-            event.Veto()
-            return
-
-        self.__saveTabs()
-
     def __onTabChanged(self, event):
-        newindex = event.GetSelection()
-        page = self._tabsCtrl.GetPage(newindex)
+        page = event.page
         self._application.selectedPage = page
         self.__saveTabs()
 
-    def __onTabDropped(self, event):
+    def __onMoveTab(self, event):
+        self.__saveTabs()
+
+    def __onTabClosed(self, event):
         self.__saveTabs()
 
     def __loadTabs(self, wikiroot):
         if wikiroot is not None:
-            selectedTab = IntegerOption(wikiroot.params,
-                                        self._tabSelectedSection,
-                                        self._tabSelectedOption,
-                                        0).value
+            selectedTab = IntegerOption(
+                wikiroot.params, self._tabSelectedSection, self._tabSelectedOption, 0
+            ).value
         self.__unbindGuiEvents()
         self._tabsCtrl.Clear()
 
@@ -208,7 +213,7 @@ class TabsController:
 
         for tab in tabsList:
             page = wikiroot[tab]
-            self._tabsCtrl.AddPage(self.__getTitle(page), page)
+            self._tabsCtrl.AddPage(page, self.__getTitle(page))
 
         pageCount = self._tabsCtrl.GetPageCount()
 
@@ -226,21 +231,24 @@ class TabsController:
     def __saveTabs(self):
         if self._application.wikiroot is not None:
             try:
-                pageSubpathList = [page.subpath if page is not None else ''
-                                   for page
-                                   in self._tabsCtrl.GetPages()]
+                pageSubpathList = [
+                    page.subpath if page is not None else ""
+                    for page in self._tabsCtrl.GetPages()
+                ]
 
                 self.__createStringListConfig(
-                    self._application.wikiroot.params).value = pageSubpathList
+                    self._application.wikiroot.params
+                ).value = pageSubpathList
 
                 selectedTab = self._tabsCtrl.GetSelection()
                 self._application.wikiroot.params.set(
-                    self._tabSelectedSection,
-                    self._tabSelectedOption,
-                    str(selectedTab))
+                    self._tabSelectedSection, self._tabSelectedOption, str(selectedTab)
+                )
             except IOError as e:
-                showError(self._application.mainWindow,
-                          _(u"Can't save file %s") % (str(e.filename)))
+                showError(
+                    self._application.mainWindow,
+                    _("Can't save file %s") % (str(e.filename)),
+                )
 
     def __onWikiOpen(self, root):
         self.__loadTabs(root)
@@ -258,12 +266,17 @@ class TabsController:
         self.openInTab(self._application.selectedPage, True)
 
     def __onPageUpdate(self, page, **kwargs):
-        self._tabsCtrl.RenameCurrentTab(
-            self.__getTitle(
-                self._application.selectedPage))
-        self._tabsCtrl.SetCurrentPage(self._application.selectedPage)
+        self._tabsCtrl.RenameCurrentTab(self.__getTitle(self._application.selectedPage))
+        self._tabsCtrl.SetCurrentPage(
+            self._application.selectedPage, self.__getTitle(page)
+        )
         self.__checkInvalidTabs()
         self.__saveTabs()
+
+    def __onThemeChanged(self, params: ThemeChangedParams):
+        if Theme.SECTION_GENERAL in params.changed_sections or Theme.SECTION_TABS in params.changed_sections:
+            self._tabsCtrl.Recalculate()
+            self._tabsCtrl.GetParent().Layout()
 
     def __checkInvalidTabs(self):
         """
@@ -275,7 +288,7 @@ class TabsController:
             page = self.getPage(index)
 
             if (page is not None and page.isRemoved) and index != selectedIndex:
-                self._tabsCtrl.DeletePage(index)
+                self._tabsCtrl.ClosePage(index)
                 index -= 1
             elif page is None or page.display_title != self.getTabTitle(index):
                 self._tabsCtrl.RenameTab(index, self.__getTitle(page))

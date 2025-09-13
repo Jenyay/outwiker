@@ -19,8 +19,8 @@
 	</author>
 
 	<requirements>
-		<api>4.944</api>
+		<api>4.954</api>
 	</requirements>
 
-	<version number="1.6.7"/>
+	<version number="1.6.8"/>
 </info>
