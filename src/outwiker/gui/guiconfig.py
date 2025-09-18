@@ -1321,6 +1321,41 @@ class TabsConfig:
             "#F3F3F0",
         )
 
+        self.fontColorNormal = StringOption(
+            self.config,
+            self.SECTION,
+            "FontColorNormal",
+            "#000000",
+        )
+
+        self.fontColorHover = StringOption(
+            self.config,
+            self.SECTION,
+            "FontColorHover",
+            "#000000",
+        )
+
+        self.fontColorDowned = StringOption(
+            self.config,
+            self.SECTION,
+            "FontColorDowned",
+            "#000000",
+        )
+
+        self.fontColorDragged = StringOption(
+            self.config,
+            self.SECTION,
+            "FontColorDragged",
+            "#000000",
+        )
+
+        self.fontColorSelected = StringOption(
+            self.config,
+            self.SECTION,
+            "FontColorSelected",
+            "#000000",
+        )
+
         self.borderColor = StringOption(
             self.config,
             self.SECTION,

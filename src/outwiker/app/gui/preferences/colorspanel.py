@@ -69,6 +69,13 @@ class ColorsPanel(BasePrefPanel):
         self.addColorParam(_("Tabs"), _("Сolor of the tab under cursor"), self._tabsConfig.backColorHover)
         self.addColorParam(_("Tabs"), _("Color of the pressed tab"), self._tabsConfig.backColorDowned)
         self.addColorParam(_("Tabs"), _("Color of the dragged tab"), self._tabsConfig.backColorDragged)
+
+        self.addColorParam(_("Tabs"), _("Font color"), self._tabsConfig.fontColorNormal)
+        self.addColorParam(_("Tabs"), _("Font color of the selected tab"), self._tabsConfig.fontColorSelected)
+        self.addColorParam(_("Tabs"), _("Font color of the tab under cursor"), self._tabsConfig.fontColorHover)
+        self.addColorParam(_("Tabs"), _("Font color of the pressed tab"), self._tabsConfig.fontColorDowned)
+        self.addColorParam(_("Tabs"), _("Font color of the dragged tab"), self._tabsConfig.fontColorDragged)
+
         self.addColorParam(_("Tabs"), _("Tab border color"), self._tabsConfig.borderColor)
 
     def addColorParam(self, section: str, title: str, config_param: StringOption) -> None:

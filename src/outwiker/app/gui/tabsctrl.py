@@ -998,7 +998,7 @@ class TabRender:
 
         return _get_trimmed_title(title, cut_count)
 
-    def _draw_title(self, dc: wx.DC, tab: SingleTabGeometry, state: int) -> None:
+    def _draw_title(self, dc: wx.DC, tab: SingleTabGeometry, tab_state: int) -> None:
         assert tab.text_left is not None
         assert tab.text_right is not None
         assert tab.title is not None
@@ -1007,8 +1007,20 @@ class TabRender:
         text_top = tab.height // 2 - text_height // 2 + tab.top
         text_max_width = tab.text_right - tab.text_left
 
+        if tab_state == TAB_STATE_HOVER:
+            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_HOVER_COLOR)
+        elif tab_state == TAB_STATE_SELECTED:
+            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_SELECTED_COLOR)
+        elif tab_state == TAB_STATE_DOWNED:
+            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_DOWNED_COLOR)
+        elif tab_state == TAB_STATE_DRAGGED:
+            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_DRAGGED_COLOR)
+        else:
+            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_NORMAL_COLOR)
+
         dc.SetFont(self._title_font)
         title = self._trim_title(dc, tab.title, text_max_width)
+        dc.SetTextForeground(font_color)
         dc.DrawText(title, tab.text_left, text_top)
 
     def _draw_background(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
@@ -1084,6 +1096,7 @@ class TabRender:
         self, dc: wx.DC, tab: SingleTabGeometry, tab_state: int, close_button_state: int
     ) -> None:
         font_size = self.get_default_font_size()
+
         self._title_font = wx.Font(wx.FontInfo(font_size))
         self._title_font.SetWeight(
             wx.FONTWEIGHT_BOLD

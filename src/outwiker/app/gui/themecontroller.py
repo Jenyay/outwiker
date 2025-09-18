@@ -92,6 +92,36 @@ class ThemeController:
 
         self._theme.set(
             self._theme.SECTION_TABS,
+            self._theme.TABS_FONT_NORMAL_COLOR,
+            sanitize_color(tabsConfig.fontColorNormal),
+        )
+
+        self._theme.set(
+            self._theme.SECTION_TABS,
+            self._theme.TABS_FONT_HOVER_COLOR,
+            sanitize_color(tabsConfig.fontColorHover),
+        )
+
+        self._theme.set(
+            self._theme.SECTION_TABS,
+            self._theme.TABS_FONT_DOWNED_COLOR,
+            sanitize_color(tabsConfig.fontColorDowned),
+        )
+
+        self._theme.set(
+            self._theme.SECTION_TABS,
+            self._theme.TABS_FONT_DRAGGED_COLOR,
+            sanitize_color(tabsConfig.fontColorDragged),
+        )
+
+        self._theme.set(
+            self._theme.SECTION_TABS,
+            self._theme.TABS_FONT_SELECTED_COLOR,
+            sanitize_color(tabsConfig.fontColorSelected),
+        )
+
+        self._theme.set(
+            self._theme.SECTION_TABS,
             self._theme.TABS_BORDER_COLOR,
             sanitize_color(tabsConfig.borderColor),
         )

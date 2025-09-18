@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 17:37+0300\n"
+"POT-Creation-Date: 2025-09-18 16:14+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1326,7 +1326,12 @@ msgstr "Перемещение"
 #: outwiker/app/gui/preferences/colorspanel.py:69
 #: outwiker/app/gui/preferences/colorspanel.py:70
 #: outwiker/app/gui/preferences/colorspanel.py:71
-#: outwiker/app/gui/preferences/colorspanel.py:72
+#: outwiker/app/gui/preferences/colorspanel.py:73
+#: outwiker/app/gui/preferences/colorspanel.py:74
+#: outwiker/app/gui/preferences/colorspanel.py:75
+#: outwiker/app/gui/preferences/colorspanel.py:76
+#: outwiker/app/gui/preferences/colorspanel.py:77
+#: outwiker/app/gui/preferences/colorspanel.py:79
 #: outwiker/app/gui/preferences/prefcontroller.py:139
 msgid "Tabs"
 msgstr "Вкладки"
@@ -1476,6 +1481,7 @@ msgid "Editor"
 msgstr "Редактор"
 
 #: outwiker/app/gui/preferences/colorspanel.py:62
+#: outwiker/app/gui/preferences/colorspanel.py:73
 msgid "Font color"
 msgstr "Цвет шрифта"
 
@@ -1511,7 +1517,23 @@ msgstr "Цвет нажатой вкладки"
 msgid "Color of the dragged tab"
 msgstr "Цвет перетаскиваемой вкладки"
 
-#: outwiker/app/gui/preferences/colorspanel.py:72
+#: outwiker/app/gui/preferences/colorspanel.py:74
+msgid "Font color of the selected tab"
+msgstr "Цвет шрифта выбранной вкладки"
+
+#: outwiker/app/gui/preferences/colorspanel.py:75
+msgid "Font color of the tab under cursor"
+msgstr "Цвет шрифта вкладки под курсором"
+
+#: outwiker/app/gui/preferences/colorspanel.py:76
+msgid "Font color of the pressed tab"
+msgstr "Цвет шрифта нажатой вкладки"
+
+#: outwiker/app/gui/preferences/colorspanel.py:77
+msgid "Font color of the dragged tab"
+msgstr "Цвет шрифта перетаскиваемой вкладки"
+
+#: outwiker/app/gui/preferences/colorspanel.py:79
 msgid "Tab border color"
 msgstr "Цвет границы вкладки"
 
