@@ -35,28 +35,14 @@ class NotesTreePanel(BasePrefPanel):
         )
 
     def _createFontSizeGUI(self, main_sizer):
-        self._fontSizeLabel = wx.StaticText(self, label=_("Font size"))
-
-        font_size_items = [
-            str(n)
-            for n in range(NOTES_TREE_MIN_FONT_SIZE, NOTES_TREE_MAX_FONT_SIZE + 1)
-        ]
-        font_size_items.insert(0, _("Default size"))
-        self._fontSizeComboBox = wx.ComboBox(
-            self, choices=font_size_items, style=wx.CB_DROPDOWN | wx.CB_READONLY
-        )
-        self._fontSizeComboBox.SetMinSize((200, -1))
-
         self._fontSizeSizer = wx.FlexGridSizer(cols=2)
         self._fontSizeSizer.AddGrowableCol(1)
-        self._fontSizeSizer.Add(
-            self._fontSizeLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-        )
-        self._fontSizeSizer.Add(
-            self._fontSizeComboBox,
-            flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL,
-            border=2,
-        )
+        self._fontSizeComboBox = self._createLabelAndFontSize(
+            _("Font size"),
+            NOTES_TREE_MIN_FONT_SIZE,
+            NOTES_TREE_MAX_FONT_SIZE,
+            self._fontSizeSizer,
+        )[1]
         main_sizer.Add(self._fontSizeSizer, flag=wx.EXPAND)
 
     def LoadState(self):

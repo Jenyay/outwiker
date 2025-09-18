@@ -27,6 +27,24 @@ class BasePrefPanel(ScrolledPanel):
         sizer.Add(label, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         sizer.Add(control, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
 
+    def _createLabelAndFontSize(
+        self, title: str, minFontSize: int, maxFontSize: int, sizer: wx.Sizer
+    ) -> Tuple[wx.StaticText, wx.ComboBox]:
+        label = wx.StaticText(self, label=title)
+
+        font_size_items = [
+            str(n)
+            for n in range(minFontSize, maxFontSize + 1)
+        ]
+        font_size_items.insert(0, _("Default size"))
+
+        fontSizeComboBox = wx.ComboBox(
+            self, choices=font_size_items, style=wx.CB_DROPDOWN | wx.CB_READONLY
+        )
+        fontSizeComboBox.SetMinSize((200, -1))
+        self._addLabelAndControlToSizer(sizer, label, fontSizeComboBox)
+        return (label, fontSizeComboBox)
+
     def _createLabelAndSpin(
         self, title: str, minVal: int, maxVal: int, sizer: wx.Sizer
     ) -> Tuple[wx.StaticText, wx.SpinCtrl]:

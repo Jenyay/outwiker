@@ -1003,6 +1003,7 @@ class TabRender:
         assert tab.text_right is not None
         assert tab.title is not None
 
+        dc.SetFont(self._title_font)
         text_height = self.get_text_height(dc)
         text_top = tab.height // 2 - text_height // 2 + tab.top
         text_max_width = tab.text_right - tab.text_left
@@ -1018,7 +1019,6 @@ class TabRender:
         else:
             font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_NORMAL_COLOR)
 
-        dc.SetFont(self._title_font)
         title = self._trim_title(dc, tab.title, text_max_width)
         dc.SetTextForeground(font_color)
         dc.DrawText(title, tab.text_left, text_top)
