@@ -53,6 +53,7 @@ class Theme:
     TABS_FONT_DOWNED_COLOR = "FontDownedColor"
     TABS_FONT_DRAGGED_COLOR = "FontDraggedColor"
     TABS_FONT_SELECTED_COLOR = "FontSelectedColor"
+    TABS_FONT_SIZE = "FontSize"
     TABS_BORDER_COLOR = "BorderColor"
     TABS_ICON_SIZE = "IconSize"
     TABS_CLOSE_BUTTON_SIZE = "CloseButtonSize"
@@ -138,6 +139,7 @@ class Theme:
         self.addParam(self.SECTION_TABS, self.TABS_FONT_DOWNED_COLOR, "#000000")
         self.addParam(self.SECTION_TABS, self.TABS_FONT_DRAGGED_COLOR, "#000000")
         self.addParam(self.SECTION_TABS, self.TABS_FONT_SELECTED_COLOR, "#000000")
+        self.addParam(self.SECTION_TABS, self.TABS_FONT_SIZE, 0)
 
         self.addParam(self.SECTION_TABS, self.TABS_BORDER_COLOR, "#B3B3B3")
 

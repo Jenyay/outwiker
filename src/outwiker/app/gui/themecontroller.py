@@ -122,6 +122,12 @@ class ThemeController:
 
         self._theme.set(
             self._theme.SECTION_TABS,
+            self._theme.TABS_FONT_SIZE,
+            tabsConfig.fontSize.value,
+        )
+
+        self._theme.set(
+            self._theme.SECTION_TABS,
             self._theme.TABS_BORDER_COLOR,
             sanitize_color(tabsConfig.borderColor),
         )

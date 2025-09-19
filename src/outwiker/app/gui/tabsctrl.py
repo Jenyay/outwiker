@@ -67,7 +67,7 @@ class TabsCtrl(wx.Window):
         self._brushes = wx.BrushList()
         self._geometry = TabsGeometryCalculator(self._theme)
         self._tab_render = TabRender(self._theme)
-        self._text_height = self._get_text_height()
+        self._text_height = None
 
         self.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
@@ -105,6 +105,7 @@ class TabsCtrl(wx.Window):
         super().SetForegroundColour(colour)
 
     def Recalculate(self):
+        self._text_height = self._get_text_height()
         self._calc_geometry()
         self.SetMinSize((-1, self._geometry.get_full_height(self._text_height)))
         rows_count = self._geometry.rows_count
@@ -871,7 +872,6 @@ class TabRender:
         self._theme = theme
         self._brushes = wx.BrushList()
         self._pens = wx.PenList()
-        self._title_font = wx.NullFont
 
         # "Close" button
         close_button_size = self._theme.get(
@@ -946,7 +946,12 @@ class TabRender:
 
     def get_text_height(self, dc: wx.DC):
         text = "Wg"
-        return dc.GetTextExtent(text).GetHeight()
+        old_font = dc.GetFont()
+        font = self._get_font(TAB_STATE_SELECTED)
+        dc.SetFont(font)
+        height = dc.GetTextExtent(text).GetHeight()
+        dc.SetFont(old_font)
+        return height
 
     def _draw_icon(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
         assert tab.icon is not None
@@ -1003,7 +1008,7 @@ class TabRender:
         assert tab.text_right is not None
         assert tab.title is not None
 
-        dc.SetFont(self._title_font)
+        dc.SetFont(self._get_font(tab_state))
         text_height = self.get_text_height(dc)
         text_top = tab.height // 2 - text_height // 2 + tab.top
         text_max_width = tab.text_right - tab.text_left
@@ -1095,20 +1100,23 @@ class TabRender:
     def draw_tab(
         self, dc: wx.DC, tab: SingleTabGeometry, tab_state: int, close_button_state: int
     ) -> None:
-        font_size = self.get_default_font_size()
-
-        self._title_font = wx.Font(wx.FontInfo(font_size))
-        self._title_font.SetWeight(
-            wx.FONTWEIGHT_BOLD
-            if tab_state == TAB_STATE_SELECTED
-            else wx.FONTWEIGHT_NORMAL
-        )
-
         self._draw_background(dc, tab)
         self._draw_tab(dc, tab, tab_state)
         self._draw_icon(dc, tab)
         self._draw_title(dc, tab, tab_state)
         self._draw_close_button(dc, tab, close_button_state)
+
+    def _get_font(self, tab_state: int) -> wx.Font:
+        theme_font_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_SIZE)
+        font_size = theme_font_size if theme_font_size > 0 else self.get_default_font_size()
+
+        font = wx.Font(wx.FontInfo(font_size))
+        font.SetWeight(
+            wx.FONTWEIGHT_BOLD
+            if tab_state == TAB_STATE_SELECTED
+            else wx.FONTWEIGHT_NORMAL
+        )
+        return font
 
     def draw_add_button(
         self, dc: wx.DC, geometry: TabsGeometryCalculator, add_button_state: int

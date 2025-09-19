@@ -1356,6 +1356,13 @@ class TabsConfig:
             "#000000",
         )
 
+        self.fontSize = IntegerOption(
+            self.config,
+            self.SECTION,
+            "FontSize",
+            0,
+        )
+
         self.borderColor = StringOption(
             self.config,
             self.SECTION,
