@@ -33,6 +33,7 @@ class Theme:
     # Tree section
     HIGHLIGHTING_COLOR = "HighlightingColor"
     HIGHLIGHTING_TEXT_COLOR = "HighlightingTextColor"
+    TREE_FONT_SIZE = "FontSize"
 
     # Notification
     NOTIFICATION_BACKGROUND_COLOR = "BackgroundColor"
@@ -107,12 +108,6 @@ class Theme:
             "#E3E3E3",
         )
 
-    def addNotesTreeParams(self):
-        self.addParam(self.SECTION_TREE, self.SELECTION_COLOR, "#0000FF")
-        self.addParam(self.SECTION_TREE, self.SELECTION_TEXT_COLOR, "#FFFFFF")
-        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_COLOR, "#E1EFFA")
-        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_TEXT_COLOR, "#000000")
-
     def addGeneralParams(self):
         self.addParam(self.SECTION_GENERAL, self.BACKGROUND_COLOR, "#FFFFFF")
         self.addParam(self.SECTION_GENERAL, self.TEXT_COLOR, "#000000")
@@ -150,6 +145,13 @@ class Theme:
         self.addParam(self.SECTION_TABS, self.TABS_MAX_WIDTH, 450)
         self.addParam(self.SECTION_TABS, self.TABS_MARGIN_HORIZONTAL, 8)
         self.addParam(self.SECTION_TABS, self.TABS_MARGIN_VERTICAL, 5)
+
+    def addNotesTreeParams(self):
+        self.addParam(self.SECTION_TREE, self.SELECTION_COLOR, "#0000FF")
+        self.addParam(self.SECTION_TREE, self.SELECTION_TEXT_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_COLOR, "#E1EFFA")
+        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_TEXT_COLOR, "#000000")
+        self.addParam(self.SECTION_TREE, self.TREE_FONT_SIZE, 0)
 
     @property
     def colorBackground(self):

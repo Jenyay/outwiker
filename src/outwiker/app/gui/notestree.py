@@ -20,6 +20,7 @@ from outwiker.app.gui.dropfiles import PageItemsDropFilesTarget
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
+from outwiker.core.application import Application
 from outwiker.core.events import (
     PAGE_UPDATE_ICON,
     PAGE_UPDATE_TITLE,
@@ -47,8 +48,8 @@ from outwiker.gui.controls.notestreectrl2 import (
 )
 
 
-class NotesTree(wx.Panel):
-    def __init__(self, parent, application):
+class NotesTree(wx.Window):
+    def __init__(self, parent: wx.Window, application: Application):
         super().__init__(parent, style=wx.TAB_TRAVERSAL)
         self._application = application
         # Переключатель устанавливается в True,
@@ -89,7 +90,7 @@ class NotesTree(wx.Panel):
         )
 
     def _initTreeCtrl(self):
-        self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
+        # self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
         self._pagesExtraIcons.append(
             (
                 self._EXTRA_ICON_BOOKMARK_TITLE,
@@ -115,7 +116,6 @@ class NotesTree(wx.Panel):
         self._application.onPageUpdate += self.__onPageUpdate
         self._application.onStartTreeUpdate += self.__onStartTreeUpdate
         self._application.onEndTreeUpdate += self.__onEndTreeUpdate
-        self._application.onPreferencesDialogClose += self.__onPreferences
         self._application.onBookmarksChanged += self.__onBookmarkChanged
         self._application.onForceNotesTreeItemsUpdate += self.__onForceNotesTreeItemsUpdate
 
@@ -128,7 +128,6 @@ class NotesTree(wx.Panel):
         self._application.onPageUpdate -= self.__onPageUpdate
         self._application.onStartTreeUpdate -= self.__onStartTreeUpdate
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
-        self._application.onPreferencesDialogClose -= self.__onPreferences
         self._application.onBookmarksChanged -= self.__onBookmarkChanged
         self._application.onForceNotesTreeItemsUpdate -= self.__onForceNotesTreeItemsUpdate
 
@@ -151,10 +150,6 @@ class NotesTree(wx.Panel):
     def __onForceNotesTreeItemsUpdate(self, page, params):
         for forced_page in params.pages:
             self.treeCtrl.updateItem(forced_page)
-
-    def __onPreferences(self, dialog):
-        self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
-        self.treeCtrl.updateTree()
 
     def __onWikiOpen(self, root):
         self._setRoot(root)

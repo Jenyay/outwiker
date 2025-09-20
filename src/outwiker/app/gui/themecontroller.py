@@ -5,7 +5,7 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.event import EVENT_PRIORITY_MAX_CORE
 from outwiker.gui.colors import sanitize_color
-from outwiker.gui.guiconfig import MainWindowConfig, TabsConfig
+from outwiker.gui.guiconfig import MainWindowConfig, TabsConfig, TreeConfig
 from outwiker.gui.theme import Theme
 
 
@@ -54,6 +54,15 @@ class ThemeController:
         )
 
         self._loadTabsConfig()
+        self._loadTreeConfig()
+
+    def _loadTreeConfig(self):
+        assert self._theme is not None
+
+        tree_config = TreeConfig(self._application.config)
+        self._theme.set(self._theme.SECTION_TREE,
+                        self._theme.TREE_FONT_SIZE,
+                        tree_config.fontSize.value)
 
     def _loadTabsConfig(self):
         assert self._theme is not None

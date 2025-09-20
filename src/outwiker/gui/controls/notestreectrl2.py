@@ -18,7 +18,7 @@ from outwiker.gui.defines import (
     NOTES_TREE_MIN_FONT_SIZE,
     NOTES_TREE_MAX_FONT_SIZE,
 )
-from outwiker.gui.theme import Theme
+from outwiker.gui.theme import Theme, ThemeChangedParams
 
 
 NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
@@ -245,9 +245,6 @@ class _ItemsViewInfo:
         self.extra_icon_width = (self.icon_width * 2) // 3
         self.extra_icon_height = (self.icon_height * 2) // 3
 
-        self._font_size = self.get_default_font_size()
-        self._update_font()
-
         self.left_margin = 4
         self.top_margin = 4
         self.depth_indent = self.icon_width // 2 + 16
@@ -266,6 +263,8 @@ class _ItemsViewInfo:
             self.back_color_selected.GetBlue(),
             100,
         )
+
+        self.update_theme()
 
     @property
     def back_color(self) -> wx.Colour:
@@ -303,9 +302,9 @@ class _ItemsViewInfo:
         if self.line_height <= title_height + 4:
             self.line_height = title_height + 10
 
-    def _update_font(self):
-        self._title_font = wx.Font(wx.FontInfo(self._font_size))
-        self._dc.SetFont(self._title_font)
+    def update_theme(self):
+        title_font = wx.Font(wx.FontInfo(self.font_size))
+        self._dc.SetFont(title_font)
         self._update_line_height()
 
     def get_default_font_size(self) -> int:
@@ -313,16 +312,13 @@ class _ItemsViewInfo:
 
     @property
     def font_size(self) -> Optional[int]:
-        return self._font_size
-
-    @font_size.setter
-    def font_size(self, value: Optional[int]):
-        if value is None:
-            self._font_size = self.get_default_font_size()
-        else:
-            self._font_size = value
-
-        self._update_font()
+        theme_font_size = self._theme.get(Theme.SECTION_TREE, Theme.TREE_FONT_SIZE)
+        return (
+            theme_font_size
+            if theme_font_size >= NOTES_TREE_MIN_FONT_SIZE
+            and theme_font_size <= NOTES_TREE_MAX_FONT_SIZE
+            else self.get_default_font_size()
+        )
 
     def getTextWidth(self, text: str) -> int:
         return self._dc.GetTextExtent(text).GetWidth()
@@ -705,12 +701,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._mouseWheelDeltaY = 3
 
         # Rename items
-        self._editItemFont = wx.Font()
-        self._editItemFont.SetPointSize(self._view_info.font_size)
-
         self._editItemTextCtrl = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         self._editItemTextCtrl.Hide()
-        self._editItemTextCtrl.SetFont(self._editItemFont)
         self._currentEditItem: Optional[NotesTreeItem] = None
         self._editClickDelay_ms = 300
         self._editItemCencelled = False
@@ -746,16 +738,18 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
 
+        self._theme.onThemeChanged += self._onThemeChanged
+
+    def _onThemeChanged(self, params: ThemeChangedParams):
+        if (
+            Theme.SECTION_GENERAL in params.changed_sections
+            or Theme.SECTION_TREE in params.changed_sections
+        ):
+            self._view_info.update_theme()
+            self.updateTree()
+
     def addExtraIcon(self, fileName: str) -> int:
         return self._extraIconsCache.add(fileName)
-
-    def setFontSize(self, fontSize: Optional[int], update=True):
-        if self._view_info.font_size != fontSize:
-            self._view_info.font_size = fontSize
-            self._editItemFont.SetPointSize(self._view_info.font_size)
-
-            if update:
-                self.updateTree()
 
     # Used in tests only
     def getRootItem(self, n: int) -> NotesTreeItem:
@@ -806,7 +800,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         elif new_font_size > NOTES_TREE_MAX_FONT_SIZE:
             new_font_size = NOTES_TREE_MAX_FONT_SIZE
 
-        self.setFontSize(new_font_size)
+        self._theme.set(Theme.SECTION_TREE, Theme.TREE_FONT_SIZE, new_font_size)
+        self._theme.sendEvent()
         scaleEvent = NotesTreeScaleEvent(fontSize=new_font_size)
         wx.PostEvent(self, scaleEvent)
 
@@ -1347,6 +1342,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             x_min - scroll_x, y - scroll_y, width, wx.DefaultCoord
         )
         title = item.getTitle()
+
+        editItemFont = wx.Font()
+        editItemFont.SetPointSize(self._view_info.font_size)
+
+        self._editItemTextCtrl.SetFont(editItemFont)
         self._editItemTextCtrl.SetValue(title)
         self._editItemTextCtrl.SetSelection(0, len(title))
         self._editItemTextCtrl.Show()
