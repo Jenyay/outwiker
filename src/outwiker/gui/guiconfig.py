@@ -337,7 +337,7 @@ class EditorConfig:
     Класс для хранения настроек редактора
     """
 
-    FONT_SECTION = "Font"
+    EDITOR_SECTION = "Editor"
 
     SHOW_LINE_NUMBERS_PARAM = "ShowLineNumbers"
     SHOW_LINE_NUMBERS_DEFAULT = False
@@ -399,7 +399,7 @@ class EditorConfig:
         # Показывать номера строк в редакторе?
         self.lineNumbers = BooleanOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.SHOW_LINE_NUMBERS_PARAM,
             EditorConfig.SHOW_LINE_NUMBERS_DEFAULT,
         )
@@ -407,7 +407,7 @@ class EditorConfig:
         # Размер табуляции
         self.tabWidth = IntegerOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.TAB_WIDTH_PARAM,
             EditorConfig.TAB_WIDTH_DEFAULT,
         )
@@ -415,7 +415,7 @@ class EditorConfig:
         # Add spaces instead tabs
         self.tabUseSpaces = BooleanOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.TAB_USE_SPACES_PARAM,
             EditorConfig.TAB_USE_SPACES_DEFAULT,
         )
@@ -423,7 +423,7 @@ class EditorConfig:
         # Размер шрифта
         self.fontSize = IntegerOption(
             self.config,
-            EditorConfig.FONT_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.FONT_SIZE_PARAM,
             EditorConfig.FONT_SIZE_DEFAULT,
         )
@@ -431,21 +431,21 @@ class EditorConfig:
         # Начертание шрифта
         self.fontName = StringOption(
             self.config,
-            EditorConfig.FONT_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.FONT_NAME_PARAM,
             EditorConfig.FONT_NAME_DEFAULT,
         )
 
         self.fontIsBold = BooleanOption(
             self.config,
-            EditorConfig.FONT_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.FONT_BOLD_PARAM,
             EditorConfig.FONT_BOLD_DEFAULT,
         )
 
         self.fontIsItalic = BooleanOption(
             self.config,
-            EditorConfig.FONT_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.FONT_ITALIC_PARAM,
             EditorConfig.FONT_ITALIC_DEFAULT,
         )
@@ -453,56 +453,56 @@ class EditorConfig:
         # Поведение клавиш Home / End
         self.homeEndKeys = IntegerOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.HOME_END_KEYS_PARAM,
             EditorConfig.HOME_END_KEYS_DEFAULT,
         )
 
         self.fontColor = StringOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.FONT_COLOR_PARAM,
             EditorConfig.FONT_COLOR_DEFAULT,
         )
 
         self.backColor = StringOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.BACK_COLOR_PARAM,
             EditorConfig.BACK_COLOR_DEFAULT,
         )
 
         self.selBackColor = StringOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.SEL_BACK_COLOR_PARAM,
             EditorConfig.SEL_BACK_COLOR_DEFAULT,
         )
 
         self.marginBackColor = StringOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.MARGIN_BACK_COLOR_PARAM,
             EditorConfig.MARGIN_BACK_COLOR_DEFAULT,
         )
 
         self.spellCheckerDicts = StringOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.SPELL_DICTS_PARAM,
             EditorConfig.SPELL_DICT_DEFAULT,
         )
 
         self.spellEnabled = BooleanOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.SPELL_ENABLE_PARAM,
             EditorConfig.SPELL_ENABLE_DEFAULT,
         )
 
         self.spellSkipDigits = BooleanOption(
             self.config,
-            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.EDITOR_SECTION,
             EditorConfig.SPELL_SKIP_DIGITS_PARAM,
             EditorConfig.SPELL_SKIP_DIGITS_DEFAULT,
         )
@@ -891,16 +891,18 @@ class TreeConfig:
     Класс для хранения настроек панели с деревом
     """
 
-    WIDTH_PARAM = "TreeWidth"
+    SECTION = "NotesTree"
+
+    WIDTH_PARAM = "Width"
     WIDTH_DEFAULT = 250
 
-    HEIGHT_PARAM = "TreeHeight"
+    HEIGHT_PARAM = "Height"
     HEIGHT_DEFAULT = 250
 
     PANE_OPTIONS_PARAM = "TreePane"
     PANE_OPTIONS_DEFAULT = ""
 
-    FONT_SIZE_PARAM = "TreeFontSize"
+    FONT_SIZE_PARAM = "FontSize"
     FONT_SIZE_DEFAULT = None
 
     # Extra icons
@@ -915,14 +917,14 @@ class TreeConfig:
 
         self.width = IntegerOption(
             self.config,
-            MainWindowConfig.MAIN_WINDOW_SECTION,
+            TreeConfig.SECTION,
             TreeConfig.WIDTH_PARAM,
             TreeConfig.WIDTH_DEFAULT,
         )
 
         self.height = IntegerOption(
             self.config,
-            MainWindowConfig.MAIN_WINDOW_SECTION,
+            TreeConfig.SECTION,
             TreeConfig.HEIGHT_PARAM,
             TreeConfig.HEIGHT_DEFAULT,
         )
@@ -930,14 +932,14 @@ class TreeConfig:
         # Параметры панели с деревом
         self.pane = StringOption(
             self.config,
-            MainWindowConfig.MAIN_WINDOW_SECTION,
+            TreeConfig.SECTION,
             TreeConfig.PANE_OPTIONS_PARAM,
             TreeConfig.PANE_OPTIONS_DEFAULT,
         )
 
         self.fontSize = IntegerOption(
             self.config,
-            MainWindowConfig.MAIN_WINDOW_SECTION,
+            TreeConfig.SECTION,
             TreeConfig.FONT_SIZE_PARAM,
             TreeConfig.FONT_SIZE_DEFAULT,
         )
@@ -945,14 +947,14 @@ class TreeConfig:
         # Extra icons
         self.extraIconBookmark = BooleanOption(
             self.config,
-            MainWindowConfig.MAIN_WINDOW_SECTION,
+            TreeConfig.SECTION,
             self.EXTRA_ICON_BOOKMARK_PARAM,
             self.EXTRA_ICON_BOOKMARK_DEFAULT,
         )
 
         self.extraIconReadOnly = BooleanOption(
             self.config,
-            MainWindowConfig.MAIN_WINDOW_SECTION,
+            TreeConfig.SECTION,
             self.EXTRA_ICON_READ_ONLY_PARAM,
             self.EXTRA_ICON_READ_ONLY_DEFAULT,
         )
@@ -1290,70 +1292,70 @@ class TabsConfig:
             self.config,
             self.SECTION,
             "BackColorNormal",
-            "#D4D4CE",
+            "",
         )
 
         self.backColorHover = StringOption(
             self.config,
             self.SECTION,
             "BackColorHover",
-            "#DDDDDD",
+            "",
         )
 
         self.backColorDowned = StringOption(
             self.config,
             self.SECTION,
             "BackColorDowned",
-            "#AAAAAA",
+            "",
         )
 
         self.backColorDragged = StringOption(
             self.config,
             self.SECTION,
             "BackColorDragged",
-            "#AAAAAA",
+            "",
         )
 
         self.backColorSelected = StringOption(
             self.config,
             self.SECTION,
             "BackColorSelected",
-            "#F3F3F0",
+            "",
         )
 
         self.fontColorNormal = StringOption(
             self.config,
             self.SECTION,
             "FontColorNormal",
-            "#000000",
+            "",
         )
 
         self.fontColorHover = StringOption(
             self.config,
             self.SECTION,
             "FontColorHover",
-            "#000000",
+            "",
         )
 
         self.fontColorDowned = StringOption(
             self.config,
             self.SECTION,
             "FontColorDowned",
-            "#000000",
+            "",
         )
 
         self.fontColorDragged = StringOption(
             self.config,
             self.SECTION,
             "FontColorDragged",
-            "#000000",
+            "",
         )
 
         self.fontColorSelected = StringOption(
             self.config,
             self.SECTION,
             "FontColorSelected",
-            "#000000",
+            "",
         )
 
         self.fontSize = IntegerOption(
@@ -1367,5 +1369,5 @@ class TabsConfig:
             self.config,
             self.SECTION,
             "BorderColor",
-            "#B3B3B3",
+            "",
         )
