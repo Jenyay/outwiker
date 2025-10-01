@@ -1377,3 +1377,9 @@ class TabsConfig:
                 self.SECTION,
                 "showIcon",
                 True)
+
+        self.showCloseButton = BooleanOption(
+                self.config,
+                self.SECTION,
+                "showCloseButton",
+                True)

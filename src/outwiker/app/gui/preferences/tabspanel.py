@@ -36,6 +36,9 @@ class TabsPanel(BasePrefPanel):
         self._showIconCheckBox = self._createCheckBox(_("Show note icon"), main_sizer)
         main_sizer.AddStretchSpacer()
 
+        self._showCloseButtonCheckBox = self._createCheckBox(_("Show close button"), main_sizer)
+        main_sizer.AddStretchSpacer()
+
         self.SetSizer(main_sizer)
         self.Layout()
 
@@ -59,6 +62,7 @@ class TabsPanel(BasePrefPanel):
             self._fontSizeComboBox.SetSelection(index)
 
         self._showIconCheckBox.SetValue(self._tabsConfig.showIcon.value)
+        self._showCloseButtonCheckBox.SetValue(self._tabsConfig.showCloseButton.value)
 
     def Save(self):
         min_tab_width = self._minTabWidthCtrl.GetValue()
@@ -80,3 +84,4 @@ class TabsPanel(BasePrefPanel):
             self._tabsConfig.fontSize.value = font_size
 
         self._tabsConfig.showIcon.value = self._showIconCheckBox.GetValue()
+        self._tabsConfig.showCloseButton.value = self._showCloseButtonCheckBox.GetValue()

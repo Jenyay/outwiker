@@ -64,6 +64,7 @@ class Theme:
     TABS_MARGIN_HORIZONTAL = "MarginHorizontal"
     TABS_MARGIN_VERTICAL = "MarginVertical"
     TABS_SHOW_ICON = "ShowIcon"
+    TABS_SHOW_CLOSE_BUTTON = "ShowCloseButton"
 
     def __init__(self):
         self._data: Dict[str, Tuple[Any, Any]] = {}
@@ -147,6 +148,7 @@ class Theme:
         self.addParam(self.SECTION_TABS, self.TABS_MARGIN_HORIZONTAL, 8)
         self.addParam(self.SECTION_TABS, self.TABS_MARGIN_VERTICAL, 5)
         self.addParam(self.SECTION_TABS, self.TABS_SHOW_ICON, True)
+        self.addParam(self.SECTION_TABS, self.TABS_SHOW_CLOSE_BUTTON, True)
 
     def addNotesTreeParams(self):
         self.addParam(self.SECTION_TREE, self.SELECTION_COLOR, "#0000FF")

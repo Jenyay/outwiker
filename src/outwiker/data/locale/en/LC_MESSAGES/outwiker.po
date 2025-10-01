@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 19:45+0300\n"
+"POT-Creation-Date: 2025-10-01 20:05+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1904,6 +1904,10 @@ msgstr "Vertical margin"
 #: outwiker/app/gui/preferences/tabspanel.py:36
 msgid "Show note icon"
 msgstr "Show note icon"
+
+#: outwiker/app/gui/preferences/tabspanel.py:39
+msgid "Show close button"
+msgstr "Show close button"
 
 #: outwiker/app/gui/preferences/tagspanel.py:30
 msgid "Headers in the popup window: "

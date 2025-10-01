@@ -60,9 +60,9 @@ class ThemeController:
         assert self._theme is not None
 
         tree_config = TreeConfig(self._application.config)
-        self._theme.set(Theme.SECTION_TREE,
-                        Theme.TREE_FONT_SIZE,
-                        tree_config.fontSize.value)
+        self._theme.set(
+            Theme.SECTION_TREE, Theme.TREE_FONT_SIZE, tree_config.fontSize.value
+        )
 
     def _loadTabsConfig(self):
         assert self._theme is not None
@@ -171,10 +171,17 @@ class ThemeController:
             tabsConfig.marginVertical.value,
         )
 
-        self._theme.set(Theme.SECTION_TABS,
-                        Theme.TABS_SHOW_ICON,
-                        tabsConfig.showIcon.value,
-                        )
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_SHOW_ICON,
+            tabsConfig.showIcon.value,
+        )
+
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_SHOW_CLOSE_BUTTON,
+            tabsConfig.showCloseButton.value,
+        )
 
     def loadSystemParams(self):
         if self._theme is None:
@@ -217,17 +224,13 @@ class ThemeController:
         self._theme.addParam(
             Theme.SECTION_TREE,
             Theme.SELECTION_TEXT_COLOR,
-            self._theme.getDefaults(
-                Theme.SECTION_GENERAL, Theme.SELECTION_TEXT_COLOR
-            ),
+            self._theme.getDefaults(Theme.SECTION_GENERAL, Theme.SELECTION_TEXT_COLOR),
         )
 
         self._theme.addParam(
             Theme.SECTION_TREE,
             Theme.SELECTION_COLOR,
-            self._theme.getDefaults(
-                Theme.SECTION_GENERAL, Theme.SELECTION_COLOR
-            ),
+            self._theme.getDefaults(Theme.SECTION_GENERAL, Theme.SELECTION_COLOR),
         )
 
     def loadParams(self):

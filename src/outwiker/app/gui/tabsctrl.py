@@ -291,7 +291,7 @@ class TabsCtrl(wx.Window):
         return None
 
     def _find_close_button_by_coord(self, x: int, y: int) -> Optional[int]:
-        if self._geometry.geometry is None:
+        if self._geometry.geometry is None or not self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_CLOSE_BUTTON):
             return None
 
         for n, tab in enumerate(self._geometry.geometry):
@@ -823,6 +823,11 @@ class TabsGeometryCalculator:
             Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE
         )
 
+        show_icon = self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICON)
+        show_close_button = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_SHOW_CLOSE_BUTTON
+        )
+
         height = self.get_tab_height(text_height)
 
         center_vertical = height // 2
@@ -843,7 +848,7 @@ class TabsGeometryCalculator:
             geometry.page_path = info.page.path if info.page is not None else None
             geometry.icon_file = info.page.icon if info.page is not None else None
 
-            if self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICON):
+            if show_icon:
                 icon_left = horizontal_margin + geometry.left
                 icon_right = icon_left + icon_size
                 icon_top = center_vertical - icon_size // 2 + geometry.top
@@ -852,24 +857,31 @@ class TabsGeometryCalculator:
             else:
                 geometry.icon = Rect(0, 0, 0, 0)
 
-            close_button_right = rect.width - horizontal_margin + geometry.left
-            close_button_left = close_button_right - close_button_size
-            close_button_top = center_vertical - close_button_size // 2 + geometry.top
-            close_button_bottom = close_button_top + close_button_size
-            geometry.close_button = Rect(
-                close_button_left,
-                close_button_right,
-                close_button_top,
-                close_button_bottom,
-            )
+            if show_close_button:
+                close_button_right = rect.width - horizontal_margin + geometry.left
+                close_button_left = close_button_right - close_button_size
+                close_button_top = (
+                    center_vertical - close_button_size // 2 + geometry.top
+                )
+                close_button_bottom = close_button_top + close_button_size
+                geometry.close_button = Rect(
+                    close_button_left,
+                    close_button_right,
+                    close_button_top,
+                    close_button_bottom,
+                )
+            else:
+                geometry.close_button = Rect(0, 0, 0, 0)
 
             geometry.text_left = (
                 geometry.icon.right + self.gap_icon_text
-                if self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICON)
+                if show_icon
                 else horizontal_margin + geometry.left
             )
             geometry.text_right = (
                 geometry.close_button.left - self.gap_text_close_button
+                if show_close_button
+                else geometry.right - horizontal_margin
             )
 
             self._geometry.append(geometry)
@@ -993,6 +1005,9 @@ class TabRender:
     def _draw_close_button(
         self, dc: wx.DC, tab: SingleTabGeometry, close_button_state: int
     ) -> None:
+        if not self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_CLOSE_BUTTON):
+            return
+
         assert tab.close_button is not None
 
         if close_button_state == TAB_CLOSE_BUTTON_STATE_HOVER:
