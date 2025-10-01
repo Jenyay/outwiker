@@ -22,6 +22,7 @@ TabsCtrlContextMenuEvent, EVT_TABSCTRL_CONTEXT_MENU = wx.lib.newevent.NewEvent()
 TabsCtrlAddNewTabEvent, EVT_TABSCTRL_ADD_NEW_TAB = wx.lib.newevent.NewEvent()
 TabsCtrlEndDragTabEvent, EVT_TABSCTRL_END_DRAG_TAB = wx.lib.newevent.NewEvent()
 TabsCtrlPageClosedEvent, EVT_TABSCTRL_CLOSED_TAB = wx.lib.newevent.NewEvent()
+TabsCtrlDoubleClickEvent, EVT_TABSCTRL_DOUBLE_CLICK_TAB = wx.lib.newevent.NewEvent()
 
 TAB_STATE_NORMAL = 0
 TAB_STATE_HOVER = 1
@@ -76,6 +77,7 @@ class TabsCtrl(wx.Window):
         self.Bind(wx.EVT_RIGHT_DOWN, handler=self._onRightButtonDown)
         self.Bind(wx.EVT_LEFT_UP, handler=self._onLeftButtonUp)
         self.Bind(wx.EVT_MIDDLE_DOWN, handler=self._onMiddleButtonDown)
+        self.Bind(wx.EVT_LEFT_DCLICK, handler=self._onLeftButtonDoubleClick)
         self.Bind(wx.EVT_SIZE, handler=self._onSize)
         self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
 
@@ -279,6 +281,15 @@ class TabsCtrl(wx.Window):
             or old_downed_close_button != self._lbutton_downed_close_button
         ):
             self._refresh_tab(self._hovered_tab)
+
+    def _onLeftButtonDoubleClick(self, event: wx.MouseEvent):
+        tab_number = self._find_tab_by_coord(event.GetX(), event.GetY())
+        if tab_number is not None:
+            pass
+
+        page = self.GetPage(tab_number)
+        new_event = TabsCtrlDoubleClickEvent(page=page)
+        wx.PostEvent(self, new_event)
 
     def _find_tab_by_coord(self, x: int, y: int) -> Optional[int]:
         if self._geometry.geometry is None:
