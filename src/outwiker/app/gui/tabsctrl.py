@@ -236,7 +236,10 @@ class TabsCtrl(wx.Window):
                 return
 
             if self._dragged_tab is not None:
-                if self._hovered_tab is not None and self._dragged_tab != self._hovered_tab:
+                if (
+                    self._hovered_tab is not None
+                    and self._dragged_tab != self._hovered_tab
+                ):
                     self.MovePage(self._dragged_tab, self._hovered_tab)
                     pass
                 return
@@ -691,10 +694,21 @@ class TabsGeometryCalculator:
         min_tab_width = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MIN_WIDTH)
         max_tab_width = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MAX_WIDTH)
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
-        close_button_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE)
-        horizontal_margin = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MARGIN_HORIZONTAL)
+        close_button_size = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
+        )
+        horizontal_margin = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_MARGIN_HORIZONTAL
+        )
 
-        min_min_tab_width = icon_size + close_button_size + 2 * horizontal_margin + self.gap_icon_text + self.gap_text_close_button + 10
+        min_min_tab_width = (
+            icon_size
+            + close_button_size
+            + 2 * horizontal_margin
+            + self.gap_icon_text
+            + self.gap_text_close_button
+            + 10
+        )
 
         if min_tab_width < min_min_tab_width:
             min_tab_width = min_min_tab_width
@@ -770,7 +784,9 @@ class TabsGeometryCalculator:
 
     def get_tab_height(self, text_height: int) -> int:
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
-        vertical_margin = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MARGIN_VERTICAL)
+        vertical_margin = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_MARGIN_VERTICAL
+        )
 
         close_button_size = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
@@ -796,7 +812,9 @@ class TabsGeometryCalculator:
         text_height: int,
     ) -> List[SingleTabGeometry]:
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
-        horizontal_margin = self._theme.get(Theme.SECTION_TABS, Theme.TABS_MARGIN_HORIZONTAL)
+        horizontal_margin = self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_MARGIN_HORIZONTAL
+        )
 
         close_button_size = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_CLOSE_BUTTON_SIZE
@@ -825,11 +843,14 @@ class TabsGeometryCalculator:
             geometry.page_path = info.page.path if info.page is not None else None
             geometry.icon_file = info.page.icon if info.page is not None else None
 
-            icon_left = horizontal_margin + geometry.left
-            icon_right = icon_left + icon_size
-            icon_top = center_vertical - icon_size // 2 + geometry.top
-            icon_bottom = icon_top + icon_size
-            geometry.icon = Rect(icon_left, icon_right, icon_top, icon_bottom)
+            if self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICON):
+                icon_left = horizontal_margin + geometry.left
+                icon_right = icon_left + icon_size
+                icon_top = center_vertical - icon_size // 2 + geometry.top
+                icon_bottom = icon_top + icon_size
+                geometry.icon = Rect(icon_left, icon_right, icon_top, icon_bottom)
+            else:
+                geometry.icon = Rect(0, 0, 0, 0)
 
             close_button_right = rect.width - horizontal_margin + geometry.left
             close_button_left = close_button_right - close_button_size
@@ -842,7 +863,11 @@ class TabsGeometryCalculator:
                 close_button_bottom,
             )
 
-            geometry.text_left = geometry.icon.right + self.gap_icon_text
+            geometry.text_left = (
+                geometry.icon.right + self.gap_icon_text
+                if self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICON)
+                else horizontal_margin + geometry.left
+            )
             geometry.text_right = (
                 geometry.close_button.left - self.gap_text_close_button
             )
@@ -954,6 +979,9 @@ class TabRender:
         return height
 
     def _draw_icon(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+        if not self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICON):
+            return
+
         assert tab.icon is not None
 
         icon_id = self._load_icon(tab.icon_file, tab.page_path)
@@ -995,8 +1023,8 @@ class TabRender:
         title_len = len(title)
         cut_count = 0
         while (
-            cut_count < title_len and
-            dc.GetTextExtent(_get_trimmed_title(title, cut_count)).GetWidth()
+            cut_count < title_len
+            and dc.GetTextExtent(_get_trimmed_title(title, cut_count)).GetWidth()
             > max_width
         ):
             cut_count += 1
@@ -1014,15 +1042,25 @@ class TabRender:
         text_max_width = tab.text_right - tab.text_left
 
         if tab_state == TAB_STATE_HOVER:
-            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_HOVER_COLOR)
+            font_color = self._theme.get(
+                Theme.SECTION_TABS, Theme.TABS_FONT_HOVER_COLOR
+            )
         elif tab_state == TAB_STATE_SELECTED:
-            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_SELECTED_COLOR)
+            font_color = self._theme.get(
+                Theme.SECTION_TABS, Theme.TABS_FONT_SELECTED_COLOR
+            )
         elif tab_state == TAB_STATE_DOWNED:
-            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_DOWNED_COLOR)
+            font_color = self._theme.get(
+                Theme.SECTION_TABS, Theme.TABS_FONT_DOWNED_COLOR
+            )
         elif tab_state == TAB_STATE_DRAGGED:
-            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_DRAGGED_COLOR)
+            font_color = self._theme.get(
+                Theme.SECTION_TABS, Theme.TABS_FONT_DRAGGED_COLOR
+            )
         else:
-            font_color = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_NORMAL_COLOR)
+            font_color = self._theme.get(
+                Theme.SECTION_TABS, Theme.TABS_FONT_NORMAL_COLOR
+            )
 
         title = self._trim_title(dc, tab.title, text_max_width)
         dc.SetTextForeground(font_color)
@@ -1108,7 +1146,9 @@ class TabRender:
 
     def _get_font(self, tab_state: int) -> wx.Font:
         theme_font_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_SIZE)
-        font_size = theme_font_size if theme_font_size > 0 else self.get_default_font_size()
+        font_size = (
+            theme_font_size if theme_font_size > 0 else self.get_default_font_size()
+        )
 
         font = wx.Font(wx.FontInfo(font_size))
         font.SetWeight(

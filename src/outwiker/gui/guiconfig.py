@@ -1371,3 +1371,9 @@ class TabsConfig:
             "BorderColor",
             "",
         )
+
+        self.showIcon = BooleanOption(
+                self.config,
+                self.SECTION,
+                "showIcon",
+                True)

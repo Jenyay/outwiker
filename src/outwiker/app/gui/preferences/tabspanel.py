@@ -33,6 +33,9 @@ class TabsPanel(BasePrefPanel):
             main_sizer,
         )[1]
 
+        self._showIconCheckBox = self._createCheckBox(_("Show note icon"), main_sizer)
+        main_sizer.AddStretchSpacer()
+
         self.SetSizer(main_sizer)
         self.Layout()
 
@@ -55,6 +58,8 @@ class TabsPanel(BasePrefPanel):
             index = 1 + font_size - TABS_MIN_FONT_SIZE
             self._fontSizeComboBox.SetSelection(index)
 
+        self._showIconCheckBox.SetValue(self._tabsConfig.showIcon.value)
+
     def Save(self):
         min_tab_width = self._minTabWidthCtrl.GetValue()
         max_tab_width = self._maxTabWidthCtrl.GetValue()
@@ -73,3 +78,5 @@ class TabsPanel(BasePrefPanel):
         else:
             font_size = font_size_index - 1 + TABS_MIN_FONT_SIZE
             self._tabsConfig.fontSize.value = font_size
+
+        self._tabsConfig.showIcon.value = self._showIconCheckBox.GetValue()
