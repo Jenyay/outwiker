@@ -60,8 +60,15 @@ class ThemeController:
         assert self._theme is not None
 
         tree_config = TreeConfig(self._application.config)
+
         self._theme.set(
             Theme.SECTION_TREE, Theme.TREE_FONT_SIZE, tree_config.fontSize.value
+        )
+
+        self._theme.set(
+            Theme.SECTION_TREE,
+            Theme.TREE_SHOW_NOTE_ICONS,
+            tree_config.showNoteIcons.value,
         )
 
     def _loadTabsConfig(self):

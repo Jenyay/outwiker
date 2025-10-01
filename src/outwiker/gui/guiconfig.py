@@ -905,6 +905,9 @@ class TreeConfig:
     FONT_SIZE_PARAM = "FontSize"
     FONT_SIZE_DEFAULT = None
 
+    SHOW_NOTE_ICONS_PARAM = "ShowNoteIcons"
+    SHOW_NOTE_ICONS_DEFAULT = True
+
     # Extra icons
     EXTRA_ICON_BOOKMARK_PARAM = "ExtraIconBookmark"
     EXTRA_ICON_BOOKMARK_DEFAULT = True
@@ -943,6 +946,13 @@ class TreeConfig:
             TreeConfig.FONT_SIZE_PARAM,
             TreeConfig.FONT_SIZE_DEFAULT,
         )
+
+        self.showNoteIcons = BooleanOption(
+                self.config,
+                TreeConfig.SECTION,
+                self.SHOW_NOTE_ICONS_PARAM,
+                self.SHOW_NOTE_ICONS_DEFAULT,
+                )
 
         # Extra icons
         self.extraIconBookmark = BooleanOption(

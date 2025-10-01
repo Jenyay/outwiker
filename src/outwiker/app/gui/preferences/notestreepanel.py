@@ -21,7 +21,20 @@ class NotesTreePanel(BasePrefPanel):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
 
-        self._createFontSizeGUI(main_sizer)
+        sizer = wx.FlexGridSizer(cols=2)
+        sizer.AddGrowableCol(1)
+        self._fontSizeComboBox = self._createLabelAndFontSize(
+            _("Font size"),
+            NOTES_TREE_MIN_FONT_SIZE,
+            NOTES_TREE_MAX_FONT_SIZE,
+            sizer,
+        )[1]
+
+        self._showNoteIconsCheckBox = self._createCheckBox(_("Show note icons"), sizer)
+        sizer.AddStretchSpacer()
+
+        main_sizer.Add(sizer, flag=wx.EXPAND)
+
         self._createExtraIconsGUI(main_sizer)
         self.SetSizer(main_sizer)
 
@@ -33,17 +46,6 @@ class NotesTreePanel(BasePrefPanel):
         self._extraIconReadonlyCheckBox = self._createCheckBox(
             _("Show read-only icon"), sizer
         )
-
-    def _createFontSizeGUI(self, main_sizer):
-        self._fontSizeSizer = wx.FlexGridSizer(cols=2)
-        self._fontSizeSizer.AddGrowableCol(1)
-        self._fontSizeComboBox = self._createLabelAndFontSize(
-            _("Font size"),
-            NOTES_TREE_MIN_FONT_SIZE,
-            NOTES_TREE_MAX_FONT_SIZE,
-            self._fontSizeSizer,
-        )[1]
-        main_sizer.Add(self._fontSizeSizer, flag=wx.EXPAND)
 
     def LoadState(self):
         """
@@ -67,6 +69,7 @@ class NotesTreePanel(BasePrefPanel):
         self.readOnlyIcon = BooleanElement(
             self._config.extraIconReadOnly, self._extraIconReadonlyCheckBox
         )
+        self.showNoteIcons = BooleanElement(self._config.showNoteIcons, self._showNoteIconsCheckBox)
 
     def Save(self):
         """
@@ -81,3 +84,4 @@ class NotesTreePanel(BasePrefPanel):
 
         self.extraIconBookmark.save()
         self.readOnlyIcon.save()
+        self.showNoteIcons.save()

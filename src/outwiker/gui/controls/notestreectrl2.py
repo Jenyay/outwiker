@@ -296,6 +296,10 @@ class _ItemsViewInfo:
     def back_color_hovered(self) -> wx.Colour:
         return wx.Colour(self._theme.get(Theme.SECTION_TREE, Theme.HIGHLIGHTING_COLOR))
 
+    @property
+    def show_icons(self) -> bool:
+        return self._theme.get(Theme.SECTION_TREE, Theme.TREE_SHOW_NOTE_ICONS)
+
     def _update_line_height(self):
         self.line_height = self.icon_height + 10
         title_height = self.getTextHeight("Yy")
@@ -339,16 +343,21 @@ class _ItemsViewInfo:
         return self.getIconLeft(item) + self.icon_width
 
     def getExtraIconLeft(self, item: NotesTreeItem, n: int) -> int:
-        return (
-            self.getIconRight(item)
-            + self.extra_icons_left_margin
-            + (self.extra_icon_width + self.extra_icons_left_margin) * n
-        )
+        if self.show_icons:
+            return (
+                self.getIconRight(item)
+                + self.extra_icons_left_margin
+                + (self.extra_icon_width + self.extra_icons_left_margin) * n
+            )
+        else:
+            return (
+                self.getIconLeft(item)
+                + (self.extra_icon_width + self.extra_icons_left_margin) * n
+            )
 
     def getExtraIconsRight(self, item: NotesTreeItem) -> int:
-        return self.getIconRight(item) + (
-            self.extra_icons_left_margin + self.extra_icon_width
-        ) * self._getExtraIconsCount(item)
+        count = self._getExtraIconsCount(item)
+        return self.getExtraIconLeft(item, count - 1) + self.extra_icon_width
 
     def getSelectionLeft(self, item: NotesTreeItem) -> int:
         return self.getExtraIconsRight(item) + self.title_left_margin // 2
@@ -637,14 +646,15 @@ class _ItemsPainter:
         )
 
     def _drawIcon(self, item: NotesTreeItem, dx: int, dy: int):
-        bitmap = self._image_list.getImageList().GetBitmap(item.getIconImageId())
-        left = self._view_info.getIconLeft(item) + dx
-        top = (
-            self._view_info.getItemTop(item)
-            + (self._view_info.line_height - self._view_info.icon_height) // 2
-            + dy
-        )
-        self._dc.DrawBitmap(bitmap, left, top)
+        if self._view_info.show_icons:
+            bitmap = self._image_list.getImageList().GetBitmap(item.getIconImageId())
+            left = self._view_info.getIconLeft(item) + dx
+            top = (
+                self._view_info.getItemTop(item)
+                + (self._view_info.line_height - self._view_info.icon_height) // 2
+                + dy
+            )
+            self._dc.DrawBitmap(bitmap, left, top)
 
     def _drawExtraIcons(self, item: NotesTreeItem, dx: int, dy: int):
         for n, (title, image) in enumerate(item.getExtraIcons()):
