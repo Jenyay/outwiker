@@ -33,10 +33,10 @@ class TabsPanel(BasePrefPanel):
             main_sizer,
         )[1]
 
-        self._showIconCheckBox = self._createCheckBox(_("Show note icon"), main_sizer)
+        self._showIconCheckBox = self._createCheckBox(_("Show note icons"), main_sizer)
         main_sizer.AddStretchSpacer()
 
-        self._showCloseButtonCheckBox = self._createCheckBox(_("Show close button"), main_sizer)
+        self._showCloseButtonCheckBox = self._createCheckBox(_("Show close buttons"), main_sizer)
         main_sizer.AddStretchSpacer()
 
         self.SetSizer(main_sizer)

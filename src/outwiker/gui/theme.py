@@ -63,7 +63,7 @@ class Theme:
     TABS_MAX_WIDTH = "MaxWidth"
     TABS_MARGIN_HORIZONTAL = "MarginHorizontal"
     TABS_MARGIN_VERTICAL = "MarginVertical"
-    TABS_SHOW_ICON = "ShowIcon"
+    TABS_SHOW_ICONS = "ShowIcons"
     TABS_SHOW_CLOSE_BUTTON = "ShowCloseButton"
 
     def __init__(self):
@@ -147,7 +147,7 @@ class Theme:
         self.addParam(self.SECTION_TABS, self.TABS_MAX_WIDTH, 450)
         self.addParam(self.SECTION_TABS, self.TABS_MARGIN_HORIZONTAL, 8)
         self.addParam(self.SECTION_TABS, self.TABS_MARGIN_VERTICAL, 5)
-        self.addParam(self.SECTION_TABS, self.TABS_SHOW_ICON, True)
+        self.addParam(self.SECTION_TABS, self.TABS_SHOW_ICONS, True)
         self.addParam(self.SECTION_TABS, self.TABS_SHOW_CLOSE_BUTTON, True)
 
     def addNotesTreeParams(self):

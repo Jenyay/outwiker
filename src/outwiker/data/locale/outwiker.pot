@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 20:05+0300\n"
+"POT-Creation-Date: 2025-10-01 20:58+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1897,11 +1897,11 @@ msgid "Vertical margin"
 msgstr ""
 
 #: outwiker/app/gui/preferences/tabspanel.py:36
-msgid "Show note icon"
+msgid "Show note icons"
 msgstr ""
 
 #: outwiker/app/gui/preferences/tabspanel.py:39
-msgid "Show close button"
+msgid "Show close buttons"
 msgstr ""
 
 #: outwiker/app/gui/preferences/tagspanel.py:30
@@ -1987,7 +1987,7 @@ msgstr ""
 msgid "Thumbnail"
 msgstr ""
 
-#: outwiker/app/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:250
+#: outwiker/app/gui/tabscontroller.py:261 outwiker/gui/basetextpanel.py:250
 #, python-format
 msgid "Can't save file %s"
 msgstr ""

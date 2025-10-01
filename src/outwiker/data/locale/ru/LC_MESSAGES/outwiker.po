@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 20:05+0300\n"
+"POT-Creation-Date: 2025-10-01 20:58+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1909,12 +1909,12 @@ msgid "Vertical margin"
 msgstr "Поле по вертикали"
 
 #: outwiker/app/gui/preferences/tabspanel.py:36
-msgid "Show note icon"
-msgstr "Отображать значок заметки"
+msgid "Show note icons"
+msgstr "Отображать значки заметок"
 
 #: outwiker/app/gui/preferences/tabspanel.py:39
-msgid "Show close button"
-msgstr "Отображать кнопку закрытия"
+msgid "Show close buttons"
+msgstr "Отображать кнопки закрытия"
 
 #: outwiker/app/gui/preferences/tagspanel.py:30
 msgid "Headers in the popup window: "
@@ -1999,7 +1999,7 @@ msgstr "Команда"
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
-#: outwiker/app/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:250
+#: outwiker/app/gui/tabscontroller.py:261 outwiker/gui/basetextpanel.py:250
 #, python-format
 msgid "Can't save file %s"
 msgstr "Ошибка записи в файл %s"
@@ -3103,6 +3103,12 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Show note icon"
+#~ msgstr "Отображать значок заметки"
+
+#~ msgid "Show close button"
+#~ msgstr "Отображать кнопку закрытия"
 
 #~ msgid "Show page icon"
 #~ msgstr "Отображать значок страницы"

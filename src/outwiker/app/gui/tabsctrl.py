@@ -834,7 +834,7 @@ class TabsGeometryCalculator:
             Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE
         )
 
-        show_icon = self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICON)
+        show_icon = self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICONS)
         show_close_button = self._theme.get(
             Theme.SECTION_TABS, Theme.TABS_SHOW_CLOSE_BUTTON
         )
@@ -1002,7 +1002,7 @@ class TabRender:
         return height
 
     def _draw_icon(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
-        if not self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICON):
+        if not self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICONS):
             return
 
         assert tab.icon is not None

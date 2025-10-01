@@ -173,7 +173,7 @@ class ThemeController:
 
         self._theme.set(
             Theme.SECTION_TABS,
-            Theme.TABS_SHOW_ICON,
+            Theme.TABS_SHOW_ICONS,
             tabsConfig.showIcon.value,
         )
 
