@@ -35,6 +35,8 @@ class Theme:
     HIGHLIGHTING_TEXT_COLOR = "HighlightingTextColor"
     TREE_FONT_SIZE = "FontSize"
     TREE_SHOW_NOTE_ICONS = "ShowIcons"
+    TREE_EXTRA_ICON_BOOKMARK = "ExtraIconBookmark"
+    TREE_EXTRA_ICON_READ_ONLY = "ExtraIconReadOnly"
 
     # Notification
     NOTIFICATION_BACKGROUND_COLOR = "BackgroundColor"
@@ -158,6 +160,8 @@ class Theme:
         self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_TEXT_COLOR, "#000000")
         self.addParam(self.SECTION_TREE, self.TREE_FONT_SIZE, 0)
         self.addParam(self.SECTION_TREE, self.TREE_SHOW_NOTE_ICONS, True)
+        self.addParam(self.SECTION_TREE, self.TREE_EXTRA_ICON_BOOKMARK, True)
+        self.addParam(self.SECTION_TREE, self.TREE_EXTRA_ICON_READ_ONLY, True)
 
     @property
     def colorBackground(self):

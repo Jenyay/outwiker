@@ -71,6 +71,18 @@ class ThemeController:
             tree_config.showNoteIcons.value,
         )
 
+        self._theme.set(
+            Theme.SECTION_TREE,
+            Theme.TREE_EXTRA_ICON_BOOKMARK,
+            tree_config.extraIconBookmark.value,
+        )
+
+        self._theme.set(
+            Theme.SECTION_TREE,
+            Theme.TREE_EXTRA_ICON_READ_ONLY,
+            tree_config.extraIconReadOnly.value,
+        )
+
     def _loadTabsConfig(self):
         assert self._theme is not None
 
