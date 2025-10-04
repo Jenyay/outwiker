@@ -358,7 +358,7 @@ class ActionController:
         if not bitmap.IsOk():
             logger.error("Invalid bitmap for %s", image)
             bitmap = readImage(
-                getBuiltinImagePath("cross.png"), self._image_width, self._image_height
+                getBuiltinImagePath("cross.svg"), self._image_width, self._image_height
             )
 
         if issubclass(type(toolbar), ToolBar2):

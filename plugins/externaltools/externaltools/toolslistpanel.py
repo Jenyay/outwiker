@@ -6,6 +6,9 @@ import os.path
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
+from outwiker.api.gui.images import readImage
+from outwiker.api.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+
 from .toolsinfo import ToolsInfo
 from .i18n import get_
 
@@ -100,11 +103,11 @@ class ToolsItemCtrl(wx.Panel):
         else:
             self._pathTextCtrl = wx.TextCtrl(self, -1, toolItem.command)
 
-        browseBitmap = wx.Bitmap(self.__getImagePath("browse.png"))
+        browseBitmap = readImage(self.__getImagePath("browse.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
         self._browseButton = wx.BitmapButton(self, bitmap=browseBitmap)
         self._browseButton.SetToolTip(_("Open file dialog..."))
 
-        removeBitmap = wx.Bitmap(self.__getImagePath("cross.png"))
+        removeBitmap = readImage(self.__getImagePath("cross.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
         self._removeButton = wx.BitmapButton(self, bitmap=removeBitmap)
         self._removeButton.SetToolTip(_("Remove tool"))
 
