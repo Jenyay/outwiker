@@ -254,7 +254,7 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             AttachExecuteFilesAction.stringId,
             toolbar,
-            getBuiltinImagePath("execute.png")
+            getBuiltinImagePath("execute.svg")
         )
 
         # Open attach folder

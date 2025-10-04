@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="execute.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="17.013101"
+     inkscape:cx="24.892582"
+     inkscape:cy="19.426206"
+     inkscape:window-width="1920"
+     inkscape:window-height="1088"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g19"
+     showguides="true" />
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="copy_rotate"
+       starting_point="17.33777,5.0481224"
+       origin="16.22122,5.0481224"
+       id="path-effect15"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       method="normal"
+       num_copies="8"
+       starting_angle="0"
+       rotation_angle="45"
+       gap="-0.01"
+       copies_to_360="true"
+       mirror_copies="false"
+       split_items="false"
+       link_styles="false" />
+    <inkscape:path-effect
+       effect="copy_rotate"
+       starting_point="0,0"
+       origin="14.99,1.2457951"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       method="normal"
+       num_copies="8"
+       starting_angle="0"
+       rotation_angle="45"
+       gap="8"
+       copies_to_360="true"
+       mirror_copies="false"
+       split_items="true"
+       link_styles="false" />
+  </defs>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g19"
+       transform="translate(-11.069595,0.07160296)">
+      <path
+         id="path1-3"
+         style="fill:#e9f2ff;fill-opacity:1;stroke:#4681c2;stroke-width:0.4;stroke-dasharray:none;stroke-dashoffset:0.695433;stroke-opacity:1;paint-order:fill markers stroke"
+         d="M 15.108915,0.27687641 14.978384,1.2671452 a 3.7983882,3.7983882 0 0 0 -1.057988,0.4813942 l -0.744909,-0.568742 -1.090866,1.0908658 0.607509,0.7925094 a 3.7983882,3.7983882 0 0 0 -0.407297,1.0884123 l -0.928928,0.1246423 v 1.542817 l 0.990268,0.1310217 a 3.7983882,3.7983882 0 0 0 0.480904,1.0579878 l -0.568251,0.744419 1.090865,1.0908659 0.792509,-0.6075088 a 3.7983882,3.7983882 0 0 0 1.088413,0.4077866 l 0.124643,0.9284382 h 1.542817 l 0.13053,-0.9902687 a 3.7983882,3.7983882 0 0 0 1.057988,-0.4809036 l 0.74491,0.5687421 1.090865,-1.0913566 -0.607508,-0.7925093 A 3.7983882,3.7983882 0 0 0 19.722644,5.697837 L 20.651082,5.5731946 V 4.0298868 L 19.660814,3.8993559 A 3.7983882,3.7983882 0 0 0 19.179911,2.8413681 L 19.748162,2.0969491 18.657296,1.0055925 17.864787,1.613592 A 3.7983882,3.7983882 0 0 0 16.776374,1.2058054 L 16.651732,0.27687641 Z" />
+      <path
+         sodipodi:type="star"
+         style="fill:#4681c2;fill-opacity:1;stroke:none;stroke-width:0.267706;paint-order:fill markers stroke"
+         id="path1"
+         inkscape:flatsided="false"
+         sodipodi:sides="3"
+         sodipodi:cx="8.3169365"
+         sodipodi:cy="0.20832837"
+         sodipodi:r1="2.06249"
+         sodipodi:r2="1.031245"
+         sodipodi:arg1="0"
+         sodipodi:arg2="1.0471976"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         d="M 10.379426,0.20832837 8.8325589,1.1014128 7.2856915,1.9944971 l 0,-1.78616878 0,-1.78616872 1.5468675,0.89308443 z"
+         inkscape:transform-center-x="-0.57829698"
+         transform="matrix(1.1215512,0,0,1.119715,6.6756233,4.6911971)" />
+    </g>
+  </g>
+</svg>
