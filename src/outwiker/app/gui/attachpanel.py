@@ -224,7 +224,7 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             RemoveAttachesActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("delete.png")
+            getBuiltinImagePath("delete.svg")
         )
 
         # Rename file
