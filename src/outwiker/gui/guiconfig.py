@@ -908,6 +908,9 @@ class TreeConfig:
     SHOW_NOTE_ICONS_PARAM = "ShowNoteIcons"
     SHOW_NOTE_ICONS_DEFAULT = True
 
+    ICON_SIZE_PARAM = "IconSize"
+    ICON_SIZE_DEFAULT = 16
+
     # Extra icons
     EXTRA_ICON_BOOKMARK_PARAM = "ExtraIconBookmark"
     EXTRA_ICON_BOOKMARK_DEFAULT = True
@@ -948,11 +951,11 @@ class TreeConfig:
         )
 
         self.showNoteIcons = BooleanOption(
-                self.config,
-                TreeConfig.SECTION,
-                self.SHOW_NOTE_ICONS_PARAM,
-                self.SHOW_NOTE_ICONS_DEFAULT,
-                )
+            self.config,
+            TreeConfig.SECTION,
+            self.SHOW_NOTE_ICONS_PARAM,
+            self.SHOW_NOTE_ICONS_DEFAULT,
+        )
 
         # Extra icons
         self.extraIconBookmark = BooleanOption(
@@ -967,6 +970,13 @@ class TreeConfig:
             TreeConfig.SECTION,
             self.EXTRA_ICON_READ_ONLY_PARAM,
             self.EXTRA_ICON_READ_ONLY_DEFAULT,
+        )
+
+        self.iconSize = IntegerOption(
+            self.config,
+            TreeConfig.SECTION,
+            self.ICON_SIZE_PARAM,
+            self.ICON_SIZE_DEFAULT,
         )
 
 
@@ -1382,14 +1392,8 @@ class TabsConfig:
             "",
         )
 
-        self.showIcon = BooleanOption(
-                self.config,
-                self.SECTION,
-                "showIcon",
-                True)
+        self.showIcon = BooleanOption(self.config, self.SECTION, "showIcon", True)
 
         self.showCloseButton = BooleanOption(
-                self.config,
-                self.SECTION,
-                "showCloseButton",
-                True)
+            self.config, self.SECTION, "showCloseButton", True
+        )

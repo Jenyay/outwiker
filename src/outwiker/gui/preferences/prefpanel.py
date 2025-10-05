@@ -59,6 +59,7 @@ class BasePrefPanel(ScrolledPanel):
     ) -> Tuple[wx.StaticText, wx.ComboBox]:
         label = wx.StaticText(self, label=title)
         combobox = wx.ComboBox(self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        combobox.SetMinSize((200, -1))
 
         self._addLabelAndControlToSizer(sizer, label, combobox)
         return (label, combobox)

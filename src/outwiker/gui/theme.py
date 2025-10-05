@@ -37,6 +37,7 @@ class Theme:
     TREE_SHOW_NOTE_ICONS = "ShowIcons"
     TREE_EXTRA_ICON_BOOKMARK = "ExtraIconBookmark"
     TREE_EXTRA_ICON_READ_ONLY = "ExtraIconReadOnly"
+    TREE_ICON_SIZE = "IconSize"
 
     # Notification
     NOTIFICATION_BACKGROUND_COLOR = "BackgroundColor"
@@ -162,6 +163,7 @@ class Theme:
         self.addParam(self.SECTION_TREE, self.TREE_SHOW_NOTE_ICONS, True)
         self.addParam(self.SECTION_TREE, self.TREE_EXTRA_ICON_BOOKMARK, True)
         self.addParam(self.SECTION_TREE, self.TREE_EXTRA_ICON_READ_ONLY, True)
+        self.addParam(self.SECTION_TREE, self.TREE_ICON_SIZE, 16)
 
     @property
     def colorBackground(self):

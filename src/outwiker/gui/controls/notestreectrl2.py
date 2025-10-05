@@ -13,8 +13,6 @@ from outwiker.gui.colors import rgb_to_lab, lab_to_rgb
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.imagelistcache import ImageListCache
 from outwiker.gui.defines import (
-    ICONS_WIDTH,
-    ICONS_HEIGHT,
     NOTES_TREE_MIN_FONT_SIZE,
     NOTES_TREE_MAX_FONT_SIZE,
 )
@@ -239,12 +237,6 @@ class _ItemsViewInfo:
         self._dc = wx.ClientDC(self._window)
 
         # Sizes
-        self.icon_height = ICONS_HEIGHT
-        self.icon_width = ICONS_WIDTH
-
-        self.extra_icon_width = (self.icon_width * 2) // 3
-        self.extra_icon_height = (self.icon_height * 2) // 3
-
         self.left_margin = 4
         self.top_margin = 4
         self.depth_indent = self.icon_width // 2 + 16
@@ -265,6 +257,22 @@ class _ItemsViewInfo:
         )
 
         self.update_theme()
+
+    @property
+    def icon_width(self) -> int:
+        return self._theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE)
+
+    @property
+    def icon_height(self) -> int:
+        return self.icon_width
+
+    @property
+    def extra_icon_width(self) -> int:
+        return (self.icon_width * 2) // 3
+
+    @property
+    def extra_icon_height(self) -> int:
+        return (self.icon_height * 2) // 3
 
     @property
     def back_color(self) -> wx.Colour:
@@ -677,17 +685,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
 
-        # Main icons for notes
-        self._iconsCache = ImageListCache(
-            self.defaultIcon, self._view_info.icon_width, self._view_info.icon_height
-        )
-
-        # Default icon is not used
-        self._extraIconsCache = ImageListCache(
-            self.defaultIcon,
-            self._view_info.extra_icon_width,
-            self._view_info.extra_icon_height,
-        )
+        # Icons for notes
+        self._iconsCache = self._create_icons_cache()
+        self._extraIconsCache = self._create_extra_icons_cache()
 
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице
         # Словарь. Ключ - страница, значение - элемент дерева NotesTreeItem
@@ -750,11 +750,31 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self._theme.onThemeChanged += self._onThemeChanged
 
+    def _create_icons_cache(self) -> ImageListCache:
+        return ImageListCache(
+            self.defaultIcon, self._view_info.icon_width, self._view_info.icon_height
+        )
+
+    def _create_extra_icons_cache(self) -> ImageListCache:
+        # Default icon is not used
+        return ImageListCache(
+            self.defaultIcon,
+            self._view_info.extra_icon_width,
+            self._view_info.extra_icon_height,
+        )
+
     def _onThemeChanged(self, params: ThemeChangedParams):
         if (
             Theme.SECTION_GENERAL in params.changed_sections
             or Theme.SECTION_TREE in params.changed_sections
         ):
+            new_icon_size = params.theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE)
+            if self._iconsCache.width != new_icon_size:
+                self._iconsCache.clear()
+                self._iconsCache = self._create_icons_cache()
+                self._extraIconsCache.clear()
+                self._extraIconsCache = self._create_extra_icons_cache()
+
             self._view_info.update_theme()
             self.updateTree()
 

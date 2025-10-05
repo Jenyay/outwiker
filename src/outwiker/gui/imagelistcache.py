@@ -21,6 +21,14 @@ class ImageListCache:
         self._defaultId = None
         self.clear()
 
+    @property
+    def width(self) -> int:
+        return self._width
+
+    @property
+    def height(self) -> int:
+        return self._height
+
     def add(self, fname: str) -> int:
         '''
         Return image ID from ImageList or default image ID

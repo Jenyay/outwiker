@@ -83,6 +83,12 @@ class ThemeController:
             tree_config.extraIconReadOnly.value,
         )
 
+        self._theme.set(
+            Theme.SECTION_TREE,
+            Theme.TREE_ICON_SIZE,
+            tree_config.iconSize.value,
+        )
+
     def _loadTabsConfig(self):
         assert self._theme is not None
 
