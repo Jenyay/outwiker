@@ -237,15 +237,7 @@ class _ItemsViewInfo:
         self._dc = wx.ClientDC(self._window)
 
         # Sizes
-        self.left_margin = 4
-        self.top_margin = 4
-        self.depth_indent = self.icon_width // 2 + 16
-        self.icon_left_margin = 8
         self.extra_icons_left_margin = 2
-        self.title_left_margin = 4
-        self.title_right_margin = 4
-        self.expand_ctrl_width = 11
-        self.expand_ctrl_height = 11
         self.selection_margin_vertical = 2
         self.order_marker_weight = 3
 
@@ -257,6 +249,30 @@ class _ItemsViewInfo:
         )
 
         self.update_theme()
+
+    @property
+    def left_margin(self) -> int:
+        return self.icon_width // 4
+
+    @property
+    def top_margin(self) -> int:
+        return self.icon_width // 4
+
+    @property
+    def depth_indent(self) -> int:
+        return int(self.icon_width * 1.5)
+
+    @property
+    def icon_left_margin(self) -> int:
+        return self.icon_width // 2
+
+    @property
+    def title_left_margin(self) -> int:
+        return self.icon_width // 4
+
+    @property
+    def title_right_margin(self) -> int:
+        return self.icon_width // 4
 
     @property
     def icon_width(self) -> int:
@@ -272,7 +288,15 @@ class _ItemsViewInfo:
 
     @property
     def extra_icon_height(self) -> int:
-        return (self.icon_height * 2) // 3
+        return self.extra_icon_width
+
+    @property
+    def expand_ctrl_width(self) -> int:
+        return (self.icon_width * 2) // 3
+
+    @property
+    def expand_ctrl_height(self) -> int:
+        return self.expand_ctrl_width
 
     @property
     def back_color(self) -> wx.Colour:
