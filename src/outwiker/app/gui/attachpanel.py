@@ -247,7 +247,7 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             AttachPasteLinkActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("paste.png")
+            getBuiltinImagePath("paste.svg")
         )
 
         # Execute attachments
@@ -261,14 +261,14 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             OpenAttachFolderActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("folder_open.png")
+            getBuiltinImagePath("folder_open.svg")
         )
 
         # Copy path to clipboard
         actionController.appendToolbarButton(
             CopyAttachPathAction.stringId,
             toolbar,
-            getBuiltinImagePath("folder_clipboard.png")
+            getBuiltinImagePath("folder_clipboard.svg")
         )
 
         toolbar.Realize()

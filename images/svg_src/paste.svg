@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="paste.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="8.5065505"
+     inkscape:cx="5.3488191"
+     inkscape:cy="31.91658"
+     inkscape:window-width="1920"
+     inkscape:window-height="1088"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true" />
+  <defs
+     id="defs1">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5"
+       id="linearGradient6"
+       x1="2.0999999"
+       y1="9.0999994"
+       x2="6.9308696"
+       y2="1.8737516"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0009355,0,0,1.0151659,9.7998904,-4.5696957)" />
+    <linearGradient
+       id="linearGradient5"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#f4f9fe;stop-opacity:1;"
+         offset="0"
+         id="stop5" />
+      <stop
+         style="stop-color:#d7e8fe;stop-opacity:0;"
+         offset="1"
+         id="stop6" />
+    </linearGradient>
+  </defs>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#dfba0f;fill-opacity:1;stroke:#a5661f;stroke-width:0.600001;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect2"
+       width="7.0598698"
+       height="7.5273657"
+       x="1.0207959"
+       y="1.3330239" />
+    <path
+       id="rect3"
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#565656;stroke-width:0.4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       d="M 4.4878869,0.20000007 A 0.70755042,0.71513137 0 0 0 3.7812938,0.88090344 H 2.9275318 V 2.2436354 H 6.1739297 V 0.88090344 H 5.1949371 A 0.70755042,0.71513137 0 0 0 4.4878869,0.20000007 Z" />
+    <path
+       id="rect1"
+       style="fill:#d7e8fe;fill-opacity:1;stroke:#4681c2;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 4.2680083,3.222702 H 6.5766948 L 8.6683587,5.4861764 V 9.5325248 H 4.2680083 Z"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       id="rect4"
+       style="fill:url(#linearGradient6);stroke-width:0.400001;stroke-dasharray:none"
+       d="m 4.6073587,3.6304655 2.198783,-0.035628 -0.00212,1.8944154 1.5388835,-0.018946 0.013183,3.6900834 h -3.748745 z"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="fill:none;stroke:#4681c2;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 6.5766948,3.222702 -0.00254,2.2634744 h 2.0787501"
+       id="path4"
+       sodipodi:nodetypes="ccc" />
+    <rect
+       style="fill:#4681c2;fill-opacity:1;stroke:none;stroke-width:0.400001;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect5"
+       width="2.9363668"
+       height="0.40000001"
+       x="5"
+       y="6.2688966" />
+    <rect
+       style="fill:#4681c2;fill-opacity:1;stroke:none;stroke-width:0.400001;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect6"
+       width="2.9363668"
+       height="0.40000001"
+       x="5"
+       y="7.2482362" />
+    <rect
+       style="fill:#4681c2;fill-opacity:1;stroke:none;stroke-width:0.400001;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect7"
+       width="2.9363668"
+       height="0.40000001"
+       x="5"
+       y="8.2275763" />
+  </g>
+</svg>
