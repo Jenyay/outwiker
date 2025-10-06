@@ -275,7 +275,7 @@ class PluginDebug(Plugin):
         iconslist = [
             os.path.join(images_dir, 'add.svg'),
             os.path.join(images_dir, 'code.svg'),
-            os.path.join(images_dir, 'save.png'),
+            os.path.join(images_dir, 'tag.svg'),
         ]
         title = '__Debug group__'
         cover = None

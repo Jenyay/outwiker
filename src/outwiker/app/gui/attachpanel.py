@@ -238,7 +238,7 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             AttachSelectAllAction.stringId,
             toolbar,
-            getBuiltinImagePath("select_all.png")
+            getBuiltinImagePath("select_all.svg")
         )
 
         toolbar.AddSeparator()
