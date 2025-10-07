@@ -17,6 +17,9 @@ jobs:
           echo "C:\Python38" >> $env:GITHUB_PATH
           echo "pythonLocation=C:\Python38" >> $env:GITHUB_ENV
 
+      - name: Install Inno Setup
+        run: choco install innosetup -y
+
       - name: Print env variables
         run: |
           $env:PATH
