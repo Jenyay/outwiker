@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 20:58+0300\n"
+"POT-Creation-Date: 2025-10-08 12:52+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -131,7 +131,6 @@ msgstr "Open folder with attachments"
 
 #: outwiker/app/actions/attachopenfolder.py:38
 #: outwiker/app/actions/openpluginsfolder.py:32
-#, python-brace-format
 msgid "Can't open folder '{}'"
 msgstr "Can't open folder '{}'"
 
@@ -1354,7 +1353,7 @@ msgstr ""
 "Can't save config.\n"
 "%s"
 
-#: outwiker/app/gui/notestree.py:248 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:256 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
@@ -1709,7 +1708,6 @@ msgid "Can't create directory for icons group"
 msgstr "Can't create directory for icons group"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:256
-#, python-brace-format
 msgid "New group{}"
 msgstr "New group{}"
 
@@ -1718,17 +1716,14 @@ msgid "Can't rename directory for icons group"
 msgstr "Can't rename directory for icons group"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:290
-#, python-brace-format
 msgid "Group with name \"{}\" exists already"
 msgstr "Group with name \"{}\" exists already"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:297
-#, python-brace-format
 msgid "Invalid group name \"{}\""
 msgstr "Invalid group name \"{}\""
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:332
-#, python-brace-format
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Remove group \"{}\" and all icons inside it?"
 
@@ -1790,23 +1785,33 @@ msgstr "Relative path to current page"
 msgid "Main window title format"
 msgstr "Main window title format"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:29
-msgid "Extra icons"
-msgstr "Extra icons"
-
-#: outwiker/app/gui/preferences/notestreepanel.py:31
-msgid "Show bookmark icon"
-msgstr "Show bookmark icon"
-
-#: outwiker/app/gui/preferences/notestreepanel.py:34
-msgid "Show read-only icon"
-msgstr "Show read-only icon"
-
-#: outwiker/app/gui/preferences/notestreepanel.py:41
+#: outwiker/app/gui/preferences/notestreepanel.py:27
 #: outwiker/app/gui/preferences/tabspanel.py:30
 #: outwiker/pages/wiki/fontsizeselector.py:35
 msgid "Font size"
 msgstr "Font size"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:34
+#: outwiker/app/gui/preferences/tabspanel.py:36
+msgid "Show note icons"
+msgstr "Show note icons"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:49
+#| msgid "Font size"
+msgid "Icon size"
+msgstr "Icon size"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:54
+msgid "Extra icons"
+msgstr "Extra icons"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:56
+msgid "Show bookmark icon"
+msgstr "Show bookmark icon"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:59
+msgid "Show read-only icon"
+msgstr "Show read-only icon"
 
 #: outwiker/app/gui/preferences/pluginspanel.py:33
 msgid "Download more plugins"
@@ -1900,10 +1905,6 @@ msgstr "Horizontal margin"
 #: outwiker/app/gui/preferences/tabspanel.py:27
 msgid "Vertical margin"
 msgstr "Vertical margin"
-
-#: outwiker/app/gui/preferences/tabspanel.py:36
-msgid "Show note icons"
-msgstr "Show note icons"
 
 #: outwiker/app/gui/preferences/tabspanel.py:39
 msgid "Show close buttons"
@@ -2031,7 +2032,6 @@ msgid "Really exit?"
 msgstr "Really exit?"
 
 #: outwiker/app/services/attachment.py:69
-#, python-brace-format
 msgid ""
 "Error renaming file\n"
 "{} -> {}\n"
@@ -2051,7 +2051,6 @@ msgstr ""
 "{0}"
 
 #: outwiker/app/services/attachment.py:167
-#, python-brace-format
 msgid "Can't create directory: {}"
 msgstr "Can't create directory: {}"
 
@@ -2069,7 +2068,6 @@ msgid "New folder"
 msgstr "New folder"
 
 #: outwiker/app/services/attachment.py:207
-#, python-brace-format
 msgid "Can't create folder {} for attachments"
 msgstr "Can't create folder {} for attachments"
 
@@ -2095,7 +2093,6 @@ msgid "You can't remove the root element"
 msgstr "You can't remove the root element"
 
 #: outwiker/app/services/tree.py:52
-#, python-brace-format
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
 "All attachments will also be deleted."
@@ -2158,7 +2155,6 @@ msgid "The page title"
 msgstr "The page title"
 
 #: outwiker/app/services/tree.py:252
-#, python-brace-format
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Can't rename page \"{}\" to \"{}\""
 
@@ -2167,7 +2163,6 @@ msgid "Can't move page when page with that title already exists"
 msgstr "Can't move page when page with that title already exists"
 
 #: outwiker/app/services/tree.py:280
-#, python-brace-format
 msgid "Can't move page: {}"
 msgstr "Can't move page: {}"
 
@@ -2309,17 +2304,14 @@ msgstr ""
 "system"
 
 #: outwiker/core/pluginsloader.py:270
-#, python-brace-format
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr "Plug-in \"{}\". Can't read \"{}\" file"
 
 #: outwiker/core/pluginsloader.py:290
-#, python-brace-format
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr "Plug-in \"{}\" is outdated. Please, update the plug-in."
 
 #: outwiker/core/pluginsloader.py:301
-#, python-brace-format
 msgid ""
 "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
 "new OutWiker version."
@@ -2576,7 +2568,6 @@ msgid "Insert rows"
 msgstr "Insert rows"
 
 #: outwiker/gui/tagscloud.py:136
-#, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Number of notes: {}"
 
@@ -2585,7 +2576,6 @@ msgid "Applied tags only"
 msgstr "Applied tags only"
 
 #: outwiker/gui/texteditormenu.py:75 outwiker/gui/texteditormenu.py:80
-#, python-brace-format
 msgid "Add \"{}\" to dictionary"
 msgstr "Add \"{}\" to dictionary"
 
@@ -2637,7 +2627,6 @@ msgid "Page loading. Please wait…"
 msgstr "Page loading. Please wait…"
 
 #: outwiker/pages/html/basehtmlpanel.py:338
-#, python-brace-format
 msgid "Page loading error: {}"
 msgstr "Page loading error: {}"
 
@@ -3003,17 +2992,14 @@ msgid "Custom CSS"
 msgstr "Custom CSS"
 
 #: outwiker/pages/wiki/parser/commands/include.py:82
-#, python-brace-format
 msgid "Can't open file '{}'"
 msgstr "Can't open file '{}'"
 
 #: outwiker/pages/wiki/parser/commands/include.py:85
-#, python-brace-format
 msgid "Encoding error in file '{}'"
 msgstr "Encoding error in file '{}'"
 
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:74
-#, python-brace-format
 msgid "Can't create thumbnail for <b>\"{}\"</b>"
 msgstr "Can't create thumbnail for <b>\"{}\"</b>"
 
@@ -3293,11 +3279,11 @@ msgstr "[[link | comment]]"
 #~ msgstr "Google+ page"
 
 #~ msgid ""
-#~ "https://plus.google.com/u/0/b/"
-#~ "113404982971748285098/113404982971748285098/posts"
+#~ "https://plus.google.com/u/0/"
+#~ "b/113404982971748285098/113404982971748285098/posts"
 #~ msgstr ""
-#~ "https://plus.google.com/u/0/b/"
-#~ "113404982971748285098/113404982971748285098/posts"
+#~ "https://plus.google.com/u/0/"
+#~ "b/113404982971748285098/113404982971748285098/posts"
 
 #~ msgid "Livejournal community"
 #~ msgstr "Livejournal community"
@@ -3490,15 +3476,15 @@ msgstr "[[link | comment]]"
 #~ "!! First Wiki Page\n"
 #~ "\n"
 #~ "                       This is the first page. You can use a text "
-#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://"
-#~ "jenyay.net | link]] and others.\n"
+#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay."
+#~ "net | link]] and others.\n"
 #~ "                       "
 #~ msgstr ""
 #~ "!! First Wiki Page\n"
 #~ "\n"
 #~ "                       This is the first page. You can use a text "
-#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://"
-#~ "jenyay.net | link]] and others.\n"
+#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay."
+#~ "net | link]] and others.\n"
 #~ "                       "
 
 #~ msgid "Not in groups [custom]"
