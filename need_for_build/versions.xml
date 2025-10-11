@@ -1,10 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.959" status="dev">
+    <version number="4.0.0.960" status="beta" date="2025-10-11">
         <changes>
+            <change>Added settings for colors of tab title font.</change>
+            <change>Added settings for tab font sizes.</change>
+            <change>Added setting to show/hide close buttons on tabs.</change>
+            <change>Added setting to show/hide icons on tabs.</change>
+            <change>Added setting to show/hide icons in the notes tree.</change>
+            <change>Double clicking a tab opens the page properties dialog.</change>
+            <change>Added setting to choose icon size for the notes tree.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлены настройки для цветов шрифта заголовков вкладок.</change>
+            <change>Добавлены настройки размера шрифтов для вкладок.</change>
+            <change>Добавлена настройка для показа / скрытия кнопок закрытия на вкладках.</change>
+            <change>Добавлена настройка для показа / скрытия значков заметок на вкладках.</change>
+            <change>Добавлена настройка для показа / скрытия значков заметок в дереве заметок.</change>
+            <change>Двойной клик на вкладке открывает диалог свойств страницы.</change>
+            <change>Добавена настройка для выбора размера значков дерева заметок.</change>
         </changes>
     </version>
 
