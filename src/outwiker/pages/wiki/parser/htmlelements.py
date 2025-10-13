@@ -11,6 +11,11 @@ def create_link_to_page(href: str, text: str) -> str:
     css_classes = [css.CSS_WIKI, css.CSS_LINK_PAGE]
     return html.link(href, text, css_classes)
 
+def create_invalid_link_to_page(href: str, text: str) -> str:
+    html = HtmlFormatter()
+    css_classes = [css.CSS_WIKI, css.CSS_LINK_PAGE, css.CSS_LINK_PAGE_ERROR]
+    return html.link(href, text, css_classes)
+
 
 def create_link_to_attached_file(href: str, text: str) -> str:
     html = HtmlFormatter()

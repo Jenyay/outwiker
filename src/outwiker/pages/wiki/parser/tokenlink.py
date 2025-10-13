@@ -10,7 +10,7 @@ from outwiker.core.htmlformatter import HtmlFormatter
 from outwiker.utilites.urls import is_url
 
 from .tokenattach import AttachToken
-from .htmlelements import create_link_to_page, create_link_to_attached_file, create_invalid_attached_file
+from .htmlelements import create_link_to_page, create_link_to_attached_file, create_invalid_attached_file, create_invalid_link_to_page
 import outwiker.core.cssclasses as css
 
 
@@ -28,6 +28,7 @@ class LinkToken:
     def __init__(self, parser):
         self.parser = parser
         self.attach_prefix = PAGE_ATTACH_DIR + '/'
+        self.page_protocol = "page://"
 
     def getToken(self):
         return QuotedString(LinkToken.linkStart,
@@ -106,7 +107,7 @@ class LinkToken:
                 not url.startswith(self.attach_prefix) and
                 not url.startswith('#') and
                 not url.startswith('mailto:')):
-            url = 'page://' + url
+            url = self.page_protocol + url
 
         if url.startswith(self.attach_prefix) and not self._isHasImage(comment):
             if Attachment(self.parser.page).exists(url[len(self.attach_prefix):]):
@@ -114,7 +115,7 @@ class LinkToken:
             else:
                 return create_invalid_attached_file(comment)
 
-        if url.startswith('page://'):
+        if url.startswith(self.page_protocol):
             return create_link_to_page(url, comment)
 
         return HtmlFormatter().link(url, comment, [css.CSS_WIKI])
@@ -142,8 +143,18 @@ class LinkToken:
             # Ссылка начинается на #, но вложенных страниц с таким именем нет,
             # значит это якорь
             return HtmlFormatter().anchor(textStrip[1:])
+        elif textStrip.startswith(self.page_protocol):
+            return self._generateLinkToPage(textStrip[len(self.page_protocol):])
 
         # Ссылка не на прикрепление
         url = text.strip()
         comment = text.strip()
         return self._generateHtmlTag(url, html.escape(comment, False))
+
+    def _generateLinkToPage(self, page_uid: str) -> str:
+        page = self.parser.application.pageUidDepot[page_uid]
+        url = self.page_protocol + page_uid
+        if page is not None:
+            return create_link_to_page(url, page.display_title)
+        else:
+            return create_invalid_link_to_page(url, url)
