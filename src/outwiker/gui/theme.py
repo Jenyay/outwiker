@@ -33,6 +33,11 @@ class Theme:
     # Tree section
     HIGHLIGHTING_COLOR = "HighlightingColor"
     HIGHLIGHTING_TEXT_COLOR = "HighlightingTextColor"
+    TREE_FONT_SIZE = "FontSize"
+    TREE_SHOW_NOTE_ICONS = "ShowIcons"
+    TREE_EXTRA_ICON_BOOKMARK = "ExtraIconBookmark"
+    TREE_EXTRA_ICON_READ_ONLY = "ExtraIconReadOnly"
+    TREE_ICON_SIZE = "IconSize"
 
     # Notification
     NOTIFICATION_BACKGROUND_COLOR = "BackgroundColor"
@@ -48,6 +53,12 @@ class Theme:
     TABS_BACKGROUND_DOWNED_COLOR = "BackgroundDownedColor"
     TABS_BACKGROUND_DRAGGED_COLOR = "BackgroundDraggedColor"
     TABS_BACKGROUND_SELECTED_COLOR = "BackgroundSelectedColor"
+    TABS_FONT_NORMAL_COLOR = "FontNormalColor"
+    TABS_FONT_HOVER_COLOR = "FontHoverColor"
+    TABS_FONT_DOWNED_COLOR = "FontDownedColor"
+    TABS_FONT_DRAGGED_COLOR = "FontDraggedColor"
+    TABS_FONT_SELECTED_COLOR = "FontSelectedColor"
+    TABS_FONT_SIZE = "FontSize"
     TABS_BORDER_COLOR = "BorderColor"
     TABS_ICON_SIZE = "IconSize"
     TABS_CLOSE_BUTTON_SIZE = "CloseButtonSize"
@@ -56,6 +67,8 @@ class Theme:
     TABS_MAX_WIDTH = "MaxWidth"
     TABS_MARGIN_HORIZONTAL = "MarginHorizontal"
     TABS_MARGIN_VERTICAL = "MarginVertical"
+    TABS_SHOW_ICONS = "ShowIcons"
+    TABS_SHOW_CLOSE_BUTTON = "ShowCloseButton"
 
     def __init__(self):
         self._data: Dict[str, Tuple[Any, Any]] = {}
@@ -68,24 +81,12 @@ class Theme:
         self.onThemeChanged = Event()
 
     def _initDefaults(self):
-        self.addParam(self.SECTION_GENERAL, self.BACKGROUND_COLOR, "#FFFFFF")
-        self.addParam(self.SECTION_GENERAL, self.TEXT_COLOR, "#000000")
-        self.addParam(self.SECTION_GENERAL, self.HYPERLINK_COLOR, "#0000FF")
-        self.addParam(self.SECTION_GENERAL, self.SELECTION_COLOR, "#0000FF")
-        self.addParam(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR, "#FFFFFF")
-        self.addParam(self.SECTION_GENERAL, self.SHADOW_COLOR, "#AAAAAA")
-        self.addParam(self.SECTION_GENERAL, self.CONTROL_BORDER_COLOR, "#000000")
-        self.addParam(
-            self.SECTION_GENERAL, self.CONTROL_BORDER_SELECTED_COLOR, "#0000FF"
-        )
-        self.addParam(self.SECTION_GENERAL, self.STATIC_LINE_COLOR, "#AAAAAA")
-        self.addParam(self.SECTION_GENERAL, self.ROUND_RADIUS, 0)
+        self.addGeneralParams()
+        self.addNotesTreeParams()
+        self.addNotificationParams()
+        self.addTabsParams()
 
-        self.addParam(self.SECTION_TREE, self.SELECTION_COLOR, "#0000FF")
-        self.addParam(self.SECTION_TREE, self.SELECTION_TEXT_COLOR, "#FFFFFF")
-        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_COLOR, "#E1EFFA")
-        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_TEXT_COLOR, "#000000")
-
+    def addNotificationParams(self):
         self.addParam(
             self.SECTION_NOTIFICATION, self.NOTIFICATION_BACKGROUND_COLOR, "#FFFFFF"
         )
@@ -113,13 +114,36 @@ class Theme:
             "#E3E3E3",
         )
 
-        # Tabs
+    def addGeneralParams(self):
+        self.addParam(self.SECTION_GENERAL, self.BACKGROUND_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_GENERAL, self.TEXT_COLOR, "#000000")
+        self.addParam(self.SECTION_GENERAL, self.HYPERLINK_COLOR, "#0000FF")
+        self.addParam(self.SECTION_GENERAL, self.SELECTION_COLOR, "#0000FF")
+        self.addParam(self.SECTION_GENERAL, self.SELECTION_TEXT_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_GENERAL, self.SHADOW_COLOR, "#AAAAAA")
+        self.addParam(self.SECTION_GENERAL, self.CONTROL_BORDER_COLOR, "#000000")
+        self.addParam(
+            self.SECTION_GENERAL, self.CONTROL_BORDER_SELECTED_COLOR, "#0000FF"
+        )
+        self.addParam(self.SECTION_GENERAL, self.STATIC_LINE_COLOR, "#AAAAAA")
+        self.addParam(self.SECTION_GENERAL, self.ROUND_RADIUS, 0)
+
+    def addTabsParams(self):
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_NORMAL_COLOR, "#D4D4CE")
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_HOVER_COLOR, "#DDDDDD")
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_DOWNED_COLOR, "#AAAAAA")
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_DRAGGED_COLOR, "#AAAAAA")
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_SELECTED_COLOR, "#F3F3F0")
+
+        self.addParam(self.SECTION_TABS, self.TABS_FONT_NORMAL_COLOR, "#000000")
+        self.addParam(self.SECTION_TABS, self.TABS_FONT_HOVER_COLOR, "#000000")
+        self.addParam(self.SECTION_TABS, self.TABS_FONT_DOWNED_COLOR, "#000000")
+        self.addParam(self.SECTION_TABS, self.TABS_FONT_DRAGGED_COLOR, "#000000")
+        self.addParam(self.SECTION_TABS, self.TABS_FONT_SELECTED_COLOR, "#000000")
+        self.addParam(self.SECTION_TABS, self.TABS_FONT_SIZE, 0)
+
         self.addParam(self.SECTION_TABS, self.TABS_BORDER_COLOR, "#B3B3B3")
+
         self.addParam(self.SECTION_TABS, self.TABS_ICON_SIZE, 16)
         self.addParam(self.SECTION_TABS, self.TABS_CLOSE_BUTTON_SIZE, 16)
         self.addParam(self.SECTION_TABS, self.TABS_ADD_BUTTON_SIZE, 20)
@@ -127,6 +151,19 @@ class Theme:
         self.addParam(self.SECTION_TABS, self.TABS_MAX_WIDTH, 450)
         self.addParam(self.SECTION_TABS, self.TABS_MARGIN_HORIZONTAL, 8)
         self.addParam(self.SECTION_TABS, self.TABS_MARGIN_VERTICAL, 5)
+        self.addParam(self.SECTION_TABS, self.TABS_SHOW_ICONS, True)
+        self.addParam(self.SECTION_TABS, self.TABS_SHOW_CLOSE_BUTTON, True)
+
+    def addNotesTreeParams(self):
+        self.addParam(self.SECTION_TREE, self.SELECTION_COLOR, "#0000FF")
+        self.addParam(self.SECTION_TREE, self.SELECTION_TEXT_COLOR, "#FFFFFF")
+        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_COLOR, "#E1EFFA")
+        self.addParam(self.SECTION_TREE, self.HIGHLIGHTING_TEXT_COLOR, "#000000")
+        self.addParam(self.SECTION_TREE, self.TREE_FONT_SIZE, 0)
+        self.addParam(self.SECTION_TREE, self.TREE_SHOW_NOTE_ICONS, True)
+        self.addParam(self.SECTION_TREE, self.TREE_EXTRA_ICON_BOOKMARK, True)
+        self.addParam(self.SECTION_TREE, self.TREE_EXTRA_ICON_READ_ONLY, True)
+        self.addParam(self.SECTION_TREE, self.TREE_ICON_SIZE, 16)
 
     @property
     def colorBackground(self):

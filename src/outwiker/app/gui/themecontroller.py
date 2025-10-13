@@ -5,7 +5,7 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.event import EVENT_PRIORITY_MAX_CORE
 from outwiker.gui.colors import sanitize_color
-from outwiker.gui.guiconfig import MainWindowConfig, TabsConfig
+from outwiker.gui.guiconfig import MainWindowConfig, TabsConfig, TreeConfig
 from outwiker.gui.theme import Theme
 
 
@@ -29,31 +29,65 @@ class ThemeController:
 
         # General
         self._theme.set(
-            self._theme.SECTION_GENERAL,
-            self._theme.BACKGROUND_COLOR,
+            Theme.SECTION_GENERAL,
+            Theme.BACKGROUND_COLOR,
             sanitize_color(mainWindowConfig.mainPanesBackgroundColor),
         )
 
         self._theme.set(
-            self._theme.SECTION_GENERAL,
-            self._theme.TEXT_COLOR,
+            Theme.SECTION_GENERAL,
+            Theme.TEXT_COLOR,
             sanitize_color(mainWindowConfig.mainPanesTextColor),
         )
 
         # Notification
         self._theme.set(
-            self._theme.SECTION_NOTIFICATION,
-            self._theme.NOTIFICATION_BACKGROUND_COLOR,
+            Theme.SECTION_NOTIFICATION,
+            Theme.NOTIFICATION_BACKGROUND_COLOR,
             sanitize_color(mainWindowConfig.mainPanesBackgroundColor),
         )
 
         self._theme.set(
-            self._theme.SECTION_NOTIFICATION,
-            self._theme.NOTIFICATION_TEXT_COLOR,
+            Theme.SECTION_NOTIFICATION,
+            Theme.NOTIFICATION_TEXT_COLOR,
             sanitize_color(mainWindowConfig.mainPanesTextColor),
         )
 
         self._loadTabsConfig()
+        self._loadTreeConfig()
+
+    def _loadTreeConfig(self):
+        assert self._theme is not None
+
+        tree_config = TreeConfig(self._application.config)
+
+        self._theme.set(
+            Theme.SECTION_TREE, Theme.TREE_FONT_SIZE, tree_config.fontSize.value
+        )
+
+        self._theme.set(
+            Theme.SECTION_TREE,
+            Theme.TREE_SHOW_NOTE_ICONS,
+            tree_config.showNoteIcons.value,
+        )
+
+        self._theme.set(
+            Theme.SECTION_TREE,
+            Theme.TREE_EXTRA_ICON_BOOKMARK,
+            tree_config.extraIconBookmark.value,
+        )
+
+        self._theme.set(
+            Theme.SECTION_TREE,
+            Theme.TREE_EXTRA_ICON_READ_ONLY,
+            tree_config.extraIconReadOnly.value,
+        )
+
+        self._theme.set(
+            Theme.SECTION_TREE,
+            Theme.TREE_ICON_SIZE,
+            tree_config.iconSize.value,
+        )
 
     def _loadTabsConfig(self):
         assert self._theme is not None
@@ -61,69 +95,117 @@ class ThemeController:
         tabsConfig = TabsConfig(self._application.config)
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_BACKGROUND_NORMAL_COLOR,
+            Theme.SECTION_TABS,
+            Theme.TABS_BACKGROUND_NORMAL_COLOR,
             sanitize_color(tabsConfig.backColorNormal),
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_BACKGROUND_HOVER_COLOR,
+            Theme.SECTION_TABS,
+            Theme.TABS_BACKGROUND_HOVER_COLOR,
             sanitize_color(tabsConfig.backColorHover),
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_BACKGROUND_DOWNED_COLOR,
+            Theme.SECTION_TABS,
+            Theme.TABS_BACKGROUND_DOWNED_COLOR,
             sanitize_color(tabsConfig.backColorDowned),
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_BACKGROUND_DRAGGED_COLOR,
+            Theme.SECTION_TABS,
+            Theme.TABS_BACKGROUND_DRAGGED_COLOR,
             sanitize_color(tabsConfig.backColorDragged),
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_BACKGROUND_SELECTED_COLOR,
+            Theme.SECTION_TABS,
+            Theme.TABS_BACKGROUND_SELECTED_COLOR,
             sanitize_color(tabsConfig.backColorSelected),
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_BORDER_COLOR,
+            Theme.SECTION_TABS,
+            Theme.TABS_FONT_NORMAL_COLOR,
+            sanitize_color(tabsConfig.fontColorNormal),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_FONT_HOVER_COLOR,
+            sanitize_color(tabsConfig.fontColorHover),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_FONT_DOWNED_COLOR,
+            sanitize_color(tabsConfig.fontColorDowned),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_FONT_DRAGGED_COLOR,
+            sanitize_color(tabsConfig.fontColorDragged),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_FONT_SELECTED_COLOR,
+            sanitize_color(tabsConfig.fontColorSelected),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_FONT_SIZE,
+            tabsConfig.fontSize.value,
+        )
+
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_BORDER_COLOR,
             sanitize_color(tabsConfig.borderColor),
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_ICON_SIZE,
+            Theme.SECTION_TABS,
+            Theme.TABS_ICON_SIZE,
             tabsConfig.iconSize.value,
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_MIN_WIDTH,
+            Theme.SECTION_TABS,
+            Theme.TABS_MIN_WIDTH,
             tabsConfig.minTabWidth.value,
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_MAX_WIDTH,
+            Theme.SECTION_TABS,
+            Theme.TABS_MAX_WIDTH,
             tabsConfig.maxTabWidth.value,
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_MARGIN_HORIZONTAL,
+            Theme.SECTION_TABS,
+            Theme.TABS_MARGIN_HORIZONTAL,
             tabsConfig.marginHorizontal.value,
         )
 
         self._theme.set(
-            self._theme.SECTION_TABS,
-            self._theme.TABS_MARGIN_VERTICAL,
+            Theme.SECTION_TABS,
+            Theme.TABS_MARGIN_VERTICAL,
             tabsConfig.marginVertical.value,
+        )
+
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_SHOW_ICONS,
+            tabsConfig.showIcon.value,
+        )
+
+        self._theme.set(
+            Theme.SECTION_TABS,
+            Theme.TABS_SHOW_CLOSE_BUTTON,
+            tabsConfig.showCloseButton.value,
         )
 
     def loadSystemParams(self):
@@ -132,32 +214,32 @@ class ThemeController:
 
         # General
         self._theme.addParam(
-            self._theme.SECTION_GENERAL,
-            self._theme.BACKGROUND_COLOR,
+            Theme.SECTION_GENERAL,
+            Theme.BACKGROUND_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
         )
 
         self._theme.addParam(
-            self._theme.SECTION_GENERAL,
-            self._theme.TEXT_COLOR,
+            Theme.SECTION_GENERAL,
+            Theme.TEXT_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
         )
 
         self._theme.addParam(
-            self._theme.SECTION_GENERAL,
-            self._theme.SELECTION_COLOR,
+            Theme.SECTION_GENERAL,
+            Theme.SELECTION_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
         )
 
         self._theme.addParam(
-            self._theme.SECTION_GENERAL,
-            self._theme.SELECTION_TEXT_COLOR,
+            Theme.SECTION_GENERAL,
+            Theme.SELECTION_TEXT_COLOR,
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT).GetAsString(
                 wx.C2S_HTML_SYNTAX
             ),
@@ -165,19 +247,15 @@ class ThemeController:
 
         # Tree
         self._theme.addParam(
-            self._theme.SECTION_TREE,
-            self._theme.SELECTION_TEXT_COLOR,
-            self._theme.getDefaults(
-                self._theme.SECTION_GENERAL, self._theme.SELECTION_TEXT_COLOR
-            ),
+            Theme.SECTION_TREE,
+            Theme.SELECTION_TEXT_COLOR,
+            self._theme.getDefaults(Theme.SECTION_GENERAL, Theme.SELECTION_TEXT_COLOR),
         )
 
         self._theme.addParam(
-            self._theme.SECTION_TREE,
-            self._theme.SELECTION_COLOR,
-            self._theme.getDefaults(
-                self._theme.SECTION_GENERAL, self._theme.SELECTION_COLOR
-            ),
+            Theme.SECTION_TREE,
+            Theme.SELECTION_COLOR,
+            self._theme.getDefaults(Theme.SECTION_GENERAL, Theme.SELECTION_COLOR),
         )
 
     def loadParams(self):

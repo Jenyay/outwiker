@@ -29,7 +29,7 @@ class IconButton:
         self._width = width
         self._height = height
 
-        self._invalidFileName = getBuiltinImagePath("cross.png")
+        self._invalidFileName = getBuiltinImagePath("cross.svg")
 
         self._normalBackground = wx.Colour(255, 255, 255)
         self._selectedBackground = wx.Colour(160, 190, 255)

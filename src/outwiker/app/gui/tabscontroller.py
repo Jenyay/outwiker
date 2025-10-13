@@ -2,6 +2,7 @@
 
 import os.path
 
+from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 from outwiker.app.gui.dropfiles import PageItemsDropFilesTarget
 from outwiker.app.services.messages import showError
@@ -15,6 +16,7 @@ from .tabsctrl import (
     EVT_TABSCTRL_ADD_NEW_TAB,
     EVT_TABSCTRL_END_DRAG_TAB,
     EVT_TABSCTRL_CLOSED_TAB,
+    EVT_TABSCTRL_DOUBLE_CLICK_TAB,
     TabsCtrl,
 )
 
@@ -148,6 +150,7 @@ class TabsController:
         self._tabsCtrl.Bind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
         self._tabsCtrl.Bind(EVT_TABSCTRL_END_DRAG_TAB, handler=self.__onMoveTab)
         self._tabsCtrl.Bind(EVT_TABSCTRL_CLOSED_TAB, handler=self.__onTabClosed)
+        self._tabsCtrl.Bind(EVT_TABSCTRL_DOUBLE_CLICK_TAB, handler=self.__onTabDoubleClick)
 
     def __unbindGuiEvents(self):
         self._tabsCtrl.Unbind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)
@@ -155,6 +158,7 @@ class TabsController:
         self._tabsCtrl.Unbind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
         self._tabsCtrl.Unbind(EVT_TABSCTRL_END_DRAG_TAB, handler=self.__onMoveTab)
         self._tabsCtrl.Unbind(EVT_TABSCTRL_CLOSED_TAB, handler=self.__onTabClosed)
+        self._tabsCtrl.Unbind(EVT_TABSCTRL_DOUBLE_CLICK_TAB, handler=self.__onTabDoubleClick)
 
     def __bindEvents(self):
         self._application.onWikiOpen += self.__onWikiOpen
@@ -196,6 +200,13 @@ class TabsController:
 
     def __onTabClosed(self, event):
         self.__saveTabs()
+
+    def __onTabDoubleClick(self, event):
+        page = event.page
+        if page is not None:
+            editPage(self._application.mainWindow,
+                     page,
+                     self._application)
 
     def __loadTabs(self, wikiroot):
         if wikiroot is not None:

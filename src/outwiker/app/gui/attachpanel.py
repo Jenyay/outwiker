@@ -224,7 +224,7 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             RemoveAttachesActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("delete.png")
+            getBuiltinImagePath("delete.svg")
         )
 
         # Rename file
@@ -238,7 +238,7 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             AttachSelectAllAction.stringId,
             toolbar,
-            getBuiltinImagePath("select_all.png")
+            getBuiltinImagePath("select_all.svg")
         )
 
         toolbar.AddSeparator()
@@ -247,28 +247,28 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             AttachPasteLinkActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("paste.png")
+            getBuiltinImagePath("paste.svg")
         )
 
         # Execute attachments
         actionController.appendToolbarButton(
             AttachExecuteFilesAction.stringId,
             toolbar,
-            getBuiltinImagePath("execute.png")
+            getBuiltinImagePath("execute.svg")
         )
 
         # Open attach folder
         actionController.appendToolbarButton(
             OpenAttachFolderActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("folder_open.png")
+            getBuiltinImagePath("folder_open.svg")
         )
 
         # Copy path to clipboard
         actionController.appendToolbarButton(
             CopyAttachPathAction.stringId,
             toolbar,
-            getBuiltinImagePath("folder_clipboard.png")
+            getBuiltinImagePath("folder_clipboard.svg")
         )
 
         toolbar.Realize()

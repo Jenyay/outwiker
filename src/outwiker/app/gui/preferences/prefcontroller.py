@@ -173,7 +173,7 @@ class PrefController:
             _("Editor"),
             editorPanesList,
             PREF_PANEL_EDITOR,
-            icon_fname=getBuiltinImagePath("editor.png"),
+            icon_fname=getBuiltinImagePath("editor.svg"),
         )
 
     def _createPluginsPage(self):

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 17:37+0300\n"
+"POT-Creation-Date: 2025-10-08 12:52+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1319,7 +1319,12 @@ msgstr "Movement"
 #: outwiker/app/gui/preferences/colorspanel.py:69
 #: outwiker/app/gui/preferences/colorspanel.py:70
 #: outwiker/app/gui/preferences/colorspanel.py:71
-#: outwiker/app/gui/preferences/colorspanel.py:72
+#: outwiker/app/gui/preferences/colorspanel.py:73
+#: outwiker/app/gui/preferences/colorspanel.py:74
+#: outwiker/app/gui/preferences/colorspanel.py:75
+#: outwiker/app/gui/preferences/colorspanel.py:76
+#: outwiker/app/gui/preferences/colorspanel.py:77
+#: outwiker/app/gui/preferences/colorspanel.py:79
 #: outwiker/app/gui/preferences/prefcontroller.py:139
 msgid "Tabs"
 msgstr "Tabs"
@@ -1348,7 +1353,7 @@ msgstr ""
 "Can't save config.\n"
 "%s"
 
-#: outwiker/app/gui/notestree.py:253 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:256 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
@@ -1469,6 +1474,7 @@ msgid "Editor"
 msgstr "Editor"
 
 #: outwiker/app/gui/preferences/colorspanel.py:62
+#: outwiker/app/gui/preferences/colorspanel.py:73
 msgid "Font color"
 msgstr "Font color"
 
@@ -1504,7 +1510,23 @@ msgstr "Color of the pressed tab"
 msgid "Color of the dragged tab"
 msgstr "Color of the dragged tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:72
+#: outwiker/app/gui/preferences/colorspanel.py:74
+msgid "Font color of the selected tab"
+msgstr "Font color of the selected tab"
+
+#: outwiker/app/gui/preferences/colorspanel.py:75
+msgid "Font color of the tab under cursor"
+msgstr "Font color of the tab under cursor"
+
+#: outwiker/app/gui/preferences/colorspanel.py:76
+msgid "Font color of the pressed tab"
+msgstr "Font color of the pressed tab"
+
+#: outwiker/app/gui/preferences/colorspanel.py:77
+msgid "Font color of the dragged tab"
+msgstr "Font color of the dragged tab"
+
+#: outwiker/app/gui/preferences/colorspanel.py:79
 msgid "Tab border color"
 msgstr "Tab border color"
 
@@ -1763,26 +1785,33 @@ msgstr "Relative path to current page"
 msgid "Main window title format"
 msgstr "Main window title format"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:29
-msgid "Extra icons"
-msgstr "Extra icons"
-
-#: outwiker/app/gui/preferences/notestreepanel.py:31
-msgid "Show bookmark icon"
-msgstr "Show bookmark icon"
-
-#: outwiker/app/gui/preferences/notestreepanel.py:34
-msgid "Show read-only icon"
-msgstr "Show read-only icon"
-
-#: outwiker/app/gui/preferences/notestreepanel.py:38
+#: outwiker/app/gui/preferences/notestreepanel.py:27
+#: outwiker/app/gui/preferences/tabspanel.py:30
 #: outwiker/pages/wiki/fontsizeselector.py:35
 msgid "Font size"
 msgstr "Font size"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:44
-msgid "Default size"
-msgstr "Default size"
+#: outwiker/app/gui/preferences/notestreepanel.py:34
+#: outwiker/app/gui/preferences/tabspanel.py:36
+msgid "Show note icons"
+msgstr "Show note icons"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:49
+#| msgid "Font size"
+msgid "Icon size"
+msgstr "Icon size"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:54
+msgid "Extra icons"
+msgstr "Extra icons"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:56
+msgid "Show bookmark icon"
+msgstr "Show bookmark icon"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:59
+msgid "Show read-only icon"
+msgstr "Show read-only icon"
 
 #: outwiker/app/gui/preferences/pluginspanel.py:33
 msgid "Download more plugins"
@@ -1861,24 +1890,25 @@ msgstr "Use dictionaries"
 msgid "Custom dictonary (one word per line)"
 msgstr "Custom dictonary (one word per line)"
 
-#: outwiker/app/gui/preferences/tabspanel.py:22
-#| msgid "Minimal font size"
+#: outwiker/app/gui/preferences/tabspanel.py:23
 msgid "Minimal tab width"
 msgstr "Minimal tab width"
 
-#: outwiker/app/gui/preferences/tabspanel.py:23
-#| msgid "Maximal font size"
+#: outwiker/app/gui/preferences/tabspanel.py:24
 msgid "Maximal tab width"
 msgstr "Maximal tab width"
 
-#: outwiker/app/gui/preferences/tabspanel.py:25
-#| msgid "Horizontal line"
+#: outwiker/app/gui/preferences/tabspanel.py:26
 msgid "Horizontal margin"
 msgstr "Horizontal margin"
 
-#: outwiker/app/gui/preferences/tabspanel.py:26
+#: outwiker/app/gui/preferences/tabspanel.py:27
 msgid "Vertical margin"
 msgstr "Vertical margin"
+
+#: outwiker/app/gui/preferences/tabspanel.py:39
+msgid "Show close buttons"
+msgstr "Show close buttons"
 
 #: outwiker/app/gui/preferences/tagspanel.py:30
 msgid "Headers in the popup window: "
@@ -1963,7 +1993,7 @@ msgstr "Command"
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
-#: outwiker/app/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:250
+#: outwiker/app/gui/tabscontroller.py:261 outwiker/gui/basetextpanel.py:250
 #, python-format
 msgid "Can't save file %s"
 msgstr "Can't save file %s"
@@ -2496,6 +2526,10 @@ msgstr "Custom icon"
 #: outwiker/gui/iconlistctrl.py:142
 msgid "Default icon"
 msgstr "Default icon"
+
+#: outwiker/gui/preferences/prefpanel.py:39
+msgid "Default size"
+msgstr "Default size"
 
 #: outwiker/gui/rootpagepanel.py:73
 msgid "Create new page..."
@@ -3047,6 +3081,15 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Show note icon"
+#~ msgstr "Show note icon"
+
+#~ msgid "Show close button"
+#~ msgstr "Show close button"
+
+#~ msgid "Show page icon"
+#~ msgstr "Show page icon"
 
 #~ msgid "Autosave interval in seconds(0 - disabled)"
 #~ msgstr "Autosave interval in seconds(0 - disabled)"

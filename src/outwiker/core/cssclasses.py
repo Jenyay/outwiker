@@ -2,6 +2,7 @@ CSS_WIKI = 'ow-wiki'
 CSS_ERROR = 'ow-error'
 CSS_IMAGE = 'ow-image'
 CSS_LINK_PAGE = 'ow-link-page'
+CSS_LINK_PAGE_ERROR = 'ow-link-page-error'
 CSS_LINK_ATTACH = 'ow-link-attach'
 CSS_ATTACH_FILE = 'ow-attach-file'
 CSS_ATTACH_IMAGE = 'ow-attach-image'
@@ -53,6 +54,11 @@ def getDefaultStyles() -> str:
         a.ow-link-page {
             text-decoration: none;
             border-bottom: 0.1em dashed;
+        }
+
+        a.ow-link-page-error {
+		  font-style: italic;
+          color: #cc0033;
         }
 
 		/* Attachment link */

@@ -2,6 +2,8 @@
 
 from typing import Dict
 
+import wx
+
 from .controls.safeimagelist import SafeImageList
 from outwiker.gui.images import readImage
 
@@ -21,6 +23,14 @@ class ImageListCache:
         self._defaultId = None
         self.clear()
 
+    @property
+    def width(self) -> int:
+        return self._width
+
+    @property
+    def height(self) -> int:
+        return self._height
+
     def add(self, fname: str) -> int:
         '''
         Return image ID from ImageList or default image ID
@@ -28,11 +38,15 @@ class ImageListCache:
         if fname in self._iconsCache:
             return self._iconsCache[fname]
 
-        image = readImage(fname, self._width, self._height)
+        bitmap = readImage(fname, self._width, self._height)
 
         imageId = 0
-        if image.IsOk():
-            imageId = self._imagelist.Add(image)
+        if bitmap.IsOk():
+            # if bitmap.GetWidth() != self._width or bitmap.GetHeight() != self._height:
+            #     image = bitmap.ConvertToImage()
+            #     image.Rescale(self._width, self._height, wx.IMAGE_QUALITY_BICUBIC)
+            #     bitmap = wx.Bitmap(image)
+            imageId = self._imagelist.Add(bitmap)
             self._iconsCache[fname] = imageId
 
         return imageId

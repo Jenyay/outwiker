@@ -3,6 +3,7 @@
 import wx
 
 from outwiker.core.application import Application
+from outwiker.gui.defines import TABS_MIN_FONT_SIZE, TABS_MAX_FONT_SIZE
 from outwiker.gui.guiconfig import TabsConfig
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
@@ -25,6 +26,19 @@ class TabsPanel(BasePrefPanel):
         self._marginHorizontalCtrl = self._createLabelAndSpin(_("Horizontal margin"), 0, 24, main_sizer)[1]
         self._marginVerticalCtrl = self._createLabelAndSpin(_("Vertical margin"), 0, 24, main_sizer)[1]
 
+        self._fontSizeComboBox = self._createLabelAndFontSize(
+            _("Font size"),
+            TABS_MIN_FONT_SIZE,
+            TABS_MAX_FONT_SIZE,
+            main_sizer,
+        )[1]
+
+        self._showIconCheckBox = self._createCheckBox(_("Show note icons"), main_sizer)
+        main_sizer.AddStretchSpacer()
+
+        self._showCloseButtonCheckBox = self._createCheckBox(_("Show close buttons"), main_sizer)
+        main_sizer.AddStretchSpacer()
+
         self.SetSizer(main_sizer)
         self.Layout()
 
@@ -34,6 +48,21 @@ class TabsPanel(BasePrefPanel):
 
         self._marginHorizontalCtrl.SetValue(self._tabsConfig.marginHorizontal.value)
         self._marginVerticalCtrl.SetValue(self._tabsConfig.marginVertical.value)
+
+        font_size = self._tabsConfig.fontSize.value
+
+        if (
+            font_size is None
+            or font_size < TABS_MIN_FONT_SIZE
+            or font_size > TABS_MAX_FONT_SIZE
+        ):
+            self._fontSizeComboBox.SetSelection(0)
+        else:
+            index = 1 + font_size - TABS_MIN_FONT_SIZE
+            self._fontSizeComboBox.SetSelection(index)
+
+        self._showIconCheckBox.SetValue(self._tabsConfig.showIcon.value)
+        self._showCloseButtonCheckBox.SetValue(self._tabsConfig.showCloseButton.value)
 
     def Save(self):
         min_tab_width = self._minTabWidthCtrl.GetValue()
@@ -46,3 +75,13 @@ class TabsPanel(BasePrefPanel):
 
         self._tabsConfig.marginHorizontal.value = self._marginHorizontalCtrl.GetValue()
         self._tabsConfig.marginVertical.value = self._marginVerticalCtrl.GetValue()
+
+        font_size_index = self._fontSizeComboBox.GetSelection()
+        if font_size_index == 0:
+            self._tabsConfig.fontSize.value = None
+        else:
+            font_size = font_size_index - 1 + TABS_MIN_FONT_SIZE
+            self._tabsConfig.fontSize.value = font_size
+
+        self._tabsConfig.showIcon.value = self._showIconCheckBox.GetValue()
+        self._tabsConfig.showCloseButton.value = self._showCloseButtonCheckBox.GetValue()

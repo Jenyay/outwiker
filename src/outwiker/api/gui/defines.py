@@ -15,5 +15,7 @@ from outwiker.gui.defines import (TOOLBAR_GENERAL, TOOLBAR_PLUGINS,
                                   CONTROLS_MARGIN,
                                   CONTROLS_HGAP,
                                   CONTROLS_VGAP,
+                                  BUTTON_ICON_WIDTH,
+                                  BUTTON_ICON_HEIGHT
                                   )
 from outwiker.pages.wiki.defines import PREF_PANEL_WIKI

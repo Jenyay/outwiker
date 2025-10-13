@@ -20,6 +20,7 @@ from outwiker.app.gui.dropfiles import PageItemsDropFilesTarget
 from outwiker.app.gui.pagedialog import editPage
 from outwiker.app.gui.pagepopupmenu import PagePopupMenu
 
+from outwiker.core.application import Application
 from outwiker.core.events import (
     PAGE_UPDATE_ICON,
     PAGE_UPDATE_TITLE,
@@ -45,12 +46,14 @@ from outwiker.gui.controls.notestreectrl2 import (
     EVT_NOTES_TREE_SCALE,
     NotesTreeItem,
 )
+from outwiker.gui.theme import Theme
 
 
-class NotesTree(wx.Panel):
-    def __init__(self, parent, application):
+class NotesTree(wx.Window):
+    def __init__(self, parent: wx.Window, application: Application):
         super().__init__(parent, style=wx.TAB_TRAVERSAL)
         self._application = application
+        self._theme = self._application.theme
         # Переключатель устанавливается в True,
         # если "внезапно" изменяется текущая страница
         self._externalPageSelect = False
@@ -70,7 +73,7 @@ class NotesTree(wx.Panel):
         # (title, iconId)
         self._pagesExtraIcons: List[Tuple[str, str]] = []
 
-        self.treeCtrl = NotesTreeCtrl2(self, self._application.theme)
+        self.treeCtrl = NotesTreeCtrl2(self, self._theme)
         self._initTreeCtrl()
 
         self.SetSize((256, 260))
@@ -84,12 +87,10 @@ class NotesTree(wx.Panel):
 
         self._bindApplicationEvents()
         self._bindGuiEvents()
-        self._dropTarget = PageItemsDropFilesTarget(
-            self._application, self.treeCtrl
-        )
+        self._dropTarget = PageItemsDropFilesTarget(self._application, self.treeCtrl)
 
     def _initTreeCtrl(self):
-        self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
+        # self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
         self._pagesExtraIcons.append(
             (
                 self._EXTRA_ICON_BOOKMARK_TITLE,
@@ -115,9 +116,10 @@ class NotesTree(wx.Panel):
         self._application.onPageUpdate += self.__onPageUpdate
         self._application.onStartTreeUpdate += self.__onStartTreeUpdate
         self._application.onEndTreeUpdate += self.__onEndTreeUpdate
-        self._application.onPreferencesDialogClose += self.__onPreferences
         self._application.onBookmarksChanged += self.__onBookmarkChanged
-        self._application.onForceNotesTreeItemsUpdate += self.__onForceNotesTreeItemsUpdate
+        self._application.onForceNotesTreeItemsUpdate += (
+            self.__onForceNotesTreeItemsUpdate
+        )
 
     def __UnBindApplicationEvents(self):
         self._application.onWikiOpen -= self.__onWikiOpen
@@ -128,16 +130,19 @@ class NotesTree(wx.Panel):
         self._application.onPageUpdate -= self.__onPageUpdate
         self._application.onStartTreeUpdate -= self.__onStartTreeUpdate
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
-        self._application.onPreferencesDialogClose -= self.__onPreferences
         self._application.onBookmarksChanged -= self.__onBookmarkChanged
-        self._application.onForceNotesTreeItemsUpdate -= self.__onForceNotesTreeItemsUpdate
+        self._application.onForceNotesTreeItemsUpdate -= (
+            self.__onForceNotesTreeItemsUpdate
+        )
 
     def __bindUpdateEvents(self):
         self._application.onTreeUpdate += self.__onTreeUpdate
         self._application.onPageCreate += self.__onPageCreate
         self._application.onPageSelect += self.__onPageSelect
         self._application.onPageOrderChange += self.__onPageOrderChange
-        self._application.onForceNotesTreeItemsUpdate += self.__onForceNotesTreeItemsUpdate
+        self._application.onForceNotesTreeItemsUpdate += (
+            self.__onForceNotesTreeItemsUpdate
+        )
         self.treeCtrl.Bind(EVT_NOTES_TREE_SEL_CHANGED, self.__onSelChanged)
 
     def __unbindUpdateEvents(self):
@@ -145,16 +150,14 @@ class NotesTree(wx.Panel):
         self._application.onPageCreate -= self.__onPageCreate
         self._application.onPageSelect -= self.__onPageSelect
         self._application.onPageOrderChange -= self.__onPageOrderChange
-        self._application.onForceNotesTreeItemsUpdate -= self.__onForceNotesTreeItemsUpdate
+        self._application.onForceNotesTreeItemsUpdate -= (
+            self.__onForceNotesTreeItemsUpdate
+        )
         self.treeCtrl.Unbind(EVT_NOTES_TREE_SEL_CHANGED, handler=self.__onSelChanged)
 
     def __onForceNotesTreeItemsUpdate(self, page, params):
         for forced_page in params.pages:
             self.treeCtrl.updateItem(forced_page)
-
-    def __onPreferences(self, dialog):
-        self.treeCtrl.setFontSize(self._treeConfig.fontSize.value)
-        self.treeCtrl.updateTree()
 
     def __onWikiOpen(self, root):
         self._setRoot(root)
@@ -299,12 +302,18 @@ class NotesTree(wx.Panel):
         if wikiroot is None:
             return
 
-        enableBookmarkExtraIcons = self._treeConfig.extraIconBookmark.value
-        enableReadOnlyExtraIcons = self._treeConfig.extraIconReadOnly.value
+        enableBookmarkExtraIcons = self._theme.get(
+            Theme.SECTION_TREE, Theme.TREE_EXTRA_ICON_BOOKMARK
+        )
+        enableReadOnlyExtraIcons = self._theme.get(
+            Theme.SECTION_TREE, Theme.TREE_EXTRA_ICON_READ_ONLY
+        )
 
         for item in items:
             item.clearExtraIcons()
-            if enableBookmarkExtraIcons and wikiroot.bookmarks.pageMarked(item.getPage()):
+            if enableBookmarkExtraIcons and wikiroot.bookmarks.pageMarked(
+                item.getPage()
+            ):
                 item.addExtraIcon(*self._pagesExtraIcons[self._EXTRA_ICON_BOOKMARK])
 
             if enableReadOnlyExtraIcons and item.getPage().readonly:

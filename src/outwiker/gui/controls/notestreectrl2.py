@@ -13,12 +13,10 @@ from outwiker.gui.colors import rgb_to_lab, lab_to_rgb
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.imagelistcache import ImageListCache
 from outwiker.gui.defines import (
-    ICONS_WIDTH,
-    ICONS_HEIGHT,
     NOTES_TREE_MIN_FONT_SIZE,
     NOTES_TREE_MAX_FONT_SIZE,
 )
-from outwiker.gui.theme import Theme
+from outwiker.gui.theme import Theme, ThemeChangedParams
 
 
 NotesTreeSelChangedEvent, EVT_NOTES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
@@ -239,24 +237,7 @@ class _ItemsViewInfo:
         self._dc = wx.ClientDC(self._window)
 
         # Sizes
-        self.icon_height = ICONS_HEIGHT
-        self.icon_width = ICONS_WIDTH
-
-        self.extra_icon_width = (self.icon_width * 2) // 3
-        self.extra_icon_height = (self.icon_height * 2) // 3
-
-        self._font_size = self.get_default_font_size()
-        self._update_font()
-
-        self.left_margin = 4
-        self.top_margin = 4
-        self.depth_indent = self.icon_width // 2 + 16
-        self.icon_left_margin = 8
         self.extra_icons_left_margin = 2
-        self.title_left_margin = 4
-        self.title_right_margin = 4
-        self.expand_ctrl_width = 11
-        self.expand_ctrl_height = 11
         self.selection_margin_vertical = 2
         self.order_marker_weight = 3
 
@@ -266,6 +247,56 @@ class _ItemsViewInfo:
             self.back_color_selected.GetBlue(),
             100,
         )
+
+        self.update_theme()
+
+    @property
+    def left_margin(self) -> int:
+        return self.icon_width // 4
+
+    @property
+    def top_margin(self) -> int:
+        return self.icon_width // 4
+
+    @property
+    def depth_indent(self) -> int:
+        return int(self.icon_width * 1.5)
+
+    @property
+    def icon_left_margin(self) -> int:
+        return self.icon_width // 2
+
+    @property
+    def title_left_margin(self) -> int:
+        return self.icon_width // 4
+
+    @property
+    def title_right_margin(self) -> int:
+        return self.icon_width // 4
+
+    @property
+    def icon_width(self) -> int:
+        return self._theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE)
+
+    @property
+    def icon_height(self) -> int:
+        return self.icon_width
+
+    @property
+    def extra_icon_width(self) -> int:
+        return (self.icon_width * 2) // 3
+
+    @property
+    def extra_icon_height(self) -> int:
+        return self.extra_icon_width
+
+    @property
+    def expand_ctrl_width(self) -> int:
+        return (self.icon_width * 2) // 3
+
+    @property
+    def expand_ctrl_height(self) -> int:
+        return self.expand_ctrl_width
 
     @property
     def back_color(self) -> wx.Colour:
@@ -297,15 +328,19 @@ class _ItemsViewInfo:
     def back_color_hovered(self) -> wx.Colour:
         return wx.Colour(self._theme.get(Theme.SECTION_TREE, Theme.HIGHLIGHTING_COLOR))
 
+    @property
+    def show_icons(self) -> bool:
+        return self._theme.get(Theme.SECTION_TREE, Theme.TREE_SHOW_NOTE_ICONS)
+
     def _update_line_height(self):
         self.line_height = self.icon_height + 10
         title_height = self.getTextHeight("Yy")
         if self.line_height <= title_height + 4:
             self.line_height = title_height + 10
 
-    def _update_font(self):
-        self._title_font = wx.Font(wx.FontInfo(self._font_size))
-        self._dc.SetFont(self._title_font)
+    def update_theme(self):
+        title_font = wx.Font(wx.FontInfo(self.font_size))
+        self._dc.SetFont(title_font)
         self._update_line_height()
 
     def get_default_font_size(self) -> int:
@@ -313,16 +348,13 @@ class _ItemsViewInfo:
 
     @property
     def font_size(self) -> Optional[int]:
-        return self._font_size
-
-    @font_size.setter
-    def font_size(self, value: Optional[int]):
-        if value is None:
-            self._font_size = self.get_default_font_size()
-        else:
-            self._font_size = value
-
-        self._update_font()
+        theme_font_size = self._theme.get(Theme.SECTION_TREE, Theme.TREE_FONT_SIZE)
+        return (
+            theme_font_size
+            if theme_font_size >= NOTES_TREE_MIN_FONT_SIZE
+            and theme_font_size <= NOTES_TREE_MAX_FONT_SIZE
+            else self.get_default_font_size()
+        )
 
     def getTextWidth(self, text: str) -> int:
         return self._dc.GetTextExtent(text).GetWidth()
@@ -343,16 +375,21 @@ class _ItemsViewInfo:
         return self.getIconLeft(item) + self.icon_width
 
     def getExtraIconLeft(self, item: NotesTreeItem, n: int) -> int:
-        return (
-            self.getIconRight(item)
-            + self.extra_icons_left_margin
-            + (self.extra_icon_width + self.extra_icons_left_margin) * n
-        )
+        if self.show_icons:
+            return (
+                self.getIconRight(item)
+                + self.extra_icons_left_margin
+                + (self.extra_icon_width + self.extra_icons_left_margin) * n
+            )
+        else:
+            return (
+                self.getIconLeft(item)
+                + (self.extra_icon_width + self.extra_icons_left_margin) * n
+            )
 
     def getExtraIconsRight(self, item: NotesTreeItem) -> int:
-        return self.getIconRight(item) + (
-            self.extra_icons_left_margin + self.extra_icon_width
-        ) * self._getExtraIconsCount(item)
+        count = self._getExtraIconsCount(item)
+        return self.getExtraIconLeft(item, count - 1) + self.extra_icon_width
 
     def getSelectionLeft(self, item: NotesTreeItem) -> int:
         return self.getExtraIconsRight(item) + self.title_left_margin // 2
@@ -641,14 +678,15 @@ class _ItemsPainter:
         )
 
     def _drawIcon(self, item: NotesTreeItem, dx: int, dy: int):
-        bitmap = self._image_list.getImageList().GetBitmap(item.getIconImageId())
-        left = self._view_info.getIconLeft(item) + dx
-        top = (
-            self._view_info.getItemTop(item)
-            + (self._view_info.line_height - self._view_info.icon_height) // 2
-            + dy
-        )
-        self._dc.DrawBitmap(bitmap, left, top)
+        if self._view_info.show_icons:
+            bitmap = self._image_list.getImageList().GetBitmap(item.getIconImageId())
+            left = self._view_info.getIconLeft(item) + dx
+            top = (
+                self._view_info.getItemTop(item)
+                + (self._view_info.line_height - self._view_info.icon_height) // 2
+                + dy
+            )
+            self._dc.DrawBitmap(bitmap, left, top)
 
     def _drawExtraIcons(self, item: NotesTreeItem, dx: int, dy: int):
         for n, (title, image) in enumerate(item.getExtraIcons()):
@@ -671,17 +709,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
 
-        # Main icons for notes
-        self._iconsCache = ImageListCache(
-            self.defaultIcon, self._view_info.icon_width, self._view_info.icon_height
-        )
-
-        # Default icon is not used
-        self._extraIconsCache = ImageListCache(
-            self.defaultIcon,
-            self._view_info.extra_icon_width,
-            self._view_info.extra_icon_height,
-        )
+        # Icons for notes
+        self._iconsCache = self._create_icons_cache()
+        self._extraIconsCache = self._create_extra_icons_cache()
 
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице
         # Словарь. Ключ - страница, значение - элемент дерева NotesTreeItem
@@ -705,12 +735,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._mouseWheelDeltaY = 3
 
         # Rename items
-        self._editItemFont = wx.Font()
-        self._editItemFont.SetPointSize(self._view_info.font_size)
-
         self._editItemTextCtrl = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         self._editItemTextCtrl.Hide()
-        self._editItemTextCtrl.SetFont(self._editItemFont)
         self._currentEditItem: Optional[NotesTreeItem] = None
         self._editClickDelay_ms = 300
         self._editItemCencelled = False
@@ -746,16 +772,38 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
 
+        self._theme.onThemeChanged += self._onThemeChanged
+
+    def _create_icons_cache(self) -> ImageListCache:
+        return ImageListCache(
+            self.defaultIcon, self._view_info.icon_width, self._view_info.icon_height
+        )
+
+    def _create_extra_icons_cache(self) -> ImageListCache:
+        # Default icon is not used
+        return ImageListCache(
+            self.defaultIcon,
+            self._view_info.extra_icon_width,
+            self._view_info.extra_icon_height,
+        )
+
+    def _onThemeChanged(self, params: ThemeChangedParams):
+        if (
+            Theme.SECTION_GENERAL in params.changed_sections
+            or Theme.SECTION_TREE in params.changed_sections
+        ):
+            new_icon_size = params.theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE)
+            if self._iconsCache.width != new_icon_size:
+                self._iconsCache.clear()
+                self._iconsCache = self._create_icons_cache()
+                self._extraIconsCache.clear()
+                self._extraIconsCache = self._create_extra_icons_cache()
+
+            self._view_info.update_theme()
+            self.updateTree()
+
     def addExtraIcon(self, fileName: str) -> int:
         return self._extraIconsCache.add(fileName)
-
-    def setFontSize(self, fontSize: Optional[int], update=True):
-        if self._view_info.font_size != fontSize:
-            self._view_info.font_size = fontSize
-            self._editItemFont.SetPointSize(self._view_info.font_size)
-
-            if update:
-                self.updateTree()
 
     # Used in tests only
     def getRootItem(self, n: int) -> NotesTreeItem:
@@ -806,7 +854,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         elif new_font_size > NOTES_TREE_MAX_FONT_SIZE:
             new_font_size = NOTES_TREE_MAX_FONT_SIZE
 
-        self.setFontSize(new_font_size)
+        self._theme.set(Theme.SECTION_TREE, Theme.TREE_FONT_SIZE, new_font_size)
+        self._theme.sendEvent()
         scaleEvent = NotesTreeScaleEvent(fontSize=new_font_size)
         wx.PostEvent(self, scaleEvent)
 
@@ -1347,6 +1396,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             x_min - scroll_x, y - scroll_y, width, wx.DefaultCoord
         )
         title = item.getTitle()
+
+        editItemFont = wx.Font()
+        editItemFont.SetPointSize(self._view_info.font_size)
+
+        self._editItemTextCtrl.SetFont(editItemFont)
         self._editItemTextCtrl.SetValue(title)
         self._editItemTextCtrl.SetSelection(0, len(title))
         self._editItemTextCtrl.Show()

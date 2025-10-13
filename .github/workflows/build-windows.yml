@@ -17,6 +17,15 @@ jobs:
           echo "C:\Python38" >> $env:GITHUB_PATH
           echo "pythonLocation=C:\Python38" >> $env:GITHUB_ENV
 
+      - name: Install Inno Setup
+        run: choco install innosetup -y
+
+      - name: Print env variables
+        run: |
+          $env:PATH
+          $env:GITHUB_PATH
+          $env:GITHUB_ENV
+
       - name: Check Python version
         run: C:\Python38\python.exe --version
 
@@ -61,7 +70,8 @@ jobs:
           echo "OutWiker version: ${{ env.OUTWIKER_VERSION }}"
 
       - name: Build OutWiker (Windows)
-        run: uv run inv win
+        run: |
+          uv run inv win
 
       - name: Upload all artifacts
         uses: actions/upload-artifact@v4
