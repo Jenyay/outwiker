@@ -59,6 +59,8 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
             .addEventListener("keydown", 
                 function (event) { 
                     let key = event.key;
+                    let code = event.code;
+
                     if (key.startsWith("Arrow")) {
                         key = key.replace("Arrow", "");
                     }
@@ -67,7 +69,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
                         return;
                     }
 
-                    let eventBody = { "key": key, "ctrl": false, "shift": false, "alt": false };
+                    let eventBody = { "code": code, "ctrl": false, "shift": false, "alt": false };
 
                     if (event.shiftKey) {
                         eventBody.shift = true;
