@@ -17,7 +17,7 @@ from outwiker.gui.hotkeyparser import HotKeyParser
 logger = logging.getLogger("outwiker.gui.actioncontroller")
 
 
-class ActionInfoInternal(object):
+class ActionInfoInternal:
     """
     Класс для внутреннего использования в ActionController
     Хранит информацию о добавленных действиях
@@ -64,12 +64,12 @@ class ActionController:
         # Словарь для хранения информации о действиях
         # Ключ - строковый идентификатор действия,
         # значение - экземпляр класса ActionInfoInternal
-        self._actionsInfo = {}  # type: Dict[str, ActionInfoInternal]
+        self._actionsInfo: Dict[str, ActionInfoInternal] = {}
 
         self._configSection = "HotKeys"
         self._enabledGui = True
 
-    def enableGui(self, enabled):
+    def enableGui(self, enabled: bool):
         self._enabledGui = enabled
 
     def destroy(self):
@@ -98,7 +98,11 @@ class ActionController:
         return self._actionsInfo[strid]
 
     def register(
-        self, action, hotkey: Optional[HotKey] = None, area: Optional[str] = None, hidden: bool = False
+        self,
+        action,
+        hotkey: Optional[HotKey] = None,
+        area: Optional[str] = None,
+        hidden: bool = False,
     ):
         """
         Добавить действие в словарь.
@@ -144,7 +148,7 @@ class ActionController:
         self._mainWindow.Bind(
             wx.EVT_MENU, handler=self._onMenuItemHandler, id=menuItem.GetId()
         )
-        
+
     def insertMenuItem(self, strid, menu, position):
         """
         Вставить действие в указанную позицию в меню menu
@@ -174,7 +178,7 @@ class ActionController:
         self._mainWindow.Bind(
             wx.EVT_MENU, handler=self._onCheckMenuItemHandler, id=menuItem.GetId()
         )
-        
+
     def insertMenuCheckItem(self, strid, menu, position):
         """
         Добавить действие в меню menu
@@ -183,7 +187,9 @@ class ActionController:
         if not self._enabledGui:
             return
 
-        menuItem = menu.InsertCheckItem(position, wx.ID_ANY, self._getMenuItemTitle(strid))
+        menuItem = menu.InsertCheckItem(
+            position, wx.ID_ANY, self._getMenuItemTitle(strid)
+        )
         self._actionsInfo[strid].menuItem = menuItem
 
         self._mainWindow.Bind(
