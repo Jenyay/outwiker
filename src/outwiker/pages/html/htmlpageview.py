@@ -165,7 +165,7 @@ class HtmlPageView(BaseHtmlPanel):
         """
         Create button and menu item to enable / disable lines wrap.
         """
-        image = os.path.join(self.imagesDir, "linewrap.png")
+        image = os.path.join(self.imagesDir, "linewrap.svg")
         toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_GENERAL]
         actionController = self._application.actionController
 
