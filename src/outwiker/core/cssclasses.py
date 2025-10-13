@@ -56,6 +56,11 @@ def getDefaultStyles() -> str:
             border-bottom: 0.1em dashed;
         }
 
+        a.ow-link-page-error {
+		  font-style: italic;
+          color: #cc0033;
+        }
+
 		/* Attachment link */
 		a.ow-link-attach {
 		  border-bottom: 1px solid transparent;
