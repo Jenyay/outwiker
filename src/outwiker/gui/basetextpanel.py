@@ -369,7 +369,7 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.appendToolbarCheckButton(
             SPELL_ON_OFF_ID,
             generalToolbar,
-            getBuiltinImagePath("spellcheck.png"),
+            getBuiltinImagePath("spellcheck.svg"),
             fullUpdate=False,
         )
 
