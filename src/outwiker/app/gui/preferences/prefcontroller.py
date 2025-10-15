@@ -190,7 +190,7 @@ class PrefController:
         self._dialog.treeBook.AddPage(
             textPrintPage,
             _("Text printout"),
-            icon_fname=getBuiltinImagePath("printer.png"),
+            icon_fname=getBuiltinImagePath("printer.svg"),
         )
 
     def _createIconsetPage(self):

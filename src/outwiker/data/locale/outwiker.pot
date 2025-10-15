@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 12:52+0300\n"
+"POT-Creation-Date: 2025-10-15 19:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
@@ -135,6 +135,7 @@ msgstr ""
 
 #: outwiker/app/actions/attachopenfolder.py:38
 #: outwiker/app/actions/openpluginsfolder.py:32
+#, python-brace-format
 msgid "Can't open folder '{}'"
 msgstr ""
 
@@ -1703,6 +1704,7 @@ msgid "Can't create directory for icons group"
 msgstr ""
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:256
+#, python-brace-format
 msgid "New group{}"
 msgstr ""
 
@@ -1711,14 +1713,17 @@ msgid "Can't rename directory for icons group"
 msgstr ""
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:290
+#, python-brace-format
 msgid "Group with name \"{}\" exists already"
 msgstr ""
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:297
+#, python-brace-format
 msgid "Invalid group name \"{}\""
 msgstr ""
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:332
+#, python-brace-format
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr ""
 
@@ -2026,6 +2031,7 @@ msgid "Really exit?"
 msgstr ""
 
 #: outwiker/app/services/attachment.py:69
+#, python-brace-format
 msgid ""
 "Error renaming file\n"
 "{} -> {}\n"
@@ -2040,6 +2046,7 @@ msgid ""
 msgstr ""
 
 #: outwiker/app/services/attachment.py:167
+#, python-brace-format
 msgid "Can't create directory: {}"
 msgstr ""
 
@@ -2055,6 +2062,7 @@ msgid "New folder"
 msgstr ""
 
 #: outwiker/app/services/attachment.py:207
+#, python-brace-format
 msgid "Can't create folder {} for attachments"
 msgstr ""
 
@@ -2081,6 +2089,7 @@ msgid "You can't remove the root element"
 msgstr ""
 
 #: outwiker/app/services/tree.py:52
+#, python-brace-format
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
 "All attachments will also be deleted."
@@ -2135,6 +2144,7 @@ msgid "The page title"
 msgstr ""
 
 #: outwiker/app/services/tree.py:252
+#, python-brace-format
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr ""
 
@@ -2143,6 +2153,7 @@ msgid "Can't move page when page with that title already exists"
 msgstr ""
 
 #: outwiker/app/services/tree.py:280
+#, python-brace-format
 msgid "Can't move page: {}"
 msgstr ""
 
@@ -2238,6 +2249,10 @@ msgstr ""
 msgid "bookmarks"
 msgstr ""
 
+#: outwiker/core/defines.py:113
+msgid "office"
+msgstr ""
+
 #: outwiker/core/htmlimproverfactory.py:27
 msgid "Line Breaks (<br/>)"
 msgstr ""
@@ -2276,14 +2291,17 @@ msgid ""
 msgstr ""
 
 #: outwiker/core/pluginsloader.py:270
+#, python-brace-format
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr ""
 
 #: outwiker/core/pluginsloader.py:290
+#, python-brace-format
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr ""
 
 #: outwiker/core/pluginsloader.py:301
+#, python-brace-format
 msgid ""
 "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
 "new OutWiker version."
@@ -2538,6 +2556,7 @@ msgid "Insert rows"
 msgstr ""
 
 #: outwiker/gui/tagscloud.py:136
+#, python-brace-format
 msgid "Number of notes: {}"
 msgstr ""
 
@@ -2546,6 +2565,7 @@ msgid "Applied tags only"
 msgstr ""
 
 #: outwiker/gui/texteditormenu.py:75 outwiker/gui/texteditormenu.py:80
+#, python-brace-format
 msgid "Add \"{}\" to dictionary"
 msgstr ""
 
@@ -2595,6 +2615,7 @@ msgid "Page loading. Please wait…"
 msgstr ""
 
 #: outwiker/pages/html/basehtmlpanel.py:338
+#, python-brace-format
 msgid "Page loading error: {}"
 msgstr ""
 
@@ -2954,14 +2975,17 @@ msgid "Custom CSS"
 msgstr ""
 
 #: outwiker/pages/wiki/parser/commands/include.py:82
+#, python-brace-format
 msgid "Can't open file '{}'"
 msgstr ""
 
 #: outwiker/pages/wiki/parser/commands/include.py:85
+#, python-brace-format
 msgid "Encoding error in file '{}'"
 msgstr ""
 
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:74
+#, python-brace-format
 msgid "Can't create thumbnail for <b>\"{}\"</b>"
 msgstr ""
 
