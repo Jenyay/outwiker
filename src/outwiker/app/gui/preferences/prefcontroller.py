@@ -182,7 +182,7 @@ class PrefController:
             pluginsPage,
             _("Plugins"),
             tag=PREF_PANEL_PLUGINS,
-            icon_fname=getBuiltinImagePath("plugin.png"),
+            icon_fname=getBuiltinImagePath("plugin.svg"),
         )
 
     def _createTextPrintoutPage(self):
