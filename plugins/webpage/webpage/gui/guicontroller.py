@@ -238,7 +238,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             SwitchCodeResultAction.stringId,
             self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE],
-            os.path.join(self.imagesDir, "render.png"),
+            os.path.join(self.imagesDir, "render.svg"),
             fullUpdate=False,
         )
 
