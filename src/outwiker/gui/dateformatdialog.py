@@ -5,10 +5,12 @@ import wx
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
 from outwiker.core.system import getBuiltinImagePath
+from outwiker.gui.images import readImage
+from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 
 
 class DateFormatDialog(TestedDialog):
-    def __init__(self, parent, message, title, initial=u""):
+    def __init__(self, parent, message, title, initial=""):
         super(DateFormatDialog, self).__init__(parent)
 
         self.__createGui()
@@ -25,8 +27,10 @@ class DateFormatDialog(TestedDialog):
         mainSizer.AddGrowableRow(1)
         mainSizer.AddGrowableRow(2)
 
-        self._messageCtrl = wx.StaticText(self, -1, u'')
-        hintBitmap = wx.Bitmap(getBuiltinImagePath(u"wand.png"))
+        self._messageCtrl = wx.StaticText(self, -1, "")
+        hintBitmap = readImage(
+            getBuiltinImagePath("wand.png"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+        )
         self._formatCtrl = DateTimeFormatCtrl(self, hintBitmap)
         self._formatCtrl.SetMinSize((300, -1))
 
