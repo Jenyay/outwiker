@@ -246,7 +246,7 @@ class GuiController:
         """
         Create button and menu item to enable / disable scripts.
         """
-        image = self.getImagePath("script-delete.png")
+        image = self.getImagePath("script-delete.svg")
         toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self.toolsMenu
 
