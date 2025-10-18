@@ -455,7 +455,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.TABLE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "table.png"),
+            os.path.join(self.imagesDir, "table.svg"),
             fullUpdate=False,
         )
 
@@ -470,7 +470,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.TABLE_ROW_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "table_insert_row.png"),
+            os.path.join(self.imagesDir, "table_insert_row.svg"),
             fullUpdate=False,
         )
 
@@ -485,7 +485,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.TABLE_CELL_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "table_insert_cell.png"),
+            os.path.join(self.imagesDir, "table_insert_cell.svg"),
             fullUpdate=False,
         )
 
