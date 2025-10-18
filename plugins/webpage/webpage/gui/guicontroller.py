@@ -795,7 +795,7 @@ class GuiController:
         if mainWindow is not None:
             action = CreateChildWebPageAction(self._application)
             toolbar = mainWindow.treePanel.panel.toolbar
-            image = self.getImagePath("create-child.png")
+            image = self.getImagePath("create-child.svg")
 
             controller = self._application.actionController
 
@@ -809,7 +809,7 @@ class GuiController:
         if mainWindow is not None:
             action = CreateSiblingWebPageAction(self._application)
             toolbar = mainWindow.treePanel.panel.toolbar
-            image = self.getImagePath("create-sibling.png")
+            image = self.getImagePath("create-sibling.svg")
 
             controller = self._application.actionController
 
