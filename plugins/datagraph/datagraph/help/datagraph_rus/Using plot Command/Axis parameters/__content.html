@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Параметры осей</title>
 
 	<style type='text/css'>
 		body, div, p, table {
@@ -10,51 +11,38 @@
 			font-family:Verdana;
 		}
 
-		img{border:none}
-		
+		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}a.ow-link-page-error{font-style:italic;color:#cc0033}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}
+		ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}
 	</style>
-	<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/excanvas.min.js"></script><![endif]-->
-<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/jquery.min.js"></script>
-<script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script>
-<script>
-$(function () { $('#graph-0').highcharts({"yAxis": {"max": 25.0, "title": {"text": null}, "min": 0.0, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "\u041b\u0438\u043d\u0438\u044f 1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "max": 1420070400000.0, "labels": {"format": "{value:%d.%m.%Y}"}, "gridLineWidth": 1, "min": 1385856000000.0, "type": "datetime"}, "legend": {"symbolWidth": 60, "enabled": false}}); });
-</script>
-<script>
-$(function () { $('#graph-1').highcharts({"yAxis": {"title": {"text": "\u041f\u043e\u0434\u043f\u0438\u0441\u044c \u0434\u043b\u044f \u043e\u0441\u0438 Y"}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "\u041b\u0438\u043d\u0438\u044f 1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": "\u041f\u043e\u0434\u043f\u0438\u0441\u044c \u0434\u043b\u044f \u043e\u0441\u0438 X"}, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
-</script>
-<script>
-$(function () { $('#graph-2').highcharts({"yAxis": {"title": {"text": null}, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "\u041b\u0438\u043d\u0438\u044f 1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"labels": {"format": "{value:%d.%m.%Y}"}, "title": {"text": null}, "type": "datetime", "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
-</script>
-<script>
-$(function () { $('#graph-3').highcharts({"yAxis": {"title": {"text": null}, "tickInterval": 1.0, "gridLineWidth": 1}, "series": [{"dashStyle": "solid", "name": "\u041b\u0438\u043d\u0438\u044f 1", "color": "#0051FF", "states": {"hover": {"enabled": false}}, "animation": false, "marker": {"symbol": "circle", "enabled": false}, "data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]]}], "title": {"text": null}, "chart": {"animation": false, "plotBorderWidth": 1}, "tooltip": {"enabled": false}, "credits": {"enabled": false}, "plotOptions": {}, "xAxis": {"title": {"text": null}, "tickInterval": 0.5, "gridLineWidth": 1}, "legend": {"symbolWidth": 60, "enabled": false}}); });
+	<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/excanvas.min.js"></script><![endif]--><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/jquery.min.js"></script><script language="javascript" type="text/javascript" src="__attach/__thumb/__js/highcharts.js"></script><script>
+$(function() { $('#graph-0').highcharts({"series": [{"data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]], "animation": false, "states": {"hover": {"enabled": false}}, "marker": {"symbol": "circle", "enabled": false}, "dashStyle": "solid", "color": "#0051FF", "name": "\u041b\u0438\u043d\u0438\u044f 1"}], "tooltip": {"enabled": false}, "chart": {"plotBorderWidth": 1, "animation": false}, "credits": {"enabled": false}, "xAxis": {"gridLineWidth": 1, "title": {"text": null}, "min": 1385856000000.0, "max": 1420070400000.0, "type": "datetime", "labels": {"format": "{value:%d.%m.%Y}"}}, "yAxis": {"gridLineWidth": 1, "title": {"text": null}, "min": 0.0, "max": 25.0}, "title": {"text": null}, "legend": {"enabled": false, "symbolWidth": 60}, "plotOptions": {}}); });
+</script><script>
+$(function() { $('#graph-1').highcharts({"series": [{"data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]], "animation": false, "states": {"hover": {"enabled": false}}, "marker": {"symbol": "circle", "enabled": false}, "dashStyle": "solid", "color": "#0051FF", "name": "\u041b\u0438\u043d\u0438\u044f 1"}], "tooltip": {"enabled": false}, "chart": {"plotBorderWidth": 1, "animation": false}, "credits": {"enabled": false}, "xAxis": {"gridLineWidth": 1, "title": {"text": "\u041f\u043e\u0434\u043f\u0438\u0441\u044c \u0434\u043b\u044f \u043e\u0441\u0438 X"}}, "yAxis": {"gridLineWidth": 1, "title": {"text": "\u041f\u043e\u0434\u043f\u0438\u0441\u044c \u0434\u043b\u044f \u043e\u0441\u0438 Y"}}, "title": {"text": null}, "legend": {"enabled": false, "symbolWidth": 60}, "plotOptions": {}}); });
+</script><script>
+$(function() { $('#graph-2').highcharts({"series": [{"data": [[1388534400000.0, 0.0], [1391212800000.0, 2.0], [1393632000000.0, 10.0], [1396310400000.0, 15.0], [1398902400000.0, 13.0], [1401580800000.0, 15.0], [1404172800000.0, 16.0], [1406851200000.0, 20.0], [1409529600000.0, 20.0], [1412121600000.0, 18.0], [1414800000000.0, 22.0], [1417392000000.0, 24.0]], "animation": false, "states": {"hover": {"enabled": false}}, "marker": {"symbol": "circle", "enabled": false}, "dashStyle": "solid", "color": "#0051FF", "name": "\u041b\u0438\u043d\u0438\u044f 1"}], "tooltip": {"enabled": false}, "chart": {"plotBorderWidth": 1, "animation": false}, "credits": {"enabled": false}, "xAxis": {"gridLineWidth": 1, "title": {"text": null}, "type": "datetime", "labels": {"format": "{value:%d.%m.%Y}"}}, "yAxis": {"gridLineWidth": 1, "title": {"text": null}}, "title": {"text": null}, "legend": {"enabled": false, "symbolWidth": 60}, "plotOptions": {}}); });
+</script><script>
+$(function() { $('#graph-3').highcharts({"series": [{"data": [[1.0, 10.0], [2.0, 11.0], [3.0, 13.0], [4.0, 15.0], [5.0, 16.0], [6.0, 18.0], [7.0, 20.0], [8.0, 20.0], [9.0, 20.0], [10.0, 20.0]], "animation": false, "states": {"hover": {"enabled": false}}, "marker": {"symbol": "circle", "enabled": false}, "dashStyle": "solid", "color": "#0051FF", "name": "\u041b\u0438\u043d\u0438\u044f 1"}], "tooltip": {"enabled": false}, "chart": {"plotBorderWidth": 1, "animation": false}, "credits": {"enabled": false}, "xAxis": {"gridLineWidth": 1, "title": {"text": null}, "tickInterval": 0.5}, "yAxis": {"gridLineWidth": 1, "title": {"text": null}, "tickInterval": 1.0}, "title": {"text": null}, "legend": {"enabled": false, "symbolWidth": 60}, "plotOptions": {}}); });
 </script>
 </head>
 
 <body>
-
-<h2>Оглавление раздела</h2>
-<ul>
-<li><a href="#names">Использование осей</a></li>
-<li><a href="#minmax">Параметры <i>min</i> / <i>max</i></a></li>
-<li><a href="#title">Параметр <i>title</i></a></li>
-<li><a href="#type">Параметр <i>type</i></a></li>
-<li><a href="#tickstep">Параметр <i>tickstep</i></a></li>
+<h2 class="ow-wiki">Оглавление раздела</h2>
+<ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki" href="#names">Использование осей</a></li><li class="ow-wiki"><a class="ow-wiki" href="#minmax">Параметры <i>min</i> / <i>max</i></a></li><li class="ow-wiki"><a class="ow-wiki" href="#title">Параметр <i>title</i></a></li><li class="ow-wiki"><a class="ow-wiki" href="#type">Параметр <i>type</i></a></li><li class="ow-wiki"><a class="ow-wiki" href="#tickstep">Параметр <i>tickstep</i></a></li>
 </ul>
-<h2><a id="names"></a> Использование осей</h2>
-<br>
-График имеет две оси <i>x</i> и <i>y</i>, имеющие одинаковые параметры. Эти параметры устанавливаются в виде <i>x.paramname = ...</i> и <i>y.paramname = ...</i> соответственно.<br>
-<br>
-<h2><a id="minmax"></a> Параметры <i>min</i> / <i>max</i></h2>
-<br>
-С помощью параметров <i>min</i> и <i>max</i> можно установить интервал, отображаемый по осям. Этот параметр работает как для чисел с плавающей точкой, так и для календарных типов данных. Для календарных данных плагин понимает множество форматов данных, но рекомендуется использовать запись вида "ГГГГ-ММ-ДД", а для времени "ЧЧ:ММ". Про календарные данные читайте раздел <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">Параметр <i>curve.data.formatcol</i></a>.<br>
-<br>
+<h2 class="ow-wiki"><a id="names"></a> Использование осей</h2>
+<br/>
+График имеет две оси <i>x</i> и <i>y</i>, имеющие одинаковые параметры. Эти параметры устанавливаются в виде <i>x.paramname = ...</i> и <i>y.paramname = ...</i> соответственно.<br/>
+<br/>
+<h2 class="ow-wiki"><a id="minmax"></a> Параметры <i>min</i> / <i>max</i></h2>
+<br/>
+С помощью параметров <i>min</i> и <i>max</i> можно установить интервал, отображаемый по осям. Этот параметр работает как для чисел с плавающей точкой, так и для календарных типов данных. Для календарных данных плагин понимает множество форматов данных, но рекомендуется использовать запись вида "ГГГГ-ММ-ДД", а для времени "ЧЧ:ММ". Про календарные данные читайте раздел <a class="ow-wiki ow-link-page" href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">Параметр <i>curve.data.formatcol</i></a>.<br/>
 
 <pre>(:plot
-curve.data.formatcol1=&quot;%d.%m.%Y&quot;
-x.type = &quot;datetime&quot;
+curve.data.formatcol1="%d.%m.%Y"
+x.type = "datetime"
 
-x.min = &quot;2013-12-01&quot;
-x.max = &quot;2015-01-01&quot;
+x.min = "2013-12-01"
+x.max = "2015-01-01"
 
 y.min = 0
 y.max = 25
@@ -72,19 +60,17 @@ y.max = 25
 01.11.2014    22
 01.12.2014    24
 (:plotend:)</pre>
-<br>
-<br>
-<div id="graph-0" style="width:700px; height:300px;"></div><br>
+<br/>
+<div id="graph-0" style="width:700px; height:300px;"></div><br/>
 <hr>
-<br>
-<h2><a id="title"></a> Параметр <i>title</i></h2>
-<br>
-С помощью параметра <i>title</i> можно установить подпись для осей, поясняющие, какая величина отложена по данной оси.<br>
-<br>
+<br/>
+<h2 class="ow-wiki"><a id="title"></a> Параметр <i>title</i></h2>
+<br/>
+С помощью параметра <i>title</i> можно установить подпись для осей, поясняющие, какая величина отложена по данной оси.<br/>
 
 <pre>(:plot
-x.title = &quot;Подпись для оси X&quot;
-y.title = &quot;Подпись для оси Y&quot;
+x.title = "Подпись для оси X"
+y.title = "Подпись для оси Y"
 :)
 1    10    20    30    40
 2    11    22    31    41
@@ -97,18 +83,16 @@ y.title = &quot;Подпись для оси Y&quot;
 9    20    30    38    46
 10   20    30    38    46
 (:plotend:)</pre>
-<br>
-<br>
-<div id="graph-1" style="width:700px; height:300px;"></div><br>
+<br/>
+<div id="graph-1" style="width:700px; height:300px;"></div><br/>
 <hr>
-<h2><a id="type"></a> Параметр <i>type</i></h2>
-<br>
-С помощью параметра <i>type</i> можно указать, что по данной оси нужно откладывать <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">календарных тип данных</a>. Для этого параметру <i>type</i> нужно присвоить значение "datetime".<br>
-<br>
+<h2 class="ow-wiki"><a id="type"></a> Параметр <i>type</i></h2>
+<br/>
+С помощью параметра <i>type</i> можно указать, что по данной оси нужно откладывать <a class="ow-wiki ow-link-page" href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">календарных тип данных</a>. Для этого параметру <i>type</i> нужно присвоить значение "datetime".<br/>
 
 <pre>(:plot
-curve.data.formatcol1=&quot;%d.%m.%Y&quot;
-x.type=&quot;datetime&quot;
+curve.data.formatcol1="%d.%m.%Y"
+x.type="datetime"
 :)
 01.01.2014    0
 01.02.2014    2
@@ -123,16 +107,14 @@ x.type=&quot;datetime&quot;
 01.11.2014    22
 01.12.2014    24
 (:plotend:)</pre>
-<br>
-<br>
-<div id="graph-2" style="width:700px; height:300px;"></div><br>
+<br/>
+<div id="graph-2" style="width:700px; height:300px;"></div><br/>
 <hr>
-<h2><a id="tickstep"></a> Параметр <i>tickstep</i></h2>
-<br>
-С помощью параметра <i>tickstep</i> можно изменить интервал между рисками на осях и, соответственно, шаг отображаемой сетки. Если этот параметр не установлен, то шаг рисок выбирается автоматически. <br>
-<br>
-<blockquote>На данный момент этот параметр не работает с календарным типом данных.</blockquote><br>
-<br>
+<h2 class="ow-wiki"><a id="tickstep"></a> Параметр <i>tickstep</i></h2>
+<br/>
+С помощью параметра <i>tickstep</i> можно изменить интервал между рисками на осях и, соответственно, шаг отображаемой сетки. Если этот параметр не установлен, то шаг рисок выбирается автоматически. <br/>
+<br/>
+<blockquote class="ow-wiki">На данный момент этот параметр не работает с календарным типом данных.</blockquote><br/>
 
 <pre>(:plot
 x.tickstep = 0.5
@@ -149,10 +131,8 @@ y.tickstep = 1
 9    20    30    38    46
 10   20    30    38    46
 (:plotend:)</pre>
-<br>
-<br>
-<br>
-<div id="graph-3" style="width:700px; height:300px;"></div><br>
-
+<br/>
+<br/>
+<div id="graph-3" style="width:700px; height:300px;"></div><br/>
 </body>
 </html>

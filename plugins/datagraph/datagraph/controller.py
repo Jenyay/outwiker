@@ -48,14 +48,14 @@ class Controller:
                 PlotAction(self._application),
                 defines.MENU_DATAGRAPH,
                 ButtonInfo(
-                    defines.TOOLBAR_DATAGRAPH, os.path.join(imagesPath, "plot.png")
+                    defines.TOOLBAR_DATAGRAPH, os.path.join(imagesPath, "plot.svg")
                 ),
             ),
             ActionGUIInfo(
                 OpenHelpAction(self._application),
                 defines.MENU_DATAGRAPH,
                 ButtonInfo(
-                    defines.TOOLBAR_DATAGRAPH, os.path.join(imagesPath, "help.png")
+                    defines.TOOLBAR_DATAGRAPH, os.path.join(imagesPath, "help.svg")
                 ),
             ),
         ]

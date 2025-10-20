@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Data format</title>
 
 	<style type='text/css'>
 		body, div, p, table {
@@ -10,18 +11,16 @@
 			font-family:Verdana;
 		}
 
-		img{border:none}
-		
+		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}a.ow-link-page-error{font-style:italic;color:#cc0033}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}
+		ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}
 	</style>
 	
 </head>
 
 <body>
-
-<h2><a id="data"></a> Data format</h2>
-<br>
-DataGraph plug-in works with textual data, which the point coordinates given as columns of the text, but every line is a single point. Default the coordinates (X and Y) of the points separated by spaces or tabs. For example:<br>
-<br>
+<h2 class="ow-wiki"><a id="data"></a> Data format</h2>
+<br/>
+DataGraph plug-in works with textual data, which the point coordinates given as columns of the text, but every line is a single point. Default the coordinates (X and Y) of the points separated by spaces or tabs. For example:<br/>
 
 <pre>0.226892802759263    13    0.0817624574300915
 0.244346095279206    14    0.0811911573526512
@@ -35,19 +34,15 @@ DataGraph plug-in works with textual data, which the point coordinates given as 
 0.383972435438752    22    0.0752196463969073
 0.401425727958696    23    0.0743071936945169
 ...</pre>
-<br>
-<br>
-Columns separator could be changed with <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep">curve.data.colsep</a> parameter.<br>
-<br>
-With <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">curve.xcol / curve.ycol</a> parameters could be selected columns for X and Y coordinates. Default plug-in work as follows:<br>
-<ul>
-<li>If data contains two or more columns, first column will be selected as column with X coordinate and second column as column with Y coordinate.</li>
-<li>If data contains one column only, this column will be selected as column with Y coordinate and X coordinate will use sequence 0, 1, 2, ...</li>
+<br/>
+Columns separator could be changed with <a class="ow-wiki ow-link-page" href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#colsep">curve.data.colsep</a> parameter.<br/>
+<br/>
+With <a class="ow-wiki ow-link-page" href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">curve.xcol / curve.ycol</a> parameters could be selected columns for X and Y coordinates. Default plug-in work as follows:<br/>
+<ul class="ow-wiki"><li class="ow-wiki">If data contains two or more columns, first column will be selected as column with X coordinate and second column as column with Y coordinate.</li><li class="ow-wiki">If data contains one column only, this column will be selected as column with Y coordinate and X coordinate will use sequence 0, 1, 2, ...</li>
 </ul>
-Empty lines are ignored. <br>
-<br>
-Data could be contained in the wiki page in the <i>plot</i> command as follows:<br>
-<br>
+Empty lines are ignored. <br/>
+<br/>
+Data could be contained in the wiki page in the <i>plot</i> command as follows:<br/>
 
 <pre>(:plot &lt;parameters&gt;:)
 0.226892802759263    13    0.0817624574300915
@@ -63,16 +58,12 @@ Data could be contained in the wiki page in the <i>plot</i> command as follows:<
 0.401425727958696    23    0.0743071936945169
 (:plotend:)
 </pre>
-<br>
-<br>
-Data could be contained in the attached file. In this case will be used <a href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">data.curve</a> parameter:<br>
-<br>
+<br/>
+Data could be contained in the attached file. In this case will be used <a class="ow-wiki ow-link-page" href="page://__0e8277e9-e11f-46fd-a5b2-b67194cddd47">data.curve</a> parameter:<br/>
 
-<pre>(:plot curve.data=&quot;Attach:filename.txt&quot; &lt;other parameters&gt;:)
+<pre>(:plot curve.data="Attach:filename.txt" &lt;other parameters&gt;:)
 (:plotend:)</pre>
-<br>
-<br>
-Besides floating point number data can contain <a href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">calendar data type</a>.<br>
-
+<br/>
+Besides floating point number data can contain <a class="ow-wiki ow-link-page" href="page://__afd7ce6a-f26f-4344-a3d7-a3e4634f4aec/#formatcol">calendar data type</a>.<br/>
 </body>
 </html>
