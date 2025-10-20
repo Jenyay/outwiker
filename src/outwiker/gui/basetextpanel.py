@@ -341,7 +341,7 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.appendToolbarButton(
             SearchAndReplaceAction.stringId,
             toolbar,
-            getBuiltinImagePath("local_replace.png"),
+            getBuiltinImagePath("replace.svg"),
             fullUpdate=False,
         )
 
