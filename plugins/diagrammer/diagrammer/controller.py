@@ -61,21 +61,21 @@ class Controller:
                 InsertDiagramAction(self._application),
                 defines.MENU_DIAGRAMMER,
                 ButtonInfo(
-                    defines.TOOLBAR_DIAGRAMMER, os.path.join(imagesPath, "diagram.png")
+                    defines.TOOLBAR_DIAGRAMMER, os.path.join(imagesPath, "diagram.svg")
                 ),
             ),
             ActionGUIInfo(
                 InsertNodeAction(self._application),
                 defines.MENU_DIAGRAMMER,
                 ButtonInfo(
-                    defines.TOOLBAR_DIAGRAMMER, os.path.join(imagesPath, "node.png")
+                    defines.TOOLBAR_DIAGRAMMER, os.path.join(imagesPath, "node.svg")
                 ),
             ),
             ActionGUIInfo(
                 InsertGroupAction(self._application),
                 defines.MENU_DIAGRAMMER,
                 ButtonInfo(
-                    defines.TOOLBAR_DIAGRAMMER, os.path.join(imagesPath, "group.png")
+                    defines.TOOLBAR_DIAGRAMMER, os.path.join(imagesPath, "group.svg")
                 ),
             ),
             ActionGUIInfo(
@@ -83,7 +83,7 @@ class Controller:
                 defines.MENU_DIAGRAMMER,
                 ButtonInfo(
                     defines.TOOLBAR_DIAGRAMMER,
-                    os.path.join(imagesPath, "edge-none.png"),
+                    os.path.join(imagesPath, "edge-none.svg"),
                 ),
             ),
             ActionGUIInfo(
@@ -91,7 +91,7 @@ class Controller:
                 defines.MENU_DIAGRAMMER,
                 ButtonInfo(
                     defines.TOOLBAR_DIAGRAMMER,
-                    os.path.join(imagesPath, "edge-left.png"),
+                    os.path.join(imagesPath, "edge-left.svg"),
                 ),
             ),
             ActionGUIInfo(
@@ -99,7 +99,7 @@ class Controller:
                 defines.MENU_DIAGRAMMER,
                 ButtonInfo(
                     defines.TOOLBAR_DIAGRAMMER,
-                    os.path.join(imagesPath, "edge-right.png"),
+                    os.path.join(imagesPath, "edge-right.svg"),
                 ),
             ),
             ActionGUIInfo(
@@ -107,14 +107,14 @@ class Controller:
                 defines.MENU_DIAGRAMMER,
                 ButtonInfo(
                     defines.TOOLBAR_DIAGRAMMER,
-                    os.path.join(imagesPath, "edge-both.png"),
+                    os.path.join(imagesPath, "edge-both.svg"),
                 ),
             ),
             ActionGUIInfo(
                 HelpAction(self._application),
                 defines.MENU_DIAGRAMMER,
                 ButtonInfo(
-                    defines.TOOLBAR_DIAGRAMMER, os.path.join(imagesPath, "help.png")
+                    defines.TOOLBAR_DIAGRAMMER, os.path.join(imagesPath, "help.svg")
                 ),
             ),
         ]
