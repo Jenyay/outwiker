@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="ljuser.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="4.2532752"
+     inkscape:cx="39.381416"
+     inkscape:cy="-5.9953797"
+     inkscape:window-width="1920"
+     inkscape:window-height="1088"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient12"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop12" />
+      <stop
+         style="stop-color:#f6f5f5;stop-opacity:1;"
+         offset="0.27559644"
+         id="stop15" />
+      <stop
+         style="stop-color:#cecaca;stop-opacity:1;"
+         offset="0.83387053"
+         id="stop14" />
+      <stop
+         style="stop-color:#a59c9c;stop-opacity:1;"
+         offset="1"
+         id="stop13" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient12"
+       id="linearGradient13"
+       x1="6.97925"
+       y1="3.9438663"
+       x2="2.7348349"
+       y2="3.9218726"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.600001;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect15"
+       width="3.2127652"
+       height="0.94571978"
+       x="3.3936174"
+       y="6.5900745" />
+    <path
+       id="rect7"
+       style="fill:#0808ff;fill-opacity:1;stroke:#000000;stroke-width:0.4;stroke-linecap:round;paint-order:fill markers stroke"
+       d="m 9.8,9.0701154 0,0.7656516 H 0.2 l 0,-0.7656516 C 0.2,8.2158223 2.6355825,7.5288311 5.0549838,7.5357943 7.4352636,7.5426449 9.8,8.229636 9.8,9.0701154 Z"
+       sodipodi:nodetypes="sscsss" />
+    <path
+       id="path6"
+       style="fill:url(#linearGradient13);stroke:#000000;stroke-width:0.4;stroke-linecap:round;paint-order:fill markers stroke"
+       d="m 7.3074204,3.9120902 c 0,1.6966733 -1.033067,3.9755999 -2.3074203,3.9755998 -1.2743529,0 -2.3074205,-2.2789266 -2.3074205,-3.9755998 0,-1.6966734 1.0330673,-2.7244 2.3074202,-2.7244 1.2743533,-1e-7 2.3074207,1.0277264 2.3074206,2.7244 z"
+       sodipodi:nodetypes="sssss" />
+    <rect
+       style="fill:#ff8418;fill-opacity:1;stroke:none;stroke-width:0.4;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect8"
+       width="2.9548306"
+       height="0.70229667"
+       x="5.7074895"
+       y="8.5924435" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
+       d="m 5.1024879,7.8956603 c 0,1.8914393 0,1.8914393 0,1.8914393"
+       id="path12" />
+  </g>
+</svg>

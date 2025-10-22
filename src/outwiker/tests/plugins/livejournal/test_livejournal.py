@@ -58,7 +58,7 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("бла-бла-бла" in result)
         self.assertTrue(
-            """<span class='ljuser ljuser-name_a_str' lj:user='a_str' style='white-space:nowrap'><a href='http://a-str.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://a-str.livejournal.com/'><b>a_str</b></a></span>""" in result)
+            """<span class='ljuser ljuser-name_a_str' lj:user='a_str' style='white-space:nowrap'><a href='https://a-str.livejournal.com/profile'><img src='https://l-stat.livejournal.net/img/userinfo_v8.svg' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://a-str.livejournal.com/' style='text-decoration-line:none;'><b style='color: #00a3d9;'>a_str</b></a></span>""" in result)
 
     def testCommunity1(self):
         text = "бла-бла-бла  (:ljcomm american_gangst:)"
@@ -70,7 +70,7 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("бла-бла-бла" in result)
         self.assertTrue(
-            """<span class='ljuser ljuser-name_american_gangst' lj:user='american_gangst' style='white-space:nowrap'><a href='http://american-gangst.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/community.gif?v=3' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://american-gangst.livejournal.com/'><b>american_gangst</b></a></span>""" in result)
+            """<span class='ljuser ljuser-name_american_gangst' lj:user='american_gangst' style='white-space:nowrap'><a href='https://american-gangst.livejournal.com/profile'><img src='https://l-stat.livejournal.net/img/community.gif' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://american-gangst.livejournal.com/' style='text-decoration-line:none;'><b style='color: #00a3d9;'>american_gangst</b></a></span>""" in result)
 
     def testUserDialog_01(self):
         from livejournal.comboboxdialog import ComboBoxDialog

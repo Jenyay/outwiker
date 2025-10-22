@@ -39,7 +39,7 @@ class Controller:
                 LJUserAction(self._application),
                 defines.MENU_LIVEJOURNAL,
                 ButtonInfo(
-                    defines.TOOLBAR_LIVEJOURNAL, os.path.join(imagesPath, "ljuser.gif")
+                    defines.TOOLBAR_LIVEJOURNAL, os.path.join(imagesPath, "ljuser.svg")
                 ),
             ),
             ActionGUIInfo(
@@ -47,7 +47,7 @@ class Controller:
                 defines.MENU_LIVEJOURNAL,
                 ButtonInfo(
                     defines.TOOLBAR_LIVEJOURNAL,
-                    os.path.join(imagesPath, "ljcommunity.gif"),
+                    os.path.join(imagesPath, "ljcommunity.svg"),
                 ),
             ),
         ]
