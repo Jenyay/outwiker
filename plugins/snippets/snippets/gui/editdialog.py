@@ -138,7 +138,12 @@ class EditSnippetsDialog(wx.Frame):
 
         # Add a snippet button
         self.addSnippetBtn = wx.BitmapButton(
-            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "snippet_add.png"))
+            self,
+            bitmap=readImage(
+                os.path.join(self._imagesPath, "snippet_add.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            ),
         )
         self.addSnippetBtn.SetToolTip(_("Create new snippet"))
         groupButtonsSizer.Add(self.addSnippetBtn, flag=wx.ALL, border=0)
@@ -203,7 +208,11 @@ class EditSnippetsDialog(wx.Frame):
         )
 
         self._snippetImageId = self._imagelist.Add(
-            wx.Bitmap(os.path.join(self._imagesPath, "snippet.png"))
+            readImage(
+                os.path.join(self._imagesPath, "snippet.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            )
         )
 
     def _createTreePanel(self, mainSizer):
