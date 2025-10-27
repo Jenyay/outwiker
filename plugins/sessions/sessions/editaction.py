@@ -4,6 +4,8 @@ import wx
 
 from outwiker.api.gui.actions import BaseAction
 from outwiker.api.gui.dialogs import TestedDialog, MessageBox
+from outwiker.api.gui.images import readImage
+from outwiker.api.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 
 from .i18n import get_
 from .sessionstorage import SessionStorage
@@ -142,12 +144,20 @@ class EditSessionsDialog(TestedDialog):
         mainButtonsSizer = wx.BoxSizer(wx.VERTICAL)
 
         self._renameButton = wx.BitmapButton(
-            self, wx.ID_ANY, wx.Bitmap(getImagePath("rename.png"))
+            self,
+            wx.ID_ANY,
+            readImage(
+                getImagePath("rename.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+            ),
         )
         self._renameButton.SetToolTip(_("Rename session..."))
 
         self._removeButton = wx.BitmapButton(
-            self, wx.ID_ANY, wx.Bitmap(getImagePath("remove.png"))
+            self,
+            wx.ID_ANY,
+            readImage(
+                getImagePath("remove.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+            ),
         )
         self._removeButton.SetToolTip(_("Remove session..."))
 

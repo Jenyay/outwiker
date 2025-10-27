@@ -256,7 +256,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.IMAGE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "image.png"),
+            os.path.join(self.imagesDir, "image.svg"),
             fullUpdate=False,
         )
 
@@ -269,7 +269,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendToolbarButton(
             polyactions.HORLINE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_horizontalrule.png"),
+            os.path.join(self.imagesDir, "text_horline.svg"),
             fullUpdate=False,
         )
 

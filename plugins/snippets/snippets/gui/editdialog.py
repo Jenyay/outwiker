@@ -8,9 +8,11 @@ import wx
 
 from outwiker.api.app.config import MainWindowConfig
 from outwiker.api.app.application import getSpecialDirList
+from outwiker.api.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 from outwiker.api.gui.dialogs import MessageBox
 from outwiker.api.gui.controls import PopupButton, EVT_POPUP_BUTTON_MENU_CLICK
 from outwiker.api.gui.controls import SafeImageList
+from outwiker.api.gui.images import readImage
 from outwiker.api.core.text import readTextFile, writeTextFile
 
 from snippets.events import RunSnippetParams
@@ -29,7 +31,7 @@ from snippets.snippetparser import SnippetParser, SnippetException
 from snippets.config import SnippetsConfig
 
 
-class TreeItemInfo(object):
+class TreeItemInfo:
     def __init__(self, path, root=False):
         self.path = path
         self.root = root
@@ -124,42 +126,72 @@ class EditSnippetsDialog(wx.Frame):
     def _createTreeButtons(self, groupButtonsSizer):
         # Add a group button
         self.addGroupBtn = wx.BitmapButton(
-            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "folder_add.png"))
+            self,
+            bitmap=readImage(
+                os.path.join(self._imagesPath, "folder_add.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            ),
         )
         self.addGroupBtn.SetToolTip(_("Add new snippets group"))
         groupButtonsSizer.Add(self.addGroupBtn, flag=wx.ALL, border=0)
 
         # Add a snippet button
         self.addSnippetBtn = wx.BitmapButton(
-            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "snippet_add.png"))
+            self,
+            bitmap=readImage(
+                os.path.join(self._imagesPath, "snippet_add.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            ),
         )
         self.addSnippetBtn.SetToolTip(_("Create new snippet"))
         groupButtonsSizer.Add(self.addSnippetBtn, flag=wx.ALL, border=0)
 
         # Rename group or snippet button
         self.renameBtn = wx.BitmapButton(
-            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "rename.png"))
+            self,
+            bitmap=readImage(
+                os.path.join(self._imagesPath, "rename.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            ),
         )
         self.renameBtn.SetToolTip(_("Rename"))
         groupButtonsSizer.Add(self.renameBtn, flag=wx.ALL, border=0)
 
         # Remove group or snippet button
         self.removeBtn = wx.BitmapButton(
-            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "remove.png"))
+            self,
+            bitmap=readImage(
+                os.path.join(self._imagesPath, "remove.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            ),
         )
         self.removeBtn.SetToolTip(_("Remove"))
         groupButtonsSizer.Add(self.removeBtn, flag=wx.ALL, border=0)
 
         # Run snippet
         self.runSnippetBtn = wx.BitmapButton(
-            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "run.png"))
+            self,
+            bitmap=readImage(
+                os.path.join(self._imagesPath, "execute.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            ),
         )
         self.runSnippetBtn.SetToolTip(_("Run snippet"))
         groupButtonsSizer.Add(self.runSnippetBtn, flag=wx.ALL, border=0)
 
         # Open help
         self.openHelpBtn = wx.BitmapButton(
-            self, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "help.png"))
+            self,
+            bitmap=readImage(
+                os.path.join(self._imagesPath, "help.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            ),
         )
         self.openHelpBtn.SetToolTip(_("Open help..."))
         groupButtonsSizer.Add(self.openHelpBtn, flag=wx.ALL, border=0)
@@ -168,11 +200,19 @@ class EditSnippetsDialog(wx.Frame):
         self._imagelist = SafeImageList(self.ICON_WIDTH, self.ICON_HEIGHT)
 
         self._dirImageId = self._imagelist.Add(
-            wx.Bitmap(os.path.join(self._imagesPath, "folder.png"))
+            readImage(
+                os.path.join(self._imagesPath, "folder.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            )
         )
 
         self._snippetImageId = self._imagelist.Add(
-            wx.Bitmap(os.path.join(self._imagesPath, "snippet.png"))
+            readImage(
+                os.path.join(self._imagesPath, "snippet.svg"),
+                BUTTON_ICON_WIDTH,
+                BUTTON_ICON_HEIGHT,
+            )
         )
 
     def _createTreePanel(self, mainSizer):
@@ -332,7 +372,9 @@ class EditSnippetsDialogController(object):
         _ = get_()
         self._application = application
         self._snippetChanged = False
-        self._dialog = EditSnippetsDialog(self._application.mainWindow, self._application)
+        self._dialog = EditSnippetsDialog(
+            self._application.mainWindow, self._application
+        )
         self._config = SnippetsConfig(self._application.config)
         self._mainWindowconfig = MainWindowConfig(self._application.config)
         self._dialog.SetClientSize(

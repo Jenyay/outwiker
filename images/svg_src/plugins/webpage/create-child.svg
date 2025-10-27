@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="create-child.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="22.251458"
+     inkscape:cx="18.897638"
+     inkscape:cy="18.897638"
+     inkscape:window-width="1920"
+     inkscape:window-height="1088"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <path
+     d="m 3.2640001,7.1961095 h 1.883484"
+     style="fill:none;stroke:#000000;stroke-width:0.400001;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+     id="path6" />
+  <path
+     d="m 3.46,4.5051094 v 2.691"
+     style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+     id="path5" />
+  <path
+     d="M 0.2,0.69710939 V 2.8431094"
+     style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+     id="path1" />
+  <path
+     d="M 0,2.8431094 H 1.61"
+     style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+     id="path2" />
+  <path
+     d="m 1.782,1.4651094 h 3.356 v 2.656 H 1.782 Z"
+     style="fill:#ffffff;fill-opacity:1;stroke:#4681c2;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;paint-order:fill markers stroke"
+     id="path3" />
+  <path
+     style="font-weight:bold;font-size:4.9389px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#4a9500;fill-opacity:1;stroke-width:0.264583"
+     d="M 6.2233688,8.963792 5.3793185,5.4284271 H 6.1100249 L 6.6429824,7.8568804 7.2892837,5.4284271 h 0.8488735 l 0.619774,2.46945 0.5426038,-2.46945 h 0.718649 L 9.1606638,8.963792 H 8.4034301 L 7.699251,6.3207088 6.9974835,8.963792 Z"
+     id="text6"
+     aria-label="W" />
+</svg>

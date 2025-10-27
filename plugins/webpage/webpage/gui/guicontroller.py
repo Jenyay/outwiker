@@ -238,7 +238,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             SwitchCodeResultAction.stringId,
             self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE],
-            os.path.join(self.imagesDir, "render.png"),
+            os.path.join(self.imagesDir, "render.svg"),
             fullUpdate=False,
         )
 
@@ -246,7 +246,7 @@ class GuiController:
         """
         Create button and menu item to enable / disable scripts.
         """
-        image = self.getImagePath("script-delete.png")
+        image = self.getImagePath("script-delete.svg")
         toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self.toolsMenu
 
@@ -455,7 +455,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.TABLE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "table.png"),
+            os.path.join(self.imagesDir, "table.svg"),
             fullUpdate=False,
         )
 
@@ -470,7 +470,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.TABLE_ROW_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "table_insert_row.png"),
+            os.path.join(self.imagesDir, "table_insert_row.svg"),
             fullUpdate=False,
         )
 
@@ -485,7 +485,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.TABLE_CELL_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "table_insert_cell.png"),
+            os.path.join(self.imagesDir, "table_insert_cell.svg"),
             fullUpdate=False,
         )
 
@@ -696,7 +696,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.IMAGE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "image.png"),
+            os.path.join(self.imagesDir, "image.svg"),
             fullUpdate=False,
         )
 
@@ -739,7 +739,7 @@ class GuiController:
         self._application.actionController.appendToolbarButton(
             polyactions.HORLINE_STR_ID,
             toolbar,
-            os.path.join(self.imagesDir, "text_horizontalrule.png"),
+            os.path.join(self.imagesDir, "text_horline.svg"),
             fullUpdate=False,
         )
 
@@ -795,7 +795,7 @@ class GuiController:
         if mainWindow is not None:
             action = CreateChildWebPageAction(self._application)
             toolbar = mainWindow.treePanel.panel.toolbar
-            image = self.getImagePath("create-child.png")
+            image = self.getImagePath("create-child.svg")
 
             controller = self._application.actionController
 
@@ -809,7 +809,7 @@ class GuiController:
         if mainWindow is not None:
             action = CreateSiblingWebPageAction(self._application)
             toolbar = mainWindow.treePanel.panel.toolbar
-            image = self.getImagePath("create-sibling.png")
+            image = self.getImagePath("create-sibling.svg")
 
             controller = self._application.actionController
 

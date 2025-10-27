@@ -7,8 +7,10 @@ import wx
 from wx.lib.newevent import NewEvent
 
 from outwiker.api.core.events import Event
+from outwiker.api.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 from outwiker.api.gui.dialogs import TestedDialog
 from outwiker.api.gui.controls import TextEditorBase
+from outwiker.api.gui.images import readImage
 
 from snippets.snippetparser import SnippetParser
 from snippets.gui.snippeteditor import SnippetEditor
@@ -28,9 +30,7 @@ class VariablesDialog(TestedDialog):
     """
 
     def __init__(self, parent, application):
-        super().__init__(
-            parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
-        )
+        super().__init__(parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         global _
         _ = get_()
 
@@ -341,8 +341,16 @@ class StringVariableCtrl(wx.Panel):
     Control to edit string variable
     """
 
-    _expandBitmap = wx.Bitmap(os.path.join(getImagesPath(), "expand.png"))
-    _collapseBitmap = wx.Bitmap(os.path.join(getImagesPath(), "collapse.png"))
+    _expandBitmap = readImage(
+        os.path.join(getImagesPath(), "expand.svg"),
+        BUTTON_ICON_WIDTH,
+        BUTTON_ICON_HEIGHT,
+    )
+    _collapseBitmap = readImage(
+        os.path.join(getImagesPath(), "collapse.svg"),
+        BUTTON_ICON_WIDTH,
+        BUTTON_ICON_HEIGHT,
+    )
 
     def __init__(self, parent, varname):
         super(StringVariableCtrl, self).__init__(parent)

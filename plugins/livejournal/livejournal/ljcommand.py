@@ -29,7 +29,7 @@ class LjUserCommand(LjCommand):
 
     @property
     def template(self):
-        return """<span class='ljuser ljuser-name_{name}' lj:user='{name}' style='white-space:nowrap'><a href='http://{name_correct}.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://{name_correct}.livejournal.com/'><b>{name}</b></a></span>"""
+        return """<span class='ljuser ljuser-name_{name}' lj:user='{name}' style='white-space:nowrap'><a href='https://{name_correct}.livejournal.com/profile'><img src='https://l-stat.livejournal.net/img/userinfo_v8.svg' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://{name_correct}.livejournal.com/' style='text-decoration-line:none;'><b style='color: #00a3d9;'>{name}</b></a></span>"""
 
     @property
     def name(self):
@@ -47,7 +47,7 @@ class LjCommunityCommand(LjCommand):
 
     @property
     def template(self):
-        return """<span class='ljuser ljuser-name_{name}' lj:user='{name}' style='white-space:nowrap'><a href='http://{name_correct}.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/community.gif?v=3' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://{name_correct}.livejournal.com/'><b>{name}</b></a></span>"""
+        return """<span class='ljuser ljuser-name_{name}' lj:user='{name}' style='white-space:nowrap'><a href='https://{name_correct}.livejournal.com/profile'><img src='https://l-stat.livejournal.net/img/community.gif' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://{name_correct}.livejournal.com/' style='text-decoration-line:none;'><b style='color: #00a3d9;'>{name}</b></a></span>"""
 
     @property
     def name(self):

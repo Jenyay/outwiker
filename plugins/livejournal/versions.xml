@@ -1,5 +1,22 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.7">
+		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.7.zip">
+			<requirements>
+                <api>4.962</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Use vector icons for buttons.</change>
+			<change>Update CSS styles.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Новые векторные значки для кнопок.</change>
+			<change>Обновление стилей CSS.</change>
+		</changes>
+	</version>
+
 	<version number="1.6.2" date="2024-09-14">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.6.2.zip">
 			<requirements>

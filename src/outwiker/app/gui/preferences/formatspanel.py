@@ -7,6 +7,8 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
+from outwiker.gui.images import readImage
+from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 
 
 class FormatsPanel(BasePrefPanel):
@@ -36,7 +38,9 @@ class FormatsPanel(BasePrefPanel):
         dateTimeLabel = wx.StaticText(self, label=_("Date and time format"))
         pageTitleTemplateLabel = wx.StaticText(self, label=_("New page title template"))
 
-        hintBitmap = wx.Bitmap(getBuiltinImagePath("wand.png"))
+        hintBitmap = readImage(
+            getBuiltinImagePath("wand.png"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+        )
 
         # Create main controls
         self.dateTimeFormatCtrl = DateTimeFormatCtrl(

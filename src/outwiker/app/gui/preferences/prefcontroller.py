@@ -182,7 +182,7 @@ class PrefController:
             pluginsPage,
             _("Plugins"),
             tag=PREF_PANEL_PLUGINS,
-            icon_fname=getBuiltinImagePath("plugin.png"),
+            icon_fname=getBuiltinImagePath("plugin.svg"),
         )
 
     def _createTextPrintoutPage(self):
@@ -190,7 +190,7 @@ class PrefController:
         self._dialog.treeBook.AddPage(
             textPrintPage,
             _("Text printout"),
-            icon_fname=getBuiltinImagePath("printer.png"),
+            icon_fname=getBuiltinImagePath("printer.svg"),
         )
 
     def _createIconsetPage(self):

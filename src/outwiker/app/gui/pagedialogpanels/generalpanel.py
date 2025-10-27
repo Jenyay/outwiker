@@ -470,7 +470,7 @@ class IconsController(BasePageDialogController):
 
     def _addRecentIconsGroup(self, group_info_list):
         recent_title = _("Recent")
-        recent_cover = getBuiltinImagePath("recent.png")
+        recent_cover = getBuiltinImagePath("recent.svg")
         recent_icons = self._recentIconsList.getRecentIcons()
         group_info_list.insert(
             0,

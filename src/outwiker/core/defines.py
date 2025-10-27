@@ -110,3 +110,4 @@ if __name__ == "__main__":
     _("weather")
     _("list")
     _("bookmarks")
+    _("office")

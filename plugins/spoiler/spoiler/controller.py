@@ -32,7 +32,7 @@ class Controller:
             ActionGUIInfo(
                 SpoilerAction(self._application),
                 MENU_WIKI_COMMANDS,
-                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "spoiler.png")),
+                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "spoiler.svg")),
             ),
         ]
 
