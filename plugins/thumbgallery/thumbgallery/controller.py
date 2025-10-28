@@ -28,7 +28,7 @@ class Controller:
             ActionGUIInfo(
                 ThumbAction(self._application),
                 MENU_WIKI_COMMANDS,
-                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "gallery.png")),
+                ButtonInfo(TOOLBAR_PLUGINS, os.path.join(imagesPath, "gallery.svg")),
             ),
         ]
 
