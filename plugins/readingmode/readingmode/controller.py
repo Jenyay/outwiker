@@ -35,7 +35,7 @@ class Controller:
                 ReadingModeAction.stringId, viewMenu
             )
 
-            image = self.getImagePath("book-open.png")
+            image = self.getImagePath("book-open.svg")
             # Добавляем кнопку-переключатель на панель инструментов
             self._application.actionController.appendToolbarCheckButton(
                 ReadingModeAction.stringId, mainWindow.toolbars[TOOLBAR_PLUGINS], image
