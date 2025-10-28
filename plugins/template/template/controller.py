@@ -48,7 +48,7 @@ class Controller:
                 PluginAction(self._application),
                 defines.MENU_PLUGINNAME,
                 ButtonInfo(
-                    defines.TOOLBAR_PLUGINNAME, os.path.join(imagesPath, "button.png")
+                    defines.TOOLBAR_PLUGINNAME, os.path.join(imagesPath, "image.svg")
                 ),
             ),
         ]
