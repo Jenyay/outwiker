@@ -1,0 +1,9 @@
+div.quote-purple {
+    background-color: #f3e5f5;
+    border-left: 5px solid #ab47bc;
+    color: #4a148c;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+    font-style: italic;
+}

@@ -1,0 +1,9 @@
+div.quote-yellow {
+    background-color: #fffde7;
+    border-left: 5px solid #fbc02d;
+    color: #795c00;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+    font-style: italic;
+}

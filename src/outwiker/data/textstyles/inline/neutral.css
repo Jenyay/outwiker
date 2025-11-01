@@ -1,0 +1,9 @@
+span.neutral {
+    display: inline-block;
+    color: #333;
+    background-color: #f5f5f5;
+    border-radius: 1px;
+    padding: 0px 2px;
+    margin: 2px;
+    border: 1px solid #cccccc;
+}

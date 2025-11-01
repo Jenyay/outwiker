@@ -1,0 +1,9 @@
+div.quote-blue {
+    background-color: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+    color: #0d47a1;
+    font-style: italic;
+}

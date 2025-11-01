@@ -1,0 +1,7 @@
+span.highlight-blue {
+    display: inline;
+    background-color: #b3e5fc;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}

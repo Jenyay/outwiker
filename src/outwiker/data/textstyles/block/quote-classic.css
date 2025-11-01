@@ -1,0 +1,8 @@
+div.quote-classic {
+    border-left: 4px solid #ccc;
+    padding: 10px 15px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    font-style: italic;
+    color: #555;
+}
