@@ -1435,22 +1435,22 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         Добавляет иконку страницы в ImageList и возвращает ее идентификатор.
         Если иконки нет, то возвращает идентификатор иконки по умолчанию
         """
-        icon = page.icon
+        icon_file = page.icon
 
-        if not icon:
+        if not icon_file:
             return self._iconsCache.getDefaultImageId()
 
-        icon = os.path.abspath(icon)
+        icon_file = os.path.abspath(icon_file)
         page_path = os.path.abspath(page.path)
 
         try:
-            if icon.startswith(page_path):
-                imageId = self._iconsCache.replace(icon)
+            if icon_file.startswith(page_path):
+                imageId = self._iconsCache.replace(icon_file)
             else:
-                imageId = self._iconsCache.add(icon)
+                imageId = self._iconsCache.add(icon_file)
         except Exception:
-            logger.error("Invalid icon file: %s", icon)
-            imageId = self._iconsCache.getDefaultImageId()
+            logger.error("Invalid icon file: %s", icon_file)
+            imageId = self._iconsCache.add_invalid(icon_file)
         return imageId
 
     def _getPageExpandState(self, page: Optional[BasePage]):

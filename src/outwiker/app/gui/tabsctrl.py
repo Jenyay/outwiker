@@ -989,7 +989,7 @@ class TabRender:
                 imageId = self._iconsCache.add(icon_file)
         except Exception:
             logger.error("Invalid icon file: %s", icon_file)
-            imageId = self._iconsCache.getDefaultImageId()
+            imageId = self._iconsCache.add_invalid(icon_file)
         return imageId
 
     def get_text_height(self, dc: wx.DC):

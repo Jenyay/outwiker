@@ -2,8 +2,6 @@
 
 from typing import Dict
 
-import wx
-
 from .controls.safeimagelist import SafeImageList
 from outwiker.gui.images import readImage
 
@@ -40,12 +38,8 @@ class ImageListCache:
 
         bitmap = readImage(fname, self._width, self._height)
 
-        imageId = 0
+        imageId = self.getDefaultImageId()
         if bitmap.IsOk():
-            # if bitmap.GetWidth() != self._width or bitmap.GetHeight() != self._height:
-            #     image = bitmap.ConvertToImage()
-            #     image.Rescale(self._width, self._height, wx.IMAGE_QUALITY_BICUBIC)
-            #     bitmap = wx.Bitmap(image)
             imageId = self._imagelist.Add(bitmap)
             self._iconsCache[fname] = imageId
 
@@ -56,7 +50,7 @@ class ImageListCache:
         Replace an existing picture in ImageList and return image ID.
         If the picture does not exist in the list, it will be added.
         '''
-        imageId = 0
+        imageId = self.getDefaultImageId()
         if fname not in self._iconsCache:
             return self.add(fname)
 
@@ -75,6 +69,7 @@ class ImageListCache:
         self._defaultId = self._imagelist.Add(self._defaultImage)
 
     def getDefaultImageId(self) -> int:
+        assert self._defaultId is not None
         return self._defaultId
 
     def getImageList(self):

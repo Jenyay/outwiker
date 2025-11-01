@@ -136,6 +136,7 @@ class IconController:
 
         # If an icon file name wrote in the page params.
         icon_from_config = page.params.iconOption.value.strip()
+        icon_file = None
         if icon_from_config:
             icon_from_config = icon_from_config.replace("\\", os.sep)
             icon_from_config = icon_from_config.replace("/", os.sep)
@@ -144,11 +145,14 @@ class IconController:
             # Return vector icon instead of bitmap icon if exists
             icon_path_svg = convert_name_to_svg(icon_path_src)
             if icon_path_src != icon_path_svg and os.path.exists(icon_path_svg):
-                return icon_path_svg
+                icon_file = icon_path_svg
+            else:
+                icon_file = icon_path_src
 
-            return icon_path_src
+        if icon_file is not None and not os.path.exists(icon_file):
+            icon_file = None
 
-        return None
+        return icon_file
 
     @staticmethod
     def display_name(file_name):
