@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 19:46+0300\n"
+"POT-Creation-Date: 2025-11-01 19:52+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1576,11 +1576,11 @@ msgstr "Строки"
 msgid "Paragraph"
 msgstr "Абзаца"
 
-#: outwiker/app/gui/preferences/formatspanel.py:36
+#: outwiker/app/gui/preferences/formatspanel.py:38
 msgid "Date and time format"
 msgstr "Формат даты и времени"
 
-#: outwiker/app/gui/preferences/formatspanel.py:37
+#: outwiker/app/gui/preferences/formatspanel.py:39
 msgid "New page title template"
 msgstr "Шаблон заголовка новой страницы"
 
@@ -1777,7 +1777,7 @@ msgstr "Удалить выбранные значки?"
 msgid "Remove icons"
 msgstr "Удалить значки"
 
-#: outwiker/app/gui/preferences/mainwindowpanel.py:33
+#: outwiker/app/gui/preferences/mainwindowpanel.py:34
 msgid "Show status panel"
 msgstr "Отображать статусную панель"
 
@@ -1793,9 +1793,13 @@ msgstr "Заголовок страницы"
 msgid "Relative path to current page"
 msgstr "Относительный путь до текущей страницы"
 
-#: outwiker/app/gui/preferences/mainwindowpanel.py:53
+#: outwiker/app/gui/preferences/mainwindowpanel.py:51
 msgid "Main window title format"
 msgstr "Формат заголовка главного окна"
+
+#: outwiker/app/gui/preferences/mainwindowpanel.py:81
+msgid "Buttons icon size (restart application required)"
+msgstr "Размер значков на кнопках (требуется перезапуск приложения)"
 
 #: outwiker/app/gui/preferences/notestreepanel.py:27
 #: outwiker/app/gui/preferences/tabspanel.py:30
@@ -1808,19 +1812,19 @@ msgstr "Размер шрифта"
 msgid "Show note icons"
 msgstr "Отображать значки заметок"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:49
+#: outwiker/app/gui/preferences/notestreepanel.py:50
 msgid "Icon size"
 msgstr "Размер значков"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:54
+#: outwiker/app/gui/preferences/notestreepanel.py:55
 msgid "Extra icons"
 msgstr "Дополнительные значки"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:56
+#: outwiker/app/gui/preferences/notestreepanel.py:57
 msgid "Show bookmark icon"
 msgstr "Показывать значок закладки"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:59
+#: outwiker/app/gui/preferences/notestreepanel.py:60
 msgid "Show read-only icon"
 msgstr "Показывать значок \"только для чтения\""
 

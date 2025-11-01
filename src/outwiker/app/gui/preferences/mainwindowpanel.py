@@ -25,6 +25,7 @@ class MainWindowPanel(BasePrefPanel):
         main_sizer.AddGrowableCol(0)
 
         self._createTitleFormatGUI(main_sizer)
+        self._createButtonsIconSizeGui(main_sizer)
         self._createStatusbarGUI(main_sizer)
 
         self.SetSizer(main_sizer)
@@ -56,15 +57,32 @@ class MainWindowPanel(BasePrefPanel):
             self, self.mainWindowConfig.titleFormat.value, hints, hintBitmap
         )
 
-        self.titleFormatSizer = wx.FlexGridSizer(1, 2, 0, 0)
+        self.titleFormatSizer = wx.FlexGridSizer(cols=2)
+        self.titleFormatSizer.AddGrowableCol(1)
         self.titleFormatSizer.Add(
-            self.titleFormatLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2
+            self.titleFormatLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
 
         self.titleFormatSizer.Add(self.titleFormatText, 0, wx.ALL | wx.EXPAND, 2)
-
-        self.titleFormatSizer.AddGrowableCol(1)
         main_sizer.Add(self.titleFormatSizer, 1, wx.EXPAND, 0)
+
+    def _createButtonsIconSizeGui(self, main_sizer):
+        self._buttons_icon_size_items = [
+            ("16 x 16", 16),
+            ("20 x 20", 20),
+            ("24 x 24", 24),
+            ("32 x 32", 32),
+            ("48 x 48", 48),
+        ]
+
+        sizer = wx.FlexGridSizer(cols=2)
+        sizer.AddGrowableCol(1)
+
+        self._buttonsIconSizeComboBox = self._createLabelAndComboBox(_("Buttons icon size (restart application required)"), sizer)[1]
+        for title, size in self._buttons_icon_size_items:
+            self._buttonsIconSizeComboBox.Append(title)
+
+        main_sizer.Add(sizer, flag=wx.EXPAND)
 
     def LoadState(self):
         """
@@ -78,6 +96,16 @@ class MainWindowPanel(BasePrefPanel):
         self.statusbarVisible = configelements.BooleanElement(
             self.mainWindowConfig.statusbar_visible, self.statusbarVisibleCheckBox
         )
+        self._load_buttons_icon_size()
+
+    def _load_buttons_icon_size(self):
+        icon_size = self.mainWindowConfig.buttonsIconSize.value
+        icon_size_index = 0
+        for n, (title, size) in enumerate(self._buttons_icon_size_items):
+            if size == icon_size:
+                icon_size_index = n
+
+        self._buttonsIconSizeComboBox.SetSelection(icon_size_index)
 
     def Save(self):
         """
@@ -85,3 +113,6 @@ class MainWindowPanel(BasePrefPanel):
         """
         self.titleFormat.save()
         self.statusbarVisible.save()
+
+        buttons_icon_size = self._buttons_icon_size_items[self._buttonsIconSizeComboBox.GetSelection()][1]
+        self.mainWindowConfig.buttonsIconSize.value = buttons_icon_size

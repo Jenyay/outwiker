@@ -10,6 +10,7 @@ from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.gui.defines import MENU_FILE, TOOLBAR_PLUGINS
+from outwiker.gui.theme import Theme
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
@@ -57,7 +58,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.initApplication()
 
         self.actionController = ActionController(
-            self.mainWindow, self.application.config)
+            self.mainWindow, self.application.config, Theme())
         self.application.config.remove_section(
             self.actionController.configSection)
         self.fileMenu = self.mainWindow.menuController[MENU_FILE]
@@ -639,7 +640,8 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.saveHotKeys()
 
         otherActionController = ActionController(self.mainWindow,
-                                                 self.application.config)
+                                                 self.application.config,
+                                                 Theme())
         otherActionController.register(action)
 
         self.assertEqual(otherActionController.getHotKey(action.stringId).key,
@@ -657,7 +659,8 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.saveHotKeys()
 
         otherActionController = ActionController(self.mainWindow,
-                                                 self.application.config)
+                                                 self.application.config,
+                                                 Theme())
         otherActionController.register(action, HotKey("F1", shift=True))
 
         self.assertEqual(otherActionController.getHotKey(action.stringId).key,
@@ -674,7 +677,8 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.saveHotKeys()
 
         otherActionController = ActionController(self.mainWindow,
-                                                 self.application.config)
+                                                 self.application.config,
+                                                 Theme())
         otherActionController.register(action)
 
         self.assertIsNone(otherActionController.getHotKey(action.stringId))

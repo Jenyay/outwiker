@@ -5,13 +5,13 @@ from typing import List, Optional, Tuple, Dict
 
 import wx
 from outwiker.core.system import getBuiltinImagePath
-from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 
 from outwiker.gui.images import readImage
 from outwiker.gui.controls.toolbar2 import ToolBar2
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.gui.hotkeyparser import HotKeyParser
+from outwiker.gui.theme import Theme
 
 
 logger = logging.getLogger("outwiker.gui.actioncontroller")
@@ -55,11 +55,10 @@ class ActionController:
     и кнопок на панели инструментов
     """
 
-    def __init__(self, mainWindow: wx.Window, config):
+    def __init__(self, mainWindow: wx.Window, config, theme: Theme):
         self._mainWindow = mainWindow
         self._config = config
-        self._image_width = BUTTON_ICON_WIDTH
-        self._image_height = BUTTON_ICON_HEIGHT
+        self._theme = theme
 
         # Словарь для хранения информации о действиях
         # Ключ - строковый идентификатор действия,
@@ -360,11 +359,12 @@ class ActionController:
 
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
-        bitmap = readImage(image, self._image_width, self._image_height)
+        image_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        bitmap = readImage(image, image_size, image_size)
         if not bitmap.IsOk():
             logger.error("Invalid bitmap for %s", image)
             bitmap = readImage(
-                getBuiltinImagePath("cross.svg"), self._image_width, self._image_height
+                getBuiltinImagePath("cross.svg"), image_size, image_size
             )
 
         if issubclass(type(toolbar), ToolBar2):
@@ -417,7 +417,8 @@ class ActionController:
 
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
-        bitmap = readImage(image, self._image_width, self._image_height)
+        image_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        bitmap = readImage(image, image_size, image_size)
 
         if issubclass(type(toolbar), ToolBar2):
             toolbarItemId = toolbar.AddCheckButton(title, bitmap, wx.ID_ANY)

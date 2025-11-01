@@ -42,6 +42,7 @@ class NotesTreePanel(BasePrefPanel):
     def _createIconSizeGui(self, sizer):
         self._icon_size_items = [
             ("16 x 16", 16),
+            ("20 x 20", 20),
             ("24 x 24", 24),
             ("32 x 32", 32),
             ("48 x 48", 48),

@@ -111,7 +111,7 @@ class OutWikerApplication(wx.App):
 
         self._application.mainWindow = self._mainWindow
         self._application.actionController = ActionController(
-            self._mainWindow, self._application.config
+            self._mainWindow, self._application.config, self._application.theme
         )
         self._application.actionController.enableGui(self.enableActionsGui)
 
