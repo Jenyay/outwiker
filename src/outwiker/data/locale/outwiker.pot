@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-01 19:52+0300\n"
+"POT-Creation-Date: 2025-11-01 19:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1611,7 +1611,7 @@ msgid "Automatically open the recent file"
 msgstr ""
 
 #: outwiker/app/gui/preferences/generalpanel.py:206
-msgid "Language(restart required)"
+msgid "Language (an application restart is required)"
 msgstr ""
 
 #: outwiker/app/gui/preferences/generalpanel.py:211
@@ -1786,7 +1786,7 @@ msgid "Main window title format"
 msgstr ""
 
 #: outwiker/app/gui/preferences/mainwindowpanel.py:81
-msgid "Buttons icon size (restart application required)"
+msgid "Buttons icon size (an application restart is required)"
 msgstr ""
 
 #: outwiker/app/gui/preferences/notestreepanel.py:27

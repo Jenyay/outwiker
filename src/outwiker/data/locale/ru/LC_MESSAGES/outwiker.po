@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-01 19:52+0300\n"
+"POT-Creation-Date: 2025-11-01 19:59+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1619,8 +1619,8 @@ msgid "Automatically open the recent file"
 msgstr "При запуске открывать последний открытый файл"
 
 #: outwiker/app/gui/preferences/generalpanel.py:206
-msgid "Language(restart required)"
-msgstr "Язык (требуется перезапуск)"
+msgid "Language (an application restart is required)"
+msgstr "Язык (требуется перезапуск приложения)"
 
 #: outwiker/app/gui/preferences/generalpanel.py:211
 msgid "Help with translation"
@@ -1798,7 +1798,7 @@ msgid "Main window title format"
 msgstr "Формат заголовка главного окна"
 
 #: outwiker/app/gui/preferences/mainwindowpanel.py:81
-msgid "Buttons icon size (restart application required)"
+msgid "Buttons icon size (an application restart is required)"
 msgstr "Размер значков на кнопках (требуется перезапуск приложения)"
 
 #: outwiker/app/gui/preferences/notestreepanel.py:27
@@ -3116,6 +3116,12 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Language(restart required)"
+#~ msgstr "Язык (требуется перезапуск)"
+
+#~ msgid "Buttons icon size (restart application required)"
+#~ msgstr "Размер значков на кнопках (требуется перезапуск приложения)"
 
 #~ msgid "Show note icon"
 #~ msgstr "Отображать значок заметки"

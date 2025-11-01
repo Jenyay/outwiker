@@ -78,7 +78,7 @@ class MainWindowPanel(BasePrefPanel):
         sizer = wx.FlexGridSizer(cols=2)
         sizer.AddGrowableCol(1)
 
-        self._buttonsIconSizeComboBox = self._createLabelAndComboBox(_("Buttons icon size (restart application required)"), sizer)[1]
+        self._buttonsIconSizeComboBox = self._createLabelAndComboBox(_("Buttons icon size (an application restart is required)"), sizer)[1]
         for title, size in self._buttons_icon_size_items:
             self._buttonsIconSizeComboBox.Append(title)
 
