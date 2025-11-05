@@ -310,6 +310,22 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
+    def test_get_icon_redirect(self):
+        controller = IconController(self.std_path)
+        redirected_icon = os.path.join(self.std_subdir, "redirected.svg")
+        self._create_file(redirected_icon)
+        controller.add_redirect("example.png", os.path.join("subdir", "redirected.svg"))
+
+        self._page.params.iconOption.value = "example.png"
+        self.assertEqual(controller.get_icon(self._page), os.path.join(self.std_subdir, "redirected.svg"))
+
+    def test_get_icon_redirect_invalid(self):
+        controller = IconController(self.std_path)
+        controller.add_redirect("example.png", os.path.join("subdir", "redirected.svg"))
+
+        self._page.params.iconOption.value = "example.png"
+        self.assertIsNone(controller.get_icon(self._page))
+
     def test_set_icon_builtin_01(self):
         controller = IconController(self.std_path)
 

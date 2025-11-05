@@ -4,7 +4,7 @@
 import os
 import os.path
 import shutil
-from typing import Union
+from typing import Dict, Union
 
 from outwiker.core.defines import ICONS_EXTENSIONS, ICONS_STD_PREFIX, PAGE_ICON_NAME
 from outwiker.core.events import PAGE_UPDATE_ICON
@@ -18,6 +18,17 @@ class IconController:
         builtin_icons_path -- path to built-in icons folder.
         """
         self._builtin_icons_path = builtin_icons_path
+        self._redirect: Dict[str, str] = {}
+
+        # Used to move builtin icons to other subfolders
+        self._redirect["__std_attach.png"] = os.path.join("office", "__std_clip.svg")
+        self._redirect["__std_calculator.png"] = os.path.join("office", "__std_calculator.png")
+        self._redirect["__std_cut.png"] = os.path.join("office", "__std_cut.png")
+        self._redirect["__std_cuter.png"] = os.path.join("office", "__std_cutter.png")
+
+    # Used in tests
+    def add_redirect(self, src_icon_path, dst_icon_path):
+        self._redirect[src_icon_path] = dst_icon_path
 
     def _is_subdir(self, fname, directory):
         fname = os.path.realpath(fname)
@@ -138,8 +149,8 @@ class IconController:
         icon_from_config = page.params.iconOption.value.strip()
         icon_file = None
         if icon_from_config:
-            icon_from_config = icon_from_config.replace("\\", os.sep)
-            icon_from_config = icon_from_config.replace("/", os.sep)
+            icon_from_config = self._fix_slashes(icon_from_config)
+            icon_from_config = self._redirect.get(icon_from_config, icon_from_config)
             icon_path_src = os.path.join(self._builtin_icons_path, icon_from_config)
 
             # Return vector icon instead of bitmap icon if exists
@@ -153,6 +164,11 @@ class IconController:
             icon_file = None
 
         return icon_file
+
+    def _fix_slashes(self, path: str) -> str:
+        path = path.replace("\\", os.sep)
+        path = path.replace("/", os.sep)
+        return path
 
     @staticmethod
     def display_name(file_name):
