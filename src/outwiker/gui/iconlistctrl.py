@@ -10,7 +10,6 @@ from wx.lib.newevent import NewEvent
 from outwiker.core.defines import ICON_DEFAULT
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.iconcontroller import IconController
-from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH
 from outwiker.gui.images import readImage
 from outwiker.gui.theme import Theme
 
@@ -34,11 +33,13 @@ class IconButton:
         self._normalBackground = wx.Colour(255, 255, 255)
         self._selectedBackground = wx.Colour(160, 190, 255)
         self._borderColor = wx.Colour(0, 0, 255)
+        self._icon_size = 16
 
         if theme is not None:
             self._normalBackground = theme.colorBackground
             self._selectedBackground = theme.colorBackgroundSelected
             self._borderColor = theme.get(Theme.SECTION_GENERAL, Theme.CONTROL_BORDER_SELECTED_COLOR)
+            self._icon_size = theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE)
 
         self._x = 0
         self._y = 0
@@ -50,12 +51,12 @@ class IconButton:
     def _createImage(self, fname):
         # Disable wxPython message about the invalid picture format
         wx.Log.EnableLogging(False)
-        image = readImage(fname, ICONS_WIDTH, ICONS_HEIGHT)
+        image = readImage(fname, self._icon_size, self._icon_size)
         wx.Log.EnableLogging(True)
 
         if not image.IsOk():
             logging.error("Invalid icon file: %s", fname)
-            image = readImage(self._invalidFileName, ICONS_WIDTH, ICONS_HEIGHT)
+            image = readImage(self._invalidFileName, self._icon_size, self._icon_size)
 
         return image
 
@@ -161,8 +162,12 @@ class IconListCtrl(wx.ScrolledWindow):
         self._propagationLevel = 20
 
         self._backgroundColor = wx.Colour(255, 255, 255)
+        self.cellWidth = 32
         if self._theme is not None:
             self._backgroundColor = self._theme.colorBackground
+            self.cellWidth = self._theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE) + 16
+
+        self.cellHeight = self.cellWidth
 
         self._canvas = wx.Panel(self)
         self._canvas.SetSize((0, 0))
@@ -174,8 +179,6 @@ class IconListCtrl(wx.ScrolledWindow):
 
         self.Bind(wx.EVT_SCROLLWIN, handler=self.__onScroll)
 
-        self.cellWidth = 32
-        self.cellHeight = 32
         self.margin = 1
         self.multiselect = multiselect
 
