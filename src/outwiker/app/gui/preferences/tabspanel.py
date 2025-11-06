@@ -36,11 +36,25 @@ class TabsPanel(BasePrefPanel):
         self._showIconCheckBox = self._createCheckBox(_("Show note icons"), main_sizer)
         main_sizer.AddStretchSpacer()
 
+        self._createIconSizeGui(main_sizer)
+
         self._showCloseButtonCheckBox = self._createCheckBox(_("Show close buttons"), main_sizer)
         main_sizer.AddStretchSpacer()
 
         self.SetSizer(main_sizer)
         self.Layout()
+
+    def _createIconSizeGui(self, sizer):
+        self._icon_size_items = [
+            ("16 x 16", 16),
+            ("20 x 20", 20),
+            ("24 x 24", 24),
+            ("32 x 32", 32),
+            ("48 x 48", 48),
+        ]
+        self._iconSizeComboBox = self._createLabelAndComboBox(_("Icon size"), sizer)[1]
+        for title, size in self._icon_size_items:
+            self._iconSizeComboBox.Append(title)
 
     def LoadState(self):
         self._minTabWidthCtrl.SetValue(self._tabsConfig.minTabWidth.value)
@@ -64,6 +78,14 @@ class TabsPanel(BasePrefPanel):
         self._showIconCheckBox.SetValue(self._tabsConfig.showIcon.value)
         self._showCloseButtonCheckBox.SetValue(self._tabsConfig.showCloseButton.value)
 
+        icon_size = self._tabsConfig.iconSize.value
+        icon_size_index = 0
+        for n, (title, size) in enumerate(self._icon_size_items):
+            if size == icon_size:
+                icon_size_index = n
+
+        self._iconSizeComboBox.SetSelection(icon_size_index)
+
     def Save(self):
         min_tab_width = self._minTabWidthCtrl.GetValue()
         max_tab_width = self._maxTabWidthCtrl.GetValue()
@@ -85,3 +107,6 @@ class TabsPanel(BasePrefPanel):
 
         self._tabsConfig.showIcon.value = self._showIconCheckBox.GetValue()
         self._tabsConfig.showCloseButton.value = self._showCloseButtonCheckBox.GetValue()
+
+        icon_size = self._icon_size_items[self._iconSizeComboBox.GetSelection()][1]
+        self._tabsConfig.iconSize.value = icon_size

@@ -37,7 +37,7 @@ ADD_BUTTON_STATE_HOVER = 1
 ADD_BUTTON_STATE_DOWNED = 2
 
 
-logger = logging.getLogger("outwiker.app.gui.tabsctrl2")
+logger = logging.getLogger("outwiker.app.gui.tabsctrl")
 
 
 class TabsCtrl(wx.Window):
@@ -106,7 +106,10 @@ class TabsCtrl(wx.Window):
     def SetForegroundColour(self, colour):
         super().SetForegroundColour(colour)
 
-    def Recalculate(self):
+    def Recalculate(self, reset_icon_cache: bool = False):
+        if reset_icon_cache:
+            self._tab_render.reset_icon_cache()
+
         self._text_height = self._get_text_height()
         self._calc_geometry()
         self.SetMinSize((-1, self._geometry.get_full_height(self._text_height)))
@@ -963,6 +966,9 @@ class TabRender:
 
         # Main icons for notes
         self._defaultIcon = getBuiltinImagePath("page.svg")
+        self.reset_icon_cache()
+
+    def reset_icon_cache(self):
         icon_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_ICON_SIZE)
         self._iconsCache = ImageListCache(self._defaultIcon, icon_size, icon_size)
 
