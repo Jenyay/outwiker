@@ -356,18 +356,6 @@ class WikiPageView(BaseWikiPageView):
             fullUpdate=False,
         )
 
-        # Text style
-        actionController.appendMenuItem(WikiStyleOnlyAction.stringId, menu)
-        actionController.appendToolbarButton(
-            WikiStyleOnlyAction.stringId,
-            toolbar,
-            getBuiltinImagePath("text_style.svg"),
-            fullUpdate=False,
-        )
-
-        # Advanced text style
-        actionController.appendMenuItem(WikiStyleAdvancedAction.stringId, menu)
-
     def __addAlignTools(self):
         toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_WIKI_ALIGN]
         menu = self._alignMenu
@@ -616,6 +604,18 @@ class WikiPageView(BaseWikiPageView):
 
         # Multiline block
         actionController.appendMenuItem(MultilineBlockAction.stringId, menu)
+
+        # Text style
+        actionController.appendMenuItem(WikiStyleOnlyAction.stringId, menu)
+        actionController.appendToolbarButton(
+            WikiStyleOnlyAction.stringId,
+            toolbar,
+            getBuiltinImagePath("text_style.svg"),
+            fullUpdate=False,
+        )
+
+        # Advanced text style
+        actionController.appendMenuItem(WikiStyleAdvancedAction.stringId, menu)
 
     def __addOtherTools(self):
         """
