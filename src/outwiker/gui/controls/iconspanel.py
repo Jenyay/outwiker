@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.gui.iconlistctrl import IconListCtrl
+from outwiker.gui.controls.iconlistctrl import IconListCtrl
 from outwiker.gui.controls.switchthemed import SwitchThemed
 from outwiker.gui.theme import Theme
 

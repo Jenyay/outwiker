@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
 from outwiker.gui.images import readImage
 
 import wx
@@ -14,7 +13,7 @@ from outwiker.gui.defines import (
     BUTTON_ICON_HEIGHT,
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
-from outwiker.gui.iconlistctrl import IconListCtrl
+from outwiker.gui.controls.iconlistctrl import IconListCtrl
 from outwiker.gui.iconscollection import IconsCollection, DuplicateGroupError
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.gui.preferences.prefpanel import BasePrefPanel

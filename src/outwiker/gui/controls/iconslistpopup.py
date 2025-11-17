@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.app.gui.pagedialogpanels.iconspanel import IconsPanel
+from outwiker.gui.controls.iconspanel import IconsPanel
 from outwiker.gui.controls.popupwindow import PopupWindow
 
 

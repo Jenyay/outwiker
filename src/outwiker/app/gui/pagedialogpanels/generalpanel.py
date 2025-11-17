@@ -10,7 +10,7 @@ import wx
 
 import outwiker.core.factory as ocf
 
-from outwiker.app.gui.pagedialogpanels.iconslistpopup import IconsListPopup
+from outwiker.gui.controls.iconslistpopup import IconsListPopup
 
 from outwiker.core.application import Application
 from outwiker.core.tagslist import TagsList
@@ -36,7 +36,7 @@ from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig, TagsConfig
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 from outwiker.gui.controls.switchthemed import EVT_SWITCH
-from outwiker.gui.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
+from outwiker.gui.controls.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.theme import Theme
 from outwiker.gui.controls.marginsizer import MarginSizer
@@ -160,7 +160,7 @@ class GeneralController(BasePageDialogController):
             self._generalPanel,
             application,
             self._dialog,
-            application.theme
+            application.theme,
         )
 
         self._orderCalculators = [
