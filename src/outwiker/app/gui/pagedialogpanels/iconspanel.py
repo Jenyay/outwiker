@@ -8,14 +8,10 @@ from outwiker.gui.theme import Theme
 
 
 class IconsPanel(wx.Panel):
-    """
-    Class of the panel in the "Icon" tab.
-    """
-
     def __init__(self, parent, theme: Theme):
         super().__init__(parent)
-        self._groupsButtonHeight = 32
         self._theme = theme
+        self._groupsButtonHeight = int(self._theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE) * 1.8)
         self._createGui()
 
     def _createGui(self):
