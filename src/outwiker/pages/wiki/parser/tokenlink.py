@@ -10,7 +10,12 @@ from outwiker.core.htmlformatter import HtmlFormatter
 from outwiker.utilites.urls import is_url
 
 from .tokenattach import AttachToken
-from .htmlelements import create_link_to_page, create_link_to_attached_file, create_invalid_attached_file, create_invalid_link_to_page
+from .htmlelements import (
+    create_link_to_page,
+    create_link_to_attached_file,
+    create_invalid_attached_file,
+    create_invalid_link_to_page,
+)
 import outwiker.core.cssclasses as css
 
 
@@ -27,17 +32,19 @@ class LinkToken:
 
     def __init__(self, parser):
         self.parser = parser
-        self.attach_prefix = PAGE_ATTACH_DIR + '/'
+        self.attach_prefix = PAGE_ATTACH_DIR + "/"
         self.page_protocol = "page://"
 
     def getToken(self):
-        return QuotedString(LinkToken.linkStart,
-                            endQuoteChar=LinkToken.linkEnd,
-                            multiline=False,
-                            convertWhitespaceEscapes=False).setParseAction(self._convertToLink)("link")
+        return QuotedString(
+            LinkToken.linkStart,
+            endQuoteChar=LinkToken.linkEnd,
+            multiline=False,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self._convertToLink)("link")
 
     def _isHasImage(self, text: str) -> bool:
-        return '<img' in text.lower()
+        return "<img" in text.lower()
 
     def _convertToLink(self, _s, _l, t):
         """
@@ -83,34 +90,37 @@ class LinkToken:
             url = url.strip()
 
             # Extract path to attached file
-            url = url[len(AttachToken.attachString):]
+            url = url[len(AttachToken.attachString) :]
             url = self._removeQuotes(url)
 
-            return '{}/{}'.format(PAGE_ATTACH_DIR, url)
+            return "{}/{}".format(PAGE_ATTACH_DIR, url)
 
         return url
 
     def _removeQuotes(self, text):
-        if ((text.startswith("'") and text.endswith("'")) or
-                ((text.startswith('"') and text.endswith('"')))):
+        if (text.startswith("'") and text.endswith("'")) or (
+            (text.startswith('"') and text.endswith('"'))
+        ):
             text = text[1:-1]
 
         return text
 
     def _getUrlTag(self, url, comment):
         return self._generateHtmlTag(
-            url.strip(),
-            self.parser.parseLinkMarkup(comment.strip()))
+            url.strip(), self.parser.parseLinkMarkup(comment.strip())
+        )
 
     def _generateHtmlTag(self, url, comment):
-        if (not is_url(url) and
-                not url.startswith(self.attach_prefix) and
-                not url.startswith('#') and
-                not url.startswith('mailto:')):
+        if (
+            not is_url(url)
+            and not url.startswith(self.attach_prefix)
+            and not url.startswith("#")
+            and not url.startswith("mailto:")
+        ):
             url = self.page_protocol + url
 
         if url.startswith(self.attach_prefix) and not self._isHasImage(comment):
-            if Attachment(self.parser.page).exists(url[len(self.attach_prefix):]):
+            if Attachment(self.parser.page).exists(url[len(self.attach_prefix) :]):
                 return create_link_to_attached_file(url, comment)
             else:
                 return create_invalid_attached_file(comment)
@@ -128,23 +138,24 @@ class LinkToken:
 
         if textStrip.startswith(AttachToken.attachString):
             # Ссылка на прикрепление
-            attach_name = self._removeQuotes(
-                    textStrip[len(AttachToken.attachString):])
+            attach_name = self._removeQuotes(textStrip[len(AttachToken.attachString) :])
 
-            url = '{}/{}'.format(PAGE_ATTACH_DIR, attach_name)
+            url = "{}/{}".format(PAGE_ATTACH_DIR, attach_name)
             comment = attach_name
             if Attachment(self.parser.page).exists(attach_name):
                 return create_link_to_attached_file(url, comment)
             else:
                 return create_invalid_attached_file(comment)
-        elif (textStrip.startswith("#") and
-                self.parser.page is not None and
-                self.parser.page[textStrip] is None):
+        elif (
+            textStrip.startswith("#")
+            and self.parser.page is not None
+            and self.parser.page[textStrip] is None
+        ):
             # Ссылка начинается на #, но вложенных страниц с таким именем нет,
             # значит это якорь
             return HtmlFormatter().anchor(textStrip[1:])
         elif textStrip.startswith(self.page_protocol):
-            return self._generateLinkToPage(textStrip[len(self.page_protocol):])
+            return self._generateLinkToPage(textStrip[len(self.page_protocol) :])
 
         # Ссылка не на прикрепление
         url = text.strip()

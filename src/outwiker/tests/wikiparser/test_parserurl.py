@@ -11,7 +11,7 @@ from outwiker.tests.utils import removeDir
 import outwiker.core.cssclasses as css
 
 
-class ParserUrlTest (unittest.TestCase):
+class ParserUrlTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
         self.encoding = "utf8"
@@ -25,7 +25,7 @@ class ParserUrlTest (unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -41,8 +41,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse2(self):
         text = "http://example.com/."
@@ -51,8 +51,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse3(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz),"
@@ -61,8 +61,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse4(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)."
@@ -71,8 +71,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse5(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/,"
@@ -81,8 +81,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse6(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/."
@@ -91,8 +91,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse7(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/"
@@ -101,8 +101,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse8(self):
         text = "http://ru.wikipedia.org/wiki/xxx,_yyy_(zzz)/"
@@ -111,18 +111,20 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse9(self):
         text = "www.jenyay.net"
-        result = f'<a class="{css.CSS_WIKI}" href="http://www.jenyay.net">www.jenyay.net</a>'
+        result = (
+            f'<a class="{css.CSS_WIKI}" href="http://www.jenyay.net">www.jenyay.net</a>'
+        )
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse10(self):
         text = "www.jenyay.net,"
@@ -131,8 +133,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse11(self):
         text = "www.jenyay.net."
@@ -141,8 +143,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse12(self):
         text = "www.jenyay.net/"
@@ -151,18 +153,20 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse13(self):
         text = "ftp.jenyay.net"
-        result = f'<a class="{css.CSS_WIKI}" href="http://ftp.jenyay.net">ftp.jenyay.net</a>'
+        result = (
+            f'<a class="{css.CSS_WIKI}" href="http://ftp.jenyay.net">ftp.jenyay.net</a>'
+        )
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse14(self):
         text = "http://rapidshare.com/#!download|514l34|373912473|ansys_hfss_12.1_with_fix.part1.rar|100431"
@@ -171,8 +175,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse15(self):
         text = "бла-бла-бла http://IP-адрес-apt-proxy:9999/ubuntu/ бла-бла"
@@ -181,8 +185,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse16(self):
         text = "192.168.1.1"
@@ -191,8 +195,8 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse17(self):
         text = "192.168.100.100"
@@ -201,28 +205,28 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse18(self):
         text = "999.99.1.1"
-        result = '999.99.1.1'
+        result = "999.99.1.1"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse19(self):
         text = "192.168.100.10010"
-        result = '192.168.100.10010'
+        result = "192.168.100.10010"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse20(self):
         text = "Бла бла 192.168.1.1 бла"
@@ -231,99 +235,109 @@ class ParserUrlTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse21(self):
         text = "99.99.1.1.20"
-        result = '99.99.1.1.20'
+        result = "99.99.1.1.20"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse22(self):
         text = "Бла бла 99.99.1.1.20 бла"
-        result = 'Бла бла 99.99.1.1.20 бла'
+        result = "Бла бла 99.99.1.1.20 бла"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse23(self):
         text = "192.168.100.256"
-        result = '192.168.100.256'
+        result = "192.168.100.256"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse24(self):
         text = "092.168.10.10"
-        result = f'<a class="{css.CSS_WIKI}" href="http://092.168.10.10">092.168.10.10</a>'
+        result = (
+            f'<a class="{css.CSS_WIKI}" href="http://092.168.10.10">092.168.10.10</a>'
+        )
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse25(self):
         text = "192.168.100.25абырвалг"
-        result = '192.168.100.25абырвалг'
+        result = "192.168.100.25абырвалг"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse26(self):
         text = "абырвалг192.168.100.25"
-        result = 'абырвалг192.168.100.25'
+        result = "абырвалг192.168.100.25"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUrlParse27(self):
         text = "0.168.100.100"
-        result = '0.168.100.100'
+        result = "0.168.100.100"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
-    def testUrlParse28(self):
-        text = "page://__adsfasdfaf"
-        result = '<a class="ow-wiki ow-link-page" href="page://__adsfasdfaf">page://__adsfasdfaf</a>'
+    def testPageProtocol(self):
+        uid = self._application.pageUidDepot.createUid(self.testPage)
+        text = f"бла-бла-бла page://{uid} бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{uid}">{self.testPage.display_title}</a> бла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
 
-    def testUrlParse29(self):
-        text = "page://__абырвалг-ффф"
-        result = '<a class="ow-wiki ow-link-page" href="page://__абырвалг-ффф">page://__абырвалг-ффф</a>'
+    def testPageProtocolSlash(self):
+        uid = self._application.pageUidDepot.createUid(self.testPage)
+        text = f"бла-бла-бла page://{uid}/ бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{uid}">{self.testPage.display_title}</a> бла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
 
-    def testUrlParse30(self):
-        text = "page://__adsfasdfaf/"
-        result = '<a class="ow-wiki ow-link-page" href="page://__adsfasdfaf/">page://__adsfasdfaf/</a>'
+    def testPageProtocolInvalidUid(self):
+        uid = "invalid_uid"
+        text = f"бла-бла-бла page://{uid} бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page ow-link-page-error" href="page://{uid}">page://{uid}</a> бла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
 
-    def testUrlParse31(self):
-        text = "page://__абырвалг-ффф/"
-        result = '<a class="ow-wiki ow-link-page" href="page://__абырвалг-ффф/">page://__абырвалг-ффф/</a>'
+    def testPageProtocolSlashInvalidUid(self):
+        uid = "invalid_uid"
+        text = f"бла-бла-бла page://{uid}/ бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page ow-link-page-error" href="page://{uid}">page://{uid}</a> бла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
