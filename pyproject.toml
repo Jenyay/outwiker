@@ -16,8 +16,7 @@ dependencies = [
     "psutil>=6.0.0",
     "rcssmin==1.2.2",
     "attrdict3==2.0.2",
-    "cacheman==2.2.0",
-    "cyhunspell",
+    "chunspell==2.0.4",
 ]
 classifiers=[
     "Development Status :: 3 - Alpha",
@@ -71,8 +70,6 @@ classifiers=[
 
     [tool.uv.sources]
     owbuildtools = { path = "./owbuildtools", editable = true }
-    cyhunspell = { path = "./depends/cyhunspell" }
-    #cacheman = { path = "./depends/cacheman" }
 
     [build-system]
     requires = ["setuptools", "wheel"]
