@@ -129,9 +129,6 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             "html.parser",
             "pkg_resources",
             "hunspell",
-            "hunspell.platform",
-            "cacheman",
-            "cacheman.cachewrap",
         ]
 
     def get_includes_dirs(self):
