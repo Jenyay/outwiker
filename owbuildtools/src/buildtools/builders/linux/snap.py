@@ -93,10 +93,10 @@ class BuilderSnap(BuilderBase):
         dest_plugins_dir = os.path.join(usr_share_outwiker, PLUGINS_DIR)
         self._copy_plugins(dest_plugins_dir)
 
-        dirs = ['depends']
-        for dir_name in dirs:
-            name = os.path.basename(dir_name)
-            shutil.copytree(dir_name, os.path.join(root, name))
+        # dirs = ['depends']
+        # for dir_name in dirs:
+        #     name = os.path.basename(dir_name)
+        #     shutil.copytree(dir_name, os.path.join(root, name))
 
     def _prepare_snapcraft_file(self, snapcraft_file):
         substitute_in_file(snapcraft_file,
