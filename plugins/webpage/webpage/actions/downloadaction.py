@@ -3,12 +3,13 @@
 from abc import ABCMeta, abstractmethod
 
 from outwiker.api.gui.actions import BaseAction
+from outwiker.api.core import Application
 
 from webpage.i18n import get_
 
 
 class BaseWebPageAction(BaseAction, metaclass=ABCMeta):
-    def __init__(self, application):
+    def __init__(self, application: Application):
         super().__init__()
         self._application = application
         global _
@@ -17,7 +18,7 @@ class BaseWebPageAction(BaseAction, metaclass=ABCMeta):
     def run(self, params):
         from webpage.gui.downloaddialog import DownloadDialog, DownloadDialogController
 
-        with DownloadDialog(self._application.mainWindow) as dlg:
+        with DownloadDialog(self._application.mainWindow, self._application.theme) as dlg:
             controller = DownloadDialogController(
                 dlg, self._application, self._getParentPage()
             )

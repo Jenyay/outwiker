@@ -13,6 +13,7 @@ from outwiker.api.app.clipboard import getClipboardText
 from outwiker.api.core.tags import TagsList
 from outwiker.api.gui.dialogs import TestedDialog, MessageBox, TestedFileDialog
 from outwiker.api.gui.controls import TagsSelector
+from outwiker.api.gui.controls import Theme
 
 import webpage.events
 from webpage.downloader import Downloader, WebPageDownloadController
@@ -23,11 +24,12 @@ from webpage.i18n import get_
 
 
 class DownloadDialog(TestedDialog):
-    def __init__(self, parent):
+    def __init__(self, parent: wx.Window, theme: Theme):
         super().__init__(parent)
         global _
         _ = get_()
 
+        self._theme = theme
         self._createGui()
         self.urlText.SetFocus()
 
@@ -66,7 +68,7 @@ class DownloadDialog(TestedDialog):
         mainSizer.Add(urlSizer, 0, wx.ALL | wx.EXPAND, border=2)
 
     def _addTagsList(self, mainSizer):
-        self.tagsSelector = TagsSelector(self)
+        self.tagsSelector = TagsSelector(self, self._theme)
         mainSizer.Add(self.tagsSelector, 0, wx.EXPAND, 0)
 
     def _addLogGui(self, mainSizer):

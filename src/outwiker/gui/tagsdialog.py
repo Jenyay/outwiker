@@ -2,6 +2,7 @@
 
 import wx
 
+from outwiker.core.application import Application
 from outwiker.core.tagslist import TagsList
 from outwiker.gui.defines import CONTROLS_HGAP, CONTROLS_MARGIN, CONTROLS_VGAP
 from outwiker.gui.controls.marginsizer import MarginSizer
@@ -9,10 +10,11 @@ from .tagsselector import TagsSelector
 
 
 class TagsDialog(wx.Dialog):
-    def __init__(self, parent, application):
+    def __init__(self, parent: wx.Window, application: Application):
         super().__init__(parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         self.__application = application
+        self.__theme = self.__application.theme
 
         self.__createControls()
         self.__setTagsList()
@@ -27,7 +29,7 @@ class TagsDialog(wx.Dialog):
 
     def __createControls(self):
         self.__tagsLabel = wx.StaticText(self, -1, _("Tags (comma separated)"))
-        self.__tagsSelector = TagsSelector(self, enable_active_tags_filter=False)
+        self.__tagsSelector = TagsSelector(self, self.__theme, enable_active_tags_filter=False)
         self.__tagsSelector.SetMinSize((350, -1))
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 

@@ -29,7 +29,7 @@ from outwiker.core.events import (
     PageDialogPageIconChangedParams,
     IconsGroupsListInitParams,
 )
-from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH, CONTROLS_HGAP, CONTROLS_VGAP
+from outwiker.gui.defines import CONTROLS_HGAP, CONTROLS_VGAP
 from outwiker.gui.iconscollection import IconsCollection
 from outwiker.gui.images import readImage
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
@@ -125,7 +125,7 @@ class GeneralPanel(wx.Panel):
 
         # Tags
         self.tagsLabel = wx.StaticText(self, -1, _("Tags (comma separated)"))
-        self.tagsSelector = TagsSelector(self, enable_active_tags_filter=False)
+        self.tagsSelector = TagsSelector(self, self._theme, enable_active_tags_filter=False)
 
     def popupIconsList(self):
         self.iconsPopup.Popup(self)
@@ -142,7 +142,8 @@ class GeneralPanel(wx.Panel):
         self.titleTextCtrl.SetValue(value)
 
     def setPageIcon(self, iconFileName):
-        bitmap = readImage(iconFileName, ICONS_WIDTH, ICONS_HEIGHT)
+        icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        bitmap = readImage(iconFileName, icon_size, icon_size)
         self.iconBtn.SetBitmapLabel(bitmap)
         # Need in Windows
         self.Layout()

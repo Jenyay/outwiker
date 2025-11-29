@@ -153,12 +153,6 @@ class TagsCloud(wx.Panel):
 
     def _onLeftDown(self, event):
         self._callTagEvent(event, "onLeftDown")
-        # event.Skip()
-        # x, y = self._getMouseCoord(event)
-        # label = self._findLabel(x, y)
-        # if label is not None:
-        #     label_x, label_y = label.getPosition()
-        #     label.onLeftDown(x - label_x, y - label_y)
 
     def _onLeftUp(self, event):
         self._callTagEvent(event, "onLeftUp")
