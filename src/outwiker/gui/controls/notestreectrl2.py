@@ -936,7 +936,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._dragMode = False
         self._mouseLeftDownXY = None
         self._dragItem = None
-        self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
+        self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
 
     def _dropItem(self, srcItem: NotesTreeItem, destItem: NotesTreeItem):
         event = None
@@ -988,7 +988,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _processMoveDragMode(self, event):
         if self._dragItem is not None and event.LeftIsDown():
             self._dragMode = True
-            self.SetCursor(wx.StockCursor(wx.CURSOR_HAND))
+            self.SetCursor(wx.Cursor(wx.CURSOR_HAND))
             if not self.HasCapture():
                 self.CaptureMouse()
 
