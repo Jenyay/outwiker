@@ -25,7 +25,7 @@ class TagsPopupWindow(PopupWindow):
         self._theme = theme
         self._enable_active_tags_filter = enable_active_tags_filter
         self._tagsList: Optional[TagsList] = None
-        super().__init__(parent, None)
+        super().__init__(parent, self._theme)
         self.SetMinSize((350, 250))
         self.SetSize(self.GetMinSize())
 
