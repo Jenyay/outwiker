@@ -7,6 +7,7 @@ from typing import List, Optional
 
 import wx
 
+from outwiker.core.application import Application
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
@@ -18,14 +19,14 @@ class PrefDialog(TestedDialog):
     Класс диалога настроек
     """
 
-    def __init__(self, parent, application):
+    def __init__(self, parent: wx.Window, application: Application):
         style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         super().__init__(parent, style=style)
 
         self._default_icon = getBuiltinImagePath("page.svg")
 
         self._application = application
-        self._treeBook = Treebook2(self, self._default_icon)
+        self._treeBook = Treebook2(self, self._application.theme, self._default_icon)
         self._do_layout()
         self._application.onPreferencesDialogCreate(self)
 

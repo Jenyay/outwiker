@@ -10,22 +10,25 @@ import wx
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagslist import TagsList
 from outwiker.gui.controls.taglabel2 import TagLabel2
-from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST, BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST
 from outwiker.gui.images import readImage
+from outwiker.gui.theme import Theme
 
 
 class TagsCloud(wx.Panel):
     def __init__(
         self,
-        parent,
+        parent: wx.Window,
+        theme: Theme,
         use_buttons: bool = True,
         min_font_size: int = 8,
         max_font_size: int = 16,
         mode: str = TAGS_CLOUD_MODE_CONTINUOUS,
         enable_tooltips: bool = True,
-        enable_active_tags_filter: bool = True
+        enable_active_tags_filter: bool = True,
     ):
         super().__init__(parent)
+        self._theme = theme
         self._use_buttons = use_buttons
         self._min_font_size = min_font_size
         self._max_font_size = max_font_size
@@ -86,8 +89,12 @@ class TagsCloud(wx.Panel):
 
             label_x_min, label_y_min = label.getPosition()
             label_x_max, label_y_max = label.getPositionMax()
-            if (y >= label_y_min and y <= label_y_max and
-                    x >= label_x_min and x <= label_x_max):
+            if (
+                y >= label_y_min
+                and y <= label_y_max
+                and x >= label_x_min
+                and x <= label_x_max
+            ):
                 result = label
                 break
 
@@ -124,8 +131,7 @@ class TagsCloud(wx.Panel):
         x, y = self._getMouseCoord(event)
         label = self._findLabel(x, y)
 
-        if (self._prevLabelHovered is not None and 
-                label is not self._prevLabelHovered):
+        if self._prevLabelHovered is not None and label is not self._prevLabelHovered:
             self._tags_panel.UnsetToolTip()
             self._prevLabelHovered.setHover(False)
 
@@ -133,7 +139,9 @@ class TagsCloud(wx.Panel):
             label.setHover(True)
             if self._enable_tooltips:
                 assert self._tags is not None
-                tooltip = _("Number of notes: {}").format(len(self._tags[label.getLabel()]))
+                tooltip = _("Number of notes: {}").format(
+                    len(self._tags[label.getLabel()])
+                )
                 self._tags_panel.SetToolTip(tooltip)
 
         self._prevLabelHovered = label
@@ -170,7 +178,10 @@ class TagsCloud(wx.Panel):
         self._callTagEvent(event, "onMiddleUp")
 
     def _getScrolledY(self) -> Tuple[int, int]:
-        ymin = self._tags_panel.GetScrollPos(wx.VERTICAL) * self._tags_panel.GetScrollPixelsPerUnit()[1]
+        ymin = (
+            self._tags_panel.GetScrollPos(wx.VERTICAL)
+            * self._tags_panel.GetScrollPixelsPerUnit()[1]
+        )
         ymax = ymin + self._tags_panel.GetClientSize()[1]
         return (ymin, ymax)
 
@@ -219,7 +230,8 @@ class TagsCloud(wx.Panel):
         self._tags_panel.SetScrollRate(0, 0)
 
         self._search_ctrl = wx.SearchCtrl(self)
-        tagBitmap = readImage(getBuiltinImagePath("tag.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
+        icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        tagBitmap = readImage(getBuiltinImagePath("tag.svg"), icon_size, icon_size)
         self._active_tags_flag = wx.BitmapToggleButton(self, label=tagBitmap)
         self._active_tags_flag.SetToolTip(_("Applied tags only"))
         self._active_tags_flag.Show(self._enable_active_tags_filter)
@@ -282,7 +294,9 @@ class TagsCloud(wx.Panel):
 
         active_only = self._active_tags_flag.GetValue()
         self._filtered_tags = (
-            self._filter_tags(self._tags.tags, active_only) if self._tags is not None else []
+            self._filter_tags(self._tags.tags, active_only)
+            if self._tags is not None
+            else []
         )
         self._filter_tag_labels()
         self._tags_panel.Scroll(-1, oldy)
@@ -297,7 +311,9 @@ class TagsCloud(wx.Panel):
             return
 
         self._filtered_tags = (
-            self._filter_tags(self._tags.tags, active_only) if self._tags is not None else []
+            self._filter_tags(self._tags.tags, active_only)
+            if self._tags is not None
+            else []
         )
         self._filter_tag_labels()
 
@@ -319,7 +335,7 @@ class TagsCloud(wx.Panel):
                 self._use_buttons,
                 self._min_font_size,
                 self._max_font_size,
-                back_color=back_color
+                back_color=back_color,
             )
 
             self._labels[tag] = newlabel
@@ -336,7 +352,11 @@ class TagsCloud(wx.Panel):
 
     def _filter_tags(self, tags: List[str], active_only: bool) -> List[str]:
         return list(
-            filter(lambda tag_name: self._filter.lower() in tag_name.lower() and (not active_only or self.isMarked(tag_name)), tags)
+            filter(
+                lambda tag_name: self._filter.lower() in tag_name.lower()
+                and (not active_only or self.isMarked(tag_name)),
+                tags,
+            )
         )
 
     def mark(self, tag: str, marked: bool = True):
