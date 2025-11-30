@@ -237,8 +237,6 @@ class _ItemsViewInfo:
         self._dc = wx.ClientDC(self._window)
 
         # Sizes
-        self.extra_icons_left_margin = 2
-        self.selection_margin_vertical = 2
         self.order_marker_weight = 3
 
         self.drop_hover_color = wx.Colour(
@@ -249,6 +247,14 @@ class _ItemsViewInfo:
         )
 
         self.update_theme()
+
+    @property
+    def extra_icons_left_margin(self) -> int:
+        return self.icon_width // 4
+
+    @property
+    def selection_margin_vertical(self) -> int:
+        return self.icon_width // 8
 
     @property
     def left_margin(self) -> int:
@@ -473,11 +479,16 @@ class _ItemsPainter:
     ) -> None:
         self._window = window
         self._dc = dc
+        self._gc = wx.GraphicsContext.Create(dc)
+
         self._image_list = image_list
         self._extra_image_list = extra_image_list
         self._view_info = view_info
 
-        self._gc = wx.GraphicsContext.Create(dc)
+        self._icon_width = self._view_info.icon_width
+        self._icon_height = self._view_info.icon_height
+        self._extra_icon_width = self._view_info.extra_icon_width
+        self._extra_icon_height = self._view_info.extra_icon_height
 
         self._expand_ctrl_images = SafeImageList(
             self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height
@@ -582,7 +593,7 @@ class _ItemsPainter:
             bitmap = self._expand_ctrl_images.GetBitmap(
                 self._expanded_img if item.isExpanded() else self._collapsed_img
             )
-            self._dc.DrawBitmap(bitmap, left, top)
+            self._gc.DrawBitmap(bitmap, left, top, bitmap.GetWidth(), bitmap.GetHeight())
 
     def _getContrastColor(self, color: wx.Colour, backColor: wx.Colour) -> wx.Colour:
         L, a, b = rgb_to_lab((color.red, color.green, color.blue))
@@ -683,10 +694,10 @@ class _ItemsPainter:
             left = self._view_info.getIconLeft(item) + dx
             top = (
                 self._view_info.getItemTop(item)
-                + (self._view_info.line_height - self._view_info.icon_height) // 2
+                + (self._view_info.line_height - self._icon_height) // 2
                 + dy
             )
-            self._dc.DrawBitmap(bitmap, left, top)
+            self._gc.DrawBitmap(bitmap, left, top, bitmap.GetWidth(), bitmap.GetHeight())
 
     def _drawExtraIcons(self, item: NotesTreeItem, dx: int, dy: int):
         for n, (title, image) in enumerate(item.getExtraIcons()):
@@ -695,10 +706,10 @@ class _ItemsPainter:
             left = self._view_info.getExtraIconLeft(item, n) + dx
             top = (
                 self._view_info.getItemTop(item)
-                + (self._view_info.line_height - self._view_info.extra_icon_height) // 2
+                + (self._view_info.line_height - self._extra_icon_height) // 2
                 + dy
             )
-            self._dc.DrawBitmap(bitmap, left, top)
+            self._gc.DrawBitmap(bitmap, left, top, bitmap.GetWidth(), bitmap.GetHeight())
 
 
 class NotesTreeCtrl2(wx.ScrolledWindow):
