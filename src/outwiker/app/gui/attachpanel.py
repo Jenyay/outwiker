@@ -301,6 +301,7 @@ class AttachPanel(wx.Panel):
         """
         Обновить список прикрепленных файлов
         """
+        setStatusText(self._application.mainWindow, self._ATTACH_STATUS_ITEM, "")
         showHiddenDirs = self._attach_config.showHiddenDirs.value
 
         self.__attachList.Freeze()
