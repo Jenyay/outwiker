@@ -305,7 +305,9 @@ class TabsCtrl(wx.Window):
         return None
 
     def _find_close_button_by_coord(self, x: int, y: int) -> Optional[int]:
-        if self._geometry.geometry is None or not self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_CLOSE_BUTTON):
+        if self._geometry.geometry is None or not self._theme.get(
+            Theme.SECTION_TABS, Theme.TABS_SHOW_CLOSE_BUTTON
+        ):
             return None
 
         for n, tab in enumerate(self._geometry.geometry):
@@ -567,6 +569,7 @@ class TabsCtrl(wx.Window):
         Обработчик события перерисовки вкладок
         """
         with wx.BufferedPaintDC(self) as dc:
+            gc = wx.GraphicsContext.Create(dc)
             background_brush = self._brushes.FindOrCreateBrush(
                 self._theme.colorBackground
             )
@@ -594,9 +597,11 @@ class TabsCtrl(wx.Window):
                 if n == self._lbutton_downed_close_button:
                     close_button_state = TAB_CLOSE_BUTTON_STATE_DOWNED
 
-                self._tab_render.draw_tab(dc, tab, state, close_button_state)
+                self._tab_render.draw_tab(dc, gc, tab, state, close_button_state)
 
-            self._tab_render.draw_add_button(dc, self._geometry, self._add_button_state)
+            self._tab_render.draw_add_button(
+                dc, gc, self._geometry, self._add_button_state
+            )
 
 
 class TabInfo:
@@ -1007,7 +1012,9 @@ class TabRender:
         dc.SetFont(old_font)
         return height
 
-    def _draw_icon(self, dc: wx.DC, tab: SingleTabGeometry) -> None:
+    def _draw_icon(
+        self, dc: wx.DC, gc: wx.GraphicsContext, tab: SingleTabGeometry
+    ) -> None:
         if not self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICONS):
             return
 
@@ -1017,10 +1024,20 @@ class TabRender:
         if icon_id is not None:
             bitmap = self._iconsCache.getImageList().GetBitmap(icon_id)
             assert bitmap.IsOk()
-            dc.DrawBitmap(bitmap, tab.icon.left, tab.icon.top)
+            gc.DrawBitmap(
+                bitmap,
+                tab.icon.left,
+                tab.icon.top,
+                bitmap.GetWidth(),
+                bitmap.GetHeight(),
+            )
 
     def _draw_close_button(
-        self, dc: wx.DC, tab: SingleTabGeometry, close_button_state: int
+        self,
+        dc: wx.DC,
+        gc: wx.GraphicsContext,
+        tab: SingleTabGeometry,
+        close_button_state: int,
     ) -> None:
         if not self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_CLOSE_BUTTON):
             return
@@ -1028,22 +1045,28 @@ class TabRender:
         assert tab.close_button is not None
 
         if close_button_state == TAB_CLOSE_BUTTON_STATE_HOVER:
-            dc.DrawBitmap(
+            gc.DrawBitmap(
                 self._close_button_hover_bmp,
                 tab.close_button.left,
                 tab.close_button.top,
+                self._close_button_hover_bmp.GetWidth(),
+                self._close_button_hover_bmp.GetHeight(),
             )
         elif close_button_state == TAB_CLOSE_BUTTON_STATE_DOWNED:
-            dc.DrawBitmap(
+            gc.DrawBitmap(
                 self._close_button_downed_bmp,
                 tab.close_button.left,
                 tab.close_button.top,
+                self._close_button_downed_bmp.GetWidth(),
+                self._close_button_downed_bmp.GetHeight(),
             )
         else:
-            dc.DrawBitmap(
+            gc.DrawBitmap(
                 self._close_button_normal_bmp,
                 tab.close_button.left,
                 tab.close_button.top,
+                self._close_button_normal_bmp.GetWidth(),
+                self._close_button_normal_bmp.GetHeight(),
             )
 
     def _trim_title(self, dc: wx.DC, title: str, max_width: int) -> str:
@@ -1168,13 +1191,18 @@ class TabRender:
         )
 
     def draw_tab(
-        self, dc: wx.DC, tab: SingleTabGeometry, tab_state: int, close_button_state: int
+        self,
+        dc: wx.DC,
+        gc: wx.GraphicsContext,
+        tab: SingleTabGeometry,
+        tab_state: int,
+        close_button_state: int,
     ) -> None:
         self._draw_background(dc, tab)
         self._draw_tab(dc, tab, tab_state)
-        self._draw_icon(dc, tab)
+        self._draw_icon(dc, gc, tab)
         self._draw_title(dc, tab, tab_state)
-        self._draw_close_button(dc, tab, close_button_state)
+        self._draw_close_button(dc, gc, tab, close_button_state)
 
     def _get_font(self, tab_state: int) -> wx.Font:
         theme_font_size = self._theme.get(Theme.SECTION_TABS, Theme.TABS_FONT_SIZE)
@@ -1191,25 +1219,35 @@ class TabRender:
         return font
 
     def draw_add_button(
-        self, dc: wx.DC, geometry: TabsGeometryCalculator, add_button_state: int
+        self,
+        dc: wx.DC,
+        gc: wx.GraphicsContext,
+        geometry: TabsGeometryCalculator,
+        add_button_state: int,
     ) -> None:
         if add_button_state == ADD_BUTTON_STATE_HOVER:
-            dc.DrawBitmap(
+            gc.DrawBitmap(
                 self._add_button_hover_bmp,
                 geometry.add_button.left,
                 geometry.add_button.top,
+                self._add_button_hover_bmp.GetWidth(),
+                self._add_button_hover_bmp.GetHeight(),
             )
         elif add_button_state == ADD_BUTTON_STATE_DOWNED:
-            dc.DrawBitmap(
+            gc.DrawBitmap(
                 self._add_button_downed_bmp,
                 geometry.add_button.left,
                 geometry.add_button.top,
+                self._add_button_downed_bmp.GetWidth(),
+                self._add_button_downed_bmp.GetHeight(),
             )
         else:
-            dc.DrawBitmap(
+            gc.DrawBitmap(
                 self._add_button_normal_bmp,
                 geometry.add_button.left,
                 geometry.add_button.top,
+                self._add_button_normal_bmp.GetWidth(),
+                self._add_button_normal_bmp.GetHeight(),
             )
 
     def get_default_font_size(self) -> int:
