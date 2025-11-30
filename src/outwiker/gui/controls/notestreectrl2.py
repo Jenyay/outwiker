@@ -593,8 +593,8 @@ class _ItemsPainter:
                 self._drawCollapsedCtrl(left, right, top, bottom)
 
     def _drawExpandedCtrl(self, left: int, right: int, top: int, bottom: int):
-        h_margin = (right - left) // 8
-        v_margin = (bottom - top) // 8
+        h_margin = int((right - left) * 0.2)
+        v_margin = int((bottom - top)  * 0.2)
 
         pen = wx.Pen(self._view_info.lines_color)
         brush = wx.Brush(self._view_info.lines_color)
@@ -611,8 +611,8 @@ class _ItemsPainter:
         self._gc.DrawPath(path)
 
     def _drawCollapsedCtrl(self, left: int, right: int, top: int, bottom: int):
-        h_margin = (right - left) // 8
-        v_margin = (bottom - top) // 8
+        h_margin = int((right - left) * 0.2)
+        v_margin = int((bottom - top)  * 0.2)
 
         pen = wx.Pen(self._view_info.lines_color)
         brush = wx.Brush(self._view_info.lines_color)
