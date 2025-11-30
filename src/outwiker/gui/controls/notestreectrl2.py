@@ -298,7 +298,7 @@ class _ItemsViewInfo:
 
     @property
     def expand_ctrl_width(self) -> int:
-        return (self.icon_width * 2) // 3
+        return int(self.icon_width * 0.8)
 
     @property
     def expand_ctrl_height(self) -> int:
@@ -493,12 +493,6 @@ class _ItemsPainter:
         self._expand_ctrl_images = SafeImageList(
             self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height
         )
-        self._expanded_img = self._expand_ctrl_images.AddFromFile(
-            getBuiltinImagePath("expanded.svg")
-        )
-        self._collapsed_img = self._expand_ctrl_images.AddFromFile(
-            getBuiltinImagePath("collapsed.svg")
-        )
 
         # Pens, brushes etc
         self._back_brush_normal = wx.NullBrush
@@ -558,7 +552,7 @@ class _ItemsPainter:
             self._drawIcon(item, dx, dy)
             self._drawExtraIcons(item, dx, dy)
             self._drawTitle(item, dx, dy)
-            self._drawExpandCtrl(item, dx, dy)
+            self._drawExpandCollapseCtrl(item, dx, dy)
             self._gc.Flush()
 
     def fillBackground(self):
@@ -586,14 +580,53 @@ class _ItemsPainter:
         self._dc.SetPen(self._order_line_pen)
         self._dc.DrawLine(xmin + dx + 1, y + dy, xmax + dx - 1, y + dy)
 
-    def _drawExpandCtrl(self, item: NotesTreeItem, dx, dy):
+    def _drawExpandCollapseCtrl(self, item: NotesTreeItem, dx, dy):
         if item.hasChildren():
             left = self._view_info.getExpandCtrlLeft(item) + dx
+            right = self._view_info.getExpandCtrlRight(item) + dx
             top = self._view_info.getExpandCtrlTop(item) + dy
-            bitmap = self._expand_ctrl_images.GetBitmap(
-                self._expanded_img if item.isExpanded() else self._collapsed_img
-            )
-            self._gc.DrawBitmap(bitmap, left, top, bitmap.GetWidth(), bitmap.GetHeight())
+            bottom = self._view_info.getExpandCtrlBottom(item) + dy
+
+            if item.isExpanded():
+                self._drawExpandedCtrl(left, right, top, bottom)
+            else:
+                self._drawCollapsedCtrl(left, right, top, bottom)
+
+    def _drawExpandedCtrl(self, left: int, right: int, top: int, bottom: int):
+        h_margin = (right - left) // 8
+        v_margin = (bottom - top) // 8
+
+        pen = wx.Pen(self._view_info.lines_color)
+        brush = wx.Brush(self._view_info.lines_color)
+
+        self._gc.SetBrush(brush)
+        self._gc.SetPen(pen)
+
+        path = self._gc.CreatePath()
+        path.MoveToPoint(left + h_margin, (top + bottom) // 2 - v_margin)
+        path.AddLineToPoint(right - h_margin, (top + bottom) // 2 - v_margin)
+        path.AddLineToPoint((left + right) // 2, bottom - v_margin)
+        path.CloseSubpath()
+
+        self._gc.DrawPath(path)
+
+    def _drawCollapsedCtrl(self, left: int, right: int, top: int, bottom: int):
+        h_margin = (right - left) // 8
+        v_margin = (bottom - top) // 8
+
+        pen = wx.Pen(self._view_info.lines_color)
+        brush = wx.Brush(self._view_info.lines_color)
+
+        self._gc.SetBrush(brush)
+        self._gc.SetPen(pen)
+
+        path = self._gc.CreatePath()
+        path.MoveToPoint((left + right) // 2 - h_margin, top + v_margin)
+        path.AddLineToPoint(right - h_margin, (top + bottom) // 2)
+        path.AddLineToPoint((left + right) // 2 - h_margin, bottom - v_margin)
+        path.CloseSubpath()
+
+        self._gc.DrawPath(path)
 
     def _getContrastColor(self, color: wx.Colour, backColor: wx.Colour) -> wx.Colour:
         L, a, b = rgb_to_lab((color.red, color.green, color.blue))
