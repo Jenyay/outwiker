@@ -385,7 +385,7 @@ class EditorConfig:
 
     # Spell checker
     SPELL_DICTS_PARAM = "dictionaries"
-    SPELL_DICT_DEFAULT = "en_US, ru_RU, ru_RU_yo, uk_UA"
+    SPELL_DICT_DEFAULT = "en_US, ru_RU, ru_YO, uk_UA"
 
     SPELL_ENABLE_PARAM = "SpellChecking"
     SPELL_ENABLE_DEFAULT = True
