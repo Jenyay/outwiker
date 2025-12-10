@@ -22,19 +22,41 @@ class IconController:
 
         # Used to move builtin icons to other file name
         self._redirect["__std_attach.png"] = os.path.join("office", "__std_clip.svg")
-        self._redirect["__std_calculator.png"] = os.path.join("office", "__std_calculator.png")
+        self._redirect["__std_calculator.png"] = os.path.join(
+            "office", "__std_calculator.png"
+        )
         self._redirect["__std_cut.png"] = os.path.join("office", "__std_cut.png")
         self._redirect["__std_cuter.png"] = os.path.join("office", "__std_cutter.png")
-        self._redirect["folders/__std_folder.svg"] = os.path.join("folders", "__std_folder_yellow.svg")
-        self._redirect["folders/__std_folder-black.svg"] = os.path.join("folders", "__std_folder_black.svg")
-        self._redirect["folders/__std_folder-blue.svg"] = os.path.join("folders", "__std_folder_blue.svg")
-        self._redirect["folders/__std_folder-green.svg"] = os.path.join("folders", "__std_folder_green.svg")
-        self._redirect["folders/__std_folder-red.svg"] = os.path.join("folders", "__std_folder_red.svg")
-        self._redirect["folders/__std_folder_open.svg"] = os.path.join("folders", "__std_folder-search.svg")
-        self._redirect["folders/__std_folders.svg"] = os.path.join("folders", "__std_folders_yellow.svg")
-        self._redirect["folders/__std_folder-vertical-document.png"] = os.path.join("folders", "__std_folder-vertical-document_yellow.svg")
-        self._redirect["folders/__std_folder-vertical-open.png"] = os.path.join("folders", "__std_folder-vertical-open_yellow.svg")
-        self._redirect["folders/__std_folder_clipboard.svg"] = os.path.join("folders", "__std_folder-clipboard.svg")
+        self._redirect[os.path.join("folders", "__std_folder.svg")] = os.path.join(
+            "folders", "__std_folder_yellow.svg"
+        )
+        self._redirect[os.path.join("folders", "__std_folder-black.svg")] = (
+            os.path.join("folders", "__std_folder_black.svg")
+        )
+        self._redirect[os.path.join("folders", "__std_folder-blue.svg")] = os.path.join(
+            "folders", "__std_folder_blue.svg"
+        )
+        self._redirect[os.path.join("folders", "__std_folder-green.svg")] = (
+            os.path.join("folders", "__std_folder_green.svg")
+        )
+        self._redirect[os.path.join("folders", "__std_folder-red.svg")] = os.path.join(
+            "folders", "__std_folder_red.svg"
+        )
+        self._redirect[os.path.join("folders", "__std_folder_open.svg")] = os.path.join(
+            "folders", "__std_folder-search.svg"
+        )
+        self._redirect[os.path.join("folders", "__std_folders.svg")] = os.path.join(
+            "folders", "__std_folders_yellow.svg"
+        )
+        self._redirect[
+            os.path.join("folders", "__std_folder-vertical-document.png")
+        ] = os.path.join("folders", "__std_folder-vertical-document_yellow.svg")
+        self._redirect[os.path.join("folders", "__std_folder-vertical-open.png")] = (
+            os.path.join("folders", "__std_folder-vertical-open_yellow.svg")
+        )
+        self._redirect[os.path.join("folders", "__std_folder_clipboard.svg")] = (
+            os.path.join("folders", "__std_folder-clipboard.svg")
+        )
 
     # Used in tests
     def add_redirect(self, src_icon_path, dst_icon_path):
