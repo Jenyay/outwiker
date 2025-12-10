@@ -32,14 +32,20 @@ class IconControllerTest(unittest.TestCase):
         os.mkdir(self.std_subdir)
 
         self.icon_fname_png = ICONS_STD_PREFIX + "_example_icon_png.png"
-        icon_path_png = os.path.abspath(os.path.join(self.std_path, self.icon_fname_png))
+        icon_path_png = os.path.abspath(
+            os.path.join(self.std_path, self.icon_fname_png)
+        )
         createFile(icon_path_png)
 
         self.icon_fname_svg = ICONS_STD_PREFIX + "_example_icon_svg.svg"
-        icon_path_svg = os.path.abspath(os.path.join(self.std_path, self.icon_fname_svg))
+        icon_path_svg = os.path.abspath(
+            os.path.join(self.std_path, self.icon_fname_svg)
+        )
         createFile(icon_path_svg)
 
-        icon_subdir_png = os.path.abspath(os.path.join(self.std_subdir, self.icon_fname_png))
+        icon_subdir_png = os.path.abspath(
+            os.path.join(self.std_subdir, self.icon_fname_png)
+        )
         createFile(icon_subdir_png)
 
     def tearDown(self):
@@ -317,7 +323,10 @@ class IconControllerTest(unittest.TestCase):
         controller.add_redirect("example.png", os.path.join("subdir", "redirected.svg"))
 
         self._page.params.iconOption.value = "example.png"
-        self.assertEqual(controller.get_icon(self._page), os.path.join(self.std_subdir, "redirected.svg"))
+        self.assertEqual(
+            controller.get_icon(self._page),
+            os.path.join(self.std_subdir, "redirected.svg"),
+        )
 
     def test_get_icon_redirect_invalid(self):
         controller = IconController(self.std_path)
@@ -654,3 +663,95 @@ class IconControllerTest(unittest.TestCase):
         controller = IconController(self.std_path)
 
         self.assertRaises(ReadonlyException, controller.remove_icon, self._page)
+
+    def test_redirect(self):
+        redirect_list = [
+            ("__std_attach.png", os.path.join("office", "__std_clip.svg")),
+            ("__std_calculator.png", os.path.join("office", "__std_calculator.png")),
+            ("__std_cut.png", os.path.join("office", "__std_cut.png")),
+            ("__std_cuter.png", os.path.join("office", "__std_cutter.png")),
+            (
+                "folders/__std_folder.svg",
+                os.path.join("folders", "__std_folder_yellow.svg"),
+            ),
+            (
+                "folders\\__std_folder.svg",
+                os.path.join("folders", "__std_folder_yellow.svg"),
+            ),
+            (
+                "folders/__std_folder-black.svg",
+                os.path.join("folders", "__std_folder_black.svg"),
+            ),
+            (
+                "folders\\__std_folder-black.svg",
+                os.path.join("folders", "__std_folder_black.svg"),
+            ),
+            (
+                "folders/__std_folder-blue.svg",
+                os.path.join("folders", "__std_folder_blue.svg"),
+            ),
+            (
+                "folders\\__std_folder-blue.svg",
+                os.path.join("folders", "__std_folder_blue.svg"),
+            ),
+            (
+                "folders/__std_folder-green.svg",
+                os.path.join("folders", "__std_folder_green.svg"),
+            ),
+            (
+                "folders\\__std_folder-green.svg",
+                os.path.join("folders", "__std_folder_green.svg"),
+            ),
+            (
+                "folders/__std_folder-red.svg",
+                os.path.join("folders", "__std_folder_red.svg"),
+            ),
+            (
+                "folders\\__std_folder-red.svg",
+                os.path.join("folders", "__std_folder_red.svg"),
+            ),
+            (
+                "folders/__std_folder_open.svg",
+                os.path.join("folders", "__std_folder-search.svg"),
+            ),
+            (
+                "folders\\__std_folder_open.svg",
+                os.path.join("folders", "__std_folder-search.svg"),
+            ),
+            (
+                "folders/__std_folders.svg",
+                os.path.join("folders", "__std_folders_yellow.svg"),
+            ),
+            (
+                "folders\\__std_folders.svg",
+                os.path.join("folders", "__std_folders_yellow.svg"),
+            ),
+            (
+                "folders/__std_folder-vertical-document.png",
+                os.path.join("folders", "__std_folder-vertical-document_yellow.svg"),
+            ),
+            (
+                "folders\\__std_folder-vertical-document.png",
+                os.path.join("folders", "__std_folder-vertical-document_yellow.svg"),
+            ),
+            (
+                "folders/__std_folder-vertical-open.png",
+                os.path.join("folders", "__std_folder-vertical-open_yellow.svg"),
+            ),
+            (
+                "folders\\__std_folder-vertical-open.png",
+                os.path.join("folders", "__std_folder-vertical-open_yellow.svg"),
+            ),
+            (
+                "folders/__std_folder_clipboard.svg",
+                os.path.join("folders", "__std_folder-clipboard.svg"),
+            ),
+            (
+                "folders\\__std_folder_clipboard.svg",
+                os.path.join("folders", "__std_folder-clipboard.svg"),
+            ),
+        ]
+
+        controller = IconController(self.std_path)
+        for src, dst in redirect_list:
+            self.assertEqual(dst, controller.take_redirect(src), src)
