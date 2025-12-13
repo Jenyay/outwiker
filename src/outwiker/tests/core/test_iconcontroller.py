@@ -750,6 +750,30 @@ class IconControllerTest(unittest.TestCase):
                 "folders\\__std_folder_clipboard.svg",
                 os.path.join("folders", "__std_folder-clipboard.svg"),
             ),
+            (
+                "__std_chart-bar.png",
+                os.path.join("charts", "__std_chart-bar.svg"),
+            ),
+            (
+                "__std_chart-line.png",
+                os.path.join("charts", "__std_chart-line.svg"),
+            ),
+            (
+                "__std_chart-pie.png",
+                os.path.join("charts", "__std_chart-pie.svg"),
+            ),
+            (
+                "__std_chart-organisation.png",
+                os.path.join("charts", "__std_chart-organisation.svg"),
+            ),
+            (
+                "__std_chart-down-color.png",
+                os.path.join("charts", "__std_chart-arrow_down.svg"),
+            ),
+            (
+                "__std_chart-up-color.png",
+                os.path.join("charts", "__std_chart-arrow_up.svg"),
+            ),
         ]
 
         controller = IconController(self.std_path)

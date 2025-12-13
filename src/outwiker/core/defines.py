@@ -111,3 +111,4 @@ if __name__ == "__main__":
     _("list")
     _("bookmarks")
     _("office")
+    _("charts")

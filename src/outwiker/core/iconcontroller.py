@@ -3,6 +3,7 @@
 
 import os
 import os.path
+from os.path import join
 import shutil
 from typing import Dict, Union
 
@@ -18,45 +19,32 @@ class IconController:
         builtin_icons_path -- path to built-in icons folder.
         """
         self._builtin_icons_path = builtin_icons_path
-        self._redirect: Dict[str, str] = {}
 
         # Used to move builtin icons to other file name
-        self._redirect["__std_attach.png"] = os.path.join("office", "__std_clip.svg")
-        self._redirect["__std_calculator.png"] = os.path.join(
-            "office", "__std_calculator.png"
-        )
-        self._redirect["__std_cut.png"] = os.path.join("office", "__std_cut.png")
-        self._redirect["__std_cuter.png"] = os.path.join("office", "__std_cutter.png")
-        self._redirect[os.path.join("folders", "__std_folder.svg")] = os.path.join(
-            "folders", "__std_folder_yellow.svg"
-        )
-        self._redirect[os.path.join("folders", "__std_folder-black.svg")] = (
-            os.path.join("folders", "__std_folder_black.svg")
-        )
-        self._redirect[os.path.join("folders", "__std_folder-blue.svg")] = os.path.join(
-            "folders", "__std_folder_blue.svg"
-        )
-        self._redirect[os.path.join("folders", "__std_folder-green.svg")] = (
-            os.path.join("folders", "__std_folder_green.svg")
-        )
-        self._redirect[os.path.join("folders", "__std_folder-red.svg")] = os.path.join(
-            "folders", "__std_folder_red.svg"
-        )
-        self._redirect[os.path.join("folders", "__std_folder_open.svg")] = os.path.join(
-            "folders", "__std_folder-search.svg"
-        )
-        self._redirect[os.path.join("folders", "__std_folders.svg")] = os.path.join(
-            "folders", "__std_folders_yellow.svg"
-        )
-        self._redirect[
-            os.path.join("folders", "__std_folder-vertical-document.png")
-        ] = os.path.join("folders", "__std_folder-vertical-document_yellow.svg")
-        self._redirect[os.path.join("folders", "__std_folder-vertical-open.png")] = (
-            os.path.join("folders", "__std_folder-vertical-open_yellow.svg")
-        )
-        self._redirect[os.path.join("folders", "__std_folder_clipboard.svg")] = (
-            os.path.join("folders", "__std_folder-clipboard.svg")
-        )
+        self._redirect: Dict[str, str] = dict([
+            ("__std_attach.png", join("office", "__std_clip.svg")),
+            ("__std_calculator.png", join("office", "__std_calculator.png")),
+            ("__std_cut.png", join("office", "__std_cut.png")),
+            ("__std_cuter.png", join("office", "__std_cutter.png")),
+
+            (join("folders", "__std_folder.svg"), join("folders", "__std_folder_yellow.svg")),
+            (join("folders", "__std_folder-black.svg"), join("folders", "__std_folder_black.svg")),
+            (join("folders", "__std_folder-blue.svg"), join("folders", "__std_folder_blue.svg")),
+            (join("folders", "__std_folder-green.svg"), join("folders", "__std_folder_green.svg")),
+            (join("folders", "__std_folder-red.svg"), join("folders", "__std_folder_red.svg")),
+            (join("folders", "__std_folder_open.svg"), join("folders", "__std_folder-search.svg")),
+            (join("folders", "__std_folders.svg"), join("folders", "__std_folders_yellow.svg")),
+            (join("folders", "__std_folder-vertical-document.png"), join("folders", "__std_folder-vertical-document_yellow.svg")),
+            (join("folders", "__std_folder-vertical-open.png"), join("folders", "__std_folder-vertical-open_yellow.svg")),
+            (join("folders", "__std_folder_clipboard.svg"), join("folders", "__std_folder-clipboard.svg")),
+
+            ("__std_chart-bar.png", join("charts", "__std_chart-bar.svg")),
+            ("__std_chart-line.png", join("charts", "__std_chart-line.svg")),
+            ("__std_chart-pie.png", join("charts", "__std_chart-pie.svg")),
+            ("__std_chart-organisation.png", join("charts", "__std_chart-organisation.svg")),
+            ("__std_chart-up-color.png", join("charts", "__std_chart-arrow_up.svg")),
+            ("__std_chart-down-color.png", join("charts", "__std_chart-arrow_down.svg")),
+            ])
 
     # Used in tests
     def add_redirect(self, src_icon_path, dst_icon_path):
@@ -106,7 +94,7 @@ class IconController:
             raise ReadonlyException
 
         for extension in ICONS_EXTENSIONS:
-            icon_fname = os.path.join(page.path, PAGE_ICON_NAME + "." + extension)
+            icon_fname = join(page.path, PAGE_ICON_NAME + "." + extension)
             if os.path.exists(icon_fname):
                 os.remove(icon_fname)
 
@@ -173,7 +161,7 @@ class IconController:
 
         # Find __icon.* file
         for extension in ICONS_EXTENSIONS:
-            fname = os.path.join(page.path, PAGE_ICON_NAME + "." + extension)
+            fname = join(page.path, PAGE_ICON_NAME + "." + extension)
             if os.path.exists(fname):
                 return fname
 
@@ -182,7 +170,7 @@ class IconController:
         icon_file = None
         if icon_from_config:
             icon_from_config = self.take_redirect(icon_from_config)
-            icon_path_src = os.path.join(self._builtin_icons_path, icon_from_config)
+            icon_path_src = join(self._builtin_icons_path, icon_from_config)
 
             # Return vector icon instead of bitmap icon if exists
             icon_path_svg = convert_name_to_svg(icon_path_src)
