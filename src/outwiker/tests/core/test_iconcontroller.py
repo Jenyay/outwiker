@@ -679,6 +679,14 @@ class IconControllerTest(unittest.TestCase):
                 os.path.join("folders", "__std_folder_yellow.svg"),
             ),
             (
+                "folders/__std_folder.png",
+                os.path.join("folders", "__std_folder_yellow.svg"),
+            ),
+            (
+                "folders\\__std_folder.png",
+                os.path.join("folders", "__std_folder_yellow.svg"),
+            ),
+            (
                 "folders/__std_folder-black.svg",
                 os.path.join("folders", "__std_folder_black.svg"),
             ),

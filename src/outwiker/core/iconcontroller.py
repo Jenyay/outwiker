@@ -28,6 +28,7 @@ class IconController:
             ("__std_cuter.png", join("office", "__std_cutter.png")),
 
             (join("folders", "__std_folder.svg"), join("folders", "__std_folder_yellow.svg")),
+            (join("folders", "__std_folder.png"), join("folders", "__std_folder_yellow.svg")),
             (join("folders", "__std_folder-black.svg"), join("folders", "__std_folder_black.svg")),
             (join("folders", "__std_folder-blue.svg"), join("folders", "__std_folder_blue.svg")),
             (join("folders", "__std_folder-green.svg"), join("folders", "__std_folder_green.svg")),
