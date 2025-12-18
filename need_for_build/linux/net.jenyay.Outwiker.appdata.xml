@@ -3,38 +3,57 @@
   <id>net.jenyay.Outwiker</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <name>Outwiker</name>
+  <name>OutWiker</name>
   <launchable type="desktop-id">net.jenyay.Outwiker.desktop</launchable>
   <summary>Personal wiki and outliner.</summary>
+  <summary xml:lang="ru">Персональная вики-система.</summary>
   <description>
     <p>
       OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors. OutWiker's main difference from the other similar programs is keeping the tree of notes in the form of directories on disk, and encouraging changing the base by external sources and programs.
+    </p>
+    <p xml:lang="ru">
+        OutWiker - это программа для хранения заметок в виде дерева. Такие программы назвают "аутлайнеры", персональными вики-системами или древовидными редакторами. Основное отличие OutWiker от других подобных приложений - это хранение заметок в виде диреторий на диске с возмоностью редактирования заметок сторонними средствами.
     </p>
   </description>
   <categories>
     <category>Office</category>
   </categories>
   <url type="homepage">https://jenyay.net/Outwiker/English</url>
-  <developer_name>Eugene Ilin</developer_name>
+  <developer id="net.jenyay">
+      <name>Eugene Ilin</name>
+      <name xml:lang="ru">Евгений Ильин</name>
+  </developer>
   <update_contact>jenyay.ilin@gmail.com</update_contact>
   <screenshots>
     <screenshot type="default">
       <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_01.png</image>
+      <caption>Main window. A note with images, links and lists</caption>
+      <caption xml:lang="ru">Главное окно. Заметка с картинками, ссылками и списками</caption>
     </screenshot>
     <screenshot type="default">
       <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_02.png</image>
+      <caption>Main window and popup window with note titles for selected tag</caption>
+      <caption xml:lang="ru">Главное окно и всплывающее окно с заголовками заметок с выбранной меткой</caption>
     </screenshot>
     <screenshot type="default">
       <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_03.png</image>
+      <caption>Dialog for selecting note icon</caption>
+      <caption xml:lang="ru">Диалог для выбора значка заметки</caption>
     </screenshot>
     <screenshot type="default">
       <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_04.png</image>
+      <caption>Note with customized formatting style. The note contains a formula and source code</caption>
+      <caption xml:lang="ru">Заметка с измененным стилем оформления. Заметка содержит формулу и исходный код</caption>
     </screenshot>
     <screenshot type="default">
       <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_05.png</image>
+      <caption>Note in wiki notation editing mode. The note contains a formula and source code</caption>
+      <caption xml:lang="ru">Заметка в режиме редактирования викинотациию. Заметка содержит формулу и исходный код</caption>
     </screenshot>
     <screenshot type="default">
       <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_06.png</image>
+      <caption>Note in wiki notation editing mode. The note contains lists, links, headers and table</caption>
+      <caption xml:lang="ru">Заметка в режиме редактирования викинотациию. Заметка содержит списки, ссылки, заголовки и таблицу</caption>
     </screenshot>
   </screenshots>
   <releases>
