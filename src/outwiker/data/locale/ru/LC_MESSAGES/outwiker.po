@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-13 15:31+0300\n"
+"POT-Creation-Date: 2025-12-19 20:52+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -2298,6 +2298,10 @@ msgstr "офис"
 #: outwiker/core/defines.py:114
 msgid "charts"
 msgstr "графики"
+
+#: outwiker/core/defines.py:115
+msgid "text"
+msgstr "текст"
 
 #: outwiker/core/htmlimproverfactory.py:27
 msgid "Line Breaks (<br/>)"

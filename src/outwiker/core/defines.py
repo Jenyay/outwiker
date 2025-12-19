@@ -112,3 +112,4 @@ if __name__ == "__main__":
     _("bookmarks")
     _("office")
     _("charts")
+    _("text")

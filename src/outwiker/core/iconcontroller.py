@@ -45,6 +45,25 @@ class IconController:
             ("__std_chart-organisation.png", join("charts", "__std_chart-organisation.svg")),
             ("__std_chart-up-color.png", join("charts", "__std_chart-arrow_up.svg")),
             ("__std_chart-down-color.png", join("charts", "__std_chart-arrow_down.svg")),
+
+            ("__std_edit-code.png", join("text", "__std_code.svg")),
+            ("__std_edit-language.png", join("text", "__std_hieroglyph.png")),
+            ("__std_edit-number.png", join("text", "__std_number.png")),
+            ("__std_edit-percent.png", join("text", "__std_percent.png")),
+            ("__std_edit-quotation.png", join("text", "__std_quotation.svg")),
+            ("__std_edit-symbol.png", join("text", "__std_symbol.png")),
+            ("__std_edit-pilcrow.svg", join("text", "__std_pilcrow.svg")),
+            ("__std_edit-pilcrow.png", join("text", "__std_pilcrow.svg")),
+            ("__std_sum.png", join("text", "__std_sum.png")),
+            ("__std_table.png", join("text", "__std_table.svg")),
+            ("__std_text-align-justify.png", join("text", "__std_align_justify.svg")),
+            ("__std_text-dropcaps.png", join("text", "__std_dropcaps.png")),
+            ("__std_text-list-bullets.png", join("text", "__std_list_bullets.svg")),
+            ("__std_text-list-numbers.png", join("text", "__std_list_numbers.svg")),
+            ("__std_page-white-paste.svg", join("text", "__std_page-white-paste.svg")),
+            ("__std_page-white-paste.png", join("text", "__std_page-white-paste.svg")),
+            ("__std_spellcheck.svg", join("text", "__std_spellcheck.svg")),
+            ("__std_spellcheck.png", join("text", "__std_spellcheck.svg")),
             ])
 
     # Used in tests

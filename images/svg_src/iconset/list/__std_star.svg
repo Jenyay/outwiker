@@ -37,11 +37,11 @@
      stroke="#000"
      stroke-width=".2"
      id="g1"
-     style="stroke:#4681c2;stroke-opacity:1">
+     style="stroke:#565656;stroke-opacity:1">
     <path
        d="M13.121 13.164v1.382M13.719 13.509l-1.196.69M13.719 14.2l-1.196-.69"
        transform="matrix(1.0053 0 0 .94101 -12.189 -12.037)"
        id="path1"
-       style="stroke:#4681c2;stroke-opacity:1" />
+       style="stroke:#565656;stroke-opacity:1" />
   </g>
 </svg>
