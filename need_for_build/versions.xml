@@ -1,10 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.963" status="dev">
+    <version number="4.0.0.964" status="beta" date="2025-12-20">
         <changes>
+            <change>Added new vector icons for notes.</change>
+            <change>Improved support for [=page://...=] style links to other pages for wiki pages.</change>
+            <change>Updated icons for toolbar buttons.</change>
+            <change>Fixed an issue with transparent images when running the Windows build under Wine.</change>
+            <change>Fixed several bugs.</change>
+            <change>Updated German localization.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлена новые векторные значки для заметок.</change>
+            <change>Для викистраниц добавлена обработка ссылок вида [=page://...=] на другие страницы.</change>
+            <change>Обновление значков для кнопок на панелях инструментов.</change>
+            <change>Исправлена проблема прозрачных картинок при запуске Windows-сборки под Wine.</change>
+            <change>Исправлены несколько ошибок.</change>
+            <change>Обновлена немецкая локализация.</change>
         </changes>
     </version>
 
