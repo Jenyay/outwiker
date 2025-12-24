@@ -34,11 +34,20 @@ class EditorPanel(BasePrefPanel):
 
         self.tabWidthSpin = wx.SpinCtrl(
             self,
-            -1,
-            str(config.TAB_WIDTH_DEFAULT),
+            value=str(config.TAB_WIDTH_DEFAULT),
             min=self.MIN_TAB_WIDTH,
             max=self.MAX_TAB_WIDTH,
-            style=wx.SP_ARROW_KEYS | wx.TE_AUTO_URL,
+            style=wx.SP_ARROW_KEYS,
+        )
+
+        self.marginWidthLabel = wx.StaticText(self, label=_("Line number field width\n0 - default value"))
+
+        self.marginWidthSpin = wx.SpinCtrl(
+            self,
+            initial=0,
+            min=0,
+            max=200,
+            style=wx.SP_ARROW_KEYS,
         )
 
         # Настройки для клавиш Home / End
@@ -53,7 +62,7 @@ class EditorPanel(BasePrefPanel):
 
     def __do_layout(self):
         # Шрифт
-        fontSizer = wx.FlexGridSizer(rows=1, cols=0, vgap=0, hgap=0)
+        fontSizer = wx.FlexGridSizer(cols=2)
         fontSizer.Add(self.fontLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         fontSizer.Add(
             self.fontPicker, 1, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, 2
@@ -62,7 +71,7 @@ class EditorPanel(BasePrefPanel):
         fontSizer.AddGrowableCol(1)
 
         # Размер табуляции
-        tabWidthSizer = wx.FlexGridSizer(cols=2, rows=0, vgap=0, hgap=0)
+        tabWidthSizer = wx.FlexGridSizer(cols=2)
         tabWidthSizer.Add(
             self.tabWidthLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
@@ -75,8 +84,22 @@ class EditorPanel(BasePrefPanel):
         )
         tabWidthSizer.AddGrowableCol(1)
 
+        # Margin width
+        marginWidthSizer = wx.FlexGridSizer(cols=2)
+        marginWidthSizer.Add(
+            self.marginWidthLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+
+        marginWidthSizer.Add(
+            self.marginWidthSpin,
+            0,
+            wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
+        marginWidthSizer.AddGrowableCol(1)
+
         # Поведение клавиш Home / End
-        homeEndSizer = wx.FlexGridSizer(cols=2, rows=0, vgap=0, hgap=0)
+        homeEndSizer = wx.FlexGridSizer(cols=2)
         homeEndSizer.AddGrowableCol(0)
         homeEndSizer.AddGrowableCol(1)
         homeEndSizer.Add(
@@ -102,6 +125,7 @@ class EditorPanel(BasePrefPanel):
         )
         mainSizer.Add(self.tabUseSpacesCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         mainSizer.Add(tabWidthSizer, 1, wx.EXPAND, 0)
+        mainSizer.Add(marginWidthSizer, 1, wx.EXPAND, 0)
         mainSizer.Add(homeEndSizer, 1, wx.EXPAND, 0)
 
         self.SetSizer(mainSizer)
@@ -135,6 +159,14 @@ class EditorPanel(BasePrefPanel):
             self.MAX_TAB_WIDTH,
         )
 
+        # Margin width
+        self.marginWidth = configelements.IntegerElement(
+            self.__config.marginWidth,
+            self.marginWidthSpin,
+            0,
+            200,
+        )
+
         if self.__config.homeEndKeys.value == 0:
             self.homeEndCombo.SetSelection(0)
         else:
@@ -145,4 +177,5 @@ class EditorPanel(BasePrefPanel):
         self.tabUseSpaces.save()
         self.fontEditor.save()
         self.tabWidth.save()
+        self.marginWidth.save()
         self.__config.homeEndKeys.value = self.homeEndCombo.GetSelection()

@@ -63,6 +63,8 @@ class TextEditor(TextEditorBase):
         # чтобы не парсить текст после каждой введенной буквы
         self._lastEdit = datetime.now() - self._DELAY * 2
 
+        self._marginWidth = 0
+
         self.__showlinenumbers = self._config.lineNumbers.value
         self.dropTarget = EditorFilesDropTarget(self._application, self)
 
@@ -98,7 +100,8 @@ class TextEditor(TextEditorBase):
     def __onModified(self, event):
         self._styleSet = False
         self._lastEdit = datetime.now()
-        self._updateMarginWidth()
+        if self.__showlinenumbers and self._marginWidth == 0:
+            self._updateMarginWidth()
         event.Skip()
 
     def sanitize_color(self, param: StringOption):
@@ -114,6 +117,7 @@ class TextEditor(TextEditorBase):
         faceName = self._config.fontName.value
         isBold = self._config.fontIsBold.value
         isItalic = self._config.fontIsItalic.value
+        self._marginWidth = self._config.marginWidth.value
 
         fontColor = self.sanitize_color(self._config.fontColor)
         backColor = self.sanitize_color(self._config.backColor)
@@ -388,13 +392,17 @@ class TextEditor(TextEditorBase):
         зависимости от шрифта
         """
         if self.__showlinenumbers:
-            self.textCtrl.SetMarginWidth(0, self.__getMarginWidth())
+            margin_width = self._marginWidth
+            if margin_width == 0:
+                margin_width = self.__getDefaultMarginWidth()
+
+            self.textCtrl.SetMarginWidth(0, margin_width)
             self.textCtrl.SetMarginWidth(1, 5)
         else:
             self.textCtrl.SetMarginWidth(0, 0)
             self.textCtrl.SetMarginWidth(1, 0)
 
-    def __getMarginWidth(self):
+    def __getDefaultMarginWidth(self):
         """
         Расчет размера серой области с номером строк
         """

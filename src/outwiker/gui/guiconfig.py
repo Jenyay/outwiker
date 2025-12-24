@@ -383,6 +383,9 @@ class EditorConfig:
     MARGIN_BACK_COLOR_PARAM = "MarginBackColor"
     MARGIN_BACK_COLOR_DEFAULT = "#C4C4C4"
 
+    MARGIN_WIDTH_PARAM = "MarginWidth"
+    MARGIN_WIDTH_DEFAULT = 0
+
     # Spell checker
     SPELL_DICTS_PARAM = "dictionaries"
     SPELL_DICT_DEFAULT = "en_US, ru_RU, ru_YO, uk_UA"
@@ -484,6 +487,13 @@ class EditorConfig:
             EditorConfig.EDITOR_SECTION,
             EditorConfig.MARGIN_BACK_COLOR_PARAM,
             EditorConfig.MARGIN_BACK_COLOR_DEFAULT,
+        )
+
+        self.marginWidth = IntegerOption(
+            self.config,
+            EditorConfig.EDITOR_SECTION,
+            EditorConfig.MARGIN_WIDTH_PARAM,
+            EditorConfig.MARGIN_WIDTH_DEFAULT,
         )
 
         self.spellCheckerDicts = StringOption(

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-19 20:52+0300\n"
+"POT-Creation-Date: 2025-12-24 21:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1554,17 +1554,23 @@ msgstr ""
 msgid "Tab width"
 msgstr ""
 
-#: outwiker/app/gui/preferences/editorpanel.py:46
+#: outwiker/app/gui/preferences/editorpanel.py:43
+msgid ""
+"Line number field width\n"
+"0 - default value"
+msgstr ""
+
+#: outwiker/app/gui/preferences/editorpanel.py:55
 msgid ""
 "Home / End keys moves the cursor \n"
 "to the beginning / end of "
 msgstr ""
 
-#: outwiker/app/gui/preferences/editorpanel.py:52
+#: outwiker/app/gui/preferences/editorpanel.py:61
 msgid "Line"
 msgstr ""
 
-#: outwiker/app/gui/preferences/editorpanel.py:52
+#: outwiker/app/gui/preferences/editorpanel.py:61
 msgid "Paragraph"
 msgstr ""
 
