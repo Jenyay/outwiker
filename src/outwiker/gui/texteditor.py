@@ -149,6 +149,7 @@ class TextEditor(TextEditorBase):
             self.SPELL_ERROR_INDICATOR, wx.stc.STC_INDIC_SQUIGGLE
         )
         self.textCtrl.IndicatorSetForeground(self.SPELL_ERROR_INDICATOR, "red")
+        self.textCtrl.StyleClearAll()
         self._styleSet = False
 
     def _setHotKeys(self):
