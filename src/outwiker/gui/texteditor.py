@@ -130,7 +130,7 @@ class TextEditor(TextEditorBase):
         self.textCtrl.StyleSetItalic(wx.stc.STC_STYLE_DEFAULT, isItalic)
         self.textCtrl.StyleSetForeground(wx.stc.STC_STYLE_DEFAULT, fontColor)
         self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_DEFAULT, backColor)
-        self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_LINENUMBER, marginBackColor)
+        self.textCtrl.StyleClearAll()
 
         self.textCtrl.SetSelBackground(1, selBackColor)
 
@@ -149,7 +149,7 @@ class TextEditor(TextEditorBase):
             self.SPELL_ERROR_INDICATOR, wx.stc.STC_INDIC_SQUIGGLE
         )
         self.textCtrl.IndicatorSetForeground(self.SPELL_ERROR_INDICATOR, "red")
-        self.textCtrl.StyleClearAll()
+        self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_LINENUMBER, marginBackColor)
         self._styleSet = False
 
     def _setHotKeys(self):
