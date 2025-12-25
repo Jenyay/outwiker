@@ -148,7 +148,7 @@ class TextEditor(TextEditorBase):
         self.textCtrl.SetTabWidth(self._config.tabWidth.value)
 
         self.enableSpellChecking = self._config.spellEnabled.value
-        self.getSpellChecker().skipWordsWithNumbers = self.config.spellSkipDigits.value
+        self.getSpellChecker().skipWordsWithNumbers = self._config.spellSkipDigits.value
 
         self.textCtrl.IndicatorSetStyle(
             self.SPELL_ERROR_INDICATOR, wx.stc.STC_INDIC_SQUIGGLE
