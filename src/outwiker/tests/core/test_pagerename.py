@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import os.path
 import unittest
 from tempfile import mkdtemp
@@ -42,7 +43,7 @@ class RenameTest(unittest.TestCase):
         self._application.wikiroot = None
         removeDir(self.path)
 
-    def testRename1(self):
+    def testRename(self):
         page = self.wikiroot["Страница 1"]
         page.title = "Страница 1 new"
 
@@ -51,6 +52,14 @@ class RenameTest(unittest.TestCase):
         self.assertEqual(page.subpath, "Страница 1 new")
         self.assertEqual(self.wikiroot["Страница 1"], None)
         self.assertTrue(os.path.exists(self.wikiroot["Страница 1 new"].path))
+
+    def testDateTime(self):
+        page = self.wikiroot["Страница 1"]
+        page.datetime = datetime(2020, 1, 1)
+        page.title = "Страница 1 new"
+
+        delta = datetime.now() - page.datetime
+        self.assertLess(abs(delta.seconds), 30)
 
     def testEvent(self):
         self._application.onPageRename += self.__onPageRename

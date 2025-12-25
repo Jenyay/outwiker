@@ -564,6 +564,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
         WikiPage._renamePaths(self, newpath)
         self.root.registry.rename_page_sections(oldsubpath, self.subpath)
+        self.updateDateTime()
 
         self.root.onPageRename(self, oldsubpath)
         self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TITLE)
