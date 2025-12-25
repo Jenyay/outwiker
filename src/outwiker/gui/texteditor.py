@@ -123,6 +123,7 @@ class TextEditor(TextEditorBase):
         backColor = self.sanitize_color(self._config.backColor)
         selBackColor = self.sanitize_color(self._config.selBackColor)
         marginBackColor = self.sanitize_color(self._config.marginBackColor)
+        lineNumberFontColor = self.sanitize_color(self._config.lineNumberFontColor)
 
         self.textCtrl.SetUseTabs(not self._config.tabUseSpaces.value)
 
@@ -154,6 +155,7 @@ class TextEditor(TextEditorBase):
         )
         self.textCtrl.IndicatorSetForeground(self.SPELL_ERROR_INDICATOR, "red")
         self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_LINENUMBER, marginBackColor)
+        self.textCtrl.StyleSetForeground(wx.stc.STC_STYLE_LINENUMBER, lineNumberFontColor)
         self._styleSet = False
 
     def _setHotKeys(self):

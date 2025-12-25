@@ -367,9 +367,13 @@ class EditorConfig:
     HOME_END_KEYS_PARAM = "HomeEndKeys"
     HOME_END_KEYS_DEFAULT = HOME_END_OF_LINE
 
-    # Цвет шрифта
+    # Main font color
     FONT_COLOR_PARAM = "FontColor"
     FONT_COLOR_DEFAULT = "#000000"
+
+    # Line number font color
+    LINE_NUMBER_FONT_COLOR_PARAM = "LineNumberFontColor"
+    LINE_NUMBER_FONT_COLOR_DEFAULT = "#000000"
 
     # Цвет фона
     BACK_COLOR_PARAM = "BackColor"
@@ -466,6 +470,13 @@ class EditorConfig:
             EditorConfig.EDITOR_SECTION,
             EditorConfig.FONT_COLOR_PARAM,
             EditorConfig.FONT_COLOR_DEFAULT,
+        )
+
+        self.lineNumberFontColor = StringOption(
+            self.config,
+            EditorConfig.EDITOR_SECTION,
+            EditorConfig.LINE_NUMBER_FONT_COLOR_PARAM,
+            EditorConfig.LINE_NUMBER_FONT_COLOR_DEFAULT,
         )
 
         self.backColor = StringOption(
