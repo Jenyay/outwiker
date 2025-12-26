@@ -1,10 +1,13 @@
+import logging
 import os
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from outwiker.core.system import getOS
 from .spellchecker import SpellChecker
 from .basespellcheckerwrapper import BaseSpellCheckerWrapper
+
+logger = logging.getLogger("spellcheckers")
 
 
 class SpellCheckersFactory:
@@ -12,10 +15,15 @@ class SpellCheckersFactory:
         self._CUSTOM_DICT_KEY = ""
         self._spell_dir_list = spell_dir_list
         self._spellcheckers: Dict[str, BaseSpellCheckerWrapper] = {}
+        self._default_checkers: List[BaseSpellCheckerWrapper] = []
 
-    def getSpellChecker(
-        self, langlist: List[str], use_custom_dict: bool = True
-    ) -> SpellChecker:
+    def setLangList(self, langlist: List[str]):
+        self._default_checkers = self._getCheckers(langlist)
+        if self._CUSTOM_DICT_KEY in self._spellcheckers:
+            del self._spellcheckers[self._CUSTOM_DICT_KEY]
+        logger.debug("Use dictionaries: %s", ", ".join(langlist))
+
+    def _getCheckers(self, langlist: List[str]):
         checkers = []
         for lang in langlist:
             key = self._getKey(lang)
@@ -27,6 +35,15 @@ class SpellCheckersFactory:
                 self._spellcheckers[key] = checker
 
             checkers.append(checker)
+
+        return checkers
+
+    def getSpellChecker(
+        self, extra_lang_list: Optional[List[str]] = None, use_custom_dict: bool = True
+    ) -> SpellChecker:
+        checkers = self._default_checkers[:]
+        if extra_lang_list is not None:
+            checkers += self._getCheckers(extra_lang_list)
 
         # If there is no custom dictionary, create it
         if not use_custom_dict:

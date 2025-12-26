@@ -12,6 +12,7 @@ import wx
 # from line_profiler import profile
 
 from outwiker.app.core.logredirector import LogRedirector
+from outwiker.app.core.spellcontroller import SpellCheckersController
 from outwiker.app.gui.mainwindow import MainWindow
 from outwiker.app.gui.themecontroller import ThemeController
 from outwiker.core.application import Application
@@ -48,6 +49,8 @@ class OutWikerApplication(wx.App):
         self._themeController = ThemeController(self._application)
         self._themeController.setTheme(self._application.theme)
         self._themeController.loadParams()
+
+        self._spellController = SpellCheckersController(self._application)
 
     def _create_custom_spell_dir(self):
         custom_dir = getSpellDirList()[-1]

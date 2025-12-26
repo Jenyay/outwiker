@@ -128,5 +128,4 @@ class HtmlTextEditor(TextEditor):
             self.SetSelection(newPos, newPos)
 
     def getSpellChecker(self):
-        langlist = self._getDictsFromConfig() + ["html"]
-        return self._application.spellCheckers.getSpellChecker(langlist)
+        return self._application.spellCheckers.getSpellChecker(extra_lang_list=["html"])

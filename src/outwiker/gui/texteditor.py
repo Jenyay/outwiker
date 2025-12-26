@@ -262,12 +262,7 @@ class TextEditor(TextEditorBase):
             self._styleSet = True
 
     def getSpellChecker(self):
-        langlist = self._getDictsFromConfig()
-        return self._application.spellCheckers.getSpellChecker(langlist)
-
-    def _getDictsFromConfig(self):
-        dictsStr = self._config.spellCheckerDicts.value
-        return [item.strip() for item in dictsStr.split(",") if item.strip()]
+        return self._application.spellCheckers.getSpellChecker()
 
     def __onContextMenu(self, event):
         point = self.textCtrl.ScreenToClient(event.GetPosition())
