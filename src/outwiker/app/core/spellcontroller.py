@@ -11,9 +11,9 @@ class SpellCheckersController:
         self._config = EditorConfig(self._application.config)
         self.updateSpellCheckers()
         
-        # self._application.onPreferencesDialogClose.bind(
-        #     self._onPreferences, EVENT_PRIORITY_MAX_CORE
-        # )
+        self._application.onPreferencesDialogClose.bind(
+            self._onPreferences, EVENT_PRIORITY_MAX_CORE
+        )
 
     def updateSpellCheckers(self):
         langlist = self._getDictsFromConfig()
@@ -27,3 +27,8 @@ class SpellCheckersController:
 
     def _onPreferences(self, dialog):
         self.updateSpellCheckers()
+
+    def clear(self):
+        spell_checkers = self._application.spellCheckers
+        if spell_checkers is not None:
+            spell_checkers.clear()
