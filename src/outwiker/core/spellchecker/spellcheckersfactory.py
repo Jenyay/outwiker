@@ -43,31 +43,32 @@ class SpellCheckersFactory:
     def getSpellChecker(
         self, extra_lang_list: Optional[List[str]] = None, use_custom_dict: bool = True
     ) -> SpellChecker:
-        if self._lang_list is None:
-            checkers = []
-        elif self._default_checkers is None:
-            checkers = self._getCheckers(self._lang_list)
-            self._default_checkers = checkers[:]
-        else:
-            checkers = self._default_checkers[:]
+        # if self._lang_list is None:
+        #     checkers = []
+        # elif self._default_checkers is None:
+        #     checkers = self._getCheckers(self._lang_list)
+        #     self._default_checkers = checkers[:]
+        # else:
+        #     checkers = self._default_checkers[:]
 
-        if extra_lang_list is not None:
-            checkers += self._getCheckers(extra_lang_list)
+        # if extra_lang_list is not None:
+        #     checkers += self._getCheckers(extra_lang_list)
 
-        # If there is no custom dictionary, create it
-        if not use_custom_dict:
-            return SpellChecker(checkers)
+        # # If there is no custom dictionary, create it
+        # if not use_custom_dict:
+        #     return SpellChecker(checkers)
 
-        if self._CUSTOM_DICT_KEY in self._spellcheckers:
-            custom_dict_checker = self._spellcheckers[self._CUSTOM_DICT_KEY]
-        else:
-            custom_dict_checker = getOS().getSpellChecker([])
-            custom_dict_checker.setCustomDict(
-                os.path.join(self._spell_dir_list[-1], CUSTOM_DICT_FILE_NAME)
-            )
-            self._spellcheckers[self._CUSTOM_DICT_KEY] = custom_dict_checker
+        # if self._CUSTOM_DICT_KEY in self._spellcheckers:
+        #     custom_dict_checker = self._spellcheckers[self._CUSTOM_DICT_KEY]
+        # else:
+        #     custom_dict_checker = getOS().getSpellChecker([])
+        #     custom_dict_checker.setCustomDict(
+        #         os.path.join(self._spell_dir_list[-1], CUSTOM_DICT_FILE_NAME)
+        #     )
+        #     self._spellcheckers[self._CUSTOM_DICT_KEY] = custom_dict_checker
 
-        return SpellChecker(checkers, custom_dict_checker)
+        # return SpellChecker(checkers, custom_dict_checker)
+        return SpellChecker([])
 
     def _getKey(self, lang: str) -> str:
         return lang.lower()
