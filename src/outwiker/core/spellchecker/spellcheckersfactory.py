@@ -5,7 +5,6 @@ from typing import Dict, List, Optional
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from outwiker.core.system import getOS
 from .spellchecker import SpellChecker
-from .basespellcheckerwrapper import BaseSpellCheckerWrapper
 
 logger = logging.getLogger("spellcheckers")
 
@@ -14,9 +13,9 @@ class SpellCheckersFactory:
     def __init__(self, spell_dir_list: List[str]) -> None:
         self._CUSTOM_DICT_KEY = ""
         self._spell_dir_list = spell_dir_list
-        self._spellcheckers: Dict[str, BaseSpellCheckerWrapper] = {}
+        self._spellcheckers = {}
         self._lang_list: Optional[List[str]] = None
-        self._default_checkers: Optional[List[BaseSpellCheckerWrapper]] = None
+        self._default_checkers = None
 
     def setLangList(self, langlist: List[str]):
         self._lang_list = langlist[:]
