@@ -50,7 +50,7 @@ class OutWikerApplication(wx.App):
         self._themeController.setTheme(self._application.theme)
         self._themeController.loadParams()
 
-        self._spellController = SpellCheckersController(self._application)
+        # self._spellController = SpellCheckersController(self._application)
 
     def _create_custom_spell_dir(self):
         custom_dir = getSpellDirList()[-1]
