@@ -46,7 +46,7 @@ class SpellCheckersFactory:
             checkers = []
         elif self._default_checkers is None:
             checkers = self._getCheckers(self._lang_list)
-            self._default_checkers = checkers[:]
+            # self._default_checkers = checkers[:]
         else:
             checkers = self._default_checkers[:]
 
