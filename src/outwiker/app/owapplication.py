@@ -35,11 +35,10 @@ class OutWikerApplication(wx.App):
         # Disable dark theme for GTK in Linux
         os.environ["GTK_THEME"] = ":light"
         os.environ["WEBKIT_DISABLE_DMABUF_RENDERER"] = "1"
-        self._application = application
-        self._spellController: Optional[SpellCheckersController] = None
         super().__init__()
 
         self.logFileName = "outwiker.log"
+        self._application = application
         self.use_fake_html_render = False
         self.enableActionsGui = True
 
@@ -50,6 +49,8 @@ class OutWikerApplication(wx.App):
         self._themeController = ThemeController(self._application)
         self._themeController.setTheme(self._application.theme)
         self._themeController.loadParams()
+
+        self._spellController = SpellCheckersController(self._application)
 
     def _create_custom_spell_dir(self):
         custom_dir = getSpellDirList()[-1]
@@ -96,7 +97,6 @@ class OutWikerApplication(wx.App):
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
         NullTranslations().install()
-        self._spellController = SpellCheckersController(self._application)
         return True
 
     def _onEndSession(self, event):

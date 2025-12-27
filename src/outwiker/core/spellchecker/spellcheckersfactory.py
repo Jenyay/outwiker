@@ -70,3 +70,4 @@ class SpellCheckersFactory:
 
     def clear(self):
         self._spellcheckers.clear()
+        self._default_checkers.clear()
