@@ -27,3 +27,8 @@ class SpellCheckersController:
 
     def _onPreferences(self, dialog):
         self.updateSpellCheckers()
+
+    def clear(self):
+        spell_checkers = self._application.spellCheckers
+        if spell_checkers is not None:
+            spell_checkers.clear()
