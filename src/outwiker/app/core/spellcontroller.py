@@ -19,7 +19,8 @@ class SpellCheckersController:
         langlist = self._getDictsFromConfig()
         spell_checkers = self._application.spellCheckers
         if spell_checkers is not None:
-            spell_checkers.setLangList(langlist)
+            spell_checkers.setLangList([])
+            # spell_checkers.setLangList(langlist)
 
     def _getDictsFromConfig(self) -> List[str]:
         dictsStr = self._config.spellCheckerDicts.value
