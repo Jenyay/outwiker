@@ -30,7 +30,7 @@ class CyHunspellWrapper(BaseSpellCheckerWrapper):
         self._customDictPath: Optional[str] = None
 
     def setLanguage(self, lang: str):
-        logger.debug("Add dictionary to HunspellWrapper spell checker")
+        logger.debug("Add dictionary to HunspellWrapper spell checker: %s", lang)
         dictsFinder = DictsFinder(self._dict_folers)
 
         checker = None
@@ -39,16 +39,18 @@ class CyHunspellWrapper(BaseSpellCheckerWrapper):
             dic_file = os.path.join(path, lang + ".dic")
             aff_file = os.path.join(path, lang + ".aff")
 
-            if (
-                checker is None
-                and os.path.exists(dic_file)
-                and os.path.exists(aff_file)
-            ):
-                checker = hunspell.Hunspell(
-                    lang, hunspell_data_dir=path, system_encoding="UTF-8"
-                )
+            if os.path.exists(dic_file) and os.path.exists(aff_file):
+                try:
+                    checker = hunspell.Hunspell(
+                        lang, hunspell_data_dir=path, system_encoding="UTF-8"
+                    )
+                    logger.debug("Added dictionary: %s", dic_file)
+                except Exception as e:
+                    logger.error("Error spell checker creation: %s", e)
 
-            logger.debug("Add dictionary: %s", dic_file)
+                break
+        else:
+            logger.error("Dictionary not found for language: %s", lang)
 
         if checker is not None:
             self._checker = checker
@@ -88,7 +90,7 @@ class CyHunspellWrapper(BaseSpellCheckerWrapper):
     def check(self, word: str) -> bool:
         checkers = self._getCheckers()
         if not checkers:
-            return True
+            return False
 
         for checker in checkers:
             if checker.spell(word):
