@@ -42,13 +42,13 @@ class SpellCheckersFactory:
     def getSpellChecker(
         self, extra_lang_list: Optional[List[str]] = None, use_custom_dict: bool = True
     ) -> SpellChecker:
-        # if self._lang_list is None:
-        #     checkers = []
-        # elif self._default_checkers is None:
-        #     checkers = self._getCheckers(self._lang_list)
-        #     self._default_checkers = checkers[:]
-        # else:
-        #     checkers = self._default_checkers[:]
+        if self._lang_list is None:
+            checkers = []
+        elif self._default_checkers is None:
+            checkers = self._getCheckers(self._lang_list)
+            self._default_checkers = checkers[:]
+        else:
+            checkers = self._default_checkers[:]
 
         # if extra_lang_list is not None:
         #     checkers += self._getCheckers(extra_lang_list)
