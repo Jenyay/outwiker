@@ -9,7 +9,7 @@ class SpellCheckersController:
     def __init__(self, application: Application) -> None:
         self._application = application
         self._config = EditorConfig(self._application.config)
-        self.updateSpellCheckers()
+        # self.updateSpellCheckers()
         
         self._application.onPreferencesDialogClose.bind(
             self._onPreferences, EVENT_PRIORITY_MAX_CORE
