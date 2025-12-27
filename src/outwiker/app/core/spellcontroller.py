@@ -30,6 +30,7 @@ class SpellCheckersController:
         self.updateSpellCheckers()
 
     def clear(self):
+        self._application.onPreferencesDialogClose.unbind(self._onPreferences)
         spell_checkers = self._application.spellCheckers
         if spell_checkers is not None:
             spell_checkers.clear()
