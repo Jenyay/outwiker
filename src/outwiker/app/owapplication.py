@@ -101,7 +101,6 @@ class OutWikerApplication(wx.App):
 
     def _onEndSession(self, event):
         self.Unbind(wx.EVT_QUERY_END_SESSION, handler=self._onEndSession)
-        self._spellController.clear()
         self._mainWindow.Destroy()
 
     def getMainWindow(self) -> Optional[MainWindow]:

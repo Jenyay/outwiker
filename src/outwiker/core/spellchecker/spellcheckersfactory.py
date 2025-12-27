@@ -15,10 +15,12 @@ class SpellCheckersFactory:
         self._CUSTOM_DICT_KEY = ""
         self._spell_dir_list = spell_dir_list
         self._spellcheckers: Dict[str, BaseSpellCheckerWrapper] = {}
-        self._default_checkers: List[BaseSpellCheckerWrapper] = []
+        self._lang_list: Optional[List[str]] = None
+        self._default_checkers: Optional[List[BaseSpellCheckerWrapper]] = None
 
     def setLangList(self, langlist: List[str]):
-        self._default_checkers = self._getCheckers(langlist)
+        self._lang_list = langlist[:]
+        self._default_checkers = None
         if self._CUSTOM_DICT_KEY in self._spellcheckers:
             del self._spellcheckers[self._CUSTOM_DICT_KEY]
         logger.debug("Use dictionaries: %s", ", ".join(langlist))
@@ -41,7 +43,14 @@ class SpellCheckersFactory:
     def getSpellChecker(
         self, extra_lang_list: Optional[List[str]] = None, use_custom_dict: bool = True
     ) -> SpellChecker:
-        checkers = self._default_checkers[:]
+        if self._lang_list is None:
+            checkers = []
+        elif self._default_checkers is None:
+            checkers = self._getCheckers(self._lang_list)
+            self._default_checkers = checkers[:]
+        else:
+            checkers = self._default_checkers[:]
+
         if extra_lang_list is not None:
             checkers += self._getCheckers(extra_lang_list)
 
@@ -70,4 +79,5 @@ class SpellCheckersFactory:
 
     def clear(self):
         self._spellcheckers.clear()
-        self._default_checkers.clear()
+        if self._default_checkers is not None:
+            self._default_checkers.clear()
