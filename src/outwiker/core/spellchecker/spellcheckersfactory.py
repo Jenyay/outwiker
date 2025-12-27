@@ -33,7 +33,7 @@ class SpellCheckersFactory:
             else:
                 checker = getOS().getSpellChecker(self._spell_dir_list)
                 checker.setLanguage(lang)
-                self._spellcheckers[key] = checker
+                # self._spellcheckers[key] = checker
 
             checkers.append(checker)
 
