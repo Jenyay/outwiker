@@ -46,7 +46,7 @@ class SpellCheckersFactory:
             checkers = []
         elif self._default_checkers is None:
             checkers = self._getCheckers(self._lang_list)
-            # self._default_checkers = checkers[:]
+            self._default_checkers = checkers[:]
         else:
             checkers = self._default_checkers[:]
 
@@ -67,7 +67,7 @@ class SpellCheckersFactory:
         #     self._spellcheckers[self._CUSTOM_DICT_KEY] = custom_dict_checker
 
         # return SpellChecker(checkers, custom_dict_checker)
-        return SpellChecker([])
+        return SpellChecker(checkers)
 
     def _getKey(self, lang: str) -> str:
         return lang.lower()
