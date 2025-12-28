@@ -122,6 +122,7 @@ class OutWikerApplication(wx.App):
         self._mainWindow.createGui()
 
     def destroyMainWindow(self):
+        self._spellController.clear()
         self._mainWindow.Destroy()
         self._mainWindow = None
         self._application.mainWindow = None
