@@ -39,7 +39,6 @@ from outwiker.app.actions.tabs import (
 import outwiker.app.actions.clipboard as clipboard
 import outwiker.app.actions.tags as tags
 
-from outwiker.app.gui.bookmarkscontroller import BookmarksController
 from outwiker.app.gui.mainwindowtools import getMainWindowTitle, setStatusText
 
 from outwiker.app.services.messages import showError
@@ -116,7 +115,6 @@ class MainWndController:
         # Ключ - id, значение - путь до вики
         self._recentId = {}
 
-        self.bookmarks = BookmarksController(self, self._application)
         self._autosaveTimer = AutosaveTimer(self._application)
 
         datetime_width = self._mainWindowConfig.datetimeStatusWidth.value
@@ -188,7 +186,6 @@ class MainWndController:
     def _bindAppEvents(self):
         self._application.onPageSelect += self._onPageSelect
         self._application.onPreferencesDialogClose += self._onPreferencesDialogClose
-        self._application.onBookmarksChanged += self._onBookmarksChanged
         self._application.onTreeUpdate += self._onTreeUpdate
         self._application.onWikiOpen += self._onWikiOpen
         self._application.onPageUpdate += self._onPageUpdate
@@ -196,19 +193,14 @@ class MainWndController:
     def _unbindAppEvents(self):
         self._application.onPageSelect -= self._onPageSelect
         self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
-        self._application.onBookmarksChanged -= self._onBookmarksChanged
         self._application.onTreeUpdate -= self._onTreeUpdate
         self._application.onWikiOpen -= self._onWikiOpen
         self._application.onPageUpdate -= self._onPageUpdate
-
-    def _onBookmarksChanged(self, params):
-        self.bookmarks.updateBookmarks()
 
     def _onTreeUpdate(self, sender):
         """
         Событие при обновлении дерева
         """
-        self.bookmarks.updateBookmarks()
         self._updateTitle()
         self._updateStatusBar()
 
@@ -216,7 +208,6 @@ class MainWndController:
         if kwargs["change"] & PAGE_UPDATE_TITLE:
             self._updateTitle()
             self._updateStatusBar()
-            self.bookmarks.updateBookmarks()
 
     def _onWikiOpen(self, wikiroot):
         """
@@ -234,7 +225,6 @@ class MainWndController:
                 )
 
         self.enableGui()
-        self.bookmarks.updateBookmarks()
         self._updateTitle()
         self._updateStatusBar()
 

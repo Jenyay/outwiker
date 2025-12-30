@@ -127,28 +127,6 @@ class RenameTest(unittest.TestCase):
         self.assertNotEqual(wiki["Страница 1 new"], None)
         self.assertEqual(wiki["Страница 1"], None)
 
-    def testBookmarks1(self):
-        page = self.wikiroot["Страница 6"]
-        self.wikiroot.bookmarks.add(page)
-        page.title = "Страница 6 new"
-
-        self.assertTrue(self.wikiroot.bookmarks.pageMarked(page))
-
-    def testBookmarks2(self):
-        page2 = self.wikiroot["Страница 2"]
-        page3 = self.wikiroot["Страница 2/Страница 3"]
-        page4 = self.wikiroot["Страница 2/Страница 3/Страница 4"]
-
-        self.wikiroot.bookmarks.add(page2)
-        self.wikiroot.bookmarks.add(page3)
-        self.wikiroot.bookmarks.add(page4)
-
-        page2.title = "Страница 2 new"
-
-        self.assertTrue(self.wikiroot.bookmarks.pageMarked(page2))
-        self.assertTrue(self.wikiroot.bookmarks.pageMarked(page3))
-        self.assertTrue(self.wikiroot.bookmarks.pageMarked(page4))
-
     def testPath(self):
         page2 = self.wikiroot["Страница 2"]
         page3 = self.wikiroot["Страница 2/Страница 3"]

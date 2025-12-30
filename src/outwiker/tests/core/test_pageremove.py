@@ -156,34 +156,6 @@ class RemovePagesTest(unittest.TestCase):
         self.assertEqual(self.wikiroot.selectedPage,
                          self.wikiroot["Страница 2/Страница 3"])
 
-    def testRemoveFromBookmarks1(self):
-        """
-        Проверка того, что страница удаляется из закладок
-        """
-        page = self.wikiroot["Страница 6"]
-        self.wikiroot.bookmarks.add(page)
-        page.remove()
-
-        self.assertFalse(self.wikiroot.bookmarks.pageMarked(page))
-
-    def testRemoveFromBookmarks2(self):
-        """
-        Проверка того, что подстраница удаленной страницы удаляется из закладок
-        """
-        page2 = self.wikiroot["Страница 2"]
-        page3 = self.wikiroot["Страница 2/Страница 3"]
-        page4 = self.wikiroot["Страница 2/Страница 3/Страница 4"]
-
-        self.wikiroot.bookmarks.add(page2)
-        self.wikiroot.bookmarks.add(page3)
-        self.wikiroot.bookmarks.add(page4)
-
-        page2.remove()
-
-        self.assertFalse(self.wikiroot.bookmarks.pageMarked(page2))
-        self.assertFalse(self.wikiroot.bookmarks.pageMarked(page3))
-        self.assertFalse(self.wikiroot.bookmarks.pageMarked(page4))
-
     def testRemoveError1(self):
         page = self.wikiroot["Страница 2"]
         pagepath = page.path

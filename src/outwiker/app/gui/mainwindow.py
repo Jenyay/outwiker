@@ -58,6 +58,7 @@ from outwiker.app.actions.tabs import (
 import outwiker.app.actions.switchto as switchto
 import outwiker.app.actions.tags as tags
 
+from outwiker.app.gui.bookmarkscontroller import BookmarksController
 from outwiker.app.gui.mainwndcontroller import MainWndController
 from outwiker.app.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.app.gui.mainpanes.attachmainpane import AttachMainPane
@@ -72,6 +73,7 @@ from outwiker.app.gui.trayicon import getTrayIconController
 
 from outwiker.app.services.messages import showError
 
+from outwiker.core.application import Application
 from outwiker.core.attachwatcher import AttachWatcher
 from outwiker.core.system import getOS, getBuiltinImagePath
 
@@ -92,7 +94,7 @@ logger = logging.getLogger("outwiker.app.gui.mainwindow")
 
 
 class MainWindow(wx.Frame):
-    def __init__(self, application):
+    def __init__(self, application: Application):
         super().__init__(None)
         logger.debug("MainWindow initializing begin")
         self._application = application
@@ -232,6 +234,9 @@ class MainWindow(wx.Frame):
         logger.debug("MainWindow. Create the MainWndController")
         self.__mainWndController = MainWndController(self, self._application)
         self.__mainWndController.loadMainWindowParams()
+
+        logger.debug("MainWindow. Create BookmarksController")
+        self.__boomarksController = BookmarksController(self.__mainWndController, self._application)
 
         logger.debug("MainWindow. Create the MainPanesController")
         self.__panesController = MainPanesController(self._application, self)
@@ -637,6 +642,7 @@ class MainWindow(wx.Frame):
 
         self._destroyCoreControllers()
 
+        self.__boomarksController.clear()
         self.trayController.destroy()
         self.__mainWndController.destroy()
 

@@ -10,7 +10,6 @@ from functools import cmp_to_key
 from typing import final, List, Optional, Union
 
 from .config import PageConfig
-from .bookmarks import Bookmarks
 from .event import Event
 from .exceptions import (
     ClearConfigError,
@@ -288,7 +287,6 @@ class WikiDocument(BasePage):
         super().__init__(path, readonly)
         self._selectedPage = None
         self._createEvents()
-        self.bookmarks = Bookmarks(self, self._params)
         self._registry = NotesTreeRegistry(self._getRegistrySaver(self._path))
         self._typeString = "document"
 
