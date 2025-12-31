@@ -322,3 +322,20 @@ class PageUidDepotTest(unittest.TestCase):
         page.readonly = True
 
         depot.createUid(page)
+
+    def testLoad_01(self):
+        depot = PageUidDepot()
+        uid = depot.createUid(self.wikiroot["Страница 1"])
+
+        depot_new = PageUidDepot()
+        self.assertIsNone(depot_new[uid])
+
+        depot_new.setWikiRoot(self.wikiroot)
+        self.assertEqual(depot_new[uid].title, "Страница 1")
+
+    def testGetRoot(self):
+        depot = PageUidDepot(self.wikiroot)
+        uid = depot.createUid(self.wikiroot)
+
+        root = depot[uid]
+        self.assertEqual(root, self.wikiroot)

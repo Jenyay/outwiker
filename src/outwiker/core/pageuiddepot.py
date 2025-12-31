@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from typing import Dict, Optional
 import uuid
 
 from outwiker.core.config import StringOption
 from outwiker.core.defines import CONFIG_GENERAL_SECTION
 from outwiker.core.exceptions import ReadonlyException
+from outwiker.core.tree import BasePage, WikiDocument
 
 
 class PageUidDepot:
     """
     Класс для хранения уникальных идентификаторов страниц и ссылок по ним
     """
-    def __init__(self, wikiroot=None):
+
+    def __init__(self, wikiroot: Optional[WikiDocument] = None):
         """
         wikiroot - корень викидерева или корневая страница.
         Если wikiroot != None, то приосходит поиск всех UID
@@ -21,14 +24,17 @@ class PageUidDepot:
 
         # Словарь идентификаторов.
         # Ключ - уникальный идентификатор, значение - указатель на страницу
-        self.__uids = {}
+        self.__uids: Dict[str, BasePage] = {}
+        self.setWikiRoot(wikiroot)
 
+    def setWikiRoot(self, wikiroot: Optional[WikiDocument]) -> None:
+        self.__uids.clear()
         self.__wikiroot = wikiroot
 
         if wikiroot is not None:
             self.__load(wikiroot)
 
-    def __load(self, root):
+    def __load(self, root: BasePage):
         """
         Прочитать UID всех страниц в дереве.
         """
@@ -39,33 +45,32 @@ class PageUidDepot:
 
         [self.__load(child) for child in root.children]
 
-    def __getUid(self, page):
+    def __getUid(self, page: BasePage) -> Optional[str]:
         """
         Прочитать и вернуть UID страницы, если он есть.
         Если его нет, возвращается None
         """
-        uid = StringOption(page.params,
-                           self.__configSection,
-                           self.__configParamName,
-                           "").value.lower()
+        uid = StringOption(
+            page.params, self.__configSection, self.__configParamName, ""
+        ).value.lower()
 
         if len(uid.strip()) == 0:
             uid = None
 
         return uid
 
-    def __getitem__(self, uid):
+    def __getitem__(self, uid: str) -> Optional[BasePage]:
         uid = uid.lower()
 
         page = self.__uids.get(uid, None)
 
-        if page is not None and page.isRemoved:
+        if page is not None and page.getTypeString() != "document" and page.isRemoved:
             del self.__uids[uid]
             page = None
 
         return page
 
-    def createUid(self, page):
+    def createUid(self, page: BasePage) -> str:
         """
         Сгенерить уникальный идентификатор для страницы и вернуть
         его в качестве значения.
@@ -90,10 +95,10 @@ class PageUidDepot:
 
         return uid
 
-    def __generateUid(self):
+    def __generateUid(self) -> str:
         return "__" + str(uuid.uuid4())
 
-    def changeUid(self, page, newUid):
+    def changeUid(self, page: BasePage, newUid: str) -> None:
         """
         Изменить идентификатор страницы.
         Если новый идентификатор уже существует, бросается исключение KeyError.
@@ -113,7 +118,7 @@ class PageUidDepot:
             raise KeyError
 
         # Запрещено использовать "/" в идентификаторе
-        if u"/" in newUid:
+        if "/" in newUid:
             raise ValueError
 
         if page.readonly:
@@ -124,7 +129,6 @@ class PageUidDepot:
 
         self.__uids[newUid] = page
 
-        StringOption(page.params,
-                     self.__configSection,
-                     self.__configParamName,
-                     "").value = newUid
+        StringOption(
+            page.params, self.__configSection, self.__configParamName, ""
+        ).value = newUid
