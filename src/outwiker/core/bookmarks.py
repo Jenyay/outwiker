@@ -62,7 +62,10 @@ class Bookmarks:
 
         return self._page_uid_depot[page_id] or self._wikiroot[page_id]
 
-    def _getPageId(self, page: WikiPage) -> Optional[str]:
+    def _getPageId(self, page: BasePage) -> Optional[str]:
+        if page.parent is None or page.isRemoved:
+            return None
+
         if page.subpath in self._pages:
             return page.subpath
 
