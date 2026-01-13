@@ -4,7 +4,7 @@ import unittest
 
 from outwiker.api.app.clipboard import copyTextToClipboard
 from outwiker.core.attachment import Attachment
-from outwiker.core.pageuiddepot import PageUidDepot
+from outwiker.core.tree import PageUidDepot
 from outwiker.gui.dialogs.linkdialog import LinkDialog
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikiconfig import WikiConfig

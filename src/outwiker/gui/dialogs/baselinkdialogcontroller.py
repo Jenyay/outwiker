@@ -8,7 +8,7 @@ import wx
 from outwiker.app.services.clipboard import getClipboardText
 from outwiker.core.attachfilters import getHiddenFilter, notFilter
 from outwiker.core.attachment import Attachment
-from outwiker.core.pageuiddepot import PageUidDepot
+from outwiker.core.tree import PageUidDepot
 
 
 class BaseLinkDialogController(metaclass=ABCMeta):

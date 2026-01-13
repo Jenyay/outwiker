@@ -9,10 +9,9 @@ from outwiker.core.event import Event, CustomEvents
 from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.pageuiddepot import PageUidDepot
 from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
 from outwiker.core.system import getSpellDirList
-from outwiker.core.tree import WikiDocument
+from outwiker.core.tree import WikiDocument, PageUidDepot
 from outwiker.gui.theme import Theme
 
 logger = logging.getLogger('outwiker.core.application')
@@ -31,10 +30,10 @@ class Application:
         self.recentWiki = None
         self.actionController = None
         self.plugins = PluginsLoader(self)
-        self.pageUidDepot = PageUidDepot()
+        self._pageUidDepot = PageUidDepot()
         self.spellCheckers = None
         self._theme = Theme()
-        self._bookmarks = Bookmarks(self.pageUidDepot)
+        self._bookmarks = Bookmarks(self._pageUidDepot)
 
         # Set to True for unit tests
         self.testMode = False
@@ -457,7 +456,7 @@ class Application:
         if self.__wikiroot is not None:
             self.__bindWikiEvents(self.__wikiroot)
 
-        self.pageUidDepot.load(self.__wikiroot)
+        self._pageUidDepot.load(self.__wikiroot)
         self.onWikiOpen(self.__wikiroot)
 
     @property
@@ -473,6 +472,10 @@ class Application:
         Set main window for the program
         """
         self.__mainWindow = value
+
+    @property
+    def pageUidDepot(self) -> PageUidDepot:
+        return self._pageUidDepot
 
     def __bindWikiEvents(self, wiki):
         """

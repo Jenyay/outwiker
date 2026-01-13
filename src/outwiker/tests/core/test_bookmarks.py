@@ -7,7 +7,7 @@ from outwiker.api.core.tree import createNotesTree
 from outwiker.core.bookmarks import Bookmarks
 from outwiker.core.config import StringListSection
 from outwiker.core.events import BookmarksChangedParams
-from outwiker.core.pageuiddepot import PageUidDepot
+from outwiker.core.tree import PageUidDepot
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.tests.utils import removeDir
