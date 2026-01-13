@@ -2,6 +2,7 @@
 
 from typing import List, Optional
 
+from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.pageuiddepot import PageUidDepot
 from outwiker.core.tree import BasePage, WikiDocument, WikiPage
 from .event import Event
@@ -69,9 +70,12 @@ class Bookmarks:
         if page.subpath in self._pages:
             return page.subpath
 
-        page_uid = self._page_uid_depot.createUid(page)
-        if page_uid in self._pages:
-            return page_uid
+        try:
+            page_uid = self._page_uid_depot.createUid(page)
+            if page_uid in self._pages:
+                return page_uid
+        except ReadonlyException:
+            return None
 
         return None
 

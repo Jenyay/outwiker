@@ -743,14 +743,14 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testGetSessionInfo_04(self):
         from sessions.sessioncontroller import SessionController
 
+        self.wikiroot["Страница 1"].readonly = True
+        self.wikiroot["Страница 2"].readonly = True
+
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Страница 1"]
 
         tabsController = self.application.mainWindow.tabsController
         tabsController.openInTab(self.wikiroot["Страница 2"], True)
-
-        self.wikiroot["Страница 1"].readonly = True
-        self.wikiroot["Страница 2"].readonly = True
 
         controller = SessionController(self.application)
 
