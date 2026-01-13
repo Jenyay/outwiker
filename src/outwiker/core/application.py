@@ -34,7 +34,7 @@ class Application:
         self.pageUidDepot = PageUidDepot()
         self.spellCheckers = None
         self._theme = Theme()
-        self._bookmarks = Bookmarks()
+        self._bookmarks = Bookmarks(self.pageUidDepot)
 
         # Set to True for unit tests
         self.testMode = False
@@ -457,7 +457,7 @@ class Application:
         if self.__wikiroot is not None:
             self.__bindWikiEvents(self.__wikiroot)
 
-        self.pageUidDepot.setWikiRoot(self.__wikiroot)
+        self.pageUidDepot.wikiroot = self.__wikiroot
         self.onWikiOpen(self.__wikiroot)
 
     @property

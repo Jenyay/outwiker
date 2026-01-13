@@ -3,9 +3,11 @@
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.api.core.tree import createNotesTree, loadNotesTree
+from outwiker.api.core.tree import createNotesTree
 from outwiker.core.bookmarks import Bookmarks
+from outwiker.core.config import StringListSection
 from outwiker.core.events import BookmarksChangedParams
+from outwiker.core.pageuiddepot import PageUidDepot
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.tests.utils import removeDir
@@ -28,7 +30,8 @@ class BookmarksTest(unittest.TestCase):
 
         self.bookmarkCount = 0
         self.bookmarkSender = None
-        self.bookmarks = Bookmarks()
+        self.page_uid_depot = PageUidDepot(self.wikiroot)
+        self.bookmarks = Bookmarks(self.page_uid_depot)
         self.bookmarks.setWikiRoot(self.wikiroot)
         self._application.wikiroot = None
 
@@ -41,7 +44,23 @@ class BookmarksTest(unittest.TestCase):
         self.bookmarkCount += 1
         self.bookmarkSender = params.bookmarks
 
-    def testAddToBookmarks(self):
+    def testAddToBookmarksAsSubpath(self):
+        # По умолчанию закладок нет
+        self.assertEqual(len(self.bookmarks), 0)
+
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+
+        self.assertEqual(len(self.bookmarks), 1)
+        self.assertEqual(self.bookmarks[0].title, "Страница 1")
+
+        # Проверим, что закладки сохраняются в конфиг
+        other_bootmarks = Bookmarks(PageUidDepot(self.wikiroot))
+        other_bootmarks.setWikiRoot(self.wikiroot)
+
+        self.assertEqual(len(other_bootmarks), 1)
+        self.assertEqual(other_bootmarks[0].title, "Страница 1")
+
+    def testAddToBookmarksAsPageUID(self):
         # По умолчанию закладок нет
         self.assertEqual(len(self.bookmarks), 0)
 
@@ -51,13 +70,13 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarks[0].title, "Страница 1")
 
         # Проверим, что закладки сохраняются в конфиг
-        other_bootmarks = Bookmarks()
+        other_bootmarks = Bookmarks(PageUidDepot(self.wikiroot))
         other_bootmarks.setWikiRoot(self.wikiroot)
 
         self.assertEqual(len(other_bootmarks), 1)
         self.assertEqual(other_bootmarks[0].title, "Страница 1")
 
-    def testManyBookmarks(self):
+    def testManyBookmarksAsPageUID(self):
         self.bookmarks.add(self.wikiroot["Страница 1"])
         self.bookmarks.add(self.wikiroot["Страница 2"])
         self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
@@ -67,7 +86,28 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarks[1].subpath, "Страница 2")
         self.assertEqual(self.bookmarks[2].subpath, "Страница 2/Страница 3")
 
-    def testRemoveBookmarks(self):
+    def testManyBookmarksAsSubpage(self):
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"], subpath=True)
+
+        self.assertEqual(len(self.bookmarks), 3)
+        self.assertEqual(self.bookmarks[0].subpath, "Страница 1")
+        self.assertEqual(self.bookmarks[1].subpath, "Страница 2")
+        self.assertEqual(self.bookmarks[2].subpath, "Страница 2/Страница 3")
+
+    def testRemoveBookmarksAsSubpath(self):
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"], subpath=True)
+
+        self.bookmarks.remove(self.wikiroot["Страница 2"])
+
+        self.assertEqual(len(self.bookmarks), 2)
+        self.assertEqual(self.bookmarks[0].subpath, "Страница 1")
+        self.assertEqual(self.bookmarks[1].subpath, "Страница 2/Страница 3")
+
+    def testRemoveBookmarksAsPageUID(self):
         self.bookmarks.add(self.wikiroot["Страница 1"])
         self.bookmarks.add(self.wikiroot["Страница 2"])
         self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
@@ -78,7 +118,7 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarks[0].subpath, "Страница 1")
         self.assertEqual(self.bookmarks[1].subpath, "Страница 2/Страница 3")
 
-    def testBookmarkEvent(self):
+    def testBookmarkEventAsPageUID(self):
         self._application.onBookmarksChanged += self.onBookmark
         self._application.wikiroot = self.wikiroot
         self._application.bookmarks.setWikiRoot(self.wikiroot)
@@ -95,7 +135,24 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarkCount, 3)
         self.assertEqual(self.bookmarkSender, self._application.bookmarks)
 
-    def testBookmarkNoEvent(self):
+    def testBookmarkEventAsSubpath(self):
+        self._application.onBookmarksChanged += self.onBookmark
+        self._application.wikiroot = self.wikiroot
+        self._application.bookmarks.setWikiRoot(self.wikiroot)
+
+        self._application.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+        self.assertEqual(self.bookmarkCount, 1)
+        self.assertEqual(self.bookmarkSender, self._application.bookmarks)
+
+        self._application.bookmarks.add(self.wikiroot["Страница 2"], subpath=True)
+        self.assertEqual(self.bookmarkCount, 2)
+        self.assertEqual(self.bookmarkSender, self._application.bookmarks)
+
+        self._application.bookmarks.remove(self.wikiroot["Страница 2"])
+        self.assertEqual(self.bookmarkCount, 3)
+        self.assertEqual(self.bookmarkSender, self._application.bookmarks)
+
+    def testBookmarkNoEventAsPageUID(self):
         self._application.bookmarks.setWikiRoot(self.wikiroot)
         self._application.onBookmarksChanged += self.onBookmark
 
@@ -111,7 +168,23 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarkCount, 0)
         self.assertEqual(self.bookmarkSender, None)
 
-    def testPageInBookmarks(self):
+    def testBookmarkNoEventAsSubpath(self):
+        self._application.bookmarks.setWikiRoot(self.wikiroot)
+        self._application.onBookmarksChanged += self.onBookmark
+
+        self._application.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+        self.assertEqual(self.bookmarkCount, 0)
+        self.assertEqual(self.bookmarkSender, None)
+
+        self._application.bookmarks.add(self.wikiroot["Страница 2"], subpath=True)
+        self.assertEqual(self.bookmarkCount, 0)
+        self.assertEqual(self.bookmarkSender, None)
+
+        self._application.bookmarks.remove(self.wikiroot["Страница 2"])
+        self.assertEqual(self.bookmarkCount, 0)
+        self.assertEqual(self.bookmarkSender, None)
+
+    def testPageInBookmarksAsPageUID(self):
         self.bookmarks.add(self.wikiroot["Страница 1"])
         self.bookmarks.add(self.wikiroot["Страница 2"])
         self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
@@ -126,7 +199,22 @@ class BookmarksTest(unittest.TestCase):
             self.bookmarks.pageMarked(self.wikiroot["Страница 1/Страница 5"]), False
         )
 
-    def testCloneBookmarks(self):
+    def testPageInBookmarksAsSubpath(self):
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"], subpath=True)
+
+        self.assertEqual(self.bookmarks.pageMarked(self.wikiroot["Страница 1"]), True)
+
+        self.assertEqual(
+            self.bookmarks.pageMarked(self.wikiroot["Страница 2/Страница 3"]), True
+        )
+
+        self.assertEqual(
+            self.bookmarks.pageMarked(self.wikiroot["Страница 1/Страница 5"]), False
+        )
+
+    def testCloneBookmarksAsPageUID(self):
         """
         Тест на повторное добавление одной и той же страницы
         """
@@ -135,3 +223,38 @@ class BookmarksTest(unittest.TestCase):
 
         self.assertEqual(len(self.bookmarks), 1)
         self.assertEqual(self.bookmarks[0].title, "Страница 1")
+
+    def testCloneBookmarksAsSubpath(self):
+        """
+        Тест на повторное добавление одной и той же страницы
+        """
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+
+        self.assertEqual(len(self.bookmarks), 1)
+        self.assertEqual(self.bookmarks[0].title, "Страница 1")
+
+    def testSubpathBookmarks(self):
+        page_uid_depot = PageUidDepot(self.wikiroot)
+
+        config = StringListSection(self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION)
+        config.value = [self.wikiroot["Страница 1"].subpath, self.wikiroot["Страница 2/Страница 3"].subpath]
+
+        bookmarks = Bookmarks(page_uid_depot)
+        bookmarks.setWikiRoot(self.wikiroot)
+
+        self.assertEqual(bookmarks[0].title, "Страница 1")
+        self.assertEqual(bookmarks[1].title, "Страница 3")
+
+    def testPageUIDBookmarks(self):
+        page_uid_depot = PageUidDepot(self.wikiroot)
+
+        config = StringListSection(self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION)
+        config.value = [page_uid_depot.createUid(self.wikiroot["Страница 1"]),
+                        page_uid_depot.createUid(self.wikiroot["Страница 2/Страница 3"])]
+
+        bookmarks = Bookmarks(page_uid_depot)
+        bookmarks.setWikiRoot(self.wikiroot)
+
+        self.assertEqual(bookmarks[0].title, "Страница 1")
+        self.assertEqual(bookmarks[1].title, "Страница 3")

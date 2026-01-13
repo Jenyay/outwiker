@@ -22,17 +22,24 @@ class PageUidDepot:
         self.__configSection = CONFIG_GENERAL_SECTION
         self.__configParamName = "uid"
 
+        self.__wikiroot: Optional[WikiDocument] = None
+
         # Словарь идентификаторов.
         # Ключ - уникальный идентификатор, значение - указатель на страницу
         self.__uids: Dict[str, BasePage] = {}
-        self.setWikiRoot(wikiroot)
+        self.wikiroot = wikiroot
 
-    def setWikiRoot(self, wikiroot: Optional[WikiDocument]) -> None:
+    @property
+    def wikiroot(self) -> Optional[WikiDocument]:
+        return self.__wikiroot
+
+    @wikiroot.setter
+    def wikiroot(self, value: Optional[WikiDocument]) -> None:
         self.__uids.clear()
-        self.__wikiroot = wikiroot
+        self.__wikiroot = value
 
-        if wikiroot is not None:
-            self.__load(wikiroot)
+        if self.__wikiroot is not None:
+            self.__load(self.__wikiroot)
 
     def __load(self, root: BasePage):
         """

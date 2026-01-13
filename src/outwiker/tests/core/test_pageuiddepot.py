@@ -330,7 +330,7 @@ class PageUidDepotTest(unittest.TestCase):
         depot_new = PageUidDepot()
         self.assertIsNone(depot_new[uid])
 
-        depot_new.setWikiRoot(self.wikiroot)
+        depot_new.wikiroot = self.wikiroot
         self.assertEqual(depot_new[uid].title, "Страница 1")
 
     def testGetRoot(self):

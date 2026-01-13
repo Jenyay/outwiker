@@ -2,7 +2,8 @@
 
 from typing import List, Optional
 
-from outwiker.core.tree import BasePage, WikiDocument
+from outwiker.core.pageuiddepot import PageUidDepot
+from outwiker.core.tree import BasePage, WikiDocument, WikiPage
 from .event import Event
 from .events import BookmarksChangedParams
 from .config import StringListSection
@@ -15,10 +16,11 @@ class Bookmarks:
     CONFIG_SECTION = "Bookmarks"
     CONFIG_OPTION = "bookmark_"
 
-    def __init__(self):
+    def __init__(self, page_uid_depot: PageUidDepot):
         self._wikiroot: Optional[WikiDocument] = None
         self._pages: List[str] = []
         self._config = None
+        self._page_uid_depot = page_uid_depot
 
         # Изменение списка закладок
         # Параметр - экземпляр класса Bookmarks
@@ -50,14 +52,40 @@ class Bookmarks:
         if self._wikiroot is None:
             raise IndexError()
 
-        subpath = self._pages[index]
-        return self._wikiroot[subpath]
+        page_id = self._pages[index]
+        return self._getPage(page_id)
 
-    def add(self, page):
+    def _getPage(self, page_id: str) -> Optional[BasePage]:
+        """Get page by subpath or page UID"""
+        if self._wikiroot is None:
+            return None
+
+        return self._page_uid_depot[page_id] or self._wikiroot[page_id]
+
+    def _getPageId(self, page: WikiPage) -> Optional[str]:
         if page.subpath in self._pages:
+            return page.subpath
+
+        page_uid = self._page_uid_depot.createUid(page)
+        if page_uid in self._pages:
+            return page_uid
+
+        return None
+
+    def add(self, page: WikiPage, subpath: bool = False):
+        """
+        Add page to bookmarks.
+
+        subpath is used for backward compatibility in tests
+        """
+        if self.pageMarked(page):
             return
 
-        self._pages.append(page.subpath)
+        if subpath:
+            self._pages.append(page.subpath)
+        else:
+            self._pages.append(self._page_uid_depot.createUid(page))
+
         self._save()
         event_params = BookmarksChangedParams(
             bookmarks=self,
@@ -71,17 +99,19 @@ class Bookmarks:
         self._config.value = self._pages
 
     def remove(self, page):
-        self._pages.remove(page.subpath)
-        event_params = BookmarksChangedParams(
-            bookmarks=self,
-            page=page,
-            action=BookmarksChangedParams.ACTION_REMOVE_FROM_BOOKMARKS,
-        )
-        self.onBookmarksChanged(event_params)
-        self._save()
+        page_id = self._getPageId(page)
+        if page_id is not None:
+            self._pages.remove(page_id)
+            event_params = BookmarksChangedParams(
+                bookmarks=self,
+                page=page,
+                action=BookmarksChangedParams.ACTION_REMOVE_FROM_BOOKMARKS,
+            )
+            self.onBookmarksChanged(event_params)
+            self._save()
 
-    def pageMarked(self, page):
+    def pageMarked(self, page: WikiPage):
         """
         Узнать находится ли страница в избранном
         """
-        return page.subpath in self._pages
+        return self._getPageId(page) is not None
