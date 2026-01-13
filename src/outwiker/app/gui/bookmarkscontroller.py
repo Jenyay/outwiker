@@ -47,7 +47,7 @@ class BookmarksController:
         # Если удаляемая страница в закладках, то уберем ее оттуда
         bookmarks = self._application.bookmarks
 
-        if not bookmarks.pageMarked(page):
+        if bookmarks.pageMarked(page):
             bookmarks.remove(page)
 
     def _onPageRename(self, page: WikiPage, oldSubpath: str):

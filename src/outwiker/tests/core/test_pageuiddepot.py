@@ -61,7 +61,8 @@ class PageUidDepotTest(unittest.TestCase):
         depot = PageUidDepot()
         uid = depot.createUid(self.wikiroot["Страница 1"])
 
-        depot_new = PageUidDepot(self.wikiroot)
+        depot_new = PageUidDepot()
+        depot_new.load(self.wikiroot)
 
         self.assertEqual(depot_new[uid].title, "Страница 1")
 
@@ -71,7 +72,8 @@ class PageUidDepotTest(unittest.TestCase):
             self.wikiroot["Страница 2/Страница 3/Страница 4"]
         )
 
-        depot_new = PageUidDepot(self.wikiroot)
+        depot_new = PageUidDepot()
+        depot_new.load(self.wikiroot)
 
         self.assertEqual(depot_new[uid].title, "Страница 4")
 
@@ -79,7 +81,8 @@ class PageUidDepotTest(unittest.TestCase):
         depot = PageUidDepot()
         uid = depot.createUid(self.wikiroot["Страница 1"])
 
-        depot_new = PageUidDepot(self.wikiroot)
+        depot_new = PageUidDepot()
+        depot_new.load(self.wikiroot)
 
         self.assertEqual(depot_new[uid].title, "Страница 1")
 
@@ -93,7 +96,8 @@ class PageUidDepotTest(unittest.TestCase):
         page.title = "Новый заголовок"
         self.assertEqual(depot[uid].title, "Новый заголовок")
 
-        depot_new = PageUidDepot(self.wikiroot)
+        depot_new = PageUidDepot()
+        depot_new.load(self.wikiroot)
         self.assertEqual(depot_new[uid].title, "Новый заголовок")
 
     def testRemovePage(self):
@@ -112,7 +116,8 @@ class PageUidDepotTest(unittest.TestCase):
         page.moveTo(self.wikiroot)
         self.assertEqual(depot[uid].title, "Страница 3")
 
-        depot_new = PageUidDepot(self.wikiroot)
+        depot_new = PageUidDepot()
+        depot_new.load(self.wikiroot)
         self.assertEqual(depot_new[uid].title, "Страница 3")
         self.assertEqual(depot_new[uid].parent, self.wikiroot)
 
@@ -125,7 +130,8 @@ class PageUidDepotTest(unittest.TestCase):
 
         self.assertEqual(depot[new_uid].title, "Страница 3")
 
-        depot_new = PageUidDepot(self.wikiroot)
+        depot_new = PageUidDepot()
+        depot_new.load(self.wikiroot)
         self.assertEqual(depot_new[new_uid].title, "Страница 3")
 
     def testChangeUid_02(self):
@@ -223,7 +229,8 @@ class PageUidDepotTest(unittest.TestCase):
         depot2 = PageUidDepot()
         depot2.changeUid(self.wikiroot["Страница 2"], new_uid)
 
-        depot3 = PageUidDepot(self.wikiroot)
+        depot3 = PageUidDepot()
+        depot3.load(self.wikiroot)
         self.assertEqual(depot3[new_uid].title, "Страница 3")
 
     def testApplication_01(self):
@@ -330,11 +337,12 @@ class PageUidDepotTest(unittest.TestCase):
         depot_new = PageUidDepot()
         self.assertIsNone(depot_new[uid])
 
-        depot_new.wikiroot = self.wikiroot
+        depot_new.load(self.wikiroot)
         self.assertEqual(depot_new[uid].title, "Страница 1")
 
     def testGetRoot(self):
-        depot = PageUidDepot(self.wikiroot)
+        depot = PageUidDepot()
+        depot.load(self.wikiroot)
         uid = depot.createUid(self.wikiroot)
 
         root = depot[uid]

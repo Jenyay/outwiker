@@ -457,7 +457,7 @@ class Application:
         if self.__wikiroot is not None:
             self.__bindWikiEvents(self.__wikiroot)
 
-        self.pageUidDepot.wikiroot = self.__wikiroot
+        self.pageUidDepot.load(self.__wikiroot)
         self.onWikiOpen(self.__wikiroot)
 
     @property
