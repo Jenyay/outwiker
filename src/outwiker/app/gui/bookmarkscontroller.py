@@ -4,6 +4,7 @@ from typing import Dict, Optional
 import wx
 
 from outwiker.core.application import Application
+from outwiker.core.event import EVENT_PRIORITY_MAX_CORE
 from outwiker.core.tree import WikiDocument, WikiPage
 from outwiker.gui.defines import MENU_BOOKMARKS
 
@@ -24,7 +25,7 @@ class BookmarksController:
         self._bookmarksId: Dict[str, str] = {}
 
         self._application.onBookmarksChanged += self._onBookmarksChanged
-        self._application.onWikiOpen += self._onWikiOpen
+        self._application.onWikiOpen.bind(self._onWikiOpen, EVENT_PRIORITY_MAX_CORE)
         self._application.onPageUpdate += self._onPageUpdate
         self._application.onTreeUpdate += self._onTreeUpdate
         self._application.onPageRemove += self._onPageRemove

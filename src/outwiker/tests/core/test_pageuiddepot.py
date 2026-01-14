@@ -235,10 +235,12 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testApplication_01(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
         uid = depot.createUid(page)
 
         self._application.wikiroot = self.wikiroot
+        self._application.wikiroot.updatePageUidDepot()
 
         self.assertEqual(self._application.pageUidDepot[uid].title, "Страница 3")
 

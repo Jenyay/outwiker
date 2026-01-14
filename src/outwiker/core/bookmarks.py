@@ -16,15 +16,18 @@ class Bookmarks:
     CONFIG_SECTION = "Bookmarks"
     CONFIG_OPTION = "bookmark_"
 
-    def __init__(self, page_uid_depot: PageUidDepot):
+    def __init__(self):
         self._wikiroot: Optional[WikiDocument] = None
         self._pages: List[str] = []
         self._config = None
-        self._page_uid_depot = page_uid_depot
 
         # Изменение списка закладок
         # Параметр - экземпляр класса Bookmarks
         self.onBookmarksChanged = Event()
+
+    @property
+    def _page_uid_depot(self) -> Optional[PageUidDepot]:
+        return self._wikiroot.pageUidDepot if self._wikiroot is not None else None
 
     def clear(self):
         self.setWikiRoot(None)

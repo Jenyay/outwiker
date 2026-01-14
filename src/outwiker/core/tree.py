@@ -291,6 +291,7 @@ class WikiDocument(BasePage):
         self._selectedPage = None
         self._createEvents()
         self._registry = NotesTreeRegistry(self._getRegistrySaver(self._path))
+        self._pageUidDepot = PageUidDepot()
         self._typeString = "document"
 
     def _getRegistrySaver(self, path):
@@ -365,6 +366,13 @@ class WikiDocument(BasePage):
         #     page - current (selected) page
         #     params - instance of the PreContentWritingParams class
         self.onPreContentWriting = Event()
+
+    @property
+    def pageUidDepot(self) -> "PageUidDepot":
+        return self._pageUidDepot
+
+    def updatePageUidDepot(self):
+        self._pageUidDepot.load(self)
 
     @staticmethod
     def clearConfigFile(path):
@@ -1043,7 +1051,7 @@ class PageUidDepot:
     Класс для хранения уникальных идентификаторов страниц и ссылок по ним
     """
 
-    def __init__(self, wikiroot: Optional[WikiDocument] = None):
+    def __init__(self):
         """
         wikiroot - корень викидерева или корневая страница.
         Если wikiroot != None, то приосходит поиск всех UID
@@ -1054,7 +1062,6 @@ class PageUidDepot:
         # Словарь идентификаторов.
         # Ключ - уникальный идентификатор, значение - указатель на страницу
         self.__uids: Dict[str, BasePage] = {}
-        self.load(wikiroot)
 
     def load(self, wikiroot: Optional[WikiDocument]) -> None:
         self.__uids.clear()

@@ -11,7 +11,7 @@ from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
 from outwiker.core.system import getSpellDirList
-from outwiker.core.tree import WikiDocument, PageUidDepot
+from outwiker.core.tree import PageUidDepot, WikiDocument
 from outwiker.gui.theme import Theme
 
 logger = logging.getLogger('outwiker.core.application')
@@ -30,10 +30,9 @@ class Application:
         self.recentWiki = None
         self.actionController = None
         self.plugins = PluginsLoader(self)
-        self._pageUidDepot = PageUidDepot()
         self.spellCheckers = None
         self._theme = Theme()
-        self._bookmarks = Bookmarks(self._pageUidDepot)
+        self._bookmarks = Bookmarks()
 
         # Set to True for unit tests
         self.testMode = False
@@ -456,7 +455,6 @@ class Application:
         if self.__wikiroot is not None:
             self.__bindWikiEvents(self.__wikiroot)
 
-        self._pageUidDepot.load(self.__wikiroot)
         self.onWikiOpen(self.__wikiroot)
 
     @property
@@ -475,7 +473,10 @@ class Application:
 
     @property
     def pageUidDepot(self) -> PageUidDepot:
-        return self._pageUidDepot
+        if self.__wikiroot is None:
+            return None
+
+        return self.__wikiroot.pageUidDepot
 
     def __bindWikiEvents(self, wiki):
         """

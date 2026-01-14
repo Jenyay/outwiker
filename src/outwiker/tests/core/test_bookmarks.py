@@ -7,7 +7,6 @@ from outwiker.api.core.tree import createNotesTree
 from outwiker.core.bookmarks import Bookmarks
 from outwiker.core.config import StringListSection
 from outwiker.core.events import BookmarksChangedParams
-from outwiker.core.tree import PageUidDepot
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.tests.utils import removeDir
@@ -30,9 +29,7 @@ class BookmarksTest(unittest.TestCase):
 
         self.bookmarkCount = 0
         self.bookmarkSender = None
-        self.page_uid_depot = PageUidDepot()
-        self.page_uid_depot.load(self.wikiroot)
-        self.bookmarks = Bookmarks(self.page_uid_depot)
+        self.bookmarks = Bookmarks()
         self.bookmarks.setWikiRoot(self.wikiroot)
         self._application.wikiroot = None
 
@@ -55,9 +52,7 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarks[0].title, "Страница 1")
 
         # Проверим, что закладки сохраняются в конфиг
-        depot = PageUidDepot()
-        depot.load(self.wikiroot)
-        other_bootmarks = Bookmarks(depot)
+        other_bootmarks = Bookmarks()
         other_bootmarks.setWikiRoot(self.wikiroot)
 
         self.assertEqual(len(other_bootmarks), 1)
@@ -73,9 +68,7 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarks[0].title, "Страница 1")
 
         # Проверим, что закладки сохраняются в конфиг
-        depot = PageUidDepot()
-        depot.load(self.wikiroot)
-        other_bootmarks = Bookmarks(depot)
+        other_bootmarks = Bookmarks()
         other_bootmarks.setWikiRoot(self.wikiroot)
 
         self.assertEqual(len(other_bootmarks), 1)
@@ -240,27 +233,23 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarks[0].title, "Страница 1")
 
     def testSubpathBookmarks(self):
-        page_uid_depot = PageUidDepot()
-        page_uid_depot.load(self.wikiroot)
-
         config = StringListSection(self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION)
         config.value = [self.wikiroot["Страница 1"].subpath, self.wikiroot["Страница 2/Страница 3"].subpath]
 
-        bookmarks = Bookmarks(page_uid_depot)
+        bookmarks = Bookmarks()
         bookmarks.setWikiRoot(self.wikiroot)
 
         self.assertEqual(bookmarks[0].title, "Страница 1")
         self.assertEqual(bookmarks[1].title, "Страница 3")
 
     def testPageUIDBookmarks(self):
-        page_uid_depot = PageUidDepot()
-        page_uid_depot.load(self.wikiroot)
+        page_uid_depot = self.wikiroot.pageUidDepot
 
         config = StringListSection(self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION)
         config.value = [page_uid_depot.createUid(self.wikiroot["Страница 1"]),
                         page_uid_depot.createUid(self.wikiroot["Страница 2/Страница 3"])]
 
-        bookmarks = Bookmarks(page_uid_depot)
+        bookmarks = Bookmarks()
         bookmarks.setWikiRoot(self.wikiroot)
 
         self.assertEqual(bookmarks[0].title, "Страница 1")
