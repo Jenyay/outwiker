@@ -17,6 +17,7 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
+        self.application.wikiroot = self.wikiroot
         self.path2 = mkdtemp(prefix="Абырвалг абырвалг")
 
         self.__createWiki()

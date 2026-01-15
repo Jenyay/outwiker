@@ -15,6 +15,7 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
+        self.application.wikiroot = self.wikiroot
 
         self.__createWiki()
         self.testPage = self.wikiroot["Страница 1"]

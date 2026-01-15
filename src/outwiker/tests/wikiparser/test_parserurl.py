@@ -19,6 +19,7 @@ class ParserUrlTest(unittest.TestCase):
         self.filesPath = "testdata/samplefiles/"
 
         self.__createWiki()
+        self._application.wikiroot = self.wikiroot
 
         factory = ParserFactory()
         self.parser = factory.make(self.testPage, self._application)

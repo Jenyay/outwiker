@@ -241,6 +241,7 @@ class PageRecognizerTest(unittest.TestCase, BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
+        self.application.wikiroot = self.wikiroot
         self.page_1 = TextPageFactory().create(self.wikiroot, "Страница 1", [])
         self.page_2 = TextPageFactory().create(self.wikiroot, "Страница 2", [])
         self.page_1_1 = TextPageFactory().create(self.page_1, "Подстраница 1", [])

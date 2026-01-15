@@ -19,6 +19,7 @@ class SnippetsWikiCommandTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.testPage = WikiPageFactory().create(self.wikiroot,
                                                  "Страница 1",
                                                  [])
+        self.application.wikiroot = self.wikiroot
         plugins_dir = ["plugins/snippets"]
 
         self.loader = PluginsLoader(self.application)
