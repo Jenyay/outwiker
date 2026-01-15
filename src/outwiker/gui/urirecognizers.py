@@ -205,7 +205,7 @@ class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
             if uid.endswith("/"):
                 uid = uid[:-1]
 
-            page = (self._application.pageUidDepot[uid] or
+            page = (self._application.wikiroot.pageUidDepot[uid] or
                     self._application.selectedPage[uid] or
                     self._application.wikiroot[uid])
 

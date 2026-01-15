@@ -246,8 +246,8 @@ class PageRecognizerTest(unittest.TestCase, BaseOutWikerMixin):
         self.page_2 = TextPageFactory().create(self.wikiroot, "Страница 2", [])
         self.page_1_1 = TextPageFactory().create(self.page_1, "Подстраница 1", [])
 
-        self.page_1_uid = self.application.pageUidDepot.createUid(self.page_1)
-        self.page_2_uid = self.application.pageUidDepot.createUid(self.page_2)
+        self.page_1_uid = self.wikiroot.pageUidDepot.createUid(self.page_1)
+        self.page_2_uid = self.wikiroot.pageUidDepot.createUid(self.page_2)
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.page_1

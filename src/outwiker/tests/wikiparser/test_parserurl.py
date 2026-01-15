@@ -312,7 +312,7 @@ class ParserUrlTest(unittest.TestCase):
         )
 
     def testPageProtocol(self):
-        uid = self._application.pageUidDepot.createUid(self.testPage)
+        uid = self.wikiroot.pageUidDepot.createUid(self.testPage)
         text = f"бла-бла-бла page://{uid} бла-бла-бла"
         expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{uid}">{self.testPage.display_title}</a> бла-бла-бла'
 
@@ -320,7 +320,7 @@ class ParserUrlTest(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def testPageProtocolSlash(self):
-        uid = self._application.pageUidDepot.createUid(self.testPage)
+        uid = self.wikiroot.pageUidDepot.createUid(self.testPage)
         text = f"бла-бла-бла page://{uid}/ бла-бла-бла"
         expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{uid}">{self.testPage.display_title}</a> бла-бла-бла'
 

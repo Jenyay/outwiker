@@ -175,7 +175,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_findPage_06(self):
         self.application.wikiroot = self.wikiroot
-        uid = self.application.pageUidDepot.createUid(
+        uid = self.wikiroot.pageUidDepot.createUid(
             self.wikiroot['/Страница 2/Страница 3'])
 
         page = findPage(self.application, uid)
@@ -184,7 +184,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_findPage_07(self):
         self.application.wikiroot = self.wikiroot
-        uid = self.application.pageUidDepot.createUid(
+        uid = self.wikiroot.pageUidDepot.createUid(
             self.wikiroot['/Страница 2/Страница 3'])
         uid = 'page://' + uid
 

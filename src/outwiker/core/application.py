@@ -11,7 +11,7 @@ from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
 from outwiker.core.system import getSpellDirList
-from outwiker.core.tree import PageUidDepot, WikiDocument
+from outwiker.core.tree import WikiDocument
 from outwiker.gui.theme import Theme
 
 logger = logging.getLogger('outwiker.core.application')
@@ -470,13 +470,6 @@ class Application:
         Set main window for the program
         """
         self.__mainWindow = value
-
-    @property
-    def pageUidDepot(self) -> PageUidDepot:
-        if self.__wikiroot is None:
-            return None
-
-        return self.__wikiroot.pageUidDepot
 
     def __bindWikiEvents(self, wiki):
         """

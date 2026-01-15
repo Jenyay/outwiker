@@ -29,7 +29,7 @@ class SessionController:
 
         try:
             link = self._protocol + \
-                self._application.pageUidDepot.createUid(page)
+                self._application.wikiroot.pageUidDepot.createUid(page)
         except ReadonlyException:
             link = page.subpath
 
@@ -93,6 +93,6 @@ class SessionController:
 
         if link.startswith(self._protocol):
             uid = link[len(self._protocol):]
-            return self._application.pageUidDepot[uid]
+            return self._application.wikiroot.pageUidDepot[uid]
 
         return self._application.wikiroot[link]

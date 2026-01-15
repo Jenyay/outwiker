@@ -219,7 +219,7 @@ class SnippetParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
         selectedText = ''
         vars = {}
 
-        right_result = self.application.pageUidDepot.createUid(page)
+        right_result = self.wikiroot.pageUidDepot.createUid(page)
 
         parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)

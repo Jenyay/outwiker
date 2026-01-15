@@ -31,7 +31,7 @@ def changeUidWithDialog(page, application):
     message = _(u'Enter new identifier for page "{}"').format(
         page.display_title)
     prefix = u'page://'
-    defaultValue = application.pageUidDepot.createUid(page)
+    defaultValue = page.root.pageUidDepot.createUid(page)
     validator = ChangeUidValidator(application, page)
 
     with TextEntryDialog(application.mainWindow,
@@ -43,7 +43,7 @@ def changeUidWithDialog(page, application):
         if dlg.ShowModal() == wx.ID_OK:
             # Не отлавливаем исключения, поскольку считаем,
             # что правильность идентификатора проверил validator
-            application.pageUidDepot.changeUid(page, dlg.Value.strip())
+            page.root.pageUidDepot.changeUid(page, dlg.Value.strip())
 
 
 @testreadonly

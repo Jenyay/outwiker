@@ -64,7 +64,7 @@ def generateLink(application, page):
     """
     Создать ссылку на страницу по UID
     """
-    uid = application.pageUidDepot.createUid(page)
+    uid = page.root.pageUidDepot.createUid(page)
     return "page://{}".format(uid)
 
 
@@ -79,11 +79,11 @@ def findPage(application, page_id):
 
     if page_id.startswith(prefix):
         page_id = page_id[len(prefix):]
-        return application.pageUidDepot[page_id]
+        return application.wikiroot.pageUidDepot[page_id]
     elif application.wikiroot[page_id] is not None:
         return application.wikiroot[page_id]
     else:
-        return application.pageUidDepot[page_id]
+        return application.wikiroot.pageUidDepot[page_id]
 
 
 def getPageHtmlPath(page):
