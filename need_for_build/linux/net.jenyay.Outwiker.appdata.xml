@@ -19,6 +19,8 @@
     <category>Office</category>
   </categories>
   <url type="homepage">https://jenyay.net/Outwiker/English</url>
+  <url type="vcs-browser">https://github.com/jenyay/outwiker</url>
+  <url type="bugtracker">https://github.com/jenyay/outwiker/issues</url>
   <developer id="net.jenyay">
       <name>Eugene Ilin</name>
       <name xml:lang="ru">Евгений Ильин</name>
