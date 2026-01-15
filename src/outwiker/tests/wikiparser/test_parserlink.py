@@ -57,8 +57,10 @@ class ParserLinkTest(unittest.TestCase):
 
         # Прикрепим к двум страницам файлы
         Attachment(self.testPage).attach(fullFilesPath)
+        self._application.wikiroot = self.wikiroot
 
     def tearDown(self):
+        self._application.wikiroot = None
         removeDir(self.path)
 
     def testUrl1(self):
