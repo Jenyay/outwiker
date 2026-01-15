@@ -236,7 +236,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             '<a href="page://_asdfasdfasdf">page://_asdfasdfasdf</a>')
 
     def testClipboardExitedPageLink(self):
-        page_uid = self.wikiroot.pageUidDepot.createUid(self._testpage)
+        page_uid = self._testpage.getUid()
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -257,7 +257,7 @@ class LinkDialogControllerHtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testClipboardExitedWithAliasPageLink(self):
         self._testpage.alias = 'Tha page with an alias'
-        page_uid = self.wikiroot.pageUidDepot.createUid(self._testpage)
+        page_uid = self._testpage.getUid()
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''

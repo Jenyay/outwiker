@@ -48,7 +48,7 @@ class UrlToken:
         return f'<a class="{css.CSS_WIKI}" href="{url}">{comment}</a>'
 
     def _generateLinkToPage(self, page_uid: str) -> str:
-        page = self.parser.application.wikiroot.pageUidDepot[page_uid]
+        page = self.parser.application.wikiroot.getPageByUid(page_uid)
         url = self.page_protocol + page_uid
         if page is not None:
             return create_link_to_page(url, page.display_title)

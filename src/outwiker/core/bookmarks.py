@@ -3,7 +3,7 @@
 from typing import List, Optional
 
 from outwiker.core.exceptions import ReadonlyException
-from outwiker.core.tree import BasePage, WikiDocument, WikiPage, PageUidDepot
+from outwiker.core.tree import BasePage, WikiDocument, WikiPage
 from .event import Event
 from .events import BookmarksChangedParams
 from .config import StringListSection
@@ -24,10 +24,6 @@ class Bookmarks:
         # Изменение списка закладок
         # Параметр - экземпляр класса Bookmarks
         self.onBookmarksChanged = Event()
-
-    @property
-    def _page_uid_depot(self) -> Optional[PageUidDepot]:
-        return self._wikiroot.pageUidDepot if self._wikiroot is not None else None
 
     def clear(self):
         self.setWikiRoot(None)
@@ -63,7 +59,7 @@ class Bookmarks:
         if self._wikiroot is None:
             return None
 
-        return self._page_uid_depot[page_id] or self._wikiroot[page_id]
+        return self._wikiroot.getPageByUid(page_id) or self._wikiroot[page_id]
 
     def _getPageId(self, page: BasePage) -> Optional[str]:
         if page.parent is None or page.isRemoved:
@@ -73,7 +69,7 @@ class Bookmarks:
             return page.subpath
 
         try:
-            page_uid = self._page_uid_depot.createUid(page)
+            page_uid = page.getUid()
             if page_uid in self._pages:
                 return page_uid
         except ReadonlyException:
@@ -93,7 +89,7 @@ class Bookmarks:
         if subpath:
             self._pages.append(page.subpath)
         else:
-            self._pages.append(self._page_uid_depot.createUid(page))
+            self._pages.append(page.getUid())
 
         self._save()
         event_params = BookmarksChangedParams(

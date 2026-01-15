@@ -1040,4 +1040,4 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(tabsController.getPage(3).title, "Страница 3")
 
     def _getPageLink(self, page):
-        return "page://" + self.wikiroot.pageUidDepot.createUid(page)
+        return "page://" + page.getUid()

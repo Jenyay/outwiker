@@ -149,7 +149,7 @@ class BranchExporter:
         slashPos = uid.find("/")
         uid_clean = uid[:slashPos] if slashPos != -1 else uid
 
-        page = self.__application.wikiroot.pageUidDepot[uid_clean]
+        page = self.__application.wikiroot.getPageByUid(uid_clean)
         anchor = self.__getAnchor(uid)
 
         return (page, anchor)

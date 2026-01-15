@@ -243,11 +243,9 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(bookmarks[1].title, "Страница 3")
 
     def testPageUIDBookmarks(self):
-        page_uid_depot = self.wikiroot.pageUidDepot
-
         config = StringListSection(self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION)
-        config.value = [page_uid_depot.createUid(self.wikiroot["Страница 1"]),
-                        page_uid_depot.createUid(self.wikiroot["Страница 2/Страница 3"])]
+        config.value = [self.wikiroot["Страница 1"].getUid(),
+                        self.wikiroot["Страница 2/Страница 3"].getUid()]
 
         bookmarks = Bookmarks()
         bookmarks.setWikiRoot(self.wikiroot)

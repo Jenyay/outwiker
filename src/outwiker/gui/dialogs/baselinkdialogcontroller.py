@@ -92,7 +92,7 @@ class BaseLinkDialogController(metaclass=ABCMeta):
         if self._isPageLink(self._dlg.link):
             prefix = 'page://'
             uid = self._dlg.link[len(prefix):]
-            page = self._page.root.pageUidDepot[uid]
+            page = self._page.root.getPageByUid(uid)
             if page is not None and not self._selectedString:
                 self._dlg.comment = page.display_title
 

@@ -283,6 +283,9 @@ class BasePage(metaclass=ABCMeta):
         The method can raise EnvironmentError.
         """
 
+    def getUid(self, generate: bool = True) -> str:
+        return ""
+
 
 @final
 class WikiDocument(BasePage):
@@ -442,6 +445,9 @@ class WikiDocument(BasePage):
     @property
     def registry(self):
         return self._registry
+
+    def getPageByUid(self, uid: str) -> Optional[BasePage]:
+        return self._pageUidDepot[uid]
 
 
 class WikiPage(BasePage, metaclass=ABCMeta):
@@ -863,6 +869,10 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         Проверить, что страница удалена
         """
         return self not in self.parent.children
+
+    def getUid(self, generate: bool = True) -> str:
+        uid = self.root.pageUidDepot.createUid(self)
+        return uid
 
 
 class PageAdapter:

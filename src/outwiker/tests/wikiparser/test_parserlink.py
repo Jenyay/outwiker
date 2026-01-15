@@ -1141,7 +1141,7 @@ class ParserLinkTest(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def testPageProtocolLink(self):
-        uid = self.wikiroot.pageUidDepot.createUid(self.testPage)
+        uid = self.testPage.getUid()
         text = f"бла-бла-бла [[page://{uid}]] бла-бла-бла"
         expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{uid}">{self.testPage.display_title}</a> бла-бла-бла'
 

@@ -31,7 +31,7 @@ def changeUidWithDialog(page, application):
     message = _(u'Enter new identifier for page "{}"').format(
         page.display_title)
     prefix = u'page://'
-    defaultValue = page.root.pageUidDepot.createUid(page)
+    defaultValue = page.getUid()
     validator = ChangeUidValidator(application, page)
 
     with TextEntryDialog(application.mainWindow,

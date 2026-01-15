@@ -225,7 +225,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.linkResult, '[[page://_asdfasdfasdf]]')
 
     def testClipboardExitedPageLink(self):
-        page_uid = self.wikiroot.pageUidDepot.createUid(self._testpage)
+        page_uid = self._testpage.getUid()
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -246,7 +246,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testClipboardExitedPageAliasLink(self):
         self._testpage.alias = 'A page with an alias'
-        page_uid = self.wikiroot.pageUidDepot.createUid(self._testpage)
+        page_uid = self._testpage.getUid()
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
