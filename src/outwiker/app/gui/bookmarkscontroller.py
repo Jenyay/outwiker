@@ -26,7 +26,6 @@ class BookmarksController:
 
         self._application.onBookmarksChanged += self._onBookmarksChanged
         self._application.onWikiOpen.bind(self._onWikiOpen, EVENT_PRIORITY_MAX_CORE)
-        self._application.onPageUpdate += self._onPageUpdate
         self._application.onTreeUpdate += self._onTreeUpdate
         self._application.onPageRemove += self._onPageRemove
         self._application.onPageRename += self._onPageRename
@@ -36,7 +35,6 @@ class BookmarksController:
     def clear(self):
         self._application.onBookmarksChanged -= self._onBookmarksChanged
         self._application.onWikiOpen -= self._onWikiOpen
-        self._application.onPageUpdate -= self._onPageUpdate
         self._application.onTreeUpdate -= self._onTreeUpdate
         self._application.onPageRemove -= self._onPageRemove
         self._application.onPageRename -= self._onPageRename
@@ -55,9 +53,6 @@ class BookmarksController:
         self._application.bookmarks.pageRenamed(page, oldSubpath)
 
     def _onTreeUpdate(self, sender):
-        self._updateBookmarksMenu()
-
-    def _onPageUpdate(self, page, **kwargs):
         self._updateBookmarksMenu()
 
     def _onWikiOpen(self, wikiroot: Optional[WikiDocument]):
