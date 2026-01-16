@@ -878,7 +878,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         uid = None
         if self._uid:
             uid = self._uid
-        elif generate and not self.readonly:
+        elif generate:
             uid = self.root.pageUidDepot.createUid(self)
         return uid
 
