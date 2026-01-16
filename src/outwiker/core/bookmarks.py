@@ -62,14 +62,14 @@ class Bookmarks:
         return self._wikiroot.getPageByUid(page_id) or self._wikiroot[page_id]
 
     def _getPageId(self, page: BasePage) -> Optional[str]:
-        if page.parent is None or page.isRemoved:
-            return None
+        # if page.parent is None or page.isRemoved:
+        #     return None
 
         if page.subpath in self._pages:
             return page.subpath
 
         try:
-            page_uid = page.getUid()
+            page_uid = page.getUid(generate=False)
             if page_uid in self._pages:
                 return page_uid
         except ReadonlyException:

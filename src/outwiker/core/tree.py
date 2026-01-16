@@ -283,8 +283,11 @@ class BasePage(metaclass=ABCMeta):
         The method can raise EnvironmentError.
         """
 
-    def getUid(self, generate: bool = True) -> str:
+    def getUid(self, generate: bool = True) -> Optional[str]:
         return ""
+
+    def setUid(self, new_uid: str) -> None:
+        pass
 
 
 @final
@@ -477,6 +480,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self._parent = parent
         self._tags = [tag for tag in self.params.tagsOption.value if tag]
         self._alias = self.params.aliasOption.value
+        self._uid = self.params.pageUidOption.value
         if len(self._alias) == 0:
             self._alias = None
 
@@ -870,9 +874,22 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         """
         return self not in self.parent.children
 
-    def getUid(self, generate: bool = True) -> str:
-        uid = self.root.pageUidDepot.createUid(self)
+    def getUid(self, generate: bool = True) -> Optional[str]:
+        uid = None
+        if self._uid:
+            uid = self._uid
+        elif generate and not self.readonly:
+            uid = self.root.pageUidDepot.createUid(self)
         return uid
+
+    def setUid(self, new_uid: str) -> None:
+        if self.readonly:
+            raise ReadonlyException
+
+        self._uid = new_uid
+        self.params.pageUidOption.value = new_uid
+        self.updateDateTime()
+        self.root.onPageUpdate(self, change=events.PAGE_UPDATE_UID)
 
 
 class PageAdapter:
@@ -1066,8 +1083,8 @@ class PageUidDepot:
         wikiroot - корень викидерева или корневая страница.
         Если wikiroot != None, то приосходит поиск всех UID
         """
-        self.__configSection = CONFIG_GENERAL_SECTION
-        self.__configParamName = "uid"
+        # self.__configSection = CONFIG_GENERAL_SECTION
+        # self.__configParamName = "uid"
 
         # Словарь идентификаторов.
         # Ключ - уникальный идентификатор, значение - указатель на страницу
@@ -1083,26 +1100,12 @@ class PageUidDepot:
         """
         Прочитать UID всех страниц в дереве.
         """
-        uid = self.__getUid(root)
+        uid = root.getUid(generate=False)
 
         if uid is not None:
             self.__uids[uid] = root
 
         [self.__load(child) for child in root.children]
-
-    def __getUid(self, page: BasePage) -> Optional[str]:
-        """
-        Прочитать и вернуть UID страницы, если он есть.
-        Если его нет, возвращается None
-        """
-        uid = StringOption(
-            page.params, self.__configSection, self.__configParamName, ""
-        ).value.lower()
-
-        if len(uid.strip()) == 0:
-            uid = None
-
-        return uid
 
     def __getitem__(self, uid: str) -> Optional[BasePage]:
         uid = uid.lower()
@@ -1121,7 +1124,7 @@ class PageUidDepot:
         его в качестве значения.
         Если у страницы уже есть идентификатор, возвращаем его
         """
-        uid = self.__getUid(page)
+        uid = page.getUid(generate=False)
         if uid is not None:
             return uid
 
@@ -1153,7 +1156,7 @@ class PageUidDepot:
 
         newUid = newUid.lower()
 
-        oldUid = self.__getUid(page)
+        oldUid = page.getUid(generate=False)
         if newUid == oldUid:
             return
 
@@ -1164,14 +1167,9 @@ class PageUidDepot:
         if "/" in newUid:
             raise ValueError
 
-        if page.readonly:
-            raise ReadonlyException
+        page.setUid(newUid)
 
         if oldUid in self.__uids:
             del self.__uids[oldUid]
 
         self.__uids[newUid] = page
-
-        StringOption(
-            page.params, self.__configSection, self.__configParamName, ""
-        ).value = newUid
