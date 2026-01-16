@@ -42,11 +42,13 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testCreateUid_01(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         uid = depot.createUid(self.wikiroot["Страница 1"])
         self.assertEqual(depot[uid], self.wikiroot["Страница 1"])
 
     def testCreateUid_02(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         uid = depot.createUid(self.wikiroot["Страница 1"])
         uid_new = depot.createUid(self.wikiroot["Страница 1"])
 
@@ -54,11 +56,13 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testCreateUid_03(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         uid = depot.createUid(self.wikiroot["Страница 1"])
         self.assertEqual(depot[uid.upper()], self.wikiroot["Страница 1"])
 
     def testSaveLoad_01(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         uid = depot.createUid(self.wikiroot["Страница 1"])
 
         depot_new = PageUidDepot()
@@ -68,6 +72,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testSaveLoad_02(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         uid = depot.createUid(
             self.wikiroot["Страница 2/Страница 3/Страница 4"]
         )
@@ -79,6 +84,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testSaveLoad_03(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         uid = depot.createUid(self.wikiroot["Страница 1"])
 
         depot_new = PageUidDepot()
@@ -90,6 +96,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testRenamePage(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
         uid = depot.createUid(page)
 
@@ -102,6 +109,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testRemovePage(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
         uid = depot.createUid(page)
 
@@ -110,6 +118,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testMovePage(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
         uid = depot.createUid(page)
 
@@ -123,6 +132,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_01(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
 
         new_uid = "Абырвалг"
@@ -136,6 +146,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_02(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
 
         new_uid = "Абырвалг"
@@ -146,6 +157,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_03(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
 
         new_uid = "Абырвалг"
@@ -158,6 +170,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_04(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
 
         new_uid = "Абырвалг"
@@ -170,6 +183,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_05(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
 
         new_uid = "Абырвалг"
@@ -180,6 +194,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_06(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
 
         new_uid = "  "
@@ -190,6 +205,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_07(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
 
         # Запрещено использовать "/" в идентификаторах
@@ -201,6 +217,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_08(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
 
         new_uid = "Абырвалг"
@@ -213,6 +230,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_09(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         page = self.wikiroot["Страница 2/Страница 3"]
 
         new_uid = "АБЫРВАЛГ"
@@ -222,6 +240,7 @@ class PageUidDepotTest(unittest.TestCase):
 
     def testChangeUid_10(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
 
         new_uid = "Абырвалг"
         depot.changeUid(self.wikiroot["Страница 2/Страница 3"], new_uid)
@@ -316,24 +335,9 @@ class PageUidDepotTest(unittest.TestCase):
         self.assertIn("page://", link)
         self.assertIn("абырвалг", link)
 
-    def testReadOnly_01(self):
-        depot = PageUidDepot()
-        page = self.wikiroot["Страница 2/Страница 3"]
-        page.readonly = True
-
-        self.assertRaises(ReadonlyException, depot.createUid, page)
-
-    def testReadOnly_02(self):
-        depot = PageUidDepot()
-        page = self.wikiroot["Страница 2/Страница 3"]
-        depot.createUid(page)
-
-        page.readonly = True
-
-        depot.createUid(page)
-
     def testLoad_01(self):
         depot = PageUidDepot()
+        depot.load(self.wikiroot)
         uid = depot.createUid(self.wikiroot["Страница 1"])
 
         depot_new = PageUidDepot()

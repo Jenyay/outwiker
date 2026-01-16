@@ -244,8 +244,8 @@ class BookmarksTest(unittest.TestCase):
 
     def testPageUIDBookmarks(self):
         config = StringListSection(self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION)
-        config.value = [self.wikiroot["Страница 1"].getUid(),
-                        self.wikiroot["Страница 2/Страница 3"].getUid()]
+        config.value = [self.wikiroot["Страница 1"].getUid(generate=True),
+                        self.wikiroot["Страница 2/Страница 3"].getUid(generate=True)]
 
         bookmarks = Bookmarks()
         bookmarks.setWikiRoot(self.wikiroot)

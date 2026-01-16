@@ -89,7 +89,7 @@ class Bookmarks:
         if subpath:
             self._pages.append(page.subpath)
         else:
-            self._pages.append(page.getUid())
+            self._pages.append(page.getUid(generate=True))
 
         self._save()
         event_params = BookmarksChangedParams(

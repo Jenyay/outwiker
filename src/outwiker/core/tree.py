@@ -480,9 +480,9 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self._parent = parent
         self._tags = [tag for tag in self.params.tagsOption.value if tag]
         self._alias = self.params.aliasOption.value
-        self._uid = self.params.pageUidOption.value
         if len(self._alias) == 0:
             self._alias = None
+        self._uid = self.params.pageUidOption.value
 
     def __bool__(self):
         return True
@@ -874,7 +874,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         """
         return self not in self.parent.children
 
-    def getUid(self, generate: bool = True) -> Optional[str]:
+    def getUid(self, generate: bool = False) -> Optional[str]:
         uid = None
         if self._uid:
             uid = self._uid
@@ -1083,9 +1083,6 @@ class PageUidDepot:
         wikiroot - корень викидерева или корневая страница.
         Если wikiroot != None, то приосходит поиск всех UID
         """
-        # self.__configSection = CONFIG_GENERAL_SECTION
-        # self.__configParamName = "uid"
-
         # Словарь идентификаторов.
         # Ключ - уникальный идентификатор, значение - указатель на страницу
         self.__uids: Dict[str, BasePage] = {}
@@ -1151,7 +1148,7 @@ class PageUidDepot:
         Если идентификатор содержит только пробелы или содержит символ "/",
         бросается исключение ValueError
         """
-        if len(newUid.strip()) == 0:
+        if newUid is None or len(newUid.strip()) == 0:
             raise ValueError
 
         newUid = newUid.lower()

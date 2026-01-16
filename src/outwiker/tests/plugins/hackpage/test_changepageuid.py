@@ -48,7 +48,7 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from hackpage.utils import changeUidWithDialog
 
         Tester.dialogTester.appendOk()
-        uid_old = self.testPage.getUid()
+        uid_old = self.testPage.getUid(generate=True)
 
         changeUidWithDialog(self.testPage, self.application)
 
@@ -127,7 +127,7 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from hackpage.validators import ChangeUidValidator
         Tester.dialogTester.appendOk()
 
-        uid = self.testPage2.getUid()
+        uid = self.testPage2.getUid(generate=True)
         uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertFalse(uidvalidator(uid))

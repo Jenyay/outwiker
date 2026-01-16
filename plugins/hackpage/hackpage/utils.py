@@ -27,19 +27,20 @@ def changeUidWithDialog(page, application):
     if page.readonly:
         raise ReadonlyException
 
-    title = _(u"Change page identifier")
-    message = _(u'Enter new identifier for page "{}"').format(
-        page.display_title)
-    prefix = u'page://'
-    defaultValue = page.getUid()
+    title = _("Change page identifier")
+    message = _('Enter new identifier for page "{}"').format(page.display_title)
+    prefix = "page://"
+    defaultValue = page.getUid(generate=True)
     validator = ChangeUidValidator(application, page)
 
-    with TextEntryDialog(application.mainWindow,
-                         title=title,
-                         message=message,
-                         prefix=prefix,
-                         value=defaultValue,
-                         validator=validator) as dlg:
+    with TextEntryDialog(
+        application.mainWindow,
+        title=title,
+        message=message,
+        prefix=prefix,
+        value=defaultValue,
+        validator=validator,
+    ) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             # Не отлавливаем исключения, поскольку считаем,
             # что правильность идентификатора проверил validator
@@ -60,15 +61,13 @@ def setAliasWithDialog(page, application):
     if page.readonly:
         raise ReadonlyException
 
-    title = _(u"Set page alias")
-    message = _(u'Enter alias for page').format(
-        page.display_title)
-    defaultValue = page.alias if page.alias is not None else u''
+    title = _("Set page alias")
+    message = _("Enter alias for page").format(page.display_title)
+    defaultValue = page.alias if page.alias is not None else ""
 
-    with TextEntryDialog(application.mainWindow,
-                         title=title,
-                         message=message,
-                         value=defaultValue) as dlg:
+    with TextEntryDialog(
+        application.mainWindow, title=title, message=message, value=defaultValue
+    ) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             page.alias = dlg.GetValue()
 
@@ -90,16 +89,17 @@ def setPageFolderWithDialog(page, application):
     oldTitle = page.title
     oldDisplayTitle = page.display_title
 
-    title = _(u'Set page folder')
-    message = _(u'Enter the page folder name')
+    title = _("Set page folder")
+    message = _("Enter the page folder name")
     defaultValue = oldTitle
 
-    with TextEntryDialog(application.mainWindow,
-                         title=title,
-                         message=message,
-                         value=defaultValue,
-                         validator=testPageTitle
-                         ) as dlg:
+    with TextEntryDialog(
+        application.mainWindow,
+        title=title,
+        message=message,
+        value=defaultValue,
+        validator=testPageTitle,
+    ) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             if page.title != dlg.GetValue():
                 page.title = dlg.GetValue()
@@ -111,12 +111,12 @@ def setPageCreationDate(page, application):
     global _
     _ = get_()
 
-    title = _('Page creation date and time')
+    title = _("Page creation date and time")
     selectedDateTime = page.creationdatetime
 
-    with DateTimeDialog(application.mainWindow,
-                        title=title,
-                        selectedDateTime=selectedDateTime) as dlg:
+    with DateTimeDialog(
+        application.mainWindow, title=title, selectedDateTime=selectedDateTime
+    ) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             page.creationdatetime = dlg.getDateTime()
             application.onPageUpdate(page, change=PAGE_UPDATE_CONTENT)
@@ -127,12 +127,12 @@ def setPageChangeDate(page, application):
     global _
     _ = get_()
 
-    title = _('Date and time of change of the page')
+    title = _("Date and time of change of the page")
     selectedDateTime = page.datetime
 
-    with DateTimeDialog(application.mainWindow,
-                        title=title,
-                        selectedDateTime=selectedDateTime) as dlg:
+    with DateTimeDialog(
+        application.mainWindow, title=title, selectedDateTime=selectedDateTime
+    ) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             page.datetime = dlg.getDateTime()
             application.onPageUpdate(page, change=PAGE_UPDATE_CONTENT)

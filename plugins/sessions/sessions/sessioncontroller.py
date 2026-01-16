@@ -28,7 +28,7 @@ class SessionController:
             return ''
 
         try:
-            link = self._protocol + page.getUid()
+            link = self._protocol + page.getUid(generate=True)
         except ReadonlyException:
             link = page.subpath
 

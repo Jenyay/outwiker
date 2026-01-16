@@ -219,7 +219,7 @@ class SnippetParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
         selectedText = ''
         vars = {}
 
-        right_result = page.getUid()
+        right_result = page.getUid(generate=True)
 
         parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
@@ -230,6 +230,7 @@ class SnippetParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from snippets.snippetparser import SnippetParser
         date = datetime(2016, 12, 9, 14, 23)
         page = self.testPage
+        page.getUid(generate=True)
         page.datetime = date
         template = '{{__eddate}}'
         selectedText = ''

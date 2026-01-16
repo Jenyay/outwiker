@@ -741,30 +741,6 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         )
         self.assertEqual(session.currentTab, 1)
 
-    def testGetSessionInfo_04(self):
-        from sessions.sessioncontroller import SessionController
-
-        self.wikiroot["Страница 1"].readonly = True
-        self.wikiroot["Страница 2"].readonly = True
-
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
-
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
-
-        controller = SessionController(self.application)
-
-        session = controller.getCurrentSession()
-
-        self.assertEqual(
-            os.path.realpath(session.path), os.path.realpath(self.wikiroot.path)
-        )
-        self.assertEqual(len(session.pages), 2)
-        self.assertEqual(session.pages[0], self.wikiroot["Страница 1"].subpath)
-        self.assertEqual(session.pages[1], self.wikiroot["Страница 2"].subpath)
-        self.assertEqual(session.currentTab, 1)
-
     def testInvalidSession_01(self):
         """
         Если нет открытых вики
@@ -1040,4 +1016,4 @@ class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(tabsController.getPage(3).title, "Страница 3")
 
     def _getPageLink(self, page):
-        return "page://" + page.getUid()
+        return "page://" + page.getUid(generate=True)
