@@ -29,8 +29,6 @@ from .system import getIconsDirList
 from .registrynotestree import NotesTreeRegistry, PickleSaver
 from . import events
 from outwiker.utilites.textfile import readTextFile, writeTextFile
-from outwiker.core.defines import CONFIG_GENERAL_SECTION
-from outwiker.core.config import StringOption
 
 
 logger = logging.getLogger("core")
@@ -879,7 +877,9 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         if self._uid:
             uid = self._uid
         elif generate:
-            uid = self.root.pageUidDepot.createUid(self)
+            depot = self.root.pageUidDepot
+            uid = depot.generateUid()
+            depot.changeUid(self, uid)
         return uid
 
     def setUid(self, new_uid: str) -> None:
@@ -1125,21 +1125,17 @@ class PageUidDepot:
         if uid is not None:
             return uid
 
-        # Добавим "__", чтобы было понятно, что в ссылке находится не страница
-        uid = self.__generateUid()
-
-        # На случай, если вдруг кто-то поменяет UID страницы, и новый UID с ним
-        # совпадет(в этом случае угадавшему UID нужно срочно проверить
-        # экстрасенсорные способности :) )
-        while uid in self.__uids:
-            uid = self.__generateUid()
+        uid = self.generateUid()
 
         self.changeUid(page, uid)
 
         return uid
 
-    def __generateUid(self) -> str:
-        return "__" + str(uuid.uuid4())
+    def generateUid(self) -> str:
+        while (uid := "__" + str(uuid.uuid4())) in self.__uids:
+            pass
+
+        return uid
 
     def changeUid(self, page: BasePage, newUid: str) -> None:
         """
@@ -1164,9 +1160,16 @@ class PageUidDepot:
         if "/" in newUid:
             raise ValueError
 
+        self.removePageUid(oldUid)
+
         page.setUid(newUid)
+        self.addPage(page)
 
-        if oldUid in self.__uids:
-            del self.__uids[oldUid]
+    def removePageUid(self, uid: Optional[str]) -> None:
+        if uid in self.__uids:
+            del self.__uids[uid]
 
-        self.__uids[newUid] = page
+    def addPage(self, page: BasePage) -> None:
+        uid = page.getUid(generate=False)
+        assert uid is not None
+        self.__uids[uid] = page
