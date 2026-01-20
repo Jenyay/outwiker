@@ -44,7 +44,7 @@ def changeUidWithDialog(page, application):
         if dlg.ShowModal() == wx.ID_OK:
             # Не отлавливаем исключения, поскольку считаем,
             # что правильность идентификатора проверил validator
-            page.root.pageUidDepot.changeUid(page, dlg.Value.strip())
+            page.setUid(dlg.Value.strip())
 
 
 @testreadonly

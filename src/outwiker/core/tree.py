@@ -879,17 +879,44 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         elif generate:
             depot = self.root.pageUidDepot
             uid = depot.generateUid()
-            depot.changeUid(self, uid)
+            self.setUid(uid)
         return uid
 
     def setUid(self, new_uid: str) -> None:
         if self.readonly:
             raise ReadonlyException
 
+        if new_uid is None or len(new_uid.strip()) == 0:
+            raise ValueError
+
+        new_uid = new_uid.lower()
+
+        oldUid = self._uid
+        if new_uid == oldUid:
+            return
+
+        depot = self.root.pageUidDepot
+        if depot.uidExists(new_uid):
+            raise KeyError
+
+        # Запрещено использовать "/" в идентификаторе
+        if "/" in new_uid:
+            raise ValueError
+
+        depot.removePageUid(oldUid)
+
         self._uid = new_uid
         self.params.pageUidOption.value = new_uid
         self.updateDateTime()
+        depot.addPage(self)
         self.root.onPageUpdate(self, change=events.PAGE_UPDATE_UID)
+
+    def _clearUid(self):
+        """Remove page UID. Used in tests"""
+        depot = self.root.pageUidDepot
+        depot.removePageUid(self._uid)
+        self._uid = None
+        self.params.pageUidOption.value = None
 
 
 class PageAdapter:
@@ -1115,55 +1142,11 @@ class PageUidDepot:
 
         return page
 
-    def createUid(self, page: BasePage) -> str:
-        """
-        Сгенерить уникальный идентификатор для страницы и вернуть
-        его в качестве значения.
-        Если у страницы уже есть идентификатор, возвращаем его
-        """
-        uid = page.getUid(generate=False)
-        if uid is not None:
-            return uid
-
-        uid = self.generateUid()
-
-        self.changeUid(page, uid)
-
-        return uid
-
     def generateUid(self) -> str:
-        while (uid := "__" + str(uuid.uuid4())) in self.__uids:
+        while (uid := str(uuid.uuid4())) in self.__uids:
             pass
 
         return uid
-
-    def changeUid(self, page: BasePage, newUid: str) -> None:
-        """
-        Изменить идентификатор страницы.
-        Если новый идентификатор уже существует, бросается исключение KeyError.
-        Если идентификатор содержит только пробелы или содержит символ "/",
-        бросается исключение ValueError
-        """
-        if newUid is None or len(newUid.strip()) == 0:
-            raise ValueError
-
-        newUid = newUid.lower()
-
-        oldUid = page.getUid(generate=False)
-        if newUid == oldUid:
-            return
-
-        if newUid in self.__uids:
-            raise KeyError
-
-        # Запрещено использовать "/" в идентификаторе
-        if "/" in newUid:
-            raise ValueError
-
-        self.removePageUid(oldUid)
-
-        page.setUid(newUid)
-        self.addPage(page)
 
     def removePageUid(self, uid: Optional[str]) -> None:
         if uid in self.__uids:
@@ -1173,3 +1156,6 @@ class PageUidDepot:
         uid = page.getUid(generate=False)
         assert uid is not None
         self.__uids[uid] = page
+
+    def uidExists(self, uid: str) -> bool:
+        return uid in self.__uids
