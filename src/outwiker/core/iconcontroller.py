@@ -64,6 +64,9 @@ class IconController:
             ("__std_page-white-paste.png", join("text", "__std_page-white-paste.svg")),
             ("__std_spellcheck.svg", join("text", "__std_spellcheck.svg")),
             ("__std_spellcheck.png", join("text", "__std_spellcheck.svg")),
+
+            ("__std_calendar.png", join("office", "__std_calendar_red.svg")),
+            ("__std_calendar.svg", join("office", "__std_calendar_red.svg")),
             ])
 
     # Used in tests
