@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-24 21:14+0300\n"
+"POT-Creation-Date: 2026-01-27 09:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -362,7 +362,7 @@ msgstr ""
 msgid "Open tree notes"
 msgstr ""
 
-#: outwiker/app/actions/openhelp.py:25 outwiker/app/gui/mainwindow.py:163
+#: outwiker/app/actions/openhelp.py:25 outwiker/app/gui/mainwindow.py:165
 msgid "Help"
 msgstr ""
 
@@ -483,7 +483,7 @@ msgstr ""
 #: outwiker/app/actions/showhideattaches.py:18
 #: outwiker/app/actions/switchto.py:63
 #: outwiker/app/gui/mainpanes/attachmainpane.py:40
-#: outwiker/app/gui/mainwindow.py:481
+#: outwiker/app/gui/mainwindow.py:486
 #: outwiker/app/gui/preferences/prefcontroller.py:142
 #: outwiker/app/gui/preferences/wikieditorpanel.py:37
 #: outwiker/gui/controls/filestreectrl.py:84
@@ -498,7 +498,7 @@ msgstr ""
 #: outwiker/app/actions/showhidetags.py:18
 #: outwiker/app/actions/switchto.py:86
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
-#: outwiker/app/gui/mainwindow.py:493
+#: outwiker/app/gui/mainwindow.py:498
 #: outwiker/gui/controls/pagelist_columns.py:226
 #: outwiker/pages/search/searchpanel.py:48
 msgid "Tags"
@@ -1080,7 +1080,7 @@ msgstr ""
 msgid "{count} file(s)  -  {size} KB"
 msgstr ""
 
-#: outwiker/app/gui/basepagedialog.py:142 outwiker/app/gui/mainwindow.py:177
+#: outwiker/app/gui/basepagedialog.py:142 outwiker/app/gui/mainwindow.py:179
 #: outwiker/app/gui/preferences/prefcontroller.py:136
 #: outwiker/app/gui/preferences/prefcontroller.py:166
 #: outwiker/pages/wiki/wikipagecontroller.py:67
@@ -1278,76 +1278,76 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:148
+#: outwiker/app/gui/mainwindow.py:150
 msgid "File"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:150
+#: outwiker/app/gui/mainwindow.py:152
 #: outwiker/app/gui/preferences/generalpanel.py:41
 msgid "Edit"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:152
+#: outwiker/app/gui/mainwindow.py:154
 msgid "Tree"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:154
+#: outwiker/app/gui/mainwindow.py:156
 msgid "Tools"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:156 outwiker/gui/rootpagepanel.py:166
+#: outwiker/app/gui/mainwindow.py:158 outwiker/gui/rootpagepanel.py:169
 msgid "Bookmarks"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:158
+#: outwiker/app/gui/mainwindow.py:160
 msgid "View"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:160 outwiker/app/gui/mainwindow.py:406
+#: outwiker/app/gui/mainwindow.py:162 outwiker/app/gui/mainwindow.py:411
 msgid "Go to"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:168
+#: outwiker/app/gui/mainwindow.py:170
 msgid "Toolbars"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:183
+#: outwiker/app/gui/mainwindow.py:185
 #: outwiker/app/gui/preferences/prefcontroller.py:183
 msgid "Plugins"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:394
+#: outwiker/app/gui/mainwindow.py:399
 msgid "Movement"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:443
-#: outwiker/app/gui/preferences/colorspanel.py:67
+#: outwiker/app/gui/mainwindow.py:448
 #: outwiker/app/gui/preferences/colorspanel.py:68
 #: outwiker/app/gui/preferences/colorspanel.py:69
 #: outwiker/app/gui/preferences/colorspanel.py:70
 #: outwiker/app/gui/preferences/colorspanel.py:71
-#: outwiker/app/gui/preferences/colorspanel.py:73
+#: outwiker/app/gui/preferences/colorspanel.py:72
 #: outwiker/app/gui/preferences/colorspanel.py:74
 #: outwiker/app/gui/preferences/colorspanel.py:75
 #: outwiker/app/gui/preferences/colorspanel.py:76
 #: outwiker/app/gui/preferences/colorspanel.py:77
-#: outwiker/app/gui/preferences/colorspanel.py:79
+#: outwiker/app/gui/preferences/colorspanel.py:78
+#: outwiker/app/gui/preferences/colorspanel.py:80
 #: outwiker/app/gui/preferences/prefcontroller.py:139
 msgid "Tabs"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:455
+#: outwiker/app/gui/mainwindow.py:460
 msgid "Paths"
 msgstr ""
 
-#: outwiker/app/gui/mainwindow.py:609
+#: outwiker/app/gui/mainwindow.py:614
 #, python-format
 msgid ""
 "Can't save config\n"
 "%s"
 msgstr ""
 
-#: outwiker/app/gui/mainwndcontroller.py:232
+#: outwiker/app/gui/mainwndcontroller.py:223
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1471,12 +1471,13 @@ msgstr ""
 #: outwiker/app/gui/preferences/colorspanel.py:63
 #: outwiker/app/gui/preferences/colorspanel.py:64
 #: outwiker/app/gui/preferences/colorspanel.py:65
+#: outwiker/app/gui/preferences/colorspanel.py:66
 #: outwiker/app/gui/preferences/prefcontroller.py:173
 msgid "Editor"
 msgstr ""
 
 #: outwiker/app/gui/preferences/colorspanel.py:62
-#: outwiker/app/gui/preferences/colorspanel.py:73
+#: outwiker/app/gui/preferences/colorspanel.py:74
 msgid "Font color"
 msgstr ""
 
@@ -1489,46 +1490,50 @@ msgid "Background color of the selected text"
 msgstr ""
 
 #: outwiker/app/gui/preferences/colorspanel.py:65
+msgid "Line number font color"
+msgstr ""
+
+#: outwiker/app/gui/preferences/colorspanel.py:66
 msgid "Page margin background color"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:67
+#: outwiker/app/gui/preferences/colorspanel.py:68
 msgid "Tab color"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:68
+#: outwiker/app/gui/preferences/colorspanel.py:69
 msgid "Сolor of the selected tab"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:69
+#: outwiker/app/gui/preferences/colorspanel.py:70
 msgid "Сolor of the tab under cursor"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:70
+#: outwiker/app/gui/preferences/colorspanel.py:71
 msgid "Color of the pressed tab"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:71
+#: outwiker/app/gui/preferences/colorspanel.py:72
 msgid "Color of the dragged tab"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:74
+#: outwiker/app/gui/preferences/colorspanel.py:75
 msgid "Font color of the selected tab"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:75
+#: outwiker/app/gui/preferences/colorspanel.py:76
 msgid "Font color of the tab under cursor"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:76
+#: outwiker/app/gui/preferences/colorspanel.py:77
 msgid "Font color of the pressed tab"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:77
+#: outwiker/app/gui/preferences/colorspanel.py:78
 msgid "Font color of the dragged tab"
 msgstr ""
 
-#: outwiker/app/gui/preferences/colorspanel.py:79
+#: outwiker/app/gui/preferences/colorspanel.py:80
 msgid "Tab border color"
 msgstr ""
 
@@ -1890,15 +1895,15 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
-#: outwiker/app/gui/preferences/spellpanel.py:30
+#: outwiker/app/gui/preferences/spellpanel.py:32
 msgid "Skip words with digits"
 msgstr ""
 
-#: outwiker/app/gui/preferences/spellpanel.py:39
+#: outwiker/app/gui/preferences/spellpanel.py:40
 msgid "Use dictionaries"
 msgstr ""
 
-#: outwiker/app/gui/preferences/spellpanel.py:55
+#: outwiker/app/gui/preferences/spellpanel.py:48
 msgid "Custom dictonary (one word per line)"
 msgstr ""
 
@@ -2027,7 +2032,7 @@ msgid "Tag removing"
 msgstr ""
 
 #: outwiker/app/gui/tagspanelcontroller.py:91
-#: outwiker/app/gui/tagspanelcontroller.py:103 outwiker/core/treetools.py:57
+#: outwiker/app/gui/tagspanelcontroller.py:103 outwiker/core/treetools.py:58
 msgid "Page is opened as read-only"
 msgstr ""
 
@@ -2540,11 +2545,11 @@ msgstr ""
 msgid "Default size"
 msgstr ""
 
-#: outwiker/gui/rootpagepanel.py:73
+#: outwiker/gui/rootpagepanel.py:75
 msgid "Create new page..."
 msgstr ""
 
-#: outwiker/gui/rootpagepanel.py:105
+#: outwiker/gui/rootpagepanel.py:107
 msgid "Path to current notes tree"
 msgstr ""
 
