@@ -498,7 +498,7 @@ class _ItemsPainter:
         )
 
         title_font_normal = self._fonts.FindOrCreateFont(wx.FontInfo(self._view_info.font_size))
-        self._gc.SetFont(title_font_normal, wx.Colour())
+        self._gc.SetFont(title_font_normal, wx.Colour(0, 0, 0))
         self._text_height = self._gc.GetFullTextExtent("W")[1]
 
     def draw(self, item: NotesTreeItem, dx, dy):
