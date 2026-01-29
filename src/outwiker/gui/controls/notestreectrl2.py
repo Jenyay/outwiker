@@ -476,14 +476,13 @@ class _ItemsPainter:
     def __init__(
         self,
         window: wx.Window,
-        dc: wx.DC,
+        gc: wx.GraphicsContext,
         image_list: ImageListCache,
         extra_image_list: ImageListCache,
         view_info: _ItemsViewInfo,
     ) -> None:
         self._window = window
-        self._dc = dc
-        self._gc = wx.GraphicsContext.Create(dc)
+        self._gc = gc
 
         self._image_list = image_list
         self._extra_image_list = extra_image_list
@@ -498,16 +497,9 @@ class _ItemsPainter:
             self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height
         )
 
-        self._text_height = None
-
-    def __enter__(self):
         title_font_normal = self._fonts.FindOrCreateFont(wx.FontInfo(self._view_info.font_size))
-        self._dc.SetFont(title_font_normal)
-        self._text_height = self._dc.GetTextExtent("W").GetHeight()
-        return self
-
-    def __exit__(self, type, value, traceback):
-        self._dc = None
+        self._gc.SetFont(title_font_normal, wx.Colour())
+        self._text_height = self._gc.GetFullTextExtent("W")[1]
 
     def draw(self, item: NotesTreeItem, dx, dy):
         if item.isVisible():
@@ -521,10 +513,10 @@ class _ItemsPainter:
 
     def fillBackground(self):
         back_color = self._view_info.back_color
-        self._dc.SetBrush(self._brushes.FindOrCreateBrush(back_color))
-        self._dc.SetPen(self._pens.FindOrCreatePen(back_color))
+        self._gc.SetBrush(self._brushes.FindOrCreateBrush(back_color))
+        self._gc.SetPen(self._pens.FindOrCreatePen(back_color))
         width, height = self._window.GetClientSize()
-        self._dc.DrawRectangle(0, 0, width, height)
+        self._gc.DrawRectangle(0, 0, width, height)
 
     def drawTreeLines(self, item: NotesTreeItem, dx: int, dy: int):
         parentItem = item.getParent()
@@ -537,17 +529,18 @@ class _ItemsPainter:
         if top < 0:
             top = 0
         centerV = self._view_info.getItemCenterVertical(item) + dy
-        points = [(left, top, left, centerV), (left, centerV, right, centerV)]
         tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
-        self._dc.DrawLineList(points, pens=tree_line_pen)
+        self._gc.SetPen(tree_line_pen)
+        self._gc.DrawLines([(left, top), (left, centerV)])
+        self._gc.DrawLines([(left, centerV), (right, centerV)])
 
     def drawOrderMarker(self, xmin: int, xmax: int, y: int, dx: int, dy: int):
         order_line_pen = self._pens.FindOrCreatePen(
             self._view_info.order_between_color,
             width=self._view_info.order_marker_weight,
         )
-        self._dc.SetPen(order_line_pen)
-        self._dc.DrawLine(xmin + dx + 1, y + dy, xmax + dx - 1, y + dy)
+        self._gc.SetPen(order_line_pen)
+        self._gc.DrawLines([(xmin + dx + 1, y + dy), (xmax + dx - 1, y + dy)])
 
     def _drawExpandCollapseCtrl(self, item: NotesTreeItem, dx, dy):
         if item.hasChildren():
@@ -627,23 +620,23 @@ class _ItemsPainter:
         )
 
         customTitleColor = item.getFontColor()
+        text_color = None
+
         if item.isSelected():
-            self._dc.SetTextBackground(self._view_info.back_color_selected)
             if customTitleColor is not None and customTitleColor.IsOk():
                 contrastColor = self._getContrastColor(
                     customTitleColor, self._view_info.back_color_selected
                 )
-                self._dc.SetTextForeground(contrastColor)
+                text_color = contrastColor
             else:
-                self._dc.SetTextForeground(self._view_info.font_color_selected)
+                text_color = self._view_info.font_color_selected
         else:
-            self._dc.SetTextBackground(self._view_info.back_color)
             if customTitleColor is not None and customTitleColor.IsOk():
-                self._dc.SetTextForeground(customTitleColor)
+                text_color = customTitleColor
             else:
-                self._dc.SetTextForeground(self._view_info.font_color_normal)
+                text_color = self._view_info.font_color_normal
 
-        self._dc.SetFont(current_font)
+        self._gc.SetFont(current_font, text_color)
 
         title_x = self._view_info.getTitleLeft(item) + dx
         top = (
@@ -651,7 +644,7 @@ class _ItemsPainter:
             + (self._view_info.line_height - self._text_height) // 2
             + dy
         )
-        self._dc.DrawText(item.getTitle(), title_x, top)
+        self._gc.DrawText(item.getTitle(), title_x, top)
 
     def _drawBackground(self, item: NotesTreeItem, dx: int, dy: int):
         left = self._view_info.getIconLeft(item) + dx
@@ -689,13 +682,13 @@ class _ItemsPainter:
 
         back_brush_selected = self._brushes.FindOrCreateBrush(self._view_info.back_color_selected)
         back_pen_selected = self._pens.FindOrCreatePen(self._view_info.back_color_selected)
-        self._dc.SetPen(back_pen_selected)
-        self._dc.SetBrush(back_brush_selected)
+        self._gc.SetPen(back_pen_selected)
+        self._gc.SetBrush(back_brush_selected)
 
         left = self._view_info.getSelectionLeft(item)
         width = self._view_info.getSelectionWidth(item)
         height = self._view_info.getSelectionHeight(item)
-        self._dc.DrawRectangle(
+        self._gc.DrawRectangle(
             dx + left,
             self._view_info.getSelectionTop(item) + dy,
             width,
@@ -1079,18 +1072,19 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _drawOrderMarker(self, xmin: int, xmax: int, y: int):
         with wx.ClientDC(self) as dc:
-            with _ItemsPainter(
+            gc = wx.GraphicsContext.Create(dc)
+            painter = _ItemsPainter(
                 self,
-                dc,
+                gc,
                 self._iconsCache,
                 self._extraIconsCache,
                 self._view_info,
-            ) as painter:
-                interval_x = self._getScrolledX()
-                interval_y = self._getScrolledY()
-                dx = -interval_x[0]
-                dy = -interval_y[0]
-                painter.drawOrderMarker(xmin, xmax, y, dx, dy)
+            )
+            interval_x = self._getScrolledX()
+            interval_y = self._getScrolledY()
+            dx = -interval_x[0]
+            dy = -interval_y[0]
+            painter.drawOrderMarker(xmin, xmax, y, dx, dy)
 
     def _onLeftButtonDown(self, event):
         self._completeItemEdit()
@@ -1248,32 +1242,34 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _refreshItem(self, item: NotesTreeItem):
         with wx.ClientDC(self) as dc:
-            with _ItemsPainter(
-                self, dc, self._iconsCache, self._extraIconsCache, self._view_info
-            ) as painter:
-                interval_x = self._getScrolledX()
-                interval_y = self._getScrolledY()
-                dx = -interval_x[0]
-                dy = -interval_y[0]
-                painter.draw(item, dx, dy)
+            gc = wx.GraphicsContext.Create(dc)
+            painter = _ItemsPainter(
+                self, gc, self._iconsCache, self._extraIconsCache, self._view_info
+            )
+            interval_x = self._getScrolledX()
+            interval_y = self._getScrolledY()
+            dx = -interval_x[0]
+            dy = -interval_y[0]
+            painter.draw(item, dx, dy)
 
     def _onPaint(self, event):
         with wx.BufferedPaintDC(self) as dc:
-            with _ItemsPainter(
-                self, dc, self._iconsCache, self._extraIconsCache, self._view_info
-            ) as painter:
-                interval_x = self._getScrolledX()
-                interval_y = self._getScrolledY()
-                painter.fillBackground()
-                for item in self._visibleItems:
-                    dx = -interval_x[0]
-                    dy = -interval_y[0]
-                    item_top = self._view_info.getItemTop(item)
-                    if item_top >= interval_y[0]:
-                        painter.drawTreeLines(item, dx, dy)
+            gc = wx.GraphicsContext.Create(dc)
+            painter = _ItemsPainter(
+                self, gc, self._iconsCache, self._extraIconsCache, self._view_info
+            )
+            interval_x = self._getScrolledX()
+            interval_y = self._getScrolledY()
+            painter.fillBackground()
+            for item in self._visibleItems:
+                dx = -interval_x[0]
+                dy = -interval_y[0]
+                item_top = self._view_info.getItemTop(item)
+                if item_top >= interval_y[0]:
+                    painter.drawTreeLines(item, dx, dy)
 
-                    if item_top >= interval_y[0] and item_top <= interval_y[1]:
-                        painter.draw(item, dx, dy)
+                if item_top >= interval_y[0] and item_top <= interval_y[1]:
+                    painter.draw(item, dx, dy)
 
     def _getScrolledX(self) -> Tuple[int, int]:
         xmin = self._getScrollX()
