@@ -791,6 +791,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
         self.Bind(wx.EVT_SIZE, handler=self._onResize)
+        self.Bind(wx.EVT_SCROLLWIN, handler=self._onScroll)
 
         self._theme.onThemeChanged += self._onThemeChanged
 
@@ -845,6 +846,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _onResize(self, event):
         self._buffer = wx.Bitmap(self.GetClientSize())
+        self.Refresh()
+
+    def _onScroll(self, event):
+        self.Refresh()
+        event.Skip()
 
     def _onMouseLeaveWindow(self, event):
         if self._hoveredItem is not None:
@@ -860,6 +866,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self._scrollSize(event)
         else:
             self._scrollTree(event)
+
+        self.Refresh()
 
     def _scrollSize(self, event):
         old_font_size = self._view_info.font_size
