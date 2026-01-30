@@ -723,6 +723,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def __init__(self, parent: wx.Window, theme: Theme) -> None:
         super().__init__(parent)
         self._theme = theme
+        self._buffer = wx.Bitmap(self.GetClientSize())
         self._view_info = _ItemsViewInfo(self, self._theme)
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
@@ -789,6 +790,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
+        self.Bind(wx.EVT_SIZE, handler=self._onResize)
 
         self._theme.onThemeChanged += self._onThemeChanged
 
@@ -840,6 +842,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         item = self._pageCache.get(page)
         return item is not None and item.isExpanded()
+
+    def _onResize(self, event):
+        self._buffer = wx.Bitmap(self.GetClientSize())
 
     def _onMouseLeaveWindow(self, event):
         if self._hoveredItem is not None:
@@ -1072,19 +1077,20 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _drawOrderMarker(self, xmin: int, xmax: int, y: int):
         with wx.ClientDC(self) as dc:
-            gc = wx.GraphicsContext.Create(dc)
-            painter = _ItemsPainter(
-                self,
-                gc,
-                self._iconsCache,
-                self._extraIconsCache,
-                self._view_info,
-            )
-            interval_x = self._getScrolledX()
-            interval_y = self._getScrolledY()
-            dx = -interval_x[0]
-            dy = -interval_y[0]
-            painter.drawOrderMarker(xmin, xmax, y, dx, dy)
+            with wx.BufferedDC(dc, self._buffer) as buffered_dc:
+                gc = wx.GraphicsContext.Create(buffered_dc)
+                painter = _ItemsPainter(
+                    self,
+                    gc,
+                    self._iconsCache,
+                    self._extraIconsCache,
+                    self._view_info,
+                )
+                interval_x = self._getScrolledX()
+                interval_y = self._getScrolledY()
+                dx = -interval_x[0]
+                dy = -interval_y[0]
+                painter.drawOrderMarker(xmin, xmax, y, dx, dy)
 
     def _onLeftButtonDown(self, event):
         self._completeItemEdit()
@@ -1242,18 +1248,19 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _refreshItem(self, item: NotesTreeItem):
         with wx.ClientDC(self) as dc:
-            gc = wx.GraphicsContext.Create(dc)
-            painter = _ItemsPainter(
-                self, gc, self._iconsCache, self._extraIconsCache, self._view_info
-            )
-            interval_x = self._getScrolledX()
-            interval_y = self._getScrolledY()
-            dx = -interval_x[0]
-            dy = -interval_y[0]
-            painter.draw(item, dx, dy)
+            with wx.BufferedDC(dc, self._buffer) as buffered_dc:
+                gc = wx.GraphicsContext.Create(buffered_dc)
+                painter = _ItemsPainter(
+                    self, gc, self._iconsCache, self._extraIconsCache, self._view_info
+                )
+                interval_x = self._getScrolledX()
+                interval_y = self._getScrolledY()
+                dx = -interval_x[0]
+                dy = -interval_y[0]
+                painter.draw(item, dx, dy)
 
     def _onPaint(self, event):
-        with wx.BufferedPaintDC(self) as dc:
+        with wx.BufferedPaintDC(self, self._buffer) as dc:
             gc = wx.GraphicsContext.Create(dc)
             painter = _ItemsPainter(
                 self, gc, self._iconsCache, self._extraIconsCache, self._view_info
