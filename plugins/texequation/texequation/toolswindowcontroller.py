@@ -75,7 +75,7 @@ class ToolsWindowController:
             self._application.mainWindow.UpdateAuiManager()
 
     def _hideToolsWindow(self):
-        if self._toolsPane is not None:
+        if self._toolsPane is not None and self._toolsPane.isShown():
             self._toolsPane.hide()
             self._application.mainWindow.UpdateAuiManager()
 
