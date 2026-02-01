@@ -469,17 +469,20 @@ class _ItemsViewInfo:
 
 
 class _ItemsPainter:
+    _brushes = wx.BrushList()
+    _pens = wx.PenList()
+    _fonts = wx.FontList()
+
     def __init__(
         self,
         window: wx.Window,
-        dc: wx.DC,
+        gc: wx.GraphicsContext,
         image_list: ImageListCache,
         extra_image_list: ImageListCache,
         view_info: _ItemsViewInfo,
     ) -> None:
         self._window = window
-        self._dc = dc
-        self._gc = wx.GraphicsContext.Create(dc)
+        self._gc = gc
 
         self._image_list = image_list
         self._extra_image_list = extra_image_list
@@ -494,56 +497,9 @@ class _ItemsPainter:
             self._view_info.expand_ctrl_width, self._view_info.expand_ctrl_height
         )
 
-        # Pens, brushes etc
-        self._back_brush_normal = wx.NullBrush
-        self._back_brush_selected = wx.NullBrush
-        self._back_brush_hovered = wx.NullBrush
-
-        self._back_pen_normal = wx.NullBrush
-        self._back_pen_selected = wx.NullBrush
-        self._back_pen_hovered = wx.NullBrush
-
-        self._title_font_normal = wx.NullFont
-        self._title_font_selected = wx.NullFont
-
-        self._tree_line_pen = wx.NullPen
-
-        self._drop_hover_pen = wx.NullPen
-        self._drop_hover_brush = wx.NullBrush
-
-        self._order_line_pen = wx.NullPen
-
-        self._text_height = None
-
-    def __enter__(self):
-        self._back_brush_normal = wx.Brush(self._view_info.back_color)
-        self._back_brush_selected = wx.Brush(self._view_info.back_color_selected)
-        self._back_brush_hovered = wx.Brush(self._view_info.back_color_hovered)
-
-        self._back_pen_normal = wx.Pen(self._view_info.back_color)
-        self._back_pen_selected = wx.Pen(self._view_info.back_color_selected)
-        self._back_pen_hovered = wx.Pen(self._view_info.back_color_hovered)
-
-        self._drop_hover_pen = wx.Pen(
-            self._view_info.drop_hover_color, style=wx.PENSTYLE_SOLID
-        )
-        self._drop_hover_brush = wx.Brush(self._view_info.drop_hover_color)
-
-        self._title_font_normal = wx.Font(wx.FontInfo(self._view_info.font_size))
-        self._title_font_selected = wx.Font(wx.FontInfo(self._view_info.font_size))
-
-        self._tree_line_pen = wx.Pen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
-        self._order_line_pen = wx.Pen(
-            self._view_info.order_between_color,
-            width=self._view_info.order_marker_weight,
-        )
-
-        self._dc.SetFont(self._title_font_normal)
-        self._text_height = self._dc.GetTextExtent("W").GetHeight()
-        return self
-
-    def __exit__(self, type, value, traceback):
-        self._dc = None
+        title_font_normal = self._fonts.FindOrCreateFont(wx.FontInfo(self._view_info.font_size))
+        self._gc.SetFont(title_font_normal, wx.Colour(0, 0, 0))
+        self._text_height = self._gc.GetFullTextExtent("W")[1]
 
     def draw(self, item: NotesTreeItem, dx, dy):
         if item.isVisible():
@@ -557,10 +513,10 @@ class _ItemsPainter:
 
     def fillBackground(self):
         back_color = self._view_info.back_color
-        self._dc.SetBrush(wx.Brush(back_color))
-        self._dc.SetPen(wx.Pen(back_color))
+        self._gc.SetBrush(self._brushes.FindOrCreateBrush(back_color))
+        self._gc.SetPen(self._pens.FindOrCreatePen(back_color))
         width, height = self._window.GetClientSize()
-        self._dc.DrawRectangle(0, 0, width, height)
+        self._gc.DrawRectangle(0, 0, width, height)
 
     def drawTreeLines(self, item: NotesTreeItem, dx: int, dy: int):
         parentItem = item.getParent()
@@ -573,12 +529,18 @@ class _ItemsPainter:
         if top < 0:
             top = 0
         centerV = self._view_info.getItemCenterVertical(item) + dy
-        points = [(left, top, left, centerV), (left, centerV, right, centerV)]
-        self._dc.DrawLineList(points, pens=self._tree_line_pen)
+        tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
+        self._gc.SetPen(tree_line_pen)
+        self._gc.DrawLines([(left, top), (left, centerV)])
+        self._gc.DrawLines([(left, centerV), (right, centerV)])
 
     def drawOrderMarker(self, xmin: int, xmax: int, y: int, dx: int, dy: int):
-        self._dc.SetPen(self._order_line_pen)
-        self._dc.DrawLine(xmin + dx + 1, y + dy, xmax + dx - 1, y + dy)
+        order_line_pen = self._pens.FindOrCreatePen(
+            self._view_info.order_between_color,
+            width=self._view_info.order_marker_weight,
+        )
+        self._gc.SetPen(order_line_pen)
+        self._gc.DrawLines([(xmin + dx + 1, y + dy), (xmax + dx - 1, y + dy)])
 
     def _drawExpandCollapseCtrl(self, item: NotesTreeItem, dx, dy):
         if item.hasChildren():
@@ -596,8 +558,8 @@ class _ItemsPainter:
         h_margin = int((right - left) * 0.2)
         v_margin = int((bottom - top)  * 0.2)
 
-        pen = wx.Pen(self._view_info.lines_color)
-        brush = wx.Brush(self._view_info.lines_color)
+        pen = self._pens.FindOrCreatePen(self._view_info.lines_color)
+        brush = self._brushes.FindOrCreateBrush(self._view_info.lines_color)
 
         self._gc.SetBrush(brush)
         self._gc.SetPen(pen)
@@ -614,8 +576,8 @@ class _ItemsPainter:
         h_margin = int((right - left) * 0.2)
         v_margin = int((bottom - top)  * 0.2)
 
-        pen = wx.Pen(self._view_info.lines_color)
-        brush = wx.Brush(self._view_info.lines_color)
+        pen = self._pens.FindOrCreatePen(self._view_info.lines_color)
+        brush = self._brushes.FindOrCreateBrush(self._view_info.lines_color)
 
         self._gc.SetBrush(brush)
         self._gc.SetPen(pen)
@@ -645,8 +607,10 @@ class _ItemsPainter:
         return wx.Colour(r, g, b)
 
     def _drawTitle(self, item: NotesTreeItem, dx: int, dy: int):
+        title_font_normal = self._fonts.FindOrCreateFont(wx.FontInfo(self._view_info.font_size))
+        title_font_selected = self._fonts.FindOrCreateFont(wx.FontInfo(self._view_info.font_size))
         current_font = (
-            self._title_font_selected if item.isSelected() else self._title_font_normal
+            title_font_selected if item.isSelected() else title_font_normal
         )
         current_font.SetStyle(
             wx.FONTSTYLE_ITALIC if item.isItalic() else wx.FONTSTYLE_NORMAL
@@ -656,23 +620,23 @@ class _ItemsPainter:
         )
 
         customTitleColor = item.getFontColor()
+        text_color = None
+
         if item.isSelected():
-            self._dc.SetTextBackground(self._view_info.back_color_selected)
             if customTitleColor is not None and customTitleColor.IsOk():
                 contrastColor = self._getContrastColor(
                     customTitleColor, self._view_info.back_color_selected
                 )
-                self._dc.SetTextForeground(contrastColor)
+                text_color = contrastColor
             else:
-                self._dc.SetTextForeground(self._view_info.font_color_selected)
+                text_color = self._view_info.font_color_selected
         else:
-            self._dc.SetTextBackground(self._view_info.back_color)
             if customTitleColor is not None and customTitleColor.IsOk():
-                self._dc.SetTextForeground(customTitleColor)
+                text_color = customTitleColor
             else:
-                self._dc.SetTextForeground(self._view_info.font_color_normal)
+                text_color = self._view_info.font_color_normal
 
-        self._dc.SetFont(current_font)
+        self._gc.SetFont(current_font, text_color)
 
         title_x = self._view_info.getTitleLeft(item) + dx
         top = (
@@ -680,7 +644,7 @@ class _ItemsPainter:
             + (self._view_info.line_height - self._text_height) // 2
             + dy
         )
-        self._dc.DrawText(item.getTitle(), title_x, top)
+        self._gc.DrawText(item.getTitle(), title_x, top)
 
     def _drawBackground(self, item: NotesTreeItem, dx: int, dy: int):
         left = self._view_info.getIconLeft(item) + dx
@@ -691,30 +655,40 @@ class _ItemsPainter:
         height = bottom - top
         window_width = self._window.GetClientSize().GetWidth()
 
-        self._gc.SetBrush(self._back_brush_normal)
-        self._gc.SetPen(self._back_pen_normal)
+        back_brush = self._brushes.FindOrCreateBrush(self._view_info.back_color)
+        self._gc.SetBrush(back_brush)
+        back_pen_normal = self._pens.FindOrCreatePen(self._view_info.back_color)
+        self._gc.SetPen(back_pen_normal)
         self._gc.DrawRectangle(left, top, window_width - left, height)
 
         if item.isHovered():
-            self._gc.SetBrush(self._back_brush_hovered)
-            self._gc.SetPen(self._back_pen_hovered)
+            back_brush_hovered = self._brushes.FindOrCreateBrush(self._view_info.back_color_hovered)
+            self._gc.SetBrush(back_brush_hovered)
+            back_pen_hovered = self._pens.FindOrCreatePen(self._view_info.back_color_hovered)
+            self._gc.SetPen(back_pen_hovered)
             self._gc.DrawRectangle(left, top, width, height)
         elif item.isDropHovered():
-            self._gc.SetBrush(self._drop_hover_brush)
-            self._gc.SetPen(self._drop_hover_pen)
+            drop_hover_brush = self._brushes.FindOrCreateBrush(self._view_info.drop_hover_color)
+            self._gc.SetBrush(drop_hover_brush)
+            drop_hover_pen = self._pens.FindOrCreatePen(
+                self._view_info.drop_hover_color, style=wx.PENSTYLE_SOLID
+            )
+            self._gc.SetPen(drop_hover_pen)
             self._gc.DrawRectangle(left, top, width, height)
 
     def _drawSelection(self, item: NotesTreeItem, dx: int, dy: int):
         if not item.isSelected():
             return
 
-        self._dc.SetPen(self._back_pen_selected)
-        self._dc.SetBrush(self._back_brush_selected)
+        back_brush_selected = self._brushes.FindOrCreateBrush(self._view_info.back_color_selected)
+        back_pen_selected = self._pens.FindOrCreatePen(self._view_info.back_color_selected)
+        self._gc.SetPen(back_pen_selected)
+        self._gc.SetBrush(back_brush_selected)
 
         left = self._view_info.getSelectionLeft(item)
         width = self._view_info.getSelectionWidth(item)
         height = self._view_info.getSelectionHeight(item)
-        self._dc.DrawRectangle(
+        self._gc.DrawRectangle(
             dx + left,
             self._view_info.getSelectionTop(item) + dy,
             width,
@@ -749,6 +723,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def __init__(self, parent: wx.Window, theme: Theme) -> None:
         super().__init__(parent)
         self._theme = theme
+        self._buffer = wx.Bitmap(self.GetClientSize())
         self._view_info = _ItemsViewInfo(self, self._theme)
 
         self.defaultIcon = getBuiltinImagePath("page.svg")
@@ -815,6 +790,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
         self.Bind(wx.EVT_MOUSEWHEEL, handler=self._onMouseWheel)
         self.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
+        self.Bind(wx.EVT_SIZE, handler=self._onResize)
+        self.Bind(wx.EVT_SCROLLWIN, handler=self._onScroll)
 
         self._theme.onThemeChanged += self._onThemeChanged
 
@@ -867,6 +844,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         item = self._pageCache.get(page)
         return item is not None and item.isExpanded()
 
+    def _onResize(self, event):
+        self._buffer = wx.Bitmap(self.GetClientSize())
+        self.Refresh()
+
+    def _onScroll(self, event):
+        self.Refresh()
+        event.Skip()
+
     def _onMouseLeaveWindow(self, event):
         if self._hoveredItem is not None:
             oldHoveredItem = self._hoveredItem
@@ -881,6 +866,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self._scrollSize(event)
         else:
             self._scrollTree(event)
+
+        self.Refresh()
 
     def _scrollSize(self, event):
         old_font_size = self._view_info.font_size
@@ -1098,13 +1085,15 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _drawOrderMarker(self, xmin: int, xmax: int, y: int):
         with wx.ClientDC(self) as dc:
-            with _ItemsPainter(
-                self,
-                dc,
-                self._iconsCache,
-                self._extraIconsCache,
-                self._view_info,
-            ) as painter:
+            with wx.BufferedDC(dc, self._buffer) as buffered_dc:
+                gc = wx.GraphicsContext.Create(buffered_dc)
+                painter = _ItemsPainter(
+                    self,
+                    gc,
+                    self._iconsCache,
+                    self._extraIconsCache,
+                    self._view_info,
+                )
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
                 dx = -interval_x[0]
@@ -1267,9 +1256,11 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
     def _refreshItem(self, item: NotesTreeItem):
         with wx.ClientDC(self) as dc:
-            with _ItemsPainter(
-                self, dc, self._iconsCache, self._extraIconsCache, self._view_info
-            ) as painter:
+            with wx.BufferedDC(dc, self._buffer) as buffered_dc:
+                gc = wx.GraphicsContext.Create(buffered_dc)
+                painter = _ItemsPainter(
+                    self, gc, self._iconsCache, self._extraIconsCache, self._view_info
+                )
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
                 dx = -interval_x[0]
@@ -1277,22 +1268,23 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 painter.draw(item, dx, dy)
 
     def _onPaint(self, event):
-        with wx.BufferedPaintDC(self) as dc:
-            with _ItemsPainter(
-                self, dc, self._iconsCache, self._extraIconsCache, self._view_info
-            ) as painter:
-                interval_x = self._getScrolledX()
-                interval_y = self._getScrolledY()
-                painter.fillBackground()
-                for item in self._visibleItems:
-                    dx = -interval_x[0]
-                    dy = -interval_y[0]
-                    item_top = self._view_info.getItemTop(item)
-                    if item_top >= interval_y[0]:
-                        painter.drawTreeLines(item, dx, dy)
+        with wx.BufferedPaintDC(self, self._buffer) as dc:
+            gc = wx.GraphicsContext.Create(dc)
+            painter = _ItemsPainter(
+                self, gc, self._iconsCache, self._extraIconsCache, self._view_info
+            )
+            interval_x = self._getScrolledX()
+            interval_y = self._getScrolledY()
+            painter.fillBackground()
+            for item in self._visibleItems:
+                dx = -interval_x[0]
+                dy = -interval_y[0]
+                item_top = self._view_info.getItemTop(item)
+                if item_top >= interval_y[0]:
+                    painter.drawTreeLines(item, dx, dy)
 
-                    if item_top >= interval_y[0] and item_top <= interval_y[1]:
-                        painter.draw(item, dx, dy)
+                if item_top >= interval_y[0] and item_top <= interval_y[1]:
+                    painter.draw(item, dx, dy)
 
     def _getScrolledX(self) -> Tuple[int, int]:
         xmin = self._getScrollX()
