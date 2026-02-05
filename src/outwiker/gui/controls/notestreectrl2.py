@@ -505,15 +505,12 @@ class _ItemsPainter:
 
     # @profile
     def draw(self, items: List[NotesTreeItem], dx, dy):
-        for item in items:
-            if item.isVisible():
-                self._drawBackground(item, dx, dy)
-                self._drawSelection(item, dx, dy)
-                self._drawIcon(item, dx, dy)
-                self._drawExtraIcons(item, dx, dy)
-                self._drawTitle(item, dx, dy)
-                self._drawExpandCollapseCtrl(item, dx, dy)
-                self._gc.Flush()
+        self._drawBackground(items, dx, dy)
+        self._drawIcons(items, dx, dy)
+        self._drawExtraIcons(items, dx, dy)
+        self._drawTitles(items, dx, dy)
+        self._drawExpandCollapseCtrls(items, dx, dy)
+        self._gc.Flush()
 
     def fillBackground(self):
         back_color = self._view_info.back_color
@@ -536,8 +533,6 @@ class _ItemsPainter:
 
             height = y_max - y_min
 
-            left = self._view_info.getTreeGridLeft(item) + dx
-            right = self._view_info.getIconLeft(item) + dx
             top = self._view_info.getItemBottom(parentItem) + dy
             if top < 0:
                 top = 0
@@ -547,6 +542,8 @@ class _ItemsPainter:
             vertical_line_bottom = centerV if centerV < height else height
 
             if top <= height:
+                left = self._view_info.getTreeGridLeft(item) + dx
+                right = self._view_info.getIconLeft(item) + dx
                 if parentItem not in parent_cache:
                     self._gc.DrawLines([(left, top), (left, vertical_line_bottom)])
                     parent_cache.add(parentItem)
@@ -562,27 +559,37 @@ class _ItemsPainter:
         self._gc.SetPen(order_line_pen)
         self._gc.DrawLines([(xmin + dx + 1, y + dy), (xmax + dx - 1, y + dy)])
 
-    def _drawExpandCollapseCtrl(self, item: NotesTreeItem, dx, dy):
-        if item.hasChildren():
-            left = self._view_info.getExpandCtrlLeft(item) + dx
-            right = self._view_info.getExpandCtrlRight(item) + dx
-            top = self._view_info.getExpandCtrlTop(item) + dy
-            bottom = self._view_info.getExpandCtrlBottom(item) + dy
-
-            if item.isExpanded():
-                self._drawExpandedCtrl(left, right, top, bottom)
-            else:
-                self._drawCollapsedCtrl(left, right, top, bottom)
-
-    def _drawExpandedCtrl(self, left: int, right: int, top: int, bottom: int):
-        h_margin = int((right - left) * 0.2)
-        v_margin = int((bottom - top)  * 0.2)
-
+    def _drawExpandCollapseCtrls(self, items: List[NotesTreeItem], dx, dy):
         pen = self._pens.FindOrCreatePen(self._view_info.lines_color)
         brush = self._brushes.FindOrCreateBrush(self._view_info.lines_color)
 
         self._gc.SetBrush(brush)
         self._gc.SetPen(pen)
+
+        for item in items:
+            if not item.isVisible():
+                continue
+
+            if item.hasChildren():
+                left = self._view_info.getExpandCtrlLeft(item) + dx
+                right = self._view_info.getExpandCtrlRight(item) + dx
+                top = self._view_info.getExpandCtrlTop(item) + dy
+                bottom = self._view_info.getExpandCtrlBottom(item) + dy
+
+                if item.isExpanded():
+                    self._drawExpandedCtrl(left, right, top, bottom)
+                else:
+                    self._drawCollapsedCtrl(left, right, top, bottom)
+
+    def _drawExpandedCtrl(self, left: int, right: int, top: int, bottom: int):
+        h_margin = int((right - left) * 0.2)
+        v_margin = int((bottom - top)  * 0.2)
+
+        # pen = self._pens.FindOrCreatePen(self._view_info.lines_color)
+        # brush = self._brushes.FindOrCreateBrush(self._view_info.lines_color)
+
+        # self._gc.SetBrush(brush)
+        # self._gc.SetPen(pen)
 
         path = self._gc.CreatePath()
         path.MoveToPoint(left + h_margin, (top + bottom) // 2 - v_margin)
@@ -596,11 +603,11 @@ class _ItemsPainter:
         h_margin = int((right - left) * 0.2)
         v_margin = int((bottom - top)  * 0.2)
 
-        pen = self._pens.FindOrCreatePen(self._view_info.lines_color)
-        brush = self._brushes.FindOrCreateBrush(self._view_info.lines_color)
+        # pen = self._pens.FindOrCreatePen(self._view_info.lines_color)
+        # brush = self._brushes.FindOrCreateBrush(self._view_info.lines_color)
 
-        self._gc.SetBrush(brush)
-        self._gc.SetPen(pen)
+        # self._gc.SetBrush(brush)
+        # self._gc.SetPen(pen)
 
         path = self._gc.CreatePath()
         path.MoveToPoint((left + right) // 2 - h_margin, top + v_margin)
@@ -626,119 +633,131 @@ class _ItemsPainter:
         r, g, b = lab_to_rgb((L, a, b))
         return wx.Colour(r, g, b)
 
-    def _drawTitle(self, item: NotesTreeItem, dx: int, dy: int):
+    # @profile
+    def _drawTitles(self, items: List[NotesTreeItem], dx: int, dy: int):
         title_font_normal = self._fonts.FindOrCreateFont(wx.FontInfo(self._view_info.font_size))
         title_font_selected = self._fonts.FindOrCreateFont(wx.FontInfo(self._view_info.font_size))
-        current_font = (
-            title_font_selected if item.isSelected() else title_font_normal
-        )
-        current_font.SetStyle(
-            wx.FONTSTYLE_ITALIC if item.isItalic() else wx.FONTSTYLE_NORMAL
-        )
-        current_font.SetWeight(
-            wx.FONTWEIGHT_BOLD if item.isBold() else wx.FONTWEIGHT_NORMAL
-        )
+        for item in items:
+            if not item.isVisible():
+                continue
 
-        customTitleColor = item.getFontColor()
-        text_color = None
+            current_font = (
+                title_font_selected if item.isSelected() else title_font_normal
+            )
+            current_font.SetStyle(
+                wx.FONTSTYLE_ITALIC if item.isItalic() else wx.FONTSTYLE_NORMAL
+            )
+            current_font.SetWeight(
+                wx.FONTWEIGHT_BOLD if item.isBold() else wx.FONTWEIGHT_NORMAL
+            )
 
-        if item.isSelected():
-            if customTitleColor is not None and customTitleColor.IsOk():
-                contrastColor = self._getContrastColor(
-                    customTitleColor, self._view_info.back_color_selected
-                )
-                text_color = contrastColor
+            customTitleColor = item.getFontColor()
+            text_color = None
+
+            if item.isSelected():
+                if customTitleColor is not None and customTitleColor.IsOk():
+                    contrastColor = self._getContrastColor(
+                        customTitleColor, self._view_info.back_color_selected
+                    )
+                    text_color = contrastColor
+                else:
+                    text_color = self._view_info.font_color_selected
             else:
-                text_color = self._view_info.font_color_selected
-        else:
-            if customTitleColor is not None and customTitleColor.IsOk():
-                text_color = customTitleColor
-            else:
-                text_color = self._view_info.font_color_normal
+                if customTitleColor is not None and customTitleColor.IsOk():
+                    text_color = customTitleColor
+                else:
+                    text_color = self._view_info.font_color_normal
 
-        self._gc.SetFont(current_font, text_color)
+            self._gc.SetFont(current_font, text_color)
 
-        title_x = self._view_info.getTitleLeft(item) + dx
-        top = (
-            self._view_info.getItemTop(item)
-            + (self._view_info.line_height - self._text_height) // 2
-            + dy
-        )
-        self._gc.DrawText(item.getTitle(), title_x, top)
+            title_x = self._view_info.getTitleLeft(item) + dx
+            top = (
+                self._view_info.getItemTop(item)
+                + (self._view_info.line_height - self._text_height) // 2
+                + dy
+            )
+            self._gc.DrawText(item.getTitle(), title_x, top)
 
     # @profile
-    def _drawBackground(self, item: NotesTreeItem, dx: int, dy: int):
-        left = self._view_info.getIconLeft(item) + dx
-        top = self._view_info.getSelectionTop(item) + dy
-        bottom = self._view_info.getSelectionBottom(item) + dy
-        height = bottom - top
+    def _drawBackground(self, items: List[NotesTreeItem], dx: int, dy: int):
+        back_brush_hovered = self._brushes.FindOrCreateBrush(self._view_info.back_color_hovered)
+        drop_hover_brush = self._brushes.FindOrCreateBrush(self._view_info.drop_hover_color)
+        back_brush = self._brushes.FindOrCreateBrush(self._view_info.back_color)
+        back_pen_normal = self._pens.FindOrCreatePen(self._view_info.back_color)
+        back_pen_hovered = self._pens.FindOrCreatePen(self._view_info.back_color_hovered)
+        drop_hover_pen = self._pens.FindOrCreatePen(
+            self._view_info.drop_hover_color, style=wx.PENSTYLE_SOLID
+        )
 
-        if item.isHovered() or item.isDropHovered():
-            right = self._view_info.getSelectionRight(item) + dx
-            width = right - left
-            if item.isHovered():
-                back_brush_hovered = self._brushes.FindOrCreateBrush(self._view_info.back_color_hovered)
-                self._gc.SetBrush(back_brush_hovered)
-                back_pen_hovered = self._pens.FindOrCreatePen(self._view_info.back_color_hovered)
-                self._gc.SetPen(back_pen_hovered)
-                self._gc.DrawRectangle(left, top, width, height)
-            elif item.isDropHovered():
-                drop_hover_brush = self._brushes.FindOrCreateBrush(self._view_info.drop_hover_color)
-                self._gc.SetBrush(drop_hover_brush)
-                drop_hover_pen = self._pens.FindOrCreatePen(
-                    self._view_info.drop_hover_color, style=wx.PENSTYLE_SOLID
-                )
-                self._gc.SetPen(drop_hover_pen)
-                self._gc.DrawRectangle(left, top, width, height)
-        else:
+        for item in items:
+            if not item.isVisible():
+                continue
+
+            left = self._view_info.getIconLeft(item) + dx
+            top = self._view_info.getSelectionTop(item) + dy
+            bottom = self._view_info.getSelectionBottom(item) + dy
+            height = bottom - top
+
             window_width = self._window.GetClientSize().GetWidth()
-            back_brush = self._brushes.FindOrCreateBrush(self._view_info.back_color)
             self._gc.SetBrush(back_brush)
-            back_pen_normal = self._pens.FindOrCreatePen(self._view_info.back_color)
             self._gc.SetPen(back_pen_normal)
             self._gc.DrawRectangle(left, top, window_width - left, height)
 
-    def _drawSelection(self, item: NotesTreeItem, dx: int, dy: int):
-        if not item.isSelected():
-            return
+            if item.isSelected():
+                back_brush_selected = self._brushes.FindOrCreateBrush(self._view_info.back_color_selected)
+                back_pen_selected = self._pens.FindOrCreatePen(self._view_info.back_color_selected)
+                self._gc.SetPen(back_pen_selected)
+                self._gc.SetBrush(back_brush_selected)
 
-        back_brush_selected = self._brushes.FindOrCreateBrush(self._view_info.back_color_selected)
-        back_pen_selected = self._pens.FindOrCreatePen(self._view_info.back_color_selected)
-        self._gc.SetPen(back_pen_selected)
-        self._gc.SetBrush(back_brush_selected)
+                left = self._view_info.getSelectionLeft(item)
+                width = self._view_info.getSelectionWidth(item)
+                height = self._view_info.getSelectionHeight(item)
+                self._gc.DrawRectangle(
+                    dx + left,
+                    self._view_info.getSelectionTop(item) + dy,
+                    width,
+                    height,
+                )
+            elif item.isHovered() or item.isDropHovered():
+                right = self._view_info.getSelectionRight(item) + dx
+                width = right - left
+                if item.isHovered():
+                    self._gc.SetBrush(back_brush_hovered)
+                    self._gc.SetPen(back_pen_hovered)
+                    self._gc.DrawRectangle(left, top, width, height)
+                elif item.isDropHovered():
+                    self._gc.SetBrush(drop_hover_brush)
+                    self._gc.SetPen(drop_hover_pen)
+                    self._gc.DrawRectangle(left, top, width, height)
 
-        left = self._view_info.getSelectionLeft(item)
-        width = self._view_info.getSelectionWidth(item)
-        height = self._view_info.getSelectionHeight(item)
-        self._gc.DrawRectangle(
-            dx + left,
-            self._view_info.getSelectionTop(item) + dy,
-            width,
-            height,
-        )
-
-    def _drawIcon(self, item: NotesTreeItem, dx: int, dy: int):
+    def _drawIcons(self, items: List[NotesTreeItem], dx: int, dy: int):
         if self._view_info.show_icons:
-            bitmap = self._image_list.getImageList().GetBitmap(item.getIconImageId())
-            left = self._view_info.getIconLeft(item) + dx
-            top = (
-                self._view_info.getItemTop(item)
-                + (self._view_info.line_height - self._icon_height) // 2
-                + dy
-            )
-            self._gc.DrawBitmap(bitmap, left, top, bitmap.GetWidth(), bitmap.GetHeight())
+            for item in items:
+                if item.isVisible():
+                    bitmap = self._image_list.getImageList().GetBitmap(item.getIconImageId())
+                    left = self._view_info.getIconLeft(item) + dx
+                    top = (
+                        self._view_info.getItemTop(item)
+                        + (self._view_info.line_height - self._icon_height) // 2
+                        + dy
+                    )
+                    self._gc.DrawBitmap(bitmap, left, top, bitmap.GetWidth(), bitmap.GetHeight())
 
-    def _drawExtraIcons(self, item: NotesTreeItem, dx: int, dy: int):
-        for n, (title, image) in enumerate(item.getExtraIcons()):
-            icon_id = self._extra_image_list.add(image)
-            bitmap = self._extra_image_list.getImageList().GetBitmap(icon_id)
-            left = self._view_info.getExtraIconLeft(item, n) + dx
-            top = (
-                self._view_info.getItemTop(item)
-                + (self._view_info.line_height - self._extra_icon_height) // 2
-                + dy
-            )
-            self._gc.DrawBitmap(bitmap, left, top, bitmap.GetWidth(), bitmap.GetHeight())
+    def _drawExtraIcons(self, items: List[NotesTreeItem], dx: int, dy: int):
+        for item in items:
+            if not item.isVisible():
+                continue
+
+            for n, (title, image) in enumerate(item.getExtraIcons()):
+                icon_id = self._extra_image_list.add(image)
+                bitmap = self._extra_image_list.getImageList().GetBitmap(icon_id)
+                left = self._view_info.getExtraIconLeft(item, n) + dx
+                top = (
+                    self._view_info.getItemTop(item)
+                    + (self._view_info.line_height - self._extra_icon_height) // 2
+                    + dy
+                )
+                self._gc.DrawBitmap(bitmap, left, top, bitmap.GetWidth(), bitmap.GetHeight())
 
 
 class NotesTreeCtrl2(wx.ScrolledWindow):
