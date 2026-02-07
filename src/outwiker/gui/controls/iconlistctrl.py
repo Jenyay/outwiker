@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-
 import logging
 import os.path
 from typing import Union
+
+# from line_profiler import profile
 
 import wx
 from wx.lib.newevent import NewEvent
@@ -62,6 +62,7 @@ class IconButton:
 
         return image
 
+    # @profile
     def paint(self, gc: wx.GraphicsContext, dy: int):
         if self._image is None:
             self._image = self._createImage(self._fname)
@@ -183,6 +184,9 @@ class IconListCtrl(wx.ScrolledWindow):
         self.margin = 1
         self.multiselect = multiselect
 
+        # Size of the control before icons layout
+        self._oldSize = (-1, -1)
+
         # Path to current page icon
         self._currentIcon = None
 
@@ -208,6 +212,7 @@ class IconListCtrl(wx.ScrolledWindow):
 
     def __onSize(self, event):
         size = self.GetClientSize()
+
         if (w := size.GetWidth()) <= 0:
             w = 1
 
@@ -215,11 +220,14 @@ class IconListCtrl(wx.ScrolledWindow):
             h = 1
 
         self._buffer = wx.Bitmap(w, h)
-        self.__layout()
+        if self._oldSize != size:
+            self.__layout()
+            self._oldSize = size
 
     def _getScrollPosY(self) -> int:
         return self.GetScrollPos(wx.VERTICAL) * (self.cellHeight + self.margin)
 
+    # @profile
     def __onPaint(self, event):
         with wx.BufferedPaintDC(self, self._buffer) as dc:
             gc = wx.GraphicsContext.Create(dc)
@@ -261,7 +269,6 @@ class IconListCtrl(wx.ScrolledWindow):
             self.__addButton(fname)
 
         self.__layout()
-        self.Scroll(0, 0)
 
     def __addButton(self, fname):
         """
@@ -381,8 +388,9 @@ class IconListCtrl(wx.ScrolledWindow):
 
         self.Scroll(0, 0)
         self.SetScrollbars(
-            self.cellWidth, self.cellHeight + self.margin, 0, rowsCount, noRefresh=False
+            0, self.cellHeight + self.margin, 0, rowsCount, noRefresh=False
         )
+        self._scrollToSelectedIcon()
         self._refreshCanvas()
 
         self.Bind(wx.EVT_SCROLLWIN, handler=self.__onScroll)
@@ -392,6 +400,22 @@ class IconListCtrl(wx.ScrolledWindow):
         Return list of the selected icons
         """
         return [button.iconFileName for button in self.buttons if button.selected]
+
+    def _scrollToSelectedIcon(self):
+        selected_button = None
+        for button in self.buttons:
+            if button.selected:
+                selected_button = button
+                break
+
+        client_height = self.GetClientSize()[1]
+        dy = self.GetScrollPixelsPerUnit()[1]
+        if (
+            selected_button is not None
+            and dy != 0
+            and selected_button.y + selected_button.height > client_height
+        ):
+            self.Scroll(0, selected_button.y // dy)
 
     def setCurrentIcon(self, fname):
         """
@@ -409,9 +433,10 @@ class IconListCtrl(wx.ScrolledWindow):
             self.__selectSingleButton(self.buttons[0])
         else:
             self.__selectSingleButton(currentButton)
-            dy = self.GetScrollPixelsPerUnit()[1]
-            if dy != 0:
-                self.Scroll(0, currentButton.y // dy)
+            self._scrollToSelectedIcon()
+            # dy = self.GetScrollPixelsPerUnit()[1]
+            # if dy != 0:
+            #     self.Scroll(0, currentButton.y // dy)
 
         self._sendIconSelectedEvent()
 
