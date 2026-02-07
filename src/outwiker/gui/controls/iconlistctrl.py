@@ -62,34 +62,31 @@ class IconButton:
 
         return image
 
-    def paint(self, dc: wx.DC, dy: int):
+    def paint(self, gc: wx.GraphicsContext, dy: int):
         if self._image is None:
             self._image = self._createImage(self._fname)
 
         assert self._image.IsOk()
 
-        dc.SetBrush(
+        gc.SetBrush(
             wx.Brush(
                 self._selectedBackground if self.selected else self._normalBackground
             )
         )
 
-        dc.SetPen(wx.TRANSPARENT_PEN)
+        gc.SetPen(wx.TRANSPARENT_PEN)
 
-        dc.DrawRectangle(self._x, self._y + dy, self._width, self._height)
+        gc.DrawRectangle(self._x, self._y + dy, self._width, self._height)
 
         posx = self._x + (self._width - self._image.GetWidth()) // 2
         posy = self._y + (self._height - self._image.GetHeight()) // 2 + dy
 
-        dc.DrawBitmap(self._image, posx, posy, True)
+        gc.DrawBitmap(self._image, posx, posy, True)
 
         if self.selected:
-            dc.SetPen(wx.Pen(self._borderColor))
-            dc.SetBrush(wx.TRANSPARENT_BRUSH)
-            dc.DrawRectangle(self._x, self._y + dy, self._width, self._height)
-
-        dc.SetBrush(wx.NullBrush)
-        dc.SetPen(wx.NullPen)
+            gc.SetPen(wx.Pen(self._borderColor))
+            gc.SetBrush(wx.TRANSPARENT_BRUSH)
+            gc.DrawRectangle(self._x, self._y + dy, self._width, self._height)
 
     @property
     def selected(self):
@@ -160,6 +157,7 @@ class IconListCtrl(wx.ScrolledWindow):
 
     def __init__(self, parent, multiselect=False, theme=None):
         super().__init__(parent, style=wx.BORDER_THEME)
+        self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
         self._buffer = wx.Bitmap(self.GetClientSize())
         self._theme = theme
         self._propagationLevel = 20
@@ -234,9 +232,6 @@ class IconListCtrl(wx.ScrolledWindow):
             gc.SetPen(wx.TRANSPARENT_PEN)
 
             gc.DrawRectangle(0, 0, *self.GetClientSize())
-
-            # dc.SetBrush(wx.NullBrush)
-            # dc.SetPen(wx.NullPen)
 
             for button in self.buttons:
                 if button.y >= y0 and button.y <= y1:
