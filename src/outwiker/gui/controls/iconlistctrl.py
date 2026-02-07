@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-
 import logging
 import os.path
 from typing import Union
+
+# from line_profiler import profile
 
 import wx
 from wx.lib.newevent import NewEvent
@@ -38,7 +38,9 @@ class IconButton:
         if theme is not None:
             self._normalBackground = theme.colorBackground
             self._selectedBackground = theme.colorBackgroundSelected
-            self._borderColor = theme.get(Theme.SECTION_GENERAL, Theme.CONTROL_BORDER_SELECTED_COLOR)
+            self._borderColor = theme.get(
+                Theme.SECTION_GENERAL, Theme.CONTROL_BORDER_SELECTED_COLOR
+            )
             self._icon_size = theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE)
 
         self._x = 0
@@ -60,34 +62,32 @@ class IconButton:
 
         return image
 
-    def paint(self, dc):
+    # @profile
+    def paint(self, gc: wx.GraphicsContext, dy: int):
         if self._image is None:
             self._image = self._createImage(self._fname)
 
         assert self._image.IsOk()
 
-        dc.SetBrush(
+        gc.SetBrush(
             wx.Brush(
                 self._selectedBackground if self.selected else self._normalBackground
             )
         )
 
-        dc.SetPen(wx.TRANSPARENT_PEN)
+        gc.SetPen(wx.TRANSPARENT_PEN)
 
-        dc.DrawRectangle(self._x, self._y, self._width, self._height)
+        gc.DrawRectangle(self._x, self._y + dy, self._width, self._height)
 
         posx = self._x + (self._width - self._image.GetWidth()) // 2
-        posy = self._y + (self._height - self._image.GetHeight()) // 2
+        posy = self._y + (self._height - self._image.GetHeight()) // 2 + dy
 
-        dc.DrawBitmap(self._image, posx, posy, True)
+        gc.DrawBitmap(self._image, posx, posy, True)
 
         if self.selected:
-            dc.SetPen(wx.Pen(self._borderColor))
-            dc.SetBrush(wx.TRANSPARENT_BRUSH)
-            dc.DrawRectangle(self._x, self._y, self._width, self._height)
-
-        dc.SetBrush(wx.NullBrush)
-        dc.SetPen(wx.NullPen)
+            gc.SetPen(wx.Pen(self._borderColor))
+            gc.SetBrush(wx.TRANSPARENT_BRUSH)
+            gc.DrawRectangle(self._x, self._y + dy, self._width, self._height)
 
     @property
     def selected(self):
@@ -157,7 +157,9 @@ class IconListCtrl(wx.ScrolledWindow):
     """
 
     def __init__(self, parent, multiselect=False, theme=None):
-        wx.ScrolledWindow.__init__(self, parent, style=wx.BORDER_THEME)
+        super().__init__(parent, style=wx.BORDER_THEME)
+        self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+        self._buffer = wx.Bitmap(self.GetClientSize())
         self._theme = theme
         self._propagationLevel = 20
 
@@ -165,17 +167,17 @@ class IconListCtrl(wx.ScrolledWindow):
         self.cellWidth = 32
         if self._theme is not None:
             self._backgroundColor = self._theme.colorBackground
-            self.cellWidth = self._theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE) + 16
+            self.cellWidth = (
+                self._theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE) + 16
+            )
 
         self.cellHeight = self.cellWidth
 
-        self._canvas = wx.Panel(self)
-        self._canvas.SetSize((0, 0))
-        self._canvas.SetBackgroundColour(self._backgroundColor)
-        self._canvas.Bind(wx.EVT_PAINT, handler=self.__onPaint)
-        self._canvas.Bind(wx.EVT_LEFT_DOWN, handler=self.__onCanvasClick)
-        self._canvas.Bind(wx.EVT_LEFT_DCLICK, handler=self.__onCanvasDoubleClick)
-        self._canvas.Bind(wx.EVT_MOTION, handler=self.__onMouseMove)
+        self.SetBackgroundColour(self._backgroundColor)
+        self.Bind(wx.EVT_PAINT, handler=self.__onPaint)
+        self.Bind(wx.EVT_LEFT_DOWN, handler=self.__onCanvasClick)
+        self.Bind(wx.EVT_LEFT_DCLICK, handler=self.__onCanvasDoubleClick)
+        self.Bind(wx.EVT_MOTION, handler=self.__onMouseMove)
 
         self.Bind(wx.EVT_SCROLLWIN, handler=self.__onScroll)
 
@@ -190,7 +192,6 @@ class IconListCtrl(wx.ScrolledWindow):
 
         self._lastClickedButton = None
 
-        # self.SetScrollRate(0, 0)
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
 
         # Список картинок, которые хранятся в окне
@@ -210,35 +211,46 @@ class IconListCtrl(wx.ScrolledWindow):
         return None
 
     def __onSize(self, event):
-        newSize = self.GetSize()
-        if self._oldSize != newSize:
+        size = self.GetClientSize()
+
+        if (w := size.GetWidth()) <= 0:
+            w = 1
+
+        if (h := size.GetHeight()) <= 0:
+            h = 1
+
+        self._buffer = wx.Bitmap(w, h)
+        if self._oldSize != size:
             self.__layout()
-            self._oldSize = newSize
+            self._oldSize = size
 
+    def _getScrollPosY(self) -> int:
+        return self.GetScrollPos(wx.VERTICAL) * (self.cellHeight + self.margin)
+
+    # @profile
     def __onPaint(self, event):
-        dc = wx.AutoBufferedPaintDCFactory(self._canvas)
+        with wx.BufferedPaintDC(self, self._buffer) as dc:
+            gc = wx.GraphicsContext.Create(dc)
+            y0 = self._getScrollPosY()
+            y1 = y0 + self.GetClientSize()[1]
 
-        y0 = self.GetScrollPos(wx.VERTICAL) * (self.cellHeight + self.margin)
-        y1 = y0 + self.GetClientSize()[1]
+            dy = -y0
 
-        dc.SetBrush(wx.Brush(self._backgroundColor))
-        dc.SetPen(wx.TRANSPARENT_PEN)
+            gc.SetBrush(wx.Brush(self._backgroundColor))
+            gc.SetPen(wx.TRANSPARENT_PEN)
 
-        dc.DrawRectangle(0, y0, self._canvas.GetSize()[0], self._canvas.GetSize()[1])
+            gc.DrawRectangle(0, 0, *self.GetClientSize())
 
-        dc.SetBrush(wx.NullBrush)
-        dc.SetPen(wx.NullPen)
-
-        for button in self.buttons:
-            if button.y >= y0 and button.y <= y1:
-                button.paint(dc)
+            for button in self.buttons:
+                if button.y >= y0 and button.y <= y1:
+                    button.paint(dc, dy)
 
     def __onMouseMove(self, event):
         button = self._getButtonByCoord(event.GetPosition()[0], event.GetPosition()[1])
-        self._canvas.SetToolTip("")
+        self.SetToolTip("")
 
         if button is not None:
-            self._canvas.SetToolTip(button.getToolTipText())
+            self.SetToolTip(button.getToolTipText())
 
     def clear(self):
         """
@@ -257,7 +269,6 @@ class IconListCtrl(wx.ScrolledWindow):
             self.__addButton(fname)
 
         self.__layout()
-        self.Scroll(0, 0)
 
     def __addButton(self, fname):
         """
@@ -265,7 +276,7 @@ class IconListCtrl(wx.ScrolledWindow):
         """
         try:
             button = IconButton(
-                self._canvas, fname, self.cellWidth, self.cellHeight, self._theme
+                self, fname, self.cellWidth, self.cellHeight, self._theme
             )
         except ValueError:
             return
@@ -274,12 +285,13 @@ class IconListCtrl(wx.ScrolledWindow):
         return button
 
     def _getButtonByCoord(self, x, y):
+        dy = -self._getScrollPosY()
         for button in self.buttons:
             if (
                 x >= button.x
                 and x <= button.x + button.width
-                and y >= button.y
-                and y <= button.y + button.height
+                and y >= button.y + dy
+                and y <= button.y + button.height + dy
             ):
                 return button
 
@@ -315,7 +327,7 @@ class IconListCtrl(wx.ScrolledWindow):
         event.Skip()
 
     def _refreshCanvas(self):
-        self._canvas.Refresh(False)
+        self.Refresh(False)
 
     def __selectSingleButton(self, selectedButton):
         for button in self.buttons:
@@ -375,9 +387,10 @@ class IconListCtrl(wx.ScrolledWindow):
             button.y = curry
 
         self.Scroll(0, 0)
-        self._canvas.SetSize(windowWidth, rowsCount * (self.cellHeight + self.margin))
-
-        self.SetScrollbars(self.cellWidth, self.cellHeight + self.margin, 1, rowsCount)
+        self.SetScrollbars(
+            0, self.cellHeight + self.margin, 0, rowsCount, noRefresh=False
+        )
+        self._scrollToSelectedIcon()
         self._refreshCanvas()
 
         self.Bind(wx.EVT_SCROLLWIN, handler=self.__onScroll)
@@ -387,6 +400,22 @@ class IconListCtrl(wx.ScrolledWindow):
         Return list of the selected icons
         """
         return [button.iconFileName for button in self.buttons if button.selected]
+
+    def _scrollToSelectedIcon(self):
+        selected_button = None
+        for button in self.buttons:
+            if button.selected:
+                selected_button = button
+                break
+
+        client_height = self.GetClientSize()[1]
+        dy = self.GetScrollPixelsPerUnit()[1]
+        if (
+            selected_button is not None
+            and dy != 0
+            and selected_button.y + selected_button.height > client_height
+        ):
+            self.Scroll(0, selected_button.y // dy)
 
     def setCurrentIcon(self, fname):
         """
@@ -404,9 +433,10 @@ class IconListCtrl(wx.ScrolledWindow):
             self.__selectSingleButton(self.buttons[0])
         else:
             self.__selectSingleButton(currentButton)
-            dy = self.GetScrollPixelsPerUnit()[1]
-            if dy != 0:
-                self.Scroll(0, currentButton.y // dy)
+            self._scrollToSelectedIcon()
+            # dy = self.GetScrollPixelsPerUnit()[1]
+            # if dy != 0:
+            #     self.Scroll(0, currentButton.y // dy)
 
         self._sendIconSelectedEvent()
 
