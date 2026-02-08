@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-27 09:26+0300\n"
+"POT-Creation-Date: 2026-02-08 18:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -2208,75 +2208,91 @@ msgid "battery"
 msgstr ""
 
 #: outwiker/core/defines.py:98
-msgid "books"
-msgstr ""
-
-#: outwiker/core/defines.py:99
-msgid "computer"
-msgstr ""
-
-#: outwiker/core/defines.py:100
-msgid "emotions"
-msgstr ""
-
-#: outwiker/core/defines.py:101
-msgid "flags"
-msgstr ""
-
-#: outwiker/core/defines.py:102
-msgid "folders"
-msgstr ""
-
-#: outwiker/core/defines.py:103
-msgid "food"
-msgstr ""
-
-#: outwiker/core/defines.py:104
-msgid "internet"
-msgstr ""
-
-#: outwiker/core/defines.py:105
-msgid "money"
-msgstr ""
-
-#: outwiker/core/defines.py:106
-msgid "people"
-msgstr ""
-
-#: outwiker/core/defines.py:107
-msgid "signs"
-msgstr ""
-
-#: outwiker/core/defines.py:108
-msgid "software"
-msgstr ""
-
-#: outwiker/core/defines.py:109
-msgid "tags"
-msgstr ""
-
-#: outwiker/core/defines.py:110
-msgid "weather"
-msgstr ""
-
-#: outwiker/core/defines.py:111
-msgid "list"
-msgstr ""
-
-#: outwiker/core/defines.py:112
 msgid "bookmarks"
 msgstr ""
 
-#: outwiker/core/defines.py:113
-msgid "office"
+#: outwiker/core/defines.py:99
+msgid "books"
 msgstr ""
 
-#: outwiker/core/defines.py:114
+#: outwiker/core/defines.py:100
 msgid "charts"
 msgstr ""
 
+#: outwiker/core/defines.py:101
+msgid "computer"
+msgstr ""
+
+#: outwiker/core/defines.py:102
+msgid "emotions"
+msgstr ""
+
+#: outwiker/core/defines.py:103
+msgid "flags"
+msgstr ""
+
+#: outwiker/core/defines.py:104
+msgid "folders"
+msgstr ""
+
+#: outwiker/core/defines.py:105
+msgid "food"
+msgstr ""
+
+#: outwiker/core/defines.py:106
+msgid "images"
+msgstr ""
+
+#: outwiker/core/defines.py:107
+msgid "internet"
+msgstr ""
+
+#: outwiker/core/defines.py:108
+msgid "list"
+msgstr ""
+
+#: outwiker/core/defines.py:109
+msgid "money"
+msgstr ""
+
+#: outwiker/core/defines.py:110
+msgid "office"
+msgstr ""
+
+#: outwiker/core/defines.py:111
+msgid "pages"
+msgstr ""
+
+#: outwiker/core/defines.py:112
+msgid "people"
+msgstr ""
+
+#: outwiker/core/defines.py:113
+msgid "plants"
+msgstr ""
+
+#: outwiker/core/defines.py:114
+msgid "signs"
+msgstr ""
+
 #: outwiker/core/defines.py:115
+msgid "software"
+msgstr ""
+
+#: outwiker/core/defines.py:116
+msgid "sport"
+msgstr ""
+
+#: outwiker/core/defines.py:117
+msgid "tags"
+msgstr ""
+
+#: outwiker/core/defines.py:118
 msgid "text"
+msgstr ""
+
+#: outwiker/core/defines.py:119
+msgid "weather"
 msgstr ""
 
 #: outwiker/core/htmlimproverfactory.py:27

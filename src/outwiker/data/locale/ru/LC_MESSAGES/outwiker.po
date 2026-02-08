@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-27 09:26+0300\n"
+"POT-Creation-Date: 2026-02-08 18:50+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -2245,76 +2245,92 @@ msgid "battery"
 msgstr "батарейка"
 
 #: outwiker/core/defines.py:98
-msgid "books"
-msgstr "книги"
-
-#: outwiker/core/defines.py:99
-msgid "computer"
-msgstr "компьютер"
-
-#: outwiker/core/defines.py:100
-msgid "emotions"
-msgstr "эмоции"
-
-#: outwiker/core/defines.py:101
-msgid "flags"
-msgstr "флаги"
-
-#: outwiker/core/defines.py:102
-msgid "folders"
-msgstr "папки"
-
-#: outwiker/core/defines.py:103
-msgid "food"
-msgstr "продукты"
-
-#: outwiker/core/defines.py:104
-msgid "internet"
-msgstr "интернет"
-
-#: outwiker/core/defines.py:105
-msgid "money"
-msgstr "деньги"
-
-#: outwiker/core/defines.py:106
-msgid "people"
-msgstr "люди"
-
-#: outwiker/core/defines.py:107
-msgid "signs"
-msgstr "знаки"
-
-#: outwiker/core/defines.py:108
-msgid "software"
-msgstr "программы"
-
-#: outwiker/core/defines.py:109
-msgid "tags"
-msgstr "метки"
-
-#: outwiker/core/defines.py:110
-msgid "weather"
-msgstr "погода"
-
-#: outwiker/core/defines.py:111
-msgid "list"
-msgstr "список"
-
-#: outwiker/core/defines.py:112
 msgid "bookmarks"
 msgstr "закладки"
 
-#: outwiker/core/defines.py:113
-msgid "office"
-msgstr "офис"
+#: outwiker/core/defines.py:99
+msgid "books"
+msgstr "книги"
 
-#: outwiker/core/defines.py:114
+#: outwiker/core/defines.py:100
 msgid "charts"
 msgstr "графики"
 
+#: outwiker/core/defines.py:101
+msgid "computer"
+msgstr "компьютер"
+
+#: outwiker/core/defines.py:102
+msgid "emotions"
+msgstr "эмоции"
+
+#: outwiker/core/defines.py:103
+msgid "flags"
+msgstr "флаги"
+
+#: outwiker/core/defines.py:104
+msgid "folders"
+msgstr "папки"
+
+#: outwiker/core/defines.py:105
+msgid "food"
+msgstr "продукты"
+
+#: outwiker/core/defines.py:106
+msgid "images"
+msgstr "картинки"
+
+#: outwiker/core/defines.py:107
+msgid "internet"
+msgstr "интернет"
+
+#: outwiker/core/defines.py:108
+msgid "list"
+msgstr "список"
+
+#: outwiker/core/defines.py:109
+msgid "money"
+msgstr "деньги"
+
+#: outwiker/core/defines.py:110
+msgid "office"
+msgstr "офис"
+
+#: outwiker/core/defines.py:111
+msgid "pages"
+msgstr "страницы"
+
+#: outwiker/core/defines.py:112
+msgid "people"
+msgstr "люди"
+
+#: outwiker/core/defines.py:113
+msgid "plants"
+msgstr "растения"
+
+#: outwiker/core/defines.py:114
+msgid "signs"
+msgstr "знаки"
+
 #: outwiker/core/defines.py:115
+msgid "software"
+msgstr "программы"
+
+#: outwiker/core/defines.py:116
+msgid "sport"
+msgstr "спорт"
+
+#: outwiker/core/defines.py:117
+msgid "tags"
+msgstr "метки"
+
+#: outwiker/core/defines.py:118
 msgid "text"
 msgstr "текст"
+
+#: outwiker/core/defines.py:119
+msgid "weather"
+msgstr "погода"
 
 #: outwiker/core/htmlimproverfactory.py:27
 msgid "Line Breaks (<br/>)"

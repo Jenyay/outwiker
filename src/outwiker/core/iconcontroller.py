@@ -26,6 +26,12 @@ class IconController:
             ("__std_calculator.png", join("office", "__std_calculator.png")),
             ("__std_cut.png", join("office", "__std_cut.png")),
             ("__std_cuter.png", join("office", "__std_cutter.png")),
+            ("__std_calendar.png", join("office", "__std_calendar_red.svg")),
+            ("__std_calendar.svg", join("office", "__std_calendar_red.svg")),
+            ("__std_telephone.png", join("office", "__std_telephone.png")),
+            ("__std_envelope.png", join("office", "__std_envelope.png")),
+            ("__std_email.png", join("office", "__std_mail.png")),
+            ("__std_report.png", join("office", "__std_report.png")),
 
             (join("folders", "__std_folder.svg"), join("folders", "__std_folder_yellow.svg")),
             (join("folders", "__std_folder.png"), join("folders", "__std_folder_yellow.svg")),
@@ -65,8 +71,38 @@ class IconController:
             ("__std_spellcheck.svg", join("text", "__std_spellcheck.svg")),
             ("__std_spellcheck.png", join("text", "__std_spellcheck.svg")),
 
-            ("__std_calendar.png", join("office", "__std_calendar_red.svg")),
-            ("__std_calendar.svg", join("office", "__std_calendar_red.svg")),
+            ("__std_terminal.png", join("software", "__std_terminal.png")),
+            (join("computer", "__std_game.png"), join("software", "__std_game.png")),
+            ("__std_firewall.png", join("software", "__std_firewall.png")),
+
+            ("__std_image.png", join("images", "__std_image.svg")),
+            ("__std_image.svg", join("images", "__std_image.svg")),
+            ("__std_image_blue.png", join("images", "__std_image_blue.png")),
+            ("__std_photo.png", join("images", "__std_photo.png")),
+            ("__std_picture.png", join("images", "__std_picture.png")),
+            ("__std_picture-empty.png", join("images", "__std_picture_empty.png")),
+            ("__std_pictures.png", join("images", "__std_pictures.png")),
+
+            ("__std_network.png", join("computer", "__std_network.png")),
+            ("__std_network-cloud.png", join("computer", "__std_network-cloud.png")),
+            ("__std_network-clouds.png", join("computer", "__std_network-clouds.png")),
+            ("__std_connect.png", join("computer", "__std_connect.png")),
+            ("__std_disconnect.png", join("computer", "__std_disconnect.png")),
+            ("__std_socket.png", join("computer", "__std_socket.png")),
+
+            ("__std_leaf.png", join("plants", "__std_leaf.png")),
+            ("__std_flower.png", join("plants", "__std_flower.png")),
+            ("__std_cactus.png", join("plants", "__std_cactus.png")),
+
+            ("__std_fruit-grape.png", join("food", "__std_grape.png")),
+
+            ("__std_page-white.png", join("pages", "__std_page_white.png")),
+
+            ("__std_sport-8ball.png", join("sport", "__std_8ball.png")),
+            ("__std_sport-basketball.png", join("sport", "__std_basketball.png")),
+            ("__std_sport-football.png", join("sport", "__std_football.png")),
+            ("__std_sport-soccer.png", join("sport", "__std_soccer.png")),
+            ("__std_board-game.png", join("sport", "__std_board-game.png")),
             ])
 
     # Used in tests
