@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-01 19:59+0300\n"
-"PO-Revision-Date: 2025-12-19 21:19+0300\n"
+"POT-Creation-Date: 2025-12-24 21:14+0300\n"
+"PO-Revision-Date: 2026-02-08 19:16+0300\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -445,7 +445,7 @@ msgstr "Aktuelle Notiz speichern"
 
 #: outwiker/app/actions/search.py:29
 #: outwiker/app/gui/preferences/hotkeyspanel.py:86
-#: outwiker/gui/basetextpanel.py:321 outwiker/pages/search/searchpanel.py:274
+#: outwiker/gui/basetextpanel.py:321 outwiker/pages/search/searchpanel.py:263
 msgid "Search"
 msgstr "Suche"
 
@@ -496,7 +496,7 @@ msgstr "Anzeigen / verstecken ein Anlagen-Panel"
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
 #: outwiker/app/gui/mainwindow.py:493
 #: outwiker/gui/controls/pagelist_columns.py:226
-#: outwiker/pages/search/searchpanel.py:47
+#: outwiker/pages/search/searchpanel.py:48
 msgid "Tags"
 msgstr "Tags"
 
@@ -1053,36 +1053,36 @@ msgstr "Aus Zwischenablage einfügen"
 msgid "Select all text"
 msgstr "Alles Auswählen"
 
-#: outwiker/app/gui/attachpanel.py:403
+#: outwiker/app/gui/attachpanel.py:404
 msgid "You did not select any file to remove"
 msgstr "Keine Datei zum Entfernen ausgewählt"
 
-#: outwiker/app/gui/attachpanel.py:406
+#: outwiker/app/gui/attachpanel.py:407
 msgid "Remove selected files?"
 msgstr "Ausgewählte Dateien entfernen?"
 
-#: outwiker/app/gui/attachpanel.py:407
+#: outwiker/app/gui/attachpanel.py:408
 msgid "Remove files?"
 msgstr "Dateien entfernen?"
 
-#: outwiker/app/gui/attachpanel.py:555
+#: outwiker/app/gui/attachpanel.py:556
 #, python-brace-format
 msgid "{name}   -   {size} KB   -   {date}"
 msgstr "{name}   -   {size} KB   -   {date}"
 
-#: outwiker/app/gui/attachpanel.py:564
+#: outwiker/app/gui/attachpanel.py:565
 #, python-brace-format
 msgid "{count} file(s)  -  {size} KB"
 msgstr "{count} Datei(en)  -  {size} KB"
 
-#: outwiker/app/gui/basepagedialog.py:130 outwiker/app/gui/mainwindow.py:177
+#: outwiker/app/gui/basepagedialog.py:142 outwiker/app/gui/mainwindow.py:177
 #: outwiker/app/gui/preferences/prefcontroller.py:136
 #: outwiker/app/gui/preferences/prefcontroller.py:166
 #: outwiker/pages/wiki/wikipagecontroller.py:67
 msgid "General"
 msgstr "Allgemeine"
 
-#: outwiker/app/gui/basepagedialog.py:141
+#: outwiker/app/gui/basepagedialog.py:153
 msgid "Appearance"
 msgstr "Ansicht"
 
@@ -1218,12 +1218,12 @@ msgstr "Neuen Tagname"
 #: outwiker/app/gui/dialogs/renametagdialog.py:85
 #: outwiker/app/gui/dialogs/renametagdialog.py:90
 #: outwiker/app/gui/pagedialogpanels/appearancepanel.py:124
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:516
-#: outwiker/app/gui/preferences/iconsetpanel.py:227
-#: outwiker/app/gui/preferences/iconsetpanel.py:284
-#: outwiker/app/gui/preferences/iconsetpanel.py:291
-#: outwiker/app/gui/preferences/iconsetpanel.py:298
-#: outwiker/app/gui/preferences/iconsetpanel.py:342
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:521
+#: outwiker/app/gui/preferences/iconsetpanel.py:226
+#: outwiker/app/gui/preferences/iconsetpanel.py:283
+#: outwiker/app/gui/preferences/iconsetpanel.py:290
+#: outwiker/app/gui/preferences/iconsetpanel.py:297
+#: outwiker/app/gui/preferences/iconsetpanel.py:341
 #: outwiker/core/textprinter.py:97
 #: outwiker/gui/controls/toastercontroller.py:50
 #: outwiker/pages/html/basehtmlpanel.py:339
@@ -1389,52 +1389,52 @@ msgstr "Nicht ändern"
 msgid "Default style"
 msgstr "Standardstil"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:104
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:105
 #: outwiker/gui/controls/pagelist_columns.py:196
 #: outwiker/pages/search/sortstrategies.py:64
 msgid "Title"
 msgstr "Titel"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:109
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:110
 msgid "Page icon"
 msgstr "Seitensymbol"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:114
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:115
 #: outwiker/gui/unknownpagetype.py:28
 msgid "Page type"
 msgstr "Seitentyp"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:120
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:121
 msgid "New page position"
 msgstr "Position neue Seite"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:126
-#: outwiker/gui/tagsdialog.py:29
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:127
+#: outwiker/gui/tagsdialog.py:31
 msgid "Tags (comma separated)"
 msgstr "Tags(Kommasepariert)"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:165
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:168
 msgid "Top of the list"
 msgstr "Anfang der Liste"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:166
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:169
 msgid "End of the list"
 msgstr "Ende der Liste"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:167
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:170
 msgid "Alphabetically"
 msgstr "Alphabetisch"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:437
-#: outwiker/app/gui/preferences/iconsetpanel.py:175
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:442
+#: outwiker/app/gui/preferences/iconsetpanel.py:174
 msgid "Not in groups"
 msgstr "Nicht in Gruppen"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:472
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:477
 msgid "Recent"
 msgstr "Letzte"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:515
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:520
 msgid "Can't set page icon\n"
 msgstr "Seiten Symbol kann nicht gesetzt werden\n"
 
@@ -1555,7 +1555,15 @@ msgstr "Verwende Leerzeichen statt Tabs"
 msgid "Tab width"
 msgstr "Tab-Schrittweite"
 
-#: outwiker/app/gui/preferences/editorpanel.py:46
+#: outwiker/app/gui/preferences/editorpanel.py:43
+msgid ""
+"Line number field width\n"
+"0 - default value"
+msgstr ""
+"Zeilennummer Feldbreite\n"
+"0 - Standardwert"
+
+#: outwiker/app/gui/preferences/editorpanel.py:55
 msgid ""
 "Home / End keys moves the cursor \n"
 "to the beginning / end of "
@@ -1563,11 +1571,11 @@ msgstr ""
 "Pos1/Ende-Tasten bewegen den Cursor \n"
 " zum Anfang / Ende des "
 
-#: outwiker/app/gui/preferences/editorpanel.py:52
+#: outwiker/app/gui/preferences/editorpanel.py:61
 msgid "Line"
 msgstr "Linie"
 
-#: outwiker/app/gui/preferences/editorpanel.py:52
+#: outwiker/app/gui/preferences/editorpanel.py:61
 msgid "Paragraph"
 msgstr "Absatz"
 
@@ -1682,144 +1690,149 @@ msgstr "Paragraf teilen"
 msgid "Additional styles (CSS):"
 msgstr "Erweiterte Stile (CSS):"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:68
+#: outwiker/app/gui/preferences/iconsetpanel.py:67
 msgid "Add new group"
 msgstr "Neue Gruppe hinzufügen"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:78
+#: outwiker/app/gui/preferences/iconsetpanel.py:77
 msgid "Remove group"
 msgstr "Gruppe entfernen"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:88
+#: outwiker/app/gui/preferences/iconsetpanel.py:87
 msgid "Rename group"
 msgstr "Gruppe umbenennen"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:117
+#: outwiker/app/gui/preferences/iconsetpanel.py:116
 msgid "Add icons"
 msgstr "Symbole hinzufügen"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:127
+#: outwiker/app/gui/preferences/iconsetpanel.py:126
 msgid "Remove selected icons"
 msgstr "Ausgewählte Symbole entfernen"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:139
+#: outwiker/app/gui/preferences/iconsetpanel.py:138
 msgid "Set icon as group cover"
 msgstr "Symbol wie Umschlag der Gruppe aufstellen"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:226
+#: outwiker/app/gui/preferences/iconsetpanel.py:225
 msgid "Can't create directory for icons group"
 msgstr "Verzeichnis für Symbole-Gruppe kann nicht erstellt werden"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:256
+#: outwiker/app/gui/preferences/iconsetpanel.py:255
 #, python-brace-format
 msgid "New group{}"
 msgstr "Neue Gruppe{}"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:283
+#: outwiker/app/gui/preferences/iconsetpanel.py:282
 msgid "Can't rename directory for icons group"
 msgstr "Verzeichnis für Symbole-Gruppe kann nicht umbenannt werden"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:290
+#: outwiker/app/gui/preferences/iconsetpanel.py:289
 #, python-brace-format
 msgid "Group with name \"{}\" exists already"
 msgstr "Gruppe mit Namen \"{}\" ist bereits vorhanden"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:297
+#: outwiker/app/gui/preferences/iconsetpanel.py:296
 #, python-brace-format
 msgid "Invalid group name \"{}\""
 msgstr "Ungültige Gruppennamen \"{}\""
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:332
+#: outwiker/app/gui/preferences/iconsetpanel.py:331
 #, python-brace-format
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Entfernen der Gruppe \"{}\" mit allen Symbolen?"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:333
+#: outwiker/app/gui/preferences/iconsetpanel.py:332
 msgid "Remove group?"
 msgstr "Gruppe entfernen?"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:342
+#: outwiker/app/gui/preferences/iconsetpanel.py:341
 msgid "Can't remove group directory"
 msgstr "Gruppenverzeichnis kann nicht entfernt werden"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:349
+#: outwiker/app/gui/preferences/iconsetpanel.py:348
 msgid "All image files"
 msgstr "Alle Bilddateien"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:349
+#: outwiker/app/gui/preferences/iconsetpanel.py:348
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:354
+#: outwiker/app/gui/preferences/iconsetpanel.py:353
 msgid "Select images"
 msgstr "Wählen Sie Bilder"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:369
-#: outwiker/app/gui/preferences/iconsetpanel.py:398
+#: outwiker/app/gui/preferences/iconsetpanel.py:368
+#: outwiker/app/gui/preferences/iconsetpanel.py:397
 msgid "You have not selected any icons"
 msgstr "Sie haben keine Symbole ausgewählt"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:370
-#: outwiker/app/gui/preferences/iconsetpanel.py:399
+#: outwiker/app/gui/preferences/iconsetpanel.py:369
+#: outwiker/app/gui/preferences/iconsetpanel.py:398
 msgid "Select icons"
 msgstr "Symbole wählen"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:377
+#: outwiker/app/gui/preferences/iconsetpanel.py:376
 msgid "Remove selected icons?"
 msgstr "Ausgewählte Symbole entfernen?"
 
-#: outwiker/app/gui/preferences/iconsetpanel.py:378
+#: outwiker/app/gui/preferences/iconsetpanel.py:377
 msgid "Remove icons"
 msgstr "Symbole entfernen"
 
-#: outwiker/app/gui/preferences/mainwindowpanel.py:34
+#: outwiker/app/gui/preferences/mainwindowpanel.py:35
 msgid "Show status panel"
 msgstr "Zeige Statusbereich"
 
-#: outwiker/app/gui/preferences/mainwindowpanel.py:46
+#: outwiker/app/gui/preferences/mainwindowpanel.py:44
 msgid "Wiki file name"
 msgstr "Wiki-Dateiname"
 
-#: outwiker/app/gui/preferences/mainwindowpanel.py:47
+#: outwiker/app/gui/preferences/mainwindowpanel.py:45
 msgid "Page title"
 msgstr "Seitentitel"
 
-#: outwiker/app/gui/preferences/mainwindowpanel.py:48
+#: outwiker/app/gui/preferences/mainwindowpanel.py:46
 msgid "Relative path to current page"
 msgstr "Relative Pfad zur aktuellen Seite"
 
-#: outwiker/app/gui/preferences/mainwindowpanel.py:51
+#: outwiker/app/gui/preferences/mainwindowpanel.py:49
 msgid "Main window title format"
 msgstr "Hauptfenster Titelformat"
 
-#: outwiker/app/gui/preferences/mainwindowpanel.py:81
-msgid "Buttons icon size (an application restart is required)"
-msgstr "Button-Symbolgröße (erfordert Programmneustart)"
+#: outwiker/app/gui/preferences/mainwindowpanel.py:71
+msgid ""
+"Buttons icon size\n"
+"(an application restart is required)"
+msgstr ""
+"Button-Symbolgröße\n"
+" (erfordert Programmneustart)"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:27
-#: outwiker/app/gui/preferences/tabspanel.py:30
+#: outwiker/app/gui/preferences/notestreepanel.py:29
+#: outwiker/app/gui/preferences/tabspanel.py:39
 #: outwiker/pages/wiki/fontsizeselector.py:35
 msgid "Font size"
 msgstr "Schriftgröße"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:34
-#: outwiker/app/gui/preferences/tabspanel.py:36
-msgid "Show note icons"
-msgstr "Zeige Notizsymbol"
-
-#: outwiker/app/gui/preferences/notestreepanel.py:50
+#: outwiker/app/gui/preferences/notestreepanel.py:36
+#: outwiker/app/gui/preferences/tabspanel.py:49
 msgid "Icon size"
 msgstr "Symbolgröße"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:55
+#: outwiker/app/gui/preferences/notestreepanel.py:38
+#: outwiker/app/gui/preferences/tabspanel.py:45
+msgid "Show note icons"
+msgstr "Zeige Notizsymbol"
+
+#: outwiker/app/gui/preferences/notestreepanel.py:47
 msgid "Extra icons"
 msgstr "Weitere Symbole"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:57
+#: outwiker/app/gui/preferences/notestreepanel.py:49
 msgid "Show bookmark icon"
 msgstr "Zeige Lesezeichensymbol"
 
-#: outwiker/app/gui/preferences/notestreepanel.py:60
+#: outwiker/app/gui/preferences/notestreepanel.py:52
 msgid "Show read-only icon"
 msgstr "Zeige Nur-Lesen-Symbol"
 
@@ -1884,7 +1897,7 @@ msgid "User's iconset"
 msgstr "Symbole des Benutzers"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:206
-#: outwiker/gui/controls/treebook2.py:47
+#: outwiker/gui/controls/treebook2.py:50
 msgid "Preferences"
 msgstr "Einstellungen"
 
@@ -1900,23 +1913,23 @@ msgstr "Benutze Wörterbuch"
 msgid "Custom dictonary (one word per line)"
 msgstr "Benutzerdefiniertes Wörterbuch (ein Wort pro Linie)"
 
-#: outwiker/app/gui/preferences/tabspanel.py:23
+#: outwiker/app/gui/preferences/tabspanel.py:25
 msgid "Minimal tab width"
 msgstr "Mindestbreite von Tabs"
 
-#: outwiker/app/gui/preferences/tabspanel.py:24
+#: outwiker/app/gui/preferences/tabspanel.py:28
 msgid "Maximal tab width"
 msgstr "Maximalbreite von Tabs"
 
-#: outwiker/app/gui/preferences/tabspanel.py:26
+#: outwiker/app/gui/preferences/tabspanel.py:32
 msgid "Horizontal margin"
 msgstr "Horizontaler Abstand"
 
-#: outwiker/app/gui/preferences/tabspanel.py:27
+#: outwiker/app/gui/preferences/tabspanel.py:35
 msgid "Vertical margin"
 msgstr "Vertikaler Abstand"
 
-#: outwiker/app/gui/preferences/tabspanel.py:39
+#: outwiker/app/gui/preferences/tabspanel.py:53
 msgid "Show close buttons"
 msgstr "Schließen-Buttons zeigen"
 
@@ -2280,6 +2293,14 @@ msgstr "Lesezeichen"
 msgid "office"
 msgstr "Büro"
 
+#: outwiker/core/defines.py:114
+msgid "charts"
+msgstr "Diagramme"
+
+#: outwiker/core/defines.py:115
+msgid "text"
+msgstr "Text"
+
 #: outwiker/core/htmlimproverfactory.py:27
 msgid "Line Breaks (<br/>)"
 msgstr "Zeilenumbruch (<br/>)"
@@ -2435,6 +2456,14 @@ msgstr "Jahr (vierstellig)"
 msgid "A literal '%' character"
 msgstr "Zeichen '%'"
 
+#: outwiker/gui/controls/iconlistctrl.py:141
+msgid "Custom icon"
+msgstr "Symbole des Benutzers"
+
+#: outwiker/gui/controls/iconlistctrl.py:143
+msgid "Default icon"
+msgstr "Standardsymbol"
+
 #: outwiker/gui/controls/pagelist_columns.py:213
 msgid "Parent"
 msgstr "Übergeordnet"
@@ -2528,15 +2557,7 @@ msgstr "Datei '%s' kann nicht ausgeführt werden"
 msgid "Can't read file %s"
 msgstr "Datei %s kann nicht gelesen werden"
 
-#: outwiker/gui/iconlistctrl.py:140
-msgid "Custom icon"
-msgstr "Symbole des Benutzers"
-
-#: outwiker/gui/iconlistctrl.py:142
-msgid "Default icon"
-msgstr "Standardsymbol"
-
-#: outwiker/gui/preferences/prefpanel.py:39
+#: outwiker/gui/preferences/prefpanel.py:36
 msgid "Default size"
 msgstr "Standardgröße"
 
@@ -2576,12 +2597,12 @@ msgstr "Kopfzeile für erste Zeile"
 msgid "Insert rows"
 msgstr "Zeile einfügen"
 
-#: outwiker/gui/tagscloud.py:136
+#: outwiker/gui/tagscloud.py:142
 #, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Anzahl Notizen: {}"
 
-#: outwiker/gui/tagscloud.py:230
+#: outwiker/gui/tagscloud.py:236
 msgid "Applied tags only"
 msgstr "Nur hinzugefügte Tags"
 
@@ -2701,19 +2722,19 @@ msgstr "Jeder Zeichen"
 msgid "All tags"
 msgstr "Alle Tags"
 
-#: outwiker/pages/search/searchpanel.py:53
+#: outwiker/pages/search/searchpanel.py:55
 msgid "Clear all tags"
 msgstr "Alle Tags löschen"
 
-#: outwiker/pages/search/searchpanel.py:54
+#: outwiker/pages/search/searchpanel.py:56
 msgid "Find"
 msgstr "Finden"
 
-#: outwiker/pages/search/searchpanel.py:58
+#: outwiker/pages/search/searchpanel.py:60
 msgid "Sort by "
 msgstr "Sortieren nach "
 
-#: outwiker/pages/search/searchpanel.py:275
+#: outwiker/pages/search/searchpanel.py:264
 msgid "Search pages..."
 msgstr "Suchergebnisseiten..."
 
