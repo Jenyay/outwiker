@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+import os
 
 from outwiker.gui.images import readImage
 
