@@ -28,15 +28,15 @@ jobs:
           restore-keys: |
             windows-pip-
 
-      - name: Cache uv environments
-        uses: actions/cache@v4
-        with:
-          path: |
-            C:\Users\runneradmin\AppData\Local\uv
-            .venv
-          key: windows-uv-python-3.8-32bit-${{ hashFiles('**/pyproject.toml') }}
-          restore-keys: |
-            windows-uv-
+      #- name: Cache uv environments
+      #  uses: actions/cache@v4
+      #  with:
+      #    path: |
+      #      C:\Users\runneradmin\AppData\Local\uv
+      #      .venv
+      #    key: windows-uv-python-3.8-32bit-${{ hashFiles('**/pyproject.toml') }}
+      #    restore-keys: |
+      #      windows-uv-
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
