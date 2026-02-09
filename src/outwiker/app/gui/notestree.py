@@ -309,9 +309,10 @@ class NotesTree(wx.Window):
             Theme.SECTION_TREE, Theme.TREE_EXTRA_ICON_READ_ONLY
         )
 
+        bookmarks = self._application.bookmarks
         for item in items:
             item.clearExtraIcons()
-            if enableBookmarkExtraIcons and wikiroot.bookmarks.pageMarked(
+            if enableBookmarkExtraIcons and bookmarks.pageMarked(
                 item.getPage()
             ):
                 item.addExtraIcon(*self._pagesExtraIcons[self._EXTRA_ICON_BOOKMARK])

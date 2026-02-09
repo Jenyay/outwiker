@@ -3,7 +3,7 @@
 	<version number="1.7.5" date="2025-10-11">
 		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.7.5.zip">
 			<requirements>
-                <api>4.942</api>
+                <api>4.960</api>
 			</requirements>
 		</download>
 		<changes>

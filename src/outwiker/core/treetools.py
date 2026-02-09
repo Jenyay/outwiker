@@ -11,8 +11,9 @@ from typing import Union
 import wx
 
 from outwiker.app.services.messages import showError
+from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_RESULT_HTML
-from outwiker.core.tree import WikiDocument
+from outwiker.core.tree import BasePage, WikiDocument
 from outwiker.core.notestreeloader import NotesTreeLoader
 from outwiker.core.exceptions import ReadonlyException
 
@@ -60,11 +61,11 @@ def testreadonly(func):
 
 
 @testreadonly
-def generateLink(application, page):
+def generateLink(application: Application, page: BasePage):
     """
     Создать ссылку на страницу по UID
     """
-    uid = application.pageUidDepot.createUid(page)
+    uid = page.getUid(generate=True)
     return "page://{}".format(uid)
 
 
@@ -79,11 +80,11 @@ def findPage(application, page_id):
 
     if page_id.startswith(prefix):
         page_id = page_id[len(prefix):]
-        return application.pageUidDepot[page_id]
+        return application.wikiroot.getPageByUid(page_id)
     elif application.wikiroot[page_id] is not None:
         return application.wikiroot[page_id]
     else:
-        return application.pageUidDepot[page_id]
+        return application.wikiroot.getPageByUid(page_id)
 
 
 def getPageHtmlPath(page):

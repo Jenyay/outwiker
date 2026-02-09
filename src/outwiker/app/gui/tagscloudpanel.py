@@ -7,13 +7,14 @@ import wx
 from outwiker.app.gui.tagspanelcontroller import TagsPanelController
 from outwiker.app.gui.pagelistpopup import PageListPopup
 
+from outwiker.core.application import Application
 from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.controls.pagelist_columns import BaseColumn, ColumnsFactory
 
 
 class TagsCloudPanel(wx.Panel):
-    def __init__(self, parent, application):
+    def __init__(self, parent, application: Application):
         super().__init__(parent)
         self._application = application
 
@@ -100,6 +101,7 @@ class TagsCloudPanel(wx.Panel):
 
         self._tagscloud = TagsCloud(
             self,
+            self._application.theme,
             min_font_size=min_font_size,
             max_font_size=max_font_size,
             mode=mode,

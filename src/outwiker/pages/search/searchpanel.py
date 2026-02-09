@@ -2,10 +2,9 @@
 
 import wx
 
+from outwiker.core.application import Application
 from outwiker.core.treetools import pageExists
-from outwiker.core.search import (Searcher,
-                                  AllTagsSearchStrategy,
-                                  AnyTagSearchStrategy)
+from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.core.tagslist import TagsList
 from outwiker.core.config import IntegerOption
 from outwiker.gui.basepagepanel import BasePagePanel
@@ -17,9 +16,10 @@ from .sortstrategies import getSortStrategies
 
 
 class SearchPanel(BasePagePanel):
-    def __init__(self, parent, application):
+    def __init__(self, parent: wx.Window, application: Application):
         BasePagePanel.__init__(self, parent, application)
 
+        self._theme = self._application.theme
         self._allTags = None
 
         # Текущий результат поиска (список страниц)
@@ -34,20 +34,22 @@ class SearchPanel(BasePagePanel):
         self._strategyList = [AnyTagSearchStrategy, AllTagsSearchStrategy]
         self._sortStrategies = getSortStrategies()
 
-        self._searchText = wx.StaticText(self, label=_('Phrase for search:'))
+        self._searchText = wx.StaticText(self, label=_("Phrase for search:"))
         self.wordsTextCtrl = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
 
-        self.tagsLabel = wx.StaticText(self, -1, _(u"Tags: "))
-        self.tagsList = TagsCloud(self)
+        self.tagsLabel = wx.StaticText(self, -1, _("Tags: "))
+        self.tagsList = TagsCloud(self, self._theme)
         self.tagsList.SetMinSize((250, 150))
 
         strategies = [_("Any tag"), _("All tags")]
-        self.tagsStrategy = wx.RadioBox(self,
-                                        -1,
-                                        _("Tags"),
-                                        choices=strategies,
-                                        majorDimension=0,
-                                        style=wx.RA_SPECIFY_ROWS)
+        self.tagsStrategy = wx.RadioBox(
+            self,
+            -1,
+            _("Tags"),
+            choices=strategies,
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
         self.tagsStrategy.SetSelection(0)
 
         self.clearTagsBtn = wx.Button(self, -1, _("Clear all tags"))
@@ -56,8 +58,7 @@ class SearchPanel(BasePagePanel):
         self.resultWindow.Show()
 
         self.sortLabel = wx.StaticText(self, -1, _("Sort by "))
-        self.sortStrategy = wx.ComboBox(self,
-                                        style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.sortStrategy = wx.ComboBox(self, style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self.sortStrategy.SetMinSize((200, -1))
         for sortStrategy in self._sortStrategies:
             self.sortStrategy.Append(sortStrategy.title)
@@ -68,8 +69,7 @@ class SearchPanel(BasePagePanel):
         self.clearTagsBtn.Bind(wx.EVT_BUTTON, handler=self.__onClear)
         self.wordsTextCtrl.Bind(wx.EVT_TEXT_ENTER, handler=self.__onFind)
         self.searchBtn.Bind(wx.EVT_BUTTON, handler=self.__onFind)
-        self.sortStrategy.Bind(wx.EVT_COMBOBOX,
-                               handler=self.__onChangeSortStrategy)
+        self.sortStrategy.Bind(wx.EVT_COMBOBOX, handler=self.__onChangeSortStrategy)
         self.tagsList.Bind(EVT_TAG_LEFT_DOWN, handler=self.__onTagLeftClick)
 
     def __do_layout(self):
@@ -79,12 +79,10 @@ class SearchPanel(BasePagePanel):
 
         searchSizer = wx.FlexGridSizer(cols=2)
         searchSizer.AddGrowableCol(1)
-        searchSizer.Add(self._searchText,
-                        flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                        border=4)
-        searchSizer.Add(self.wordsTextCtrl,
-                        flag=wx.EXPAND | wx.ALL,
-                        border=4)
+        searchSizer.Add(
+            self._searchText, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=4
+        )
+        searchSizer.Add(self.wordsTextCtrl, flag=wx.EXPAND | wx.ALL, border=4)
 
         mainSizer.Add(searchSizer, 1, wx.EXPAND, 0)
 
@@ -104,15 +102,9 @@ class SearchPanel(BasePagePanel):
         mainSizer.Add(tagsSizer, 1, wx.EXPAND, 0)
 
         sortSizer = wx.BoxSizer(wx.HORIZONTAL)
-        sortSizer.Add(self.sortLabel,
-                      1,
-                      wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                      border=2)
+        sortSizer.Add(self.sortLabel, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
 
-        sortSizer.Add(self.sortStrategy,
-                      1,
-                      wx.ALL | wx. EXPAND,
-                      border=2)
+        sortSizer.Add(self.sortStrategy, 1, wx.ALL | wx.EXPAND, border=2)
 
         mainSizer.Add(sortSizer, 1, wx.EXPAND, 0)
 
@@ -193,9 +185,7 @@ class SearchPanel(BasePagePanel):
         """
         Сохранить настройки страницы
         """
-        if (self.page is not None and
-                not self.page.isRemoved and
-                pageExists(self.page)):
+        if self.page is not None and not self.page.isRemoved and pageExists(self.page):
             self.__saveSearchPhrase()
             self.__saveSearchTags()
             self.__saveSearchTagsStrategy()
@@ -236,10 +226,9 @@ class SearchPanel(BasePagePanel):
     def __loadSortStrategy(self):
         assert self.page is not None
 
-        sortOption = IntegerOption(self.page.params,
-                                   self.page.paramsSection,
-                                   self.sortStrategySection,
-                                   0)
+        sortOption = IntegerOption(
+            self.page.params, self.page.paramsSection, self.sortStrategySection, 0
+        )
 
         sort = sortOption.value
         if sort < 0 or sort >= len(self._sortStrategies):
@@ -249,10 +238,9 @@ class SearchPanel(BasePagePanel):
     def __saveSortStrategy(self):
         assert self.page is not None
 
-        sortOption = IntegerOption(self.page.params,
-                                   self.page.paramsSection,
-                                   self.sortStrategySection,
-                                   0)
+        sortOption = IntegerOption(
+            self.page.params, self.page.paramsSection, self.sortStrategySection, 0
+        )
         sortOption.value = self.sortStrategy.GetSelection()
 
     def __onFind(self, event):
@@ -269,10 +257,12 @@ class SearchPanel(BasePagePanel):
 
         searcher = Searcher(phrase, tags, self.page.strategy)
 
-        runner = LongProcessRunner(searcher.find,
-                                   self._application.mainWindow,
-                                   _(u"Search"),
-                                   _(u"Search pages..."))
+        runner = LongProcessRunner(
+            searcher.find,
+            self._application.mainWindow,
+            _("Search"),
+            _("Search pages..."),
+        )
 
         self._currentResultPages = runner.run(self.page.root)
 
@@ -304,14 +294,14 @@ class SearchPanel(BasePagePanel):
         sortStrategy = self.__getCurrentSortStrategy()
 
         resultPages_sorted = resultPages[:]
-        resultPages_sorted.sort(
-            key=sortStrategy.sort,
-            reverse=sortStrategy.inverse)
+        resultPages_sorted.sort(key=sortStrategy.sort, reverse=sortStrategy.inverse)
 
-        report = HtmlReport(resultPages_sorted,
-                            self.__getSearchPhrase(),
-                            self.__getSearchTags(),
-                            self._application)
+        report = HtmlReport(
+            resultPages_sorted,
+            self.__getSearchPhrase(),
+            self.__getSearchTags(),
+            self._application,
+        )
 
         htmltext = report.generate()
         self.resultWindow.SetPage(htmltext, self.page.path)
@@ -326,9 +316,7 @@ class SearchPanel(BasePagePanel):
 
         for n in range(len(resultPages)):
             option = self._resultOptionTemplate % n
-            self.page.params.set(self._resultsSection,
-                                 option,
-                                 resultPages[n].subpath)
+            self.page.params.set(self._resultsSection, option, resultPages[n].subpath)
 
     def __loadResults(self):
         """

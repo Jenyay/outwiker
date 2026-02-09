@@ -125,7 +125,7 @@ class CurrentPagePanel(wx.Panel):
 
         page = self._application.selectedPage
 
-        if page is not None and page.root.bookmarks.pageMarked(
+        if page is not None and self._application.bookmarks.pageMarked(
             self._application.selectedPage
         ):
             image = self._bookmarkActiveImg

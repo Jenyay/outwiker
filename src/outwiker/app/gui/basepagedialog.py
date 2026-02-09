@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 import wx
 
 from outwiker.app.gui.pagedialogpanels.generalpanel import (
@@ -10,14 +12,23 @@ from outwiker.app.gui.pagedialogpanels.appearancepanel import (
     AppearancePanel,
     AppearanceController,
 )
+from outwiker.core.application import Application
 from outwiker.core.events import PageDialogInitParams, PageDialogDestroyParams
+from outwiker.core.tree import WikiPage
 from outwiker.gui.defines import CONTROLS_MARGIN
 from outwiker.gui.guiconfig import PageDialogConfig
+from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 from outwiker.gui.testeddialog import TestedDialog
 
 
 class BasePageDialog(TestedDialog):
-    def __init__(self, parentWnd, currentPage, parentPage, application):
+    def __init__(
+        self,
+        parentWnd: wx.Window,
+        currentPage: WikiPage,
+        parentPage: WikiPage,
+        application: Application,
+    ):
         super().__init__(
             parent=parentWnd, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         )
@@ -26,8 +37,9 @@ class BasePageDialog(TestedDialog):
         self._currentPage = currentPage
 
         self._application = application
-        self._panels = []
-        self._controllers = []
+        self._theme = self._application.theme
+        self._panels: List[wx.Window] = []
+        self._controllers: List[BasePageDialogController] = []
 
         self._config = PageDialogConfig(self._application.config)
 
@@ -126,7 +138,7 @@ class BasePageDialog(TestedDialog):
         # Add general panel
         parent = self.getPanelsParent()
 
-        self._generalPanel = GeneralPanel(parent, self._application.theme)
+        self._generalPanel = GeneralPanel(parent, self._theme)
         self.addPanel(self._generalPanel, _("General"))
 
         self._generalController = GeneralController(
@@ -168,7 +180,11 @@ class BasePageDialog(TestedDialog):
     def _createOkCancelButtons(self, sizer):
         # Создание кнопок Ok/Cancel
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
-        sizer.Add(buttonsSizer, flag=wx.ALIGN_RIGHT | wx.TOP | wx.BOTTOM, border=CONTROLS_MARGIN)
+        sizer.Add(
+            buttonsSizer,
+            flag=wx.ALIGN_RIGHT | wx.TOP | wx.BOTTOM,
+            border=CONTROLS_MARGIN,
+        )
         self.Bind(wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
 
     @property

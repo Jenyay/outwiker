@@ -1,0 +1,8 @@
+div.quote-pink {
+    background-color: #fce4ec;
+    border-left: 5px solid #ec407a;
+    color: #880e4f;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+}

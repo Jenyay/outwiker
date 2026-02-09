@@ -59,7 +59,6 @@ class PageFactory(metaclass=ABCMeta):
         title = getAlternativeTitle(alias, siblings)
         path = os.path.join(parent.path, title)
 
-        # page = self.createPage(parent, title, path)
         page = WikiPage(path, title, parent)
         order = order_calculator(parent, alias, tags)
         parent.addToChildren(page, order)
@@ -74,6 +73,8 @@ class PageFactory(metaclass=ABCMeta):
             page.alias = alias
 
         page.setTypeString(self.getPageTypeString())
+        if not page.readonly:
+            page.getUid(generate=True)
         return page
 
     @property

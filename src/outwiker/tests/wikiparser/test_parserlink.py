@@ -57,8 +57,10 @@ class ParserLinkTest(unittest.TestCase):
 
         # Прикрепим к двум страницам файлы
         Attachment(self.testPage).attach(fullFilesPath)
+        self._application.wikiroot = self.wikiroot
 
     def tearDown(self):
+        self._application.wikiroot = None
         removeDir(self.path)
 
     def testUrl1(self):
@@ -1139,8 +1141,8 @@ class ParserLinkTest(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def testPageProtocolLink(self):
-        uid = self._application.pageUidDepot.createUid(self.testPage)
-        text = f'бла-бла-бла [[page://{uid}]] бла-бла-бла'
+        uid = self.testPage.getUid()
+        text = f"бла-бла-бла [[page://{uid}]] бла-бла-бла"
         expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{uid}">{self.testPage.display_title}</a> бла-бла-бла'
 
         result = self.parser.toHtml(text)
@@ -1148,7 +1150,7 @@ class ParserLinkTest(unittest.TestCase):
 
     def testPageProtocolLinkInvalidUid(self):
         uid = "invalid_uid"
-        text = f'бла-бла-бла [[page://{uid}]] бла-бла-бла'
+        text = f"бла-бла-бла [[page://{uid}]] бла-бла-бла"
         expected = f'бла-бла-бла <a class="ow-wiki ow-link-page ow-link-page-error" href="page://{uid}">page://{uid}</a> бла-бла-бла'
 
         result = self.parser.toHtml(text)

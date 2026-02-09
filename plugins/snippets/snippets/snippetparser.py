@@ -106,7 +106,7 @@ class SnippetParser(object):
                 defines.VAR_SUBPATH: page.subpath,
                 defines.VAR_ATTACH: attach.getAttachPath(True),
                 defines.VAR_FOLDER: page.path,
-                defines.VAR_PAGE_ID: self._application.pageUidDepot.createUid(page),
+                defines.VAR_PAGE_ID: page.getUid(generate=True),
                 defines.VAR_DATE_CREATING: page.creationdatetime,
                 defines.VAR_DATE_EDITIND: page.datetime,
                 defines.VAR_TAGS: VarList(sorted(page.tags)),

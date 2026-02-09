@@ -120,6 +120,14 @@ def getDefaultStyles() -> str:
 		  background-position: center center;
 		  background-size: 75% auto;
 		}
+
+		blockquote.ow-wiki {
+		  border-left: 4px solid #ccc;
+		  padding: 10px 15px;
+		  margin: 10px 0;
+		  background-color: #f9f9f9;
+		  color: #222;
+		}
     '''
 
     return css

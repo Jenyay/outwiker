@@ -1,0 +1,7 @@
+span.highlight-orange {
+    display: inline;
+    background-color: #ffd180;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}

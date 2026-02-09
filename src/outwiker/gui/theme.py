@@ -29,6 +29,7 @@ class Theme:
     CONTROL_BORDER_SELECTED_COLOR = "ControlBorderSelectedColor"
     STATIC_LINE_COLOR = "StaticLineColor"
     ROUND_RADIUS = "RoundRadius"
+    BUTTONS_ICON_SIZE = "ButtonIconSize"
 
     # Tree section
     HIGHLIGHTING_COLOR = "HighlightingColor"
@@ -127,6 +128,7 @@ class Theme:
         )
         self.addParam(self.SECTION_GENERAL, self.STATIC_LINE_COLOR, "#AAAAAA")
         self.addParam(self.SECTION_GENERAL, self.ROUND_RADIUS, 0)
+        self.addParam(self.SECTION_GENERAL, self.BUTTONS_ICON_SIZE, 16)
 
     def addTabsParams(self):
         self.addParam(self.SECTION_TABS, self.TABS_BACKGROUND_NORMAL_COLOR, "#D4D4CE")

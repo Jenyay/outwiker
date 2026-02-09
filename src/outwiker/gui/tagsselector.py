@@ -11,24 +11,28 @@ from outwiker.core.tagslist import TagsList
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
 from outwiker.gui.controls.popupwindow import PopupWindow
-from outwiker.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 from outwiker.gui.images import readImage
+from outwiker.gui.theme import Theme
 
 
 TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()
 
 
 class TagsPopupWindow(PopupWindow):
-    def __init__(self, parent, enable_active_tags_filter: bool = True):
+    def __init__(
+        self, parent: wx.Window, theme: Theme, enable_active_tags_filter: bool = True
+    ):
+        self._theme = theme
         self._enable_active_tags_filter = enable_active_tags_filter
         self._tagsList: Optional[TagsList] = None
-        super().__init__(parent, None)
+        super().__init__(parent, self._theme)
         self.SetMinSize((350, 250))
         self.SetSize(self.GetMinSize())
 
     def createGUI(self):
         self._tagsCloud = TagsCloud(
             self,
+            self._theme,
             use_buttons=False,
             enable_active_tags_filter=self._enable_active_tags_filter,
         )
@@ -88,19 +92,23 @@ class TagsAutocompleter(wx.TextCompleterSimple):
 
 
 class TagsSelector(wx.Panel):
-    def __init__(self, parent, enable_active_tags_filter: bool = True):
+    def __init__(
+        self, parent: wx.Window, theme: Theme, enable_active_tags_filter: bool = True
+    ):
         super().__init__(parent)
+        self._theme = theme
         self._popup_height = 250
 
         self._tagsList: Optional[TagsList] = None
 
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
 
-        tagBitmap = readImage(getBuiltinImagePath("tag.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
+        icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        tagBitmap = readImage(getBuiltinImagePath("tag.svg"), icon_size, icon_size)
         self.tagsButton = wx.BitmapButton(self, bitmap=tagBitmap)
 
         self._tagsCloudPopup: TagsPopupWindow = TagsPopupWindow(
-            self, enable_active_tags_filter=enable_active_tags_filter
+            self, self._theme, enable_active_tags_filter=enable_active_tags_filter
         )
         self._tagsCloudPopup.Bind(EVT_TAG_LEFT_DOWN, self._onTagClick)
 

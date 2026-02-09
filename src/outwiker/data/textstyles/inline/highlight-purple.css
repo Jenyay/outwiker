@@ -1,0 +1,7 @@
+span.highlight-purple {
+    display: inline;
+    background-color: #e1bee7;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}

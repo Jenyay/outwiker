@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import os.path
 import unittest
 from tempfile import mkdtemp
@@ -42,7 +43,7 @@ class RenameTest(unittest.TestCase):
         self._application.wikiroot = None
         removeDir(self.path)
 
-    def testRename1(self):
+    def testRename(self):
         page = self.wikiroot["Страница 1"]
         page.title = "Страница 1 new"
 
@@ -51,6 +52,14 @@ class RenameTest(unittest.TestCase):
         self.assertEqual(page.subpath, "Страница 1 new")
         self.assertEqual(self.wikiroot["Страница 1"], None)
         self.assertTrue(os.path.exists(self.wikiroot["Страница 1 new"].path))
+
+    def testDateTime(self):
+        page = self.wikiroot["Страница 1"]
+        page.datetime = datetime(2020, 1, 1)
+        page.title = "Страница 1 new"
+
+        delta = datetime.now() - page.datetime
+        self.assertLess(abs(delta.seconds), 30)
 
     def testEvent(self):
         self._application.onPageRename += self.__onPageRename
@@ -117,28 +126,6 @@ class RenameTest(unittest.TestCase):
         wiki = loadNotesTree(self.path)
         self.assertNotEqual(wiki["Страница 1 new"], None)
         self.assertEqual(wiki["Страница 1"], None)
-
-    def testBookmarks1(self):
-        page = self.wikiroot["Страница 6"]
-        self.wikiroot.bookmarks.add(page)
-        page.title = "Страница 6 new"
-
-        self.assertTrue(self.wikiroot.bookmarks.pageMarked(page))
-
-    def testBookmarks2(self):
-        page2 = self.wikiroot["Страница 2"]
-        page3 = self.wikiroot["Страница 2/Страница 3"]
-        page4 = self.wikiroot["Страница 2/Страница 3/Страница 4"]
-
-        self.wikiroot.bookmarks.add(page2)
-        self.wikiroot.bookmarks.add(page3)
-        self.wikiroot.bookmarks.add(page4)
-
-        page2.title = "Страница 2 new"
-
-        self.assertTrue(self.wikiroot.bookmarks.pageMarked(page2))
-        self.assertTrue(self.wikiroot.bookmarks.pageMarked(page3))
-        self.assertTrue(self.wikiroot.bookmarks.pageMarked(page4))
 
     def testPath(self):
         page2 = self.wikiroot["Страница 2"]

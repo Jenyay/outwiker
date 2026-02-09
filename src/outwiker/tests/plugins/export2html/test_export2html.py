@@ -30,7 +30,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         os.mkdir(self.outputdir)
 
-        self.application.wikiroot = None
+        self.application.wikiroot = self.root
 
     def tearDown(self):
         self.application.wikiroot = None

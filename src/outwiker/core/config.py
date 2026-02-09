@@ -410,6 +410,7 @@ class PageConfig(Config):
     typeParamName = "type"
     tagsParamName = "tags"
     titleColorParamName = "titlecolor"
+    pageUidParamName = "uid"
 
     def __init__(self, fname, readonly=False):
         super().__init__(fname, readonly)
@@ -451,4 +452,8 @@ class PageConfig(Config):
 
         self.titleColorOption = StringOption(
             self, PageConfig.sectionName, PageConfig.titleColorParamName, ""
+        )
+
+        self.pageUidOption = StringOption(
+            self, PageConfig.sectionName, PageConfig.pageUidParamName, None
         )

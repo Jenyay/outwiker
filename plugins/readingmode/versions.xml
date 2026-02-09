@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.3.3" date="2025-11-08">
+		<download href="https://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.3.3.zip">
+			<requirements>
+                <api>4.962</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Use vector icon for buttons.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Использование векторных значков для кнопок.</change>
+		</changes>
+	</version>
+
 	<version number="1.3.2" date="2024-09-14">
 		<download href="https://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.3.2.zip">
 			<requirements>

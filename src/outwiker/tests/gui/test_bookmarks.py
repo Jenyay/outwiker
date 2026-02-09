@@ -21,13 +21,16 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
                        "Страница 4",
                        [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
+        self.bookmarks = self.application.bookmarks
 
     def tearDown(self):
+        self.application.wikiroot = None
         self.destroyApplication()
         self.destroyWiki(self.wikiroot)
 
     def testClearMenu(self):
         self.application.wikiroot = self.wikiroot
+        self.application.bookmarks.setWikiRoot(self.wikiroot)
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
 
         self.assertNotEqual(bookmarksMenu, None)
@@ -40,11 +43,11 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def _getItemText(self, item):
         return item.GetItemLabel().replace("_", "").replace("&", "")
 
-    def testAddBookmarks1(self):
+    def testAddBookmarks1_AsSubpath(self):
         self.application.wikiroot = self.wikiroot
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
 
-        self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
 
         self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
 
@@ -54,15 +57,33 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(self._getItemText(items[2]), "Страница 1")
 
-        self.wikiroot.bookmarks.remove(self.wikiroot["Страница 1"])
+        self.bookmarks.remove(self.wikiroot["Страница 1"])
         self.assertEqual(bookmarksMenu.GetMenuItemCount(), 2)
 
-    def testAddBookmarks2(self):
+    def testAddBookmarks1_AsPageUID(self):
         self.application.wikiroot = self.wikiroot
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
 
-        self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
-        self.wikiroot.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
+        self.bookmarks.add(self.wikiroot["Страница 1"])
+
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
+
+        items = bookmarksMenu.GetMenuItems()
+        self.assertFalse(items[0].IsSeparator())
+        self.assertTrue(items[1].IsSeparator())
+
+        self.assertEqual(self._getItemText(items[2]), "Страница 1")
+
+        self.bookmarks.remove(self.wikiroot["Страница 1"])
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 2)
+
+    def testAddBookmarks2_AsSubpath(self):
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+        bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
+
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"], subpath=True)
 
         self.assertEqual(bookmarksMenu.GetMenuItemCount(), 4)
 
@@ -74,7 +95,7 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._getItemText(items[3]),
                          "Страница 3 [Страница 2]")
 
-        self.wikiroot.bookmarks.remove(self.wikiroot["Страница 1"])
+        self.bookmarks.remove(self.wikiroot["Страница 1"])
         self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
 
         newitems = bookmarksMenu.GetMenuItems()
@@ -84,14 +105,42 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._getItemText(newitems[2]),
                          "Страница 3 [Страница 2]")
 
-    def testTitleBookmarks(self):
+    def testAddBookmarks2_AsPageUID(self):
         self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
 
-        self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
-        self.wikiroot.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
-        self.wikiroot.bookmarks.add(
-            self.wikiroot["Страница 2/Страница 3/Страница 4"])
+        self.bookmarks.add(self.wikiroot["Страница 1"])
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
+
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 4)
+
+        items = bookmarksMenu.GetMenuItems()
+        self.assertFalse(items[0].IsSeparator())
+        self.assertTrue(items[1].IsSeparator())
+
+        self.assertEqual(self._getItemText(items[2]), "Страница 1")
+        self.assertEqual(self._getItemText(items[3]),
+                         "Страница 3 [Страница 2]")
+
+        self.bookmarks.remove(self.wikiroot["Страница 1"])
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
+
+        newitems = bookmarksMenu.GetMenuItems()
+        self.assertFalse(newitems[0].IsSeparator())
+        self.assertTrue(newitems[1].IsSeparator())
+
+        self.assertEqual(self._getItemText(newitems[2]),
+                         "Страница 3 [Страница 2]")
+
+    def testTitleBookmarks_AsSubpath(self):
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+        bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
+
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3/Страница 4"], subpath=True)
 
         self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
 
@@ -105,10 +154,48 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._getItemText(
             items[4]), "Страница 4 [Страница 2/Страница 3]")
 
-    def testLoading(self):
-        self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
-        self.wikiroot.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
-        self.wikiroot.bookmarks.add(self.wikiroot["Страница 2/Страница 3/Страница 4"])
+    def testTitleBookmarks_AsPageUID(self):
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+        bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
+
+        self.bookmarks.add(self.wikiroot["Страница 1"])
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3/Страница 4"])
+
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
+
+        items = bookmarksMenu.GetMenuItems()
+        self.assertFalse(items[0].IsSeparator())
+        self.assertTrue(items[1].IsSeparator())
+
+        self.assertEqual(self._getItemText(items[2]), "Страница 1")
+        self.assertEqual(self._getItemText(
+            items[3]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(
+            items[4]), "Страница 4 [Страница 2/Страница 3]")
+
+    def testLoading_AsSubpath(self):
+        self.bookmarks.setWikiRoot(self.wikiroot)
+        self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"], subpath=True)
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3/Страница 4"], subpath=True)
+
+        self.application.wikiroot = self.wikiroot
+
+        bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
+        items = bookmarksMenu.GetMenuItems()
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
+
+        self.assertEqual(self._getItemText(items[2]), "Страница 1")
+        self.assertEqual(self._getItemText(items[3]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(items[4]), "Страница 4 [Страница 2/Страница 3]")
+
+    def testLoading_AsPageUID(self):
+        self.bookmarks.setWikiRoot(self.wikiroot)
+        self.bookmarks.add(self.wikiroot["Страница 1"])
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
+        self.bookmarks.add(self.wikiroot["Страница 2/Страница 3/Страница 4"])
 
         self.application.wikiroot = self.wikiroot
 
@@ -122,6 +209,7 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAddBookmarkAction1(self):
         self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
         self.application.selectedPage = self.wikiroot["Страница 1"]
 
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
@@ -153,3 +241,127 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
 
         self.assertFalse(bookmarksMenu.GetMenuItems()[0].IsEnabled())
+
+    def testRename1_AsSubpath(self):
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+
+        page = self.wikiroot["Страница 1"]
+        self.bookmarks.add(page, subpath=True)
+        page.title = "Страница 6 new"
+
+        self.assertTrue(self.bookmarks.pageMarked(page))
+
+    def testRename1_AsPageUID(self):
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+
+        page = self.wikiroot["Страница 1"]
+        self.bookmarks.add(page)
+        page.title = "Страница 6 new"
+
+        self.assertTrue(self.bookmarks.pageMarked(page))
+
+    def testRename2_AsSubpath(self):
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+
+        page2 = self.wikiroot["Страница 2"]
+        page3 = self.wikiroot["Страница 2/Страница 3"]
+        page4 = self.wikiroot["Страница 2/Страница 3/Страница 4"]
+
+        self.bookmarks.add(page2, subpath=True)
+        self.bookmarks.add(page3, subpath=True)
+        self.bookmarks.add(page4, subpath=True)
+
+        page2.title = "Страница 2 new"
+
+        self.assertTrue(self.bookmarks.pageMarked(page2))
+        self.assertTrue(self.bookmarks.pageMarked(page3))
+        self.assertTrue(self.bookmarks.pageMarked(page4))
+
+    def testRename2_AsPageUID(self):
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+
+        page2 = self.wikiroot["Страница 2"]
+        page3 = self.wikiroot["Страница 2/Страница 3"]
+        page4 = self.wikiroot["Страница 2/Страница 3/Страница 4"]
+
+        self.bookmarks.add(page2)
+        self.bookmarks.add(page3)
+        self.bookmarks.add(page4)
+
+        page2.title = "Страница 2 new"
+
+        self.assertTrue(self.bookmarks.pageMarked(page2))
+        self.assertTrue(self.bookmarks.pageMarked(page3))
+        self.assertTrue(self.bookmarks.pageMarked(page4))
+
+    def testRemove1_AsSubpath(self):
+        """
+        Проверка того, что страница удаляется из закладок
+        """
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+
+        page = self.wikiroot["Страница 1"]
+        self.bookmarks.add(page, subpath=True)
+        page.remove()
+
+        self.assertFalse(self.bookmarks.pageMarked(page))
+
+    def testRemove1_AsPageUID(self):
+        """
+        Проверка того, что страница удаляется из закладок
+        """
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+
+        page = self.wikiroot["Страница 1"]
+        self.bookmarks.add(page)
+        page.remove()
+
+        self.assertFalse(self.bookmarks.pageMarked(page))
+
+    def testRemove2_AsSubpath(self):
+        """
+        Проверка того, что подстраница удаленной страницы удаляется из закладок
+        """
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+
+        page2 = self.wikiroot["Страница 2"]
+        page3 = self.wikiroot["Страница 2/Страница 3"]
+        page4 = self.wikiroot["Страница 2/Страница 3/Страница 4"]
+
+        self.bookmarks.add(page2, subpath=True)
+        self.bookmarks.add(page3, subpath=True)
+        self.bookmarks.add(page4, subpath=True)
+
+        page2.remove()
+
+        self.assertFalse(self.bookmarks.pageMarked(page2))
+        self.assertFalse(self.bookmarks.pageMarked(page3))
+        self.assertFalse(self.bookmarks.pageMarked(page4))
+
+    def testRemove2_AsPageUID(self):
+        """
+        Проверка того, что подстраница удаленной страницы удаляется из закладок
+        """
+        self.application.wikiroot = self.wikiroot
+        self.bookmarks.setWikiRoot(self.wikiroot)
+
+        page2 = self.wikiroot["Страница 2"]
+        page3 = self.wikiroot["Страница 2/Страница 3"]
+        page4 = self.wikiroot["Страница 2/Страница 3/Страница 4"]
+
+        self.bookmarks.add(page2)
+        self.bookmarks.add(page3)
+        self.bookmarks.add(page4)
+
+        page2.remove()
+
+        self.assertFalse(self.bookmarks.pageMarked(page2))
+        self.assertFalse(self.bookmarks.pageMarked(page3))
+        self.assertFalse(self.bookmarks.pageMarked(page4))

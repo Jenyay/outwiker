@@ -2,6 +2,8 @@
 
 import wx
 
+from outwiker.core.application import Application
+
 from .basepagepanel import BasePagePanel
 from .controls.pagelist import PageList, EVT_PAGE_CLICK
 from .controls.pagelist_columns import ColumnsFactory
@@ -125,7 +127,7 @@ class BookmarksPanel(wx.Panel):
     '''
     Panel with bookmarks list
     '''
-    def __init__(self, parent, application):
+    def __init__(self, parent, application: Application):
         super().__init__(parent)
         self._application = application
         self._config = GeneralGuiConfig(self._application.config)
@@ -142,11 +144,12 @@ class BookmarksPanel(wx.Panel):
     def _updateBookmarks(self):
         assert self._application.wikiroot is not None
 
-        wikiroot = self._application.wikiroot
-        page_list = [wikiroot.bookmarks[n]
+        # wikiroot = self._application.wikiroot
+        bookmarks = self._application.bookmarks
+        page_list = [bookmarks[n]
                      for n
-                     in range(len(wikiroot.bookmarks))
-                     if wikiroot.bookmarks[n] is not None]
+                     in range(len(bookmarks))
+                     if bookmarks[n] is not None]
         self._pageList.setPageList(page_list)
 
     def _createPageList(self):

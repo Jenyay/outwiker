@@ -8,7 +8,6 @@ import wx
 from outwiker.app.services.clipboard import getClipboardText
 from outwiker.core.attachfilters import getHiddenFilter, notFilter
 from outwiker.core.attachment import Attachment
-from outwiker.core.pageuiddepot import PageUidDepot
 
 
 class BaseLinkDialogController(metaclass=ABCMeta):
@@ -93,7 +92,7 @@ class BaseLinkDialogController(metaclass=ABCMeta):
         if self._isPageLink(self._dlg.link):
             prefix = 'page://'
             uid = self._dlg.link[len(prefix):]
-            page = PageUidDepot(self._page.root)[uid]
+            page = self._page.root.getPageByUid(uid)
             if page is not None and not self._selectedString:
                 self._dlg.comment = page.display_title
 

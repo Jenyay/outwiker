@@ -29,6 +29,7 @@ class NotesTreeLoader:
         self._loadChildren(root)
         logger.debug("Children notes loading ended")
 
+        root.updatePageUidDepot()
         root.onTreeUpdate(root)
         logger.debug("Wiki document loading ended")
         return root

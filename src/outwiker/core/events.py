@@ -25,6 +25,9 @@ PAGE_UPDATE_TITLE = 16
 # Changed page style
 PAGE_UPDATE_COLOR = 32
 
+# Changed page uid
+PAGE_UPDATE_UID = 64
+
 
 class LinkClickParams:
     """

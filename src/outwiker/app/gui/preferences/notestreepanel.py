@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from typing import List, Tuple
 import wx
 
 from outwiker.gui.guiconfig import TreeConfig
@@ -12,6 +13,7 @@ class NotesTreePanel(BasePrefPanel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._config = TreeConfig(application.config)
+        self._icon_sizes = [16, 20, 24, 32, 48]
         self._createGUI()
 
         self.LoadState()
@@ -30,7 +32,9 @@ class NotesTreePanel(BasePrefPanel):
             sizer,
         )[1]
 
-        self._createIconSizeGui(sizer)
+        self._iconSizeComboBox = self._createIconSizeGui(
+            _("Icon size"), self._icon_sizes, sizer
+        )[1]
         self._showNoteIconsCheckBox = self._createCheckBox(_("Show note icons"), sizer)
         sizer.AddStretchSpacer()
 
@@ -38,17 +42,6 @@ class NotesTreePanel(BasePrefPanel):
 
         self._createExtraIconsGUI(main_sizer)
         self.SetSizer(main_sizer)
-
-    def _createIconSizeGui(self, sizer):
-        self._icon_size_items = [
-            ("16 x 16", 16),
-            ("24 x 24", 24),
-            ("32 x 32", 32),
-            ("48 x 48", 48),
-        ]
-        self._iconSizeComboBox = self._createLabelAndComboBox(_("Icon size"), sizer)[1]
-        for title, size in self._icon_size_items:
-            self._iconSizeComboBox.Append(title)
 
     def _createExtraIconsGUI(self, main_sizer):
         sizer = self._createSection(main_sizer, _("Extra icons"), cols=1)[1]
@@ -87,7 +80,7 @@ class NotesTreePanel(BasePrefPanel):
 
         icon_size = self._config.iconSize.value
         icon_size_index = 0
-        for n, (title, size) in enumerate(self._icon_size_items):
+        for n, size in enumerate(self._icon_sizes):
             if size == icon_size:
                 icon_size_index = n
 
@@ -108,5 +101,5 @@ class NotesTreePanel(BasePrefPanel):
         self.readOnlyIcon.save()
         self.showNoteIcons.save()
 
-        icon_size = self._icon_size_items[self._iconSizeComboBox.GetSelection()][1]
+        icon_size = self._icon_sizes[self._iconSizeComboBox.GetSelection()]
         self._config.iconSize.value = icon_size

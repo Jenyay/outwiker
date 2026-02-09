@@ -367,9 +367,13 @@ class EditorConfig:
     HOME_END_KEYS_PARAM = "HomeEndKeys"
     HOME_END_KEYS_DEFAULT = HOME_END_OF_LINE
 
-    # Цвет шрифта
+    # Main font color
     FONT_COLOR_PARAM = "FontColor"
     FONT_COLOR_DEFAULT = "#000000"
+
+    # Line number font color
+    LINE_NUMBER_FONT_COLOR_PARAM = "LineNumberFontColor"
+    LINE_NUMBER_FONT_COLOR_DEFAULT = "#000000"
 
     # Цвет фона
     BACK_COLOR_PARAM = "BackColor"
@@ -383,9 +387,12 @@ class EditorConfig:
     MARGIN_BACK_COLOR_PARAM = "MarginBackColor"
     MARGIN_BACK_COLOR_DEFAULT = "#C4C4C4"
 
+    MARGIN_WIDTH_PARAM = "MarginWidth"
+    MARGIN_WIDTH_DEFAULT = 0
+
     # Spell checker
     SPELL_DICTS_PARAM = "dictionaries"
-    SPELL_DICT_DEFAULT = "en_US, ru_RU, ru_RU_yo, uk_UA"
+    SPELL_DICT_DEFAULT = "en_US, ru_RU, ru_YO, uk_UA"
 
     SPELL_ENABLE_PARAM = "SpellChecking"
     SPELL_ENABLE_DEFAULT = True
@@ -465,6 +472,13 @@ class EditorConfig:
             EditorConfig.FONT_COLOR_DEFAULT,
         )
 
+        self.lineNumberFontColor = StringOption(
+            self.config,
+            EditorConfig.EDITOR_SECTION,
+            EditorConfig.LINE_NUMBER_FONT_COLOR_PARAM,
+            EditorConfig.LINE_NUMBER_FONT_COLOR_DEFAULT,
+        )
+
         self.backColor = StringOption(
             self.config,
             EditorConfig.EDITOR_SECTION,
@@ -484,6 +498,13 @@ class EditorConfig:
             EditorConfig.EDITOR_SECTION,
             EditorConfig.MARGIN_BACK_COLOR_PARAM,
             EditorConfig.MARGIN_BACK_COLOR_DEFAULT,
+        )
+
+        self.marginWidth = IntegerOption(
+            self.config,
+            EditorConfig.EDITOR_SECTION,
+            EditorConfig.MARGIN_WIDTH_PARAM,
+            EditorConfig.MARGIN_WIDTH_DEFAULT,
         )
 
         self.spellCheckerDicts = StringOption(
@@ -805,6 +826,9 @@ class MainWindowConfig:
     MAIN_PANES_TEXT_COLOR_PARAM = "main_panes_text_color"
     MAIN_PANES_TEXT_COLOR_DEFAULT = ""
 
+    BUTTONS_ICON_SIZE_PARAM = "ButtonsIconSize"
+    BUTTONS_ICON_SIZE_DEFAULT = 16
+
     def __init__(self, config):
         self.config = config
 
@@ -883,6 +907,13 @@ class MainWindowConfig:
             MainWindowConfig.MAIN_WINDOW_SECTION,
             self.MAIN_PANES_TEXT_COLOR_PARAM,
             self.MAIN_PANES_TEXT_COLOR_DEFAULT,
+        )
+
+        self.buttonsIconSize = IntegerOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.BUTTONS_ICON_SIZE_PARAM,
+            self.BUTTONS_ICON_SIZE_DEFAULT,
         )
 
 

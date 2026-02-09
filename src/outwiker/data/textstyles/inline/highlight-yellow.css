@@ -1,0 +1,7 @@
+span.highlight-yellow {
+    display: inline;
+    background-color: #ffff66;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}

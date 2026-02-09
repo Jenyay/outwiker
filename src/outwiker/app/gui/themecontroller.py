@@ -13,6 +13,7 @@ class ThemeController:
     def __init__(self, application: Application) -> None:
         self._application = application
         self._theme: Optional[Theme] = None
+        self._first_load = True
         self._application.onPreferencesDialogClose.bind(
             self._onPreferences, EVENT_PRIORITY_MAX_CORE
         )
@@ -25,22 +26,17 @@ class ThemeController:
         if self._theme is None:
             return
 
+        self._loadGeneralConfig()
+        self._loadNotificationConfig()
+        self._loadTabsConfig()
+        self._loadTreeConfig()
+
+        self._first_load = False
+
+    def _loadNotificationConfig(self):
+        assert self._theme is not None
+
         mainWindowConfig = MainWindowConfig(self._application.config)
-
-        # General
-        self._theme.set(
-            Theme.SECTION_GENERAL,
-            Theme.BACKGROUND_COLOR,
-            sanitize_color(mainWindowConfig.mainPanesBackgroundColor),
-        )
-
-        self._theme.set(
-            Theme.SECTION_GENERAL,
-            Theme.TEXT_COLOR,
-            sanitize_color(mainWindowConfig.mainPanesTextColor),
-        )
-
-        # Notification
         self._theme.set(
             Theme.SECTION_NOTIFICATION,
             Theme.NOTIFICATION_BACKGROUND_COLOR,
@@ -53,8 +49,27 @@ class ThemeController:
             sanitize_color(mainWindowConfig.mainPanesTextColor),
         )
 
-        self._loadTabsConfig()
-        self._loadTreeConfig()
+    def _loadGeneralConfig(self):
+        assert self._theme is not None
+
+        mainWindowConfig = MainWindowConfig(self._application.config)
+
+        self._theme.set(
+            Theme.SECTION_GENERAL,
+            Theme.BACKGROUND_COLOR,
+            sanitize_color(mainWindowConfig.mainPanesBackgroundColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_GENERAL,
+            Theme.TEXT_COLOR,
+            sanitize_color(mainWindowConfig.mainPanesTextColor),
+        )
+
+        if self._first_load:
+            self._theme.set(Theme.SECTION_GENERAL,
+                            Theme.BUTTONS_ICON_SIZE,
+                            mainWindowConfig.buttonsIconSize.value)
 
     def _loadTreeConfig(self):
         assert self._theme is not None

@@ -63,6 +63,8 @@ class EditSnippetsDialog(wx.Frame):
 
         self.ICON_WIDTH = 16
         self.ICON_HEIGHT = 16
+        self.BUTTON_MENU_ICON_WIDTH = 28
+        self.BUTTON_MENU_ICON_HEIGHT = 16
 
         self._imagesPath = getImagesPath()
         self._dirImageId = None
@@ -242,7 +244,11 @@ class EditSnippetsDialog(wx.Frame):
         # Insert variable
         self.insertVariableBtn = PopupButton(
             parent,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "variables-menu.png")),
+            bitmap=readImage(
+                os.path.join(self._imagesPath, "variables-menu.svg"),
+                self.BUTTON_MENU_ICON_WIDTH,
+                self.BUTTON_MENU_ICON_HEIGHT,
+            ),
         )
         self.insertVariableBtn.SetToolTip(_("Insert variable"))
 
@@ -257,7 +263,12 @@ class EditSnippetsDialog(wx.Frame):
 
         # Insert block
         self.insertBlockBtn = PopupButton(
-            parent, bitmap=wx.Bitmap(os.path.join(self._imagesPath, "block-menu.png"))
+            parent,
+            bitmap=readImage(
+                os.path.join(self._imagesPath, "block-menu.svg"),
+                self.BUTTON_MENU_ICON_WIDTH,
+                self.BUTTON_MENU_ICON_HEIGHT,
+            ),
         )
         self.insertBlockBtn.SetToolTip(_("Insert block"))
 

@@ -1,0 +1,9 @@
+span.info {
+    display: inline-block;
+    color: #333;
+    background-color: #f0f0ff;
+    border-radius: 1px;
+    padding: 0px 2px;
+    margin: 2px;
+    border: 1px solid #b0b0e0;
+}

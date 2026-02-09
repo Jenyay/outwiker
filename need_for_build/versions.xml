@@ -1,10 +1,62 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.961" status="dev">
+    <version number="4.0.0.967" status="dev">
         <changes>
         </changes>
 
         <changes lang="ru">
+        </changes>
+    </version>
+
+    <version number="4.0.0.966" status="beta" date="2026-01-27">
+        <changes>
+            <change>Added new vector icons for notes.</change>
+            <change>Fixed several bugs.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена новые векторные значки для заметок.</change>
+            <change>Исправлены несколько ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="4.0.0.964" status="beta" date="2025-12-20">
+        <changes>
+            <change>Added new vector icons for notes.</change>
+            <change>Improved support for [=page://...=] style links to other pages for wiki pages.</change>
+            <change>Updated icons for toolbar buttons.</change>
+            <change>Fixed an issue with transparent images when running the Windows build under Wine.</change>
+            <change>Fixed several bugs.</change>
+            <change>Updated German localization.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена новые векторные значки для заметок.</change>
+            <change>Для викистраниц добавлена обработка ссылок вида [=page://...=] на другие страницы.</change>
+            <change>Обновление значков для кнопок на панелях инструментов.</change>
+            <change>Исправлена проблема прозрачных картинок при запуске Windows-сборки под Wine.</change>
+            <change>Исправлены несколько ошибок.</change>
+            <change>Обновлена немецкая локализация.</change>
+        </changes>
+    </version>
+
+    <version number="4.0.0.962" status="beta" date="2025-11-08">
+        <changes>
+            <change>Vector icons are now used consistently across all toolbars.</change>
+            <change>Wiki pages now support links of the form [=[[page://...]]=] to other pages.</change>
+            <change>New text styles have been added for wiki pages.</change>
+            <change>A setting has been added to adjust the size of buttons on toolbars.</change>
+            <change>A setting has been added to adjust the size of icons on tabs.</change>
+            <change>New vector icons have been added for notes.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Для на панелях инструментов теперь везде используются векторные значки.</change>
+            <change>Для викистраниц добавлена обработка ссылок вида [=[[page://...]]=] на другие страницы.</change>
+            <change>Добавлены новые стили текста для викистраниц.</change>
+            <change>Добавлена настройка для изменения размера кнопок на панелях инструметов.</change>
+            <change>Добавлена настройка для изменения размера значков на вкладках.</change>
+            <change>Добавлена новые векторные значки для заметок.</change>
         </changes>
     </version>
 

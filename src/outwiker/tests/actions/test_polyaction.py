@@ -5,6 +5,7 @@ import unittest
 from outwiker.gui.polyaction import PolyAction
 from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.hotkey import HotKey
+from outwiker.gui.theme import Theme
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
@@ -14,16 +15,15 @@ class PolyActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
-        self.actionController = ActionController(self.mainWindow,
-                                                 self.application.config)
-        self.application.config.remove_section(
-            self.actionController.configSection)
+        self.actionController = ActionController(
+            self.mainWindow, self.application.config, Theme()
+        )
+        self.application.config.remove_section(self.actionController.configSection)
 
         self._actionVal = 0
 
     def tearDown(self):
-        self.application.config.remove_section(
-            self.actionController.configSection)
+        self.application.config.remove_section(self.actionController.configSection)
         self.destroyApplication()
         self.destroyWiki(self.wikiroot)
 
@@ -46,8 +46,9 @@ class PolyActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(polyaction, hotkey)
 
         self.assertEqual(self.actionController.getAction(strid).title, title)
-        self.assertEqual(self.actionController.getAction(strid).description,
-                         description)
+        self.assertEqual(
+            self.actionController.getAction(strid).description, description
+        )
 
         polyaction.run(None)
 

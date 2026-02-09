@@ -7,10 +7,10 @@ import shutil
 import datetime
 from abc import ABCMeta
 from functools import cmp_to_key
-from typing import final, List, Optional, Union
+from typing import final, List, Optional, Union, Dict
+import uuid
 
 from .config import PageConfig
-from .bookmarks import Bookmarks
 from .event import Event
 from .exceptions import (
     ClearConfigError,
@@ -281,6 +281,12 @@ class BasePage(metaclass=ABCMeta):
         The method can raise EnvironmentError.
         """
 
+    def getUid(self, generate: bool = True) -> Optional[str]:
+        return ""
+
+    def setUid(self, new_uid: str) -> None:
+        pass
+
 
 @final
 class WikiDocument(BasePage):
@@ -288,8 +294,8 @@ class WikiDocument(BasePage):
         super().__init__(path, readonly)
         self._selectedPage = None
         self._createEvents()
-        self.bookmarks = Bookmarks(self, self._params)
         self._registry = NotesTreeRegistry(self._getRegistrySaver(self._path))
+        self._pageUidDepot = PageUidDepot()
         self._typeString = "document"
 
     def _getRegistrySaver(self, path):
@@ -365,6 +371,13 @@ class WikiDocument(BasePage):
         #     params - instance of the PreContentWritingParams class
         self.onPreContentWriting = Event()
 
+    @property
+    def pageUidDepot(self) -> "PageUidDepot":
+        return self._pageUidDepot
+
+    def updatePageUidDepot(self):
+        self._pageUidDepot.load(self)
+
     @staticmethod
     def clearConfigFile(path):
         """
@@ -434,6 +447,9 @@ class WikiDocument(BasePage):
     def registry(self):
         return self._registry
 
+    def getPageByUid(self, uid: str) -> Optional[BasePage]:
+        return self._pageUidDepot[uid]
+
 
 class WikiPage(BasePage, metaclass=ABCMeta):
     """
@@ -464,6 +480,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self._alias = self.params.aliasOption.value
         if len(self._alias) == 0:
             self._alias = None
+        self._uid = self.params.pageUidOption.value
 
     def __bool__(self):
         return True
@@ -564,6 +581,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
         WikiPage._renamePaths(self, newpath)
         self.root.registry.rename_page_sections(oldsubpath, self.subpath)
+        self.updateDateTime()
 
         self.root.onPageRename(self, oldsubpath)
         self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TITLE)
@@ -854,6 +872,52 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         """
         return self not in self.parent.children
 
+    def getUid(self, generate: bool = False) -> Optional[str]:
+        uid = None
+        if self._uid:
+            uid = self._uid
+        elif generate:
+            depot = self.root.pageUidDepot
+            uid = depot.generateUid()
+            self.setUid(uid)
+        return uid
+
+    def setUid(self, new_uid: str) -> None:
+        if self.readonly:
+            raise ReadonlyException
+
+        if new_uid is None or len(new_uid.strip()) == 0:
+            raise ValueError
+
+        new_uid = new_uid.lower()
+
+        oldUid = self._uid
+        if new_uid == oldUid:
+            return
+
+        depot = self.root.pageUidDepot
+        if depot.uidExists(new_uid):
+            raise KeyError
+
+        # Запрещено использовать "/" в идентификаторе
+        if "/" in new_uid:
+            raise ValueError
+
+        depot.removePageUid(oldUid)
+
+        self._uid = new_uid
+        self.params.pageUidOption.value = new_uid
+        self.updateDateTime()
+        depot.addPage(self)
+        self.root.onPageUpdate(self, change=events.PAGE_UPDATE_UID)
+
+    def _clearUid(self):
+        """Remove page UID. Used in tests"""
+        depot = self.root.pageUidDepot
+        depot.removePageUid(self._uid)
+        self._uid = None
+        self.params.pageUidOption.value = None
+
 
 class PageAdapter:
     def __init__(self, page) -> None:
@@ -1034,3 +1098,64 @@ class PageAdapter:
     @property
     def readonly(self):
         return self._page.readonly
+
+
+class PageUidDepot:
+    """
+    Класс для хранения уникальных идентификаторов страниц и ссылок по ним
+    """
+
+    def __init__(self):
+        """
+        wikiroot - корень викидерева или корневая страница.
+        Если wikiroot != None, то приосходит поиск всех UID
+        """
+        # Словарь идентификаторов.
+        # Ключ - уникальный идентификатор, значение - указатель на страницу
+        self.__uids: Dict[str, BasePage] = {}
+
+    def load(self, wikiroot: Optional[WikiDocument]) -> None:
+        self.__uids.clear()
+
+        if wikiroot is not None:
+            self.__load(wikiroot)
+
+    def __load(self, root: BasePage):
+        """
+        Прочитать UID всех страниц в дереве.
+        """
+        uid = root.getUid(generate=False)
+
+        if uid is not None:
+            self.__uids[uid] = root
+
+        [self.__load(child) for child in root.children]
+
+    def __getitem__(self, uid: str) -> Optional[BasePage]:
+        uid = uid.lower()
+
+        page = self.__uids.get(uid, None)
+
+        if page is not None and page.getTypeString() != "document" and page.isRemoved:
+            del self.__uids[uid]
+            page = None
+
+        return page
+
+    def generateUid(self) -> str:
+        while (uid := str(uuid.uuid4())) in self.__uids:
+            pass
+
+        return uid
+
+    def removePageUid(self, uid: Optional[str]) -> None:
+        if uid in self.__uids:
+            del self.__uids[uid]
+
+    def addPage(self, page: BasePage) -> None:
+        uid = page.getUid(generate=False)
+        assert uid is not None
+        self.__uids[uid] = page
+
+    def uidExists(self, uid: str) -> bool:
+        return uid in self.__uids

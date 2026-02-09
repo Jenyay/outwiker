@@ -4,7 +4,6 @@ import unittest
 
 from outwiker.api.app.clipboard import copyTextToClipboard
 from outwiker.core.attachment import Attachment
-from outwiker.core.pageuiddepot import PageUidDepot
 from outwiker.gui.dialogs.linkdialog import LinkDialog
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikiconfig import WikiConfig
@@ -226,7 +225,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.linkResult, '[[page://_asdfasdfasdf]]')
 
     def testClipboardExitedPageLink(self):
-        page_uid = PageUidDepot().createUid(self._testpage)
+        page_uid = self._testpage.getUid()
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
@@ -247,7 +246,7 @@ class LinkDialogControllerWikiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testClipboardExitedPageAliasLink(self):
         self._testpage.alias = 'A page with an alias'
-        page_uid = PageUidDepot().createUid(self._testpage)
+        page_uid = self._testpage.getUid()
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''

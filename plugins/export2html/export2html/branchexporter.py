@@ -137,11 +137,6 @@ class BranchExporter:
         на которую ведет ссылка (если она существует),
         в противном случае возвращает None.
         """
-        # Т.к. поддержка этого протокола появилась только в версии 1.8.0,
-        # то нужно проверить, есть ли в self.__application член pageUidDepot
-        if "pageUidDepot" not in self.__application.__dict__:
-            return (None, None)
-
         protocol = "page://"
 
         if not href.startswith(protocol):
@@ -154,7 +149,7 @@ class BranchExporter:
         slashPos = uid.find("/")
         uid_clean = uid[:slashPos] if slashPos != -1 else uid
 
-        page = self.__application.pageUidDepot[uid_clean]
+        page = self.__application.wikiroot.getPageByUid(uid_clean)
         anchor = self.__getAnchor(uid)
 
         return (page, anchor)

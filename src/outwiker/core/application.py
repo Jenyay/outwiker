@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from typing import Optional
 
+from outwiker.core.bookmarks import Bookmarks
 from outwiker.core.config import Config
 from outwiker.core.event import Event, CustomEvents
 from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.pageuiddepot import PageUidDepot
 from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
 from outwiker.core.system import getSpellDirList
+from outwiker.core.tree import WikiDocument
 from outwiker.gui.theme import Theme
 
 logger = logging.getLogger('outwiker.core.application')
@@ -18,7 +20,7 @@ logger = logging.getLogger('outwiker.core.application')
 class Application:
     def __init__(self):
         # Opened wiki
-        self.__wikiroot = None
+        self.__wikiroot: Optional[WikiDocument] = None
 
         # Application's main window
         self.__mainWindow = None
@@ -28,9 +30,9 @@ class Application:
         self.recentWiki = None
         self.actionController = None
         self.plugins = PluginsLoader(self)
-        self.pageUidDepot = PageUidDepot()
         self.spellCheckers = None
-        self.__theme = Theme()
+        self._theme = Theme()
+        self._bookmarks = Bookmarks()
 
         # Set to True for unit tests
         self.testMode = False
@@ -392,7 +394,8 @@ class Application:
             self.__unbindWikiEvents(self.wikiroot)
 
         self._unbindAllEvents()
-        self.__theme.clear()
+        self._theme.clear()
+        self._bookmarks.clear()
         self.wikiroot = None
         self.config = None
         self.mainWindow = None
@@ -409,10 +412,14 @@ class Application:
 
     @property
     def theme(self) -> Theme:
-        return self.__theme
+        return self._theme
 
     @property
-    def wikiroot(self):
+    def bookmarks(self) -> Bookmarks:
+        return self._bookmarks
+
+    @property
+    def wikiroot(self) -> Optional[WikiDocument]:
         """
         Return the root of the wiki opened in the current time or None if
         no wiki opened
@@ -420,7 +427,7 @@ class Application:
         return self.__wikiroot
 
     @wikiroot.setter
-    def wikiroot(self, value):
+    def wikiroot(self, value: Optional[WikiDocument]):
         """
         Set wiki as current
         """
@@ -448,7 +455,6 @@ class Application:
         if self.__wikiroot is not None:
             self.__bindWikiEvents(self.__wikiroot)
 
-        self.pageUidDepot = PageUidDepot(self.__wikiroot)
         self.onWikiOpen(self.__wikiroot)
 
     @property
@@ -469,6 +475,8 @@ class Application:
         """
         Subscribe to wiki event to forward it to next receiver.
         """
+        self.bookmarks.onBookmarksChanged += self.onBookmarksChanged
+
         wiki.onPageSelect += self.onPageSelect
         wiki.onPageUpdate += self.onPageUpdate
         wiki.onTreeUpdate += self.onTreeUpdate
@@ -480,7 +488,6 @@ class Application:
         wiki.onPageRemove += self.onPageRemove
         wiki.onAttachListChanged += self.onAttachListChanged
         wiki.onAttachSubdirChanged += self.onAttachSubdirChanged
-        wiki.bookmarks.onBookmarksChanged += self.onBookmarksChanged
         wiki.onPostContentReading += self.onPostContentReading
         wiki.onPreContentWriting += self.onPreContentWriting
 
@@ -488,6 +495,8 @@ class Application:
         """
         Unsubscribe from wiki events.
         """
+        self.bookmarks.onBookmarksChanged -= self.onBookmarksChanged
+
         wiki.onPageSelect -= self.onPageSelect
         wiki.onPageUpdate -= self.onPageUpdate
         wiki.onTreeUpdate -= self.onTreeUpdate
@@ -499,7 +508,6 @@ class Application:
         wiki.onPageRemove -= self.onPageRemove
         wiki.onAttachListChanged -= self.onAttachListChanged
         wiki.onAttachSubdirChanged -= self.onAttachSubdirChanged
-        wiki.bookmarks.onBookmarksChanged -= self.onBookmarksChanged
         wiki.onPostContentReading -= self.onPostContentReading
         wiki.onPreContentWriting -= self.onPreContentWriting
 

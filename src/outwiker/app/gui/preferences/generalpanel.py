@@ -203,7 +203,7 @@ class GeneralPanel(BasePrefPanel):
         languageSizer.AddGrowableCol(1)
 
         self.langLabel, self.langCombo = self._createLabelAndComboBox(
-            _("Language(restart required)"), languageSizer
+            _("Language (an application restart is required)"), languageSizer
         )
         self.langCombo.SetMinSize((self.LANG_COMBO_WIDTH, -1))
 

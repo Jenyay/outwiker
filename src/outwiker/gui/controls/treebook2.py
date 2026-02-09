@@ -4,13 +4,18 @@ from typing import List, Optional, Tuple, Dict
 import wx
 
 from outwiker.gui.imagelistcache import ImageListCache
-from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
+from outwiker.gui.theme import Theme
 
 
 class Treebook2(wx.SplitterWindow):
-    def __init__(self, parent: wx.Window, defaultIcon: str):
+    def __init__(self, parent: wx.Window, theme: Theme, defaultIcon: str):
         super().__init__(parent)
+        self._theme = theme
+
+        self._icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
         self._default_icon = defaultIcon
+        self._iconsCache = ImageListCache(self._default_icon, self._icon_size, self._icon_size)
+
         self._current_page: Optional[wx.Panel] = None
         self._default_leftSize = 300
         self._create_gui()
@@ -36,8 +41,6 @@ class Treebook2(wx.SplitterWindow):
         self._current_page = page
 
     def _create_gui(self):
-        self._iconsCache = ImageListCache(self._default_icon, ICONS_WIDTH, ICONS_HEIGHT)
-
         self._tree = wx.TreeCtrl(
             self,
             style=wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_HAS_BUTTONS | wx.TR_NO_LINES,

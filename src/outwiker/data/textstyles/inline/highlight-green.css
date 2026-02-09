@@ -1,0 +1,7 @@
+span.highlight-green {
+    display: inline;
+    background-color: #ccff90;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}

@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Iterable, Tuple
 
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
@@ -32,10 +32,7 @@ class BasePrefPanel(ScrolledPanel):
     ) -> Tuple[wx.StaticText, wx.ComboBox]:
         label = wx.StaticText(self, label=title)
 
-        font_size_items = [
-            str(n)
-            for n in range(minFontSize, maxFontSize + 1)
-        ]
+        font_size_items = [str(n) for n in range(minFontSize, maxFontSize + 1)]
         font_size_items.insert(0, _("Default size"))
 
         fontSizeComboBox = wx.ComboBox(
@@ -107,3 +104,12 @@ class BasePrefPanel(ScrolledPanel):
         staticBoxSizer.Add(sizer, flag=wx.EXPAND)
         main_sizer.Add(staticBoxSizer, flag=wx.EXPAND | wx.ALL, border=2)
         return (staticBox, sizer)
+
+    def _createIconSizeGui(
+        self, title: str, sizes: Iterable[int], sizer: wx.Sizer
+    ) -> Tuple[wx.StaticText, wx.ComboBox]:
+        label, iconSizeComboBox = self._createLabelAndComboBox(title, sizer)
+        for size in sizes:
+            iconSizeComboBox.Append(f"{size} x {size}")
+
+        return (label, iconSizeComboBox)

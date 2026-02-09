@@ -10,8 +10,9 @@ import wx
 
 import outwiker.core.factory as ocf
 
-from outwiker.app.gui.pagedialogpanels.iconslistpopup import IconsListPopup
+from outwiker.gui.controls.iconslistpopup import IconsListPopup
 
+from outwiker.core.application import Application
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import BasePage
 from outwiker.core.events import (
@@ -28,14 +29,14 @@ from outwiker.core.events import (
     PageDialogPageIconChangedParams,
     IconsGroupsListInitParams,
 )
-from outwiker.gui.defines import ICONS_HEIGHT, ICONS_WIDTH, CONTROLS_HGAP, CONTROLS_VGAP
+from outwiker.gui.defines import CONTROLS_HGAP, CONTROLS_VGAP
 from outwiker.gui.iconscollection import IconsCollection
 from outwiker.gui.images import readImage
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig, TagsConfig
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 from outwiker.gui.controls.switchthemed import EVT_SWITCH
-from outwiker.gui.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
+from outwiker.gui.controls.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.theme import Theme
 from outwiker.gui.controls.marginsizer import MarginSizer
@@ -124,7 +125,7 @@ class GeneralPanel(wx.Panel):
 
         # Tags
         self.tagsLabel = wx.StaticText(self, -1, _("Tags (comma separated)"))
-        self.tagsSelector = TagsSelector(self, enable_active_tags_filter=False)
+        self.tagsSelector = TagsSelector(self, self._theme, enable_active_tags_filter=False)
 
     def popupIconsList(self):
         self.iconsPopup.Popup(self)
@@ -141,14 +142,15 @@ class GeneralPanel(wx.Panel):
         self.titleTextCtrl.SetValue(value)
 
     def setPageIcon(self, iconFileName):
-        bitmap = readImage(iconFileName, ICONS_WIDTH, ICONS_HEIGHT)
+        icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        bitmap = readImage(iconFileName, icon_size, icon_size)
         self.iconBtn.SetBitmapLabel(bitmap)
         # Need in Windows
         self.Layout()
 
 
 class GeneralController(BasePageDialogController):
-    def __init__(self, generalPanel, application, dialog):
+    def __init__(self, generalPanel, application: Application, dialog):
         super().__init__(application)
         self._dialog = dialog
         self._generalPanel = generalPanel
@@ -159,6 +161,7 @@ class GeneralController(BasePageDialogController):
             self._generalPanel,
             application,
             self._dialog,
+            application.theme,
         )
 
         self._orderCalculators = [
@@ -390,11 +393,13 @@ class GeneralController(BasePageDialogController):
 
 
 class IconsController(BasePageDialogController):
-    def __init__(self, iconsPanel, generalPanel, application, dialog):
+    def __init__(self, iconsPanel, generalPanel, application, dialog, theme: Theme):
         super().__init__(application)
-        self._dialog = dialog
         self._iconsPanel = iconsPanel
         self._generalPanel = generalPanel
+        self._dialog = dialog
+        self._theme = theme
+
         self._groupsMaxWidth = 200
         self._page = None
         self._default_group_cover = getBuiltinImagePath("icons_cover_default.svg")
@@ -568,8 +573,11 @@ class IconsController(BasePageDialogController):
         return name.capitalize()
 
     def _appendGroups(self):
+        icon_width = self._theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE)
+        icon_height = icon_width
+
         for index, groupInfo in enumerate(self._groupsInfo):
-            bitmap = self._getCoverBitmap(groupInfo.cover)
+            bitmap = self._getCoverBitmap(groupInfo.cover, icon_width, icon_height)
             if (
                 index != 0
                 and groupInfo.group_type != self._groupsInfo[index - 1].group_type
@@ -583,27 +591,24 @@ class IconsController(BasePageDialogController):
 
         self._iconsPanel.groupCtrl.SetMinSize((minw, minh))
 
-    def _getCoverBitmap(self, fname):
+    def _getCoverBitmap(self, fname, icon_width, icon_height):
         """
         Return bitmap for combobox item
         """
         if fname is None:
             return None
 
-        neww = ICONS_WIDTH
-        newh = ICONS_HEIGHT
-
         wx.Log.EnableLogging(False)
-        image = readImage(fname, ICONS_WIDTH, ICONS_HEIGHT).ConvertToImage()
+        image = readImage(fname, icon_width, icon_height).ConvertToImage()
         wx.Log.EnableLogging(True)
 
         if not image.IsOk():
             logging.error("Invalid icon file: %s", fname)
             return None
 
-        posx = (neww - image.Width) // 2
-        posy = (newh - image.Height) // 2
-        image.Resize((neww, newh), (posx, posy), 255, 255, 255)
+        posx = (icon_width - image.Width) // 2
+        posy = (icon_height - image.Height) // 2
+        image.Resize((icon_width, icon_height), (posx, posy), 255, 255, 255)
 
         return wx.Bitmap(image)
 

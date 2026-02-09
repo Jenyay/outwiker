@@ -62,6 +62,7 @@ class ColorsPanel(BasePrefPanel):
         self.addColorParam(_("Editor"), _("Font color"), self._editorGuiConfig.fontColor) 
         self.addColorParam(_("Editor"), _("Background color"), self._editorGuiConfig.backColor) 
         self.addColorParam(_("Editor"), _("Background color of the selected text"), self._editorGuiConfig.selBackColor) 
+        self.addColorParam(_("Editor"), _("Line number font color"), self._editorGuiConfig.lineNumberFontColor) 
         self.addColorParam(_("Editor"), _("Page margin background color"), self._editorGuiConfig.marginBackColor) 
 
         self.addColorParam(_("Tabs"), _("Tab color"), self._tabsConfig.backColorNormal)
