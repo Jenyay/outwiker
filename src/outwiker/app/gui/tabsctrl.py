@@ -1170,7 +1170,9 @@ class TabRender:
                 Theme.SECTION_TABS, Theme.TABS_BACKGROUND_DOWNED_COLOR
             )
 
-        gc.SetPen(self._pens.FindOrCreatePen(border_color, 2))
+        pen = self._pens.FindOrCreatePen(border_color, 2)
+        pen.SetQuality(wx.PEN_QUALITY_HIGH)
+        gc.SetPen(pen)
         gc.SetBrush(
             self._brushes.FindOrCreateBrush(background_color)
         )
