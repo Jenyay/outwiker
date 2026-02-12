@@ -10,7 +10,7 @@ import wx.lib.newevent
 
 # from line_profiler import profile
 
-from outwiker.core.system import getBuiltinImagePath
+from outwiker.core.system import getBuiltinImagePath, getOS
 from outwiker.gui.colors import rgb_to_lab, lab_to_rgb
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.imagelistcache import ImageListCache
@@ -522,8 +522,12 @@ class _ItemsPainter:
     # @profile
     def drawTreeLines(self, items: List[NotesTreeItem], dx: int, dy: int, y_min: int, y_max: int):
         parent_cache = set()
-        tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_USER_DASH)
-        tree_line_pen.SetDashes([2, 2])
+        if getOS().name == 'unix':
+            tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
+        else:
+            tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_USER_DASH)
+            tree_line_pen.SetDashes([2, 2])
+
         self._gc.SetPen(tree_line_pen)
 
         # Draw items from bottom to top direction
