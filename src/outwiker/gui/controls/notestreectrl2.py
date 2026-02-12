@@ -522,7 +522,8 @@ class _ItemsPainter:
     # @profile
     def drawTreeLines(self, items: List[NotesTreeItem], dx: int, dy: int, y_min: int, y_max: int):
         parent_cache = set()
-        tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
+        tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_USER_DASH)
+        tree_line_pen.SetDashes([2, 2])
         self._gc.SetPen(tree_line_pen)
 
         # Draw items from bottom to top direction
