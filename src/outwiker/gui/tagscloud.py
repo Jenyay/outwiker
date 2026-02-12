@@ -35,7 +35,7 @@ class TagsCloud(wx.Panel):
         self._mode = mode
         self._enable_tooltips = enable_tooltips
         self._enable_active_tags_filter = enable_active_tags_filter
-        self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+        self._buffer = wx.Bitmap(self.GetClientSize())
 
         self._scroll_start_time = None
         self._scroll_timeout_musec = 200e3
@@ -185,7 +185,7 @@ class TagsCloud(wx.Panel):
         ymax = ymin + self._tags_panel.GetClientSize()[1]
         return (ymin, ymax)
 
-    def _repaintLabels(self, label_names: Iterable, dc: wx.DC):
+    def _repaintLabels(self, label_names: Iterable, dc: wx.DC, gc: wx.GraphicsContext):
         y_min, y_max = self._getScrolledY()
 
         for label_name in label_names:
@@ -193,19 +193,20 @@ class TagsCloud(wx.Panel):
             label_x_min, label_y_min = label.getPosition()
             label_y_max = label.getPositionMax()[1]
             if label_y_min <= y_max and label_y_max >= y_min:
-                label.onPaint(dc, label_x_min, label_y_min - y_min)
+                label.onPaint(dc, gc, label_x_min, label_y_min - y_min)
 
             if label_y_min > y_max:
                 break
 
     def _onPaint(self, event):
-        with wx.BufferedPaintDC(self._tags_panel) as dc:
+        with wx.BufferedPaintDC(self._tags_panel, self._buffer) as dc:
+            gc = wx.GraphicsContext.Create(dc)
             back_color = self.GetBackgroundColour()
-            dc.SetBrush(wx.Brush(back_color))
-            dc.SetPen(wx.Pen(back_color))
+            gc.SetBrush(wx.Brush(back_color))
+            gc.SetPen(wx.Pen(back_color))
             width, height = self._tags_panel.GetClientSize()
-            dc.DrawRectangle(0, 0, width, height)
-            self._repaintLabels(self._filtered_tags, dc)
+            gc.DrawRectangle(0, 0, width, height)
+            self._repaintLabels(self._filtered_tags, dc, gc)
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min_font_size
@@ -228,6 +229,7 @@ class TagsCloud(wx.Panel):
 
         self._tags_panel = wx.ScrolledCanvas(self)
         self._tags_panel.SetScrollRate(0, 0)
+        self._tags_panel.SetBackgroundStyle(wx.BG_STYLE_PAINT)
 
         self._search_ctrl = wx.SearchCtrl(self)
         icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
@@ -258,6 +260,7 @@ class TagsCloud(wx.Panel):
     def __onSize(self, event):
         newSize = self.GetSize()
         if self._oldSize != newSize:
+            self._buffer = wx.Bitmap(self.GetClientSize())
             self.__moveLabels()
             self._oldSize = newSize
 

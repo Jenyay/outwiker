@@ -202,9 +202,10 @@ class TagLabel2:
     def Refresh(self):
         if self._paint_x is not None and self._paint_y is not None:
             with wx.ClientDC(self._parent) as dc:
-                self.onPaint(dc, self._paint_x, self._paint_y)
+                gc = wx.GraphicsContext.Create(dc)
+                self.onPaint(dc, gc, self._paint_x, self._paint_y)
 
-    def onPaint(self, dc, x0, y0):
+    def onPaint(self, dc: wx.DC, gc: wx.GraphicsContext, x0: int, y0: int):
         if not self._visible:
             return
 
@@ -213,9 +214,9 @@ class TagLabel2:
         dc.SetDeviceOrigin(x0, y0)
 
         # Draw background
-        dc.SetBrush(wx.Brush(self._back_color))
-        dc.SetPen(wx.Pen(self._back_color))
-        dc.DrawRectangle(0, 0, self._width, self._height)
+        gc.SetBrush(wx.Brush(self._back_color))
+        gc.SetPen(wx.Pen(self._back_color))
+        gc.DrawRectangle(x0, y0, self._width, self._height)
 
         # Draw tag
         tag_back_color = self._get_back_color()
