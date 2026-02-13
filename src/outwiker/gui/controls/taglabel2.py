@@ -212,7 +212,6 @@ class TagLabel2:
 
         self._paint_x = x0
         self._paint_y = y0
-        dc.SetDeviceOrigin(x0, y0)
 
         # Draw background
         gc.SetBrush(wx.Brush(self._back_color))
@@ -252,7 +251,7 @@ class TagLabel2:
         dc.SetFont(font)
         text_x = self._text_left
         text_y = int((self._height - text_size[1]) / 2)
-        dc.DrawText(self._label, text_x, text_y)
+        dc.DrawText(self._label, text_x + x0, text_y + y0)
 
         # Draw the Add / Remove button
         if self._use_buttons:
