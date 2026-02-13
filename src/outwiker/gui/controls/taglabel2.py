@@ -142,22 +142,21 @@ class TagLabel2:
         self._button_center_y = self._center_y
 
         self._button_add_width = self._em2px(0.5)
-        self._button_add_height = self._em2px(0.5)
-        self._button_add_left = int(self._button_center_x - self._button_add_width / 2)
-        self._button_add_right = self._button_add_left + self._button_add_width
-        self._button_add_top = self._center_y - int(self._button_add_height / 2)
-        self._button_add_bottom = self._center_y + int(self._button_add_height / 2)
+        if self._button_add_width % 2 != 0:
+            self._button_add_width += 1
+
+        self._button_add_height = self._button_add_width
+        self._button_add_left = self._button_center_x - self._button_add_width // 2
+        self._button_add_right = self._button_center_x + self._button_add_width // 2
+        self._button_add_top = self._center_y - self._button_add_height // 2
+        self._button_add_bottom = self._center_y + self._button_add_height // 2
 
         self._button_remove_width = self._em2px(0.33)
         self._button_remove_height = self._em2px(0.35)
-        self._button_remove_left = int(
-            self._button_center_x - self._button_remove_width / 2
-        )
+        self._button_remove_left = self._button_center_x - self._button_remove_width // 2
         self._button_remove_right = self._button_remove_left + self._button_remove_width
-        self._button_remove_top = self._center_y - int(self._button_remove_height / 2)
-        self._button_remove_bottom = self._center_y + int(
-            self._button_remove_height / 2
-        )
+        self._button_remove_top = self._center_y - self._button_remove_height // 2
+        self._button_remove_bottom = self._center_y + self._button_remove_height // 2
 
         self._font_size = int(
             self._min_font_size
@@ -261,29 +260,29 @@ class TagLabel2:
                 self._draw_remove_button(gc, x0, y0)
 
     def _draw_add_button(self, gc: wx.GraphicsContext, x0: int, y0: int):
-        width = 2
+        line_width = 2
         button_color = (
             self._hover_add_button_color
             if self._is_hover_button
             else self._add_button_color
         )
         gc.SetBrush(wx.Brush(button_color))
-        gc.SetPen(wx.Pen(button_color))
+        gc.SetPen(wx.NullPen)
 
         # Horizontal line
         gc.DrawRectangle(
             self._button_add_left + x0,
-            self._button_center_y - width // 2 + y0,
-            self._button_add_width,
-            width,
+            self._button_center_y - line_width // 2 + y0,
+            self._button_add_right - self._button_add_left,
+            line_width,
         )
 
         # Vertical line
         gc.DrawRectangle(
-            self._button_center_x - width // 2 + x0,
-            self._button_add_top - 1 + y0,
-            width,
-            self._button_add_height,
+            self._button_center_x - line_width // 2 + x0,
+            self._button_add_top + y0,
+            line_width,
+            self._button_add_bottom - self._button_add_top,
         )
 
         border_x = int((self._button_add_right + self._text_left) / 2)
@@ -291,13 +290,13 @@ class TagLabel2:
         gc.DrawLines([(border_x + x0, y0), (border_x + x0, self._height + y0)])
 
     def _draw_remove_button(self, gc: wx.GraphicsContext, x0: int, y0: int):
-        width = 2
+        line_width = 2
         button_color = (
             self._hover_remove_button_color
             if self._is_hover_button
             else self._remove_button_color
         )
-        gc.SetPen(wx.Pen(button_color, width))
+        gc.SetPen(wx.Pen(button_color, line_width))
 
         gc.DrawLines(
             [
