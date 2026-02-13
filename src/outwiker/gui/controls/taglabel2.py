@@ -1,3 +1,4 @@
+import math
 from typing import Optional, Tuple
 
 import wx
@@ -127,7 +128,7 @@ class TagLabel2:
         self._em = self._calc_em()
 
         self._height = self._em2px(1.0)
-        if self._height % 2 == 0:
+        if self._height % 2 != 0:
             self._height += 1
         self._margin_left = self._em2px(0.4)
         self._margin_right = self._em2px(0.2)
@@ -221,37 +222,20 @@ class TagLabel2:
         # Draw tag
         tag_back_color = self._get_back_color()
         tag_border_color = self._get_border_color()
-        dc.SetBrush(wx.Brush(tag_back_color))
-        dc.SetPen(wx.Pen(tag_back_color))
-        dc.DrawRectangle(
-            self._button_border_x, 0, self._width - self._button_border_x - 1, self._height - 1
-        )
-        dc.SetPen(wx.Pen(tag_border_color, 1))
-        dc.DrawLineList(
-            [
-                (self._button_border_x, 0, self._width - 1, 0),
-                (self._width - 1, 0, self._width - 1, self._height - 1),
-                (self._button_border_x, self._height - 1, self._width - 1, self._height - 1),
-            ]
-        )
+        gc.SetBrush(wx.Brush(tag_back_color))
+        pen = wx.Pen(tag_border_color, 1)
+        pen.SetQuality(wx.PEN_QUALITY_HIGH)
+        gc.SetPen(pen)
 
-        # Draw the Add / Remove button background and border
-        button_back_color = self._get_button_back_color()
-        button_border_color = self._get_button_border_color()
-        dc.SetBrush(wx.Brush(button_back_color))
-        dc.SetPen(wx.Pen(button_back_color))
-        # dc.DrawEllipse(0, 0, self._height, self._height - 1)
-        dc.DrawRectangle(
-            self._arc_width, 0, self._button_border_x - self._arc_width, self._height - 1
-        )
-        dc.SetPen(wx.Pen(button_border_color, 1))
-        dc.DrawEllipticArc(0, 0, self._height, self._height - 1, 90, 270)
-        dc.DrawLineList(
-            [
-                (self._arc_width, 0, self._button_border_x, 0),
-                (self._arc_width, self._height - 1, self._button_border_x, self._height - 1),
-            ]
-        )
+        path = gc.CreatePath()
+        path.MoveToPoint(self._button_border_x + x0, y0)
+        path.AddArc(self._arc_width + x0, self._center_y + y0, self._height // 2, math.pi * 1.5, math.pi * 0.5, clockwise=False)
+        path.AddLineToPoint(self._button_border_x + x0, self._height + y0)
+        path.AddLineToPoint(self._width + x0, self._height + y0)
+        path.AddLineToPoint(self._width + x0, y0)
+        path.AddLineToPoint(self._button_border_x + x0, y0)
+
+        gc.DrawPath(path)
 
         # Draw text
         text_size = self._calc_text_size(self._label, self._font_size)
@@ -266,11 +250,11 @@ class TagLabel2:
         # Draw the Add / Remove button
         if self._use_buttons:
             if self._is_hover and not self._is_marked:
-                self._draw_add_button(dc)
+                self._draw_add_button(dc, gc)
             elif self._is_hover and self._is_marked:
-                self._draw_remove_button(dc)
+                self._draw_remove_button(dc, gc)
 
-    def _draw_add_button(self, dc: wx.DC):
+    def _draw_add_button(self, dc: wx.DC, gc: wx.GraphicsContext):
         width = 2
         button_color = self._hover_add_button_color if self._is_hover_button else self._add_button_color
         dc.SetBrush(wx.Brush(button_color))
@@ -293,7 +277,7 @@ class TagLabel2:
         dc.SetPen(wx.Pen(self._normal_hover_border_color))
         dc.DrawLine(border_x, 0, border_x, self._height)
 
-    def _draw_remove_button(self, dc: wx.DC):
+    def _draw_remove_button(self, dc: wx.DC, gc: wx.GraphicsContext):
         width = 2
         button_color = self._hover_remove_button_color if self._is_hover_button else self._remove_button_color
         dc.SetPen(wx.Pen(button_color, width))
