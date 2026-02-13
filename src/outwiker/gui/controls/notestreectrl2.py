@@ -478,12 +478,14 @@ class _ItemsPainter:
     def __init__(
         self,
         window: wx.Window,
+        dc: wx.DC,
         gc: wx.GraphicsContext,
         image_list: ImageListCache,
         extra_image_list: ImageListCache,
         view_info: _ItemsViewInfo,
     ) -> None:
         self._window = window
+        self._dc = dc
         self._gc = gc
 
         self._image_list = image_list
@@ -501,7 +503,9 @@ class _ItemsPainter:
 
         title_font_normal = self._fonts.FindOrCreateFont(wx.FontInfo(self._view_info.font_size))
         self._gc.SetFont(title_font_normal, wx.Colour(0, 0, 0))
-        self._text_height = self._gc.GetFullTextExtent("W")[1]
+
+        # In Linux GetFullTextExtent returns the float type
+        self._text_height = int(self._gc.GetFullTextExtent("W")[1])
 
     # @profile
     def draw(self, items: List[NotesTreeItem], dx, dy):
@@ -673,7 +677,8 @@ class _ItemsPainter:
                 else:
                     text_color = self._view_info.font_color_normal
 
-            self._gc.SetFont(current_font, text_color)
+            self._dc.SetTextForeground(text_color)
+            self._dc.SetFont(current_font)
 
             title_x = self._view_info.getTitleLeft(item) + dx
             top = (
@@ -681,7 +686,7 @@ class _ItemsPainter:
                 + (self._view_info.line_height - self._text_height) // 2
                 + dy
             )
-            self._gc.DrawText(item.getTitle(), title_x, top)
+            self._dc.DrawText(item.getTitle(), title_x, top)
 
     # @profile
     def _drawBackground(self, items: List[NotesTreeItem], dx: int, dy: int):
@@ -1136,6 +1141,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 gc = wx.GraphicsContext.Create(buffered_dc)
                 painter = _ItemsPainter(
                     self,
+                    buffered_dc,
                     gc,
                     self._iconsCache,
                     self._extraIconsCache,
@@ -1306,7 +1312,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             with wx.BufferedDC(dc, self._buffer) as buffered_dc:
                 gc = wx.GraphicsContext.Create(buffered_dc)
                 painter = _ItemsPainter(
-                    self, gc, self._iconsCache, self._extraIconsCache, self._view_info
+                    self, buffered_dc, gc, self._iconsCache, self._extraIconsCache, self._view_info
                 )
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
@@ -1319,7 +1325,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         with wx.BufferedPaintDC(self, self._buffer) as dc:
             gc = wx.GraphicsContext.Create(dc)
             painter = _ItemsPainter(
-                self, gc, self._iconsCache, self._extraIconsCache, self._view_info
+                self, dc, gc, self._iconsCache, self._extraIconsCache, self._view_info
             )
             interval_x = self._getScrolledX()
             interval_y = self._getScrolledY()
@@ -1617,3 +1623,4 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self.updateTree()
         self.scrollToPage(newSelectedPage)
+
