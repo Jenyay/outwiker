@@ -27,7 +27,7 @@ class TagLabel2:
         max_font_size: int = 16,
         x: int = 0,
         y: int = 0,
-        back_color: Optional[wx.Colour] = None
+        back_color: Optional[wx.Colour] = None,
     ):
         self._parent = parent
         self._label = label
@@ -229,7 +229,14 @@ class TagLabel2:
 
         path = gc.CreatePath()
         path.MoveToPoint(self._button_border_x + x0, y0)
-        path.AddArc(self._arc_width + x0, self._center_y + y0, self._height // 2, math.pi * 1.5, math.pi * 0.5, clockwise=False)
+        path.AddArc(
+            self._arc_width + x0,
+            self._center_y + y0,
+            self._height // 2,
+            math.pi * 1.5,
+            math.pi * 0.5,
+            clockwise=False,
+        )
         path.AddLineToPoint(self._button_border_x + x0, self._height + y0)
         path.AddLineToPoint(self._width + x0, self._height + y0)
         path.AddLineToPoint(self._width + x0, y0)
@@ -250,57 +257,66 @@ class TagLabel2:
         # Draw the Add / Remove button
         if self._use_buttons:
             if self._is_hover and not self._is_marked:
-                self._draw_add_button(dc, gc)
+                self._draw_add_button(gc, x0, y0)
             elif self._is_hover and self._is_marked:
-                self._draw_remove_button(dc, gc)
+                self._draw_remove_button(gc, x0, y0)
 
-    def _draw_add_button(self, dc: wx.DC, gc: wx.GraphicsContext):
+    def _draw_add_button(self, gc: wx.GraphicsContext, x0: int, y0: int):
         width = 2
-        button_color = self._hover_add_button_color if self._is_hover_button else self._add_button_color
-        dc.SetBrush(wx.Brush(button_color))
-        dc.SetPen(wx.Pen(button_color))
-        dc.DrawRectangle(
-            self._button_add_left,
-            int(self._button_center_y - width / 2),
-            self._button_add_width + 1,
+        button_color = (
+            self._hover_add_button_color
+            if self._is_hover_button
+            else self._add_button_color
+        )
+        gc.SetBrush(wx.Brush(button_color))
+        gc.SetPen(wx.Pen(button_color))
+
+        # Horizontal line
+        gc.DrawRectangle(
+            self._button_add_left + x0,
+            self._button_center_y - width // 2 + y0,
+            self._button_add_width,
             width,
         )
 
-        dc.DrawRectangle(
-            int(self._button_center_x - width / 2),
-            self._button_add_top - 1,
+        # Vertical line
+        gc.DrawRectangle(
+            self._button_center_x - width // 2 + x0,
+            self._button_add_top - 1 + y0,
             width,
-            self._button_add_height + 1,
+            self._button_add_height,
         )
 
         border_x = int((self._button_add_right + self._text_left) / 2)
-        dc.SetPen(wx.Pen(self._normal_hover_border_color))
-        dc.DrawLine(border_x, 0, border_x, self._height)
+        gc.SetPen(wx.Pen(self._normal_hover_border_color))
+        gc.DrawLines([(border_x + x0, y0), (border_x + x0, self._height + y0)])
 
-    def _draw_remove_button(self, dc: wx.DC, gc: wx.GraphicsContext):
+    def _draw_remove_button(self, gc: wx.GraphicsContext, x0: int, y0: int):
         width = 2
-        button_color = self._hover_remove_button_color if self._is_hover_button else self._remove_button_color
-        dc.SetPen(wx.Pen(button_color, width))
-        dc.DrawLineList(
+        button_color = (
+            self._hover_remove_button_color
+            if self._is_hover_button
+            else self._remove_button_color
+        )
+        gc.SetPen(wx.Pen(button_color, width))
+
+        gc.DrawLines(
             [
-                (
-                    self._button_remove_left,
-                    self._button_remove_top,
-                    self._button_remove_right,
-                    self._button_remove_bottom,
-                ),
-                (
-                    self._button_remove_left,
-                    self._button_remove_bottom,
-                    self._button_remove_right,
-                    self._button_remove_top,
-                ),
+                (self._button_remove_left + x0, self._button_remove_top + y0),
+                (self._button_remove_right + x0, self._button_remove_bottom + y0),
+            ]
+        )
+
+        gc.DrawLines(
+            [
+                (self._button_remove_left + x0, self._button_remove_bottom + y0),
+                (self._button_remove_right + x0, self._button_remove_top + y0),
             ]
         )
 
         border_x = int((self._button_remove_right + self._text_left) / 2)
-        dc.SetPen(wx.Pen(self._marked_hover_border_color))
-        dc.DrawLine(border_x, 0, border_x, self._height)
+        gc.SetPen(wx.Pen(self._marked_hover_border_color))
+        gc.DrawLines([(border_x + x0, y0), (border_x + x0, self._height + y0)])
 
     def onLeftDown(self, x, y):
         if self._use_buttons and x <= self._button_border_x:
