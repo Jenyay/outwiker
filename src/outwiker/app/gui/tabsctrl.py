@@ -1121,14 +1121,14 @@ class TabRender:
 
         font = self._get_font(tab_state)
         dc.SetFont(font)
+        dc.SetTextForeground(font_color)
         text_height = self.get_text_height(dc)
         text_top = tab.height // 2 - text_height // 2 + tab.top
         text_max_width = tab.text_right - tab.text_left
 
         title = self._trim_title(dc, tab.title, text_max_width)
 
-        gc.SetFont(font, font_color)
-        gc.DrawText(title, tab.text_left, text_top)
+        dc.DrawText(title, tab.text_left, text_top)
 
     def _draw_background(self, gc: wx.GraphicsContext, tab: SingleTabGeometry) -> None:
         assert tab.left is not None
