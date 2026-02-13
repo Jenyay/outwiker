@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from .tagscloud import TagsCloud
-from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
+from outwiker.gui.theme import Theme
+from .tagscloud import TagsCloud, EVT_TAG_LEFT_DOWN
 
 
 class SingleTagSelector(TagsCloud):
-    def __init__(self, parent, enable_active_tags_filter: bool = False):
+    def __init__(self, parent, theme: Theme, enable_active_tags_filter: bool = False):
         super().__init__(
             parent,
+            theme,
             use_buttons=False,
             enable_active_tags_filter=enable_active_tags_filter,
         )

@@ -156,7 +156,7 @@ class RenameTagAction(BaseAction):
     def renameTagGui(self, wikiroot, parent):
         tagslist = TagsList(wikiroot)
 
-        with RenameTagDialog(parent, tagslist) as dlg:
+        with RenameTagDialog(parent, self._application, tagslist) as dlg:
             _set_tags_cloud_settings(self._application, dlg)
             if dlg.ShowModal() == wx.ID_OK:
                 self._application.onStartTreeUpdate(wikiroot)
