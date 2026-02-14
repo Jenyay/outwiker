@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.967" status="dev">
+    <version number="4.0.0.968" status="beta" date="2026-02-14">
         <changes>
+            <change>Optimizations in interface drawing.</change>
+            <change>Fixed several bugs.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Оптимизации при рисовании интерфейса.</change>
+            <change>Исправлены несколько ошибок.</change>
         </changes>
     </version>
 
