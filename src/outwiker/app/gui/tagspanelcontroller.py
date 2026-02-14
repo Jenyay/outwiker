@@ -11,7 +11,7 @@ from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
-from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN, EVT_TAG_RIGHT_UP, EVT_TAG_ADD, EVT_TAG_REMOVE
+from outwiker.gui.tagscloud import EVT_TAG_LEFT_DOWN, EVT_TAG_RIGHT_UP, EVT_TAG_ADD, EVT_TAG_REMOVE
 
 
 class TagsPanelController:

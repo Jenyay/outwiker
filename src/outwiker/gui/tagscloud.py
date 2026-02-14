@@ -1,19 +1,424 @@
 # -*- coding: utf-8 -*-
 
 import os
+import math
 from typing import Collection, Dict, List, Optional, Tuple
 from collections.abc import Iterable
 from datetime import datetime
 
 import wx
+import wx.lib.newevent
 
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagslist import TagsList
-from outwiker.gui.controls.taglabel2 import TagLabel2
 from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST
 from outwiker.gui.images import readImage
 from outwiker.gui.theme import Theme
 
+
+TagLeftDownEvent, EVT_TAG_LEFT_DOWN = wx.lib.newevent.NewEvent()
+TagLeftUpEvent, EVT_TAG_LEFT_UP = wx.lib.newevent.NewEvent()
+
+TagRightDownEvent, EVT_TAG_RIGHT_DOWN = wx.lib.newevent.NewEvent()
+TagRightUpEvent, EVT_TAG_RIGHT_UP = wx.lib.newevent.NewEvent()
+
+TagMiddleDownEvent, EVT_TAG_MIDDLE_DOWN = wx.lib.newevent.NewEvent()
+TagMiddleUpEvent, EVT_TAG_MIDDLE_UP = wx.lib.newevent.NewEvent()
+
+TagAddEvent, EVT_TAG_ADD = wx.lib.newevent.NewEvent()
+TagRemoveEvent, EVT_TAG_REMOVE = wx.lib.newevent.NewEvent()
+
+
+class TagLabel2:
+    def __init__(
+        self,
+        parent: wx.Window,
+        label: str,
+        use_buttons: bool = True,
+        min_font_size: int = 8,
+        max_font_size: int = 16,
+        x: int = 0,
+        y: int = 0,
+        back_color: Optional[wx.Colour] = None,
+    ):
+        self._parent = parent
+        self._label = label
+        self._use_buttons = use_buttons
+        self._is_marked = False
+        self._is_hover = False
+        self._is_hover_button = False
+
+        self._x = x
+        self._y = y
+        self._width = 0
+        self._height = 0
+        self._visible = True
+        self._paint_x = None
+        self._paint_y = None
+
+        self._propagationLevel = 10
+        self._ratio = 1.0
+
+        self._back_color = wx.Colour("#FFFFFF") if back_color is None else back_color
+
+        self._normal_back_color = self._back_color
+        self._normal_border_color = self._back_color
+        self._normal_font_color = wx.Colour("#34609D")
+
+        self._normal_hover_back_color = wx.Colour("#D6E7FD")
+        self._normal_hover_border_color = wx.Colour("#78D8FC")
+        self._normal_hover_font_color = wx.Colour("#34609D")
+        self._add_button_color = wx.Colour("#577EBF")
+        self._hover_add_button_color = wx.Colour("#20518C")
+
+        self._marked_back_color = wx.Colour("#fcde78")
+        self._marked_border_color = wx.Colour("#EDB14A")
+        self._marked_font_color = wx.Colour("#714b0a")
+
+        self._marked_hover_back_color = wx.Colour("#FFC500")
+        self._marked_hover_border_color = wx.Colour("#B5931E")
+        self._marked_hover_font_color = wx.Colour("#000000")
+        self._remove_button_color = wx.Colour("#B5931E")
+        self._hover_remove_button_color = wx.Colour("#8B6D00")
+
+        self.setFontSize(min_font_size, max_font_size)
+
+    def setBackColor(self, color: wx.Colour):
+        self._back_color = color
+        self._normal_back_color = self._back_color
+        self._normal_border_color = self._back_color
+
+    def isHover(self) -> bool:
+        return self._is_hover
+
+    def setHover(self, value: bool):
+        old_value = self._is_hover
+        self._is_hover = value
+        if value != old_value:
+            self.Refresh()
+
+    def isVisible(self) -> bool:
+        return self._visible
+
+    def Move(self, x: int, y: int):
+        self._x = x
+        self._y = y
+
+    def getSize(self) -> Tuple[int, int]:
+        return (self._width, self._height)
+
+    def getPosition(self) -> Tuple[int, int]:
+        return (self._x, self._y)
+
+    def getPositionMax(self) -> Tuple[int, int]:
+        return (self._x + self._width, self._y + self._height)
+
+    def Show(self, visible=True):
+        self._visible = visible
+
+    def getLabel(self) -> str:
+        return self._label
+
+    def setFontSize(self, min_font_size: int, max_font_size: int):
+        self._min_font_size = min(min_font_size, max_font_size)
+        self._max_font_size = max(min_font_size, max_font_size)
+        self._calc_sizes()
+
+    def _calc_em(self) -> int:
+        return self._calc_text_size("Q", self._max_font_size)[1]
+
+    def _calc_text_size(self, text: str, font_size: int) -> Tuple[int, int]:
+        with wx.ClientDC(self._parent) as dc:
+            font = wx.Font(wx.FontInfo(font_size))
+            dc.SetFont(font)
+            return dc.GetTextExtent(text)
+
+    def _em2px(self, em: float) -> int:
+        return int(em * self._em)
+
+    def _calc_sizes(self):
+        self._em = self._calc_em()
+
+        self._height = self._em2px(1.0)
+        if self._height % 2 != 0:
+            self._height += 1
+        self._margin_left = self._em2px(0.4)
+        self._margin_right = self._em2px(0.2)
+
+        self._center_y = self._height // 2
+        self._arc_width = self._height // 2
+        self._text_left = self._arc_width + self._margin_left
+
+        self._button_border_x = self._text_left - self._em2px(0.1)
+        self._button_center_x = self._em2px(0.4)
+        self._button_center_y = self._center_y
+
+        self._button_add_width = self._em2px(0.5)
+        if self._button_add_width % 2 != 0:
+            self._button_add_width += 1
+
+        self._button_add_height = self._button_add_width
+        self._button_add_left = self._button_center_x - self._button_add_width // 2
+        self._button_add_right = self._button_center_x + self._button_add_width // 2
+        self._button_add_top = self._center_y - self._button_add_height // 2
+        self._button_add_bottom = self._center_y + self._button_add_height // 2
+
+        self._button_remove_width = self._em2px(0.33)
+        self._button_remove_height = self._em2px(0.35)
+        self._button_remove_left = self._button_center_x - self._button_remove_width // 2
+        self._button_remove_right = self._button_remove_left + self._button_remove_width
+        self._button_remove_top = self._center_y - self._button_remove_height // 2
+        self._button_remove_bottom = self._center_y + self._button_remove_height // 2
+
+        self._font_size = int(
+            self._min_font_size
+            + self._ratio * (self._max_font_size - self._min_font_size)
+        )
+
+        self._text_width = self._calc_text_size(self._label, self._font_size)[0]
+
+        self._width = (
+            self._arc_width + self._margin_left + self._text_width + self._margin_right
+        )
+
+    def _get_current_font(self):
+        return wx.Font(wx.FontInfo(self._font_size))
+
+    def setRatio(self, ratio):
+        """
+        Установить коэффициент, показывающий относительный размер метки.
+        Коэффициент должен быть в интервале [0; 1]
+        """
+        self._ratio = ratio
+        self._calc_sizes()
+
+    def mark(self, marked: bool = True):
+        self._is_marked = marked
+        self.Refresh()
+
+    @property
+    def isMarked(self) -> bool:
+        return self._is_marked
+
+    @property
+    def isUsedButtons(self) -> bool:
+        return self._use_buttons
+
+    @isUsedButtons.setter
+    def isUsedButtons(self, value):
+        old_value = self._use_buttons
+        self._use_buttons = value
+        if old_value != value:
+            self.Refresh()
+
+    def Refresh(self):
+        if self._paint_x is not None and self._paint_y is not None:
+            with wx.ClientDC(self._parent) as dc:
+                gc = wx.GraphicsContext.Create(dc)
+                self.onPaint(dc, gc, self._paint_x, self._paint_y)
+
+    def onPaint(self, dc: wx.DC, gc: wx.GraphicsContext, x0: int, y0: int):
+        if not self._visible:
+            return
+
+        self._paint_x = x0
+        self._paint_y = y0
+
+        # Draw background
+        gc.SetBrush(wx.Brush(self._back_color))
+        gc.SetPen(wx.Pen(self._back_color))
+        gc.DrawRectangle(x0, y0, self._width, self._height)
+
+        # Draw tag
+        tag_back_color = self._get_back_color()
+        tag_border_color = self._get_border_color()
+        gc.SetBrush(wx.Brush(tag_back_color))
+        pen = wx.Pen(tag_border_color, 1)
+        pen.SetQuality(wx.PEN_QUALITY_HIGH)
+        gc.SetPen(pen)
+
+        path = gc.CreatePath()
+        path.MoveToPoint(self._button_border_x + x0, y0)
+        path.AddArc(
+            self._arc_width + x0,
+            self._center_y + y0,
+            self._height // 2,
+            math.pi * 1.5,
+            math.pi * 0.5,
+            clockwise=False,
+        )
+        path.AddLineToPoint(self._button_border_x + x0, self._height + y0)
+        path.AddLineToPoint(self._width + x0, self._height + y0)
+        path.AddLineToPoint(self._width + x0, y0)
+        path.AddLineToPoint(self._button_border_x + x0, y0)
+
+        gc.DrawPath(path)
+
+        # Draw text
+        text_size = self._calc_text_size(self._label, self._font_size)
+        font_color = self._get_font_color()
+        font = self._get_current_font()
+        dc.SetTextForeground(font_color)
+        dc.SetFont(font)
+        text_x = self._text_left
+        text_y = int((self._height - text_size[1]) / 2)
+        dc.DrawText(self._label, text_x + x0, text_y + y0)
+
+        # Draw the Add / Remove button
+        if self._use_buttons:
+            if self._is_hover and not self._is_marked:
+                self._draw_add_button(gc, x0, y0)
+            elif self._is_hover and self._is_marked:
+                self._draw_remove_button(gc, x0, y0)
+
+    def _draw_add_button(self, gc: wx.GraphicsContext, x0: int, y0: int):
+        line_width = 2
+        button_color = (
+            self._hover_add_button_color
+            if self._is_hover_button
+            else self._add_button_color
+        )
+        gc.SetBrush(wx.Brush(button_color))
+        gc.SetPen(wx.NullPen)
+
+        # Horizontal line
+        gc.DrawRectangle(
+            self._button_add_left + x0,
+            self._button_center_y - line_width // 2 + y0,
+            self._button_add_right - self._button_add_left,
+            line_width,
+        )
+
+        # Vertical line
+        gc.DrawRectangle(
+            self._button_center_x - line_width // 2 + x0,
+            self._button_add_top + y0,
+            line_width,
+            self._button_add_bottom - self._button_add_top,
+        )
+
+        border_x = int((self._button_add_right + self._text_left) / 2)
+        gc.SetPen(wx.Pen(self._normal_hover_border_color))
+        gc.DrawLines([(border_x + x0, y0), (border_x + x0, self._height + y0)])
+
+    def _draw_remove_button(self, gc: wx.GraphicsContext, x0: int, y0: int):
+        line_width = 2
+        button_color = (
+            self._hover_remove_button_color
+            if self._is_hover_button
+            else self._remove_button_color
+        )
+        gc.SetPen(wx.Pen(button_color, line_width))
+
+        gc.DrawLines(
+            [
+                (self._button_remove_left + x0, self._button_remove_top + y0),
+                (self._button_remove_right + x0, self._button_remove_bottom + y0),
+            ]
+        )
+
+        gc.DrawLines(
+            [
+                (self._button_remove_left + x0, self._button_remove_bottom + y0),
+                (self._button_remove_right + x0, self._button_remove_top + y0),
+            ]
+        )
+
+        border_x = int((self._button_remove_right + self._text_left) / 2)
+        gc.SetPen(wx.Pen(self._marked_hover_border_color))
+        gc.DrawLines([(border_x + x0, y0), (border_x + x0, self._height + y0)])
+
+    def onLeftDown(self, x, y):
+        if self._use_buttons and x <= self._button_border_x:
+            self._sendTagEvent(TagRemoveEvent if self._is_marked else TagAddEvent)
+        else:
+            self._sendTagEvent(TagLeftDownEvent)
+
+    def onRightDown(self, x, y):
+        self._sendTagEvent(TagRightDownEvent)
+
+    def onMiddleDown(self, x, y):
+        self._sendTagEvent(TagMiddleDownEvent)
+
+    def onLeftUp(self, x, y):
+        self._sendTagEvent(TagLeftUpEvent)
+
+    def onRightUp(self, x, y):
+        self._sendTagEvent(TagRightUpEvent)
+
+    def onMiddleUp(self, x, y):
+        self._sendTagEvent(TagMiddleUpEvent)
+
+    def onMouseMove(self, x, y):
+        new_is_hover_button = x <= self._button_border_x
+        if new_is_hover_button != self._is_hover_button:
+            self._is_hover_button = new_is_hover_button
+            self.Refresh()
+
+    def _sendTagEvent(self, eventType):
+        newevent = eventType(text=self._label)
+        newevent.ResumePropagation(self._propagationLevel)
+        wx.PostEvent(self._parent, newevent)
+
+    def _get_font_color(self) -> wx.Colour:
+        if self._is_marked and not self._is_hover:
+            return self._marked_font_color
+
+        if self._is_marked and self._is_hover:
+            return self._marked_hover_font_color
+
+        if not self._is_marked and self._is_hover:
+            return self._normal_hover_font_color
+
+        return self._normal_font_color
+
+    def _get_back_color(self) -> wx.Colour:
+        if self._is_marked and not self._is_hover:
+            return self._marked_back_color
+
+        if self._is_marked and self._is_hover:
+            return self._marked_hover_back_color
+
+        if not self._is_marked and self._is_hover:
+            return self._normal_hover_back_color
+
+        return self._normal_back_color
+
+    def _get_border_color(self) -> wx.Colour:
+        if self._is_marked and not self._is_hover:
+            return self._marked_border_color
+
+        if self._is_marked and self._is_hover:
+            return self._marked_hover_border_color
+
+        if not self._is_marked and self._is_hover:
+            return self._normal_hover_border_color
+
+        return self._normal_border_color
+
+    def _get_button_back_color(self) -> wx.Colour:
+        if self._is_marked and not self._is_hover:
+            return self._marked_back_color
+
+        if self._is_marked and self._is_hover:
+            return self._marked_hover_back_color
+
+        if not self._is_marked and self._is_hover:
+            return self._normal_hover_back_color
+
+        return self._normal_back_color
+
+    def _get_button_border_color(self) -> wx.Colour:
+        if self._is_marked and not self._is_hover:
+            return self._marked_border_color
+
+        if self._is_marked and self._is_hover:
+            return self._marked_hover_border_color
+
+        if not self._is_marked and self._is_hover:
+            return self._normal_hover_border_color
+
+        return self._normal_border_color
 
 class TagsCloud(wx.Panel):
     def __init__(
@@ -35,7 +440,7 @@ class TagsCloud(wx.Panel):
         self._mode = mode
         self._enable_tooltips = enable_tooltips
         self._enable_active_tags_filter = enable_active_tags_filter
-        self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+        self._buffer = wx.Bitmap(self.GetClientSize())
 
         self._scroll_start_time = None
         self._scroll_timeout_musec = 200e3
@@ -185,7 +590,7 @@ class TagsCloud(wx.Panel):
         ymax = ymin + self._tags_panel.GetClientSize()[1]
         return (ymin, ymax)
 
-    def _repaintLabels(self, label_names: Iterable, dc: wx.DC):
+    def _repaintLabels(self, label_names: Iterable, dc: wx.DC, gc: wx.GraphicsContext):
         y_min, y_max = self._getScrolledY()
 
         for label_name in label_names:
@@ -193,19 +598,20 @@ class TagsCloud(wx.Panel):
             label_x_min, label_y_min = label.getPosition()
             label_y_max = label.getPositionMax()[1]
             if label_y_min <= y_max and label_y_max >= y_min:
-                label.onPaint(dc, label_x_min, label_y_min - y_min)
+                label.onPaint(dc, gc, label_x_min, label_y_min - y_min)
 
             if label_y_min > y_max:
                 break
 
     def _onPaint(self, event):
-        with wx.BufferedPaintDC(self._tags_panel) as dc:
+        with wx.BufferedPaintDC(self._tags_panel, self._buffer) as dc:
+            gc = wx.GraphicsContext.Create(dc)
             back_color = self.GetBackgroundColour()
-            dc.SetBrush(wx.Brush(back_color))
-            dc.SetPen(wx.Pen(back_color))
+            gc.SetBrush(wx.Brush(back_color))
+            gc.SetPen(wx.Pen(back_color))
             width, height = self._tags_panel.GetClientSize()
-            dc.DrawRectangle(0, 0, width, height)
-            self._repaintLabels(self._filtered_tags, dc)
+            gc.DrawRectangle(0, 0, width, height)
+            self._repaintLabels(self._filtered_tags, dc, gc)
 
     def setFontSize(self, min_font_size: int, max_font_size: int):
         self._min_font_size = min_font_size
@@ -228,6 +634,7 @@ class TagsCloud(wx.Panel):
 
         self._tags_panel = wx.ScrolledCanvas(self)
         self._tags_panel.SetScrollRate(0, 0)
+        self._tags_panel.SetBackgroundStyle(wx.BG_STYLE_PAINT)
 
         self._search_ctrl = wx.SearchCtrl(self)
         icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
@@ -258,6 +665,7 @@ class TagsCloud(wx.Panel):
     def __onSize(self, event):
         newSize = self.GetSize()
         if self._oldSize != newSize:
+            self._buffer = wx.Bitmap(self.GetClientSize())
             self.__moveLabels()
             self._oldSize = newSize
 

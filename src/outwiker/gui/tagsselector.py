@@ -9,7 +9,7 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagscommands import getTagsString, parseTagsList
 from outwiker.core.tagslist import TagsList
 from outwiker.gui.tagscloud import TagsCloud
-from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
+from outwiker.gui.tagscloud import EVT_TAG_LEFT_DOWN
 from outwiker.gui.controls.popupwindow import PopupWindow
 from outwiker.gui.images import readImage
 from outwiker.gui.theme import Theme
