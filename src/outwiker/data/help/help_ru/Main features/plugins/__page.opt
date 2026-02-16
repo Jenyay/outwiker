@@ -1,11 +1,12 @@
 [General]
 type = wiki
-tags = плагины
-order = 5
-datetime = 2020-05-16 19:15:48.313684
+tags = плагины,fixme
+order = 4
+datetime = 2026-02-16 21:02:44.296512
 cursorposition = 629
 alias = Плагины
 uid = __abdecced-898a-4475-9002-cf78426f3db7
+icon = __std_plugin.svg
 
 [wiki]
 md5_hash = d210e6b35fc9d850fc41466b0e464ddf

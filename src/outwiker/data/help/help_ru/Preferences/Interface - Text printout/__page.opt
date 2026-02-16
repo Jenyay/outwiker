@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = настройки
-order = 15
+tags = fixme,настройки
+order = 16
 creationdatetime = 2020-05-10 10:44:50.239528
-datetime = 2023-07-19 14:52:43.973112
+datetime = 2026-02-16 21:16:32.378074
 uid = settings_text_printout
 alias = Печать текста
 

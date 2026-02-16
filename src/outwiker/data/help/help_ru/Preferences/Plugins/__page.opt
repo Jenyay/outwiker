@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = плагины, настройки
-order = 14
+tags = плагины,настройки,fixme
+order = 15
 creationdatetime = 2020-05-10 11:03:19.826283
-datetime = 2023-07-19 14:54:05.494846
+datetime = 2026-02-16 21:16:29.742022
 uid = settings_plugins
 alias = Плагины
 

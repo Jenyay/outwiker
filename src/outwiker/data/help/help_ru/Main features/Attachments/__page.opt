@@ -4,8 +4,8 @@ expand = False
 [General]
 type = html
 order = 0
-tags = вложения
-datetime = 2024-08-13 18:57:24.071744
+tags = fixme,вложения
+datetime = 2026-02-16 21:00:43.244302
 linewrap = True
 cursorposition = 496
 alias = Прикрепленные файлы

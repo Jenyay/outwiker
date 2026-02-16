@@ -8,9 +8,10 @@ expand = False
 type = wiki
 order = 2
 tags = wiki
-datetime = 2024-08-13 19:06:53.835899
+datetime = 2026-02-16 21:04:34.664089
 cursorposition = 0
 alias = Списки
+icon = text/__std_list_bullets.svg
 
 [Misc]
 pageindex = 1

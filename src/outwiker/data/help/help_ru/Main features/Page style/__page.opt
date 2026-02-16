@@ -1,8 +1,8 @@
 [General]
 type = wiki
-tags = стили
+tags = fixme,стили
 order = 3
-datetime = 2024-08-13 19:04:18.556400
+datetime = 2026-02-16 21:02:03.222592
 cursorposition = 181
 alias = Стили страниц
 uid = styles

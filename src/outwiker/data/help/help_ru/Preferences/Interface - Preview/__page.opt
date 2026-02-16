@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = стили, настройки
-order = 4
+tags = fixme,настройки,стили
+order = 5
 creationdatetime = 2020-05-10 10:26:44.305854
-datetime = 2023-07-18 10:12:57.019187
+datetime = 2026-02-16 21:15:27.347865
 uid = settings_interface_preview
 alias = Интерфейс - Просмотр
 

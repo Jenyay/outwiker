@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = настройки
+tags = fixme,настройки
 order = 0
 creationdatetime = 2020-05-10 09:47:23.664135
-datetime = 2023-07-18 10:04:03.461031
+datetime = 2026-02-16 21:13:16.654911
 uid = settings_interface_general
 alias = Интерфейс - Общие
 

@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = настройки
-order = 7
+tags = fixme,настройки
+order = 8
 creationdatetime = 2020-05-10 10:36:09.110931
-datetime = 2023-07-19 14:10:02.150136
+datetime = 2026-02-16 21:15:49.012385
 uid = settings_interface_hotkeys
 alias = Интерфейс - Сочетания клавиш
 

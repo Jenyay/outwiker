@@ -5,11 +5,12 @@ expand = True
 type = wiki
 order = 1
 tags = 
-datetime = 2023-09-12 12:52:04.916163
+datetime = 2026-02-16 20:59:22.396774
 linewrap = True
 cursorposition = 1884
 uid = __8fb202a4-8a7a-40ad-8326-e744ffb102f5
 alias = О программе и контакты
+icon = software/__std_outwiker.svg
 
 [Misc]
 pageindex = 1

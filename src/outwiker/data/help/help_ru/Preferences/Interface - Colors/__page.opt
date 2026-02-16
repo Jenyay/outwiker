@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = настройки
-order = 2
+tags = fixme,настройки
+order = 3
 creationdatetime = 2020-05-10 10:23:54.772670
-datetime = 2024-06-30 21:43:58.286238
+datetime = 2026-02-16 21:13:38.624113
 uid = settings_interface_colors
 alias = Интерфейс - Цвета
 

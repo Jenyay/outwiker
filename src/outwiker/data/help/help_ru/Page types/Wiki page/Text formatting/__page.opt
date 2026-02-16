@@ -8,9 +8,10 @@ expand = False
 type = wiki
 order = 5
 tags = wiki
-datetime = 2023-07-16 21:30:38.570138
+datetime = 2026-02-16 21:06:44.080152
 cursorposition = 1319
 alias = Форматирование текста
+icon = text/__std_color_background.svg
 
 [Misc]
 pageindex = 1
