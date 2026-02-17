@@ -95,7 +95,7 @@ class BasePage(metaclass=ABCMeta):
     @property
     def root(self) -> "WikiDocument":
         """
-        Return root of notes tree
+        Return root of note tree
         """
         result = self
         while result.parent is not None:

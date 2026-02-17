@@ -69,7 +69,7 @@ def print_memory(count=30):
 
 def create_temp_notes_tree():
     '''
-    Create empty notes tree in the temp directory
+    Create empty note tree in the temp directory
     '''
     path = mkdtemp(prefix='Абырвалг абыр')
     wikiroot = createNotesTree(path)

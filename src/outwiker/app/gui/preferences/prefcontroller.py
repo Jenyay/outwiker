@@ -135,9 +135,9 @@ class PrefController:
         interfacePanelsList = [
             PreferencePanelInfo(generalPage, _("General")),
             PreferencePanelInfo(mainWindowPage, _("Main window")),
-            PreferencePanelInfo(notesTreePage, _("Notes tree")),
+            PreferencePanelInfo(notesTreePage, _("Note tree")),
             PreferencePanelInfo(tabsPage, _("Tabs")),
-            PreferencePanelInfo(tagsPage, _("Tags cloud")),
+            PreferencePanelInfo(tagsPage, _("Tag cloud")),
             PreferencePanelInfo(trayPage, _("Tray icon")),
             PreferencePanelInfo(attachPage, _("Attachments")),
             PreferencePanelInfo(htmlRenderPage, _("Preview")),

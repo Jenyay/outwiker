@@ -191,7 +191,7 @@ class CurrentPagePanel(wx.Panel):
 
     def __createClosedTreePanel(self):
         """
-        Create panel for closed notes tree
+        Create panel for closed note tree
         """
         self.__pageView = ClosedTreePanel(self, self._application)
         self.__pageView.SetBackgroundColour(self.GetBackgroundColour())

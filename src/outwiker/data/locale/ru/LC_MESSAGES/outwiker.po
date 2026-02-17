@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-08 18:50+0300\n"
+"POT-Creation-Date: 2026-02-17 20:47+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -476,7 +476,7 @@ msgid "Begin search and replace on page"
 msgstr "Начать поиск и замену по странице"
 
 #: outwiker/app/actions/showhideattaches.py:18
-#: outwiker/app/actions/switchto.py:63
+#: outwiker/app/actions/switchto.py:66
 #: outwiker/app/gui/mainpanes/attachmainpane.py:40
 #: outwiker/app/gui/mainwindow.py:486
 #: outwiker/app/gui/preferences/prefcontroller.py:142
@@ -490,7 +490,7 @@ msgstr "Вложения"
 msgid "Show / hide a attachments panel"
 msgstr "Показать / спрятать панель \"Вложения\""
 
-#: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:86
+#: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:90
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
 #: outwiker/app/gui/mainwindow.py:498
 #: outwiker/gui/controls/pagelist_columns.py:226
@@ -503,12 +503,12 @@ msgid "Show / hide a tags panel"
 msgstr "Показать / спрятать панель с метками"
 
 #: outwiker/app/actions/showhidetree.py:18
-msgid "Notes Tree"
+msgid "Note Tree"
 msgstr "Дерево заметок"
 
 #: outwiker/app/actions/showhidetree.py:22
-msgid "Show / hide a notes tree panel"
-msgstr "Показать / спрятать панель с деревом"
+msgid "Show / hide a note tree panel"
+msgstr "Показать / спрятать панель с деревом с деревом заметок"
 
 #: outwiker/app/actions/sortchildalpha.py:19
 msgid "Sort Children Pages Alphabetically"
@@ -526,29 +526,29 @@ msgstr "Упорядочить страницы данного уровня по
 msgid "Sort siblings pages alphabetically"
 msgstr "Упорядочить страницы данного уровня по алфавиту"
 
-#: outwiker/app/actions/switchto.py:17
+#: outwiker/app/actions/switchto.py:18
 msgid "Main panel"
 msgstr "Главная панель"
 
-#: outwiker/app/actions/switchto.py:21
+#: outwiker/app/actions/switchto.py:22
 msgid "Set focus to main panel"
 msgstr "Установить фокус на главную панель"
 
-#: outwiker/app/actions/switchto.py:40
+#: outwiker/app/actions/switchto.py:42
 #: outwiker/app/gui/preferences/prefcontroller.py:138
-msgid "Notes tree"
+msgid "Note tree"
 msgstr "Дерево заметок"
 
-#: outwiker/app/actions/switchto.py:44
-msgid "Set focus to notes tree"
+#: outwiker/app/actions/switchto.py:46
+msgid "Set focus to note tree"
 msgstr "Установить фокус на дерево заметок"
 
-#: outwiker/app/actions/switchto.py:67
+#: outwiker/app/actions/switchto.py:70
 msgid "Set focus to attachments panel"
 msgstr "Установить фокус на панель с вложениями"
 
-#: outwiker/app/actions/switchto.py:90
-msgid "Set focus to tags cloud panel"
+#: outwiker/app/actions/switchto.py:94
+msgid "Set focus to tag cloud panel"
 msgstr "Установить фокус на панель облака тегов"
 
 #: outwiker/app/actions/tabs.py:17
@@ -612,7 +612,7 @@ msgid "Rename Tag…"
 msgstr "Переименовать метку…"
 
 #: outwiker/app/actions/tags.py:147
-#: outwiker/app/gui/dialogs/renametagdialog.py:21
+#: outwiker/app/gui/dialogs/renametagdialog.py:24
 #: outwiker/app/gui/tagpopupmenu.py:22
 msgid "Rename tag"
 msgstr "Переименовать метку"
@@ -1211,17 +1211,17 @@ msgstr "Контакты автора"
 msgid "Author: Eugeniy Ilin (aka Jenyay)"
 msgstr "Автор: Евгений Ильин (aka Jenyay)"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:35
-#: outwiker/app/gui/dialogs/renametagdialog.py:84
+#: outwiker/app/gui/dialogs/renametagdialog.py:38
+#: outwiker/app/gui/dialogs/renametagdialog.py:87
 msgid "Select tag for rename"
 msgstr "Выберите метку для переименования"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:36
+#: outwiker/app/gui/dialogs/renametagdialog.py:39
 msgid "New tag name"
 msgstr "Новое имя метки"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:85
-#: outwiker/app/gui/dialogs/renametagdialog.py:90
+#: outwiker/app/gui/dialogs/renametagdialog.py:88
+#: outwiker/app/gui/dialogs/renametagdialog.py:93
 #: outwiker/app/gui/pagedialogpanels/appearancepanel.py:124
 #: outwiker/app/gui/pagedialogpanels/generalpanel.py:521
 #: outwiker/app/gui/preferences/iconsetpanel.py:226
@@ -1235,7 +1235,7 @@ msgstr "Новое имя метки"
 msgid "Error"
 msgstr "Ошибка"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:89
+#: outwiker/app/gui/dialogs/renametagdialog.py:92
 #: outwiker/app/gui/tagpopupmenu.py:33
 msgid "Enter new tag name"
 msgstr "Введите новое имя метки"
@@ -1256,15 +1256,15 @@ msgid "Attach files to the note?"
 msgstr "Прикрепить файлы к заметке?"
 
 #: outwiker/app/gui/emptypageview.py:27
-msgid "Create new notes tree..."
+msgid "Create new note tree..."
 msgstr "Создать новое дерево заметок..."
 
 #: outwiker/app/gui/emptypageview.py:35
-msgid "Open notes tree from disk..."
+msgid "Open note tree from disk..."
 msgstr "Открыть дерево заметок с диска..."
 
 #: outwiker/app/gui/emptypageview.py:51
-msgid "Recently used notes tree:"
+msgid "Recently used note tree:"
 msgstr "Последние используемые деревья заметок:"
 
 #: outwiker/app/gui/emptypageview.py:57
@@ -1867,7 +1867,7 @@ msgid "Site"
 msgstr "Сайт"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:140
-msgid "Tags cloud"
+msgid "Tag cloud"
 msgstr "Облако меток"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:141
@@ -1948,7 +1948,7 @@ msgid "Headers in the popup window: "
 msgstr "Заголовки во всплывающем окне: "
 
 #: outwiker/app/gui/preferences/tagspanel.py:41
-msgid "Tags cloud view mode"
+msgid "Tag cloud view mode"
 msgstr "Режим отображения облака меток"
 
 #: outwiker/app/gui/preferences/tagspanel.py:42
@@ -2150,11 +2150,11 @@ msgid "Loading"
 msgstr "Загрузка"
 
 #: outwiker/app/services/tree.py:113
-msgid "Opening notes tree..."
+msgid "Opening note tree..."
 msgstr "Открытие дерева заметок..."
 
 #: outwiker/app/services/tree.py:138
-msgid "Can't load notes tree:\n"
+msgid "Can't load note tree:\n"
 msgstr "Ошибка загрузки дерева заметок:\n"
 
 #: outwiker/app/services/tree.py:178
@@ -2607,8 +2607,8 @@ msgid "Create new page..."
 msgstr "Создать новую страницу..."
 
 #: outwiker/gui/rootpagepanel.py:107
-msgid "Path to current notes tree"
-msgstr "Путь до дерева заметок"
+msgid "Path to current note tree"
+msgstr "Путь до текущего дерева заметок"
 
 #: outwiker/gui/tabledialog.py:14
 msgid "Insert table"
@@ -2638,12 +2638,12 @@ msgstr "Заголовочные ячейки в первой строке"
 msgid "Insert rows"
 msgstr "Вставить строки"
 
-#: outwiker/gui/tagscloud.py:142
+#: outwiker/gui/tagscloud.py:547
 #, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Количество заметок: {}"
 
-#: outwiker/gui/tagscloud.py:236
+#: outwiker/gui/tagscloud.py:643
 msgid "Applied tags only"
 msgstr "Только установленные теги"
 

@@ -32,7 +32,7 @@ class JSONSaver(BaseSaver):
             text = readTextFile(self._fname)
             items = json.loads(text)
         except (IOError, json.JSONDecodeError):
-            logger.error("Error reading a notes tree registry")
+            logger.error("Error reading a note tree registry")
             items = {}
 
         return items
@@ -42,7 +42,7 @@ class JSONSaver(BaseSaver):
         try:
             writeTextFile(self._fname, text)
         except IOError:
-            logger.error("Error saving a notes tree registry")
+            logger.error("Error saving a note tree registry")
 
 
 class PickleSaver(BaseSaver):
@@ -54,7 +54,7 @@ class PickleSaver(BaseSaver):
             with open(self._fname, "rb") as fp:
                 items = pickle.load(fp)
         except (IOError, pickle.PickleError):
-            logger.error("Error reading a notes tree registry")
+            logger.error("Error reading a note tree registry")
             items = {}
 
         return items
@@ -64,7 +64,7 @@ class PickleSaver(BaseSaver):
             with open(self._fname, "wb") as fp:
                 pickle.dump(items, fp)
         except IOError:
-            logger.error("Error saving a notes tree registry")
+            logger.error("Error saving a note tree registry")
 
 
 class NotesTreeRegistry(Registry):
@@ -79,11 +79,11 @@ class NotesTreeRegistry(Registry):
         items = saver.load()
 
         if items.get(self._VERSION_OPTION, None) != self._version:
-            logger.warning("Invalid notes tree registry version")
+            logger.warning("Invalid note tree registry version")
             items = {}
 
         if not isinstance(items, MutableMapping):
-            logger.error("Invalid notes tree registry format")
+            logger.error("Invalid note tree registry format")
             items = {}
 
         items[self._VERSION_OPTION] = self._version

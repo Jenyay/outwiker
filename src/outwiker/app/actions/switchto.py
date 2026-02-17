@@ -7,18 +7,19 @@ class SwitchToMainPanelAction(BaseAction):
     """
     Set focus to main panel.
     """
-    stringId = u"GoToMainPanel"
+
+    stringId = "GoToMainPanel"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Main panel")
+        return _("Main panel")
 
     @property
     def description(self):
-        return _(u"Set focus to main panel")
+        return _("Set focus to main panel")
 
     def run(self, params):
         panel = self._application.mainWindow.pagePanel
@@ -28,20 +29,21 @@ class SwitchToMainPanelAction(BaseAction):
 
 class SwitchToTreeAction(BaseAction):
     """
-    Set focus to notes tree.
+    Set focus to note tree.
     """
-    stringId = u"GoToNotesTree"
+
+    stringId = "GoToNotesTree"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Notes tree")
+        return _("Note tree")
 
     @property
     def description(self):
-        return _(u"Set focus to notes tree")
+        return _("Set focus to note tree")
 
     def run(self, params):
         panel = self._application.mainWindow.treePanel
@@ -53,18 +55,19 @@ class SwitchToAttachmentsAction(BaseAction):
     """
     Set focus to attachments panel.
     """
-    stringId = u"GoToAttachments"
+
+    stringId = "GoToAttachments"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Attachments")
+        return _("Attachments")
 
     @property
     def description(self):
-        return _(u"Set focus to attachments panel")
+        return _("Set focus to attachments panel")
 
     def run(self, params):
         panel = self._application.mainWindow.attachPanel
@@ -74,20 +77,21 @@ class SwitchToAttachmentsAction(BaseAction):
 
 class SwitchToTagsCloudAction(BaseAction):
     """
-    Set focus to tags cloud panel.
+    Set focus to tag cloud panel.
     """
-    stringId = u"GoToTags"
+
+    stringId = "GoToTags"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Tags")
+        return _("Tags")
 
     @property
     def description(self):
-        return _(u"Set focus to tags cloud panel")
+        return _("Set focus to tag cloud panel")
 
     def run(self, params):
         panel = self._application.mainWindow.tagsCloudPanel

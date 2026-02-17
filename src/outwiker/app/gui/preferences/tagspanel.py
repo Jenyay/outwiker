@@ -38,7 +38,7 @@ class TagsPanel(BasePrefPanel):
         modeSizer = wx.FlexGridSizer(cols=2)
         modeSizer.AddGrowableCol(0)
 
-        modeLabel = wx.StaticText(self, label=_("Tags cloud view mode"))
+        modeLabel = wx.StaticText(self, label=_("Tag cloud view mode"))
         self._modeList = wx.ComboBox(self, choices=[_("As continuous text"), _("As list")], style=wx.CB_READONLY)
         self._modeList.SetMinSize((200, -1))
 

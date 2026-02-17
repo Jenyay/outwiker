@@ -12,7 +12,7 @@ from outwiker.gui.basepagepanel import BasePagePanel
 
 class ClosedTreePanel(BasePagePanel):
     '''
-    The panel showed when notes tree is closed
+    The panel showed when note tree is closed
     '''
 
     def __init__(self, parent, application):
@@ -21,18 +21,18 @@ class ClosedTreePanel(BasePagePanel):
 
     # @profile
     def _createGUI(self):
-        # Button to create new notes tree
+        # Button to create new note tree
         self._createNotesTreeButton = wx.Button(
             self,
-            label=_('Create new notes tree...'))
+            label=_('Create new note tree...'))
 
         self._createNotesTreeButton.Bind(wx.EVT_BUTTON,
                                          handler=self._onCreateNotes)
 
-        # Button to open notes tree
+        # Button to open note tree
         self._openNotesTreeButton = wx.Button(
             self,
-            label=_('Open notes tree from disk...'))
+            label=_('Open note tree from disk...'))
         self._openNotesTreeButton.Bind(wx.EVT_BUTTON,
                                        handler=self._onOpenNotes)
 
@@ -45,10 +45,10 @@ class ClosedTreePanel(BasePagePanel):
                          flag=wx.ALL,
                          border=4)
 
-        # Recently opened notes tree
+        # Recently opened note tree
         recentlyText = wx.StaticText(
             self,
-            label=_('Recently used notes tree:'))
+            label=_('Recently used note tree:'))
 
         self._recentlyListBox = wx.ListBox(self, style=wx.LB_SINGLE)
         self._recentlyListBox.Bind(wx.EVT_LISTBOX_DCLICK,

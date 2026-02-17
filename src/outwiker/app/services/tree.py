@@ -89,7 +89,7 @@ def openWiki(path: str, application: Application, readonly: bool = False) -> Opt
         except Exception as e:
             return e
 
-    logger.debug("Opening notes tree from: %s", path)
+    logger.debug("Opening note tree from: %s", path)
     if not os.path.exists(path):
         _canNotLoadWikiMessage(path)
         return None
@@ -97,12 +97,12 @@ def openWiki(path: str, application: Application, readonly: bool = False) -> Opt
     preWikiOpenParams = PreWikiOpenParams(path, readonly)
     application.onPreWikiOpen(application.selectedPage, preWikiOpenParams)
     if preWikiOpenParams.abortOpen:
-        logger.debug("Opening notes tree aborted")
+        logger.debug("Opening note tree aborted")
         return None
 
     # The path may be changed in event handlers
     path = preWikiOpenParams.path
-    logger.debug("Notes tree path after onPreWikiOpen: %s", path)
+    logger.debug("Note tree path after onPreWikiOpen: %s", path)
 
     # Если передан путь до файла настроек (а не до папки с вики),
     # то оставим только папку
@@ -110,7 +110,7 @@ def openWiki(path: str, application: Application, readonly: bool = False) -> Opt
         path = os.path.split(path)[0]
 
     runner = LongProcessRunner(
-        threadFunc, wx.GetApp().getMainWindow(), _("Loading"), _("Opening notes tree...")
+        threadFunc, wx.GetApp().getMainWindow(), _("Loading"), _("Opening note tree...")
     )
     result = runner.run(os.path.realpath(path), readonly)
 
@@ -134,8 +134,8 @@ def _canNotLoadWikiMessage(path):
     """
     Вывести сообщение о том, что невоможно открыть вики
     """
-    logger.warning("Can't load notes tree: %s", path)
-    text = _("Can't load notes tree:\n") + path
+    logger.warning("Can't load note tree: %s", path)
+    text = _("Can't load note tree:\n") + path
     showError(wx.GetApp().getMainWindow(), text)
 
 

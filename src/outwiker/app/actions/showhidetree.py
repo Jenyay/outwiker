@@ -15,11 +15,11 @@ class ShowHideTreeAction(BaseAction):
 
     @property
     def title(self):
-        return _("Notes Tree")
+        return _("Note Tree")
 
     @property
     def description(self):
-        return _("Show / hide a notes tree panel")
+        return _("Show / hide a note tree panel")
 
     def run(self, params):
         showHideNotesTreePanel(self._application.mainWindow, params)

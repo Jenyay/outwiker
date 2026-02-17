@@ -87,7 +87,7 @@ class ButtonsPanel(wx.Panel):
 
 class NotesTreePathPanel(wx.Panel):
     '''
-    Panel with information about path to current notes tree
+    Panel with information about path to current note tree
     '''
     def __init__(self, parent, application):
         super().__init__(parent)
@@ -104,7 +104,7 @@ class NotesTreePathPanel(wx.Panel):
     def _createGUI(self):
         self._pathStaticText = wx.StaticText(
             self,
-            label=_('Path to current notes tree'),
+            label=_('Path to current note tree'),
             style=wx.ALIGN_CENTER_HORIZONTAL)
 
         self._pathTextCtrl = wx.TextCtrl(self,
