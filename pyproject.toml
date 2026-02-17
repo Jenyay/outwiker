@@ -9,7 +9,7 @@ license = {file = "LICENSE.txt"}
 keywords = ["outliner", "notepad", "notes", "wiki"]
 requires-python = ">=3.8"
 dependencies = [
-    "wxPython==4.2.2",
+    #"wxPython==4.2.2",
     "Pillow==10.4.0",
     "idna>=2.10",
     "pyparsing==3.1.4",
@@ -18,6 +18,10 @@ dependencies = [
     "attrdict3==2.0.2",
     "chunspell==2.0.4",
 ]
+
+[project.optional-dependencies]
+gui = [ "wxPython>=4.2.2" ]
+
 classifiers=[
     "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
