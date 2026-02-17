@@ -56,7 +56,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
 
       - name: Sync dependencies
-        run: uv sync --python "C:\Python38\python.exe" --dev
+        run: uv sync --python "C:\Python38\python.exe" --dev --extra gui
 
       - name: Get OutWiker version
         shell: bash
