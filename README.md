@@ -1,4 +1,4 @@
-[![Documentation Status](https://readthedocs.org/projects/outwiker/badge/?version=latest)](http://outwiker.readthedocs.io/ru/latest/?badge=latest) [![Build status](https://ci.appveyor.com/api/projects/status/s4o1qxj58ctfd39d?svg=true)](https://ci.appveyor.com/project/Jenyay/outwiker)
+[![Tests (Linux)](https://github.com/Jenyay/outwiker/actions/workflows/test-linux.yaml/badge.svg)](https://github.com/Jenyay/outwiker/actions/workflows/test-linux.yaml) [![Tests (Windows 64bit)](https://github.com/Jenyay/outwiker/actions/workflows/test-windows.yaml/badge.svg)](https://github.com/Jenyay/outwiker/actions/workflows/test-windows.yaml) [![Build (Windows)](https://github.com/Jenyay/outwiker/actions/workflows/build-windows.yml/badge.svg)](https://github.com/Jenyay/outwiker/actions/workflows/build-windows.yml) [![Documentation Status](https://readthedocs.org/projects/outwiker/badge/?version=latest)](http://outwiker.readthedocs.io/ru/latest/?badge=latest)
 
 OutWiker
 ========
