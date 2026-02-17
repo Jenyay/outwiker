@@ -1,7 +1,7 @@
 [General]
 type = wiki
 tags = fixme,настройки,стили
-order = 5
+order = 7
 creationdatetime = 2020-05-10 10:26:44.305854
 datetime = 2026-02-16 21:15:27.347865
 uid = settings_interface_preview

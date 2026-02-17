@@ -1,9 +1,9 @@
 [General]
 type = wiki
 tags = fixme,настройки,вложения
-order = 7
+order = 6
 creationdatetime = 2020-05-10 10:31:15.223023
-datetime = 2026-02-16 21:15:40.648629
+datetime = 2026-02-17 10:07:42.411520
 uid = settings_interface_attachments
-alias = Интерфейс - Прикрепленные файлы
+alias = Интерфейс - Вложения
 

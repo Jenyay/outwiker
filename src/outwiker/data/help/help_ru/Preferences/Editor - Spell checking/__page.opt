@@ -1,7 +1,7 @@
 [General]
 type = wiki
 tags = fixme,настройки
-order = 11
+order = 12
 creationdatetime = 2020-05-10 10:54:57.722478
 datetime = 2026-02-16 21:16:08.457323
 uid = settings_editor_spell_checking

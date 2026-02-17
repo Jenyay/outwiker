@@ -1,7 +1,7 @@
 [General]
 type = wiki
 tags = fixme,настройки
-order = 13
+order = 14
 creationdatetime = 2020-05-10 11:00:34.628315
 datetime = 2026-02-16 21:16:18.147283
 uid = settings_editor_wiki_editor
