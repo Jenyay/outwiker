@@ -9,7 +9,7 @@ license = {file = "LICENSE.txt"}
 keywords = ["outliner", "notepad", "notes", "wiki"]
 requires-python = ">=3.8"
 dependencies = [
-    "wxPython==4.2.2",
+    #"wxPython==4.2.2",
     "Pillow==10.4.0",
     "idna>=2.10",
     "pyparsing==3.1.4",
@@ -45,48 +45,52 @@ classifiers=[
 
     dynamic = ["version"]
 
-    [project.urls]
-    Homepage = "https://jenyay.net/Outwiker/English"
-    Documentation = "https://outwiker.readthedocs.io/"
-    Repository = "https://github.com/Jenyay/outwiker"
+[project.urls]
+Homepage = "https://jenyay.net/Outwiker/English"
+Documentation = "https://outwiker.readthedocs.io/"
+Repository = "https://github.com/Jenyay/outwiker"
 
-    [dependency-groups]
-    dev = [
-        "invoke==2.2.1",
-        "cx-freeze==7.2.10",
-        "pympler==1.1",
-        "pytest>=8.3.2",
-        "coverage>=7.6.1",
-        "jinja2>=3.1",
-        "colorama==0.4.6",
-        "sphinx>=7.1",
-        "lief==0.15.1",
-        "line-profiler==4.2.0",
-        "owbuildtools",
-    ]
+[project.optional-dependencies]
+gui = [ "wxPython>=4.2.2" ]
 
-    [tool.uv]
-    default-groups = ["dev"]
+[project.scripts]
+outwiker = "outwiker.__main__:main"
 
-    [tool.uv.sources]
-    owbuildtools = { path = "./owbuildtools", editable = true }
+[dependency-groups]
+dev = [
+    "invoke==2.2.1",
+    "cx-freeze==7.2.10",
+    "pympler==1.1",
+    "pytest>=8.3.2",
+    "coverage>=7.6.1",
+    "jinja2>=3.1",
+    "colorama==0.4.6",
+    "sphinx>=7.1",
+    "lief==0.15.1",
+    "line-profiler==4.2.0",
+    "owbuildtools",
+]
 
-    [build-system]
-    requires = ["setuptools", "wheel"]
-    build-backend = "setuptools.build_meta:__legacy__"
 
-    [project.scripts]
-    outwiker = "outwiker.__main__:main"
+[tool.uv]
+default-groups = ["dev"]
 
-    [tool.setuptools.packages.find]
-    where = ["src"]
-    exclude = ["outwiker.tests*"]
+[tool.uv.sources]
+owbuildtools = { path = "./owbuildtools", editable = true }
 
-    [tool.setuptools.package-data]
-    outwiker = ["data/**/*"]
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["outwiker.tests*"]
 
-    [tool.setuptools.exclude-package-data]
-    outwiker = ["tests*"]
+[tool.setuptools.package-data]
+outwiker = ["data/**/*"]
 
-    [tool.setuptools.dynamic]
-    version = {attr = "outwiker.__version_str__"}
+[tool.setuptools.exclude-package-data]
+outwiker = ["tests*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "outwiker.__version_str__"}
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta:__legacy__"
