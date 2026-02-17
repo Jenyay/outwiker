@@ -51,7 +51,7 @@ Documentation = "https://outwiker.readthedocs.io/"
 Repository = "https://github.com/Jenyay/outwiker"
 
 [project.optional-dependencies]
-gui = [ "wxPython>=4.2.2" ]
+gui = [ "wxPython==4.2.2" ]
 
 [project.scripts]
 outwiker = "outwiker.__main__:main"
