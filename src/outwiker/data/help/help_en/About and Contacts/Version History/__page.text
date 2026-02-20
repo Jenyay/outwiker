@@ -1,4 +1,26 @@
-!!! [=3.3 (August 2024)=]
+!!! 4.0 (April 2026)
+
+* Added the ability to change the order of notes using the mouse.
+* Added the ability to change the color of notes in the notes tree.
+* Added the ability to change the font size in the notes tree.
+* Added the ability to scale the notes tree using the mouse wheel.
+* An additional icon has been added to the notes tree to indicate that the note has been bookmarked.
+* An additional icon has been added to the notes tree to indicate that the note is open in read-only mode.
+* Added a new plugin RecentEditedPages.
+* Added new built-in icons for notes.
+* New plugin's API version.
+* New notes tree.
+* New tag selection interface for the page.
+* New tabs that can be arranged in multiple rows.
+* Added the ability to change the icon size in the note tree.
+* Added numerous interface appearance settings.
+* A setting has been added to adjust the size of buttons on toolbars.
+* New text styles have been added for wiki pages.
+* Wiki pages now support links of the form [=[[page://...]] and page://...=] to other pages.
+* New vector icons have been added for notes.
+
+
+!!! 3.3 (August 2024)
 
 * Changed tags cloud design.
 * Added the ability to filter tags.
@@ -12,7 +34,7 @@
 * Added new icons for pages.
 
 
-!!! [=3.2 (August 2023)=]
+!!! 3.2 (August 2023)
 
 * Added the ability to create folders in attached files.
 * Added the ability to navigate to subfolders in the attachments panel.
@@ -32,13 +54,14 @@
 * Added the ability to set the style of list item bullets on a wiki page.
 * Migrate to wxPython 4.2.1.
 
-!!! [=3.1 (April 2022)=]
+
+!!! 3.1 (April 2022)
 
 * Improve dialog for creation notes and edit notes properties.
 * Improve work with hotkeys.
 * Improve attachments panel GUI.
 
-!!! [=3.0 (May 2021)=]
+!!! 3.0 (May 2021)
 
 * Now you can use any symbols in the notes title.
 * New toolbars.
@@ -60,7 +83,7 @@
 * Change plug-ins format.
 * Migrate to Python 3.x and wxPython 4.0.
 
-!!! [=2.0 (June 2017)=]
+!!! 2.0 (June 2017)
 
 * The program now uses wxPython 3.0 library.
 * Duplicating the current line via menu or hot key was implemented.
@@ -82,7 +105,7 @@
 * New setting to change background color of the selected text was implemented.
 
 
-!!! [=1.9.0  (April 2016)=]
+!!! 1.9.0  (April 2016)
 
 * Icons for notes are separated into groups.
 * Now users can complement a standard set of icons for new files.
@@ -92,13 +115,13 @@
 
 
 
-!!! [=1.8.1.752 (October 2014)=]
+!!! 1.8.1.752 (October 2014)
 
 * Bug fixes.
 
 
 
-!!! [=1.8.0.750 (November 2014)=]
+!!! 1.8.0.750 (November 2014)
 
 * Added the ability to customize keyboard shortcuts.
 * Added the ability to refer to a page using unique identifiers.
@@ -134,7 +157,7 @@
 * Bug fixes and improvments.
 
 
-!!! [=1.7.0.684 (December 2012)=]
+!!! 1.7.0.684 (December 2012)
 
 * Added the ability to open the notes in separate tabs.
 * The toolbar is divided into several floating toolbars.
@@ -152,7 +175,7 @@
 * Fixed other bugs.
 * Many small fixes and improvements in the interface
 
-!!! [=1.6.0.650 (May 2012)=]
+!!! 1.6.0.650 (May 2012)
 
 * Redesigned properties dialog page.
 * Wiki commands for decoration options for users and community livejournal.com removed from the program into a [[plugin -> http://jenyay.net/Outwiker/LivejournalPlugin]].
@@ -161,7 +184,7 @@
 * Now to align text to the wiki pages other than [=%center%=] and [=%right%=] you can use [=%left%=] and [=%justify%=].
 * Many small improvements.
 
-!!! [=1.5.0.627 (February 2012)=]
+!!! 1.5.0.627 (February 2012)
 
 * Tag cloud added to the main window.
 * Added ability to select tags from the cloud of the existing tags.
@@ -169,7 +192,7 @@
 * Added ability to rename a tags.
 * Minor changes in the interface.
 
-!!! [=1.4.0.601 (December 2011)=]
+!!! 1.4.0.601 (December 2011)
 
 * Added plugins support.
 * Added timer autosave.
@@ -182,7 +205,7 @@
 * The program is now being tested only under Python 2.7.
 
 
-!!! [=1.3.2.496 (September 2011)=]
+!!! 1.3.2.496 (September 2011)
 
 * New interface for selecting icons.
 * Added new icon from [[http://www.famfamfam.com/lab/icons/silk | famfamfam.com]] and [[http://p.yusukekamiyamane.com/ | yusukekamiyamane.com]] sets.
@@ -202,12 +225,12 @@
 * Code refactoring.
 
 
-!!! [=1.3.1.393 (July 2011)=]
+!!! 1.3.1.393 (July 2011)
 
 * On Windows, fixed the error due to which the links do not work on the search page.
 * On Linux, fixed the error, because of which did not open the page, if the path to them was the '#'.
 
-!!! [=1.3.0.384 (June 2011)=]
+!!! 1.3.0.384 (June 2011)
 
 * Now, as HTML-rendering engine is used Internet Explorer for Windows version, WebKit for Linux version.
 * Added ability to print notes and their source code.
@@ -223,7 +246,7 @@
 * Fixed error when trying to open wikis, if for some of the notes is not writable.
 * Fixed a bug which caused the Windows did not work rendering of formulas, if the OutWiker was installed in a directory containing spaces.
 
-!!! [=1.2.0.322 (April 2011)=]
+!!! 1.2.0.322 (April 2011)
 
 * For wiki added the ability to enter formulas in the TeX notation (used mimeTex).
 * Link to image in [= [[Attach: xxx.png]] =] or [= [[http://.../xxx.png]] =] on the wiki pages only inserts a link to an image and not the picture itself.
@@ -285,7 +308,7 @@
 * Various minor bug fixes and interface improvements.
 
 
-!!! [=1.0 beta 3 (October 2010)=]
+!!! 1.0 beta 3 (October 2010)
 
 * Added a open mode "read only". Help now opens in this mode.
 * The ability to store settings in your profile folder, not in the folder with the program (non-portable mode).
@@ -294,7 +317,7 @@
 * Fix a few bugs in the wiki parser.
 
 
-!!! [=1.0 beta 2 (August 2010)=]
+!!! 1.0 beta 2 (August 2010)
 
 * Added ability to move pages in the tree.
 * Added ability to rename pages without to call the page properties dialog.
@@ -309,7 +332,7 @@
 * Fixed bugs.
 
 
-!!! [=1.0 beta 1 (July 2010)=]
+!!! 1.0 beta 1 (July 2010)
 
 * A new type of page - the page in a wiki notation.
 * Added information about the program.
@@ -324,7 +347,7 @@
 * Minor fixes and improvements.
 
 
-!!! [=1.0 alpha 3 (June 2010)=]
+!!! 1.0 alpha 3 (June 2010)
 
 * Added ability to search by page.
 * The buttons for the main tags page HTML.
@@ -336,7 +359,7 @@
 * Fixed some bugs.
 
 
-!!! [=1.0 alpha 2 (May 2010)=]
+!!! 1.0 alpha 2 (May 2010)
 
 * Ability to delete and rename pages.
 * The global search for text and tags.
@@ -347,6 +370,6 @@
 * Fixed some bugs.
 * Minor interface changes.
 
-!!! [=1.0 alpha 1 (May 2010)=]
+!!! 1.0 alpha 1 (May 2010)
 
 * First public version.

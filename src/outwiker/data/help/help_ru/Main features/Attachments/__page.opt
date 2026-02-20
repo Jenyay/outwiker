@@ -5,11 +5,11 @@ expand = False
 type = html
 order = 0
 tags = fixme,вложения
-datetime = 2026-02-16 21:00:43.244302
+datetime = 2026-02-20 20:40:18.381167
 linewrap = True
 cursorposition = 496
-alias = Прикрепленные файлы
 uid = __a60513aa-0c70-4ec9-aee8-4f9193224494
+alias = Вложения
 
 [Misc]
 pageindex = 1
