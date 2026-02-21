@@ -3,7 +3,7 @@ type = wiki
 tags = fixme,настройки
 order = 12
 creationdatetime = 2020-05-10 10:54:57.722478
-datetime = 2026-02-16 21:16:08.457323
+datetime = 2026-02-21 19:46:59.661018
 uid = settings_editor_spell_checking
 alias = Редактор - Проверка орфографии
 

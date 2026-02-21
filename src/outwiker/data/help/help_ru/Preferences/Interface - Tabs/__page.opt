@@ -3,7 +3,8 @@ type = wiki
 tags = fixme,настройки
 order = 3
 creationdatetime = 2026-02-17 10:04:46.320403
-datetime = 2026-02-17 10:05:03.096218
+datetime = 2026-02-21 19:32:55.956325
 uid = e7d37d0b-e931-44f4-913e-5769520d1afa
 alias = Интерфейс - Вкладки
+icon = battery/__std_battery-000.svg
 

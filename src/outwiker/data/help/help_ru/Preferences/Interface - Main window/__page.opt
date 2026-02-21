@@ -3,7 +3,7 @@ type = wiki
 tags = fixme,настройки
 order = 1
 creationdatetime = 2020-05-10 10:05:49.625586
-datetime = 2026-02-16 21:13:33.266149
+datetime = 2026-02-21 19:31:18.517634
 uid = settings_interface_main_window
 alias = Интерфейс - Главное окно
 

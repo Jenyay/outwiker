@@ -3,6 +3,7 @@ type = wiki
 tags = !fixme,for users,settings
 order = 3
 creationdatetime = 2026-02-17 10:04:11.365569
-datetime = 2026-02-17 10:04:11.444764
+datetime = 2026-02-21 20:16:49.714669
 uid = a95d53e6-6ad8-4388-96c2-e61842082ca5
+icon = battery/__std_battery-000.svg
 

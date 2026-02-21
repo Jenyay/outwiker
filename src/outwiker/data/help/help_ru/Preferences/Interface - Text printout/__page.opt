@@ -3,7 +3,7 @@ type = wiki
 tags = fixme,настройки
 order = 16
 creationdatetime = 2020-05-10 10:44:50.239528
-datetime = 2026-02-16 21:16:32.378074
+datetime = 2026-02-21 19:49:07.534194
 uid = settings_text_printout
 alias = Печать текста
 
