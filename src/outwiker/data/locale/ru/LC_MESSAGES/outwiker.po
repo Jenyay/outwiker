@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 20:47+0300\n"
+"POT-Creation-Date: 2026-02-28 18:38+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -105,7 +105,7 @@ msgid "Can't execute attachment '%s'"
 msgstr "Ошибка запуска вложения '%s'"
 
 #: outwiker/app/actions/attachfiles.py:24
-msgid "Attach Files…"
+msgid "Attach files…"
 msgstr "Прикрепить файлы…"
 
 #: outwiker/app/actions/attachfiles.py:28
@@ -113,7 +113,7 @@ msgid "Attach files to current page"
 msgstr "Прикрепить файлы к текущей странице"
 
 #: outwiker/app/actions/attachfolder.py:25
-msgid "Attach Folder…"
+msgid "Attach folder…"
 msgstr "Прикрепить папку…"
 
 #: outwiker/app/actions/attachfolder.py:29
@@ -122,7 +122,7 @@ msgstr "Прикрепить папку с файлами к текущей ст
 
 #: outwiker/app/actions/attachopenfolder.py:20
 #: outwiker/app/gui/pagepopupmenu.py:105
-msgid "Open Attachments Folder"
+msgid "Open attachments folder"
 msgstr "Открыть папку с вложениями"
 
 #: outwiker/app/actions/attachopenfolder.py:24
@@ -181,7 +181,7 @@ msgstr "Выбрать всё"
 msgid "Select all attachments. Action for the attachments panel"
 msgstr "Выбрать все вложения. Действие для панели \"Вложения\""
 
-#: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:98
+#: outwiker/app/actions/clipboard.py:22
 msgid "Copy Page Title"
 msgstr "Копировать заголовок страницы"
 
@@ -198,7 +198,7 @@ msgstr "Скопировано в буфер обмена"
 msgid "Page title has been copied to the clipboard"
 msgstr "Заголовок страницы скопирован в буфер обмена"
 
-#: outwiker/app/actions/clipboard.py:52 outwiker/app/gui/pagepopupmenu.py:99
+#: outwiker/app/actions/clipboard.py:52
 msgid "Copy Page Path"
 msgstr "Копировать путь до страницы"
 
@@ -210,7 +210,7 @@ msgstr "Копировать путь до текущей страницы в б
 msgid "Path to the page has been copied to the clipboard"
 msgstr "Путь до страницы скопирован в буфер обмена"
 
-#: outwiker/app/actions/clipboard.py:82 outwiker/app/gui/pagepopupmenu.py:101
+#: outwiker/app/actions/clipboard.py:82
 msgid "Copy Attachments Path"
 msgstr "Копировать путь до вложений"
 
@@ -222,7 +222,7 @@ msgstr "Копировать путь до вложений текущей ст�
 msgid "Path to the page attachments has been copied to the clipboard"
 msgstr "Путь до вложений страницы скопирован в буфер обмена"
 
-#: outwiker/app/actions/clipboard.py:114 outwiker/app/gui/pagepopupmenu.py:103
+#: outwiker/app/actions/clipboard.py:114
 msgid "Copy Page Link"
 msgstr "Копировать ссылку на страницу"
 
@@ -1443,6 +1443,22 @@ msgstr "Последнее"
 msgid "Can't set page icon\n"
 msgstr "Ошибка установки значка страницы\n"
 
+#: outwiker/app/gui/pagepopupmenu.py:98
+msgid "Copy page title"
+msgstr "Копировать заголовок страницы"
+
+#: outwiker/app/gui/pagepopupmenu.py:99
+msgid "Copy page path"
+msgstr "Копировать путь до страницы"
+
+#: outwiker/app/gui/pagepopupmenu.py:101
+msgid "Copy attachments path"
+msgstr "Копировать путь до вложений"
+
+#: outwiker/app/gui/pagepopupmenu.py:103
+msgid "Copy page link"
+msgstr "Копировать ссылку на страницу"
+
 #: outwiker/app/gui/preferences/attachpanel.py:16
 msgid "Insert link to attachment"
 msgstr "Вставить ссылку на вложение"
@@ -1650,19 +1666,19 @@ msgstr "Авто"
 #: outwiker/app/gui/preferences/hotkeyspanel.py:47
 #, python-brace-format
 msgid ""
-"{hotkey} hotkey assigned for \"{old}\".\n"
-"Assign this hotkey for \"{new}\"?"
+"{hotkey} shortcut assigned for \"{old}\".\n"
+"Assign this shortcut for \"{new}\"?"
 msgstr ""
 "Сочетание клавиш {hotkey} назначено для \"{old}\".\n"
 "Назначить это сочетание клавиш для \"{new}\"?"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:53
-msgid "Hotkeys conflict"
+msgid "Shortcuts conflict"
 msgstr "Конфликт сочетаний клавиш"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:105
 msgid ""
-"Hotkey.\n"
+"Shortcut.\n"
 "Press the Backspace key to clear"
 msgstr ""
 "Сочетание клавиш.\n"
@@ -1879,7 +1895,7 @@ msgid "Colors"
 msgstr "Цвета"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:145
-msgid "Hotkeys"
+msgid "Keyboard shortcuts"
 msgstr "Сочетания клавиш"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:146
@@ -3159,6 +3175,12 @@ msgstr "[[комментарий -> ссылка]]"
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
 
+#~ msgid "Hotkeys"
+#~ msgstr "Сочетания клавиш"
+
+#~ msgid "Attach Files…"
+#~ msgstr "Прикрепить файлы…"
+
 #~ msgid "Buttons icon size (an application restart is required)"
 #~ msgstr "Размер значков на кнопках (требуется перезапуск приложения)"
 
@@ -3625,9 +3647,6 @@ msgstr "[[ссылка | комментарий]]"
 
 #~ msgid "Reload"
 #~ msgstr "Перезагрузить"
-
-#~ msgid "Attach files…"
-#~ msgstr "Прикрепить файлы…"
 
 #~ msgid "Global search…"
 #~ msgstr "Глобальный поиск…"

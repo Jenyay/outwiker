@@ -1,0 +1,17 @@
+[General]
+type = wiki
+tags = !fixme,for users,styles
+order = 3
+cursorposition = 1548
+datetime = 2026-02-28 18:28:16.877089
+uid = styles
+
+[wiki]
+md5_hash = 63eb89cdf57ee3ae29187a8ba2a6ba15
+
+[Tree]
+expand = True
+
+[Misc]
+pageindex = 0
+

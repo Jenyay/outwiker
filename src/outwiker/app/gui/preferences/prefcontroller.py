@@ -142,7 +142,7 @@ class PrefController:
             PreferencePanelInfo(attachPage, _("Attachments")),
             PreferencePanelInfo(htmlRenderPage, _("Preview")),
             PreferencePanelInfo(colorsPage, _("Colors")),
-            PreferencePanelInfo(hotkeysPage, _("Hotkeys")),
+            PreferencePanelInfo(hotkeysPage, _("Keyboard shortcuts")),
             PreferencePanelInfo(formatsPage, _("Formats")),
         ]
 

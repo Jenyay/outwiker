@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 20:47+0300\n"
+"POT-Creation-Date: 2026-02-28 18:38+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -105,16 +105,16 @@ msgid "Can't execute attachment '%s'"
 msgstr "Can't execute attachment '%s'"
 
 #: outwiker/app/actions/attachfiles.py:24
-msgid "Attach Files…"
-msgstr "Attach Files…"
+msgid "Attach files…"
+msgstr "Attach files…"
 
 #: outwiker/app/actions/attachfiles.py:28
 msgid "Attach files to current page"
 msgstr "Attach files to current page"
 
 #: outwiker/app/actions/attachfolder.py:25
-msgid "Attach Folder…"
-msgstr "Attach Folder…"
+msgid "Attach folder…"
+msgstr "Attach folder…"
 
 #: outwiker/app/actions/attachfolder.py:29
 msgid "Attach folder with files to current page"
@@ -122,8 +122,8 @@ msgstr "Attach folder with files to current page"
 
 #: outwiker/app/actions/attachopenfolder.py:20
 #: outwiker/app/gui/pagepopupmenu.py:105
-msgid "Open Attachments Folder"
-msgstr "Open Attachments Folder"
+msgid "Open attachments folder"
+msgstr "Open attachments folder"
 
 #: outwiker/app/actions/attachopenfolder.py:24
 msgid "Open folder with attachments"
@@ -181,7 +181,7 @@ msgstr "Select all"
 msgid "Select all attachments. Action for the attachments panel"
 msgstr "Select all attachments. Action for the attachments panel"
 
-#: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:98
+#: outwiker/app/actions/clipboard.py:22
 msgid "Copy Page Title"
 msgstr "Copy Page Title"
 
@@ -198,7 +198,7 @@ msgstr "Copied to clipboard"
 msgid "Page title has been copied to the clipboard"
 msgstr "Page title has been copied to the clipboard"
 
-#: outwiker/app/actions/clipboard.py:52 outwiker/app/gui/pagepopupmenu.py:99
+#: outwiker/app/actions/clipboard.py:52
 msgid "Copy Page Path"
 msgstr "Copy Page Path"
 
@@ -210,7 +210,7 @@ msgstr "Copy path to current page to clipboard"
 msgid "Path to the page has been copied to the clipboard"
 msgstr "Path to the page has been copied to the clipboard"
 
-#: outwiker/app/actions/clipboard.py:82 outwiker/app/gui/pagepopupmenu.py:101
+#: outwiker/app/actions/clipboard.py:82
 msgid "Copy Attachments Path"
 msgstr "Copy Attachments Path"
 
@@ -222,7 +222,7 @@ msgstr "Copy path to attachments for current page to clipboard"
 msgid "Path to the page attachments has been copied to the clipboard"
 msgstr "Path to the page attachments has been copied to the clipboard"
 
-#: outwiker/app/actions/clipboard.py:114 outwiker/app/gui/pagepopupmenu.py:103
+#: outwiker/app/actions/clipboard.py:114
 msgid "Copy Page Link"
 msgstr "Copy Page Link"
 
@@ -1436,6 +1436,23 @@ msgstr "Recent"
 msgid "Can't set page icon\n"
 msgstr "Can't set page icon\n"
 
+#: outwiker/app/gui/pagepopupmenu.py:98
+msgid "Copy page title"
+msgstr "Copy page title"
+
+#: outwiker/app/gui/pagepopupmenu.py:99
+msgid "Copy page path"
+msgstr "Copy page path"
+
+#: outwiker/app/gui/pagepopupmenu.py:101
+#| msgid "Copy attachments Path"
+msgid "Copy attachments path"
+msgstr "Copy attachments path"
+
+#: outwiker/app/gui/pagepopupmenu.py:103
+msgid "Copy page link"
+msgstr "Copy page link"
+
 #: outwiker/app/gui/preferences/attachpanel.py:16
 msgid "Insert link to attachment"
 msgstr "Insert link to attachment"
@@ -1641,24 +1658,31 @@ msgid "Auto"
 msgstr "Auto"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:47
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "{hotkey} hotkey assigned for \"{old}\".\n"
+#| "Assign this hotkey for \"{new}\"?"
 msgid ""
-"{hotkey} hotkey assigned for \"{old}\".\n"
-"Assign this hotkey for \"{new}\"?"
+"{hotkey} shortcut assigned for \"{old}\".\n"
+"Assign this shortcut for \"{new}\"?"
 msgstr ""
 "{hotkey} hotkey assigned for \"{old}\".\n"
 "Assign this hotkey for \"{new}\"?"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:53
-msgid "Hotkeys conflict"
-msgstr "Hotkeys conflict"
+#| msgid "Hotkeys conflict"
+msgid "Shortcuts conflict"
+msgstr "Shortcuts conflict"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:105
+#| msgid ""
+#| "Hotkey.\n"
+#| "Press the Backspace key to clear"
 msgid ""
-"Hotkey.\n"
+"Shortcut.\n"
 "Press the Backspace key to clear"
 msgstr ""
-"Hotkey.\n"
+"Shortcut.\n"
 "Press the Backspace key to clear"
 
 #: outwiker/app/gui/preferences/htmleditorpanel.py:34
@@ -1872,8 +1896,8 @@ msgid "Colors"
 msgstr "Colors"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:145
-msgid "Hotkeys"
-msgstr "Hotkeys"
+msgid "Keyboard shortcuts"
+msgstr ""
 
 #: outwiker/app/gui/preferences/prefcontroller.py:146
 msgid "Formats"
@@ -3151,6 +3175,16 @@ msgstr "[[comment -> link]]"
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
 
+#~ msgid "Hotkeys"
+#~ msgstr "Hotkeys"
+
+#~| msgid "Open Attachments Folder"
+#~ msgid "Open attachments Folder"
+#~ msgstr "Open attachments Folder"
+
+#~ msgid "Attach Files…"
+#~ msgstr "Attach Files…"
+
 #~ msgid "Notes Tree"
 #~ msgstr "Notes Tree"
 
@@ -3646,9 +3680,6 @@ msgstr "[[link | comment]]"
 
 #~ msgid "Reload"
 #~ msgstr "Reload"
-
-#~ msgid "Attach files…"
-#~ msgstr "Attach files…"
 
 #~ msgid "Global search…"
 #~ msgstr "Global search…"

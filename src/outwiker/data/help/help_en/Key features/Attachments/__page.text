@@ -1,0 +1,31 @@
+!! Attachments
+
+Working with attached files and folders (attachments) is one of the main features of the OutWiker program. Attachments can contain both files and folders with files. Attached image files can be inserted into the text of the page. For example:
+
+%center%Attach:cat.jpg
+
+You can also insert links to attached files: [[Attach:cat.jpg]], in which case clicking on such a link will launch an external program to open the file of the corresponding type.
+
+All files attached to a note are stored in the nested folder ''__attach'' inside the note's folder. 
+
+To attach new files, you can drag and drop them into the "Attachments" window, use the "Attach Files" button on the toolbar, or select the menu item "Tools - Attachments - Attach files...".
+
+%center%Attach:attach_panel.png
+
+The buttons on the toolbar of the "Attachments" window allow you to perform the following actions:
+
+* Add (copy) new files to the attachments (the '''"Attach files..."''' button).
+* Add (copy) an existing folder to the attachments (the '''"Attach folder..."''' button)
+* Create an empty folder (the '''"Create a new attached folder"''' button).
+* Delete attached files or folders (the '''"Delete attachments"''' button).
+* Change the name of an attached file or folder (the '''"Rename attachment"''' button).
+* Select all attached files and folders (the '''"Select all"''' button).
+* Insert a link to the attached files or folders selected in the "Attachments" panel onto the note page (the '''"Insert link to attachments"''' button).
+* Open in an external program or execute the selected attached files (the '''"Execute attachments"''' button).
+* Open the folder with the attached files in the system file manager (the '''"Open attachments folder"''' button).
+* Copy the path to the folder with the attached files to the clipboard (the '''"Copy attachments path"''' button).
+
+----
+'''See also:'''
+* page://wiki-attachments
+* page://settings_interface_attachments

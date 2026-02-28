@@ -44,13 +44,13 @@ class HotKeysPanel(BasePrefPanel):
             oldAction = self._application.actionController.getTitle(
                 oldActionStrId)
 
-            text = _('{hotkey} hotkey assigned for "{old}".\nAssign this hotkey for "{new}"?').format(
+            text = _('{hotkey} shortcut assigned for "{old}".\nAssign this shortcut for "{new}"?').format(
                 hotkey=newhotkey,
                 old=oldAction,
                 new=newAction)
 
             if (MessageBox(text,
-                           _('Hotkeys conflict'),
+                           _('Shortcuts conflict'),
                            wx.ICON_QUESTION | wx.YES | wx.NO) == wx.YES):
                 self.__hotkeys[oldActionStrId] = None
             else:
@@ -102,7 +102,7 @@ class HotKeysPanel(BasePrefPanel):
         hotkeyLabel = wx.StaticText(
             self,
             -1,
-            _('Hotkey.\nPress the Backspace key to clear'))
+            _('Shortcut.\nPress the Backspace key to clear'))
 
         # Горячая клавиша
         self.__hotkeyCtrl = HotkeyCtrl(self)

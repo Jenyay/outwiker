@@ -95,14 +95,14 @@ class PagePopupMenu:
 
         popupMenu.AppendSeparator()
 
-        self.ID_COPY_TITLE = popupMenu.Append(wx.ID_ANY, _("Copy Page Title")).GetId()
-        self.ID_COPY_PATH = popupMenu.Append(wx.ID_ANY, _("Copy Page Path")).GetId()
+        self.ID_COPY_TITLE = popupMenu.Append(wx.ID_ANY, _("Copy page title")).GetId()
+        self.ID_COPY_PATH = popupMenu.Append(wx.ID_ANY, _("Copy page path")).GetId()
         self.ID_COPY_ATTACH_PATH = popupMenu.Append(
-            wx.ID_ANY, _("Copy Attachments Path")
+            wx.ID_ANY, _("Copy attachments path")
         ).GetId()
-        self.ID_COPY_LINK = popupMenu.Append(wx.ID_ANY, _("Copy Page Link")).GetId()
+        self.ID_COPY_LINK = popupMenu.Append(wx.ID_ANY, _("Copy page link")).GetId()
         self.ID_OPEN_ATTACH_FOLDER = popupMenu.Append(
-            wx.ID_ANY, _("Open Attachments Folder")
+            wx.ID_ANY, _("Open attachments folder")
         ).GetId()
 
         popupMenu.AppendSeparator()

@@ -21,7 +21,7 @@ class AttachFilesAction(BaseAction):
 
     @property
     def title(self):
-        return _("Attach Files…")
+        return _("Attach files…")
 
     @property
     def description(self):

@@ -22,7 +22,7 @@ class AttachFolderAction(BaseAction):
 
     @property
     def title(self):
-        return _("Attach Folder…")
+        return _("Attach folder…")
 
     @property
     def description(self):
