@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-24 21:14+0300\n"
-"PO-Revision-Date: 2026-02-08 19:16+0300\n"
+"POT-Creation-Date: 2026-02-17 20:47+0300\n"
+"PO-Revision-Date: 2026-02-28 10:11+0300\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -359,7 +359,7 @@ msgstr "Öffnen…"
 msgid "Open tree notes"
 msgstr "Notizenbaum öffnen"
 
-#: outwiker/app/actions/openhelp.py:25 outwiker/app/gui/mainwindow.py:163
+#: outwiker/app/actions/openhelp.py:25 outwiker/app/gui/mainwindow.py:165
 msgid "Help"
 msgstr "Hilfe"
 
@@ -478,9 +478,9 @@ msgid "Begin search and replace on page"
 msgstr "Starten suchen und ersetzen auf Seite"
 
 #: outwiker/app/actions/showhideattaches.py:18
-#: outwiker/app/actions/switchto.py:63
+#: outwiker/app/actions/switchto.py:66
 #: outwiker/app/gui/mainpanes/attachmainpane.py:40
-#: outwiker/app/gui/mainwindow.py:481
+#: outwiker/app/gui/mainwindow.py:486
 #: outwiker/app/gui/preferences/prefcontroller.py:142
 #: outwiker/app/gui/preferences/wikieditorpanel.py:37
 #: outwiker/gui/controls/filestreectrl.py:84
@@ -492,9 +492,9 @@ msgstr "Anlagen"
 msgid "Show / hide a attachments panel"
 msgstr "Anzeigen / verstecken ein Anlagen-Panel"
 
-#: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:86
+#: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:90
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
-#: outwiker/app/gui/mainwindow.py:493
+#: outwiker/app/gui/mainwindow.py:498
 #: outwiker/gui/controls/pagelist_columns.py:226
 #: outwiker/pages/search/searchpanel.py:48
 msgid "Tags"
@@ -505,12 +505,12 @@ msgid "Show / hide a tags panel"
 msgstr "Anzeigen / verstecken ein Tags-Panel"
 
 #: outwiker/app/actions/showhidetree.py:18
-msgid "Notes Tree"
-msgstr "Notizen-Baum"
+msgid "Note Tree"
+msgstr "Notizbaum"
 
 #: outwiker/app/actions/showhidetree.py:22
-msgid "Show / hide a notes tree panel"
-msgstr "Anzeigen / verstecken ein Notizbaum-Panel"
+msgid "Show / hide a note tree panel"
+msgstr "Zeige / Verstecke ein Notizbaum-Panel"
 
 #: outwiker/app/actions/sortchildalpha.py:19
 msgid "Sort Children Pages Alphabetically"
@@ -528,30 +528,30 @@ msgstr "Neue Seite auf gleicher Ebene nach dem Alphabet sortieren"
 msgid "Sort siblings pages alphabetically"
 msgstr "Neue Seite auf gleicher Ebene nach dem Alphabet sortieren"
 
-#: outwiker/app/actions/switchto.py:17
+#: outwiker/app/actions/switchto.py:18
 msgid "Main panel"
 msgstr "Grundleiste"
 
-#: outwiker/app/actions/switchto.py:21
+#: outwiker/app/actions/switchto.py:22
 msgid "Set focus to main panel"
 msgstr "Fokus auf Grundleiste aufstellen"
 
-#: outwiker/app/actions/switchto.py:40
+#: outwiker/app/actions/switchto.py:42
 #: outwiker/app/gui/preferences/prefcontroller.py:138
-msgid "Notes tree"
-msgstr "Notizen-Baum"
+msgid "Note tree"
+msgstr "Notizbaum"
 
-#: outwiker/app/actions/switchto.py:44
-msgid "Set focus to notes tree"
-msgstr "Fokus auf Notizen-Baum aufstellen"
+#: outwiker/app/actions/switchto.py:46
+msgid "Set focus to note tree"
+msgstr "Fokus auf Notizbaum setzen"
 
-#: outwiker/app/actions/switchto.py:67
+#: outwiker/app/actions/switchto.py:70
 msgid "Set focus to attachments panel"
 msgstr "Fokus auf ein Anlagen-Panel aufstellen"
 
-#: outwiker/app/actions/switchto.py:90
-msgid "Set focus to tags cloud panel"
-msgstr "Fokus auf eine Paneel einer Tag Wolke aufstellen"
+#: outwiker/app/actions/switchto.py:94
+msgid "Set focus to tag cloud panel"
+msgstr "Fokus auf das Panel einer Tag-Wolke setzen"
 
 #: outwiker/app/actions/tabs.py:17
 msgid "Close Tab"
@@ -614,7 +614,7 @@ msgid "Rename Tag…"
 msgstr "Tag umbenennen…"
 
 #: outwiker/app/actions/tags.py:147
-#: outwiker/app/gui/dialogs/renametagdialog.py:21
+#: outwiker/app/gui/dialogs/renametagdialog.py:24
 #: outwiker/app/gui/tagpopupmenu.py:22
 msgid "Rename tag"
 msgstr "Tag umbenennen"
@@ -1075,7 +1075,7 @@ msgstr "{name}   -   {size} KB   -   {date}"
 msgid "{count} file(s)  -  {size} KB"
 msgstr "{count} Datei(en)  -  {size} KB"
 
-#: outwiker/app/gui/basepagedialog.py:142 outwiker/app/gui/mainwindow.py:177
+#: outwiker/app/gui/basepagedialog.py:142 outwiker/app/gui/mainwindow.py:179
 #: outwiker/app/gui/preferences/prefcontroller.py:136
 #: outwiker/app/gui/preferences/prefcontroller.py:166
 #: outwiker/pages/wiki/wikipagecontroller.py:67
@@ -1206,17 +1206,17 @@ msgstr "Kontakte der Autoren"
 msgid "Author: Eugeniy Ilin (aka Jenyay)"
 msgstr "Autor: Eugeniy Ilin (aka Jenyay)"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:35
-#: outwiker/app/gui/dialogs/renametagdialog.py:84
+#: outwiker/app/gui/dialogs/renametagdialog.py:38
+#: outwiker/app/gui/dialogs/renametagdialog.py:87
 msgid "Select tag for rename"
 msgstr "Tag für Umbenennung wählen"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:36
+#: outwiker/app/gui/dialogs/renametagdialog.py:39
 msgid "New tag name"
 msgstr "Neuen Tagname"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:85
-#: outwiker/app/gui/dialogs/renametagdialog.py:90
+#: outwiker/app/gui/dialogs/renametagdialog.py:88
+#: outwiker/app/gui/dialogs/renametagdialog.py:93
 #: outwiker/app/gui/pagedialogpanels/appearancepanel.py:124
 #: outwiker/app/gui/pagedialogpanels/generalpanel.py:521
 #: outwiker/app/gui/preferences/iconsetpanel.py:226
@@ -1230,7 +1230,7 @@ msgstr "Neuen Tagname"
 msgid "Error"
 msgstr "Fehler"
 
-#: outwiker/app/gui/dialogs/renametagdialog.py:89
+#: outwiker/app/gui/dialogs/renametagdialog.py:92
 #: outwiker/app/gui/tagpopupmenu.py:33
 msgid "Enter new tag name"
 msgstr "Neuen Tagname eingeben"
@@ -1251,16 +1251,16 @@ msgid "Attach files to the note?"
 msgstr "Dateien zur Notiz anhängen?"
 
 #: outwiker/app/gui/emptypageview.py:27
-msgid "Create new notes tree..."
+msgid "Create new note tree..."
 msgstr "Entwerfe neuen Notizenbaum..."
 
 #: outwiker/app/gui/emptypageview.py:35
-msgid "Open notes tree from disk..."
+msgid "Open note tree from disk..."
 msgstr "Öffne Notizenbaum von Festplatte..."
 
 #: outwiker/app/gui/emptypageview.py:51
-msgid "Recently used notes tree:"
-msgstr "Zuletzt benutzter Notizenbaum:"
+msgid "Recently used note tree:"
+msgstr "Zuletzt benutzter Notizbaum:"
 
 #: outwiker/app/gui/emptypageview.py:57
 msgid "Open"
@@ -1274,69 +1274,69 @@ msgstr "Notiz"
 msgid "Notes"
 msgstr "Notizen"
 
-#: outwiker/app/gui/mainwindow.py:148
+#: outwiker/app/gui/mainwindow.py:150
 msgid "File"
 msgstr "Datei"
 
-#: outwiker/app/gui/mainwindow.py:150
+#: outwiker/app/gui/mainwindow.py:152
 #: outwiker/app/gui/preferences/generalpanel.py:41
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: outwiker/app/gui/mainwindow.py:152
+#: outwiker/app/gui/mainwindow.py:154
 msgid "Tree"
 msgstr "Baum"
 
-#: outwiker/app/gui/mainwindow.py:154
+#: outwiker/app/gui/mainwindow.py:156
 msgid "Tools"
 msgstr "Werkzeuge"
 
-#: outwiker/app/gui/mainwindow.py:156 outwiker/gui/rootpagepanel.py:166
+#: outwiker/app/gui/mainwindow.py:158 outwiker/gui/rootpagepanel.py:169
 msgid "Bookmarks"
 msgstr "Lesezeichen"
 
-#: outwiker/app/gui/mainwindow.py:158
+#: outwiker/app/gui/mainwindow.py:160
 msgid "View"
 msgstr "Ansicht"
 
-#: outwiker/app/gui/mainwindow.py:160 outwiker/app/gui/mainwindow.py:406
+#: outwiker/app/gui/mainwindow.py:162 outwiker/app/gui/mainwindow.py:411
 msgid "Go to"
 msgstr "Zu überzugehen"
 
-#: outwiker/app/gui/mainwindow.py:168
+#: outwiker/app/gui/mainwindow.py:170
 msgid "Toolbars"
 msgstr "Funktionsleisten"
 
-#: outwiker/app/gui/mainwindow.py:183
+#: outwiker/app/gui/mainwindow.py:185
 #: outwiker/app/gui/preferences/prefcontroller.py:183
 msgid "Plugins"
 msgstr "Plugins"
 
-#: outwiker/app/gui/mainwindow.py:394
+#: outwiker/app/gui/mainwindow.py:399
 msgid "Movement"
 msgstr "Bewegung"
 
-#: outwiker/app/gui/mainwindow.py:443
-#: outwiker/app/gui/preferences/colorspanel.py:67
+#: outwiker/app/gui/mainwindow.py:448
 #: outwiker/app/gui/preferences/colorspanel.py:68
 #: outwiker/app/gui/preferences/colorspanel.py:69
 #: outwiker/app/gui/preferences/colorspanel.py:70
 #: outwiker/app/gui/preferences/colorspanel.py:71
-#: outwiker/app/gui/preferences/colorspanel.py:73
+#: outwiker/app/gui/preferences/colorspanel.py:72
 #: outwiker/app/gui/preferences/colorspanel.py:74
 #: outwiker/app/gui/preferences/colorspanel.py:75
 #: outwiker/app/gui/preferences/colorspanel.py:76
 #: outwiker/app/gui/preferences/colorspanel.py:77
-#: outwiker/app/gui/preferences/colorspanel.py:79
+#: outwiker/app/gui/preferences/colorspanel.py:78
+#: outwiker/app/gui/preferences/colorspanel.py:80
 #: outwiker/app/gui/preferences/prefcontroller.py:139
 msgid "Tabs"
 msgstr "Tabs"
 
-#: outwiker/app/gui/mainwindow.py:455
+#: outwiker/app/gui/mainwindow.py:460
 msgid "Paths"
 msgstr "Pfade"
 
-#: outwiker/app/gui/mainwindow.py:609
+#: outwiker/app/gui/mainwindow.py:614
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -1345,7 +1345,7 @@ msgstr ""
 "Konfiguration kann nicht gespeichert werden\n"
 "%s"
 
-#: outwiker/app/gui/mainwndcontroller.py:232
+#: outwiker/app/gui/mainwndcontroller.py:223
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1472,12 +1472,13 @@ msgstr "Hauptbereiche Textfarbe"
 #: outwiker/app/gui/preferences/colorspanel.py:63
 #: outwiker/app/gui/preferences/colorspanel.py:64
 #: outwiker/app/gui/preferences/colorspanel.py:65
+#: outwiker/app/gui/preferences/colorspanel.py:66
 #: outwiker/app/gui/preferences/prefcontroller.py:173
 msgid "Editor"
 msgstr "Editor"
 
 #: outwiker/app/gui/preferences/colorspanel.py:62
-#: outwiker/app/gui/preferences/colorspanel.py:73
+#: outwiker/app/gui/preferences/colorspanel.py:74
 msgid "Font color"
 msgstr "Schriftfarbe"
 
@@ -1490,46 +1491,50 @@ msgid "Background color of the selected text"
 msgstr "Hintergrundfarbe des ausgewählten Text"
 
 #: outwiker/app/gui/preferences/colorspanel.py:65
+msgid "Line number font color"
+msgstr "Farbe der Zeilennummerierung"
+
+#: outwiker/app/gui/preferences/colorspanel.py:66
 msgid "Page margin background color"
 msgstr "Hintergrundfarbe des Feld der Seite"
 
-#: outwiker/app/gui/preferences/colorspanel.py:67
+#: outwiker/app/gui/preferences/colorspanel.py:68
 msgid "Tab color"
 msgstr "Tab-Farbe"
 
-#: outwiker/app/gui/preferences/colorspanel.py:68
+#: outwiker/app/gui/preferences/colorspanel.py:69
 msgid "Сolor of the selected tab"
 msgstr "Farbe des gewählten Tabs"
 
-#: outwiker/app/gui/preferences/colorspanel.py:69
+#: outwiker/app/gui/preferences/colorspanel.py:70
 msgid "Сolor of the tab under cursor"
 msgstr "Farbe des Tabs unterm Mauszeiger"
 
-#: outwiker/app/gui/preferences/colorspanel.py:70
+#: outwiker/app/gui/preferences/colorspanel.py:71
 msgid "Color of the pressed tab"
 msgstr "Tab-Farbe, wenn festgehalten"
 
-#: outwiker/app/gui/preferences/colorspanel.py:71
+#: outwiker/app/gui/preferences/colorspanel.py:72
 msgid "Color of the dragged tab"
 msgstr "Tab-Farbe, wenn verschoben"
 
-#: outwiker/app/gui/preferences/colorspanel.py:74
+#: outwiker/app/gui/preferences/colorspanel.py:75
 msgid "Font color of the selected tab"
 msgstr "Schriftfarbe des gewählten Tabs"
 
-#: outwiker/app/gui/preferences/colorspanel.py:75
+#: outwiker/app/gui/preferences/colorspanel.py:76
 msgid "Font color of the tab under cursor"
 msgstr "Schriftfarbe des Tabs unterm Mauszeiger"
 
-#: outwiker/app/gui/preferences/colorspanel.py:76
+#: outwiker/app/gui/preferences/colorspanel.py:77
 msgid "Font color of the pressed tab"
 msgstr "Schriftfarbe, wenn Tab festgehalten"
 
-#: outwiker/app/gui/preferences/colorspanel.py:77
+#: outwiker/app/gui/preferences/colorspanel.py:78
 msgid "Font color of the dragged tab"
 msgstr "Schriftfarbe, wenn Tab verschoben"
 
-#: outwiker/app/gui/preferences/colorspanel.py:79
+#: outwiker/app/gui/preferences/colorspanel.py:80
 msgid "Tab border color"
 msgstr "Farbe für Tab-Umrandung"
 
@@ -1857,8 +1862,8 @@ msgid "Site"
 msgstr "Website"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:140
-msgid "Tags cloud"
-msgstr "Tag Wolke"
+msgid "Tag cloud"
+msgstr "Tag-Wolke"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:141
 msgid "Tray icon"
@@ -1901,15 +1906,15 @@ msgstr "Symbole des Benutzers"
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: outwiker/app/gui/preferences/spellpanel.py:30
+#: outwiker/app/gui/preferences/spellpanel.py:32
 msgid "Skip words with digits"
 msgstr "Überspringe Wärter mit Zahlen"
 
-#: outwiker/app/gui/preferences/spellpanel.py:39
+#: outwiker/app/gui/preferences/spellpanel.py:40
 msgid "Use dictionaries"
 msgstr "Benutze Wörterbuch"
 
-#: outwiker/app/gui/preferences/spellpanel.py:55
+#: outwiker/app/gui/preferences/spellpanel.py:48
 msgid "Custom dictonary (one word per line)"
 msgstr "Benutzerdefiniertes Wörterbuch (ein Wort pro Linie)"
 
@@ -1938,8 +1943,8 @@ msgid "Headers in the popup window: "
 msgstr "Header in das Popup-Fenster: "
 
 #: outwiker/app/gui/preferences/tagspanel.py:41
-msgid "Tags cloud view mode"
-msgstr "Tags Cloud View Modus"
+msgid "Tag cloud view mode"
+msgstr "Betrachtungsmodus für Tag-Wolke"
 
 #: outwiker/app/gui/preferences/tagspanel.py:42
 msgid "As continuous text"
@@ -2038,7 +2043,7 @@ msgid "Tag removing"
 msgstr "Tag entfernen"
 
 #: outwiker/app/gui/tagspanelcontroller.py:91
-#: outwiker/app/gui/tagspanelcontroller.py:103 outwiker/core/treetools.py:57
+#: outwiker/app/gui/tagspanelcontroller.py:103 outwiker/core/treetools.py:58
 msgid "Page is opened as read-only"
 msgstr "Seite wird als schreibgeschützt geöffnet"
 
@@ -2140,12 +2145,12 @@ msgid "Loading"
 msgstr "es läd"
 
 #: outwiker/app/services/tree.py:113
-msgid "Opening notes tree..."
-msgstr "Notizen Baum wird geöffnet..."
+msgid "Opening note tree..."
+msgstr "Notizbaum wird geöffnet..."
 
 #: outwiker/app/services/tree.py:138
-msgid "Can't load notes tree:\n"
-msgstr "Kann Notizen-Struktur nicht laden:\n"
+msgid "Can't load note tree:\n"
+msgstr "Kann Notizbaum nicht laden:\n"
 
 #: outwiker/app/services/tree.py:178
 #, python-format
@@ -2230,76 +2235,92 @@ msgid "battery"
 msgstr "Akku"
 
 #: outwiker/core/defines.py:98
-msgid "books"
-msgstr "Bücher"
-
-#: outwiker/core/defines.py:99
-msgid "computer"
-msgstr "Computer"
-
-#: outwiker/core/defines.py:100
-msgid "emotions"
-msgstr "Emotionen"
-
-#: outwiker/core/defines.py:101
-msgid "flags"
-msgstr "Flaggen"
-
-#: outwiker/core/defines.py:102
-msgid "folders"
-msgstr "Ordner"
-
-#: outwiker/core/defines.py:103
-msgid "food"
-msgstr "Essen"
-
-#: outwiker/core/defines.py:104
-msgid "internet"
-msgstr "Internet"
-
-#: outwiker/core/defines.py:105
-msgid "money"
-msgstr "Geld"
-
-#: outwiker/core/defines.py:106
-msgid "people"
-msgstr "Menschen"
-
-#: outwiker/core/defines.py:107
-msgid "signs"
-msgstr "Zeichen"
-
-#: outwiker/core/defines.py:108
-msgid "software"
-msgstr "Software"
-
-#: outwiker/core/defines.py:109
-msgid "tags"
-msgstr "Tags"
-
-#: outwiker/core/defines.py:110
-msgid "weather"
-msgstr "Wetter"
-
-#: outwiker/core/defines.py:111
-msgid "list"
-msgstr "Liste"
-
-#: outwiker/core/defines.py:112
 msgid "bookmarks"
 msgstr "Lesezeichen"
 
-#: outwiker/core/defines.py:113
-msgid "office"
-msgstr "Büro"
+#: outwiker/core/defines.py:99
+msgid "books"
+msgstr "Bücher"
 
-#: outwiker/core/defines.py:114
+#: outwiker/core/defines.py:100
 msgid "charts"
 msgstr "Diagramme"
 
+#: outwiker/core/defines.py:101
+msgid "computer"
+msgstr "Computer"
+
+#: outwiker/core/defines.py:102
+msgid "emotions"
+msgstr "Emotionen"
+
+#: outwiker/core/defines.py:103
+msgid "flags"
+msgstr "Flaggen"
+
+#: outwiker/core/defines.py:104
+msgid "folders"
+msgstr "Ordner"
+
+#: outwiker/core/defines.py:105
+msgid "food"
+msgstr "Essen"
+
+#: outwiker/core/defines.py:106
+msgid "images"
+msgstr "Bilder"
+
+#: outwiker/core/defines.py:107
+msgid "internet"
+msgstr "Internet"
+
+#: outwiker/core/defines.py:108
+msgid "list"
+msgstr "Liste"
+
+#: outwiker/core/defines.py:109
+msgid "money"
+msgstr "Geld"
+
+#: outwiker/core/defines.py:110
+msgid "office"
+msgstr "Büro"
+
+#: outwiker/core/defines.py:111
+msgid "pages"
+msgstr "Seiten"
+
+#: outwiker/core/defines.py:112
+msgid "people"
+msgstr "Menschen"
+
+#: outwiker/core/defines.py:113
+msgid "plants"
+msgstr "Pflanzen"
+
+#: outwiker/core/defines.py:114
+msgid "signs"
+msgstr "Zeichen"
+
 #: outwiker/core/defines.py:115
+msgid "software"
+msgstr "Software"
+
+#: outwiker/core/defines.py:116
+msgid "sport"
+msgstr "Sport"
+
+#: outwiker/core/defines.py:117
+msgid "tags"
+msgstr "Tags"
+
+#: outwiker/core/defines.py:118
 msgid "text"
 msgstr "Text"
+
+#: outwiker/core/defines.py:119
+msgid "weather"
+msgstr "Wetter"
 
 #: outwiker/core/htmlimproverfactory.py:27
 msgid "Line Breaks (<br/>)"
@@ -2561,13 +2582,13 @@ msgstr "Datei %s kann nicht gelesen werden"
 msgid "Default size"
 msgstr "Standardgröße"
 
-#: outwiker/gui/rootpagepanel.py:73
+#: outwiker/gui/rootpagepanel.py:75
 msgid "Create new page..."
 msgstr "Neue Seite erstellen..."
 
-#: outwiker/gui/rootpagepanel.py:105
-msgid "Path to current notes tree"
-msgstr "Pfad zur aktuellen Notizen-Struktur"
+#: outwiker/gui/rootpagepanel.py:107
+msgid "Path to current note tree"
+msgstr "Pfad zu aktuellem Notizbaum"
 
 #: outwiker/gui/tabledialog.py:14
 msgid "Insert table"
@@ -2597,12 +2618,12 @@ msgstr "Kopfzeile für erste Zeile"
 msgid "Insert rows"
 msgstr "Zeile einfügen"
 
-#: outwiker/gui/tagscloud.py:142
+#: outwiker/gui/tagscloud.py:547
 #, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Anzahl Notizen: {}"
 
-#: outwiker/gui/tagscloud.py:236
+#: outwiker/gui/tagscloud.py:643
 msgid "Applied tags only"
 msgstr "Nur hinzugefügte Tags"
 
