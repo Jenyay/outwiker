@@ -2,10 +2,10 @@
 expand = False
 
 [General]
-type = html
+type = wiki
 order = 0
-tags = fixme,вложения
-datetime = 2026-02-20 20:40:18.381167
+tags = вложения
+datetime = 2026-02-28 10:02:01.416034
 linewrap = True
 cursorposition = 496
 uid = __a60513aa-0c70-4ec9-aee8-4f9193224494

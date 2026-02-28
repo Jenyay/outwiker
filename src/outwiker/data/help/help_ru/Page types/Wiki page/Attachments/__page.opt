@@ -8,9 +8,9 @@ expand = False
 type = wiki
 order = 1
 tags = wiki, вложения
-datetime = 2026-02-16 21:03:49.212373
+datetime = 2026-02-28 09:58:55.499442
 cursorposition = 613
-uid = __81525846-01d4-443e-a631-cfd4010abf64
+uid = wiki-attachments
 alias = Прикрепленные файлы и картинки
 icon = images/__std_image.svg
 
