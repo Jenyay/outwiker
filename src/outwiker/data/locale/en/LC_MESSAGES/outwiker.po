@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 18:38+0300\n"
+"POT-Creation-Date: 2026-02-28 20:52+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -243,8 +243,9 @@ msgid "Close a tree notes"
 msgstr "Close a tree notes"
 
 #: outwiker/app/actions/editpageprop.py:18
-msgid "Page Properties…"
-msgstr "Page Properties…"
+#| msgid "Page Properties…"
+msgid "Page properties…"
+msgstr "Page properties…"
 
 #: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:120
 msgid "Edit page properties"
@@ -584,32 +585,27 @@ msgid "Go to previous tab"
 msgstr "Go to previous tab"
 
 #: outwiker/app/actions/tags.py:39
-msgid "Add Tags to Branch…"
-msgstr "Add Tags to Branch…"
+#| msgid "Add tags to branch"
+msgid "Add tags to branch…"
+msgstr "Add tags to branch…"
 
-#: outwiker/app/actions/tags.py:43
+#: outwiker/app/actions/tags.py:43 outwiker/app/actions/tags.py:69
 msgid "Add tags to branch"
 msgstr "Add tags to branch"
 
-#: outwiker/app/actions/tags.py:69
-msgid "Add Tags to Branch"
-msgstr "Add Tags to Branch"
-
 #: outwiker/app/actions/tags.py:92
-msgid "Remove Tags from Branch…"
-msgstr "Remove Tags from Branch…"
+#| msgid "Remove tags from branch"
+msgid "Remove tags from branch…"
+msgstr "Remove tags from branch…"
 
-#: outwiker/app/actions/tags.py:96
+#: outwiker/app/actions/tags.py:96 outwiker/app/actions/tags.py:119
 msgid "Remove tags from branch"
 msgstr "Remove tags from branch"
 
-#: outwiker/app/actions/tags.py:119
-msgid "Remove Tags from Branch"
-msgstr "Remove Tags from Branch"
-
 #: outwiker/app/actions/tags.py:143
-msgid "Rename Tag…"
-msgstr "Rename Tag…"
+#| msgid "Rename Tag…"
+msgid "Rename tag…"
+msgstr "Rename tag…"
 
 #: outwiker/app/actions/tags.py:147
 #: outwiker/app/gui/dialogs/renametagdialog.py:24
@@ -1445,7 +1441,6 @@ msgid "Copy page path"
 msgstr "Copy page path"
 
 #: outwiker/app/gui/pagepopupmenu.py:101
-#| msgid "Copy attachments Path"
 msgid "Copy attachments path"
 msgstr "Copy attachments path"
 
@@ -1658,7 +1653,7 @@ msgid "Auto"
 msgstr "Auto"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:47
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "{hotkey} hotkey assigned for \"{old}\".\n"
 #| "Assign this hotkey for \"{new}\"?"
@@ -1666,18 +1661,14 @@ msgid ""
 "{hotkey} shortcut assigned for \"{old}\".\n"
 "Assign this shortcut for \"{new}\"?"
 msgstr ""
-"{hotkey} hotkey assigned for \"{old}\".\n"
-"Assign this hotkey for \"{new}\"?"
+"{hotkey} shortcut assigned for \"{old}\".\n"
+"Assign this shortcut for \"{new}\"?"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:53
-#| msgid "Hotkeys conflict"
 msgid "Shortcuts conflict"
 msgstr "Shortcuts conflict"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:105
-#| msgid ""
-#| "Hotkey.\n"
-#| "Press the Backspace key to clear"
 msgid ""
 "Shortcut.\n"
 "Press the Backspace key to clear"
@@ -1897,7 +1888,7 @@ msgstr "Colors"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:145
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Keyboard shortcuts"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:146
 msgid "Formats"
@@ -3174,6 +3165,18 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Add Tags to Branch…"
+#~ msgstr "Add Tags to Branch…"
+
+#~ msgid "Add Tags to Branch"
+#~ msgstr "Add Tags to Branch"
+
+#~ msgid "Remove Tags from Branch…"
+#~ msgstr "Remove Tags from Branch…"
+
+#~ msgid "Remove Tags from Branch"
+#~ msgstr "Remove Tags from Branch"
 
 #~ msgid "Hotkeys"
 #~ msgstr "Hotkeys"

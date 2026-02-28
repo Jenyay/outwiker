@@ -15,7 +15,7 @@ class EditPagePropertiesAction(BaseAction):
 
     @property
     def title(self):
-        return _("Page Properties…")
+        return _("Page properties…")
 
     @property
     def description(self):

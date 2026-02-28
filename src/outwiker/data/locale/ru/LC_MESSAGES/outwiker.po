@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 18:38+0300\n"
+"POT-Creation-Date: 2026-02-28 20:52+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -243,7 +243,7 @@ msgid "Close a tree notes"
 msgstr "Закрыть дерево заметок"
 
 #: outwiker/app/actions/editpageprop.py:18
-msgid "Page Properties…"
+msgid "Page properties…"
 msgstr "Свойства страницы…"
 
 #: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:120
@@ -584,31 +584,23 @@ msgid "Go to previous tab"
 msgstr "Перейти на предыдущую вкладку"
 
 #: outwiker/app/actions/tags.py:39
-msgid "Add Tags to Branch…"
+msgid "Add tags to branch…"
 msgstr "Добавить метки к ветке…"
 
-#: outwiker/app/actions/tags.py:43
+#: outwiker/app/actions/tags.py:43 outwiker/app/actions/tags.py:69
 msgid "Add tags to branch"
 msgstr "Добавить метки к ветке"
 
-#: outwiker/app/actions/tags.py:69
-msgid "Add Tags to Branch"
-msgstr "Добавление меток к ветке"
-
 #: outwiker/app/actions/tags.py:92
-msgid "Remove Tags from Branch…"
+msgid "Remove tags from branch…"
 msgstr "Удалить метки из ветки…"
 
-#: outwiker/app/actions/tags.py:96
+#: outwiker/app/actions/tags.py:96 outwiker/app/actions/tags.py:119
 msgid "Remove tags from branch"
 msgstr "Удалить метки из ветки"
 
-#: outwiker/app/actions/tags.py:119
-msgid "Remove Tags from Branch"
-msgstr "Удаление меток из ветки"
-
 #: outwiker/app/actions/tags.py:143
-msgid "Rename Tag…"
+msgid "Rename tag…"
 msgstr "Переименовать метку…"
 
 #: outwiker/app/actions/tags.py:147
@@ -3174,6 +3166,18 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Add Tags to Branch…"
+#~ msgstr "Добавить метки к ветке…"
+
+#~ msgid "Add Tags to Branch"
+#~ msgstr "Добавление меток к ветке"
+
+#~ msgid "Remove Tags from Branch…"
+#~ msgstr "Удалить метки из ветки…"
+
+#~ msgid "Remove Tags from Branch"
+#~ msgstr "Удаление меток из ветки"
 
 #~ msgid "Hotkeys"
 #~ msgstr "Сочетания клавиш"

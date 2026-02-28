@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 18:38+0300\n"
+"POT-Creation-Date: 2026-02-28 20:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -247,7 +247,7 @@ msgid "Close a tree notes"
 msgstr ""
 
 #: outwiker/app/actions/editpageprop.py:18
-msgid "Page Properties…"
+msgid "Page properties…"
 msgstr ""
 
 #: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:120
@@ -589,31 +589,23 @@ msgid "Go to previous tab"
 msgstr ""
 
 #: outwiker/app/actions/tags.py:39
-msgid "Add Tags to Branch…"
+msgid "Add tags to branch…"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:43
+#: outwiker/app/actions/tags.py:43 outwiker/app/actions/tags.py:69
 msgid "Add tags to branch"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:69
-msgid "Add Tags to Branch"
-msgstr ""
-
 #: outwiker/app/actions/tags.py:92
-msgid "Remove Tags from Branch…"
+msgid "Remove tags from branch…"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:96
+#: outwiker/app/actions/tags.py:96 outwiker/app/actions/tags.py:119
 msgid "Remove tags from branch"
 msgstr ""
 
-#: outwiker/app/actions/tags.py:119
-msgid "Remove Tags from Branch"
-msgstr ""
-
 #: outwiker/app/actions/tags.py:143
-msgid "Rename Tag…"
+msgid "Rename tag…"
 msgstr ""
 
 #: outwiker/app/actions/tags.py:147

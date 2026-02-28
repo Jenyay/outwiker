@@ -6,10 +6,16 @@ type = wiki
 order = 0
 tags = for users,attachments
 linewrap = True
-datetime = 2026-02-28 18:17:10.775168
+datetime = 2026-02-28 19:05:41.563034
 cursorposition = 1208
 uid = __d4682a4f-8dd4-442a-8eb8-2915ec66c6b2
 
 [Misc]
 pageindex = 0
+
+[Wiki]
+recentstylename = notice
+
+[wiki]
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n", "notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
