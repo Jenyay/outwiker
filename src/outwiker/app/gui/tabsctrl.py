@@ -279,8 +279,9 @@ class TabsCtrl(wx.Window):
 
             if self._hovered_tab is not None:
                 page = self._tabs[self._hovered_tab].page
-                tooltip = f"{page.display_title}"
-                self.SetToolTip(tooltip)
+                if page is not None:
+                    tooltip = f"{page.display_title}"
+                    self.SetToolTip(tooltip)
             else:
                 self.UnsetToolTip()
         elif self._hovered_tab is not None and (
