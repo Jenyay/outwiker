@@ -33,6 +33,7 @@ class TagLabel2:
     def __init__(
         self,
         parent: wx.Window,
+        tags_cloud_window: wx.Window,
         label: str,
         use_buttons: bool = True,
         min_font_size: int = 8,
@@ -42,6 +43,7 @@ class TagLabel2:
         back_color: Optional[wx.Colour] = None,
     ):
         self._parent = parent
+        self._tags_cloutd_window = tags_cloud_window
         self._label = label
         self._use_buttons = use_buttons
         self._is_marked = False
@@ -53,8 +55,6 @@ class TagLabel2:
         self._width = 0
         self._height = 0
         self._visible = True
-        self._paint_x = None
-        self._paint_y = None
 
         self._propagationLevel = 10
         self._ratio = 1.0
@@ -212,17 +212,17 @@ class TagLabel2:
             self.Refresh()
 
     def Refresh(self):
-        if self._paint_x is not None and self._paint_y is not None:
-            with wx.ClientDC(self._parent) as dc:
-                gc = wx.GraphicsContext.Create(dc)
-                self.onPaint(dc, gc, self._paint_x, self._paint_y)
+        with wx.ClientDC(self._parent) as dc:
+            gc = wx.GraphicsContext.Create(dc)
+            self.onPaint(dc, gc)
 
-    def onPaint(self, dc: wx.DC, gc: wx.GraphicsContext, x0: int, y0: int):
+    def onPaint(self, dc: wx.DC, gc: wx.GraphicsContext):
         if not self._visible:
             return
 
-        self._paint_x = x0
-        self._paint_y = y0
+        y_min = self._tags_cloutd_window.getScrolledY()[0]
+        x0 = self._x
+        y0 = self._y - y_min
 
         # Draw background
         gc.SetBrush(wx.Brush(self._back_color))
@@ -509,7 +509,7 @@ class TagsCloud(wx.Panel):
         return result
 
     def _getMouseCoord(self, event) -> Tuple[int, int]:
-        return (event.GetX(), event.GetY() + self._getScrolledY()[0])
+        return (event.GetX(), event.GetY() + self.getScrolledY()[0])
 
     def _onScroll(self, event):
         event.Skip()
@@ -582,7 +582,7 @@ class TagsCloud(wx.Panel):
     def _onMiddleUp(self, event):
         self._callTagEvent(event, "onMiddleUp")
 
-    def _getScrolledY(self) -> Tuple[int, int]:
+    def getScrolledY(self) -> Tuple[int, int]:
         ymin = (
             self._tags_panel.GetScrollPos(wx.VERTICAL)
             * self._tags_panel.GetScrollPixelsPerUnit()[1]
@@ -591,14 +591,14 @@ class TagsCloud(wx.Panel):
         return (ymin, ymax)
 
     def _repaintLabels(self, label_names: Iterable, dc: wx.DC, gc: wx.GraphicsContext):
-        y_min, y_max = self._getScrolledY()
+        y_min, y_max = self.getScrolledY()
 
         for label_name in label_names:
             label = self._labels[label_name]
-            label_x_min, label_y_min = label.getPosition()
+            label_y_min = label.getPosition()[1]
             label_y_max = label.getPositionMax()[1]
             if label_y_min <= y_max and label_y_max >= y_min:
-                label.onPaint(dc, gc, label_x_min, label_y_min - y_min)
+                label.onPaint(dc, gc)
 
             if label_y_min > y_max:
                 break
@@ -739,6 +739,7 @@ class TagsCloud(wx.Panel):
         for tag in self._tags:
             newlabel = TagLabel2(
                 self._tags_panel,
+                self,
                 tag,
                 self._use_buttons,
                 self._min_font_size,
