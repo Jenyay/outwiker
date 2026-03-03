@@ -594,7 +594,7 @@ class TagsCloud(wx.Panel):
                 gc = wx.GraphicsContext.Create(buffered_dc)
                 label.draw(buffered_dc, gc)
 
-    def _repaintLabels(self, label_names: Iterable[str], dc: wx.DC, gc: wx.GraphicsContext):
+    def _repaintLabels(self, label_names: Iterable, dc: wx.DC, gc: wx.GraphicsContext):
         y_min, y_max = self.getScrolledY()
 
         for label_name in label_names:
