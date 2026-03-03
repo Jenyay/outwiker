@@ -43,7 +43,7 @@ class TagLabel2:
         back_color: Optional[wx.Colour] = None,
     ):
         self._parent = parent
-        self._tags_cloutd_window = tags_cloud_window
+        self._tags_cloud_window = tags_cloud_window
         self._label = label
         self._use_buttons = use_buttons
         self._is_marked = False
@@ -88,14 +88,16 @@ class TagLabel2:
         self._normal_back_color = self._back_color
         self._normal_border_color = self._back_color
 
-    def isHover(self) -> bool:
+    @property
+    def isButtonHovered(self) -> bool:
+        return self._is_hover_button
+
+    @property
+    def isHovered(self) -> bool:
         return self._is_hover
 
     def setHover(self, value: bool):
-        old_value = self._is_hover
         self._is_hover = value
-        if value != old_value:
-            self.Refresh()
 
     def isVisible(self) -> bool:
         return self._visible
@@ -194,33 +196,16 @@ class TagLabel2:
 
     def mark(self, marked: bool = True):
         self._is_marked = marked
-        self.Refresh()
 
     @property
     def isMarked(self) -> bool:
         return self._is_marked
 
-    @property
-    def isUsedButtons(self) -> bool:
-        return self._use_buttons
-
-    @isUsedButtons.setter
-    def isUsedButtons(self, value):
-        old_value = self._use_buttons
-        self._use_buttons = value
-        if old_value != value:
-            self.Refresh()
-
-    def Refresh(self):
-        with wx.ClientDC(self._parent) as dc:
-            gc = wx.GraphicsContext.Create(dc)
-            self.onPaint(dc, gc)
-
-    def onPaint(self, dc: wx.DC, gc: wx.GraphicsContext):
+    def draw(self, dc: wx.DC, gc: wx.GraphicsContext):
         if not self._visible:
             return
 
-        y_min = self._tags_cloutd_window.getScrolledY()[0]
+        y_min = self._tags_cloud_window.getScrolledY()[0]
         x0 = self._x
         y0 = self._y - y_min
 
@@ -349,11 +334,8 @@ class TagLabel2:
     def onMiddleUp(self, x, y):
         self._sendTagEvent(TagMiddleUpEvent)
 
-    def onMouseMove(self, x, y):
-        new_is_hover_button = x <= self._button_border_x
-        if new_is_hover_button != self._is_hover_button:
-            self._is_hover_button = new_is_hover_button
-            self.Refresh()
+    def updateButtonHover(self, x, y):
+        self._is_hover_button = x <= self._button_border_x
 
     def _sendTagEvent(self, eventType):
         newevent = eventType(text=self._label)
@@ -511,18 +493,30 @@ class TagsCloud(wx.Panel):
     def _getMouseCoord(self, event) -> Tuple[int, int]:
         return (event.GetX(), event.GetY() + self.getScrolledY()[0])
 
+    def _setLabelHover(self, label: TagLabel2, value: bool):
+        old_value = label.isHovered
+        if old_value != value:
+            label.setHover(value)
+            self._refreshLabel(label)
+
+    def _markLabel(self, label: TagLabel2, value: bool):
+        old_value = label.isMarked
+        if old_value != value:
+            label.mark(value)
+            self._refreshLabel(label)
+
     def _onScroll(self, event):
         event.Skip()
         # Don't repaint labels during scroll
         self._scroll_start_time = datetime.now()
         if self._prevLabelHovered is not None:
-            self._prevLabelHovered.setHover(False)
+            self._setLabelHover(self._prevLabelHovered, False)
             self._tags_panel.UnsetToolTip()
             self._prevLabelHovered = None
 
     def _onMouseLeaveWindow(self, event):
         if self._prevLabelHovered is not None:
-            self._prevLabelHovered.setHover(False)
+            self._setLabelHover(self._prevLabelHovered, False)
 
     def _onMouseMove(self, event):
         # Don't repaint labels during scroll
@@ -538,10 +532,10 @@ class TagsCloud(wx.Panel):
 
         if self._prevLabelHovered is not None and label is not self._prevLabelHovered:
             self._tags_panel.UnsetToolTip()
-            self._prevLabelHovered.setHover(False)
+            self._setLabelHover(self._prevLabelHovered, False)
 
         if label is not None and label is not self._prevLabelHovered:
-            label.setHover(True)
+            self._setLabelHover(label, True)
             if self._enable_tooltips:
                 assert self._tags is not None
                 tooltip = _("Number of notes: {}").format(
@@ -551,9 +545,13 @@ class TagsCloud(wx.Panel):
 
         self._prevLabelHovered = label
 
+        # Mouse over button inside tag?
         if label is not None:
             label_x, label_y = label.getPosition()
-            label.onMouseMove(x - label_x, y - label_y)
+            old_button_hover = label.isButtonHovered
+            label.updateButtonHover(x - label_x, y - label_y)
+            if label.isButtonHovered != old_button_hover:
+                self._refreshLabel(label)
 
     def _callTagEvent(self, event, method_name):
         event.Skip()
@@ -590,7 +588,13 @@ class TagsCloud(wx.Panel):
         ymax = ymin + self._tags_panel.GetClientSize()[1]
         return (ymin, ymax)
 
-    def _repaintLabels(self, label_names: Iterable, dc: wx.DC, gc: wx.GraphicsContext):
+    def _refreshLabel(self, label: TagLabel2):
+        with wx.ClientDC(self._tags_panel) as dc:
+            with wx.BufferedDC(dc, self._buffer) as buffered_dc:
+                gc = wx.GraphicsContext.Create(buffered_dc)
+                label.draw(buffered_dc, gc)
+
+    def _repaintLabels(self, label_names: Iterable[str], dc: wx.DC, gc: wx.GraphicsContext):
         y_min, y_max = self.getScrolledY()
 
         for label_name in label_names:
@@ -598,7 +602,7 @@ class TagsCloud(wx.Panel):
             label_y_min = label.getPosition()[1]
             label_y_max = label.getPositionMax()[1]
             if label_y_min <= y_max and label_y_max >= y_min:
-                label.onPaint(dc, gc)
+                label.draw(dc, gc)
 
             if label_y_min > y_max:
                 break
@@ -773,14 +777,16 @@ class TagsCloud(wx.Panel):
         Выделить метку
         """
         if tag.lower().strip() in self._labels.keys():
-            self._labels[tag.lower().strip()].mark(marked)
+            label = self._labels[tag.lower().strip()]
+            self._markLabel(label, marked)
             if self._is_active_only():
                 self._updateFilter()
 
     def mark_list(self, tags: Collection[str], marked: bool = True):
         for tag in tags:
             if tag.lower().strip() in self._labels.keys():
-                self._labels[tag.lower().strip()].mark(marked)
+                label = self._labels[tag.lower().strip()]
+                self._markLabel(label, marked)
 
         if self._is_active_only():
             self._updateFilter()
@@ -792,7 +798,7 @@ class TagsCloud(wx.Panel):
         Убрать все выделения с меток
         """
         for label in self._labels.values():
-            label.mark(False)
+            self._markLabel(label, False)
 
         if self._is_active_only():
             self._updateFilter()
