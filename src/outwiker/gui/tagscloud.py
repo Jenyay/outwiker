@@ -83,6 +83,30 @@ class TagLabel2:
 
         self.setFontSize(min_font_size, max_font_size)
 
+    @property
+    def x(self) -> int:
+        return self._x
+
+    @property
+    def y(self) -> int:
+        return self._y
+
+    @property
+    def width(self) -> int:
+        return self._width
+
+    @property
+    def height(self) -> int:
+        return self._height
+
+    @property
+    def label(self) -> str:
+        return self._label
+
+    @property
+    def isUseButtons(self) -> bool:
+        return self._use_buttons
+
     def setBackColor(self, color: wx.Colour):
         self._back_color = color
         self._normal_back_color = self._back_color
@@ -401,6 +425,214 @@ class TagLabel2:
             return self._normal_hover_border_color
 
         return self._normal_border_color
+
+
+class _TagPainter:
+    def __init__(self,
+                 parent: wx.Window,
+                 back_color: Optional[wx.Colour] = None) -> None:
+        self._parent = parent
+
+        # ToDo: Read clors from Theme
+        self._back_color = wx.Colour("#FFFFFF") if back_color is None else back_color
+
+        self._normal_back_color = self._back_color
+        self._normal_border_color = self._back_color
+        self._normal_font_color = wx.Colour("#34609D")
+
+        self._normal_hover_back_color = wx.Colour("#D6E7FD")
+        self._normal_hover_border_color = wx.Colour("#78D8FC")
+        self._normal_hover_font_color = wx.Colour("#34609D")
+        self._add_button_color = wx.Colour("#577EBF")
+        self._hover_add_button_color = wx.Colour("#20518C")
+
+        self._marked_back_color = wx.Colour("#fcde78")
+        self._marked_border_color = wx.Colour("#EDB14A")
+        self._marked_font_color = wx.Colour("#714b0a")
+
+        self._marked_hover_back_color = wx.Colour("#FFC500")
+        self._marked_hover_border_color = wx.Colour("#B5931E")
+        self._marked_hover_font_color = wx.Colour("#000000")
+        self._remove_button_color = wx.Colour("#B5931E")
+        self._hover_remove_button_color = wx.Colour("#8B6D00")
+
+    def draw(self, label: TagLabel2, y_scroll: int, dc: wx.DC, gc: wx.GraphicsContext):
+        if not label.isVisible():
+            return
+
+        x0 = label.x
+        y0 = label.y - y_scroll
+
+        # Draw background
+        gc.SetBrush(wx.Brush(self._back_color))
+        gc.SetPen(wx.Pen(self._back_color))
+        gc.DrawRectangle(x0, y0, label.width, label.height)
+
+        # Draw tag
+        tag_back_color = self._get_back_color(label)
+        tag_border_color = self._get_border_color(label)
+        gc.SetBrush(wx.Brush(tag_back_color))
+        pen = wx.Pen(tag_border_color, 1)
+        pen.SetQuality(wx.PEN_QUALITY_HIGH)
+        gc.SetPen(pen)
+
+        path = gc.CreatePath()
+        path.MoveToPoint(label._button_border_x + x0, y0)
+        path.AddArc(
+            label._arc_width + x0,
+            label._center_y + y0,
+            label.height // 2,
+            math.pi * 1.5,
+            math.pi * 0.5,
+            clockwise=False,
+        )
+        path.AddLineToPoint(label._button_border_x + x0, label.height + y0)
+        path.AddLineToPoint(label.width + x0, label.height + y0)
+        path.AddLineToPoint(label.width + x0, y0)
+        path.AddLineToPoint(label._button_border_x + x0, y0)
+
+        gc.DrawPath(path)
+
+        # Draw text
+        text_size = self._calc_text_size(label.label, label._font_size)
+        font_color = self._get_font_color(label)
+        font = label._get_current_font()
+        dc.SetTextForeground(font_color)
+        dc.SetFont(font)
+        text_x = label._text_left
+        text_y = int((label.height - text_size[1]) / 2)
+        dc.DrawText(label.label, text_x + x0, text_y + y0)
+
+        # Draw the Add / Remove button
+        if label.isUseButtons:
+            if label.isHovered and not label.isMarked:
+                self._draw_add_button(label, gc, x0, y0)
+            elif label.isHovered and label.isMarked:
+                self._draw_remove_button(label, gc, x0, y0)
+
+    def _calc_text_size(self, text: str, font_size: int) -> Tuple[int, int]:
+        with wx.ClientDC(self._parent) as dc:
+            font = wx.Font(wx.FontInfo(font_size))
+            dc.SetFont(font)
+            return dc.GetTextExtent(text)
+
+    def _draw_add_button(self, label: TagLabel2, gc: wx.GraphicsContext, x0: int, y0: int):
+        line_width = 2
+        button_color = (
+            self._hover_add_button_color
+            if label.isButtonHovered 
+            else self._add_button_color
+        )
+        gc.SetBrush(wx.Brush(button_color))
+        gc.SetPen(wx.NullPen)
+
+        # Horizontal line
+        gc.DrawRectangle(
+            label._button_add_left + x0,
+            label._button_center_y - line_width // 2 + y0,
+            label._button_add_right - label._button_add_left,
+            line_width,
+        )
+
+        # Vertical line
+        gc.DrawRectangle(
+            label._button_center_x - line_width // 2 + x0,
+            label._button_add_top + y0,
+            line_width,
+            label._button_add_bottom - label._button_add_top,
+        )
+
+        border_x = int((label._button_add_right + label._text_left) / 2)
+        gc.SetPen(wx.Pen(self._normal_hover_border_color))
+        gc.DrawLines([(border_x + x0, y0), (border_x + x0, label.height + y0)])
+
+    def _draw_remove_button(self, label: TagLabel2, gc: wx.GraphicsContext, x0: int, y0: int):
+        line_width = 2
+        button_color = (
+            self._hover_remove_button_color
+            if label.isButtonHovered
+            else self._remove_button_color
+        )
+        gc.SetPen(wx.Pen(button_color, line_width))
+
+        gc.DrawLines(
+            [
+                (label._button_remove_left + x0, label._button_remove_top + y0),
+                (label._button_remove_right + x0, label._button_remove_bottom + y0),
+            ]
+        )
+
+        gc.DrawLines(
+            [
+                (label._button_remove_left + x0, label._button_remove_bottom + y0),
+                (label._button_remove_right + x0, label._button_remove_top + y0),
+            ]
+        )
+
+        border_x = int((label._button_remove_right + label._text_left) / 2)
+        gc.SetPen(wx.Pen(self._marked_hover_border_color))
+        gc.DrawLines([(border_x + x0, y0), (border_x + x0, label.height + y0)])
+
+    def _get_font_color(self, label: TagLabel2) -> wx.Colour:
+        if label.isMarked and not label.isHovered:
+            return self._marked_font_color
+
+        if label.isMarked and label.isHovered:
+            return self._marked_hover_font_color
+
+        if not label.isMarked and label.isHovered:
+            return self._normal_hover_font_color
+
+        return self._normal_font_color
+
+    def _get_back_color(self, label: TagLabel2) -> wx.Colour:
+        if label.isMarked and not label.isHovered:
+            return self._marked_back_color
+
+        if label.isMarked and label.isHovered:
+            return self._marked_hover_back_color
+
+        if not label.isMarked and label.isHovered:
+            return self._normal_hover_back_color
+
+        return self._normal_back_color
+
+    def _get_border_color(self, label: TagLabel2) -> wx.Colour:
+        if label.isMarked and not label.isHovered:
+            return self._marked_border_color
+
+        if label.isMarked and label.isHovered:
+            return self._marked_hover_border_color
+
+        if not label.isMarked and label.isHovered:
+            return self._normal_hover_border_color
+
+        return self._normal_border_color
+
+    def _get_button_back_color(self, label: TagLabel2) -> wx.Colour:
+        if label.isMarked and not label.isHovered:
+            return self._marked_back_color
+
+        if label.isMarked and label.isHovered:
+            return self._marked_hover_back_color
+
+        if not label.isMarked and label.isHovered:
+            return self._normal_hover_back_color
+
+        return self._normal_back_color
+
+    def _get_button_border_color(self, label: TagLabel2) -> wx.Colour:
+        if label.isMarked and not label.isHovered:
+            return self._marked_border_color
+
+        if label.isMarked and label.isHovered:
+            return self._marked_hover_border_color
+
+        if not label.isMarked and label.isHovered:
+            return self._normal_hover_border_color
+
+        return self._normal_border_color
+
 
 class TagsCloud(wx.Panel):
     def __init__(
