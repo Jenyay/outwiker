@@ -8,9 +8,9 @@ expand = True
 type = wiki
 order = 0
 tags = wiki
-datetime = 2026-02-16 21:03:12.305684
+datetime = 2026-03-06 20:05:50.486514
 cursorposition = 0
-uid = __19866d72-8d95-4e2c-8df1-6df0bd8f06c0
+uid = wiki-page
 alias = Викистраница
 
 [Misc]

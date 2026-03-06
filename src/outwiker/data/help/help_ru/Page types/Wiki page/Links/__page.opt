@@ -8,9 +8,9 @@ expand = False
 type = wiki
 order = 3
 tags = fixme,wiki
-datetime = 2026-02-16 21:05:15.991448
+datetime = 2026-03-06 20:09:26.566935
 cursorposition = 2294
-uid = wiki_links
+uid = wiki-links
 alias = Ссылки
 
 [Misc]

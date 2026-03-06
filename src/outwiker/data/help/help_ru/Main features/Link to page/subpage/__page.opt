@@ -2,9 +2,9 @@
 expand = False
 
 [General]
-type = html
+type = wiki
 tags = 
-datetime = 2026-02-16 21:01:34.680943
+datetime = 2026-03-06 20:31:40.381713
 linewrap = True
 cursorposition = 0
 uid = __10b622cd-7ea7-4267-97e9-697fcf869486

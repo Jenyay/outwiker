@@ -1,44 +1,47 @@
-OutWiker provides possibility to make links between notes. A note can be referred to in two ways (link type):
-* By name.
-* By identifier.
+!! Links to pages
 
-Link of any type can be inserted either with &lt;a href="..."&gt; tag (html notes) or with [[wiki notation -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]] (wiki notes).
+You can insert links to another page in every note. There are two ways to link to pages:
+* By page ID.
+* By note name or its relative path (this method is not recommended).
 
-
-!!! Link by unique identifier
-
-OutWiker can create links to other page. This type of links is considered to be preferable one. Identifier for any given note stays the same in case of note's title change or moving the note within the tree. So the links by identifier remain working, unless the target note is deleted.
-
-To copy link to note in the clipboard, go to "Tools -> Copy page link" or right-click the note's tab and select the "Copy page link" item of the pop-up menu.
-
-For example, the link address for this note is as follows: page://__d0ed44d4-0772-4f04-80ca-98fc55530667
-
-Any link by identifier must begin with prefix "page://" followed by the identifier itself. Such links can be used in HTML notes in exactly the same way as any links with standard HTML prefixes (http(s)://, ftp:// and so on).
-
-Examples:
-
-* [[page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c | Wiki Commands]] (wiki)
-* [[Nested note -> page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d]] (wiki)
-
-Links by identifier are allowed to include anchors. In this case, the link looks like page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor
+To create links of any type, you can use the &lt;a href="..."&gt; tag on [[HTML pages -> page://html-page]] or special commands for [[links -> page://wiki-links]] on [[wiki page -> page://wiki-page]].
 
 
-!!! Link by name
+!!! Links by unique ID
 
-A link by name looks like file path for UNIX system, for example, {+/Note name 1/Note name 2/.../Purpose note+}.
+OutWiker allows you to link to pages by their unique IDs, which do not depend on the page's name and location, so links remain functional when pages are renamed or moved. 
 
-The links by name may begin with "/", in this case OutWiker starts looking for the target note from root of the tree, otherwise the current page is used as the starting point for search.
+To copy a link to a page by its ID, select the menu item "Tools -> Copy link to page" or select the menu item with the same name in the context menu that appears when you right-click a note in the tree. For example, for this page, such a link looks like this: [[page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2 -> page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2]]. 
 
-Examples:
+The link starts with "page://", followed by the page ID.
 
-* [=<a href="page://Note Types/Wiki Note/Wiki Commands">/Note Types/Wiki Note/Wiki Commands</a>=] (HTML)
-* [=<a href="page://Nested Note">Nested Note</a>=] (HTML)
+Link examples:
+
+* [[page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c | Wiki commands]]
+* [[Wiki commands -> page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c]]
+* page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c
+* [[page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c]]
+
+When using links by unique ID, you can link not only to another page but also to an anchor on another page. In this case, the link will look like this: [[page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d/#anchor  -> page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d/#anchor]]
 
 
-* [[/Note Types/Wiki Note/Wiki Commands]] (wiki)
-* [[Note Types/Wiki Note/Wiki Commands]] (wiki)
-* [[Nested Note]] (wiki)
 
-Renaming or moving of the target note from a branch of the tree to another one results in invalidating the link. In this case link should be edited manually.
+!!! Links by name
 
-Due to the problems described above, using links by name are not encouraged in general case. One should consider using links by identifier in stead. Links by name are considered to be obsolete, albeit working, functionality.
+Links by name are similar to path links in UNIX systems, and they look like this: {+Page name 1/ Page name 2/.../Target page name+}. 
+
+If the link starts with the "/" character, the page search begins from the root of the notes tree. If there is no "/" character at the beginning of the link, the search is first performed starting from the current page, and if the requested page is not found, then from the root.
+
+Examples of links formatted using the &lt;a ...&gt;...&lt;/a&gt; tag (this is not recommended on wiki pages):
+
+* [=<a href="/Page types/Wiki page/Wiki commands">/Page types/Wiki page/Wiki commands</a>=] (with a slash at the beginning of the link works only in Windows)
+* [=<a href="Page types/Wiki page/Wiki commands">Page types/Wiki page/Wiki commands</a>=]
+* [=<a href="Child page">Child page</a>=]
+
+Examples of links formatted using wiki notation:
+
+* [[/Page types/Wiki page/Wiki commands]] (with a slash at the beginning of the link works only in Windows)
+* [[Page types/Wiki page/Wiki commands]]
+* [[Child page]]
+
+Links by name can be considered deprecated because when a linked page is renamed or moved, such links stop working and need to be tracked and corrected manually.
