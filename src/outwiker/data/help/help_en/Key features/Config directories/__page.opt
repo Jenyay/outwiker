@@ -1,0 +1,14 @@
+[General]
+type = wiki
+tags = !fixme
+order = 3
+creationdatetime = 2026-03-11 19:42:21.168739
+datetime = 2026-03-11 20:50:19.432067
+uid = ce21b5f6-a85c-40ce-abb1-52287e957938
+
+[Wiki]
+recentstylename = notice
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
+

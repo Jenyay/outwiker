@@ -1,11 +1,11 @@
 [General]
 type = wiki
 tags = плагины,fixme
-order = 4
-datetime = 2026-02-16 21:02:44.296512
+order = 5
+datetime = 2026-03-11 20:49:45.159880
 cursorposition = 629
 alias = Плагины
-uid = __abdecced-898a-4475-9002-cf78426f3db7
+uid = plugins
 icon = __std_plugin.svg
 
 [wiki]
