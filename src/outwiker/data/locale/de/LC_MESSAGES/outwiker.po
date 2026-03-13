@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 20:47+0300\n"
-"PO-Revision-Date: 2026-02-28 10:11+0300\n"
+"POT-Creation-Date: 2026-02-28 20:52+0300\n"
+"PO-Revision-Date: 2026-03-13 09:15+0300\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -107,7 +107,7 @@ msgid "Can't execute attachment '%s'"
 msgstr "Kann Anhang '%s' nicht ausführen"
 
 #: outwiker/app/actions/attachfiles.py:24
-msgid "Attach Files…"
+msgid "Attach files…"
 msgstr "Dateien anhängen…"
 
 #: outwiker/app/actions/attachfiles.py:28
@@ -115,7 +115,7 @@ msgid "Attach files to current page"
 msgstr "Dateien zum aktuellen Seite anhängen"
 
 #: outwiker/app/actions/attachfolder.py:25
-msgid "Attach Folder…"
+msgid "Attach folder…"
 msgstr "Ordner anhängen…"
 
 #: outwiker/app/actions/attachfolder.py:29
@@ -124,8 +124,8 @@ msgstr "Ordner mit Dateien an aktuelle Seite anhängen"
 
 #: outwiker/app/actions/attachopenfolder.py:20
 #: outwiker/app/gui/pagepopupmenu.py:105
-msgid "Open Attachments Folder"
-msgstr "Ordner mit Anhang öffnen"
+msgid "Open attachments folder"
+msgstr "Ordner für Anhänge öffnen"
 
 #: outwiker/app/actions/attachopenfolder.py:24
 msgid "Open folder with attachments"
@@ -183,7 +183,7 @@ msgstr "Alles wählen"
 msgid "Select all attachments. Action for the attachments panel"
 msgstr "Alle Anhänge wählen. Aktion für angehängtes Panel"
 
-#: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:98
+#: outwiker/app/actions/clipboard.py:22
 msgid "Copy Page Title"
 msgstr "Seitentitel kopieren"
 
@@ -200,7 +200,7 @@ msgstr "In die Zwischenablage kopiert"
 msgid "Page title has been copied to the clipboard"
 msgstr "Seitenüberschrift in die Zwischenablage kopiert"
 
-#: outwiker/app/actions/clipboard.py:52 outwiker/app/gui/pagepopupmenu.py:99
+#: outwiker/app/actions/clipboard.py:52
 msgid "Copy Page Path"
 msgstr "Seitenpfad kopieren"
 
@@ -212,7 +212,7 @@ msgstr "Pfad zur aktuellen Seite in Zwischenablage kopieren"
 msgid "Path to the page has been copied to the clipboard"
 msgstr "Pfad zur Seite in die Zwischenablage kopiert"
 
-#: outwiker/app/actions/clipboard.py:82 outwiker/app/gui/pagepopupmenu.py:101
+#: outwiker/app/actions/clipboard.py:82
 msgid "Copy Attachments Path"
 msgstr "Anlagen-Pfad kopieren"
 
@@ -224,7 +224,7 @@ msgstr "Pfad für Anlagen aktueller Seite in die Zwischenablage kopieren"
 msgid "Path to the page attachments has been copied to the clipboard"
 msgstr "Pfad zu Seitenanhängen in die Zwischenablage kopiert"
 
-#: outwiker/app/actions/clipboard.py:114 outwiker/app/gui/pagepopupmenu.py:103
+#: outwiker/app/actions/clipboard.py:114
 msgid "Copy Page Link"
 msgstr "Seitenlink kopieren"
 
@@ -245,7 +245,7 @@ msgid "Close a tree notes"
 msgstr "Notizen-Baum schließen"
 
 #: outwiker/app/actions/editpageprop.py:18
-msgid "Page Properties…"
+msgid "Page properties…"
 msgstr "Seiteneigenschaften…"
 
 #: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:120
@@ -586,31 +586,23 @@ msgid "Go to previous tab"
 msgstr "Wechseln zum vorherigen Tab"
 
 #: outwiker/app/actions/tags.py:39
-msgid "Add Tags to Branch…"
+msgid "Add tags to branch…"
 msgstr "Tags an ein Ast hinzufügen…"
 
-#: outwiker/app/actions/tags.py:43
+#: outwiker/app/actions/tags.py:43 outwiker/app/actions/tags.py:69
 msgid "Add tags to branch"
 msgstr "Tags an ein Ast hinzufügen"
 
-#: outwiker/app/actions/tags.py:69
-msgid "Add Tags to Branch"
-msgstr "Tags an ein Ast hinzufügen"
-
 #: outwiker/app/actions/tags.py:92
-msgid "Remove Tags from Branch…"
-msgstr "Tags von ein Ast entfernen…"
+msgid "Remove tags from branch…"
+msgstr "Tags von einem Ast entfernen…"
 
-#: outwiker/app/actions/tags.py:96
+#: outwiker/app/actions/tags.py:96 outwiker/app/actions/tags.py:119
 msgid "Remove tags from branch"
 msgstr "Tags von ein Ast entfernen"
 
-#: outwiker/app/actions/tags.py:119
-msgid "Remove Tags from Branch"
-msgstr "Tags von ein Ast entfernen"
-
 #: outwiker/app/actions/tags.py:143
-msgid "Rename Tag…"
+msgid "Rename tag…"
 msgstr "Tag umbenennen…"
 
 #: outwiker/app/actions/tags.py:147
@@ -1438,6 +1430,22 @@ msgstr "Letzte"
 msgid "Can't set page icon\n"
 msgstr "Seiten Symbol kann nicht gesetzt werden\n"
 
+#: outwiker/app/gui/pagepopupmenu.py:98
+msgid "Copy page title"
+msgstr "Seitentitel kopieren"
+
+#: outwiker/app/gui/pagepopupmenu.py:99
+msgid "Copy page path"
+msgstr "Seitenpfad kopieren"
+
+#: outwiker/app/gui/pagepopupmenu.py:101
+msgid "Copy attachments path"
+msgstr "Anlagen-Pfad kopieren"
+
+#: outwiker/app/gui/pagepopupmenu.py:103
+msgid "Copy page link"
+msgstr "Seitenlink kopieren"
+
 #: outwiker/app/gui/preferences/attachpanel.py:16
 msgid "Insert link to attachment"
 msgstr "Link zum Anhang einfügen"
@@ -1645,19 +1653,19 @@ msgstr "Automatisch"
 #: outwiker/app/gui/preferences/hotkeyspanel.py:47
 #, python-brace-format
 msgid ""
-"{hotkey} hotkey assigned for \"{old}\".\n"
-"Assign this hotkey for \"{new}\"?"
+"{hotkey} shortcut assigned for \"{old}\".\n"
+"Assign this shortcut for \"{new}\"?"
 msgstr ""
-"Tastenkombination {hotkey} ernenne für \"{old}\".\n"
-"Diese Tastenkombination ernennen für \"{new}\"?"
+"Tastenkombination {hotkey} bisher für \"{old}\" verwendet.\n"
+"Diese Tastenkombination jetzt für \"{new}\" benutzen?"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:53
-msgid "Hotkeys conflict"
-msgstr "Tastenkombinationen in Konflikt geraten"
+msgid "Shortcuts conflict"
+msgstr "Konflikt mit Tastenkombination"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:105
 msgid ""
-"Hotkey.\n"
+"Shortcut.\n"
 "Press the Backspace key to clear"
 msgstr ""
 "Tastenkombination.\n"
@@ -1874,7 +1882,7 @@ msgid "Colors"
 msgstr "Farben"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:145
-msgid "Hotkeys"
+msgid "Keyboard shortcuts"
 msgstr "Tastenkombinationen"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:146
