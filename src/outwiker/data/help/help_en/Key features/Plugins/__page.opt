@@ -6,6 +6,7 @@ datetime = 2026-03-11 20:50:16.959567
 cursorposition = 629
 uid = plugins
 icon = __std_plugin.svg
+alias = plugins
 
 [wiki]
 md5_hash = d210e6b35fc9d850fc41466b0e464ddf

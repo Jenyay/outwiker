@@ -44,13 +44,13 @@
 В обычном режиме директории настроек ищутся в тех же местах, что были перечислены в разделе про <a class="ow-wiki" href="#portable">портабельный режим</a>, но что-то менять в этих директориях не рекомендуется, а предлагается работать с директориями внутри внутри профиля пользователя:<br/>
 <ul class="ow-wiki"><li class="ow-wiki">Файл настроек <span class="notice">outwiker.ini</span> и файл лога работы <span class="notice">outwiker.log</span> располагаются в директории <span class="notice">C:\Users\USERNAME\AppData\Roaming\outwiker\</span>.</li><li class="ow-wiki">Директория с плагинами  - <span class="notice">C:\Users\USERNAME\AppData\Roaming\outwiker\plugins</span>.</li><li class="ow-wiki">Директория со значками для заметок - <span class="notice">C:\Users\USERNAME\AppData\Roaming\outwiker\iconset</span>.</li><li class="ow-wiki">Директория со словарями для проверки орфографии - <span class="notice">C:\Users\USERNAME\AppData\Roaming\outwiker\spell</span>.</li><li class="ow-wiki">Директория со стилями страниц - <span class="notice">C:\Users\USERNAME\AppData\Roaming\outwiker\styles</span>.</li><li class="ow-wiki">Директория со стилями оформления текста для викистраниц - <span class="notice">C:\Users\USERNAME\AppData\Roaming\outwiker\textstyles</span>.</li>
 </ul>
-Здесь предполагается, что директория пользователя расположена на диске C:\ по адресу <span class="notice">C:\Users\<b>USERNAME</b>\</span>, где <b>USERNAME</b> - это имя пользователя в системе.<br/>
+Здесь предполагается, что директория пользователя расположена на диске C: по адресу <span class="notice">C:\Users\<b>USERNAME</b>\</span>, где <b>USERNAME</b> - это имя пользователя в системе.<br/>
 <br/>
 <h2 class="ow-wiki"><a id="linux"></a> Директории настроек под Linux</h2>
 <br/>
 Путь до директорий настроек под Linux зависит от того, каким образом запускается приложение OutWiker: из исходных кодов, как flatpak-пакет или snap-пакет.<br/>
 <br/>
-При запуске приложения OutWiker <b>из исходников</b> корневая директория настроек определяется по следующему правилу.<ul class="ow-wiki"><li class="ow-wiki">Если установлена переменная окружения <span class="notice">XDG_CONFIG_HOME</span>, то путь до корневой директории настроек будет следующий: <span class="notice">"$XDG_CONFIG_HOME/outwiker"</span>.</li><li class="ow-wiki">Если переменная окружения <span class="notice">XDG_CONFIG_HOME</span> не установлена, то корневой директорией до настроек будет считаться <span class="notice">~/.config/outwiker</span>.</li>
+При запуске приложения OutWiker <b>из исходников</b> корневая директория настроек определяется по следующему правилу.<ul class="ow-wiki"><li class="ow-wiki">Если установлена переменная окружения <span class="notice">XDG_CONFIG_HOME</span>, то путь до корневой директории настроек будет следующий: <span class="notice">"$XDG_CONFIG_HOME/outwiker"</span>.</li><li class="ow-wiki">Если переменная окружения <span class="notice">XDG_CONFIG_HOME</span> не установлена, то корневой директорией для настроек будет считаться <span class="notice">~/.config/outwiker</span>.</li>
 </ul>
 При запуске OutWiker из <b>flatpak-пакета</b> корневой директорией настроек будет <span class="notice">~/.var/app/net.jenyay.Outwiker/config/outwiker/</span><br/>
 <br/>
@@ -59,6 +59,9 @@
 Внутри корневой директории настроек располагаются:<br/>
 <ul class="ow-wiki"><li class="ow-wiki">Файл настроек <span class="notice">outwiker.ini</span> и файл лога работы <span class="notice">outwiker.log</span>.</li><li class="ow-wiki">Директория с плагинами  - <span class="notice">plugins</span>.</li><li class="ow-wiki">Директория со значками для заметок - <span class="notice">iconset</span>.</li><li class="ow-wiki">Директория со словарями для проверки орфографии - <span class="notice">spell</span>.</li><li class="ow-wiki">Директория со стилями страниц - <span class="notice">styles</span>.</li><li class="ow-wiki">Директория со стилями оформления текста для викистраниц - <span class="notice">textstyles</span>.</li>
 </ul>
+<h2 class="ow-wiki">Переменная окружения OUTWIKER_PATH</h2>
+<br/>
+OutWiker позволяет добавить еще одну директорию, которая будет использоваться как корневая директория для настроек. Путь к этой директории может быть записан в переменную окружения <span class="notice">OUTWIKER_PATH</span>. Внутри этой директории могут располагаться все те же поддиректории, которые упоминались ранее: <span class="notice">plugins</span>, <span class="notice">iconset</span>, <span class="notice">spell</span>, <span class="notice">styles</span>, <span class="notice">textstyles</span>.<br/>
 <hr>
 <b>См. также:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://plugins">Плагины</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://styles">Стили страниц</a></li>
 </ul>
