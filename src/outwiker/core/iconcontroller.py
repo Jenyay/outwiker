@@ -90,7 +90,8 @@ class IconController:
             ("__std_disconnect.png", join("computer", "__std_disconnect.png")),
             ("__std_socket.png", join("computer", "__std_socket.png")),
 
-            ("__std_leaf.png", join("plants", "__std_leaf.png")),
+            (join("plants", "__std_leaf.svg"), join("plants", "__std_leaf_green.svg")),
+            ("__std_leaf.png", join("plants", "__std_leaf_green.svg")),
             ("__std_flower.png", join("plants", "__std_flower.png")),
             ("__std_cactus.png", join("plants", "__std_cactus.png")),
 
