@@ -7,18 +7,36 @@
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:10pt;
+			font-size:11pt;
 			font-family:Verdana;
 		}
 
 		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}a.ow-link-page-error{font-style:italic;color:#cc0033}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}blockquote.ow-wiki{border-left:4px solid #ccc;padding:10px 15px;margin:10px 0;background-color:#f9f9f9;color:#222}
 		
 	</style>
-	
+	<style>span.code {
+	display: inline-block;
+	background: #FBFCD2;
+	font-family: monospace;
+	border: solid 1px #CCC;
+	padding: 0.2em;
+}
+</style>
+<style>span.notice {
+	display: inline-block;
+	color: #333;
+	background-color: #e3f7fc;
+	border-radius: 1px;
+	padding: 0px 2px 0px 2px;
+	margin: 2px;
+	border:1px solid #8ed9f6;
+}
+</style>
+
 </head>
 
 <body>
-<h2 class="ow-wiki">Картинки </h2>
+<h2 class="ow-wiki">Прикрепленные файлы и картинки </h2>
 <br/>
 <table border=1 style="border-collapse: collapse; border: 1px solid black;">
 <tr>
@@ -27,79 +45,79 @@
 <td align="center"><b>Комментарий</b></td>
 </tr>
 <tr>
-<td align="center">https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg</td>
+<td align="left"><span class="code">https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg</span></td>
 <td align="center"><img class="ow-image" src="https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg"/></td>
-<td align="center">Вставить картинку из интернета</td>
+<td align="left">Вставить картинку из интернета</td>
 </tr>
 <tr>
-<td align="center">Attach:small_image.jpg</td>
+<td align="left"><span class="code">Attach:small_image.jpg</span></td>
 <td align="center"><img class="ow-image" src="__attach/small_image.jpg"/></td>
-<td align="center">Вставить прикрепленную картинку</td>
+<td align="left">Вставить прикрепленную картинку</td>
 </tr>
 <tr>
-<td align="center">Attach:"subdir/small_image_in_subdir.jpg"</td>
+<td align="left"><span class="code">Attach:"subdir/small_image_in_subdir.jpg"</span></td>
 <td align="center"><img class="ow-image" src="__attach/subdir/small_image_in_subdir.jpg"/></td>
-<td align="center">Вставить прикрепленную картинку из вложенной папки</td>
+<td align="left">Вставить прикрепленную картинку из вложенной папки</td>
 </tr>
 <tr>
-<td align="center">[[http://jenyay.net | Attach:small_image.jpg]]</td>
+<td align="left"><span class="code">[[http://jenyay.net | Attach:small_image.jpg]]</span></td>
 <td align="center"><a class="ow-wiki" href="http://jenyay.net"><img class="ow-image" src="__attach/small_image.jpg"/></a></td>
-<td align="center">Вставить ссылку в виде картинки</td>
+<td align="left">Вставить ссылку в виде картинки</td>
 </tr>
 <tr>
-<td align="center">[[page://__bdf571a9-ebca-4e1c-8d79-9e7816a03029 | Attach:small_image.jpg]]</td>
-<td align="center"><a class="ow-wiki ow-link-page" href="page://__bdf571a9-ebca-4e1c-8d79-9e7816a03029"><img class="ow-image" src="__attach/small_image.jpg"/></a></td>
-<td align="center">Вставить ссылку на другую страницу в виде картинки</td>
+<td align="left"><span class="code">[[page://wiki-page | Attach:small_image.jpg]]</span></td>
+<td align="center"><a class="ow-wiki ow-link-page" href="page://wiki-page"><img class="ow-image" src="__attach/small_image.jpg"/></a></td>
+<td align="left">Вставить ссылку на другую страницу в виде картинки</td>
 </tr>
 <tr>
-<td align="center">%thumb%Attach:image.jpg%%</td>
+<td align="left"><span class="code">%thumb%Attach:image.jpg%%</span></td>
 <td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_maxsize_500_image.jpg"/></a></td>
-<td align="center">Вставить уменьшенную картинку со ссылкой на оригинал. <br/>
-Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</td>
+<td align="left">Вставить уменьшенную картинку со ссылкой на оригинал. <br/>
+Уменьшенные копии картинок создаются в поддиректории <span class="notice">__thumb</span> директории с прикрепленными файлами</td>
 </tr>
 <tr>
-<td align="center">%width=200%Attach:image.jpg%%</td>
+<td align="left"><span class="code">%width=200%Attach:image.jpg%%</span></td>
 <td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_width_200_image.jpg"/></a></td>
-<td align="center">Вставить уменьшенную картинку с заданным размером по горизонтали со ссылкой на оригинал.<br/>
+<td align="left">Вставить уменьшенную картинку с заданным размером по горизонтали со ссылкой на оригинал.<br/>
 <br/>
 Возможные варианты команды: <br/>
 <br/>
-<i>%width=200px%Attach:image.jpg%%</i> <br/>
+<span class="code">%width=200px%Attach:image.jpg%%</span> <br/>
 <br/>
 или <br/>
 <br/>
-<i>%thumb width=200%Attach:image.jpg%%</i> <br/>
+<span class="code">%thumb width=200%Attach:image.jpg%%</span> <br/>
 <br/>
-Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</td>
+Уменьшенные копии картинок создаются в поддиректории <span class="notice">__thumb</span> директории с прикрепленными файлами</td>
 </tr>
 <tr>
-<td align="center">%height=200%Attach:image.jpg%%</td>
+<td align="left"><span class="code">%height=200%Attach:image.jpg%%</span></td>
 <td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_height_200_image.jpg"/></a></td>
-<td align="center">Вставить уменьшенную картинку с заданным размером по вертикали со ссылкой на оригинал.<br/>
+<td align="left">Вставить уменьшенную картинку с заданным размером по вертикали со ссылкой на оригинал.<br/>
 <br/>
 Возможные варианты команды: <br/>
 <br/>
-<i>%height=200px%Attach:image.jpg%%</i> <br/>
+<span class="code">%height=200px%Attach:image.jpg%%</span> <br/>
 <br/>
 или <br/>
-<i>%thumb height=200%Attach:image.jpg%%</i> <br/>
+<span class="code">%thumb height=200%Attach:image.jpg%%</span> <br/>
 <br/>
-Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</td>
+Уменьшенные копии картинок создаются в поддиректории <span class="notice">__thumb </span>директории с прикрепленными файлами</td>
 </tr>
 <tr>
-<td align="center">%maxsize=200%Attach:image.jpg%%</td>
+<td align="left"><span class="code">%maxsize=200%Attach:image.jpg%%</span></td>
 <td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_maxsize_200_image.jpg"/></a></td>
-<td align="center">Вставить уменьшенную картинку с заданным максимальным размером со ссылкой на оригинал.<br/>
+<td align="left">Вставить уменьшенную картинку с заданным максимальным размером со ссылкой на оригинал.<br/>
 <br/>
 Возможные варианты команды: <br/>
 <br/>
-<i>%maxsize=200px%Attach:image.jpg%%</i> <br/>
+<span class="code">%maxsize=200px%Attach:image.jpg%%</span> <br/>
 <br/>
 или <br/>
 <br/>
-<i>%thumb maxsize=200%Attach:image.jpg%%</i> <br/>
+<span class="code">%thumb maxsize=200%Attach:image.jpg%%</span> <br/>
 <br/>
-Уменьшенные копии картинок создаются в поддиректории __thumb директории с прикрепленными файлами</td>
+Уменьшенные копии картинок создаются в поддиректории <span class="notice">__thumb</span> директории с прикрепленными файлами</td>
 </tr>
 </table><h2 class="ow-wiki">Прикрепленные файлы других типов</h2>
 <br/>
@@ -110,46 +128,46 @@
 <td align="center"><b>Комментарий</b></td>
 </tr>
 <tr>
-<td align="left">Attach:file.txt</td>
+<td align="left"><span class="code">Attach:file.txt</span></td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/file.txt">file.txt</a></td>
-<td align="center">Ссылка на прикрепленный файл</td>
+<td align="left">Ссылка на прикрепленный файл</td>
 </tr>
 <tr>
-<td align="left">[[Attach:file.txt]]</td>
+<td align="left"><span class="code">[[Attach:file.txt]]</span></td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/file.txt">file.txt</a></td>
-<td align="center">Ссылка на прикрепленный файл. <br/>
+<td align="left">Ссылка на прикрепленный файл. <br/>
 То же, что и предыдущая запись.</td>
 </tr>
 <tr>
-<td align="left">Attach:"subdir/file_in_subdir.txt"</td>
+<td align="left"><span class="code">Attach:"subdir/file_in_subdir.txt"</span></td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/subdir/file_in_subdir.txt">subdir/file_in_subdir.txt</a></td>
-<td align="center">Ссылка на прикрепленный файл во вложенной папке</td>
+<td align="left">Ссылка на прикрепленный файл во вложенной папке</td>
 </tr>
 <tr>
-<td align="left">[[Attach:small_image.jpg]]</td>
+<td align="left"><span class="code">[[Attach:small_image.jpg]]</span></td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/small_image.jpg">small_image.jpg</a></td>
-<td align="center">Ссылка на прикрепленную картинку</td>
+<td align="left">Ссылка на прикрепленную картинку</td>
 </tr>
 <tr>
-<td align="left">[[Attach:file.txt | Прикрепленный файл]]</td>
+<td align="left"><span class="code">[[Attach:file.txt | Прикрепленный файл]]</span></td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/file.txt">Прикрепленный файл</a></td>
-<td align="center">Ссылка на прикрепленный файл с комментарием</td>
+<td align="left">Ссылка на прикрепленный файл с комментарием</td>
 </tr>
 <tr>
-<td align="left">[[Прикрепленный файл -> Attach:file.txt]]</td>
+<td align="left"><span class="code">[[Прикрепленный файл -> Attach:file.txt]]</span></td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/file.txt">Прикрепленный файл</a></td>
-<td align="center">Ссылка на прикрепленный файл с комментарием <br/>
+<td align="left">Ссылка на прикрепленный файл с комментарием <br/>
 То же, что и предыдущая запись.</td>
 </tr>
 <tr>
-<td align="left">[[Attach:"subdir/file_in_subdir.txt" | Прикрепленный файл]]</td>
+<td align="left"><span class="code">[[Attach:"subdir/file_in_subdir.txt" | Прикрепленный файл]]</span></td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/subdir/file_in_subdir.txt">Прикрепленный файл</a></td>
-<td align="center">Ссылка на прикрепленный файл во вложенной папке с комментарием</td>
+<td align="left">Ссылка на прикрепленный файл во вложенной папке с комментарием</td>
 </tr>
 <tr>
-<td align="left">[[Прикрепленный файл -> Attach:"subdir/file_in_subdir.txt"]]</td>
+<td align="left"><span class="code">[[Прикрепленный файл -> Attach:"subdir/file_in_subdir.txt"]]</span></td>
 <td align="center"><a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/subdir/file_in_subdir.txt">Прикрепленный файл</a></td>
-<td align="center">Ссылка на прикрепленный файл во вложенной папке с комментарием <br/>
+<td align="left">Ссылка на прикрепленный файл во вложенной папке с комментарием <br/>
 То же, что и предыдущая запись.</td>
 </tr>
 </table>

@@ -1,5 +1,13 @@
-Wiki-type notes are fully supported by OutWiker. Pages of this type are allowed to contain HTML-code, however, they are primarily designed for tagged text with syntax resembling, albeit not identical to, that of notation described on [[pmWiki -> http://pmwiki.org/]].
+!! Wiki page
 
-The notation wiki syntax is described in the following child notes:
+This [[page type -> page://page-types]] offers the most extensive text formatting capabilities using various wiki commands, while still allowing you to insert "raw" HTML code if the wiki notation is insufficient for certain tasks. However, wiki pages are primarily designed to use a syntax that resembles (but does not exactly copy) the notation used in [[pmWiki -> https://pmwiki.org/]].
+
+The wiki notation syntax is described in more detail in the child help pages:
 
 (:childlist:)
+
+----
+'''See also:'''
+* page://html-page
+* page://text-page
+* page://search-page

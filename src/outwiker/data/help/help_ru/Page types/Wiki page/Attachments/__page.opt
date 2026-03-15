@@ -1,5 +1,6 @@
 [wiki]
 md5_hash = d74c37ee29b879312ad9183db78a6a9a
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n", "notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [Tree]
 expand = False
@@ -8,7 +9,7 @@ expand = False
 type = wiki
 order = 1
 tags = wiki, вложения
-datetime = 2026-02-28 09:58:55.499442
+datetime = 2026-03-15 18:58:54.661688
 cursorposition = 613
 uid = wiki-attachments
 alias = Прикрепленные файлы и картинки
@@ -16,4 +17,7 @@ icon = images/__std_image.svg
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = notice
 

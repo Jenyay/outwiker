@@ -8,9 +8,10 @@ expand = True
 type = wiki
 order = 3
 tags = 
-datetime = 2026-02-16 21:03:03.287473
+datetime = 2026-03-15 18:42:15.013016
 cursorposition = 439
 alias = Типы страниц
+uid = page-types
 
 [Misc]
 pageindex = 1
