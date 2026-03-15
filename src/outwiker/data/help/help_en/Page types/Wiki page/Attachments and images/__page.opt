@@ -7,9 +7,9 @@ expand = False
 [General]
 type = wiki
 order = 1
-tags = wiki, attachments, for users
+tags = wiki,attachments
 cursorposition = 0
-datetime = 2026-02-28 18:28:31.929676
+datetime = 2026-03-15 11:19:40.113732
 uid = wiki-attachments
 icon = images/__std_image.svg
 

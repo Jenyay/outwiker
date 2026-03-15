@@ -1,17 +1,22 @@
 [General]
 type = wiki
-tags = tags
-order = 1
-datetime = 2026-03-15 11:19:40.104511
-cursorposition = 2605
-uid = __4d6b3355-f050-4579-8ca7-82061915c4f0
+tags = стили
+order = 4
+datetime = 2026-03-15 11:14:46.104674
+cursorposition = 181
+alias = Стили страниц
+uid = styles
+creationdatetime = 2026-03-15 10:59:57.966279
 
 [wiki]
-md5_hash = 358c434ecf0a58437dc27d9892338f89
+md5_hash = d73f2377a8225cbad5d642c757828642
 custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
+[Tree]
+expand = True
+
 [Misc]
-pageindex = 0
+pageindex = 1
 
 [Wiki]
 recentstylename = notice

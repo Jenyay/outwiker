@@ -3,8 +3,8 @@ type = wiki
 tags = 
 order = 3
 creationdatetime = 2026-03-11 19:42:21.168739
-datetime = 2026-03-13 20:48:45.494992
-uid = ce21b5f6-a85c-40ce-abb1-52287e957938
+datetime = 2026-03-15 11:03:56.984237
+uid = config-dirs
 alias = Директории настроек
 
 [Wiki]

@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = !fixme,for users,wiki,styles
+tags = wiki,styles,!fixme
 order = 0
 creationdatetime = 2018-07-03 09:25:21.153861
-datetime = 2026-02-17 10:00:10.628709
+datetime = 2026-03-15 11:19:40.124348
 uid = builtinstyles
 alias = Built-in styles and colors
 

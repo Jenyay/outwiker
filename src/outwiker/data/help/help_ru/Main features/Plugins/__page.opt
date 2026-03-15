@@ -1,16 +1,21 @@
 [General]
 type = wiki
-tags = плагины,fixme
+tags = плагины
 order = 5
-datetime = 2026-03-11 20:49:45.159880
+datetime = 2026-03-15 12:06:11.352779
 cursorposition = 629
 alias = Плагины
 uid = plugins
 icon = __std_plugin.svg
+creationdatetime = 2026-03-15 11:57:38.068805
 
 [wiki]
 md5_hash = d210e6b35fc9d850fc41466b0e464ddf
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = notice
 

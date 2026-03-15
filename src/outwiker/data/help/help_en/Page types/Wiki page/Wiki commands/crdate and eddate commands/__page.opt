@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = commands, for users, wiki
+tags = commands,wiki
 order = 3
 creationdatetime = 2014-08-21 12:40:15.313125
-datetime = 2026-02-17 10:01:44.287061
+datetime = 2026-03-15 11:19:40.134210
 cursorposition = 575
 
 [wiki]

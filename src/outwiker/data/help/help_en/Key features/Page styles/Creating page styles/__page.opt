@@ -1,14 +1,12 @@
 [General]
 type = wiki
-tags = 
-order = 3
-creationdatetime = 2026-03-11 19:42:21.168739
-datetime = 2026-03-15 11:05:42.561949
-uid = config-dirs
-
-[Wiki]
-recentstylename = notice
+tags = styles, advanced
+order = 0
+datetime = 2026-03-15 11:38:11.467359
+cursorposition = 2028
+uid = create-style
 
 [wiki]
+md5_hash = f35fdc2145c1abcff54f6572cecfb45d
 custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 

@@ -3,24 +3,36 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-	<title>Создание стилей</title>
+	<title>Creating page styles</title>
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:10pt;
+			font-size:11pt;
 			font-family:Verdana;
 		}
 
 		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}a.ow-link-page-error{font-style:italic;color:#cc0033}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}blockquote.ow-wiki{border-left:4px solid #ccc;padding:10px 15px;margin:10px 0;background-color:#f9f9f9;color:#222}
 		ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}
 	</style>
-	
+	<style>span.notice {
+	display: inline-block;
+	color: #333;
+	background-color: #e3f7fc;
+	border-radius: 1px;
+	padding: 0px 2px 0px 2px;
+	margin: 2px;
+	border:1px solid #8ed9f6;
+}
+</style>
+
 </head>
 
 <body>
-Стиль оформления представляет собой директорию, в которой обязательно должен быть файл <i>__style.html</i> и не обязательная поддиректория <i>__style</i>.<br/>
+<h1 class="ow-wiki">Creating page styles</h1>
 <br/>
-Содержимое <i>__style.html</i> - это обычный HTML-файл в кодировке UTF-8, внутрь которого с помощью специальных макросов подставляется содержимое страницы и некоторые дополнительные параметры, о которых написано ниже. Для примера, так выглядит стиль по умолчанию:<br/>
+A <a class="ow-wiki ow-link-page" href="page://styles">page style</a> is a directory that must contain a <span class="notice">__style.html</span> file and an optional <span class="notice">__style</span> subdirectory.<br/>
+<br/>
+The content of <span class="notice">__style.html</span> is a standard HTML file in UTF-8 encoding that contains some substitution macros. During the generation of the final page view, these macros are replaced with the page content or additional parameters described <a class="ow-wiki" href="#macros">below</a>. For example, this is what the default style looks like:<br/>
 
 <pre>
 &lt;html&gt;
@@ -44,10 +56,14 @@
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
+<h2 class="ow-wiki"><a id="macros"></a> Substitution macros</h2>
 <br/>
-В файле <i>__style.html</i> содержатся специальные макросы подстановки, которые начинаются с символа "$", за которым идет имя макроса, возможно окруженное фигурными скобками, например: $content или ${content}. Второй случай нужен, если сразу за макросом должен располагаться какой-то текст впритык к нему (без пробелов). На данный момент стили поддерживают следующие макросы подстановки:<br/>
-<ul class="ow-wiki"><li class="ow-wiki"><b>$content</b> - заменяется содержимым страницы.</li><li class="ow-wiki"><b>$fontsize</b> - размер шрифта, установленного в настройках. Измеряется в пунктах (pt).</li><li class="ow-wiki"><b>$fontfamily</b> - имя шрифта, установленного в настройках.</li><li class="ow-wiki"><b>$userstyle</b> - дополнительные стили, которые могут создаваться в процессе разбора викистраниц.</li><li class="ow-wiki"><b>$userhead</b> - дополнительные теги внутри тега &lt;head&gt;...&lt;/head&gt;, которые могут создаваться в процессе разбора викистраниц.</li>
+The <span class="notice">__style.html</span> file contains special substitution macros that start with the "$" character followed by the macro name, optionally surrounded by curly braces, for example: <span class="notice">$content</span> or <span class="notice">${content}</span>. The second case is needed if the macro must be followed immediately by some text without spaces. Currently, page styles support the following substitution macros:<br/>
+<ul class="ow-wiki"><li class="ow-wiki"><span class="notice">$content</span> - replaced with the page content.</li><li class="ow-wiki"><span class="notice">$fontsize</span> - the font size set in the settings. Measured in points (pt).</li><li class="ow-wiki"><span class="notice">$fontfamily</span> - the font family name set in the settings.</li><li class="ow-wiki"><span class="notice">$userstyle</span> - additional styles that may be created during the wiki page parsing.</li><li class="ow-wiki"><span class="notice">$userhead</span> - additional tags inside the &lt;head&gt;...&lt;/head&gt; tag that may be created during the wiki page parsing.</li>
 </ul>
-Директория <i>__style</i> является не обязательной. В ней могут располагаться картинки и файлы со стилями CSS. Однако хранить стили CSS в этой директории не желательно, лучше их помещать непосредственно в файл <i>__style.html</i>. В первую очередь это связано с кэшированием стилей при запуске программы под Linux. Если несколько стилей имеют файлы CSS с одинаковыми именами, то при переключении между этими стилями одноименные файлы CSS при рендеринге HTML могут обновляться не сразу.
+The <span class="notice">__style</span> subdirectory is optional. It can contain images and CSS files. However, it is not recommended to store CSS styles in this directory; it is better to place them directly in the <span class="notice">__style.html</span> file. This is primarily due to style caching when running the program under Linux. If several styles have CSS files with the same names, these files might not be updated immediately during HTML rendering when switching between such styles.<br/>
+<hr>
+<b>See also:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://styles">Page styles</a></li>
+</ul>
 </body>
 </html>
