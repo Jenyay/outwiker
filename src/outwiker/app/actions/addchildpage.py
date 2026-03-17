@@ -14,11 +14,11 @@ class AddChildPageAction(BaseAction):
 
     @property
     def title(self):
-        return _('Add Child Page…')
+        return _('Create child page…')
 
     @property
     def description(self):
-        return _('Add child page')
+        return _('Create child page')
 
     def run(self, params):
         createChildPage(self._application.mainWindow,

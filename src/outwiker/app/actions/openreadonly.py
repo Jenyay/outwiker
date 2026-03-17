@@ -15,11 +15,11 @@ class OpenReadOnlyAction(BaseAction):
 
     @property
     def title(self):
-        return _("Open Read-only…")
+        return _("Open read-only…")
 
     @property
     def description(self):
-        return _("Open tree notes read only")
+        return _("Opens the note tree in read-only mode")
 
     def run(self, params):
         openWikiWithDialog(self._application.mainWindow, self._application, True)

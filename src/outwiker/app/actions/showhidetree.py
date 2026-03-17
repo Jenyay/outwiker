@@ -15,7 +15,7 @@ class ShowHideTreeAction(BaseAction):
 
     @property
     def title(self):
-        return _("Note Tree")
+        return _("Note tree")
 
     @property
     def description(self):

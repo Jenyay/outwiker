@@ -16,7 +16,7 @@ class AttachCreateSubdirAction(BaseAction):
 
     @property
     def title(self):
-        return _('Create a new attached folder')
+        return _('Create new attached folder')
 
     @property
     def description(self):

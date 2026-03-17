@@ -17,7 +17,7 @@ class GlobalSearchAction (BaseAction):
 
     @property
     def title(self):
-        return _("Global Search…")
+        return _("Global search…")
 
     @property
     def description(self):

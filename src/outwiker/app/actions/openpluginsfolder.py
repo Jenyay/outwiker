@@ -16,7 +16,7 @@ class OpenPluginsFolderAction(BaseAction):
 
     @property
     def title(self):
-        return _("Open Plugins Folder")
+        return _("Open plugins folder")
 
     @property
     def description(self):

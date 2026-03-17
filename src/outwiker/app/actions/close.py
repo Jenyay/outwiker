@@ -19,7 +19,7 @@ class CloseAction(BaseAction):
 
     @property
     def description(self):
-        return _("Close a tree notes")
+        return _("Close the opened note tree")
 
     def run(self, params):
         closeWiki(self._application)

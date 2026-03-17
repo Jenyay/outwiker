@@ -19,7 +19,7 @@ class CopyPageTitleAction(BaseAction):
 
     @property
     def title(self):
-        return _("Copy Page Title")
+        return _("Copy page title")
 
     @property
     def description(self):
@@ -49,7 +49,7 @@ class CopyPagePathAction(BaseAction):
 
     @property
     def title(self):
-        return _("Copy Page Path")
+        return _("Copy page path")
 
     @property
     def description(self):
@@ -79,7 +79,7 @@ class CopyAttachPathAction(BaseAction):
 
     @property
     def title(self):
-        return _("Copy Attachments Path")
+        return _("Copy attachments path")
 
     @property
     def description(self):
@@ -111,7 +111,7 @@ class CopyPageLinkAction(BaseAction):
 
     @property
     def title(self):
-        return _("Copy Page Link")
+        return _("Copy page link")
 
     @property
     def description(self):

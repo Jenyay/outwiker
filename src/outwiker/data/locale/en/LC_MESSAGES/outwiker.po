@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 20:52+0300\n"
+"POT-Creation-Date: 2026-03-17 20:59+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -26,40 +26,45 @@ msgstr "Open \"About\" dialog"
 
 #: outwiker/app/actions/addbookmark.py:17
 #: outwiker/app/actions/addbookmark.py:21
-msgid "Add/Remove Bookmark"
-msgstr "Add/Remove Bookmark"
+#| msgid "Add/remove bookmark"
+msgid "Add / remove bookmark"
+msgstr "Add / remove bookmark"
 
 #: outwiker/app/actions/addchildpage.py:17
-msgid "Add Child Page…"
-msgstr "Add Child Page…"
+#| msgid "Add child page…"
+msgid "Create child page…"
+msgstr "Create child page…"
 
 #: outwiker/app/actions/addchildpage.py:21
-msgid "Add child page"
-msgstr "Add child page"
+#| msgid "Create Page"
+msgid "Create child page"
+msgstr "Create child page"
 
 #: outwiker/app/actions/addsiblingpage.py:17
-msgid "Add Sibling Page…"
-msgstr "Add Sibling Page…"
+#| msgid "Add sibling page…"
+msgid "Create sibling page…"
+msgstr "Create sibling page…"
 
 #: outwiker/app/actions/addsiblingpage.py:21
-msgid "Add sibling page"
-msgstr "Add sibling page"
+#| msgid "Add sibling page"
+msgid "Create sibling page"
+msgstr "Create sibling page"
 
 #: outwiker/app/actions/applystyle.py:28
-msgid "Set Style to Branch…"
-msgstr "Set Style to Branch…"
+msgid "Set style to branch…"
+msgstr "Set style to branch…"
 
-#: outwiker/app/actions/applystyle.py:32 outwiker/app/actions/applystyle.py:63
+#: outwiker/app/actions/applystyle.py:32 outwiker/app/actions/applystyle.py:93
+msgid "Set style to branch"
+msgstr "Set style to branch"
+
+#: outwiker/app/actions/applystyle.py:63
 msgid "Set Style to Branch"
 msgstr "Set Style to Branch"
 
 #: outwiker/app/actions/applystyle.py:64
 msgid "Please wait..."
 msgstr "Please wait..."
-
-#: outwiker/app/actions/applystyle.py:93
-msgid "Set style to branch"
-msgstr "Set style to branch"
 
 #: outwiker/app/actions/applystyle.py:95
 msgid "Style"
@@ -71,8 +76,8 @@ msgid "Default"
 msgstr "Default"
 
 #: outwiker/app/actions/attachcreatesubdir.py:19
-msgid "Create a new attached folder"
-msgstr "Create a new attached folder"
+msgid "Create new attached folder"
+msgstr "Create new attached folder"
 
 #: outwiker/app/actions/attachcreatesubdir.py:23
 msgid "Create a new folder in the current attached folder"
@@ -181,9 +186,9 @@ msgstr "Select all"
 msgid "Select all attachments. Action for the attachments panel"
 msgstr "Select all attachments. Action for the attachments panel"
 
-#: outwiker/app/actions/clipboard.py:22
-msgid "Copy Page Title"
-msgstr "Copy Page Title"
+#: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:98
+msgid "Copy page title"
+msgstr "Copy page title"
 
 #: outwiker/app/actions/clipboard.py:26
 msgid "Copy current page title to clipboard"
@@ -198,9 +203,9 @@ msgstr "Copied to clipboard"
 msgid "Page title has been copied to the clipboard"
 msgstr "Page title has been copied to the clipboard"
 
-#: outwiker/app/actions/clipboard.py:52
-msgid "Copy Page Path"
-msgstr "Copy Page Path"
+#: outwiker/app/actions/clipboard.py:52 outwiker/app/gui/pagepopupmenu.py:99
+msgid "Copy page path"
+msgstr "Copy page path"
 
 #: outwiker/app/actions/clipboard.py:56
 msgid "Copy path to current page to clipboard"
@@ -210,9 +215,9 @@ msgstr "Copy path to current page to clipboard"
 msgid "Path to the page has been copied to the clipboard"
 msgstr "Path to the page has been copied to the clipboard"
 
-#: outwiker/app/actions/clipboard.py:82
-msgid "Copy Attachments Path"
-msgstr "Copy Attachments Path"
+#: outwiker/app/actions/clipboard.py:82 outwiker/app/gui/pagepopupmenu.py:101
+msgid "Copy attachments path"
+msgstr "Copy attachments path"
 
 #: outwiker/app/actions/clipboard.py:86
 msgid "Copy path to attachments for current page to clipboard"
@@ -222,9 +227,9 @@ msgstr "Copy path to attachments for current page to clipboard"
 msgid "Path to the page attachments has been copied to the clipboard"
 msgstr "Path to the page attachments has been copied to the clipboard"
 
-#: outwiker/app/actions/clipboard.py:114
-msgid "Copy Page Link"
-msgstr "Copy Page Link"
+#: outwiker/app/actions/clipboard.py:114 outwiker/app/gui/pagepopupmenu.py:103
+msgid "Copy page link"
+msgstr "Copy page link"
 
 #: outwiker/app/actions/clipboard.py:118
 msgid "Copy link to current page to clipboard"
@@ -239,11 +244,10 @@ msgid "Close"
 msgstr "Close"
 
 #: outwiker/app/actions/close.py:22
-msgid "Close a tree notes"
-msgstr "Close a tree notes"
+msgid "Close the opened note tree"
+msgstr "Close the opened note tree"
 
 #: outwiker/app/actions/editpageprop.py:18
-#| msgid "Page Properties…"
 msgid "Page properties…"
 msgstr "Page properties…"
 
@@ -259,17 +263,17 @@ msgstr "Exit…"
 msgid "Close OutWiker"
 msgstr "Close OutWiker"
 
-#: outwiker/app/actions/fullscreen.py:17
+#: outwiker/app/actions/fullscreen.py:18
 msgid "Fullscreen"
 msgstr "Fullscreen"
 
-#: outwiker/app/actions/fullscreen.py:21
+#: outwiker/app/actions/fullscreen.py:22
 msgid "Fullscreen mode on/off"
 msgstr "Fullscreen mode on/off"
 
 #: outwiker/app/actions/globalsearch.py:20
-msgid "Global Search…"
-msgstr "Global Search…"
+msgid "Global search…"
+msgstr "Global search…"
 
 #: outwiker/app/actions/globalsearch.py:24
 msgid "Create or open page for global search"
@@ -296,9 +300,6 @@ msgid "Open next page"
 msgstr "Open next page"
 
 #: outwiker/app/actions/movepagedown.py:21
-msgid "Move Page Down"
-msgstr "Move Page Down"
-
 #: outwiker/app/actions/movepagedown.py:25
 msgid "Move page down"
 msgstr "Move page down"
@@ -310,11 +311,7 @@ msgstr "Move page down"
 msgid "Wiki is not open"
 msgstr "Wiki is not open"
 
-#: outwiker/app/actions/movepageup.py:21
-msgid "Move Page Up"
-msgstr "Move Page Up"
-
-#: outwiker/app/actions/movepageup.py:25
+#: outwiker/app/actions/movepageup.py:21 outwiker/app/actions/movepageup.py:25
 msgid "Move page up"
 msgstr "Move page up"
 
@@ -371,20 +368,20 @@ msgid "help_en"
 msgstr "help_en"
 
 #: outwiker/app/actions/openpluginsfolder.py:19
-msgid "Open Plugins Folder"
-msgstr "Open Plugins Folder"
+msgid "Open plugins folder"
+msgstr "Open plugins folder"
 
 #: outwiker/app/actions/openpluginsfolder.py:23
 msgid "Open folder with plugins"
 msgstr "Open folder with plugins"
 
 #: outwiker/app/actions/openreadonly.py:18
-msgid "Open Read-only…"
-msgstr "Open Read-only…"
+msgid "Open read-only…"
+msgstr "Open read-only…"
 
 #: outwiker/app/actions/openreadonly.py:22
-msgid "Open tree notes read only"
-msgstr "Open tree notes read only"
+msgid "Opens the note tree in read-only mode"
+msgstr "Opens the note tree in read-only mode"
 
 #: outwiker/app/actions/preferences.py:18
 msgid "Preferences…"
@@ -403,12 +400,12 @@ msgid "Print current page"
 msgstr "Print current page"
 
 #: outwiker/app/actions/reloadwiki.py:21
-msgid "Reload Wiki…"
-msgstr "Reload Wiki…"
+msgid "Reload note tree…"
+msgstr "Reload note tree…"
 
 #: outwiker/app/actions/reloadwiki.py:25
-msgid "Reload wiki"
-msgstr "Reload wiki"
+msgid "Reload the currently opened note tree"
+msgstr "Reload the currently opened note tree"
 
 #: outwiker/app/actions/reloadwiki.py:29
 msgid "Save current page before reload?"
@@ -419,16 +416,16 @@ msgid "Save?"
 msgstr "Save?"
 
 #: outwiker/app/actions/removepage.py:18
-msgid "Remove Page…"
-msgstr "Remove Page…"
+msgid "Remove page…"
+msgstr "Remove page…"
 
 #: outwiker/app/actions/removepage.py:22
 msgid "Remove current page and all children"
 msgstr "Remove current page and all children"
 
 #: outwiker/app/actions/renamepage.py:17
-msgid "Rename Page"
-msgstr "Rename Page"
+msgid "Rename page"
+msgstr "Rename page"
 
 #: outwiker/app/actions/renamepage.py:21
 msgid "Rename current page"
@@ -469,12 +466,12 @@ msgid "Find previous on page"
 msgstr "Find previous on page"
 
 #: outwiker/app/actions/search.py:96
-msgid "Search and Replace"
-msgstr "Search and Replace"
+msgid "Search and replace"
+msgstr "Search and replace"
 
 #: outwiker/app/actions/search.py:100
-msgid "Begin search and replace on page"
-msgstr "Begin search and replace on page"
+msgid "Start search and replace on the page"
+msgstr "Start search and replace on the page"
 
 #: outwiker/app/actions/showhideattaches.py:18
 #: outwiker/app/actions/switchto.py:66
@@ -500,32 +497,33 @@ msgid "Tags"
 msgstr "Tags"
 
 #: outwiker/app/actions/showhidetags.py:22
-msgid "Show / hide a tags panel"
-msgstr "Show / hide a tags panel"
+msgid "Show / hide a tag panel"
+msgstr "Show / hide a tag panel"
 
-#: outwiker/app/actions/showhidetree.py:18
-msgid "Note Tree"
-msgstr "Note Tree"
+#: outwiker/app/actions/showhidetree.py:18 outwiker/app/actions/switchto.py:42
+#: outwiker/app/gui/preferences/prefcontroller.py:138
+msgid "Note tree"
+msgstr "Note tree"
 
 #: outwiker/app/actions/showhidetree.py:22
 msgid "Show / hide a note tree panel"
 msgstr "Show / hide a note tree panel"
 
 #: outwiker/app/actions/sortchildalpha.py:19
-msgid "Sort Children Pages Alphabetically"
-msgstr "Sort Children Pages Alphabetically"
+msgid "Sort child pages alphabetically"
+msgstr "Sort child pages alphabetically"
 
 #: outwiker/app/actions/sortchildalpha.py:23
-msgid "Sort children pages alphabetically"
-msgstr "Sort children pages alphabetically"
+msgid "Sort the child pages alphabetically"
+msgstr "Sort the child pages alphabetically"
 
 #: outwiker/app/actions/sortsiblingsalpha.py:19
-msgid "Sort Siblings Pages Alphabetically"
-msgstr "Sort Siblings Pages Alphabetically"
+msgid "Sort sibling pages alphabetically"
+msgstr "Sort sibling pages alphabetically"
 
 #: outwiker/app/actions/sortsiblingsalpha.py:23
-msgid "Sort siblings pages alphabetically"
-msgstr "Sort siblings pages alphabetically"
+msgid "Sort the sibling pages alphabetically"
+msgstr "Sort the sibling pages alphabetically"
 
 #: outwiker/app/actions/switchto.py:18
 msgid "Main panel"
@@ -534,11 +532,6 @@ msgstr "Main panel"
 #: outwiker/app/actions/switchto.py:22
 msgid "Set focus to main panel"
 msgstr "Set focus to main panel"
-
-#: outwiker/app/actions/switchto.py:42
-#: outwiker/app/gui/preferences/prefcontroller.py:138
-msgid "Note tree"
-msgstr "Note tree"
 
 #: outwiker/app/actions/switchto.py:46
 msgid "Set focus to note tree"
@@ -552,40 +545,35 @@ msgstr "Set focus to attachments panel"
 msgid "Set focus to tag cloud panel"
 msgstr "Set focus to tag cloud panel"
 
-#: outwiker/app/actions/tabs.py:17
-msgid "Close Tab"
-msgstr "Close Tab"
+#: outwiker/app/actions/tabs.py:18
+msgid "Close tab"
+msgstr "Close tab"
 
-#: outwiker/app/actions/tabs.py:21
+#: outwiker/app/actions/tabs.py:22
 msgid "Close current tab"
 msgstr "Close current tab"
 
-#: outwiker/app/actions/tabs.py:42
-msgid "Add Tab"
-msgstr "Add Tab"
-
-#: outwiker/app/actions/tabs.py:46
+#: outwiker/app/actions/tabs.py:44 outwiker/app/actions/tabs.py:48
 msgid "Add tab"
 msgstr "Add tab"
 
-#: outwiker/app/actions/tabs.py:64
-msgid "Next Tab"
-msgstr "Next Tab"
+#: outwiker/app/actions/tabs.py:67
+msgid "Next tab"
+msgstr "Next tab"
 
-#: outwiker/app/actions/tabs.py:68
+#: outwiker/app/actions/tabs.py:71
 msgid "Go to next tab"
 msgstr "Go to next tab"
 
-#: outwiker/app/actions/tabs.py:86
-msgid "Previous Tab"
-msgstr "Previous Tab"
-
 #: outwiker/app/actions/tabs.py:90
+msgid "Previous tab"
+msgstr "Previous tab"
+
+#: outwiker/app/actions/tabs.py:94
 msgid "Go to previous tab"
 msgstr "Go to previous tab"
 
 #: outwiker/app/actions/tags.py:39
-#| msgid "Add tags to branch"
 msgid "Add tags to branch…"
 msgstr "Add tags to branch…"
 
@@ -594,7 +582,6 @@ msgid "Add tags to branch"
 msgstr "Add tags to branch"
 
 #: outwiker/app/actions/tags.py:92
-#| msgid "Remove tags from branch"
 msgid "Remove tags from branch…"
 msgstr "Remove tags from branch…"
 
@@ -603,7 +590,6 @@ msgid "Remove tags from branch"
 msgstr "Remove tags from branch"
 
 #: outwiker/app/actions/tags.py:143
-#| msgid "Rename Tag…"
 msgid "Rename tag…"
 msgstr "Rename tag…"
 
@@ -651,20 +637,16 @@ msgid "Insert code"
 msgstr "Insert code"
 
 #: outwiker/app/gui/actionslist.py:252
-msgid "Insert code(monospaced font)"
-msgstr "Insert code(monospaced font)"
+msgid "Format as code (monospaced font)"
+msgstr "Format as code (monospaced font)"
 
 #: outwiker/app/gui/actionslist.py:257 outwiker/app/gui/actionslist.py:258
 msgid "Align text left"
 msgstr "Align text left"
 
-#: outwiker/app/gui/actionslist.py:263
+#: outwiker/app/gui/actionslist.py:263 outwiker/app/gui/actionslist.py:264
 msgid "Align text center"
 msgstr "Align text center"
-
-#: outwiker/app/gui/actionslist.py:264
-msgid "Center"
-msgstr "Center"
 
 #: outwiker/app/gui/actionslist.py:269 outwiker/app/gui/actionslist.py:270
 msgid "Align text right"
@@ -674,37 +656,65 @@ msgstr "Align text right"
 msgid "Justify"
 msgstr "Justify"
 
-#: outwiker/app/gui/actionslist.py:281 outwiker/app/gui/actionslist.py:282
+#: outwiker/app/gui/actionslist.py:281
 msgid "First-level heading"
 msgstr "First-level heading"
 
-#: outwiker/app/gui/actionslist.py:287 outwiker/app/gui/actionslist.py:288
+#: outwiker/app/gui/actionslist.py:282
+msgid "Insert a first-level heading"
+msgstr "Insert a first-level heading"
+
+#: outwiker/app/gui/actionslist.py:287
 msgid "Second-level heading"
 msgstr "Second-level heading"
 
-#: outwiker/app/gui/actionslist.py:293 outwiker/app/gui/actionslist.py:294
-msgid "Subtitle three"
-msgstr "Subtitle three"
+#: outwiker/app/gui/actionslist.py:288
+msgid "Insert a second-level heading"
+msgstr "Insert a second-level heading"
 
-#: outwiker/app/gui/actionslist.py:299 outwiker/app/gui/actionslist.py:300
-msgid "Subtitle four"
-msgstr "Subtitle four"
+#: outwiker/app/gui/actionslist.py:293
+msgid "Third-level heading"
+msgstr "Third-level heading"
 
-#: outwiker/app/gui/actionslist.py:305 outwiker/app/gui/actionslist.py:306
-msgid "Subtitle five"
-msgstr "Subtitle five"
+#: outwiker/app/gui/actionslist.py:294
+msgid "Insert a third-level heading"
+msgstr "Insert a third-level heading"
 
-#: outwiker/app/gui/actionslist.py:311 outwiker/app/gui/actionslist.py:312
-msgid "Subtitle six"
-msgstr "Subtitle six"
+#: outwiker/app/gui/actionslist.py:299
+msgid "Fourth-level heading"
+msgstr "Fourth-level heading"
+
+#: outwiker/app/gui/actionslist.py:300
+msgid "Insert a fourth-level heading"
+msgstr "Insert a fourth-level heading"
+
+#: outwiker/app/gui/actionslist.py:305
+msgid "Fifth-level heading"
+msgstr "Fifth-level heading"
+
+#: outwiker/app/gui/actionslist.py:306
+msgid "Insert a fifth-level heading"
+msgstr "Insert a fifth-level heading"
+
+#: outwiker/app/gui/actionslist.py:311
+msgid "Sixth-level heading"
+msgstr "Sixth-level heading"
+
+#: outwiker/app/gui/actionslist.py:312
+msgid "Insert a sixth-level heading"
+msgstr "Insert a sixth-level heading"
 
 #: outwiker/app/gui/actionslist.py:315
 msgid "Anchor"
 msgstr "Anchor"
 
-#: outwiker/app/gui/actionslist.py:318 outwiker/app/gui/actionslist.py:319
+#: outwiker/app/gui/actionslist.py:318
 msgid "Horizontal rule"
 msgstr "Horizontal rule"
+
+#: outwiker/app/gui/actionslist.py:319
+msgid "Insert a horizontal rule"
+msgstr "Insert a horizontal rule"
 
 #: outwiker/app/gui/actionslist.py:323
 #: outwiker/app/gui/preferences/wikieditorpanel.py:33
@@ -713,8 +723,8 @@ msgid "Link"
 msgstr "Link"
 
 #: outwiker/app/gui/actionslist.py:323
-msgid "Insert Link"
-msgstr "Insert Link"
+msgid "Insert a link"
+msgstr "Insert a link"
 
 #: outwiker/app/gui/actionslist.py:327
 msgid "Quote"
@@ -729,8 +739,8 @@ msgid "Image"
 msgstr "Image"
 
 #: outwiker/app/gui/actionslist.py:334
-msgid "Insert image"
-msgstr "Insert image"
+msgid "Insert an image"
+msgstr "Insert an image"
 
 #: outwiker/app/gui/actionslist.py:337
 msgid "Mark"
@@ -741,20 +751,20 @@ msgid "Mark text"
 msgstr "Mark text"
 
 #: outwiker/app/gui/actionslist.py:340
-msgid "Bullets list"
-msgstr "Bullets list"
+msgid "Unordered list"
+msgstr "Unordered list"
 
 #: outwiker/app/gui/actionslist.py:341
-msgid "Insert a bullets list"
-msgstr "Insert a bullets list"
+msgid "Insert an unordered list"
+msgstr "Insert an unordered list"
 
 #: outwiker/app/gui/actionslist.py:346
-msgid "Numbers list"
-msgstr "Numbers list"
+msgid "Ordered list"
+msgstr "Ordered list"
 
 #: outwiker/app/gui/actionslist.py:347
-msgid "Insert a numbers list"
-msgstr "Insert a numbers list"
+msgid "Insert an ordered list"
+msgstr "Insert an ordered list"
 
 #: outwiker/app/gui/actionslist.py:352
 msgid "Decrease nesting level"
@@ -773,8 +783,8 @@ msgid "Insert a line break"
 msgstr "Insert a line break"
 
 #: outwiker/app/gui/actionslist.py:364 outwiker/app/gui/actionslist.py:365
-msgid "Convert HTML Symbols"
-msgstr "Convert HTML Symbols"
+msgid "Escape HTML characters"
+msgstr "Escape HTML characters"
 
 #: outwiker/app/gui/actionslist.py:370 outwiker/pages/html/htmlpageview.py:39
 #: outwiker/pages/wiki/wikipageview.py:71
@@ -815,8 +825,8 @@ msgid "Spell checking"
 msgstr "Spell checking"
 
 #: outwiker/app/gui/actionslist.py:392
-msgid "Enable / disable spell checking"
-msgstr "Enable / disable spell checking"
+msgid "Toggle spell checking"
+msgstr "Toggle spell checking"
 
 #: outwiker/app/gui/actionslist.py:397
 msgid "Duplicate line"
@@ -855,16 +865,16 @@ msgid "Join lines"
 msgstr "Join lines"
 
 #: outwiker/app/gui/actionslist.py:422
-msgid "Delete word to the left"
-msgstr "Delete word to the left"
+msgid "Delete word left"
+msgstr "Delete word left"
 
 #: outwiker/app/gui/actionslist.py:423
 msgid "Delete text to beginning of the word"
 msgstr "Delete text to beginning of the word"
 
 #: outwiker/app/gui/actionslist.py:428
-msgid "Delete word to the right"
-msgstr "Delete word to the right"
+msgid "Delete word right"
+msgstr "Delete word right"
 
 #: outwiker/app/gui/actionslist.py:429
 msgid "Delete text to ending of the word"
@@ -875,8 +885,8 @@ msgid "Delete to start of the line"
 msgstr "Delete to start of the line"
 
 #: outwiker/app/gui/actionslist.py:435
-msgid "Delete text back from the current position to the start of the line"
-msgstr "Delete text back from the current position to the start of the line"
+msgid "Delete text to the beginning of the line"
+msgstr "Delete text to the beginning of the line"
 
 #: outwiker/app/gui/actionslist.py:440
 msgid "Delete to end of the line"
@@ -1024,8 +1034,8 @@ msgid "Copy"
 msgstr "Copy"
 
 #: outwiker/app/gui/actionslist.py:546
-msgid "Copy to clipboard"
-msgstr "Copy to clipboard"
+msgid "Copy selected text to clipboard"
+msgstr "Copy selected text to clipboard"
 
 #: outwiker/app/gui/actionslist.py:551 outwiker/gui/texteditormenu.py:38
 msgid "Cut"
@@ -1432,22 +1442,6 @@ msgstr "Recent"
 msgid "Can't set page icon\n"
 msgstr "Can't set page icon\n"
 
-#: outwiker/app/gui/pagepopupmenu.py:98
-msgid "Copy page title"
-msgstr "Copy page title"
-
-#: outwiker/app/gui/pagepopupmenu.py:99
-msgid "Copy page path"
-msgstr "Copy page path"
-
-#: outwiker/app/gui/pagepopupmenu.py:101
-msgid "Copy attachments path"
-msgstr "Copy attachments path"
-
-#: outwiker/app/gui/pagepopupmenu.py:103
-msgid "Copy page link"
-msgstr "Copy page link"
-
 #: outwiker/app/gui/preferences/attachpanel.py:16
 msgid "Insert link to attachment"
 msgstr "Insert link to attachment"
@@ -1654,9 +1648,6 @@ msgstr "Auto"
 
 #: outwiker/app/gui/preferences/hotkeyspanel.py:47
 #, python-brace-format
-#| msgid ""
-#| "{hotkey} hotkey assigned for \"{old}\".\n"
-#| "Assign this hotkey for \"{new}\"?"
 msgid ""
 "{hotkey} shortcut assigned for \"{old}\".\n"
 "Assign this shortcut for \"{new}\"?"
@@ -2645,12 +2636,12 @@ msgstr "Header cells for first row"
 msgid "Insert rows"
 msgstr "Insert rows"
 
-#: outwiker/gui/tagscloud.py:547
+#: outwiker/gui/tagscloud.py:567
 #, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Number of notes: {}"
 
-#: outwiker/gui/tagscloud.py:643
+#: outwiker/gui/tagscloud.py:674
 msgid "Applied tags only"
 msgstr "Applied tags only"
 
@@ -3166,6 +3157,99 @@ msgstr "[[comment -> link]]"
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
 
+#~ msgid "Add child page"
+#~ msgstr "Add child page"
+
+#~ msgid "Add Child Page…"
+#~ msgstr "Add Child Page…"
+
+#~ msgid "Add Sibling Page…"
+#~ msgstr "Add Sibling Page…"
+
+#~ msgid "Set Style to Branch…"
+#~ msgstr "Set Style to Branch…"
+
+#~ msgid "Copy Page Title"
+#~ msgstr "Copy Page Title"
+
+#~ msgid "Copy Page Path"
+#~ msgstr "Copy Page Path"
+
+#~ msgid "Copy Attachments Path"
+#~ msgstr "Copy Attachments Path"
+
+#~ msgid "Copy Page Link"
+#~ msgstr "Copy Page Link"
+
+#~ msgid "Close a tree notes"
+#~ msgstr "Close a tree notes"
+
+#~ msgid "Global Search…"
+#~ msgstr "Global Search…"
+
+#~ msgid "Move Page Down"
+#~ msgstr "Move Page Down"
+
+#~ msgid "Move Page Up"
+#~ msgstr "Move Page Up"
+
+#~ msgid "Reload Wiki…"
+#~ msgstr "Reload Wiki…"
+
+#~ msgid "Reload wiki"
+#~ msgstr "Reload wiki"
+
+#~ msgid "Note Tree"
+#~ msgstr "Note Tree"
+
+#~ msgid "Sort Children Pages Alphabetically"
+#~ msgstr "Sort Children Pages Alphabetically"
+
+#~ msgid "Sort Siblings Pages Alphabetically"
+#~ msgstr "Sort Siblings Pages Alphabetically"
+
+#~ msgid "Add Tab"
+#~ msgstr "Add Tab"
+
+#~ msgid "Insert code(monospaced font)"
+#~ msgstr "Insert code(monospaced font)"
+
+#~ msgid "Center"
+#~ msgstr "Center"
+
+#~ msgid "Subtitle three"
+#~ msgstr "Subtitle three"
+
+#~ msgid "Subtitle four"
+#~ msgstr "Subtitle four"
+
+#~ msgid "Subtitle five"
+#~ msgstr "Subtitle five"
+
+#~ msgid "Subtitle six"
+#~ msgstr "Subtitle six"
+
+#~ msgid "Bullets list"
+#~ msgstr "Bullets list"
+
+#~ msgid "Insert a bullets list"
+#~ msgstr "Insert a bullets list"
+
+#~ msgid "Numbers list"
+#~ msgstr "Numbers list"
+
+#~ msgid "Convert HTML Symbols"
+#~ msgstr "Convert HTML Symbols"
+
+#~ msgid "Enable / disable spell checking"
+#~ msgstr "Enable / disable spell checking"
+
+#~ msgid "Delete text back from the current position to the start of the line"
+#~ msgstr "Delete text back from the current position to the start of the line"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "Copy to clipboard"
+
 #~ msgid "Add Tags to Branch…"
 #~ msgstr "Add Tags to Branch…"
 
@@ -3433,11 +3517,11 @@ msgstr "[[link | comment]]"
 #~ msgstr "Google+ page"
 
 #~ msgid ""
-#~ "https://plus.google.com/u/0/b/"
-#~ "113404982971748285098/113404982971748285098/posts"
+#~ "https://plus.google.com/u/0/b/113404982971748285098/113404982971748285098/"
+#~ "posts"
 #~ msgstr ""
-#~ "https://plus.google.com/u/0/b/"
-#~ "113404982971748285098/113404982971748285098/posts"
+#~ "https://plus.google.com/u/0/b/113404982971748285098/113404982971748285098/"
+#~ "posts"
 
 #~ msgid "Livejournal community"
 #~ msgstr "Livejournal community"
@@ -3538,9 +3622,6 @@ msgstr "[[link | comment]]"
 
 #~ msgid "Alt"
 #~ msgstr "Alt"
-
-#~ msgid "Insert code (monospaced font)"
-#~ msgstr "Insert code (monospaced font)"
 
 #~ msgid "Previous word"
 #~ msgstr "Previous word"
@@ -3683,9 +3764,6 @@ msgstr "[[link | comment]]"
 
 #~ msgid "Reload"
 #~ msgstr "Reload"
-
-#~ msgid "Global search…"
-#~ msgstr "Global search…"
 
 #~ msgid "Remove…"
 #~ msgstr "Remove…"
@@ -3837,8 +3915,7 @@ msgstr "[[link | comment]]"
 #~ msgid ""
 #~ "<HTML>\n"
 #~ "<HEAD>\n"
-#~ "    <META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/"
-#~ ">\n"
+#~ "    <META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>\n"
 #~ "</HEAD>\n"
 #~ "\n"
 #~ "<BODY>\n"
@@ -3851,8 +3928,7 @@ msgstr "[[link | comment]]"
 #~ msgstr ""
 #~ "<HTML>\n"
 #~ "<HEAD>\n"
-#~ "    <META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/"
-#~ ">\n"
+#~ "    <META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>\n"
 #~ "</HEAD>\n"
 #~ "\n"
 #~ "<BODY>\n"

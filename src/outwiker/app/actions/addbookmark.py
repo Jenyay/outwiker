@@ -14,11 +14,11 @@ class AddBookmarkAction (BaseAction):
 
     @property
     def title(self):
-        return _('Add/Remove Bookmark')
+        return _('Add / remove bookmark')
 
     @property
     def description(self):
-        return _('Add/Remove Bookmark')
+        return _('Add / remove bookmark')
 
     def run(self, params):
         toggleBookmarkForCurrentPage(self._application)

@@ -18,11 +18,11 @@ class ReloadWikiAction(BaseAction):
 
     @property
     def title(self):
-        return _("Reload Wiki…")
+        return _("Reload note tree…")
 
     @property
     def description(self):
-        return _("Reload wiki")
+        return _("Reload the currently opened note tree")
 
     def run(self, params):
         if self._application.wikiroot is not None:

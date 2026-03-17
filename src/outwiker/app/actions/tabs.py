@@ -3,22 +3,23 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class CloseTabAction (BaseAction):
+class CloseTabAction(BaseAction):
     """
     Закрыть текущую вкладку
     """
-    stringId = u"CloseTab"
+
+    stringId = "CloseTab"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Close Tab")
+        return _("Close tab")
 
     @property
     def description(self):
-        return _(u"Close current tab")
+        return _("Close current tab")
 
     def run(self, params):
         assert self._application.mainWindow is not None
@@ -28,66 +29,69 @@ class CloseTabAction (BaseAction):
             self._application.mainWindow.tabsController.closeTab(index)
 
 
-class AddTabAction (BaseAction):
+class AddTabAction(BaseAction):
     """
     Добавить вкладку
     """
-    stringId = u"AddTab"
+
+    stringId = "AddTab"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Add Tab")
+        return _("Add tab")
 
     @property
     def description(self):
-        return _(u"Add tab")
+        return _("Add tab")
 
     def run(self, params):
         assert self._application.mainWindow is not None
         self._application.mainWindow.tabsController.cloneTab()
 
 
-class NextTabAction (BaseAction):
+class NextTabAction(BaseAction):
     """
     Перейти на следующую вкладку
     """
-    stringId = u"NextTab"
+
+    stringId = "NextTab"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Next Tab")
+        return _("Next tab")
 
     @property
     def description(self):
-        return _(u"Go to next tab")
+        return _("Go to next tab")
 
     def run(self, params):
         assert self._application.mainWindow is not None
         self._application.mainWindow.tabsController.nextTab()
 
 
-class PreviousTabAction (BaseAction):
+class PreviousTabAction(BaseAction):
     """
     Перейти на предыдущую вкладку
     """
-    stringId = u"PreviousTab"
+
+    stringId = "PreviousTab"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Previous Tab")
+        return _("Previous tab")
 
     @property
     def description(self):
-        return _(u"Go to previous tab")
+        return _("Go to previous tab")
 
     def run(self, params):
         assert self._application.mainWindow is not None

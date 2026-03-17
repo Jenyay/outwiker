@@ -16,11 +16,11 @@ class SortChildAlphabeticalAction(BaseAction):
 
     @property
     def title(self):
-        return _("Sort Children Pages Alphabetically")
+        return _("Sort child pages alphabetically")
 
     @property
     def description(self):
-        return _("Sort children pages alphabetically")
+        return _("Sort the child pages alphabetically")
 
     def run(self, params):
         self.sortChildren()

@@ -18,7 +18,7 @@ class MovePageDownAction(BaseAction):
 
     @property
     def title(self):
-        return _("Move Page Down")
+        return _("Move page down")
 
     @property
     def description(self):
