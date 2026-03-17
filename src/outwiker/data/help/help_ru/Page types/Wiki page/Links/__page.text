@@ -26,7 +26,7 @@
 
 || border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
-||%code%[=[[#anchor]]=]%%||Добавить якорь с именем #anchor||Результирующий HTML-код: &lt;a name=&quot;#anchor&quot;&gt;&lt;/a&gt;||
+||%code%[=[[#anchor]]=]%%||Добавить якорь с именем #anchor||Результирующий HTML-код: %code%&lt;a name=&quot;#anchor&quot;&gt;&lt;/a&gt;%%||
 ||%code%[=[[#anchor | Ссылка на якорь]]=]%%||[[#anchor | Ссылка на якорь]]||Ссылка на якорь с именем anchor на открытой странице||
 ||%code%[=[[Ссылка на якорь -> #anchor]]=]%%||[[#anchor | Ссылка на якорь]]||Ссылка на якорь с именем anchor на открытой странице||
 ||%code%[=[[page://__8fb202a4-8a7a-40ad-8326-e744ffb102f5/#anchor]]=]%%||[[page://__8fb202a4-8a7a-40ad-8326-e744ffb102f5/#anchor]]||Ссылка на якорь с именем anchor на другой странице||

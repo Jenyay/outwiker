@@ -1,5 +1,6 @@
 [wiki]
 md5_hash = 2281fea1cdd24fd0156d6c63248a7103
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n", "notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [Tree]
 expand = False
@@ -9,7 +10,7 @@ type = wiki
 order = 2
 tags = wiki
 cursorposition = 1341
-datetime = 2026-03-15 11:19:40.115463
+datetime = 2026-03-17 19:02:34.254248
 icon = text/__std_list_bullets.svg
 
 [Misc]

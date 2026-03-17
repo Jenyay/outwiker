@@ -1,5 +1,6 @@
 [wiki]
 md5_hash = 810dff495e6da5235e84fd745182867d
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 
 [Tree]
 expand = False
@@ -7,11 +8,14 @@ expand = False
 [General]
 type = wiki
 order = 3
-tags = wiki,!fixme
+tags = wiki
 cursorposition = 1923
-datetime = 2026-03-15 11:19:40.117250
+datetime = 2026-03-17 19:08:28.633555
 uid = wiki-links
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = code
 
