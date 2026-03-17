@@ -1,5 +1,6 @@
 [wiki]
 md5_hash = 2dd15587ac3069824191a5712bf9340a
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 
 [Tree]
 expand = False
@@ -8,8 +9,11 @@ expand = False
 type = wiki
 order = 0
 tags = wiki
-datetime = 2026-03-15 18:45:31.216036
+datetime = 2026-03-17 15:50:32.400487
 cursorposition = 0
 alias = Заголовки
 icon = text/__std_font_style.svg
+
+[Wiki]
+recentstylename = code
 
