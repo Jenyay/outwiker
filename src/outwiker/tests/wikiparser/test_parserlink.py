@@ -1148,6 +1148,14 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testPageProtocolLinkAnchor(self):
+        uid = self.testPage.getUid()
+        text = f"бла-бла-бла [[page://{uid}/#anchor]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{uid}/#anchor">{self.testPage.display_title}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
     def testPageProtocolLinkInvalidUid(self):
         uid = "invalid_uid"
         text = f"бла-бла-бла [[page://{uid}]] бла-бла-бла"

@@ -1,7 +1,3 @@
-[Bookmarks]
-bookmark_1 = Пользователям/Горячие клавиши
-bookmark_0 = Пользователям/Типы страниц/Wiki-страница
-
 [Tree]
 expand = True
 
@@ -10,6 +6,10 @@ lastviewedpage = О программе и контакты
 
 [General]
 selectedtab = 0
+
+[Bookmarks]
+bookmark_0 = Пользователям/Типы страниц/Wiki-страница
+bookmark_1 = Пользователям/Горячие клавиши
 
 [Tabs]
 tab_0 = Page types/Wiki page/Links
