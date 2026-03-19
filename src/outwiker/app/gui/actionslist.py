@@ -426,7 +426,7 @@ polyactionsList = [
     PolyactionInfo(
         polyactions.DELETE_WORD_RIGHT,
         _("Delete word right"),
-        _("Delete text to ending of the word"),
+        _("Delete to end of the word"),
         HotKey("Delete", ctrl=True),
     ),
     PolyactionInfo(

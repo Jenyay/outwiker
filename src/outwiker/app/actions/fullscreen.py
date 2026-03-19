@@ -19,7 +19,7 @@ class FullScreenAction(BaseAction):
 
     @property
     def description(self):
-        return _("Fullscreen mode on/off")
+        return _("Toggle fullscreen mode")
 
     def run(self, params):
         self._application.mainWindow.setFullscreen(params)

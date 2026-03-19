@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 20:59+0300\n"
+"POT-Creation-Date: 2026-03-19 16:44+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -26,27 +26,22 @@ msgstr "Open \"About\" dialog"
 
 #: outwiker/app/actions/addbookmark.py:17
 #: outwiker/app/actions/addbookmark.py:21
-#| msgid "Add/remove bookmark"
 msgid "Add / remove bookmark"
 msgstr "Add / remove bookmark"
 
 #: outwiker/app/actions/addchildpage.py:17
-#| msgid "Add child page…"
 msgid "Create child page…"
 msgstr "Create child page…"
 
 #: outwiker/app/actions/addchildpage.py:21
-#| msgid "Create Page"
 msgid "Create child page"
 msgstr "Create child page"
 
 #: outwiker/app/actions/addsiblingpage.py:17
-#| msgid "Add sibling page…"
 msgid "Create sibling page…"
 msgstr "Create sibling page…"
 
 #: outwiker/app/actions/addsiblingpage.py:21
-#| msgid "Add sibling page"
 msgid "Create sibling page"
 msgstr "Create sibling page"
 
@@ -136,7 +131,6 @@ msgstr "Open folder with attachments"
 
 #: outwiker/app/actions/attachopenfolder.py:38
 #: outwiker/app/actions/openpluginsfolder.py:32
-#, python-brace-format
 msgid "Can't open folder '{}'"
 msgstr "Can't open folder '{}'"
 
@@ -268,8 +262,9 @@ msgid "Fullscreen"
 msgstr "Fullscreen"
 
 #: outwiker/app/actions/fullscreen.py:22
-msgid "Fullscreen mode on/off"
-msgstr "Fullscreen mode on/off"
+#| msgid "Fullscreen mode on/off"
+msgid "Toggle fullscreen mode"
+msgstr "Toggle fullscreen mode"
 
 #: outwiker/app/actions/globalsearch.py:20
 msgid "Global search…"
@@ -466,8 +461,9 @@ msgid "Find previous on page"
 msgstr "Find previous on page"
 
 #: outwiker/app/actions/search.py:96
-msgid "Search and replace"
-msgstr "Search and replace"
+#| msgid "Find on page"
+msgid "Find and replace"
+msgstr "Find and replace"
 
 #: outwiker/app/actions/search.py:100
 msgid "Start search and replace on the page"
@@ -485,8 +481,9 @@ msgid "Attachments"
 msgstr "Attachments"
 
 #: outwiker/app/actions/showhideattaches.py:22
-msgid "Show / hide a attachments panel"
-msgstr "Show / hide a attachments panel"
+#| msgid "Show / hide a attachments panel"
+msgid "Toggle the attachments panel"
+msgstr "Toggle the attachments panel"
 
 #: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:90
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
@@ -497,8 +494,9 @@ msgid "Tags"
 msgstr "Tags"
 
 #: outwiker/app/actions/showhidetags.py:22
-msgid "Show / hide a tag panel"
-msgstr "Show / hide a tag panel"
+#| msgid "Show / hide a tag panel"
+msgid "Toggle the tag panel"
+msgstr "Toggle the tag panel"
 
 #: outwiker/app/actions/showhidetree.py:18 outwiker/app/actions/switchto.py:42
 #: outwiker/app/gui/preferences/prefcontroller.py:138
@@ -506,8 +504,9 @@ msgid "Note tree"
 msgstr "Note tree"
 
 #: outwiker/app/actions/showhidetree.py:22
-msgid "Show / hide a note tree panel"
-msgstr "Show / hide a note tree panel"
+#| msgid "Show / hide a note tree panel"
+msgid "Toggle the note tree panel"
+msgstr "Toggle the note tree panel"
 
 #: outwiker/app/actions/sortchildalpha.py:19
 msgid "Sort child pages alphabetically"
@@ -877,8 +876,9 @@ msgid "Delete word right"
 msgstr "Delete word right"
 
 #: outwiker/app/gui/actionslist.py:429
-msgid "Delete text to ending of the word"
-msgstr "Delete text to ending of the word"
+#| msgid "Delete text to ending of the word"
+msgid "Delete to end of the word"
+msgstr "Delete to end of the word"
 
 #: outwiker/app/gui/actionslist.py:434
 msgid "Delete to start of the line"
@@ -1728,7 +1728,6 @@ msgid "Can't create directory for icons group"
 msgstr "Can't create directory for icons group"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:255
-#, python-brace-format
 msgid "New group{}"
 msgstr "New group{}"
 
@@ -1737,17 +1736,14 @@ msgid "Can't rename directory for icons group"
 msgstr "Can't rename directory for icons group"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:289
-#, python-brace-format
 msgid "Group with name \"{}\" exists already"
 msgstr "Group with name \"{}\" exists already"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:296
-#, python-brace-format
 msgid "Invalid group name \"{}\""
 msgstr "Invalid group name \"{}\""
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:331
-#, python-brace-format
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Remove group \"{}\" and all icons inside it?"
 
@@ -2064,7 +2060,6 @@ msgid "Really exit?"
 msgstr "Really exit?"
 
 #: outwiker/app/services/attachment.py:69
-#, python-brace-format
 msgid ""
 "Error renaming file\n"
 "{} -> {}\n"
@@ -2084,7 +2079,6 @@ msgstr ""
 "{0}"
 
 #: outwiker/app/services/attachment.py:167
-#, python-brace-format
 msgid "Can't create directory: {}"
 msgstr "Can't create directory: {}"
 
@@ -2102,7 +2096,6 @@ msgid "New folder"
 msgstr "New folder"
 
 #: outwiker/app/services/attachment.py:207
-#, python-brace-format
 msgid "Can't create folder {} for attachments"
 msgstr "Can't create folder {} for attachments"
 
@@ -2128,7 +2121,6 @@ msgid "You can't remove the root element"
 msgstr "You can't remove the root element"
 
 #: outwiker/app/services/tree.py:52
-#, python-brace-format
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
 "All attachments will also be deleted."
@@ -2191,7 +2183,6 @@ msgid "The page title"
 msgstr "The page title"
 
 #: outwiker/app/services/tree.py:252
-#, python-brace-format
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Can't rename page \"{}\" to \"{}\""
 
@@ -2200,7 +2191,6 @@ msgid "Can't move page when page with that title already exists"
 msgstr "Can't move page when page with that title already exists"
 
 #: outwiker/app/services/tree.py:280
-#, python-brace-format
 msgid "Can't move page: {}"
 msgstr "Can't move page: {}"
 
@@ -2370,17 +2360,14 @@ msgstr ""
 "system"
 
 #: outwiker/core/pluginsloader.py:270
-#, python-brace-format
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr "Plug-in \"{}\". Can't read \"{}\" file"
 
 #: outwiker/core/pluginsloader.py:290
-#, python-brace-format
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr "Plug-in \"{}\" is outdated. Please, update the plug-in."
 
 #: outwiker/core/pluginsloader.py:301
-#, python-brace-format
 msgid ""
 "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
 "new OutWiker version."
@@ -2412,8 +2399,9 @@ msgid "Page \"%s\" is changed by the external program"
 msgstr "Page \"%s\" is changed by the external program"
 
 #: outwiker/gui/basetextpanel.py:212
-msgid "Owerwrite?"
-msgstr "Owerwrite?"
+#| msgid "Overwrite"
+msgid "Overwrite?"
+msgstr "Overwrite?"
 
 #: outwiker/gui/basetextpanel.py:593
 msgid "Lines"
@@ -2637,7 +2625,6 @@ msgid "Insert rows"
 msgstr "Insert rows"
 
 #: outwiker/gui/tagscloud.py:567
-#, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Number of notes: {}"
 
@@ -2646,7 +2633,6 @@ msgid "Applied tags only"
 msgstr "Applied tags only"
 
 #: outwiker/gui/texteditormenu.py:75 outwiker/gui/texteditormenu.py:80
-#, python-brace-format
 msgid "Add \"{}\" to dictionary"
 msgstr "Add \"{}\" to dictionary"
 
@@ -2698,7 +2684,6 @@ msgid "Page loading. Please wait…"
 msgstr "Page loading. Please wait…"
 
 #: outwiker/pages/html/basehtmlpanel.py:338
-#, python-brace-format
 msgid "Page loading error: {}"
 msgstr "Page loading error: {}"
 
@@ -2927,8 +2912,9 @@ msgid "Encoding"
 msgstr "Encoding"
 
 #: outwiker/pages/wiki/actions/include.py:163
-msgid "Convert symbols <, > and && to HTML"
-msgstr "Convert symbols <, > and && to HTML"
+#| msgid "Escape HTML characters"
+msgid "Escape HTML special characters"
+msgstr "Escape HTML special characters"
 
 #: outwiker/pages/wiki/actions/include.py:167
 msgid "Parse wiki notation"
@@ -3064,17 +3050,14 @@ msgid "Custom CSS"
 msgstr "Custom CSS"
 
 #: outwiker/pages/wiki/parser/commands/include.py:82
-#, python-brace-format
 msgid "Can't open file '{}'"
 msgstr "Can't open file '{}'"
 
 #: outwiker/pages/wiki/parser/commands/include.py:85
-#, python-brace-format
 msgid "Encoding error in file '{}'"
 msgstr "Encoding error in file '{}'"
 
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:74
-#, python-brace-format
 msgid "Can't create thumbnail for <b>\"{}\"</b>"
 msgstr "Can't create thumbnail for <b>\"{}\"</b>"
 
@@ -3156,6 +3139,15 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Search and replace"
+#~ msgstr "Search and replace"
+
+#~ msgid "Owerwrite?"
+#~ msgstr "Owerwrite?"
+
+#~ msgid "Convert symbols <, > and && to HTML"
+#~ msgstr "Convert symbols <, > and && to HTML"
 
 #~ msgid "Add child page"
 #~ msgstr "Add child page"
@@ -3711,15 +3703,15 @@ msgstr "[[link | comment]]"
 #~ "!! First Wiki Page\n"
 #~ "\n"
 #~ "                       This is the first page. You can use a text "
-#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://"
-#~ "jenyay.net | link]] and others.\n"
+#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay."
+#~ "net | link]] and others.\n"
 #~ "                       "
 #~ msgstr ""
 #~ "!! First Wiki Page\n"
 #~ "\n"
 #~ "                       This is the first page. You can use a text "
-#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://"
-#~ "jenyay.net | link]] and others.\n"
+#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay."
+#~ "net | link]] and others.\n"
 #~ "                       "
 
 #~ msgid "Not in groups [custom]"

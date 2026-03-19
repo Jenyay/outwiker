@@ -114,7 +114,7 @@ JOIN_LINES = "JoinLines"
 # Delete text to beginning of the word
 DELETE_WORD_LEFT = "DeleteWordLeft"
 
-# Delete text to ending of the word
+# Delete text to end of the word
 DELETE_WORD_RIGHT = "DeleteWordRight"
 
 # Delete back from the current position to the start of the line

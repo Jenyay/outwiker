@@ -93,7 +93,7 @@ class SearchAndReplaceAction(BaseSearchAction):
 
     @property
     def title(self):
-        return _("Search and replace")
+        return _("Find and replace")
 
     @property
     def description(self):

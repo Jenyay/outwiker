@@ -160,7 +160,7 @@ class IncludeDialog(TestedDialog):
 
         # Преобразовывать символы HTML?
         self._escapeHtmlCheckBox = wx.CheckBox(
-            self, label=_("Convert symbols <, > and && to HTML"))
+            self, label=_("Escape HTML special characters"))
 
         # Делать разбор викинотации?
         self._wikiParseCheckBox = wx.CheckBox(

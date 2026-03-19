@@ -209,7 +209,7 @@ class BaseTextPanel(BasePagePanel):
 
         message = _('Page "%s" is changed by the external program') % self.page.title
         self.externalEditDialog = ButtonsDialog(
-            self, message, _("Owerwrite?"), buttons, default=0, cancel=2
+            self, message, _("Overwrite?"), buttons, default=0, cancel=2
         )
 
         result = self.externalEditDialog.ShowModal()
