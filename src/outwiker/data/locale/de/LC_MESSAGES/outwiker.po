@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 20:52+0300\n"
-"PO-Revision-Date: 2026-03-13 09:15+0300\n"
+"POT-Creation-Date: 2026-03-17 20:59+0300\n"
+"PO-Revision-Date: 2026-03-19 12:17+0300\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Crowdin-Project: outwiker\n"
@@ -32,40 +32,40 @@ msgstr "\"Über\" Dialogfeld öffnen"
 
 #: outwiker/app/actions/addbookmark.py:17
 #: outwiker/app/actions/addbookmark.py:21
-msgid "Add/Remove Bookmark"
+msgid "Add / remove bookmark"
 msgstr "Lesezeichen hinzufügen/entfernen"
 
 #: outwiker/app/actions/addchildpage.py:17
-msgid "Add Child Page…"
-msgstr "Unterseite hinzufügen…"
+msgid "Create child page…"
+msgstr "Unterseite erstellen…"
 
 #: outwiker/app/actions/addchildpage.py:21
-msgid "Add child page"
-msgstr "Unterseite hinzufügen"
+msgid "Create child page"
+msgstr "Unterseite erstellen"
 
 #: outwiker/app/actions/addsiblingpage.py:17
-msgid "Add Sibling Page…"
-msgstr "Neue Seite auf gleicher Ebene erstellen…"
+msgid "Create sibling page…"
+msgstr "Seite auf derselben Ebene erstellen…"
 
 #: outwiker/app/actions/addsiblingpage.py:21
-msgid "Add sibling page"
-msgstr "Neue Seite auf gleicher Ebene erstellen"
+msgid "Create sibling page"
+msgstr "Seite auf derselben Ebene erstellen"
 
 #: outwiker/app/actions/applystyle.py:28
-msgid "Set Style to Branch…"
-msgstr "Stil für ein Ast aufstellen…"
+msgid "Set style to branch…"
+msgstr "Stil für Ast aufstellen…"
 
-#: outwiker/app/actions/applystyle.py:32 outwiker/app/actions/applystyle.py:63
+#: outwiker/app/actions/applystyle.py:32 outwiker/app/actions/applystyle.py:93
+msgid "Set style to branch"
+msgstr "Stil für ein Ast aufstellen"
+
+#: outwiker/app/actions/applystyle.py:63
 msgid "Set Style to Branch"
 msgstr "Stil für ein Ast aufstellen"
 
 #: outwiker/app/actions/applystyle.py:64
 msgid "Please wait..."
 msgstr "Bitte warten..."
-
-#: outwiker/app/actions/applystyle.py:93
-msgid "Set style to branch"
-msgstr "Stil für ein Ast aufstellen"
 
 #: outwiker/app/actions/applystyle.py:95
 msgid "Style"
@@ -77,7 +77,7 @@ msgid "Default"
 msgstr "Standard"
 
 #: outwiker/app/actions/attachcreatesubdir.py:19
-msgid "Create a new attached folder"
+msgid "Create new attached folder"
 msgstr "Neuen Ordner als Anhang erstellen"
 
 #: outwiker/app/actions/attachcreatesubdir.py:23
@@ -183,8 +183,8 @@ msgstr "Alles wählen"
 msgid "Select all attachments. Action for the attachments panel"
 msgstr "Alle Anhänge wählen. Aktion für angehängtes Panel"
 
-#: outwiker/app/actions/clipboard.py:22
-msgid "Copy Page Title"
+#: outwiker/app/actions/clipboard.py:22 outwiker/app/gui/pagepopupmenu.py:98
+msgid "Copy page title"
 msgstr "Seitentitel kopieren"
 
 #: outwiker/app/actions/clipboard.py:26
@@ -200,8 +200,8 @@ msgstr "In die Zwischenablage kopiert"
 msgid "Page title has been copied to the clipboard"
 msgstr "Seitenüberschrift in die Zwischenablage kopiert"
 
-#: outwiker/app/actions/clipboard.py:52
-msgid "Copy Page Path"
+#: outwiker/app/actions/clipboard.py:52 outwiker/app/gui/pagepopupmenu.py:99
+msgid "Copy page path"
 msgstr "Seitenpfad kopieren"
 
 #: outwiker/app/actions/clipboard.py:56
@@ -212,8 +212,8 @@ msgstr "Pfad zur aktuellen Seite in Zwischenablage kopieren"
 msgid "Path to the page has been copied to the clipboard"
 msgstr "Pfad zur Seite in die Zwischenablage kopiert"
 
-#: outwiker/app/actions/clipboard.py:82
-msgid "Copy Attachments Path"
+#: outwiker/app/actions/clipboard.py:82 outwiker/app/gui/pagepopupmenu.py:101
+msgid "Copy attachments path"
 msgstr "Anlagen-Pfad kopieren"
 
 #: outwiker/app/actions/clipboard.py:86
@@ -224,8 +224,8 @@ msgstr "Pfad für Anlagen aktueller Seite in die Zwischenablage kopieren"
 msgid "Path to the page attachments has been copied to the clipboard"
 msgstr "Pfad zu Seitenanhängen in die Zwischenablage kopiert"
 
-#: outwiker/app/actions/clipboard.py:114
-msgid "Copy Page Link"
+#: outwiker/app/actions/clipboard.py:114 outwiker/app/gui/pagepopupmenu.py:103
+msgid "Copy page link"
 msgstr "Seitenlink kopieren"
 
 #: outwiker/app/actions/clipboard.py:118
@@ -241,8 +241,8 @@ msgid "Close"
 msgstr "Schließen"
 
 #: outwiker/app/actions/close.py:22
-msgid "Close a tree notes"
-msgstr "Notizen-Baum schließen"
+msgid "Close the opened note tree"
+msgstr "Geöffneten Notizbaum schließen"
 
 #: outwiker/app/actions/editpageprop.py:18
 msgid "Page properties…"
@@ -260,16 +260,16 @@ msgstr "Verlassen…"
 msgid "Close OutWiker"
 msgstr "Schließen OutWiker"
 
-#: outwiker/app/actions/fullscreen.py:17
+#: outwiker/app/actions/fullscreen.py:18
 msgid "Fullscreen"
 msgstr "Vollbild"
 
-#: outwiker/app/actions/fullscreen.py:21
+#: outwiker/app/actions/fullscreen.py:22
 msgid "Fullscreen mode on/off"
 msgstr "Vollbild-Modus ein-/ausschalten"
 
 #: outwiker/app/actions/globalsearch.py:20
-msgid "Global Search…"
+msgid "Global search…"
 msgstr "Globale Suche…"
 
 #: outwiker/app/actions/globalsearch.py:24
@@ -297,9 +297,6 @@ msgid "Open next page"
 msgstr "Nächste Seite öffnen"
 
 #: outwiker/app/actions/movepagedown.py:21
-msgid "Move Page Down"
-msgstr "Seite nach unten verschieben"
-
 #: outwiker/app/actions/movepagedown.py:25
 msgid "Move page down"
 msgstr "Seite nach unten verschieben"
@@ -311,11 +308,7 @@ msgstr "Seite nach unten verschieben"
 msgid "Wiki is not open"
 msgstr "Wiki ist nicht geöffnet"
 
-#: outwiker/app/actions/movepageup.py:21
-msgid "Move Page Up"
-msgstr "Die Seite nach oben verschieben"
-
-#: outwiker/app/actions/movepageup.py:25
+#: outwiker/app/actions/movepageup.py:21 outwiker/app/actions/movepageup.py:25
 msgid "Move page up"
 msgstr "Die Seite nach oben verschieben"
 
@@ -372,7 +365,7 @@ msgid "help_en"
 msgstr "help_en"
 
 #: outwiker/app/actions/openpluginsfolder.py:19
-msgid "Open Plugins Folder"
+msgid "Open plugins folder"
 msgstr "Plugins-Ordner öffnen"
 
 #: outwiker/app/actions/openpluginsfolder.py:23
@@ -380,12 +373,12 @@ msgid "Open folder with plugins"
 msgstr "Ordner öffnen mit plugins"
 
 #: outwiker/app/actions/openreadonly.py:18
-msgid "Open Read-only…"
+msgid "Open read-only…"
 msgstr "Schreibgeschützt öffnen…"
 
 #: outwiker/app/actions/openreadonly.py:22
-msgid "Open tree notes read only"
-msgstr "Notizenbaum nur für des Lesen öffnen"
+msgid "Opens the note tree in read-only mode"
+msgstr "Öffnet den Notizbaum mit Schreibschutz"
 
 #: outwiker/app/actions/preferences.py:18
 msgid "Preferences…"
@@ -404,12 +397,12 @@ msgid "Print current page"
 msgstr "Aktuelle Seite drucken"
 
 #: outwiker/app/actions/reloadwiki.py:21
-msgid "Reload Wiki…"
-msgstr "Wiki neu laden…"
+msgid "Reload note tree…"
+msgstr "Notizbaum neuladen…"
 
 #: outwiker/app/actions/reloadwiki.py:25
-msgid "Reload wiki"
-msgstr "Wiki neu laden"
+msgid "Reload the currently opened note tree"
+msgstr "Lade aktuellen Notizbaum neu"
 
 #: outwiker/app/actions/reloadwiki.py:29
 msgid "Save current page before reload?"
@@ -420,7 +413,7 @@ msgid "Save?"
 msgstr "Speichern?"
 
 #: outwiker/app/actions/removepage.py:18
-msgid "Remove Page…"
+msgid "Remove page…"
 msgstr "Seite entfernen…"
 
 #: outwiker/app/actions/removepage.py:22
@@ -428,7 +421,7 @@ msgid "Remove current page and all children"
 msgstr "Aktuelle Seite und alle Unterseiten entfernen"
 
 #: outwiker/app/actions/renamepage.py:17
-msgid "Rename Page"
+msgid "Rename page"
 msgstr "Seite umbenennen"
 
 #: outwiker/app/actions/renamepage.py:21
@@ -470,12 +463,12 @@ msgid "Find previous on page"
 msgstr "Vorherigen auf Seite finden"
 
 #: outwiker/app/actions/search.py:96
-msgid "Search and Replace"
+msgid "Search and replace"
 msgstr "Suchen und ersetzen"
 
 #: outwiker/app/actions/search.py:100
-msgid "Begin search and replace on page"
-msgstr "Starten suchen und ersetzen auf Seite"
+msgid "Start search and replace on the page"
+msgstr "Starte Suche und ersetze auf dieser Seite"
 
 #: outwiker/app/actions/showhideattaches.py:18
 #: outwiker/app/actions/switchto.py:66
@@ -501,11 +494,12 @@ msgid "Tags"
 msgstr "Tags"
 
 #: outwiker/app/actions/showhidetags.py:22
-msgid "Show / hide a tags panel"
+msgid "Show / hide a tag panel"
 msgstr "Anzeigen / verstecken ein Tags-Panel"
 
-#: outwiker/app/actions/showhidetree.py:18
-msgid "Note Tree"
+#: outwiker/app/actions/showhidetree.py:18 outwiker/app/actions/switchto.py:42
+#: outwiker/app/gui/preferences/prefcontroller.py:138
+msgid "Note tree"
 msgstr "Notizbaum"
 
 #: outwiker/app/actions/showhidetree.py:22
@@ -513,20 +507,20 @@ msgid "Show / hide a note tree panel"
 msgstr "Zeige / Verstecke ein Notizbaum-Panel"
 
 #: outwiker/app/actions/sortchildalpha.py:19
-msgid "Sort Children Pages Alphabetically"
-msgstr "Unterseite nach dem Alphabet sortieren"
+msgid "Sort child pages alphabetically"
+msgstr "Unterseiten nach dem Alphabet sortieren"
 
 #: outwiker/app/actions/sortchildalpha.py:23
-msgid "Sort children pages alphabetically"
-msgstr "Unterseite nach dem Alphabet sortieren"
+msgid "Sort the child pages alphabetically"
+msgstr "Sortiert die Unterseiten nach dem Alphabet"
 
 #: outwiker/app/actions/sortsiblingsalpha.py:19
-msgid "Sort Siblings Pages Alphabetically"
-msgstr "Neue Seite auf gleicher Ebene nach dem Alphabet sortieren"
+msgid "Sort sibling pages alphabetically"
+msgstr "Sortiere Seiten auf dieser Ebene nach dem Alphabet"
 
 #: outwiker/app/actions/sortsiblingsalpha.py:23
-msgid "Sort siblings pages alphabetically"
-msgstr "Neue Seite auf gleicher Ebene nach dem Alphabet sortieren"
+msgid "Sort the sibling pages alphabetically"
+msgstr "Sortiert Seiten auf dieser Ebene nach dem Alphabet"
 
 #: outwiker/app/actions/switchto.py:18
 msgid "Main panel"
@@ -535,11 +529,6 @@ msgstr "Grundleiste"
 #: outwiker/app/actions/switchto.py:22
 msgid "Set focus to main panel"
 msgstr "Fokus auf Grundleiste aufstellen"
-
-#: outwiker/app/actions/switchto.py:42
-#: outwiker/app/gui/preferences/prefcontroller.py:138
-msgid "Note tree"
-msgstr "Notizbaum"
 
 #: outwiker/app/actions/switchto.py:46
 msgid "Set focus to note tree"
@@ -553,35 +542,31 @@ msgstr "Fokus auf ein Anlagen-Panel aufstellen"
 msgid "Set focus to tag cloud panel"
 msgstr "Fokus auf das Panel einer Tag-Wolke setzen"
 
-#: outwiker/app/actions/tabs.py:17
-msgid "Close Tab"
+#: outwiker/app/actions/tabs.py:18
+msgid "Close tab"
 msgstr "Tab schließen"
 
-#: outwiker/app/actions/tabs.py:21
+#: outwiker/app/actions/tabs.py:22
 msgid "Close current tab"
 msgstr "Aktuellen Tab schließen"
 
-#: outwiker/app/actions/tabs.py:42
-msgid "Add Tab"
-msgstr "Tab hinzufügen"
-
-#: outwiker/app/actions/tabs.py:46
+#: outwiker/app/actions/tabs.py:44 outwiker/app/actions/tabs.py:48
 msgid "Add tab"
 msgstr "Tab hinzufügen"
 
-#: outwiker/app/actions/tabs.py:64
-msgid "Next Tab"
-msgstr "Nächsten Tab"
+#: outwiker/app/actions/tabs.py:67
+msgid "Next tab"
+msgstr "Nächster Tab"
 
-#: outwiker/app/actions/tabs.py:68
+#: outwiker/app/actions/tabs.py:71
 msgid "Go to next tab"
 msgstr "Wechseln zum nächsten Tab"
 
-#: outwiker/app/actions/tabs.py:86
-msgid "Previous Tab"
-msgstr "Vorherigen Tab"
-
 #: outwiker/app/actions/tabs.py:90
+msgid "Previous tab"
+msgstr "Vorheriger Tab"
+
+#: outwiker/app/actions/tabs.py:94
 msgid "Go to previous tab"
 msgstr "Wechseln zum vorherigen Tab"
 
@@ -649,20 +634,16 @@ msgid "Insert code"
 msgstr "Fügen Sie code"
 
 #: outwiker/app/gui/actionslist.py:252
-msgid "Insert code(monospaced font)"
-msgstr "Fügen Sie Code (Festbreitenschriftart)"
+msgid "Format as code (monospaced font)"
+msgstr "Als Code formatieren (Festbreitenschriftart)"
 
 #: outwiker/app/gui/actionslist.py:257 outwiker/app/gui/actionslist.py:258
 msgid "Align text left"
 msgstr "Text linksbündig"
 
-#: outwiker/app/gui/actionslist.py:263
+#: outwiker/app/gui/actionslist.py:263 outwiker/app/gui/actionslist.py:264
 msgid "Align text center"
 msgstr "Text zentrumbündig"
-
-#: outwiker/app/gui/actionslist.py:264
-msgid "Center"
-msgstr "Text zentriert"
 
 #: outwiker/app/gui/actionslist.py:269 outwiker/app/gui/actionslist.py:270
 msgid "Align text right"
@@ -672,37 +653,65 @@ msgstr "Text rechtsbündig"
 msgid "Justify"
 msgstr "Die Angleichung nach der Breite"
 
-#: outwiker/app/gui/actionslist.py:281 outwiker/app/gui/actionslist.py:282
+#: outwiker/app/gui/actionslist.py:281
 msgid "First-level heading"
 msgstr "Überschrift der ersten Ebene"
 
-#: outwiker/app/gui/actionslist.py:287 outwiker/app/gui/actionslist.py:288
+#: outwiker/app/gui/actionslist.py:282
+msgid "Insert a first-level heading"
+msgstr "Überschrift 1. Ordnung einfügen"
+
+#: outwiker/app/gui/actionslist.py:287
 msgid "Second-level heading"
 msgstr "Überschrift der zweiten Ebene"
 
-#: outwiker/app/gui/actionslist.py:293 outwiker/app/gui/actionslist.py:294
-msgid "Subtitle three"
-msgstr "Untertitel drei"
+#: outwiker/app/gui/actionslist.py:288
+msgid "Insert a second-level heading"
+msgstr "Überschrift 2. Ordnung einfügen"
 
-#: outwiker/app/gui/actionslist.py:299 outwiker/app/gui/actionslist.py:300
-msgid "Subtitle four"
-msgstr "Untertitel vier"
+#: outwiker/app/gui/actionslist.py:293
+msgid "Third-level heading"
+msgstr "Überschrift der dritten Ebene"
 
-#: outwiker/app/gui/actionslist.py:305 outwiker/app/gui/actionslist.py:306
-msgid "Subtitle five"
-msgstr "Untertitel fünf"
+#: outwiker/app/gui/actionslist.py:294
+msgid "Insert a third-level heading"
+msgstr "Überschrift 3. Ordnung einfügen"
 
-#: outwiker/app/gui/actionslist.py:311 outwiker/app/gui/actionslist.py:312
-msgid "Subtitle six"
-msgstr "Untertitel sechs"
+#: outwiker/app/gui/actionslist.py:299
+msgid "Fourth-level heading"
+msgstr "Überschrift der vierten Ebene"
+
+#: outwiker/app/gui/actionslist.py:300
+msgid "Insert a fourth-level heading"
+msgstr "Überschrift 4. Ordnung einfügen"
+
+#: outwiker/app/gui/actionslist.py:305
+msgid "Fifth-level heading"
+msgstr "Überschrift der fünften Ebene"
+
+#: outwiker/app/gui/actionslist.py:306
+msgid "Insert a fifth-level heading"
+msgstr "Überschrift 5. Ordnung einfügen"
+
+#: outwiker/app/gui/actionslist.py:311
+msgid "Sixth-level heading"
+msgstr "Überschrift der sechsten Ebene"
+
+#: outwiker/app/gui/actionslist.py:312
+msgid "Insert a sixth-level heading"
+msgstr "Überschrift 6. Ordnung einfügen"
 
 #: outwiker/app/gui/actionslist.py:315
 msgid "Anchor"
 msgstr "Anker"
 
-#: outwiker/app/gui/actionslist.py:318 outwiker/app/gui/actionslist.py:319
+#: outwiker/app/gui/actionslist.py:318
 msgid "Horizontal rule"
 msgstr "Horizontale Linie"
+
+#: outwiker/app/gui/actionslist.py:319
+msgid "Insert a horizontal rule"
+msgstr "Horizontale Linie einfügen"
 
 #: outwiker/app/gui/actionslist.py:323
 #: outwiker/app/gui/preferences/wikieditorpanel.py:33
@@ -711,7 +720,7 @@ msgid "Link"
 msgstr "Link"
 
 #: outwiker/app/gui/actionslist.py:323
-msgid "Insert Link"
+msgid "Insert a link"
 msgstr "Link einfügen"
 
 #: outwiker/app/gui/actionslist.py:327
@@ -727,7 +736,7 @@ msgid "Image"
 msgstr "Bild"
 
 #: outwiker/app/gui/actionslist.py:334
-msgid "Insert image"
+msgid "Insert an image"
 msgstr "Bild einfügen"
 
 #: outwiker/app/gui/actionslist.py:337
@@ -739,20 +748,20 @@ msgid "Mark text"
 msgstr "Text markieren"
 
 #: outwiker/app/gui/actionslist.py:340
-msgid "Bullets list"
-msgstr "Ohne Nummer Liste"
+msgid "Unordered list"
+msgstr "Ungeordnete Liste"
 
 #: outwiker/app/gui/actionslist.py:341
-msgid "Insert a bullets list"
-msgstr "Ohne Nummer Liste einfügen"
+msgid "Insert an unordered list"
+msgstr "Eine ungeordnete Liste einfügen"
 
 #: outwiker/app/gui/actionslist.py:346
-msgid "Numbers list"
-msgstr "Nummer Liste"
+msgid "Ordered list"
+msgstr "Geordnete Liste"
 
 #: outwiker/app/gui/actionslist.py:347
-msgid "Insert a numbers list"
-msgstr "Nummer Liste einfügen"
+msgid "Insert an ordered list"
+msgstr "Eine geordnete Liste einfügen"
 
 #: outwiker/app/gui/actionslist.py:352
 msgid "Decrease nesting level"
@@ -771,8 +780,8 @@ msgid "Insert a line break"
 msgstr "Einfügen eines Zeilenumbruchs"
 
 #: outwiker/app/gui/actionslist.py:364 outwiker/app/gui/actionslist.py:365
-msgid "Convert HTML Symbols"
-msgstr "Symbole umwandeln in HTML"
+msgid "Escape HTML characters"
+msgstr "HTML-Schriftzeichen formatieren"
 
 #: outwiker/app/gui/actionslist.py:370 outwiker/pages/html/htmlpageview.py:39
 #: outwiker/pages/wiki/wikipageview.py:71
@@ -813,8 +822,8 @@ msgid "Spell checking"
 msgstr "Rechtschreibprüfung"
 
 #: outwiker/app/gui/actionslist.py:392
-msgid "Enable / disable spell checking"
-msgstr "Rechtschreibprüfung aktivieren / deaktivieren"
+msgid "Toggle spell checking"
+msgstr "Rechtschreibprüfung ein/aus"
 
 #: outwiker/app/gui/actionslist.py:397
 msgid "Duplicate line"
@@ -853,7 +862,7 @@ msgid "Join lines"
 msgstr "Zeile einfügen"
 
 #: outwiker/app/gui/actionslist.py:422
-msgid "Delete word to the left"
+msgid "Delete word left"
 msgstr "Linkes Wort löschen"
 
 #: outwiker/app/gui/actionslist.py:423
@@ -861,7 +870,7 @@ msgid "Delete text to beginning of the word"
 msgstr "Bis Wortanfang löschen"
 
 #: outwiker/app/gui/actionslist.py:428
-msgid "Delete word to the right"
+msgid "Delete word right"
 msgstr "Rechtes Wort löschen"
 
 #: outwiker/app/gui/actionslist.py:429
@@ -873,8 +882,8 @@ msgid "Delete to start of the line"
 msgstr "Bis Zeilenbeginn löschen"
 
 #: outwiker/app/gui/actionslist.py:435
-msgid "Delete text back from the current position to the start of the line"
-msgstr "Ab aktueller Position bis Zeilenanfang löschen"
+msgid "Delete text to the beginning of the line"
+msgstr "Bis Zeilenanfang löschen"
 
 #: outwiker/app/gui/actionslist.py:440
 msgid "Delete to end of the line"
@@ -1022,8 +1031,8 @@ msgid "Copy"
 msgstr "Kopieren"
 
 #: outwiker/app/gui/actionslist.py:546
-msgid "Copy to clipboard"
-msgstr "In die Zwischenablage kopieren"
+msgid "Copy selected text to clipboard"
+msgstr "Markierten Text in Zwischenablage kopieren"
 
 #: outwiker/app/gui/actionslist.py:551 outwiker/gui/texteditormenu.py:38
 msgid "Cut"
@@ -1429,22 +1438,6 @@ msgstr "Letzte"
 #: outwiker/app/gui/pagedialogpanels/generalpanel.py:520
 msgid "Can't set page icon\n"
 msgstr "Seiten Symbol kann nicht gesetzt werden\n"
-
-#: outwiker/app/gui/pagepopupmenu.py:98
-msgid "Copy page title"
-msgstr "Seitentitel kopieren"
-
-#: outwiker/app/gui/pagepopupmenu.py:99
-msgid "Copy page path"
-msgstr "Seitenpfad kopieren"
-
-#: outwiker/app/gui/pagepopupmenu.py:101
-msgid "Copy attachments path"
-msgstr "Anlagen-Pfad kopieren"
-
-#: outwiker/app/gui/pagepopupmenu.py:103
-msgid "Copy page link"
-msgstr "Seitenlink kopieren"
 
 #: outwiker/app/gui/preferences/attachpanel.py:16
 msgid "Insert link to attachment"
@@ -2150,7 +2143,7 @@ msgstr "Seite kann nicht entfernt werden"
 
 #: outwiker/app/services/tree.py:113
 msgid "Loading"
-msgstr "es läd"
+msgstr "Es läd"
 
 #: outwiker/app/services/tree.py:113
 msgid "Opening note tree..."
@@ -2626,12 +2619,12 @@ msgstr "Kopfzeile für erste Zeile"
 msgid "Insert rows"
 msgstr "Zeile einfügen"
 
-#: outwiker/gui/tagscloud.py:547
+#: outwiker/gui/tagscloud.py:567
 #, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Anzahl Notizen: {}"
 
-#: outwiker/gui/tagscloud.py:643
+#: outwiker/gui/tagscloud.py:674
 msgid "Applied tags only"
 msgstr "Nur hinzugefügte Tags"
 
