@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 20:59+0300\n"
-"PO-Revision-Date: 2026-03-19 12:17+0300\n"
+"POT-Creation-Date: 2026-03-19 16:44+0300\n"
+"PO-Revision-Date: 2026-03-26 13:41+0300\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Crowdin-Project: outwiker\n"
@@ -133,7 +133,6 @@ msgstr "Ordner mit Anhängen öffnen"
 
 #: outwiker/app/actions/attachopenfolder.py:38
 #: outwiker/app/actions/openpluginsfolder.py:32
-#, python-brace-format
 msgid "Can't open folder '{}'"
 msgstr "Ordner '{}' kann nicht geöffnet werden"
 
@@ -265,8 +264,8 @@ msgid "Fullscreen"
 msgstr "Vollbild"
 
 #: outwiker/app/actions/fullscreen.py:22
-msgid "Fullscreen mode on/off"
-msgstr "Vollbild-Modus ein-/ausschalten"
+msgid "Toggle fullscreen mode"
+msgstr "Vollbildmodus ein/aus"
 
 #: outwiker/app/actions/globalsearch.py:20
 msgid "Global search…"
@@ -463,8 +462,8 @@ msgid "Find previous on page"
 msgstr "Vorherigen auf Seite finden"
 
 #: outwiker/app/actions/search.py:96
-msgid "Search and replace"
-msgstr "Suchen und ersetzen"
+msgid "Find and replace"
+msgstr "Suchen und Ersetzen"
 
 #: outwiker/app/actions/search.py:100
 msgid "Start search and replace on the page"
@@ -482,8 +481,8 @@ msgid "Attachments"
 msgstr "Anlagen"
 
 #: outwiker/app/actions/showhideattaches.py:22
-msgid "Show / hide a attachments panel"
-msgstr "Anzeigen / verstecken ein Anlagen-Panel"
+msgid "Toggle the attachments panel"
+msgstr "Anhang-Panel ein-/ausblenden"
 
 #: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:90
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
@@ -494,8 +493,8 @@ msgid "Tags"
 msgstr "Tags"
 
 #: outwiker/app/actions/showhidetags.py:22
-msgid "Show / hide a tag panel"
-msgstr "Anzeigen / verstecken ein Tags-Panel"
+msgid "Toggle the tag panel"
+msgstr "Tag-Panel ein-/ausblenden"
 
 #: outwiker/app/actions/showhidetree.py:18 outwiker/app/actions/switchto.py:42
 #: outwiker/app/gui/preferences/prefcontroller.py:138
@@ -503,8 +502,8 @@ msgid "Note tree"
 msgstr "Notizbaum"
 
 #: outwiker/app/actions/showhidetree.py:22
-msgid "Show / hide a note tree panel"
-msgstr "Zeige / Verstecke ein Notizbaum-Panel"
+msgid "Toggle the note tree panel"
+msgstr "Notizbaum-Panel ein-/ausblenden"
 
 #: outwiker/app/actions/sortchildalpha.py:19
 msgid "Sort child pages alphabetically"
@@ -874,7 +873,7 @@ msgid "Delete word right"
 msgstr "Rechtes Wort löschen"
 
 #: outwiker/app/gui/actionslist.py:429
-msgid "Delete text to ending of the word"
+msgid "Delete to end of the word"
 msgstr "Bis Wortende löschen"
 
 #: outwiker/app/gui/actionslist.py:434
@@ -1725,7 +1724,6 @@ msgid "Can't create directory for icons group"
 msgstr "Verzeichnis für Symbole-Gruppe kann nicht erstellt werden"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:255
-#, python-brace-format
 msgid "New group{}"
 msgstr "Neue Gruppe{}"
 
@@ -1734,17 +1732,14 @@ msgid "Can't rename directory for icons group"
 msgstr "Verzeichnis für Symbole-Gruppe kann nicht umbenannt werden"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:289
-#, python-brace-format
 msgid "Group with name \"{}\" exists already"
 msgstr "Gruppe mit Namen \"{}\" ist bereits vorhanden"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:296
-#, python-brace-format
 msgid "Invalid group name \"{}\""
 msgstr "Ungültige Gruppennamen \"{}\""
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:331
-#, python-brace-format
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Entfernen der Gruppe \"{}\" mit allen Symbolen?"
 
@@ -2061,7 +2056,6 @@ msgid "Really exit?"
 msgstr "Wirklich verlassen?"
 
 #: outwiker/app/services/attachment.py:69
-#, python-brace-format
 msgid ""
 "Error renaming file\n"
 "{} -> {}\n"
@@ -2081,7 +2075,6 @@ msgstr ""
 "{0}"
 
 #: outwiker/app/services/attachment.py:167
-#, python-brace-format
 msgid "Can't create directory: {}"
 msgstr "Kann Ordner nicht erstellen: {}"
 
@@ -2099,7 +2092,6 @@ msgid "New folder"
 msgstr "Neuer Ordner"
 
 #: outwiker/app/services/attachment.py:207
-#, python-brace-format
 msgid "Can't create folder {} for attachments"
 msgstr "Kann Ordner {} nicht für Anhänge erstellen"
 
@@ -2125,7 +2117,6 @@ msgid "You can't remove the root element"
 msgstr "Das Root-Element kann nicht entfernt werden"
 
 #: outwiker/app/services/tree.py:52
-#, python-brace-format
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
 "All attachments will also be deleted."
@@ -2188,7 +2179,6 @@ msgid "The page title"
 msgstr "Titel der Seite"
 
 #: outwiker/app/services/tree.py:252
-#, python-brace-format
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Seite \"{}\" kann nicht zu \"{}\" umbenannt werden"
 
@@ -2197,7 +2187,6 @@ msgid "Can't move page when page with that title already exists"
 msgstr "Seite kann nicht verschoben werden, wenn die Seite mit dem Titel bereits vorhanden ist"
 
 #: outwiker/app/services/tree.py:280
-#, python-brace-format
 msgid "Can't move page: {}"
 msgstr "Seite kann nicht verschoben werden: {}"
 
@@ -2357,17 +2346,14 @@ msgid "The page title contains invalid characters for Microsoft Windows operatin
 msgstr "Titel der Seite enthält ungültige Zeichen für Microsoft Windows-Betriebssystem"
 
 #: outwiker/core/pluginsloader.py:270
-#, python-brace-format
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr "Plugin \"{}\". Fehler beim Lesen von Datei \"{}\""
 
 #: outwiker/core/pluginsloader.py:290
-#, python-brace-format
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr "Plugin \"{}\" ist veraltet. Bitte aktualisieren Sie das Plugin."
 
 #: outwiker/core/pluginsloader.py:301
-#, python-brace-format
 msgid "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a new OutWiker version."
 msgstr "Plugin \"{}\" ist für eine neuere Version von OutWiker entwickelt. Bitte installieren Sie eine neuere Version von OutWiker."
 
@@ -2395,7 +2381,7 @@ msgid "Page \"%s\" is changed by the external program"
 msgstr "Seite \"%s\" wird durch das externe Programm geändert"
 
 #: outwiker/gui/basetextpanel.py:212
-msgid "Owerwrite?"
+msgid "Overwrite?"
 msgstr "Überschreiben?"
 
 #: outwiker/gui/basetextpanel.py:593
@@ -2620,7 +2606,6 @@ msgid "Insert rows"
 msgstr "Zeile einfügen"
 
 #: outwiker/gui/tagscloud.py:567
-#, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Anzahl Notizen: {}"
 
@@ -2629,7 +2614,6 @@ msgid "Applied tags only"
 msgstr "Nur hinzugefügte Tags"
 
 #: outwiker/gui/texteditormenu.py:75 outwiker/gui/texteditormenu.py:80
-#, python-brace-format
 msgid "Add \"{}\" to dictionary"
 msgstr "Füge \"{}\" zum Wörterbuch hinzu"
 
@@ -2681,7 +2665,6 @@ msgid "Page loading. Please wait…"
 msgstr "Auslastung von Seite. Bitte warten…"
 
 #: outwiker/pages/html/basehtmlpanel.py:338
-#, python-brace-format
 msgid "Page loading error: {}"
 msgstr "Fehler beim Auslastung von Seite: {}"
 
@@ -2908,8 +2891,8 @@ msgid "Encoding"
 msgstr "Kodierung"
 
 #: outwiker/pages/wiki/actions/include.py:163
-msgid "Convert symbols <, > and && to HTML"
-msgstr "Symbole umwandeln <, > und && in HTML"
+msgid "Escape HTML special characters"
+msgstr "HTML-Schriftzeichen formatieren"
 
 #: outwiker/pages/wiki/actions/include.py:167
 msgid "Parse wiki notation"
@@ -3045,17 +3028,14 @@ msgid "Custom CSS"
 msgstr "Benutzerdefinierte CSS"
 
 #: outwiker/pages/wiki/parser/commands/include.py:82
-#, python-brace-format
 msgid "Can't open file '{}'"
 msgstr "Datei kann nicht geöffnet werden '{}'"
 
 #: outwiker/pages/wiki/parser/commands/include.py:85
-#, python-brace-format
 msgid "Encoding error in file '{}'"
 msgstr "Kodierung der Datei fehlerhaft '{}'"
 
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:74
-#, python-brace-format
 msgid "Can't create thumbnail for <b>\"{}\"</b>"
 msgstr "Miniaturansicht kann nicht erstellt werden <b>\"{}\"</b>"
 
