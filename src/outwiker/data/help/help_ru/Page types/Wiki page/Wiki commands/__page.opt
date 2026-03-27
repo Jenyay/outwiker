@@ -8,9 +8,9 @@ expand = True
 type = wiki
 order = 7
 tags = wiki, команды
-datetime = 2026-02-16 21:07:34.889330
+datetime = 2026-03-27 20:45:33.556131
 cursorposition = 0
-uid = __93dc4b03-424f-4d7f-a344-f293c93230d9
+uid = wikicommand
 alias = Викикоманды
 
 [Misc]

@@ -1,5 +1,7 @@
 [wiki]
 md5_hash = 9bf7cfea87fb62c75a4bf8d07e74199d
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+custom_styles_block = {"code": "div.code {\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 1em;\n}\n"}
 
 [Tree]
 expand = False
@@ -8,11 +10,16 @@ expand = False
 type = wiki
 order = 4
 tags = wiki
-datetime = 2026-02-16 21:05:46.117458
+datetime = 2026-03-27 21:10:39.294142
 cursorposition = 2888
 alias = Таблицы
 icon = text/__std_table.svg
+uid = ec3d3795-75b6-4e8d-aee3-9d1cf081399a
+creationdatetime = 2026-03-27 21:09:36.362052
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = code
 
