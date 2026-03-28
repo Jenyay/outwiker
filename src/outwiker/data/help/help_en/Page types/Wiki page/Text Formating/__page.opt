@@ -1,5 +1,7 @@
 [wiki]
 md5_hash = 43a08d88fe457a098d68aa9ec11c5e53
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+custom_styles_block = {"border": "div.border {\n\tpadding: 1em;\n\tmargin: 1em;\n\tborder: 1px solid #000;\n}\n"}
 
 [Tree]
 expand = False
@@ -8,9 +10,10 @@ expand = False
 type = wiki
 order = 5
 tags = wiki
-datetime = 2026-03-15 11:19:40.120750
+datetime = 2026-03-28 09:54:22.749522
 cursorposition = 1773
 icon = text/__std_color_background.svg
+uid = wiki-format-text
 
 [Misc]
 pageindex = 0

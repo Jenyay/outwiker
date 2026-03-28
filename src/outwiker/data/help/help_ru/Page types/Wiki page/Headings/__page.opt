@@ -9,10 +9,11 @@ expand = False
 type = wiki
 order = 0
 tags = wiki
-datetime = 2026-03-17 15:50:32.400487
+datetime = 2026-03-28 09:46:01.448265
 cursorposition = 0
 alias = Заголовки
 icon = text/__std_font_style.svg
+uid = wiki-heading
 
 [Wiki]
 recentstylename = code

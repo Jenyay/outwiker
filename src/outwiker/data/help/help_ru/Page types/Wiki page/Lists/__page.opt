@@ -10,10 +10,11 @@ expand = False
 type = wiki
 order = 2
 tags = wiki
-datetime = 2026-03-17 20:18:36.412961
+datetime = 2026-03-28 09:41:06.460412
 cursorposition = 0
 alias = Списки
 icon = text/__std_list_bullets.svg
+uid = wiki-lists
 
 [Misc]
 pageindex = 1
