@@ -1,5 +1,7 @@
 [wiki]
 md5_hash = 517614bc8b67b34c11d647a537903da7
+custom_styles_block = {"code": "div.code {\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 1em;\n}\n"}
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 
 [Tree]
 expand = True
@@ -8,11 +10,15 @@ expand = True
 type = wiki
 order = 7
 tags = wiki, команды
-datetime = 2026-03-27 20:45:33.556131
+datetime = 2026-03-28 20:25:42.221498
 cursorposition = 0
 uid = wikicommand
 alias = Викикоманды
+creationdatetime = 2026-03-28 20:20:43.755091
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = code
 

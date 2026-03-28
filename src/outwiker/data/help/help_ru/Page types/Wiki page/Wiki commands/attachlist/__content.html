@@ -3,11 +3,11 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-	<title>Команда attachlist</title>
+	<title>Команда (:attachlist:)</title>
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:10pt;
+			font-size:11pt;
 			font-family:Verdana;
 		}
 
@@ -22,31 +22,40 @@
 	padding: 0.2em;
 }
 </style>
+<style>span.notice {
+	display: inline-block;
+	color: #333;
+	background-color: #e3f7fc;
+	border-radius: 1px;
+	padding: 0px 2px 0px 2px;
+	margin: 2px;
+	border:1px solid #8ed9f6;
+}
+</style>
 
 </head>
 
 <body>
-<h2 class="ow-wiki">Назначение и синтаксис команды (:attachlist:)</h2>
-<br/>
-Команда <span class="code">(:attachlist:)</span> предназначена для вставки в вики-страницу списка прикрепленных файлов:<br/>
+<h1 class="ow-wiki">Команда (:attachlist:)</h1>
+<h2 class="ow-wiki"><a id="syntax"></a> Назначение и синтаксис</h2>
+<a class="ow-wiki ow-link-page" href="page://wikicommand">Викикоманда</a> <span class="code">(:attachlist:)</span> предназначена для вставки в викистраницу списка <a class="ow-wiki ow-link-page" href="page://wiki-attachments">прикрепленных файлов</a>:<br/>
 <br/>
 <span class="code">(:attachlist [params...]:)</span><br/>
 <br/>
 Дополнительно в команде <span class="code">(:attachlist:)</span> могут быть использованы следующие параметры:<br/>
-<ul class="ow-wiki"><li class="ow-wiki"><span class="code">sort</span> - указывает порядок сортировки файлов. Параметр <i>sort</i> может принимать следующие значения:</li><ul class="ow-wiki"><li class="ow-wiki ow-li-minus"><i>name</i> - прикрепленные файлы будут отсортированы по именам (это равносильно использованию команды (:attachlist:) без параметров);</li><li class="ow-wiki ow-li-minus"><i>descendname</i> - прикрепленные файлы будут отсортированы по именам в обратном порядке;</li><li class="ow-wiki ow-li-minus"><i>ext</i> - прикрепленные файлы будут отсортированы по расширениям;</li><li class="ow-wiki ow-li-minus"><i>descendext</i> - прикрепленные файлы будут отсортированы по расширениям в обратном порядке;</li><li class="ow-wiki ow-li-minus"><i>size</i> - прикрепленные файлы будут отсортированы по их размеру;</li><li class="ow-wiki ow-li-minus"><i>descendsize</i> - прикрепленные файлы будут отсортированы по их размеру в обратном порядке;</li><li class="ow-wiki ow-li-minus"><i>date</i> - прикрепленные файлы будут отсортированы по дате их последней модификации;</li><li class="ow-wiki ow-li-minus"><i>descenddate</i> - прикрепленные файлы будут отсортированы по дате их последней модификации в обратном порядке;</li>
+<ul class="ow-wiki"><li class="ow-wiki"><span class="code">sort</span> - указывает порядок сортировки файлов. Этот параметр может принимать следующие значения:</li><ul class="ow-wiki"><li class="ow-wiki ow-li-minus"><span class="code">name</span> - прикрепленные файлы будут отсортированы по именам (это значение по умолчанию и равносильно использованию команды <span class="code">(:attachlist:)</span> без параметров);</li><li class="ow-wiki ow-li-minus"><span class="code">descendname</span> - прикрепленные файлы будут отсортированы по именам в обратном порядке;</li><li class="ow-wiki ow-li-minus"><span class="code">ext</span> - прикрепленные файлы будут отсортированы по расширениям;</li><li class="ow-wiki ow-li-minus"><span class="code">descendext</span> - прикрепленные файлы будут отсортированы по расширениям в обратном порядке;</li><li class="ow-wiki ow-li-minus"><span class="code">size</span> - прикрепленные файлы будут отсортированы по их размеру;</li><li class="ow-wiki ow-li-minus"><span class="code">descendsize</span> - прикрепленные файлы будут отсортированы по их размеру в обратном порядке;</li><li class="ow-wiki ow-li-minus"><span class="code">date</span> - прикрепленные файлы будут отсортированы по дате их последней модификации;</li><li class="ow-wiki ow-li-minus"><span class="code">descenddate</span> - прикрепленные файлы будут отсортированы по дате их последней модификации в обратном порядке;</li>
 </ul>
 <li class="ow-wiki"><span class="code">subdir</span> - позволяет отображать прикрепленные файлы из вложенных папок.</li>
 </ul>
-<h2 class="ow-wiki">Примеры</h2>
-<br/>
-У данной страницы имеется пять вложенных файлов, а также папка "subfolder" с еще несколькими файлами. Далее показан результат работы команды (:attachlist:) с различными значениями параметров:<br/>
+<h2 class="ow-wiki"><a id="examples"></a> Примеры</h2>
+У данной страницы имеется пять вложенных файлов, а также директория <span class="notice">subfolder</span> с еще несколькими файлами. Далее показан результат работы команды <span class="code">(:attachlist:)</span> с различными значениями параметров:<br/>
 <br/>
 <table border="1" style="border-collapse: collapse; border: 1px solid black;">
 <tr><th width=150em> Команда</th><th width=200em> Результат<br/>
 </th>
 </tr>
 <tr>
-<td>(:attachlist:)</td>
+<td><span class="code">(:attachlist:)</span></td>
 <td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Вложения</a></li><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder">subfolder</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li>
 </ul>
 </ul>
@@ -54,7 +63,7 @@
 </td>
 </tr>
 <tr>
-<td>(:attachlist sort=ext:)</td>
+<td><span class="code">(:attachlist sort=ext:)</span></td>
 <td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Вложения</a></li><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder">subfolder</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li>
 </ul>
 </ul>
@@ -62,7 +71,7 @@
 </td>
 </tr>
 <tr>
-<td>(:attachlist sort=descendext:)</td>
+<td><span class="code">(:attachlist sort=descendext:)</span></td>
 <td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Вложения</a></li><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder">subfolder</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li>
 </ul>
 </ul>
@@ -70,7 +79,7 @@
 </td>
 </tr>
 <tr>
-<td>(:attachlist sort=size:)</td>
+<td><span class="code">(:attachlist sort=size:)</span></td>
 <td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/">Вложения</a></li><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder">subfolder</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/anchor.png">anchor.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.jpg">image.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.gif">image.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/image.png">image.png</a></li>
 </ul>
 </ul>
@@ -78,7 +87,7 @@
 </td>
 </tr>
 <tr>
-<td>(:attachlist subdir="subfolder":)</td>
+<td><span class="code">(:attachlist subdir="subfolder":)</span></td>
 <td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder/">subfolder</a></li><ul class="ow-attach-list"><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/feed.gif">feed.gif</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/icon.jpeg">icon.jpeg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/new.png">new.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/open.png">open.png</a></li>
 </ul>
 </ul>
@@ -86,12 +95,15 @@
 </td>
 </tr>
 <tr>
-<td>(:attachlist subdir="subfolder" sort=descendname:)</td>
+<td><span class="code">(:attachlist subdir="subfolder" sort=descendname:)</span></td>
 <td><ul class="ow-attach-list"><li class="ow-attach-dir"><a class="ow-link-attach ow-attach-dir" href="__attach/subfolder/">subfolder</a></li><ul class="ow-attach-list"><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/open.png">open.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/new.png">new.png</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/icon.jpeg">icon.jpeg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/first.jpg">first.jpg</a></li><li class="ow-attach-file"><a class="ow-link-attach ow-attach-file" href="__attach/subfolder/feed.gif">feed.gif</a></li>
 </ul>
 </ul>
 </td>
 </tr>
 </table><br/>
+<hr>
+<b>См. также:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wikicommand">Викикоманды</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-childlist">Команда (:childlist:)</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-attachments">Прикрепленные файлы и картинки</a></li>
+</ul>
 </body>
 </html>

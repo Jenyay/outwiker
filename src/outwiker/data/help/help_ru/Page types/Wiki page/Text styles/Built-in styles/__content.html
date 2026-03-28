@@ -7,14 +7,22 @@
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:10pt;
+			font-size:11pt;
 			font-family:Verdana;
 		}
 
 		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}a.ow-link-page-error{font-style:italic;color:#cc0033}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}blockquote.ow-wiki{border-left:4px solid #ccc;padding:10px 15px;margin:10px 0;background-color:#f9f9f9;color:#222}
 		ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}
 	</style>
-	<style>span.notice {
+	<style>span.code {
+	display: inline-block;
+	background: #FBFCD2;
+	font-family: monospace;
+	border: solid 1px #CCC;
+	padding: 0.2em;
+}
+</style>
+<style>span.notice {
 	display: inline-block;
 	color: #333;
 	background-color: #e3f7fc;
@@ -54,10 +62,85 @@
 	border:1px solid #f5aca6;
 }
 </style>
+<style>span.info {
+    display: inline-block;
+    color: #333;
+    background-color: #f0f0ff;
+    border-radius: 1px;
+    padding: 0px 2px;
+    margin: 2px;
+    border: 1px solid #b0b0e0;
+}
+</style>
+<style>span.neutral {
+    display: inline-block;
+    color: #333;
+    background-color: #f5f5f5;
+    border-radius: 1px;
+    padding: 0px 2px;
+    margin: 2px;
+    border: 1px solid #cccccc;
+}
+</style>
+<style>span.highlight-blue {
+    display: inline;
+    background-color: #b3e5fc;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}
+</style>
+<style>span.highlight-green {
+    display: inline;
+    background-color: #ccff90;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}
+</style>
+<style>span.highlight-orange {
+    display: inline;
+    background-color: #ffd180;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}
+</style>
+<style>span.highlight-pink {
+    display: inline;
+    background-color: #ffc1e3;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}
+</style>
+<style>span.highlight-purple {
+    display: inline;
+    background-color: #e1bee7;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}
+</style>
+<style>span.highlight-yellow {
+    display: inline;
+    background-color: #ffff66;
+    color: inherit;
+    padding: 0px 2px;
+    border-radius: 1px;
+}
+</style>
 <style>div.border {
 	padding: 1em;
 	margin: 1em;
 	border: 1px solid #000;
+}
+</style>
+<style>div.code {
+	background: #FBFCD2;
+	font-family: monospace;
+	border: solid 1px #CCC;
+	padding: 1em;
 }
 </style>
 <style>div.frame {
@@ -65,6 +148,24 @@
 	padding: 1em;
 	margin: 1em;
 	border: 1px solid #000;
+}
+</style>
+<style>div.info {
+	color: #333;
+	background-color: #f0f0ff;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+	border:1px solid #b0b0e0;
+}
+</style>
+<style>div.neutral {
+	color: #333;
+	background-color: #f5f5f5;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+	border:1px solid #cccccc;
 }
 </style>
 <style>div.notice {
@@ -103,27 +204,124 @@
 	border:1px solid #f5aca6;
 }
 </style>
+<style>div.quote-marker {
+    background-color: #ffffcc;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    color: #333;
+}
+</style>
+<style>div.quote-blue {
+    background-color: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+    color: #0d47a1;
+}
+</style>
+<style>div.quote-green {
+    background-color: #e8f5e9;
+    border-left: 5px solid #4caf50;
+    color: #1b5e20;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+}
+</style>
+<style>div.quote-orange {
+    background-color: #fff3e0;
+    border-left: 5px solid #ff9800;
+    color: #4e2600;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+}
+</style>
+<style>div.quote-pink {
+    background-color: #fce4ec;
+    border-left: 5px solid #ec407a;
+    color: #880e4f;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+}
+</style>
+<style>div.quote-purple {
+    background-color: #f3e5f5;
+    border-left: 5px solid #ab47bc;
+    color: #4a148c;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+}
+</style>
+<style>div.quote-yellow {
+    background-color: #fffde7;
+    border-left: 5px solid #fbc02d;
+    color: #795c00;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 6px;
+}
+</style>
 
 </head>
 
 <body>
+<h1 class="ow-wiki">Встроенные стили и цвета</h1>
+<br/>
+В разделе <a class="ow-wiki ow-link-page" href="page://textstyles">Стили текста</a> показано, как можно изменять оформления текста с помощью именованных стилей и цветов. OutWiker предоставляет множество встроенных стилей, которые перечислены далее. В последнем разделе этой заметки приводится список именованных цветов, которые можно использовать при задании стиля текста.<br/>
+<h2 class="ow-wiki">Оглавление</h2>
 <ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki" href="#inline">Встроенные строковые стили</a></li><li class="ow-wiki"><a class="ow-wiki" href="#block">Встроенные блоковые стили</a></li><li class="ow-wiki"><a class="ow-wiki" href="#colors">Встроенные цвета</a></li>
 </ul>
 <h2 class="ow-wiki"><a id="inline"></a> Встроенные строковые стили</h2>
+Обычный текст. <span class="code">Текст со стилем <b>code</b></span>. Опять обычный текст.<br/>
 <br/>
-<span class="notice">Текст со стилем <b>notice</b></span><br/>
-<span class="success">Текст со стилем <b>success</b></span><br/>
-<span class="warn">Текст со стилем <b>warn</b></span><br/>
-<span class="error">Текст со стилем <b>error</b></span><br/>
+Обычный текст. <span class="notice">Текст со стилем <b>notice</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="success">Текст со стилем <b>success</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="warn">Текст со стилем <b>warn</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="error">Текст со стилем <b>error</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="info">Текст со стилем <b>info</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="neutral">Текст со стилем <b>neutral</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="highlight-blue">Текст со стилем <b>highlight-blue</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="highlight-green">Текст со стилем <b>highlight-green</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="highlight-orange">Текст со стилем <b>highlight-orange</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="highlight-pink">Текст со стилем <b>highlight-pink</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="highlight-purple">Текст со стилем <b>highlight-purple</b></span>. Опять обычный текст.<br/>
+<br/>
+Обычный текст. <span class="highlight-yellow">Текст со стилем <b>highlight-yellow</b></span>. Опять обычный текст.<br/>
 <br/>
 <h2 class="ow-wiki"><a id="block"></a> Встроенные блоковые стили</h2>
 <br/>
-<div class="border">Текст со стилем <b>border</b></div><br/>
-<div class="frame">Текст со стилем <b>frame</b></div><br/>
-<div class="notice">Текст со стилем <b>notice</b></div><br/>
-<div class="success">Текст со стилем <b>success</b></div><br/>
-<div class="warn">Текст со стилем <b>warn</b></div><br/>
-<div class="error">Текст со стилем <b>error</b></div><h2 class="ow-wiki"><a id="colors"></a> Встроенные цвета</h2>
+<div class="border">Текст со стилем <b>border</b>.</div><br/>
+<div class="code">Текст со стилем <b>code</b>.</div><br/>
+<div class="frame">Текст со стилем <b>frame</b>.</div><br/>
+<div class="info">Текст со стилем <b>info</b>.</div><br/>
+<div class="neutral">Текст со стилем <b>neutral</b>.</div><br/>
+<div class="notice">Текст со стилем <b>notice</b>.</div><br/>
+<div class="success">Текст со стилем <b>success</b>.</div><br/>
+<div class="warn">Текст со стилем <b>warn</b>.</div><br/>
+<div class="error">Текст со стилем <b>error</b>.</div><br/>
+<div class="quote-marker">Текст со стилем <b>quote-marker</b>.</div><br/>
+<div class="quote-blue">Текст со стилем <b>quote-blue</b>.</div><br/>
+<div class="quote-green">Текст со стилем <b>quote-green</b>.</div><br/>
+<div class="quote-orange">Текст со стилем <b>quote-orange</b>.</div><br/>
+<div class="quote-pink">Текст со стилем <b>quote-pink</b>.</div><br/>
+<div class="quote-purple">Текст со стилем <b>quote-purple</b>.</div><br/>
+<div class="quote-yellow">Текст со стилем <b>quote-yellow</b>.</div><br/>
+<h2 class="ow-wiki"><a id="colors"></a> Встроенные цвета</h2>
 <br/>
 <table >
 <tr>
@@ -715,5 +913,8 @@
 <td align="center"><span style="background-color: yellowgreen; width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"></span></td>
 </tr>
 </table>
+<hr>
+<b>См. также:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://textstyles">Стили текста</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://customstyles">Пользовательские стили оформления</a></li>
+</ul>
 </body>
 </html>

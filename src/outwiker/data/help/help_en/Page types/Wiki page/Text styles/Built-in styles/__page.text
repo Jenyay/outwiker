@@ -1,40 +1,107 @@
+!! Built-in styles and colors
+
+The page://textstyles section explains how you can change text formatting using named styles and colors. OutWiker provides many built-in styles, which are listed below. The last section of this note provides a list of named colors that can be used when defining a text style.
+
+!!! Contents
 * [[Built-in inline styles -> #inline]]
 * [[Built-in block styles -> #block]]
 * [[Built-in colors -> #colors]]
 
-!!! [[#inline]] Built-in inline styles
 
-%notice%Text with a '''notice''' style%%
-%success%Text with a '''success''' style%%
-%warn%Text with a '''warn''' style%%
-%error%Text with a '''error''' style%%
+!!! [[#inline]] Built-in inline styles
+Regular text. %code%Text with '''code''' style%%. Regular text again.
+
+Regular text. %notice%Text with '''notice''' style%%. Regular text again.
+
+Regular text. %success%Text with '''success''' style%%. Regular text again.
+
+Regular text. %warn%Text with '''warn''' style%%. Regular text again.
+
+Regular text. %error%Text with '''error''' style%%. Regular text again.
+
+Regular text. %info%Text with '''info''' style%%. Regular text again.
+
+Regular text. %neutral%Text with '''neutral''' style%%. Regular text again.
+
+Regular text. %highlight-blue%Text with '''highlight-blue''' style%%. Regular text again.
+
+Regular text. %highlight-green%Text with '''highlight-green''' style%%. Regular text again.
+
+Regular text. %highlight-orange%Text with '''highlight-orange''' style%%. Regular text again.
+
+Regular text. %highlight-pink%Text with '''highlight-pink''' style%%. Regular text again.
+
+Regular text. %highlight-purple%Text with '''highlight-purple''' style%%. Regular text again.
+
+Regular text. %highlight-yellow%Text with '''highlight-yellow''' style%%. Regular text again.
 
 
 !!! [[#block]] Built-in block styles
 
 %border%
-Text with a '''border''' style.
+Text with '''border''' style.
+%%
+
+%code%
+Text with '''code''' style.
 %%
 
 %frame%
-Text with a '''frame''' style.
+Text with '''frame''' style.
+%%
+
+%info%
+Text with '''info''' style.
+%%
+
+%neutral%
+Text with '''neutral''' style.
 %%
 
 %notice%
-Text with a '''notice''' style.
+Text with '''notice''' style.
 %%
 
 %success%
-Text with a '''success''' style.
+Text with '''success''' style.
 %%
 
 %warn%
-Text with a '''warn''' style.
+Text with '''warn''' style.
 %%
 
 %error%
-Text with a '''error''' style.
+Text with '''error''' style.
 %%
+
+%quote-marker%
+Text with '''quote-marker''' style.
+%%
+
+%quote-blue%
+Text with '''quote-blue''' style.
+%%
+
+%quote-green%
+Text with '''quote-green''' style.
+%%
+
+%quote-orange%
+Text with '''quote-orange''' style.
+%%
+
+%quote-pink%
+Text with '''quote-pink''' style.
+%%
+
+%quote-purple%
+Text with '''quote-purple''' style.
+%%
+
+%quote-yellow%
+Text with '''quote-yellow''' style.
+%%
+
 
 !!! [[#colors]] Built-in colors
 
@@ -186,3 +253,8 @@ Text with a '''error''' style.
 ||whitesmoke || %bg-whitesmoke style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
 ||yellow || %bg-yellow style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
 ||yellowgreen || %bg-yellowgreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+
+----
+'''See also:'''
+* page://textstyles
+* page://customstyles

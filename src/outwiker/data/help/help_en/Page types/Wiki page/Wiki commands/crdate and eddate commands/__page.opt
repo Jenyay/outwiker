@@ -3,8 +3,10 @@ type = wiki
 tags = commands,wiki
 order = 3
 creationdatetime = 2014-08-21 12:40:15.313125
-datetime = 2026-03-15 11:19:40.134210
+datetime = 2026-03-28 20:23:24.968520
 cursorposition = 575
+uid = wiki-crdate-eddate
+alias = (:crdate:) and (:eddate:) commands
 
 [wiki]
 md5_hash = af075a650fe998502d888264dfa78bdc

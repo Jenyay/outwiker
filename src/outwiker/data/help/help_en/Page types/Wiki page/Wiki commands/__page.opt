@@ -1,5 +1,7 @@
 [wiki]
 md5_hash = 39413a8730a796abc38e75e27c77b60d
+custom_styles_block = {"code": "div.code {\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 1em;\n}\n"}
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 
 [Tree]
 expand = False
@@ -9,7 +11,7 @@ type = wiki
 order = 7
 tags = commands,wiki
 cursorposition = 896
-datetime = 2026-03-27 22:41:17.632336
+datetime = 2026-03-28 20:27:07.677556
 uid = wikicommand
 
 [Misc]

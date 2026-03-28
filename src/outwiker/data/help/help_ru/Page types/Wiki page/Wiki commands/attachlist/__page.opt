@@ -1,14 +1,16 @@
 [wiki]
 md5_hash = 939f68ccbece21a224539fe559d68d4e
-custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n", "notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [General]
 type = wiki
 order = 0
 tags = wiki, команды
-datetime = 2026-02-16 21:07:49.287080
+datetime = 2026-03-28 20:39:05.016729
 cursorposition = 0
-alias = Команда attachlist
+alias = Команда (:attachlist:)
+uid = wiki-attachlist
+creationdatetime = 2026-03-28 20:36:38.046887
 
 [Misc]
 pageindex = 1

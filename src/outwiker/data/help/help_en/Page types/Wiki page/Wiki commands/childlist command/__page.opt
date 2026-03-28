@@ -8,8 +8,10 @@ expand = False
 type = wiki
 order = 1
 tags = commands,wiki
-datetime = 2026-03-15 11:19:40.130909
+datetime = 2026-03-28 20:23:07.359964
 cursorposition = 1086
+uid = wiki-childlist
+alias = (:childlist:) command
 
 [Misc]
 pageindex = 1

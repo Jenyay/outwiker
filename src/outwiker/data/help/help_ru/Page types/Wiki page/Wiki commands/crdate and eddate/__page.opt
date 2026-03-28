@@ -3,9 +3,10 @@ type = wiki
 tags = wiki, команды
 order = 3
 creationdatetime = 2014-08-21 12:26:47.811979
-datetime = 2026-02-16 21:11:01.691456
+datetime = 2026-03-28 20:22:11.187925
 cursorposition = 236
-alias = Команды crdate и eddate
+alias = Команды (:crdate:) и (:eddate:)
+uid = wiki-crdate-eddate
 
 [wiki]
 md5_hash = fc7780183c32d7f6db61b0296256269d

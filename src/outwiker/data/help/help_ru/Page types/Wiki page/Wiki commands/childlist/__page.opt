@@ -8,9 +8,10 @@ expand = False
 type = wiki
 order = 1
 tags = wiki, команды
-datetime = 2026-02-16 21:08:07.804073
+datetime = 2026-03-28 20:21:38.964132
 cursorposition = 1406
-alias = Команда childlist
+alias = Команда (:childlist:)
+uid = wiki-childlist
 
 [Misc]
 pageindex = 1

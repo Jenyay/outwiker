@@ -1,168 +1,115 @@
-To colorize a text on the wiki page a special command is provided. The command set text style (don't confuse with page styles). A common command format is [=%parameters%text to colorize%%=]. The command may be applied to text block (block style) or text inside paragraph (inline style).
+!! Text styles
 
-A block style applied with command format:
+!!! Contents
+** [[Style definition syntax -> #syntax]]
+** [[Named styles -> #stylename]]
+** [[Setting text color -> #color]]
+** [[Setting background color -> #bgcolor]]
+** [[Advanced style settings -> #css]]
+** [[Combining all of the above -> #all]]
 
-%border%
-[=%style parameters%
-text to colorize
+!!! [[#syntax]] Style definition syntax
+A special wiki command is provided for formatting text on wiki pages to set the text style (not to be confused with [[page styles -> page://styles]]). The general format of the command for setting a style is as follows: %code%[=%parameters%text%%=]%%. This command can be applied to format a block of text (block style) or text within a paragraph (inline style).
+
+Block style is defined using the following command:
+
+%code%
+[=%parameters%
+formatted text
 %%=]
 %%
 
-It is important to strings [=%style parameters%=] and [=%%=] starts with a begin of the line. There should not be any gaps before them.
+It is important that the %code%[=%style parameters%=]%% and %code%[=%%=]%% lines start at the beginning of the line with no leading spaces.
 
-A inline style applied with command format:
+Inline style is defined using a syntax that can be used within the text:
 
-%border%
-a text... [=%style parameters%text to colorize%%=] other text...
+%code%
+[=%parameters%text%%=]
 %%
 
+Inside the inline command %code%[=%...%...%%=]%%, there should be no line breaks, with the exception of the %code%[=[[<<]]=]%% wiki command. Block style can contain multiple lines and paragraphs.
 
-Inside the string command [=% ...% ... %% =] there should not be line breaks except for the command [= [[<<]] =]. A block style can contain many lines and paragraphs.
+In both command formats, style parameters can include the following elements:
 
-A both style formats may contain follows parameters:
+* [[Style name -> #stylename]].
+* [[Text color -> #color]].
+* [[Background color -> #bgcolor]].
+* [[Custom style settings -> #css]].
+* [[A combination of all of the above -> #all]].
 
+!!! [[#stylename]] Named styles
+OutWiker contains many built-in inline and block styles. Their full list can be seen in the style selection dialog (menu item %notice%Wiki - Formatting - Text style...%%) or in the [[Built-in styles and colors -> page://builtinstyles]] section.
 
-1. [[Style name -> #stylename]].
-2. [[Text color -> #color]].
-3. [[Background color -> #bgcolor]].
-4. [[Custom style settings -> #css]].
-5. [[All of the above -> #all]].
+For example:
 
-1. [[#stylename]] '''Style name.''' OutWiker have a lot of the built-in inline and block styles. List of the styles you can see in the dialog to select style (menu item "Wiki - Font - Text style...") or in the section [[Built-in styles and colors -> page://builtinstyles]]. For example:
-
-%border%
-''Wiki notation:''
-[=A simple text. %notice%A text with a notice style.%% A simple text again.=]
-
-''Result:''
-A simple text. %notice%A text with a notice style.%% A simple text again.
-%%
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Wiki notation''' || '''Result''' ||
+||Regular text. %code%[=%notice%Text with notice style%%=]%%. Regular text again. ||Regular text. %notice%Text with notice style%%. Regular text again. ||
 
 
-2. [[#color]] '''Text color.''' Instead of style name you can set text color by color name or with follows formats (like HTML and CSS): #RRGGBB, #RGB, rgb(r,g,b). Built-in color names is described in the section [[Built-in colors -> page://builtinstyles/#colors]]. For example:
+!!! [[#color]] Setting text color
+Instead of a style name, you can specify colors - by name or in formats like %code%[=#RRGGBB=]%%, %code%[=#RGB=]%%, %code%rgb(r,g,b)%%. A list of built-in color names is provided in the [[Built-in colors -> page://builtinstyles/#colors]] section.
 
-%border%
-''Wiki notation:''
-[=A simple text. %blue%A blue text.%% A simple text again.=]
+For example:
 
-''Result:''
-A simple text. %blue%A blue text.%% A simple text again.
-%%
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Wiki notation''' || '''Result''' ||
+||Regular text. %code%[=%blue%Styled text%%=]%%. Regular text again. ||Regular text. %blue%Styled text%%. Regular text again. ||
+||Regular text. %code%[=%#A2F%Styled text%%=]%%. Regular text again.||Regular text. %#A2F%Styled text%%. Regular text again. ||
+||Regular text. %code%[=%#15acac%Styled text%%=]%%. Regular text again. ||Regular text. %#15acac%Styled text%%. Regular text again. ||
 
-%border%
-''Wiki notation:''
-[=A simple text. %#A2F%Colorized text.%% A simple text again.=]
+Color can also be set using the %code%color%% parameter:
 
-''Result:''
-A simple text. %#A2F%Colorized text.%% A simple text again.
-%%
-
-%border%
-''Wiki notation:''
-[=A simple text. %#15acac%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %#15acac%Colorized text.%% A simple text again.
-%%
-
-You can set text color with a ''color'' parameter":
-
-%border%
-''Wiki notation:''
-[=A simple text. %color=blue%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %color=blue%Colorized text.%% A simple text again.
-%%
-
-%border%
-''Wiki notation:''
-[=A simple text. %color=#A2F%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %color="#A2F"%Colorized text.%% A simple text again.
-%%
-
-%border%
-''Wiki notation:''
-[=A simple text. %color=#15acac%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %color=#15acac%Colorized text.%% A simple text again.
-%%
-
-%border%
-''Wiki notation:''
-[=A simple text. %color="rgb(200, 90, 128)"%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %color="rgb(200, 90, 128)"%Colorized text.%% A simple text again.
-%%
-
-3. [[#bgcolor]] '''Background color'''. There are several options to set background color for string or part of the string.
-
-To set background color for one of the standard named colors (see section [[Built-in colors -> page://builtinstyles/#colors]]) you can write color name with a "bg_" or "bg-" prefix. For example:
-
-%border%
-''Wiki notation:''
-[=A simple text. %bg-yellow%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %bg-yellow%Colorized text.%% A simple text again.
-%%
-
-%border%
-''Wiki notation:''
-[=A simple text. %bg_aqua%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %bg_aqua%Colorized text.%% A simple text again.
-%%
-
-To set background color you can use a ''bgcolor'' parameter. The parameter allow you set background color by name or use one of formats: #RGB, #RRGGBB or rgb(r,g,b). For example:
-
-%border%
-''Wiki notation:''
-[=A simple text. %bgcolor="#AB6"%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %bgcolor="#AB6"%Colorized text.%% A simple text again.
-%%
-
-%border%
-''Wiki notation:''
-[=A simple text. %bgcolor="#AA66CC"%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %bgcolor="#AA66CC"%Colorized text.%% A simple text again.
-%%
-
-%border%
-''Wiki notation:''
-[=A simple text. %bgcolor="rgb(200, 90, 128)"%Colorized text.%% A simple text again.=]
-
-''Result:''
-A simple text. %bgcolor="rgb(200, 90, 128)"%Colorized text.%% A simple text again.
-%%
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Wiki notation''' || '''Result''' ||
+||Regular text. %code%[=%color=blue%Styled text%%=]%%. Regular text again. || Regular text. %color=blue%Styled text%%. Regular text again. ||
+||Regular text. %code%[=%color="#A2F"%Styled text%%=]%%. Regular text again. || Regular text. %color="#A2F"%Styled text%%. Regular text again. ||
+||Regular text. %code%[=%color="#15acac"%Styled text%%=]%%. Regular text again. || Regular text. %color="#15acac"%Styled text%%. Regular text again. ||
+||Regular text. %code%[=%color="rgb(200, 90, 128)"%Styled text%%=]%%. Regular text again. || Regular text. %color="rgb(200, 90, 128)"%Styled text%%. Regular text again. ||
 
 
-4. [[#css]] '''Custom style settings.''' You can apply arbitrary style from CSS with a ''style'' parameter. For example:
+!!! [[#bgcolor]] Setting background color
+There are several options for setting the background color of a part of a line or a block.
 
-%border%
-''Wiki notation:''
-[=A simple text. %style="font-weight: bold; border: 1px; solid"%Colorized text.%% A simple text again.=]
+If you want to use one of the standard [[named colors -> page://builtinstyles/#colors]] as the background color, simply specify the color name with a %code%bg_%% or %code%bg-%% prefix. For example:
 
-''Result:''
-A simple text. %style="font-weight: bold; border: 1px solid;"%Colorized text.%% A simple text again.
-%%
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Wiki notation''' || '''Result''' ||
+||Regular text. %code%[=%bg-yellow%Styled text%%=]%%. Regular text again. ||Regular text. %bg-yellow%Styled text%%. Regular text again. ||
+||Regular text. %code%[=%bg_aqua%Styled text%%=]%%. Regular text again. ||Regular text. %bg_aqua%Styled text%%. Regular text again. ||
+
+You can also use the %code%bgcolor%% parameter to specify the background color, which allows you to set colors not only by name but also using %code%[=#RGB=]%%, %code%[=#RRGGBB=]%%, and %code%rgb(r,g,b)%% formats:
+
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Wiki notation''' || '''Result''' ||
+||Regular text. %code%[=%bgcolor="#AB6"%Styled text%%=]%%. Regular text again. ||Regular text. %bgcolor="#AB6"%Styled text%%. Regular text again. ||
+||Regular text. %code%[=%bgcolor="#AA66CC"%Styled text%%=]%%. Regular text again. ||Regular text. %bgcolor="#AA66CC"%Styled text%%. Regular text again. ||
+||Regular text. %code%[=%bgcolor="rgb(200, 90, 128)"%Styled text%%=]%%. Regular text again. ||Regular text. %bgcolor="rgb(200, 90, 128)"%Styled text%%. Regular text again. ||
 
 
-5. [[#all]] '''All of the above.''' You can use all of the above parameters simultaneously. And you can apply several styles to text. For example:
+!!! [[#css]] Advanced style settings
 
-%border%
-''Wiki notation:''
-[=A simple text. %style="blue bg-yellow font-weight: bold; border: 1px; solid"%Colorized text.%% A simple text again.=]
+You can apply an arbitrary CSS style to a section of text or a block using the %code%style%% parameter.
 
-''Result:''
-A simple text. %blue bg-yellow style="font-weight: bold; border: 1px solid;"%Colorized text.%% A simple text again.
-%%
+For example:
+
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Wiki notation''' || '''Result''' ||
+||Regular text. %code%[=%style="font-weight: bold; border: 1px solid;"%Styled text%%=]%%. Regular text again. ||Regular text. %style="font-weight: bold; border: 1px solid;"%Styled text%%. Regular text again. ||
+
+
+!!! [[#all]] Combining all of the above
+
+All the parameters mentioned above can be used simultaneously. Also, multiple styles can be applied to the text.
+
+For example:
+
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Wiki notation''' || '''Result''' ||
+||Regular text. %code%[=%blue bg-yellow style="font-weight: bold; border: 1px solid;"%Styled text%%=]%%. Regular text again. ||Regular text. %blue bg-yellow style="font-weight: bold; border: 1px solid;"%Styled text%%. Regular text again. ||
+
+----
+'''See also:'''
+* page://builtinstyles
+* page://customstyles
+* page://wiki-format-text

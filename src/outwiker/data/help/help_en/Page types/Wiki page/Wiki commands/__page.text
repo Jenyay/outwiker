@@ -1,21 +1,45 @@
-!!! Command syntax
+!! Wiki commands
 
-Apart from the commands described in the previous sections, wiki notation also support the so-called wiki commands, whose syntax is as follows:
+!!! [[#syntax]] Syntax
+In addition to the notation described in the previous sections, wiki pages also support wiki commands. Many [[plugins -> page://plugins]] add new wiki commands. The general syntax of a wiki command is as follows:
 
-[=
-(:commandname [params...] :)
+%code%
+[=(:commandname [params...] :)
 [content...]
-(:commandnameend:)
-=]
+(:commandnameend:)=]
+%%
 
-Here ''commandname'' - the name of the command; ''params'' - optional switche(s) that activate various command's options; ''content'' - a piece of text the command is applied to.
+Here, %code%commandname%% is the name of the wiki command, while %code%params%% and %code%content%% are optional elements that set command parameters and the text to which the command is applied, respectively. Different wiki commands support different sets of parameters, and some wiki commands may have no parameters at all.
 
-!!! Params
+Some wiki commands do not require %code%content%%. In this case, they can be written as follows:
 
-The syntax of switches varies depending on the command, for example:
+%code%
+[= (:commandname [params...] :) =]
+%%
 
+And if no parameters are used either, then:
+
+%code%
+(:commandname:)
+%%
+
+
+!!! [[#params]] Parameters
+The parameter format may vary for different commands, but the following recording format is mainly used:
+
+%code%
 param1 param2 = value1 param3 = "value 3" param4 = 'value 4' param5
+%%
 
-Switches must be separated with space characters, some switches may have to be set to specific value. Switches without values ​​can be regarded as flags: it is either on or off. 
+Here, %code%param1%%, ..., %code%param5%% are parameter names, and %code%value1%%, %code%value 3%%, and %code%value 4%% are the values of some parameters.
 
-If the value contains alphanumerics and underscores only, it ​should not be quoted. In case of presence of any other characters quotation is mandatory.
+Parameters are separated by spaces. Some parameters have values, while others are simply listed. Parameters without values can be treated as flags: whether the parameter is set or not.
+
+If a parameter value consists only of letters, numbers, and underscores, such values do not need to be enclosed in quotes; otherwise, single or double quotes are required.
+
+----
+'''See also:'''
+* page://wiki-attachlist
+* page://wiki-childlist
+* page://wiki-include
+* page://wiki-crdate-eddate

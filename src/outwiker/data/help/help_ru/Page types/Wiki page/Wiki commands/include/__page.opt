@@ -5,7 +5,8 @@ md5_hash = 766b85220c346228928d95aa3dfc903b
 type = wiki
 order = 2
 tags = wiki, команды
-datetime = 2026-02-16 21:10:48.649944
+datetime = 2026-03-28 20:21:47.811997
 cursorposition = 0
-alias = Команда include
+alias = Команда (:include:)
+uid = wiki-include
 
