@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-	<title>include command</title>
+	<title>(:include:) command</title>
 
 	<style type='text/css'>
 		body, div, p, table {
@@ -14,95 +14,111 @@
 		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}a.ow-link-page-error{font-style:italic;color:#cc0033}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}blockquote.ow-wiki{border-left:4px solid #ccc;padding:10px 15px;margin:10px 0;background-color:#f9f9f9;color:#222}
 		ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}
 	</style>
-	
+	<style>span.code {
+	display: inline-block;
+	background: #FBFCD2;
+	font-family: monospace;
+	border: solid 1px #CCC;
+	padding: 0.2em;
+}
+</style>
+<style>div.code {
+	background: #FBFCD2;
+	font-family: monospace;
+	border: solid 1px #CCC;
+	padding: 1em;
+}
+</style>
+<style>div.border {
+	padding: 1em;
+	margin: 1em;
+	border: 1px solid #000;
+}
+</style>
+
 </head>
 
 <body>
-<h2 class="ow-wiki">The (:include:) command</h2>
-<br/>
-The  (:include:)  command is a placeholder, which is to be replaced with content of the attached file, when parsing. The full syntax for the command is as follows:<br/>
-<br/>
-(:include Attach:filename [params...]:)<br/>
-<br/>
-Here <i>filename</i> is the name of the attached file and switches of the command are listed below.<br/>
-<h2 class="ow-wiki">Switches of the command (:include:)</h2>
-<br/>
-The (:include:) command can take the following values:<br/>
-<ul class="ow-wiki"><li class="ow-wiki"><i>encoding</i></li><li class="ow-wiki"><i>htmlescape</i></li><li class="ow-wiki"><i>wikiparse</i></li>
+<h1 class="ow-wiki"> wiki command</h1>
+<h2 class="ow-wiki">Contents</h2>
+<ul class="ow-wiki"><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki" href="#syntax">Purpose and Syntax</a></li><li class="ow-wiki"><a class="ow-wiki" href="#params">Command Parameters</a></li><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki" href="#encoding">encoding</a></li><li class="ow-wiki"><a class="ow-wiki" href="#htmlescape">htmlescape</a></li><li class="ow-wiki"><a class="ow-wiki" href="#wikiparse">wikiparse</a></li>
 </ul>
-<h3 class="ow-wiki">encoding</h3>
-<i>Encoding</i> switch indicates the encoding of the attached file to be included. Since OutWiker is incapable of recognizing encodings, as, by default, it treats all files as if they were encoded in UTF-8.<br/>
+</ul>
+</ul>
+<h2 class="ow-wiki"><a id="syntax"></a> Purpose and Syntax</h2>
+The <span class="code">(:include:)</span> command is designed to insert the content of attached files directly into a wiki page. The syntax is as follows:<br/>
 <br/>
-If the file is encoded in <a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/text_utf8.txt">text_utf8.txt</a> the "encoding" switch may be omitted:<br/>
+<div class="code">(:include Attach:filename [params...]:)</div><br/>
+Here, <span class="code">filename</span> is the name of the attachment whose content you want to embed in the page text.<br/>
 <br/>
-(:include Attach:text_utf8.txt:)<br/>
+Additional command parameters are detailed below.<br/>
 <br/>
+<h2 class="ow-wiki"><a id="params"></a> Command Parameters</h2>
+The <span class="code">(:include:)</span> command accepts the optional parameters described in the following sections.<br/>
+<h3 class="ow-wiki"><a id="encoding"></a> encoding</h3>
+The <span class="code">encoding</span> parameter specifies the character encoding of the inserted text. Since OutWiker cannot automatically detect a file's encoding, it assumes UTF-8 by default.<br/>
+<br/>
+For example, to insert the file <a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/text_utf8.txt">text_utf8.txt</a> (attached to this page and created in UTF-8), simply use:<br/>
+<br/>
+<div class="code">(:include Attach:text_utf8.txt:)</div><br/>
+The result will be:<br/>
+<br/>
+<div class="border">Текст в <br/>
+кодировке UTF-8</div><br/>
+You can also specify the encoding explicitly for the same file:<br/>
+<br/>
+<div class="code">(:include Attach:text_utf8.txt encoding=utf8 :)</div><br/>
+To insert the contents of <a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/text_1251.txt">text_1251.txt</a> using the cp1251 encoding, the command would look like this:<br/>
+<br/>
+<div class="code">(:include Attach:text_1251.txt encoding=cp1251:)</div><br/>
 Result:<br/>
-Текст в <br/>
-кодировке UTF-8<br/>
 <br/>
-For files in other encoding, the switch must be specified explicitly as follows:<br/>
+<div class="border">Это текст<br/>
+в кодировке 1251</div><br/>
+If you forget to specify an encoding other than UTF-8, or if you provide an incorrect one, an error will occur. For instance, the command:<br/>
 <br/>
-(:include Attach:text_utf8.txt encoding=utf8 :)<br/>
+<div class="code">(:include Attach:text_1251.txt:)</div><br/>
+Will result in the following error text:<br/>
 <br/>
-Another example of the (:include:) command to insert a file text_1251.txt encoded in cp1251:<br/>
-<br/>
-(:include Attach:text_1251.txt encoding=cp1251:)<br/>
-<br/>
-Result:<br/>
-Это текст<br/>
-в кодировке 1251<br/>
-<br/>
-In case the encoding is not specified, OutWiker gives an error message as in the following example:<br/>
-<br/>
-(:include Attach:text_1251.txt:)<br/>
-<br/>
-Result:<br/>
 <div class="ow-wiki ow-wiki-include ow-error">Ошибка кодировки файла 'text_1251.txt'</div><br/>
 <br/>
-Full list of supported encodings is extensive, it can be found on the following webpage (Python help): <a class="ow-wiki" href="http://docs.python.org/library/codecs.html#standard-encodings">this page</a>. Here is an excerpt from that list with the most commonly used encodings (note that single encoding may have multiple names):<br/>
+The list of supported encodings is quite extensive and can be found on <a class="ow-wiki" href="http://docs.python.org/library/codecs.html#standard-encodings">this Python documentation page</a>. Common encodings include (note that the same encoding may have multiple aliases):<br/>
 <ul class="ow-wiki"><li class="ow-wiki">utf8, utf-8, utf_8, U8, UTF;</li><li class="ow-wiki">cp1251, windows-1251;</li><li class="ow-wiki">koi8_r;</li><li class="ow-wiki">koi8_u;</li><li class="ow-wiki">utf_32, utf-32, utf32;</li><li class="ow-wiki">utf_16, utf-16, utf16;</li><li class="ow-wiki">mac_cyrillic, maccyrillic;</li><li class="ow-wiki">cp866, 866, IBM866;</li>
 </ul>
-<h3 class="ow-wiki">htmlescape</h3>
+<h3 class="ow-wiki"><a id="htmlescape"></a> htmlescape</h3>
+The <span class="code">htmlescape</span> parameter instructs the <span class="code">(:include:)</span> command to escape HTML characters in the source file. It replaces <span class="code">&lt;</span>, <span class="code">&gt;</span>, and <span class="code">&amp;</span> with <span class="code">&amp;lt;</span>, <span class="code">&amp;gt;</span>, and <span class="code">&amp;amp;</span> respectively. This is particularly useful for displaying source code from attached files.<br/>
 <br/>
-The <i>htmlescape</i> switch forces the parser to interpret the characters &lt;, &gt;, , &amp; as &amp;lt;, &amp;gt;, &amp;amp;, respectively. This switch comes in handy in case the attached file contains source code.<br/>
+For example, the following command without the <span class="code">htmlescape</span> parameter would display text in bold because the file contains &lt;b&gt;...&lt;/b&gt; tags:<br/>
 <br/>
-Example of the command with the switch "htmlescape" omitted:<br/>
-(:include Attach:html.txt:)<br/>
+<div class="code">(:include Attach:html.txt:)</div><br/>
+Result:<br/>
 <br/>
-displays bolded text:<br/>
-<B>Это текст с HTML-тегами</B><br/>
+<div class="border"><b>This text contains HTML tags</b></div><br/>
+However, by adding the <span class="code">htmlescape</span> parameter:<br/>
 <br/>
-If the switch is included<br/>
-(:include Attach:html.txt htmlescape:)<br/>
+<div class="code">(:include Attach:html.txt htmlescape:)</div><br/>
+The raw HTML code will be displayed instead:<br/>
 <br/>
-it displays the HTML code:<br/>
-&lt;B&gt;Это текст с HTML-тегами&lt;/B&gt;<br/>
-<h3 class="ow-wiki">wikiparse</h3>
+<div class="border">&lt;b&gt;This text contains HTML tags&lt;/b&gt;</div><br/>
+<h3 class="ow-wiki"><a id="wikiparse"></a> wikiparse</h3>
+The <span class="code">wikiparse</span> parameter tells the <span class="code">(:include:)</span> command to pass the file content through the wiki notation parser. This is used when the attached file contains wiki markup that needs to be converted to HTML for proper rendering.<br/>
 <br/>
-<i>Wikiparse</i> forces OutWiker to process content of the attached file with the wiki parser before rendering. This switch comes in handy in case the attached file contains wiki notation.<br/>
+For example, since the file <a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/wiki.txt">wiki.txt</a> contains wiki notation, the command:<br/>
 <br/>
-Example of the command with the switch "wikiparse" omitted:<br/>
+<div class="code">(:include Attach:wiki.txt:)</div><br/>
+Will simply display the raw text:<br/>
 <br/>
-(:include Attach:wiki.txt:)<br/>
+<div class="border">'''This text contains wiki notation'''</div><br/>
+But with the <span class="code">wikiparse</span> parameter:<br/>
 <br/>
-displays the following non-parsed text:<br/>
-'''Этот текст содержит вики-нотацию'''<br/>
+<div class="code">(:include Attach:wiki.txt wikiparse :)</div><br/>
+The wiki notation is parsed and rendered as HTML on the page:<br/>
 <br/>
-If the switch is included<br/>
-(:include Attach:wiki.txt wikiparse :)<br/>
+<div class="border"><b>This text contains wiki notation</b></div><br/>
 <br/>
-it parses content as wiki-text:<br/>
-<b>Этот текст содержит вики-нотацию</b><br/>
-<br/>
-If the command  (:include:)  is invoked with both switches "htmlescape" and "wikiparse", then OutWiker processes HTML escape characters first, and than parses the wiki notation.<br/>
-<br/>
-It is also possible to use the tag &lt;pre&gt; to render listing of source code from the attached file nicely. The syntax is as follows:<br/>
-
-<pre>
-&lt;pre&gt;
-(:include Attach:filename htmlescape:)
-&lt;/pre&gt;
-</pre>
+If both <span class="code">htmlescape</span> and <span class="code">wikiparse</span> parameters are set in the <span class="code">(:include:)</span> command, the HTML characters are escaped first, followed by the wiki notation parsing.<br/>
+<hr>
+<b>See also:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wikicommand">Wiki commands</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-format-text">Text Formating</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-attachlist">(:attachlist:) command</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-childlist">(:childlist:) command</a></li>
+</ul>
 </body>
 </html>

@@ -1,1 +1,1 @@
-'''Этот текст содержит вики-нотацию'''
+'''This text contains wiki notation'''

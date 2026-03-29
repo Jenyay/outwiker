@@ -1,48 +1,71 @@
-!!! The [=(:include:)=] command
+!! (:include:) wiki command
 
-The [= (:include:) =] command is a placeholder, which is to be replaced with content of the attached file, when parsing. The full syntax for the command is as follows:
+!!! Contents
+** [[Purpose and Syntax -> #syntax]]
+** [[Command Parameters -> #params]]
+*** [[encoding -> #encoding]]
+*** [[htmlescape -> #htmlescape]]
+*** [[wikiparse -> #wikiparse]]
 
+!!! [[#syntax]] Purpose and Syntax
+The %code%[=(:include:)=]%% command is designed to insert the content of attached files directly into a wiki page. The syntax is as follows:
+
+%code%
 [=(:include Attach:filename [params...]:)=]
+%%
 
-Here ''filename'' is the name of the attached file and switches of the command are listed below.
+Here, %code%filename%% is the name of the attachment whose content you want to embed in the page text.
 
-!!! Switches of the command [=(:include:)=]
+Additional command parameters are detailed below.
 
-The [=(:include:)=] command can take the following values:
 
-* ''encoding''
-* ''htmlescape''
-* ''wikiparse''
+!!! [[#params]] Command Parameters
+The %code%[=(:include:)=]%% command accepts the optional parameters described in the following sections.
 
-!!!! encoding
-''Encoding'' switch indicates the encoding of the attached file to be included. Since OutWiker is incapable of recognizing encodings, as, by default, it treats all files as if they were encoded in UTF-8.
+!!!! [[#encoding]] encoding
+The %code%encoding%% parameter specifies the character encoding of the inserted text. Since OutWiker cannot automatically detect a file's encoding, it assumes UTF-8 by default.
 
-If the file is encoded in Attach:text_utf8.txt the "encoding" switch may be omitted:
+For example, to insert the file Attach:text_utf8.txt (attached to this page and created in UTF-8), simply use:
 
+%code%
 [=(:include Attach:text_utf8.txt:)=]
+%%
 
-Result:
+The result will be:
+
+%border%
 (:include Attach:text_utf8.txt:)
+%%
 
-For files in other encoding, the switch must be specified explicitly as follows:
+You can also specify the encoding explicitly for the same file:
 
+%code%
 [=(:include Attach:text_utf8.txt encoding=utf8 :)=]
+%%
 
-Another example of the [=(:include:)=] command to insert a file text_1251.txt encoded in cp1251:
+To insert the contents of Attach:text_1251.txt using the cp1251 encoding, the command would look like this:
 
+%code%
 [=(:include Attach:text_1251.txt encoding=cp1251:)=]
+%%
 
 Result:
+
+%border%
 (:include Attach:text_1251.txt encoding=cp1251:)
+%%
 
-In case the encoding is not specified, OutWiker gives an error message as in the following example:
+If you forget to specify an encoding other than UTF-8, or if you provide an incorrect one, an error will occur. For instance, the command:
 
+%code%
 [=(:include Attach:text_1251.txt:)=]
+%%
 
-Result:
+Will result in the following error text:
+
 (:include Attach:text_1251.txt:)
 
-Full list of supported encodings is extensive, it can be found on the following webpage (Python help): [[http://docs.python.org/library/codecs.html#standard-encodings | this page]]. Here is an excerpt from that list with the most commonly used encodings (note that single encoding may have multiple names):
+The list of supported encodings is quite extensive and can be found on [[http://docs.python.org/library/codecs.html#standard-encodings | this Python documentation page]]. Common encodings include (note that the same encoding may have multiple aliases):
 
 * utf8, utf-8, utf_8, U8, UTF;
 * cp1251, windows-1251;
@@ -53,45 +76,67 @@ Full list of supported encodings is extensive, it can be found on the following 
 * mac_cyrillic, maccyrillic;
 * cp866, 866, IBM866;
 
-!!!! htmlescape
+!!!! [[#htmlescape]] htmlescape
+The %code%htmlescape%% parameter instructs the %code%[=(:include:)=]%% command to escape HTML characters in the source file. It replaces %code%&lt;%%, %code%&gt;%%, and %code%&amp;%% with %code%&amp;lt;%%, %code%&amp;gt;%%, and %code%&amp;amp;%% respectively. This is particularly useful for displaying source code from attached files.
 
-The ''htmlescape'' switch forces the parser to interpret the characters &lt;, &gt;, , &amp; as &amp;lt;, &amp;gt;, &amp;amp;, respectively. This switch comes in handy in case the attached file contains source code.
+For example, the following command without the %code%htmlescape%% parameter would display text in bold because the file contains &lt;b&gt;...&lt;/b&gt; tags:
 
-Example of the command with the switch "htmlescape" omitted:
+%code%
 [=(:include Attach:html.txt:)=]
+%%
 
-displays bolded text:
+Result:
+
+%border%
 (:include Attach:html.txt:)
+%%
 
-If the switch is included
+However, by adding the %code%htmlescape%% parameter:
+
+%code%
 [=(:include Attach:html.txt htmlescape:)=]
+%%
 
-it displays the HTML code:
+The raw HTML code will be displayed instead:
+
+%border%
 (:include Attach:html.txt htmlescape:)
+%%
 
-!!!! wikiparse
 
-''Wikiparse'' forces OutWiker to process content of the attached file with the wiki parser before rendering. This switch comes in handy in case the attached file contains wiki notation.
+!!!! [[#wikiparse]] wikiparse
+The %code%wikiparse%% parameter tells the %code%[=(:include:)=]%% command to pass the file content through the wiki notation parser. This is used when the attached file contains wiki markup that needs to be converted to HTML for proper rendering.
 
-Example of the command with the switch "wikiparse" omitted:
+For example, since the file Attach:wiki.txt contains wiki notation, the command:
 
+%code%
 [=(:include Attach:wiki.txt:)=]
+%%
 
-displays the following non-parsed text:
+Will simply display the raw text:
+
+%border%
 (:include Attach:wiki.txt:)
+%%
 
-If the switch is included
+But with the %code%wikiparse%% parameter:
+
+%code%
 [=(:include Attach:wiki.txt wikiparse :)=]
+%%
 
-it parses content as wiki-text:
+The wiki notation is parsed and rendered as HTML on the page:
+
+%border%
 (:include Attach:wiki.txt wikiparse :)
+%%
 
-If the command [= (:include:) =] is invoked with both switches "htmlescape" and "wikiparse", then OutWiker processes HTML escape characters first, and than parses the wiki notation.
 
-It is also possible to use the tag &lt;pre&gt; to render listing of source code from the attached file nicely. The syntax is as follows:
+If both %code%htmlescape%% and %code%wikiparse%% parameters are set in the %code%[=(:include:)=]%% command, the HTML characters are escaped first, followed by the wiki notation parsing.
 
-[@
-<pre>
-(:include Attach:filename htmlescape:)
-</pre>
-@]
+----
+'''See also:'''
+* page://wikicommand
+* page://wiki-format-text
+* page://wiki-attachlist
+* page://wiki-childlist
