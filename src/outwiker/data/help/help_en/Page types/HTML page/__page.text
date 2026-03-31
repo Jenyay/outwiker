@@ -1,14 +1,34 @@
-HTML-type notes are fully supported by OutWiker. At the moment, the Internet Explorer engine is used to render HTML notes on Windows. WebKit engine is used for Linux.
+<h1>HTML Pages</h1>
 
-There is one notable difference between standard HTML pages and OutWiker's notes. OutWiker uses the tag &lt;br&gt; to represent a single line break and &lt;p&gt; to represent a double line break.
+One of the page types supported by OutWiker is HTML pages, where the HTML markup language is used for text formatting. While the toolbar buttons on a <a href="page://wiki-page">wiki page</a> insert wiki markup, the same buttons on HTML pages add the corresponding HTML tags.
 
-There are buttons on the toolbar for adding some of the most frequently used tags.
+HTML pages can be a useful tool for preparing content for website publications.
 
-It is possible to insert links to other pages and attached files.
+The HTML page toolbar contains buttons for adding some of the most commonly used tags. In addition to the tags available via the toolbar or menu, you can add any tags supported by the rendering engine OutWiker is based on. Currently, OutWiker uses the Internet Explorer engine on Windows and WebKit on Linux to display HTML pages.
 
-Examples of HTML-notes:
+Since any HTML tags, including &lt;script&gt;, can be used on an HTML page, you should be cautious with notes received from third-party sources.
 
-<div align="center"><a href="__attach/outwiker_html.png"><img src="__attach/outwiker_html_small.png"/></a>
+Unlike standard HTML code, OutWiker accounts for line breaks. Each line break is automatically replaced with a &lt;br&gt; tag.
 
-<a href="__attach/outwiker_htmlcode.png"><img src="__attach/outwiker_htmlcode_small.png"/> </a>
+On HTML pages, you can also add links to other pages using the &lt;a&gt; tag. Links can be created using relative paths in the note tree or, preferably, page identifiers (e.g., <a href="page://__a31ba2cf-93a2-4ed1-b3a3-116104c171e2">page://__a31ba2cf-93a2-4ed1-b3a3-116104c171e2</a>). For more details, see the <a href="page://__a31ba2cf-93a2-4ed1-b3a3-116104c171e2">Page Links</a> documentation.
+
+Pages can also include links to attached files. See the examples below.
+
+When writing a note on an HTML page, you do not need to format the entire HTML document; you only enter the content located within the &lt;body&gt;...&lt;/body&gt; tags. The HTML document headers (&lt;head&gt;...&lt;/head&gt;) are generated automatically based on the <a href="page://styles">page style</a>.
+
+<div align="center">
+<a href="__attach/outwiker_htmlcode.png"><img src="__attach/outwiker_htmlcode_small.png"/></a>
+HTML page code ("HTML" tab)
+
+<a href="__attach/outwiker_html.png"><img src="__attach/outwiker_html_small.png"/></a>
+Rendered result ("Preview" tab)
 </div>
+
+<hr/>
+
+<b>See also:</b>
+<ul>
+<li><a href="page://wiki-page">Wiki Pages</a></li>
+<li><a href="page://links">Page Links</a></li>
+<li><a href="page://attachments">Attachments</a></li>
+</ul>

@@ -5,10 +5,10 @@ expand = False
 type = wiki
 order = 0
 tags = вложения
-datetime = 2026-02-28 19:01:52.501583
+datetime = 2026-03-31 09:30:58.648393
 linewrap = True
 cursorposition = 496
-uid = __a60513aa-0c70-4ec9-aee8-4f9193224494
+uid = attachments
 alias = Вложения
 
 [Misc]

@@ -8,11 +8,11 @@ expand = False
 type = html
 order = 1
 tags = fixme,html
-datetime = 2026-03-06 20:04:55.255955
+datetime = 2026-03-31 10:28:29.739443
 linewrap = True
 cursorposition = 794
 uid = html-page
-alias = HTML-страница
+alias = HTML-страницы
 
 [Misc]
 pageindex = 1
