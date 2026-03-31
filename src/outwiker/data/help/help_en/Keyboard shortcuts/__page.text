@@ -1,9 +1,13 @@
-Default hotkeys are listed in the following table. You can change shortcuts in the [[settings -> page://settings_interface_hotkeys]].
+!! Keyboard shortcuts
 
-||border=1 style="border-collapse: collapse; border: 1px solid black;"
-|| '''Hotkey''' || '''Action''' ||
-||Ctrl+N ||Create new notes tree ||
-||Ctrl+O ||Open existing notes tree ||
+To speed up your workflow, you can assign hotkeys to almost any action available in the application menus. This can be configured in the [[application settings -> page://settings]] under the %notice%[[Interface - Keyboard shortcuts -> page://settings_interface_hotkeys]]%% section.
+
+The following table lists the default keyboard shortcuts used in the application.
+
+||border=1 width=90% style="border-collapse: collapse; border: 1px solid black;"
+|| '''Keyboard Shortcut''' || '''Action''' ||
+||Ctrl+N ||Create a new note tree ||
+||Ctrl+O ||Open an existing note tree ||
 ||Ctrl+S ||Save note ||
 ||Alt+F4 ||Exit ||
 ||Ctrl+Z ||Undo ||
@@ -11,77 +15,82 @@ Default hotkeys are listed in the following table. You can change shortcuts in t
 ||Ctrl+X ||Cut ||
 ||Ctrl+C ||Copy ||
 ||Ctrl+V ||Paste ||
-||Ctrl+F8 ||Open preferences dialog||
-||Ctrl+F ||Search in note [[<<]]''(in wiki/HTML view or text pages)'' ||
-||Ctrl+H ||Search and replace in note [[<<]]''(in wiki/HTML view or text pages)'' ||
-||F3 ||Find next [[<<]]''(in wiki/HTML view or text pages)'' ||
-||Shift + F3 ||Find previous [[<<]]''(in wiki/HTML view or text pages)'' ||
-||Ctrl+Shift+Y ||Create new note with the same nesting level as current one ||
-||Ctrl+Shift+P ||Create child note ||
-||Ctrl+Shift+F8l ||Remove current note ||
+||Ctrl+F8 ||Open settings dialog ||
+||Ctrl+F ||Search on page [[<<]]''(in wiki/HTML editor or on text pages)'' ||
+||Ctrl+H ||Find and replace on page [[<<]]''(in wiki/HTML editor or on text pages)'' ||
+||F3 ||Find next match on page [[<<]]''(in wiki/HTML editor or on text pages)'' ||
+||Shift + F3 ||Find previous match on page [[<<]]''(in wiki/HTML editor or on text pages)'' ||
+||Ctrl+Shift+Y ||Create a sibling page (at the same level as selected) ||
+||Ctrl+Shift+P ||Create a child page ||
+||Ctrl+Shift+F8 ||Delete selected page ||
 ||F1 ||Open help ||
 ||F2 ||Rename page ||
-||Ctrl+E ||Edit current note properties ||
-||Ctrl+Shift+F ||Find note in the notes tree ||
+||Ctrl+E ||Edit selected page properties ||
+||Ctrl+Shift+F ||Search for pages in the note tree ||
 ||Ctrl+Shift+A ||Attach files ||
-||Ctrl+Shift+D ||Duplicate current line in editor ||
-||Ctrl+D ||Add current note to bookmarks / Remove current note from bookmarks ||
-||F4 ||Switch between code and preview tabs ||
-||F7 ||Turn on / turn off spell checking ||
-||Ctrl+F4 ||Update wiki page in view mode ||
-||Shift+F4 ||Switch to HTML code for current wiki note ||
-||Ctrl+F1 ||Open the about dialog||
-||Ctrl+B ||Bold. [[<<]]''For wiki/HTML pages''||
-||Ctrl+I ||Italic. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Shift+I ||Bold italic. [[<<]]''For wiki/HTML pages''||
-||Ctrl+U ||Underlined. [[<<]]''For wiki/HTML pages''||
-||Ctrl+= ||Subscript. [[<<]]''For wiki/HTML pages''||
-||Ctrl++ ||Superscript. [[<<]]''For wiki/HTML pages''||
-||Ctrl+, ||Smaller font. [[<<]]''For wiki/HTML pages''||
-||Ctrl+. ||Larger font. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Enter ||Insert line brake. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Q ||Quote block. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Shift+B ||Preformatted text. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Alt+L ||Align left. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Alt+C ||Align center. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Alt+R ||Align right. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Alt+J ||Justify. [[<<]]''For wiki/HTML pages''||
-||Ctrl+1 ... Ctrl+6 ||Heading level 1-6. [[<<]]''For wiki/HTML pages''||
-||Ctrl+G ||Bulleted list. [[<<]]''For wiki/HTML pages''||
-||Ctrl+J ||Numbered list. [[<<]]''For wiki/HTML pages''||
-||Ctrl+K ||Strikethrough. [[<<]]''For wiki/HTML pages''||
-||Ctrl+M ||Insert the &lt;IMG&gt; tag[[<<]]''For HTML notes''||
-||Ctrl+M ||Insert thumbnail.[[<<]]''For wiki notes''||
-||Ctrl+L ||Insert link. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Shift+H ||Insert horizontal line. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Shift+T ||Insert table. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Shift+G ||Insert table row. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Shift+T ||Insert table cell. [[<<]]''For wiki/HTML pages''||
-||Ctrl+Up ||Go to the previous page of the same nesting level in the notes tree||
-||Ctrl+Down ||Go to the next page of the same nesting level in the notes tree||
-||Ctrl+Shift+Up ||Move current note up||
-||Ctrl+Shift+Down ||Move current note down||
-||Ctrl+Shift+PageUp ||Go to previous tab||
-||Ctrl+Shift+PageDown ||Go to next tab||
-||Ctrl+Alt+Left ||Go to the previous page in the history of the current tab||
-||Ctrl+Alt+Right ||Go to the next page in the history of the current tab||
-||Ctrl+T ||Open new tab||
-||Ctrl+W ||Close current tab||
-||Ctrl+Shift+W ||Close current notes tree||
-||Ctrl+P ||Print current page||
-||F11 ||Full screen mode||
-||F2 ||Rename selected attachment. [[<<]]''(When focus is on the Attachments panel)'' ||
-||Delete ||Remove selected attachment. [[<<]]''(When focus is on the Attachments panel)'' ||
-||Ctrl+Enter ||Insert link to selected attachments. [[<<]]''(When focus is on the Attachments panel)'' ||
-||Ctrl+A ||Select all attachments. [[<<]]''(When focus is on the Attachments panel)'' ||
-||F7 ||Create a new folder in attachments. [[<<]]''(When focus is on the Attachments panel)'' ||
-||Ctrl+Backspace ||Delete word on the left||
-||Ctrl+Delete ||Delete word on the right||
-||Ctrl+Shift+Backspace ||Delete line on the left||
-||Ctrl+Shift+Delete ||Delete line on the right||
-||Ctrl+Left ||Go to word on the left||
-||Ctrl+Right ||Go to word on the right||
-||Ctrl+Shift+Left ||Go to word on the left and select text||
-||Ctrl+Shift+Right ||Go to word on the right and select text||
-||Ctrl+Shift+K ||Insert code to colorize text with color||
-||Ctrl+Shift+N ||Insert code to colorize background with color||
+||Ctrl+Shift+D ||Duplicate current line in the editor ||
+||Ctrl+D ||Add/remove page to/from bookmarks ||
+||F4 ||Toggle between page code and preview ||
+||F7 ||Enable/disable spell checking ||
+||Ctrl+F4 ||Refresh wiki page in preview mode ||
+||Shift+F4 ||Switch to HTML code view for wiki pages ||
+||Ctrl+F1 ||Open "About" dialog ||
+||Ctrl+B ||Bold text [[<<]]''For wiki/HTML pages''||
+||Ctrl+I ||Italic text [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+I ||Bold Italic text [[<<]]''For wiki pages''||
+||Ctrl+U ||Underlined text [[<<]]''For wiki/HTML pages''||
+||Ctrl+= ||Subscript [[<<]]''For wiki/HTML pages''||
+||Ctrl++ ||Superscript [[<<]]''For wiki/HTML pages''||
+||Ctrl+, ||Small font [[<<]]''For wiki/HTML pages''||
+||Ctrl+. ||Large font [[<<]]''For wiki/HTML pages''||
+||Ctrl+Enter ||Insert line break [[<<]]''For wiki/HTML pages''||
+||Ctrl+Q ||Insert blockquote [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+B ||Insert code for preformatted text [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+L ||Align left [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+C ||Align center [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+R ||Align right [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+J ||Justify [[<<]]''For wiki/HTML pages''||
+||Ctrl+1 ... Ctrl+6 ||Heading levels 1 to 6 [[<<]]''For wiki/HTML pages''||
+||Ctrl+G ||Unordered list [[<<]]''For wiki/HTML pages''||
+||Ctrl+J ||Ordered list [[<<]]''For wiki/HTML pages''||
+||Ctrl+K ||Strikethrough text [[<<]]''For wiki/HTML pages''||
+||Ctrl+M ||Insert &lt;IMG&gt; tag [[<<]]''For HTML pages''||
+||Ctrl+M ||Insert code for thumbnails [[<<]]''For wiki pages''||
+||Ctrl+L ||Insert link [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+H ||Insert horizontal rule [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+T ||Insert code for table [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+G ||Insert code for table row [[<<]]''For wiki/HTML pages''||
+||Ctrl+Shift+U ||Insert code for table cell [[<<]]''For wiki/HTML pages''||
+||Ctrl+Up ||Go to previous sibling page in the note tree ||
+||Ctrl+Down ||Go to next sibling page in the note tree ||
+||Ctrl+Shift+Up ||Move current page up ||
+||Ctrl+Shift+Down ||Move current page down ||
+||Ctrl+Shift+PageUp ||Go to previous tab ||
+||Ctrl+Shift+PageDown ||Go to next tab ||
+||Ctrl+Alt+Left ||Go back in current tab history ||
+||Ctrl+Alt+Right ||Go forward in current tab history ||
+||Ctrl+T ||Add tab ||
+||Ctrl+W ||Close tab ||
+||Ctrl+Shift+W ||Close current note tree ||
+||Ctrl+P ||Print current page ||
+||F11 ||Enter full-screen mode ||
+||F2 ||Rename selected file [[<<]]''(when attachment panel is focused)'' ||
+||Delete ||Delete selected attachments [[<<]]''(when attachment panel is focused)''||
+||Ctrl+Enter ||Insert link to selected attachments [[<<]]''(when attachment panel is focused)''||
+||Ctrl+A ||Select all attachments [[<<]]''(when attachment panel is focused)''||
+||F7 ||Create folder in attachments [[<<]]''(when attachment panel is focused)''||
+||Ctrl+F7 ||Create folder in attachments ||
+||Ctrl+Backspace ||Delete word to the left ||
+||Ctrl+Delete ||Delete word to the right ||
+||Ctrl+Shift+Backspace ||Delete line to the left ||
+||Ctrl+Shift+Delete ||Delete line to the right ||
+||Ctrl+Left ||Move to word on the left ||
+||Ctrl+Right ||Move to word on the right ||
+||Ctrl+Shift+Left ||Select word to the left ||
+||Ctrl+Shift+Right ||Select word to the right ||
+||Ctrl+Shift+K ||Insert code for text color ||
+||Ctrl+Shift+N ||Insert code for background color ||
+
+----
+'''See also:'''
+* page://settings_interface_hotkeys

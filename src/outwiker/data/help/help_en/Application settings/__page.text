@@ -1,0 +1,15 @@
+!! Application settings
+
+OutWiker is designed to give users as many options as possible to customize the application to their liking and habits. Most parameters can be modified via the Preferences dialog, which is accessed through the %notice%Edit - Preferences...%% menu item. The application offers a wide range of settings, organized into various sections shown in the left sidebar of the dialog.
+
+%center%Attach:outwiker_opt_general.png
+
+All settings are stored in the %notice%outwiker.ini%% file. Its location depends on your operating system and the application's running mode. For more detailed information about the location of the configuration file, see the [[Configuration directories -> page://config-dirs]] section.
+
+The following pages provide a detailed description of all available settings for each section.
+
+(:childlist:)
+
+----
+'''See also:'''
+* page://config-dirs

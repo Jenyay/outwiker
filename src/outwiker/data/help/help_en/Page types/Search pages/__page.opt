@@ -1,5 +1,5 @@
 [wiki]
-md5_hash = ad9114d5b369fd8c1e41a2b7cb8b7875
+md5_hash = 3a95c9c61e8588458a5a3686e57518a9
 custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [Tree]
@@ -8,16 +8,11 @@ expand = False
 [General]
 type = wiki
 order = 3
-tags = fixme,поиск
-datetime = 2026-03-31 20:44:00.790516
-cursorposition = 285
+tags = !fixme
+cursorposition = 345
+datetime = 2026-03-31 20:50:08.987906
 uid = search-page
-alias = Страницы поиска
-creationdatetime = 2026-03-31 20:23:42.620484
 
 [Misc]
-pageindex = 1
-
-[Wiki]
-recentstylename = notice
+pageindex = 0
 

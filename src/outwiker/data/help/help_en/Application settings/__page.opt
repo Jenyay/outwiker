@@ -1,20 +1,16 @@
 [General]
 type = wiki
-tags = настройки
+tags = settings,!fixme
 order = 5
 creationdatetime = 2015-02-01 20:49:35.017769
-datetime = 2026-03-31 21:18:22.547272
-cursorposition = 10862
-alias = Настройки приложения
+datetime = 2026-03-31 21:17:45.482932
+cursorposition = 13506
 uid = settings
 
 [wiki]
-md5_hash = c660f472df86cd29eef17fc6bd5f005e
+md5_hash = 42c288250e017c18e162a309b24b96e2
 custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [Misc]
-pageindex = 1
-
-[Wiki]
-recentstylename = notice
+pageindex = 0
 
