@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 10:05+0300\n"
+"POT-Creation-Date: 2026-04-01 20:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1780,7 +1780,7 @@ msgid "Remove icons"
 msgstr ""
 
 #: outwiker/app/gui/preferences/mainwindowpanel.py:35
-msgid "Show status panel"
+msgid "Show status bar"
 msgstr ""
 
 #: outwiker/app/gui/preferences/mainwindowpanel.py:44

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 10:03+0300\n"
+"POT-Creation-Date: 2026-04-01 20:10+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1610,22 +1610,18 @@ msgid "Notification timeout in seconds"
 msgstr "Notification timeout in seconds"
 
 #: outwiker/app/gui/preferences/generalpanel.py:134
-#| msgid "Ask before exit"
 msgid "Confirm before exit"
 msgstr "Confirm before exit"
 
 #: outwiker/app/gui/preferences/generalpanel.py:146
-#| msgid "Length of recently used icons history"
 msgid "Recent icons history size"
 msgstr "Recent icons history size"
 
 #: outwiker/app/gui/preferences/generalpanel.py:160
-#| msgid "Recently used note tree:"
 msgid "Recent note tree history size"
 msgstr "Recent note tree history size"
 
 #: outwiker/app/gui/preferences/generalpanel.py:173
-#| msgid "Open note tree from disk..."
 msgid "Open last note tree on startup"
 msgstr "Open last note tree on startup"
 
@@ -1638,7 +1634,6 @@ msgid "Help with translation"
 msgstr "Help with translation"
 
 #: outwiker/app/gui/preferences/generalpanel.py:242
-#| msgid "Default opening page mode"
 msgid "Default page opening mode"
 msgstr "Default page opening mode"
 
@@ -1790,8 +1785,9 @@ msgid "Remove icons"
 msgstr "Remove icons"
 
 #: outwiker/app/gui/preferences/mainwindowpanel.py:35
-msgid "Show status panel"
-msgstr "Show status panel"
+#| msgid "Show status panel"
+msgid "Show status bar"
+msgstr "Show status bar"
 
 #: outwiker/app/gui/preferences/mainwindowpanel.py:44
 msgid "Wiki file name"

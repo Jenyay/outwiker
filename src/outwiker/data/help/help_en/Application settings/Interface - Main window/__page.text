@@ -1,11 +1,23 @@
-!!! Interface - Main window
+!! Interface - Main window
 
-%center%Attach:outwiker_opt_mainwindow.png
+%center%Attach:outwiker_opt_main_window.png
 
-The '''Main window title format''' input field determines how the title of the main window should look like. The following macros can be used:
+The %notice%Main window title format%% field allows you to define a template for generating the OutWiker window title. You can use the following placeholders in your template:
 
-* '''{page}''' substitutes title of the current note;
-* '''{file}''' substitutes the note's tree name;
-* '''{subpath}''' substitutes path to the current note relative to the tree root.
+* %code%{page}%% — the title of the currently selected page;
+* %code%{subpath}%% — the relative path to the selected page from the note tree root;
+* %code%{file}%% — the name of the directory containing the currently open note tree.
 
-The '''Show status panel''' check box allow you show or hide the panel located at the bottom of the main program window.
+These placeholders do not need to be typed manually; you can insert them using the button located to the right of the input field. Clicking it will open a drop-down menu with the available placeholders.
+
+The %notice%Buttons icon size%% drop-down list allows you to change the size of interface elements. By default, the smallest icon size (16 x 16 pixels) is used. You can choose from several options: 20 x 20, 24 x 24, 32 x 32, or 48 x 48 pixels. This is particularly useful for high-resolution (High-DPI) displays.
+
+The %notice%Show status bar%% check box allows you to hide or display the status bar located at the very bottom of the main application window.
+
+----
+'''See also:'''
+* page://settings_interface_general
+* page://settings_interface_notetree
+* page://settings_interface_tabs
+* page://settings_interface_tags_cloud
+* page://settings_interface_tray
