@@ -1,0 +1,27 @@
+!! Interface - Tabs
+
+%center%Attach:outwiker_opt_tabs.png
+
+This section of the preferences is designed to customize the appearance of tabs, which allow you to keep multiple notes at hand and quickly switch between them. Tabs are located above the text of the open note.
+
+Tabs change their size depending on their number and, if necessary, will occupy multiple rows.
+
+The %notice%Minimum tab width%% input field allows you to set the horizontal size in pixels; a tab will not shrink below this value regardless of the number of open tabs. If tabs at their minimum size do not fit in a single row, they will wrap to multiple rows.
+
+The %notice%Maximum tab width%% input field allows you to set the horizontal size in pixels that tabs will not exceed, even if there is free space available in the tab bar.
+
+The %notice%Horizontal padding%% and %notice%Vertical padding%% settings allow you to define additional free space horizontally and vertically within each tab, around the icon and the page title.
+
+The %notice%Font size%% drop-down list allows you to change the font size used for note titles on the tabs. If %notice%Default size%% is selected, the application will use the font size defined by your operating system for interface elements.
+
+The %notice%Show note icons%% check box allows you to enable or disable the display of note icons on the tabs.
+
+The %notice%Icon size%% drop-down list allows you to change the size of the icons displayed preceding the note title on the tab. By default, the smallest size (16 x 16 pixels) is used. You can choose from the following options: 20 x 20, 24 x 24, 32 x 32, or 48 x 48 pixels. This is particularly useful for high-resolution displays.
+
+The %notice%Show close buttons%% check box allows you to enable or disable the close button on each tab.
+
+----
+'''See also:'''
+* page://settings_interface_main_window
+* page://settings_interface_notetree
+* page://settings_interface_tags_cloud

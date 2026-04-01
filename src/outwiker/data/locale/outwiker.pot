@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 20:10+0300\n"
+"POT-Creation-Date: 2026-04-01 21:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1911,19 +1911,19 @@ msgid "Custom dictonary (one word per line)"
 msgstr ""
 
 #: outwiker/app/gui/preferences/tabspanel.py:25
-msgid "Minimal tab width"
+msgid "Minimum tab width"
 msgstr ""
 
 #: outwiker/app/gui/preferences/tabspanel.py:28
-msgid "Maximal tab width"
+msgid "Maximum tab width"
 msgstr ""
 
 #: outwiker/app/gui/preferences/tabspanel.py:32
-msgid "Horizontal margin"
+msgid "Horizontal padding"
 msgstr ""
 
 #: outwiker/app/gui/preferences/tabspanel.py:35
-msgid "Vertical margin"
+msgid "Vertical padding"
 msgstr ""
 
 #: outwiker/app/gui/preferences/tabspanel.py:53

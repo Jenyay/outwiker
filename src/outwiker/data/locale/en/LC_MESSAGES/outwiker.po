@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 20:10+0300\n"
+"POT-Creation-Date: 2026-04-01 21:15+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1785,7 +1785,6 @@ msgid "Remove icons"
 msgstr "Remove icons"
 
 #: outwiker/app/gui/preferences/mainwindowpanel.py:35
-#| msgid "Show status panel"
 msgid "Show status bar"
 msgstr "Show status bar"
 
@@ -1919,20 +1918,24 @@ msgid "Custom dictonary (one word per line)"
 msgstr "Custom dictonary (one word per line)"
 
 #: outwiker/app/gui/preferences/tabspanel.py:25
-msgid "Minimal tab width"
-msgstr "Minimal tab width"
+#| msgid "Minimal tab width"
+msgid "Minimum tab width"
+msgstr "Minimum tab width"
 
 #: outwiker/app/gui/preferences/tabspanel.py:28
-msgid "Maximal tab width"
-msgstr "Maximal tab width"
+#| msgid "Maximal tab width"
+msgid "Maximum tab width"
+msgstr "Maximum tab width"
 
 #: outwiker/app/gui/preferences/tabspanel.py:32
-msgid "Horizontal margin"
-msgstr "Horizontal margin"
+#| msgid "Horizontal margin"
+msgid "Horizontal padding"
+msgstr "Horizontal padding"
 
 #: outwiker/app/gui/preferences/tabspanel.py:35
-msgid "Vertical margin"
-msgstr "Vertical margin"
+#| msgid "Vertical margin"
+msgid "Vertical padding"
+msgstr "Vertical padding"
 
 #: outwiker/app/gui/preferences/tabspanel.py:53
 msgid "Show close buttons"
