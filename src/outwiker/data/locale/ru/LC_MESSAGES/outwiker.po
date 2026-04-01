@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 16:44+0300\n"
+"POT-Creation-Date: 2026-04-01 10:03+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -131,6 +131,7 @@ msgstr "Открыть папку с вложениями"
 
 #: outwiker/app/actions/attachopenfolder.py:38
 #: outwiker/app/actions/openpluginsfolder.py:32
+#, python-brace-format
 msgid "Can't open folder '{}'"
 msgstr "Ошибка открытия папки '{}'"
 
@@ -1612,24 +1613,24 @@ msgid "Autosave interval in seconds (0 - disabled)"
 msgstr "Интервал автосохранения в секундах (0 - отключено)"
 
 #: outwiker/app/gui/preferences/generalpanel.py:103
-msgid "Toaster delay in seconds"
-msgstr "Задержка окна сообщений в секундах"
+msgid "Notification timeout in seconds"
+msgstr "Задержка уведомлений в секундах"
 
 #: outwiker/app/gui/preferences/generalpanel.py:134
-msgid "Ask before exit"
+msgid "Confirm before exit"
 msgstr "Спрашивать подтверждение перед выходом"
 
 #: outwiker/app/gui/preferences/generalpanel.py:146
-msgid "Length of recently used icons history"
+msgid "Recent icons history size"
 msgstr "Размер истории последних используемых значков"
 
 #: outwiker/app/gui/preferences/generalpanel.py:160
-msgid "Length of recently opened files history"
-msgstr "Размер истории последних открытых файлов"
+msgid "Recent note tree history size"
+msgstr "Размер истории открытых деревьев заметок"
 
 #: outwiker/app/gui/preferences/generalpanel.py:173
-msgid "Automatically open the recent file"
-msgstr "При запуске открывать последний открытый файл"
+msgid "Open last note tree on startup"
+msgstr "При запуске открывать последнее используемое дерево заметок"
 
 #: outwiker/app/gui/preferences/generalpanel.py:206
 msgid "Language (an application restart is required)"
@@ -1640,7 +1641,7 @@ msgid "Help with translation"
 msgstr "Помочь с переводом"
 
 #: outwiker/app/gui/preferences/generalpanel.py:242
-msgid "Default opening page mode"
+msgid "Default page opening mode"
 msgstr "Режим открытия страниц по умолчанию"
 
 #: outwiker/app/gui/preferences/generalpanel.py:323
@@ -1729,6 +1730,7 @@ msgid "Can't create directory for icons group"
 msgstr "Ошибка создания директории для группы значков"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:255
+#, python-brace-format
 msgid "New group{}"
 msgstr "Новая группа{}"
 
@@ -1737,14 +1739,17 @@ msgid "Can't rename directory for icons group"
 msgstr "Ошибка переименования группы значков"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:289
+#, python-brace-format
 msgid "Group with name \"{}\" exists already"
 msgstr "Группа с именем \"{}\" уже существует"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:296
+#, python-brace-format
 msgid "Invalid group name \"{}\""
 msgstr "Недопустимое имя группы \"{}\""
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:331
+#, python-brace-format
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Удалить группу \"{}\" и все значки внутри нее?"
 
@@ -2061,6 +2066,7 @@ msgid "Really exit?"
 msgstr "Действительно выйти?"
 
 #: outwiker/app/services/attachment.py:69
+#, python-brace-format
 msgid ""
 "Error renaming file\n"
 "{} -> {}\n"
@@ -2080,6 +2086,7 @@ msgstr ""
 "{0}"
 
 #: outwiker/app/services/attachment.py:167
+#, python-brace-format
 msgid "Can't create directory: {}"
 msgstr "Ошибка создания папки: {}"
 
@@ -2097,6 +2104,7 @@ msgid "New folder"
 msgstr "Новая папка"
 
 #: outwiker/app/services/attachment.py:207
+#, python-brace-format
 msgid "Can't create folder {} for attachments"
 msgstr "Ошибка создания папки {} для вложений"
 
@@ -2122,6 +2130,7 @@ msgid "You can't remove the root element"
 msgstr "Нельзя удалить корневой элемент"
 
 #: outwiker/app/services/tree.py:52
+#, python-brace-format
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
 "All attachments will also be deleted."
@@ -2184,6 +2193,7 @@ msgid "The page title"
 msgstr "Заголовок страницы"
 
 #: outwiker/app/services/tree.py:252
+#, python-brace-format
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Невозможно переименовать страницу \"{}\" в \"{}\""
 
@@ -2194,6 +2204,7 @@ msgstr ""
 "существует"
 
 #: outwiker/app/services/tree.py:280
+#, python-brace-format
 msgid "Can't move page: {}"
 msgstr "Невозможно переместить страницу: {}"
 
@@ -2362,14 +2373,17 @@ msgid ""
 msgstr "Заголовок страницы содержит запрещённые в Microsoft Windows символы"
 
 #: outwiker/core/pluginsloader.py:270
+#, python-brace-format
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr "Плагин \"{}\". Ошибка чтения файла \"{}\""
 
 #: outwiker/core/pluginsloader.py:290
+#, python-brace-format
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr "Плагин \"{}\" устарел. Пожалуйста, обновите плагин."
 
 #: outwiker/core/pluginsloader.py:301
+#, python-brace-format
 msgid ""
 "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
 "new OutWiker version."
@@ -2626,6 +2640,7 @@ msgid "Insert rows"
 msgstr "Вставить строки"
 
 #: outwiker/gui/tagscloud.py:567
+#, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Количество заметок: {}"
 
@@ -2634,6 +2649,7 @@ msgid "Applied tags only"
 msgstr "Только установленные теги"
 
 #: outwiker/gui/texteditormenu.py:75 outwiker/gui/texteditormenu.py:80
+#, python-brace-format
 msgid "Add \"{}\" to dictionary"
 msgstr "Добавить \"{}\" в словарь"
 
@@ -2685,6 +2701,7 @@ msgid "Page loading. Please wait…"
 msgstr "Загрузка страницы. Пожалуйста, подождите…"
 
 #: outwiker/pages/html/basehtmlpanel.py:338
+#, python-brace-format
 msgid "Page loading error: {}"
 msgstr "Ошибка загрузки страницы: {}"
 
@@ -3050,14 +3067,17 @@ msgid "Custom CSS"
 msgstr "Дополнительные стили CSS"
 
 #: outwiker/pages/wiki/parser/commands/include.py:82
+#, python-brace-format
 msgid "Can't open file '{}'"
 msgstr "Ошибка открытия файла '{}'"
 
 #: outwiker/pages/wiki/parser/commands/include.py:85
+#, python-brace-format
 msgid "Encoding error in file '{}'"
 msgstr "Ошибка кодировки файла '{}'"
 
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:74
+#, python-brace-format
 msgid "Can't create thumbnail for <b>\"{}\"</b>"
 msgstr "Ошибка создания миниатюры для <b>\"{}\"</b>"
 
@@ -3139,6 +3159,15 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Toaster delay in seconds"
+#~ msgstr "Задержка окна сообщений в секундах"
+
+#~ msgid "Length of recently opened files history"
+#~ msgstr "Размер истории последних открытых файлов"
+
+#~ msgid "Automatically open the recent file"
+#~ msgstr "При запуске открывать последний открытый файл"
 
 #~ msgid "Search and replace"
 #~ msgstr "Найти и заменить"
@@ -3669,8 +3698,8 @@ msgstr "[[ссылка | комментарий]]"
 #~ "!! First Wiki Page\n"
 #~ "\n"
 #~ "                       This is the first page. You can use a text "
-#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://jenyay."
-#~ "net | link]] and others.\n"
+#~ "formating: '''bold''', ''italic'', {+underlined text+}, [[http://"
+#~ "jenyay.net | link]] and others.\n"
 #~ "                       "
 #~ msgstr ""
 #~ "!! Первая викистраница\n"

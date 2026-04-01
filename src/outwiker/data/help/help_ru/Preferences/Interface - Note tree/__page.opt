@@ -3,8 +3,8 @@ type = wiki
 tags = fixme,настройки
 order = 2
 creationdatetime = 2026-02-16 21:14:20.133233
-datetime = 2026-02-21 19:32:18.824059
-uid = ab266b8e-957c-40cc-a6c7-617f08691670
+datetime = 2026-04-01 09:43:17.376062
+uid = settings_interface_notetree
 alias = Интерфейс - Дерево заметок
 icon = battery/__std_battery-000.svg
 

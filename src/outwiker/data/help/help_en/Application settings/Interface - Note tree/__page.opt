@@ -3,7 +3,7 @@ type = wiki
 tags = settings,!fixme
 order = 2
 creationdatetime = 2026-02-17 10:03:40.040696
-datetime = 2026-03-15 11:19:40.145729
-uid = 8ab5f976-13d4-41f7-a555-c4328b496336
+datetime = 2026-04-01 09:44:38.621577
+uid = settings_interface_notetree
 icon = battery/__std_battery-000.svg
 
