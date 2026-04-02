@@ -1,8 +1,11 @@
 [General]
 type = wiki
-tags = fixme,!fixme,tags,settings
+tags = settings,fixme,tags
 order = 4
 creationdatetime = 2020-05-10 10:28:37.258955
-datetime = 2026-02-21 20:17:35.413842
+datetime = 2026-04-02 20:35:46.255911
 uid = settings_interface_tags_cloud
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 

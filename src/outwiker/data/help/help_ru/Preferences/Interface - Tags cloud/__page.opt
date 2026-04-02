@@ -1,9 +1,15 @@
 [General]
 type = wiki
-tags = настройки,fixme,метки
+tags = настройки,метки
 order = 4
 creationdatetime = 2020-05-10 10:28:37.258955
-datetime = 2026-02-21 19:33:20.048751
+datetime = 2026-04-02 20:35:43.774425
 uid = settings_interface_tags_cloud
 alias = Интерфейс - Облако меток
+
+[Wiki]
+recentstylename = notice
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
