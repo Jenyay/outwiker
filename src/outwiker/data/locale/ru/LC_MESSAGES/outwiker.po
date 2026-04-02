@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 21:15+0300\n"
+"POT-Creation-Date: 2026-04-02 20:23+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -1945,27 +1945,27 @@ msgid "Show close buttons"
 msgstr "Отображать кнопки закрытия"
 
 #: outwiker/app/gui/preferences/tagspanel.py:30
-msgid "Headers in the popup window: "
-msgstr "Заголовки во всплывающем окне: "
+msgid "Headers in popup window:"
+msgstr "Заголовки во всплывающем окне:"
 
 #: outwiker/app/gui/preferences/tagspanel.py:41
-msgid "Tag cloud view mode"
+msgid "Tag cloud display mode"
 msgstr "Режим отображения облака меток"
 
 #: outwiker/app/gui/preferences/tagspanel.py:42
-msgid "As continuous text"
-msgstr "Непрерывным текстом"
+msgid "Continuous text"
+msgstr "Непрерывный текст"
 
 #: outwiker/app/gui/preferences/tagspanel.py:42
-msgid "As list"
-msgstr "Списком"
+msgid "List"
+msgstr "Список"
 
 #: outwiker/app/gui/preferences/tagspanel.py:53
-msgid "Minimal font size"
+msgid "Minimum font size"
 msgstr "Минимальный размер шрифта"
 
 #: outwiker/app/gui/preferences/tagspanel.py:54
-msgid "Maximal font size"
+msgid "Maximum font size"
 msgstr "Максимальный размер шрифта"
 
 #: outwiker/app/gui/preferences/tagspanel.py:59
@@ -3159,6 +3159,9 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "As list"
+#~ msgstr "Списком"
 
 #~ msgid "Toaster delay in seconds"
 #~ msgstr "Задержка окна сообщений в секундах"

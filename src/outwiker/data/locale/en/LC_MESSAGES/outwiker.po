@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 21:15+0300\n"
+"POT-Creation-Date: 2026-04-02 20:23+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -1918,22 +1918,18 @@ msgid "Custom dictonary (one word per line)"
 msgstr "Custom dictonary (one word per line)"
 
 #: outwiker/app/gui/preferences/tabspanel.py:25
-#| msgid "Minimal tab width"
 msgid "Minimum tab width"
 msgstr "Minimum tab width"
 
 #: outwiker/app/gui/preferences/tabspanel.py:28
-#| msgid "Maximal tab width"
 msgid "Maximum tab width"
 msgstr "Maximum tab width"
 
 #: outwiker/app/gui/preferences/tabspanel.py:32
-#| msgid "Horizontal margin"
 msgid "Horizontal padding"
 msgstr "Horizontal padding"
 
 #: outwiker/app/gui/preferences/tabspanel.py:35
-#| msgid "Vertical margin"
 msgid "Vertical padding"
 msgstr "Vertical padding"
 
@@ -1942,28 +1938,34 @@ msgid "Show close buttons"
 msgstr "Show close buttons"
 
 #: outwiker/app/gui/preferences/tagspanel.py:30
-msgid "Headers in the popup window: "
-msgstr "Headers in the popup window: "
+#| msgid "Headers in the popup window: "
+msgid "Headers in popup window:"
+msgstr "Headers in popup window:"
 
 #: outwiker/app/gui/preferences/tagspanel.py:41
-msgid "Tag cloud view mode"
-msgstr "Tag cloud view mode"
+#| msgid "Tag cloud view mode"
+msgid "Tag cloud display mode"
+msgstr "Tag cloud display mode"
 
 #: outwiker/app/gui/preferences/tagspanel.py:42
-msgid "As continuous text"
-msgstr "As continuous text"
+#| msgid "As continuous text"
+msgid "Continuous text"
+msgstr "Continuous text"
 
 #: outwiker/app/gui/preferences/tagspanel.py:42
-msgid "As list"
-msgstr "As list"
+#| msgid "Lists"
+msgid "List"
+msgstr "List"
 
 #: outwiker/app/gui/preferences/tagspanel.py:53
-msgid "Minimal font size"
-msgstr "Minimal font size"
+#| msgid "Minimal font size"
+msgid "Minimum font size"
+msgstr "Minimum font size"
 
 #: outwiker/app/gui/preferences/tagspanel.py:54
-msgid "Maximal font size"
-msgstr "Maximal font size"
+#| msgid "Maximal font size"
+msgid "Maximum font size"
+msgstr "Maximum font size"
 
 #: outwiker/app/gui/preferences/tagspanel.py:59
 msgid "Show tooltips"
@@ -3155,6 +3157,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "As list"
+#~ msgstr "As list"
 
 #~ msgid "Toaster delay in seconds"
 #~ msgstr "Toaster delay in seconds"

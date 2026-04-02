@@ -27,7 +27,7 @@ class TagsPanel(BasePrefPanel):
         self.SetSizer(mainSizer)
 
     def _createHeadersGui(self, mainsizer):
-        text = wx.StaticText(self, label=_("Headers in the popup window: "))
+        text = wx.StaticText(self, label=_("Headers in popup window:"))
         self._popupHeaders = wx.CheckListBox(self)
         self._popupHeaders.SetMinSize((250, 100))
 
@@ -38,8 +38,8 @@ class TagsPanel(BasePrefPanel):
         modeSizer = wx.FlexGridSizer(cols=2)
         modeSizer.AddGrowableCol(0)
 
-        modeLabel = wx.StaticText(self, label=_("Tag cloud view mode"))
-        self._modeList = wx.ComboBox(self, choices=[_("As continuous text"), _("As list")], style=wx.CB_READONLY)
+        modeLabel = wx.StaticText(self, label=_("Tag cloud display mode"))
+        self._modeList = wx.ComboBox(self, choices=[_("Continuous text"), _("List")], style=wx.CB_READONLY)
         self._modeList.SetMinSize((200, -1))
 
         modeSizer.Add(modeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND| wx.ALL, border=2)
@@ -50,8 +50,8 @@ class TagsPanel(BasePrefPanel):
         fontSizer = wx.FlexGridSizer(cols=2)
         fontSizer.AddGrowableCol(0)
 
-        self._minFontSizeCtrl = self._createLabelAndSpin(_("Minimal font size"), 4, 32, fontSizer)[1]
-        self._maxFontSizeCtrl = self._createLabelAndSpin(_("Maximal font size"), 4, 32, fontSizer)[1]
+        self._minFontSizeCtrl = self._createLabelAndSpin(_("Minimum font size"), 4, 32, fontSizer)[1]
+        self._maxFontSizeCtrl = self._createLabelAndSpin(_("Maximum font size"), 4, 32, fontSizer)[1]
 
         mainsizer.Add(fontSizer, 0, wx.EXPAND | wx.ALL, border=2)
 
