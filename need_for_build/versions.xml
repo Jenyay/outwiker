@@ -1,16 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.0.0.969" status="dev">
+    <version number="4.0.0.970" status="beta" date="2026-04-04">
         <changes>
+            <change>Documentation update.</change>
+            <change>Interface rendering optimizations.</change>
+            <change>Fixed several bugs.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Обновление документации.</change>
+            <change>Оптимизации при рисовании интерфейса.</change>
+            <change>Исправлены несколько ошибок.</change>
         </changes>
     </version>
 
     <version number="4.0.0.968" status="beta" date="2026-02-14">
         <changes>
-            <change>Optimizations in interface drawing.</change>
+            <change>Interface rendering optimizations.</change>
             <change>Fixed several bugs.</change>
         </changes>
 
