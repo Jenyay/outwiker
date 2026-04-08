@@ -83,7 +83,7 @@ class NotesTree(wx.Window):
         self.popupMenu = None
 
         # Имя опции для сохранения развернутости страницы
-        self.pageOptionExpand = "Expand"
+        # self.pageOptionExpand = "Expand"
 
         self._bindApplicationEvents()
         self._bindGuiEvents()
@@ -229,10 +229,7 @@ class NotesTree(wx.Window):
 
         page = event.page
         expanded = event.expanded
-
-        if not page.readonly:
-            page_registry = page.root.registry.get_page_registry(page)
-            page_registry.set(self.pageOptionExpand, expanded)
+        page.expand(expanded)
 
         if expanded:
             for child in page.children:

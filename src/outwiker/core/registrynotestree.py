@@ -13,7 +13,7 @@ from outwiker.utilites.textfile import readTextFile, writeTextFile
 logger = logging.getLogger("outwiker.core.notestreeregistry")
 
 
-class BaseSaver(object, metaclass=ABCMeta):
+class BaseSaver(metaclass=ABCMeta):
     @abstractmethod
     def load(self):
         pass

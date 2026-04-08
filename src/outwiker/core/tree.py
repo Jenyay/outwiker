@@ -47,6 +47,10 @@ class BasePage(metaclass=ABCMeta):
         self.readonly = readonly
         self._typeString = None
 
+        self._expanded: Optional[bool] = None
+        # Option name for registry about expand state
+        self._expanded_option_name = "Expand"
+
         configpath = os.path.join(path, PAGE_OPT_FILE)
         if (
             not self.readonly
@@ -102,6 +106,18 @@ class BasePage(metaclass=ABCMeta):
             result = result.parent
 
         return result
+
+    def isExpanded(self) -> bool:
+        if self._expanded is None:
+            page_registry = self.root.registry.get_page_registry(self)
+            self._expanded = page_registry.getbool(self._expanded_option_name, default=False)
+        return self._expanded
+
+    def expand(self, expanded: bool):
+        self._expanded = expanded
+        if not self.readonly:
+            page_registry = self.root.registry.get_page_registry(self)
+            page_registry.set(self._expanded_option_name, expanded)
 
     def save(self):
         if self.readonly:
@@ -478,6 +494,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self._parent = parent
         self._tags = [tag for tag in self.params.tagsOption.value if tag]
         self._alias = self.params.aliasOption.value
+
         if len(self._alias) == 0:
             self._alias = None
         self._uid = self.params.pageUidOption.value

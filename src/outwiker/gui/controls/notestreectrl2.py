@@ -792,9 +792,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._hoveredItem: Optional[NotesTreeItem] = None
         self._leftButtonDownItem: Optional[NotesTreeItem] = None
 
-        # Имя опции для сохранения развернутости страницы
-        self.pageOptionExpand = "Expand"
-
         self._rootItems: List[NotesTreeItem] = []
         self._lineCount = 0
 
@@ -1561,10 +1558,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         if page.parent is None:
             return True
 
-        page_registry = page.root.registry.get_page_registry(page)
-        expanded = page_registry.getbool(self.pageOptionExpand, default=False)
-
-        return expanded
+        return page.isExpanded()
 
     def _getTreeItem(self, page: Optional[BasePage]) -> Optional[NotesTreeItem]:
         """
