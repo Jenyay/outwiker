@@ -19,3 +19,19 @@ def wikipage():
     yield page
 
     removeDir(path)
+
+
+@pytest.fixture
+def wikiroot():
+    path = mkdtemp()
+    root = createNotesTree(path)
+
+    factory = TextPageFactory()
+    factory.create(root, "Page 1", [])
+    factory.create(root, "Page 2", [])
+    factory.create(root["Page 2"], "Page 3", [])
+    factory.create(root["Page 2/Page 3"], "Page 4", [])
+
+    yield root
+
+    removeDir(path)
