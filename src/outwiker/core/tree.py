@@ -118,7 +118,6 @@ class BasePage(metaclass=ABCMeta):
         if not self.readonly:
             page_registry = self.root.registry.get_page_registry(self)
             page_registry.set(self._expanded_option_name, expanded)
-            self.root.registry.save()
 
     def save(self):
         if self.readonly:

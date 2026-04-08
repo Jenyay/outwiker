@@ -33,6 +33,7 @@ def test_expand_load(wikiroot: WikiDocument):
     wikiroot["Page 1"].expand(True)
     wikiroot["Page 2"].expand(True)
     wikiroot["Page 2/Page 3/Page 4"].expand(True)
+    wikiroot.save()
 
     loaded_wiki = loadNotesTree(wikiroot.path)
 
@@ -48,6 +49,7 @@ def test_expand_loaded(wikiroot: WikiDocument):
     loaded_wiki["Page 1"].expand(True)
     loaded_wiki["Page 2"].expand(True)
     loaded_wiki["Page 2/Page 3/Page 4"].expand(True)
+    loaded_wiki.save()
 
     loaded_wiki_2 = loadNotesTree(wikiroot.path)
 
@@ -68,6 +70,7 @@ def test_expand_readonly(wikiroot: WikiDocument):
     assert loaded_wiki["Page 2"].isExpanded()
     assert not loaded_wiki["Page 2/Page 3"].isExpanded()
     assert loaded_wiki["Page 2/Page 3/Page 4"].isExpanded()
+    loaded_wiki.save()
 
     loaded_wiki_2 = loadNotesTree(wikiroot.path)
 
