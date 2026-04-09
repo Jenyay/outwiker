@@ -106,9 +106,10 @@ def test(c, params):
     if not params:
         params = ["buildtools/src/buildtools/tests", "src/outwiker/tests"]
 
-    command = getPython() if params else "coverage run {}".format(COVERAGE_PARAMS)
+    # command = getPython() if params else "coverage run {}".format(COVERAGE_PARAMS)
 
-    c.run("{command} runtests.py {args}".format(command=command, args=" ".join(params)))
+    # c.run("{command} runtests.py {args}".format(command=command, args=" ".join(params)))
+    c.run("coverage run runtests.py {args}".format(args=" ".join(params)))
 
 
 def _runTests(c, testdir, prefix, section="", *args):
