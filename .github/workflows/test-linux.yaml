@@ -87,3 +87,12 @@ jobs:
 
       - name: Run tests
         run: xvfb-run --server-args="-screen 0 1280x1024x24" uv run inv test -p src/outwiker/tests/
+
+      - name: Coverage report
+        run uv run inv coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage_report
+          path: build/htmlcov
