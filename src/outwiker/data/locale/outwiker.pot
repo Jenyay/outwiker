@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 09:47+0300\n"
+"POT-Creation-Date: 2026-04-13 19:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1445,11 +1445,11 @@ msgid "Insert link to attachment"
 msgstr ""
 
 #: outwiker/app/gui/preferences/attachpanel.py:17
-msgid "Execute attachment"
+msgid "Run attachment"
 msgstr ""
 
 #: outwiker/app/gui/preferences/attachpanel.py:37
-msgid "Double clicking or pressing Enter on an attached file"
+msgid "Double-click or Enter on an attachment"
 msgstr ""
 
 #: outwiker/app/gui/preferences/attachpanel.py:44

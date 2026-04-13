@@ -14,7 +14,7 @@ class AttachPanel(BasePrefPanel):
 
         self._actions = [
             (_("Insert link to attachment"), AttachConfig.ACTION_INSERT_LINK),
-            (_("Execute attachment"), AttachConfig.ACTION_OPEN),
+            (_("Run attachment"), AttachConfig.ACTION_OPEN),
         ]
 
         self._config = AttachConfig(application.config)
@@ -34,7 +34,7 @@ class AttachPanel(BasePrefPanel):
         actionsSizer.AddGrowableCol(0)
 
         self.doubleClickActionCombo = self._createLabelAndComboBox(
-            _("Double clicking or pressing Enter on an attached file"), actionsSizer
+            _("Double-click or Enter on an attachment"), actionsSizer
         )[1]
 
         self.doubleClickActionCombo.SetMinSize((self.ACTIONS_COMBOBOX_WIDTH, -1))

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 09:47+0300\n"
+"POT-Creation-Date: 2026-04-13 19:04+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1449,12 +1449,12 @@ msgid "Insert link to attachment"
 msgstr "Вставить ссылку на вложение"
 
 #: outwiker/app/gui/preferences/attachpanel.py:17
-msgid "Execute attachment"
+msgid "Run attachment"
 msgstr "Запустить вложение"
 
 #: outwiker/app/gui/preferences/attachpanel.py:37
-msgid "Double clicking or pressing Enter on an attached file"
-msgstr "Двойной клик или нажатие клавиши Enter на вложении"
+msgid "Double-click or Enter on an attachment"
+msgstr "Двойной клик или Enter на вложении"
 
 #: outwiker/app/gui/preferences/attachpanel.py:44
 msgid "Show hidden folders"
@@ -3159,6 +3159,9 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Execute attachment"
+#~ msgstr "Запустить вложение"
 
 #~ msgid "Start iconized"
 #~ msgstr "Запускаться свернутым в трей"

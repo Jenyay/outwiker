@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 09:47+0300\n"
+"POT-Creation-Date: 2026-04-13 19:04+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1442,12 +1442,14 @@ msgid "Insert link to attachment"
 msgstr "Insert link to attachment"
 
 #: outwiker/app/gui/preferences/attachpanel.py:17
-msgid "Execute attachment"
-msgstr "Execute attachment"
+#| msgid "Rename attachment"
+msgid "Run attachment"
+msgstr "Run attachment"
 
 #: outwiker/app/gui/preferences/attachpanel.py:37
-msgid "Double clicking or pressing Enter on an attached file"
-msgstr "Double clicking or pressing Enter on an attached file"
+#| msgid "Double clicking or pressing Enter on an attached file"
+msgid "Double-click or Enter on an attachment"
+msgstr "Double-click or Enter on an attachment"
 
 #: outwiker/app/gui/preferences/attachpanel.py:44
 msgid "Show hidden folders"
@@ -1988,17 +1990,14 @@ msgid "Close window"
 msgstr "Close window"
 
 #: outwiker/app/gui/preferences/traypanel.py:38
-#| msgid "Minimize window button"
 msgid "Minimize button"
 msgstr "Minimize button"
 
 #: outwiker/app/gui/preferences/traypanel.py:45
-#| msgid "Close window button"
 msgid "Close button"
 msgstr "Close button"
 
 #: outwiker/app/gui/preferences/traypanel.py:60
-#| msgid "Minimize to tray"
 msgid "Start minimized to tray"
 msgstr "Start minimized to tray"
 
@@ -3154,6 +3153,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Execute attachment"
+#~ msgstr "Execute attachment"
 
 #~ msgid "Start iconized"
 #~ msgstr "Start iconized"
