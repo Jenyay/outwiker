@@ -1,14 +1,20 @@
-!!! Interface - Attachments
+!! Interface - Attachments
 
 %center%Attach:outwiker_opt_attach.png
 
-Here one can select action resulted of double-click on file name on the "Attachments" panel.
+This section contains settings for configuring the behavior of the %notice%Attachments%% panel.
 
 %center%%thumb width=700%Attach:attach_panel.png%%
 
-The choice is to be made between the following actions:
+The %notice%Double-click or Enter on an attachment%% drop-down list allows you to choose which action should occur during these events. The list contains two options:
 
-* To open the clicked file in application associated with this type of files.
-* To insert link to the clicked file in note text.
+* %notice%Run attachment%%: opens the selected file in the program associated with its file type, or executes the file if it is an executable (e.g., an .exe file on Windows).
+* %notice%Insert link to attachment%%: for [[page types -> page://page-types]] that support file links within the note text ([[wiki pages -> page://wiki-page]] and [[HTML pages -> page://html-page]]), this inserts the notation that will be converted into a link to the selected file or files.
 
-Using the '''Show hidden folders''' checkbox, you can enable or disable the display of folders that start with two underscores, are considered hidden in OutWiker and are used for internal needs (for example, to store thumbnails of images).
+The %notice%Show hidden folders%% check box allows you to enable or disable the display of folders that start with two underscores (%info%__%%). Such folders are considered service folders and are hidden from the user by default. In this version, only one type of hidden folder is created within the attachments folder: %info%__thumb%%. This folder contains, for example, thumbnail files for images on the page. Plugins may create other similar folders that should not be shown to the user, or use the %info%__thumb%% folder for their own purposes.
+
+----
+'''See also:'''
+* page://attachments
+* page://wiki-attachments
+* page://html-page
