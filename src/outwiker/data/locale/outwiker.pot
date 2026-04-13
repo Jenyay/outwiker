@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 20:23+0300\n"
+"POT-Creation-Date: 2026-04-13 09:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
@@ -1358,7 +1358,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: outwiker/app/gui/notestree.py:256 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:253 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr ""
 
@@ -1981,15 +1981,15 @@ msgid "Close window"
 msgstr ""
 
 #: outwiker/app/gui/preferences/traypanel.py:38
-msgid "Minimize window button"
+msgid "Minimize button"
 msgstr ""
 
 #: outwiker/app/gui/preferences/traypanel.py:45
-msgid "Close window button"
+msgid "Close button"
 msgstr ""
 
 #: outwiker/app/gui/preferences/traypanel.py:60
-msgid "Start iconized"
+msgid "Start minimized to tray"
 msgstr ""
 
 #: outwiker/app/gui/preferences/traypanel.py:65

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 20:23+0300\n"
+"POT-Creation-Date: 2026-04-13 09:47+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -1362,7 +1362,7 @@ msgstr ""
 "Невозможно сохранить настройки.\n"
 "%s"
 
-#: outwiker/app/gui/notestree.py:256 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:253 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
@@ -1873,7 +1873,7 @@ msgstr "Облако меток"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:141
 msgid "Tray icon"
-msgstr "Значок в панели задач"
+msgstr "Значок на панели задач"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:144
 msgid "Colors"
@@ -1995,15 +1995,15 @@ msgid "Close window"
 msgstr "Закрыть окно"
 
 #: outwiker/app/gui/preferences/traypanel.py:38
-msgid "Minimize window button"
+msgid "Minimize button"
 msgstr "Кнопка сворачивания окна"
 
 #: outwiker/app/gui/preferences/traypanel.py:45
-msgid "Close window button"
+msgid "Close button"
 msgstr "Кнопка закрытия окна"
 
 #: outwiker/app/gui/preferences/traypanel.py:60
-msgid "Start iconized"
+msgid "Start minimized to tray"
 msgstr "Запускаться свернутым в трей"
 
 #: outwiker/app/gui/preferences/traypanel.py:65
@@ -3160,6 +3160,9 @@ msgstr "[[комментарий -> ссылка]]"
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
 
+#~ msgid "Start iconized"
+#~ msgstr "Запускаться свернутым в трей"
+
 #~ msgid "As list"
 #~ msgstr "Списком"
 
@@ -3417,9 +3420,6 @@ msgstr "[[ссылка | комментарий]]"
 
 #~ msgid "<b>Can't create thumbnail for \"{}\"</b>"
 #~ msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
-
-#~ msgid "Minimize to tray"
-#~ msgstr "Сворачивать в трей"
 
 #~ msgid "Minimize on close window"
 #~ msgstr "Сворачивать при закрытии окна"

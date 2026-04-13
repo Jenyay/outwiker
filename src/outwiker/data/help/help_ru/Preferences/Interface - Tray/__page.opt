@@ -3,7 +3,13 @@ type = wiki
 tags = fixme,настройки
 order = 5
 creationdatetime = 2020-05-10 09:51:06.758211
-datetime = 2026-02-21 19:33:49.311700
+datetime = 2026-04-13 09:33:37.879879
 uid = settings_interface_tray
-alias = Интерфейс - Значок в панели задач
+alias = Интерфейс - Значок на панели задач
+
+[Wiki]
+recentstylename = notice
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 

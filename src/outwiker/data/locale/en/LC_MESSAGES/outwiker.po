@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 20:23+0300\n"
+"POT-Creation-Date: 2026-04-13 09:47+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -1355,7 +1355,7 @@ msgstr ""
 "Can't save config.\n"
 "%s"
 
-#: outwiker/app/gui/notestree.py:256 outwiker/app/services/tree.py:235
+#: outwiker/app/gui/notestree.py:253 outwiker/app/services/tree.py:235
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
@@ -1938,32 +1938,26 @@ msgid "Show close buttons"
 msgstr "Show close buttons"
 
 #: outwiker/app/gui/preferences/tagspanel.py:30
-#| msgid "Headers in the popup window: "
 msgid "Headers in popup window:"
 msgstr "Headers in popup window:"
 
 #: outwiker/app/gui/preferences/tagspanel.py:41
-#| msgid "Tag cloud view mode"
 msgid "Tag cloud display mode"
 msgstr "Tag cloud display mode"
 
 #: outwiker/app/gui/preferences/tagspanel.py:42
-#| msgid "As continuous text"
 msgid "Continuous text"
 msgstr "Continuous text"
 
 #: outwiker/app/gui/preferences/tagspanel.py:42
-#| msgid "Lists"
 msgid "List"
 msgstr "List"
 
 #: outwiker/app/gui/preferences/tagspanel.py:53
-#| msgid "Minimal font size"
 msgid "Minimum font size"
 msgstr "Minimum font size"
 
 #: outwiker/app/gui/preferences/tagspanel.py:54
-#| msgid "Maximal font size"
 msgid "Maximum font size"
 msgstr "Maximum font size"
 
@@ -1994,16 +1988,19 @@ msgid "Close window"
 msgstr "Close window"
 
 #: outwiker/app/gui/preferences/traypanel.py:38
-msgid "Minimize window button"
-msgstr "Minimize window button"
+#| msgid "Minimize window button"
+msgid "Minimize button"
+msgstr "Minimize button"
 
 #: outwiker/app/gui/preferences/traypanel.py:45
-msgid "Close window button"
-msgstr "Close window button"
+#| msgid "Close window button"
+msgid "Close button"
+msgstr "Close button"
 
 #: outwiker/app/gui/preferences/traypanel.py:60
-msgid "Start iconized"
-msgstr "Start iconized"
+#| msgid "Minimize to tray"
+msgid "Start minimized to tray"
+msgstr "Start minimized to tray"
 
 #: outwiker/app/gui/preferences/traypanel.py:65
 msgid "Always show tray icon"
@@ -3158,6 +3155,9 @@ msgstr "[[comment -> link]]"
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
 
+#~ msgid "Start iconized"
+#~ msgstr "Start iconized"
+
 #~ msgid "As list"
 #~ msgstr "As list"
 
@@ -3456,9 +3456,6 @@ msgstr "[[link | comment]]"
 
 #~ msgid "<b>Can't create thumbnail for \"{}\"</b>"
 #~ msgstr "<b>Can't create thumbnail for \"{}\"</b>"
-
-#~ msgid "Minimize to tray"
-#~ msgstr "Minimize to tray"
 
 #~ msgid "Minimize on close window"
 #~ msgstr "Minimize on close window"

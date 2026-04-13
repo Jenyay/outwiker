@@ -1,11 +1,17 @@
-!!! Interface - Tray icon
+!! Interface - Tray icon
 
 %center%Attach:outwiker_opt_tray.png
 
-The settings in this section allows you to select behavior for the program icon in system tray (area with icons near the clock in Windows).
+The settings in this section are designed to configure the behavior of the application icon in the system tray (the area with icons next to the clock).
 
-You can select the behavior of the buttons in the main program window Using the '''Minimize window button''' and '''Close window button''' drop-down lists. For the window minimization button, you can select actions: "Minimize window" and "Minimize to tray" (in the latter case, the window will disappear from the taskbar, but will be displayed as a tray icon). There is also a "Close Window" action for the window close button (which is what this button does by default).
+Using the %notice%Minimize button%% and %notice%Close button%% drop-down lists, you can choose the action performed when clicking the corresponding buttons in the application's main window title bar.
 
-The '''Start iconized''' check-box selection forces OutWiker to start minimized with icon in the systray and no taskbar button. This may come in handy if OutWiker is added to the list of programs to autorun upon OS booting.
+The following actions are available for the minimize button: %notice%Minimize window%% and %notice%Minimize to tray%% (in the latter case, the window will disappear from the taskbar but remain visible as an icon in the tray). The same actions are available for the close button, along with the %notice%Close window%% option (which is the default behavior).
 
-If the '''Always show tray icon''' check-box is selected, then the systray icon is shown always, not just when the program is minimized.
+The %notice%Start minimized to tray%% check box tells the application to hide the main window and display only the tray icon upon startup. This can be useful if OutWiker is set to launch automatically when the operating system starts.
+
+The %notice%Always show tray icon%% check box indicates that the application icon should always be visible in the system tray, even when the program is not minimized.
+
+----
+'''See also:'''
+* page://settings_interface_main_window

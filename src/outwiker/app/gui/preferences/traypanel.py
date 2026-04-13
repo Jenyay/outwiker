@@ -35,14 +35,14 @@ class TrayPanel(BasePrefPanel):
         self._buttons_sizer.AddGrowableCol(1)
 
         # Minimize button actions
-        minimizeButtonLabel = wx.StaticText(self, label=_('Minimize window button'))
+        minimizeButtonLabel = wx.StaticText(self, label=_('Minimize button'))
         self.minimizeComboBox = wx.ComboBox(self, style=wx.CB_READONLY)
 
         self._buttons_sizer.Add(minimizeButtonLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
         self._buttons_sizer.Add(self.minimizeComboBox, flag=wx.ALIGN_RIGHT | wx.ALL, border=2)
 
         # Close button actions
-        closeButtonLabel = wx.StaticText(self, label=_('Close window button'))
+        closeButtonLabel = wx.StaticText(self, label=_('Close button'))
         self.closeComboBox = wx.ComboBox(self, style=wx.CB_READONLY)
 
         self._buttons_sizer.Add(closeButtonLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
@@ -57,7 +57,7 @@ class TrayPanel(BasePrefPanel):
         self.startIconizedCheckBox = wx.CheckBox(
             self,
             -1,
-            _("Start iconized"))
+            _("Start minimized to tray"))
 
         self.alwaysInTrayCheckBox = wx.CheckBox(
             self,
