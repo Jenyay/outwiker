@@ -2,7 +2,7 @@
 
 %center%Attach:outwiker_opt_tray.png
 
-The settings in this section are designed to configure the behavior of the application icon in the system tray (the area with icons next to the clock).
+The settings in this section are designed to configure the behavior of the application icon in the system tray (the area with icons by the clock).
 
 Using the %notice%Minimize button%% and %notice%Close button%% drop-down lists, you can choose the action performed when clicking the corresponding buttons in the application's main window title bar.
 
