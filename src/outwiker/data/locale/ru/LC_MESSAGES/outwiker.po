@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 19:04+0300\n"
+"POT-Creation-Date: 2026-04-13 20:35+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1694,8 +1694,8 @@ msgid "String"
 msgstr "Строка"
 
 #: outwiker/app/gui/preferences/htmlrenderpanel.py:30
-msgid "Paragraphs separator"
-msgstr "Разделитель параграфов"
+msgid "Paragraph separator"
+msgstr "Разделитель абзацев"
 
 #: outwiker/app/gui/preferences/htmlrenderpanel.py:37
 msgid "Additional styles (CSS):"

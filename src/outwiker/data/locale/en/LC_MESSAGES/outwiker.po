@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 19:04+0300\n"
+"POT-Creation-Date: 2026-04-13 20:35+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1442,12 +1442,10 @@ msgid "Insert link to attachment"
 msgstr "Insert link to attachment"
 
 #: outwiker/app/gui/preferences/attachpanel.py:17
-#| msgid "Rename attachment"
 msgid "Run attachment"
 msgstr "Run attachment"
 
 #: outwiker/app/gui/preferences/attachpanel.py:37
-#| msgid "Double clicking or pressing Enter on an attached file"
 msgid "Double-click or Enter on an attachment"
 msgstr "Double-click or Enter on an attachment"
 
@@ -1689,8 +1687,9 @@ msgid "String"
 msgstr "String"
 
 #: outwiker/app/gui/preferences/htmlrenderpanel.py:30
-msgid "Paragraphs separator"
-msgstr "Paragraphs separator"
+#| msgid "Paragraphs separator"
+msgid "Paragraph separator"
+msgstr "Paragraph separator"
 
 #: outwiker/app/gui/preferences/htmlrenderpanel.py:37
 msgid "Additional styles (CSS):"
