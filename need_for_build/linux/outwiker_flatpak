@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd /app/bin/net.jenyay.Outwiker
-/app/python312/bin/python3.12 runoutwiker.py "$@"
+python3.12 runoutwiker.py "$@"
