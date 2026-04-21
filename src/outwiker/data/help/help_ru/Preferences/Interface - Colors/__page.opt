@@ -1,9 +1,15 @@
 [General]
 type = wiki
-tags = fixme,настройки
+tags = настройки
 order = 8
 creationdatetime = 2020-05-10 10:23:54.772670
-datetime = 2026-02-21 19:44:31.786033
+datetime = 2026-04-21 20:16:29.135221
 uid = settings_interface_colors
 alias = Интерфейс - Цвета
+
+[Wiki]
+recentstylename = notice
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 

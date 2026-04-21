@@ -8,7 +8,7 @@ The %notice%Font%% setting allows you to define the default font size and typefa
 
 In the %notice%Additional styles (CSS)%% input field, you can enter your own CSS styles to be added to every page (provided the page type supports this parameter). This setting is intended for advanced users who are familiar with CSS and wish to customize the look of their pages without creating separate [[page styles -> page://styles]]. For this purpose, the wiki page parser adds numerous CSS classes to various formatting elements within notes, which can be used for fine-tuning the appearance.
 
-If the [[HtmlFormatter -> https://jenyay.net/Outwiker/HtmlFormatter]] [[plugin -> page://plugins]] is enabled, a %notice%Paragraph separator%% setting will be added to this section. This setting allows you to switch between different formatting modes for text blocks separated by empty lines. Using the drop-down list, you can choose how spacing between text blocks is handled: by using %code%&lt;br&gt;%% tags or by wrapping blocks in %code%&lt;p&gt;...&lt;/p&gt;%% tags.
+If the [[HtmlFormatter -> https://jenyay.net/Outwiker/HtmlFormatterEn]] [[plugin -> page://plugins]] is enabled, a %notice%Paragraph separator%% setting will be added to this section. This setting allows you to switch between different formatting modes for text blocks separated by empty lines. Using the drop-down list, you can choose how spacing between text blocks is handled: by using %code%&lt;br&gt;%% tags or by wrapping blocks in %code%&lt;p&gt;...&lt;/p&gt;%% tags.
 
 ----
 '''See also:'''
