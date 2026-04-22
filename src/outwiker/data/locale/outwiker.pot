@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 20:35+0300\n"
+"POT-Creation-Date: 2026-04-22 20:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1555,16 +1555,16 @@ msgid "Show line numbers"
 msgstr ""
 
 #: outwiker/app/gui/preferences/editorpanel.py:32
-msgid "Use spaces instead tabs"
+msgid "Use spaces instead of tabs"
 msgstr ""
 
 #: outwiker/app/gui/preferences/editorpanel.py:33
-msgid "Tab width"
+msgid "Tab size"
 msgstr ""
 
 #: outwiker/app/gui/preferences/editorpanel.py:43
 msgid ""
-"Line number field width\n"
+"Line number margin width\n"
 "0 - default value"
 msgstr ""
 

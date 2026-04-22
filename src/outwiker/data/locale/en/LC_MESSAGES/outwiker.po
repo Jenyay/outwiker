@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 20:35+0300\n"
+"POT-Creation-Date: 2026-04-22 20:07+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1552,19 +1552,24 @@ msgid "Show line numbers"
 msgstr "Show line numbers"
 
 #: outwiker/app/gui/preferences/editorpanel.py:32
-msgid "Use spaces instead tabs"
-msgstr "Use spaces instead tabs"
+#| msgid "Use spaces instead tabs"
+msgid "Use spaces instead of tabs"
+msgstr "Use spaces instead of tabs"
 
 #: outwiker/app/gui/preferences/editorpanel.py:33
-msgid "Tab width"
-msgstr "Tab width"
+#| msgid "Max size"
+msgid "Tab size"
+msgstr "Tab size"
 
 #: outwiker/app/gui/preferences/editorpanel.py:43
+#| msgid ""
+#| "Line number field width\n"
+#| "0 - default value"
 msgid ""
-"Line number field width\n"
+"Line number margin width\n"
 "0 - default value"
 msgstr ""
-"Line number field width\n"
+"Line number margin width\n"
 "0 - default value"
 
 #: outwiker/app/gui/preferences/editorpanel.py:55
@@ -1687,7 +1692,6 @@ msgid "String"
 msgstr "String"
 
 #: outwiker/app/gui/preferences/htmlrenderpanel.py:30
-#| msgid "Paragraphs separator"
 msgid "Paragraph separator"
 msgstr "Paragraph separator"
 
@@ -3152,6 +3156,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Tab width"
+#~ msgstr "Tab width"
 
 #~ msgid "Execute attachment"
 #~ msgstr "Execute attachment"

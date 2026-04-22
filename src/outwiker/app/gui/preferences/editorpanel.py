@@ -29,8 +29,8 @@ class EditorPanel(BasePrefPanel):
         self.fontLabel = wx.StaticText(self, -1, _("Font"))
         self.fontPicker = wx.FontPickerCtrl(self, -1)
         self.lineNumbersCheckBox = wx.CheckBox(self, -1, _("Show line numbers"))
-        self.tabUseSpacesCheckBox = wx.CheckBox(self, -1, _("Use spaces instead tabs"))
-        self.tabWidthLabel = wx.StaticText(self, -1, _("Tab width"))
+        self.tabUseSpacesCheckBox = wx.CheckBox(self, -1, _("Use spaces instead of tabs"))
+        self.tabWidthLabel = wx.StaticText(self, -1, _("Tab size"))
 
         self.tabWidthSpin = wx.SpinCtrl(
             self,
@@ -40,7 +40,7 @@ class EditorPanel(BasePrefPanel):
             style=wx.SP_ARROW_KEYS,
         )
 
-        self.marginWidthLabel = wx.StaticText(self, label=_("Line number field width\n0 - default value"))
+        self.marginWidthLabel = wx.StaticText(self, label=_("Line number margin width\n0 - default value"))
 
         self.marginWidthSpin = wx.SpinCtrl(
             self,
