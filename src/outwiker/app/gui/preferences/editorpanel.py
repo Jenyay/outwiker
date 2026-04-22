@@ -52,7 +52,7 @@ class EditorPanel(BasePrefPanel):
 
         # Настройки для клавиш Home / End
         self.homeEndLabel = wx.StaticText(
-            self, -1, _("Home / End keys moves the cursor \nto the beginning / end of ")
+            self, -1, _("Home / End keys move cursor \nto the start / end of ")
         )
 
         self.homeEndCombo = wx.ComboBox(self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
