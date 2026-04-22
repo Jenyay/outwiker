@@ -1,8 +1,8 @@
 [General]
 type = wiki
-tags = settings,!fixme
+tags = settings
 order = 9
 creationdatetime = 2020-05-10 10:36:09.110931
-datetime = 2026-02-21 20:19:17.497785
+datetime = 2026-04-22 09:44:42.891647
 uid = settings_interface_hotkeys
 

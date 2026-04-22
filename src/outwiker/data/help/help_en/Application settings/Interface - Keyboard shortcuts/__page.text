@@ -1,0 +1,12 @@
+!! Interface - Keyboard shortcuts
+
+%center%Attach:outwiker_opt_keys.png
+
+This section allows you to assign or modify keyboard shortcuts for specific program actions. The main part of the window displays a list of all available actions that can be mapped to shortcuts. A search bar is located above the list to filter actions by name. Below the list, there is a field providing a detailed description of the selected action. At the very bottom, you will find an input field for assigning a shortcut to the selected action.
+
+Default keyboard shortcuts are listed in the page://shortcuts section.
+
+----
+'''See also:'''
+* page://shortcuts
+* page://settings_interface_general
