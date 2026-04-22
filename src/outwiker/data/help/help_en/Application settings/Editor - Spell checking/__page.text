@@ -1,9 +1,22 @@
-!!! Editor - Spell checking
+!! Editor - Spell checking
 
 %center%Attach:outwiker_opt_editor_spell.png
 
-In the "Spell checking" section one can select dictionaries for spell checking.
+This section allows you to configure the settings for the spell checking process within the note editor.
 
-The spell checking dictionaries are located in the ''spell'' subdirectory of the program's directory as well as the ''spell'' directory of the settings directory (in case of Windows 7 and above, it is ''C:\Users\USERNAME\AppData\Roaming\outwiker\spell''; in case of Linux, it is ''~/.config/outwiker/spell'' by default).
+If the %notice%Skip words with digits%% checkbox is enabled, the spell checker will ignore words containing digits, such as "word123", "111word", "one111one", etc.
 
-It is possible to set custom dictionary which contains words added by user.
+OutWiker can use multiple dictionaries simultaneously for spell checking. A word is considered correct if it is found in at least one of the active dictionaries. In the %notice%Dictionaries in use%% list, you can select which dictionaries to use for real-time spell checking. Note that using many dictionaries at once may affect editor performance when handling large amounts of text.
+
+Among the available dictionaries, there is a special %notice%html%% dictionary that contains HTML tag names.
+
+The dictionaries used by OutWiker are located in the %info%spell%% folder within the [[configuration directories -> page://config-dirs]]. OutWiker uses the LibreOffice dictionary format for the hunspell engine. You can find additional dictionaries at [[this link -> https://github.com/LibreOffice/dictionaries/]] and copy them into the %info%spell%% folder.
+
+The %notice%User dictionary%% field lists words that have been added by the user. Words are added to this list via the "Add to dictionary" context menu item when right-clicking a misspelled word in the editor. In this settings section, you can also manually add or remove words to be treated as correct. Each word must be entered on a new line.
+
+----
+'''See also:'''
+* page://config-dirs
+* page://settings_editor_general
+* page://settings_editor_html_editor
+* page://settings_editor_wiki_editor

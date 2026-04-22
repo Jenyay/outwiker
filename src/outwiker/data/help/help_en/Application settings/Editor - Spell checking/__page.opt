@@ -1,8 +1,11 @@
 [General]
 type = wiki
-tags = settings,!fixme
+tags = settings
 order = 12
 creationdatetime = 2020-05-10 10:54:57.722478
-datetime = 2026-02-21 20:20:49.751665
+datetime = 2026-04-22 21:13:49.384531
 uid = settings_editor_spell_checking
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n", "info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n"}
 
