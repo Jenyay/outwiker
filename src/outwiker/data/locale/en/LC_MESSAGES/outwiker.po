@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-22 20:18+0300\n"
+"POT-Creation-Date: 2026-04-22 21:09+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1568,9 +1568,6 @@ msgstr ""
 "0 - default value"
 
 #: outwiker/app/gui/preferences/editorpanel.py:55
-#| msgid ""
-#| "Home / End keys moves the cursor \n"
-#| "to the beginning / end of "
 msgid ""
 "Home / End keys move cursor \n"
 "to the start / end of "
@@ -1913,8 +1910,9 @@ msgid "Skip words with digits"
 msgstr "Skip words with digits"
 
 #: outwiker/app/gui/preferences/spellpanel.py:40
-msgid "Use dictionaries"
-msgstr "Use dictionaries"
+#| msgid "Use dictionaries"
+msgid "Dictionaries in use"
+msgstr "Dictionaries in use"
 
 #: outwiker/app/gui/preferences/spellpanel.py:48
 msgid "Custom dictonary (one word per line)"

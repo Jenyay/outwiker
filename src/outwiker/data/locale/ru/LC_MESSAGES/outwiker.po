@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-22 20:18+0300\n"
+"POT-Creation-Date: 2026-04-22 21:09+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1917,7 +1917,7 @@ msgid "Skip words with digits"
 msgstr "Пропускать слова с цифрами"
 
 #: outwiker/app/gui/preferences/spellpanel.py:40
-msgid "Use dictionaries"
+msgid "Dictionaries in use"
 msgstr "Используемые словари"
 
 #: outwiker/app/gui/preferences/spellpanel.py:48
