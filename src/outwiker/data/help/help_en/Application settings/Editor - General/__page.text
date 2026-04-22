@@ -2,12 +2,23 @@
 
 %center%Attach:outwiker_opt_editor_general.png
 
-This section contains controls to modify behavior of the note content editor. Here one can set a font face and size (the '''Font''' button) as well as the following parameters: foreground colour for text and background colours for text, selected text and page margin. The following image illustrates how a note with tweaked colors looks like
+This section contains settings for the text editor used for taking notes.
 
-%center%Attach:editor_colors.png
+The %notice%Font%% group allows you to customize the font face and size.
 
-The '''Show line numbers''' check-box allows to enable/disable display of the line numbers. Line numbers are shown on the left side of text.
+Use the %notice%Show line numbers%% checkbox to enable or disable the display of line numbering to the left of the text.
 
-The '''Tab width''' control allows to change the number of space characters corresponding to single tabulation character.
+The width of the line numbering area can be adjusted using the %notice%Line number margin width%% parameter. This value is set in pixels. If set to 0, the width will be determined automatically to be the minimum necessary.
 
-The '''Home / End keys moves the cursor to the beginning / end of... ''' drop-down list allows to control the text editor response on hitting the "Home" ("End") key. When the key is hit the cursor jumps either to the beginning (end) of the current line or to the beginning (end) of the current paragraph.
+If the %notice%Use spaces instead of tabs%% checkbox is enabled, pressing the %code%Tab%% key will insert a specific number of space characters instead of a tab character. The number of spaces is defined in the %notice%Tab size%% field (the default value is 4).
+
+The text editor can handle %code%Home%% / %code%End%% keys in two ways. Pressing these keys will move the cursor either to the beginning / end of the current line, or to the beginning / end of the current paragraph (considering word wrap). This behavior is toggled via the %notice%Home / End keys move cursor to the start / end of%% drop-down list. The available options are either %notice%Line%% or %notice%Paragraph%%.
+
+In addition to the parameters listed here, you can configure the text editor's UI colors in the page://settings_interface_colors section. The page://settings_editor_html_editor and page://settings_editor_wiki_editor sections also allow you to customize syntax highlighting for HTML and wiki pages, respectively.
+
+----
+'''See also:'''
+* page://settings_interface_colors
+* page://settings_editor_html_editor
+* page://settings_editor_wiki_editor
+* page://settings_editor_spell_checking

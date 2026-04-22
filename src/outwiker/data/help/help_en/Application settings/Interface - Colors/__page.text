@@ -4,7 +4,12 @@
 
 This section allows you to customize the colors used in the application interface. Colors are organized into the following groups: %notice%Main window%%, %notice%Editor%%, and %notice%Tabs%%. The color for each interface element can be selected from the corresponding drop-down list. You can also use default colors, many of which are inherited from your system settings.
 
-In the %notice%Editor%% group, you can only change the colors of the core editor elements. If you need to change the syntax highlighting colors for HTML code or wiki pages, please refer to the following settings pages: page://settings_editor_html_editor and page://settings_editor_wiki_editor.
+In the %notice%Editor%% group, you can only change the colors of the core editor elements shown in the following image:
+
+%center%Attach:editor_colors.png
+
+If you need to modify the syntax highlighting colors for HTML code or wiki pages, you can do so on the page://settings_editor_html_editor and page://settings_editor_wiki_editor settings pages, respectively.
+
 
 ----
 '''See also:'''
