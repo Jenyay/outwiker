@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = fixme,настройки
+tags = настройки
 order = 13
 creationdatetime = 2020-05-10 10:56:56.089905
-datetime = 2026-02-21 19:47:22.987250
+datetime = 2026-04-23 09:40:12.979499
 uid = settings_editor_html_editor
 alias = Редактор - HTML-редактор
 
