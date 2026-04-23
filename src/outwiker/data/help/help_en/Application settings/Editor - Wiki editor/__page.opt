@@ -1,8 +1,11 @@
 [General]
 type = wiki
-tags = settings,!fixme
+tags = settings
 order = 14
 creationdatetime = 2020-05-10 11:00:34.628315
-datetime = 2026-02-21 20:22:03.121809
+datetime = 2026-04-23 10:05:53.369371
 uid = settings_editor_wiki_editor
+
+[wiki]
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 
