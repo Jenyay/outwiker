@@ -197,7 +197,7 @@ class PrefController:
         iconsetPage = IconsetPanel(self._dialog.treeBook)
         self._dialog.treeBook.AddPage(
             iconsetPage,
-            _("User's iconset"),
+            _("Custom icons"),
             icon_fname=getBuiltinImagePath("picture.svg"),
         )
 

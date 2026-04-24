@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-22 21:09+0300\n"
+"POT-Creation-Date: 2026-04-24 20:17+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1425,7 +1425,6 @@ msgid "Alphabetically"
 msgstr "Alphabetically"
 
 #: outwiker/app/gui/pagedialogpanels/generalpanel.py:442
-#: outwiker/app/gui/preferences/iconsetpanel.py:174
 msgid "Not in groups"
 msgstr "Not in groups"
 
@@ -1718,6 +1717,11 @@ msgstr "Remove selected icons"
 msgid "Set icon as group cover"
 msgstr "Set icon as group cover"
 
+#: outwiker/app/gui/preferences/iconsetpanel.py:174
+#| msgid "Not in groups"
+msgid "No groups"
+msgstr "No groups"
+
 #: outwiker/app/gui/preferences/iconsetpanel.py:225
 msgid "Can't create directory for icons group"
 msgstr "Can't create directory for icons group"
@@ -1897,8 +1901,9 @@ msgid "Text printout"
 msgstr "Text printout"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:200
-msgid "User's iconset"
-msgstr "User's iconset"
+#| msgid "Custom icon"
+msgid "Custom icons"
+msgstr "Custom icons"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:206
 #: outwiker/gui/controls/treebook2.py:50
@@ -1910,7 +1915,6 @@ msgid "Skip words with digits"
 msgstr "Skip words with digits"
 
 #: outwiker/app/gui/preferences/spellpanel.py:40
-#| msgid "Use dictionaries"
 msgid "Dictionaries in use"
 msgstr "Dictionaries in use"
 
@@ -3152,6 +3156,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "User's iconset"
+#~ msgstr "User's iconset"
 
 #~ msgid "Tab width"
 #~ msgstr "Tab width"

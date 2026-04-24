@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-22 21:09+0300\n"
+"POT-Creation-Date: 2026-04-24 20:17+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1428,7 +1428,6 @@ msgid "Alphabetically"
 msgstr ""
 
 #: outwiker/app/gui/pagedialogpanels/generalpanel.py:442
-#: outwiker/app/gui/preferences/iconsetpanel.py:174
 msgid "Not in groups"
 msgstr ""
 
@@ -1713,6 +1712,10 @@ msgstr ""
 msgid "Set icon as group cover"
 msgstr ""
 
+#: outwiker/app/gui/preferences/iconsetpanel.py:174
+msgid "No groups"
+msgstr ""
+
 #: outwiker/app/gui/preferences/iconsetpanel.py:225
 msgid "Can't create directory for icons group"
 msgstr ""
@@ -1890,7 +1893,7 @@ msgid "Text printout"
 msgstr ""
 
 #: outwiker/app/gui/preferences/prefcontroller.py:200
-msgid "User's iconset"
+msgid "Custom icons"
 msgstr ""
 
 #: outwiker/app/gui/preferences/prefcontroller.py:206

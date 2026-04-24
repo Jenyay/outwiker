@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-22 21:09+0300\n"
+"POT-Creation-Date: 2026-04-24 20:17+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1432,7 +1432,6 @@ msgid "Alphabetically"
 msgstr "По алфавиту"
 
 #: outwiker/app/gui/pagedialogpanels/generalpanel.py:442
-#: outwiker/app/gui/preferences/iconsetpanel.py:174
 msgid "Not in groups"
 msgstr "Без групп"
 
@@ -1725,6 +1724,10 @@ msgstr "Удалить выбранные значки"
 msgid "Set icon as group cover"
 msgstr "Установить значок как обложку группы"
 
+#: outwiker/app/gui/preferences/iconsetpanel.py:174
+msgid "No groups"
+msgstr "Без групп"
+
 #: outwiker/app/gui/preferences/iconsetpanel.py:225
 msgid "Can't create directory for icons group"
 msgstr "Ошибка создания директории для группы значков"
@@ -1904,7 +1907,7 @@ msgid "Text printout"
 msgstr "Печать текста"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:200
-msgid "User's iconset"
+msgid "Custom icons"
 msgstr "Значки пользователя"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:206
@@ -3159,6 +3162,9 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "User's iconset"
+#~ msgstr "Значки пользователя"
 
 #~ msgid "Tab width"
 #~ msgstr "Размер табуляции"
