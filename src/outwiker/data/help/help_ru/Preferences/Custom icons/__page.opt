@@ -1,0 +1,15 @@
+[General]
+type = wiki
+tags = настройки
+order = 15
+creationdatetime = 2020-05-10 11:02:01.997356
+datetime = 2026-04-24 22:48:02.816924
+uid = settings_iconset
+alias = Пользовательские значки
+
+[Wiki]
+recentstylename = notice
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n", "info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n"}
+

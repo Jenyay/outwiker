@@ -1,0 +1,23 @@
+!! Custom icons
+
+%center%Attach:outwiker_opt_icons.png
+
+OutWiker includes a wide variety of built-in icons that can be assigned to notes to distinguish them in the note tree. In addition to the included icons, users can add their own by creating custom icon groups. These custom icons can then be used alongside the standard ones.
+
+The %notice%Custom icons%% section provides an interface for adding and removing custom icons and groups.
+
+Icon groups are subdirectories located within the %info%icons%% folder inside the [[configuration directories -> page://config-dirs]]. You don't need to worry about this if you manage icons and groups through the user interface in this section. However, it is useful to keep in mind when backing up your OutWiker settings to ensure your custom icons are included.
+
+The left side of the window displays a list of user groups (icons can also be stored outside of groups, directly in the %info%icons%% directory, which corresponds to the %notice%No groups%% item). You can create, delete, or rename groups using the buttons below the list.
+
+The right side of the window displays the icons within the selected group. Buttons below the icon list allow you to add or remove icons, as well as set an icon as a group cover.
+
+If OutWiker is running in [[portable mode -> page://config-dirs/#portable]] (i.e., the configuration file is in the same directory as the executable), you can also add or remove icons in the built-in icon groups. However, mixing built-in and custom icons is not recommended.
+
+Various image formats can be used as icons. The standard icon set includes both raster PNG and vector SVG files. It is recommended to use the SVG format whenever possible. This ensures that image quality remains consistent regardless of the icon size selected in the [[note tree -> page://settings_interface_notetree]] and on [[tabs -> page://settings_interface_tabs]].
+
+----
+'''See also:'''
+* page://settings_interface_notetree
+* page://settings_interface_tabs
+* page://config-dirs
