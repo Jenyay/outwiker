@@ -1,8 +1,11 @@
 [General]
 type = wiki
-tags = settings,!fixme,plugins
+tags = settings,plugins
 order = 17
 creationdatetime = 2020-05-10 11:03:19.826283
-datetime = 2026-03-15 11:54:40.277662
+datetime = 2026-04-25 21:06:17.223989
 uid = settings-plugins
+
+[wiki]
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n"}
 

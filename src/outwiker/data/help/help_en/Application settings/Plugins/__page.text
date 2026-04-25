@@ -1,7 +1,16 @@
-!!! Plugins
+!! Plugins
 
 %center%Attach:outwiker_opt_plugins.png
 
-The list of the installed [[plugins -> page://__d19b4552-2b5e-4aa2-b7c7-8843d5de319b]] can be found in this section. If a plug-in is selected then information pane appears to the right of the list. It contains the following info: plug-in name, version number, short description and link to the plug-in webpage (if exists).
+This section allows you to view the list of installed [[plugins -> page://plugins]]. Selecting a plugin from the list displays information about it, including its name, version number, a brief description, and a link to the plugin's website, if available.
 
-Deselecting check-box against a plug-in allows to disable it (note that the plug-in is not removed!) to have cleaner interface by hiding plugins button bar as well as menu temporarily.
+A check box before the plugin name indicates that the plugin is activated. Therefore, you do not need to remove a plugin from the %info%plugins%% subdirectory within the [[configuration directories -> page://config-dirs]] to disable it. You can deactivate it in this settings section.
+
+A link to the [[website page -> https://jenyay.net/Outwiker/PluginsEn]] with a list of supported plugins is located at the bottom of the window.
+
+Plugins may add their own settings sections as subsection within this section.
+
+----
+'''See also:'''
+* page://plugins
+* page://config-dirs

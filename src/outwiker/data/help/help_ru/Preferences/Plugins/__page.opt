@@ -1,9 +1,15 @@
 [General]
 type = wiki
-tags = плагины,настройки,fixme
+tags = настройки,плагины
 order = 17
 creationdatetime = 2020-05-10 11:03:19.826283
-datetime = 2026-03-15 11:54:26.624652
+datetime = 2026-04-25 21:06:25.176500
 uid = settings-plugins
 alias = Плагины
+
+[Wiki]
+recentstylename = info
+
+[wiki]
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n"}
 
