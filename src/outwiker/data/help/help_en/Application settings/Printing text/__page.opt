@@ -1,0 +1,11 @@
+[General]
+type = wiki
+tags = settings
+order = 16
+creationdatetime = 2020-05-10 10:44:50.239528
+datetime = 2026-04-25 20:33:44.165700
+uid = settings_text_printout
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
+
