@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 20:17+0300\n"
+"POT-Creation-Date: 2026-04-25 20:25+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -1903,7 +1903,7 @@ msgid "Wiki editor"
 msgstr "Викиредактор"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:192
-msgid "Text printout"
+msgid "Printing text"
 msgstr "Печать текста"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:200
@@ -1980,8 +1980,8 @@ msgid "This options for text printing only"
 msgstr "Эти настройки предназначены только для печати текста"
 
 #: outwiker/app/gui/preferences/textprintpanel.py:31
-msgid "Page Options..."
-msgstr "Настройки страницы..."
+msgid "Page setup…"
+msgstr "Настройки страницы…"
 
 #: outwiker/app/gui/preferences/traypanel.py:13
 #: outwiker/app/gui/preferences/traypanel.py:14
@@ -3162,6 +3162,12 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Text printout"
+#~ msgstr "Печать текста"
+
+#~ msgid "Page Options..."
+#~ msgstr "Настройки страницы..."
 
 #~ msgid "User's iconset"
 #~ msgstr "Значки пользователя"

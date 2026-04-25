@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 20:17+0300\n"
+"POT-Creation-Date: 2026-04-25 20:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1889,7 +1889,7 @@ msgid "Wiki editor"
 msgstr ""
 
 #: outwiker/app/gui/preferences/prefcontroller.py:192
-msgid "Text printout"
+msgid "Printing text"
 msgstr ""
 
 #: outwiker/app/gui/preferences/prefcontroller.py:200
@@ -1966,7 +1966,7 @@ msgid "This options for text printing only"
 msgstr ""
 
 #: outwiker/app/gui/preferences/textprintpanel.py:31
-msgid "Page Options..."
+msgid "Page setup…"
 msgstr ""
 
 #: outwiker/app/gui/preferences/traypanel.py:13

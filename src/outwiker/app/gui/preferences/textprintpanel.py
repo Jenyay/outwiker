@@ -28,7 +28,7 @@ class TextPrintPanel(BasePrefPanel):
                                              style=wx.ALIGN_CENTRE)
         self.fontLabel = wx.StaticText(self, -1, _("Font"))
         self.fontPicker = wx.FontPickerCtrl(self, -1)
-        self.pageOptionsBtn = wx.Button(self, -1, _("Page Options..."))
+        self.pageOptionsBtn = wx.Button(self, -1, _("Page setup…"))
 
     def __set_properties(self):
         DEFAULT_WIDTH = 400

@@ -189,7 +189,7 @@ class PrefController:
         textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
         self._dialog.treeBook.AddPage(
             textPrintPage,
-            _("Text printout"),
+            _("Printing text"),
             icon_fname=getBuiltinImagePath("printer.svg"),
         )
 

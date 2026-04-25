@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 20:17+0300\n"
+"POT-Creation-Date: 2026-04-25 20:25+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1718,7 +1718,6 @@ msgid "Set icon as group cover"
 msgstr "Set icon as group cover"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:174
-#| msgid "Not in groups"
 msgid "No groups"
 msgstr "No groups"
 
@@ -1897,11 +1896,11 @@ msgid "Wiki editor"
 msgstr "Wiki editor"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:192
-msgid "Text printout"
-msgstr "Text printout"
+#| msgid "Printing error"
+msgid "Printing text"
+msgstr "Printing text"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:200
-#| msgid "Custom icon"
 msgid "Custom icons"
 msgstr "Custom icons"
 
@@ -1975,8 +1974,9 @@ msgid "This options for text printing only"
 msgstr "This options for text printing only"
 
 #: outwiker/app/gui/preferences/textprintpanel.py:31
-msgid "Page Options..."
-msgstr "Page Options..."
+#| msgid "Page properties…"
+msgid "Page setup…"
+msgstr "Page setup…"
 
 #: outwiker/app/gui/preferences/traypanel.py:13
 #: outwiker/app/gui/preferences/traypanel.py:14
@@ -3156,6 +3156,12 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Text printout"
+#~ msgstr "Text printout"
+
+#~ msgid "Page Options..."
+#~ msgstr "Page Options..."
 
 #~ msgid "User's iconset"
 #~ msgstr "User's iconset"
