@@ -3,50 +3,67 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-	<title>Command Line Parameters</title>
+	<title>Command line parameters</title>
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:10pt;
+			font-size:11pt;
 			font-family:Verdana;
 		}
 
 		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}a.ow-link-page-error{font-style:italic;color:#cc0033}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}blockquote.ow-wiki{border-left:4px solid #ccc;padding:10px 15px;margin:10px 0;background-color:#f9f9f9;color:#222}
-		
+		ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}
 	</style>
-	
+	<style>div.code {
+	background: #FBFCD2;
+	font-family: monospace;
+	border: solid 1px #CCC;
+	padding: 1em;
+}
+</style>
+<style>span.code {
+	display: inline-block;
+	background: #FBFCD2;
+	font-family: monospace;
+	border: solid 1px #CCC;
+	padding: 0.2em;
+}
+</style>
+<style>span.info {
+    display: inline-block;
+    color: #333;
+    background-color: #f0f0ff;
+    border-radius: 1px;
+    padding: 0px 2px;
+    margin: 2px;
+    border: 1px solid #b0b0e0;
+}
+</style>
+
 </head>
 
 <body>
-OutWiker can take some command line parameters. The syntax is as follows:<br/>
+<h1 class="ow-wiki">Command line parameters</h1>
 <br/>
-<blockquote class="ow-wiki">
-<pre>outwiker [--page PAGE] [--help] [--version] [--readonly] [--normal] [--debug] [--disable-plugins] [path]</pre>
-</blockquote><br/>
+When launching OutWiker from the command line, you can specify additional parameters. The following describes the parameters supported in this version.<br/>
 <br/>
-<b>path</b> - path to the note tree. For example: <br/>
-<blockquote class="ow-wiki">outwiker.exe "C:\temp\samplewiki"<br/>
+The command line syntax is as follows:<br/>
 <br/>
-outwiker.exe "C:\temp\samplewiki\__page.opt"</blockquote><br/>
-<br/>
-<b>-p, --page</b> - UID or relative path to note to show. For example:<br/>
-<blockquote class="ow-wiki">outwiker.exe --page="Page 1/Page 2/Page 3" "C:\temp\samplewiki"<br/>
-<br/>
-outwiker.exe -p "Page 1/Page 2/Page 3" "C:\temp\samplewiki"<br/>
-<br/>
-outwiker.exe --page="page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76" "C:\temp\samplewiki"<br/>
-</blockquote><br/>
-<br/>
-<b>-h, --help</b> - displays help for command line parameters. <br/>
-<br/>
-<b>-v, --version</b> - displays OutWiker's version.<br/>
-<br/>
-<b>-r, --readonly</b> - opens the note tree in read-only mode.<br/>
-<br/>
-<b>--normal</b> - does not allow minimising the main window when starting OutWiker.<br/>
-<br/>
-<b>--debug</b> - forces OutWiker to run in debug mode.<br/>
-<br/>
-<b>--disable-plugins</b> - Do not load any installed plug-in.
+<div class="code">outwiker [--page PAGE] [--help] [--version] [--readonly] [--normal] [--debug] [--disable-plugins] [path]</div><br/>
+Here, the square brackets <span class="code">[...]</span> indicate optional parts. Each parameter is described below.<br/>
+<ul class="ow-wiki"><li class="ow-wiki"><span class="code">path</span> — the path to a note tree. When this parameter is specified, OutWiker will immediately open the note tree at the specified location. This can be either the path to the directory containing the <span class="info">__page.opt</span> file at its root or the direct path to that file. For example:</li>
+</ul>
+<span class="code">outwiker.exe "C:\temp\samplewiki"</span><br/>
+<span class="code">outwiker.exe "C:\temp\samplewiki\__page.opt"</span><br/>
+<ul class="ow-wiki"><li class="ow-wiki"><span class="code">-r</span> or <span class="code">--readonly</span> — opens the note tree in read-only mode. In this mode, you cannot modify the page text, and the state of the note tree is not saved. This mode is used, for example, when opening the OutWiker help.</li><li class="ow-wiki"><span class="code">-p</span> or <span class="code">--page</span>. Use this parameter to specify a <a class="ow-wiki ow-link-page" href="page://links">page ID</a> or a relative path to a page that should be opened immediately after the note tree is loaded. For example:</li>
+</ul>
+<span class="code">outwiker.exe --page="page://1640eea0-1bb0-453b-ba4c-07f1c298ce76" "C:\temp\samplewiki"</span><br/>
+<span class="code">outwiker.exe --page="Page 1/Page 2/Page 3" "C:\temp\samplewiki"</span> <br/>
+<span class="code">outwiker.exe -p "Page 1/Page 2/Page 3" "C:\temp\samplewiki"</span> <br/>
+<ul class="ow-wiki"><li class="ow-wiki"><span class="code">--normal</span> — do not minimize the OutWiker main window on startup, even if the settings specify that the program should start minimized <a class="ow-wiki ow-link-page" href="page://settings_interface_tray">to the tray</a>.</li><li class="ow-wiki"><span class="code">--debug</span> — runs the application in debug mode. In this case, extensive additional information will be added to the <span class="info">outwiker.log</span> file in the <a class="ow-wiki ow-link-page" href="page://config-dirs">configuration directory</a> to help track the application's behavior. Frequent use of this parameter may cause the <span class="info">outwiker.log</span> file to increase in size rapidly. By default (without this parameter), only error messages and warnings are recorded in the log file.</li><li class="ow-wiki"><span class="code">--disable-plugins</span> — deactivates all installed <a class="ow-wiki ow-link-page" href="page://plugins">plugins</a> on startup.</li><li class="ow-wiki"><span class="code">-h</span> or <span class="code">--help</span> — displays help for the command line parameters.</li><li class="ow-wiki"><span class="code">-v</span> or <span class="code">--version</span> — displays the OutWiker version number.</li>
+</ul>
+<hr>
+<b>See also:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://key-features">Key features</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://config-dirs">Config directories</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://plugins">Plugins</a></li>
+</ul>
 </body>
 </html>

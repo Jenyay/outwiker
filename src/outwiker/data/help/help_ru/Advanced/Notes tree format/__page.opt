@@ -7,10 +7,11 @@ expand = False
 [General]
 type = wiki
 tags = расширенные возможности
-datetime = 2026-02-16 21:17:32.459035
+datetime = 2026-04-26 18:57:52.905916
 cursorposition = 0
-order = 3
+order = 1
 alias = Структура дерева заметок
+uid = advanced-note-tree-scructure
 
 [Misc]
 pageindex = 1

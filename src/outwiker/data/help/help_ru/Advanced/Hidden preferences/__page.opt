@@ -1,11 +1,12 @@
 [General]
 type = wiki
 tags = расширенные возможности
-order = 2
+order = 3
 creationdatetime = 2014-08-25 17:41:58.555902
-datetime = 2026-02-16 21:17:23.980605
+datetime = 2026-04-26 18:57:17.987089
 cursorposition = 0
 alias = Скрытые настройки
+uid = advanced-hidden-settings
 
 [wiki]
 md5_hash = 9bab1900fbace42041e98ae1635b80d1

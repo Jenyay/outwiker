@@ -9,10 +9,11 @@ expand = False
 [General]
 type = wiki
 tags = расширенные возможности
-datetime = 2026-02-16 21:17:07.630357
+datetime = 2026-04-26 18:56:46.980000
 cursorposition = 874
-order = 1
+order = 2
 alias = Изменение типа страниц
+uid = advanced-page-type
 
 [Misc]
 pageindex = 1

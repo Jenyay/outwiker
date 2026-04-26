@@ -7,10 +7,11 @@ expand = True
 [General]
 type = wiki
 order = 2
-tags = 
-datetime = 2026-02-28 18:23:35.797291
+tags = fixme
+datetime = 2026-04-26 19:37:29.215776
 cursorposition = 0
 alias = Основные возможности
+uid = key-features
 
 [Misc]
 pageindex = 1

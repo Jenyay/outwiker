@@ -1,3 +1,11 @@
-This section is for users who want to better understand the structure of note keeping and to get the maximum advantage of the program.
+!! Advanced features
 
-(:childlist:)
+Child pages in this section are intended for users who want to gain a deeper understanding of the note storage structure to make the most of the program's capabilities. Understanding the note structure and the parameters described in these notes may inspire ideas that you can implement using third-party scripts or applications.
+
+----
+'''See also:'''
+* page://advanced-command-line
+* page://advanced-note-tree-scructure
+* page://advanced-page-type
+* page://advanced-hidden-settings
+* page://advanced-aliases

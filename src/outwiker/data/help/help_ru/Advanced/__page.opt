@@ -7,10 +7,12 @@ expand = True
 [General]
 type = wiki
 order = 6
-tags = fixme,расширенные возможности
-datetime = 2026-04-26 18:20:09.044593
+tags = расширенные возможности
+datetime = 2026-04-26 19:09:01.963871
 cursorposition = 0
 alias = Расширенные возможности
+uid = advanced
+creationdatetime = 2026-04-26 18:55:07.485851
 
 [Misc]
 pageindex = 1

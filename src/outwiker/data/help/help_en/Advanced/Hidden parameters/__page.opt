@@ -1,10 +1,11 @@
 [General]
 type = wiki
 tags = advanced
-order = 1
+order = 3
 creationdatetime = 2014-08-25 17:50:54.679618
-datetime = 2026-02-28 18:30:30.125585
+datetime = 2026-04-26 18:57:25.775939
 cursorposition = 348
+uid = advanced-hidden-settings
 
 [wiki]
 md5_hash = f92685f7a8cf0dc814ca89d104319707

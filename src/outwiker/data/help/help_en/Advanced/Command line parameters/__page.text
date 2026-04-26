@@ -1,28 +1,40 @@
-OutWiker can take some command line parameters. The syntax is as follows:
+!! Command line parameters
 
-[>[@outwiker [--page PAGE] [--help] [--version] [--readonly] [--normal] [--debug] [--disable-plugins] [path]@]<]
+When launching OutWiker from the command line, you can specify additional parameters. The following describes the parameters supported in this version.
 
-'''path''' - path to the note tree. For example: 
-[>outwiker.exe "C:\temp\samplewiki"
+The command line syntax is as follows:
 
-outwiker.exe "C:\temp\samplewiki\__page.opt"<]
+%code%
+[=outwiker [--page PAGE] [--help] [--version] [--readonly] [--normal] [--debug] [--disable-plugins] [path]=]
+%%
 
-'''-p, --page''' - UID or relative path to note to show. For example:
-[>outwiker.exe --page="Page 1/Page 2/Page 3" "C:\temp\samplewiki"
+Here, the square brackets %code%[=[...]=]%% indicate optional parts. Each parameter is described below.
 
-outwiker.exe -p "Page 1/Page 2/Page 3" "C:\temp\samplewiki"
+* %code%path%% — the path to a note tree. When this parameter is specified, OutWiker will immediately open the note tree at the specified location. This can be either the path to the directory containing the %info%__page.opt%% file at its root or the direct path to that file. For example:
 
-outwiker.exe --page="[=page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76=]" "C:\temp\samplewiki"
-<]
+%code%outwiker.exe "C:\temp\samplewiki"%%
+%code%outwiker.exe "C:\temp\samplewiki\__page.opt"%%
 
-'''-h, --help''' - displays help for command line parameters. 
+* %code%-r%% or %code%--readonly%% — opens the note tree in read-only mode. In this mode, you cannot modify the page text, and the state of the note tree is not saved. This mode is used, for example, when opening the OutWiker help.
 
-'''-v, --version''' - displays OutWiker's version.
+* %code%-p%% or %code%--page%%. Use this parameter to specify a [[page ID -> page://links]] or a relative path to a page that should be opened immediately after the note tree is loaded. For example:
 
-'''-r, --readonly''' - opens the note tree in read-only mode.
+%code%[=outwiker.exe --page="page://1640eea0-1bb0-453b-ba4c-07f1c298ce76" "C:\temp\samplewiki"=]%%
+%code%outwiker.exe --page="Page 1/Page 2/Page 3" "C:\temp\samplewiki"%% 
+%code%outwiker.exe -p "Page 1/Page 2/Page 3" "C:\temp\samplewiki"%% 
 
-'''--normal''' - does not allow minimising the main window when starting OutWiker.
+* %code%--normal%% — do not minimize the OutWiker main window on startup, even if the settings specify that the program should start minimized [[to the tray -> page://settings_interface_tray]].
 
-'''--debug''' - forces OutWiker to run in debug mode.
+* %code%--debug%% — runs the application in debug mode. In this case, extensive additional information will be added to the %info%outwiker.log%% file in the [[configuration directory -> page://config-dirs]] to help track the application's behavior. Frequent use of this parameter may cause the %info%outwiker.log%% file to increase in size rapidly. By default (without this parameter), only error messages and warnings are recorded in the log file.
 
-'''--disable-plugins''' - Do not load any installed plug-in.
+* %code%--disable-plugins%% — deactivates all installed [[plugins -> page://plugins]] on startup.
+
+* %code%-h%% or %code%--help%% — displays help for the command line parameters.
+
+* %code%-v%% or %code%--version%% — displays the OutWiker version number.
+
+----
+'''See also:'''
+* page://key-features
+* page://config-dirs
+* page://plugins
