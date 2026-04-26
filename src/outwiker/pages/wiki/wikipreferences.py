@@ -18,11 +18,11 @@ class WikiPrefGeneralPanel(BasePrefPanel):
 
     def __createGui(self):
         # Show generated HTML code?
-        self.htmlCodeCheckbox = wx.CheckBox(self, -1, _("Show HTML Code Tab"))
+        self.htmlCodeCheckbox = wx.CheckBox(self, -1, _("Show HTML code tab"))
 
         # Highlight the wiki notation?
         self.colorizeWiki = wx.CheckBox(
-            self, -1, _("Highlight the Wiki Notation"))
+            self, -1, _("Highlight wiki notation"))
 
         # Thumbnails default size
         self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))

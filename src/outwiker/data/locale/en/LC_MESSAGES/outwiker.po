@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-25 20:25+0300\n"
+"POT-Creation-Date: 2026-04-26 17:03+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1896,7 +1896,6 @@ msgid "Wiki editor"
 msgstr "Wiki editor"
 
 #: outwiker/app/gui/preferences/prefcontroller.py:192
-#| msgid "Printing error"
 msgid "Printing text"
 msgstr "Printing text"
 
@@ -1974,7 +1973,6 @@ msgid "This options for text printing only"
 msgstr "This options for text printing only"
 
 #: outwiker/app/gui/preferences/textprintpanel.py:31
-#| msgid "Page properties…"
 msgid "Page setup…"
 msgstr "Page setup…"
 
@@ -3107,9 +3105,13 @@ msgid "0 - default size"
 msgstr "0 - default size"
 
 #: outwiker/pages/wiki/wikipage.py:61
-#: outwiker/pages/wiki/wikipagecontroller.py:69
 msgid "Wiki Page"
 msgstr "Wiki Page"
+
+#: outwiker/pages/wiki/wikipagecontroller.py:69
+#| msgid "Wiki Page"
+msgid "Wiki page"
+msgstr "Wiki page"
 
 #: outwiker/pages/wiki/wikipageview.py:54
 #: outwiker/pages/wiki/wikipageview.py:57
@@ -3130,12 +3132,14 @@ msgid "Select text background color"
 msgstr "Select text background color"
 
 #: outwiker/pages/wiki/wikipreferences.py:21
-msgid "Show HTML Code Tab"
-msgstr "Show HTML Code Tab"
+#| msgid "Show HTML Code Tab"
+msgid "Show HTML code tab"
+msgstr "Show HTML code tab"
 
 #: outwiker/pages/wiki/wikipreferences.py:25
-msgid "Highlight the Wiki Notation"
-msgstr "Highlight the Wiki Notation"
+#| msgid "Highlight the Wiki Notation"
+msgid "Highlight wiki notation"
+msgstr "Highlight wiki notation"
 
 #: outwiker/pages/wiki/wikipreferences.py:28
 msgid "Thumbnail Size"

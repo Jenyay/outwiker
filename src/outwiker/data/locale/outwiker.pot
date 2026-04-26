@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-25 20:25+0300\n"
+"POT-Creation-Date: 2026-04-26 17:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -3066,8 +3066,11 @@ msgid "0 - default size"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipage.py:61
-#: outwiker/pages/wiki/wikipagecontroller.py:69
 msgid "Wiki Page"
+msgstr ""
+
+#: outwiker/pages/wiki/wikipagecontroller.py:69
+msgid "Wiki page"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipageview.py:54
@@ -3089,11 +3092,11 @@ msgid "Select text background color"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipreferences.py:21
-msgid "Show HTML Code Tab"
+msgid "Show HTML code tab"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipreferences.py:25
-msgid "Highlight the Wiki Notation"
+msgid "Highlight wiki notation"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipreferences.py:28
