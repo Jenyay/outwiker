@@ -1,18 +1,30 @@
-!!! Wiki page
+!! Wiki page
 
-%center%Attach:outwiker_opt_wiki_page.png
+%center%Attach:outwiker_opt_wikipage.png
 
-This section contains parameters which affect [[wiki page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] general look.
+This section contains parameters that affect the appearance and behavior of [[wiki pages -> page://wiki-page]].
 
-Clicking the "Preview" tab of a wiki note triggers procedure of HTML code autogenerating. The generated code is rendered at the "Preview" tab. Normally, it happens without user interference, however, sometimes it may be desirable to have access to the generated code, for example, to copy and paste it into a web or blog page. The code is listed on the "HTML" tab. As not everyone needs this functionality, so the "HTML" tab is hidden by default. To make it visible, one should select the '''Show HTML Code Tab''' check-box.
+When switching a wiki page to %notice%Preview%% mode, HTML code is generated in the background. This generated HTML page is what the user actually sees. In most cases, you don't need to worry about the underlying HTML code. However, the HTML generated from the wiki notation can be useful for certain tasks—for example, if you use OutWiker to create website pages or blog posts. For this purpose, there is an %notice%HTML%% mode, with its tab located at the bottom next to the %notice%Preview%% tab. Since not everyone needs this mode, the tab is hidden by default. To display it, enable the %notice%Show HTML code tab%% check box.
 
-The '''Thumbnail size''' parameter value sets the default thumbnail size. The thumbnails can be created with the [[[=%thumb%Attach:filename%%=] -> page://__22953e02-77ed-4b41-a5fe-a75e0d6a431e]] wiki command. It should be taken into account that thumbnail size value set in specific wiki tag has precedence and thus overrides the value of this parameter.
+The %notice%Highlight wiki notation%% check box allows you to enable or disable syntax highlighting on the wiki page.
 
-[[Links -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]] of the wiki notes can be of two formats:
+The %notice%Thumbnail size%% parameter sets the default size for image thumbnails created using the [[[=%thumb%Attach:filename%%=] -> page://wiki-attachments/#thumb]] syntax, provided that the thumbnail size is not explicitly defined within the wiki tag's additional parameters.
 
-* [=[[Link -> Comment]]=]
-* [=[[Comment | Link]]=]
+[[Links -> page://wiki-links]] on wiki pages can be represented in two formats:
 
-The '''Default link style''' parameter allows to set the default format that is automatically applied to all links inserted via dialogue invoked by ''Wiki - Link'' menu or the "Link" button of the toolbar.
+* %code%[=[[Link -> Comment]]=]%%
+* %code%[=[[Comment | Link]]=]%%
 
-If one creates a new [[wiki page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] without any content (even space characters), then OutWiker can be forced to show some data about the note on the ''Preview'' tab, for example, it can display lists of attachments and/or child pages. The '''Template for empty page''' field allows specific templates for such data to be created.
+When using the dialog opened via the %notice%Wiki - Link%% menu item or the corresponding toolbar button, the link can be created in either format. Which format is used is determined by the %notice%Default link style%% parameter.
+
+If you create a [[wiki page -> page://wiki-page]] and leave it empty (no characters, not even spaces), the %notice%Preview%% mode can display something more useful than a blank sheet. For example, by default, it will show a list of attached files and child pages. You can change this behavior using the %notice%Template for empty page%% parameter. The text in this field will be used as the content for any empty page. The empty page template can include wiki notation.
+
+----
+'''See also:'''
+* page://settings_interface_preview
+* page://settings_editor_html_editor
+* page://settings_editor_wiki_editor
+* page://wiki-page
+* page://wiki-attachments
+* page://wiki-links
+* page://html-page

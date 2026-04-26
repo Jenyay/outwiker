@@ -7,7 +7,7 @@
 ||%code%[=Attach:"subdir/small_image_in_subdir.jpg"=]%% || Attach:"subdir/small_image_in_subdir.jpg" ||Insert an attached image from a subdirectory ||
 ||%code%[=[[http://jenyay.net | Attach:small_image.jpg]]=]%% || [[http://jenyay.net | Attach:small_image.jpg]] ||Insert a link as an image ||
 ||%code%[=[[page://wiki-page | Attach:small_image.jpg]]=]%% || [[page://wiki-page | Attach:small_image.jpg]] ||Insert a link to another page as an image ||
-||%code%[=%thumb%Attach:image.jpg%%=]%% || %thumb%Attach:image.jpg%% ||Insert a thumbnail with a link to the original. [[<<]]Thumbnails are created in the %notice%__thumb%% subdirectory of the attached files directory ||
+||[[#thumb]]%code%[=%thumb%Attach:image.jpg%%=]%% || %thumb%Attach:image.jpg%% ||Insert a thumbnail with a link to the original. [[<<]]Thumbnails are created in the %notice%__thumb%% subdirectory of the attached files directory ||
 ||%code%[=%width=200%Attach:image.jpg%%=]%% || %width=200%Attach:image.jpg%% ||Insert a thumbnail with a specified width and a link to the original.[[<<]][[<<]]\
 Possible command variants: [[<<]][[<<]]\
 %code%[=%width=200px%Attach:image.jpg%%=]%% [[<<]][[<<]]\

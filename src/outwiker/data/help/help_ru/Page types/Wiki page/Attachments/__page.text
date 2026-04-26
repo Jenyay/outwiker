@@ -7,7 +7,7 @@
 ||%code%[=Attach:"subdir/small_image_in_subdir.jpg"=]%% || Attach:"subdir/small_image_in_subdir.jpg" ||Вставить прикрепленную картинку из вложенной папки ||
 ||%code%[=[[http://jenyay.net | Attach:small_image.jpg]]=]%% || [[http://jenyay.net | Attach:small_image.jpg]] ||Вставить ссылку в виде картинки ||
 ||%code%[=[[page://wiki-page | Attach:small_image.jpg]]=]%% || [[page://wiki-page | Attach:small_image.jpg]] ||Вставить ссылку на другую страницу в виде картинки ||
-||%code%[=%thumb%Attach:image.jpg%%=]%% || %thumb%Attach:image.jpg%% ||Вставить уменьшенную картинку со ссылкой на оригинал. [[<<]]Уменьшенные копии картинок создаются в поддиректории %notice%__thumb%% директории с прикрепленными файлами ||
+||[[#thumb]]%code%[=%thumb%Attach:image.jpg%%=]%% || %thumb%Attach:image.jpg%% ||Вставить уменьшенную картинку со ссылкой на оригинал. [[<<]]Уменьшенные копии картинок создаются в поддиректории %notice%__thumb%% директории с прикрепленными файлами ||
 ||%code%[=%width=200%Attach:image.jpg%%=]%% || %width=200%Attach:image.jpg%% ||Вставить уменьшенную картинку с заданным размером по горизонтали со ссылкой на оригинал.[[<<]][[<<]]\
 Возможные варианты команды: [[<<]][[<<]]\
 %code%[=%width=200px%Attach:image.jpg%%=]%% [[<<]][[<<]]\
