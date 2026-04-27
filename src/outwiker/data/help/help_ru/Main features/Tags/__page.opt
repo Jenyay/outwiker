@@ -2,10 +2,10 @@
 type = wiki
 tags = метки
 order = 1
-datetime = 2026-02-28 20:48:54.232549
+datetime = 2026-04-27 09:29:56.755885
 cursorposition = 31
-alias = Работа с метками
-uid = __ca5c9434-c31b-493a-9d22-20b70d645922
+alias = Метки
+uid = tags
 creationdatetime = 2026-02-28 18:51:27.007314
 
 [wiki]

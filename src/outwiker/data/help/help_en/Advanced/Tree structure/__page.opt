@@ -1,5 +1,6 @@
 [wiki]
 md5_hash = 9ea3ff037099546433a4fcc3e542304c
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n", "notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n", "code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 
 [Tree]
 expand = False
@@ -8,7 +9,7 @@ expand = False
 type = wiki
 order = 1
 tags = advanced
-datetime = 2026-04-26 18:58:12.750606
+datetime = 2026-04-27 10:21:45.153825
 cursorposition = 1607
 uid = advanced-note-tree-scructure
 

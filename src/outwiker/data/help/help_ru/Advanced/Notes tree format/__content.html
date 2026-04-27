@@ -7,25 +7,62 @@
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:10pt;
+			font-size:11pt;
 			font-family:Verdana;
 		}
 
 		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}a.ow-link-page-error{font-style:italic;color:#cc0033}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}blockquote.ow-wiki{border-left:4px solid #ccc;padding:10px 15px;margin:10px 0;background-color:#f9f9f9;color:#222}
-		
+		ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}
 	</style>
-	
+	<style>span.info {
+    display: inline-block;
+    color: #333;
+    background-color: #f0f0ff;
+    border-radius: 1px;
+    padding: 0px 2px;
+    margin: 2px;
+    border: 1px solid #b0b0e0;
+}
+</style>
+<style>span.notice {
+	display: inline-block;
+	color: #333;
+	background-color: #e3f7fc;
+	border-radius: 1px;
+	padding: 0px 2px 0px 2px;
+	margin: 2px;
+	border:1px solid #8ed9f6;
+}
+</style>
+<style>span.code {
+	display: inline-block;
+	background: #FBFCD2;
+	font-family: monospace;
+	border: solid 1px #CCC;
+	padding: 0.2em;
+}
+</style>
+
 </head>
 
 <body>
-Каждая заметка расположена в своей отдельной папке, вложенные папки как раз и создают дерево. Все другие вложенные папки считаются вложенными заметками. Вот, например, как выглядит дерево заметок этой справки: <a class="ow-wiki ow-link-attach ow-attach-file" href="__attach/FileTree.txt">FileTree.txt</a><br/>
+<h1 class="ow-wiki">Структура дерева заметок</h1>
 <br/>
-В каждой папке-заметке, как и в корне дерева, находится файл <i>__page.opt</i>, в котором хранятся настройки отдельной заметки (теги, ее тип и т.д.). Кроме того во вложенных папках расположены файлы <i>__page.text</i> – собственно, содержимое заметки (формат этого файла зависит от типа страницы) и, возможно, <i>__icon.*</i> – иконка в любом графическом формате размером 16×16 пикселей.<br/>
+Дерево заметок (страниц) строится на основе дерева файловой системы. Каждая страница расположена в своей отдельной директории, а вложенные поддиректории образуют дочерние страницы.<br/>
 <br/>
-В каждой папке-заметке есть вложенная папка <i>__attach</i>, где располагаются прикрепленный файлы, поэтому для того, чтобы прикрепить файл к заметке, достаточно его скопировать в папку <i>__attach</i>.<br/>
+В каждой директории, чтобы она считалась страницей с заметками, а также в корне дерева, должен присутствовать файл <span class="info">__page.opt</span>, в котором хранятся свойства данной заметки (<a class="ow-wiki ow-link-page" href="page://page-types">тип заметки</a>, <a class="ow-wiki ow-link-page" href="page://tags">метки</a> и другая информация). Содержимое этого файла зависит от <a class="ow-wiki ow-link-page" href="page://page-types">типа страницы</a>. Кроме того в директориях с заметками может быть расположен файл <span class="info">__page.text</span> – собственно, содержимое заметки (формат этого файла тоже зависит от типа страницы) и, возможно, файл <span class="info">__icon.*</span> – иконка для заметки в любом графическом формате (обычно в формате SVG или PNG).<br/>
 <br/>
-Благодаря такой структуре возможно открывать каждую ветвь как отдельное дерево, только при этом надо учитывать, что корневой элемент древа не содержит самой заметки, а используется только как контейнер для вложенных страниц.<br/>
+Внутри директорий <a class="ow-wiki ow-link-page" href="page://wiki-page">вики-</a> и <a class="ow-wiki ow-link-page" href="page://html-page">HTML-страниц</a> создается файл <span class="info">__content.html</span>, который содержит окончательный вид заметки, который показывается пользователю. Этот файл создается на основе викинотации или HTML-кода, который вводит пользователь при написании заметки. Если вам нужно открыть заметку на компьютере, где не установлен OutWiker, то вы можете открыть файл <span class="info">__content.html</span> нужной заметки в любом браузере.<br/>
 <br/>
-В программе файлы и директории, созданные OutWiker'ом, начинаются с двух символов подчеркивания.
+В каждой директории-заметке может быть поддиректория <span class="info">__attach</span>, куда помещаются <a class="ow-wiki ow-link-page" href="page://attachments">прикрепленные файлы</a>. Эта директория создается только при необходимости, если пользователь добавляет вложение на страницу или копирует путь до директории с вложениями через контекстное меню в дереве заметок или с помощью пункта меню <span class="notice">Инструменты - Пути - Копировать путь до вложений</span>. Для того, чтобы прикрепить файл к заметке, достаточно его скопировать в директорию <span class="info">__attach</span>. Внутри этой директории можно создавать вложенные директории, которые также будут отображаться на панели <span class="notice">Вложения</span>.<br/>
+<br/>
+В директории заметки в формате <a class="ow-wiki ow-link-page" href="page://wiki-page">викинотации</a> может присутствовать директория с именем <span class="info">__thumb</span>. Изначально она была предназначена для хранения миниатюр изображений, но также эту директорию иногда используют для хранения дополнительных файлов, используемых при отображении сгенерированного HTML-кода.<br/>
+<br/>
+По умолчанию  имя заметки совпадает с именем директории, содержащей эту заметку. При этом все директории, имена которых начинаются с двух символов подчеркивания <span class="code">__</span>, считаются служебными и не рассматриваются как вложенная страница. Однако это не значит, что имена заметок не могут начинаться с этих символов. Чтобы обойти такое ограничение, можно использовать <a class="ow-wiki ow-link-page" href="page://advanced-aliases">псевдонимы страниц</a>, позволяющие создавать заметки, имена которых не совпадают с именами директорий, которые эти заметки содержат. Также это позволяет обойти ограничения файловых систем на использование некоторых символов в именах файлов и директорий.<br/>
+<br/>
+Благодаря такой структуре возможно открывать каждую ветвь дерева как отдельное дерево заметок, только при этом надо учитывать, что корневой элемент древа не содержит текста заметки, а используется только как контейнер для вложенных страниц.<br/>
+<hr>
+<b>См. также:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://page-types">Типы страниц</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://advanced-aliases">Псевдонимы страниц</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://attachments">Вложения</a></li>
+</ul>
 </body>
 </html>

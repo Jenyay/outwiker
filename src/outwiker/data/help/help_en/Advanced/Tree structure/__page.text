@@ -1,15 +1,21 @@
-Each note is stored in its own directory, which may contain any number of (sub)directories with lower level (child) notes. Thus the note tree in OutWiker is a representation for the tree of directories on disk. For example, this reference note tree is organised as shown in the following file: Attach:tree.txt
+!! Structure of the note tree
 
-Each directory, including the root directory, contains the ''__page.opt'' file, that stores various settings for the note, such as tag(s), page type, etc (or some info about the whole tree for the case of the root directory).
+The note tree (page tree) is built upon the file system structure. Each page is located in its own separate directory, and nested subdirectories form child pages.
 
-Each directory, except for the root directory, includes the following files:
+Each directory that is treated as a page, as well as the root of the tree, must contain a %info%__page.opt%% file. This file stores the note's properties ([[page type -> page://page-types]], [[tags -> page://tags]], and other metadata). The content of this file depends on the [[page type -> page://page-types]]. Additionally, note directories may contain a %info%__page.text%% file—the actual content of the note (its format also depends on the page type)—and potentially a %info%__icon.*%% file, which serves as the note's icon in any graphic format (typically SVG or PNG).
 
-* mandatory ''__page.text'' contains note content (the format of this file depends on the note type);
-* optional ''__icon .*'' stores note's icon of 16 × 16 pixels size (OutWiker recognises all standard bitmap formats);
-* some other format-specific files (for example, ''__content.html'').
+Inside the directories of [[wiki pages -> page://wiki-page]] and [[HTML pages -> page://html-page]], a %info%__content.html%% file is created. This file contains the final version of the note as displayed to the user. It is generated from the wiki notation or HTML code entered by the user. If you need to view a note on a computer where OutWiker is not installed, you can open the %info%__content.html%% file of the desired note in any web browser.
 
-Apart from child note subdirectories, each directory can contain the ''__attach'' subdirectory, which stores files attached to the note (and vice versa all files placed to this directory will be automatically attached to the note).
+Each note directory may contain a %info%__attach%% subdirectory where [[attachments -> page://attachments]] are stored. This directory is created only when necessary—for example, when a user adds an attachment or copies the path to the attachments directory via the note tree context menu or the %notice%Tools - Paths - Copy attachments path%% menu item. To attach a file to a note, simply copy it into the %info%__attach%% directory. You can create nested subdirectories within this folder, which will also be displayed in the %notice%Attachments%% panel.
 
-Because of this note tree structure, each branch of the tree can be considered as tree on its own (the only thing to remember is that the root element of the note tree is not a note, rather it serves as container for lower level notes).
+In wiki-type note directories, there may be a directory named %info%__thumb%%. Originally intended for storing image thumbnails, this directory is sometimes used for additional files required to display the generated HTML code.
 
-For OutWiker to be able to build the note tree, names of files must begin with two consecutive underscores (it does not apply to the files within the ''__attach'' directory, there are no special requirements for names of those).
+By default, the note title matches the name of its directory. All directories with names starting with two underscores (%code%__%%) are considered auxiliary and are not treated as nested pages. This does not mean that note titles cannot start with these characters. To bypass this limitation, you can use [[page aliases -> page://advanced-aliases]], which allow you to create notes with titles that differ from their directory names. This also helps bypass file system restrictions on specific characters in file and directory names.
+
+Due to this structure, any branch of the tree can be opened as a separate note tree. However, keep in mind that the root element of a tree does not contain note text; it serves only as a container for nested pages.
+
+----
+'''See also:'''
+* page://page-types
+* page://advanced-aliases
+* page://attachments

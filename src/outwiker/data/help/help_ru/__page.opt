@@ -5,12 +5,13 @@ expand = True
 lastviewedpage = О программе и контакты
 
 [General]
-selectedtab = 0
+selectedtab = 1
 
 [Bookmarks]
 bookmark_0 = Пользователям/Типы страниц/Wiki-страница
 bookmark_1 = Пользователям/Горячие клавиши
 
 [Tabs]
-tab_0 = Advanced/Command line
+tab_0 = Advanced/Notes tree format
+tab_1 = Advanced/Notes tree format
 
