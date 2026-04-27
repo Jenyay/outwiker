@@ -60,6 +60,8 @@ In wiki-type note directories, there may be a directory named <span class="info"
 <br/>
 By default, the note title matches the name of its directory. All directories with names starting with two underscores (<span class="code">__</span>) are considered auxiliary and are not treated as nested pages. This does not mean that note titles cannot start with these characters. To bypass this limitation, you can use <a class="ow-wiki ow-link-page" href="page://advanced-aliases">page aliases</a>, which allow you to create notes with titles that differ from their directory names. This also helps bypass file system restrictions on specific characters in file and directory names.<br/>
 <br/>
+A <span class="info">__cache.tmp</span> file is created in the root directory of the note tree, containing non-essential auxiliary information. For example, this file stores information about which branches of the note tree are currently expanded or collapsed. Losing data from this file is not an issue; therefore, the <span class="info">__cache.tmp</span> file does not need to be stored on a server or in a repository if you use version control systems to store your note tree.<br/>
+<br/>
 Due to this structure, any branch of the tree can be opened as a separate note tree. However, keep in mind that the root element of a tree does not contain note text; it serves only as a container for nested pages.<br/>
 <hr>
 <b>See also:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://page-types">Page types</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://advanced-aliases">Page alias</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://attachments">Attachments</a></li>

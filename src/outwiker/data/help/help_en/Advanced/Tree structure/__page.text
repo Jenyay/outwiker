@@ -12,6 +12,8 @@ In wiki-type note directories, there may be a directory named %info%__thumb%%. O
 
 By default, the note title matches the name of its directory. All directories with names starting with two underscores (%code%__%%) are considered auxiliary and are not treated as nested pages. This does not mean that note titles cannot start with these characters. To bypass this limitation, you can use [[page aliases -> page://advanced-aliases]], which allow you to create notes with titles that differ from their directory names. This also helps bypass file system restrictions on specific characters in file and directory names.
 
+A %info%__cache.tmp%% file is created in the root directory of the note tree, containing non-essential auxiliary information. For example, this file stores information about which branches of the note tree are currently expanded or collapsed. Losing data from this file is not an issue; therefore, the %info%__cache.tmp%% file does not need to be stored on a server or in a repository if you use version control systems to store your note tree.
+
 Due to this structure, any branch of the tree can be opened as a separate note tree. However, keep in mind that the root element of a tree does not contain note text; it serves only as a container for nested pages.
 
 ----

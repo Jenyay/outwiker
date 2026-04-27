@@ -1,9 +1,6 @@
 [wiki]
 md5_hash = 1ad5623afb4bbbee78a4bcb13406188a
 
-[Tree]
-expand = True
-
 [General]
 type = wiki
 order = 6

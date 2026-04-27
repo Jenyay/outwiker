@@ -1,18 +1,27 @@
-It is not possible to change note type via GUI. However, it can be done manually, since any note is stored on disk as set of text and bitmap files.
+!! Changing page types
 
-In order to manualy change the note type do the following:
+OutWiker supports various [[page types -> page://page-types]]: plain [[text pages -> page://text-page]], [[HTML pages -> page://html-page]], [[wiki pages -> page://wiki-page]], and [[global search pages -> page://search-page]]. Additionally, some plugins, such as [[Markdown -> https://jenyay.net/Outwiker/MarkdownEn]] and [[WebPage -> https://jenyay.net/Outwiker/WebPageEn]], introduce new page types.
 
-# Run Windows Explorer, go to the directory where the note's files are located.
-# Open the ''__page.opt'' file in a text editor.
-# Change value of the ''Type'' field of the ''[General]'' section with the desired type name and save the file.
-# Launch OutWiker (if OutWiker's window has already been opened, go to "Tools / Reload Wiki" to refresh the tree of notes).
+Currently, there is no way to change a page type via the graphical user interface after the page has been created. However, you can change the page type by editing the contents of the %info%__page.opt%% file within the page directory. To do this, open the file in a text editor and change the %code%type%% parameter value in the %code%[General]%% section. The possible values are listed below. Here are the currently supported built-in page types:
 
-At the moment OutWiker supports the following note types:
-* text - [[Text Page -> page://__b32aa743-384d-493f-aad4-4c4cbf945fbb]];
-* html - [[HTML Page -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]]; 
-* wiki - [[Wiki Page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]];
-* search - [[Search Page -> page://__80ff0cd2-f4f3-42d8-9b38-4a73cf42a9d0]].
+* %code%text%% — [[Text page -> page://text-page]]
+* %code%html%% — [[HTML page -> page://html-page]]
+* %code%wiki%% — [[Wiki page -> page://wiki-page]]
+* %code%search%% — [[Search page -> page://search-page]]
+
+Page types supported via plugins:
+
+* %code%markdown%% — Markdown page ([[Markdown -> https://jenyay.net/Outwiker/MarkdownEn]] plugin)
+* %code%web%% — Web page ([[WebPage -> https://jenyay.net/Outwiker/WebPageEn]] plugin)
+
+If you are editing the settings file of a page within the currently open note tree, remember to reload the note tree.
 
 %warn%
-'''Use the described procedure with caution for the syntax as well as structure of ''__page.opt'' and ''__page.text'' files depend on the note type.'''
+Change page types with caution, as the %info%__page.opt%% file may contain different parameters for different page types, and the content of the %info%__page.text%% file may also vary.
 %%
+
+----
+'''See also:'''
+* page://advanced-note-tree-scructure
+* page://advanced-hidden-settings
+* page://advanced-aliases
