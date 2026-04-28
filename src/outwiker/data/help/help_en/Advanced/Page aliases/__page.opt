@@ -1,14 +1,10 @@
 [General]
 type = wiki
-tags = расширенные возможности
+tags = advanced
 order = 3
 creationdatetime = 2020-05-28 21:09:06.698777
-datetime = 2026-04-28 09:03:56.778888
-alias = Псевдонимы страниц
+datetime = 2026-04-28 09:17:11.151682
 uid = advanced-aliases
-
-[Wiki]
-recentstylename = code
 
 [wiki]
 custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n", "code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}

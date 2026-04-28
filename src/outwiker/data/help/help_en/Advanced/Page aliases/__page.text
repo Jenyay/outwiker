@@ -1,0 +1,16 @@
+!! Page aliases
+
+A page title displayed in the note tree does not always match the name of the directory containing that page's files. Furthermore, file systems restrict which characters can be used in file and directory names. For example, Windows prohibits characters such as *, ?, :, /, \, and others. However, you might still want to use these characters in page titles. To bypass this limitation, a page can have an alias; when present, the alias is what will be displayed in the note tree.
+
+An alias is assigned automatically when creating a page with prohibited characters, or when a page is created with a name that already exists at the same nesting level. In such cases, the folder name is adjusted to meet file system requirements, while the note is displayed to the user with the name they originally entered.
+
+The alias is defined in the [[note settings file -> page://advanced-note-tree-scructure]] %info%__page.opt%% within the %code%[General]%% section using the %code%alias%% parameter.
+
+The main OutWiker interface does not provide a way to directly modify this parameter, as users typically do not need to know whether a note's folder name matches its title. However, if you require this functionality, you can use the [[HackPage -> https://jenyay.net/Outwiker/HackPageEn]] [[plugin -> page://plugins]], which allows you to set and change page aliases, as well as rename a note's directory without changing the page title.
+
+When creating [[links -> page://wiki_links]] to other pages, you can use either page aliases or the corresponding folder names. However, it is highly recommended to create links using unique page IDs instead.
+
+----
+'''See also:'''
+* page://advanced-note-tree-scructure`
+* page://advanced-page-type
