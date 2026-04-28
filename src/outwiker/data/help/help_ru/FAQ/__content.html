@@ -33,37 +33,32 @@
 Далее собраны вопросы, которые задавали пользователи, с ответами на них.<br/>
 <br/>
 <h2 class="ow-wiki">У меня OutWiker не запускается под Windows. Что делать?</h2>
-<br/>
 Попробуйте установить <a class="ow-wiki" href="https://www.microsoft.com/en-us/download/details.aspx?id=48145">MS Visual C++ Redistributable Package</a>. Если установка библиотеки не помогла, напишите об этом автору на почту <a class="ow-wiki" href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a> или в <a class="ow-wiki" href="https://t.me/jenyay">Telegram</a> с полным текстом ошибки, который можно найти в файле <span class="info">outwiker.log</span> в <a class="ow-wiki ow-link-page" href="page://config-dirs">директории настроек</a>.<br/>
 <br/>
 <h2 class="ow-wiki">Будет ли версия OutWiker под мобильные платформы?</h2>
-<br/>
 Когда только я начинал разрабатывать OutWiker, то планировал сделать версию хотя бы под Android. Со временем понял, что это отдельная большая задача. Интерфейс программы под PC и мобильные платформы должны быть принципиально разными. Учитывая, что OutWiker во многом ориентирован на викинотацию, а на мобильных телефонах неудобно набирать много текста, особенно с управляющими символами, разработку под мобильные платформы я отложил в сторону. Может быть когда-нибудь к ней вернусь.<br/>
 <br/>
 <h2 class="ow-wiki">Почему нет deb-пакета под Linux?</h2>
-<br/>
 OutWiker написан на Python и использует некоторый набор сторонних библиотек, некоторые из которых уже не поддерживаются авторами, а некоторые изменяют свое поведение в новых версиях. При сборке deb-пакета под определенную версию Ubuntu нужно ориентироваться на конкретные версии Python, которые разные в разных версиях Ubuntu. Подобные проблемы возникают и с библиотеками. Это очень муторная работа поддерживать разные сочетания версий Python и библиотек, которые поставляются с Ubuntu. Поэтому некоторое время назад было решено отказаться от сборки deb-пакетов в пользу <a class="ow-wiki" href="https://snapcraft.io/outwiker">snap</a> и <a class="ow-wiki" href="https://flathub.org/en/apps/net.jenyay.Outwiker">flatpak</a>.<br/>
 <br/>
 <h2 class="ow-wiki">Может быть лучше сделать, чтобы программа хранила заметки в одном файле?</h2>
-<br/>
 Хранение заметок в виде дерева директорий - одна из основных особенностей, ради которой и задумывалась программа OutWiker. Это сделано для того, чтобы уменьшить вероятность того, что будут потеряны все заметки из-за сбоя файловой системы, который уничтожит один файл.<br/>
 <br/>
 <h2 class="ow-wiki">Будет ли визуальный редактор для страниц?</h2>
-<br/>
 Есть мысли сделать отдельный тип страниц в формате RichTextFormat с визуальным редактором. Не исключаю, что появится визуальный редактор для HTML-страниц. Но о каких-либо сроках говорить пока не могу.<br/>
 <br/>
-<h2 class="ow-wiki">Как устанавливать плагины</h2>
+<h2 class="ow-wiki">Почему бы не добавить шифрование заметок?</h2>
+Криптография - это особая сложная область, в которой слишком высока цена ошибок. Лучше пусть шифрования не будет совсем, чем шифрование формальное, но которое легко взламывается. К тому же для шифрования файлов существует большое количество сторонних приложений, например, <a class="ow-wiki" href="https://veracrypt.io">VeraCrypt</a>, <a class="ow-wiki" href="https://nuetzlich.net/gocryptfs/">gocryptfs</a> / <a class="ow-wiki" href="https://github.com/bailey27/cppcryptfs">cppcryptfs</a>, <a class="ow-wiki" href="https://www.cryfs.org">CryFS</a> и другие. Эти инструменты легко можно использовать для шифрования дерева заметок OutWiker.<br/>
 <br/>
+<h2 class="ow-wiki">Как устанавливать плагины</h2>
 Для установки <a class="ow-wiki ow-link-page" href="page://plugins">плагинов</a> необходимо распаковать скачанный архив с плагином в директорию <span class="info">plugins</span>, расположенный в <a class="ow-wiki ow-link-page" href="page://config-dirs">директории настроек</a>. Если вы запускаете OutWiker в портабельном режиме под Windows, т.е. когда файл настроек <span class="info">outwiker.ini</span> расположен рядом с запускаемым файлом <span class="info">outwiker.exe</span>, поддиректория <span class="info">plugins</span> будет создана в той же директории, где расположен файл <span class="info">outwiker.exe</span>.<br/>
 <br/>
 Обратите внимание, что каждый плагин - это директория с файлами, именно эту директорию и нужно копировать в <span class="info">plugins</span>. В <a class="ow-wiki ow-link-page" href="page://settings">диалоге настроек</a> в разделе <a class="ow-wiki ow-link-page" href="page://settings-plugins">Плагины</a> вы можете отключать плагины, не удаляя их из директории <span class="info">plugins</span>.<br/>
 <br/>
 <h2 class="ow-wiki">Как помочь с переводом интерфейса на другой язык?</h2>
-<br/>
 Все локализации OutWiker хранятся на сервисе <a class="ow-wiki" href="https://crowdin.com/project/outwiker">crowdin.com</a>. Там вы можете присоединиться к уже начатым переводам интерфейса на другие языки или начать новый перевод. Важно, чтобы в первую очередь был переведен файл <span class="info">outwiker.pot</span>, который содержит строки, используемые в основном интерфейсе приложения. Остальные файлы локализации относятся к плагинам.<br/>
 <br/>
 <h2 class="ow-wiki">Куда отправлять сообщения об ошибках и предложения о новых возможностях?</h2>
-<br/>
 Лучше всего, если вы оформите Issue на странице <a class="ow-wiki" href="https://github.com/Jenyay/outwiker/issues">github</a>. Также вы можете писать мне на почту <a class="ow-wiki" href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a> или в <a class="ow-wiki" href="https://t.me/jenyay">Telegram</a>. Можете писать по-английски или по-русски.<br/>
 <hr>
 <b>См. также:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://config-dirs">Директории настроек</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://plugins">Плагины</a></li>

@@ -7,13 +7,14 @@ expand = False
 
 [General]
 type = wiki
-order = 1
-tags = wiki, вложения
-datetime = 2026-04-26 16:52:42.881974
+order = 2
+tags = wiki,вложения
+datetime = 2026-04-28 20:17:25.872857
 cursorposition = 613
 uid = wiki-attachments
 alias = Прикрепленные файлы и картинки
 icon = images/__std_image.svg
+creationdatetime = 2026-04-28 20:16:49.829913
 
 [Misc]
 pageindex = 1

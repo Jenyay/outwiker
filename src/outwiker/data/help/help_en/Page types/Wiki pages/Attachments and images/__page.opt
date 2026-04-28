@@ -7,10 +7,10 @@ expand = False
 
 [General]
 type = wiki
-order = 1
+order = 2
 tags = wiki,attachments
 cursorposition = 0
-datetime = 2026-04-26 16:53:44.241712
+datetime = 2026-04-28 20:18:45.957688
 uid = wiki-attachments
 icon = images/__std_image.svg
 

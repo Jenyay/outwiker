@@ -1,4 +1,4 @@
-!!! Attached files and images 
+!!! Attachments and images
 
 || border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Syntax''' || '''Result''' || '''Comment''' ||
@@ -39,3 +39,9 @@ Thumbnails are created in the %notice%__thumb%% subdirectory of the attached fil
 ||%code%[=[[Attached file -> Attach:file.txt]]=]%% || [[Attached file -> Attach:file.txt]] ||Link to an attached file with a comment [[<<]]Same as the previous entry. ||
 ||%code%[=[[Attach:"subdir/file_in_subdir.txt" | Attached file]]=]%% || [[Attach:"subdir/file_in_subdir.txt" | Attached file]] ||Link to an attached file in a subdirectory with a comment ||
 ||%code%[=[[Attached file -> Attach:"subdir/file_in_subdir.txt"]]=]%% || [[Attached file -> Attach:"subdir/file_in_subdir.txt"]] ||Link to an attached file in a subdirectory with a comment [[<<]]Same as the previous entry. ||
+
+----
+'''See also:'''
+* page://wiki-format-text
+* page://wiki-links
+* page://wiki-tables

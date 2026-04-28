@@ -2,7 +2,7 @@
 
 %center%Attach:outwiker_opt_preview.png
 
-This section controls the appearance of [[HTML -> page://__7bd312fb-c3e4-4d9d-9267-cc394dbb9f20]] and [[wiki pages -> page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0]] in preview mode. Some [[plugins -> page://plugins]] add new page types that also feature a preview mode; these settings apply to those page types as well.
+This section controls the appearance of [[HTML -> page://html-page]] and [[wiki pages -> page://wiki-page]] in preview mode. Some [[plugins -> page://plugins]] add new page types that also feature a preview mode; these settings apply to those page types as well.
 
 The %notice%Font%% setting allows you to define the default font size and typeface used on the page.
 

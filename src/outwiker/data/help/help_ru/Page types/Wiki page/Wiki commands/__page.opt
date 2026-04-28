@@ -9,7 +9,7 @@ expand = True
 [General]
 type = wiki
 order = 7
-tags = wiki, команды
+tags = wiki,команды
 datetime = 2026-03-28 20:25:42.221498
 cursorposition = 0
 uid = wikicommand

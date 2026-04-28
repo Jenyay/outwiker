@@ -8,9 +8,9 @@ expand = False
 
 [General]
 type = wiki
-order = 4
+order = 5
 tags = wiki
-datetime = 2026-03-28 09:41:41.997187
+datetime = 2026-04-28 20:19:40.972694
 cursorposition = 2888
 alias = Таблицы
 icon = text/__std_table.svg
