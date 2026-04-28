@@ -1,5 +1,5 @@
 [wiki]
-md5_hash = 67e11a87afea4879dd50fe2c4b333fb4
+md5_hash = a4a37827570436f4722ebc1eeda8f5f4
 custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [Tree]
@@ -9,15 +9,11 @@ expand = False
 type = wiki
 order = 4
 tags = 
-datetime = 2026-04-22 09:25:19.804567
-cursorposition = 0
-alias = Сочетания клавиш
+datetime = 2026-04-28 09:24:55.461491
+cursorposition = 1600
 uid = shortcuts
-creationdatetime = 2026-03-31 20:59:29.441390
+icon = computer/__std_keyboard.png
 
 [Misc]
-pageindex = 1
-
-[Wiki]
-recentstylename = notice
+pageindex = 0
 

@@ -1,18 +1,23 @@
 [wiki]
 md5_hash = 4ff5535692deb02a7f687a1ce431c129
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n"}
 
 [Tree]
 expand = False
 
 [General]
 type = wiki
-order = 7
-tags = fixme
-datetime = 2026-04-26 18:59:49.432922
+order = 6
+tags = 
+datetime = 2026-04-28 10:12:47.180371
 cursorposition = 0
 uid = faq
 alias = Часто задаваемые вопросы
+creationdatetime = 2026-04-28 09:38:04.035459
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = info
 

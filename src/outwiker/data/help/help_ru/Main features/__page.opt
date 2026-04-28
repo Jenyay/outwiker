@@ -7,8 +7,8 @@ expand = True
 [General]
 type = wiki
 order = 2
-tags = fixme
-datetime = 2026-04-26 19:37:29.215776
+tags = 
+datetime = 2026-04-28 10:16:04.736180
 cursorposition = 0
 alias = Основные возможности
 uid = key-features
