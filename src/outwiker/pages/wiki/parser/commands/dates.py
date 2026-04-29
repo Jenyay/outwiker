@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+from datetime import datetime
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.gui.guiconfig import GeneralGuiConfig
@@ -21,13 +22,13 @@ class CommandDateBase(Command, metaclass=ABCMeta):
         self.FORMAT_PARAM = "format"
 
     @abstractmethod
-    def _getDate(self):
+    def _getDate(self) -> datetime:
         """
         Метод должен возвращать дату (datetime), которую нужно вставить на страницу
         """
         pass
 
-    def execute(self, params, content):
+    def execute(self, params: str, content: str) -> str:
         """
         Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
@@ -37,15 +38,12 @@ class CommandDateBase(Command, metaclass=ABCMeta):
         if self.FORMAT_PARAM in paramsDict:
             formatStr = paramsDict[self.FORMAT_PARAM]
         else:
-            formatStr = GeneralGuiConfig(self.parser.application.config).dateTimeFormat.value
+            formatStr = GeneralGuiConfig(
+                self.parser.application.config
+            ).dateTimeFormat.value
 
         date = self._getDate()
-        # Avoidance for bug in Python: https://bugs.python.org/issue8305
-        result = (
-            date.strftime(formatStr.encode("unicode-escape").decode())
-            .encode()
-            .decode("unicode-escape")
-        )
+        result = date.strftime(formatStr)
 
         return result
 
@@ -58,13 +56,13 @@ class CommandDateCreation(CommandDateBase):
     """
 
     @property
-    def name(self):
+    def name(self) -> str:
         """
         Возвращает имя команды, которую обрабатывает класс
         """
         return "crdate"
 
-    def _getDate(self):
+    def _getDate(self) -> datetime:
         return self.parser.page.creationdatetime
 
 
@@ -76,11 +74,11 @@ class CommandDateEdition(CommandDateBase):
     """
 
     @property
-    def name(self):
+    def name(self) -> str:
         """
         Возвращает имя команды, которую обрабатывает класс
         """
         return "eddate"
 
-    def _getDate(self):
+    def _getDate(self) -> datetime:
         return self.parser.page.datetime

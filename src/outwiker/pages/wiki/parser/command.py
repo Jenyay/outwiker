@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 import re
+from typing import Dict
 
 
-class Command (object, metaclass=ABCMeta):
+class Command(object, metaclass=ABCMeta):
     """
     Абстрактный базовый класс для команд.
     """
@@ -15,15 +16,16 @@ class Command (object, metaclass=ABCMeta):
         """
         self.parser = parser
 
-    @abstractproperty
-    def name(self):
+    @property
+    @abstractmethod
+    def name(self) -> str:
         """
         Возвращает имя команды, которую обрабатывает класс
         """
         pass
 
     @abstractmethod
-    def execute(self, params, content):
+    def execute(self, params: str, content: str) -> str:
         """
         Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
@@ -31,7 +33,7 @@ class Command (object, metaclass=ABCMeta):
         pass
 
     @staticmethod
-    def parseParams(params):
+    def parseParams(params: str) -> Dict[str, str]:
         """
         Parse params string into parts: key - value. Key may contain a dot.
         Sample params:
@@ -44,28 +46,27 @@ class Command (object, metaclass=ABCMeta):
 
         result = {}
 
-        regex = re.compile(pattern, re.IGNORECASE |
-                           re.MULTILINE | re.DOTALL | re.VERBOSE)
+        regex = re.compile(
+            pattern, re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE
+        )
         matches = regex.finditer(params)
 
         for match in matches:
             name = match.group("name")
             param = match.group("param")
             if param is None:
-                param = u""
+                param = ""
 
             result[name] = Command.removeQuotes(param)
 
         return result
 
     @staticmethod
-    def removeQuotes(text):
+    def removeQuotes(text: str) -> str:
         """
         Удалить начальные и конечные кавычки, которые остались после разбора параметров
         """
-        if (len(text) > 0 and
-                (text[0] == text[-1] == "'" or
-                    text[0] == text[-1] == '"')):
+        if len(text) > 0 and (text[0] == text[-1] == "'" or text[0] == text[-1] == '"'):
             return text[1:-1]
 
         return text
