@@ -2,6 +2,7 @@
 
 from abc import ABCMeta, abstractmethod
 from datetime import datetime
+import re
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.gui.guiconfig import GeneralGuiConfig
@@ -28,6 +29,15 @@ class CommandDateBase(Command, metaclass=ABCMeta):
         """
         pass
 
+    def _decode_unicode_escapes(self, text: str) -> str:
+        def replace_match(match):
+            code = match.group(1) or match.group(2)
+            return chr(int(code, 16))
+
+        # Search template: \uXXXX or \UXXXXXXXX
+        pattern = re.compile(r'\\u([0-9a-fA-F]{4})|\\U([0-9a-fA-F]{8})')
+        return pattern.sub(replace_match, text)
+
     def execute(self, params: str, content: str) -> str:
         """
         Запустить команду на выполнение.
@@ -43,7 +53,8 @@ class CommandDateBase(Command, metaclass=ABCMeta):
             ).dateTimeFormat.value
 
         date = self._getDate()
-        result = date.strftime(formatStr)
+        # https://bugs.python.org/issue8304
+        result = self._decode_unicode_escapes(date.strftime(formatStr.encode("unicode_escape").decode()))
 
         return result
 
