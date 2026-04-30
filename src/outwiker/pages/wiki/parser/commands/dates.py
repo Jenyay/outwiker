@@ -29,15 +29,6 @@ class CommandDateBase(Command, metaclass=ABCMeta):
         """
         pass
 
-    def _decode_unicode_escapes(self, text: str) -> str:
-        def replace_match(match):
-            code = match.group(1) or match.group(2)
-            return chr(int(code, 16))
-
-        # Search template: \uXXXX or \UXXXXXXXX
-        pattern = re.compile(r'\\u([0-9a-fA-F]{4})|\\U([0-9a-fA-F]{8})')
-        return pattern.sub(replace_match, text)
-
     def execute(self, params: str, content: str) -> str:
         """
         Запустить команду на выполнение.
@@ -53,8 +44,9 @@ class CommandDateBase(Command, metaclass=ABCMeta):
             ).dateTimeFormat.value
 
         date = self._getDate()
-        # https://bugs.python.org/issue8304
-        result = self._decode_unicode_escapes(date.strftime(formatStr.encode("unicode_escape").decode()))
+        # Workaround for the bug https://bugs.python.org/issue8304
+        pattern = re.compile(r"%[%a-zA-Z]")
+        result = pattern.sub(lambda match: date.strftime(match.group(0)), formatStr)
 
         return result
 

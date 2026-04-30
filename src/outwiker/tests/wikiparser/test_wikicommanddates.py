@@ -117,17 +117,17 @@ class WikiCommandDatesTest (BaseOutWikerMixin, TestCase):
 
         self.assertEqual(result_right, result)
 
-    # def testCreationParams_05(self):
-    #     self._config.dateTimeFormat.value = '%c'
+    def testCreationParams_05(self):
+        self._config.dateTimeFormat.value = '%c'
 
-    #     command = CommandDateCreation(self.parser)
-    #     params = 'format="%d.%m Абырвалг \\u1234"'
+        command = CommandDateCreation(self.parser)
+        params = 'format="%d.%m Абырвалг \\u1234"'
 
-    #     result = command.execute(params, '')
+        result = command.execute(params, '')
 
-    #     result_right = "20.08 Абырвалг \\u1234"
+        result_right = "20.08 Абырвалг \\u1234"
 
-    #     self.assertEqual(result_right, result)
+        self.assertEqual(result_right, result)
 
     def testEditEmpty_01(self):
         self._config.dateTimeFormat.value = '%d.%m.%Y'
@@ -201,14 +201,14 @@ class WikiCommandDatesTest (BaseOutWikerMixin, TestCase):
 
         self.assertEqual(result_right, result)
 
-    # def testEditParams_05(self):
-    #     self._config.dateTimeFormat.value = '%c'
+    def testEditParams_05(self):
+        self._config.dateTimeFormat.value = '%c'
 
-    #     command = CommandDateEdition(self.parser)
-    #     params = 'format="%d.%m Абырвалг \\u1234"'
+        command = CommandDateEdition(self.parser)
+        params = 'format="%d.%m Абырвалг \\u1234"'
 
-    #     result = command.execute(params, '')
+        result = command.execute(params, '')
 
-    #     result_right = "21.09 Абырвалг \\u1234"
+        result_right = "21.09 Абырвалг \\u1234"
 
-    #     self.assertEqual(result_right, result)
+        self.assertEqual(result_right, result)
