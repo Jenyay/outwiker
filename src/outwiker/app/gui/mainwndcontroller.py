@@ -45,6 +45,7 @@ from outwiker.app.services.messages import showError
 from outwiker.app.services.tree import openWiki
 
 from outwiker.core.events import PAGE_UPDATE_TITLE
+from outwiker.core.utils import strftime_safe
 
 from outwiker.gui.autosavetimer import AutosaveTimer
 from outwiker.gui.guiconfig import TrayConfig, GeneralGuiConfig, MainWindowConfig
@@ -282,16 +283,14 @@ class MainWndController:
         self._mainWindow.SetTitle(getMainWindowTitle(self._application))
 
     def _updateStatusBar(self):
-        dateFormat = self._generalConfig.dateTimeFormat.value
+        date_format = self._generalConfig.dateTimeFormat.value
         text = ""
 
         if (
             self._application.selectedPage is not None
             and self._application.selectedPage.datetime is not None
         ):
-            text = datetime.datetime.strftime(
-                self._application.selectedPage.datetime, dateFormat
-            )
+            text = strftime_safe(self._application.selectedPage.datetime, date_format)
 
         setStatusText(self._application.mainWindow, STATUSBAR_PAGE_DATETIME_ITEM, text)
 

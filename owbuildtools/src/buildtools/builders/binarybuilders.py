@@ -71,6 +71,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             "outwiker.api.core.pagestyle",
             "outwiker.api.core.spellchecker",
             "outwiker.api.core.tags",
+            "outwiker.api.core.utils",
             "outwiker.api.gui",
             "outwiker.api.gui.actions",
             "outwiker.api.gui.basetextstylingcontroller",

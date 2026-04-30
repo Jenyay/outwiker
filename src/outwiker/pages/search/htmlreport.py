@@ -2,6 +2,7 @@
 
 import html
 
+from outwiker.core.utils import strftime_safe
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
@@ -72,8 +73,8 @@ class HtmlReport:
 
     def generateDate(self, page):
         config = GeneralGuiConfig(self.__application.config)
-        dateStr = page.datetime.strftime(config.dateTimeFormat.value)
-        result = _("Last modified date: {0}").format(dateStr)
+        date_str = strftime_safe(page.datetime, config.dateTimeFormat.value)
+        result = _("Last modified date: {0}").format(date_str)
 
         return result
 

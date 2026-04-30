@@ -22,6 +22,7 @@ from outwiker.core.events import (
     PageDialogPageFactoriesNeededParams,
     PageDialogNewPageOrderChangedParams,
 )
+from outwiker.core.utils import strftime_safe
 from outwiker.core.system import getIconsDirList, getBuiltinImagePath
 from outwiker.core.recenticonslist import RecentIconsList
 from outwiker.core.defines import ICON_DEFAULT
@@ -263,7 +264,7 @@ class GeneralController(BasePageDialogController):
     def _getDefaultTitle(self):
         config = GeneralGuiConfig(self._application.config)
         template = config.pageTitleTemplate.value
-        title = datetime.now().strftime(template)
+        title = strftime_safe(datetime.now(), template)
         return title
 
     def initBeforeEditing(self, currentPage):

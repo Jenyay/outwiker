@@ -4,8 +4,9 @@ from abc import ABCMeta, abstractmethod
 from datetime import datetime
 import re
 
-from outwiker.pages.wiki.parser.command import Command
+from outwiker.core.utils import strftime_safe
 from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.pages.wiki.parser.command import Command
 
 
 class CommandDateBase(Command, metaclass=ABCMeta):
@@ -37,18 +38,14 @@ class CommandDateBase(Command, metaclass=ABCMeta):
         paramsDict = self.parseParams(params)
 
         if self.FORMAT_PARAM in paramsDict:
-            formatStr = paramsDict[self.FORMAT_PARAM]
+            format = paramsDict[self.FORMAT_PARAM]
         else:
-            formatStr = GeneralGuiConfig(
+            format = GeneralGuiConfig(
                 self.parser.application.config
             ).dateTimeFormat.value
 
         date = self._getDate()
-        # Workaround for the bug https://bugs.python.org/issue8304
-        pattern = re.compile(r"%[%a-zA-Z]")
-        result = pattern.sub(lambda match: date.strftime(match.group(0)), formatStr)
-
-        return result
+        return strftime_safe(date, format)
 
 
 class CommandDateCreation(CommandDateBase):
