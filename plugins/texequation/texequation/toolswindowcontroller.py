@@ -50,6 +50,7 @@ class ToolsWindowController:
             # May be the window was closed by user
             if not self._prevPositionInsideEquation:
                 self._showToolsWindow()
+                editor.SetFocus()
 
             self._updateEquation(text, position)
         else:
