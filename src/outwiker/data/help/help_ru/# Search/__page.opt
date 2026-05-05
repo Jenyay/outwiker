@@ -11,8 +11,9 @@ expand = False
 type = search
 order = 0
 tags = поиск
-datetime = 2023-07-19 15:29:40.362730
+datetime = 2026-05-05 19:53:31.685960
 alias = # Поиск
+icon = text/__std_search_global.svg
 
 [SearchResults]
 page_0 = Preferences

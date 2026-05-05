@@ -8,9 +8,10 @@ expand = True
 type = wiki
 order = 5
 tags = advanced
-datetime = 2026-04-28 09:25:52.746484
+datetime = 2026-05-05 19:48:44.497651
 cursorposition = 77
 uid = advanced
+icon = software/__std_terminal.png
 
 [Misc]
 pageindex = 1

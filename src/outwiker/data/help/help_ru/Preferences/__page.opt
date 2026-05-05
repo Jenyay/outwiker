@@ -3,10 +3,11 @@ type = wiki
 tags = настройки
 order = 5
 creationdatetime = 2015-02-01 20:49:35.017769
-datetime = 2026-04-26 18:11:43.138559
+datetime = 2026-05-05 19:54:37.749543
 cursorposition = 10862
 alias = Настройки приложения
 uid = settings
+icon = __std_cog.png
 
 [wiki]
 md5_hash = c660f472df86cd29eef17fc6bd5f005e
