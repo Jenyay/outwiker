@@ -33,6 +33,7 @@ class IconController:
             ("__std_email.png", join("office", "__std_mail.png")),
             ("__std_report.png", join("office", "__std_report.png")),
 
+
             (join("folders", "__std_folder.svg"), join("folders", "__std_folder_yellow.svg")),
             (join("folders", "__std_folder.png"), join("folders", "__std_folder_yellow.svg")),
             (join("folders", "__std_folder-black.svg"), join("folders", "__std_folder_black.svg")),
@@ -74,6 +75,7 @@ class IconController:
             ("__std_terminal.png", join("software", "__std_terminal.png")),
             (join("computer", "__std_game.png"), join("software", "__std_game.png")),
             ("__std_firewall.png", join("software", "__std_firewall.png")),
+            ("__std_application-monitor.png", join("software", "__std_application-monitor.svg")),
 
             ("__std_image.png", join("images", "__std_image.svg")),
             ("__std_image.svg", join("images", "__std_image.svg")),
