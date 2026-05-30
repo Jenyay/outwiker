@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-Модуль с функциями сортировки страниц
+Module with page sorting functions
 """
 
 
 def sortOrderFunction(page1, page2):
     """
-    Функция для сортировки страниц с учетом order
+    Function for sorting pages with order consideration
     """
     orderpage1 = page1.params.orderOption.value
     orderpage2 = page2.params.orderOption.value
 
-    # Если еще не установили порядок страницы (значение по умолчанию: -1)
+    # If the page order has not been set yet (default value: -1)
     if orderpage1 == -1 or orderpage2 == -1:
         return sortAlphabeticalFunction(page1, page2)
     elif orderpage1 > orderpage2:
@@ -24,7 +24,7 @@ def sortOrderFunction(page1, page2):
 
 def sortAlphabeticalFunction(page1, page2):
     """
-    Функция для сортировки страниц по алфавиту
+    Function for sorting pages alphabetically
     """
     if page1.display_title.lower() > page2.display_title.lower():
         return 1
