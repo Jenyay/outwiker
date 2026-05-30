@@ -25,11 +25,10 @@ class ThumbmakerBase(object, metaclass=ABCMeta):
 
     def thumbByWidth(self, fname_src, width_new, fname_new):
         """
-        Создать превьюшку определенной ширины
+        Create a thumbnail with a specific width
         """
         if not os.path.exists(fname_src):
-            raise ThumbException(u"Error: %s not found" %
-                                 os.path.basename(fname_src))
+            raise ThumbException("Error: %s not found" % os.path.basename(fname_src))
 
         image_src = self._loadImage(fname_src)
 
@@ -45,11 +44,10 @@ class ThumbmakerBase(object, metaclass=ABCMeta):
 
     def thumbByHeight(self, fname_src, height_new, fname_new):
         """
-        Создать превьюшку определенной высоты
+        Create a thumbnail with a specific height
         """
         if not os.path.exists(fname_src):
-            raise ThumbException(u"Error: %s not found" %
-                                 os.path.basename(fname_src))
+            raise ThumbException("Error: %s not found" % os.path.basename(fname_src))
 
         image_src = self._loadImage(fname_src)
         try:
@@ -64,21 +62,18 @@ class ThumbmakerBase(object, metaclass=ABCMeta):
 
     def thumbByMaxSize(self, fname_src, maxsize_res, fname_new, larger=True):
         """
-        Создать превьюшку с заданным максимальным размером
-        larger - увеличивать ли картинку, если она меньше заданного размера?
+        Create a thumbnail with a given maximum size
+        larger - whether to enlarge the image if it is smaller than the specified size
         """
         if not os.path.exists(fname_src):
-            raise ThumbException(u"Error: %s not found" %
-                                 os.path.basename(fname_src))
+            raise ThumbException("Error: %s not found" % os.path.basename(fname_src))
 
         image_src = self._loadImage(fname_src)
 
         try:
             width_src, height_src = self._getSize(image_src)
 
-            if (not larger and
-                    width_src <= maxsize_res and
-                    height_src <= maxsize_res):
+            if not larger and width_src <= maxsize_res and height_src <= maxsize_res:
                 self._rescale(image_src, width_src, height_src, fname_new)
             elif width_src > height_src:
                 self.thumbByWidth(fname_src, maxsize_res, fname_new)

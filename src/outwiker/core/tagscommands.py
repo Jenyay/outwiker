@@ -7,7 +7,7 @@ from .tagslist import TagsList
 
 def parseTagsList(tagsString: str) -> List[str]:
     """
-    Преобразовать строку тегов, разделенных запятой, в список
+    Convert a comma-separated tag string to a list
     """
     tags = [tag.strip() for tag in tagsString.lower().split(",")
             if len(tag.strip()) > 0]
@@ -17,14 +17,14 @@ def parseTagsList(tagsString: str) -> List[str]:
 
 def getTagsString(tags: List[str]) -> str:
     """
-    Получить строку тегов
+    Get a tag string
     """
     return ", ".join(tags)
 
 
 def removeTag(page, tag: str):
     """
-    Удалить тег из страницы
+    Remove a tag from the page
     """
     taglower = tag.lower()
     pageTags = page.tags
@@ -52,10 +52,10 @@ def appendTagsList(page, tagslist):
 
 def tagBranch(parentPage, tags):
     """
-    Добавить теги к ветке, начиная с родительской страницы
+    Add tags to a branch starting from the parent page
 
-    parentPage - страница, с которой начинается ветка
-    tags - список тегов для добавления
+    parentPage - the page where the branch starts
+    tags - list of tags to add
     """
     if "tags" in dir(parentPage):
         appendTagsList(parentPage, tags)
@@ -64,10 +64,10 @@ def tagBranch(parentPage, tags):
 
 def removeTagsFromBranch(parentPage, tags):
     """
-    Удалить теги из ветки, начиная с родительской страницы
+    Remove tags from a branch starting from the parent page
 
-    parentPage - страницы, с которой начинается ветка
-    tags - список тегов, которые надо удалить
+    parentPage - the page where the branch starts
+    tags - list of tags to remove
     """
     if "tags" in dir(parentPage):
         [removeTag(parentPage, tag) for tag in tags]
@@ -77,7 +77,7 @@ def removeTagsFromBranch(parentPage, tags):
 
 def renameTag(wikiroot, oldName, newName):
     """
-    Переименовать тег
+    Rename a tag
     """
     tags = TagsList(wikiroot)
     for page in tags[oldName]:

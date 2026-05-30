@@ -6,15 +6,16 @@ import os.path
 from .style import Style
 
 
-class StylesList(object):
+class StylesList:
     """
-    Класс для хранения списка существующих стилей страниц
+    Class for storing the list of existing page styles
     """
+
     def __init__(self, dirlist):
         """
-        dirlist - список директорий, где ищутся стили
+        dirlist - list of directories where styles are searched
         """
-        # Список хранит пути до имеющихся проверенных стилей
+        # List stores paths to existing verified styles
         self.__styles = sorted(self.__findStyles(dirlist))
 
     def __len__(self):
@@ -25,7 +26,7 @@ class StylesList(object):
 
     def __findStyles(self, dirlist):
         """
-        Поиск стилей в по путям в списке dirlist
+        Search for styles by paths in the dirlist
         """
         styles = []
         for path in dirlist:
@@ -35,13 +36,17 @@ class StylesList(object):
 
     def __findStylesInDir(self, path):
         """
-        Возвращает список стилей, найденных в директории path
+        Returns the list of styles found in the path directory
         """
         if not os.path.exists(path):
             return []
 
         style = Style()
-        return [os.path.join(path, styledir)
-                for styledir in os.listdir(path)
-                if (not styledir.startswith("__") and
-                    style.check(os.path.join(path, styledir)))]
+        return [
+            os.path.join(path, styledir)
+            for styledir in os.listdir(path)
+            if (
+                not styledir.startswith("__")
+                and style.check(os.path.join(path, styledir))
+            )
+        ]

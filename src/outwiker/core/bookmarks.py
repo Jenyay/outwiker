@@ -11,7 +11,7 @@ from .config import StringListSection
 
 class Bookmarks:
     """
-    Класс, хранящий избранные страницы внутри вики
+    Class that stores favorite pages within the wiki
     """
     CONFIG_SECTION = "Bookmarks"
     CONFIG_OPTION = "bookmark_"
@@ -21,8 +21,8 @@ class Bookmarks:
         self._pages: List[str] = []
         self._config = None
 
-        # Изменение списка закладок
-        # Параметр - экземпляр класса Bookmarks
+        # Bookmarks list change
+        # Parameter - instance of Bookmarks class
         self.onBookmarksChanged = Event()
 
     def clear(self):

@@ -3,11 +3,11 @@
 
 class TagsList:
     """
-    Класс для хранения списка всех тегов в вики
+    Class for storing the list of all tags in the wiki
     """
 
     def __init__(self, root):
-        # Словарь тегов. Ключ - тег, значение - список страниц с этим тегом
+        # Dictionary of tags. Key - tag, value - list of pages with this tag
         self._tags = {}
 
         self._findTags(root)
@@ -15,13 +15,13 @@ class TagsList:
     @property
     def tags(self):
         """
-        Возвращает список тегов
+        Returns the list of tags
         """
         return list(sorted(self._tags.keys()))
 
     def _findTags(self, page):
         """
-        Поиск тегов для страницы page и ее дочерних страниц
+        Search for tags for page and its child pages
         """
         if page.parent is not None:
             for tag in page.tags:
