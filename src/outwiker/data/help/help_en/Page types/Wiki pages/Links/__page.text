@@ -17,9 +17,6 @@ Wiki page text can contain links to websites on the Internet, as well as to othe
 ||%code%[=[[Link -> /Page types/Wiki page/Lists]]=]%%||[[Link -> /Page types/Wiki page/Lists]]||Link to a tree page by name with a comment||
 ||%code%[=[[Subpage -> Child page]]=]%%||[[Subpage -> Child page]]||Link to a child page by name with a comment||
 ||%code%[=[[Child page]]=]%%||[[Child page]]||Link to a child page||
-||%code%[=[[../../HTML page]]=]%%||[[../../HTML page]]||Using relative links[[<<]](works only in the Windows version) ||
-||%code%[=[[../../HTML page | Page link]]=]%%||[[../../HTML page | Page link]]||Using relative links with comments[[<<]](works only in the Windows version) ||
-||%code%[=[[Page link -> ../../HTML page ]]=]%%||[[Page link -> ../../HTML page ]] ||Using relative links with comments[[<<]](works only in the Windows version) ||
 
 
 !!! Links and anchors
