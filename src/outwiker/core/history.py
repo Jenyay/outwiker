@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
-"""Классы для работы с историей открытия страниц."""
+"""Classes for working with page open history."""
 
 
 class HistoryEmptyException(Exception):
     """
-    Вызывается при попытке вернуться назад, если история возврата пустая
-    (и аналогично с историей вперед)
+    Raised when trying to go back if the back history is empty
+    (and similarly for forward history)
     """
 
 
 class History(object):
-    """Класс для работы с историей открытия страниц на вкладке."""
+    """Class for working with page open history on a tab."""
 
     def __init__(self):
-        # Список страниц для возврата(для перехода "назад")
+        # List of pages for going back (for "back" navigation)
         self._back = []
 
-        # Список страниц для перехода "вперед"
+        # List of pages for going forward
         self._forward = []
 
-        # Текущая открытая страница
+        # Currently open page
         self._currentPage = None
 
     @property
@@ -31,16 +31,18 @@ class History(object):
         return len(self._forward)
 
     def goto(self, newCurrentPage):
-        """Произошел переход на новую страницу."""
-        if (self._currentPage is None and
-                len(self._back) == 0 and
-                len(self._forward) == 0):
-            # В первый раз открыли какую-то страницу
+        """Transition to a new page."""
+        if (
+            self._currentPage is None
+            and len(self._back) == 0
+            and len(self._forward) == 0
+        ):
+            # First time opening a page
             self._currentPage = newCurrentPage
             return
 
         if self._currentPage == newCurrentPage:
-            # Если повторно открываем ту же самую страницу, то ничего не делаем
+            # If opening the same page again, do nothing
             return
 
         self._back.append(self._currentPage)
