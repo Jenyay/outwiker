@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Классы для работы с версией программы
+Classes for working with program version
 """
 
 import re
@@ -10,10 +10,10 @@ from functools import reduce
 class Status(object):
     def __init__(self, name, number):
         """
-        Класс для нецифровых обозначений версий (альфа, бета и т.д.)
-        name - название версии
-        weight - "вес" версии. Чем это значение больше,
-            тем более "зрелая" версия
+        Class for non-numeric version designations (alpha, beta, etc.)
+        name - version name
+        weight - version "weight". The higher this value,
+            the more "mature" the version
         """
         self.name = name
         self.number = number
@@ -39,7 +39,7 @@ class Status(object):
 
 class StatusSet(object):
     """
-    Набор стандартных статусов
+    Set of standard statuses
     """
     DEV = Status("dev", 0)
     NIGHTLY = Status("nightly", 1)
@@ -105,7 +105,7 @@ class Version(object):
                         self.version, "")
         result += " " + self.status.name
 
-        # Отбросим первую точку
+        # Drop the first dot
         return result.strip()[1:]
 
     def __repr__(self):
@@ -143,7 +143,7 @@ class Version(object):
     @staticmethod
     def parse(string):
         """
-        Создать версию по строке
+        Create a version from a string
         """
         regex = r"^\s*(?P<major>\d+)(?P<minor>(\.\d+)*)\s*(?P<status>.+)?"
         m = re.match(regex, string, re.IGNORECASE)
