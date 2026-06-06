@@ -2,9 +2,11 @@
 <versions>
     <version number="4.0.0.973" status="dev">
         <changes>
+            <change>Added new vector icons for notes.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлена новые векторные значки для заметок.</change>
         </changes>
     </version>
 
