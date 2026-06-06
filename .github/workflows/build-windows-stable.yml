@@ -1,4 +1,4 @@
-name: Build (Windows)
+name: Build stable (Windows)
 
 on: [push, workflow_dispatch]
 
