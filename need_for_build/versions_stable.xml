@@ -18,7 +18,7 @@
             <change>Added numerous appearance settings for the interface.</change>
             <change>Added a setting to change the button size on toolbars.</change>
             <change>Added new text styles for wiki pages.</change>
-            <change>Added handling of links like page://... and [=[[page://...]] on other pages for wiki pages.</change>
+            <change>Added handling of links like page://... and [[page://...]] on other pages for wiki pages.</change>
             <change>Added new vector icons for notes.</change>
             <change>New API version for plugins.</change>
         </changes>
@@ -40,7 +40,7 @@
             <change>Добавлено множество настроек внешнего вида интерфейса.</change>
             <change>Добавлена настройка для изменения размера кнопок на панелях инструментов.</change>
             <change>Добавлены новые стили текста для викистраниц.</change>
-            <change>Для викистраниц добавлена обработка ссылок вида page://... и [=[[page://...]] на другие страницы.</change>
+            <change>Для викистраниц добавлена обработка ссылок вида page://... и [[page://...]] на другие страницы.</change>
             <change>Добавлена новые векторные значки для заметок.</change>
             <change>Новая версия API для плагинов.</change>
         </changes>
