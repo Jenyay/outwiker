@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="4.1.0.975" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="4.0.0.974" date="2026-06-06">
         <changes>
             <change>Added new vector icons for notes.</change>
