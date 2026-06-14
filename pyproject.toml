@@ -7,9 +7,8 @@ authors = [
 readme = "README.md"
 license = {file = "LICENSE.txt"}
 keywords = ["outliner", "notepad", "notes", "wiki"]
-requires-python = ">=3.8"
+#requires-python = ">=3.8"
 dependencies = [
-    #"wxPython==4.2.2",
     "Pillow==10.4.0",
     "idna>=2.10",
     "pyparsing==3.1.4",
@@ -51,7 +50,11 @@ Documentation = "https://outwiker.readthedocs.io/"
 Repository = "https://github.com/Jenyay/outwiker"
 
 [project.optional-dependencies]
-gui = [ "wxPython==4.2.2" ]
+gui = [ 
+    #"wxPython==4.2.2" 
+    "wxPython==4.2.2; platform_system=='Windows'",
+    "wxPython==4.2.5; platform_system=='Linux'",
+]
 
 [project.scripts]
 outwiker = "outwiker.__main__:main"
