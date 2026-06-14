@@ -77,7 +77,7 @@ jobs:
 
       - name: Install wxPython
         run: |
-          uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04 wxPython==4.2.2
+          uv pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04 wxPython==4.2.5
 
       - name: Sync dependencies
         run: uv sync --dev --extra gui
