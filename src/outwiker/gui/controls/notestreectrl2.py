@@ -1313,8 +1313,8 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         left = self._view_info.getIconLeft(item) + dx
         top = self._view_info.getSelectionTop(item) + dy
         bottom = self._view_info.getSelectionBottom(item) + dy
-        height = bottom - top
-        width = self.GetClientSize().GetWidth() - dx
+        height = bottom - top + 1
+        width = self.GetClientSize().GetWidth() - dx + 1
         self.Refresh(rect=wx.Rect(left, top, width, height))
 
     # @profile

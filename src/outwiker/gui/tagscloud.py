@@ -616,10 +616,11 @@ class TagsCloud(wx.Panel):
 
     def _refreshLabel(self, label: TagLabel2):
         y_min = self.getScrolledY()[0]
-        with wx.ClientDC(self._tags_panel) as dc:
-            with wx.BufferedDC(dc, self._buffer) as buffered_dc:
-                gc = wx.GraphicsContext.Create(buffered_dc)
-                self._tag_painter.draw(label, y_min, buffered_dc, gc)
+        left = label.x
+        top = label.y - y_min
+        width = label.geometry.width + 1
+        height = label.geometry.height + 1
+        self._tags_panel.Refresh(rect=wx.Rect(left, top, width, height))
 
     def _repaintLabels(self, label_names: Iterable, dc: wx.DC, gc: wx.GraphicsContext):
         y_min, y_max = self.getScrolledY()
