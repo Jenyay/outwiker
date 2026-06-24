@@ -1305,17 +1305,24 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         )
 
     def _refreshItem(self, item: NotesTreeItem):
-        with wx.ClientDC(self) as dc:
-            with wx.BufferedDC(dc, self._buffer) as buffered_dc:
-                gc = wx.GraphicsContext.Create(buffered_dc)
-                painter = _ItemsPainter(
-                    self, buffered_dc, gc, self._iconsCache, self._extraIconsCache, self._view_info
-                )
-                interval_x = self._getScrolledX()
-                interval_y = self._getScrolledY()
-                dx = -interval_x[0]
-                dy = -interval_y[0]
-                painter.draw([item], dx, dy)
+        interval_x = self._getScrolledX()
+        interval_y = self._getScrolledY()
+        dx = -interval_x[0]
+        dy = -interval_y[0]
+        # with wx.ClientDC(self) as dc:
+        #     with wx.BufferedDC(dc, self._buffer) as buffered_dc:
+        #         gc = wx.GraphicsContext.Create(buffered_dc)
+        #         painter = _ItemsPainter(
+        #             self, buffered_dc, gc, self._iconsCache, self._extraIconsCache, self._view_info
+        #         )
+        #         painter.draw([item], dx, dy)
+
+        left = self._view_info.getIconLeft(item) + dx
+        top = self._view_info.getSelectionTop(item) + dy
+        bottom = self._view_info.getSelectionBottom(item) + dy
+        height = bottom - top
+        width = self.GetClientSize().GetWidth()
+        self.Refresh(rect=wx.Rect(left, top, width, height))
 
     # @profile
     def _onPaint(self, event):
