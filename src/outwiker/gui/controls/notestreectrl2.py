@@ -1335,11 +1335,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             for item in self._visibleItems:
                 item_top = self._view_info.getItemTop(item)
                 if item_top >= interval_y[0]:
-                    # painter.drawTreeLines(item, dx, dy, interval_y[0], interval_y[1])
                     items_for_tree_lines.append(item)
 
                 if item_top >= interval_y[0] and item_top <= interval_y[1]:
-                    # painter.draw(item, dx, dy)
                     items_for_draw.append(item)
 
             painter.drawTreeLines(items_for_tree_lines, dx, dy, interval_y[0], interval_y[1])
