@@ -1,0 +1,23 @@
+!! Structure of the note tree
+
+The note tree (page tree) is built upon the file system structure. Each page is located in its own separate directory, and nested subdirectories form child pages.
+
+Each directory that is treated as a page, as well as the root of the tree, must contain a %info%__page.opt%% file. This file stores the note's properties ([[page type -> page://page-types]], [[tags -> page://tags]], and other metadata). The content of this file depends on the [[page type -> page://page-types]]. Additionally, note directories may contain a %info%__page.text%% file—the actual content of the note (its format also depends on the page type)—and potentially a %info%__icon.*%% file, which serves as the note's icon in any graphic format (typically SVG or PNG).
+
+Inside the directories of [[wiki pages -> page://wiki-page]] and [[HTML pages -> page://html-page]], a %info%__content.html%% file is created. This file contains the final version of the note as displayed to the user. It is generated from the wiki notation or HTML code entered by the user. If you need to view a note on a computer where OutWiker is not installed, you can open the %info%__content.html%% file of the desired note in any web browser.
+
+Each note directory may contain a %info%__attach%% subdirectory where [[attachments -> page://attachments]] are stored. This directory is created only when necessary—for example, when a user adds an attachment or copies the path to the attachments directory via the note tree context menu or the %notice%Tools - Paths - Copy attachments path%% menu item. To attach a file to a note, simply copy it into the %info%__attach%% directory. You can create nested subdirectories within this folder, which will also be displayed in the %notice%Attachments%% panel.
+
+In wiki-type note directories, there may be a directory named %info%__thumb%%. Originally intended for storing image thumbnails, this directory is sometimes used for additional files required to display the generated HTML code.
+
+By default, the note title matches the name of its directory. All directories with names starting with two underscores (%code%__%%) are considered auxiliary and are not treated as nested pages. This does not mean that note titles cannot start with these characters. To bypass this limitation, you can use [[page aliases -> page://advanced-aliases]], which allow you to create notes with titles that differ from their directory names. This also helps bypass file system restrictions on specific characters in file and directory names.
+
+A %info%__cache.tmp%% file is created in the root directory of the note tree, containing non-essential auxiliary information. For example, this file stores information about which branches of the note tree are currently expanded or collapsed. Losing data from this file is not an issue; therefore, the %info%__cache.tmp%% file does not need to be stored on a server or in a repository if you use version control systems to store your note tree.
+
+Due to this structure, any branch of the tree can be opened as a separate note tree. However, keep in mind that the root element of a tree does not contain note text; it serves only as a container for nested pages.
+
+----
+'''See also:'''
+* page://page-types
+* page://advanced-aliases
+* page://attachments

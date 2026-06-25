@@ -4,6 +4,7 @@ from datetime import datetime
 
 import wx
 
+from outwiker.core.utils import strftime_safe
 from outwiker.gui.controls.formatctrl import FormatCtrl
 
 
@@ -62,8 +63,8 @@ class DateTimeFormatCtrl(wx.Panel):
 
     def _updateExample(self):
         try:
-            dateStr = datetime.now().strftime(self.GetValue())
-            self.exampleText.SetValue(dateStr)
+            date_str = strftime_safe(datetime.now(), self.GetValue())
+            self.exampleText.SetValue(date_str)
         except ValueError:
             pass
 

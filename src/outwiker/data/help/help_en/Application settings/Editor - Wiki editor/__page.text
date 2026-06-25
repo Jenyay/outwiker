@@ -1,0 +1,18 @@
+!! Editor - Wiki editor
+
+%center%Attach:outwiker_opt_editor_wiki.png
+
+This section contains settings for the syntax highlighting of various wiki notation elements: headings, [[wiki commands -> page://wikicommand]] (defined using the %code%[=(: ... :)=]%% syntax), image thumbnails, and links to attached files or websites.
+
+An example of wiki notation highlighting is shown in the following image:
+
+%center%%thumb width=600%Attach:wiki_highlight.png%%
+
+The font face and size for the note editor are configured in the page://settings_editor_general section.
+
+----
+'''See also:'''
+* page://html-page
+* page://settings_editor_general
+* page://settings_editor_html_editor
+* page://settings_interface_colors

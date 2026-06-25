@@ -1,0 +1,15 @@
+[General]
+type = wiki
+tags = 
+order = 3
+creationdatetime = 2026-03-11 19:42:21.168739
+datetime = 2026-04-13 20:02:23.525887
+uid = config-dirs
+alias = Директории настроек
+
+[Wiki]
+recentstylename = highlight-orange
+
+[wiki]
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n", "code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+

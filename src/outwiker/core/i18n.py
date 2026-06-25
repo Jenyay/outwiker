@@ -11,12 +11,12 @@ from .config import StringOption
 from .system import getMainModuleDataPath
 
 
-# Константа, показывающая, что язык нужно определить самостоятельно
+# Constant indicating that the language should be determined automatically
 AUTO_LANGUAGE = "Auto"
 
 
 class I18nConfig(object):
-    """Настройки, связанные с локализацией"""
+    """Settings related to localization"""
 
     def __init__(self, config):
         self.config = config
@@ -40,11 +40,11 @@ def init_i18n(language):
 
 def loadLanguage(language, langdir, domain):
     """
-    Загрузить язык из указанной директории
-    language - язык, который надо загрузить, или константа AUTO_LANGUAGE
+    Load language from the specified directory
+    language - language to load, or AUTO_LANGUAGE constant
     """
-    # Если в качестве языка передана константа AUTO_LANGUAGE,
-    # значит язык надо определить самостоятельно
+    # If AUTO_LANGUAGE constant is passed as language,
+    # then the language should be determined automatically
     reallanguage = getDefaultLanguage() if language == AUTO_LANGUAGE else language
 
     try:
@@ -57,7 +57,7 @@ def loadLanguage(language, langdir, domain):
 
 def getLanguageFromConfig(config):
     """
-    Прочитать настройку языка из конфига
+    Read language setting from config
     """
     i18config = I18nConfig(config)
     language = i18config.languageOption.value
@@ -66,7 +66,7 @@ def getLanguageFromConfig(config):
 
 def isLangDir(root, folder):
     """
-    Возвращает True, если path - путь до папки с локализацией
+    Returns True if path is a path to localization folder
     """
     path = os.path.join(root, folder)
 
@@ -86,7 +86,7 @@ def isLangDir(root, folder):
 
 def getLanguages():
     """
-    Получить список всех языков, находящихся в папке locale
+    Get list of all languages in the locale folder
     """
     langdir = os.path.join(getMainModuleDataPath(), "locale")
 

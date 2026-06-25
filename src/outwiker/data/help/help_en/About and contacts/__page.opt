@@ -1,0 +1,16 @@
+[Tree]
+expand = True
+
+[General]
+type = wiki
+order = 1
+tags = 
+datetime = 2026-04-28 20:14:42.927945
+linewrap = True
+cursorposition = 1647
+uid = __d0ed44d4-0772-4f04-80ca-98fc55530667
+icon = software/__std_outwiker.svg
+
+[Misc]
+pageindex = 1
+

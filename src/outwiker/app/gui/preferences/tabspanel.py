@@ -22,17 +22,17 @@ class TabsPanel(BasePrefPanel):
         main_sizer.AddGrowableCol(0)
 
         self._minTabWidthCtrl = self._createLabelAndSpin(
-            _("Minimal tab width"), 40, 600, main_sizer
+            _("Minimum tab width"), 40, 600, main_sizer
         )[1]
         self._maxTabWidthCtrl = self._createLabelAndSpin(
-            _("Maximal tab width"), 50, 600, main_sizer
+            _("Maximum tab width"), 50, 600, main_sizer
         )[1]
 
         self._marginHorizontalCtrl = self._createLabelAndSpin(
-            _("Horizontal margin"), 0, 24, main_sizer
+            _("Horizontal padding"), 0, 24, main_sizer
         )[1]
         self._marginVerticalCtrl = self._createLabelAndSpin(
-            _("Vertical margin"), 0, 24, main_sizer
+            _("Vertical padding"), 0, 24, main_sizer
         )[1]
 
         self._fontSizeComboBox = self._createLabelAndFontSize(

@@ -1,0 +1,12 @@
+!! Headings
+
+Headings on a wiki page are marked with exclamation marks as the first character in a line. The more exclamation marks (from two to seven), the lower the level of the heading.
+
+||border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Syntax''' || '''Result''' ||
+||[=!! First-level heading=] || !! First-level heading ||
+||[=!!! Second-level heading=] || !!! Second-level heading ||
+||[=!!!! Third-level heading=] || !!!! Third-level heading ||
+||[=!!!!! Fourth-level heading=] || !!!!! Fourth-level heading ||
+||[=!!!!!! Fifth-level heading=] || !!!!!! Fifth-level heading ||
+||[=!!!!!!! Sixth-level heading=] || !!!!!!! Sixth-level heading ||

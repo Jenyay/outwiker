@@ -3,6 +3,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
+from outwiker.core.utils import strftime_safe
 import outwiker.gui.controls.ultimatelistctrl as ULC
 
 WIDTH_DEFAULT = 200
@@ -233,7 +234,8 @@ class ModifyDateColumn(BaseColumn):
     name = 'moddate'
 
     def getCellContent(self, page):
-        return page.datetime.strftime('%d.%m.%Y     %H:%M')
+        format = "%d.%m.%Y     %H:%M"
+        return strftime_safe(page.datetime, format)
 
     def getTitle(self) -> str:
         return _('Modify date')

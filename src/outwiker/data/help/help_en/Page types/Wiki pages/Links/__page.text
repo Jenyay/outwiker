@@ -1,0 +1,91 @@
+!! Links
+
+Wiki page text can contain links to websites on the Internet, as well as to other pages within the note tree. Such links can be created in several different ways. The following table provides examples of how to format these links.
+ 
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+||%code%[=https://example.com=]%%||https://example.com||Link to an Internet address||
+||%code%[=[[https://example.com]]=]%%||[[https://example.com]]||Link to an Internet address||
+||%code%[=[[Link example -> https://example.com]]=]%%||[[Link example -> https://example.com]]||Link to an Internet address with specific text||
+||%code%[=[[https://example.com | Link example]]=]%%||[[https://example.com | Link example]]||Link to an Internet address with specific text||
+||%code%[=[[page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]=]%%||[[page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]||Link to a tree page by its ID||
+||%code%[=[[page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0 | Page link]]=]%%||[[page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0 | Page link]]||Link to a tree page by ID with a comment||
+||%code%[=[[Page link -> page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]=]%%||[[Page link ->page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]||Link to a tree page by ID with a comment||
+||%code%[=[[Page types/Wiki page/Lists]]=]%%||[[Page types/Wiki page/Lists]]||Link to a tree page by name||
+||%code%[=[[Page types/Wiki page/Lists | Link]]=]%%||[[Page types/Wiki page/Lists | Link]]||Link to a tree page by name with a comment||
+||%code%[=[[Link -> Page types/Wiki page/Lists]]=]%%||[[Link -> Page types/Wiki page/Lists]]||Link to a tree page by name with a comment||
+||%code%[=[[Link -> /Page types/Wiki page/Lists]]=]%%||[[Link -> /Page types/Wiki page/Lists]]||Link to a tree page by name with a comment||
+||%code%[=[[Subpage -> Child page]]=]%%||[[Subpage -> Child page]]||Link to a child page by name with a comment||
+||%code%[=[[Child page]]=]%%||[[Child page]]||Link to a child page||
+
+
+!!! Links and anchors
+
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+||%code%[=[[#anchor]]=]%%||Add an anchor named #anchor||Resulting HTML code: %code%&lt;a name=&quot;#anchor&quot;&gt;&lt;/a&gt;%%||
+||%code%[=[[#anchor | Link to anchor]]=]%%||[[#anchor | Link to anchor]]||Link to an anchor named anchor on the current page||
+||%code%[=[[Link to anchor -> #anchor]]=]%%||[[#anchor | Link to anchor]]||Link to an anchor named anchor on the current page||
+||%code%[=[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]=]%%||[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]||Link to an anchor named anchor on another page||
+||%code%[=page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor=]%%||page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor||Link to an anchor named anchor on another page||
+||%code%[=[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor | Link to anchor on another page]]=]%%||[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor | Link to anchor on another page]]||Link to an anchor named anchor on another page with a comment||
+||%code%[=[[Link to anchor on another page -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]=]%%||[[Link to anchor on another page -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]||Link to an anchor named anchor on another page with a comment||
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[[#anchor]]The anchor is located here
+
+
+
+
+
+
+
+
+

@@ -93,11 +93,11 @@ class SearchAndReplaceAction(BaseSearchAction):
 
     @property
     def title(self):
-        return _("Search and Replace")
+        return _("Find and replace")
 
     @property
     def description(self):
-        return _("Begin search and replace on page")
+        return _("Start search and replace on the page")
 
     def run(self, params):
         searchPanel = self._getSearchPanel()

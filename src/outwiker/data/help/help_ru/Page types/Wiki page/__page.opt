@@ -8,10 +8,11 @@ expand = True
 type = wiki
 order = 0
 tags = wiki
-datetime = 2023-07-21 09:25:11.530039
+datetime = 2026-03-15 18:43:45.909844
 cursorposition = 0
-uid = __19866d72-8d95-4e2c-8df1-6df0bd8f06c0
-alias = Викистраница
+uid = wiki-page
+alias = Викистраницы
+creationdatetime = 2026-03-15 18:30:12.992028
 
 [Misc]
 pageindex = 1

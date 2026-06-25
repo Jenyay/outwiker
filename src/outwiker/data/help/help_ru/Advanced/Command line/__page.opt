@@ -1,5 +1,7 @@
 [wiki]
 md5_hash = 340702b361648fd87e5b9615ab334814
+custom_styles_block = {"code": "div.code {\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 1em;\n}\n"}
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n", "info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n"}
 
 [Tree]
 expand = False
@@ -7,12 +9,16 @@ expand = False
 [General]
 type = wiki
 tags = расширенные возможности
-datetime = 2023-07-21 09:26:10.090233
+datetime = 2026-04-26 19:38:42.318160
 cursorposition = 427
 order = 0
-uid = __1640eea0-1bb0-453b-ba4c-07f1c298ce76
+uid = advanced-command-line
 alias = Параметры командной строки
+creationdatetime = 2026-04-26 19:35:51.230382
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = code
 

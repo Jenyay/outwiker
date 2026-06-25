@@ -9,7 +9,7 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.config import IntegerOption
 from outwiker.gui.basepagepanel import BasePagePanel
 from outwiker.gui.tagscloud import TagsCloud
-from outwiker.gui.controls.taglabel2 import EVT_TAG_LEFT_DOWN
+from outwiker.gui.tagscloud import EVT_TAG_LEFT_DOWN
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from .htmlreport import HtmlReport
 from .sortstrategies import getSortStrategies

@@ -1,0 +1,200 @@
+!! Lists
+
+!!! Table of contents
+
+* [[Overview -> #intro]]
+* [[Unordered lists -> #unorder]]
+* [[Ordered lists -> #order]]
+* [[Mixed lists -> #mixed]]
+* [[List styles -> #styles]]
+
+
+!!! [[#intro]] Overview
+
+Using wiki notation, you can create ordered and unordered lists. To create unordered lists, use one or more %code%[=*=]%% characters at the beginning of a line. Increasing the number of consecutive %code%[=*=]%% characters (without spaces) increases the nesting level of the list item.
+
+Similarly, to create ordered lists, use one or more %code%[=#=]%% characters at the beginning of a line.
+
+To create an unordered list, you can use the menu item %notice%Wiki - Lists - Unordered list%% or the Attach:bullet.png button.
+
+To create an ordered list, you can use the menu item %notice%Wiki - Lists - Ordered list%% or the Attach:order.png button.
+
+If the cursor is on a line that is already a list item (the line starts with the %code%[=*=]%% or %code%[=#=]%% character), clicking the Attach:bullet.png or Attach:order.png buttons, or selecting the corresponding menu items, will increase the nesting level of the list item.
+
+Below are several examples of using lists in wiki notation.
+
+!!! [[#unorder]] Unordered lists
+
+(:table border="1" width = 600px style="border-collapse: collapse; border: 1px solid black;":)
+(:row:)
+(:hcell:) Wiki notation
+(:hcell:) Result
+(:row:)
+(:cell:)%code%[=* Line 1
+* Line 2
+** Line 3
+** Line 4
+*** Line 5
+*** Line 6
+** Line 7
+* Line 8
+=]%%
+(:cell:)
+* Line 1
+* Line 2
+** Line 3
+** Line 4
+*** Line 5
+*** Line 6
+** Line 7
+* Line 8
+(:tableend:)
+
+
+!!! [[#order]] Ordered lists
+
+(:table border="1" width = 600px style="border-collapse: collapse; border: 1px solid black;":)
+(:row:)
+(:hcell:) Wiki notation
+(:hcell:) Result
+(:row:)
+(:cell:)%code%[=# Line 1
+# Line 2
+## Line 3
+## Line 4
+### Line 5
+### Line 6
+## Line 7
+# Line 8
+=]%%
+(:cell:)
+# Line 1
+# Line 2
+## Line 3
+## Line 4
+### Line 5
+### Line 6
+## Line 7
+# Line 8
+(:tableend:)
+
+
+!!! [[#mixed]] Mixed lists
+
+(:table border="1" width = 600px style="border-collapse: collapse; border: 1px solid black;":)
+(:row:)
+(:hcell:) Wiki notation
+(:hcell:) Result
+(:row:)
+(:cell:)%code%[=# Line 1
+# Line 2
+** Line 3
+** Line 4
+### Line 5
+### Line 6
+** Line 7
+# Line 8
+=]%%
+(:cell:)
+# Line 1
+# Line 2
+** Line 3
+** Line 4
+### Line 5
+### Line 6
+** Line 7
+# Line 8
+(:tableend:)
+
+
+!!! [[#styles]] List styles
+
+For unordered lists, you can change the style of bullets (the symbols placed at the beginning of each list item). This can be useful, for example, for creating to-do lists, where upcoming tasks can be marked with one style and completed tasks with another (special styles are provided for this). List styles are also helpful if you use the [[Bullet Journal -> https://en.wikipedia.org/wiki/Bullet_journal]] methodology.
+
+The style is specified after the unordered list %code%[=*=]%% character and consists of a pair of square brackets, which may contain an additional character defining the style. The following table lists the currently supported styles:
+
+(:table border="1" width=600em style="border-collapse: collapse; border: 1px solid black;":)
+(:row:)
+(:hcell:) Wiki notation
+(:hcell:) Result
+(:row:)
+(:cell:)%code%[=* [ ] First list item
+* [ ] Second list item=]%%
+(:cell:)
+* [ ] First list item
+* [ ] Second list item
+
+(:row:)
+(:cell:)%code%[=* [/] First list item
+* [/] Second list item=]%%
+(:cell:)
+* [/] First list item
+* [/] Second list item
+
+(:row:)
+(:cell:)%code%[=* [x] First list item
+* [x] Second list item=]%%
+(:cell:)
+* [x] First list item
+* [x] Second list item
+
+(:row:)
+(:cell:)%code%[=* [*] First list item
+* [*] Second list item=]%%
+(:cell:)
+* [*] First list item
+* [*] Second list item
+
+(:row:)
+(:cell:)%code%[=* [+] First list item
+* [+] Second list item=]%%
+(:cell:)
+* [+] First list item
+* [+] Second list item
+
+(:row:)
+(:cell:)%code%[=* [-] First list item
+* [-] Second list item=]%%
+(:cell:)
+* [-] First list item
+* [-] Second list item
+
+(:row:)
+(:cell:)%code%[=* [o] First list item
+* [o] Second list item=]%%
+(:cell:)
+* [o] First list item
+* [o] Second list item
+
+(:row:)
+(:cell:)%code%[=* [v] First list item
+* [v] Second list item=]%%
+(:cell:)
+* [v] First list item
+* [v] Second list item
+
+(:row:)
+(:cell:)%code%[=* [<] First list item
+* [<] Second list item=]%%
+(:cell:)
+* [<] First list item
+* [<] Second list item
+
+(:row:)
+(:cell:)%code%[=* [>] First list item
+* [>] Second list item=]%%
+(:cell:)
+* [>] First list item
+* [>] Second list item
+
+(:row:)
+(:cell:)%code%[=* [] First list item
+* [] Second list item=]%%
+(:cell:)
+* [] First list item
+* [] Second list item
+(:tableend:)
+
+To insert a list item with a style, you can use the menu item %notice%Wiki - Lists - List item style...%%. Selecting this item opens the dialog shown in the following image, where you can choose the desired list item style.
+
+%center%Attach:bullet_style.png

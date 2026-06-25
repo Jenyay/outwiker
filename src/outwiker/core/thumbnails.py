@@ -10,7 +10,7 @@ from outwiker.core.defines import PAGE_ATTACH_DIR
 
 class Thumbnails:
     """
-    Класс для работы с директорией с вложенными файлами
+    Class for working with attachments directory
     """
     thumbDir = "__thumb"
 
@@ -23,8 +23,8 @@ class Thumbnails:
 
     def getThumbPath(self, create: bool):
         """
-        Получить полный путь до папки с превьюшками
-        create - нужно ли создавать директорию, если ее еще нет
+        Get the full path to the thumbnails directory
+        create - whether to create the directory if it doesn't exist
         """
         path = os.path.join(Attachment(self.page).getAttachPath(create=create),
                             Thumbnails.thumbDir)
@@ -36,7 +36,7 @@ class Thumbnails:
 
     def clearDir(self):
         """
-        Удалить все содержимое папки __thumb
+        Remove all contents of the __thumb directory
         """
         path = self.getThumbPath(create=False)
 

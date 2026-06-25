@@ -1,0 +1,17 @@
+!! Interface - Tray icon
+
+%center%Attach:outwiker_opt_tray.png
+
+The settings in this section are designed to configure the behavior of the application icon in the system tray (the area with icons by the clock).
+
+Using the %notice%Minimize button%% and %notice%Close button%% drop-down lists, you can choose the action performed when clicking the corresponding buttons in the application's main window title bar.
+
+The following actions are available for the minimize button: %notice%Minimize window%% and %notice%Minimize to tray%% (in the latter case, the window will disappear from the taskbar but remain visible as an icon in the tray). The same actions are available for the close button, along with the %notice%Close window%% option (which is the default behavior).
+
+The %notice%Start minimized to tray%% check box tells the application to hide the main window and display only the tray icon upon startup. This can be useful if OutWiker is set to launch automatically when the operating system starts.
+
+The %notice%Always show tray icon%% check box indicates that the application icon should always be visible in the system tray, even when the program is not minimized.
+
+----
+'''See also:'''
+* page://settings_interface_main_window

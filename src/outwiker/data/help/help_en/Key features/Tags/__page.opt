@@ -1,0 +1,18 @@
+[General]
+type = wiki
+tags = tags
+order = 1
+datetime = 2026-04-27 09:30:56.029571
+cursorposition = 2605
+uid = tags
+
+[wiki]
+md5_hash = 358c434ecf0a58437dc27d9892338f89
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
+
+[Misc]
+pageindex = 0
+
+[Wiki]
+recentstylename = notice
+

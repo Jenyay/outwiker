@@ -88,9 +88,8 @@ class Config:
 
     def save(self):
         """
-        Сохранить изменения
-        Возвращает True, если сохранение прошло успешно и False
-        в противном случае
+            Save changes.
+            Returns True if save was successful and False otherwise.
         """
         if self.readonly:
             return False
@@ -102,28 +101,28 @@ class Config:
 
     def remove_section(self, section):
         """
-        Удалить текцию из файла конфига
-        section - имя удаляемой секции
+            Remove section from config file.
+            section - name of the section to remove.
         """
         result = self._config.remove_section(section) and self.save()
         return result
 
     def remove_option(self, section, option):
         """
-        Удалить настройку из файла конфига
-        section - имя секции, которой принадлежит опция
-        option - имя удаляемой опции
+            Remove option from config file.
+            section - name of the section that contains the option.
+            option - name of the option to remove.
         """
         result = self._config.remove_option(section, option) and self.save()
         return result
 
     def getbool(self, section, param):
         """
-        Получить булево значение из конфига
-        section - имя секции файла конфига
-        param - имя параметра
-        Возващает строку с прочитанным значением
-        Может бросать исключения
+            Get boolean value from config.
+            section - section name in config file.
+            param - parameter name.
+            Returns string with the read value.
+            Can raise exceptions.
         """
         val = self.get(section, param)
 
@@ -132,66 +131,66 @@ class Config:
 
 class BaseOption(metaclass=ABCMeta):
     """
-    Базовый класс для работы с отдельными записями конфига
+    Base class for working with individual config entries
     """
 
     def __init__(self, config, section, param, defaultValue):
         """
-        config - экземпляр класса core.Config
-        section - секция для параметра конфига
-        param - имя параметра конфига
-        defaultValue - значение по умолчанию
+        config - instance of core.Config class
+        section - section for config parameter
+        param - config parameter name
+        defaultValue - default value
         """
         self.config = config
         self.section = section
         self.param = param
         self.defaultValue = defaultValue
 
-        # Указатель на последнее возникшее исключение
-        # Как правило исключения игнорируются,
-        # поэтому это поле используется для отладки
+        # Pointer to the last exception
+        # Generally exceptions are ignored,
+        # so this field is used for debugging
         self.error = None
 
     def remove_option(self):
         """
-        Удалить настройку
+        Remove the setting
         """
         self.config.remove_option(self.section, self.param)
 
     @property
     def value(self):
         """
-        Возвращает значение парамета
+        Returns the parameter value
         """
         return self._loadParam()
 
     @value.setter
     def value(self, val):
         """
-        Устанавливает значение параметра
+        Sets the parameter value
         """
         self.config.set(self.section, self.param, self._prepareToWrite(val))
 
     @abstractmethod
     def _loadValue(self):
         """
-        Метод должен прочитать из конфига параметр self.param из секции
-        self.section и вернуть значение.
-        Исключения можно игнорировать, поскольку они перехватываются выше
-        в методе _loadParam
+        Method should read from config the parameter self.param from section
+        self.section and return the value.
+        Exceptions can be ignored since they are caught above
+        in the _loadParam method
         """
         pass
 
     def _prepareToWrite(self, val) -> str:
         """
-            Преобразовать (если надо) значение к виду, в котором оно будет
-        записано в конфиг
+        Convert (if needed) the value to the form in which it will be
+        written to the config
         """
         return val
 
     def _loadParam(self):
         """
-        Возващает прочитанное из конфига значение или значение по умолчанию
+        Returns the value read from config or the default value
         """
         try:
             val = self._loadValue()
@@ -204,7 +203,7 @@ class BaseOption(metaclass=ABCMeta):
 
 class StringOption(BaseOption):
     """
-    Класс для упрощения работы со строковыми опциями
+    Class for working with string options
     """
 
     def __init__(self, config, section, param, defaultValue):
@@ -212,20 +211,20 @@ class StringOption(BaseOption):
 
     def _loadValue(self) -> str:
         """
-        Получить значение
+        Get the value
         """
         return self.config.get(self.section, self.param)
 
 
 class BooleanOption(BaseOption):
     """
-    Булевская настройка.
-    Элемент управления - wx.CheckBox
+    Boolean option.
+    Control element - wx.CheckBox
     """
 
     def _loadValue(self) -> bool:
         """
-        Получить значение
+        Get the value
         """
         return self.config.getbool(self.section, self.param)
 
@@ -244,18 +243,18 @@ class JSONOption(BaseOption):
 
 class StcStyleOption(BaseOption):
     """
-    Настрока для хранения стиля редактора StcStyledEditor
+    Option for storing StcStyledEditor style
     """
 
     def __init__(self, config, section, param, defaultValue):
         """
-        defaultValue - экземпляр класса StcStyle
+        defaultValue - instance of StcStyle class
         """
         super().__init__(config, section, param, defaultValue)
 
     def _loadValue(self) -> StcStyle:
         """
-        Получить значение. В производных классах этот метод переопределяется
+        Get the value. This method can be overridden in derived classes
         """
         style = StcStyle.parse(self.config.get(self.section, self.param))
         if style is None:
@@ -269,7 +268,7 @@ class StcStyleOption(BaseOption):
 
 class DateTimeOption(BaseOption):
     """
-    Настройка для хранения даты и времени
+    Option for storing date and time
     """
 
     formatDate = "%Y-%m-%d %H:%M:%S.%f"
@@ -287,9 +286,9 @@ class DateTimeOption(BaseOption):
 
 class ListOption(BaseOption):
     """
-    Класс для хранения настроек в виде списка.
-    По умолчанию элементы разделяются символом ";",
-    но разделитель можно изменять
+    Class for storing settings as a list.
+    By default, elements are separated by the ";" character,
+    but the separator can be changed.
     """
 
     def __init__(
@@ -316,8 +315,8 @@ class ListOption(BaseOption):
 
 class IntegerOption(BaseOption):
     """
-    Настройка для целых чисел.
-    Элемент управления - wx.SpinCtrl
+    Option for integer values.
+    Control element - wx.SpinCtrl
     """
 
     def __init__(self, config, section, param, defaultValue):
@@ -325,22 +324,22 @@ class IntegerOption(BaseOption):
 
     def _loadValue(self) -> int:
         """
-        Получить значение. В производных классах этот метод переопределяется
+        Get the value. This method can be overridden in derived classes.
         """
         return self.config.getint(self.section, self.param)
 
 
 class StringListSection:
     """
-    Класс для хранения списка строк. Список хранится в отдельной секции
+    Class for storing a list of strings. The list is stored in a separate section.
     """
 
     def __init__(self, config, section, paramname):
         """
-        config - экземпляр класса Config
-        section - имя секции для хранения списка
-        paramname - начало имени параметров, которые будут храниться в секции.
-        К paramname будут добавляться порядковые числа.
+        config - instance of Config class
+        section - name of the section for storing the list
+        paramname - beginning of the parameter name that will be stored in the section.
+        Sequential numbers will be added to paramname.
         """
         self._config = config
         self._section = section
@@ -366,14 +365,14 @@ class StringListSection:
     @property
     def value(self) -> List[str]:
         """
-        Возвращает знвчение парамета
+        Returns the parameter value
         """
         return self._loadValue()
 
     @value.setter
     def value(self, val: List[str]):
         """
-        Устанавливает значение параметра
+        Sets the parameter value
         """
         self._config.remove_section(self._section)
 
@@ -385,10 +384,9 @@ class StringListSection:
 class FontOption:
     def __init__(self, faceNameOption, sizeOption, isBoldOption, isItalicOption):
         """
-        faceNameOption - экземепляр класса StringOption, где хранится
-        значение начертания шрифта
-        sizeOption - экземпляр класса IntegerOption, где хранится размер шрифта
-        isBoldOption, isItalicOption - экземпляры класса BooleanOption
+        faceNameOption - instance of StringOption class that stores the font face name
+        sizeOption - instance of IntegerOption class that stores the font size
+        isBoldOption, isItalicOption - instances of BooleanOption class
         """
         self.faceName = faceNameOption
         self.size = sizeOption
@@ -398,7 +396,7 @@ class FontOption:
 
 class PageConfig(Config):
     """
-    Класс для хранения настроек страниц
+    Class for storing page settings
     """
 
     sectionName = "General"

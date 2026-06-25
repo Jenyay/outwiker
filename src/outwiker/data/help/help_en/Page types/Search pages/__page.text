@@ -1,0 +1,21 @@
+!! Search pages
+
+Global search across all notes is implemented as a separate [[page type -> page://page-types]] that can be placed anywhere in the note tree. Typically, it is most logical to create these pages at the root level of the hierarchy. You can create multiple search pages, which is useful if you frequently use the same search criteria. In this case, each page is configured with its own search settings that persist between application restarts.
+
+%center%%thumb width=600%Attach:outwiker_search.png%% 
+
+There are several ways to create a search page. Like any other page, it can be created using the buttons above the note tree or via the menu items %notice%Tree - Create sibling page...%% or %notice%Tree - Create child page...%%. In the %notice%Create page%% dialog that appears, select %notice%Search page%% from the %notice%Page type%% drop-down list.
+
+%center%Attach:dialog.png
+
+There is also a simplified way to create a search page. By selecting the menu item %notice%Tools – Global search...%% or clicking the corresponding toolbar button, a search page named %notice%[=# Search=]%% will be created and immediately selected. If a search page with this name already exists, the application will simply switch to it.
+
+You can search for notes by page content or by tags. If the %notice%Search phrase%% field is left empty, the search will be performed by tags only. You can also specify whether a page must contain all selected tags or at least one of them.
+
+If no tags are selected, they will be ignored during the search. If you leave the search phrase field empty and do not select any tags, the search will return all pages in the tree.
+
+----
+'''See also:'''
+* page://wiki-page
+* page://html-page
+* page://text-page

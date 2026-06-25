@@ -1,0 +1,14 @@
+!! [=(:crdate:)=] and [=(:eddate:)=] wiki commands
+
+The %code%[=(:crdate:)=]%% and %code%[=(:eddate:)=]%% commands are designed to insert the creation date and the last modification date of the current page, respectively.
+
+If these commands are used without parameters, the date format is taken from the [[application settings -> page://settings-interface-formats]] (using the same format as the last modification timestamp displayed in the application's status bar). However, if you wish to define a different format, use the %code%format%% parameter.
+
+The format can be configured in the dialog that appears when selecting the menu item %notice%Wiki - Commands - Creation date [=(:crdate:)=]%% or %notice%Wiki - Commands - Last modification date [=(:eddate:)=]%%. This dialog is shown below:
+
+%center% Attach:dialog.png
+
+----
+'''See also:'''
+* page://wikicommand
+* page://settings-interface-formats

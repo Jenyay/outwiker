@@ -63,7 +63,7 @@ class NotesTree(wx.Window):
             parent=self, style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE
         )
 
-        # Extra icons for notes tree
+        # Extra icons for note tree
         self._EXTRA_ICON_BOOKMARK = 0
         self._EXTRA_ICON_BOOKMARK_TITLE = "bookmark"
 
@@ -83,7 +83,7 @@ class NotesTree(wx.Window):
         self.popupMenu = None
 
         # Имя опции для сохранения развернутости страницы
-        self.pageOptionExpand = "Expand"
+        # self.pageOptionExpand = "Expand"
 
         self._bindApplicationEvents()
         self._bindGuiEvents()
@@ -229,10 +229,7 @@ class NotesTree(wx.Window):
 
         page = event.page
         expanded = event.expanded
-
-        if not page.readonly:
-            page_registry = page.root.registry.get_page_registry(page)
-            page_registry.set(self.pageOptionExpand, expanded)
+        page.expand(expanded)
 
         if expanded:
             for child in page.children:
@@ -395,7 +392,7 @@ class NotesTree(wx.Window):
 
     def addButtons(self):
         """
-        Add the buttons to notes tree panel.
+        Add the buttons to note tree panel.
         """
         actionController = self._application.actionController
 

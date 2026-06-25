@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.api.app.config import GeneralGuiConfig
+from outwiker.api.core.utils import strftime_safe
 
 from .i18n import get_
 
@@ -57,7 +58,7 @@ class DatePageInfo:
         items = [
             "<li><b>{title}</b> ({date})</li>".format(
                 title=page.display_subpath,
-                date=page.datetime.strftime(self._dateTimeFormat),
+                date=strftime_safe(page.datetime, self._dateTimeFormat),
             )
             if page.datetime is not None
             else ""

@@ -11,15 +11,14 @@ import outwiker.core.cssclasses as css
 
 class MyTemplate(Template):
     """
-    Класс работы с шаблонами. Единственное, для чего сделан такой класс
-    - избавиться от замены $$ на $
-    Реализация регулярного выражения частично взята
-    из http://stackoverflow.com/a/12769116
+    Template class. The only reason for this class is to disable
+    $$ to $ replacement.
+    Regular expression implementation is partially taken from
+    http://stackoverflow.com/a/12769116
     """
-
     pattern = r"""
       %(delim)s(?:
-      (?P<escaped>^$) |          # Отключим замену $$
+      (?P<escaped>^$) |          # Disable $$ replacement
       (?P<named>%(id)s) |        # delimiter and a Python identifier
       {(?P<braced>%(id)s)} |     # delimiter and a braced identifier
       (?P<invalid>^$)            # never matches (the regex is not multilined)
@@ -30,15 +29,15 @@ class MyTemplate(Template):
 
 
 class HtmlTemplate:
-    """Класс для генерации HTML-страницы на основе шаблона."""
+    """Class for generating HTML page based on a template."""
 
     def __init__(self, application, template):
         """
-        template - текст шаблона
+        template - template text
 
-        Шаблон должен иметь содержание которого оформлено в стиле,
-        описанном в http://docs.python.org/library/string.html#template-strings
-        за исключением того, что в шаблоне $$ не заменяется на $
+        Template content must be in the style described in
+        http://docs.python.org/library/string.html#template-strings,
+        except that $$ in the template is not replaced with $
         """
         self.config = HtmlRenderConfig(application.config)
 

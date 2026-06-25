@@ -1,0 +1,13 @@
+!! Wiki page
+
+This [[page type -> page://page-types]] offers the most extensive text formatting capabilities using various wiki commands, while still allowing you to insert "raw" HTML code if the wiki notation is insufficient for certain tasks. However, wiki pages are primarily designed to use a syntax that resembles (but does not exactly copy) the notation used in [[pmWiki -> https://pmwiki.org/]].
+
+The wiki notation syntax is described in more detail in the child help pages:
+
+(:childlist:)
+
+----
+'''See also:'''
+* page://html-page
+* page://text-page
+* page://search-page

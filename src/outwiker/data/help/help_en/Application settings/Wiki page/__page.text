@@ -1,0 +1,30 @@
+!! Wiki page
+
+%center%Attach:outwiker_opt_wikipage.png
+
+This section contains parameters that affect the appearance and behavior of [[wiki pages -> page://wiki-page]].
+
+When switching a wiki page to %notice%Preview%% mode, HTML code is generated in the background. This generated HTML page is what the user actually sees. In most cases, you don't need to worry about the underlying HTML code. However, the HTML generated from the wiki notation can be useful for certain tasks—for example, if you use OutWiker to create website pages or blog posts. For this purpose, there is an %notice%HTML%% mode, with its tab located at the bottom next to the %notice%Preview%% tab. Since not everyone needs this mode, the tab is hidden by default. To display it, enable the %notice%Show HTML code tab%% check box.
+
+The %notice%Highlight wiki notation%% check box allows you to enable or disable syntax highlighting on the wiki page.
+
+The %notice%Thumbnail size%% parameter sets the default size for image thumbnails created using the [[[=%thumb%Attach:filename%%=] -> page://wiki-attachments/#thumb]] syntax, provided that the thumbnail size is not explicitly defined within the wiki tag's additional parameters.
+
+[[Links -> page://wiki-links]] on wiki pages can be represented in two formats:
+
+* %code%[=[[Link -> Comment]]=]%%
+* %code%[=[[Comment | Link]]=]%%
+
+When using the dialog opened via the %notice%Wiki - Link%% menu item or the corresponding toolbar button, the link can be created in either format. Which format is used is determined by the %notice%Default link style%% parameter.
+
+If you create a [[wiki page -> page://wiki-page]] and leave it empty (no characters, not even spaces), the %notice%Preview%% mode can display something more useful than a blank sheet. For example, by default, it will show a list of attached files and child pages. You can change this behavior using the %notice%Template for empty page%% parameter. The text in this field will be used as the content for any empty page. The empty page template can include wiki notation.
+
+----
+'''See also:'''
+* page://settings_interface_preview
+* page://settings_editor_html_editor
+* page://settings_editor_wiki_editor
+* page://wiki-page
+* page://wiki-attachments
+* page://wiki-links
+* page://html-page

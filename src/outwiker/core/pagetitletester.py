@@ -27,13 +27,14 @@ class PageTitleWarning(Exception):
 
 
 class PageTitleTester(metaclass=ABCMeta):
-    """Класс для проверки правильности заголовка страницы."""
+    """Class for testing the correctness of the page title."""
 
     def test(self, title):
-        """Проверить правильность заголовка.
+        """
+        Test the correctness of the title.
 
-        Если есть ошибки или предупреждения, бросаются исключения
-        PageTitleError или PageTitleWarning соответственно
+        If there are errors or warnings, exceptions
+        PageTitleError or PageTitleWarning are raised respectively.
         """
         self._testCommonErrors(title)
         self._testForError(title)
@@ -43,8 +44,8 @@ class PageTitleTester(metaclass=ABCMeta):
 
     @staticmethod
     def _testCommonWarnings(title):
-        """Проверка на предупреждения, общие для всех систем."""
-        # Проверка, содержит ли имя выражение виде %xx, где x - 16-ричное число
+        """Test for warnings common to all systems."""
+        # Check if the name contains an expression in the form %xx, where x is a hexadecimal number
         regex = "%[0-9a-fA-F]{2}"
         if re.search(regex, title, flags=re.IGNORECASE) is not None:
             raise PageTitleWarning(
@@ -54,7 +55,7 @@ class PageTitleTester(metaclass=ABCMeta):
             )
 
     def _testCommonErrors(self, title):
-        """Проверка на ошибки, общие для всех систем."""
+        """Test for errors common to all systems."""
         striptitle = title.strip()
 
         if len(striptitle) == 0:
@@ -74,24 +75,24 @@ class PageTitleTester(metaclass=ABCMeta):
     @staticmethod
     def _testForInvalidChar(title, invalidCharacters):
         """
-        Возвращает True, если в заголовке title есть заперещенные символы из
-        строки invalidCharacters
+        Returns True if the title contains forbidden characters from
+        the invalidCharacters string.
         """
         return len([char for char in invalidCharacters if char in title]) == 0
 
     @abstractmethod
     def _testForError(self, title):
         """
-        Если есть ошибки в будущем заголовке страницы, то бросается
-        исключение PageTitleError
+        If there are errors in the future page title, a
+        PageTitleError exception is raised.
         """
         pass
 
     @abstractmethod
     def _testForWarning(self, title):
         """
-        Если есть ошибки в будущем заголовке страницы, то бросается
-        исключение PageTitleWarning
+        If there are warnings in the future page title, a
+        PageTitleWarning exception is raised.
         """
         pass
 
@@ -102,7 +103,7 @@ class PageTitleTester(metaclass=ABCMeta):
 
 
 class WindowsPageTitleTester(PageTitleTester):
-    """Проверка имени страницы для Windows."""
+    """Test page name for Windows."""
 
     def _testForError(self, title):
         invalidCharacters = '><|?*:"\\'
@@ -116,7 +117,7 @@ class WindowsPageTitleTester(PageTitleTester):
 
 
 class LinuxPageTitleTester(PageTitleTester):
-    """Проверка имени страницы для Linux."""
+    """Test page name for Linux."""
 
     def _testForError(self, title):
         pass

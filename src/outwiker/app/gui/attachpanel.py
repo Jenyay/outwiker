@@ -29,6 +29,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.events import (BeginAttachRenamingParams,
                                   AttachSelectionChangedParams)
 from outwiker.core.system import getBuiltinImagePath, getOS
+from outwiker.core.utils import strftime_safe
 
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.guiconfig import AttachConfig, GeneralGuiConfig
@@ -557,9 +558,10 @@ class AttachPanel(wx.Panel):
         name = os.path.relpath(fname_full, root_path)
         size = ('{:,.2f}'.format(os.path.getsize(fname_full) / 1024)).replace(',', ' ')
         datetime_format = self._general_config.dateTimeFormat.value
-        date = datetime.fromtimestamp(os.path.getmtime(fname_full)).strftime(datetime_format)
+        date = datetime.fromtimestamp(os.path.getmtime(fname_full))
+        date_str = strftime_safe(date, datetime_format)
 
-        return tpl.format(name=name, size=size, date=date)
+        return tpl.format(name=name, size=size, date=date_str)
 
     def _getStatusTextForManyFiles(self, fname_full) -> str:
         tpl = _('{count} file(s)  -  {size} KB')

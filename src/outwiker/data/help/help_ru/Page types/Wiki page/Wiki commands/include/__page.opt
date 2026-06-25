@@ -1,11 +1,18 @@
 [wiki]
 md5_hash = 766b85220c346228928d95aa3dfc903b
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+custom_styles_block = {"code": "div.code {\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 1em;\n}\n", "border": "div.border {\n\tpadding: 1em;\n\tmargin: 1em;\n\tborder: 1px solid #000;\n}\n"}
 
 [General]
 type = wiki
 order = 2
 tags = wiki, команды
-datetime = 2023-08-08 13:33:51.042996
+datetime = 2026-03-29 19:32:56.504943
 cursorposition = 0
-alias = Команда include
+alias = Команда (:include:)
+uid = wiki-include
+creationdatetime = 2026-03-29 19:32:10.549822
+
+[Wiki]
+recentstylename = code
 

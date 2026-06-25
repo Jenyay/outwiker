@@ -1,16 +1,16 @@
 [wiki]
 md5_hash = 1ad5623afb4bbbee78a4bcb13406188a
 
-[Tree]
-expand = True
-
 [General]
 type = wiki
 order = 6
 tags = расширенные возможности
-datetime = 2023-07-21 09:26:10.079723
+datetime = 2026-05-05 19:47:55.880633
 cursorposition = 0
 alias = Расширенные возможности
+uid = advanced
+creationdatetime = 2026-04-26 18:55:07.485851
+icon = software/__std_terminal.png
 
 [Misc]
 pageindex = 1

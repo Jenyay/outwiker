@@ -1,0 +1,19 @@
+!! Page styles
+
+You can set styles for [[wiki pages -> page://wiki-page]] and [[HTML pages -> page://html-page]]. To select a page style, use the "Appearance" tab in the page properties dialog.
+
+%center% Attach:styles_list.png 
+
+Page styles are stored in the %notice%styles%% subdirectory within the [[settings directories -> page://config-dirs]].
+
+When applying a style, the %notice%__style.html%% file and the %notice%__style%% subdirectory (if it exists in the selected style) are copied to the page directory. This solves the problem where a certain style is installed on one computer but not on another. At the same time, this approach allows you to individually customize styles for each page. When applying the default style, the %notice%__style.html%% file and the %notice%__style%% subdirectory are deleted.
+
+Below are screenshots of the same page using different styles.
+
+||border=0 width=100%
+|| %thumb%Attach:style_default.png%%[[<<]]Default style || %thumb%Attach:style_black_and_red.png%%[[<<]]"black_and_red" style ||
+|| %thumb%Attach:style_dark.png%%[[<<]]"dark" style || %thumb%Attach:style_green.png%%[[<<]]"green" style ||
+
+----
+'''See also:'''
+* page://create-style

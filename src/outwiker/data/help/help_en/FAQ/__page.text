@@ -1,14 +1,46 @@
-!! Frequently asked questions (FAQ)
+!! Frequently asked questions
 
-!!!! OutWiker does not run on Windows. What should I do?
-
-Try to install [[https://www.microsoft.com/en-us/download/details.aspx?id=48145 | MS Visual C++ Redistributable Package]]. If it does not help, please, send message to the author at [[https://jenyay.net/Outwiker/English | OutWiker program page]] or to e-mail [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] with a full text of error.
+This section contains a collection of user-submitted questions and their answers.
 
 
-!!!! Would not it be better, if OutWiker kept notes in one file?
+!!! OutWiker won't start on Windows. What should I do?
+Try installing the [[https://www.microsoft.com/en-us/download/details.aspx?id=48145 | MS Visual C++ Redistributable Package]]. If installing this library does not resolve the issue, please contact the author via email at [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] or via [[Telegram -> https://t.me/jenyay]]. Please include the full error log, which can be found in the %info%outwiker.log%% file in the [[configuration directory -> page://config-dirs]].
 
-Keeping notes in a tree is the main feature of OutWiker that stands it apart from similar software. It is possible that one day users will be granted choice of how to store their note collections, however, it is not on the developer's to-do list in the near future.
 
-!!!! Will there be a visual editor for the pages?
+!!! Will there be a version of OutWiker for mobile platforms?
+When I first started developing OutWiker, I planned to release a version at least for Android. Over time, I realized that this is a significant standalone task. The program's interface for PC and mobile platforms would have to be fundamentally different. Considering that OutWiker is largely focused on wiki notation, and typing large amounts of text—especially with control characters—is inconvenient on mobile phones, I have set aside development for mobile platforms. I might return to it someday.
 
-Possibility to add such functionality (RichTextFormat seems to be the best candidate to implement wysiwyg editor) is under consideration. But it is still not certain for the moment.
+
+!!! Why is there no deb package for Linux?
+OutWiker is written in Python and relies on several third-party libraries, some of which are no longer maintained, while others change their behavior in newer versions. When building a deb package for a specific Ubuntu release, you must target specific Python versions, which vary between Ubuntu releases. Similar issues arise with libraries. It is a very tedious task to maintain various combinations of Python and library versions shipped with Ubuntu. Therefore, some time ago, it was decided to discontinue deb package builds in favor of [[snap -> https://snapcraft.io/outwiker]] and [[flatpak -> https://flathub.org/en/apps/net.jenyay.Outwiker]].
+
+
+!!! Wouldn't it be better if the program stored notes in a single file?
+Storing notes as a directory tree is one of the core features for which OutWiker was originally designed. This structure is intended to reduce the likelihood of losing all notes due to a file system failure that might destroy a single file.
+
+
+!!! Will there be a visual editor for pages?
+I am considering creating a separate page type in RichTextFormat with a visual editor. I also haven't ruled out the possibility of a visual editor for HTML pages. However, I cannot provide any specific timeline at this point.
+
+
+!!! Why not add note encryption?
+Cryptography is a complex and specialized field where the cost of error is extremely high. It is better to have no encryption at all than to have a superficial implementation that is easily compromised. Furthermore, there are many third-party applications specifically designed for file encryption, such as [[VeraCrypt -> https://veracrypt.io]], [[gocryptfs -> https://nuetzlich.net/gocryptfs/]] / [[cppcryptfs -> https://github.com/bailey27/cppcryptfs]], [[CryFS -> https://www.cryfs.org]], and others. These tools can easily be used to encrypt an OutWiker note tree.
+
+
+!!! How to install plugins
+To install [[plugins -> page://plugins]], you need to unpack the downloaded plugin archive into the %info%plugins%% directory located within the [[configuration directory -> page://config-dirs]]. If you are running OutWiker in portable mode on Windows (i.e., the %info%outwiker.ini%% settings file is located next to the %info%outwiker.exe%% executable), the %info%plugins%% subdirectory will be created in the same directory as the %info%outwiker.exe%% file.
+
+Note that each plugin is a directory containing files; it is this directory that should be copied into %info%plugins%%. In the [[settings dialog -> page://settings]], under the [[Plugins -> page://settings-plugins]] section, you can disable plugins without removing them from the %info%plugins%% directory.
+
+
+!!! How can I help translate the interface into another language?
+All OutWiker localizations are hosted on [[crowdin.com -> https://crowdin.com/project/outwiker]]. There, you can join existing interface translation projects or start a new translation. It is important to prioritize the translation of the %info%outwiker.pot%% file, as it contains the strings used in the main application interface. The remaining localization files pertain to plugins.
+
+
+!!! Where should I send bug reports and feature requests?
+The best way is to create an issue on the [[GitHub -> https://github.com/Jenyay/outwiker/issues]] page. Alternatively, you can contact me via email at [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] or via [[Telegram -> https://t.me/jenyay]]. You can write in either English or Russian. 
+
+----
+'''See also:'''
+* page://config-dirs
+* page://plugins

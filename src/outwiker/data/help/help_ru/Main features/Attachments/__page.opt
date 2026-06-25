@@ -2,15 +2,21 @@
 expand = False
 
 [General]
-type = html
+type = wiki
 order = 0
 tags = вложения
-datetime = 2024-08-13 18:57:24.071744
+datetime = 2026-03-31 09:30:58.648393
 linewrap = True
 cursorposition = 496
-alias = Прикрепленные файлы
-uid = __a60513aa-0c70-4ec9-aee8-4f9193224494
+uid = attachments
+alias = Вложения
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = notice
+
+[wiki]
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n", "notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 

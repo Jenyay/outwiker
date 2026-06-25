@@ -1,0 +1,34 @@
+!! [=(:childlist:)=] command
+
+!!! [[#syntax]] Purpose and Syntax
+The %code%[=(:childlist:)=]%% command is used to display a list of [[child pages -> page://wikicommand]] on a wiki page. The syntax is as follows:
+
+%code%
+[=(:childlist [sort=...]:)=]
+%%
+
+The optional %code%sort%% parameter determines the display order of the child pages. If the %code%sort%% parameter is not specified, the pages will be displayed in the same order as they appear in the note tree.
+
+The %code%sort%% parameter can take the following values:
+
+* %code%name%% — child pages are sorted alphabetically in ascending order;
+* %code%descendname%% — child pages are sorted alphabetically in descending order;
+* %code%creation%% — child pages are sorted by creation date (oldest pages first);
+* %code%descendcreation%% — child pages are sorted by creation date (newest pages first);
+* %code%edit%% — child pages are sorted by the date of the last modification (most recently edited pages at the bottom);
+* %code%descendedit%% — child pages are sorted by the date of the last modification (most recently edited pages at the top);
+* %code%descendorder%% — child pages are displayed in the reverse order of their appearance in the tree.
+
+
+!!! [[#examples]] Examples
+
+This page has four child pages. The following table shows the results of the %code%[=(:childlist:)=]%% command with various %code%sort%% parameter values:
+
+||width=100% border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Command''' || %code%[=(:childlist:)=]%% || %code%[=(:childlist sort=name:)=]%% || %code%[=(:childlist sort=descendname:)=]%% || %code%[=(:childlist sort=descendorder:)=]%% ||
+|| '''Result''' ||(:childlist:) ||(:childlist sort=name:) ||(:childlist sort=descendname:) ||(:childlist sort=descendorder:) ||
+
+----
+'''See also:'''
+* page://wikicommand
+* page://wiki-attachlist

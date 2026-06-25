@@ -47,6 +47,10 @@ class BasePage(metaclass=ABCMeta):
         self.readonly = readonly
         self._typeString = None
 
+        self._expanded: Optional[bool] = None
+        # Option name for registry about expand state
+        self._expanded_option_name = "Expand"
+
         configpath = os.path.join(path, PAGE_OPT_FILE)
         if (
             not self.readonly
@@ -95,13 +99,25 @@ class BasePage(metaclass=ABCMeta):
     @property
     def root(self) -> "WikiDocument":
         """
-        Return root of notes tree
+        Return root of note tree
         """
         result = self
         while result.parent is not None:
             result = result.parent
 
         return result
+
+    def isExpanded(self) -> bool:
+        if self._expanded is None:
+            page_registry = self.root.registry.get_page_registry(self)
+            self._expanded = page_registry.getbool(self._expanded_option_name, default=False)
+        return self._expanded
+
+    def expand(self, expanded: bool):
+        self._expanded = expanded
+        if not self.readonly:
+            page_registry = self.root.registry.get_page_registry(self)
+            page_registry.set(self._expanded_option_name, expanded)
 
     def save(self):
         if self.readonly:
@@ -117,7 +133,7 @@ class BasePage(metaclass=ABCMeta):
 
     def __getitem__(self, path: str) -> Optional[Union["BasePage", "WikiPage"]]:
         """
-        Get pae by relative path in tree
+        Get page by relative path in tree
         """
         if len(path) == 0:
             return None
@@ -125,11 +141,11 @@ class BasePage(metaclass=ABCMeta):
         if path == "/":
             return self.root
 
-        # Если путь начинается с "/", то отсчет начнем от корня
+        # If path starts with "/", count starts from root
         if path[0] == "/":
             return self.root[path[1:]]
 
-        # Разделим путь по составным частям
+        # Split path into its constituent parts
         titles = path.split("/")
         page = self
 
@@ -167,8 +183,7 @@ class BasePage(metaclass=ABCMeta):
     @staticmethod
     def testDublicate(parent, title):
         """
-        Проверить заголовок страницы на то, что в родителе нет
-        страницы с таким заголовком
+        Check that parent does not have a page with such title
         """
         for page in parent.children:
             if page.title.lower() == title.lower():
@@ -177,8 +192,8 @@ class BasePage(metaclass=ABCMeta):
 
     def changeChildOrder(self, page, neworder):
         """
-        Изменить порядок дочерних элементов
-        Дочернюю страницу page переместить на уровень neworder
+        Change the order of child elements
+        Move the child page 'page' to the level 'neworder'
         """
         oldorder = self._children.index(page)
         if oldorder == neworder:
@@ -219,7 +234,7 @@ class BasePage(metaclass=ABCMeta):
 
     def isChild(self, page):
         """
-        Проверить, является ли page дочерней (вложенной) страницей для self
+        Check if 'page' is a child (nested) page of 'self'
         """
         currentpage = page
         while currentpage is not None:
@@ -232,17 +247,15 @@ class BasePage(metaclass=ABCMeta):
     @property
     def datetime(self):
         """
-        Получить дату и время изменения страницы в виде экземпляра
-        класса datetime.datetime
+        Get the date and time of page modification as a datetime.datetime instance
         """
         return self._datetime
 
     def _getDateTime(self):
         date = self.params.datetimeOption.value
         if date is None:
-            # Если дата не установлена, то возвратим дату последнего
-            # изменения файла с контентом, при этом запишем эту дату в
-            # файл настроек
+            # If date is not set, return the date of the last modification of the content file,
+            # and write this date to the settings file
             contentpath = os.path.join(self.path, PAGE_CONTENT_FILE)
             if os.path.exists(contentpath):
                 time = os.path.getmtime(contentpath)
@@ -271,7 +284,7 @@ class BasePage(metaclass=ABCMeta):
 
     def updateDateTime(self):
         """
-        Установить дату изменения страницы в текущую дату/время
+        Set the page modification date to the current date/time
         """
         self.datetime = datetime.datetime.now()
 
@@ -303,46 +316,45 @@ class WikiDocument(BasePage):
         return PickleSaver(registry_path)
 
     def _createEvents(self):
-        # Выбор новой страницы
-        # Параметры: новая выбранная страница
+        # New page selection
+        # Parameters: new selected page
         self.onPageSelect = Event()
 
-        # Обновление дерева
-        # Параметры: sender - из-за кого обновляется дерево
+        # Tree update
+        # Parameters: sender - who triggers the tree update
         self.onTreeUpdate = Event()
 
-        # Начало сложного обновления дерева
-        # Параметры: root - корень дерева
+        # Start of complex tree update
+        # Parameters: root - tree root
         self.onStartTreeUpdate = Event()
 
-        # Конец сложного обновления дерева
-        # Параметры: root - корень дерева
+        # End of complex tree update
+        # Parameters: root - tree root
         self.onEndTreeUpdate = Event()
 
-        # Обновление страницы
-        # Параметры:
+        # Page update
+        # Parameters:
         #     sender
         #     **kwargs
-        # kwargs содержит значение 'change', хранящее флаги того,
-        #     что изменилось
+        # kwargs contains the 'change' value, storing flags for what changed
         self.onPageUpdate = Event()
 
-        # Изменение порядка страниц
-        # Параметры: page - страница, положение которой изменили
+        # Changing page order
+        # Parameters: page - the page whose position was changed
         self.onPageOrderChange = Event()
 
-        # Переименование страницы.
-        # Параметры:
-        #   page - переименованная страница,
-        #   oldSubpath - старый относительный путь до страницы
+        # Page rename.
+        # Parameters:
+        #   page - the renamed page,
+        #   oldSubpath - old relative path to the page
         self.onPageRename = Event()
 
-        # Создание страницы
-        # Параметры: sender
+        # Page creation
+        # Parameters: sender
         self.onPageCreate = Event()
 
-        # Удаленеи страницы
-        # Параметр - удаленная страница
+        # Page deletion
+        # Parameter - the deleted page
         self.onPageRemove = Event()
 
         # Event occurs after change attached file list.
@@ -381,10 +393,9 @@ class WikiDocument(BasePage):
     @staticmethod
     def clearConfigFile(path):
         """
-        Очистить файл __page.opt.
-        Используется в случае, если файл __page.opt испорчен
-        path - путь до вики (или до директории с файлом __page.opt,
-        или включая этот файл)
+        Clear the __page.opt file.
+        Used in case the __page.opt file is corrupted.
+        path - path to wiki (or to directory with __page.opt file, or including this file)
         """
         if path.endswith(PAGE_OPT_FILE):
             realpath = path
@@ -404,7 +415,7 @@ class WikiDocument(BasePage):
     @staticmethod
     def create(path):
         """
-        Создать корень для вики
+        Create root for wiki
         """
         root = WikiDocument(path)
         root.save()
@@ -419,7 +430,7 @@ class WikiDocument(BasePage):
     @selectedPage.setter
     def selectedPage(self, page):
         if page is None or page.getTypeString() == self.getTypeString():
-            # Экземпляр класса WikiDocument выбирать нельзя
+            # Cannot select WikiDocument class instance
             self._selectedPage = None
         else:
             self._selectedPage = page
@@ -453,7 +464,7 @@ class WikiDocument(BasePage):
 
 class WikiPage(BasePage, metaclass=ABCMeta):
     """
-    Страница в дереве.
+    Page in tree.
     """
     iconController = IconController(getIconsDirList()[0])
 
@@ -461,7 +472,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         """
         Constructor.
 
-        path -- путь до страницы
+        path -- path to page
         """
         if not BasePage.testDublicate(parent, title):
             logger.error(
@@ -478,6 +489,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self._parent = parent
         self._tags = [tag for tag in self.params.tagsOption.value if tag]
         self._alias = self.params.aliasOption.value
+
         if len(self._alias) == 0:
             self._alias = None
         self._uid = self.params.pageUidOption.value
@@ -503,14 +515,14 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     @property
     def order(self):
         """
-        Вернуть индекс страницы в списке дочерних страниц
+        Return the page index in the list of child pages
         """
         return self.parent.children.index(self)
 
     @order.setter
     def order(self, neworder):
         """
-        Изменить положение страницы (порядок)
+        Change the page position (order)
         """
         self.parent.changeChildOrder(self, neworder)
 
@@ -570,8 +582,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         if oldtitle == newtitle:
             return
 
-        # Проверка на дубликат страниц, а также на то, что в заголовке страницы
-        # может меняться только регистр букв
+        # Check for duplicate pages and that only the letter case can be changed in the page title
         if not self.canRename(newtitle):
             raise DuplicateTitle
 
@@ -592,7 +603,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     @staticmethod
     def _renamePaths(page, newPath):
         """
-        Скорректировать пути после переименования страницы
+        Correct paths after renaming a page
         """
         oldPath = page.path
         page._path = newPath
@@ -604,7 +615,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     def moveTo(self, newparent):
         """
-        Переместить запись к другому родителю
+        Move the entry to another parent
         """
         if self._parent == newparent:
             return
@@ -613,10 +624,10 @@ class WikiPage(BasePage, metaclass=ABCMeta):
             raise ReadonlyException(self)
 
         if self.isChild(newparent):
-            # Нельзя быть родителем своего родителя(предка)
+            # Cannot be a parent of one's own parent (ancestor)
             raise TreeException
 
-        # Проверка на то, что в новом родителе нет записи с таким же заголовком
+        # Check that the new parent does not have an entry with the same title
         if newparent[self.title] is not None:
             raise DuplicateTitle
 
@@ -624,12 +635,11 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         oldparent = self.parent
         oldsubpath = self.subpath
 
-        # Новый путь для страницы
+        # New path for the page
         newpath = os.path.join(newparent.path, self.title)
 
-        # Временное имя папки.
-        # Сначала попробуем переименовать папку во временную,
-        # а потом уже ее переместим в нужное место с нужным именем
+        # Temporary folder name.
+        # First, we'll try renaming the folder with the page, and then move it to the right place with the right name
         tempname = self._getTempName(oldpath)
 
         try:
@@ -652,13 +662,12 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     def _getTempName(self, pagepath):
         """
-        Найти уникальное имя для перемещаемой страницы.
-        При перемещении сначала пробуем переименовать папку со страницей,
-        а потом уже перемещать.
+        Find a unique name for the moved page.
+        When moving, first try renaming the folder with the page, then move it.
 
-        pagepath - текущий путь до страницы
+        pagepath - current path to page
 
-        Метод возвращает полный путь
+        The method returns the full path
         """
         path, title = os.path.split(pagepath)
         template = "__{title}_{number}"
@@ -688,7 +697,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     @property
     def tags(self):
         """
-        Получить список тегов для страницы (список строк)
+        Get the list of tags for the page (list of strings)
         """
         result = [tag.lower() for tag in self._tags]
         result.sort()
@@ -697,11 +706,11 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     @tags.setter
     def tags(self, tags):
         """
-        Установить теги для страницы
-        tags - список тегов (список строк)
+        Set tags for the page
+        tags - list of tags (list of strings)
         """
         lowertags = [tag.lower() for tag in tags]
-        # Избавимся от дубликатов
+        # Remove duplicates
         newtagset = set(lowertags)
         newtags = list(newtagset)
 
@@ -716,7 +725,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     def save(self):
         """
-        Сохранить страницу
+        Save the page
         """
         if self.readonly:
             return
@@ -728,16 +737,16 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     def _saveOptions(self):
         """
-        Сохранить настройки
+        Save settings
         """
-        # Тип
+        # Type
         self._params.typeOption.value = self.getTypeString()
         self._params.tagsOption.value = self._tags
         self._params.orderOption.value = self.order
 
     def initAfterCreating(self, tags):
         """
-        Инициализация после создания
+        Initialization after creation
         """
         self._tags = tags[:]
         self.save()
@@ -749,7 +758,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     @property
     def content(self):
         """
-        Прочитать файл-содержимое страницы
+        Read the page content file
         """
         text = ""
         path = os.path.join(self.path, PAGE_CONTENT_FILE)
@@ -789,9 +798,9 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     @property
     def textContent(self):
         """
-        Получить контент в текстовом виде.
-        Используется для поиска по страницам.
-        В большинстве случаев достаточно вернуть просто content
+        Get content in text form.
+        Used for searching through pages.
+        In most cases, it's enough to return just content
         """
         return self.content
 
@@ -801,8 +810,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         page = self.parent
 
         while page.parent is not None:
-            # Пока не дойдем до корня, у которого нет заголовка,
-            # и родитель - None
+            # Until we reach the root, which has no title and parent is None
             result = page.title + "/" + result
             page = page.parent
 
@@ -821,7 +829,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
     def remove(self):
         """
-        Удалить страницу
+        Delete the page
         """
         if self.readonly:
             raise ReadonlyException(self)
@@ -839,16 +847,16 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         self.root.onStartTreeUpdate(self.root)
         self._removePageFromTree(self)
 
-        # Если выбранная страница была удалена
+        # If the selected page was deleted
         if oldSelectedPage is not None and (
             oldSelectedPage == self or self.isChild(oldSelectedPage)
         ):
-            # Новая выбранная страница взамен старой
+            # New selected page instead of the old one
             newselpage = oldSelectedPage
             while newselpage.parent is not None and newselpage.isRemoved:
                 newselpage = newselpage.parent
 
-            # Если попали в корень дерева
+            # If we ended up at the tree root
             if newselpage.parent is None:
                 newselpage = None
 
@@ -868,7 +876,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     @property
     def isRemoved(self):
         """
-        Проверить, что страница удалена
+        Check that the page is deleted
         """
         return self not in self.parent.children
 
@@ -899,7 +907,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
         if depot.uidExists(new_uid):
             raise KeyError
 
-        # Запрещено использовать "/" в идентификаторе
+        # Prohibited to use "/" in the identifier
         if "/" in new_uid:
             raise ValueError
 
@@ -1102,16 +1110,16 @@ class PageAdapter:
 
 class PageUidDepot:
     """
-    Класс для хранения уникальных идентификаторов страниц и ссылок по ним
+    Class for storing unique page identifiers and references to them
     """
 
     def __init__(self):
         """
-        wikiroot - корень викидерева или корневая страница.
-        Если wikiroot != None, то приосходит поиск всех UID
+        wikiroot - wiki tree root or root page.
+        If wikiroot != None, then all UIDs are searched
         """
-        # Словарь идентификаторов.
-        # Ключ - уникальный идентификатор, значение - указатель на страницу
+        # Dictionary of identifiers.
+        # Key - unique identifier, value - pointer to page
         self.__uids: Dict[str, BasePage] = {}
 
     def load(self, wikiroot: Optional[WikiDocument]) -> None:
@@ -1122,7 +1130,7 @@ class PageUidDepot:
 
     def __load(self, root: BasePage):
         """
-        Прочитать UID всех страниц в дереве.
+        Read UID of all pages in the tree.
         """
         uid = root.getUid(generate=False)
 

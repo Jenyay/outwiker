@@ -1,0 +1,18 @@
+[General]
+type = wiki
+tags = styles
+order = 4
+cursorposition = 1548
+datetime = 2026-03-15 11:19:14.071920
+uid = styles
+
+[wiki]
+md5_hash = 63eb89cdf57ee3ae29187a8ba2a6ba15
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
+
+[Tree]
+expand = True
+
+[Misc]
+pageindex = 0
+

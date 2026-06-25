@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Действия, которые зависят от ОС, на которой запущена программа
+OS-dependent actions for the program
 """
 
 import ctypes
@@ -39,7 +39,7 @@ from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    )
 
 
-# Имя по умолчанию для папки с настройками в профиле пользователя (устарело)
+# Default name for the settings folder in user profile (deprecated)
 DEFAULT_OLD_CONFIG_DIR = ".outwiker"
 
 logger = logging.getLogger('outwiker.core.system')
@@ -73,14 +73,14 @@ class Windows(System):
 
     def startFile(self, path: Union[str, Path]):
         """
-        Запустить программу по умолчанию для path
+        Start the default program for path
         """
         os.startfile(path)
 
     @property
     def inputEncoding(self):
         """
-        Кодировка, используемая для преобразования нажатой клавиши в строку
+        Encoding used to convert a pressed key to a string
         """
         return "mbcs"
 
@@ -95,8 +95,8 @@ class Windows(System):
     @property
     def settingsDir(self):
         """
-        Возвращает папку, внутри которой хранятся настройки всех программ,
-        и где будет создаваться папка для хранения настроек OutWiker
+        Returns the folder where all programs' settings are stored,
+        and where the folder for OutWiker settings will be created
         """
         homeDir = op.expanduser("~")
         appdata = (os.environ["APPDATA"]
@@ -189,16 +189,16 @@ class Unix(System):
 
     def startFile(self, path: Union[str, Path]):
         """
-        Запустить программу по умолчанию для path
+        Start the default program for path
         """
         subprocess.Popen(['xdg-open', str(path)])
 
     @property
     def settingsDir(self):
         """
-        Возвращает папку, внутри которой хранятся настройки всех программ,
-        и где будет создаваться папка для хранения настроек OutWiker.
-        ($XDG_CONFIG_HOME/outwiker или .config/outwiker)
+        Returns the folder where all programs' settings are stored,
+        and where the folder for OutWiker settings will be created.
+        ($XDG_CONFIG_HOME/outwiker or .config/outwiker)
         """
         homeDir = op.expanduser("~")
         settingsDir = os.environ.get("XDG_CONFIG_HOME", ".config")
@@ -284,11 +284,11 @@ def getMainModulePath() -> str:
 
 def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     """
-    Вернуть полный путь до файла настроек.
-    Поиск пути осуществляется следующим образом:
-    1. Если в папке с программой есть файл настроек, то вернуть путь до него
-    2. Иначе настройки будут храниться в домашней конфигурационной директории
-    outwiker (Пример: .conf/outwiker)
+    Return the full path to the settings file.
+    The path is searched as follows:
+    1. If there is a settings file in the program folder, return the path to it
+    2. Otherwise, settings will be stored in the home configuration directory
+    outwiker (Example: .config/outwiker)
     """
     confSrc = op.join(getCurrentDir(), fname)
 
@@ -358,7 +358,7 @@ def getTemplatesDir() -> str:
 
 def getExeFile() -> str:
     """
-    Возвращает имя запускаемого файла
+    Returns the name of the executable file
     """
     return sys.argv[0]
 
@@ -366,7 +366,7 @@ def getExeFile() -> str:
 def getPluginsDirList(configDirName=DEFAULT_CONFIG_DIR,
                       configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
-    Возвращает список директорий, откуда должны грузиться плагины
+    Returns a list of directories from which plugins should be loaded
     """
     return getSpecialDirList(PLUGINS_FOLDER_NAME,
                              configDirName,
@@ -376,7 +376,7 @@ def getPluginsDirList(configDirName=DEFAULT_CONFIG_DIR,
 def getIconsDirList(configDirName=DEFAULT_CONFIG_DIR,
                     configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
-    Возвращает список директорий, где могут располагаться иконки для страниц
+    Returns a list of directories where page icons may be located
     """
     return getSpecialDirList(ICONS_FOLDER_NAME, configDirName, configFileName)
 
@@ -384,7 +384,7 @@ def getIconsDirList(configDirName=DEFAULT_CONFIG_DIR,
 def getStylesDirList(configDirName=DEFAULT_CONFIG_DIR,
                      configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
-    Возвращает список директорий, откуда должны грузиться плагины
+    Returns a list of directories from which styles should be loaded
     """
     return getSpecialDirList(STYLES_FOLDER_NAME, configDirName, configFileName)
 
@@ -392,7 +392,7 @@ def getStylesDirList(configDirName=DEFAULT_CONFIG_DIR,
 def getSpellDirList(configDirName=DEFAULT_CONFIG_DIR,
                     configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
-    Возвращает список директорий со словарями для проверки орфографии
+    Returns a list of directories with spelling dictionaries
     """
     return getSpecialDirList(SPELL_FOLDER_NAME, configDirName, configFileName)
 
@@ -401,8 +401,8 @@ def getSpecialDirList(dirname,
                       configDirName=DEFAULT_CONFIG_DIR,
                       configFileName=DEFAULT_CONFIG_NAME) -> List[str]:
     """
-    Возвращает список "специальных" директорий (директорий для плагинов,
-    стилей и т.п., расположение которых зависит от расположения файла настроек)
+    Returns a list of "special" directories (directories for plugins,
+    styles, etc., whose location depends on the location of the settings file)
     """
     dirlist = []
 
@@ -410,16 +410,16 @@ def getSpecialDirList(dirname,
     moduleDataDir = getMainModuleDataPath()
     dirlist.append(moduleDataDir)
 
-    # Директория рядом с запускаемым файлом
+    # Directory next to the executable file
     programSpecialDir = op.abspath(getCurrentDir())
     dirlist.append(programSpecialDir)
 
-    # Путь из переменной окружения OUTWIKER_PATH
+    # Path from OUTWIKER_PATH environment variable
     custom_path = os.environ.get(OUTWIKER_PATH_ENV_VAR, '')
     if custom_path:
         dirlist.append(custom_path)
 
-    # Директория рядом с файлом настроек
+    # Directory next to the settings file
     configdir = op.dirname(getConfigPath(configDirName, configFileName))
 
     if programSpecialDir != configdir:

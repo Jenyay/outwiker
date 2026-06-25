@@ -1,34 +1,34 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .config import IntegerOption
 
 
-class RecentWiki(object):
+class RecentWiki:
     """
-    Класс для хранения списка последних открытых вики
+    Class for storing the list of recently opened wikis
     """
-    # Длина истории по умолчанию
+
+    # Default history length
     MAXLEN_DEFAULT = 5
 
     def __init__(self, config):
         """
-        config - эксемпляр класса core.config. Туда сохраняем список файлов
+        config - instance of core.config class. The list of files is saved there.
         """
         self._config = config
-        self._sectionName = u"RecentWiki"
-        self._paramTemplate = u"Path_%d"
+        self._sectionName = "RecentWiki"
+        self._paramTemplate = "Path_%d"
 
-        # Имя параметра, в котором хранится размер истории
-        # последних открытых вики
-        self._maxLenParamName = u"maxcount"
+        # Parameter name that stores the size of the recently opened wikis history
+        self._maxLenParamName = "maxcount"
 
         self._recentes = self._load()
 
     def _load(self):
         """
-        Загрузка последних открытых вики из файла конфига
+        Load recently opened wikis from the config file
         """
-        # Сохраненные пути
+        # Saved paths
         recentes = []
 
         try:
@@ -44,7 +44,7 @@ class RecentWiki(object):
 
     def _save(self):
         """
-        Сохранение списка последних открытых вики
+        Save the list of recently opened wikis
         """
         for n in range(len(self._recentes)):
             param = self._paramTemplate % (n + 1)
@@ -52,7 +52,7 @@ class RecentWiki(object):
 
     def add(self, path):
         """
-        Добавить путь к списку последних открытых вики
+        Add a path to the list of recently opened wikis
         """
         if path in self._recentes:
             self._recentes.remove(path)
@@ -60,7 +60,7 @@ class RecentWiki(object):
         self._recentes.insert(0, path)
 
         if len(self._recentes) > self.maxlen:
-            del self._recentes[self.maxlen:]
+            del self._recentes[self.maxlen :]
 
         self._save()
 
@@ -76,9 +76,8 @@ class RecentWiki(object):
     @property
     def maxlen(self):
         """
-        Возвращает размер списка последних открытых вики (значение из конфига)
+        Returns the size of the list of recently opened wikis (value from config)
         """
-        return IntegerOption(self._config,
-                             self._sectionName,
-                             self._maxLenParamName,
-                             self.MAXLEN_DEFAULT).value
+        return IntegerOption(
+            self._config, self._sectionName, self._maxLenParamName, self.MAXLEN_DEFAULT
+        ).value

@@ -135,14 +135,14 @@ class PrefController:
         interfacePanelsList = [
             PreferencePanelInfo(generalPage, _("General")),
             PreferencePanelInfo(mainWindowPage, _("Main window")),
-            PreferencePanelInfo(notesTreePage, _("Notes tree")),
+            PreferencePanelInfo(notesTreePage, _("Note tree")),
             PreferencePanelInfo(tabsPage, _("Tabs")),
-            PreferencePanelInfo(tagsPage, _("Tags cloud")),
+            PreferencePanelInfo(tagsPage, _("Tag cloud")),
             PreferencePanelInfo(trayPage, _("Tray icon")),
             PreferencePanelInfo(attachPage, _("Attachments")),
             PreferencePanelInfo(htmlRenderPage, _("Preview")),
             PreferencePanelInfo(colorsPage, _("Colors")),
-            PreferencePanelInfo(hotkeysPage, _("Hotkeys")),
+            PreferencePanelInfo(hotkeysPage, _("Keyboard shortcuts")),
             PreferencePanelInfo(formatsPage, _("Formats")),
         ]
 
@@ -189,7 +189,7 @@ class PrefController:
         textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
         self._dialog.treeBook.AddPage(
             textPrintPage,
-            _("Text printout"),
+            _("Printing text"),
             icon_fname=getBuiltinImagePath("printer.svg"),
         )
 
@@ -197,7 +197,7 @@ class PrefController:
         iconsetPage = IconsetPanel(self._dialog.treeBook)
         self._dialog.treeBook.AddPage(
             iconsetPage,
-            _("User's iconset"),
+            _("Custom icons"),
             icon_fname=getBuiltinImagePath("picture.svg"),
         )
 

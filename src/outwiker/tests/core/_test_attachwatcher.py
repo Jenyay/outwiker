@@ -197,7 +197,7 @@ class AttachWatcherTest(BaseWxTestCase):
 
     def test_empty_09_close_wiki(self):
         '''
-        Close current notes tree
+        Close current note tree
         '''
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01

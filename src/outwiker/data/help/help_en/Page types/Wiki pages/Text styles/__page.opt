@@ -1,0 +1,13 @@
+[General]
+type = wiki
+tags = wiki,styles
+order = 6
+creationdatetime = 2018-07-03 09:05:20.446670
+datetime = 2026-03-28 18:40:45.575902
+uid = textstyles
+alias = Text styles
+
+[wiki]
+custom_styles_block = {"code": "div.code {\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 1em;\n}\n"}
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n", "notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
+

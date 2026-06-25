@@ -1,0 +1,11 @@
+[General]
+type = wiki
+tags = settings
+order = 3
+creationdatetime = 2026-02-17 10:04:11.365569
+datetime = 2026-04-26 17:36:05.317389
+uid = settings_interface_tabs
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
+

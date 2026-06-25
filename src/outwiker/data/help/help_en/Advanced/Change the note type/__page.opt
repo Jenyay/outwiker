@@ -1,0 +1,22 @@
+[wiki]
+md5_hash = 38964fb6f5cdaae699f958f4856b7264
+custom_styles_block = {"warn": "div.warn {\n\tcolor: #333;\n\tbackground-color: #fff8c4;\n\tborder-radius: 10px;\n\tpadding: 10px 10px 10px 10px;\n\tmargin: 10px;\n\tborder:1px solid #f2c779;\n}\n"}
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n", "code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+order = 2
+tags = advanced
+datetime = 2026-04-27 20:53:59.987124
+cursorposition = 964
+uid = advanced-page-type
+
+[Misc]
+pageindex = 1
+
+[Wiki]
+recentstylename = warn
+

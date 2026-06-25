@@ -1,0 +1,215 @@
+!! Tables
+
+!!! Contents
+
+** [[Simplified table creation -> #simple]]
+** [[Using the [=(:table:)=] wiki command -> #wikicommand]]
+*** [[Syntax -> #syntax]]
+*** [[Usage examples -> #examples]]
+*** [[Nested tables -> #nested]]
+
+!!! Approaches to creating tables
+
+There are two approaches to creating tables on wiki pages:
+* using simplified wiki notation for creating small tables;
+* using the %code%[=(:table:)...(:tableend:)=]%% wiki command, which allows for finer tuning of the table appearance.
+
+Both approaches are discussed below.
+
+
+!!! [[#simple]] Simplified table creation
+
+To create tables using simplified wiki notation, use the following format:
+
+%code%[=|| parameters
+|| First cell of the first row || Second cell of the first row || ... || Last cell of the first row ||
+|| First cell of the second row || Second cell of the second row || ... || Last cell of the second row ||
+...
+=]%%
+
+When using this notation, you must declare the start of the table using the %code%[=||=]%% symbols. These can be followed by optional table parameters, which are standard attributes of the HTML &lt;table&gt; tag (e.g., %code%border%%, %code%width%%, etc.). Each new line starting with %code%[=||=]%% describes a row of the table. Table cells are also separated by %code%[=||=]%%. The same symbols are placed at the end of each table row.
+
+Horizontal text alignment within table cells is set by spaces before and after the text inside the cell. This is shown in the following example:
+
+Table code:
+
+%code%[=|| border=1 width=100%
+||Left alignment || Center alignment || Right alignment||
+=]%%
+
+Result:
+
+|| border=1 width=100%
+||Left alignment || Center alignment || Right alignment||
+
+
+!!! [[#wikicommand]] Using the [=(:table:)=] command
+
+!!!! [[#syntax]] Syntax
+
+The [[wiki command -> page://wikicommand]] %code%[=(:table:)=]%% is more convenient for creating large tables with formatted text inside cells. The syntax for this command is as follows:
+
+%code%[=(:table parameters:)
+(:row parameters:)
+(:hcell parameters:) Header cell text
+(:hcell parameters:) Header cell text
+...
+(:row parameters:)
+(:cell parameters:) Cell text
+(:cell parameters:) Cell text
+...
+(:tableend:)=]%%
+
+The %code%[=(:table:)=]%% wiki command can use the same parameters as the HTML &lt;table&gt; tag. The most commonly used parameters are:
+* %code%border%% to set the thickness of the table border. If %code%border=0%% (the default value), the table is displayed without a border.
+* %code%width%% to set the table width.
+* %code%align%% to set the table alignment.
+
+The %code%[=(:table parameters:)...(:tableend:)=]%% wiki command is converted into HTML code like: %code%&lt;table parameters&gt;...&lt;/table&gt;%%.
+
+The %code%[=(:row:)=]%% command indicates the start of a new table row; it is an analog of the HTML %code%&lt;tr&gt;%% tag and can contain the same parameters.
+
+The start of a new cell is defined using the %code%[=(:cell:)=]%% command for regular cells or %code%[=(:hcell:)=]%% for header cells. The %code%[=(:cell:)=]%% command is an analog of the HTML %code%&lt;td&gt;%% tag, and %code%[=(:hcell:)=]%% is an analog of the %code%&lt;th&gt;%% tag.
+
+!!!! [[#examples]] Usage examples
+
+(:table2 width=100% border=1 style="border-collapse: collapse; border: 1px solid black;":)
+(:row2:)
+(:hcell2:) Comment
+(:hcell2:) Wiki notation
+(:hcell2:) Result
+
+(:row2:)
+(:cell2:) Table with a border and a header row
+(:cell2:)%code%[=(:table border="1":)
+(:row:)
+(:hcell:)cell 1
+(:hcell:)cell 2
+(:hcell:)cell 3
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)=]%%
+(:cell2:)(:table border="1":)
+(:row:)
+(:hcell:)cell 1
+(:hcell:)cell 2
+(:hcell:)cell 3
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)
+
+(:row2:)
+(:cell2:) Table without a border
+(:cell2:)%code%[=(:table:)
+(:row:)
+(:cell:)cell 1
+(:cell:)cell 2
+(:cell:)cell 3
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)=]%%
+(:cell2:)(:table:)
+(:row:)
+(:cell:)cell 1
+(:cell:)cell 2
+(:cell:)cell 3
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)
+
+(:row2:)
+(:cell2:) Using %code%colspan%% and %code%rowspan%% parameters to merge cells horizontally and vertically
+(:cell2:)%code%[=(:table border="1" align="center":)
+(:row:)
+(:cell colspan=2 align=center:)cell 1
+(:cell rowspan=2:)cell 2
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:tableend:)=]%%
+(:cell2:)(:table border="1" align="center":)
+(:row:)
+(:cell colspan=2 align=center:)cell 1
+(:cell rowspan=2:)cell 2
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:tableend:)
+(:table2end:)
+
+
+!!!! [[#nested]] Nested tables
+
+To place one table inside a cell of another table, a single %code%[=(:table:)=]%% wiki command is not enough. In such cases, the wiki parser would not know where the top-level table ends and the nested table begins. Therefore, to explicitly indicate the start and end of table creation, numbered commands were added: %code%[=(:table1:)=]%%, %code%[=(:table2:)=]%%, %code%[=(:table3:)=]%%, %code%[=(:table4:)=]%%, and %code%[=(:table5:)=]%%. These can be used in the same way as the %code%[=(:table:)=]%% command but were created specifically for nested tables. According to the formatting rules for [[wiki commands -> page://wikicommand]], these numbered commands are closed using the expressions %code%[=(:table1end:)=]%%, %code%[=(:table2end:)=]%%, %code%[=(:table3end:)=]%%, %code%[=(:table4end:)=]%%, and %code%[=(:table5end:)=]%% respectively.
+
+Within a command like %code%[=(:tableN:)=]%% (where N = 1, 2, ..., 5), numbered commands %code%[=(:rowN:)=]%%, %code%[=(:cellN:)=]%%, and %code%[=(:hcellN:)=]%% must also be used to create rows and cells. This feature makes it clear which row or cell belongs to which table.
+
+Example:
+
+(:table3 border="1" width=100% style="border-collapse: collapse; border: 1px solid black;":)
+(:row3:)
+(:hcell3:) Wiki notation
+(:hcell3:) Result
+
+(:row3:)
+(:cell3:)
+%code%[=(:table border=1 align=center:)
+(:row:)
+(:cell:)(:table2 border=1:)
+(:row2:)
+(:cell2:)Table 2. Cell 1
+(:cell2:)Table 2. Cell 2
+(:cell2:)Table 2. Cell 3
+(:row2:)
+(:cell2:)Table 2. Cell 4
+(:cell2:)Table 2. Cell 5
+(:cell2:)Table 2. Cell 6
+(:table2end:)
+
+(:cell:)cell 2
+(:cell:)cell 3
+
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)=]%%
+
+(:cell3:)(:table border=1 align=center:)
+(:row:)
+(:cell:)(:table2 border=1:)
+(:row2:)
+(:cell2:)Table 2. Cell 1
+(:cell2:)Table 2. Cell 2
+(:cell2:)Table 2. Cell 3
+(:row2:)
+(:cell2:)Table 2. Cell 4
+(:cell2:)Table 2. Cell 5
+(:cell2:)Table 2. Cell 6
+(:table2end:)
+
+(:cell:)cell 2
+(:cell:)cell 3
+
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)
+(:table3end:)
+
+The numbering of tables does not necessarily have to reflect the nesting level. For example, on this help page, the outer table for the last example is created using the %code%[=(:table3:)=]%% command, while the nested ones use the %code%[=(:table:)=]%% and %code%[=(:table2:)=]%% commands.
+
+----
+'''See also:'''
+* page://wiki-format-text
+* page://wiki-links
+* page://wikicommand

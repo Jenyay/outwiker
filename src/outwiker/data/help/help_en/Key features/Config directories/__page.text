@@ -1,0 +1,67 @@
+!! Settings directories
+
+The term settings directories refers to the following directories:
+
+* The directory where the settings file %info%outwiker.ini%% and the application log file %info%outwiker.log%% are located.
+* The directory with plugins - %info%plugins%%.
+* The directory with note icons - %info%iconset%%.
+* The directory with spell checking dictionaries - %info%spell%%.
+* The directory with page styles - %info%styles%%.
+* The directory with text formatting styles for wiki pages - %info%textstyles%%.
+
+There are several paths where OutWiker tries to find the settings directories. 
+
+!!! [[#portable]] Portable mode (Windows version)
+
+If the settings file %info%outwiker.ini%% is located in the same directory as the executable file (%info%outwiker.exe%%), then OutWiker runs in portable mode. This means that the program uses only the directories inside its main directory for its needs. In this mode, the settings directories are located in the following subdirectories within the application directory:
+
+* The settings file %info%outwiker.ini%% and the application log file %info%outwiker.log%% are located directly in the application directory.
+* The directory with plugins - the %info%plugins%% directory within the program directory.
+* The directory with note icons - %info%lib\outwiker\data\iconset%%.
+* The directory with spell checking dictionaries - %info%lib\outwiker\data\spell%%.
+* The directory with page styles - %info%lib\outwiker\data\styles%%.
+* The directory with text formatting styles for wiki pages - %info%lib\outwiker\data\textstyles%%.
+
+!!! [[#normal_win]] Normal mode (Windows version)
+
+In normal mode, the settings directories are searched for in the same locations listed in the section about [[portable mode -> #portable]], but it is not recommended to change anything in these directories; instead, it is suggested to work with directories inside the user profile:
+
+* The settings file %info%outwiker.ini%% and the application log file %info%outwiker.log%% are located in the %info%C:\Users\USERNAME\AppData\Roaming\outwiker\%% directory.
+* The directory with plugins - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\plugins%%.
+* The directory with note icons - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\iconset%%.
+* The directory with spell checking dictionaries - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\spell%%.
+* The directory with page styles - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\styles%%.
+* The directory with text formatting styles for wiki pages - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\textstyles%%.
+
+It is assumed here that the user directory is located on the C: drive at %info%C:\Users\'''USERNAME'''\%%, where '''USERNAME''' is the username in the system.
+
+
+!!! [[#linux]] Settings directories on Linux
+
+The path to the settings directories on Linux depends on how the OutWiker application is launched: from source code, as a flatpak package, or as a snap package.
+
+When launching the OutWiker application '''from source code''', the root settings directory is determined by the following rule.
+* If the %code%XDG_CONFIG_HOME%% environment variable is set, the path to the root settings directory will be: %info%"$XDG_CONFIG_HOME/outwiker"%%. 
+* If the %code%XDG_CONFIG_HOME%% environment variable is not set, %info%~/.config/outwiker%% will be considered the root settings directory.
+
+When launching OutWiker from a '''flatpak package''', the root settings directory will be %info%~/.var/app/net.jenyay.Outwiker/config/outwiker/%%
+
+When launching OutWiker from a '''snap package''', the root settings directory will be %info%~/snap/outwiker/current/.config/outwiker/%%
+
+Located inside the root settings directory are:
+
+* The settings file %info%outwiker.ini%% and the application log file %info%outwiker.log%%.
+* The directory with plugins - %info%plugins%%.
+* The directory with note icons - %info%iconset%%.
+* The directory with spell checking dictionaries - %info%spell%%.
+* The directory with page styles - %info%styles%%.
+* The directory with text formatting styles for wiki pages - %info%textstyles%%.
+
+!!! OUTWIKER_PATH environment variable
+
+OutWiker allows you to add another directory that will be used as a root settings directory. The path to this directory can be stored in the %code%OUTWIKER_PATH%% environment variable. Inside this directory, all the same subdirectories mentioned earlier can be located: %info%plugins%%, %info%iconset%%, %info%spell%%, %info%styles%%, %info%textstyles%%.
+
+----
+'''See also:'''
+* page://plugins
+* page://styles

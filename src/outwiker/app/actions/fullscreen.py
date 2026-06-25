@@ -3,22 +3,23 @@
 from outwiker.gui.baseaction import BaseAction
 
 
-class FullScreenAction (BaseAction):
+class FullScreenAction(BaseAction):
     """
     Переход в полноэкранный режим и обратно
     """
-    stringId = u"Fullscreen"
+
+    stringId = "Fullscreen"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Fullscreen")
+        return _("Fullscreen")
 
     @property
     def description(self):
-        return _(u"Fullscreen mode on/off")
+        return _("Toggle fullscreen mode")
 
     def run(self, params):
         self._application.mainWindow.setFullscreen(params)

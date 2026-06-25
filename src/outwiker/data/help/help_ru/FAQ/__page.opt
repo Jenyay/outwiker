@@ -1,18 +1,23 @@
 [wiki]
 md5_hash = 4ff5535692deb02a7f687a1ce431c129
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n"}
 
 [Tree]
 expand = False
 
 [General]
 type = wiki
-order = 7
+order = 6
 tags = 
-datetime = 2020-05-10 10:55:52.834651
+datetime = 2026-04-28 20:32:53.827208
 cursorposition = 0
-uid = __bdf571a9-ebca-4e1c-8d79-9e7816a03029
+uid = faq
 alias = Часто задаваемые вопросы
+creationdatetime = 2026-04-28 09:38:04.035459
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = info
 

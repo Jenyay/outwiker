@@ -8,9 +8,10 @@ expand = True
 type = wiki
 order = 2
 tags = 
-datetime = 2023-07-16 21:03:10.728493
+datetime = 2026-04-28 10:16:04.736180
 cursorposition = 0
 alias = Основные возможности
+uid = key-features
 
 [Misc]
 pageindex = 1

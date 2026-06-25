@@ -1,0 +1,60 @@
+!! [=(:attachlist:)=] command
+
+!!! [[#syntax]] Purpose and Syntax
+The [[wiki command -> page://wikicommand]] %code%[=(:attachlist:)=]%% is designed to insert a list of [[attachments -> page://wiki-attachments]] into a wiki page:
+
+%code%[=(:attachlist [params...]:)=]%%
+
+The following parameters can be used with the %code%[=(:attachlist:)=]%% command to customize the list:
+
+* %code%sort%% — specifies the file sorting order. This parameter accepts the following values:
+** [-] %code%name%% — files are sorted by name in ascending order (default, equivalent to using the command without parameters);
+** [-] %code%descendname%% — files are sorted by name in descending order;
+** [-] %code%ext%% — files are sorted by extension in ascending order;
+** [-] %code%descendext%% — files are sorted by extension in descending order;
+** [-] %code%size%% — files are sorted by size in ascending order;
+** [-] %code%descendsize%% — files are sorted by size in descending order;
+** [-] %code%date%% — files are sorted by last modification date in ascending order;
+** [-] %code%descenddate%% — files are sorted by last modification date in descending order;
+
+* %code%subdir%% — allows displaying attachments located in subfolders.
+
+
+!!! [[#examples]] Examples
+This page has five attached files and a directory named %notice%subfolder%% containing several more files. Below are results of the %code%[=(:attachlist:)=]%% command with various parameter values:
+
+(:table border="1" style="border-collapse: collapse; border: 1px solid black;":)
+(:row:)
+(:hcell width=150em:) Command
+(:hcell width=200em:) Result
+
+(:row:)
+(:cell:)%code%[=(:attachlist:)=]%%
+(:cell:)(:attachlist:)
+
+(:row:)
+(:cell:)%code%[=(:attachlist sort=ext:)=]%%
+(:cell:)(:attachlist sort=ext:)
+
+(:row:)
+(:cell:)%code%[=(:attachlist sort=descendext:)=]%%
+(:cell:)(:attachlist sort=descendext:)
+
+(:row:)
+(:cell:)%code%[=(:attachlist sort=size:)=]%%
+(:cell:)(:attachlist sort=size:)
+
+(:row:)
+(:cell:)%code%[=(:attachlist subdir="subfolder":)=]%%
+(:cell:)(:attachlist subdir="subfolder":)
+
+(:row:)
+(:cell:)%code%[=(:attachlist subdir="subfolder" sort=descendname:)=]%%
+(:cell:)(:attachlist subdir="subfolder" sort=descendname:)
+(:tableend:)
+
+----
+'''See also:'''
+* page://wikicommand
+* page://wiki-childlist
+* page://wiki-attachments

@@ -2,14 +2,19 @@
 type = wiki
 tags = метки
 order = 1
-datetime = 2023-07-21 09:29:14.318680
+datetime = 2026-04-27 09:29:56.755885
 cursorposition = 31
-alias = Работа с метками
-uid = __ca5c9434-c31b-493a-9d22-20b70d645922
+alias = Метки
+uid = tags
+creationdatetime = 2026-02-28 18:51:27.007314
 
 [wiki]
 md5_hash = eba3a44ccb1036747bda0a5ae54a28a1
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = notice
 

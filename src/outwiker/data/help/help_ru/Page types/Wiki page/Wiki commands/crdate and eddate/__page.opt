@@ -3,13 +3,18 @@ type = wiki
 tags = wiki, команды
 order = 3
 creationdatetime = 2014-08-21 12:26:47.811979
-datetime = 2024-08-13 19:10:52.530835
+datetime = 2026-03-29 21:04:23.215539
 cursorposition = 236
-alias = Команды crdate и eddate
+alias = Команды (:crdate:) и (:eddate:)
+uid = wiki-crdate-eddate
 
 [wiki]
 md5_hash = fc7780183c32d7f6db61b0296256269d
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n", "notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = notice
 

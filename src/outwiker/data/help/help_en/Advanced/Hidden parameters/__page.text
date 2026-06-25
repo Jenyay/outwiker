@@ -1,0 +1,13 @@
+!! Hidden settings
+
+This section lists settings that cannot be managed via the [[settings dialog -> page://settings]], but can be configured in the %info%outwiker.ini%% file stored in the [[configuration directory -> page://config-dirs]]. If any of the parameters listed below are missing from the %info%outwiker.ini%% file, they can be added manually.
+
+||border=1 width=100% style="border-collapse: collapse; border: 1px solid black;"
+|| '''Section''' || '''Parameter''' || '''Description''' || '''Default value''' ||
+||%code%[General]%% ||%code%debug%% ||Boolean value. Enables debug mode (generates a more detailed application log). ||False ||
+||%code%[MainWindow]%% ||%code%datetime_status_width%% ||Integer value. Defines the width of the status bar area allocated for displaying the page's last modified date. ||250 ||
+
+----
+'''See also:'''
+* page://config-dirs
+* page://advanced-command-line

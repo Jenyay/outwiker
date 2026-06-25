@@ -1,6 +1,6 @@
 [Search]
 strategy = 1
-tags = for users
+tags = 
 phrase = 
 sort = 0
 
@@ -11,7 +11,8 @@ expand = False
 type = search
 order = 0
 tags = 
-datetime = 2020-05-09 20:26:41.546034
+datetime = 2026-05-05 19:53:58.809783
+icon = text/__std_search_global.svg
 
 [SearchResults]
 page_0 = Key Features

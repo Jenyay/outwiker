@@ -27,7 +27,7 @@ class HtmlRenderPanel(BasePrefPanel):
         self.fontPicker = wx.FontPickerCtrl(self, -1)
 
         # Html improver
-        self.improverLabel = wx.StaticText(self, -1, _("Paragraphs separator"))
+        self.improverLabel = wx.StaticText(self, -1, _("Paragraph separator"))
 
         self.improverComboBox = wx.ComboBox(
             self, -1, style=wx.CB_READONLY | wx.CB_DROPDOWN

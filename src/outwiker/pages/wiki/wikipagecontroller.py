@@ -66,7 +66,7 @@ class WikiPageController:
         panel = WikiPrefGeneralPanel(dialog.treeBook, self._application)
         prefPanelInfo = PreferencePanelInfo(panel, _("General"))
 
-        dialog.appendPreferenceGroup(_("Wiki Page"), [prefPanelInfo], PREF_PANEL_WIKI)
+        dialog.appendPreferenceGroup(_("Wiki page"), [prefPanelInfo], PREF_PANEL_WIKI)
 
     @pagetype(PAGE_TYPE_STRING)
     def __onPageViewCreate(self, page):

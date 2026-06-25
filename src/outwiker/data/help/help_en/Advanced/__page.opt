@@ -6,10 +6,12 @@ expand = True
 
 [General]
 type = wiki
-order = 7
+order = 5
 tags = advanced
-datetime = 2020-06-09 11:01:11.846041
+datetime = 2026-05-05 19:48:44.497651
 cursorposition = 77
+uid = advanced
+icon = software/__std_terminal.png
 
 [Misc]
 pageindex = 1

@@ -1,0 +1,19 @@
+[wiki]
+md5_hash = a62cff7f90e9ef1bb48cb532cce7402f
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n", "notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+order = 2
+tags = wiki,attachments
+cursorposition = 0
+datetime = 2026-04-28 20:18:45.957688
+uid = wiki-attachments
+icon = images/__std_image.svg
+
+[Misc]
+pageindex = 0
+

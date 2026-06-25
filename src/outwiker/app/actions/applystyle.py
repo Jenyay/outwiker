@@ -25,11 +25,11 @@ class SetStyleToBranchAction(BaseAction):
 
     @property
     def title(self):
-        return _("Set Style to Branch…")
+        return _("Set style to branch…")
 
     @property
     def description(self):
-        return _("Set Style to Branch")
+        return _("Set style to branch")
 
     def run(self, params):
         assert self._application.mainWindow is not None

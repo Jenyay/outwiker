@@ -36,7 +36,7 @@ class AddTagsToBranchAction(BaseAction):
 
     @property
     def title(self):
-        return _("Add Tags to Branch…")
+        return _("Add tags to branch…")
 
     @property
     def description(self):
@@ -66,7 +66,7 @@ class AddTagsToBranchAction(BaseAction):
         with TagsDialog(parent, self._application) as dlg:
             _set_tags_cloud_settings(self._application, dlg)
 
-            dlg.SetTitle(_("Add Tags to Branch"))
+            dlg.SetTitle(_("Add tags to branch"))
 
             if dlg.ShowModal() == wx.ID_OK:
                 self._application.onStartTreeUpdate(page.root)
@@ -89,7 +89,7 @@ class RemoveTagsFromBranchAction(BaseAction):
 
     @property
     def title(self):
-        return _("Remove Tags from Branch…")
+        return _("Remove tags from branch…")
 
     @property
     def description(self):
@@ -116,7 +116,7 @@ class RemoveTagsFromBranchAction(BaseAction):
         Удалить теги из ветки, начинающейся со страницы page
         """
         with TagsDialog(parent, self._application) as dlg:
-            dlg.SetTitle(_("Remove Tags from Branch"))
+            dlg.SetTitle(_("Remove tags from branch"))
             _set_tags_cloud_settings(self._application, dlg)
 
             if dlg.ShowModal() == wx.ID_OK:
@@ -140,7 +140,7 @@ class RenameTagAction(BaseAction):
 
     @property
     def title(self):
-        return _("Rename Tag…")
+        return _("Rename tag…")
 
     @property
     def description(self):
@@ -156,7 +156,7 @@ class RenameTagAction(BaseAction):
     def renameTagGui(self, wikiroot, parent):
         tagslist = TagsList(wikiroot)
 
-        with RenameTagDialog(parent, tagslist) as dlg:
+        with RenameTagDialog(parent, self._application, tagslist) as dlg:
             _set_tags_cloud_settings(self._application, dlg)
             if dlg.ShowModal() == wx.ID_OK:
                 self._application.onStartTreeUpdate(wikiroot)

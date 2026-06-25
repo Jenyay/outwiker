@@ -1,5 +1,6 @@
 [wiki]
 md5_hash = ad9114d5b369fd8c1e41a2b7cb8b7875
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
 
 [Tree]
 expand = False
@@ -8,11 +9,15 @@ expand = False
 type = wiki
 order = 3
 tags = поиск
-datetime = 2024-08-13 19:48:34.035730
+datetime = 2026-04-27 10:23:40.256828
 cursorposition = 285
-uid = __40f2a2ad-7ece-4892-9eb0-3d2902f76dc9
-alias = Страница поиска
+uid = search-page
+alias = Страницы поиска
+creationdatetime = 2026-03-31 20:23:42.620484
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = notice
 

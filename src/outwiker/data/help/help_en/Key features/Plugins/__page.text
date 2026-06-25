@@ -1,0 +1,19 @@
+!! Plugins
+
+Plugins (add-ons) allow you to further extend OutWiker's capabilities beyond its core features. You can find additional plugins [[on this page -> https://jenyay.net/Outwiker/PluginsEn]] of the program's website. A large number of plugins are included in the OutWiker installer and can be installed along with the application. 
+
+You can create your own plugins, which are written in Python and consist of a directory containing scripts and a %notice%plugin.xml%% manifest file. 
+
+To install an additional plugin, you need to copy the directory containing the plugin's source code and manifest file into the %notice%plugins%% subdirectory within the [[settings directories -> page://config-dirs]]. You can open the plugins directory in your operating system's file manager directly from OutWiker by selecting the menu item %notice%"Help - Open plugins folder"%%.
+
+After restarting OutWiker, the installed plugin will appear in the [[preferences dialog -> page://settings]] under the [[Plugins -> page://settings-plugins]] section:
+
+%center%Attach:outwiker_opt_plugins.png
+
+If you have written a new plugin and would like it to be placed on the plugins page, please send it to [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] with a detailed description of what it does. Accompanying unit tests are welcome.
+
+----
+'''See also:'''
+* [[Plugin development documentation -> https://outwiker.readthedocs.io/ru/latest/ru/plugins/index.html]]
+* [[List of plugins on the OutWiker website -> https://jenyay.net/Outwiker/PluginsEn]]
+* [[ Preferences - Plugins -> page://settings-plugins]]

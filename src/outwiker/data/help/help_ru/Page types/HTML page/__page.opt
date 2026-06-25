@@ -8,11 +8,11 @@ expand = False
 type = html
 order = 1
 tags = html
-datetime = 2024-08-13 19:43:02.672132
+datetime = 2026-04-27 10:23:04.163596
 linewrap = True
 cursorposition = 794
-uid = __7bd312fb-c3e4-4d9d-9267-cc394dbb9f20
-alias = HTML-страница
+uid = html-page
+alias = HTML-страницы
 
 [Misc]
 pageindex = 1

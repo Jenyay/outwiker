@@ -1,0 +1,11 @@
+!! Interface - Formats
+
+%center%Attach:outwiker_opt_formats.png
+
+The %notice%Date and time format%% input field allows you to define the format for displaying page creation and modification dates in various parts of the program, such as the status bar. OutWiker uses the date and time formatting [[standard used in Python -> https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior]]. There is no need to memorize formatting characters, as the button to the right of the input field opens a menu containing all available format elements. A preview of the date and time based on your current selection is displayed below the field.
+
+The %notice%New page title template%% field allows you to set the default name for newly created pages. This is useful if you frequently create pages with titles that include, for example, the current date or time. This field supports the same placeholders as the %notice%Date and time format%% field described above.
+
+----
+'''See also:'''
+* page://settings_interface_main_window

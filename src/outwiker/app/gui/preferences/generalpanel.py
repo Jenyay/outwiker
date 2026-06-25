@@ -100,7 +100,7 @@ class GeneralPanel(BasePrefPanel):
         main_sizer.Add(autosaveSizer, 1, wx.EXPAND, 0)
 
     def _createToasterDelayGui(self, main_sizer, generalConfig):
-        delayLabel = wx.StaticText(self, label=_("Toaster delay in seconds"))
+        delayLabel = wx.StaticText(self, label=_("Notification timeout in seconds"))
 
         self.toasterDelaySpin = wx.SpinCtrl(
             self,
@@ -131,7 +131,7 @@ class GeneralPanel(BasePrefPanel):
         Создать элементы интерфейса, которые не попали ни в какую другую
             категорию
         """
-        self.askBeforeExitCheckBox = wx.CheckBox(self, -1, _("Ask before exit"))
+        self.askBeforeExitCheckBox = wx.CheckBox(self, -1, _("Confirm before exit"))
 
         main_sizer.Add(
             self.askBeforeExitCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2
@@ -143,7 +143,7 @@ class GeneralPanel(BasePrefPanel):
         """
         # Count of recently used icons
         recentIconsLabel = wx.StaticText(
-            self, -1, _("Length of recently used icons history")
+            self, -1, _("Recent icons history size")
         )
 
         self.iconsHistoryLengthSpin = wx.SpinCtrl(
@@ -157,7 +157,7 @@ class GeneralPanel(BasePrefPanel):
 
         # Recently opened files
         history_label = wx.StaticText(
-            self, -1, _("Length of recently opened files history")
+            self, -1, _("Recent note tree history size")
         )
 
         self.historySpin = wx.SpinCtrl(
@@ -170,7 +170,7 @@ class GeneralPanel(BasePrefPanel):
         )
 
         self.autoopenCheckBox = wx.CheckBox(
-            self, -1, _("Automatically open the recent file")
+            self, -1, _("Open last note tree on startup")
         )
 
         historySizer = wx.FlexGridSizer(cols=2)
@@ -239,7 +239,7 @@ class GeneralPanel(BasePrefPanel):
         pageTabSizer.AddGrowableRow(0)
 
         self.pageTabComboBox = self._createLabelAndComboBox(
-            _("Default opening page mode"), pageTabSizer
+            _("Default page opening mode"), pageTabSizer
         )[1]
 
         self.pageTabComboBox.SetMinSize((self.PAGE_TAB_COMBO_WIDTH, -1))

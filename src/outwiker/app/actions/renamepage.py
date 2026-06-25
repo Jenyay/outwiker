@@ -14,7 +14,7 @@ class RenamePageAction(BaseAction):
 
     @property
     def title(self):
-        return _("Rename Page")
+        return _("Rename page")
 
     @property
     def description(self):

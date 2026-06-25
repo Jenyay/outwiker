@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Tables</title>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:11pt;
+			font-family:Verdana;
+		}
+
+		img{border:none;vertical-align:middle}div.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}span.ow-error{color:#cc0033;background-color:#FFBABA;border:1px solid;margin:1em 0px;padding:1em}a.ow-link-page{text-decoration:none;border-bottom:0.1em dashed}a.ow-link-page-error{font-style:italic;color:#cc0033}a.ow-link-attach{border-bottom:1px solid transparent;text-decoration:none;font-style:italic;white-space:nowrap}a.ow-link-attach:hover{border-color:#eee;color:#000}a.ow-link-attach:before{margin-right:0px;content:"";height:1.6em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}a.ow-attach-dir:before{margin-right:2px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cGF0aCBmaWxsPSdsaWdodGJsdWUnIGQ9J005Ni40MjksMzcuNXYzOS4yODZjMCwzLjQyMy0xLjIyOCw2LjM2MS0zLjY4NCw4LjgxN2MtMi40NTUsMi40NTUtNS4zOTUsMy42ODMtOC44MTYsMy42ODNIMTYuMDcxIGMtMy40MjMsMC02LjM2Mi0xLjIyOC04LjgxNy0zLjY4M2MtMi40NTYtMi40NTYtMy42ODMtNS4zOTUtMy42ODMtOC44MTdWMjMuMjE0YzAtMy40MjIsMS4yMjgtNi4zNjIsMy42ODMtOC44MTcgYzIuNDU1LTIuNDU2LDUuMzk0LTMuNjgzLDguODE3LTMuNjgzaDE3Ljg1N2MzLjQyMiwwLDYuMzYyLDEuMjI4LDguODE3LDMuNjgzYzIuNDU1LDIuNDU1LDMuNjgzLDUuMzk1LDMuNjgzLDguODE3VjI1aDM3LjUgYzMuNDIyLDAsNi4zNjEsMS4yMjgsOC44MTYsMy42ODNDOTUuMjAxLDMxLjEzOCw5Ni40MjksMzQuMDc4LDk2LjQyOSwzNy41eicgLz48L3N2Zz4K");background-position:center center;background-size:75% auto}span.ow-attach-error{font-style:italic;white-space:nowrap;color:#cc0033}span.ow-attach-error:before{margin-right:0px;content:"";height:1.8em;vertical-align:middle;width:1.5em;background-repeat:no-repeat;display:inline-block;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBmaWxsPSIjMkE5NEY0IiBkPSJNMTM1LjYyNiAzNDYuMWMtMjAuMjAxIDAtMzkuMTQ2LTcuODItNTMuMzQ3LTIyLjAyLTE0LjE5OS0xNC4yLTIyLjAyLTMzLjE0Ni0yMi4wMi01My4zNDYgMC0yMC4yMDEgNy44Mi0zOS4xNDYgMjIuMDItNTMuMzQ3TDIyOS40MTQgNzAuMjUzYzExLjI2My0xMS4yNTkgMjYuMDc2LTE3LjAyNyA0MS42ODEtMTYuMjkxIDE0Ljg4My43MTggMjkuMjYyIDcuMjk2IDQwLjQ4OSAxOC41MjNzMTcuODA3IDI1LjYwNSAxOC41MjQgNDAuNDg3Yy43NTQgMTUuNjE5LTUuMDMxIDMwLjQyMi0xNi4yOTMgNDEuNjgybC0xMzguMjE4IDEzOC4yMmMtMTQuNjY2IDE0LjY2My0zOC41MjUgMTQuNjYzLTUzLjE4OSAwLTcuMDg1LTcuMDg2LTEwLjk4Ni0xNi41My0xMC45ODYtMjYuNTk1IDAtMTAuMDY2IDMuOTAxLTE5LjUxMSAxMC45ODctMjYuNTk2bDkzLjYzMS05My42MzdjNC44MzctNC44MzYgMTIuNjgtNC44MzYgMTcuNTE4IDAgNC44MzggNC44MzggNC44MzggMTIuNjgyLjAwMiAxNy41MmwtOTMuNjMzIDkzLjYzN2MtMi40MDUgMi40MDQtMy43MyA1LjYyOC0zLjczIDkuMDc2IDAgMy40NDcgMS4zMjUgNi42NzEgMy43MyA5LjA3NiA1LjAwNSA1LjAwMyAxMy4xNDYgNS4wMDYgMTguMTUyIDBsMTM4LjIxOC0xMzguMjJjNi4zNS02LjM0OSA5LjQ4My0xNC4yOTIgOS4wNjUtMjIuOTY5LS40Mi04LjcxOC00LjQzMy0xNy4yOTktMTEuMjk2LTI0LjE2My0xNC4zMDEtMTQuMzAxLTM0LjEyMi0xNS4yMzgtNDcuMTM1LTIuMjMxTDk5Ljc5OCAyMzQuOTA3Yy05LjUyIDkuNTIxLTE0Ljc2NCAyMi4yNDUtMTQuNzY0IDM1LjgyOCAwIDEzLjU4MiA1LjI0NCAyNi4zMDcgMTQuNzY0IDM1LjgyNiA5LjUyMSA5LjUyMSAyMi4yNDUgMTQuNzY1IDM1LjgyOCAxNC43NjVzMjYuMzA3LTUuMjQ0IDM1LjgyNy0xNC43NjVsMTQ3LjE0MS0xNDcuMTRjNC44MzgtNC44MzggMTIuNjgtNC44MzkgMTcuNTE5IDAgNC44MzggNC44MzggNC44MzggMTIuNjgxIDAgMTcuNTE5TDE4OC45NzIgMzI0LjA4MWMtMTQuMiAxNC4xOTktMzMuMTQ2IDIyLjAxOS01My4zNDYgMjIuMDE5eiIvPjwvc3ZnPg==");background-position:center center;background-size:75% auto}blockquote.ow-wiki{border-left:4px solid #ccc;padding:10px 15px;margin:10px 0;background-color:#f9f9f9;color:#222}
+		ul.ow-wiki{padding-left:1rem;list-style-type:none}ul.ow-wiki>li.ow-wiki:before{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMm1tIiBoZWlnaHQ9IjJtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMiAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMjQ4MjIgMCAwIC4yNDgwOCAtMi4zNzEzIC0yLjU0NzYpIj4KPGNpcmNsZSBjeD0iMTMuNTgxIiBjeT0iMTQuMjk5IiByPSIxIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjgxOSIvPgo8L2c+Cjwvc3ZnPgoK");background-position:0.0 0.0em;background-size:1.2em 1.2em;background-repeat:no-repeat;margin-right:0px;content:"";height:1.4em;width:1.5em;vertical-align:middle;display:inline-block}
+	</style>
+	<style>span.code {
+	display: inline-block;
+	background: #FBFCD2;
+	font-family: monospace;
+	border: solid 1px #CCC;
+	padding: 0.2em;
+}
+</style>
+
+</head>
+
+<body>
+<h1 class="ow-wiki">Tables</h1>
+<h2 class="ow-wiki">Contents</h2>
+<ul class="ow-wiki"><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki" href="#simple">Simplified table creation</a></li><li class="ow-wiki"><a class="ow-wiki" href="#wikicommand">Using the (:table:) wiki command</a></li><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki" href="#syntax">Syntax</a></li><li class="ow-wiki"><a class="ow-wiki" href="#examples">Usage examples</a></li><li class="ow-wiki"><a class="ow-wiki" href="#nested">Nested tables</a></li>
+</ul>
+</ul>
+</ul>
+<h2 class="ow-wiki">Approaches to creating tables</h2>
+<br/>
+There are two approaches to creating tables on wiki pages:<ul class="ow-wiki"><li class="ow-wiki">using simplified wiki notation for creating small tables;</li><li class="ow-wiki">using the <span class="code">(:table:)...(:tableend:)</span> wiki command, which allows for finer tuning of the table appearance.</li>
+</ul>
+Both approaches are discussed below.<br/>
+<br/>
+<h2 class="ow-wiki"><a id="simple"></a> Simplified table creation</h2>
+<br/>
+To create tables using simplified wiki notation, use the following format:<br/>
+<br/>
+<span class="code">|| parameters<br/>
+|| First cell of the first row || Second cell of the first row || ... || Last cell of the first row ||<br/>
+|| First cell of the second row || Second cell of the second row || ... || Last cell of the second row ||<br/>
+...<br/>
+</span><br/>
+<br/>
+When using this notation, you must declare the start of the table using the <span class="code">||</span> symbols. These can be followed by optional table parameters, which are standard attributes of the HTML &lt;table&gt; tag (e.g., <span class="code">border</span>, <span class="code">width</span>, etc.). Each new line starting with <span class="code">||</span> describes a row of the table. Table cells are also separated by <span class="code">||</span>. The same symbols are placed at the end of each table row.<br/>
+<br/>
+Horizontal text alignment within table cells is set by spaces before and after the text inside the cell. This is shown in the following example:<br/>
+<br/>
+Table code:<br/>
+<br/>
+<span class="code">|| border=1 width=100%<br/>
+||Left alignment || Center alignment || Right alignment||<br/>
+</span><br/>
+<br/>
+Result:<br/>
+<br/>
+<table border=1 width=100%>
+<tr>
+<td align="left">Left alignment</td>
+<td align="center">Center alignment</td>
+<td align="right">Right alignment</td>
+</tr>
+</table><br/>
+<h2 class="ow-wiki"><a id="wikicommand"></a> Using the (:table:) command</h2>
+<h3 class="ow-wiki"><a id="syntax"></a> Syntax</h3>
+<br/>
+The <a class="ow-wiki ow-link-page" href="page://wikicommand">wiki command</a> <span class="code">(:table:)</span> is more convenient for creating large tables with formatted text inside cells. The syntax for this command is as follows:<br/>
+<br/>
+<span class="code">(:table parameters:)<br/>
+(:row parameters:)<br/>
+(:hcell parameters:) Header cell text<br/>
+(:hcell parameters:) Header cell text<br/>
+...<br/>
+(:row parameters:)<br/>
+(:cell parameters:) Cell text<br/>
+(:cell parameters:) Cell text<br/>
+...<br/>
+(:tableend:)</span><br/>
+<br/>
+The <span class="code">(:table:)</span> wiki command can use the same parameters as the HTML &lt;table&gt; tag. The most commonly used parameters are:<ul class="ow-wiki"><li class="ow-wiki"><span class="code">border</span> to set the thickness of the table border. If <span class="code">border=0</span> (the default value), the table is displayed without a border.</li><li class="ow-wiki"><span class="code">width</span> to set the table width.</li><li class="ow-wiki"><span class="code">align</span> to set the table alignment.</li>
+</ul>
+The <span class="code">(:table parameters:)...(:tableend:)</span> wiki command is converted into HTML code like: <span class="code">&lt;table parameters&gt;...&lt;/table&gt;</span>.<br/>
+<br/>
+The <span class="code">(:row:)</span> command indicates the start of a new table row; it is an analog of the HTML <span class="code">&lt;tr&gt;</span> tag and can contain the same parameters.<br/>
+<br/>
+The start of a new cell is defined using the <span class="code">(:cell:)</span> command for regular cells or <span class="code">(:hcell:)</span> for header cells. The <span class="code">(:cell:)</span> command is an analog of the HTML <span class="code">&lt;td&gt;</span> tag, and <span class="code">(:hcell:)</span> is an analog of the <span class="code">&lt;th&gt;</span> tag.<br/>
+<h3 class="ow-wiki"><a id="examples"></a> Usage examples</h3>
+<br/>
+<table width=100% border=1 style="border-collapse: collapse; border: 1px solid black;">
+<tr><th> Comment</th><th> Wiki notation</th><th> Result<br/>
+</th>
+</tr>
+<tr>
+<td> Table with a border and a header row</td>
+<td><span class="code">(:table border="1":)<br/>
+(:row:)<br/>
+(:hcell:)cell 1<br/>
+(:hcell:)cell 2<br/>
+(:hcell:)cell 3<br/>
+(:row:)<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:cell:)cell 6<br/>
+(:tableend:)</span></td>
+<td>
+<table border="1">
+<tr><th>cell 1</th><th>cell 2</th><th>cell 3</th>
+</tr>
+<tr>
+<td>cell 4</td>
+<td>cell 5</td>
+<td>cell 6</td>
+</tr>
+</table><br/>
+</td>
+</tr>
+<tr>
+<td> Table without a border</td>
+<td><span class="code">(:table:)<br/>
+(:row:)<br/>
+(:cell:)cell 1<br/>
+(:cell:)cell 2<br/>
+(:cell:)cell 3<br/>
+(:row:)<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:cell:)cell 6<br/>
+(:tableend:)</span></td>
+<td>
+<table>
+<tr>
+<td>cell 1</td>
+<td>cell 2</td>
+<td>cell 3</td>
+</tr>
+<tr>
+<td>cell 4</td>
+<td>cell 5</td>
+<td>cell 6</td>
+</tr>
+</table><br/>
+</td>
+</tr>
+<tr>
+<td> Using <span class="code">colspan</span> and <span class="code">rowspan</span> parameters to merge cells horizontally and vertically</td>
+<td><span class="code">(:table border="1" align="center":)<br/>
+(:row:)<br/>
+(:cell colspan=2 align=center:)cell 1<br/>
+(:cell rowspan=2:)cell 2<br/>
+(:row:)<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:tableend:)</span></td>
+<td>
+<table border="1" align="center">
+<tr>
+<td colspan=2 align=center>cell 1</td>
+<td rowspan=2>cell 2</td>
+</tr>
+<tr>
+<td>cell 4</td>
+<td>cell 5</td>
+</tr>
+</table></td>
+</tr>
+</table><br/>
+<br/>
+<h3 class="ow-wiki"><a id="nested"></a> Nested tables</h3>
+<br/>
+To place one table inside a cell of another table, a single <span class="code">(:table:)</span> wiki command is not enough. In such cases, the wiki parser would not know where the top-level table ends and the nested table begins. Therefore, to explicitly indicate the start and end of table creation, numbered commands were added: <span class="code">(:table1:)</span>, <span class="code">(:table2:)</span>, <span class="code">(:table3:)</span>, <span class="code">(:table4:)</span>, and <span class="code">(:table5:)</span>. These can be used in the same way as the <span class="code">(:table:)</span> command but were created specifically for nested tables. According to the formatting rules for <a class="ow-wiki ow-link-page" href="page://wikicommand">wiki commands</a>, these numbered commands are closed using the expressions <span class="code">(:table1end:)</span>, <span class="code">(:table2end:)</span>, <span class="code">(:table3end:)</span>, <span class="code">(:table4end:)</span>, and <span class="code">(:table5end:)</span> respectively.<br/>
+<br/>
+Within a command like <span class="code">(:tableN:)</span> (where N = 1, 2, ..., 5), numbered commands <span class="code">(:rowN:)</span>, <span class="code">(:cellN:)</span>, and <span class="code">(:hcellN:)</span> must also be used to create rows and cells. This feature makes it clear which row or cell belongs to which table.<br/>
+<br/>
+Example:<br/>
+<br/>
+<table border="1" width=100% style="border-collapse: collapse; border: 1px solid black;">
+<tr><th> Wiki notation</th><th> Result<br/>
+</th>
+</tr>
+<tr>
+<td><span class="code">(:table border=1 align=center:)<br/>
+(:row:)<br/>
+(:cell:)(:table2 border=1:)<br/>
+(:row2:)<br/>
+(:cell2:)Table 2. Cell 1<br/>
+(:cell2:)Table 2. Cell 2<br/>
+(:cell2:)Table 2. Cell 3<br/>
+(:row2:)<br/>
+(:cell2:)Table 2. Cell 4<br/>
+(:cell2:)Table 2. Cell 5<br/>
+(:cell2:)Table 2. Cell 6<br/>
+(:table2end:)<br/>
+<br/>
+(:cell:)cell 2<br/>
+(:cell:)cell 3<br/>
+<br/>
+(:row:)<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:cell:)cell 6<br/>
+(:tableend:)</span><br/>
+</td>
+<td>
+<table border=1 align=center>
+<tr>
+<td>
+<table border=1>
+<tr>
+<td>Table 2. Cell 1</td>
+<td>Table 2. Cell 2</td>
+<td>Table 2. Cell 3</td>
+</tr>
+<tr>
+<td>Table 2. Cell 4</td>
+<td>Table 2. Cell 5</td>
+<td>Table 2. Cell 6</td>
+</tr>
+</table></td>
+<td>cell 2</td>
+<td>cell 3</td>
+</tr>
+<tr>
+<td>cell 4</td>
+<td>cell 5</td>
+<td>cell 6</td>
+</tr>
+</table></td>
+</tr>
+</table><br/>
+<br/>
+The numbering of tables does not necessarily have to reflect the nesting level. For example, on this help page, the outer table for the last example is created using the <span class="code">(:table3:)</span> command, while the nested ones use the <span class="code">(:table:)</span> and <span class="code">(:table2:)</span> commands.<br/>
+<hr>
+<b>See also:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-format-text">Text Formating</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-links">Links</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wikicommand">Wiki commands</a></li>
+</ul>
+</body>
+</html>

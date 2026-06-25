@@ -1,0 +1,25 @@
+!! Interface - Tag cloud
+
+%center%Attach:outwiker_opt_tags.png
+
+This section contains settings for customizing the appearance of the %notice%Tags%% panel.
+
+%center%Attach:tags_cloud.png 
+
+This panel displays a tag cloud where the font size for each tag increases based on the number of notes it is applied to. Using the %notice%Minimum font size%% and %notice%Maximum font size%% fields, you can configure the range of font sizes in the tag cloud. If you prefer all tags to be displayed at the same size, you can set both values to the same number.
+
+The tag cloud can operate in two modes, which are toggled via the %notice%Tag cloud display mode%% drop-down list:
+* %notice%Continuous text%% mode is used by default. In this mode, multiple tags are displayed on a single line.
+* %notice%List%% mode displays tags one per line.
+
+The %notice%Show tooltips%% check box allows you to enable or disable the hints that appear when you hover your mouse over a tag. These tooltips contain information about the number of notes associated with that specific tag.
+
+Additionally, the %notice%Titles in popup window%% group of check boxes allows you to enable or disable the display of page titles in the window that appears when a tag is clicked.
+
+%center%%thumb width=700%Attach:popup.png%%
+
+----
+'''See also:'''
+* page://settings_interface_main_window
+* page://settings_interface_notetree
+* page://settings_interface_tabs

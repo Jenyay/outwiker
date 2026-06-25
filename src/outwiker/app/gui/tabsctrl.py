@@ -279,8 +279,9 @@ class TabsCtrl(wx.Window):
 
             if self._hovered_tab is not None:
                 page = self._tabs[self._hovered_tab].page
-                tooltip = f"{page.display_title}"
-                self.SetToolTip(tooltip)
+                if page is not None:
+                    tooltip = f"{page.display_title}"
+                    self.SetToolTip(tooltip)
             else:
                 self.UnsetToolTip()
         elif self._hovered_tab is not None and (
@@ -1121,14 +1122,14 @@ class TabRender:
 
         font = self._get_font(tab_state)
         dc.SetFont(font)
+        dc.SetTextForeground(font_color)
         text_height = self.get_text_height(dc)
         text_top = tab.height // 2 - text_height // 2 + tab.top
         text_max_width = tab.text_right - tab.text_left
 
         title = self._trim_title(dc, tab.title, text_max_width)
 
-        gc.SetFont(font, font_color)
-        gc.DrawText(title, tab.text_left, text_top)
+        dc.DrawText(title, tab.text_left, text_top)
 
     def _draw_background(self, gc: wx.GraphicsContext, tab: SingleTabGeometry) -> None:
         assert tab.left is not None
@@ -1170,7 +1171,9 @@ class TabRender:
                 Theme.SECTION_TABS, Theme.TABS_BACKGROUND_DOWNED_COLOR
             )
 
-        gc.SetPen(self._pens.FindOrCreatePen(border_color, 2))
+        pen = self._pens.FindOrCreatePen(border_color, 2)
+        pen.SetQuality(wx.PEN_QUALITY_HIGH)
+        gc.SetPen(pen)
         gc.SetBrush(
             self._brushes.FindOrCreateBrush(background_color)
         )

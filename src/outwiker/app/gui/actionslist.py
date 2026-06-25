@@ -249,7 +249,7 @@ polyactionsList = [
     PolyactionInfo(
         polyactions.CODE_STR_ID,
         _("Insert code"),
-        _("Insert code(monospaced font)"),
+        _("Format as code (monospaced font)"),
         None,
     ),
     PolyactionInfo(
@@ -261,7 +261,7 @@ polyactionsList = [
     PolyactionInfo(
         polyactions.ALIGN_CENTER_STR_ID,
         _("Align text center"),
-        _("Center"),
+        _("Align text center"),
         HotKey("C", ctrl=True, shift=True),
     ),
     PolyactionInfo(
@@ -279,48 +279,48 @@ polyactionsList = [
     PolyactionInfo(
         polyactions.HEADING_1_STR_ID,
         _("First-level heading"),
-        _("First-level heading"),
+        _("Insert a first-level heading"),
         HotKey("1", ctrl=True),
     ),
     PolyactionInfo(
         polyactions.HEADING_2_STR_ID,
         _("Second-level heading"),
-        _("Second-level heading"),
+        _("Insert a second-level heading"),
         HotKey("2", ctrl=True),
     ),
     PolyactionInfo(
         polyactions.HEADING_3_STR_ID,
-        _("Subtitle three"),
-        _("Subtitle three"),
+        _("Third-level heading"),
+        _("Insert a third-level heading"),
         HotKey("3", ctrl=True),
     ),
     PolyactionInfo(
         polyactions.HEADING_4_STR_ID,
-        _("Subtitle four"),
-        _("Subtitle four"),
+        _("Fourth-level heading"),
+        _("Insert a fourth-level heading"),
         HotKey("4", ctrl=True),
     ),
     PolyactionInfo(
         polyactions.HEADING_5_STR_ID,
-        _("Subtitle five"),
-        _("Subtitle five"),
+        _("Fifth-level heading"),
+        _("Insert a fifth-level heading"),
         HotKey("5", ctrl=True),
     ),
     PolyactionInfo(
         polyactions.HEADING_6_STR_ID,
-        _("Subtitle six"),
-        _("Subtitle six"),
+        _("Sixth-level heading"),
+        _("Insert a sixth-level heading"),
         HotKey("6", ctrl=True),
     ),
     PolyactionInfo(polyactions.ANCHOR_STR_ID, _("Anchor"), _("Anchor"), None),
     PolyactionInfo(
         polyactions.HORLINE_STR_ID,
         _("Horizontal rule"),
-        _("Horizontal rule"),
+        _("Insert a horizontal rule"),
         HotKey("H", ctrl=True, shift=True),
     ),
     PolyactionInfo(
-        polyactions.LINK_STR_ID, _("Link"), _("Insert Link"), HotKey("L", ctrl=True)
+        polyactions.LINK_STR_ID, _("Link"), _("Insert a link"), HotKey("L", ctrl=True)
     ),
     PolyactionInfo(
         polyactions.QUOTE_STR_ID,
@@ -331,20 +331,20 @@ polyactionsList = [
     PolyactionInfo(
         polyactions.IMAGE_STR_ID,
         _("Image"),
-        _("Insert image"),
+        _("Insert an image"),
         HotKey("M", ctrl=True, shift=True),
     ),
     PolyactionInfo(polyactions.MARK_STR_ID, _("Mark"), _("Mark text"), None),
     PolyactionInfo(
         polyactions.LIST_BULLETS_STR_ID,
-        _("Bullets list"),
-        _("Insert a bullets list"),
+        _("Unordered list"),
+        _("Insert an unordered list"),
         HotKey("G", ctrl=True),
     ),
     PolyactionInfo(
         polyactions.LIST_NUMBERS_STR_ID,
-        _("Numbers list"),
-        _("Insert a numbers list"),
+        _("Ordered list"),
+        _("Insert an ordered list"),
         HotKey("J", ctrl=True),
     ),
     PolyactionInfo(
@@ -361,8 +361,8 @@ polyactionsList = [
     ),
     PolyactionInfo(
         polyactions.HTML_ESCAPE_STR_ID,
-        _("Convert HTML Symbols"),
-        _("Convert HTML Symbols"),
+        _("Escape HTML characters"),
+        _("Escape HTML characters"),
         None,
     ),
     PolyactionInfo(
@@ -389,7 +389,7 @@ polyactionsList = [
     PolyactionInfo(
         polyactions.SPELL_ON_OFF_ID,
         _("Spell checking"),
-        _("Enable / disable spell checking"),
+        _("Toggle spell checking"),
         HotKey("F7"),
     ),
     PolyactionInfo(
@@ -419,20 +419,20 @@ polyactionsList = [
     PolyactionInfo(polyactions.JOIN_LINES, _("Join lines"), _("Join lines"), None),
     PolyactionInfo(
         polyactions.DELETE_WORD_LEFT,
-        _("Delete word to the left"),
+        _("Delete word left"),
         _("Delete text to beginning of the word"),
         HotKey("Back", ctrl=True),
     ),
     PolyactionInfo(
         polyactions.DELETE_WORD_RIGHT,
-        _("Delete word to the right"),
-        _("Delete text to ending of the word"),
+        _("Delete word right"),
+        _("Delete to end of the word"),
         HotKey("Delete", ctrl=True),
     ),
     PolyactionInfo(
         polyactions.DELETE_LINE_LEFT,
         _("Delete to start of the line"),
-        _("Delete text back from the current position to the start of the line"),
+        _("Delete text to the beginning of the line"),
         HotKey("Back", ctrl=True, shift=True),
     ),
     PolyactionInfo(
@@ -543,7 +543,7 @@ polyactionsList = [
     PolyactionInfo(
         polyactions.CLIPBOARD_COPY_ID,
         _("Copy"),
-        _("Copy to clipboard"),
+        _("Copy selected text to clipboard"),
         HotKey("C", ctrl=True),
     ),
     PolyactionInfo(

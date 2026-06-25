@@ -15,8 +15,8 @@ class BaseHashCalculator(metaclass=ABCMeta):
     @abstractmethod
     def getFullContent(self, page) -> List[str]:
         """
-        Получить контент для расчета контрольной суммы, по которой определяется,
-        нужно ли обновлять страницу
+        Get the content for calculating the checksum, which determines
+        whether the page needs to be updated
         """
 
     @property
@@ -31,12 +31,11 @@ class BaseHashCalculator(metaclass=ABCMeta):
 class SimpleHashCalculator(BaseHashCalculator):
     def getFullContent(self, page) -> List[str]:
         """
-        Получить контент для расчета контрольной суммы, по которой определяется,
-        нужно ли обновлять страницу
+        Get the content for calculating the checksum, which determines
+        whether the page needs to be updated
         """
-        # Здесь накапливаем список интересующих строк (по которым определяем
-        # изменилась страница или нет)
-        # Заголовок страницы
+        # Here we accumulate the list of interesting strings (by which we determine
+        # whether the page has changed)
         items: List[str] = []
 
         self._getPageTitleContent(page, items)
@@ -58,8 +57,8 @@ class SimpleHashCalculator(BaseHashCalculator):
 
     def _getPluginsListContent(self, content: List[str]) -> None:
         """
-        Создать список плагинов с учетом номеров версий
-        Возвращает строку
+        Create a list of plugins with version numbers
+        Returns a string
         """
         if len(self._application.plugins) == 0:
             return
@@ -72,9 +71,9 @@ class SimpleHashCalculator(BaseHashCalculator):
 
     def _getDirContent(self, page, content: List[str], dirname=".") -> None:
         """
-        Сформировать список строковых элементов для расчета хеша по данным вложенной
-        поддиректории dirname (путь относительно __attach)
-        page - страница, для которой собираем список вложений
+        Form a list of string elements for hash calculation based on data in the nested
+        subdirectory dirname (path relative to __attach)
+        page - the page for which we collect the attachments list
         """
         attach = Attachment(page)
         attachroot = attach.getAttachPath()
@@ -85,7 +84,7 @@ class SimpleHashCalculator(BaseHashCalculator):
         for fname in attachlist:
             fullpath = os.path.join(attachroot, dirname, fname)
 
-            # Пропустим директории, которые начинаются с __
+            # Skip directories that start with __
             if not os.path.isdir(fname) or not fname.startswith("__"):
                 try:
                     content.append(fname)
@@ -94,6 +93,6 @@ class SimpleHashCalculator(BaseHashCalculator):
                     if os.path.isdir(fullpath):
                         self._getDirContent(page, content, os.path.join(dirname, fname))
                 except OSError:
-                    # Если есть проблемы с доступом к файлу, то здесь на это не
-                    # будем обращать внимания
+                    # If there are access issues with the file, we don't
+                    # pay attention to them here
                     pass

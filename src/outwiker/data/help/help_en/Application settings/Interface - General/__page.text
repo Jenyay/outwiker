@@ -1,0 +1,28 @@
+!! Interface - General
+
+%center%Attach:outwiker_opt_general.png
+
+%notice%Confirm before exit%%. If this check box is selected, a confirmation dialog will appear when exiting OutWiker.
+
+The %notice%Autosave interval in seconds%% field allows you to specify how frequently the currently open note is saved. If set to 0, the timer-based autosave is disabled. However, notes are still saved during other events, such as exiting the program, switching between notes, or toggling between the "Wiki," "View," and "HTML" tabs. Additionally, you can manually save a note using the %notice%File - Save%% menu item.
+
+The %notice%Recent icons history size%% field sets the number of icons stored in the "recently used" list within the page creation and property dialogs.
+
+The %notice%Recent note tree history size%% field determines the number of recently opened note trees displayed in the %notice%File%% menu.
+
+If the %notice%Open last note tree on startup%% check box is selected, the last used note tree will automatically open when the program starts.
+
+The %notice%Notification timeout in seconds%% field sets the display duration for the information windows that appear in the bottom-right corner to notify you of errors or program events.
+
+Certain page types (such as [[wiki pages -> page://wiki-page]] and [[HTML pages -> page://html-page]]) can be displayed in different modes: [[Preview mode -> page://settings_interface_preview]] or Edit mode. Using the %notice%Default page opening mode%% drop-down list, you can choose which mode is active when a page is selected in the note tree. You can set pages to always open in Preview or Edit mode, or choose to remember the last used mode for each specific page.
+
+The %notice%Language%% drop-down list allows you to select one of the supported interface languages. If %notice%Auto%% is selected, the language is determined by your operating system settings. If you would like to help translate the application into another language, you can do so via the [[crowdin.com -> https://crowdin.com/project/outwiker]] localization service.
+
+----
+'''See also:'''
+* page://settings_interface_main_window
+* page://settings_interface_preview
+* page://settings_interface_notetree
+* page://settings_interface_tabs
+* page://settings_interface_tray
+* page://settings_interface_colors

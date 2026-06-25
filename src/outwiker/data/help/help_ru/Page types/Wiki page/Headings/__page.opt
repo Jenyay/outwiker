@@ -1,14 +1,20 @@
 [wiki]
 md5_hash = 2dd15587ac3069824191a5712bf9340a
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 
 [Tree]
 expand = False
 
 [General]
 type = wiki
-order = 0
+order = 1
 tags = wiki
-datetime = 2020-05-14 23:14:04.584737
+datetime = 2026-03-28 09:46:01.448265
 cursorposition = 0
 alias = Заголовки
+icon = text/__std_font_style.svg
+uid = wiki-heading
+
+[Wiki]
+recentstylename = code
 

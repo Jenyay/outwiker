@@ -45,7 +45,7 @@ class CommandLine(object):
         parser.add_argument('wikipath',
                             nargs='?',
                             metavar='path',
-                            help='Path to notes tree')
+                            help='Path to note tree')
 
         parser.add_argument('--page', '-p',
                             help='Subpath or UID of a page')

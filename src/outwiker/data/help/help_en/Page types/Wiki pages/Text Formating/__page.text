@@ -1,0 +1,90 @@
+!! Text formatting
+
+Wiki pages allow you to customize the appearance of your note text using various syntax constructs. When developing the wiki notation, the syntax was largely borrowed from the [[pmWiki -> https://www.pmwiki.org]] engine. The following table lists the main syntax constructs.
+
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+||%code%[=''Italic''=]%% ||''Italic'' || - ||
+||%code%[='''Bold'''=]%% ||'''Bold''' || - ||
+||%code%[=''''Bold italic''''=]%% ||''''Bold italic'''' || - ||
+||%code%[='^Superscript^'=]%% ||'^Superscript^' || For comparison: regular font '^Superscript^' ||
+||%code%[='_Subscript_'=]%% ||'_Subscript_' || For comparison: regular font '_Subscript_' ||
+||%code%[=[----Smaller font----]=]%% ||[----Smaller font----] || - ||
+||%code%[=[---Smaller font---]=]%% ||[---Smaller font---] || - ||
+||%code%[=[--Smaller font--]=]%% ||[--Smaller font--] || - ||
+||%code%[=[-Smaller font-]=]%% ||[-Smaller font-] || - ||
+||%code%[=[+Larger font+]=]%% ||[+Larger font+] || - ||
+||%code%[=[++Larger font++]=]%% ||[++Larger font++] || - ||
+||%code%[=[+++Larger font+++]=]%% ||[+++Larger font+++] || - ||
+||%code%[=[++++Larger font++++]=]%% ||[++++Larger font++++] || - ||
+||%code%[=[+++++Larger font+++++]=]%% ||[+++++Larger font+++++] || - ||
+||%code%[={+Underlined text+}=]%% ||{+Underlined text+} || - ||
+||%code%[={-Strikethrough text-}=]%% ||{-Strikethrough text-} || - ||
+||%code%[=[>Quote<]=]%% ||[>Quote<] || Text is wrapped in &lt;blockquote&gt;...&lt;/blockquote&gt; tags ||
+||%code%[=[!Highlighted text!]=]%% ||[!Highlighted text!] || Text is wrapped in &lt;mark&gt;...&lt;/mark&gt; tags ||
+||%code%[=@@Monospaced font@@=]%% ||@@Monospaced font@@ || Text is wrapped in &lt;code&gt;...&lt;/code&gt; tags ||
+||%code%[=[@Non-formatted monospaced '''text'''@]=]%% ||[@Non-formatted monospaced '''text'''@] || Special wiki notation characters are not replaced inside brackets; text is wrapped in &lt;pre&gt;...&lt;/pre&gt; tags ||
+||%code%[@[=Non-formatted '''text'''=]@]%% ||[=Non-formatted '''text'''=] || Special wiki notation characters are not replaced inside brackets ||
+||%code%[=----=]%% || ---- || Horizontal rule ||
+||%code%[=%blue%Styled text%%=]%% ||%blue%Styled text%% || For details, see the [[text styles -> page://textstyles]] section ||
+
+
+!!! Line continuation
+There are commands related to line handling. For example, the %code%\%% character at the end of a line indicates that the text continues on the next line and no line break should be made at this point. For example, the following text will not be split into two lines:
+
+%code%[=This is a long string, \
+which continues on the next line=]%%
+
+Result:
+
+%border%
+This is a long string, \
+which continues on the next line
+%%
+
+
+!!! Line break
+The %code%[=[[&lt;&lt;]]=]%% command indicates that a line break should be added at this position. This command is especially useful in [[lists -> page://wiki-lists]] and [[tables -> page://wiki-tables]], as in these cases, a regular line break usually signifies the creation of a new list item or a new table row.
+
+Example of a line break command in a list:
+
+%code%[=# First list item.
+# Second list item [[<<]]Second line of the second list item.
+# Third list item [[<<]][[<<]] Second line of the third list item after two indents.
+# Fourth list item.
+=]%%
+
+Result:
+
+%border%
+# First list item.
+# Second list item [[<<]]Second line of the second list item.
+# Third list item [[<<]][[<<]] Second line of the third list item after two indents.
+# Fourth list item.
+%%
+
+Example of a line break command in a table:
+
+%code%[=|| border=1
+||First row|| bla-bla-bla ||
+||Second row [[<<]]continuation of the second row|| bla-bla-bla ||
+||Third row [[<<]][[<<]] Continuation of the third row || bla-bla-bla ||
+||Fourth \
+row || bla-bla-bla ||=]%%
+
+Result:
+
+|| border=1
+||First row|| bla-bla-bla ||
+||Second row [[<<]]continuation of the second row|| bla-bla-bla ||
+||Third row [[<<]][[<<]] Continuation of the third row || bla-bla-bla ||
+||Fourth \
+row || bla-bla-bla ||
+
+----
+'''See also:'''
+* page://wiki-lists
+* page://wiki-tables
+* page://wiki-links
+* page://textstyles
+* page://wiki-heading

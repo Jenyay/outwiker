@@ -1,5 +1,7 @@
 [wiki]
 md5_hash = fa4cb1e224f5c62bf06a4bb336b7538d
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+custom_styles_block = {"code": "div.code {\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 1em;\n}\n"}
 
 [Tree]
 expand = False
@@ -8,10 +10,15 @@ expand = False
 type = wiki
 order = 1
 tags = wiki, команды
-datetime = 2023-07-16 21:32:29.600005
+datetime = 2026-03-29 19:01:53.339777
 cursorposition = 1406
-alias = Команда childlist
+alias = Команда (:childlist:)
+uid = wiki-childlist
+creationdatetime = 2026-03-29 18:54:57.653736
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = code
 

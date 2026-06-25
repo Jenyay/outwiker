@@ -63,6 +63,7 @@ class ToolsPanel(wx.Panel):
         self._oldEquationHash = equationHash
         equation = equation.replace("\\", "\\\\")
         equation = equation.replace('"', '\\"')
+        equation = equation.replace("\n", "\\\n")
         html = self._getHTML(equation, blockMode)
         path = (
             urllib.parse.quote(os.path.abspath(".").replace("\\", "/"))

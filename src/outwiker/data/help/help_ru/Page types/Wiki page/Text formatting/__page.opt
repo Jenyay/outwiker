@@ -1,17 +1,25 @@
 [wiki]
 md5_hash = db2d3068d2bcb2504b161f75267bba93
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+custom_styles_block = {"border": "div.border {\n\tpadding: 1em;\n\tmargin: 1em;\n\tborder: 1px solid #000;\n}\n"}
 
 [Tree]
 expand = False
 
 [General]
 type = wiki
-order = 5
+order = 0
 tags = wiki
-datetime = 2023-07-16 21:30:38.570138
+datetime = 2026-03-28 09:54:33.523251
 cursorposition = 1319
 alias = Форматирование текста
+icon = text/__std_color_background.svg
+uid = wiki-format-text
+creationdatetime = 2026-03-28 09:45:11.889012
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = border
 

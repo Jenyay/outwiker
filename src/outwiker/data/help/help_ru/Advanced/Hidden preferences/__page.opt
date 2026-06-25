@@ -1,15 +1,20 @@
 [General]
 type = wiki
 tags = расширенные возможности
-order = 2
+order = 4
 creationdatetime = 2014-08-25 17:41:58.555902
-datetime = 2023-07-21 09:26:10.100389
+datetime = 2026-04-28 09:26:21.936628
 cursorposition = 0
 alias = Скрытые настройки
+uid = advanced-hidden-settings
 
 [wiki]
 md5_hash = 9bab1900fbace42041e98ae1635b80d1
+custom_styles_inline = {"info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n", "code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 
 [Misc]
 pageindex = 1
+
+[Wiki]
+recentstylename = code
 

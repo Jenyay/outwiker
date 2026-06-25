@@ -1,9 +1,15 @@
 [General]
 type = wiki
-tags = вложения, настройки
+tags = настройки,вложения
 order = 6
 creationdatetime = 2020-05-10 10:31:15.223023
-datetime = 2023-07-18 10:22:04.220670
+datetime = 2026-04-26 18:14:46.130703
 uid = settings_interface_attachments
-alias = Интерфейс - Прикрепленные файлы
+alias = Интерфейс - Вложения
+
+[Wiki]
+recentstylename = code
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n", "info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n"}
 

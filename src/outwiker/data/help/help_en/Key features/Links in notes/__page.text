@@ -1,0 +1,51 @@
+!! Links to pages
+
+You can insert links to another page in every note. There are two ways to link to pages:
+* By page ID.
+* By note name or its relative path (this method is not recommended).
+
+To create links of any type, you can use the %code%&lt;a href="..."&gt;%% tag on [[HTML pages -> page://html-page]] or special commands for [[links -> page://wiki-links]] on [[wiki page -> page://wiki-page]].
+
+
+!!! Links by unique ID
+
+OutWiker allows you to link to pages by their unique IDs, which do not depend on the page's name and location, so links remain functional when pages are renamed or moved. 
+
+To copy a link to a page by its ID, select the menu item %notice%Tools -> Copy link to page%% or select the menu item with the same name in the context menu that appears when you right-click a note in the tree. For example, for this page, such a link looks like this: [[page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d -> page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d]]. 
+
+The link starts with %notice%page://%%, followed by the page ID.
+
+Link examples:
+
+* [[page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d | Child page]]
+* [[Child page -> page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d]]
+* page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d
+* [[page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d]]
+
+When using links by unique ID, you can link not only to another page but also to an anchor on another page. In this case, the link will look like this: [[page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d/#anchor  -> page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d/#anchor]]
+
+
+
+!!! Links by name
+
+Links by name are similar to path links in UNIX systems, and they look like this: {+Page name 1/ Page name 2/.../Target page name+}. 
+
+If the link starts with the %code%/%% character, the page search begins from the root of the notes tree. If there is no %code%/%% character at the beginning of the link, the search is first performed starting from the current page, and if the requested page is not found, then from the root.
+
+Examples of links formatted using the %code%&lt;a ...&gt;...&lt;/a&gt;%% tag (this is not recommended on wiki pages):
+
+* [=<a href="/Page types/Wiki page/Wiki commands">/Page types/Wiki page/Wiki commands</a>=] (with a slash at the beginning of the link works only in Windows)
+* [=<a href="Page types/Wiki page/Wiki commands">Page types/Wiki page/Wiki commands</a>=]
+* [=<a href="Child page">Child page</a>=]
+
+Examples of links formatted using wiki notation:
+
+* [[/Page types/Wiki page/Wiki commands]] (with a slash at the beginning of the link works only in Windows)
+* [[Page types/Wiki page/Wiki commands]]
+* [[Child page]]
+
+Links by name can be considered deprecated because when a linked page is renamed or moved, such links stop working and need to be tracked and corrected manually.
+
+----
+'''See also:'''
+* page://wiki-links

@@ -162,9 +162,12 @@ class LinkToken:
         comment = text.strip()
         return self._generateHtmlTag(url, html.escape(comment, False))
 
-    def _generateLinkToPage(self, page_uid: str) -> str:
+    def _generateLinkToPage(self, page_uid_src: str) -> str:
+        params_pos = page_uid_src.rfind("/")
+        page_uid = page_uid_src[:params_pos] if params_pos != -1 else page_uid_src
+
         page = self.parser.application.wikiroot.getPageByUid(page_uid)
-        url = self.page_protocol + page_uid
+        url = self.page_protocol + page_uid_src
         if page is not None:
             return create_link_to_page(url, page.display_title)
         else:

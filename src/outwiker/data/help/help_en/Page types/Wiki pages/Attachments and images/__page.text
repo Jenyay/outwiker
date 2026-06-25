@@ -1,0 +1,47 @@
+!!! Attachments and images
+
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+||%code%[=https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg=]%% || https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg ||Insert an image from the Internet ||
+||%code%[=Attach:small_image.jpg=]%% || Attach:small_image.jpg ||Insert an attached image ||
+||%code%[=Attach:"subdir/small_image_in_subdir.jpg"=]%% || Attach:"subdir/small_image_in_subdir.jpg" ||Insert an attached image from a subdirectory ||
+||%code%[=[[http://jenyay.net | Attach:small_image.jpg]]=]%% || [[http://jenyay.net | Attach:small_image.jpg]] ||Insert a link as an image ||
+||%code%[=[[page://wiki-page | Attach:small_image.jpg]]=]%% || [[page://wiki-page | Attach:small_image.jpg]] ||Insert a link to another page as an image ||
+||[[#thumb]]%code%[=%thumb%Attach:image.jpg%%=]%% || %thumb%Attach:image.jpg%% ||Insert a thumbnail with a link to the original. [[<<]]Thumbnails are created in the %notice%__thumb%% subdirectory of the attached files directory ||
+||%code%[=%width=200%Attach:image.jpg%%=]%% || %width=200%Attach:image.jpg%% ||Insert a thumbnail with a specified width and a link to the original.[[<<]][[<<]]\
+Possible command variants: [[<<]][[<<]]\
+%code%[=%width=200px%Attach:image.jpg%%=]%% [[<<]][[<<]]\
+or [[<<]][[<<]]\
+%code%[=%thumb width=200%Attach:image.jpg%%=]%% [[<<]][[<<]]\
+Thumbnails are created in the %notice%__thumb%% subdirectory of the attached files directory ||
+||%code%[=%height=200%Attach:image.jpg%%=]%% || %height=200%Attach:image.jpg%% ||Insert a thumbnail with a specified height and a link to the original.[[<<]][[<<]]\
+Possible command variants: [[<<]][[<<]]\
+%code%[=%height=200px%Attach:image.jpg%%=]%% [[<<]][[<<]]\
+or [[<<]]\
+%code%[=%thumb height=200%Attach:image.jpg%%=]%% [[<<]][[<<]]\
+Thumbnails are created in the %notice%__thumb %%subdirectory of the attached files directory ||
+||%code%[=%maxsize=200%Attach:image.jpg%%=]%% || %maxsize=200%Attach:image.jpg%% ||Insert a thumbnail with a specified maximum size and a link to the original.[[<<]][[<<]]\
+Possible command variants: [[<<]][[<<]]\
+%code%[=%maxsize=200px%Attach:image.jpg%%=]%% [[<<]][[<<]]\
+or [[<<]][[<<]]\
+%code%[=%thumb maxsize=200%Attach:image.jpg%%=]%% [[<<]][[<<]]\
+Thumbnails are created in the %notice%__thumb%% subdirectory of the attached files directory ||
+
+!!! Other types of attached files
+
+|| border=1 width=90% style="border-collapse: collapse; border: 1px solid black;"
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+||%code%[=Attach:file.txt=]%% || Attach:file.txt ||Link to an attached file ||
+||%code%[=[[Attach:file.txt]]=]%% || [[Attach:file.txt]] ||Link to an attached file. [[<<]]Same as the previous entry. ||
+||%code%[=Attach:"subdir/file_in_subdir.txt"=]%% || Attach:"subdir/file_in_subdir.txt" ||Link to an attached file in a subdirectory ||
+||%code%[=[[Attach:small_image.jpg]]=]%% || [[Attach:small_image.jpg]] ||Link to an attached image ||
+||%code%[=[[Attach:file.txt | Attached file]]=]%% || [[Attach:file.txt | Attached file]] ||Link to an attached file with a comment ||
+||%code%[=[[Attached file -> Attach:file.txt]]=]%% || [[Attached file -> Attach:file.txt]] ||Link to an attached file with a comment [[<<]]Same as the previous entry. ||
+||%code%[=[[Attach:"subdir/file_in_subdir.txt" | Attached file]]=]%% || [[Attach:"subdir/file_in_subdir.txt" | Attached file]] ||Link to an attached file in a subdirectory with a comment ||
+||%code%[=[[Attached file -> Attach:"subdir/file_in_subdir.txt"]]=]%% || [[Attached file -> Attach:"subdir/file_in_subdir.txt"]] ||Link to an attached file in a subdirectory with a comment [[<<]]Same as the previous entry. ||
+
+----
+'''See also:'''
+* page://wiki-format-text
+* page://wiki-links
+* page://wiki-tables

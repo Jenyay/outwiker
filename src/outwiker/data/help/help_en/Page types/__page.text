@@ -1,0 +1,13 @@
+!! Page types
+
+Pages in OutWiker can be of different types. Currently, the following page types are available:
+
+* [[Wiki pages -> page://wiki-page]]. The most feature-rich page type. This type is recommended for most cases.
+* [[HTML pages -> page://html-page]]. A page type where note formatting is done by adding HTML tags. This type can be useful if you are preparing articles for publication on a website.
+* [[Text pages -> page://text-page]]. The simplest page type that does not support any formatting. Just text and nothing else.
+* [[Search pages -> page://search-page]]. A special page type designed for searching text throughout the entire note tree and saving the search results.
+
+You can also add other page types using [[plugins -> page://plugins]]. In particular:
+
+* The [[Markdown -> https://jenyay.net/Outwiker/MarkdownEn]] plugin adds a page type that uses Markdown syntax for formatting.
+* The [[WebPage -> https://jenyay.net/Outwiker/WebPageEn]] plugin allows you to download web pages and save the result as a custom page type.

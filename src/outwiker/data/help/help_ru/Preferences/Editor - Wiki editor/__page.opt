@@ -1,9 +1,15 @@
 [General]
 type = wiki
 tags = настройки
-order = 12
+order = 14
 creationdatetime = 2020-05-10 11:00:34.628315
-datetime = 2023-07-19 15:05:41.757088
+datetime = 2026-04-26 18:17:12.545154
 uid = settings_editor_wiki_editor
 alias = Редактор - Викиредактор
+
+[Wiki]
+recentstylename = code
+
+[wiki]
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
 

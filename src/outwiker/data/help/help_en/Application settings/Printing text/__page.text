@@ -1,0 +1,15 @@
+!! Printing text
+
+%center%Attach:outwiker_opt_print_text.png
+
+This section allows you to configure printing parameters for [[text notes -> page://text-page]], as well as [[HTML pages -> page://html-page]] in %notice%HTML%% mode and [[wiki pages -> page://wiki-page]] in %notice%Wiki%% and %notice%HTML%% modes.
+
+The %notice%Font%% group allows you to set the font face and size for printing text.
+
+When printing formatted notes, the font defined in the [[page style -> page://styles]] is used. This setting does not apply to formatted text printing.
+
+Clicking the %notice%Page setup...%% button opens a dialog where you can define page parameters for printing. The appearance of this dialog will vary depending on your operating system.
+
+----
+'''See also:'''
+* page://text-page

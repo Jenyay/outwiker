@@ -37,7 +37,7 @@ class SpellPanel(BasePrefPanel):
         self.SetSizer(mainSizer)
 
     def _createDictsList(self, mainSizer):
-        dictsLabel = wx.StaticText(self, label=_("Use dictionaries"))
+        dictsLabel = wx.StaticText(self, label=_("Dictionaries in use"))
         self.dictsList = wx.CheckListBox(self)
 
         mainSizer.Add(dictsLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)

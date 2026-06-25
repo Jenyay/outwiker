@@ -1,0 +1,62 @@
+!! Working with tags
+
+!!! Table of Contents
+
+** [[Adding tags to notes -> #addtags]]
+** [[Batch operations with tags -> #group]]
+*** [[Batch adding and removing tags -> #add-remove]]
+*** [[Renaming tags -> #rename]]
+
+!!! [[#addtags]] Adding tags to notes
+
+You can add any number of tags to each note, which can then be used to find the desired note. 
+
+Tags can be added to notes in several ways. First, they can be added when creating a note. In this case, the tags must be listed separated by commas. 
+
+%center% Attach:pageproperties.png
+
+Tags can also be edited after a note is created using the "Page Properties" dialog, which is called via the %notice%"Tree - Page properties..."%% menu item, or by double-clicking a note in the note tree or an open note tab.
+
+Secondly, tags can be added from the main window without calling the page properties. The "Tags" pane is designed for this. If the "Tags" pane is hidden, it can be opened using the %notice%"View - Tags"%% menu item.
+
+%center% Attach:tags_panel.png
+
+The background of tags set for the selected page is highlighted with a color (yellow by default).
+
+In the "Tags" pane, the font size for each tag depends on how often that tag is used among all notes (the more popular the tag, the larger the font).
+
+When you left-click a tag, a list of pages that are also marked with that tag appears. 
+
+%center% %thumb width=700%Attach:popup.png%%
+
+
+!!! [[#group]] Batch operations with tags
+
+!!!! [[#add-remove]] Batch adding and removing tags
+
+OutWiker allows you to add or remove tags in an entire branch of notes. To add tags to a note branch, perform the following operations:
+
+1. Select the note that is the root for the branch to which you want to add one or more tags. If you need to add a tag to the entire tree, select the root of the tree.
+2. Select the %notice%"Tools - Tags - Add tags to branch..."%% menu item. The following dialog will appear:
+
+%center% Attach:addtag.png
+
+%center% Attach:addtag_popup.png
+
+3. Select the tags you want to add to the notes (tags are separated by commas). You can select existing tags or enter new ones.
+4. Click "OK", after which the selected tags will be added to the note branch. The selected tags are also added to the currently selected note.
+
+To remove tags from a branch or the entire tree, you need to perform the same operations described above for adding tags, with the only difference being that in step 2 you need to select the %notice%"Tools - Tags - Remove tags from branch..."%% menu item.
+
+
+!!!! [[#rename]] Renaming tags
+
+To rename an existing tag, select the %notice%"Tools - Tags - Rename tag..."%% menu item. The following dialog will appear:
+
+%center%Attach:renametag.png
+
+In the tag cloud, select the tag you want to rename (the selected tag is highlighted with a color), and in the bottom input field, enter a new name for the tag. Click "OK", after which the tag with the new name will be added instead of the selected tag throughout the entire note tree.
+
+----
+'''See also:'''
+* page://settings_interface_tags_cloud

@@ -1,0 +1,20 @@
+[wiki]
+md5_hash = 31dedec4eb3eb825a2c0732a97395853
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+custom_styles_block = {"code": "div.code {\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 1em;\n}\n"}
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+order = 1
+tags = commands,wiki
+datetime = 2026-03-29 18:59:01.231045
+cursorposition = 1086
+uid = wiki-childlist
+alias = (:childlist:) command
+
+[Misc]
+pageindex = 1
+

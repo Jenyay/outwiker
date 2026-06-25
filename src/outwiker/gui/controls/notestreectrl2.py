@@ -10,7 +10,7 @@ import wx.lib.newevent
 
 # from line_profiler import profile
 
-from outwiker.core.system import getBuiltinImagePath
+from outwiker.core.system import getBuiltinImagePath, getOS
 from outwiker.gui.colors import rgb_to_lab, lab_to_rgb
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.imagelistcache import ImageListCache
@@ -478,12 +478,14 @@ class _ItemsPainter:
     def __init__(
         self,
         window: wx.Window,
+        dc: wx.DC,
         gc: wx.GraphicsContext,
         image_list: ImageListCache,
         extra_image_list: ImageListCache,
         view_info: _ItemsViewInfo,
     ) -> None:
         self._window = window
+        self._dc = dc
         self._gc = gc
 
         self._image_list = image_list
@@ -501,7 +503,9 @@ class _ItemsPainter:
 
         title_font_normal = self._fonts.FindOrCreateFont(wx.FontInfo(self._view_info.font_size))
         self._gc.SetFont(title_font_normal, wx.Colour(0, 0, 0))
-        self._text_height = self._gc.GetFullTextExtent("W")[1]
+
+        # In Linux GetFullTextExtent returns the float type
+        self._text_height = int(self._gc.GetFullTextExtent("W")[1])
 
     # @profile
     def draw(self, items: List[NotesTreeItem], dx, dy):
@@ -522,7 +526,12 @@ class _ItemsPainter:
     # @profile
     def drawTreeLines(self, items: List[NotesTreeItem], dx: int, dy: int, y_min: int, y_max: int):
         parent_cache = set()
-        tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
+        if getOS().name == 'unix':
+            tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_DOT)
+        else:
+            tree_line_pen = self._pens.FindOrCreatePen(self._view_info.lines_color, style=wx.PENSTYLE_USER_DASH)
+            tree_line_pen.SetDashes([2, 2])
+
         self._gc.SetPen(tree_line_pen)
 
         # Draw items from bottom to top direction
@@ -668,7 +677,8 @@ class _ItemsPainter:
                 else:
                     text_color = self._view_info.font_color_normal
 
-            self._gc.SetFont(current_font, text_color)
+            self._dc.SetTextForeground(text_color)
+            self._dc.SetFont(current_font)
 
             title_x = self._view_info.getTitleLeft(item) + dx
             top = (
@@ -676,7 +686,7 @@ class _ItemsPainter:
                 + (self._view_info.line_height - self._text_height) // 2
                 + dy
             )
-            self._gc.DrawText(item.getTitle(), title_x, top)
+            self._dc.DrawText(item.getTitle(), title_x, top)
 
     # @profile
     def _drawBackground(self, items: List[NotesTreeItem], dx: int, dy: int):
@@ -781,9 +791,6 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         self._dropHoveredItem: Optional[NotesTreeItem] = None
         self._hoveredItem: Optional[NotesTreeItem] = None
         self._leftButtonDownItem: Optional[NotesTreeItem] = None
-
-        # Имя опции для сохранения развернутости страницы
-        self.pageOptionExpand = "Expand"
 
         self._rootItems: List[NotesTreeItem] = []
         self._lineCount = 0
@@ -1131,6 +1138,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
                 gc = wx.GraphicsContext.Create(buffered_dc)
                 painter = _ItemsPainter(
                     self,
+                    buffered_dc,
                     gc,
                     self._iconsCache,
                     self._extraIconsCache,
@@ -1301,7 +1309,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             with wx.BufferedDC(dc, self._buffer) as buffered_dc:
                 gc = wx.GraphicsContext.Create(buffered_dc)
                 painter = _ItemsPainter(
-                    self, gc, self._iconsCache, self._extraIconsCache, self._view_info
+                    self, buffered_dc, gc, self._iconsCache, self._extraIconsCache, self._view_info
                 )
                 interval_x = self._getScrolledX()
                 interval_y = self._getScrolledY()
@@ -1314,7 +1322,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         with wx.BufferedPaintDC(self, self._buffer) as dc:
             gc = wx.GraphicsContext.Create(dc)
             painter = _ItemsPainter(
-                self, gc, self._iconsCache, self._extraIconsCache, self._view_info
+                self, dc, gc, self._iconsCache, self._extraIconsCache, self._view_info
             )
             interval_x = self._getScrolledX()
             interval_y = self._getScrolledY()
@@ -1550,10 +1558,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         if page.parent is None:
             return True
 
-        page_registry = page.root.registry.get_page_registry(page)
-        expanded = page_registry.getbool(self.pageOptionExpand, default=False)
-
-        return expanded
+        return page.isExpanded()
 
     def _getTreeItem(self, page: Optional[BasePage]) -> Optional[NotesTreeItem]:
         """
@@ -1612,3 +1617,4 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
 
         self.updateTree()
         self.scrollToPage(newSelectedPage)
+

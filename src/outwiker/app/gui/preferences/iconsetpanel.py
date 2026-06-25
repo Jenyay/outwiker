@@ -171,7 +171,7 @@ class IconsetPanel(BasePrefPanel):
             if rootimage is None
             else self._imagelist.Add(readImage(rootimage, ICONS_WIDTH, ICONS_HEIGHT))
         )
-        rootItem = self._groups.AddRoot(_("Not in groups"), imageIndex, data=None)
+        rootItem = self._groups.AddRoot(_("No groups"), imageIndex, data=None)
 
         # Add child groups
         for group in collection.getGroups():

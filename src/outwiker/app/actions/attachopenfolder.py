@@ -17,7 +17,7 @@ class OpenAttachFolderAction(BaseAction):
 
     @property
     def title(self):
-        return _("Open Attachments Folder")
+        return _("Open attachments folder")
 
     @property
     def description(self):

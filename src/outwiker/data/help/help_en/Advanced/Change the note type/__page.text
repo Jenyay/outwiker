@@ -1,0 +1,27 @@
+!! Changing page types
+
+OutWiker supports various [[page types -> page://page-types]]: plain [[text pages -> page://text-page]], [[HTML pages -> page://html-page]], [[wiki pages -> page://wiki-page]], and [[global search pages -> page://search-page]]. Additionally, some plugins, such as [[Markdown -> https://jenyay.net/Outwiker/MarkdownEn]] and [[WebPage -> https://jenyay.net/Outwiker/WebPageEn]], introduce new page types.
+
+Currently, there is no way to change a page type via the graphical user interface after the page has been created. However, you can change the page type by editing the contents of the %info%__page.opt%% file within the page directory. To do this, open the file in a text editor and change the %code%type%% parameter value in the %code%[General]%% section. The possible values are listed below. Here are the currently supported built-in page types:
+
+* %code%text%% — [[Text page -> page://text-page]]
+* %code%html%% — [[HTML page -> page://html-page]]
+* %code%wiki%% — [[Wiki page -> page://wiki-page]]
+* %code%search%% — [[Search page -> page://search-page]]
+
+Page types supported via plugins:
+
+* %code%markdown%% — Markdown page ([[Markdown -> https://jenyay.net/Outwiker/MarkdownEn]] plugin)
+* %code%web%% — Web page ([[WebPage -> https://jenyay.net/Outwiker/WebPageEn]] plugin)
+
+If you are editing the settings file of a page within the currently open note tree, remember to reload the note tree.
+
+%warn%
+Change page types with caution, as the %info%__page.opt%% file may contain different parameters for different page types, and the content of the %info%__page.text%% file may also vary.
+%%
+
+----
+'''See also:'''
+* page://advanced-note-tree-scructure
+* page://advanced-hidden-settings
+* page://advanced-aliases

@@ -19,7 +19,7 @@ class ShowHideAttachesAction(BaseAction):
 
     @property
     def description(self):
-        return _("Show / hide a attachments panel")
+        return _("Toggle the attachments panel")
 
     def run(self, params):
         showHideAttachPanel(self._application.mainWindow, params)

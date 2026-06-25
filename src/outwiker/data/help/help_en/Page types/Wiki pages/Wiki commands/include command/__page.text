@@ -1,0 +1,142 @@
+!! (:include:) wiki command
+
+!!! Contents
+** [[Purpose and Syntax -> #syntax]]
+** [[Command Parameters -> #params]]
+*** [[encoding -> #encoding]]
+*** [[htmlescape -> #htmlescape]]
+*** [[wikiparse -> #wikiparse]]
+
+!!! [[#syntax]] Purpose and Syntax
+The %code%[=(:include:)=]%% command is designed to insert the content of attached files directly into a wiki page. The syntax is as follows:
+
+%code%
+[=(:include Attach:filename [params...]:)=]
+%%
+
+Here, %code%filename%% is the name of the attachment whose content you want to embed in the page text.
+
+Additional command parameters are detailed below.
+
+
+!!! [[#params]] Command Parameters
+The %code%[=(:include:)=]%% command accepts the optional parameters described in the following sections.
+
+!!!! [[#encoding]] encoding
+The %code%encoding%% parameter specifies the character encoding of the inserted text. Since OutWiker cannot automatically detect a file's encoding, it assumes UTF-8 by default.
+
+For example, to insert the file Attach:text_utf8.txt (attached to this page and created in UTF-8), simply use:
+
+%code%
+[=(:include Attach:text_utf8.txt:)=]
+%%
+
+The result will be:
+
+%border%
+(:include Attach:text_utf8.txt:)
+%%
+
+You can also specify the encoding explicitly for the same file:
+
+%code%
+[=(:include Attach:text_utf8.txt encoding=utf8 :)=]
+%%
+
+To insert the contents of Attach:text_1251.txt using the cp1251 encoding, the command would look like this:
+
+%code%
+[=(:include Attach:text_1251.txt encoding=cp1251:)=]
+%%
+
+Result:
+
+%border%
+(:include Attach:text_1251.txt encoding=cp1251:)
+%%
+
+If you forget to specify an encoding other than UTF-8, or if you provide an incorrect one, an error will occur. For instance, the command:
+
+%code%
+[=(:include Attach:text_1251.txt:)=]
+%%
+
+Will result in the following error text:
+
+(:include Attach:text_1251.txt:)
+
+The list of supported encodings is quite extensive and can be found on [[http://docs.python.org/library/codecs.html#standard-encodings | this Python documentation page]]. Common encodings include (note that the same encoding may have multiple aliases):
+
+* utf8, utf-8, utf_8, U8, UTF;
+* cp1251, windows-1251;
+* koi8_r;
+* koi8_u;
+* utf_32, utf-32, utf32;
+* utf_16, utf-16, utf16;
+* mac_cyrillic, maccyrillic;
+* cp866, 866, IBM866;
+
+!!!! [[#htmlescape]] htmlescape
+The %code%htmlescape%% parameter instructs the %code%[=(:include:)=]%% command to escape HTML characters in the source file. It replaces %code%&lt;%%, %code%&gt;%%, and %code%&amp;%% with %code%&amp;lt;%%, %code%&amp;gt;%%, and %code%&amp;amp;%% respectively. This is particularly useful for displaying source code from attached files.
+
+For example, the following command without the %code%htmlescape%% parameter would display text in bold because the file contains &lt;b&gt;...&lt;/b&gt; tags:
+
+%code%
+[=(:include Attach:html.txt:)=]
+%%
+
+Result:
+
+%border%
+(:include Attach:html.txt:)
+%%
+
+However, by adding the %code%htmlescape%% parameter:
+
+%code%
+[=(:include Attach:html.txt htmlescape:)=]
+%%
+
+The raw HTML code will be displayed instead:
+
+%border%
+(:include Attach:html.txt htmlescape:)
+%%
+
+
+!!!! [[#wikiparse]] wikiparse
+The %code%wikiparse%% parameter tells the %code%[=(:include:)=]%% command to pass the file content through the wiki notation parser. This is used when the attached file contains wiki markup that needs to be converted to HTML for proper rendering.
+
+For example, since the file Attach:wiki.txt contains wiki notation, the command:
+
+%code%
+[=(:include Attach:wiki.txt:)=]
+%%
+
+Will simply display the raw text:
+
+%border%
+(:include Attach:wiki.txt:)
+%%
+
+But with the %code%wikiparse%% parameter:
+
+%code%
+[=(:include Attach:wiki.txt wikiparse :)=]
+%%
+
+The wiki notation is parsed and rendered as HTML on the page:
+
+%border%
+(:include Attach:wiki.txt wikiparse :)
+%%
+
+
+If both %code%htmlescape%% and %code%wikiparse%% parameters are set in the %code%[=(:include:)=]%% command, the HTML characters are escaped first, followed by the wiki notation parsing.
+
+----
+'''See also:'''
+* page://wikicommand
+* page://wiki-format-text
+* page://wiki-attachlist
+* page://wiki-childlist

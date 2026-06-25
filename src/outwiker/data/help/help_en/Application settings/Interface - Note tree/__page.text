@@ -1,0 +1,24 @@
+!! Interface - Note tree
+
+%center%Attach:outwiker_opt_note_tree.png
+
+This preferences section is designed to customize the appearance of the %notice%Notes%% panel, where the note tree is displayed.
+
+The %notice%Font size%% drop-down list allows you to change the font size used for note titles in the tree. If %notice%Default size%% is selected, the application will use the font size defined by your operating system for interface elements.
+
+The %notice%Icon size%% drop-down list allows you to change the size of the icons displayed next to each note in the tree. By default, the smallest size (16 x 16 pixels) is used. You can choose from the following options: 20 x 20, 24 x 24, 32 x 32, or 48 x 48 pixels. This is particularly useful for high-resolution displays.
+
+The %notice%Show note icons%% check box allows you to show or hide icons preceding note titles in the tree.
+
+In the %notice%Extra icons%% group, you can enable or disable additional icons that appear next to the main icon under certain conditions:
+
+* The %notice%Show bookmark icon%% check box enables or disables an extra icon indicating that the page has been bookmarked.
+* The %notice%Show read-only icon%% check box enables or disables an extra icon indicating that the page is opened in read-only mode.
+
+This version of OutWiker includes two types of built-in extra icons, but [[plugins -> page://plugins]] can add their own. For example, the [[RecentEditedPages -> https://jenyay.net/Outwiker/RecentEditedPagesEn]] plugin adds an icon indicating that the page was edited today.
+
+----
+'''See also:'''
+* page://settings_interface_main_window
+* page://settings_interface_tabs
+* page://settings_interface_tags_cloud

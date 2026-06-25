@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Классы для глобального поиска по вики
+Classes for global wiki search
 """
 import os.path
 
@@ -10,7 +10,7 @@ from outwiker.core.attachment import Attachment
 
 class AllTagsSearchStrategy(object):
     """
-    Стратегия проверки тегов, когда все теги должны быть найдены
+    Tag search strategy when all tags must be found
     """
     @staticmethod
     def testTags(tags, page):
@@ -28,7 +28,7 @@ class AllTagsSearchStrategy(object):
 
 class AnyTagSearchStrategy(object):
     """
-    Стратегия проверки тегов, когда достаточно найти один гет
+    Tag search strategy when it's enough to find one tag
     """
     @staticmethod
     def testTags(tags, page):
@@ -50,9 +50,9 @@ class AnyTagSearchStrategy(object):
 class Searcher(object):
     def __init__(self, phrase, tags, tagsStrategy):
         """
-        phrase -- строка поиска(неразобранная)
-        tags -- список тегов, по которым ищем страницы
-        tagsStrategy -- стратегия поиска по тегам
+        phrase - search string (unparsed)
+        tags - list of tags to search pages by
+        tagsStrategy - tag search strategy
         """
         self.phrase = phrase
         self.tags = [tag.lower() for tag in tags]
@@ -60,7 +60,7 @@ class Searcher(object):
 
     def find(self, root):
         """
-        Найти подходящие по условию поиска страницы
+        Find pages matching the search condition
         """
         result = []
 
@@ -75,8 +75,8 @@ class Searcher(object):
 
     def __testFullContent(self, page):
         """
-        Поиск искомого текста в разных частях заметки
-        (содержимом, заголовке, тегах)
+        Search for the desired text in different parts of the note
+        (content, title, tags)
         """
         return (self.__testTitle(page) or
                 self.__testContent(page) or
@@ -93,8 +93,8 @@ class Searcher(object):
 
     def __testContent(self, page):
         """
-        Проверить, что искомая фраза встречается в контексте страницы.
-        Также возвращает True, если контент пуст
+        Check if the search phrase occurs in the page content.
+        Also returns True if the content is empty
         """
         content = page.textContent.lower()
         if len(self.phrase) == 0 or self.phrase.lower() in content:
@@ -104,7 +104,7 @@ class Searcher(object):
 
     def __testTagsContent(self, page):
         """
-        Проверить, встречается ли в тексте меток искомая фраза
+        Check if the search phrase occurs in the tags text
         """
         lowerPhrase = self.phrase.lower()
         tags = [tag for tag in page.tags if lowerPhrase in tag.lower()]

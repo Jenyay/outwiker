@@ -1,0 +1,22 @@
+[wiki]
+md5_hash = 4736ded233b6d6c9f88308622cef1fec
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n"}
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+order = 5
+tags = wiki
+datetime = 2026-04-28 20:19:56.301816
+cursorposition = 5900
+icon = text/__std_table.svg
+uid = wiki-tables
+
+[Misc]
+pageindex = 0
+
+[Wiki]
+recentstylename = code
+

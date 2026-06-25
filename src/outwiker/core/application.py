@@ -163,10 +163,10 @@ class Application:
         self.onPageViewDestroy = Event()
 
         # Event occurs after the popup menu creation by right mouse click
-        # on the notes tree
+        # on the note tree
         # Parameters:
         #     menu - created popup menu,
-        #     page - the page on which was right clicked in the notes tree
+        #     page - the page on which was right clicked in the note tree
         self.onTreePopupMenu = Event()
 
         # Event occurs before HTML generation (for wiki and HTML pages)
@@ -330,7 +330,7 @@ class Application:
         #     params - instance of the AttachSubdirChangedParams class
         self.onAttachSubdirChanged = Event()
 
-        # Event occurs after key pressing in the notes text editor
+        # Event occurs after key pressing in the note text editor
         # Parameters:
         #     page - current (selected) page
         #     params - instance of the TextEditorKeyDownParams class
@@ -368,13 +368,13 @@ class Application:
         #     params - instance of the AttachSelectionChangedParams class
         self.onAttachSelectionChanged = Event()
 
-        # Event occurs after list of visible the notes tree items
+        # Event occurs after list of visible the note tree items
         # Parameters:
         #    page - current (selection) page
         #    params - instance of the NotesTreeItemsPreparingParams class
         self.onNotesTreeItemsPreparing = Event()
 
-        # The event denotes that the notes tree items should be updated:
+        # The event denotes that the note tree items should be updated:
         # Parameters:
         #    page - current (selection) page
         #    params - instance of the ForceNotesTreeItemsUpdate class
@@ -444,7 +444,7 @@ class Application:
             try:
                 self.__wikiroot.save()
             except OSError:
-                logger.error("Can't save notes tree settings: %s", self.__wikiroot.path)
+                logger.error("Can't save note tree settings: %s", self.__wikiroot.path)
                 self.__wikiroot = None
 
             postWikiCloseParams = PostWikiCloseParams(wikiPath)

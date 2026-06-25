@@ -1,0 +1,27 @@
+!! Running from source
+
+OutWiker is open-source software distributed under the GPL 3 license. If you want to obtain the source code and run OutWiker from source, follow the procedure described below. Running the application requires Python 3.8 - 3.12. Using newer versions of Python may cause issues with some libraries. It is recommended to use [[uv -> https://docs.astral.sh/uv/]] for creating virtual environments.
+
+To obtain the source code and create a virtual environment, execute the following commands in your terminal:
+
+%code%
+git clone https://github.com/Jenyay/outwiker
+cd outwiker
+uv sync --dev --extra gui --python 3.12
+%%
+
+On some Linux distributions, the last command may encounter issues while installing the wxPython library. In such cases, it is recommended to install wxPython manually from a wheel, which can be found [[at this link -> https://extras.wxpython.org/wxPython4/extras/linux/gtk3/]]. This version uses wxPython 4.2.2.
+
+To run OutWiker, execute the following command:
+
+%code%
+uv run python -m outwiker
+%%
+
+The following branches are used in the git repository:
+
+* %notice%master%% — the current beta version.
+* %notice%dev%% — the current development version. Before a new beta release, this branch is merged into the master branch.
+* %notice%stable%% — the current stable version.
+
+Additionally, each stable and beta version is marked with corresponding tags.

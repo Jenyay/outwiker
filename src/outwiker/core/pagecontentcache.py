@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from .defines import REGISTRY_PAGE_HASH
-from .hashcalculator import BaseHashCalculator 
+from .hashcalculator import BaseHashCalculator
 
 
 class PageContentCache:
     """
-    Класс для проверки того, можно ли использовать уже созданный HTML-файл
-    для викистраницы или надо его создавать заново
+    Class to check if an already created HTML file can be used
+    for the wiki page or if it needs to be recreated
     """
 
     def __init__(self, page, hashCalculator: BaseHashCalculator, application):
@@ -20,7 +20,7 @@ class PageContentCache:
 
     def canReadFromCache(self):
         """
-        Можно ли прочитать готовый HTML, или его надо создавать заново?
+        Can we read the ready HTML, or does it need to be recreated?
         """
         reg = self._page.root.registry.get_page_registry(self._page)
         try:

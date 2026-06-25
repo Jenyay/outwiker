@@ -18,7 +18,7 @@ class MovePageUpAction (BaseAction):
 
     @property
     def title(self):
-        return _("Move Page Up")
+        return _("Move page up")
 
     @property
     def description(self):

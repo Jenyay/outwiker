@@ -14,11 +14,11 @@ class AddSiblingPageAction (BaseAction):
 
     @property
     def title(self):
-        return _('Add Sibling Page…')
+        return _('Create sibling page…')
 
     @property
     def description(self):
-        return _('Add sibling page')
+        return _('Create sibling page')
 
     def run(self, params):
         createSiblingPage(self._application.mainWindow,

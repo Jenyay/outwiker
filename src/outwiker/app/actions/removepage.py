@@ -15,7 +15,7 @@ class RemovePageAction(BaseAction):
 
     @property
     def title(self):
-        return _("Remove Page…")
+        return _("Remove page…")
 
     @property
     def description(self):

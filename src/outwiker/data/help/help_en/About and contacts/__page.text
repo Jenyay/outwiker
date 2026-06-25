@@ -1,0 +1,49 @@
+!! OutWiker
+!!! Version 4.0
+
+OutWiker is designed to present set of notes in tree view. Such programs are called "outliners", personal wikis, or tree-like editors. 
+
+OutWiker's main feature that makes it different from other similar programs is storing the collection (the tree) of notes on disk as set of nested directories whose hierarchy is in one-to-one correspondence with the the note tree structure. This approach makes it possible to edit any individual note with third party software. At the moment OutWiker supports notes of three different types, namely, [[page://text-page | plain text]], [[page://html-page | HTML]] and [[page://wiki-page | wiki]]. Plug-ins can be used to work with other note types (for example, Markdown).
+
+OutWiker webpage: https://jenyay.net/Outwiker/English
+
+!!! OutWiker in social network:
+
+* [[Telegram channel -> https://t.me/outwiker]]
+
+
+!!! Contacts
+Author: Eugeniy Ilin (aka Jenyay)
+
+* My site - https://jenyay.net
+* Telegram - [[https://t.me/jenyay | @jenyay]]
+* My Telegram channel - [[https://t.me/jenyaynet | jenyay.net]]
+* e-mail: [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]]
+
+!!! [[#thanks]] Acknoledgements
+
+The program uses free icons sets downloaded from the following sites [[http://www.famfamfam.com/lab/icons/silk/ | famfamfam.com]], [[https://p.yusukekamiyamane.com/ | yusukekamiyamane.com]] and [[https://www.fatcow.com/free-icons | fatcow.com]]. Many thanks to the authors of those icon sets. 
+
+* Thanks to [[Link-Mario -> https://crowdin.com/profile/Link-Mario]] for German translation.
+* Thanks to [[Nabrodov Alexey -> https://averr.in/]] for the program logo.
+* Thanks to Gorbunov Anatoly for the new program logo.
+* Thanks to Cheshkov Iliya ((:ljuser ilyuxaif:)) for corrections of help in English.
+* Thanks to Yury aka [[Cuprum -> http://cuprum.name/]] for the icons of browsers and operating systems.
+* Thanks to (:ljuser linda-kaioh:) for the program testing.
+* Thanks to Vitaliy Yakovchuk, Dmytro Vasylchenko, Vadym Derckach and Sergei Garmash for the Ukrainian translation.
+* Thanks to Matteo Migliaccio for the italian translation.
+* Thanks to tehTen (Jabber {+1010@xmpp.ru+}) for "greyness" style.
+* Thanks to Alex for "AVC" style.
+* Thanks to Gabrielle Ramires for "gabrielle" and "gabrielle_light" styles.
+* Thanks to Unreal666 for error detection.
+* Thanks to Vadim Suharnikov for sending patches.
+* Thanks to Roman Sobolev for "solarized_light" and "solarized_dark" styles.
+* Thanks to Åke Engelbrektson for Swedish translation.
+* Thanks to S. N. for English help correction.
+* Thanks to [[Vladimir Tuboltsev -> https://github.com/twobolts]]for the migration to Python 3.x and wxPython 4.0.
+* Thanks to bl00dy1837 for German translation.
+
+
+The Russian dictionary used by OutWiker was created by Alexander Lebedev.
+
+The Ukrainian dictionary used by OutWiker was created by: Vladimir Yakovchuk, Oleg Podgurniy, Dmytro Kovalyov, Maksym Polyakov, Andriy Rysin, Valentyn Solomko, Volodymyr M. Lisivka, Eugeniy Meshcheryakov, Dmytro Kovalyov.

@@ -1219,7 +1219,7 @@ class PrefDialogConfig:
 
 class TagsConfig:
     """
-    Options for tags and tags cloud
+    Options for tags and tag cloud
     """
 
     SECTION = "Tags"

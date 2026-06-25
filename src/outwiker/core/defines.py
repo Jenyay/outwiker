@@ -74,13 +74,13 @@ REGISTRY_PAGE_HASH = "md5_hash"
 
 URL_TRANSLATE = "https://crowdin.com/project/outwiker"
 
-# Местоположение конфигурационной директории
-# По стандарту, если переменная XDG_CONFIG_HOME не задана в окружении,
-# то берется значение по умолчанию т.е. ~/.config
+# Location of the configuration directory
+# According to the standard, if the XDG_CONFIG_HOME environment variable is not set,
+# the default value is used, i.e. ~/.config
 # http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 DEFAULT_CONFIG_DIR = "outwiker"
 
-# Имя файла настроек по умолчанию
+# Default configuration file name
 DEFAULT_CONFIG_NAME = "outwiker.ini"
 
 OUTWIKER_PATH_ENV_VAR = "OUTWIKER_PATH"

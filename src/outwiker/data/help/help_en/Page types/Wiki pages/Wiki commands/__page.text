@@ -1,0 +1,45 @@
+!! Wiki commands
+
+!!! [[#syntax]] Syntax
+In addition to the notation described in the previous sections, wiki pages also support wiki commands. Many [[plugins -> page://plugins]] add new wiki commands. The general syntax of a wiki command is as follows:
+
+%code%
+[=(:commandname [params...] :)
+[content...]
+(:commandnameend:)=]
+%%
+
+Here, %code%commandname%% is the name of the wiki command, while %code%params%% and %code%content%% are optional elements that set command parameters and the text to which the command is applied, respectively. Different wiki commands support different sets of parameters, and some wiki commands may have no parameters at all.
+
+Some wiki commands do not require %code%content%%. In this case, they can be written as follows:
+
+%code%
+[= (:commandname [params...] :) =]
+%%
+
+And if no parameters are used either, then:
+
+%code%
+(:commandname:)
+%%
+
+
+!!! [[#params]] Parameters
+The parameter format may vary for different commands, but the following recording format is mainly used:
+
+%code%
+param1 param2 = value1 param3 = "value 3" param4 = 'value 4' param5
+%%
+
+Here, %code%param1%%, ..., %code%param5%% are parameter names, and %code%value1%%, %code%value 3%%, and %code%value 4%% are the values of some parameters.
+
+Parameters are separated by spaces. Some parameters have values, while others are simply listed. Parameters without values can be treated as flags: whether the parameter is set or not.
+
+If a parameter value consists only of letters, numbers, and underscores, such values do not need to be enclosed in quotes; otherwise, single or double quotes are required.
+
+----
+'''See also:'''
+* page://wiki-attachlist
+* page://wiki-childlist
+* page://wiki-include
+* page://wiki-crdate-eddate

@@ -11,7 +11,7 @@ from outwiker.gui.guiconfig import TextPrintConfig
 
 class TextPrinter:
     """
-    Интерфейс для печати текстовых страниц
+    Interface for printing text pages
     """
     def __init__(self, parent, application):
         self.parent = parent
@@ -22,8 +22,8 @@ class TextPrinter:
         self.monoFont = self.config.fontName.value
         self.fontSizes = list(range(10, 17))
 
-        # Поля на странице: верхнее, нижнее, левое, правое,
-        # расстояние между шапкой/подвалом и текстом в мм
+        # Page margins: top, bottom, left, right,
+        # distance between header/footer and text in mm
         headerspace = 0.0
 
         self.margins = (self.config.marginTop.value,
@@ -45,9 +45,9 @@ class TextPrinter:
 
     def _preparetext(self, text):
         """
-        Подготовить текст с учетом того, что печататься будет HTML
+        Prepare text considering that HTML will be printed
         """
-        # Заменим спецсимволы HTML и установим переводы строк
+        # Replace HTML special characters and set line breaks
         newtext = html.escape(text, True)
         newtext = newtext.replace("\n\n", "<P>")
         newtext = newtext.replace("\n", "<BR>")
@@ -68,7 +68,7 @@ class TextPrinter:
 
     def _getPrintData(self):
         """
-        Получить параметры печати(страницы) по умолчанию
+        Get default print (page) settings
         """
         pd = wx.PrintData()
         pd.SetPaperId(self.paperId)
@@ -77,7 +77,7 @@ class TextPrinter:
 
     def _getPrintDialogData(self, printdata):
         """
-        Получить настройки диалога печати по умолчанию
+        Get default print dialog settings
         """
         pdd = wx.PrintDialogData(printdata)
         pdd.EnableSelection(False)

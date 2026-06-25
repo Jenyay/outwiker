@@ -1,0 +1,19 @@
+[wiki]
+md5_hash = 5b2dae9c5f2d304e24d16c42520a36b4
+custom_styles_block = {"code": "div.code {\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 1em;\n}\n"}
+custom_styles_inline = {"code": "span.code {\n\tdisplay: inline-block;\n\tbackground: #FBFCD2;\n\tfont-family: monospace;\n\tborder: solid 1px #CCC;\n\tpadding: 0.2em;\n}\n", "info": "span.info {\n    display: inline-block;\n    color: #333;\n    background-color: #f0f0ff;\n    border-radius: 1px;\n    padding: 0px 2px;\n    margin: 2px;\n    border: 1px solid #b0b0e0;\n}\n"}
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+order = 0
+tags = advanced
+cursorposition = 885
+datetime = 2026-04-26 19:50:24.897754
+uid = advanced-command-line
+
+[Misc]
+pageindex = 0
+
