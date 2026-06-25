@@ -278,9 +278,19 @@ class NotesTree(wx.Window):
         beforePage = event.beforePage
         afterPage = event.afterPage
         assert beforePage is not None or afterPage is not None
+
+        oldOrder = srcPage.order
+        oldParent = srcPage.parent
+
         newParent = beforePage.parent if beforePage is not None else afterPage.parent
         newOrder = beforePage.order if beforePage is not None else afterPage.order + 1
-        srcPage.moveTo(newParent)
+
+        if oldParent is newParent and oldOrder < newOrder:
+            newOrder -= 1
+
+        if oldOrder is not newParent:
+            srcPage.moveTo(newParent)
+
         srcPage.order = newOrder
 
     def __onTreeUpdate(self, sender):
