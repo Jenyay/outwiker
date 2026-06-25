@@ -943,7 +943,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self._hoveredItem.setHovered(False)
             self._hoveredItem = None
             self._leftButtonDownItem = None
-            self._refreshItem(oldHoveredItem)
+            self._refreshItems([oldHoveredItem])
 
     def _onMouseWheel(self, event):
         event.StopPropagation()
@@ -1047,7 +1047,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
     def _resetDragMode(self):
         if self._dropHoveredItem is not None:
             self._dropHoveredItem.setDropHovered(False)
-            self._refreshItem(self._dropHoveredItem)
+            self._refreshItems([self._dropHoveredItem])
 
         self._dragMode = False
         self._mouseLeftDownXY = None
@@ -1095,12 +1095,14 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         oldHoveredItem = self._hoveredItem
         self._hoveredItem = self._getItemByXY(x, y)
         if oldHoveredItem is not self._hoveredItem:
+            updated_items = []
             if oldHoveredItem is not None:
                 oldHoveredItem.setHovered(False)
-                self._refreshItem(oldHoveredItem)
+                updated_items.append(oldHoveredItem)
             if self._hoveredItem is not None:
                 self._hoveredItem.setHovered(True)
-                self._refreshItem(self._hoveredItem)
+                updated_items.append(self._hoveredItem)
+            self._refreshItems(updated_items)
 
     def _processMoveDragMode(self, event):
         if self._dragItem is not None and event.LeftIsDown():
@@ -1115,15 +1117,19 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             self._dropHoveredItem = self._getItemByY(y)
 
             if oldHoveredItem is not self._dropHoveredItem:
+                updated_items = []
                 if oldHoveredItem is not None:
                     oldHoveredItem.setDropHovered(False)
-                    self._refreshItem(oldHoveredItem)
+                    updated_items.append(oldHoveredItem)
+
                 if (
                     self._dropHoveredItem is not None
                     and self._dragItem is not self._dropHoveredItem
                 ):
                     self._dropHoveredItem.setDropHovered(True)
-                    self._refreshItem(self._dropHoveredItem)
+                    updated_items.append(self._dropHoveredItem)
+
+                self._refreshItems(updated_items)
 
             self._processOrderDrag(self._dropHoveredItem, y)
         return self._dragMode
@@ -1153,13 +1159,16 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         if self._orderAfterItem is not None:
             self._order_marker = self._getOrderMarkerAfter(self._orderAfterItem)
 
+        updated_items = []
         if oldBeforeItem is not self._orderBeforeItem:
-            self._refreshItem(oldBeforeItem)
-            self._refreshItem(self._orderBeforeItem)
+            updated_items.append(oldBeforeItem)
+            updated_items.append(self._orderBeforeItem)
 
         if oldAfterItem is not self._orderAfterItem:
-            self._refreshItem(oldAfterItem)
-            self._refreshItem(self._orderAfterItem)
+            updated_items.append(oldAfterItem)
+            updated_items.append(self._orderAfterItem)
+
+        self._refreshItems(updated_items)
 
     def _getOrderMarkerBefore(self, item: NotesTreeItem) -> OrderMarker:
         y = self._view_info.getItemTop(item)
@@ -1327,22 +1336,48 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             noRefresh=False,
         )
 
-    def _refreshItem(self, item: Optional[NotesTreeItem]):
-        if item is None:
-            return
-
+    def _refreshItems(self, items: List[Optional[NotesTreeItem]]):
         interval_x = self._getScrolledX()
         interval_y = self._getScrolledY()
         dx = -interval_x[0]
         dy = -interval_y[0]
-
-        y_gap = 5
-        left = self._view_info.getIconLeft(item) + dx
-        top = self._view_info.getSelectionTop(item) + dy
-        bottom = self._view_info.getSelectionBottom(item) + dy
-        height = bottom - top
         width = self.GetClientSize().GetWidth() - dx + 1
-        self.Refresh(rect=wx.Rect(left, top - y_gap, width, height + y_gap * 2))
+        y_gap = 5
+
+        shared_left = None
+        shared_top = None
+        shared_bottom = None
+
+        for item in items:
+            if item is None:
+                continue
+
+            left = self._view_info.getIconLeft(item) + dx
+            top = self._view_info.getSelectionTop(item) + dy
+            bottom = self._view_info.getSelectionBottom(item) + dy
+
+            if shared_left is None:
+                shared_left = left
+                shared_top = top
+                shared_bottom = bottom
+            else:
+                assert shared_top is not None
+                assert shared_bottom is not None
+                left = min(left, shared_left)
+                top = min(top, shared_top)
+                bottom = max(bottom, shared_bottom)
+
+        if shared_left is not None:
+            assert shared_top is not None
+            assert shared_bottom is not None
+            self.Refresh(
+                rect=wx.Rect(
+                    shared_left,
+                    shared_top - y_gap,
+                    width,
+                    shared_bottom - shared_top + y_gap * 2,
+                )
+            )
 
     # @profile
     def _onPaint(self, event):
@@ -1457,7 +1492,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             event = NotesTreeItemsPreparingEvent(items=[item])
             wx.PostEvent(self, event)
             wx.YieldIfNeeded()
-            self._refreshItem(item)
+            self._refreshItems([item])
 
     def updateTree(self):
         if self._hoveredItem is not None:
