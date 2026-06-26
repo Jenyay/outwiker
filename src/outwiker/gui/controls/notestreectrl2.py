@@ -1363,9 +1363,9 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             else:
                 assert shared_top is not None
                 assert shared_bottom is not None
-                left = min(left, shared_left)
-                top = min(top, shared_top)
-                bottom = max(bottom, shared_bottom)
+                shared_left = min(left, shared_left)
+                shared_top = min(top, shared_top)
+                shared_bottom = max(bottom, shared_bottom)
 
         if shared_left is not None:
             assert shared_top is not None
