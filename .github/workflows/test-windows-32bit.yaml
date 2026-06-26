@@ -6,7 +6,7 @@ jobs:
   test-windows-32bit:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -39,7 +39,7 @@ jobs:
       #      windows-uv-
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v8
 
       - name: Sync dependencies
         run: uv sync --python "C:\Python38\python.exe" --dev --extra gui
@@ -51,7 +51,7 @@ jobs:
         run: uv run inv coverage
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage_report
           path: build/htmlcov
