@@ -6,7 +6,7 @@ jobs:
   test-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -47,30 +47,12 @@ jobs:
         run: which autopoint && autopoint --version
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      #- name: Cache uv environments
-      #  uses: actions/cache@v4
-      #  with:
-      #    path: |
-      #      ~/.cache/uv
-      #      .venv
-      #    key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
-      #    restore-keys: |
-      #      ${{ runner.os }}-uv-
-
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v8.1.0
 
       - name: Create virtual environment
         run: uv venv --clear .venv
@@ -92,7 +74,7 @@ jobs:
         run: uv run inv coverage
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage_report
           path: build/htmlcov
