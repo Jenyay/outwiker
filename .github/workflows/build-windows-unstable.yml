@@ -6,7 +6,7 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -30,7 +30,7 @@ jobs:
         run: C:\Python38\python.exe --version
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v8.1.0
 
       - name: Sync dependencies
         run: uv sync --python "C:\Python38\python.exe" --dev --extra gui
@@ -51,14 +51,14 @@ jobs:
           uv run inv win
 
       - name: Upload all artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: outwiker_unstable_windows_all_${{ env.OUTWIKER_VERSION }}
           path: |
             build/${{ env.OUTWIKER_VERSION }}/windows/*
 
       - name: Upload exe only
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: outwiker_unstable_windows_exe_${{ env.OUTWIKER_VERSION }}
           path: |
