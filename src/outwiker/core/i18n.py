@@ -3,12 +3,10 @@
 import os
 import os.path
 import gettext
-import locale
-
 import wx
 
 from .config import StringOption
-from .system import getMainModuleDataPath
+from .system import getMainModuleDataPath, getOS
 
 
 # Constant indicating that the language should be determined automatically
@@ -26,10 +24,6 @@ class I18nConfig(object):
         )
 
 
-def getDefaultLanguage():
-    return locale.getlocale()[0]
-
-
 def init_i18n(language):
     langdir = os.path.join(getMainModuleDataPath(), "locale")
     lang = loadLanguage(language, langdir, "outwiker")
@@ -45,7 +39,7 @@ def loadLanguage(language, langdir, domain):
     """
     # If AUTO_LANGUAGE constant is passed as language,
     # then the language should be determined automatically
-    reallanguage = getDefaultLanguage() if language == AUTO_LANGUAGE else language
+    reallanguage = getOS().defaultLanguage if language == AUTO_LANGUAGE else language
 
     try:
         lang = gettext.translation(domain, langdir, languages=[reallanguage, "en"])

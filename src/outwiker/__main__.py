@@ -21,14 +21,18 @@ logger = logging.getLogger("outwiker")
 
 
 def print_info():
+    current_os = getOS()
+
     logger.debug(
         "Current OutWiker API version: {}.{}".format(
             outwiker.__api_version__[0], outwiker.__api_version__[1]
         )
     )
+    logger.debug("OS name: %s", current_os.name)
     logger.debug("Python version: %s", sys.version)
     logger.debug("wxPython version: %s", wx.__version__)
     logger.debug("Current locale: %s", locale.setlocale(locale.LC_ALL, None))
+    logger.debug("Default language: %s", current_os.defaultLanguage)
     logger.debug('Decimal point: "%s"', locale.localeconv()["decimal_point"])
     logger.debug("Current working directory: %s", os.getcwd())
     logger.debug("Main module directory: %s", getMainModulePath())
