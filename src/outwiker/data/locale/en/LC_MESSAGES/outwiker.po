@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-26 17:03+0300\n"
+"POT-Creation-Date: 2026-06-30 15:43+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../../../..\n"
 "X-Poedit-SearchPath-0: outwiker/data\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -246,7 +246,7 @@ msgstr "Close the opened note tree"
 msgid "Page properties…"
 msgstr "Page properties…"
 
-#: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:120
+#: outwiker/app/actions/editpageprop.py:22 outwiker/app/gui/pagedialog.py:128
 msgid "Edit page properties"
 msgstr "Edit page properties"
 
@@ -274,7 +274,7 @@ msgstr "Global search…"
 msgid "Create or open page for global search"
 msgstr "Create or open page for global search"
 
-#: outwiker/app/actions/globalsearch.py:36 outwiker/app/gui/pagedialog.py:57
+#: outwiker/app/actions/globalsearch.py:36 outwiker/app/gui/pagedialog.py:61
 msgid "Can't create page"
 msgstr "Can't create page"
 
@@ -486,7 +486,7 @@ msgstr "Toggle the attachments panel"
 #: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:90
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
 #: outwiker/app/gui/mainwindow.py:498
-#: outwiker/gui/controls/pagelist_columns.py:226
+#: outwiker/gui/controls/pagelist_columns.py:227
 #: outwiker/pages/search/searchpanel.py:48
 msgid "Tags"
 msgstr "Tags"
@@ -1052,24 +1052,24 @@ msgstr "Paste from clipboard"
 msgid "Select all text"
 msgstr "Select all text"
 
-#: outwiker/app/gui/attachpanel.py:404
+#: outwiker/app/gui/attachpanel.py:405
 msgid "You did not select any file to remove"
 msgstr "You did not select any file to remove"
 
-#: outwiker/app/gui/attachpanel.py:407
+#: outwiker/app/gui/attachpanel.py:408
 msgid "Remove selected files?"
 msgstr "Remove selected files?"
 
-#: outwiker/app/gui/attachpanel.py:408
+#: outwiker/app/gui/attachpanel.py:409
 msgid "Remove files?"
 msgstr "Remove files?"
 
-#: outwiker/app/gui/attachpanel.py:556
+#: outwiker/app/gui/attachpanel.py:557
 #, python-brace-format
 msgid "{name}   -   {size} KB   -   {date}"
 msgstr "{name}   -   {size} KB   -   {date}"
 
-#: outwiker/app/gui/attachpanel.py:565
+#: outwiker/app/gui/attachpanel.py:567
 #, python-brace-format
 msgid "{count} file(s)  -  {size} KB"
 msgstr "{count} file(s)  -  {size} KB"
@@ -1217,7 +1217,7 @@ msgstr "New tag name"
 #: outwiker/app/gui/dialogs/renametagdialog.py:88
 #: outwiker/app/gui/dialogs/renametagdialog.py:93
 #: outwiker/app/gui/pagedialogpanels/appearancepanel.py:124
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:521
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:537
 #: outwiker/app/gui/preferences/iconsetpanel.py:226
 #: outwiker/app/gui/preferences/iconsetpanel.py:283
 #: outwiker/app/gui/preferences/iconsetpanel.py:290
@@ -1344,7 +1344,7 @@ msgstr ""
 "Can't save config\n"
 "%s"
 
-#: outwiker/app/gui/mainwndcontroller.py:223
+#: outwiker/app/gui/mainwndcontroller.py:224
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1359,12 +1359,12 @@ msgstr ""
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
-#: outwiker/app/gui/pagedialog.py:24
+#: outwiker/app/gui/pagedialog.py:26
 #, python-format
 msgid "Page \"%s\" not found"
 msgstr "Page \"%s\" not found"
 
-#: outwiker/app/gui/pagedialog.py:100
+#: outwiker/app/gui/pagedialog.py:108
 msgid "Create Page"
 msgstr "Create Page"
 
@@ -1388,51 +1388,56 @@ msgstr "Do not change"
 msgid "Default style"
 msgstr "Default style"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:105
-#: outwiker/gui/controls/pagelist_columns.py:196
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:110
+#: outwiker/gui/controls/pagelist_columns.py:197
 #: outwiker/pages/search/sortstrategies.py:64
 msgid "Title"
 msgstr "Title"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:110
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:115
 msgid "Page icon"
 msgstr "Page icon"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:115
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:120
 #: outwiker/gui/unknownpagetype.py:28
 msgid "Page type"
 msgstr "Page type"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:121
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:126
 msgid "New page position"
 msgstr "New page position"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:127
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:132
 #: outwiker/gui/tagsdialog.py:31
 msgid "Tags (comma separated)"
 msgstr "Tags (comma separated)"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:168
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:136
+#| msgid "Open the created note in a new tab"
+msgid "Open the created page in a new tab"
+msgstr "Open the created page in a new tab"
+
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:184
 msgid "Top of the list"
 msgstr "Top of the list"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:169
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:185
 msgid "End of the list"
 msgstr "End of the list"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:170
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:186
 msgid "Alphabetically"
 msgstr "Alphabetically"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:442
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:458
 msgid "Not in groups"
 msgstr "Not in groups"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:477
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:493
 msgid "Recent"
 msgstr "Recent"
 
-#: outwiker/app/gui/pagedialogpanels/generalpanel.py:520
+#: outwiker/app/gui/pagedialogpanels/generalpanel.py:536
 msgid "Can't set page icon\n"
 msgstr "Can't set page icon\n"
 
@@ -2112,7 +2117,7 @@ msgstr "Can't open clipboard"
 msgid "Can't copy text to clipboard"
 msgstr "Can't copy text to clipboard"
 
-#: outwiker/app/services/texteditor.py:23
+#: outwiker/app/services/texteditor.py:24
 msgid "Enter format of the date"
 msgstr "Enter format of the date"
 
@@ -2330,11 +2335,11 @@ msgstr "weather"
 msgid "Line Breaks (<br/>)"
 msgstr "Line Breaks (<br/>)"
 
-#: outwiker/core/i18n.py:124
+#: outwiker/core/i18n.py:118
 msgid "LANGUAGE_DEFAULT"
 msgstr "LANGUAGE_ENGLISH"
 
-#: outwiker/core/pagetitletester.py:52
+#: outwiker/core/pagetitletester.py:53
 #, python-format
 msgid ""
 "The page title contains the expression \"%xx\". Links on this page may be "
@@ -2343,23 +2348,23 @@ msgstr ""
 "The page title contains the expression \"%xx\". Links on this page may be "
 "invalid."
 
-#: outwiker/core/pagetitletester.py:61
+#: outwiker/core/pagetitletester.py:62
 msgid "The page title is empty"
 msgstr "The page title is empty"
 
-#: outwiker/core/pagetitletester.py:64
+#: outwiker/core/pagetitletester.py:65
 msgid "Invalid the page title"
 msgstr "Invalid the page title"
 
-#: outwiker/core/pagetitletester.py:67
+#: outwiker/core/pagetitletester.py:68
 msgid "The page title can not begin with __"
 msgstr "The page title can not begin with __"
 
-#: outwiker/core/pagetitletester.py:72 outwiker/core/pagetitletester.py:112
+#: outwiker/core/pagetitletester.py:73 outwiker/core/pagetitletester.py:113
 msgid "The page title contains invalid characters"
 msgstr "The page title contains invalid characters"
 
-#: outwiker/core/pagetitletester.py:131
+#: outwiker/core/pagetitletester.py:132
 msgid ""
 "The page title contains invalid characters for Microsoft Windows operating "
 "system"
@@ -2425,71 +2430,71 @@ msgstr "Default color"
 msgid "Select color..."
 msgstr "Select color..."
 
-#: outwiker/gui/controls/datetimeformatctrl.py:20
+#: outwiker/gui/controls/datetimeformatctrl.py:21
 msgid "Abbreviated weekday name"
 msgstr "Abbreviated weekday name"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:21
+#: outwiker/gui/controls/datetimeformatctrl.py:22
 msgid "Full weekday name"
 msgstr "Full weekday name"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:22
+#: outwiker/gui/controls/datetimeformatctrl.py:23
 msgid "Abbreviated month name"
 msgstr "Abbreviated month name"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:23
+#: outwiker/gui/controls/datetimeformatctrl.py:24
 msgid "Full month name"
 msgstr "Full month name"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:24
+#: outwiker/gui/controls/datetimeformatctrl.py:25
 msgid "Appropriate date and time representation"
 msgstr "Appropriate date and time representation"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:25
+#: outwiker/gui/controls/datetimeformatctrl.py:26
 msgid "Day of the month as a decimal number (01, 02, ..., 31)"
 msgstr "Day of the month as a decimal number (01, 02, ..., 31)"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:26
+#: outwiker/gui/controls/datetimeformatctrl.py:27
 msgid "Hour(24-hour clock) as a decimal number (00, 01, ..., 23)"
 msgstr "Hour(24-hour clock) as a decimal number (00, 01, ..., 23)"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:27
+#: outwiker/gui/controls/datetimeformatctrl.py:28
 msgid "Hour(12-hour clock) as a decimal number (01, 02, ..., 12)"
 msgstr "Hour(12-hour clock) as a decimal number (01, 02, ..., 12)"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:28
+#: outwiker/gui/controls/datetimeformatctrl.py:29
 msgid "Month as a decimal number (01, 02, ..., 12)"
 msgstr "Month as a decimal number (01, 02, ..., 12)"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:29
+#: outwiker/gui/controls/datetimeformatctrl.py:30
 msgid "Minute as a decimal number (00, 01, ..., 59)"
 msgstr "Minute as a decimal number (00, 01, ..., 59)"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:30
+#: outwiker/gui/controls/datetimeformatctrl.py:31
 msgid "AM or PM"
 msgstr "AM or PM"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:31
+#: outwiker/gui/controls/datetimeformatctrl.py:32
 msgid "Second as a decimal number (00, 01, ..., 59)"
 msgstr "Second as a decimal number (00, 01, ..., 59)"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:32
+#: outwiker/gui/controls/datetimeformatctrl.py:33
 msgid "Appropriate date representation"
 msgstr "Appropriate date representation"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:33
+#: outwiker/gui/controls/datetimeformatctrl.py:34
 msgid "Appropriate time representation"
 msgstr "Appropriate time representation"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:34
+#: outwiker/gui/controls/datetimeformatctrl.py:35
 msgid "Year without century (00, 01, ..., 99)"
 msgstr "Year without century (00, 01, ..., 99)"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:35
+#: outwiker/gui/controls/datetimeformatctrl.py:36
 msgid "Year with century"
 msgstr "Year with century"
 
-#: outwiker/gui/controls/datetimeformatctrl.py:36
+#: outwiker/gui/controls/datetimeformatctrl.py:37
 msgid "A literal '%' character"
 msgstr "A literal '%' character"
 
@@ -2501,11 +2506,11 @@ msgstr "Custom icon"
 msgid "Default icon"
 msgstr "Default icon"
 
-#: outwiker/gui/controls/pagelist_columns.py:213
+#: outwiker/gui/controls/pagelist_columns.py:214
 msgid "Parent"
 msgstr "Parent"
 
-#: outwiker/gui/controls/pagelist_columns.py:239
+#: outwiker/gui/controls/pagelist_columns.py:241
 msgid "Modify date"
 msgstr "Modify date"
 
@@ -2634,12 +2639,12 @@ msgstr "Header cells for first row"
 msgid "Insert rows"
 msgstr "Insert rows"
 
-#: outwiker/gui/tagscloud.py:567
+#: outwiker/gui/tagscloud.py:603
 #, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Number of notes: {}"
 
-#: outwiker/gui/tagscloud.py:674
+#: outwiker/gui/tagscloud.py:711
 msgid "Applied tags only"
 msgstr "Applied tags only"
 
@@ -2729,12 +2734,12 @@ msgstr "Lists"
 msgid "Tables"
 msgstr "Tables"
 
-#: outwiker/pages/search/htmlreport.py:76
+#: outwiker/pages/search/htmlreport.py:77
 #, python-brace-format
 msgid "Last modified date: {0}"
 msgstr "Last modified date: {0}"
 
-#: outwiker/pages/search/htmlreport.py:84
+#: outwiker/pages/search/htmlreport.py:85
 #: outwiker/pages/search/searchpanel.py:40
 msgid "Tags: "
 msgstr "Tags: "
@@ -3109,7 +3114,6 @@ msgid "Wiki Page"
 msgstr "Wiki Page"
 
 #: outwiker/pages/wiki/wikipagecontroller.py:69
-#| msgid "Wiki Page"
 msgid "Wiki page"
 msgstr "Wiki page"
 
@@ -3132,12 +3136,10 @@ msgid "Select text background color"
 msgstr "Select text background color"
 
 #: outwiker/pages/wiki/wikipreferences.py:21
-#| msgid "Show HTML Code Tab"
 msgid "Show HTML code tab"
 msgstr "Show HTML code tab"
 
 #: outwiker/pages/wiki/wikipreferences.py:25
-#| msgid "Highlight the Wiki Notation"
 msgid "Highlight wiki notation"
 msgstr "Highlight wiki notation"
 

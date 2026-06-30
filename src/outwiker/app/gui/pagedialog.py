@@ -5,7 +5,9 @@ import wx
 from outwiker.app.services.messages import showError
 from outwiker.app.services.tree import renamePage
 from outwiker.app.gui.basepagedialog import BasePageDialog
+from outwiker.core.application import Application
 from outwiker.core.exceptions import ReadonlyException
+from outwiker.core.tree import BasePage
 from outwiker.core.treetools import pageExists, testreadonly
 
 
@@ -25,6 +27,7 @@ def editPage(parentWnd, currentPage, application):
         return
 
     with EditPageDialog(parentWnd, currentPage, application) as dlg:
+        dlg.generalPanel.setOpenInNewTabVisible(False)
         if dlg.ShowModal() == wx.ID_OK:
             renamePage(currentPage, dlg.pageTitle)
             if not dlg.setPageProperties(currentPage):
@@ -32,7 +35,7 @@ def editPage(parentWnd, currentPage, application):
 
 
 @testreadonly
-def createPageWithDialog(parentwnd, parentpage, application):
+def createPageWithDialog(parentwnd: wx.Window, parentpage: BasePage, application: Application):
     """
     Показать диалог настроек и создать страницу
     """
@@ -44,6 +47,7 @@ def createPageWithDialog(parentwnd, parentpage, application):
     page = None
 
     with CreatePageDialog(parentwnd, parentpage, application) as dlg:
+        dlg.generalPanel.setOpenInNewTabVisible(True)
         if dlg.ShowModal() == wx.ID_OK:
             factory = dlg.selectedFactory
             alias = dlg.pageTitle
@@ -61,7 +65,11 @@ def createPageWithDialog(parentwnd, parentpage, application):
             if not dlg.setPageProperties(page):
                 return None
 
-            page.root.selectedPage = page
+            if dlg.generalPanel.isOpenInNewTab:
+                if application.mainWindow is not None:
+                    application.mainWindow.tabsController.openInTab(page, True)
+            else:
+                page.root.selectedPage = page
 
     return page
 
