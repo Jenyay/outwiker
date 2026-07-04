@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import os
 import html
 import unittest
@@ -1044,12 +1045,12 @@ class ParserLinkTest(unittest.TestCase):
             filename=filename
         )
         attach_path = "{}/{}".format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected_regex = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}\\?rnd=\\d+"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path
         )
 
         result = self.parser.toHtml(text)
-        self.assertEqual(result, expected)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def testLinkAttachImageArrowNotExists(self):
         filename = "invalid.png"
@@ -1069,12 +1070,12 @@ class ParserLinkTest(unittest.TestCase):
             filename=filename
         )
         attach_path = "{}/{}".format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected_regex = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}\\?rnd=\\d+"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path
         )
 
         result = self.parser.toHtml(text)
-        self.assertEqual(result, expected)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def testLinkAttachImageArrowDoubleQuotes(self):
         filename = "accept.png"
@@ -1082,12 +1083,12 @@ class ParserLinkTest(unittest.TestCase):
             filename=filename
         )
         attach_path = "{}/{}".format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected_regex = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}\\?rnd=\\d+"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path
         )
 
         result = self.parser.toHtml(text)
-        self.assertEqual(result, expected)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def testLinkAttachImagePipe(self):
         filename = "accept.png"
@@ -1095,12 +1096,12 @@ class ParserLinkTest(unittest.TestCase):
             filename=filename
         )
         attach_path = "{}/{}".format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected_regex = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}\\?rnd=\\d+"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path
         )
 
         result = self.parser.toHtml(text)
-        self.assertEqual(result, expected)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def testLinkAttachImagePipeNotExists(self):
         filename = "invalid.png"
@@ -1120,12 +1121,12 @@ class ParserLinkTest(unittest.TestCase):
             filename=filename
         )
         attach_path = "{}/{}".format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected_regex = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}\\?rnd=\\d+"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path
         )
 
         result = self.parser.toHtml(text)
-        self.assertEqual(result, expected)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def testLinkAttachImagePipeDoubleQuotes(self):
         filename = "accept.png"
@@ -1133,12 +1134,12 @@ class ParserLinkTest(unittest.TestCase):
             filename=filename
         )
         attach_path = "{}/{}".format(PAGE_ATTACH_DIR, filename)
-        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected_regex = 'бла-бла-бла \n<a class="ow-wiki" href="{attach_path}"><img class="ow-image" src="{attach_path}\\?rnd=\\d+"/></a> бла-бла-бла\nбла-бла-бла'.format(
             attach_path=attach_path
         )
 
         result = self.parser.toHtml(text)
-        self.assertEqual(result, expected)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def testPageProtocolLink(self):
         uid = self.testPage.getUid()

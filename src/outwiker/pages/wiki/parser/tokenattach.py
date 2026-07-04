@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import re
-import os.path
 from abc import ABCMeta, abstractmethod
+import random
 
 from pyparsing import Literal, Regex
 
@@ -89,7 +89,9 @@ class AttachAllToken(AttachToken):
     def _convertToLink(self, s, l, t):
         fname = t[1]
         fname_fix_slash = fname.replace("\\", "/")
-        href = "{dirname}/{fname}".format(dirname=PAGE_ATTACH_DIR, fname=fname_fix_slash)
+        href = "{dirname}/{fname}".format(
+            dirname=PAGE_ATTACH_DIR, fname=fname_fix_slash
+        )
         text = fname
 
         if Attachment(self.parser.page).exists(fname_fix_slash):
@@ -119,7 +121,12 @@ class AttachImagesToken(AttachToken):
     def _convertToLink(self, s, l, t):
         fname = t[1]
         fname_fix_slash = fname.replace("\\", "/")
-        src = "{dirname}/{fname}".format(dirname=PAGE_ATTACH_DIR, fname=fname_fix_slash)
+        rnd = random.randrange(1000)
+
+        # To disable image caching
+        src = "{dirname}/{fname}?rnd={rnd}".format(
+            dirname=PAGE_ATTACH_DIR, fname=fname_fix_slash, rnd=rnd
+        )
 
         if Attachment(self.parser.page).exists(fname_fix_slash):
             return create_image(src, [css.CSS_IMAGE])

@@ -3,9 +3,7 @@
 from abc import abstractmethod
 import logging
 import os
-import urllib.request
 import urllib.parse
-import urllib.error
 
 import wx
 
