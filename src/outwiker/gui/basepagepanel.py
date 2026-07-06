@@ -80,9 +80,6 @@ class BasePagePanel(ScrolledPanel):
             toolbar.Realize()
             toolbar.Thaw()
 
-    def GetSelection(self) -> Optional[str]:
-        return None
-
     ###############################################
     # Методы, которые обязательно надо перегрузить
     ###############################################

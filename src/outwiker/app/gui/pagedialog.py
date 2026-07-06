@@ -95,7 +95,7 @@ def createSiblingPage(parentwnd, page: Optional[WikiPage], application: Applicat
         parentpage = application.wikiroot
     else:
         parentpage = page.parent
-        selectet_text = parentwnd.pageView.GetSelection()
+        selectet_text = application.selectedText
 
     createPageWithDialog(parentwnd, parentpage, application, content=selectet_text)
 
@@ -111,7 +111,7 @@ def createChildPage(parentwnd, page: Optional[BasePage], application: Applicatio
     if page is None:
         page = application.wikiroot
     else:
-        selectet_text = parentwnd.pageView.GetSelection()
+        selectet_text = application.selectedText
 
     createPageWithDialog(parentwnd, page, application, content=selectet_text)
 

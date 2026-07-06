@@ -451,3 +451,11 @@ class ForceNotesTreeItemsUpdate:
     Parameters for onForceNotesTreeItemsUpdate
     """
     pages: List["outwiker.core.tree.BaseWikiPage"] = field(default_factory=list)
+
+
+@dataclass
+class RequestSelectedTextResult:
+    """
+    Result for RequestSelectedText event
+    """
+    selected_text: Optional[str] = None
