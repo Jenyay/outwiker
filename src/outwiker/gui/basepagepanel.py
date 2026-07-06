@@ -2,6 +2,7 @@
 
 import logging
 import os.path
+from typing import Optional
 
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
@@ -67,7 +68,7 @@ class BasePagePanel(ScrolledPanel):
 
     def enableTool(self, tool, enabled):
         """
-        Активировать или дезактивировать один инструмент(пункт меню и кнопку)
+        Активировать или дезактивировать один инструмент (пункт меню и кнопку)
         tool - экземпляр класса ToolsInfo
         """
         tool.menu.Enable(tool.id, enabled)
@@ -78,6 +79,9 @@ class BasePagePanel(ScrolledPanel):
             toolbar.EnableTool(tool.id, enabled)
             toolbar.Realize()
             toolbar.Thaw()
+
+    def GetSelection(self) -> Optional[str]:
+        return None
 
     ###############################################
     # Методы, которые обязательно надо перегрузить

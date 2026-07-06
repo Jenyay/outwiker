@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from typing import Optional
 
 import wx
 import wx.lib.newevent
@@ -636,3 +637,6 @@ class BaseTextPanel(BasePagePanel):
 
     def SetFocus(self):
         self.GetEditor().SetFocus()
+
+    def GetSelection(self) -> str:
+        return self.GetEditor().GetSelectedText()

@@ -10,6 +10,7 @@ class PageMainPane(MainPane):
     """
     Класс для работы с панелью с контентом страницы
     """
+
     def _createPanel(self):
         return CurrentPagePanel(self.parent, self._application)
 
@@ -18,7 +19,7 @@ class PageMainPane(MainPane):
 
     @property
     def caption(self):
-        return _(u"Note")
+        return _("Note")
 
     @property
     def pageView(self):
@@ -28,6 +29,17 @@ class PageMainPane(MainPane):
         """
         Создать класс с информацией о панели для auiManager
         """
-        pane = wx.aui.AuiPaneInfo().Name("pagePane").Gripper(False).CaptionVisible(False).Layer(0).Position(0).CloseButton(False).MaximizeButton(False).Center().Dock()
+        pane = (
+            wx.aui.AuiPaneInfo()
+            .Name("pagePane")
+            .Gripper(False)
+            .CaptionVisible(False)
+            .Layer(0)
+            .Position(0)
+            .CloseButton(False)
+            .MaximizeButton(False)
+            .Center()
+            .Dock()
+        )
 
         return pane
