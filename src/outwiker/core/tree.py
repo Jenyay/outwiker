@@ -928,7 +928,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
 
 
 class PageAdapter:
-    def __init__(self, page) -> None:
+    def __init__(self, page: WikiPage) -> None:
         self._page = page
 
     @property

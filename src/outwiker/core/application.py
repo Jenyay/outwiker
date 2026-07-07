@@ -6,7 +6,7 @@ from typing import Optional
 from outwiker.core.bookmarks import Bookmarks
 from outwiker.core.config import Config
 from outwiker.core.event import Event, CustomEvents
-from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams
+from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams, RequestSelectedTextResult
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
@@ -380,6 +380,11 @@ class Application:
         #    params - instance of the ForceNotesTreeItemsUpdate class
         self.onForceNotesTreeItemsUpdate = Event()
 
+        # The event called when selected text from current page needed
+        # Parameters:
+        #    result - instance of RequestSelectedTextResult
+        self.requestSelectedText = Event()
+
     def init(self, fullConfigPath):
         """
         Initialize config and locale
@@ -535,3 +540,12 @@ class Application:
         if hasattr(self, name) and isinstance(getattr(self, name), Event):
             return getattr(self, name)
         return self.customEvents.get(name)
+
+    @property
+    def selectedText(self) -> Optional[str]:
+        if self.selectedPage is None:
+            return None
+
+        response = RequestSelectedTextResult()
+        self.requestSelectedText(result=response)
+        return response.selected_text
