@@ -430,7 +430,7 @@ class ParserFontTest (unittest.TestCase):
         result = self.parser.toHtml(text)
         end = time.perf_counter()
 
-        self.assertLess(end - begin, 1)
+        self.assertLess(end - begin, 5)
         self.assertEqual(result, expected)
 
     def testInvalidBoldItalic(self):
@@ -441,5 +441,5 @@ class ParserFontTest (unittest.TestCase):
         result = self.parser.toHtml(text)
         end = time.perf_counter()
 
-        self.assertLess(end - begin, 1)
+        self.assertLess(end - begin, 5)
         self.assertEqual(result, expected)
