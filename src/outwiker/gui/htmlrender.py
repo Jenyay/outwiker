@@ -118,6 +118,20 @@ class HtmlRenderBase(wx.Panel):
     def Reload(self):
         self._render.Reload()
 
+    def RunScript(self, script: str) -> None:
+        self._render.RunScript(script)
+
+    def _runScriptUpdateScrolling(self):
+        script_send_scroll_position = """
+        function send_scroll_position() {
+            window.location = "outwiker://scroll-position-changed?position=" + window.pageYOffset;
+        }
+        window.addEventListener('scroll', function(event) {
+            send_scroll_position();
+        });
+        """
+        self.RunScript(script_send_scroll_position)
+
 
 class HTMLRenderForPageMixin:
     def getClickParams(self,

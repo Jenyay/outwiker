@@ -69,6 +69,7 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         import wx.html2 as webview
 
         self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
+        self.render.Unbind(webview.EVT_WEBVIEW_LOADED, handler=self._onPageLoaded)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
 
@@ -81,6 +82,7 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
         self.render.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
+        self.render.Bind(webview.EVT_WEBVIEW_LOADED, handler=self._onPageLoaded)
 
     def _pathToURL(self, path: str) -> str:
         """
@@ -92,8 +94,12 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         import wx.html2 as webview
 
         self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
+        self.render.Unbind(webview.EVT_WEBVIEW_LOADED, handler=self._onPageLoaded)
         self.render.Stop()
         event.Skip()
+
+    def _onPageLoaded(self, event):
+        pass
 
     def _onCopyFromHtml(self, event):
         self.render.Copy()
@@ -121,7 +127,7 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
             nav_id,
             href,
             curr_href,
-            self.canOpenUrl
+            self.canOpenUrl,
         )
 
         # Open empty page
@@ -232,7 +238,7 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
 
         logger.debug("_onLinkClicked. href_src=%s", source_href)
 
-        (url, page, filename, anchor) = self._identifyUri(href)
+        url, page, filename, anchor = self._identifyUri(href)
 
         params = self.getClickParams(
             source_href, mouse_button, modifier, url, page, filename, anchor
@@ -261,6 +267,9 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
             return False
 
         return True
+
+    def _onPageLoaded(self, event):
+        self._runScriptUpdateScrolling()
 
 
 class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
@@ -325,7 +334,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
 
         logger.debug("_onLinkClicked. href_src=%s", source_href)
 
-        (url, filename, anchor) = self._identifyUri(href)
+        url, filename, anchor = self._identifyUri(href)
 
         if url is not None:
             self.openUrl(url)
