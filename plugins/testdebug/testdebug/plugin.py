@@ -286,10 +286,35 @@ class PluginDebug(Plugin):
         # const text = "Положение прокрутки: " + verticalScroll;
         # document.write(text);
         # """
-        script = """
-        window.scrollTo(0, 500);
+
+        # script = """
+        # window.scrollTo(0, 500);
+        # """
+
+        script_send_scroll_position = """
+        function send_scroll_position() {
+            window.location = "outwiker://scroll-position-changed?position=" + window.pageYOffset;
+        }
+        window.addEventListener('scroll', function(event) {
+            send_scroll_position();
+        });
         """
-        web_view.RunScript(script)
+
+        script_send_complete = """
+        function send_complete_notify() {
+            window.location = "outwiker://page-complete";
+        }
+
+        if (document.readyState === 'complete') {
+            send_complete_notify();
+        }
+        else {
+            window.addEventListener('load', send_complete_notify);
+        }
+        """
+
+        web_view.RunScript(script_send_complete)
+        web_view.RunScript(script_send_scroll_position)
 
     def __onRaiseException(self, event):
         raise IOError
