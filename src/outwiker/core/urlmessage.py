@@ -1,4 +1,4 @@
-from urllib.parse import unquote_plus
+# from urllib.parse import unquote_plus
 from typing import Optional, Dict
 
 
@@ -59,11 +59,12 @@ def parse_urlmessage(
             else:
                 key, value = pair, ""
 
-            try:
-                decoded_value = unquote_plus(value)
-            except Exception:
-                return None
+            # try:
+            #     decoded_value = unquote_plus(value)
+            # except Exception:
+            #     return None
 
-            params[key] = decoded_value
+            # params[key] = decoded_value
+            params[key] = value
 
     return URLMessage(protocol, name_part, params)
