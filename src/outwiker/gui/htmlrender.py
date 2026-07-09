@@ -24,7 +24,9 @@ class HtmlRenderBase(wx.Panel):
         self._application = application
         self._render = self._createRender()
         self._searchPanel = SearchReplacePanel(self)
-        self._searchPanelController = getOS().getHtmlRenderSearchController(self._searchPanel, self)
+        self._searchPanelController = getOS().getHtmlRenderSearchController(
+            self._searchPanel, self
+        )
         sizer = wx.FlexGridSizer(cols=1)
         sizer.AddGrowableCol(0)
         sizer.AddGrowableRow(0)
@@ -52,9 +54,9 @@ class HtmlRenderBase(wx.Panel):
         pass
 
     def _createRender(self):
-        '''
+        """
         Must return instance of HTML render engine
-        '''
+        """
 
     def Find(self, text):
         if self._render:
@@ -88,12 +90,12 @@ class HtmlRenderBase(wx.Panel):
         if link is None:
             return None
 
-        endProtocol = u"://"
+        endProtocol = "://"
         pos = link.find(endProtocol)
         if pos == -1:
             return None
 
-        return link[:pos + len(endProtocol)]
+        return link[: pos + len(endProtocol)]
 
     def decodeIDNA(self, link):
         """
@@ -104,11 +106,9 @@ class HtmlRenderBase(wx.Panel):
 
         protocol = self._getLinkProtocol(link)
         if protocol is not None:
-            url = link[len(protocol):]
+            url = link[len(protocol) :]
             try:
-                link = u"{}{}".format(
-                    protocol,
-                    idna.decode(url))
+                link = "{}{}".format(protocol, idna.decode(url))
             except UnicodeError:
                 # Под IE ссылки не преобразуются в кодировку IDNA
                 pass
@@ -134,25 +134,20 @@ class HtmlRenderBase(wx.Panel):
 
 
 class HTMLRenderForPageMixin:
-    def getClickParams(self,
-                       href,
-                       button,
-                       modifier,
-                       isurl,
-                       ispage,
-                       isfilename,
-                       isanchor):
+    def getClickParams(
+        self, href, button, modifier, isurl, ispage, isfilename, isanchor
+    ):
         linktype = None
 
         if isanchor:
-            linktype = u"anchor"
+            linktype = "anchor"
 
         if isurl:
-            linktype = u"url"
+            linktype = "url"
         elif ispage:
-            linktype = u"page"
+            linktype = "page"
         elif isfilename:
-            linktype = u"filename"
+            linktype = "filename"
 
         return LinkClickParams(
             link=href,
