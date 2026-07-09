@@ -126,17 +126,6 @@ class HtmlRenderBase(wx.Panel):
     def RunScript(self, script: str) -> None:
         self._render.RunScript(script)
 
-    def _runScriptUpdateScrolling(self):
-        script_send_scroll_position = """
-        function send_scroll_position() {
-            window.location = "outwiker://scroll-position-changed?position=" + window.pageYOffset;
-        }
-        window.addEventListener('scroll', function(event) {
-            send_scroll_position();
-        });
-        """
-        self.RunScript(script_send_scroll_position)
-
     def _process_scrolled_message(self, urlmessage: URLMessage):
         try:
             position = int(urlmessage.params["position"])
@@ -150,6 +139,21 @@ class HtmlRenderBase(wx.Panel):
     def processUrlMessage(self, urlmessage: URLMessage) -> None:
         if urlmessage.message_name == URL_MESSAGE_SCROLLED:
             self._process_scrolled_message(urlmessage)
+
+    def SetScrollPosition(self, position: int) -> None:
+        script = f"""
+        function scroll() {{
+            window.scrollTo(0, {position});
+        }}
+
+        if (document.readyState === 'complete') {{
+            scroll();
+        }}
+        else {{
+            window.addEventListener('load', scroll);
+        }}
+        """
+        self.RunScript(script)
 
 
 class HTMLRenderForPageMixin:

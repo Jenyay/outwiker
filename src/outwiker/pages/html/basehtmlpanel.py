@@ -5,7 +5,9 @@ import os
 
 import wx
 import wx.aui
+import wx.html2 as webview
 
+from outwiker.core.tree import WikiPage
 from outwiker.core.treetools import getPageHtmlPath
 from outwiker.app.actions.search import (
     SearchAction,
@@ -21,8 +23,9 @@ from outwiker.core.defines import (
     PAGE_MODE_TEXT,
     PAGE_MODE_PREVIEW,
     REGISTRY_PAGE_CURSOR_POSITION,
+    REGISTRY_PAGE_PREVIEW_SCROLL_POSITION,
 )
-from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams
+from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams, PreviewScrolledParams
 from outwiker.core.system import getImagesDir
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.defines import STATUSBAR_MESSAGE_ITEM
@@ -68,8 +71,13 @@ class BaseHtmlPanel(BaseTextPanel):
             wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self._onTabChanged, self.notebook
         )
         self.Bind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
+        self.htmlWindow.Bind(webview.EVT_WEBVIEW_LOADED, handler=self._onPageLoaded)
+
         self._application.onPageUpdate += self._onPageUpdate
+        self._application.onPreviewScrolled += self._onPreviewScrolled
+
         self._bindHotkeys()
+        
         logger.debug("BaseHtmlPanel creation ended")
 
     def _bindHotkeys(self):
@@ -119,7 +127,10 @@ class BaseHtmlPanel(BaseTextPanel):
             handler=self._onTabChanged,
         )
         self.Unbind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
+        self.htmlWindow.Unbind(webview.EVT_WEBVIEW_LOADED, handler=self._onPageLoaded)
+
         self._application.onPageUpdate -= self._onPageUpdate
+        self._application.onPreviewScrolled -= self._onPreviewScrolled
 
         for n in range(self.pageCount):
             self.notebook.RemovePage(0)
@@ -129,7 +140,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self._unbindHotkeys()
         super().Clear()
 
-    def SetCursorPosition(self, position):
+    def SetCursorPosition(self, position: int) -> None:
         """
         Установить курсор в текстовом редакторе в положение position
         """
@@ -141,6 +152,9 @@ class BaseHtmlPanel(BaseTextPanel):
         Возвращает положение курсора в текстовом редакторе
         """
         return self.codeEditor.GetCurrentPosition()
+
+    def SetPreviewScrollPosition(self, position: int) -> None:
+        self.htmlWindow.SetScrollPosition(position)
 
     def GetEditor(self):
         return self._codeEditor
@@ -439,3 +453,32 @@ class BaseHtmlPanel(BaseTextPanel):
         ):
             self._updatePage()
             self._updateHtmlWindow()
+
+    def _onPreviewScrolled(self, page: WikiPage, params: PreviewScrolledParams):
+        position = params.position
+        reg = page.root.registry.get_page_registry(page)
+        reg.set(REGISTRY_PAGE_PREVIEW_SCROLL_POSITION, position)
+
+    def _scrollPreviewToLastPosition(self, page: WikiPage):
+        reg = page.root.registry.get_page_registry(page)
+        try:
+            position = reg.getint(REGISTRY_PAGE_PREVIEW_SCROLL_POSITION, default=0)
+            self.SetPreviewScrollPosition(position)
+        except (KeyError, ValueError):
+            pass
+
+    def _runScriptUpdateScrolling(self):
+        script_send_scroll_position = """
+        function send_scroll_position() {
+            window.location = "outwiker://scroll-position-changed?position=" + window.pageYOffset;
+        }
+        window.addEventListener('scroll', function(event) {
+            send_scroll_position();
+        });
+        """
+        self.htmlWindow.RunScript(script_send_scroll_position)
+
+    def _onPageLoaded(self, event):
+        self._scrollPreviewToLastPosition(self._currentpage)
+        self._runScriptUpdateScrolling()
+        event.Skip()

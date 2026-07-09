@@ -70,7 +70,6 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         import wx.html2 as webview
 
         self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
-        self.render.Unbind(webview.EVT_WEBVIEW_LOADED, handler=self._onPageLoaded)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
 
@@ -83,7 +82,6 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
         self.render.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
-        self.render.Bind(webview.EVT_WEBVIEW_LOADED, handler=self._onPageLoaded)
 
     def _pathToURL(self, path: str) -> str:
         """
@@ -95,12 +93,8 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         import wx.html2 as webview
 
         self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
-        self.render.Unbind(webview.EVT_WEBVIEW_LOADED, handler=self._onPageLoaded)
         self.render.Stop()
         event.Skip()
-
-    def _onPageLoaded(self, event):
-        pass
 
     def _onCopyFromHtml(self, event):
         self.render.Copy()
@@ -204,8 +198,7 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
         """
         uri = self.render.GetCurrentURL()
 
-        logger.debug("_identifyUri. href=%s", href)
-        logger.debug("_identifyUri. current URI=%s", uri)
+        logger.debug("_identifyUri. href=%s. current URI=%s", href, uri)
 
         if uri is not None:
             basepath = self.getBasePath()
@@ -216,11 +209,14 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
             filename = FileRecognizerWebKit(basepath).recognize(href)
             anchor = AnchorRecognizerWebKit(basepath).recognize(href)
 
-            logger.debug("_identifyUri. url_message=%s", url_message)
-            logger.debug("_identifyUri. url=%s", url)
-            logger.debug("_identifyUri. page=%s", page)
-            logger.debug("_identifyUri. filename=%s", filename)
-            logger.debug("_identifyUri. anchor=%s", anchor)
+            logger.debug(
+                "_identifyUri. url_message=%s. url=%s. page=%s. filename=%s. anchor=%s",
+                url_message,
+                url,
+                page,
+                filename,
+                anchor,
+            )
 
             return (url_message, url, page, filename, anchor)
 
@@ -274,9 +270,6 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
 
         return True
 
-    def _onPageLoaded(self, event):
-        self._runScriptUpdateScrolling()
-
 
 class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
     """
@@ -309,8 +302,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
         """
         uri = self.render.GetCurrentURL()
 
-        logger.debug("_identifyUri. href=%s", href)
-        logger.debug("_identifyUri. current URI=%s", uri)
+        logger.debug("_identifyUri. href=%s. Current URI=%s", href, uri)
 
         if uri is not None:
             basepath = self.getBasePath()
@@ -319,9 +311,9 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
             filename = FileRecognizerWebKit(basepath).recognize(href)
             anchor = AnchorRecognizerWebKit(basepath).recognize(href)
 
-            logger.debug("_identifyUri. url=%s", url)
-            logger.debug("_identifyUri. filename=%s", filename)
-            logger.debug("_identifyUri. anchor=%s", anchor)
+            logger.debug(
+                "_identifyUri. url=%s. filename=%s. anchor=%s", url, filename, anchor
+            )
 
             return (url, filename, anchor)
 
