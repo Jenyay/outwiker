@@ -9,7 +9,8 @@ import wx
 
 import outwiker.core.system
 from outwiker.app.services.messages import showError
-from outwiker.core.defines import APP_DATA_KEY_ANCHOR
+from outwiker.core.defines import APP_DATA_KEY_ANCHOR, URL_PROTOCOL
+from outwiker.core.urlmessage import parse_urlmessage
 from outwiker.gui.defines import ID_KEY_CTRL, ID_MOUSE_LEFT
 from outwiker.utilites.textfile import readTextFile
 
@@ -209,19 +210,21 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
         if uri is not None:
             basepath = self.getBasePath()
 
+            url_message = parse_urlmessage(href, expected_protocol=URL_PROTOCOL)
             url = URLRecognizer(basepath).recognize(href)
             page = PageRecognizerWebKit(basepath, self._application).recognize(href)
             filename = FileRecognizerWebKit(basepath).recognize(href)
             anchor = AnchorRecognizerWebKit(basepath).recognize(href)
 
+            logger.debug("_identifyUri. url_message=%s", url_message)
             logger.debug("_identifyUri. url=%s", url)
             logger.debug("_identifyUri. page=%s", page)
             logger.debug("_identifyUri. filename=%s", filename)
             logger.debug("_identifyUri. anchor=%s", anchor)
 
-            return (url, page, filename, anchor)
+            return (url_message, url, page, filename, anchor)
 
-        return (None, None, None, None)
+        return (None, None, None, None, None)
 
     def _onLinkClicked(self, href):
         """
@@ -238,7 +241,10 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
 
         logger.debug("_onLinkClicked. href_src=%s", source_href)
 
-        url, page, filename, anchor = self._identifyUri(href)
+        url_message, url, page, filename, anchor = self._identifyUri(href)
+        if url_message is not None:
+            self.processUrlMessage(url_message)
+            return True
 
         params = self.getClickParams(
             source_href, mouse_button, modifier, url, page, filename, anchor

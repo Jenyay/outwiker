@@ -459,3 +459,11 @@ class RequestSelectedTextResult:
     Result for RequestSelectedText event
     """
     selected_text: Optional[str] = None
+
+
+@dataclass
+class PreviewScrolledParams:
+    """
+    Parameters for onPreviewScrolled event
+    """
+    position: int

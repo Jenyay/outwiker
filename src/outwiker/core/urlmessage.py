@@ -49,6 +49,9 @@ def parse_urlmessage(
     if not name_part:
         return None
 
+    if name_part.endswith("/"):
+        name_part = name_part[:-1]
+
     params = {}
     if params_part:
         for pair in params_part.split("&"):

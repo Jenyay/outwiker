@@ -85,6 +85,9 @@ DEFAULT_CONFIG_NAME = "outwiker.ini"
 
 OUTWIKER_PATH_ENV_VAR = "OUTWIKER_PATH"
 
+URL_PROTOCOL = "outwiker"
+URL_MESSAGE_SCROLLED = "scroll-position-changed"
+
 
 # To translate this words with xgettext
 if __name__ == "__main__":

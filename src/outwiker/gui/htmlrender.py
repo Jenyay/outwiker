@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 
 import idna
+import logging
 
 import wx
 
 import outwiker.core
+from outwiker.core.defines import URL_MESSAGE_SCROLLED
+from outwiker.core.urlmessage import URLMessage
 from outwiker.app.services.messages import showError
-from outwiker.core.events import LinkClickParams
+from outwiker.core.events import LinkClickParams, PreviewScrolledParams
 from outwiker.core.system import getOS
 from outwiker.gui.controls.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.defines import ID_KEY_CTRL, ID_KEY_SHIFT
+
+logger = logging.getLogger("outwiker.gui.htmlrender")
 
 
 class HtmlRenderBase(wx.Panel):
@@ -131,6 +136,20 @@ class HtmlRenderBase(wx.Panel):
         });
         """
         self.RunScript(script_send_scroll_position)
+
+    def _process_scrolled_message(self, urlmessage: URLMessage):
+        try:
+            position = int(urlmessage.params["position"])
+        except ValueError:
+            logger.error("Invalid URLMessage params: %s", urlmessage)
+            return
+
+        params = PreviewScrolledParams(position)
+        self._application.onPreviewScrolled(self._application.selectedPage, params)
+
+    def processUrlMessage(self, urlmessage: URLMessage) -> None:
+        if urlmessage.message_name == URL_MESSAGE_SCROLLED:
+            self._process_scrolled_message(urlmessage)
 
 
 class HTMLRenderForPageMixin:

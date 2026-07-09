@@ -9,6 +9,14 @@ def test_valid_full_message():
     assert msg.params == {"foo": "bar", "baz": "123"}
 
 
+def test_valid_full_message_slash():
+    msg = parse_urlmessage("outwiker://test/?foo=bar&baz=123")
+    assert isinstance(msg, URLMessage)
+    assert msg.protocol == "outwiker"
+    assert msg.message_name == "test"
+    assert msg.params == {"foo": "bar", "baz": "123"}
+
+
 def test_message_without_params():
     msg = parse_urlmessage("outwiker://event")
     assert msg.protocol == "outwiker"
@@ -16,8 +24,21 @@ def test_message_without_params():
     assert msg.params == {}
 
 
+def test_message_without_params_slash():
+    msg = parse_urlmessage("outwiker://event/")
+    assert msg.protocol == "outwiker"
+    assert msg.message_name == "event"
+    assert msg.params == {}
+
+
 def test_message_with_empty_query():
     msg = parse_urlmessage("outwiker://event?")
+    assert msg.message_name == "event"
+    assert msg.params == {}
+
+
+def test_message_with_empty_query_slash():
+    msg = parse_urlmessage("outwiker://event/?")
     assert msg.message_name == "event"
     assert msg.params == {}
 

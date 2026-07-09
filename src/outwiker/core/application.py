@@ -380,6 +380,12 @@ class Application:
         #    params - instance of the ForceNotesTreeItemsUpdate class
         self.onForceNotesTreeItemsUpdate = Event()
 
+        # The event occurs after scrolling in HTML render for page preview mode
+        # Parameters:
+        #    page - current (selected) page
+        #    params - instance of the PreviewScrolledParams class
+        self.onPreviewScrolled = Event()
+
         # The event called when selected text from current page needed
         # Parameters:
         #    result - instance of RequestSelectedTextResult
