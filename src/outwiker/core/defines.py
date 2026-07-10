@@ -70,7 +70,8 @@ CONFIG_TOOLBARS_VISIBLE_SUFFIX = "_visible"
 
 REGISTRY_SECTION_PAGES = "__pages"
 REGISTRY_PAGE_CURSOR_POSITION = "cursorposition"
-REGISTRY_PAGE_PREVIEW_SCROLL_POSITION = "preview_scroll"
+REGISTRY_PAGE_PREVIEW_SCROLL_POSITION_X = "preview_scroll_x"
+REGISTRY_PAGE_PREVIEW_SCROLL_POSITION_Y = "preview_scroll_y"
 REGISTRY_PAGE_HASH = "md5_hash"
 
 URL_TRANSLATE = "https://crowdin.com/project/outwiker"

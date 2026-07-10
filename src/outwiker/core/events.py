@@ -466,4 +466,5 @@ class PreviewScrolledParams:
     """
     Parameters for onPreviewScrolled event
     """
-    position: int
+    position_x: int
+    position_y: int

@@ -128,22 +128,23 @@ class HtmlRenderBase(wx.Panel):
 
     def _process_scrolled_message(self, urlmessage: URLMessage):
         try:
-            position = int(urlmessage.params["position"])
-        except ValueError:
+            position_x = int(urlmessage.params["position-x"])
+            position_y = int(urlmessage.params["position-y"])
+        except (ValueError, KeyError):
             logger.error("Invalid URLMessage params: %s", urlmessage)
             return
 
-        params = PreviewScrolledParams(position)
+        params = PreviewScrolledParams(position_x, position_y)
         self._application.onPreviewScrolled(self._application.selectedPage, params)
 
     def processUrlMessage(self, urlmessage: URLMessage) -> None:
         if urlmessage.message_name == URL_MESSAGE_SCROLLED:
             self._process_scrolled_message(urlmessage)
 
-    def SetScrollPosition(self, position: int) -> None:
+    def SetScrollPosition(self, position_x: int, position_y: int) -> None:
         script = f"""
         function scroll() {{
-            window.scrollTo(0, {position});
+            window.scrollTo({position_x}, {position_y});
         }}
 
         if (document.readyState === 'complete') {{
