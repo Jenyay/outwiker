@@ -28,37 +28,43 @@
   <update_contact>jenyay.ilin@gmail.com</update_contact>
   <screenshots>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_01.png</image>
-      <caption>Main window. A note with images, links and lists</caption>
-      <caption xml:lang="ru">Главное окно. Заметка с картинками, ссылками и списками</caption>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_01.png</image>
+      <caption>The main application window with a formatted text note in view mode.</caption>
+      <caption xml:lang="ru">Главное окно программы с заметкой, содержащей форматированный текст, в режиме просмотра.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_02.png</image>
-      <caption>Main window and popup window with note titles for selected tag</caption>
-      <caption xml:lang="ru">Главное окно и всплывающее окно с заголовками заметок с выбранной меткой</caption>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_02.png</image>
+      <caption>The main application window with a formatted text note in wiki mode.</caption>
+      <caption xml:lang="ru">Главное окно программы с заметкой, содержащей форматированный текст, в режиме вики.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_03.png</image>
-      <caption>Dialog for selecting note icon</caption>
-      <caption xml:lang="ru">Диалог для выбора значка заметки</caption>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_03.png</image>
+      <caption>Note properties dialog.</caption>
+      <caption xml:lang="ru">Диалог свойств заметки.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_04.png</image>
-      <caption>Note with customized formatting style. The note contains a formula and source code</caption>
-      <caption xml:lang="ru">Заметка с измененным стилем оформления. Заметка содержит формулу и исходный код</caption>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_04.png</image>
+      <caption>The note tree opened as read-only. A note containing attached images is opened in view mode.</caption>
+      <caption xml:lang="ru">Дерево заметок открыто только для чтения. Заметка, содержащая вложенные изображения, открыта в режиме просмотра.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_05.png</image>
-      <caption>Note in wiki notation editing mode. The note contains a formula and source code</caption>
-      <caption xml:lang="ru">Заметка в режиме редактирования викинотациию. Заметка содержит формулу и исходный код</caption>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_05.png</image>
+      <caption>The note tree opened as read-only. A note containing attached images is opened in wiki mode.</caption>
+      <caption xml:lang="ru">Дерево заметок открыто только для чтения. Заметка, содержащая вложенные изображения, открыта в режиме вики.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.3_en_linux_06.png</image>
-      <caption>Note in wiki notation editing mode. The note contains lists, links, headers and table</caption>
-      <caption xml:lang="ru">Заметка в режиме редактирования викинотациию. Заметка содержит списки, ссылки, заголовки и таблицу</caption>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_06.png</image>
+      <caption>Note icon selection dialog.</caption>
+      <caption xml:lang="ru">Диалог выбора значка для заметки.</caption>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_07.png</image>
+      <caption>Search notes by tag dialog.</caption>
+      <caption xml:lang="ru">Диалог поиска заметок по метке.</caption>
     </screenshot>
   </screenshots>
   <releases>
+    <release version="4.1.0.976" date="2026-07-18" />
     <release version="4.0.0.974" date="2026-06-06" />
     <release version="4.0.0.972" date="2026-05-01" />
     <release version="4.0.0.970" date="2026-04-04" />

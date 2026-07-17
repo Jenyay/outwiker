@@ -3,6 +3,7 @@
 OS-dependent actions for the program
 """
 
+from abc import ABC, abstractmethod
 import ctypes
 import locale
 import os
@@ -12,7 +13,7 @@ import sys
 import subprocess
 import logging
 from pathlib import Path
-from typing import List, Union
+from typing import List, Optional, Union
 from uuid import UUID
 from functools import lru_cache 
 
@@ -21,10 +22,10 @@ import wx
 import outwiker
 from outwiker.core.images import find_svg
 
-from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
+from .pagetitletester import PageTitleTester, WindowsPageTitleTester, LinuxPageTitleTester
 from .spellchecker.cyhunspellwrapper import CyHunspellWrapper
 
-from outwiker.gui.fileicons import WindowsFileIcons, UnixFileIcons
+from outwiker.gui.fileicons import BaseFileIcons, WindowsFileIcons, UnixFileIcons
 from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    IMAGES_FOLDER_NAME,
                                    STYLES_FOLDER_NAME,
@@ -45,7 +46,7 @@ DEFAULT_OLD_CONFIG_DIR = ".outwiker"
 logger = logging.getLogger('outwiker.core.system')
 
 
-class System:
+class System(ABC):
     def migrateConfig(self,
                       oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
                       newConfDirName=DEFAULT_CONFIG_DIR):
@@ -61,39 +62,100 @@ class System:
         if op.exists(oldConfDir) and not op.exists(confDir):
             shutil.move(oldConfDir, confDir)
 
+    @property
+    @abstractmethod
+    def name(self) -> str:
+        ...
+
+    @property
+    @abstractmethod
+    def python(self) -> str:
+        ...
+
+    @abstractmethod
+    def startFile(self, path: Union[str, Path]) -> None:
+        ...
+
+    @property
+    @abstractmethod
+    def inputEncoding(self) -> str:
+        ...
+
+    @property
+    @abstractmethod
+    def pageTitleTester(self) -> PageTitleTester:
+        ...
+
+    @property
+    @abstractmethod
+    def fileIcons(self) -> BaseFileIcons:
+        ...
+
+    @property
+    @abstractmethod
+    def settingsDir(self) -> str:
+        ...
+
+    @property
+    @abstractmethod
+    def documentsDir(self) -> Optional[str]:
+        ...
+
+    @abstractmethod
+    def getHtmlRender(self, parent, application):
+        ...
+
+    @abstractmethod
+    def getHtmlRenderForPage(self, parent, application):
+        ...
+
+    @abstractmethod
+    def getHtmlRenderSearchController(self, searchPanel, htmlRender):
+        ...
+
+    @property
+    @abstractmethod
+    def windowIconFile(self) -> str:
+        ...
+
+    @property
+    @abstractmethod
+    def defaultLanguage(self) -> str:
+        ...
+
 
 class Windows(System):
     @property
-    def name(self):
+    def name(self) -> str:
         return 'windows'
 
     @property
-    def python(self):
+    def python(self) -> str:
         return 'python'
 
-    def startFile(self, path: Union[str, Path]):
+    def startFile(self, path: Union[str, Path]) -> None:
         """
         Start the default program for path
         """
         os.startfile(path)
 
     @property
-    def inputEncoding(self):
+    def inputEncoding(self) -> str:
         """
         Encoding used to convert a pressed key to a string
         """
         return "mbcs"
 
     @property
-    def pageTitleTester(self):
+    def pageTitleTester(self) -> PageTitleTester:
         return WindowsPageTitleTester()
 
     @property
-    def fileIcons(self):
+    def fileIcons(self) -> BaseFileIcons:
         return WindowsFileIcons()
 
     @property
-    def settingsDir(self):
+    def settingsDir(self) -> str:
         """
         Returns the folder where all programs' settings are stored,
         and where the folder for OutWiker settings will be created
@@ -105,7 +167,7 @@ class Windows(System):
         return appdata
 
     @property
-    def documentsDir(self):
+    def documentsDir(self) -> Optional[str]:
         # Get from https://gist.github.com/mkropat/7550097#file-knownpaths-py
         from ctypes import windll, wintypes
 
@@ -176,6 +238,11 @@ class Windows(System):
     @property
     def windowIconFile(self) -> str:
         return getBuiltinImagePath("outwiker_small.ico")
+
+    @property
+    def defaultLanguage(self) -> str:
+        lang_id = ctypes.windll.kernel32.GetUserDefaultUILanguage()
+        return locale.windows_locale.get(lang_id, "en")
 
 
 class Unix(System):
@@ -258,6 +325,11 @@ class Unix(System):
     def getHtmlRenderSearchController(self, searchPanel, htmlRender):
         from outwiker.gui.controls.htmlsearchpanelcontrollerunix import HtmlSearchPanelControllerUnix
         return HtmlSearchPanelControllerUnix(searchPanel, htmlRender)
+
+    @property
+    def defaultLanguage(self) -> str:
+        lang = locale.getlocale()[0]
+        return lang if lang is not None else "en"
 
 
 def getOS():

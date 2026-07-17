@@ -15,14 +15,14 @@
 
 from __future__ import division
 
-import pkg_resources
+import importlib.metadata
 
 renderers = {}
 searchpath = []
 
 
 def init_renderers():
-    for plugin in pkg_resources.iter_entry_points('blockdiag_noderenderer'):
+    for plugin in importlib.metadata.entry_points(group='blockdiag_noderenderer'):
         module = plugin.load()
         if hasattr(module, 'setup'):
             module.setup(module)

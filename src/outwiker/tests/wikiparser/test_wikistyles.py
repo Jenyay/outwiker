@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import unittest
 from tempfile import mkdtemp
 
@@ -153,9 +154,11 @@ class WikiStylesBlockTest(unittest.TestCase):
 бла-бла-бла
 %%
 '''
-        result = '''текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>
+        expected_regex = '''текст <a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon\\.png\\?rnd=\\d+"/></a>
 <div class="class-red">бла-бла-бла</div>'''
-        self.assertEqual(result, self.parser.toHtml(text))
+
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_with_thumbnails_after(self):
         Attachment(self.testPage).attach(['testdata/images/icon.png'])
@@ -164,9 +167,11 @@ class WikiStylesBlockTest(unittest.TestCase):
 бла-бла-бла
 %%
 %thumb width=32%Attach:icon.png%%'''
-        result = '''текст
-<div class="class-red">бла-бла-бла</div><a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>'''
-        self.assertEqual(result, self.parser.toHtml(text))
+        expected_regex = '''текст
+<div class="class-red">бла-бла-бла</div><a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon\\.png\\?rnd=\\d+"/></a>'''
+
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_with_thumbnails_inside(self):
         Attachment(self.testPage).attach(['testdata/images/icon.png'])
@@ -174,9 +179,11 @@ class WikiStylesBlockTest(unittest.TestCase):
 %class-red%
 бла-бла-бла %thumb width=32%Attach:icon.png%%
 %%'''
-        result = '''текст
-<div class="class-red">бла-бла-бла <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a></div>'''
-        self.assertEqual(result, self.parser.toHtml(text))
+        expected_regex = '''текст
+<div class="class-red">бла-бла-бла <a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon\\.png\\?rnd=\\d+"/></a></div>'''
+
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_with_thumbnails_between(self):
         Attachment(self.testPage).attach(['testdata/images/icon.png'])
@@ -190,12 +197,13 @@ class WikiStylesBlockTest(unittest.TestCase):
 %class-red%
 бла-бла-бла
 %%'''
-        result = '''текст
+        expected_regex = '''текст
 <div class="class-red">бла-бла-бла</div>
-<a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>
+<a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon\\.png\\?rnd=\\d+"/></a>
 
 <div class="class-red">бла-бла-бла</div>'''
-        self.assertEqual(result, self.parser.toHtml(text))
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
 
 class WikiStylesInlineTest(unittest.TestCase):
@@ -512,41 +520,46 @@ class WikiStylesInlineTest(unittest.TestCase):
         Attachment(self.testPage).attach(['testdata/images/icon.png'])
 
         text = "текст %thumb width=32%Attach:icon.png%% %class-red%бла-бла-бла%% текст"
-        result = 'текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a> <span class="class-red">бла-бла-бла</span> текст'
+        expected_regex = 'текст <a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon\\.png\\?rnd=\\d+"/></a> <span class="class-red">бла-бла-бла</span> текст'
 
-        self.assertEqual(result, self.parser.toHtml(text))
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_thumbnail_after(self):
         Attachment(self.testPage).attach(['testdata/images/icon.png'])
 
         text = "текст %class-red%бла-бла-бла%% текст %thumb width=32%Attach:icon.png%%"
-        result = 'текст <span class="class-red">бла-бла-бла</span> текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>'
+        expected_regex = 'текст <span class="class-red">бла-бла-бла</span> текст <a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon\\.png\\?rnd=\\d+"/></a>'
 
-        self.assertEqual(result, self.parser.toHtml(text))
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_thumbnail_inside(self):
         Attachment(self.testPage).attach(['testdata/images/icon.png'])
 
         text = "текст %class-red%бла-бла-бла %thumb width=32%Attach:icon.png%%%% текст"
-        result = 'текст <span class="class-red">бла-бла-бла <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a></span> текст'
+        expected_regex = 'текст <span class="class-red">бла-бла-бла <a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon\\.png\\?rnd=\\d+"/></a></span> текст'
 
-        self.assertEqual(result, self.parser.toHtml(text))
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_thumbnail_between(self):
         Attachment(self.testPage).attach(['testdata/images/icon.png'])
 
         text = "текст %class-red%бла-бла-бла%% текст %thumb width=32%Attach:icon.png%% %class-red%бла-бла-бла%%"
-        result = 'текст <span class="class-red">бла-бла-бла</span> текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a> <span class="class-red">бла-бла-бла</span>'
+        expected_regex = 'текст <span class="class-red">бла-бла-бла</span> текст <a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon\\.png\\?rnd=\\d+"/></a> <span class="class-red">бла-бла-бла</span>'
 
-        self.assertEqual(result, self.parser.toHtml(text))
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_thumbnail_serial(self):
         Attachment(self.testPage).attach(['testdata/images/icon.png'])
 
         text = "текст %class-red%бла-бла-бла%% текст %thumb width=32%Attach:icon.png%% %class-red%бла-бла-бла%% %thumb width=32%Attach:icon.png%%"
-        result = 'текст <span class="class-red">бла-бла-бла</span> текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a> <span class="class-red">бла-бла-бла</span> <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>'
+        expected_regex = 'текст <span class="class-red">бла-бла-бла</span> текст <a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon\\.png\\?rnd=\\d+"/></a> <span class="class-red">бла-бла-бла</span> <a href="__attach/icon\\.png"><img src="__attach/__thumb/th_width_32_icon.png\\?rnd=\\d+"/></a>'
 
-        self.assertEqual(result, self.parser.toHtml(text))
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
 
 class StyleGeneratorTest(unittest.TestCase):

@@ -14,7 +14,7 @@ from outwiker.app.gui.pagedialogpanels.appearancepanel import (
 )
 from outwiker.core.application import Application
 from outwiker.core.events import PageDialogInitParams, PageDialogDestroyParams
-from outwiker.core.tree import WikiPage
+from outwiker.core.tree import BasePage, WikiPage
 from outwiker.gui.defines import CONTROLS_MARGIN
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
@@ -26,7 +26,7 @@ class BasePageDialog(TestedDialog):
         self,
         parentWnd: wx.Window,
         currentPage: WikiPage,
-        parentPage: WikiPage,
+        parentPage: BasePage,
         application: Application,
     ):
         super().__init__(

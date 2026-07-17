@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import os
 import unittest
 from tempfile import mkdtemp
@@ -98,13 +99,11 @@ class ParserAlignTest (unittest.TestCase):
 
     def testCenter5(self):
         text = "бла-бла-бла \n\n% center %Attach:accept.png\n\nбла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n\n<div align="center"><img class="ow-image" src="__attach/accept.png"/></div>\n\nбла-бла-бла\nбла-бла-бла'
+        expected_regex = re.compile('бла-бла-бла \n\n<div align="center"><img class="ow-image" src="__attach/accept\\.png\\?rnd=\\d+"/></div>\n\nбла-бла-бла\nбла-бла-бла')
 
-        self.assertEqual(
-            self.parser.toHtml(text),
-            result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+        result = self.parser.toHtml(text)
+
+        self.assertIsNotNone(expected_regex.match(result), result)
 
     def testRight1(self):
         text = "бла-бла-бла \n% right %кхм бла-бла-бла\nбла-бла-бла"

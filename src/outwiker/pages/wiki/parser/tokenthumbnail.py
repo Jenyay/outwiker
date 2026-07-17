@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import random
 import re
 
 from pyparsing import Regex
@@ -74,4 +75,8 @@ class ThumbnailToken:
             text = _("Can't create thumbnail for <b>\"{}\"</b>").format(fname)
             return self._html_formatter.error(text)
 
-        return '<a href="{}/{}"><img src="{}"/></a>'.format(PAGE_ATTACH_DIR, fname, thumb.replace("\\", "/"))
+        thumb_url = thumb.replace("\\", "/")
+
+        # To disable image caching
+        thumb_url += f"?rnd={random.randrange(1000)}"
+        return f'<a href="{PAGE_ATTACH_DIR}/{fname}"><img src="{thumb_url}"/></a>'

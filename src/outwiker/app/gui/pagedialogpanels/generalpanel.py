@@ -96,6 +96,10 @@ class GeneralPanel(wx.Panel):
         generalSizer.Add(self.orderLabel, flag=wx.ALIGN_CENTER_VERTICAL)
         generalSizer.Add(self.orderCombo, flag=wx.EXPAND)
 
+        # Open in new tab checkbox
+        generalSizer.AddStretchSpacer()
+        generalSizer.Add(self.openInNewTabCheckBox, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
+
         marginSizer = MarginSizer()
         marginSizer.Add(generalSizer)
         self.SetSizer(marginSizer)
@@ -128,21 +132,32 @@ class GeneralPanel(wx.Panel):
         self.tagsLabel = wx.StaticText(self, -1, _("Tags (comma separated)"))
         self.tagsSelector = TagsSelector(self, self._theme, enable_active_tags_filter=False)
 
-    def popupIconsList(self):
+        # Open in new tab checkbox
+        self.openInNewTabCheckBox = wx.CheckBox(self, label=_("Open the created page in a new tab"))
+
+    def setOpenInNewTabVisible(self, visible: bool) -> None:
+        self.openInNewTabCheckBox.Show(visible)
+        self.Layout()
+
+    @property
+    def isOpenInNewTab(self) -> bool:
+        return self.openInNewTabCheckBox.IsChecked()
+
+    def popupIconsList(self) -> None:
         self.iconsPopup.Popup(self)
 
-    def closeIconsList(self):
+    def closeIconsList(self) -> None:
         self.iconsPopup.Hide()
 
     @property
-    def pageTitle(self):
+    def pageTitle(self) -> str:
         return self.titleTextCtrl.GetValue()
 
     @pageTitle.setter
-    def pageTitle(self, value):
+    def pageTitle(self, value: str) -> None:
         self.titleTextCtrl.SetValue(value)
 
-    def setPageIcon(self, iconFileName):
+    def setPageIcon(self, iconFileName: str) -> None:
         icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
         bitmap = readImage(iconFileName, icon_size, icon_size)
         self.iconBtn.SetBitmapLabel(bitmap)

@@ -11,7 +11,7 @@ description: |
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 icon: usr/share/icons/outwiker.svg
-base: core22
+base: core24
 
 apps:
   outwiker:
@@ -36,15 +36,15 @@ apps:
       - gnome
     desktop: usr/share/applications/outwiker.desktop
     environment:
-      LD_LIBRARY_PATH: $SNAP/pylib/hunspell:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libgtk-3-0:$LD_LIBRARY_PATH
+      LD_LIBRARY_PATH: $SNAP/pylib/hunspell:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/webkit2gtk-4.1/:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pulseaudio:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libgtk-3-0:$LD_LIBRARY_PATH
       PYTHONPATH: $SNAP/pylib
       PATH: $SNAP/usr/bin:$SNAP/pylib:$PATH
 
 layout:
   /usr/lib/locale:
     bind: $SNAP/usr/lib/locale
-  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0:
-    bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0
+  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/webkit2gtk-4.1:
+    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/webkit2gtk-4.1
   /usr/share/xml/iso-codes:
     bind: $SNAP/usr/share/xml/iso-codes
 
@@ -67,10 +67,10 @@ parts:
     plugin: nil
     source: .
     build-packages:
-      - python3.10-dev
+      - python3.12-dev
       - python3-pip
       #- libhunspell-dev
-      - libwebkit2gtk-4.0-dev
+      - libwebkit2gtk-4.1-dev
       - freeglut3-dev
       - libgstreamer-plugins-base1.0-dev
       - libjpeg-dev
@@ -87,24 +87,24 @@ parts:
       - automake
       - libtool
     stage-packages:
-      - python3.10
-      - python3-distutils
+      - python3.12
+      #- python3-distutils-extra
       - libsdl2-2.0-0
       - libxss1
-      - freeglut3
+      #- freeglut3
       - ibus-gtk3
       - libpulse0
       #- libhunspell-1.7-0
       - libegl1
       - libenchant-2-2
-      - libjavascriptcoregtk-4.0-18
-      - libwebkit2gtk-4.0-37
+      - libjavascriptcoregtk-4.1-0
+      - libwebkit2gtk-4.1-0
       - libwebpdemux2
       - libgnutls30
       - xdg-user-dirs
       - libcanberra-gtk3-module
     override-build: |
-      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-22.04 wxPython==4.2.2
+      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04 wxPython==4.2.5
       pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib Pillow==10.4.0 idna==2.10 pyparsing==3.1.4 rcssmin==1.2.1 psutil==6.1.1 attrdict3==2.0.2 chunspell==2.0.4 wheel setuptools
       cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
       chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
