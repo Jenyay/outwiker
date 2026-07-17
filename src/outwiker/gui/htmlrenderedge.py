@@ -4,31 +4,34 @@ from abc import abstractmethod
 import json
 import logging
 import os
-import urllib.request
 import urllib.parse
-import urllib.error
+import wx.html2
 
 import wx
 
 import outwiker.core.system
 from outwiker.app.services.messages import showError
-from outwiker.core.defines import APP_DATA_KEY_ANCHOR
+from outwiker.core.defines import APP_DATA_KEY_ANCHOR, URL_PROTOCOL
+from outwiker.core.urlmessage import parse_urlmessage
 from outwiker.gui.defines import ID_KEY_CTRL, ID_MOUSE_LEFT
 from outwiker.utilites.textfile import readTextFile
 
 
 from .htmlrender import HtmlRenderBase, HTMLRenderForPageMixin
 from .urirecognizers import (
-    URLRecognizer, AnchorRecognizerEdge, FileRecognizerEdge,
-    PageRecognizerEdge)
+    URLRecognizer,
+    AnchorRecognizerEdge,
+    FileRecognizerEdge,
+    PageRecognizerEdge,
+)
 
-logger = logging.getLogger('outwiker.gui.htmlrenderedge')
+logger = logging.getLogger("outwiker.gui.htmlrenderedge")
 
 
 class HtmlRenderEdgeBase(HtmlRenderBase):
-    '''
+    """
     A base class for HTML render. Engine - Edge.
-    '''
+    """
 
     def __init__(self, parent, application):
         super().__init__(parent, application)
@@ -48,28 +51,37 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
     def LoadPage(self, fname: str) -> None:
         pass
 
-    def _createRender(self):
-        import wx.html2
-        render = wx.html2.WebView.New(self, backend=wx.html2.WebViewBackendEdge)
-        render.AddScriptMessageHandler('wx_msg')
-        render.Bind(wx.html2.EVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, self._handleMessage)
+    def _addKeyProcessingScript(self, render):
+        render.AddScriptMessageHandler("key_message")
 
-        js_code = """
+        js_key_code = """
         document 
             .addEventListener("keydown", 
                 function (event) { 
                     let key = event.key;
                     let code = event.code;
 
-                    if (key.startsWith("Arrow")) {
-                        key = key.replace("Arrow", "");
+                    if (code.startsWith("Arrow")) {
+                        code = code.replace("Arrow", "");
+                    }
+
+                    if (code.startsWith("Key")) {
+                        code = code.replace("Key", "");
+                    }
+
+                    if (code.startsWith("Digit")) {
+                        code = code.replace("Digit", "");
+                    }
+
+                    if (code.startsWith("Numpad")) {
+                        code = code.replace("Numpad", "");
                     }
 
                     if (key == "Control" || key == "Shift" || key == "Alt") {
                         return;
                     }
 
-                    let eventBody = { "code": code, "ctrl": false, "shift": false, "alt": false };
+                    let eventBody = { "key": code, "ctrl": false, "shift": false, "alt": false };
 
                     if (event.shiftKey) {
                         eventBody.shift = true;
@@ -81,16 +93,23 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
                         eventBody.ctrl = true;
                     }
 
-                   window.wx_msg.postMessage(JSON.stringify(eventBody));
+                   window.key_message.postMessage(JSON.stringify(eventBody));
                 }); 
 """
-        render.AddUserScript(js_code, wx.html2.WEBVIEW_INJECT_AT_DOCUMENT_START)
+        render.AddUserScript(js_key_code, wx.html2.WEBVIEW_INJECT_AT_DOCUMENT_START)
 
+    def _createRender(self):
+        render = wx.html2.WebView.New(self, backend=wx.html2.WebViewBackendEdge)
+        render.Bind(
+            wx.html2.EVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, self._handleJSMessage
+        )
+
+        self._addKeyProcessingScript(render)
         return render
 
-    def _handleMessage(self, event):
-        obj = json.loads(event.GetString())
-        print(obj)
+    def _handleJSMessage(self, event):
+        key_obj = json.loads(event.GetString())
+        logger.debug("HTML render. Key pressed: %s", key_obj)
         # key_event = wx.KeyEvent()
         # key_event.SetUnicodeKey(ord(obj["key"]))
         # key_event.SetAltDown(obj["alt"])
@@ -108,7 +127,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         self.render.Print()
 
     def SetPage(self, htmltext, basepath, anchor=None):
-        logger.debug('SetPage({nav_id}). basepath={basepath}'.format(nav_id=self._navigate_id, basepath=basepath))
+        logger.debug("SetPage(%s). basepath=%s", self._navigate_id, basepath)
         self._basepath = basepath
         path = basepath
         if anchor:
@@ -119,8 +138,8 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
 
     def Sleep(self):
         import wx.html2 as webview
-        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
-                           handler=self._onNavigating)
+
+        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
 
@@ -129,15 +148,15 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         self._navigate_id = 1
 
         import wx.html2 as webview
+
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
-        self.render.Bind(webview.EVT_WEBVIEW_NAVIGATING,
-                         handler=self._onNavigating)
+        self.render.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
 
     def _remove_file_prefix(self, path: str) -> str:
-        prefix = 'file:///'
+        prefix = "file:///"
         if path.startswith(prefix):
-            path = path[len(prefix):]
+            path = path[len(prefix) :]
 
         return path
 
@@ -146,8 +165,8 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
 
     def _onClose(self, event):
         import wx.html2 as webview
-        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
-                           handler=self._onNavigating)
+
+        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
         self.render.Stop()
         event.Skip()
 
@@ -159,27 +178,32 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         nav_id = self._navigate_id
         self._navigate_id += 1
 
-        logger.debug('_onNavigating ({nav_id}) begin. canOpenUrl = {can_open_url}'.format(
-            nav_id=nav_id,
-            can_open_url=self.canOpenUrl))
+        logger.debug(
+            "_onNavigating (%s) begin. canOpenUrl = %s", nav_id, self.canOpenUrl
+        )
 
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
         frame = event.GetTarget()
         if frame:
-            logger.debug('_onNavigating ({nav_id}) frame={frame}'.format(
-                nav_id=nav_id, frame=frame))
-            logger.debug('_onNavigating ({nav_id}) end'.format(nav_id=nav_id))
+            logger.debug("_onNavigating (%s) frame=%s", nav_id, frame)
+            logger.debug("_onNavigating (%s) end", nav_id)
             return
 
         href = event.GetURL()
         href_decoded = self._decode_href(href)
         curr_href = self.render.GetCurrentURL()
-        logger.debug('_onNavigating ({nav_id}). href={href}; curr_href={curr_href}; href_decoded={href_decoded}; canOpenUrl={canOpenUrl}'.format(
-            nav_id=nav_id, href=href, curr_href=curr_href, href_decoded=href_decoded, canOpenUrl=self.canOpenUrl))
+        logger.debug(
+            "_onNavigating (%s). href=%s; curr_href=%s; href_decoded=%s; canOpenUrl=%s",
+            nav_id,
+            href,
+            curr_href,
+            href_decoded,
+            self.canOpenUrl,
+        )
 
         # Open empty page
-        if href == 'about:blank' or href == '':
-            logger.debug('_onNavigating. Skip about:blank')
+        if href == "about:blank" or href == "":
+            logger.debug("_onNavigating. Skip about:blank")
             event.Veto()
             return
 
@@ -191,26 +215,28 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
             #     event.Veto()
             #     return
 
-            logger.debug(
-                '_onNavigating ({nav_id}). Link clicked.'.format(nav_id=nav_id))
+            logger.debug("_onNavigating (%s). Link clicked.", nav_id)
             processed = self._onLinkClicked(href_decoded)
             if processed:
                 event.Veto()
-                logger.debug(
-                    '_onNavigating ({nav_id}) end. Veto'.format(nav_id=nav_id))
+                logger.debug("_onNavigating (%s) end. Veto", nav_id)
             else:
-                logger.debug('_onNavigating ({nav_id}) end. Allow href processing. href={href}'.format(
-                    nav_id=nav_id, href=href))
+                logger.debug(
+                    "_onNavigating (%s) end. Allow href processing. href=%s",
+                    nav_id,
+                    href,
+                )
         else:
             self.canOpenUrl.remove(href_decoded)
-            logger.debug('_onNavigating ({nav_id}) end. canOpenUrl={canOpenUrl}'.format(
-                nav_id=nav_id, canOpenUrl=self.canOpenUrl))
+            logger.debug(
+                "_onNavigating (%s) end. canOpenUrl=%s", nav_id, self.canOpenUrl
+            )
 
 
 class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
-    '''
+    """
     HTML render for using as note page render. Engine - Edge.
-    '''
+    """
 
     def __init__(self, parent, application):
         super().__init__(parent, application)
@@ -225,8 +251,8 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
         self._currentPage = value
 
     def LoadPage(self, fname):
-        fname = fname.replace('\\', '/')
-        logger.debug('LoadPage({nav_id}). fname={fname}'.format(nav_id=self._navigate_id, fname=fname))
+        fname = fname.replace("\\", "/")
+        logger.debug("LoadPage(%s). fname=%s", self._navigate_id, fname)
         self.render.Stop()
         self._basepath = fname
 
@@ -253,27 +279,29 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
         """
         uri = self.render.GetCurrentURL()
 
-        logger.debug('_identifyUri. href={href}'.format(href=href))
-        logger.debug('_identifyUri. current URI={uri}'.format(uri=uri))
+        logger.debug("_identifyUri. href=%s. current URI=%s", href, uri)
 
         if uri is not None:
             basepath = self.getBasePath()
 
+            url_message = parse_urlmessage(href, expected_protocol=URL_PROTOCOL)
             url = URLRecognizer(basepath).recognize(href)
             page = PageRecognizerEdge(basepath, self._application).recognize(href)
             filename = FileRecognizerEdge(basepath).recognize(href)
             anchor = AnchorRecognizerEdge(basepath).recognize(href)
 
-            logger.debug('_identifyUri. url={url}'.format(url=url))
-            logger.debug('_identifyUri. page={page}'.format(page=page))
             logger.debug(
-                '_identifyUri. filename={filename}'.format(filename=filename))
-            logger.debug(
-                '_identifyUri. anchor={anchor}'.format(anchor=anchor))
+                "_identifyUri. url_message=%s. url=%s. page=%s. filename=%s. anchor=%s",
+                url_message,
+                url,
+                page,
+                filename,
+                anchor,
+            )
 
-            return (url, page, filename, anchor)
+            return (url_message, url, page, filename, anchor)
 
-        return (None, None, None, None)
+        return (None, None, None, None, None)
 
     def _onLinkClicked(self, href):
         """
@@ -288,19 +316,17 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
         href = urllib.parse.unquote(href)
         href = self.decodeIDNA(href)
 
-        logger.debug('_onLinkClicked. href_src={source_href}'.format(
-            source_href=source_href)
+        logger.debug("_onLinkClicked. href_src=%s", source_href)
+
+        url_message, url, page, filename, anchor = self._identifyUri(href)
+
+        if url_message is not None:
+            self.processUrlMessage(url_message)
+            return True
+
+        params = self.getClickParams(
+            source_href, mouse_button, modifier, url, page, filename, anchor
         )
-
-        (url, page, filename, anchor) = self._identifyUri(href)
-
-        params = self.getClickParams(source_href,
-                                     mouse_button,
-                                     modifier,
-                                     url,
-                                     page,
-                                     filename,
-                                     anchor)
 
         self._application.onLinkClick(self._currentPage, params)
         if params.process:
@@ -328,28 +354,28 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
 
 
 class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
-    '''
+    """
     HTML render for common using. Engine - Edge.
-    '''
+    """
 
     def __init__(self, parent, application):
         super().__init__(parent, application)
 
     def LoadPage(self, fname):
-        logger.debug('LoadPage({nav_id}). fname={fname}'.format(nav_id=self._navigate_id, fname=fname))
+        logger.debug("LoadPage(%s). fname=%s", self._navigate_id, fname)
         self.render.Stop()
 
         try:
             html = readTextFile(fname)
         except IOError:
-            text = _(u"Can't read file %s") % (fname)
+            text = _("Can't read file %s") % (fname)
             self.canOpenUrl.add(fname)
             self.SetPage(text, os.path.dirname(fname))
 
         basepath = os.path.dirname(fname)
 
-        if not basepath.endswith('/'):
-            basepath += '/'
+        if not basepath.endswith("/"):
+            basepath += "/"
 
         self.SetPage(html, basepath, anchor=None)
 
@@ -359,8 +385,7 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
         """
         uri = self.render.GetCurrentURL()
 
-        logger.debug('_identifyUri. href={href}'.format(href=href))
-        logger.debug('_identifyUri. current URI={uri}'.format(uri=uri))
+        logger.debug("_identifyUri. href=%s. current URI=%s", href, uri)
 
         if uri is not None:
             basepath = self.getBasePath()
@@ -369,11 +394,9 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
             filename = FileRecognizerEdge(basepath).recognize(href)
             anchor = AnchorRecognizerEdge(basepath).recognize(href)
 
-            logger.debug('_identifyUri. url={url}'.format(url=url))
             logger.debug(
-                '_identifyUri. filename={filename}'.format(filename=filename))
-            logger.debug(
-                '_identifyUri. anchor={anchor}'.format(anchor=anchor))
+                "_identifyUri. url=%s. filename=%s. anchor=%s", url, filename, anchor
+            )
 
             return (url, filename, anchor)
 
@@ -390,9 +413,7 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
         href = urllib.parse.unquote(href)
         href = self.decodeIDNA(href)
 
-        logger.debug('_onLinkClicked. href_src={source_href}'.format(
-            source_href=source_href)
-        )
+        logger.debug("_onLinkClicked. href_src=%s", source_href)
 
         (url, filename, anchor) = self._identifyUri(href)
 
@@ -402,7 +423,7 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
             try:
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
-                text = _(u"Can't execute file '%s'") % filename
+                text = _("Can't execute file '%s'") % filename
                 showError(self._application.mainWindow, text)
         elif anchor is not None:
             return False
