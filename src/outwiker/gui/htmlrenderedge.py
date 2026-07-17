@@ -100,9 +100,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
 
     def _createRender(self):
         render = wx.html2.WebView.New(self, backend=wx.html2.WebViewBackendEdge)
-        render.Bind(
-            wx.html2.EVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, self._handleJSMessage
-        )
+        render.Bind(wx.html2.EVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, self._handleJSMessage)
 
         self._addKeyProcessingScript(render)
         return render
@@ -137,9 +135,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         self.render.SetPage(htmltext, path)
 
     def Sleep(self):
-        import wx.html2 as webview
-
-        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
+        self.render.Unbind(wx.html2.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
 
@@ -147,11 +143,9 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         self.canOpenUrl = set()
         self._navigate_id = 1
 
-        import wx.html2 as webview
-
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
-        self.render.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
+        self.render.Bind(wx.html2.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
 
     def _remove_file_prefix(self, path: str) -> str:
         prefix = "file:///"
@@ -164,9 +158,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         return self._remove_file_prefix(urllib.parse.unquote(href))
 
     def _onClose(self, event):
-        import wx.html2 as webview
-
-        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
+        self.render.Unbind(wx.html2.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
         self.render.Stop()
         event.Skip()
 
