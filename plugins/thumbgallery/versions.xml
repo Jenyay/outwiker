@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="1.6.5">
+	<version number="1.6.5" date="2026-07-18">
 		<download href="https://jenyay.net/uploads/Outwiker/ThumbGallery/thumbgallery-1.6.5.zip">
 			<requirements>
                 <api>4.962</api>

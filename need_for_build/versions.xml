@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="4.1.0.975" status="dev">
+    <version number="4.1.0.976" status="beta" date="2026-07-18">
         <changes>
+            <change>Added the ability to immediately open a new note in a new tab when creating it.</change>
+            <change>Added the ability to create a note based on the selected text in an open note.</change>
+            <change>Added scroll position saving in the view mode.</change>
+            <change>Fixed application startup and operation in window managers running via Wayland on Linux.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлена возможность при создании новой заметки сразу открывать ее в новой вкладке.</change>
+            <change>Добавлена возможность создания заметки на основе выделенного текста в открытой заметке.</change>
+            <change>Добавлено сохранение положения прокрутки в режиме просмотра.</change>
+            <change>Исправлен запуск и работа приложения в оконных менеджерах, работающих через Wayland в Linux.</change>
         </changes>
     </version>
 
