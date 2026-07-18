@@ -6,18 +6,15 @@
 
 Кроме того, OutWiker может содержать страницы разного типа, в данный момент поддерживаются три типа страниц: [[page://text-page | обычный текст]], [[page://html-page | HTML-страницы]] и [[page://wiki-page | викистраницы]]. Кроме того, плагины могут добавлять новые типы страниц (например, в формате Markdown). Некоторые подробности о программе OutWiker вы можете узнать, прочитав записи с тегом [[https://jenyay.net/blog/tag/outwiker/ | outwiker]] в [[https://jenyay.net/blog/ | блоге]].
 
-Страница программы - https://jenyay.net/Soft/Outwiker
-
-!!! [[#social]] OutWiker с социальных сетях
-
-* [[Канал в Telegram -> https://t.me/outwiker]]
-* [[OutWiker ВКонтакте -> https://vk.com/outwiker]]
+* [[Сайт OutWiker -> https://jenyay.net/Soft/Outwiker]]
+* [[Канал OutWiker в Telegram -> https://t.me/outwiker]]
+* [[Исходники на GitHub -> https://github.com/Jenyay/outwiker]]
 
 !!! [[#contacts]] Контакты
 Автор: Евгений Ильин (aka Jenyay)
 
 * Мой сайт - https://jenyay.net
-* Telegram - [[https://t.me/jenyay | @jenyay]]
+* Контакт для связи в Telegram - [[https://t.me/jenyay | @jenyay]]
 * Канал в Telegram - [[https://t.me/jenyaynet | jenyay.net]]
 * e-mail: [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]]
 
