@@ -2,6 +2,7 @@
 
 import logging
 import os
+from urllib.parse import urlparse
 
 import wx
 import wx.aui
@@ -78,7 +79,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self._application.onPreviewScrolled += self._onPreviewScrolled
 
         self._bindHotkeys()
-        
+
         logger.debug("BaseHtmlPanel creation ended")
 
     def _bindHotkeys(self):
@@ -481,6 +482,9 @@ class BaseHtmlPanel(BaseTextPanel):
         self.htmlWindow.RunScript(script_send_scroll_position)
 
     def _onPageLoaded(self, event):
-        self._scrollPreviewToLastPosition(self._currentpage)
+        url_elements = urlparse(event.GetURL())
+        if not url_elements.fragment:
+            # Don't scroll if anchor exists
+            self._scrollPreviewToLastPosition(self._currentpage)
         self._runScriptUpdateScrolling()
         event.Skip()
