@@ -10,30 +10,19 @@ jobs:
         with:
           submodules: true
 
-      - name: Download and install Python 3.8 32-bit
-        run: |
-          Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe" -OutFile "python-installer.exe"
-          Start-Process .\python-installer.exe -ArgumentList "/quiet InstallAllUsers=1 PrependPath=0 TargetDir=C:\Python38" -Wait
-          echo "C:\Python38" >> $env:GITHUB_PATH
-          echo "pythonLocation=C:\Python38" >> $env:GITHUB_ENV
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
 
       - name: Install Inno Setup
         run: choco install innosetup -y
-
-      - name: Print env variables
-        run: |
-          $env:PATH
-          $env:GITHUB_PATH
-          $env:GITHUB_ENV
-
-      - name: Check Python version
-        run: C:\Python38\python.exe --version
 
       - name: Install uv
         uses: astral-sh/setup-uv@v8.1.0
 
       - name: Sync dependencies
-        run: uv sync --python "C:\Python38\python.exe" --dev --extra gui
+        run: uv sync --dev --extra gui
 
       - name: Get OutWiker version
         shell: bash
