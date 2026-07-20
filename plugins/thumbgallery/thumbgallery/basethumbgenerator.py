@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import random
+
 from outwiker.api.core.images import PageThumbmaker
 from outwiker.api.pages.wiki.config import WikiConfig
 
@@ -21,16 +23,19 @@ class BaseThumbGenerator:
         self._parser = parser
         self._thumbsize = self._parseThumbSize(thumbsize)
 
-    def _getThumbnail(self, page, fname):
+    def _getThumbnail(self, page, fname: str) -> str:
         """
         Метод создает превьюшку и возвращает относительный путь до нее
         (относительно корня страницы)
         """
         thumbmaker = PageThumbmaker()
 
-        return thumbmaker.createThumbByMaxSize(page, fname, self._thumbsize).replace(
+        thumb = thumbmaker.createThumbByMaxSize(page, fname, self._thumbsize).replace(
             "\\", "/"
         )
+        # To disable image caching
+        thumb += f"?rnd={random.randrange(1000)}"
+        return thumb
 
     def _parseThumbSize(self, thumbsize):
         """

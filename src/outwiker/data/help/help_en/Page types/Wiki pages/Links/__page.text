@@ -1,6 +1,6 @@
 !! Links
 
-Wiki page text can contain links to websites on the Internet, as well as to other pages within the note tree. Such links can be created in several different ways. The following table provides examples of how to format these links.
+Wiki pages text can contain links to websites on the Internet, as well as to other pages within the note tree. Such links can be created in several different ways. The following table provides examples of how to format these links.
  
 || border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Syntax''' || '''Result''' || '''Comment''' ||
@@ -11,10 +11,10 @@ Wiki page text can contain links to websites on the Internet, as well as to othe
 ||%code%[=[[page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]=]%%||[[page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]||Link to a tree page by its ID||
 ||%code%[=[[page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0 | Page link]]=]%%||[[page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0 | Page link]]||Link to a tree page by ID with a comment||
 ||%code%[=[[Page link -> page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]=]%%||[[Page link ->page://19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]||Link to a tree page by ID with a comment||
-||%code%[=[[Page types/Wiki page/Lists]]=]%%||[[Page types/Wiki page/Lists]]||Link to a tree page by name||
-||%code%[=[[Page types/Wiki page/Lists | Link]]=]%%||[[Page types/Wiki page/Lists | Link]]||Link to a tree page by name with a comment||
-||%code%[=[[Link -> Page types/Wiki page/Lists]]=]%%||[[Link -> Page types/Wiki page/Lists]]||Link to a tree page by name with a comment||
-||%code%[=[[Link -> /Page types/Wiki page/Lists]]=]%%||[[Link -> /Page types/Wiki page/Lists]]||Link to a tree page by name with a comment||
+||%code%[=[[Page types/Wiki pages/Lists]]=]%%||[[Page types/Wiki pages/Lists]]||Link to a tree page by name||
+||%code%[=[[Page types/Wiki pages/Lists | Link]]=]%%||[[Page types/Wiki pages/Lists | Link]]||Link to a tree page by name with a comment||
+||%code%[=[[Link -> Page types/Wiki pages/Lists]]=]%%||[[Link -> Page types/Wiki pages/Lists]]||Link to a tree page by name with a comment||
+||%code%[=[[Link -> /Page types/Wiki pages/Lists]]=]%%||[[Link -> /Page types/Wiki pages/Lists]]||Link to a tree page by name with a comment||
 ||%code%[=[[Subpage -> Child page]]=]%%||[[Subpage -> Child page]]||Link to a child page by name with a comment||
 ||%code%[=[[Child page]]=]%%||[[Child page]]||Link to a child page||
 

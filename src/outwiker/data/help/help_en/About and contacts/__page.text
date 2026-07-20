@@ -1,15 +1,13 @@
 !! OutWiker
-!!! Version 4.0
+!!! Version 4.1
 
 OutWiker is designed to present set of notes in tree view. Such programs are called "outliners", personal wikis, or tree-like editors. 
 
 OutWiker's main feature that makes it different from other similar programs is storing the collection (the tree) of notes on disk as set of nested directories whose hierarchy is in one-to-one correspondence with the the note tree structure. This approach makes it possible to edit any individual note with third party software. At the moment OutWiker supports notes of three different types, namely, [[page://text-page | plain text]], [[page://html-page | HTML]] and [[page://wiki-page | wiki]]. Plug-ins can be used to work with other note types (for example, Markdown).
 
-OutWiker webpage: https://jenyay.net/Outwiker/English
-
-!!! OutWiker in social network:
-
+* [[OutWiker webpage -> https://jenyay.net/Outwiker/English]]
 * [[Telegram channel -> https://t.me/outwiker]]
+* [[Source code -> https://github.com/Jenyay/outwiker]]
 
 
 !!! Contacts

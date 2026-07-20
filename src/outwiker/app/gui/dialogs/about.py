@@ -31,11 +31,18 @@ class AboutDialog(TestedDialog):
 
         self.license = wx.StaticText(self.aboutPane, -1, _("License: GPL 3"))
 
-        self.outwikerUrlLabel = wx.StaticText(self.aboutPane, -1, _("OutWiker's home page"))
-        self.outwikerTelegramLabel = wx.StaticText(self.aboutPane, -1, _("Telegram group"))
-        self.outwikerVKLabel = wx.StaticText(self.aboutPane, -1, _("VK group"))
-        self.outwikerGithubLabel = wx.StaticText(self.aboutPane, -1, _("Sources on github"))
-        self.outwikerCrowdinLabel = wx.StaticText(self.aboutPane, -1, _("OutWiker localizations"))
+        self.outwikerUrlLabel = wx.StaticText(
+            self.aboutPane, -1, _("OutWiker's home page")
+        )
+        self.outwikerTelegramLabel = wx.StaticText(
+            self.aboutPane, -1, _("Telegram group")
+        )
+        self.outwikerGithubLabel = wx.StaticText(
+            self.aboutPane, -1, _("Sources on github")
+        )
+        self.outwikerCrowdinLabel = wx.StaticText(
+            self.aboutPane, -1, _("OutWiker localizations")
+        )
 
         self.outwikerUrl = HyperLinkCtrl(
             self.aboutPane,
@@ -49,13 +56,6 @@ class AboutDialog(TestedDialog):
             -1,
             label=_("https://t.me/outwiker"),
             URL=_("https://t.me/outwiker"),
-        )
-
-        self.outwikerVK = HyperLinkCtrl(
-            self.aboutPane,
-            -1,
-            label=_("https://vk.com/outwiker"),
-            URL=_("https://vk.com/outwiker"),
         )
 
         self.outwikerGithub = HyperLinkCtrl(
@@ -76,7 +76,9 @@ class AboutDialog(TestedDialog):
 
         self.authorEmailLabel = wx.StaticText(self.contactsPane, -1, _("Email"))
         self.authorHomeSiteLabel = wx.StaticText(self.contactsPane, -1, _("Home site"))
-        self.authorTelegramLabel = wx.StaticText(self.contactsPane, -1, _("Telegram group"))
+        self.authorTelegramLabel = wx.StaticText(
+            self.contactsPane, -1, _("Telegram group")
+        )
         self.authorGithubLabel = wx.StaticText(self.contactsPane, -1, _("Github page"))
 
         self.authorEmail = HyperLinkCtrl(
@@ -195,13 +197,6 @@ class AboutDialog(TestedDialog):
         )
 
         outwiker_pages_sizer.Add(
-            self.outwikerVKLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
-        )
-        outwiker_pages_sizer.Add(
-            self.outwikerVK, flag=wx.ALL | wx.ALIGN_LEFT, border=2
-        )
-
-        outwiker_pages_sizer.Add(
             self.outwikerGithubLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
         outwiker_pages_sizer.Add(
@@ -242,16 +237,36 @@ class AboutDialog(TestedDialog):
         contacts_tab_sizer.AddGrowableCol(0)
         contacts_tab_sizer.AddGrowableCol(1)
 
-        contacts_tab_sizer.Add(self.authorEmailLabel, flag=wx.ALL | wx.ALIGN_LEFT| wx.ALIGN_CENTER_VERTICAL, border=2)
+        contacts_tab_sizer.Add(
+            self.authorEmailLabel,
+            flag=wx.ALL | wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
         contacts_tab_sizer.Add(self.authorEmail, flag=wx.ALL | wx.ALIGN_LEFT, border=2)
 
-        contacts_tab_sizer.Add(self.authorHomeSiteLabel, flag=wx.ALL | wx.ALIGN_LEFT| wx.ALIGN_CENTER_VERTICAL, border=2)
-        contacts_tab_sizer.Add(self.authorHomeSite, flag=wx.ALL | wx.ALIGN_LEFT, border=2)
+        contacts_tab_sizer.Add(
+            self.authorHomeSiteLabel,
+            flag=wx.ALL | wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
+        contacts_tab_sizer.Add(
+            self.authorHomeSite, flag=wx.ALL | wx.ALIGN_LEFT, border=2
+        )
 
-        contacts_tab_sizer.Add(self.authorTelegramLabel, flag=wx.ALL | wx.ALIGN_LEFT| wx.ALIGN_CENTER_VERTICAL, border=2)
-        contacts_tab_sizer.Add(self.authorTelegram, flag=wx.ALL | wx.ALIGN_LEFT, border=2)
+        contacts_tab_sizer.Add(
+            self.authorTelegramLabel,
+            flag=wx.ALL | wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
+        contacts_tab_sizer.Add(
+            self.authorTelegram, flag=wx.ALL | wx.ALIGN_LEFT, border=2
+        )
 
-        contacts_tab_sizer.Add(self.authorGithubLabel, flag=wx.ALL | wx.ALIGN_LEFT| wx.ALIGN_CENTER_VERTICAL, border=2)
+        contacts_tab_sizer.Add(
+            self.authorGithubLabel,
+            flag=wx.ALL | wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
         contacts_tab_sizer.Add(self.authorGithub, flag=wx.ALL | wx.ALIGN_LEFT, border=2)
 
         border_sizer.Add(contacts_tab_sizer, flag=wx.ALL | wx.EXPAND, border=8)

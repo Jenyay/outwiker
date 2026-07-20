@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from typing import Optional
 
 import wx
 import wx.lib.newevent
@@ -41,6 +42,8 @@ from outwiker.actions.polyactionsid import (
     REDO_ID,
     SELECT_ALL_ID,
 )
+from outwiker.core.application import Application
+from outwiker.core.events import RequestSelectedTextResult
 from outwiker.core.treetools import pageExists
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
@@ -58,8 +61,8 @@ class BaseTextPanel(BasePagePanel):
     (где есть текстовый редактор)
     """
 
-    def __init__(self, parent, application):
-        super(BaseTextPanel, self).__init__(parent, application)
+    def __init__(self, parent, application: Application):
+        super().__init__(parent, application)
 
         self._baseTextPolyactions = [
             SPELL_ON_OFF_ID,
@@ -117,6 +120,7 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.onAttachmentPaste += self.onAttachmentPaste
         self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
+        self._application.requestSelectedText += self.onRequestSelectedText
 
         self._onSetPage += self.__onSetPage
 
@@ -268,6 +272,8 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.onAttachmentPaste -= self.onAttachmentPaste
         self._application.onPreferencesDialogClose -= self.onPreferencesDialogClose
+        self._application.requestSelectedText -= self.onRequestSelectedText
+
         self._onSetPage -= self.__onSetPage
 
         self.removeGui()
@@ -636,3 +642,6 @@ class BaseTextPanel(BasePagePanel):
 
     def SetFocus(self):
         self.GetEditor().SetFocus()
+
+    def onRequestSelectedText(self, result: RequestSelectedTextResult):
+        result.selected_text = self.GetEditor().GetSelectedText()

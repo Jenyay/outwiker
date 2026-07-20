@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.core.attachment import Attachment
 from outwiker.api.core.defines import PAGE_ATTACH_DIR
 
 from .basethumbgenerator import BaseThumbGenerator

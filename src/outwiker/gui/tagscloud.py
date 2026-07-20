@@ -15,7 +15,6 @@ from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIS
 from outwiker.gui.images import readImage
 from outwiker.gui.theme import Theme
 
-
 TagLeftDownEvent, EVT_TAG_LEFT_DOWN = wx.lib.newevent.NewEvent()
 TagLeftUpEvent, EVT_TAG_LEFT_UP = wx.lib.newevent.NewEvent()
 
@@ -172,27 +171,46 @@ class TagLabel2:
             button_add_width += 1
 
         button_add_height = button_add_width
-        self.geometry.button_add_left = self.geometry.button_center_x - button_add_width // 2
-        self.geometry.button_add_right = self.geometry.button_center_x + button_add_width // 2
+        self.geometry.button_add_left = (
+            self.geometry.button_center_x - button_add_width // 2
+        )
+        self.geometry.button_add_right = (
+            self.geometry.button_center_x + button_add_width // 2
+        )
         self.geometry.button_add_top = self.geometry.center_y - button_add_height // 2
-        self.geometry.button_add_bottom = self.geometry.center_y + button_add_height // 2
+        self.geometry.button_add_bottom = (
+            self.geometry.center_y + button_add_height // 2
+        )
 
         button_remove_width = self._em2px(0.33)
         button_remove_height = self._em2px(0.35)
-        self.geometry.button_remove_left = self.geometry.button_center_x - button_remove_width // 2
-        self.geometry.button_remove_right = self.geometry.button_remove_left + button_remove_width
-        self.geometry.button_remove_top = self.geometry.center_y - button_remove_height // 2
-        self.geometry.button_remove_bottom = self.geometry.center_y + button_remove_height // 2
+        self.geometry.button_remove_left = (
+            self.geometry.button_center_x - button_remove_width // 2
+        )
+        self.geometry.button_remove_right = (
+            self.geometry.button_remove_left + button_remove_width
+        )
+        self.geometry.button_remove_top = (
+            self.geometry.center_y - button_remove_height // 2
+        )
+        self.geometry.button_remove_bottom = (
+            self.geometry.center_y + button_remove_height // 2
+        )
 
         self.geometry.font_size = int(
             self._min_font_size
             + self._ratio * (self._max_font_size - self._min_font_size)
         )
 
-        self.geometry.text_width = self._calc_text_size(self._label, self.geometry.font_size)[0]
+        self.geometry.text_width = self._calc_text_size(
+            self._label, self.geometry.font_size
+        )[0]
 
         self.geometry.width = (
-            self.geometry.arc_width + margin_left + self.geometry.text_width + margin_right
+            self.geometry.arc_width
+            + margin_left
+            + self.geometry.text_width
+            + margin_right
         )
 
     def setRatio(self, ratio):
@@ -241,9 +259,7 @@ class TagLabel2:
 
 
 class _TagPainter:
-    def __init__(self,
-                 parent: wx.Window,
-                 theme: Theme) -> None:
+    def __init__(self, parent: wx.Window, theme: Theme) -> None:
         self._parent = parent
         self._theme = theme
         self._update_theme()
@@ -302,7 +318,9 @@ class _TagPainter:
             math.pi * 0.5,
             clockwise=False,
         )
-        path.AddLineToPoint(label.geometry.button_border_x + x0, label.geometry.height + y0)
+        path.AddLineToPoint(
+            label.geometry.button_border_x + x0, label.geometry.height + y0
+        )
         path.AddLineToPoint(label.geometry.width + x0, label.geometry.height + y0)
         path.AddLineToPoint(label.geometry.width + x0, y0)
         path.AddLineToPoint(label.geometry.button_border_x + x0, y0)
@@ -333,11 +351,13 @@ class _TagPainter:
             dc.SetFont(font)
             return dc.GetTextExtent(text)
 
-    def _draw_add_button(self, label: TagLabel2, gc: wx.GraphicsContext, x0: int, y0: int):
+    def _draw_add_button(
+        self, label: TagLabel2, gc: wx.GraphicsContext, x0: int, y0: int
+    ):
         line_width = 2
         button_color = (
             self._hover_add_button_color
-            if label.isButtonHovered 
+            if label.isButtonHovered
             else self._add_button_color
         )
         gc.SetBrush(wx.Brush(button_color))
@@ -363,7 +383,9 @@ class _TagPainter:
         gc.SetPen(wx.Pen(self._normal_hover_border_color))
         gc.DrawLines([(border_x + x0, y0), (border_x + x0, label.geometry.height + y0)])
 
-    def _draw_remove_button(self, label: TagLabel2, gc: wx.GraphicsContext, x0: int, y0: int):
+    def _draw_remove_button(
+        self, label: TagLabel2, gc: wx.GraphicsContext, x0: int, y0: int
+    ):
         line_width = 2
         button_color = (
             self._hover_remove_button_color
@@ -374,19 +396,33 @@ class _TagPainter:
 
         gc.DrawLines(
             [
-                (label.geometry.button_remove_left + x0, label.geometry.button_remove_top + y0),
-                (label.geometry.button_remove_right + x0, label.geometry.button_remove_bottom + y0),
+                (
+                    label.geometry.button_remove_left + x0,
+                    label.geometry.button_remove_top + y0,
+                ),
+                (
+                    label.geometry.button_remove_right + x0,
+                    label.geometry.button_remove_bottom + y0,
+                ),
             ]
         )
 
         gc.DrawLines(
             [
-                (label.geometry.button_remove_left + x0, label.geometry.button_remove_bottom + y0),
-                (label.geometry.button_remove_right + x0, label.geometry.button_remove_top + y0),
+                (
+                    label.geometry.button_remove_left + x0,
+                    label.geometry.button_remove_bottom + y0,
+                ),
+                (
+                    label.geometry.button_remove_right + x0,
+                    label.geometry.button_remove_top + y0,
+                ),
             ]
         )
 
-        border_x = int((label.geometry.button_remove_right + label.geometry.text_left) / 2)
+        border_x = int(
+            (label.geometry.button_remove_right + label.geometry.text_left) / 2
+        )
         gc.SetPen(wx.Pen(self._marked_hover_border_color))
         gc.DrawLines([(border_x + x0, y0), (border_x + x0, label.geometry.height + y0)])
 
@@ -616,10 +652,11 @@ class TagsCloud(wx.Panel):
 
     def _refreshLabel(self, label: TagLabel2):
         y_min = self.getScrolledY()[0]
-        with wx.ClientDC(self._tags_panel) as dc:
-            with wx.BufferedDC(dc, self._buffer) as buffered_dc:
-                gc = wx.GraphicsContext.Create(buffered_dc)
-                self._tag_painter.draw(label, y_min, buffered_dc, gc)
+        left = label.x
+        top = label.y - y_min
+        width = label.geometry.width + 1
+        height = label.geometry.height + 1
+        self._tags_panel.Refresh(rect=wx.Rect(left, top, width, height))
 
     def _repaintLabels(self, label_names: Iterable, dc: wx.DC, gc: wx.GraphicsContext):
         y_min, y_max = self.getScrolledY()
@@ -687,9 +724,9 @@ class TagsCloud(wx.Panel):
         self.SetSizer(self._main_sizer)
 
     def __onSize(self, event):
-        newSize = self.GetSize()
-        if self._oldSize != newSize:
-            self._buffer = wx.Bitmap(self.GetClientSize())
+        newSize = self.GetClientSize()
+        if self._oldSize != newSize and newSize.Width > 0 and newSize.Height > 0:
+            self._buffer = wx.Bitmap(newSize)
             self.__moveLabels()
             self._oldSize = newSize
 

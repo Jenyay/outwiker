@@ -88,11 +88,21 @@ class PluginDebug(Plugin):
             self._application.onHtmlRenderingEnd += self.__onHtmlRenderingEnd
             self._application.onWikiParserPrepare += self.__onWikiParserPrepare
             self._application.onPageDialogInit += self.__onPageDialogInit
-            self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
-            self._application.onPageDialogPageTitleChanged += self.__onPageDialogPageTitleChanged
-            self._application.onPageDialogPageStyleChanged += self.__onPageDialogPageStyleChanged
-            self._application.onPageDialogPageIconChanged += self.__onPageDialogPageIconChanged
-            self._application.onPageDialogPageTagsChanged += self.__onPageDialogPageTagsChanged
+            self._application.onPageDialogPageTypeChanged += (
+                self.__onPageDialogPageTypeChanged
+            )
+            self._application.onPageDialogPageTitleChanged += (
+                self.__onPageDialogPageTitleChanged
+            )
+            self._application.onPageDialogPageStyleChanged += (
+                self.__onPageDialogPageStyleChanged
+            )
+            self._application.onPageDialogPageIconChanged += (
+                self.__onPageDialogPageIconChanged
+            )
+            self._application.onPageDialogPageTagsChanged += (
+                self.__onPageDialogPageTagsChanged
+            )
             self._application.onPreWikiOpen += self.__onPreWikiOpen
             self._application.onPostWikiOpen += self.__onPostWikiOpen
             self._application.onIconsGroupsListInit += self.__onIconsGroupsListInit
@@ -109,30 +119,37 @@ class PluginDebug(Plugin):
         mainWindow = self._application.mainWindow
         mainMenu = mainWindow.menuController.getRootMenu()
         if mainWindow is not None and TOOLBAR_PLUGINS in mainWindow.toolbars:
-            self._application.actionController.removeMenuItem(
-                DebugAction.stringId)
-            self._application.actionController.removeToolbarButton(
-                DebugAction.stringId)
-            self._application.actionController.removeAction(
-                DebugAction.stringId)
+            self._application.actionController.removeMenuItem(DebugAction.stringId)
+            self._application.actionController.removeToolbarButton(DebugAction.stringId)
+            self._application.actionController.removeAction(DebugAction.stringId)
 
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onPluginsList)
+            self._application.mainWindow.Unbind(
+                wx.EVT_MENU, handler=self.__onPluginsList
+            )
 
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onButtonsDialog)
+            self._application.mainWindow.Unbind(
+                wx.EVT_MENU, handler=self.__onButtonsDialog
+            )
 
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onStartWatchEvents)
+            self._application.mainWindow.Unbind(
+                wx.EVT_MENU, handler=self.__onStartWatchEvents
+            )
 
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onStopWatchEvents)
+            self._application.mainWindow.Unbind(
+                wx.EVT_MENU, handler=self.__onStopWatchEvents
+            )
 
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onRaiseException)
+            self._application.mainWindow.Unbind(
+                wx.EVT_MENU, handler=self.__onRaiseException
+            )
 
-            self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                                handler=self.__onShowToaster)
+            self._application.mainWindow.Unbind(
+                wx.EVT_MENU, handler=self.__onShowToaster
+            )
+
+            self._application.mainWindow.Unbind(
+                wx.EVT_MENU, handler=self.__onRunScript
+            )
 
             index = mainMenu.FindMenu(self.__menuName)
             assert index != wx.NOT_FOUND
@@ -149,11 +166,21 @@ class PluginDebug(Plugin):
             self._application.onHtmlRenderingEnd -= self.__onHtmlRenderingEnd
             self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
             self._application.onPageDialogInit -= self.__onPageDialogInit
-            self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
-            self._application.onPageDialogPageTitleChanged -= self.__onPageDialogPageTitleChanged
-            self._application.onPageDialogPageStyleChanged -= self.__onPageDialogPageStyleChanged
-            self._application.onPageDialogPageIconChanged -= self.__onPageDialogPageIconChanged
-            self._application.onPageDialogPageTagsChanged -= self.__onPageDialogPageTagsChanged
+            self._application.onPageDialogPageTypeChanged -= (
+                self.__onPageDialogPageTypeChanged
+            )
+            self._application.onPageDialogPageTitleChanged -= (
+                self.__onPageDialogPageTitleChanged
+            )
+            self._application.onPageDialogPageStyleChanged -= (
+                self.__onPageDialogPageStyleChanged
+            )
+            self._application.onPageDialogPageIconChanged -= (
+                self.__onPageDialogPageIconChanged
+            )
+            self._application.onPageDialogPageTagsChanged -= (
+                self.__onPageDialogPageTagsChanged
+            )
             self._application.onPreWikiOpen -= self.__onPreWikiOpen
             self._application.onPostWikiOpen -= self.__onPostWikiOpen
             self._application.onIconsGroupsListInit -= self.__onIconsGroupsListInit
@@ -162,46 +189,42 @@ class PluginDebug(Plugin):
             self._application.onPostContentReading -= self.__onPostContentReading
 
     def __createMenu(self):
-        self.menu = wx.Menu(u"")
-        pluginsListMenuItem = self.menu.Append(wx.ID_ANY,
-                                               _("Plugins List"))
-        buttonsDialogMenuItem = self.menu.Append(wx.ID_ANY,
-                                                 _("ButtonsDialog"))
-        startWatchMenuItem = self.menu.Append(wx.ID_ANY,
-                                              _("Start watch events"))
-        stopWatchMenuItem = self.menu.Append(wx.ID_ANY,
-                                             _("Stop watch events"))
-        raiseExceptionMenuItem = self.menu.Append(wx.ID_ANY,
-                                                  _("Raise exception"))
-        showToasterMenuItem = self.menu.Append(wx.ID_ANY,
-                                               _("Show toaster"))
+        self.menu = wx.Menu("")
+        pluginsListMenuItem = self.menu.Append(wx.ID_ANY, _("Plugins List"))
+        buttonsDialogMenuItem = self.menu.Append(wx.ID_ANY, _("ButtonsDialog"))
+        startWatchMenuItem = self.menu.Append(wx.ID_ANY, _("Start watch events"))
+        stopWatchMenuItem = self.menu.Append(wx.ID_ANY, _("Stop watch events"))
+        raiseExceptionMenuItem = self.menu.Append(wx.ID_ANY, _("Raise exception"))
+        showToasterMenuItem = self.menu.Append(wx.ID_ANY, _("Show toaster"))
+        runScriptMenuItem = self.menu.Append(wx.ID_ANY, _("Run script"))
 
-        self._application.mainWindow.menuController.getRootMenu().Append(self.menu,
-                                                                         self.__menuName)
+        self._application.mainWindow.menuController.getRootMenu().Append(
+            self.menu, self.__menuName
+        )
 
-        self._application.mainWindow.Bind(wx.EVT_MENU,
-                                          self.__onPluginsList,
-                                          pluginsListMenuItem)
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self.__onPluginsList, pluginsListMenuItem
+        )
 
-        self._application.mainWindow.Bind(wx.EVT_MENU,
-                                          self.__onButtonsDialog,
-                                          buttonsDialogMenuItem)
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self.__onButtonsDialog, buttonsDialogMenuItem
+        )
 
-        self._application.mainWindow.Bind(wx.EVT_MENU,
-                                          self.__onStartWatchEvents,
-                                          startWatchMenuItem)
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self.__onStartWatchEvents, startWatchMenuItem
+        )
 
-        self._application.mainWindow.Bind(wx.EVT_MENU,
-                                          self.__onStopWatchEvents,
-                                          stopWatchMenuItem)
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self.__onStopWatchEvents, stopWatchMenuItem
+        )
 
-        self._application.mainWindow.Bind(wx.EVT_MENU,
-                                          self.__onRaiseException,
-                                          raiseExceptionMenuItem)
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self.__onRaiseException, raiseExceptionMenuItem
+        )
 
-        self._application.mainWindow.Bind(wx.EVT_MENU,
-                                          self.__onShowToaster,
-                                          showToasterMenuItem)
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU, self.__onRunScript, runScriptMenuItem
+        )
 
     def __createTestAction(self):
         mainWindow = self._application.mainWindow
@@ -217,9 +240,7 @@ class PluginDebug(Plugin):
             controller.register(action, hotkey=hotkey)
 
             controller.appendMenuCheckItem(DebugAction.stringId, self.menu)
-            controller.appendToolbarCheckButton(DebugAction.stringId,
-                                                toolbar,
-                                                image)
+            controller.appendToolbarCheckButton(DebugAction.stringId, toolbar, image)
 
     def getImagePath(self, imageName):
         """
@@ -235,24 +256,65 @@ class PluginDebug(Plugin):
         """
         if page.getTypeString() == "wiki":
             menuItem = menu.Append(wx.ID_ANY, _("Message For Wiki Page"))
-            menu.Bind(wx.EVT_MENU,
-                      lambda event: MessageBox(
-                          _("Wiki Message"), _("This is wiki page")),
-                      menuItem)
+            menu.Bind(
+                wx.EVT_MENU,
+                lambda event: MessageBox(_("Wiki Message"), _("This is wiki page")),
+                menuItem,
+            )
 
         elif page.getTypeString() == "html":
             menuItem = menu.Append(wx.ID_ANY, _("Message For HTML Page"))
-            menu.Bind(wx.EVT_MENU,
-                      lambda event: MessageBox(
-                          _("HTML Message"), _("This is HTML page")),
-                      menuItem)
+            menu.Bind(
+                wx.EVT_MENU,
+                lambda event: MessageBox(_("HTML Message"), _("This is HTML page")),
+                menuItem,
+            )
 
         elif page.getTypeString() == "text":
             menuItem = menu.Append(wx.ID_ANY, _("Message For Text Page"))
-            menu.Bind(wx.EVT_MENU,
-                      lambda event: MessageBox(
-                          _("Text Message"), _("This is Text page")),
-                      menuItem)
+            menu.Bind(
+                wx.EVT_MENU,
+                lambda event: MessageBox(_("Text Message"), _("This is Text page")),
+                menuItem,
+            )
+
+    def __onRunScript(self, event):
+        web_view = self._application.mainWindow.pageView.htmlWindow.render
+        print("Run script")
+        # script = """
+        # const verticalScroll = window.pageYOffset;
+        # const text = "Положение прокрутки: " + verticalScroll;
+        # document.write(text);
+        # """
+
+        # script = """
+        # window.scrollTo(0, 500);
+        # """
+
+        script_send_scroll_position = """
+        function send_scroll_position() {
+            window.location = "outwiker://scroll-position-changed?position=" + window.pageYOffset;
+        }
+        window.addEventListener('scroll', function(event) {
+            send_scroll_position();
+        });
+        """
+
+        script_send_complete = """
+        function send_complete_notify() {
+            window.location = "outwiker://page-complete";
+        }
+
+        if (document.readyState === 'complete') {
+            send_complete_notify();
+        }
+        else {
+            window.addEventListener('load', send_complete_notify);
+        }
+        """
+
+        web_view.RunScript(script_send_complete)
+        web_view.RunScript(script_send_scroll_position)
 
     def __onRaiseException(self, event):
         raise IOError
@@ -260,7 +322,8 @@ class PluginDebug(Plugin):
     def __onPostProcessing(self, page, params):
         if self._enablePostProcessing:
             params.result = re.compile(re.escape("абырвалг"), re.I | re.U).sub(
-                "Главрыба", params.result)
+                "Главрыба", params.result
+            )
 
     def __onPreProcessing(self, page, params):
         if self._enablePreProcessing:
@@ -273,31 +336,34 @@ class PluginDebug(Plugin):
         images_dir = getImagesDir()
 
         iconslist = [
-            os.path.join(images_dir, 'add.svg'),
-            os.path.join(images_dir, 'code.svg'),
-            os.path.join(images_dir, 'tag.svg'),
+            os.path.join(images_dir, "add.svg"),
+            os.path.join(images_dir, "code.svg"),
+            os.path.join(images_dir, "tag.svg"),
         ]
-        title = '__Debug group__'
+        title = "__Debug group__"
         cover = None
         group_type = IconsGroupInfo.TYPE_OTHER
         sort_key = None
 
-        newgroup = IconsGroupInfo(iconslist=iconslist,
-                                  title=title,
-                                  cover=cover,
-                                  group_type=group_type,
-                                  sort_key=sort_key)
+        newgroup = IconsGroupInfo(
+            iconslist=iconslist,
+            title=title,
+            cover=cover,
+            group_type=group_type,
+            sort_key=sort_key,
+        )
         params.groupsList.insert(0, newgroup)
 
     def __onButtonsDialog(self, event):
-        buttons = [_("Button 1"), _("Button 2"),
-                   _("Button 3"), _("Cancel")]
-        with ButtonsDialog(self._application.mainWindow,
-                           _("Message"),
-                           _("Caption"),
-                           buttons,
-                           default=0,
-                           cancel=3) as dlg:
+        buttons = [_("Button 1"), _("Button 2"), _("Button 3"), _("Cancel")]
+        with ButtonsDialog(
+            self._application.mainWindow,
+            _("Message"),
+            _("Caption"),
+            buttons,
+            default=0,
+            cancel=3,
+        ) as dlg:
             result = dlg.ShowModal()
 
             if result == wx.ID_CANCEL:
@@ -306,8 +372,7 @@ class PluginDebug(Plugin):
                 print(result)
 
     def __onPluginsList(self, event):
-        pluginslist = [plugin.name +
-                       "\n" for plugin in self._application.plugins]
+        pluginslist = [plugin.name + "\n" for plugin in self._application.plugins]
         MessageBox("".join(pluginslist), _("Plugins List"))
 
     def __onStartWatchEvents(self, event):
@@ -338,7 +403,7 @@ class PluginDebug(Plugin):
     def __onEditorPopupMenu(self, page, params):
         if self._enableOnEditorPopup:
             params.menu.AppendSeparator()
-            params.menu.Append(-1, 'Debug popup menu item')
+            params.menu.Append(-1, "Debug popup menu item")
 
     def __onHtmlRenderingBegin(self, page, htmlView):
         self._timer.start()
@@ -349,8 +414,8 @@ class PluginDebug(Plugin):
         if self._enableRenderingTimeMeasuring:
             interval = self._timer.getTimeInterval()
             text = 'Rendering "{page}": {time} sec'.format(
-                page=page.title,
-                time=interval)
+                page=page.title, time=interval
+            )
 
             logging.info(text)
 
@@ -366,30 +431,30 @@ class PluginDebug(Plugin):
     def __onPageDialogInit(self, page, params):
         if self._enableNewPageDialogTab:
             panel = NewPageDialogPanel(params.dialog.getPanelsParent())
-            params.dialog.addPanel(panel, _('Debug'))
+            params.dialog.addPanel(panel, _("Debug"))
 
             controller = DebugPageDialogController(self._application)
             params.dialog.addController(controller)
 
     def __onPageDialogPageTypeChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print('Selected page type: {}'.format(params.pageType))
+            print("Selected page type: {}".format(params.pageType))
 
     def __onPageDialogPageTitleChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print('New page title: {}'.format(params.pageTitle))
+            print("New page title: {}".format(params.pageTitle))
 
     def __onPageDialogPageStyleChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print('New page style: {}'.format(params.pageStyle))
+            print("New page style: {}".format(params.pageStyle))
 
     def __onPageDialogPageIconChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print('New page icon: {}'.format(params.pageIcon))
+            print("New page icon: {}".format(params.pageIcon))
 
     def __onPageDialogPageTagsChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print('New page tags: {}'.format(params.pageTags))
+            print("New page tags: {}".format(params.pageTags))
 
     def __onPreWikiOpen(self, page, params):
         if self._enableOpeningTimeMeasure:
@@ -399,9 +464,9 @@ class PluginDebug(Plugin):
         if self._enableOpeningTimeMeasure:
             interval = time.time() - self._startWikiOpenTime
             self._startWikiOpenTime = None
-            text = 'Opening wiki {path}: {time} sec'.format(
-                path=params.path,
-                time=interval)
+            text = "Opening wiki {path}: {time} sec".format(
+                path=params.path, time=interval
+            )
             logging.info(text)
 
     def __onTextEditorKeyDown(self, page, params):
@@ -409,8 +474,8 @@ class PluginDebug(Plugin):
             if params.processed:
                 return
 
-            if params.keyUnicode == ord('('):
-                params.editor.turnText('(', ')')
+            if params.keyUnicode == ord("("):
+                params.editor.turnText("(", ")")
                 params.disableOutput = True
                 params.processed = True
 
@@ -421,20 +486,20 @@ class PluginDebug(Plugin):
     def __onPostContentReading(self, page, params):
         if self._enableOnPrePostContent:
             if params.content.startswith(self._prePostContentPrefix):
-                params.content = params.content[len(
-                    self._prePostContentPrefix):]
+                params.content = params.content[len(self._prePostContentPrefix) :]
 
     def __onTextEditorCaretMove(self, page, params):
         if self._enableOnTextEditorCaretMove:
             text = params.editor.GetText()
             print(params.startSelection, params.endSelection)
 
-            if (params.startSelection == params.endSelection
-                    and positionInside(text, params.startSelection, '{$', '$}')):
-                print('Equation!')
+            if params.startSelection == params.endSelection and positionInside(
+                text, params.startSelection, "{$", "$}"
+            ):
+                print("Equation!")
 
     def __onShowToaster(self, event):
-        text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nPellentesque malesuada mollis tortor, eget mattis nisi lobortis et. Vestibulum accumsan vehicula volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum bibendum arcu augue, sit amet finibus augue posuere et.\nSed sem purus, fermentum et hendrerit eget, laoreet faucibus massa.'
+        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nPellentesque malesuada mollis tortor, eget mattis nisi lobortis et. Vestibulum accumsan vehicula volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum bibendum arcu augue, sit amet finibus augue posuere et.\nSed sem purus, fermentum et hendrerit eget, laoreet faucibus massa."
         self._application.mainWindow.toaster.showError(text)
 
     ###################################################
@@ -447,11 +512,13 @@ class PluginDebug(Plugin):
 
     @property
     def description(self):
-        return _("""Debug Plugin
+        return _(
+            """Debug Plugin
                  <a href="https://jenyay.net">https://jenyay.net</a>
 
                  <a href="/111">Link to page</a>
-                 """)
+                 """
+        )
 
     @property
     def url(self):

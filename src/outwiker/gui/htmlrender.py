@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 
 import idna
+import logging
 
 import wx
 
 import outwiker.core
+from outwiker.core.defines import URL_MESSAGE_SCROLLED
+from outwiker.core.urlmessage import URLMessage
 from outwiker.app.services.messages import showError
-from outwiker.core.events import LinkClickParams
+from outwiker.core.events import LinkClickParams, PreviewScrolledParams
 from outwiker.core.system import getOS
 from outwiker.gui.controls.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.defines import ID_KEY_CTRL, ID_KEY_SHIFT
+
+logger = logging.getLogger("outwiker.gui.htmlrender")
 
 
 class HtmlRenderBase(wx.Panel):
@@ -24,7 +29,9 @@ class HtmlRenderBase(wx.Panel):
         self._application = application
         self._render = self._createRender()
         self._searchPanel = SearchReplacePanel(self)
-        self._searchPanelController = getOS().getHtmlRenderSearchController(self._searchPanel, self)
+        self._searchPanelController = getOS().getHtmlRenderSearchController(
+            self._searchPanel, self
+        )
         sizer = wx.FlexGridSizer(cols=1)
         sizer.AddGrowableCol(0)
         sizer.AddGrowableRow(0)
@@ -52,9 +59,9 @@ class HtmlRenderBase(wx.Panel):
         pass
 
     def _createRender(self):
-        '''
+        """
         Must return instance of HTML render engine
-        '''
+        """
 
     def Find(self, text):
         if self._render:
@@ -88,12 +95,12 @@ class HtmlRenderBase(wx.Panel):
         if link is None:
             return None
 
-        endProtocol = u"://"
+        endProtocol = "://"
         pos = link.find(endProtocol)
         if pos == -1:
             return None
 
-        return link[:pos + len(endProtocol)]
+        return link[: pos + len(endProtocol)]
 
     def decodeIDNA(self, link):
         """
@@ -104,11 +111,9 @@ class HtmlRenderBase(wx.Panel):
 
         protocol = self._getLinkProtocol(link)
         if protocol is not None:
-            url = link[len(protocol):]
+            url = link[len(protocol) :]
             try:
-                link = u"{}{}".format(
-                    protocol,
-                    idna.decode(url))
+                link = "{}{}".format(protocol, idna.decode(url))
             except UnicodeError:
                 # Под IE ссылки не преобразуются в кодировку IDNA
                 pass
@@ -118,27 +123,55 @@ class HtmlRenderBase(wx.Panel):
     def Reload(self):
         self._render.Reload()
 
+    def RunScript(self, script: str) -> None:
+        self._render.RunScript(script)
+
+    def _process_scrolled_message(self, urlmessage: URLMessage):
+        try:
+            position_x = int(urlmessage.params["position-x"])
+            position_y = int(urlmessage.params["position-y"])
+        except (ValueError, KeyError):
+            logger.error("Invalid URLMessage params: %s", urlmessage)
+            return
+
+        params = PreviewScrolledParams(position_x, position_y)
+        self._application.onPreviewScrolled(self._application.selectedPage, params)
+
+    def processUrlMessage(self, urlmessage: URLMessage) -> None:
+        if urlmessage.message_name == URL_MESSAGE_SCROLLED:
+            self._process_scrolled_message(urlmessage)
+
+    def SetScrollPosition(self, position_x: int, position_y: int) -> None:
+        script = f"""
+        function scroll() {{
+            window.scrollTo({position_x}, {position_y});
+        }}
+
+        if (document.readyState === 'complete') {{
+            scroll();
+        }}
+        else {{
+            window.addEventListener('load', scroll);
+        }}
+        """
+        self.RunScript(script)
+
 
 class HTMLRenderForPageMixin:
-    def getClickParams(self,
-                       href,
-                       button,
-                       modifier,
-                       isurl,
-                       ispage,
-                       isfilename,
-                       isanchor):
+    def getClickParams(
+        self, href, button, modifier, isurl, ispage, isfilename, isanchor
+    ):
         linktype = None
 
         if isanchor:
-            linktype = u"anchor"
+            linktype = "anchor"
 
         if isurl:
-            linktype = u"url"
+            linktype = "url"
         elif ispage:
-            linktype = u"page"
+            linktype = "page"
         elif isfilename:
-            linktype = u"filename"
+            linktype = "filename"
 
         return LinkClickParams(
             link=href,

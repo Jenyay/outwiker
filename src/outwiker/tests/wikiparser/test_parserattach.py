@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import os
 import unittest
 from tempfile import mkdtemp
@@ -70,34 +71,35 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_png_simple(self):
         fname = "accept.png"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/accept\\.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
+
 
     def test_attach_png_single_quotes(self):
         fname = "accept.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/accept\\.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_png_double_quotes(self):
         fname = "accept.png"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/accept.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_webp(self):
         fname = "image.webp"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/image.webp\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_in_link_simple(self):
         fname = "filename.tmp"
@@ -148,10 +150,10 @@ class ParserAttachTest(unittest.TestCase):
         fname = "картинка с пробелами.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/картинка с пробелами.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_07(self):
         fname = "accept.png"
@@ -201,10 +203,10 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_jpg(self):
         fname = "image_01.JPG"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/image_01.JPG\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_13(self):
         fname = "dir.xxx"
@@ -279,50 +281,50 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_subfolder_forward_slash(self):
         fname = "dir/subdir/subdir2/image.png"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/dir/subdir/subdir2/image.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_image_subfolder_forward_slash_single_quotes(self):
         fname = "dir/subdir/subdir2/image.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/dir/subdir/subdir2/image.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_image_subfolder_forward_slash_double_quotes(self):
         fname = "dir/subdir/subdir2/image.png"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/dir/subdir/subdir2/image.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_image_subfolder_backslash(self):
         fname = "dir\\subdir\\subdir2\\image.png"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-                fname.replace('\\', '/'))
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/dir/subdir/subdir2/image.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_image_subfolder_backslash_single_quotes(self):
         fname = "dir\\subdir\\subdir2\\image.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname.replace('\\', '/'))
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/dir/subdir/subdir2/image.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_image_subfolder_backslash_double_quotes(self):
         fname = "dir\\subdir\\subdir2\\image.png"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname.replace('\\', '/'))
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/dir/subdir/subdir2/image.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_file_with_spaces_in_folder_forward_slash_single_quotes(self):
         fname = "dir/subdir/subdir2/файл с пробелами.tmp"
@@ -343,18 +345,18 @@ class ParserAttachTest(unittest.TestCase):
     def test_attach_image_with_spaces_subfolder_forward_slash_single_quotes(self):
         fname = "dir/subdir/subdir2/картинка с пробелами.png"
         text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/dir/subdir/subdir2/картинка с пробелами.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_attach_image_with_spaces_subfolder_forward_slash_double_quotes(self):
         fname = "dir/subdir/subdir2/картинка с пробелами.png"
         text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
-        result = 'бла-бла-бла \n<img class="ow-image" src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
-            fname)
+        expected_regex = 'бла-бла-бла \n<img class="ow-image" src="__attach/dir/subdir/subdir2/картинка с пробелами.png\\?rnd=\\d+"/> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+        self.assertIsNotNone(re.match(expected_regex, result))
 
     def test_file_not_found(self):
         fname = "invalid.inv"
