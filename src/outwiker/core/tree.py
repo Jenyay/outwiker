@@ -6,7 +6,6 @@ import os.path
 import shutil
 import datetime
 from abc import ABCMeta
-from functools import cmp_to_key
 from typing import final, List, Optional, Union, Dict
 import uuid
 
@@ -18,7 +17,6 @@ from .exceptions import (
     ReadonlyException,
     TreeException,
 )
-from .sortfunctions import sortAlphabeticalFunction
 from .defines import (
     PAGE_CONTENT_FILE,
     PAGE_OPT_FILE,
@@ -174,7 +172,7 @@ class BasePage(metaclass=ABCMeta):
         """
         Sort children pages alphabetical
         """
-        self._children.sort(key=cmp_to_key(sortAlphabeticalFunction))
+        self._children.sort(key=lambda page: page.display_title.lower())
 
         self.root.onStartTreeUpdate(self.root)
         self.saveChildrenParams()
