@@ -168,11 +168,11 @@ class BasePage(metaclass=ABCMeta):
 
         return page
 
-    def sortChildren(self, key_func: Callable[["WikiPage"], Any]):
+    def sortChildren(self, key_func: Callable[["WikiPage"], Any], reverse: bool = False):
         """
         Sort children pages
         """
-        self._children.sort(key=key_func)
+        self._children.sort(key=key_func, reverse=reverse)
 
         self.root.onStartTreeUpdate(self.root)
         self.saveChildrenParams()
@@ -969,8 +969,8 @@ class PageAdapter:
     def __getitem__(self, path: str) -> Optional[Union[BasePage, WikiPage]]:
         return self._page[path]
 
-    def sortChildren(self, key_func: Callable[["WikiPage"], Any]):
-        self._page.sortChildren(key_func)
+    def sortChildren(self, key_func: Callable[["WikiPage"], Any], reverse: bool = False):
+        self._page.sortChildren(key_func, reverse)
 
     def changeChildOrder(self, page, neworder):
         self._page.changeChildOrder(page, neworder)

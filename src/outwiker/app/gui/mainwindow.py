@@ -47,8 +47,20 @@ from outwiker.app.actions.reloadwiki import ReloadWikiAction
 from outwiker.app.actions.removepage import RemovePageAction
 from outwiker.app.actions.renamepage import RenamePageAction
 from outwiker.app.actions.save import SaveAction
-from outwiker.app.actions.sortchild import SortChildAlphabeticalAction
-from outwiker.app.actions.sortsiblings import SortSiblingsAlphabeticalAction
+from outwiker.app.actions.sortchild import (
+    SortChildAlphabeticalAction,
+    SortChildByCreationDateAscAction,
+    SortChildByCreationDateDescAction,
+    SortChildByModifiedDateAscAction,
+    SortChildByModifiedDateDescAction,
+)
+from outwiker.app.actions.sortsiblings import (
+    SortSiblingsAlphabeticalAction,
+    SortSiblingsByCreationDateAscAction,
+    SortSiblingsByCreationDateDescAction,
+    SortSiblingsByModifiedDateAscAction,
+    SortSiblingsByModifiedDateDescAction,
+)
 from outwiker.app.actions.tabs import (
     AddTabAction,
     CloseTabAction,
@@ -379,6 +391,7 @@ class MainWindow(wx.Frame):
         menu.AppendSeparator()
 
         self._createMovementSubmenu()
+        self._createSortingSubmenu()
         self._createGoToSubmenu()
 
         menu.AppendSeparator()
@@ -392,12 +405,49 @@ class MainWindow(wx.Frame):
 
         actionController.appendMenuItem(MovePageUpAction.stringId, submenu)
         actionController.appendMenuItem(MovePageDownAction.stringId, submenu)
+
+        menu.AppendSubMenu(submenu, _("Movement"))
+
+    def _createSortingSubmenu(self):
+        menu = self.menuController[guidefines.MENU_TREE]
+        actionController = self._application.actionController
+        submenu = wx.Menu()
+
         actionController.appendMenuItem(SortChildAlphabeticalAction.stringId, submenu)
+
+        actionController.appendMenuItem(
+            SortChildByCreationDateAscAction.stringId, submenu
+        )
+        actionController.appendMenuItem(
+            SortChildByCreationDateDescAction.stringId, submenu
+        )
+        actionController.appendMenuItem(
+            SortChildByModifiedDateAscAction.stringId, submenu
+        )
+        actionController.appendMenuItem(
+            SortChildByModifiedDateDescAction.stringId, submenu
+        )
+
+        submenu.AppendSeparator()
+
         actionController.appendMenuItem(
             SortSiblingsAlphabeticalAction.stringId, submenu
         )
 
-        menu.AppendSubMenu(submenu, _("Movement"))
+        actionController.appendMenuItem(
+            SortSiblingsByCreationDateAscAction.stringId, submenu
+        )
+        actionController.appendMenuItem(
+            SortSiblingsByCreationDateDescAction.stringId, submenu
+        )
+        actionController.appendMenuItem(
+            SortSiblingsByModifiedDateAscAction.stringId, submenu
+        )
+        actionController.appendMenuItem(
+            SortSiblingsByModifiedDateDescAction.stringId, submenu
+        )
+
+        menu.AppendSubMenu(submenu, _("Sorting"))
 
     def _createGoToSubmenu(self):
         menu = self.menuController[guidefines.MENU_TREE]
