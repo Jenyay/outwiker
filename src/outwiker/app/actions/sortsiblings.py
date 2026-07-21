@@ -5,10 +5,11 @@ from outwiker.core.treetools import testreadonly
 from outwiker.gui.baseaction import BaseAction
 
 
-class SortSiblingsAlphabeticalAction (BaseAction):
+class SortSiblingsAlphabeticalAction(BaseAction):
     """
     Отсортировать страницы того же уровня по алфавиту
     """
+
     stringId = "SortSiblingsAlphabetically"
 
     def __init__(self, application):
@@ -32,4 +33,6 @@ class SortSiblingsAlphabeticalAction (BaseAction):
             return
 
         if self._application.wikiroot.selectedPage is not None:
-            self._application.wikiroot.selectedPage.parent.sortChildrenAlphabetical()
+            self._application.wikiroot.selectedPage.parent.sortChildren(
+                lambda page: page.display_title.lower()
+            )

@@ -2,8 +2,8 @@
 
 import unittest
 
-from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
-from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.app.actions.sortchild import SortChildAlphabeticalAction
+from outwiker.app.actions.sortsiblings import SortSiblingsAlphabeticalAction
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
@@ -44,7 +44,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
 
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
         self.assertEqual(self.wikiroot["Страница 1"].order, 0)
         self.assertEqual(self.wikiroot["Страница 2"].order, 1)
@@ -57,7 +58,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = None
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
     def testChildrenSort(self):
         factory = TextPageFactory()
@@ -87,7 +89,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = parent
 
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
         self.assertEqual(self.wikiroot["Родитель/Страница 1"].order, 0)
         self.assertEqual(self.wikiroot["Родитель/Страница 2"].order, 1)
@@ -103,7 +106,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = parent
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
     def testSiblingsRoot(self):
         factory = TextPageFactory()
@@ -132,7 +136,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
 
         self.application.actionController.getAction(
-            SortSiblingsAlphabeticalAction.stringId).run(None)
+            SortSiblingsAlphabeticalAction.stringId
+        ).run(None)
 
         self.assertEqual(self.wikiroot["Страница 1"].order, 0)
         self.assertEqual(self.wikiroot["Страница 2"].order, 2)
@@ -169,7 +174,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Родитель/Страница 2"]
 
         self.application.actionController.getAction(
-            SortSiblingsAlphabeticalAction.stringId).run(None)
+            SortSiblingsAlphabeticalAction.stringId
+        ).run(None)
 
         self.assertEqual(self.wikiroot["Родитель/Страница 1"].order, 0)
         self.assertEqual(self.wikiroot["Родитель/Страница 2"].order, 1)
@@ -185,10 +191,12 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = parent
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
     def testSiblingsEmpty_02(self):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = None
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)

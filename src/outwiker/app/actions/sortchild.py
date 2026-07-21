@@ -9,6 +9,7 @@ class SortChildAlphabeticalAction(BaseAction):
     """
     Отсортировать дочерние страницы по алфавиту
     """
+
     stringId = "SortChildAlphabetically"
 
     def __init__(self, application):
@@ -31,7 +32,9 @@ class SortChildAlphabeticalAction(BaseAction):
             showError(self._application.mainWindow, _("Wiki is not open"))
             return
 
+        sort_func = lambda page: page.display_title.lower()
+
         if self._application.wikiroot.selectedPage is not None:
-            self._application.wikiroot.selectedPage.sortChildrenAlphabetical()
+            self._application.wikiroot.selectedPage.sortChildren(sort_func)
         else:
-            self._application.wikiroot.sortChildrenAlphabetical()
+            self._application.wikiroot.sortChildren(sort_func)

@@ -47,8 +47,8 @@ from outwiker.app.actions.reloadwiki import ReloadWikiAction
 from outwiker.app.actions.removepage import RemovePageAction
 from outwiker.app.actions.renamepage import RenamePageAction
 from outwiker.app.actions.save import SaveAction
-from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
-from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.app.actions.sortchild import SortChildAlphabeticalAction
+from outwiker.app.actions.sortsiblings import SortSiblingsAlphabeticalAction
 from outwiker.app.actions.tabs import (
     AddTabAction,
     CloseTabAction,
@@ -88,7 +88,6 @@ from outwiker.pages.html.htmlpagecontroller import HtmlPageController
 from outwiker.pages.text.textpagecontroller import TextPageController
 from outwiker.pages.search.searchpagecontroller import SearchPageController
 import outwiker.core.defines as defines
-
 
 logger = logging.getLogger("outwiker.app.gui.mainwindow")
 
@@ -236,7 +235,9 @@ class MainWindow(wx.Frame):
         self.__mainWndController.loadMainWindowParams()
 
         logger.debug("MainWindow. Create BookmarksController")
-        self.__boomarksController = BookmarksController(self.__mainWndController, self._application)
+        self.__boomarksController = BookmarksController(
+            self.__mainWndController, self._application
+        )
 
         logger.debug("MainWindow. Create the MainPanesController")
         self.__panesController = MainPanesController(self._application, self)
@@ -600,12 +601,12 @@ class MainWindow(wx.Frame):
                 self.__panesController.savePanesParams()
 
             if self._realSize:
-                (width, height) = self._realSize
+                width, height = self._realSize
                 self.mainWindowConfig.width.value = width
                 self.mainWindowConfig.height.value = height
 
             if self._realPosition:
-                (xpos, ypos) = self._realPosition
+                xpos, ypos = self._realPosition
                 self.mainWindowConfig.xPos.value = xpos
                 self.mainWindowConfig.yPos.value = ypos
 

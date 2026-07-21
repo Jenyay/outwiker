@@ -44,8 +44,8 @@ from outwiker.app.actions.search import (
 from outwiker.app.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.app.actions.showhidetags import ShowHideTagsAction
 from outwiker.app.actions.showhidetree import ShowHideTreeAction
-from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
-from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.app.actions.sortchild import SortChildAlphabeticalAction
+from outwiker.app.actions.sortsiblings import SortSiblingsAlphabeticalAction
 from outwiker.app.actions.switchto import (
     SwitchToAttachmentsAction,
     SwitchToMainPanelAction,
@@ -91,7 +91,6 @@ from outwiker.app.actions.attachfolder import (
 from outwiker.gui.actioninfo import ActionInfo, PolyactionInfo
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.defines import ATTACH_ACTIONS_AREA
-
 
 actionsList = [
     ActionInfo(OpenAction, HotKey("O", ctrl=True)),

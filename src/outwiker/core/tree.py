@@ -6,7 +6,7 @@ import os.path
 import shutil
 import datetime
 from abc import ABCMeta
-from typing import final, List, Optional, Union, Dict
+from typing import Any, Callable, final, List, Optional, Union, Dict
 import uuid
 
 from .config import PageConfig
@@ -168,11 +168,11 @@ class BasePage(metaclass=ABCMeta):
 
         return page
 
-    def sortChildrenAlphabetical(self):
+    def sortChildren(self, key_func: Callable[["WikiPage"], Any]):
         """
-        Sort children pages alphabetical
+        Sort children pages
         """
-        self._children.sort(key=lambda page: page.display_title.lower())
+        self._children.sort(key=key_func)
 
         self.root.onStartTreeUpdate(self.root)
         self.saveChildrenParams()
@@ -969,8 +969,8 @@ class PageAdapter:
     def __getitem__(self, path: str) -> Optional[Union[BasePage, WikiPage]]:
         return self._page[path]
 
-    def sortChildrenAlphabetical(self):
-        self._page.sortChildrenAlphabetical()
+    def sortChildren(self, key_func: Callable[["WikiPage"], Any]):
+        self._page.sortChildren(key_func)
 
     def changeChildOrder(self, page, neworder):
         self._page.changeChildOrder(page, neworder)
