@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.app.services.clipboard import (copyTitleToClipboard,
-                                             copyLinkToClipboard,
-                                             copyPathToClipboard,
-                                             copyAttachPathToClipboard)
-from outwiker.app.services.messages import showInfo
+from outwiker.app.services.clipboard import (
+    copyTitleToClipboard,
+    copyLinkToClipboard,
+    copyPathToClipboard,
+    copyAttachPathToClipboard,
+)
 from outwiker.gui.baseaction import BaseAction
+from outwiker.app.gui.mainwindowtools import setStatusText
+from outwiker.gui.defines import STATUSBAR_MESSAGE_ITEM
 
 
 class CopyPageTitleAction(BaseAction):
     """
     Копировать в буфер обмена заголовок текущей страницы
     """
+
     stringId = "CopyPageTitle"
 
     def __init__(self, application):
@@ -33,16 +37,16 @@ class CopyPageTitleAction(BaseAction):
             return
 
         if copyTitleToClipboard(page):
-            title = _('Copied to clipboard')
-            text = _('Page title has been copied to the clipboard')
-            showInfo(self._application.mainWindow, title, text)
+            text = _("Page title has been copied to the clipboard")
+            setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, text)
 
 
 class CopyPagePathAction(BaseAction):
     """
     Копировать в буфер обмена путь до текущей страницы
     """
-    stringId = u"CopyPagePath"
+
+    stringId = "CopyPagePath"
 
     def __init__(self, application):
         self._application = application
@@ -63,15 +67,15 @@ class CopyPagePathAction(BaseAction):
             return
 
         if copyPathToClipboard(page):
-            title = _('Copied to clipboard')
-            text = _('Path to the page has been copied to the clipboard')
-            showInfo(self._application.mainWindow, title, text)
+            text = _("Path to the page has been copied to the clipboard")
+            setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, text)
 
 
 class CopyAttachPathAction(BaseAction):
     """
     Копировать в буфер обмена путь до прикрепленных файлов
     """
+
     stringId = "CopyAttachPath"
 
     def __init__(self, application):
@@ -95,16 +99,16 @@ class CopyAttachPathAction(BaseAction):
         is_current_page = page is self._application.selectedPage
 
         if copyAttachPathToClipboard(page, is_current_page):
-            title = _('Copied to clipboard')
-            text = _('Path to the page attachments has been copied to the clipboard')
-            showInfo(self._application.mainWindow, title, text)
+            text = _("Path to the page attachments has been copied to the clipboard")
+            setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, text)
 
 
 class CopyPageLinkAction(BaseAction):
     """
     Копировать в буфер обмена ссылку на текущую страницу
     """
-    stringId = u"CopyPageLink"
+
+    stringId = "CopyPageLink"
 
     def __init__(self, application):
         self._application = application
@@ -125,6 +129,5 @@ class CopyPageLinkAction(BaseAction):
             return
 
         if copyLinkToClipboard(page, self._application):
-            title = _('Copied to clipboard')
-            text = _('Link to the page has been copied to the clipboard')
-            showInfo(self._application.mainWindow, title, text)
+            text = _("Link to the page has been copied to the clipboard")
+            setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, text)
