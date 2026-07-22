@@ -182,7 +182,6 @@ class BaseTextPanel(BasePagePanel):
             self.__externalEdit()
         else:
             self._savePageContent(self.page)
-            self.__updateOldContent()
 
     def __externalEdit(self):
         """
@@ -195,7 +194,6 @@ class BaseTextPanel(BasePagePanel):
             if result == 0:
                 # Перезаписать
                 self._savePageContent(self.page)
-                self.__updateOldContent()
             elif result == 1:
                 # Перезагрузить
                 self.__updateOldContent()
@@ -242,9 +240,10 @@ class BaseTextPanel(BasePagePanel):
             logger.error("Registry. Can't set cursor position")
 
         newContent = self.GetContentFromGui()
-        if self.__stringsAreEqual(page.content, newContent):
+        if self.__stringsAreEqual(self._oldContent, newContent):
             return
 
+        self._oldContent = newContent
         try:
             page.content = newContent
         except IOError as e:
