@@ -90,11 +90,16 @@ class BasePrefPanel(ScrolledPanel):
         main_sizer: wx.Sizer,
         title: str,
         cols: int = 2,
+        bold_title: bool = False,
     ) -> Tuple[wx.StaticBox, wx.Sizer]:
         """
         Create StaticBox for options
         """
         staticBox = wx.StaticBox(self, label=title)
+        if bold_title:
+            bold_font = staticBox.GetFont()
+            bold_font.SetWeight(wx.FONTWEIGHT_BOLD)
+            staticBox.SetFont(bold_font)
         staticBoxSizer = wx.StaticBoxSizer(staticBox, wx.VERTICAL)
 
         sizer = wx.FlexGridSizer(cols=cols)

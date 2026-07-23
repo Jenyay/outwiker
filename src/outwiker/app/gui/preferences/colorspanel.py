@@ -6,7 +6,12 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.config import StringOption
 from outwiker.gui.controls.colorcombobox import ColorComboBox
-from outwiker.gui.guiconfig import EditorConfig, MainWindowConfig, GeneralGuiConfig, TabsConfig
+from outwiker.gui.guiconfig import (
+    EditorConfig,
+    MainWindowConfig,
+    GeneralGuiConfig,
+    TabsConfig,
+)
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
 
@@ -56,30 +61,86 @@ class ColorsPanel(BasePrefPanel):
         self.SetupScrolling()
 
     def _fillParams(self):
-        self.addColorParam(_("Main window"), _("Main panels background color"), self._mainWindowConfig.mainPanesBackgroundColor)
-        self.addColorParam(_("Main window"), _("Main panels text color"), self._mainWindowConfig.mainPanesTextColor)
+        self.addColorParam(
+            _("Main window"),
+            _("Main panels background color"),
+            self._mainWindowConfig.mainPanesBackgroundColor,
+        )
+        self.addColorParam(
+            _("Main window"),
+            _("Main panels text color"),
+            self._mainWindowConfig.mainPanesTextColor,
+        )
 
-        self.addColorParam(_("Editor"), _("Font color"), self._editorGuiConfig.fontColor) 
-        self.addColorParam(_("Editor"), _("Background color"), self._editorGuiConfig.backColor) 
-        self.addColorParam(_("Editor"), _("Background color of the selected text"), self._editorGuiConfig.selBackColor) 
-        self.addColorParam(_("Editor"), _("Line number font color"), self._editorGuiConfig.lineNumberFontColor) 
-        self.addColorParam(_("Editor"), _("Page margin background color"), self._editorGuiConfig.marginBackColor) 
+        self.addColorParam(
+            _("Editor"), _("Font color"), self._editorGuiConfig.fontColor
+        )
+        self.addColorParam(
+            _("Editor"), _("Background color"), self._editorGuiConfig.backColor
+        )
+        self.addColorParam(
+            _("Editor"),
+            _("Background color of the selected text"),
+            self._editorGuiConfig.selBackColor,
+        )
+        self.addColorParam(
+            _("Editor"),
+            _("Line number font color"),
+            self._editorGuiConfig.lineNumberFontColor,
+        )
+        self.addColorParam(
+            _("Editor"),
+            _("Page margin background color"),
+            self._editorGuiConfig.marginBackColor,
+        )
 
         self.addColorParam(_("Tabs"), _("Tab color"), self._tabsConfig.backColorNormal)
-        self.addColorParam(_("Tabs"), _("Сolor of the selected tab"), self._tabsConfig.backColorSelected)
-        self.addColorParam(_("Tabs"), _("Сolor of the tab under cursor"), self._tabsConfig.backColorHover)
-        self.addColorParam(_("Tabs"), _("Color of the pressed tab"), self._tabsConfig.backColorDowned)
-        self.addColorParam(_("Tabs"), _("Color of the dragged tab"), self._tabsConfig.backColorDragged)
+        self.addColorParam(
+            _("Tabs"),
+            _("Сolor of the selected tab"),
+            self._tabsConfig.backColorSelected,
+        )
+        self.addColorParam(
+            _("Tabs"),
+            _("Сolor of the tab under cursor"),
+            self._tabsConfig.backColorHover,
+        )
+        self.addColorParam(
+            _("Tabs"), _("Color of the pressed tab"), self._tabsConfig.backColorDowned
+        )
+        self.addColorParam(
+            _("Tabs"), _("Color of the dragged tab"), self._tabsConfig.backColorDragged
+        )
 
         self.addColorParam(_("Tabs"), _("Font color"), self._tabsConfig.fontColorNormal)
-        self.addColorParam(_("Tabs"), _("Font color of the selected tab"), self._tabsConfig.fontColorSelected)
-        self.addColorParam(_("Tabs"), _("Font color of the tab under cursor"), self._tabsConfig.fontColorHover)
-        self.addColorParam(_("Tabs"), _("Font color of the pressed tab"), self._tabsConfig.fontColorDowned)
-        self.addColorParam(_("Tabs"), _("Font color of the dragged tab"), self._tabsConfig.fontColorDragged)
+        self.addColorParam(
+            _("Tabs"),
+            _("Font color of the selected tab"),
+            self._tabsConfig.fontColorSelected,
+        )
+        self.addColorParam(
+            _("Tabs"),
+            _("Font color of the tab under cursor"),
+            self._tabsConfig.fontColorHover,
+        )
+        self.addColorParam(
+            _("Tabs"),
+            _("Font color of the pressed tab"),
+            self._tabsConfig.fontColorDowned,
+        )
+        self.addColorParam(
+            _("Tabs"),
+            _("Font color of the dragged tab"),
+            self._tabsConfig.fontColorDragged,
+        )
 
-        self.addColorParam(_("Tabs"), _("Tab border color"), self._tabsConfig.borderColor)
+        self.addColorParam(
+            _("Tabs"), _("Tab border color"), self._tabsConfig.borderColor
+        )
 
-    def addColorParam(self, section: str, title: str, config_param: StringOption) -> None:
+    def addColorParam(
+        self, section: str, title: str, config_param: StringOption
+    ) -> None:
         if section not in self._color_sections:
             self._color_sections[section] = []
 
@@ -96,7 +157,7 @@ class ColorsPanel(BasePrefPanel):
 
     def _createSections(self, main_sizer):
         for section_title, items in self._color_sections.items():
-            sizer = self._createSection(main_sizer, section_title)[1]
+            sizer = self._createSection(main_sizer, section_title, bold_title=True)[1]
             for color_element in items:
                 ctrl = self._createLabelAndColorComboBox(color_element.title, sizer)[1]
                 ctrl.AddColors(self._recentGuiColors)
