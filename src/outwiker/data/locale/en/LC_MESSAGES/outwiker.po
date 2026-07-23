@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 22:12+0300\n"
+"POT-Creation-Date: 2026-07-23 21:21+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -21,8 +21,8 @@ msgid "About…"
 msgstr "About…"
 
 #: outwiker/app/actions/about.py:22
-msgid "Open \"About\" dialog"
-msgstr "Open \"About\" dialog"
+msgid "View application information"
+msgstr "View application information"
 
 #: outwiker/app/actions/addbookmark.py:17
 #: outwiker/app/actions/addbookmark.py:21
@@ -71,20 +71,23 @@ msgid "Default"
 msgstr "Default"
 
 #: outwiker/app/actions/attachcreatesubdir.py:19
-msgid "Create new attached folder"
-msgstr "Create new attached folder"
+#| msgid "Create new attached folder"
+msgid "Create attached folder"
+msgstr "Create attached folder"
 
 #: outwiker/app/actions/attachcreatesubdir.py:23
-msgid "Create a new folder in the current attached folder"
-msgstr "Create a new folder in the current attached folder"
+#| msgid "Create a new folder in the current attached folder"
+msgid "Create a folder in the current attached folder"
+msgstr "Create a folder in the current attached folder"
 
 #: outwiker/app/actions/attachcreatesubdir.py:36
+#| msgid ""
+#| "Create a new folder in the current attached folder. Action for "
+#| "attachments panel"
 msgid ""
-"Create a new folder in the current attached folder. Action for attachments "
-"panel"
+"Create a folder in the current attached folder. Action for attachments panel"
 msgstr ""
-"Create a new folder in the current attached folder. Action for attachments "
-"panel"
+"Create a folder in the current attached folder. Action for attachments panel"
 
 #: outwiker/app/actions/attachexecute.py:22
 msgid "Execute attachments"
@@ -377,8 +380,9 @@ msgid "Preferences…"
 msgstr "Preferences…"
 
 #: outwiker/app/actions/preferences.py:22
-msgid "Open the preferences dialog"
-msgstr "Open the preferences dialog"
+#| msgid "Open the preferences dialog"
+msgid "Open the preferences window"
+msgstr "Open the preferences window"
 
 #: outwiker/app/actions/printaction.py:18
 msgid "Print"
@@ -499,7 +503,6 @@ msgid "Toggle the note tree panel"
 msgstr "Toggle the note tree panel"
 
 #: outwiker/app/actions/sortchild.py:47
-#| msgid "Sort child pages alphabetically"
 msgid "Child pages alphabetically"
 msgstr "Child pages alphabetically"
 
@@ -508,47 +511,38 @@ msgid "Sort the child pages alphabetically"
 msgstr "Sort the child pages alphabetically"
 
 #: outwiker/app/actions/sortchild.py:66
-#| msgid "Creation date (oldest first)"
 msgid "Child pages by creation date (oldest first)"
 msgstr "Child pages by creation date (oldest first)"
 
 #: outwiker/app/actions/sortchild.py:70
-#| msgid "Creation date (oldest first)"
 msgid "Sort the child pages by creation date (oldest first)"
 msgstr "Sort the child pages by creation date (oldest first)"
 
 #: outwiker/app/actions/sortchild.py:92
-#| msgid "Creation date (newest first)"
 msgid "Child pages by creation date (newest first)"
 msgstr "Child pages by creation date (newest first)"
 
 #: outwiker/app/actions/sortchild.py:96
-#| msgid "Creation date (newest first)"
 msgid "Sort the child pages by creation date (newest first)"
 msgstr "Sort the child pages by creation date (newest first)"
 
 #: outwiker/app/actions/sortchild.py:118
-#| msgid "Changing date (oldest first)"
 msgid "Child pages by modified date (oldest first)"
 msgstr "Child pages by modified date (oldest first)"
 
 #: outwiker/app/actions/sortchild.py:122
-#| msgid "Changing date (oldest first)"
 msgid "Sort the child pages by modified date (oldest first)"
 msgstr "Sort the child pages by modified date (oldest first)"
 
 #: outwiker/app/actions/sortchild.py:144
-#| msgid "Changing date (newest first)"
 msgid "Child pages by modified date (newest first)"
 msgstr "Child pages by modified date (newest first)"
 
 #: outwiker/app/actions/sortchild.py:148
-#| msgid "Changing date (newest first)"
 msgid "Sort the child pages by modified date (newest first)"
 msgstr "Sort the child pages by modified date (newest first)"
 
 #: outwiker/app/actions/sortsiblings.py:47
-#| msgid "Sort sibling pages alphabetically"
 msgid "Sibling pages alphabetically"
 msgstr "Sibling pages alphabetically"
 
@@ -557,37 +551,30 @@ msgid "Sort the sibling pages alphabetically"
 msgstr "Sort the sibling pages alphabetically"
 
 #: outwiker/app/actions/sortsiblings.py:66
-#| msgid "Creation date (oldest first)"
 msgid "Sibling pages by creation date (oldest first)"
 msgstr "Sibling pages by creation date (oldest first)"
 
 #: outwiker/app/actions/sortsiblings.py:70
-#| msgid "Creation date (oldest first)"
 msgid "Sort the sibling pages by creation date (oldest first)"
 msgstr "Sort the sibling pages by creation date (oldest first)"
 
 #: outwiker/app/actions/sortsiblings.py:92
-#| msgid "Creation date (newest first)"
 msgid "Sibling pages by creation date (newest first)"
 msgstr "Sibling pages by creation date (newest first)"
 
 #: outwiker/app/actions/sortsiblings.py:96
-#| msgid "Creation date (newest first)"
 msgid "Sort the sibling pages by creation date (newest first)"
 msgstr "Sort the sibling pages by creation date (newest first)"
 
 #: outwiker/app/actions/sortsiblings.py:118
-#| msgid "Changing date (oldest first)"
 msgid "Sibling pages by modified date (oldest first)"
 msgstr "Sibling pages by modified date (oldest first)"
 
 #: outwiker/app/actions/sortsiblings.py:122
-#| msgid "Sort the sibling pages alphabetically"
 msgid "Sort the sibling pages by modified date (oldest first)"
 msgstr "Sort the sibling pages by modified date (oldest first)"
 
 #: outwiker/app/actions/sortsiblings.py:144
-#| msgid "Changing date (newest first)"
 msgid "Sibling pages by modified date (newest first)"
 msgstr "Sibling pages by modified date (newest first)"
 
@@ -669,11 +656,11 @@ msgstr "Rename tag…"
 msgid "Rename tag"
 msgstr "Rename tag"
 
-#: outwiker/app/gui/actionslist.py:229 outwiker/gui/editorstyleslist.py:26
+#: outwiker/app/gui/actionslist.py:229 outwiker/gui/editorstyleslist.py:27
 msgid "Bold"
 msgstr "Bold"
 
-#: outwiker/app/gui/actionslist.py:232 outwiker/gui/editorstyleslist.py:27
+#: outwiker/app/gui/actionslist.py:232 outwiker/gui/editorstyleslist.py:28
 msgid "Italic"
 msgstr "Italic"
 
@@ -682,7 +669,7 @@ msgid "Bold italic"
 msgstr "Bold italic"
 
 #: outwiker/app/gui/actionslist.py:242 outwiker/app/gui/actionslist.py:243
-#: outwiker/gui/editorstyleslist.py:28
+#: outwiker/gui/editorstyleslist.py:29
 msgid "Underline"
 msgstr "Underline"
 
@@ -1383,22 +1370,21 @@ msgid "Movement"
 msgstr "Movement"
 
 #: outwiker/app/gui/mainwindow.py:450
-#| msgid "Sort"
 msgid "Sorting"
 msgstr "Sorting"
 
 #: outwiker/app/gui/mainwindow.py:499
-#: outwiker/app/gui/preferences/colorspanel.py:68
-#: outwiker/app/gui/preferences/colorspanel.py:69
-#: outwiker/app/gui/preferences/colorspanel.py:70
-#: outwiker/app/gui/preferences/colorspanel.py:71
-#: outwiker/app/gui/preferences/colorspanel.py:72
-#: outwiker/app/gui/preferences/colorspanel.py:74
-#: outwiker/app/gui/preferences/colorspanel.py:75
-#: outwiker/app/gui/preferences/colorspanel.py:76
-#: outwiker/app/gui/preferences/colorspanel.py:77
-#: outwiker/app/gui/preferences/colorspanel.py:78
-#: outwiker/app/gui/preferences/colorspanel.py:80
+#: outwiker/app/gui/preferences/colorspanel.py:97
+#: outwiker/app/gui/preferences/colorspanel.py:99
+#: outwiker/app/gui/preferences/colorspanel.py:104
+#: outwiker/app/gui/preferences/colorspanel.py:109
+#: outwiker/app/gui/preferences/colorspanel.py:112
+#: outwiker/app/gui/preferences/colorspanel.py:115
+#: outwiker/app/gui/preferences/colorspanel.py:117
+#: outwiker/app/gui/preferences/colorspanel.py:122
+#: outwiker/app/gui/preferences/colorspanel.py:127
+#: outwiker/app/gui/preferences/colorspanel.py:132
+#: outwiker/app/gui/preferences/colorspanel.py:138
 #: outwiker/app/gui/preferences/prefcontroller.py:139
 msgid "Tabs"
 msgstr "Tabs"
@@ -1452,11 +1438,11 @@ msgstr "Page style"
 msgid "Can't set page style\n"
 msgstr "Can't set page style\n"
 
-#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:168
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:169
 msgid "Do not change"
 msgstr "Do not change"
 
-#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:170
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:171
 msgid "Default style"
 msgstr "Default style"
 
@@ -1520,102 +1506,102 @@ msgstr "Insert link to attachment"
 msgid "Run attachment"
 msgstr "Run attachment"
 
-#: outwiker/app/gui/preferences/attachpanel.py:37
+#: outwiker/app/gui/preferences/attachpanel.py:38
 msgid "Double-click or Enter on an attachment"
 msgstr "Double-click or Enter on an attachment"
 
-#: outwiker/app/gui/preferences/attachpanel.py:44
+#: outwiker/app/gui/preferences/attachpanel.py:45
 msgid "Show hidden folders"
 msgstr "Show hidden folders"
 
-#: outwiker/app/gui/preferences/colorspanel.py:59
-#: outwiker/app/gui/preferences/colorspanel.py:60
+#: outwiker/app/gui/preferences/colorspanel.py:65
+#: outwiker/app/gui/preferences/colorspanel.py:70
 #: outwiker/app/gui/preferences/prefcontroller.py:137
 msgid "Main window"
 msgstr "Main window"
 
-#: outwiker/app/gui/preferences/colorspanel.py:59
+#: outwiker/app/gui/preferences/colorspanel.py:66
 msgid "Main panels background color"
 msgstr "Main panels background color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:60
+#: outwiker/app/gui/preferences/colorspanel.py:71
 msgid "Main panels text color"
 msgstr "Main panels text color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:62
-#: outwiker/app/gui/preferences/colorspanel.py:63
-#: outwiker/app/gui/preferences/colorspanel.py:64
-#: outwiker/app/gui/preferences/colorspanel.py:65
-#: outwiker/app/gui/preferences/colorspanel.py:66
+#: outwiker/app/gui/preferences/colorspanel.py:76
+#: outwiker/app/gui/preferences/colorspanel.py:79
+#: outwiker/app/gui/preferences/colorspanel.py:82
+#: outwiker/app/gui/preferences/colorspanel.py:87
+#: outwiker/app/gui/preferences/colorspanel.py:92
 #: outwiker/app/gui/preferences/prefcontroller.py:173
 msgid "Editor"
 msgstr "Editor"
 
-#: outwiker/app/gui/preferences/colorspanel.py:62
-#: outwiker/app/gui/preferences/colorspanel.py:74
+#: outwiker/app/gui/preferences/colorspanel.py:76
+#: outwiker/app/gui/preferences/colorspanel.py:115
 msgid "Font color"
 msgstr "Font color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:63
+#: outwiker/app/gui/preferences/colorspanel.py:79
 msgid "Background color"
 msgstr "Background color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:64
+#: outwiker/app/gui/preferences/colorspanel.py:83
 msgid "Background color of the selected text"
 msgstr "Background color of the selected text"
 
-#: outwiker/app/gui/preferences/colorspanel.py:65
+#: outwiker/app/gui/preferences/colorspanel.py:88
 msgid "Line number font color"
 msgstr "Line number font color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:66
+#: outwiker/app/gui/preferences/colorspanel.py:93
 msgid "Page margin background color"
 msgstr "Page margin background color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:68
+#: outwiker/app/gui/preferences/colorspanel.py:97
 msgid "Tab color"
 msgstr "Tab color"
 
-#: outwiker/app/gui/preferences/colorspanel.py:69
+#: outwiker/app/gui/preferences/colorspanel.py:100
 msgid "Сolor of the selected tab"
 msgstr "Сolor of the selected tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:70
+#: outwiker/app/gui/preferences/colorspanel.py:105
 msgid "Сolor of the tab under cursor"
 msgstr "Сolor of the tab under cursor"
 
-#: outwiker/app/gui/preferences/colorspanel.py:71
+#: outwiker/app/gui/preferences/colorspanel.py:109
 msgid "Color of the pressed tab"
 msgstr "Color of the pressed tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:72
+#: outwiker/app/gui/preferences/colorspanel.py:112
 msgid "Color of the dragged tab"
 msgstr "Color of the dragged tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:75
+#: outwiker/app/gui/preferences/colorspanel.py:118
 msgid "Font color of the selected tab"
 msgstr "Font color of the selected tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:76
+#: outwiker/app/gui/preferences/colorspanel.py:123
 msgid "Font color of the tab under cursor"
 msgstr "Font color of the tab under cursor"
 
-#: outwiker/app/gui/preferences/colorspanel.py:77
+#: outwiker/app/gui/preferences/colorspanel.py:128
 msgid "Font color of the pressed tab"
 msgstr "Font color of the pressed tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:78
+#: outwiker/app/gui/preferences/colorspanel.py:133
 msgid "Font color of the dragged tab"
 msgstr "Font color of the dragged tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:80
+#: outwiker/app/gui/preferences/colorspanel.py:138
 msgid "Tab border color"
 msgstr "Tab border color"
 
 #: outwiker/app/gui/preferences/editorpanel.py:29
 #: outwiker/app/gui/preferences/htmlrenderpanel.py:26
 #: outwiker/app/gui/preferences/textprintpanel.py:29
-#: outwiker/pages/html/htmlpageview.py:37
+#: outwiker/gui/editorstyleslist.py:25 outwiker/pages/html/htmlpageview.py:37
 #: outwiker/pages/html/htmlpageview.py:203
 #: outwiker/pages/wiki/wikipageview.py:69
 #: outwiker/pages/wiki/wikipageview.py:165
@@ -1798,8 +1784,9 @@ msgid "No groups"
 msgstr "No groups"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:225
-msgid "Can't create directory for icons group"
-msgstr "Can't create directory for icons group"
+#| msgid "Can't create directory for icons group"
+msgid "Can't create folder for icons group"
+msgstr "Can't create folder for icons group"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:255
 #, python-brace-format
@@ -1807,13 +1794,15 @@ msgid "New group{}"
 msgstr "New group{}"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:282
-msgid "Can't rename directory for icons group"
-msgstr "Can't rename directory for icons group"
+#| msgid "Can't rename directory for icons group"
+msgid "Can't rename folder for icons group"
+msgstr "Can't rename folder for icons group"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:289
 #, python-brace-format
-msgid "Group with name \"{}\" exists already"
-msgstr "Group with name \"{}\" exists already"
+#| msgid "Group with name \"{}\" exists already"
+msgid "Group \"{}\" exists already"
+msgstr "Group \"{}\" exists already"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:296
 #, python-brace-format
@@ -1830,8 +1819,9 @@ msgid "Remove group?"
 msgstr "Remove group?"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:341
-msgid "Can't remove group directory"
-msgstr "Can't remove group directory"
+#| msgid "Can't remove group directory"
+msgid "Can't remove group folder"
+msgstr "Can't remove group folder"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:348
 msgid "All image files"
@@ -3233,6 +3223,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Open \"About\" dialog"
+#~ msgstr "Open \"About\" dialog"
 
 #~ msgid "Copied to clipboard"
 #~ msgstr "Copied to clipboard"
