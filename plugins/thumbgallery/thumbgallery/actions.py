@@ -30,7 +30,7 @@ class ThumbAction(BaseAction):
 
     @property
     def description(self):
-        return _("Insert (:thumbgallery:) wiki command to create the gallery.")
+        return _("Insert (:thumbgallery:) wiki command to create the gallery")
 
     def run(self, params):
         with ThumbDialog(
