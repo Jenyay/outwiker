@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Statistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:47+0300\n"
-"PO-Revision-Date: 2018-08-23 13:37+0300\n"
+"POT-Creation-Date: 2026-07-25 21:04+0300\n"
+"PO-Revision-Date: 2026-07-25 21:04+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en_GB\n"
@@ -16,72 +16,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.9\n"
 
-#: tagsinfo.py:35
-#, python-brace-format
-msgid "Tags count: {0}"
-msgstr "Tags count: {0}"
+#: datepageinfo.py:36
+msgid "Recent edited pages:"
+msgstr "Recent edited pages:"
 
-#: tagsinfo.py:39
-msgid "Most frequently used tags:"
-msgstr "Most frequently used tags:"
-
-#: tagsinfo.py:47
-msgid "Most rarely used tags:"
-msgstr "Most rarely used tags:"
-
-#: pageattachmentsizeinfo.py:21
-msgid ""
-"Pages with the largest size of attachments (in brackets the size of "
-"attachments):"
-msgstr ""
-"Pages with the largest size of attachments (in brackets the size of "
-"attachments):"
-
-#: pageattachmentsizeinfo.py:40
-msgid "kB"
-msgstr "kB"
+#: datepageinfo.py:45
+msgid "Oldest pages:"
+msgstr "Oldest pages:"
 
 #: maxdepthinfo.py:23
 #, python-brace-format
 msgid "Max page depth: {0}"
 msgstr "Max page depth: {0}"
 
-#: pagestatdialog.py:22 plugin.py:73
-msgid "Page Statistic"
-msgstr "Page Statistic"
+#: pageattachmentsizeinfo.py:23
+msgid ""
+"Pages with the largest size of attachments (in brackets the size of "
+"attachments):"
+msgstr ""
+"Pages with the largest size of attachments (in brackets the size of "
+"attachments):"
 
-#: pagestatdialog.py:64
-msgid "Word count"
-msgstr "Word count"
+#: pageattachmentsizeinfo.py:43
+msgid "KB"
+msgstr "KB"
 
-#: pagestatdialog.py:80
-msgid "Line count"
-msgstr "Line count"
-
-#: pagestatdialog.py:96
-msgid "Character count"
-msgstr "Character count"
-
-#: pagestatdialog.py:112
-msgid "Character count without spaces"
-msgstr "Character count without spaces"
-
-#: pagestatdialog.py:128
-msgid "Number of attachments"
-msgstr "Number of attachments"
-
-#: pagestatdialog.py:144
-msgid "Size of attachments (kB)"
-msgstr "Size of attachments (kB)"
+#: pagecontentlengthinfo.py:21
+msgid "The longest notes (in brackets the number of characters):"
+msgstr "The longest notes (in brackets the number of characters):"
 
 #: pagecountinfo.py:17
 #, python-brace-format
 msgid "Page count: {0}"
 msgstr "Page count: {0}"
 
-#: plugin.py:36
+#: pagestatdialog.py:23 plugin.py:74
+msgid "Page Statistic"
+msgstr "Page Statistic"
+
+#: pagestatdialog.py:61
+msgid "Word count"
+msgstr "Word count"
+
+#: pagestatdialog.py:72
+msgid "Line count"
+msgstr "Line count"
+
+#: pagestatdialog.py:83
+msgid "Character count"
+msgstr "Character count"
+
+#: pagestatdialog.py:95
+msgid "Character count without spaces"
+msgstr "Character count without spaces"
+
+#: pagestatdialog.py:115
+msgid "Number of attachments"
+msgstr "Number of attachments"
+
+#: pagestatdialog.py:128
+msgid "Size of attachments (kB)"
+msgstr "Size of attachments (kB)"
+
+#: plugin.py:37
 msgid ""
 "The plugin to display statistics. \n"
 "                \n"
@@ -93,41 +92,44 @@ msgstr ""
 "Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
 "<b>Tools -> Tree Statistic</b>."
 
-#: plugin.py:42
+#: plugin.py:44
 msgid "https://jenyay.net/Outwiker/StatisticsEn"
 msgstr "https://jenyay.net/Outwiker/StatisticsEn"
 
-#: plugin.py:80 treestatdialog.py:51
+#: plugin.py:80 treestatdialog.py:49
 msgid "Tree Statistic"
 msgstr "Tree Statistic"
 
-#: treestatdialog.py:95
-msgid "A tree has no pages"
-msgstr "A tree has no pages"
+#: tagsinfo.py:34
+#, python-brace-format
+msgid "Tags count: {0}"
+msgstr "Tags count: {0}"
 
-#: treestatdialog.py:98
+#: tagsinfo.py:37
+msgid "Frequently used tags:"
+msgstr "Frequently used tags:"
+
+#: tagsinfo.py:46
+msgid "Rarely used tags:"
+msgstr "Rarely used tags:"
+
+#: treestatdialog.py:79
 msgid "Collecting statistics. Please wait..."
 msgstr "Collecting statistics. Please wait..."
 
-#: treestatdialog.py:102
+#: treestatdialog.py:82
 msgid "Statistics"
 msgstr "Statistics"
 
-#: treestatdialog.py:103
+#: treestatdialog.py:82
 msgid "Collecting statistics..."
 msgstr "Collecting statistics..."
 
-#: datepageinfo.py:35
-msgid "Recent edited pages:"
-msgstr "Recent edited pages:"
+#~ msgid "kB"
+#~ msgstr "kB"
 
-#: datepageinfo.py:43
-msgid "Oldest pages:"
-msgstr "Oldest pages:"
-
-#: pagecontentlengthinfo.py:21
-msgid "The longest notes (in brackets the number of characters):"
-msgstr "The longest notes (in brackets the number of characters):"
+#~ msgid "A tree has no pages"
+#~ msgstr "A tree has no pages"
 
 #~ msgid "http://jenyay.net/Outwiker/StatisticsEn"
 #~ msgstr "http://jenyay.net/Outwiker/StatisticsEn"

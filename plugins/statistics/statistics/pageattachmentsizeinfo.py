@@ -40,7 +40,7 @@ class PageAttachmentSizeInfo:
         Оформить список страниц в виде HTML
         """
         # Локализованные единицы изменения размеров файлов
-        kb = _("kB")
+        kb = _("KB")
 
         items = [
             "<li><b>{title}</b> ({size} {kb})</li>".format(
