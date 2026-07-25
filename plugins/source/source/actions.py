@@ -14,7 +14,7 @@ from .insertdialogcontroller import InsertDialogController
 
 class InsertSourceAction(BaseAction):
     """
-    Вызвать диалог для вставки команды (:source:)
+    Open dialog to insert (:source:) command
     """
 
     stringId = "Source_InsertSource"
@@ -41,7 +41,7 @@ class InsertSourceAction(BaseAction):
     @testreadonly
     def _insertCommand(self):
         """
-        Вставка команды (:source:) в редактор
+        Insert (:source:) command into editor
         """
         if self._application.selectedPage.readonly:
             raise ReadonlyException()
@@ -63,6 +63,6 @@ class InsertSourceAction(BaseAction):
 
     def _getPageView(self):
         """
-        Получить указатель на панель представления страницы
+        Get pointer to the page view panel
         """
         return self._application.mainWindow.pageView

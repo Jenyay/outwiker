@@ -20,15 +20,14 @@ from .gui.filterlistdialog import FilterListDialog
 
 class InsertDialogController:
     """
-    Класс для управления диалогом InsertDialog
+    Controller class for InsertDialog
     """
 
     def __init__(self, page, dialog: InsertDialog, config):
         """
-        page - текущая страница
-        dialog - экземпляр класса InsertDialog,
-            который надо будет показать пользователю.
-        config - экземпляр класса SourceConfig
+        page - current page
+        dialog - InsertDialog instance to show to the user.
+        config - SourceConfig instance
         """
         self._page = page
         self._dialog = dialog
@@ -81,15 +80,15 @@ class InsertDialogController:
 
     def _onfileChecked(self, event):
         """
-        Обработчик события при установке/снятии флажка
-            "Вставить текст программы из файла"
+        Event handler for checkbox toggle
+            "Insert source text from file"
         """
         self.updateFileChecked()
 
     def updateFileChecked(self):
         """
-        Обновление интерфейса после установки/удаления флажка
-            "Вставить текст программы из файла"
+        Update interface after checkbox is checked/unchecked
+            "Insert source text from file"
         """
         self.enableFileGuiElements(self._dialog.fileCheckBox.IsChecked())
         self.loadLanguagesState()
@@ -97,7 +96,7 @@ class InsertDialogController:
     @testreadonly
     def _onAttach(self, event):
         """
-        Обработчик события при нажатии на кнопку для прикрепления файла
+        Event handler for file attachment button
         """
         if self._page.readonly:
             raise ReadonlyException()
@@ -125,8 +124,7 @@ class InsertDialogController:
 
     def showDialog(self):
         """
-        Метод показывает диалог и возвращает результат метода
-            ShowModal() диалога
+        Show dialog and return the result of ShowModal()
         """
         self.loadState()
 
@@ -163,8 +161,7 @@ class InsertDialogController:
 
     def _getCommonParams(self):
         """
-        Получить список параметров, общий для исходников,
-            вставляемых в виде текста и из файла
+        Get common parameters for both inline and file-based source code
         """
         commonparams = "{tabwidth}{style}{parentbg}{linenum}"
 
@@ -179,8 +176,8 @@ class InsertDialogController:
 
     def _getStringsForText(self):
         """
-        Возвращает кортеж строк для случая оформления исходников
-            из текста (не из файла)
+        Returns a tuple of strings for formatting source code
+            from text (not from file)
         """
         langStr = ' lang="{language}"'.format(
             language=self._langList.getDesignation(self._dialog.language)
@@ -198,8 +195,8 @@ class InsertDialogController:
 
     def _getStringsForAttachment(self):
         """
-        Возвращает кортеж строк для случая оформления исходников
-            из прикрепленных файлов
+        Returns a tuple of strings for formatting source code
+            from attached files
         """
         fname = self._dialog.attachment
         encoding = self._dialog.encoding
@@ -230,7 +227,7 @@ class InsertDialogController:
 
     def getCommandStrings(self):
         """
-        Возвращает кортеж из двух строк, описывающих начало и конец команды
+        Returns a tuple of two strings describing the start and end of the command
         """
         if self._dialog.insertFromFile:
             return self._getStringsForAttachment()
@@ -253,7 +250,7 @@ class InsertDialogController:
 
     def loadState(self):
         """
-        Загрузить настройки и установить их в диалоге
+        Load settings and apply them to the dialog
         """
         self._loadTabWidthState()
         self.loadLanguagesState()
@@ -271,7 +268,7 @@ class InsertDialogController:
 
     def _updateDialogSize(self):
         """
-        Изменение размера диалога
+        Update dialog size
         """
         currentWidth, currentHeight = self._dialog.GetSize()
         dialogWidth = max(self._config.dialogWidth.value, currentWidth)
@@ -295,21 +292,21 @@ class InsertDialogController:
 
     def _loadEncodingState(self):
         """
-        Заполнение списка кодировок
+        Fill encoding list
         """
         self._dialog.encodingComboBox.AppendItems(self.getEncodingList())
         self._dialog.encodingComboBox.SetSelection(0)
 
     def _loadTabWidthState(self):
         """
-        Настройки элементов интерфейса, связанных с шириной табуляции
+        Configure tab width GUI elements
         """
         self._dialog.tabWidthSpin.SetRange(self.MIN_TAB_WIDTH, self.MAX_TAB_WIDTH)
         self._dialog.tabWidthSpin.SetValue(0)
 
     def loadLanguagesState(self):
         """
-        Заполнение списка языков программирования
+        Fill programming languages list
         """
         languages = self._getLangList() + [_("Other...")]
 
@@ -334,7 +331,7 @@ class InsertDialogController:
 
     def saveState(self):
         """
-        Сохранить настройки диалога
+        Save dialog settings
         """
         if (
             not self._dialog.insertFromFile
@@ -353,8 +350,7 @@ class InsertDialogController:
 
     def enableFileGuiElements(self, enabled):
         """
-        Активировать или дизактивировать элементы управления,
-            связанные с прикрепленными файлами
+        Enable or disable GUI elements related to attached files
         """
         self._dialog.attachmentLabel.Enable(enabled)
         self._dialog.attachmentComboBox.Enable(enabled)

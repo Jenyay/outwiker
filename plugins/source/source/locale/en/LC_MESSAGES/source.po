@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Source plugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-27 15:23+0300\n"
-"PO-Revision-Date: 2022-07-27 15:24+0300\n"
+"POT-Creation-Date: 2026-07-26 00:04+0300\n"
+"PO-Revision-Date: 2026-07-26 00:08+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: en_US\n"
@@ -16,106 +16,104 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.9\n"
 
-#: actions.py:29
+#: actions.py:30
 msgid "Source Code (:source ...:)"
 msgstr "Source Code (:source ...:)"
 
-#: actions.py:34
+#: actions.py:35
 msgid ""
 "Source plugin. Insert (: source... :) command for source code highlighting"
 msgstr ""
 "Source plugin. Insert (: source... :) command for source code highlighting"
 
 #: commandsource.py:78
-#| msgid "<B>Source plugin: File '{0}' not found</B>"
+#, python-brace-format
 msgid "Source plugin: File '{}' not found"
 msgstr "Source plugin: File '{}' not found"
 
-#: commandsource.py:81
-#| msgid "<B>Source plugin: Encoding error</B>"
+#: commandsource.py:83
 msgid "Source plugin: Encoding error"
 msgstr "Source plugin: Encoding error"
 
-#: commandsource.py:84
-#| msgid "<B>Source plugin: Unknown encoding</B>"
+#: commandsource.py:86
 msgid "Source plugin: Unknown encoding"
 msgstr "Source plugin: Unknown encoding"
 
 #: controller.py:87
-msgid "Source [Plugin]"
-msgstr "Source [Plugin]"
+msgid "Source"
+msgstr "Source"
 
-#: insertdialog.py:24
+#: insertdialog.py:25
 msgid "Source code"
 msgstr "Source code"
 
-#: insertdialog.py:87
+#: insertdialog.py:91
 msgid "General"
 msgstr "General"
 
-#: insertdialog.py:88
+#: insertdialog.py:92
 msgid "Appearance"
 msgstr "Appearance"
 
-#: insertdialog.py:135
+#: insertdialog.py:139
 msgid "Use the page background for the code block"
 msgstr "Use the page background for the code block"
 
-#: insertdialog.py:149
+#: insertdialog.py:153
 msgid "Enable line numbers"
 msgstr "Enable line numbers"
 
-#: insertdialog.py:165
+#: insertdialog.py:169
 msgid "Tab Width (0 - Default Value)"
 msgstr "Tab Width (0 - Default Value)"
 
-#: insertdialog.py:197
+#: insertdialog.py:201
 msgid "Style"
 msgstr "Style"
 
-#: insertdialog.py:224
+#: insertdialog.py:228
 msgid "Insert source from file"
 msgstr "Insert source from file"
 
-#: insertdialog.py:225
+#: insertdialog.py:229
 msgid "Attached file"
 msgstr "Attached file"
 
-#: insertdialog.py:244
+#: insertdialog.py:250
 msgid "Attach new files"
 msgstr "Attach new files"
 
-#: insertdialog.py:265
+#: insertdialog.py:271
 msgid "File encoding"
 msgstr "File encoding"
 
-#: insertdialog.py:288
+#: insertdialog.py:294
 msgid "Language"
 msgstr "Language"
 
-#: insertdialogcontroller.py:43
+#: insertdialogcontroller.py:44
 msgid "Auto"
 msgstr "Auto"
 
-#: insertdialogcontroller.py:69
+#: insertdialogcontroller.py:68
 msgid "Add other language"
 msgstr "Add other language"
 
-#: insertdialogcontroller.py:309
+#: insertdialogcontroller.py:311
 msgid "Other..."
 msgstr "Other..."
 
-#: lang_translate.py:4
+#: lang_translate.py:5
 msgid "1S"
 msgstr "1S"
 
-#: lang_translate.py:5
+#: lang_translate.py:6
 msgid "Text only"
 msgstr "Text only"
 
-#: plugin.py:47
+#: plugin.py:55
 msgid ""
 "Add command (:source:) in wiki parser. This command highlight your source "
 "code."
@@ -123,7 +121,7 @@ msgstr ""
 "Add command (:source:) in wiki parser. This command highlight your source "
 "code."
 
-#: plugin.py:49
+#: plugin.py:59
 msgid ""
 "<B>Usage:</B>:\n"
 "(:source params... :)\n"
@@ -135,7 +133,7 @@ msgstr ""
 "source code\n"
 "(:sourceend:)"
 
-#: plugin.py:54
+#: plugin.py:66
 msgid ""
 "<B>Params:</B>\n"
 "<U>lang</U> - programming language\n"
@@ -169,7 +167,7 @@ msgstr ""
 "\n"
 "<U>linenum</U> - enable line numbers"
 
-#: plugin.py:69
+#: plugin.py:83
 msgid ""
 "<B>Example 1:</B>\n"
 "<PRE>(:source lang=\"python\" tabwidth=4:)\n"
@@ -189,7 +187,7 @@ msgstr ""
 "(:sourceend:)\n"
 "</PRE>"
 
-#: plugin.py:78
+#: plugin.py:94
 msgid ""
 "<B>Example 2:</B>\n"
 "<PRE>(:source lang=\"python\" style=\"autumn\":)\n"
@@ -209,7 +207,7 @@ msgstr ""
 "(:sourceend:)\n"
 "</PRE>"
 
-#: plugin.py:87
+#: plugin.py:105
 msgid ""
 "<B>Example 3:</B>\n"
 "<PRE>(:source lang=\"python\" tabwidth=4 parentbg linenum:)\n"
@@ -229,7 +227,7 @@ msgstr ""
 "(:sourceend:)\n"
 "</PRE>"
 
-#: plugin.py:96
+#: plugin.py:116
 msgid ""
 "<B>Example 4:</B>\n"
 "<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
@@ -239,7 +237,7 @@ msgstr ""
 "<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
 "PRE>"
 
-#: plugin.py:99
+#: plugin.py:121
 msgid ""
 "<B>Example 5:</B>\n"
 "<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
@@ -249,29 +247,32 @@ msgstr ""
 "<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
 "PRE>"
 
-#: plugin.py:127
+#: plugin.py:152
 msgid "https://jenyay.net/Outwiker/SourcePluginEn"
 msgstr "https://jenyay.net/Outwiker/SourcePluginEn"
 
-#: preferencepanel.py:54
+#: preferencepanel.py:53
 msgid "Default Tab Width"
 msgstr "Default Tab Width"
 
-#: preferencepanel.py:89
+#: preferencepanel.py:81
 msgid "Default Style"
 msgstr "Default Style"
 
-#: preferencepanel.py:121
+#: preferencepanel.py:106
 msgid "Used Languages"
 msgstr "Used Languages"
 
-#: preferencepanel.py:142
+#: preferencepanel.py:123
 msgid "Select All"
 msgstr "Select All"
 
-#: preferencepanel.py:143
+#: preferencepanel.py:124
 msgid "Clear"
 msgstr "Clear"
+
+#~ msgid "Source [Plugin]"
+#~ msgstr "Source [Plugin]"
 
 #~ msgid ""
 #~ "<B>Params:</B>\n"
@@ -402,8 +403,8 @@ msgstr "Clear"
 #~ "</PRE>\n"
 #~ "\n"
 #~ "<B>Example 3:</B>\n"
-#~ "<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:"
-#~ "sourceend:)</PRE>\n"
+#~ "<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)"
+#~ "(:sourceend:)</PRE>\n"
 #~ "\n"
 #~ "<B>Example 4:</B>\n"
 #~ "<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
@@ -444,8 +445,8 @@ msgstr "Clear"
 #~ "</PRE>\n"
 #~ "\n"
 #~ "<B>Example 3:</B>\n"
-#~ "<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:"
-#~ "sourceend:)</PRE>\n"
+#~ "<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)"
+#~ "(:sourceend:)</PRE>\n"
 #~ "\n"
 #~ "<B>Example 4:</B>\n"
 #~ "<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
