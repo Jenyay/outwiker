@@ -23,7 +23,7 @@ class DisableScriptsAction(BaseAction):
 
     @property
     def description(self):
-        return _("WebPage. Enable / disable scripts on downloaded page.")
+        return _("WebPage. Enable / disable scripts on downloaded page")
 
     def run(self, checked):
         assert self._application.selectedPage.getTypeString() == PAGE_TYPE_STRING
