@@ -3,7 +3,6 @@
 import wx
 
 from outwiker.api.core.defines import PAGE_MODE_TEXT
-from outwiker.api.gui.preferences import PreferencePanelInfo
 from outwiker.api.gui.defines import PREF_PANEL_PLUGINS
 
 from .actions import AddAutoRenameTagAction
@@ -41,7 +40,7 @@ class AutoRenamer:
 
     def __onPreferencesDialogCreate(self, dialog):
         prefPanel = PreferencesPanel(dialog.treeBook, self._application.config)
-        panelName = _("AutoRenamer [Plugin]")
+        panelName = _("AutoRenamer")
         dialog.addPage(prefPanel, panelName, parent_page_tag=PREF_PANEL_PLUGINS)
 
     def __onPageViewCreate(self, page):

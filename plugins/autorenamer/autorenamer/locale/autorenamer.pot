@@ -6,32 +6,29 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Autorenamer plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 13:06+0300\n"
+"POT-Creation-Date: 2026-07-26 11:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: preferencesPanel.py:25
-msgid "Automatically rename all pages according to their first line"
+#: actions.py:19
+msgid "AutoRename (:autorename:)"
 msgstr ""
 
-#: preferencesPanel.py:33
-msgid ""
-"Automatically set first line of the page be the name of this page on page "
-"create"
+#: actions.py:23
+msgid "Insert AutoRename (:autorename:) command"
 msgstr ""
 
-#: autorenamer.py:44
-msgid "AutoRenamer [Plugin]"
-msgstr ""
-
-#: autorenamer.py:81
+#: autorenamer.py:43 autorenamer.py:85
 msgid "AutoRenamer"
 msgstr ""
 
@@ -39,17 +36,19 @@ msgstr ""
 msgid ""
 "Plugin allows to rename all pages automatically using the first line of the "
 "page or automatically rename just those pages where you place (:autorename:) "
-"mark"
+"wiki command"
 msgstr ""
 
-#: plugin.py:23
+#: plugin.py:24
 msgid "<b>Author:</b> Vitalii Koshura (delionkur-lestat@mail.ru)"
 msgstr ""
 
-#: actions.py:18
-msgid "AutoRename (:autorename:)"
+#: preferencesPanel.py:25
+msgid "Automatically rename all pages according to their first line"
 msgstr ""
 
-#: actions.py:22
-msgid "Insert AutoRename (:autorename:) command"
+#: preferencesPanel.py:36
+msgid ""
+"Automatically set first line of the page be the name of this page on page "
+"create"
 msgstr ""
