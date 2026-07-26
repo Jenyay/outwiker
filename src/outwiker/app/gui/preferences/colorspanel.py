@@ -11,6 +11,7 @@ from outwiker.gui.guiconfig import (
     MainWindowConfig,
     GeneralGuiConfig,
     TabsConfig,
+    TagsConfig,
 )
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
 
@@ -45,6 +46,7 @@ class ColorsPanel(BasePrefPanel):
         self._editorGuiConfig = EditorConfig(application.config)
         self._generalGuiConfig = GeneralGuiConfig(application.config)
         self._tabsConfig = TabsConfig(application.config)
+        self._tagsConfig = TagsConfig(application.config)
 
         self._color_sections: Dict[str, List[ColorElement]] = {}
         self._fillParams()
@@ -61,6 +63,12 @@ class ColorsPanel(BasePrefPanel):
         self.SetupScrolling()
 
     def _fillParams(self):
+        self._fillMainWindowParams()
+        self._fillEditorParams()
+        self._fillTabsParams()
+        self._fillTagsParams()
+
+    def _fillMainWindowParams(self):
         self.addColorParam(
             _("Main window"),
             _("Main panels background color"),
@@ -72,6 +80,7 @@ class ColorsPanel(BasePrefPanel):
             self._mainWindowConfig.mainPanesTextColor,
         )
 
+    def _fillEditorParams(self):
         self.addColorParam(
             _("Editor"), _("Font color"), self._editorGuiConfig.fontColor
         )
@@ -94,6 +103,7 @@ class ColorsPanel(BasePrefPanel):
             self._editorGuiConfig.marginBackColor,
         )
 
+    def _fillTabsParams(self):
         self.addColorParam(_("Tabs"), _("Tab color"), self._tabsConfig.backColorNormal)
         self.addColorParam(
             _("Tabs"),
@@ -136,6 +146,79 @@ class ColorsPanel(BasePrefPanel):
 
         self.addColorParam(
             _("Tabs"), _("Tab border color"), self._tabsConfig.borderColor
+        )
+
+    def _fillTagsParams(self):
+        # Tag cloud colors
+        self.addColorParam(
+            _("Tags"),
+            _("Normal tag font color"),
+            self._tagsConfig.normalFontColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Normal hover tag background color"),
+            self._tagsConfig.normalHoverBackColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Normal hover tag border color"),
+            self._tagsConfig.normalHoverBorderColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Normal hover tag font color"),
+            self._tagsConfig.normalHoverFontColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Add button color"),
+            self._tagsConfig.addButtonColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Hover add button color"),
+            self._tagsConfig.hoverAddButtonColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Marked tag background color"),
+            self._tagsConfig.markedBackColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Marked tag border color"),
+            self._tagsConfig.markedBorderColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Marked tag font color"),
+            self._tagsConfig.markedFontColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Marked hover tag background color"),
+            self._tagsConfig.markedHoverBackColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Marked hover tag border color"),
+            self._tagsConfig.markedHoverBorderColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Marked hover tag font color"),
+            self._tagsConfig.markedHoverFontColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Remove button color"),
+            self._tagsConfig.removeButtonColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Hover remove button color"),
+            self._tagsConfig.hoverRemoveButtonColor,
         )
 
     def addColorParam(

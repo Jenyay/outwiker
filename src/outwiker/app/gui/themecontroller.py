@@ -5,7 +5,7 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.event import EVENT_PRIORITY_MAX_CORE
 from outwiker.gui.colors import sanitize_color
-from outwiker.gui.guiconfig import MainWindowConfig, TabsConfig, TreeConfig
+from outwiker.gui.guiconfig import MainWindowConfig, TabsConfig, TreeConfig, TagsConfig
 from outwiker.gui.theme import Theme
 
 
@@ -30,6 +30,7 @@ class ThemeController:
         self._loadNotificationConfig()
         self._loadTabsConfig()
         self._loadTreeConfig()
+        self._loadTagsConfig()
 
         self._first_load = False
 
@@ -221,6 +222,95 @@ class ThemeController:
             Theme.SECTION_TABS,
             Theme.TABS_SHOW_CLOSE_BUTTON,
             tabsConfig.showCloseButton.value,
+        )
+
+    def _loadTagsConfig(self):
+        assert self._theme is not None
+
+        tagsConfig = TagsConfig(self._application.config)
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_NORMAL_FONT_COLOR,
+            sanitize_color(tagsConfig.normalFontColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_NORMAL_HOVER_BACK_COLOR,
+            sanitize_color(tagsConfig.normalHoverBackColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_NORMAL_HOVER_BORDER_COLOR,
+            sanitize_color(tagsConfig.normalHoverBorderColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_NORMAL_HOVER_FONT_COLOR,
+            sanitize_color(tagsConfig.normalHoverFontColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_ADD_BUTTON_COLOR,
+            sanitize_color(tagsConfig.addButtonColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_HOVER_ADD_BUTTON_COLOR,
+            sanitize_color(tagsConfig.hoverAddButtonColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_MARKED_BACK_COLOR,
+            sanitize_color(tagsConfig.markedBackColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_MARKED_BORDER_COLOR,
+            sanitize_color(tagsConfig.markedBorderColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_MARKED_FONT_COLOR,
+            sanitize_color(tagsConfig.markedFontColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_MARKED_HOVER_BACK_COLOR,
+            sanitize_color(tagsConfig.markedHoverBackColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_MARKED_HOVER_BORDER_COLOR,
+            sanitize_color(tagsConfig.markedHoverBorderColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_MARKED_HOVER_FONT_COLOR,
+            sanitize_color(tagsConfig.markedHoverFontColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_REMOVE_BUTTON_COLOR,
+            sanitize_color(tagsConfig.removeButtonColor),
+        )
+
+        self._theme.set(
+            Theme.SECTION_TAGS,
+            Theme.TAGS_HOVER_REMOVE_BUTTON_COLOR,
+            sanitize_color(tagsConfig.hoverRemoveButtonColor),
         )
 
     def loadSystemParams(self):
