@@ -1,74 +1,82 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: externaltools\n"
+"Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:51+0300\n"
-"PO-Revision-Date: 2018-08-23 13:03+0300\n"
-"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
-"Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"POT-Creation-Date: 2026-07-26 10:49+0300\n"
+"PO-Revision-Date: 2026-07-26 10:50+0300\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
-"X-Poedit-Basepath: ../../..\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.6\n"
-"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
+"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
+"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Project-ID: 7620\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: externaltools.po\n"
+"X-Crowdin-File-ID: 85\n"
+"X-Generator: Poedit 3.9\n"
 
-#: controller.py:67 commandexec/commandcontroller.py:127
-msgid "ExternalTools"
-msgstr "ExternalTools"
+#: commandexec/actions.py:45
+msgid "Run applications (:exec:)"
+msgstr "Запуск приложений (:exec:)"
 
-#: controller.py:87
-msgid "External Tools [Plugin]"
-msgstr "External Tools [Плагин]"
+#: commandexec/actions.py:49
+msgid "ExternalTools plugin. Insert (:exec:) command"
+msgstr "Плагин ExternalTools. Вставить команду (:exec:)"
 
-#: toolslistpanel.py:106
-msgid "Open file dialog..."
-msgstr "Открыть диалог выбора файла..."
+#: commandexec/actions.py:70
+msgid "%page%. Current page. Text file"
+msgstr "%page%. Текущая страница. Текстовый файл"
 
-#: toolslistpanel.py:112
-msgid "Remove tool"
-msgstr "Удалить приложение"
+#: commandexec/actions.py:75
+msgid ""
+"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
+"a path to current page text file."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %page%. Этот макрос будет заменён на "
+"путь до текстового файла текущей страницы."
 
-#: toolslistpanel.py:121
-msgid "Executables (*.exe)|*.exe|All Files|*.*"
-msgstr "Выполняемые файлы (*.exe)|*.exe|Все файлы|*.*"
+#: commandexec/actions.py:91
+msgid "%html%. Current page. HTML file"
+msgstr "%html%. Текущая страница. Файл HTML"
 
-#: toolslistpanel.py:123
-msgid "All Files|*"
-msgstr "Все файлы|*"
+#: commandexec/actions.py:96
+msgid ""
+"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
+"a path to current HTML file."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %html%. Этот макрос будет заменён на "
+"путь до файла HTML текущей страницы."
 
-#: menumaker.py:44
-msgid "Open Content File with..."
-msgstr "Открыть файл с текстом заметки в..."
+#: commandexec/actions.py:112
+msgid "%attach%. Path to current attachments folder"
+msgstr "%attach%. Путь до текущей папки вложенных файлов"
 
-#: menumaker.py:58
-msgid "Open Result HTML File with..."
-msgstr "Открыть HTML-файл в..."
+#: commandexec/actions.py:117
+msgid ""
+"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
+"by a path to current attach folder."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %attach%. Этот макрос будет заменён на "
+"путь до папки с вложенными файлами текущей страницы."
 
-#: preferencespanel.py:39
-msgid "Warn before executing applications by (:exec:) command"
-msgstr "Предупреждать перед запуском приложений с помощью команды (:exec:)"
+#: commandexec/actions.py:133
+msgid "%folder%. Path to current page folder"
+msgstr "%folder%. Путь до папки текущей страницы"
 
-#: preferencespanel.py:42
-msgid "Tools List"
-msgstr "Список приложений"
+#: commandexec/actions.py:138
+msgid ""
+"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
+"by a path to current page folder."
+msgstr ""
+"Плагин ExternalTools. Вставить макрос %folder%. Этот макрос будет заменён на "
+"путь до папки текущей страницы."
 
-#: preferencespanel.py:43
-msgid "Append Tools"
-msgstr "Добавить приложение"
-
-#: preferencespanel.py:100
-msgid "Can't save options"
-msgstr "Ошибка сохранения настроек"
-
-#: preferencespanel.py:101 menutoolscontroller.py:73
-msgid "Error"
-msgstr "Ошибка"
-
-#: commandexec/commandcontroller.py:120
+#: commandexec/commandcontroller.py:121
 msgid ""
 "Run applications by ExternalTools plugin?\n"
 "It may be unsafe."
@@ -76,7 +84,7 @@ msgstr ""
 "Запустить приложения с помощью плагина ExternalTools?\n"
 "Это может быть опасно."
 
-#: commandexec/commandcontroller.py:122
+#: commandexec/commandcontroller.py:123
 msgid ""
 "Run application by ExternalTools plugin?\n"
 "It may be unsafe."
@@ -84,61 +92,9 @@ msgstr ""
 "Запустить приложение с помощью плагина ExternalTools?\n"
 "Это может быть опасно."
 
-#: commandexec/actions.py:43
-msgid "Run applications (:exec:)"
-msgstr "Запуск приложений (:exec:)"
-
-#: commandexec/actions.py:47
-msgid "ExternalTools plugin. Insert (:exec:) command"
-msgstr "Плагин ExternalTools. Вставить команду (:exec:)"
-
-#: commandexec/actions.py:67
-msgid "%page%. Current page. Text file"
-msgstr "%page%. Текущая страница. Текстовый файл"
-
-#: commandexec/actions.py:71
-msgid ""
-"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
-"a path to current page text file."
-msgstr ""
-"Плагин ExternalTools. Вставить макрос %page%. Этот макрос будет заменен на "
-"путь до текстового файла текущей страницы."
-
-#: commandexec/actions.py:85
-msgid "%html%. Current page. HTML file"
-msgstr "%html%. Текущая страница. Файл HTML"
-
-#: commandexec/actions.py:89
-msgid ""
-"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
-"a path to current HTML file."
-msgstr ""
-"Плагин ExternalTools. Вставить макрос %html%. Этот макрос будет заменен на "
-"путь до файла HTML текущей страницы."
-
-#: commandexec/actions.py:103
-msgid "%attach%. Path to current attachments folder"
-msgstr "%attach%. Путь до текущей папки вложенных файлов"
-
-#: commandexec/actions.py:107
-msgid ""
-"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
-"by a path to current attach folder."
-msgstr ""
-"Плагин ExternalTools. Вставить макрос %attach%. Этот макрос будет заменен на "
-"путь до папки с вложенными файлами текущей страницы."
-
-#: commandexec/actions.py:121
-msgid "%folder%. Path to current page folder"
-msgstr "%folder%. Путь до папки текущей страницы"
-
-#: commandexec/actions.py:125
-msgid ""
-"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
-"by a path to current page folder."
-msgstr ""
-"Плагин ExternalTools. Вставить макрос %folder%. Этот макрос будет заменен на "
-"путь до папки текущей страницы."
+#: commandexec/commandcontroller.py:129 controller.py:66 controller.py:85
+msgid "ExternalTools"
+msgstr "ExternalTools"
 
 #: commandexec/execdialog.py:17
 msgid "Link"
@@ -156,15 +112,27 @@ msgstr "Вставка команды (:exec:)"
 msgid "Title"
 msgstr "Заголовок"
 
-#: commandexec/execdialog.py:47
+#: commandexec/execdialog.py:43
 msgid "Format"
 msgstr "Формат"
 
-#: menutoolscontroller.py:72
+#: menumaker.py:46
+msgid "Open Content File with..."
+msgstr "Открыть файл с текстом заметки в..."
+
+#: menumaker.py:62
+msgid "Open Result HTML File with..."
+msgstr "Открыть HTML-файл в..."
+
+#: menutoolscontroller.py:70
 msgid "Can't execute tools"
 msgstr "Ошибка запуска приложения"
 
-#: plugin.py:37
+#: menutoolscontroller.py:70 preferencespanel.py:96
+msgid "Error"
+msgstr "Ошибка"
+
+#: plugin.py:39
 msgid ""
 "ExternalTools plug-in allows to open the notes files with external "
 "applications.\n"
@@ -182,15 +150,15 @@ msgstr ""
 "приложениях.\n"
 "\n"
 "Плагин добавляет команду (:exec:) для создания ссылки или кнопки, "
-"позволяющие запускать внешние приложения с викистраниц..\n"
+"запускающие внешние приложения с вики-страниц..\n"
 "\n"
-"Команда (:exec:) позволяет запускать несколько приложений одновременно. "
-"Каждое приложение должно располагаться на отдельной строке.\n"
+"Командой (:exec:) можно запускать сразу несколько приложений. Каждое "
+"приложение должно располагаться на отдельной строке.\n"
 "\n"
-"Если строка начинается со знака \"#\", то эта строка игнорируется. Знак \"#"
-"\" в начале строки - это знак комментария.\n"
+"Если строка начинается со знака \"#\", то она игнорируется. Символ \"#\" в "
+"начале строки - это признак комментария.\n"
 
-#: plugin.py:46
+#: plugin.py:50
 msgid ""
 "The (:exec:) command has the following optional parameters:\n"
 "<ul>\n"
@@ -206,7 +174,7 @@ msgstr ""
 "<li>title. Этот параметр устанавливает текст для ссылки или кнопки.</li>\n"
 "</ul>"
 
-#: plugin.py:52
+#: plugin.py:58
 msgid ""
 "Inside (:exec:) command may be macroses. The macroses will be replaced by "
 "appropriate paths:\n"
@@ -224,21 +192,21 @@ msgstr ""
 "Внутри команды (:exec:) могут использоваться макросы. Эти макросы будут "
 "заменены на соответствующие пути:\n"
 "<ul>\n"
-"<li><b>%page%</b>. Этот макрос будет заменен на полный путь до файла с "
-"текстом страницы.</li>\n"
-"<li><b>%html%</b>. Этот макрос будет заменен на полный путь до HTML-файла "
+"<li><b>%page%</b>. Этот макрос заменяется на полный путь до файла с текстом "
 "страницы.</li>\n"
-"<li><b>%folder%</b>. Этот путь будет заменен на полный путь до папки "
+"<li><b>%html%</b>. Этот макрос заменяется на полный путь до HTML-файла "
 "страницы.</li>\n"
-"<li><b>%attach%</b>. Этот макрос будет заменен на полный путь до папки с "
-"прикрепленными файлами без слеша на конце.</li>\n"
+"<li><b>%folder%</b>. Этот путь заменяется на полный путь до папки страницы.</"
+"li>\n"
+"<li><b>%attach%</b>. Этот макрос заменяется на полный путь до папки с "
+"прикреплёнными файлами без слеша в конце.</li>\n"
 "</ul>"
 
-#: plugin.py:60
+#: plugin.py:67
 msgid "Examples"
 msgstr "Примеры"
 
-#: plugin.py:62
+#: plugin.py:70
 msgid ""
 "Creating a link for running application.exe:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
@@ -246,7 +214,7 @@ msgstr ""
 "Создание ссылки для запуска application.exe:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
 
-#: plugin.py:65
+#: plugin.py:75
 msgid ""
 "Same but creating a button\n"
 "<code><pre>(:exec format=button:)\n"
@@ -258,7 +226,7 @@ msgstr ""
 "application.exe\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:70
+#: plugin.py:82
 msgid ""
 "Create a link for running application.exe with parameters:\n"
 "<code><pre>(:exec:)\n"
@@ -270,7 +238,7 @@ msgstr ""
 "application.exe param1 \"c:\\myfolder\\path to file name\"\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:75
+#: plugin.py:89
 msgid ""
 "Run a lot of applications:\n"
 "<code><pre>(:exec title=\"Run application_1, application_2 and "
@@ -288,19 +256,19 @@ msgstr ""
 "application_3.exe param_1 param_2\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:82
+#: plugin.py:98
 msgid ""
 "Open attached file with application.exe:\n"
 "<code><pre>(:exec:)\n"
 "application.exe Attach:my_file.txt\n"
 "(:execend:)</pre></code>"
 msgstr ""
-"Открыть прикрепленный файл с помощью application.exe:\n"
+"Открыть прикреплённый файл с помощью application.exe:\n"
 "<code><pre>(:exec:)\n"
 "application.exe Attach:my_file.txt\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:87
+#: plugin.py:105
 msgid ""
 "Execute application.exe from attachments folder:\n"
 "<code><pre>(:exec:)\n"
@@ -311,7 +279,7 @@ msgid ""
 "Attach:application.exe Attach:my_file.txt\n"
 "(:execend:)</pre></code>"
 msgstr ""
-"Запустить application.exe из папки с прикрепленынми файлами:\n"
+"Запустить application.exe из папки с прикреплёнными файлами:\n"
 "<code><pre>(:exec:)\n"
 "%attach%/application.exe %attach%/my_file.txt\n"
 "(:execend:)</pre></code>\n"
@@ -320,158 +288,41 @@ msgstr ""
 "Attach:application.exe Attach:my_file.txt\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:143
+#: plugin.py:165
 msgid "https://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr "https://jenyay.net/Outwiker/ExternalTools"
 
-#~ msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
-#~ msgstr "http://jenyay.net/Outwiker/ExternalTools"
+#: preferencespanel.py:38
+msgid "Warn before executing applications by (:exec:) command"
+msgstr "Предупреждать перед запуском приложений с помощью команды (:exec:)"
 
-#~ msgid ""
-#~ "Open notes files with external editor.\n"
-#~ "\n"
-#~ "For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for "
-#~ "creation link or button for execute external applications from wiki "
-#~ "page.\n"
-#~ "\n"
-#~ "The (:exec:) command allow to run many applications. Every application "
-#~ "must writed on the separated lines.\n"
-#~ "\n"
-#~ "If line begins with \"#\" this line will be ignored. \"#\" in begin of "
-#~ "the line is sign of the comment.\n"
-#~ msgstr ""
-#~ "Открывает файлы заметок во внешних редакторах.\n"
-#~ "\n"
-#~ "Для OutWiker 1.9 и выше ExternalTools добавляет команду (:exec:) для "
-#~ "создания ссылки или кнопки для запуска внешних приложений с "
-#~ "викистраницы.\n"
-#~ "\n"
-#~ "Команда (:exec:) позволяет запускать несколько приложений. Каждое "
-#~ "приложение должно быть записано на отдельной строке.\n"
-#~ "\n"
-#~ "Если строка начинается с \"#\", то эта строка игнорируется. \"#\" в "
-#~ "начале строки - это знак комментария.\n"
+#: preferencespanel.py:41
+msgid "Tools List"
+msgstr "Список приложений"
 
-#~ msgid ""
-#~ "Run a lot of applications:\n"
-#~ "<code><pre>(:exec text=\"Run application_1, application_2 and "
-#~ "application_3\":)\n"
-#~ "application_1.exe\n"
-#~ "application_2.exe param_1 param_2\n"
-#~ "application_3.exe param_1 param_2\n"
-#~ "(:execend:)</pre></code>"
-#~ msgstr ""
-#~ "Запустить несколько приложений:\n"
-#~ "<code><pre>(:exec text=\"Run application_1, application_2 and "
-#~ "application_3\":)\n"
-#~ "application_1.exe\n"
-#~ "application_2.exe param_1 param_2\n"
-#~ "application_3.exe param_1 param_2\n"
-#~ "(:execend:)</pre></code>"
+#: preferencespanel.py:42
+msgid "Append Tools"
+msgstr "Добавить приложение"
 
-#~ msgid ""
-#~ "Open notes files with external editor.\n"
-#~ "\n"
-#~ "For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for "
-#~ "creation link or button for execute external applications from wiki "
-#~ "page.\n"
-#~ "\n"
-#~ "The (:exec:) command has the following optional parameters:\n"
-#~ "<ul>\n"
-#~ "<li>format. If the parameter equals \"button\" command will create a "
-#~ "button instead of a link.</li>\n"
-#~ "<li>title. The parameter sets the text for link or button.</li>\n"
-#~ "</ul>\n"
-#~ "\n"
-#~ "The (:exec:) command allow to run many applications. Every application "
-#~ "must writed on the separated lines.\n"
-#~ "\n"
-#~ "If line begins with \"#\" this line will be ignored. \"#\" in begin of "
-#~ "the line is sign of the comment.\n"
-#~ "\n"
-#~ "<b>Examples</b>\n"
-#~ "\n"
-#~ "Creating a link for running application.exe:\n"
-#~ "<code><pre>(:exec:)application.exe(:execend:)</pre></code>\n"
-#~ "\n"
-#~ "Same but creating a button\n"
-#~ "<code><pre>(:exec format=button:)\n"
-#~ "application.exe\n"
-#~ "(:execend:)</pre></code>\n"
-#~ "\n"
-#~ "Create a link for running application.exe with parameters:\n"
-#~ "<code><pre>(:exec:)\n"
-#~ "application.exe param1 \"c:\\myfolder\\path to file name\"\n"
-#~ "(:execend:)</pre></code>\n"
-#~ "\n"
-#~ "Run many applications:\n"
-#~ "<code><pre>(:exec text=\"Run application_1, application_2 and "
-#~ "application_3\":)\n"
-#~ "application_1.exe\n"
-#~ "application_2.exe param_1 param_2\n"
-#~ "application_3.exe param_1 param_2\n"
-#~ "(:execend:)</pre></code>\n"
-#~ msgstr ""
-#~ "Открывает файлы заметок во внешних редакторах.\n"
-#~ "\n"
-#~ "Для OutWiker 1.9 и выше ExternalTools добавляет команду (:exec:) для "
-#~ "создания ссылки или кнопки для запуска внешних приложений с "
-#~ "викистраницы.\n"
-#~ "\n"
-#~ "Команда (:exec:) имеет следующие необязательные параметры:\n"
-#~ "<ul>\n"
-#~ "<li>format. Если этот параметр равен \"button\", то команда создаст "
-#~ "кнопку вместо ссылки (по умолчанию).</li>\n"
-#~ "<li>title. Этот параметр устанавливает текст для ссылки или кнопки.</li>\n"
-#~ "</ul>\n"
-#~ "\n"
-#~ "Команда (:exec:) позволяет запускать несколкьо приложений. Каждое "
-#~ "приложение должно быть записано на отдельной строке.\n"
-#~ "\n"
-#~ "Если строка начинается с \"#\", то эта строка игнорируется. \"#\" в "
-#~ "начале строки - это знак комментария.\n"
-#~ "\n"
-#~ "<b>Примеры</b>\n"
-#~ "\n"
-#~ "Создание ссылки для запуска application.exe:\n"
-#~ "<code><pre>(:exec:)application.exe(:execend:)</pre></code>\n"
-#~ "\n"
-#~ "То же самое, но для создания кнопки\n"
-#~ "<code><pre>(:exec format=button:)\n"
-#~ "application.exe\n"
-#~ "(:execend:)</pre></code>\n"
-#~ "\n"
-#~ "Создать ссылку для запуска application.exe с параметрами:\n"
-#~ "<code><pre>(:exec:)\n"
-#~ "application.exe param1 \"c:\\myfolder\\path to file name\"\n"
-#~ "(:execend:)</pre></code>\n"
-#~ "\n"
-#~ "Запустить несколько приложений:\n"
-#~ "<code><pre>(:exec text=\"Run application_1, application_2 and "
-#~ "application_3\":)\n"
-#~ "application_1.exe\n"
-#~ "application_2.exe param_1 param_2\n"
-#~ "application_3.exe param_1 param_2\n"
-#~ "(:execend:)</pre></code>\n"
+#: preferencespanel.py:96
+msgid "Can't save options"
+msgstr "Ошибка сохранения настроек"
 
-#~ msgid ""
-#~ "Open notes files with external editor.\n"
-#~ "Added (:exec:) command for creation link for execute external tools from "
-#~ "wiki page.\n"
-#~ "\n"
-#~ "<b>Examples</b>\n"
-#~ "(:exec text=\"Open gvim in diff mode\":)\n"
-#~ "gvim -d \"file name 1.txt\" \"file name 2.txt\"\n"
-#~ "(:execend:)\n"
-#~ msgstr ""
-#~ "Открывает файлы заметок во внешних редакторах.\n"
-#~ "Добавляет команду (:exec:) для создания ссылок на запуск внешних "
-#~ "приложений на викистраницах.\n"
-#~ "\n"
-#~ "<b>Примеры</b>\n"
-#~ "(:exec text=\"Открыть gvim в режиме сравнения\":)\n"
-#~ "gvim -d \"file name 1.txt\" \"file name 2.txt\"\n"
-#~ "(:execend:)\n"
+#: toolslistpanel.py:108
+msgid "Open file dialog..."
+msgstr "Открыть диалог выбора файла..."
 
-#~ msgid "Open notes files with external editor"
-#~ msgstr "Открывает файлы заметок во внешних приложениях."
+#: toolslistpanel.py:112
+msgid "Remove tool"
+msgstr "Удалить приложение"
+
+#: toolslistpanel.py:121
+msgid "Executables (*.exe)|*.exe|All Files|*.*"
+msgstr "Выполняемые файлы (*.exe)|*.exe|Все файлы|*.*"
+
+#: toolslistpanel.py:123
+msgid "All Files|*"
+msgstr "Все файлы|*"
+
+#~ msgid "External Tools [Plugin]"
+#~ msgstr "External Tools [Плагин]"
