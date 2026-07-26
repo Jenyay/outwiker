@@ -29,7 +29,7 @@ class PluginHtmlHeads(Plugin):
     @property
     def description(self):
         description = _(
-            """Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)"""
+            """Plugin adds wiki commands (:title:), (:description:), (:keywords:) and (:htmlhead:)"""
         )
 
         usage = _(
