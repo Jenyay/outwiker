@@ -105,70 +105,53 @@ class ColorsPanel(BasePrefPanel):
 
     def _fillTabsParams(self):
         self.addColorParam(_("Tabs"), _("Tab color"), self._tabsConfig.backColorNormal)
+        self.addColorParam(_("Tabs"), _("Font color"), self._tabsConfig.fontColorNormal)
+        self.addColorParam(_("Tabs"), _("Border color"), self._tabsConfig.borderColor)
         self.addColorParam(
             _("Tabs"),
-            _("Сolor of the selected tab"),
+            _("Selected tab color"),
             self._tabsConfig.backColorSelected,
         )
         self.addColorParam(
             _("Tabs"),
-            _("Сolor of the tab under cursor"),
+            _("Selected tab font color"),
+            self._tabsConfig.fontColorSelected,
+        )
+
+        self.addColorParam(
+            _("Tabs"),
+            _("Tab color (hovered)"),
             self._tabsConfig.backColorHover,
         )
         self.addColorParam(
-            _("Tabs"), _("Color of the pressed tab"), self._tabsConfig.backColorDowned
-        )
-        self.addColorParam(
-            _("Tabs"), _("Color of the dragged tab"), self._tabsConfig.backColorDragged
-        )
-
-        self.addColorParam(_("Tabs"), _("Font color"), self._tabsConfig.fontColorNormal)
-        self.addColorParam(
             _("Tabs"),
-            _("Font color of the selected tab"),
-            self._tabsConfig.fontColorSelected,
-        )
-        self.addColorParam(
-            _("Tabs"),
-            _("Font color of the tab under cursor"),
+            _("Font color (hovered)"),
             self._tabsConfig.fontColorHover,
         )
+
         self.addColorParam(
-            _("Tabs"),
-            _("Font color of the pressed tab"),
-            self._tabsConfig.fontColorDowned,
+            _("Tabs"), _("Tab color (pressed)"), self._tabsConfig.backColorDowned
         )
         self.addColorParam(
             _("Tabs"),
-            _("Font color of the dragged tab"),
+            _("Font color (pressed)"),
+            self._tabsConfig.fontColorDowned,
+        )
+
+        self.addColorParam(
+            _("Tabs"), _("Tab color (dragged)"), self._tabsConfig.backColorDragged
+        )
+        self.addColorParam(
+            _("Tabs"),
+            _("Font color (dragged)"),
             self._tabsConfig.fontColorDragged,
         )
 
-        self.addColorParam(
-            _("Tabs"), _("Tab border color"), self._tabsConfig.borderColor
-        )
-
     def _fillTagsParams(self):
-        # Tag cloud colors
         self.addColorParam(
             _("Tags"),
-            _("Normal tag font color"),
+            _("Font color"),
             self._tagsConfig.normalFontColor,
-        )
-        self.addColorParam(
-            _("Tags"),
-            _("Normal hover tag background color"),
-            self._tagsConfig.normalHoverBackColor,
-        )
-        self.addColorParam(
-            _("Tags"),
-            _("Normal hover tag border color"),
-            self._tagsConfig.normalHoverBorderColor,
-        )
-        self.addColorParam(
-            _("Tags"),
-            _("Normal hover tag font color"),
-            self._tagsConfig.normalHoverFontColor,
         )
         self.addColorParam(
             _("Tags"),
@@ -177,48 +160,66 @@ class ColorsPanel(BasePrefPanel):
         )
         self.addColorParam(
             _("Tags"),
-            _("Hover add button color"),
-            self._tagsConfig.hoverAddButtonColor,
+            _("Remove button color"),
+            self._tagsConfig.removeButtonColor,
         )
+
         self.addColorParam(
             _("Tags"),
-            _("Marked tag background color"),
+            _("Selected tag color"),
             self._tagsConfig.markedBackColor,
         )
         self.addColorParam(
             _("Tags"),
-            _("Marked tag border color"),
-            self._tagsConfig.markedBorderColor,
-        )
-        self.addColorParam(
-            _("Tags"),
-            _("Marked tag font color"),
+            _("Selected tag font color"),
             self._tagsConfig.markedFontColor,
         )
         self.addColorParam(
             _("Tags"),
-            _("Marked hover tag background color"),
+            _("Selected tag border color"),
+            self._tagsConfig.markedBorderColor,
+        )
+
+        self.addColorParam(
+            _("Tags"),
+            _("Tag color (hover)"),
+            self._tagsConfig.normalHoverBackColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Font color (hover)"),
+            self._tagsConfig.normalHoverFontColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Border color (hover)"),
+            self._tagsConfig.normalHoverBorderColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Add button color (hover)"),
+            self._tagsConfig.hoverAddButtonColor,
+        )
+        self.addColorParam(
+            _("Tags"),
+            _("Remove button color (hover)"),
+            self._tagsConfig.hoverRemoveButtonColor,
+        )
+
+        self.addColorParam(
+            _("Tags"),
+            _("Selected tag color (hover)"),
             self._tagsConfig.markedHoverBackColor,
         )
         self.addColorParam(
             _("Tags"),
-            _("Marked hover tag border color"),
-            self._tagsConfig.markedHoverBorderColor,
-        )
-        self.addColorParam(
-            _("Tags"),
-            _("Marked hover tag font color"),
+            _("Selected tag font color (hover)"),
             self._tagsConfig.markedHoverFontColor,
         )
         self.addColorParam(
             _("Tags"),
-            _("Remove button color"),
-            self._tagsConfig.removeButtonColor,
-        )
-        self.addColorParam(
-            _("Tags"),
-            _("Hover remove button color"),
-            self._tagsConfig.hoverRemoveButtonColor,
+            _("Selected tag border color (hover)"),
+            self._tagsConfig.markedHoverBorderColor,
         )
 
     def addColorParam(

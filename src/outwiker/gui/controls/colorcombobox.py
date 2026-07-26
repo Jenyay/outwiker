@@ -44,7 +44,7 @@ class ColorComboBox(wx.adv.OwnerDrawnComboBox):
             return
 
         if item == 0:
-            self._drawText(_("Default color"), dc, rect)
+            self._drawText(_("Default"), dc, rect)
         elif item == self.GetCount() - 1:
             self._drawText(_("Select color..."), dc, rect)
         else:

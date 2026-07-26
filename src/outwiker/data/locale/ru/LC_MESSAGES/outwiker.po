@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 21:21+0300\n"
-"PO-Revision-Date: 2026-07-23 21:24+0300\n"
+"POT-Creation-Date: 2026-07-26 22:36+0300\n"
+"PO-Revision-Date: 2026-07-26 22:37+0300\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -74,6 +74,7 @@ msgid "Style"
 msgstr "Стиль"
 
 #: outwiker/app/actions/applystyle.py:122
+#: outwiker/gui/controls/colorcombobox.py:47
 #: outwiker/pages/wiki/gui/listitemstyledialog.py:74
 msgid "Default"
 msgstr "По умолчанию"
@@ -486,6 +487,20 @@ msgstr "Показать/скрыть панель с вложениями"
 #: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:90
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
 #: outwiker/app/gui/mainwindow.py:549
+#: outwiker/app/gui/preferences/colorspanel.py:152
+#: outwiker/app/gui/preferences/colorspanel.py:157
+#: outwiker/app/gui/preferences/colorspanel.py:162
+#: outwiker/app/gui/preferences/colorspanel.py:168
+#: outwiker/app/gui/preferences/colorspanel.py:173
+#: outwiker/app/gui/preferences/colorspanel.py:178
+#: outwiker/app/gui/preferences/colorspanel.py:184
+#: outwiker/app/gui/preferences/colorspanel.py:189
+#: outwiker/app/gui/preferences/colorspanel.py:194
+#: outwiker/app/gui/preferences/colorspanel.py:200
+#: outwiker/app/gui/preferences/colorspanel.py:205
+#: outwiker/app/gui/preferences/colorspanel.py:210
+#: outwiker/app/gui/preferences/colorspanel.py:215
+#: outwiker/app/gui/preferences/colorspanel.py:220
 #: outwiker/gui/controls/pagelist_columns.py:227
 #: outwiker/pages/search/searchpanel.py:48
 msgid "Tags"
@@ -1383,17 +1398,17 @@ msgid "Sorting"
 msgstr "Сортировка"
 
 #: outwiker/app/gui/mainwindow.py:499
-#: outwiker/app/gui/preferences/colorspanel.py:97
-#: outwiker/app/gui/preferences/colorspanel.py:99
-#: outwiker/app/gui/preferences/colorspanel.py:104
+#: outwiker/app/gui/preferences/colorspanel.py:107
+#: outwiker/app/gui/preferences/colorspanel.py:108
 #: outwiker/app/gui/preferences/colorspanel.py:109
-#: outwiker/app/gui/preferences/colorspanel.py:112
-#: outwiker/app/gui/preferences/colorspanel.py:115
-#: outwiker/app/gui/preferences/colorspanel.py:117
+#: outwiker/app/gui/preferences/colorspanel.py:111
+#: outwiker/app/gui/preferences/colorspanel.py:116
 #: outwiker/app/gui/preferences/colorspanel.py:122
 #: outwiker/app/gui/preferences/colorspanel.py:127
-#: outwiker/app/gui/preferences/colorspanel.py:132
-#: outwiker/app/gui/preferences/colorspanel.py:138
+#: outwiker/app/gui/preferences/colorspanel.py:133
+#: outwiker/app/gui/preferences/colorspanel.py:136
+#: outwiker/app/gui/preferences/colorspanel.py:142
+#: outwiker/app/gui/preferences/colorspanel.py:145
 #: outwiker/app/gui/preferences/prefcontroller.py:139
 msgid "Tabs"
 msgstr "Вкладки"
@@ -1523,89 +1538,142 @@ msgstr "Двойной щелчок или Enter на вложении"
 msgid "Show hidden folders"
 msgstr "Показывать скрытые папки"
 
-#: outwiker/app/gui/preferences/colorspanel.py:65
-#: outwiker/app/gui/preferences/colorspanel.py:70
+#: outwiker/app/gui/preferences/colorspanel.py:73
+#: outwiker/app/gui/preferences/colorspanel.py:78
 #: outwiker/app/gui/preferences/prefcontroller.py:137
 msgid "Main window"
 msgstr "Главное окно"
 
-#: outwiker/app/gui/preferences/colorspanel.py:66
+#: outwiker/app/gui/preferences/colorspanel.py:74
 msgid "Main panels background color"
 msgstr "Цвет фона основных панелей"
 
-#: outwiker/app/gui/preferences/colorspanel.py:71
+#: outwiker/app/gui/preferences/colorspanel.py:79
 msgid "Main panels text color"
 msgstr "Цвет текста основных панелей"
 
-#: outwiker/app/gui/preferences/colorspanel.py:76
-#: outwiker/app/gui/preferences/colorspanel.py:79
-#: outwiker/app/gui/preferences/colorspanel.py:82
-#: outwiker/app/gui/preferences/colorspanel.py:87
-#: outwiker/app/gui/preferences/colorspanel.py:92
+#: outwiker/app/gui/preferences/colorspanel.py:85
+#: outwiker/app/gui/preferences/colorspanel.py:88
+#: outwiker/app/gui/preferences/colorspanel.py:91
+#: outwiker/app/gui/preferences/colorspanel.py:96
+#: outwiker/app/gui/preferences/colorspanel.py:101
 #: outwiker/app/gui/preferences/prefcontroller.py:173
 msgid "Editor"
 msgstr "Редактор"
 
-#: outwiker/app/gui/preferences/colorspanel.py:76
-#: outwiker/app/gui/preferences/colorspanel.py:115
+#: outwiker/app/gui/preferences/colorspanel.py:85
+#: outwiker/app/gui/preferences/colorspanel.py:108
+#: outwiker/app/gui/preferences/colorspanel.py:153
 msgid "Font color"
 msgstr "Цвет шрифта"
 
-#: outwiker/app/gui/preferences/colorspanel.py:79
+#: outwiker/app/gui/preferences/colorspanel.py:88
 msgid "Background color"
 msgstr "Цвет фона"
 
-#: outwiker/app/gui/preferences/colorspanel.py:83
+#: outwiker/app/gui/preferences/colorspanel.py:92
 msgid "Background color of the selected text"
 msgstr "Цвет фона выделенного текста"
 
-#: outwiker/app/gui/preferences/colorspanel.py:88
+#: outwiker/app/gui/preferences/colorspanel.py:97
 msgid "Line number font color"
 msgstr "Цвет шрифта номеров строк"
 
-#: outwiker/app/gui/preferences/colorspanel.py:93
+#: outwiker/app/gui/preferences/colorspanel.py:102
 msgid "Page margin background color"
 msgstr "Цвет фона полей страницы"
 
-#: outwiker/app/gui/preferences/colorspanel.py:97
+#: outwiker/app/gui/preferences/colorspanel.py:107
 msgid "Tab color"
 msgstr "Цвет вкладки"
 
-#: outwiker/app/gui/preferences/colorspanel.py:100
-msgid "Сolor of the selected tab"
-msgstr "Цвет выбранной вкладки"
-
-#: outwiker/app/gui/preferences/colorspanel.py:105
-msgid "Сolor of the tab under cursor"
-msgstr "Цвет вкладки под курсором"
-
 #: outwiker/app/gui/preferences/colorspanel.py:109
-msgid "Color of the pressed tab"
-msgstr "Цвет нажатой вкладки"
+msgid "Border color"
+msgstr "Цвет границы"
 
 #: outwiker/app/gui/preferences/colorspanel.py:112
-msgid "Color of the dragged tab"
-msgstr "Цвет перетаскиваемой вкладки"
+msgid "Selected tab color"
+msgstr "Цвет выбранной вкладки"
 
-#: outwiker/app/gui/preferences/colorspanel.py:118
-msgid "Font color of the selected tab"
+#: outwiker/app/gui/preferences/colorspanel.py:117
+msgid "Selected tab font color"
 msgstr "Цвет шрифта выбранной вкладки"
 
 #: outwiker/app/gui/preferences/colorspanel.py:123
-msgid "Font color of the tab under cursor"
-msgstr "Цвет шрифта вкладки под курсором"
+msgid "Tab color (hovered)"
+msgstr "Цвет вкладки (при наведении)"
 
 #: outwiker/app/gui/preferences/colorspanel.py:128
-msgid "Font color of the pressed tab"
-msgstr "Цвет шрифта нажатой вкладки"
+msgid "Font color (hovered)"
+msgstr "Цвет шрифта (при наведении)"
 
 #: outwiker/app/gui/preferences/colorspanel.py:133
-msgid "Font color of the dragged tab"
-msgstr "Цвет шрифта перетаскиваемой вкладки"
+msgid "Tab color (pressed)"
+msgstr "Цвет вкладки (при нажатии)"
 
-#: outwiker/app/gui/preferences/colorspanel.py:138
-msgid "Tab border color"
-msgstr "Цвет границы вкладки"
+#: outwiker/app/gui/preferences/colorspanel.py:137
+msgid "Font color (pressed)"
+msgstr "Цвет шрифта (при нажатии)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:142
+msgid "Tab color (dragged)"
+msgstr "Цвет вкладки (при перетаскивании)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:146
+msgid "Font color (dragged)"
+msgstr "Цвет шрифта (при перетаскивании)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:158
+msgid "Add button color"
+msgstr "Цвет кнопки «Добавить»"
+
+#: outwiker/app/gui/preferences/colorspanel.py:163
+msgid "Remove button color"
+msgstr "Цвет кнопки «Удалить»"
+
+#: outwiker/app/gui/preferences/colorspanel.py:169
+msgid "Selected tag color"
+msgstr "Цвет выбранного тега"
+
+#: outwiker/app/gui/preferences/colorspanel.py:174
+msgid "Selected tag font color"
+msgstr "Цвет шрифта выбранного тега"
+
+#: outwiker/app/gui/preferences/colorspanel.py:179
+msgid "Selected tag border color"
+msgstr "Цвет границы выбранного тега"
+
+#: outwiker/app/gui/preferences/colorspanel.py:185
+msgid "Selected tag color (hover)"
+msgstr "Цвет выбранного тега (при наведении)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:190
+msgid "Selected tag font color (hover)"
+msgstr "Цвет шрифта выбранного тега (при наведении)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:195
+msgid "Selected tag border color (hover)"
+msgstr "Цвет границы выбранного тега (при наведении)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:201
+msgid "Tag color (hover)"
+msgstr "Цвет тега (при наведении)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:206
+msgid "Font color (hover)"
+msgstr "Цвет шрифта (при наведении)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:211
+msgid "Border color (hover)"
+msgstr "Цвет границы (при наведении)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:216
+msgid "Add button color (hover)"
+msgstr "Цвет кнопки «Добавить» (при наведении)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:221
+msgid "Remove button color (hover)"
+msgstr "Цвет кнопки «Удалить» (при наведении)"
 
 #: outwiker/app/gui/preferences/editorpanel.py:29
 #: outwiker/app/gui/preferences/htmlrenderpanel.py:26
@@ -1643,7 +1711,7 @@ msgid ""
 "to the start / end of "
 msgstr ""
 "Клавиши Home/End перемещают курсор\n"
-"в начало/конец"
+"в начало/конец "
 
 #: outwiker/app/gui/preferences/editorpanel.py:61
 msgid "Line"
@@ -2489,10 +2557,6 @@ msgstr "Перезаписать?"
 msgid "Lines"
 msgstr "Строки"
 
-#: outwiker/gui/controls/colorcombobox.py:47
-msgid "Default color"
-msgstr "Цвет по умолчанию"
-
 #: outwiker/gui/controls/colorcombobox.py:49
 msgid "Select color..."
 msgstr "Выбрать цвет..."
@@ -2706,12 +2770,12 @@ msgstr "Заголовочные ячейки в первой строке"
 msgid "Insert rows"
 msgstr "Вставить строки"
 
-#: outwiker/gui/tagscloud.py:603
+#: outwiker/gui/tagscloud.py:643
 #, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Количество заметок: {}"
 
-#: outwiker/gui/tagscloud.py:711
+#: outwiker/gui/tagscloud.py:751
 msgid "Applied tags only"
 msgstr "Только установленные теги"
 
@@ -3229,6 +3293,42 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Selected tag background color"
+#~ msgstr "Цвет фона выбранного тега"
+
+#~ msgid "Background color (hover)"
+#~ msgstr "Цвет фона (при наведении)"
+
+#~ msgid "Selected tag background color (hover)"
+#~ msgstr "Цвет фона выбранного тега (при наведении)"
+
+#~ msgid "Сolor of the selected tab"
+#~ msgstr "Цвет выбранной вкладки"
+
+#~ msgid "Сolor of the tab under cursor"
+#~ msgstr "Цвет вкладки под курсором"
+
+#~ msgid "Color of the pressed tab"
+#~ msgstr "Цвет нажатой вкладки"
+
+#~ msgid "Color of the dragged tab"
+#~ msgstr "Цвет перетаскиваемой вкладки"
+
+#~ msgid "Font color of the selected tab"
+#~ msgstr "Цвет шрифта выбранной вкладки"
+
+#~ msgid "Font color of the tab under cursor"
+#~ msgstr "Цвет шрифта вкладки под курсором"
+
+#~ msgid "Font color of the pressed tab"
+#~ msgstr "Цвет шрифта нажатой вкладки"
+
+#~ msgid "Font color of the dragged tab"
+#~ msgstr "Цвет шрифта перетаскиваемой вкладки"
+
+#~ msgid "Default color"
+#~ msgstr "Цвет по умолчанию"
 
 #~ msgid "Open \"About\" dialog"
 #~ msgstr "Открыть диалог \"О программе\""
