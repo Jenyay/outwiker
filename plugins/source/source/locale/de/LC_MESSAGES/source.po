@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-26 00:04+0300\n"
-"PO-Revision-Date: 2026-07-26 00:06+0300\n"
-"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"PO-Revision-Date: 2026-07-27 22:58+0300\n"
+"Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -12,38 +12,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
 "X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Project-ID: 7620\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: source.pot\n"
+"X-Crowdin-File-ID: 88\n"
+"X-Poedit-SearchPath-0: .\n"
 
 #: actions.py:30
 msgid "Source Code (:source ...:)"
 msgstr "Source Code (:source ...:)"
 
 #: actions.py:35
-msgid ""
-"Source plugin. Insert (: source... :) command for source code highlighting"
-msgstr ""
-"Source plugin. Einfügen (: source... :) Befehl zum Source Code hervorheben"
+msgid "Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr "Source plugin. Einfügen (: source... :) Befehl zum Source Code hervorheben"
 
 #: commandsource.py:78
 #, python-brace-format
-#| msgid "<B>Source plugin: File '{0}' not found</B>"
 msgid "Source plugin: File '{}' not found"
-msgstr ""
+msgstr "Source-Plugin: Datei '{}' nicht gefunden"
 
 #: commandsource.py:83
-#| msgid "<B>Source plugin: Encoding error</B>"
 msgid "Source plugin: Encoding error"
-msgstr ""
+msgstr "Source-Plugin: Codierungsfehler"
 
 #: commandsource.py:86
-#| msgid "<B>Source plugin: Unknown encoding</B>"
 msgid "Source plugin: Unknown encoding"
-msgstr ""
+msgstr "Source-Plugin: Unbekannte Kodierung"
 
 #: controller.py:87
-#| msgid "Source code"
 msgid "Source"
 msgstr "Source"
 
@@ -109,19 +108,15 @@ msgstr "Andere..."
 
 #: lang_translate.py:5
 msgid "1S"
-msgstr ""
+msgstr "1S"
 
 #: lang_translate.py:6
 msgid "Text only"
 msgstr "Nur Text"
 
 #: plugin.py:55
-msgid ""
-"Add command (:source:) in wiki parser. This command highlight your source "
-"code."
-msgstr ""
-"Den Befehl (:source:) in Wiki-Parser einfügen. Mit diesem Befehl wird der "
-"Sourcecode hervorgehoben."
+msgid "Add command (:source:) in wiki parser. This command highlight your source code."
+msgstr "Den Befehl (:source:) in Wiki-Parser einfügen. Mit diesem Befehl wird der Sourcecode hervorgehoben."
 
 #: plugin.py:59
 msgid ""
@@ -144,8 +139,7 @@ msgid ""
 "\n"
 "<U>file</U> - attached source file\n"
 "\n"
-"<U>encoding</U> - encoding of the attached source file (default encoding - "
-"utf8)\n"
+"<U>encoding</U> - encoding of the attached source file (default encoding - utf8)\n"
 "\n"
 "<U>style</U> - style of hightlighting\n"
 "\n"
@@ -160,8 +154,7 @@ msgstr ""
 "\n"
 "<U>file</U> - Angehängte Sourcecodedatei\n"
 "\n"
-"<U>encoding</U> - Kodierung der angehängten Sourcecodedatei(Standard "
-"Kodierung - utf8)\n"
+"<U>encoding</U> - Kodierung der angehängten Sourcecodedatei(Standard Kodierung - utf8)\n"
 "\n"
 "<U>style</U> - Stil der Hervorhebung\n"
 "\n"
@@ -232,22 +225,18 @@ msgstr ""
 #: plugin.py:116
 msgid ""
 "<B>Example 4:</B>\n"
-"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
-"PRE>"
+"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</PRE>"
 msgstr ""
 "<B>Example 4:</B>\n"
-"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
-"PRE>"
+"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</PRE>"
 
 #: plugin.py:121
 msgid ""
 "<B>Example 5:</B>\n"
-"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
-"PRE>"
+"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</PRE>"
 msgstr ""
 "<B>Example 5:</B>\n"
-"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
-"PRE>"
+"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</PRE>"
 
 #: plugin.py:152
 msgid "https://jenyay.net/Outwiker/SourcePluginEn"
@@ -272,6 +261,3 @@ msgstr "Alles markieren"
 #: preferencepanel.py:124
 msgid "Clear"
 msgstr "Bereinigen"
-
-#~ msgid "Source [Plugin]"
-#~ msgstr "Source [Plugin]"

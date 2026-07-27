@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 22:12+0300\n"
-"PO-Revision-Date: 2026-07-23 18:52+0300\n"
+"POT-Creation-Date: 2026-07-26 22:36+0300\n"
+"PO-Revision-Date: 2026-07-27 22:57+0300\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -27,8 +27,8 @@ msgid "About…"
 msgstr "Über…"
 
 #: outwiker/app/actions/about.py:22
-msgid "Open \"About\" dialog"
-msgstr "\"Über\" Dialogfeld öffnen"
+msgid "View application information"
+msgstr "Zeige Anwendungsinformation"
 
 #: outwiker/app/actions/addbookmark.py:17
 #: outwiker/app/actions/addbookmark.py:21
@@ -72,21 +72,22 @@ msgid "Style"
 msgstr "Stil"
 
 #: outwiker/app/actions/applystyle.py:122
+#: outwiker/gui/controls/colorcombobox.py:47
 #: outwiker/pages/wiki/gui/listitemstyledialog.py:74
 msgid "Default"
 msgstr "Standard"
 
 #: outwiker/app/actions/attachcreatesubdir.py:19
-msgid "Create new attached folder"
+msgid "Create attached folder"
 msgstr "Neuen Ordner als Anhang erstellen"
 
 #: outwiker/app/actions/attachcreatesubdir.py:23
-msgid "Create a new folder in the current attached folder"
+msgid "Create a folder in the current attached folder"
 msgstr "Neuen Ordner im aktuell angehängten Ordner erstellen"
 
 #: outwiker/app/actions/attachcreatesubdir.py:36
-msgid "Create a new folder in the current attached folder. Action for attachments panel"
-msgstr "Neuen Ordner im aktuell angehängten Ordner erstellen. Aktion für angehängtes Panel"
+msgid "Create a folder in the current attached folder. Action for attachments panel"
+msgstr "Neuen Ordner im aktuell angehängten Ordner erstellen. Aktion für das Panel Anhang"
 
 #: outwiker/app/actions/attachexecute.py:22
 msgid "Execute attachments"
@@ -379,8 +380,8 @@ msgid "Preferences…"
 msgstr "Einstellungen…"
 
 #: outwiker/app/actions/preferences.py:22
-msgid "Open the preferences dialog"
-msgstr "Einstellungendialog öffnen"
+msgid "Open the preferences window"
+msgstr "Einstellungsfenster öffnen"
 
 #: outwiker/app/actions/printaction.py:18
 msgid "Print"
@@ -482,6 +483,20 @@ msgstr "Anhang-Panel ein-/ausblenden"
 #: outwiker/app/actions/showhidetags.py:18 outwiker/app/actions/switchto.py:90
 #: outwiker/app/gui/mainpanes/tagscloudmainpane.py:63
 #: outwiker/app/gui/mainwindow.py:549
+#: outwiker/app/gui/preferences/colorspanel.py:152
+#: outwiker/app/gui/preferences/colorspanel.py:157
+#: outwiker/app/gui/preferences/colorspanel.py:162
+#: outwiker/app/gui/preferences/colorspanel.py:168
+#: outwiker/app/gui/preferences/colorspanel.py:173
+#: outwiker/app/gui/preferences/colorspanel.py:178
+#: outwiker/app/gui/preferences/colorspanel.py:184
+#: outwiker/app/gui/preferences/colorspanel.py:189
+#: outwiker/app/gui/preferences/colorspanel.py:194
+#: outwiker/app/gui/preferences/colorspanel.py:200
+#: outwiker/app/gui/preferences/colorspanel.py:205
+#: outwiker/app/gui/preferences/colorspanel.py:210
+#: outwiker/app/gui/preferences/colorspanel.py:215
+#: outwiker/app/gui/preferences/colorspanel.py:220
 #: outwiker/gui/controls/pagelist_columns.py:227
 #: outwiker/pages/search/searchpanel.py:48
 msgid "Tags"
@@ -654,11 +669,11 @@ msgstr "Tag umbenennen…"
 msgid "Rename tag"
 msgstr "Tag umbenennen"
 
-#: outwiker/app/gui/actionslist.py:229 outwiker/gui/editorstyleslist.py:26
+#: outwiker/app/gui/actionslist.py:229 outwiker/gui/editorstyleslist.py:27
 msgid "Bold"
 msgstr "Fett"
 
-#: outwiker/app/gui/actionslist.py:232 outwiker/gui/editorstyleslist.py:27
+#: outwiker/app/gui/actionslist.py:232 outwiker/gui/editorstyleslist.py:28
 msgid "Italic"
 msgstr "Kursiv"
 
@@ -667,7 +682,7 @@ msgid "Bold italic"
 msgstr "Fett Kursiv"
 
 #: outwiker/app/gui/actionslist.py:242 outwiker/app/gui/actionslist.py:243
-#: outwiker/gui/editorstyleslist.py:28
+#: outwiker/gui/editorstyleslist.py:29
 msgid "Underline"
 msgstr "Unterstreichung"
 
@@ -1372,17 +1387,17 @@ msgid "Sorting"
 msgstr "Sortiere"
 
 #: outwiker/app/gui/mainwindow.py:499
-#: outwiker/app/gui/preferences/colorspanel.py:68
-#: outwiker/app/gui/preferences/colorspanel.py:69
-#: outwiker/app/gui/preferences/colorspanel.py:70
-#: outwiker/app/gui/preferences/colorspanel.py:71
-#: outwiker/app/gui/preferences/colorspanel.py:72
-#: outwiker/app/gui/preferences/colorspanel.py:74
-#: outwiker/app/gui/preferences/colorspanel.py:75
-#: outwiker/app/gui/preferences/colorspanel.py:76
-#: outwiker/app/gui/preferences/colorspanel.py:77
-#: outwiker/app/gui/preferences/colorspanel.py:78
-#: outwiker/app/gui/preferences/colorspanel.py:80
+#: outwiker/app/gui/preferences/colorspanel.py:107
+#: outwiker/app/gui/preferences/colorspanel.py:108
+#: outwiker/app/gui/preferences/colorspanel.py:109
+#: outwiker/app/gui/preferences/colorspanel.py:111
+#: outwiker/app/gui/preferences/colorspanel.py:116
+#: outwiker/app/gui/preferences/colorspanel.py:122
+#: outwiker/app/gui/preferences/colorspanel.py:127
+#: outwiker/app/gui/preferences/colorspanel.py:133
+#: outwiker/app/gui/preferences/colorspanel.py:136
+#: outwiker/app/gui/preferences/colorspanel.py:142
+#: outwiker/app/gui/preferences/colorspanel.py:145
 #: outwiker/app/gui/preferences/prefcontroller.py:139
 msgid "Tabs"
 msgstr "Tabs"
@@ -1436,11 +1451,11 @@ msgstr "Seitenstil"
 msgid "Can't set page style\n"
 msgstr "Seiten Stil kann nicht gesetzt werden\n"
 
-#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:168
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:169
 msgid "Do not change"
 msgstr "Nicht ändern"
 
-#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:170
+#: outwiker/app/gui/pagedialogpanels/appearancepanel.py:171
 msgid "Default style"
 msgstr "Standardstil"
 
@@ -1504,102 +1519,155 @@ msgstr "Link zum Anhang einfügen"
 msgid "Run attachment"
 msgstr "Anhang ausführen"
 
-#: outwiker/app/gui/preferences/attachpanel.py:37
+#: outwiker/app/gui/preferences/attachpanel.py:38
 msgid "Double-click or Enter on an attachment"
 msgstr "Anhang doppelt anklicken oder Enter drücken"
 
-#: outwiker/app/gui/preferences/attachpanel.py:44
+#: outwiker/app/gui/preferences/attachpanel.py:45
 msgid "Show hidden folders"
 msgstr "Zeige versteckte Ordner"
 
-#: outwiker/app/gui/preferences/colorspanel.py:59
-#: outwiker/app/gui/preferences/colorspanel.py:60
+#: outwiker/app/gui/preferences/colorspanel.py:73
+#: outwiker/app/gui/preferences/colorspanel.py:78
 #: outwiker/app/gui/preferences/prefcontroller.py:137
 msgid "Main window"
 msgstr "Hauptfenster"
 
-#: outwiker/app/gui/preferences/colorspanel.py:59
+#: outwiker/app/gui/preferences/colorspanel.py:74
 msgid "Main panels background color"
 msgstr "Hintergrundfarbe der Hauptseite"
 
-#: outwiker/app/gui/preferences/colorspanel.py:60
+#: outwiker/app/gui/preferences/colorspanel.py:79
 msgid "Main panels text color"
 msgstr "Hauptbereiche Textfarbe"
 
-#: outwiker/app/gui/preferences/colorspanel.py:62
-#: outwiker/app/gui/preferences/colorspanel.py:63
-#: outwiker/app/gui/preferences/colorspanel.py:64
-#: outwiker/app/gui/preferences/colorspanel.py:65
-#: outwiker/app/gui/preferences/colorspanel.py:66
+#: outwiker/app/gui/preferences/colorspanel.py:85
+#: outwiker/app/gui/preferences/colorspanel.py:88
+#: outwiker/app/gui/preferences/colorspanel.py:91
+#: outwiker/app/gui/preferences/colorspanel.py:96
+#: outwiker/app/gui/preferences/colorspanel.py:101
 #: outwiker/app/gui/preferences/prefcontroller.py:173
 msgid "Editor"
 msgstr "Editor"
 
-#: outwiker/app/gui/preferences/colorspanel.py:62
-#: outwiker/app/gui/preferences/colorspanel.py:74
+#: outwiker/app/gui/preferences/colorspanel.py:85
+#: outwiker/app/gui/preferences/colorspanel.py:108
+#: outwiker/app/gui/preferences/colorspanel.py:153
 msgid "Font color"
 msgstr "Schriftfarbe"
 
-#: outwiker/app/gui/preferences/colorspanel.py:63
+#: outwiker/app/gui/preferences/colorspanel.py:88
 msgid "Background color"
 msgstr "Hintergrundfarbe"
 
-#: outwiker/app/gui/preferences/colorspanel.py:64
+#: outwiker/app/gui/preferences/colorspanel.py:92
 msgid "Background color of the selected text"
 msgstr "Hintergrundfarbe des ausgewählten Text"
 
-#: outwiker/app/gui/preferences/colorspanel.py:65
+#: outwiker/app/gui/preferences/colorspanel.py:97
 msgid "Line number font color"
 msgstr "Farbe der Zeilennummerierung"
 
-#: outwiker/app/gui/preferences/colorspanel.py:66
+#: outwiker/app/gui/preferences/colorspanel.py:102
 msgid "Page margin background color"
 msgstr "Hintergrundfarbe des Feld der Seite"
 
-#: outwiker/app/gui/preferences/colorspanel.py:68
+#: outwiker/app/gui/preferences/colorspanel.py:107
 msgid "Tab color"
 msgstr "Tab-Farbe"
 
-#: outwiker/app/gui/preferences/colorspanel.py:69
-msgid "Сolor of the selected tab"
-msgstr "Farbe des gewählten Tabs"
+#: outwiker/app/gui/preferences/colorspanel.py:109
+msgid "Border color"
+msgstr "Rahmenfarbe"
 
-#: outwiker/app/gui/preferences/colorspanel.py:70
-msgid "Сolor of the tab under cursor"
-msgstr "Farbe des Tabs unterm Mauszeiger"
+#: outwiker/app/gui/preferences/colorspanel.py:112
+msgid "Selected tab color"
+msgstr "Farbe von gewähltem Tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:71
-msgid "Color of the pressed tab"
-msgstr "Tab-Farbe, wenn festgehalten"
+#: outwiker/app/gui/preferences/colorspanel.py:117
+msgid "Selected tab font color"
+msgstr "Textfarbe von gewähltem Tab"
 
-#: outwiker/app/gui/preferences/colorspanel.py:72
-msgid "Color of the dragged tab"
-msgstr "Tab-Farbe, wenn verschoben"
+#: outwiker/app/gui/preferences/colorspanel.py:123
+msgid "Tab color (hovered)"
+msgstr "Tab-Farbe (beim Draufzeigen)"
 
-#: outwiker/app/gui/preferences/colorspanel.py:75
-msgid "Font color of the selected tab"
-msgstr "Schriftfarbe des gewählten Tabs"
+#: outwiker/app/gui/preferences/colorspanel.py:128
+msgid "Font color (hovered)"
+msgstr "Text-Farbe (beim Draufzeigen)"
 
-#: outwiker/app/gui/preferences/colorspanel.py:76
-msgid "Font color of the tab under cursor"
-msgstr "Schriftfarbe des Tabs unterm Mauszeiger"
+#: outwiker/app/gui/preferences/colorspanel.py:133
+msgid "Tab color (pressed)"
+msgstr "Tab-Farbe (gedrückt)"
 
-#: outwiker/app/gui/preferences/colorspanel.py:77
-msgid "Font color of the pressed tab"
-msgstr "Schriftfarbe, wenn Tab festgehalten"
+#: outwiker/app/gui/preferences/colorspanel.py:137
+msgid "Font color (pressed)"
+msgstr "Text-Farbe (gedrückt)"
 
-#: outwiker/app/gui/preferences/colorspanel.py:78
-msgid "Font color of the dragged tab"
-msgstr "Schriftfarbe, wenn Tab verschoben"
+#: outwiker/app/gui/preferences/colorspanel.py:142
+msgid "Tab color (dragged)"
+msgstr "Tab-Farbe (gezogen)"
 
-#: outwiker/app/gui/preferences/colorspanel.py:80
-msgid "Tab border color"
-msgstr "Farbe für Tab-Umrandung"
+#: outwiker/app/gui/preferences/colorspanel.py:146
+msgid "Font color (dragged)"
+msgstr "Text-Farbe (gezogen)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:158
+msgid "Add button color"
+msgstr "Button-Farbe hinzufügen"
+
+#: outwiker/app/gui/preferences/colorspanel.py:163
+msgid "Remove button color"
+msgstr "Button-Farbe entfernen"
+
+#: outwiker/app/gui/preferences/colorspanel.py:169
+msgid "Selected tag color"
+msgstr "Farbe von gewähltem Tag"
+
+#: outwiker/app/gui/preferences/colorspanel.py:174
+msgid "Selected tag font color"
+msgstr "Textfarbe von gewähltem Tag"
+
+#: outwiker/app/gui/preferences/colorspanel.py:179
+msgid "Selected tag border color"
+msgstr "Rahmenfarbe von gewähltem Tag"
+
+#: outwiker/app/gui/preferences/colorspanel.py:185
+msgid "Selected tag color (hover)"
+msgstr "Farbe von gewähltem Tag (beim Draufzeigen)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:190
+msgid "Selected tag font color (hover)"
+msgstr "Textfarbe von gewähltem Tag (beim Draufzeigen)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:195
+msgid "Selected tag border color (hover)"
+msgstr "Rahmenfarbe von gewähltem Tag (beim Draufzeigen)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:201
+msgid "Tag color (hover)"
+msgstr "Tag-Farbe (beim Draufzeigen)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:206
+msgid "Font color (hover)"
+msgstr "Text-Farbe (beim Draufzeigen)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:211
+msgid "Border color (hover)"
+msgstr "Rahmenfarbe (beim Draufzeigen)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:216
+msgid "Add button color (hover)"
+msgstr "Button-Farbe hinzufügen (beim Draufzeigen)"
+
+#: outwiker/app/gui/preferences/colorspanel.py:221
+msgid "Remove button color (hover)"
+msgstr "Button-Farbe entfernen (beim Draufzeigen)"
 
 #: outwiker/app/gui/preferences/editorpanel.py:29
 #: outwiker/app/gui/preferences/htmlrenderpanel.py:26
 #: outwiker/app/gui/preferences/textprintpanel.py:29
-#: outwiker/pages/html/htmlpageview.py:37
+#: outwiker/gui/editorstyleslist.py:25 outwiker/pages/html/htmlpageview.py:37
 #: outwiker/pages/html/htmlpageview.py:203
 #: outwiker/pages/wiki/wikipageview.py:69
 #: outwiker/pages/wiki/wikipageview.py:165
@@ -1782,8 +1850,8 @@ msgid "No groups"
 msgstr "Keine Gruppen"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:225
-msgid "Can't create directory for icons group"
-msgstr "Verzeichnis für Symbole-Gruppe kann nicht erstellt werden"
+msgid "Can't create folder for icons group"
+msgstr "Verzeichnis für Symbol-Gruppe kann nicht erstellt werden"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:255
 #, python-brace-format
@@ -1791,12 +1859,12 @@ msgid "New group{}"
 msgstr "Neue Gruppe{}"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:282
-msgid "Can't rename directory for icons group"
-msgstr "Verzeichnis für Symbole-Gruppe kann nicht umbenannt werden"
+msgid "Can't rename folder for icons group"
+msgstr "Verzeichnis für Symbol-Gruppe kann nicht umbenannt werden"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:289
 #, python-brace-format
-msgid "Group with name \"{}\" exists already"
+msgid "Group \"{}\" exists already"
 msgstr "Gruppe mit Namen \"{}\" ist bereits vorhanden"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:296
@@ -1814,7 +1882,7 @@ msgid "Remove group?"
 msgstr "Gruppe entfernen?"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:341
-msgid "Can't remove group directory"
+msgid "Can't remove group folder"
 msgstr "Gruppenverzeichnis kann nicht entfernt werden"
 
 #: outwiker/app/gui/preferences/iconsetpanel.py:348
@@ -2463,10 +2531,6 @@ msgstr "Überschreiben?"
 msgid "Lines"
 msgstr "Zeilen"
 
-#: outwiker/gui/controls/colorcombobox.py:47
-msgid "Default color"
-msgstr "Standardfarbe"
-
 #: outwiker/gui/controls/colorcombobox.py:49
 msgid "Select color..."
 msgstr "Farbe wählen..."
@@ -2680,12 +2744,12 @@ msgstr "Kopfzeile für erste Zeile"
 msgid "Insert rows"
 msgstr "Zeile einfügen"
 
-#: outwiker/gui/tagscloud.py:603
+#: outwiker/gui/tagscloud.py:643
 #, python-brace-format
 msgid "Number of notes: {}"
 msgstr "Anzahl Notizen: {}"
 
-#: outwiker/gui/tagscloud.py:711
+#: outwiker/gui/tagscloud.py:751
 msgid "Applied tags only"
 msgstr "Nur hinzugefügte Tags"
 
