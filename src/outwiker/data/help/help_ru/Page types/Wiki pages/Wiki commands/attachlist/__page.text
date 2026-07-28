@@ -1,7 +1,7 @@
 !! Команда [=(:attachlist:)=]
 
 !!! [[#syntax]] Назначение и синтаксис
-[[Викикоманда -> page://wikicommand]] %code%[=(:attachlist:)=]%% предназначена для вставки в викистраницу списка [[прикрепленных файлов -> page://wiki-attachments]]:
+[[Вики-команда -> page://wikicommand]] %code%[=(:attachlist:)=]%% предназначена для вставки в вики-страницу списка [[прикрепленных файлов -> page://wiki-attachments]]:
 
 %code%[=(:attachlist [params...]:)=]%%
 

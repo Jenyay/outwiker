@@ -8,7 +8,7 @@
 
 %center%Attach:editor_colors.png
 
-Если требуется изменить цвета раскраски синтаксиса HTML-кода или викистраницы, то это можно сделать на странице настроек page://settings_editor_html_editor и page://settings_editor_wiki_editor соответственно.
+Если требуется изменить цвета раскраски синтаксиса HTML-кода или вики-страницы, то это можно сделать на странице настроек page://settings_editor_html_editor и page://settings_editor_wiki_editor соответственно.
 
 ----
 '''См. также:'''
