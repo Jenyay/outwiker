@@ -64,49 +64,10 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="4.1.0.979" date="2026-07-28" />
     <release version="4.1.0.978" date="2026-07-28" />
     <release version="4.1.0.976" date="2026-07-18" />
     <release version="4.0.0.974" date="2026-06-06" />
-    <release version="4.0.0.972" date="2026-05-01" />
-    <release version="4.0.0.970" date="2026-04-04" />
-    <release version="4.0.0.968" date="2026-02-14" />
-    <release version="4.0.0.966" date="2026-01-27" />
-    <release version="4.0.0.964" date="2025-12-20" />
-    <release version="4.0.0.962" date="2025-11-08" />
-    <release version="4.0.0.960" date="2025-10-11" />
-    <release version="4.0.0.958" date="2025-09-13" />
-    <release version="4.0.0.956" date="2025-08-16" />
-    <release version="4.0.0.954" date="2025-07-27" />
-    <release version="4.0.0.952" date="2025-07-05" />
-    <release version="4.0.0.950" date="2025-01-20" />
-    <release version="4.0.0.948" date="2024-12-14" />
-    <release version="4.0.0.946" date="2024-11-23" />
-    <release version="4.0.0.944" date="2024-11-16" />
-    <release version="4.0.0.942" date="2024-09-14" />
-    <release version="3.3.0.940" date="2024-08-15" />
-    <release version="3.3.0.938" date="2024-06-22" />
-    <release version="3.3.0.936" date="2024-03-07" />
-    <release version="3.3.0.934" date="2024-01-27" />
-    <release version="3.3.0.932" date="2023-12-24" />
-    <release version="3.3.0.930" date="2023-11-18" />
-    <release version="3.3.0.928" date="2023-09-30" />
-    <release version="3.2.0.926" date="2023-08-10" />
-    <release version="3.2.0.924" date="2023-06-17" />
-    <release version="3.2.0.922" date="2023-05-03" />
-    <release version="3.2.0.920" date="2023-03-05" />
-    <release version="3.2.0.918" date="2023-01-07" />
-    <release version="3.2.0.916" date="2022-12-11" />
-    <release version="3.2.0.914" date="2022-11-20" />
-    <release version="3.2.0.912" date="2022-10-29" />
-    <release version="3.2.0.910" date="2022-08-03" />
-    <release version="3.2.0.908" date="2022-07-17" />
-    <release version="3.2.0.906" date="2022-06-26" />
-    <release version="3.2.0.904" date="2022-05-28" />
-    <release version="3.2.0.902" date="2022-05-22" />
-    <release version="3.1.0.900" date="2022-04-16" />
-    <release version="3.1.0.896" date="2022-02-19" />
-    <release version="3.1.0.894" date="2021-01-23" />
-    <release version="3.1.0.892" date="2021-07-27" />
   </releases>
   <content_rating type="oars-1.0">
     <content_attribute id="violence-cartoon">none</content_attribute>
