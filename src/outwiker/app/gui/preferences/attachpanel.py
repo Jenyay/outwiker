@@ -28,6 +28,7 @@ class AttachPanel(BasePrefPanel):
         self._createShowHiddenDirsGui(mainSizer)
 
         self.SetSizer(mainSizer)
+        self.Layout()
 
     def _createActionsGui(self, mainSizer):
         actionsSizer = wx.FlexGridSizer(cols=2)

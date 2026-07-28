@@ -19,7 +19,7 @@ class AboutAction(BaseAction):
 
     @property
     def description(self):
-        return _('Open "About" dialog')
+        return _('View application information')
 
     def run(self, params):
         assert self._application.mainWindow is not None

@@ -17,6 +17,7 @@ class Theme:
     SECTION_WIKI_EDITOR = "WikiEditor"
     SECTION_NOTIFICATION = "Notification"
     SECTION_TABS = "Tabs"
+    SECTION_TAGS = "Tags"
 
     # General section
     BACKGROUND_COLOR = "BackgroundColor"
@@ -71,6 +72,22 @@ class Theme:
     TABS_SHOW_ICONS = "ShowIcons"
     TABS_SHOW_CLOSE_BUTTON = "ShowCloseButton"
 
+    # Tags section
+    TAGS_NORMAL_FONT_COLOR = "NormalFontColor"
+    TAGS_NORMAL_HOVER_BACK_COLOR = "NormalHoverBackColor"
+    TAGS_NORMAL_HOVER_BORDER_COLOR = "NormalHoverBorderColor"
+    TAGS_NORMAL_HOVER_FONT_COLOR = "NormalHoverFontColor"
+    TAGS_ADD_BUTTON_COLOR = "AddButtonColor"
+    TAGS_HOVER_ADD_BUTTON_COLOR = "HoverAddButtonColor"
+    TAGS_MARKED_BACK_COLOR = "MarkedBackColor"
+    TAGS_MARKED_BORDER_COLOR = "MarkedBorderColor"
+    TAGS_MARKED_FONT_COLOR = "MarkedFontColor"
+    TAGS_MARKED_HOVER_BACK_COLOR = "MarkedHoverBackColor"
+    TAGS_MARKED_HOVER_BORDER_COLOR = "MarkedHoverBorderColor"
+    TAGS_MARKED_HOVER_FONT_COLOR = "MarkedHoverFontColor"
+    TAGS_REMOVE_BUTTON_COLOR = "RemoveButtonColor"
+    TAGS_HOVER_REMOVE_BUTTON_COLOR = "HoverRemoveButtonColor"
+
     def __init__(self):
         self._data: Dict[str, Tuple[Any, Any]] = {}
         self._initDefaults()
@@ -86,6 +103,7 @@ class Theme:
         self.addNotesTreeParams()
         self.addNotificationParams()
         self.addTabsParams()
+        self.addTagsParams()
 
     def addNotificationParams(self):
         self.addParam(
@@ -166,6 +184,22 @@ class Theme:
         self.addParam(self.SECTION_TREE, self.TREE_EXTRA_ICON_BOOKMARK, True)
         self.addParam(self.SECTION_TREE, self.TREE_EXTRA_ICON_READ_ONLY, True)
         self.addParam(self.SECTION_TREE, self.TREE_ICON_SIZE, 16)
+
+    def addTagsParams(self):
+        self.addParam(self.SECTION_TAGS, self.TAGS_NORMAL_FONT_COLOR, "#34609D")
+        self.addParam(self.SECTION_TAGS, self.TAGS_NORMAL_HOVER_BACK_COLOR, "#D6E7FD")
+        self.addParam(self.SECTION_TAGS, self.TAGS_NORMAL_HOVER_BORDER_COLOR, "#78D8FC")
+        self.addParam(self.SECTION_TAGS, self.TAGS_NORMAL_HOVER_FONT_COLOR, "#34609D")
+        self.addParam(self.SECTION_TAGS, self.TAGS_ADD_BUTTON_COLOR, "#577EBF")
+        self.addParam(self.SECTION_TAGS, self.TAGS_HOVER_ADD_BUTTON_COLOR, "#20518C")
+        self.addParam(self.SECTION_TAGS, self.TAGS_MARKED_BACK_COLOR, "#FCDE78")
+        self.addParam(self.SECTION_TAGS, self.TAGS_MARKED_BORDER_COLOR, "#EDB14A")
+        self.addParam(self.SECTION_TAGS, self.TAGS_MARKED_FONT_COLOR, "#714B0A")
+        self.addParam(self.SECTION_TAGS, self.TAGS_MARKED_HOVER_BACK_COLOR, "#FFC500")
+        self.addParam(self.SECTION_TAGS, self.TAGS_MARKED_HOVER_BORDER_COLOR, "#B5931E")
+        self.addParam(self.SECTION_TAGS, self.TAGS_MARKED_HOVER_FONT_COLOR, "#000000")
+        self.addParam(self.SECTION_TAGS, self.TAGS_REMOVE_BUTTON_COLOR, "#B5931E")
+        self.addParam(self.SECTION_TAGS, self.TAGS_HOVER_REMOVE_BUTTON_COLOR, "#8B6D00")
 
     @property
     def colorBackground(self):

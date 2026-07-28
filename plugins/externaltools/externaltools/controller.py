@@ -82,4 +82,4 @@ class Controller:
         from .preferencespanel import PreferencesPanel
 
         prefPanel = PreferencesPanel(dialog.treeBook, self._application.config)
-        dialog.addPage(prefPanel, _("External Tools [Plugin]"), parent_page_tag=PREF_PANEL_PLUGINS)
+        dialog.addPage(prefPanel, _("ExternalTools"), parent_page_tag=PREF_PANEL_PLUGINS)

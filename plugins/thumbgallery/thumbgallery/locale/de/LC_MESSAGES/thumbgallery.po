@@ -2,59 +2,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:51+0300\n"
-"PO-Revision-Date: 2023-11-20 21:58+0300\n"
-"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"POT-Creation-Date: 2026-07-25 11:54+0300\n"
+"PO-Revision-Date: 2026-07-27 22:59+0300\n"
+"Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
 "X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Project-ID: 7620\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: thumbgallery.pot\n"
+"X-Crowdin-File-ID: 91\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: thumbdialog.py:24
-msgid "Gallery"
-msgstr "Gallerie"
-
-#: thumbdialog.py:35
-msgid "Columns count (0 - without table)"
-msgstr "Spalten Anzahl (0 - ohne Tabele)"
-
-#: thumbdialog.py:45
-msgid "Thumbnails size (0 - default size)"
-msgstr "Vorschaubild Grösse (0 - Standard Grösse)"
-
-#: thumbdialog.py:56
-msgid "All Images"
-msgstr "Alle Bilder"
-
-#: thumbdialog.py:59
-msgid "Clear"
-msgstr "Bereinigen"
-
-#: plugin.py:47
-msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "https://jenyay.net/Outwiker/ThumbGalleryEn"
-
-#: plugin.py:53
-msgid "locale/description.html"
-msgstr "locale/de/LC_MESSAGES/description.html"
-
-#: plugin.py:60
-msgid "Can't load description"
-msgstr "Beschreibung kann nicht geladen werden"
-
-#: actions.py:24
+#: actions.py:29
 msgid "Gallery (:thumbgallery:)"
 msgstr "Gallerie (:thumbgallery:)"
 
-#: actions.py:28
-msgid "Insert (:thumbgallery:) wiki command to create the gallery."
-msgstr "Füge den Wiki Befehl (:thumbgallery:) ein um eine Gallerie zu erzeugen."
+#: actions.py:33
+msgid "Insert (:thumbgallery:) wiki command to create the gallery"
+msgstr "Füge den Wiki Befehl (:thumbgallery:) ein um eine Gallerie zu erzeugen"
 
-#~ msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
-#~ msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#: plugin.py:48
+msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "https://jenyay.net/Outwiker/ThumbGalleryEn"
+
+#: plugin.py:54
+msgid "locale/description.html"
+msgstr "locale/de/LC_MESSAGES/description.html"
+
+#: plugin.py:62
+msgid "Can't load description"
+msgstr "Beschreibung kann nicht geladen werden"
+
+#: thumbdialog.py:34
+msgid "Gallery"
+msgstr "Gallerie"
+
+#: thumbdialog.py:40
+msgid "Columns count (0 - without table)"
+msgstr "Spalten Anzahl (0 - ohne Tabele)"
+
+#: thumbdialog.py:47
+msgid "Thumbnails size (0 - default size)"
+msgstr "Vorschaubild Grösse (0 - Standard Grösse)"

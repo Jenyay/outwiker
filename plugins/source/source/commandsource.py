@@ -26,31 +26,31 @@ from .misc import getFileName, getDefaultStyle
 
 class CommandSource(Command):
     """
-     Команда source для оформления исходных текстов программ
-     Использование:
+     Source command for formatting source code.
+     Usage:
 
     (:source params)
-     Текст программы
+     source code
     (:sourceend:)
 
-     Параметры:
-     tabwidth - размер табуляции
-     lang - язык программирования (пока не используется)
-     file - имя прикрепленного файла (с приставкой Attach: или без нее)
-     encoding - кодировка для прикрепленного файла
-         (используется вместе с параметром file).
-         Если кодировка не указана, используется UTF-8
+     Params:
+     tabwidth - tab size
+     lang - programming language (not used yet)
+     file - attached file name (with or without Attach: prefix)
+     encoding - encoding for attached file
+         (used together with file parameter).
+         If encoding is not specified, UTF-8 is used
     """
 
     def __init__(self, parser, config):
         """
-        parser - экземпляр парсера
+        parser - parser instance
         """
         super().__init__(parser)
         self._config = SourceConfig(config)
         self._html_formatter = HtmlFormatter([CSS_SOURCE_PLUGIN])
 
-        # Стили CSS, добавленные в заголовок
+        # CSS styles added to the header
         self.__appendCssClasses = []
 
         global _
@@ -59,14 +59,14 @@ class CommandSource(Command):
     @property
     def name(self):
         """
-        Возвращает имя команды, которую обрабатывает класс
+        Returns the command name handled by this class
         """
         return "source"
 
     def execute(self, params, content):
         """
-        Запустить команду на выполнение.
-        Оформление исходных текстов
+        Execute the command.
+        Format source code.
         """
         params_dict = Command.parseParams(params)
 
@@ -95,7 +95,7 @@ class CommandSource(Command):
 
     def _getTabWidth(self, params_dict):
         """
-        Получить размер табуляции в зависимости от параметров
+        Get tab width based on parameters
         """
         tabwidth = self._config.tabWidth.value
 
@@ -112,18 +112,18 @@ class CommandSource(Command):
 
     def _getContentFromFile(self, params_dict):
         """
-        Попытаться прочитать исходник из файла,
-        заданный в параметре FILE_PARAM_NAME
-        В начале значения параметра может стоять строка Attach:
+        Try to read source code from a file,
+        specified in FILE_PARAM_NAME parameter.
+        Attach: prefix may be present at the beginning of the parameter value.
         """
         fname = getFileName(params_dict[FILE_PARAM_NAME])
         fname = fname.replace("\\", "/")
         encoding = self._getEncoding(params_dict)
 
-        # Полный путь до прикрепленного файла
+        # Full path to the attached file
         attachPath = Attachment(self.parser.page).getFullPath(fname)
 
-        # Обработка исключений происходит выше(в execute)
+        # Exception handling is done above (in execute)
         with open(attachPath, encoding=encoding) as fp:
             sourceTextStr = fp.read()
 
@@ -131,7 +131,7 @@ class CommandSource(Command):
 
     def _getEncoding(self, params_dict):
         """
-        Выберем кодировку в соответствии с параметрами
+        Select encoding according to parameters
         """
         encoding = ENCODING_DEFAULT
 
@@ -160,8 +160,8 @@ class CommandSource(Command):
 
     def _colorize(self, params_dict, content):
         """
-        Раскраска исходников. Возвращает получившийся HTML и добавляет
-        нужные стили в заголовок страницы
+        Colorize source code. Returns resulting HTML and adds
+        required styles to the page header
         """
         from pygments import highlight
         from pygments import formatters
@@ -180,7 +180,7 @@ class CommandSource(Command):
         if cssclass not in self.__appendCssClasses:
             sourceStyle = formatter.get_style_defs()
 
-            # Нужно для улучшения внешнего вида исходников
+            # Required for better source code appearance
             sourceStyle += CUSTOM_STYLES.format(name=cssclass)
 
             if parentbg:

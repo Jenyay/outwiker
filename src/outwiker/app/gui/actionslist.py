@@ -44,8 +44,20 @@ from outwiker.app.actions.search import (
 from outwiker.app.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.app.actions.showhidetags import ShowHideTagsAction
 from outwiker.app.actions.showhidetree import ShowHideTreeAction
-from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
-from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.app.actions.sortchild import (
+    SortChildAlphabeticalAction,
+    SortChildByCreationDateAscAction,
+    SortChildByCreationDateDescAction,
+    SortChildByModifiedDateAscAction,
+    SortChildByModifiedDateDescAction,
+)
+from outwiker.app.actions.sortsiblings import (
+    SortSiblingsAlphabeticalAction,
+    SortSiblingsByCreationDateAscAction,
+    SortSiblingsByCreationDateDescAction,
+    SortSiblingsByModifiedDateAscAction,
+    SortSiblingsByModifiedDateDescAction,
+)
 from outwiker.app.actions.switchto import (
     SwitchToAttachmentsAction,
     SwitchToMainPanelAction,
@@ -92,7 +104,6 @@ from outwiker.gui.actioninfo import ActionInfo, PolyactionInfo
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.defines import ATTACH_ACTIONS_AREA
 
-
 actionsList = [
     ActionInfo(OpenAction, HotKey("O", ctrl=True)),
     ActionInfo(NewAction, HotKey("N", ctrl=True)),
@@ -113,8 +124,18 @@ actionsList = [
     ActionInfo(MovePageDownAction, HotKey("Down", ctrl=True, shift=True)),
     ActionInfo(RenamePageAction, HotKey("F2")),
     ActionInfo(RemovePageAction, HotKey("F8", ctrl=True, shift=True)),
+
     ActionInfo(SortChildAlphabeticalAction, None),
+    ActionInfo(SortChildByCreationDateAscAction, None),
+    ActionInfo(SortChildByCreationDateDescAction, None),
+    ActionInfo(SortChildByModifiedDateAscAction, None),
+    ActionInfo(SortChildByModifiedDateDescAction, None),
+
     ActionInfo(SortSiblingsAlphabeticalAction, None),
+    ActionInfo(SortSiblingsByCreationDateAscAction, None),
+    ActionInfo(SortSiblingsByCreationDateDescAction, None),
+    ActionInfo(SortSiblingsByModifiedDateAscAction, None),
+    ActionInfo(SortSiblingsByModifiedDateDescAction, None),
     ActionInfo(AddTabAction, HotKey("T", ctrl=True)),
     ActionInfo(CloseTabAction, HotKey("W", ctrl=True)),
     ActionInfo(PreviousTabAction, HotKey("PageUp", ctrl=True, shift=True)),

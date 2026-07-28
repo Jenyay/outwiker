@@ -25,9 +25,7 @@ class TagsInfo:
         return """{tagsCount}
 {frequentTags}
 {rarelyTags}
-<hr/>""".format(
-            tagsCount=tagsCount, frequentTags=frequentTags, rarelyTags=rarelyTags
-        )
+<hr/>""".format(tagsCount=tagsCount, frequentTags=frequentTags, rarelyTags=rarelyTags)
 
     def _getTagsCount(self):
         """
@@ -36,7 +34,7 @@ class TagsInfo:
         return "<p>" + _("Tags count: {0}").format(len(self._frequentTagsList)) + "</p>"
 
     def _getFrequentTags(self):
-        title = _("Most frequently used tags:")
+        title = _("Frequently used tags:")
         tagsList = self._frequentTagsList[
             0 : min(self._itemsCount, len(self._frequentTagsList))
         ]
@@ -45,7 +43,7 @@ class TagsInfo:
         return """<p>{title}<br>{items}</p>""".format(title=title, items=itemsHtml)
 
     def _getRarelyTags(self):
-        title = _("Most rarely used tags:")
+        title = _("Rarely used tags:")
 
         tagsListAll = self._frequentTagsList[:]
         tagsListAll.reverse()

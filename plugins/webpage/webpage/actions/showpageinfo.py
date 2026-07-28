@@ -30,4 +30,4 @@ class ShowPageInfoAction(BaseAction):
 
     @property
     def description(self):
-        return _("WebPage. Show current web page information.")
+        return _("WebPage. Show current web page information")

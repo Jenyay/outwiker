@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:51+0300\n"
-"PO-Revision-Date: 2018-08-23 13:02+0300\n"
+"POT-Creation-Date: 2026-07-26 10:49+0300\n"
+"PO-Revision-Date: 2026-07-26 10:50+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -11,92 +11,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.9\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: externaltools.po\n"
 
-#: controller.py:67 commandexec/commandcontroller.py:127
-msgid "ExternalTools"
-msgstr "ExternalTools"
-
-#: controller.py:87
-msgid "External Tools [Plugin]"
-msgstr "Externe Tools [Plugin]"
-
-#: toolslistpanel.py:106
-msgid "Open file dialog..."
-msgstr "Dialogfeld \"Datei öffnen\"..."
-
-#: toolslistpanel.py:112
-msgid "Remove tool"
-msgstr "Werkzeug entfernen"
-
-#: toolslistpanel.py:121
-msgid "Executables (*.exe)|*.exe|All Files|*.*"
-msgstr "Ausführbare Dateien (*.exe)|*.exe|alle Dateien| *. *"
-
-#: toolslistpanel.py:123
-msgid "All Files|*"
-msgstr "Alle Dateien|*"
-
-#: menumaker.py:44
-msgid "Open Content File with..."
-msgstr "Öffne Datei mit..."
-
-#: menumaker.py:58
-msgid "Open Result HTML File with..."
-msgstr "Öffne Ergebnis HTML-Datei mit..."
-
-#: preferencespanel.py:39
-msgid "Warn before executing applications by (:exec:) command"
-msgstr "Warnen bevor der Ausführung von Anwendungen durch den Befehl (:exec:)"
-
-#: preferencespanel.py:42
-msgid "Tools List"
-msgstr "Werkzeugliste"
-
-#: preferencespanel.py:43
-msgid "Append Tools"
-msgstr "Tools hinzufügen"
-
-#: preferencespanel.py:100
-msgid "Can't save options"
-msgstr "Optionen können nicht gespeichert werden"
-
-#: preferencespanel.py:101 menutoolscontroller.py:73
-msgid "Error"
-msgstr "Fehler"
-
-#: commandexec/commandcontroller.py:120
-msgid ""
-"Run applications by ExternalTools plugin?\n"
-"It may be unsafe."
-msgstr ""
-"Anwendungen von ExternalTools Plugin laufen lassen? \n"
-"Es kann gefährlich sein."
-
-#: commandexec/commandcontroller.py:122
-msgid ""
-"Run application by ExternalTools plugin?\n"
-"It may be unsafe."
-msgstr ""
-"Anwendung von ExternalTools Plugin laufen lassen? \n"
-"Es kann gefährlich sein."
-
-#: commandexec/actions.py:43
+#: commandexec/actions.py:45
 msgid "Run applications (:exec:)"
 msgstr "Anwendungen ausführen (:exec:)"
 
-#: commandexec/actions.py:47
+#: commandexec/actions.py:49
 msgid "ExternalTools plugin. Insert (:exec:) command"
 msgstr "ExternalTools Plugin. Einfügebefehl (:exec:)"
 
-#: commandexec/actions.py:67
+#: commandexec/actions.py:70
 msgid "%page%. Current page. Text file"
 msgstr "%page%. Aktuelle Seite. Text-Datei"
 
-#: commandexec/actions.py:71
+#: commandexec/actions.py:75
 msgid ""
 "ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
 "a path to current page text file."
@@ -104,11 +36,11 @@ msgstr ""
 "ExternalTools Plugin. Ein %page% -Makro einfügen. Die Makros werden durch "
 "einen Pfad zur aktuellen Seite Text-Datei ersetzt."
 
-#: commandexec/actions.py:85
+#: commandexec/actions.py:91
 msgid "%html%. Current page. HTML file"
 msgstr "%html%. Aktuelle Seite. HTML-Datei"
 
-#: commandexec/actions.py:89
+#: commandexec/actions.py:96
 msgid ""
 "ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
 "a path to current HTML file."
@@ -116,11 +48,11 @@ msgstr ""
 "ExternalTools Plugin. Ein %html% -Makro einfügen. Die Makros werden durch "
 "einen Pfad zur aktuellen Seite HTML-Datei ersetzt."
 
-#: commandexec/actions.py:103
+#: commandexec/actions.py:112
 msgid "%attach%. Path to current attachments folder"
 msgstr "%attach%. Pfad zu aktuellem Anhänge Ordner"
 
-#: commandexec/actions.py:107
+#: commandexec/actions.py:117
 msgid ""
 "ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
 "by a path to current attach folder."
@@ -128,17 +60,37 @@ msgstr ""
 "ExternalTools Plugin. Ein %attach% -Makro einfügen. Die Makros werden durch "
 "einen Pfad zur aktuellen Anhängeordner ersetzt."
 
-#: commandexec/actions.py:121
+#: commandexec/actions.py:133
 msgid "%folder%. Path to current page folder"
 msgstr "%folder%. Pfad zu aktuellem Seiten Ordner"
 
-#: commandexec/actions.py:125
+#: commandexec/actions.py:138
 msgid ""
 "ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
 "by a path to current page folder."
 msgstr ""
 "ExternalTools Plugin. Ein %folder% -Makro einfügen. Die Makros werden durch "
 "einen Pfad zur aktuellen Seitenordner ersetzt."
+
+#: commandexec/commandcontroller.py:121
+msgid ""
+"Run applications by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Anwendungen von ExternalTools Plugin laufen lassen? \n"
+"Es kann gefährlich sein."
+
+#: commandexec/commandcontroller.py:123
+msgid ""
+"Run application by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Anwendung von ExternalTools Plugin laufen lassen? \n"
+"Es kann gefährlich sein."
+
+#: commandexec/commandcontroller.py:129 controller.py:66 controller.py:85
+msgid "ExternalTools"
+msgstr "ExternalTools"
 
 #: commandexec/execdialog.py:17
 msgid "Link"
@@ -156,15 +108,27 @@ msgstr "Befehl (:exec:) einfügen"
 msgid "Title"
 msgstr "Titel"
 
-#: commandexec/execdialog.py:47
+#: commandexec/execdialog.py:43
 msgid "Format"
 msgstr "Format"
 
-#: menutoolscontroller.py:72
+#: menumaker.py:46
+msgid "Open Content File with..."
+msgstr "Öffne Datei mit..."
+
+#: menumaker.py:62
+msgid "Open Result HTML File with..."
+msgstr "Öffne Ergebnis HTML-Datei mit..."
+
+#: menutoolscontroller.py:70
 msgid "Can't execute tools"
 msgstr "Werkzeug kann nicht ausgeführt werden"
 
-#: plugin.py:37
+#: menutoolscontroller.py:70 preferencespanel.py:96
+msgid "Error"
+msgstr "Fehler"
+
+#: plugin.py:39
 msgid ""
 "ExternalTools plug-in allows to open the notes files with external "
 "applications.\n"
@@ -190,7 +154,7 @@ msgstr ""
 "Wen die Zeile mit \"#\" beginnt, wird diese Zeile ignoriert. \"#\" als Begin "
 "einer Zeile ist ein Kommentar. \n"
 
-#: plugin.py:46
+#: plugin.py:50
 msgid ""
 "The (:exec:) command has the following optional parameters:\n"
 "<ul>\n"
@@ -207,7 +171,7 @@ msgstr ""
 "li>\n"
 "</ul>"
 
-#: plugin.py:52
+#: plugin.py:58
 msgid ""
 "Inside (:exec:) command may be macroses. The macroses will be replaced by "
 "appropriate paths:\n"
@@ -235,11 +199,11 @@ msgstr ""
 "Anhängeordners ersetzt one Slash am Schluss.</li>\n"
 "</ul>"
 
-#: plugin.py:60
+#: plugin.py:67
 msgid "Examples"
 msgstr "Beispiele"
 
-#: plugin.py:62
+#: plugin.py:70
 msgid ""
 "Creating a link for running application.exe:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
@@ -247,7 +211,7 @@ msgstr ""
 "Erstellt einen Link um application.exe auszuführen:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
 
-#: plugin.py:65
+#: plugin.py:75
 msgid ""
 "Same but creating a button\n"
 "<code><pre>(:exec format=button:)\n"
@@ -259,7 +223,7 @@ msgstr ""
 "application.exe\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:70
+#: plugin.py:82
 msgid ""
 "Create a link for running application.exe with parameters:\n"
 "<code><pre>(:exec:)\n"
@@ -271,7 +235,7 @@ msgstr ""
 "application.exe param1 \"c:\\myfolder\\path to file name\"\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:75
+#: plugin.py:89
 msgid ""
 "Run a lot of applications:\n"
 "<code><pre>(:exec title=\"Run application_1, application_2 and "
@@ -289,7 +253,7 @@ msgstr ""
 "application_3.exe param_1 param_2\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:82
+#: plugin.py:98
 msgid ""
 "Open attached file with application.exe:\n"
 "<code><pre>(:exec:)\n"
@@ -301,7 +265,7 @@ msgstr ""
 "application.exe Attach:my_file.txt\n"
 " (:execend:)</pre></code>"
 
-#: plugin.py:87
+#: plugin.py:105
 msgid ""
 "Execute application.exe from attachments folder:\n"
 "<code><pre>(:exec:)\n"
@@ -321,9 +285,44 @@ msgstr ""
 "Attach:application.exe Attach:my_file.txt\n"
 " (:execend:)</pre></code>"
 
-#: plugin.py:143
+#: plugin.py:165
 msgid "https://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr "https://jenyay.net/Outwiker/ExternalToolsEn"
+
+#: preferencespanel.py:38
+msgid "Warn before executing applications by (:exec:) command"
+msgstr "Warnen bevor der Ausführung von Anwendungen durch den Befehl (:exec:)"
+
+#: preferencespanel.py:41
+msgid "Tools List"
+msgstr "Werkzeugliste"
+
+#: preferencespanel.py:42
+msgid "Append Tools"
+msgstr "Tools hinzufügen"
+
+#: preferencespanel.py:96
+msgid "Can't save options"
+msgstr "Optionen können nicht gespeichert werden"
+
+#: toolslistpanel.py:108
+msgid "Open file dialog..."
+msgstr "Dialogfeld \"Datei öffnen\"..."
+
+#: toolslistpanel.py:112
+msgid "Remove tool"
+msgstr "Werkzeug entfernen"
+
+#: toolslistpanel.py:121
+msgid "Executables (*.exe)|*.exe|All Files|*.*"
+msgstr "Ausführbare Dateien (*.exe)|*.exe|alle Dateien| *. *"
+
+#: toolslistpanel.py:123
+msgid "All Files|*"
+msgstr "Alle Dateien|*"
+
+#~ msgid "External Tools [Plugin]"
+#~ msgstr "Externe Tools [Plugin]"
 
 #~ msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 #~ msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"

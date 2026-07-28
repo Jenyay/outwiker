@@ -13,7 +13,7 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagslist import TagsList
 from outwiker.gui.defines import TAGS_CLOUD_MODE_CONTINUOUS, TAGS_CLOUD_MODE_LIST
 from outwiker.gui.images import readImage
-from outwiker.gui.theme import Theme
+from outwiker.gui.theme import Theme, ThemeChangedParams
 
 TagLeftDownEvent, EVT_TAG_LEFT_DOWN = wx.lib.newevent.NewEvent()
 TagLeftUpEvent, EVT_TAG_LEFT_UP = wx.lib.newevent.NewEvent()
@@ -261,32 +261,59 @@ class TagLabel2:
 class _TagPainter:
     def __init__(self, parent: wx.Window, theme: Theme) -> None:
         self._parent = parent
-        self._theme = theme
-        self._update_theme()
+        self.update_theme(theme)
 
-    def _update_theme(self):
-        # ToDo: Read colors from Theme
-        self._back_color = self._theme.colorBackground
+    def update_theme(self, theme: Theme):
+        self._back_color = theme.colorBackground
 
-        self._normal_back_color = self._back_color
-        self._normal_border_color = self._back_color
-        self._normal_font_color = wx.Colour("#34609D")
+        self._normal_back_color = theme.colorBackground
+        self._normal_border_color = theme.colorBackground
 
-        self._normal_hover_back_color = wx.Colour("#D6E7FD")
-        self._normal_hover_border_color = wx.Colour("#78D8FC")
-        self._normal_hover_font_color = wx.Colour("#34609D")
-        self._add_button_color = wx.Colour("#577EBF")
-        self._hover_add_button_color = wx.Colour("#20518C")
+        self._normal_font_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_NORMAL_FONT_COLOR)
+        )
 
-        self._marked_back_color = wx.Colour("#fcde78")
-        self._marked_border_color = wx.Colour("#EDB14A")
-        self._marked_font_color = wx.Colour("#714b0a")
+        self._normal_hover_back_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_NORMAL_HOVER_BACK_COLOR)
+        )
+        self._normal_hover_border_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_NORMAL_HOVER_BORDER_COLOR)
+        )
+        self._normal_hover_font_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_NORMAL_HOVER_FONT_COLOR)
+        )
+        self._add_button_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_ADD_BUTTON_COLOR)
+        )
+        self._hover_add_button_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_HOVER_ADD_BUTTON_COLOR)
+        )
 
-        self._marked_hover_back_color = wx.Colour("#FFC500")
-        self._marked_hover_border_color = wx.Colour("#B5931E")
-        self._marked_hover_font_color = wx.Colour("#000000")
-        self._remove_button_color = wx.Colour("#B5931E")
-        self._hover_remove_button_color = wx.Colour("#8B6D00")
+        self._marked_back_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_MARKED_BACK_COLOR)
+        )
+        self._marked_border_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_MARKED_BORDER_COLOR)
+        )
+        self._marked_font_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_MARKED_FONT_COLOR)
+        )
+
+        self._marked_hover_back_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_MARKED_HOVER_BACK_COLOR)
+        )
+        self._marked_hover_border_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_MARKED_HOVER_BORDER_COLOR)
+        )
+        self._marked_hover_font_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_MARKED_HOVER_FONT_COLOR)
+        )
+        self._remove_button_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_REMOVE_BUTTON_COLOR)
+        )
+        self._hover_remove_button_color = wx.Colour(
+            theme.get(Theme.SECTION_TAGS, Theme.TAGS_HOVER_REMOVE_BUTTON_COLOR)
+        )
 
     def draw(self, label: TagLabel2, y_scroll: int, dc: wx.DC, gc: wx.GraphicsContext):
         if not label.isVisible():
@@ -520,7 +547,8 @@ class TagsCloud(wx.Panel):
         self._tags_panel.Bind(wx.EVT_RIGHT_UP, handler=self._onRightUp)
         self._tags_panel.Bind(wx.EVT_MIDDLE_UP, handler=self._onMiddleUp)
 
-        self._tags_panel.Bind(wx.EVT_SIZE, self.__onSize)
+        self._tags_panel.Bind(wx.EVT_SIZE, self._onSize)
+        self._tags_panel.Bind(wx.EVT_CLOSE, self._onClose)
         self._tags_panel.Bind(wx.EVT_PAINT, handler=self._onPaint)
         self._tags_panel.Bind(wx.EVT_MOTION, handler=self._onMouseMove)
         self._tags_panel.Bind(wx.EVT_LEAVE_WINDOW, handler=self._onMouseLeaveWindow)
@@ -528,6 +556,18 @@ class TagsCloud(wx.Panel):
         self._search_ctrl.Bind(wx.EVT_TEXT, handler=self._onSearch)
         self._search_ctrl.Bind(wx.EVT_KEY_DOWN, self._onKeyPressed)
         self._active_tags_flag.Bind(wx.EVT_TOGGLEBUTTON, self._onActiveTagsToggle)
+
+        self._theme.onThemeChanged += self._onThemeChanged
+
+    def _onClose(self, event):
+        self._theme.onThemeChanged -= self._onThemeChanged
+
+    def _onThemeChanged(self, params: ThemeChangedParams):
+        if (
+            Theme.SECTION_GENERAL in params.changed_sections
+            or Theme.SECTION_TAGS in params.changed_sections
+        ):
+            self._tag_painter.update_theme(self._theme)
 
     def _findLabel(self, x, y) -> Optional[TagLabel2]:
         result = None
@@ -723,7 +763,7 @@ class TagsCloud(wx.Panel):
 
         self.SetSizer(self._main_sizer)
 
-    def __onSize(self, event):
+    def _onSize(self, event):
         newSize = self.GetClientSize()
         if self._oldSize != newSize and newSize.Width > 0 and newSize.Height > 0:
             self._buffer = wx.Bitmap(newSize)
@@ -820,8 +860,10 @@ class TagsCloud(wx.Panel):
     def _filter_tags(self, tags: List[str], active_only: bool) -> List[str]:
         return list(
             filter(
-                lambda tag_name: self._filter.lower() in tag_name.lower()
-                and (not active_only or self.isMarked(tag_name)),
+                lambda tag_name: (
+                    self._filter.lower() in tag_name.lower()
+                    and (not active_only or self.isMarked(tag_name))
+                ),
                 tags,
             )
         )

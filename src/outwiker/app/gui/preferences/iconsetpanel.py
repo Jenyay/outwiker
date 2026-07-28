@@ -222,7 +222,7 @@ class IconsetPanel(BasePrefPanel):
             self.__selectGroupItem(newGroupName)
         except (IOError, SystemError):
             MessageBox(
-                _("Can't create directory for icons group"),
+                _("Can't create folder for icons group"),
                 _("Error"),
                 wx.OK | wx.ICON_ERROR,
             )
@@ -279,14 +279,14 @@ class IconsetPanel(BasePrefPanel):
             collection.renameGroup(oldGroupName, newGroupName)
         except (IOError, SystemError):
             MessageBox(
-                _("Can't rename directory for icons group"),
+                _("Can't rename folder for icons group"),
                 _("Error"),
                 wx.OK | wx.ICON_ERROR,
             )
             return
         except DuplicateGroupError:
             MessageBox(
-                _('Group with name "{}" exists already').format(newGroupName),
+                _('Group "{}" exists already').format(newGroupName),
                 _("Error"),
                 wx.OK | wx.ICON_ERROR,
             )
@@ -338,7 +338,7 @@ class IconsetPanel(BasePrefPanel):
                 self.__getIconsCollection().removeGroup(groupname)
             except (IOError, SystemError):
                 MessageBox(
-                    _("Can't remove group directory"), _("Error"), wx.OK | wx.ICON_ERROR
+                    _("Can't remove group folder"), _("Error"), wx.OK | wx.ICON_ERROR
                 )
                 return
             self.__updateGroups()

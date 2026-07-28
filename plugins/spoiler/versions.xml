@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.7.4" date="2026-07-28">
+		<download href="https://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.7.4.zip">
+			<requirements>
+                <api>4.962</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Update localizations.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Обновление локализаций.</change>
+		</changes>
+	</version>
+
 	<version number="1.7.3" date="2025-11-08">
 		<download href="https://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.7.3.zip">
 			<requirements>

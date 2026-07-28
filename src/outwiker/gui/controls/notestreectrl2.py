@@ -1095,6 +1095,7 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
         oldHoveredItem = self._hoveredItem
         self._hoveredItem = self._getItemByXY(x, y)
         if oldHoveredItem is not self._hoveredItem:
+            self.SetToolTip("")
             updated_items = []
             if oldHoveredItem is not None:
                 oldHoveredItem.setHovered(False)
@@ -1102,7 +1103,16 @@ class NotesTreeCtrl2(wx.ScrolledWindow):
             if self._hoveredItem is not None:
                 self._hoveredItem.setHovered(True)
                 updated_items.append(self._hoveredItem)
+                self._updateToolTip(self._hoveredItem)
             self._refreshItems(updated_items)
+
+    def _updateToolTip(self, item: NotesTreeItem):
+        # Show a tooltip if the title does not fit within the window width
+        left = self._view_info.getSelectionLeft(item)
+        right = self._view_info.getSelectionRight(item)
+        x_min, x_max = self._getScrolledX()
+        if left <= x_min or right >= x_max:
+            self.SetToolTip(item.getTitle())
 
     def _processMoveDragMode(self, event):
         if self._dragItem is not None and event.LeftIsDown():

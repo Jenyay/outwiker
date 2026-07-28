@@ -19,7 +19,7 @@ class PreferencesAction(BaseAction):
 
     @property
     def description(self):
-        return _("Open the preferences dialog")
+        return _("Open the preferences window")
 
     def run(self, params):
         dlg = PrefDialog(self._application.mainWindow, self._application)

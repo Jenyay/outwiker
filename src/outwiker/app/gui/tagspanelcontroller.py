@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import wx
-from functools import cmp_to_key
 
 from outwiker.app.gui.tagpopupmenu import TagPopupMenu
 from outwiker.app.services.messages import showError
 
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag
-from outwiker.core.sortfunctions import sortAlphabeticalFunction
 
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
 from outwiker.gui.tagscloud import EVT_TAG_LEFT_DOWN, EVT_TAG_RIGHT_UP, EVT_TAG_ADD, EVT_TAG_REMOVE
@@ -62,7 +60,7 @@ class TagsPanelController:
 
     def __showPopupTagsWindow(self, tagname):
         pages = self.__currentTags[tagname][:]
-        pages.sort(key=cmp_to_key(sortAlphabeticalFunction))
+        pages.sort(key=lambda page: page.display_title.lower())
         self.__tagsPanel.showPopup(pages)
 
     def __onTagLeftClick(self, event):

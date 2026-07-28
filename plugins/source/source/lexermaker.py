@@ -7,7 +7,7 @@ from .misc import getFileName
 
 class LexerMaker:
     """
-    Класс для создания нужного лексера
+    Class for creating the required lexer
     """
 
     def getLexer(self, params_dict):
@@ -22,8 +22,8 @@ class LexerMaker:
 
     def __getLexerByName(self, params_dict):
         """
-        Возвращает лексер для нужного языка программирования
-        в зависимости от параметров
+        Returns lexer for the specified programming language
+        based on parameters
         """
         from pygments.lexers import ClassNotFound
         from pygments.lexers import get_lexer_by_name
@@ -57,7 +57,7 @@ class LexerMaker:
     @staticmethod
     def __getDefaultLexer():
         """
-        Создать лексер по умолчанию
+        Create default lexer
         """
         from pygments.lexers import get_lexer_by_name
 

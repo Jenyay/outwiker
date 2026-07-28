@@ -13,13 +13,13 @@ from .langlist import LangList
 
 class PreferencePanel(BasePrefPanel):
     """
-    Панель с настройками
+    Preferences panel
     """
 
     def __init__(self, parent, config):
         """
-        parent - родитель панели(должен быть wx.Treebook)
-        config - настройки из plugin._application.config
+        parent - parent panel (must be wx.Treebook)
+        config - settings from plugin._application.config
         """
         super().__init__(parent)
 
@@ -32,7 +32,7 @@ class PreferencePanel(BasePrefPanel):
 
     def __createGui(self):
         """
-        Создать элементы управления
+        Create GUI controls
         """
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
@@ -45,8 +45,7 @@ class PreferencePanel(BasePrefPanel):
 
     def __createTabWidthGui(self, mainSizer):
         """
-        Создать элементы управления, связанные
-            с выбором размера табуляции по умолчанию
+        Create GUI controls for default tab size selection
         """
         tabSizer = wx.FlexGridSizer(cols=2)
         tabSizer.AddGrowableCol(1)
@@ -74,7 +73,7 @@ class PreferencePanel(BasePrefPanel):
 
     def __createDefaultStyleGui(self, mainSizer):
         """
-        Создать элементы управления, связанные с выбором стиля по умолчанию
+        Create GUI controls for default style selection
         """
         styleSizer = wx.FlexGridSizer(cols=2)
         styleSizer.AddGrowableCol(1)
@@ -101,7 +100,7 @@ class PreferencePanel(BasePrefPanel):
 
     def __createLangGui(self, mainSizer):
         """
-        Создание элементов управления, связанных с выбором используемых языков
+        Create GUI controls for selecting used languages
         """
         # Метка с комментарием о том, что это за языки в списке
         languageLabel = wx.StaticText(self, -1, _("Used Languages"))
@@ -144,7 +143,7 @@ class PreferencePanel(BasePrefPanel):
 
 class PrefPanelController(object):
     """
-    Контроллер для панели настроек
+    Controller for preferences panel
     """
 
     def __init__(self, owner, config):
@@ -201,6 +200,6 @@ class PrefPanelController(object):
 
     def _getAllLanguages(self):
         """
-        Получить список всех языков, о которых знает pygments
+        Get list of all languages known to pygments
         """
         return sorted(self._langList.allNames())
