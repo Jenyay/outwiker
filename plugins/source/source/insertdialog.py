@@ -12,7 +12,7 @@ from .misc import getImagePath
 
 class InsertDialog(TestedDialog):
     """
-    Диалог для вставки команды (:source:)
+    Dialog for inserting (:source:) command
     """
 
     def __init__(self, parent):
@@ -28,7 +28,7 @@ class InsertDialog(TestedDialog):
         self.ICONS_WIDTH = 16
         self.ICONS_HEIGHT = 16
 
-        # Размер отступа
+        # Indent size
         self._indent = 50
         self._fieldsWidth = 200
 
@@ -74,7 +74,7 @@ class InsertDialog(TestedDialog):
 
     def _createGui(self):
         """
-        Создать элементы управления
+        Create GUI controls
         """
         self.notebook = wx.Notebook(self)
 
@@ -132,8 +132,8 @@ class InsertDialog(TestedDialog):
 
     def _createParentBgGui(self, mainSizer, parent):
         """
-        Создать элементы интерфейса для опции
-            "Использовать фон страницы для блока кода"
+        Create GUI elements for the option
+            "Use the page background for the code block"
         """
         self.parentBgCheckBox = wx.CheckBox(
             parent, -1, _("Use the page background for the code block")
@@ -148,7 +148,7 @@ class InsertDialog(TestedDialog):
 
     def _createLineNumGui(self, mainSizer, parent):
         """
-        Создать элементы интерфейса для добавления номеров строк
+        Create GUI elements for adding line numbers
         """
         self.lineNumCheckBox = wx.CheckBox(parent, -1, _("Enable line numbers"))
 
@@ -161,7 +161,7 @@ class InsertDialog(TestedDialog):
 
     def _createTabWidthGui(self, mainSizer, parent):
         """
-        Создать интерфейс, связанный с размером табуляции
+        Create GUI for tab width setting
         """
         tabSizer = wx.FlexGridSizer(0, 2, 0, 0)
         tabSizer.AddGrowableCol(1)
@@ -193,7 +193,7 @@ class InsertDialog(TestedDialog):
 
     def _createStyleGui(self, mainSizer, parent):
         """
-        Создать интерфейс, связанный с выбором стиля оформления
+        Create GUI for style selection
         """
         styleSizer = wx.FlexGridSizer(0, 2, 0, 0)
         styleSizer.AddGrowableCol(1)
@@ -223,7 +223,7 @@ class InsertDialog(TestedDialog):
 
     def _createFileGui(self, mainSizer, parent):
         """
-        Создать интерфейс, связанный со вставкой исходников из вложенных файлов
+        Create GUI for inserting source code from attached files
         """
         self.fileCheckBox = wx.CheckBox(parent, label=_("Insert source from file"))
         self.attachmentLabel = wx.StaticText(parent, -1, _("Attached file"))
@@ -242,14 +242,14 @@ class InsertDialog(TestedDialog):
             border=2,
         )
 
-        # Кнопка для прикрепления нового файла
+        # Button for attaching a new file
         attachImage = readImage(
             getImagePath("attach.svg"), self.ICONS_WIDTH, self.ICONS_HEIGHT
         )
         self.attachButton = wx.BitmapButton(parent, -1, attachImage)
         self.attachButton.SetToolTip(_("Attach new files"))
 
-        # Список для выбора прикрепленных файлов
+        # List for selecting attached files
         self.attachmentComboBox = FilesTreeComboBox(parent)
 
         fileSizer = wx.FlexGridSizer(cols=2)
@@ -267,7 +267,7 @@ class InsertDialog(TestedDialog):
             border=2,
         )
 
-        # Выбор кодировки файла
+        # File encoding selection
         self.encodingLabel = wx.StaticText(parent, -1, _("File encoding"))
         self.encodingComboBox = wx.ComboBox(parent, style=wx.CB_DROPDOWN)
 
@@ -290,7 +290,7 @@ class InsertDialog(TestedDialog):
             border=2,
         )
 
-        # Выбор языка программирования
+        # Programming language selection
         languageLabel = wx.StaticText(parent, -1, _("Language"))
         self.languageComboBox = wx.ComboBox(
             parent, style=wx.CB_DROPDOWN | wx.CB_READONLY

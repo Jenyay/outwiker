@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from functools import reduce
+from typing import Dict
 
 import wx.stc
 
@@ -12,10 +13,9 @@ class WikiEditor(TextEditor):
     def __init__(self, parent, application):
         super().__init__(parent, application)
         self._colorizeSyntax = True
-        self._styles = {}
 
-    def __createStyles(self, config):
-        self._styles = {}
+    def __createStyles(self, config) -> Dict[int, str]:
+        styles: Dict[int, str] = {}
 
         # Константы для стилей
         self.STYLE_BOLD_ID = 1 << 0
@@ -61,46 +61,48 @@ class WikiEditor(TextEditor):
         self.STYLE_LINK_BOLD_ID = self.STYLE_BOLD_ID | self.STYLE_LINK_ID
 
         # Заполняем словарь стилей
-        self._styles[self.STYLE_BOLD_ID] = "bold"
-        self._styles[self.STYLE_ITALIC_ID] = "italic"
-        self._styles[self.STYLE_UNDERLINE_ID] = "underline"
-        self._styles[self.STYLE_BOLD_ITALIC_UNDERLINE_ID] = "bold,italic,underline"
-        self._styles[self.STYLE_BOLD_ITALIC_ID] = "bold,italic"
-        self._styles[self.STYLE_BOLD_UNDERLINE_ID] = "bold,underline"
-        self._styles[self.STYLE_ITALIC_UNDERLINE_ID] = "italic,underline"
-        self._styles[self.STYLE_LINK_ID] = config.link.value.tostr()
-        self._styles[self.STYLE_LINK_BOLD_ITALIC_UNDERLINE_ID] = (
-            self._styles[self.STYLE_LINK_ID] + ",bold,italic,underline"
+        styles[self.STYLE_BOLD_ID] = "bold"
+        styles[self.STYLE_ITALIC_ID] = "italic"
+        styles[self.STYLE_UNDERLINE_ID] = "underline"
+        styles[self.STYLE_BOLD_ITALIC_UNDERLINE_ID] = "bold,italic,underline"
+        styles[self.STYLE_BOLD_ITALIC_ID] = "bold,italic"
+        styles[self.STYLE_BOLD_UNDERLINE_ID] = "bold,underline"
+        styles[self.STYLE_ITALIC_UNDERLINE_ID] = "italic,underline"
+        styles[self.STYLE_LINK_ID] = config.link.value.tostr()
+        styles[self.STYLE_LINK_BOLD_ITALIC_UNDERLINE_ID] = (
+            styles[self.STYLE_LINK_ID] + ",bold,italic,underline"
         )
-        self._styles[self.STYLE_LINK_ITALIC_UNDERLINE_ID] = (
-            self._styles[self.STYLE_LINK_ID] + ",italic,underline"
+        styles[self.STYLE_LINK_ITALIC_UNDERLINE_ID] = (
+            styles[self.STYLE_LINK_ID] + ",italic,underline"
         )
-        self._styles[self.STYLE_LINK_BOLD_UNDERLINE_ID] = (
-            self._styles[self.STYLE_LINK_ID] + ",bold,underline"
+        styles[self.STYLE_LINK_BOLD_UNDERLINE_ID] = (
+            styles[self.STYLE_LINK_ID] + ",bold,underline"
         )
-        self._styles[self.STYLE_LINK_UNDERLINE_ID] = (
-            self._styles[self.STYLE_LINK_ID] + ",underline"
+        styles[self.STYLE_LINK_UNDERLINE_ID] = (
+            styles[self.STYLE_LINK_ID] + ",underline"
         )
-        self._styles[self.STYLE_LINK_BOLD_ITALIC_ID] = (
-            self._styles[self.STYLE_LINK_ID] + ",bold,italic"
+        styles[self.STYLE_LINK_BOLD_ITALIC_ID] = (
+            styles[self.STYLE_LINK_ID] + ",bold,italic"
         )
-        self._styles[self.STYLE_LINK_ITALIC_ID] = (
-            self._styles[self.STYLE_LINK_ID] + ",italic"
+        styles[self.STYLE_LINK_ITALIC_ID] = (
+            styles[self.STYLE_LINK_ID] + ",italic"
         )
-        self._styles[self.STYLE_LINK_BOLD_ID] = (
-            self._styles[self.STYLE_LINK_ID] + ",bold"
+        styles[self.STYLE_LINK_BOLD_ID] = (
+            styles[self.STYLE_LINK_ID] + ",bold"
         )
-        self._styles[self.STYLE_HEADING_ID] = config.heading.value.tostr()
-        self._styles[self.STYLE_COMMAND_ID] = config.command.value.tostr()
-        self._styles[self.STYLE_COMMENT_ID] = config.comment.value.tostr()
-        self._styles[self.STYLE_ATTACHMENT_ID] = config.attachment.value.tostr()
-        self._styles[self.STYLE_THUMBNAIL_ID] = config.thumbnail.value.tostr()
+        styles[self.STYLE_HEADING_ID] = config.heading.value.tostr()
+        styles[self.STYLE_COMMAND_ID] = config.command.value.tostr()
+        styles[self.STYLE_COMMENT_ID] = config.comment.value.tostr()
+        styles[self.STYLE_ATTACHMENT_ID] = config.attachment.value.tostr()
+        styles[self.STYLE_THUMBNAIL_ID] = config.thumbnail.value.tostr()
+
+        return styles
 
     def setDefaultSettings(self):
         super().setDefaultSettings()
         wiki_config = WikiConfig(self._application.config)
 
-        self.__createStyles(wiki_config)
+        styles = self.__createStyles(wiki_config)
 
         self._colorizeSyntax = wiki_config.colorizeSyntax.value
 
@@ -109,24 +111,22 @@ class WikiEditor(TextEditor):
             wx.stc.STC_MOD_INSERTTEXT | wx.stc.STC_MOD_DELETETEXT
         )
 
-        for styleid, style in self._styles.items():
+        font_size: int = self.config.fontSize.value
+        font_name = self.config.fontName.value
+        back_color = self.sanitize_color(self.config.backColor)
+
+        for styleid, style in styles.items():
             self.textCtrl.StyleSetSpec(styleid, style)
-            self.textCtrl.StyleSetSize(styleid, self.config.fontSize.value)
-            self.textCtrl.StyleSetFaceName(styleid, self.config.fontName.value)
-            self.textCtrl.StyleSetBackground(styleid, self.sanitize_color(self.config.backColor))
+            self.textCtrl.StyleSetSize(styleid, font_size)
+            self.textCtrl.StyleSetFaceName(styleid, font_name)
+            self.textCtrl.StyleSetBackground(styleid, back_color)
 
         self.textCtrl.StyleSetSpec(
-            self.STYLE_HEADING_ID, self._styles[self.STYLE_HEADING_ID]
+            self.STYLE_HEADING_ID, styles[self.STYLE_HEADING_ID]
         )
-        self.textCtrl.StyleSetSize(
-            self.STYLE_HEADING_ID, self.config.fontSize.value + 2
-        )
-        self.textCtrl.StyleSetFaceName(
-            self.STYLE_HEADING_ID, self.config.fontName.value
-        )
-        self.textCtrl.StyleSetBackground(
-            self.STYLE_HEADING_ID, self.sanitize_color(self.config.backColor)
-        )
+        self.textCtrl.StyleSetSize(self.STYLE_HEADING_ID, font_size + 2)
+        self.textCtrl.StyleSetFaceName(self.STYLE_HEADING_ID, font_name)
+        self.textCtrl.StyleSetBackground(self.STYLE_HEADING_ID, back_color)
 
     @property
     def colorizeSyntax(self):

@@ -102,7 +102,7 @@ class Controller:
         prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
         dialog.addPage(
             prefPanel,
-            _("TeXEquation [Plugin]"),
+            _("TeXEquation"),
             parent_page_tag=PREF_PANEL_PLUGINS,
             icon_fname=self._get_image_full_path("equation.svg"),
         )

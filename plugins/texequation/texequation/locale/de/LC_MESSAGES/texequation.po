@@ -2,54 +2,55 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-07 13:27+0300\n"
-"PO-Revision-Date: 2019-04-07 19:34+0300\n"
+"POT-Creation-Date: 2026-07-25 12:07+0300\n"
+"PO-Revision-Date: 2026-07-25 12:09+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: texequation.pot\n"
-"Language: de_DE\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: actions.py:22
+#: actions.py:23
 msgid "Equation..."
 msgstr "Gleichungen..."
 
-#: actions.py:26
+#: actions.py:27
 msgid "Insert the equation in te TeX format"
 msgstr "Füge eine Gleichung im TeX Format ein"
 
-#: actions.py:33
+#: actions.py:34
 msgid "Select the equation type"
 msgstr "Wähle den Gleichungs Typ aus"
 
-#: actions.py:34
+#: actions.py:35
 msgid "Insert the equation"
 msgstr "Füge die Gleichung ein"
 
-#: actions.py:35
+#: actions.py:36
 msgid "Inline"
 msgstr "In Reihe"
 
-#: actions.py:35
+#: actions.py:36
 msgid "Block"
 msgstr "Block"
 
-#: actions.py:35
+#: actions.py:36
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: controller.py:98
-msgid "TeXEquation [Plugin]"
-msgstr "TeXEquation [Plugin]"
+#: controller.py:105
+#| msgid "Equation..."
+msgid "TeXEquation"
+msgstr "TeXEquation"
 
 #: plugin.py:31
 msgid "TeXEquation plug-in allow to insert equations in the TeX format."
@@ -59,14 +60,17 @@ msgstr "TeXEquation Plugin erlaubt Gleichungen im TeX Format einzufügen."
 msgid "https://jenyay.net/Outwiker/TexEquationEn"
 msgstr "https://jenyay.net/Outwiker/TexEquationEn"
 
-#: preferencepanel.py:35
+#: preferencepanel.py:33
 msgid "Inline equations scale (%)"
 msgstr "Einfügen TeXEquation-Skala (%)"
 
-#: preferencepanel.py:49
+#: preferencepanel.py:41
 msgid "Block equations scale (%)"
 msgstr "Blockiere TeXEquation-Skala (%)"
 
-#: tokentex.py:102
+#: tokentex.py:116
 msgid "Can't copy KaTeX library"
 msgstr "KaTeX Bibliothek kann nicht kopiert werden"
+
+#~ msgid "TeXEquation [Plugin]"
+#~ msgstr "TeXEquation [Plugin]"

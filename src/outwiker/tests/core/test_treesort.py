@@ -16,6 +16,7 @@ class TreeSortTest(unittest.TestCase):
         self.treeUpdateCount = 0
         self.treeUpdateSender = None
         self._application.wikiroot = None
+        self._sort_by_title = lambda page: page.display_title.lower()
 
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
@@ -49,7 +50,7 @@ class TreeSortTest(unittest.TestCase):
         """
         Сортировка записей по алфавиту
         """
-        self.wikiroot.sortChildrenAlphabetical()
+        self.wikiroot.sortChildren(self._sort_by_title)
 
         children = self.wikiroot.children
 
@@ -66,7 +67,7 @@ class TreeSortTest(unittest.TestCase):
         """
         Сортировка записей по алфавиту
         """
-        self.wikiroot.sortChildrenAlphabetical()
+        self.wikiroot.sortChildren(self._sort_by_title)
 
         self.assertEqual(0, self.wikiroot["Страница 1"].order)
         self.assertEqual(1, self.wikiroot["Страница 2"].order)
@@ -81,7 +82,7 @@ class TreeSortTest(unittest.TestCase):
         self._application.wikiroot = self.wikiroot
         self._application.onEndTreeUpdate += self.onEndTreeUpdate
 
-        self.wikiroot.sortChildrenAlphabetical()
+        self.wikiroot.sortChildren(self._sort_by_title)
 
         self._application.onEndTreeUpdate -= self.onEndTreeUpdate
 
@@ -95,7 +96,7 @@ class TreeSortTest(unittest.TestCase):
         """
         self._application.onEndTreeUpdate += self.onEndTreeUpdate
 
-        self.wikiroot.sortChildrenAlphabetical()
+        self.wikiroot.sortChildren(self._sort_by_title)
 
         self._application.onEndTreeUpdate -= self.onEndTreeUpdate
 
@@ -132,7 +133,7 @@ class TreeSortTest(unittest.TestCase):
         self._application.wikiroot = self.wikiroot
         self._application.onEndTreeUpdate += self.onEndTreeUpdate
 
-        self.wikiroot["Страница 1"].sortChildrenAlphabetical()
+        self.wikiroot["Страница 1"].sortChildren(self._sort_by_title)
 
         self._application.onEndTreeUpdate -= self.onEndTreeUpdate
 
@@ -164,7 +165,7 @@ class TreeSortTest(unittest.TestCase):
 
         self._application.onEndTreeUpdate += self.onEndTreeUpdate
 
-        self.wikiroot["Страница 1"].sortChildrenAlphabetical()
+        self.wikiroot["Страница 1"].sortChildren(self._sort_by_title)
 
         self._application.onEndTreeUpdate -= self.onEndTreeUpdate
 

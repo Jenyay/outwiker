@@ -1,66 +1,42 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: Plugin name\n"
+"Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:51+0300\n"
-"PO-Revision-Date: 2018-08-23 13:25+0300\n"
-"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2026-07-26 09:58+0300\n"
+"PO-Revision-Date: 2026-07-26 09:59+0300\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
-"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
+"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
+"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Project-ID: 7620\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: pagetypecolor.pot\n"
+"X-Crowdin-File-ID: 109\n"
+"X-Generator: Poedit 3.9\n"
 
-#: controller.py:57
-msgid "PageTypeColor [Plugin]"
-msgstr "PageTypeColor [Плагин]"
+#: controller.py:61
+#| msgid "PageTypeColor [Plugin]"
+msgid "PageTypeColor"
+msgstr "PageTypeColor"
 
-#: plugin.py:31
+#: plugin.py:32
 msgid ""
 "Plugin colorize the page dialog controls in depending on the selected page "
 "type."
 msgstr ""
-"Плагин раскрашивает элементы диалога редактирования страницы в зависимости "
-"от выбранного типа страницы"
+"Плагин раскрашивает элементы окна редактирования страницы в соответствии с "
+"её выбранным типом."
 
-#: plugin.py:35
+#: plugin.py:37
 msgid "https://jenyay.net/Outwiker/PageTypeColorEn"
 msgstr "https://jenyay.net/Outwiker/PageTypeColorEn"
 
-#: preferencepanel.py:47
+#: preferencepanel.py:43
 msgid "The colors for the various page types"
 msgstr "Цвета для различных типов страниц"
-
-#~ msgid "http://jenyay.net/Outwiker/PageTypeColorEn"
-#~ msgstr "http://jenyay.net/Outwiker/PageTypeColor"
-
-#~ msgid "Wiki page"
-#~ msgstr "Викистраница"
-
-#~ msgid "HTML page"
-#~ msgstr "HTML-страница"
-
-#~ msgid "Text page"
-#~ msgstr "Текстовая страница"
-
-#~ msgid "Search page"
-#~ msgstr "Страница поиска"
-
-#~ msgid "Menu Item Title"
-#~ msgstr "Название пункта меню"
-
-#~ msgid "Description"
-#~ msgstr "Описание"
-
-#~ msgid "Plugin description"
-#~ msgstr "Описание плагина"
-
-#~ msgid "http://jenyay.net"
-#~ msgstr "http://jenyay.net"

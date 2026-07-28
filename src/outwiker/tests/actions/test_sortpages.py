@@ -1,9 +1,22 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import unittest
 
-from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
-from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.app.actions.sortchild import (
+    SortChildAlphabeticalAction,
+    SortChildByCreationDateAscAction,
+    SortChildByCreationDateDescAction,
+    SortChildByModifiedDateAscAction,
+    SortChildByModifiedDateDescAction,
+)
+from outwiker.app.actions.sortsiblings import (
+    SortSiblingsAlphabeticalAction,
+    SortSiblingsByCreationDateAscAction,
+    SortSiblingsByCreationDateDescAction,
+    SortSiblingsByModifiedDateAscAction,
+    SortSiblingsByModifiedDateDescAction,
+)
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
@@ -17,7 +30,7 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyApplication()
         self.destroyWiki(self.wikiroot)
 
-    def testChildrenRoot(self):
+    def test_alphabetatical_children_root(self):
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
@@ -44,7 +57,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
 
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
         self.assertEqual(self.wikiroot["Страница 1"].order, 0)
         self.assertEqual(self.wikiroot["Страница 2"].order, 1)
@@ -53,13 +67,14 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.wikiroot["Страница 5"].order, 4)
         self.assertEqual(self.wikiroot["Страница 6"].order, 5)
 
-    def testChildrenRootEmpty(self):
+    def test_alphabetatical_children_root_empty(self):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = None
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
-    def testChildrenSort(self):
+    def test_alphabetatical_ehildren_sort(self):
         factory = TextPageFactory()
         parent = factory.create(self.wikiroot, "Родитель", [])
         factory.create(parent, "Страница 1", [])
@@ -87,7 +102,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = parent
 
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
         self.assertEqual(self.wikiroot["Родитель/Страница 1"].order, 0)
         self.assertEqual(self.wikiroot["Родитель/Страница 2"].order, 1)
@@ -96,16 +112,17 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.wikiroot["Родитель/Страница 5"].order, 4)
         self.assertEqual(self.wikiroot["Родитель/Страница 6"].order, 5)
 
-    def testChildrenEmpty(self):
+    def test_alphabetatical_children_empty(self):
         factory = TextPageFactory()
         parent = factory.create(self.wikiroot, "Родитель", [])
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = parent
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
-    def testSiblingsRoot(self):
+    def test_alphabetatical_siblings_root(self):
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
@@ -132,7 +149,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
 
         self.application.actionController.getAction(
-            SortSiblingsAlphabeticalAction.stringId).run(None)
+            SortSiblingsAlphabeticalAction.stringId
+        ).run(None)
 
         self.assertEqual(self.wikiroot["Страница 1"].order, 0)
         self.assertEqual(self.wikiroot["Страница 2"].order, 2)
@@ -141,7 +159,7 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.wikiroot["Страница 5"].order, 1)
         self.assertEqual(self.wikiroot["Страница 6"].order, 3)
 
-    def testSiblingsChildren(self):
+    def test_alphabetatical_siblings_children(self):
         factory = TextPageFactory()
         parent = factory.create(self.wikiroot, "Родитель", [])
         factory.create(parent, "Страница 1", [])
@@ -169,7 +187,8 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Родитель/Страница 2"]
 
         self.application.actionController.getAction(
-            SortSiblingsAlphabeticalAction.stringId).run(None)
+            SortSiblingsAlphabeticalAction.stringId
+        ).run(None)
 
         self.assertEqual(self.wikiroot["Родитель/Страница 1"].order, 0)
         self.assertEqual(self.wikiroot["Родитель/Страница 2"].order, 1)
@@ -178,17 +197,219 @@ class SortPagesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.wikiroot["Родитель/Страница 5"].order, 4)
         self.assertEqual(self.wikiroot["Родитель/Страница 6"].order, 5)
 
-    def testSiblingsEmpty_01(self):
+    def test_alphabetatical_siblings_empty_01(self):
         factory = TextPageFactory()
         parent = factory.create(self.wikiroot, "Родитель", [])
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = parent
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
 
-    def testSiblingsEmpty_02(self):
+    def test_alphabetatical_siblings_empty_02(self):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = None
         self.application.actionController.getAction(
-            SortChildAlphabeticalAction.stringId).run(None)
+            SortChildAlphabeticalAction.stringId
+        ).run(None)
+
+    def test_creation_date_asc_children(self):
+        factory = TextPageFactory()
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot, "Страница 3", [])
+
+        self.wikiroot["Страница 1"].order = 0
+        self.wikiroot["Страница 2"].order = 1
+        self.wikiroot["Страница 3"].order = 2
+
+        self.wikiroot["Страница 1"].creationdatetime = datetime(2026, 7, 15)
+        self.wikiroot["Страница 2"].creationdatetime = datetime(2026, 7, 13)
+        self.wikiroot["Страница 3"].creationdatetime = datetime(2026, 7, 14)
+
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = None
+
+        self.application.actionController.getAction(
+            SortChildByCreationDateAscAction.stringId
+        ).run(None)
+
+        self.assertEqual(self.wikiroot["Страница 2"].order, 0)
+        self.assertEqual(self.wikiroot["Страница 3"].order, 1)
+        self.assertEqual(self.wikiroot["Страница 1"].order, 2)
+
+    def test_creation_date_desc_children(self):
+        factory = TextPageFactory()
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot, "Страница 3", [])
+
+        self.wikiroot["Страница 1"].order = 0
+        self.wikiroot["Страница 2"].order = 1
+        self.wikiroot["Страница 3"].order = 2
+
+        self.wikiroot["Страница 1"].creationdatetime = datetime(2026, 7, 15)
+        self.wikiroot["Страница 2"].creationdatetime = datetime(2026, 7, 13)
+        self.wikiroot["Страница 3"].creationdatetime = datetime(2026, 7, 14)
+
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = None
+
+        self.application.actionController.getAction(
+            SortChildByCreationDateDescAction.stringId
+        ).run(None)
+
+        self.assertEqual(self.wikiroot["Страница 1"].order, 0)
+        self.assertEqual(self.wikiroot["Страница 3"].order, 1)
+        self.assertEqual(self.wikiroot["Страница 2"].order, 2)
+
+    def test_modified_date_asc_children(self):
+        factory = TextPageFactory()
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot, "Страница 3", [])
+
+        self.wikiroot["Страница 1"].order = 0
+        self.wikiroot["Страница 2"].order = 1
+        self.wikiroot["Страница 3"].order = 2
+
+        self.wikiroot["Страница 1"].datetime = datetime(2026, 7, 15)
+        self.wikiroot["Страница 2"].datetime = datetime(2026, 7, 13)
+        self.wikiroot["Страница 3"].datetime = datetime(2026, 7, 14)
+
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = None
+
+        self.application.actionController.getAction(
+            SortChildByModifiedDateAscAction.stringId
+        ).run(None)
+
+        self.assertEqual(self.wikiroot["Страница 2"].order, 0)
+        self.assertEqual(self.wikiroot["Страница 3"].order, 1)
+        self.assertEqual(self.wikiroot["Страница 1"].order, 2)
+
+    def test_modified_date_desc_children(self):
+        factory = TextPageFactory()
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot, "Страница 3", [])
+
+        self.wikiroot["Страница 1"].order = 0
+        self.wikiroot["Страница 2"].order = 1
+        self.wikiroot["Страница 3"].order = 2
+
+        self.wikiroot["Страница 1"].datetime = datetime(2026, 7, 15)
+        self.wikiroot["Страница 2"].datetime = datetime(2026, 7, 13)
+        self.wikiroot["Страница 3"].datetime = datetime(2026, 7, 14)
+
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = None
+
+        self.application.actionController.getAction(
+            SortChildByModifiedDateDescAction.stringId
+        ).run(None)
+
+        self.assertEqual(self.wikiroot["Страница 1"].order, 0)
+        self.assertEqual(self.wikiroot["Страница 3"].order, 1)
+        self.assertEqual(self.wikiroot["Страница 2"].order, 2)
+
+    def test_creation_date_asc_siblings(self):
+        factory = TextPageFactory()
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot, "Страница 3", [])
+
+        self.wikiroot["Страница 1"].order = 0
+        self.wikiroot["Страница 2"].order = 1
+        self.wikiroot["Страница 3"].order = 2
+
+        self.wikiroot["Страница 1"].creationdatetime = datetime(2026, 7, 15)
+        self.wikiroot["Страница 2"].creationdatetime = datetime(2026, 7, 13)
+        self.wikiroot["Страница 3"].creationdatetime = datetime(2026, 7, 14)
+
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 1"]
+
+        self.application.actionController.getAction(
+            SortSiblingsByCreationDateAscAction.stringId
+        ).run(None)
+
+        self.assertEqual(self.wikiroot["Страница 2"].order, 0)
+        self.assertEqual(self.wikiroot["Страница 3"].order, 1)
+        self.assertEqual(self.wikiroot["Страница 1"].order, 2)
+
+    def test_creation_date_desc_siblings(self):
+        factory = TextPageFactory()
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot, "Страница 3", [])
+
+        self.wikiroot["Страница 1"].order = 0
+        self.wikiroot["Страница 2"].order = 1
+        self.wikiroot["Страница 3"].order = 2
+
+        self.wikiroot["Страница 1"].creationdatetime = datetime(2026, 7, 15)
+        self.wikiroot["Страница 2"].creationdatetime = datetime(2026, 7, 13)
+        self.wikiroot["Страница 3"].creationdatetime = datetime(2026, 7, 14)
+
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 1"]
+
+        self.application.actionController.getAction(
+            SortSiblingsByCreationDateDescAction.stringId
+        ).run(None)
+
+        self.assertEqual(self.wikiroot["Страница 1"].order, 0)
+        self.assertEqual(self.wikiroot["Страница 3"].order, 1)
+        self.assertEqual(self.wikiroot["Страница 2"].order, 2)
+
+    def test_modified_date_asc_siblings(self):
+        factory = TextPageFactory()
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot, "Страница 3", [])
+
+        self.wikiroot["Страница 1"].order = 0
+        self.wikiroot["Страница 2"].order = 1
+        self.wikiroot["Страница 3"].order = 2
+
+        self.wikiroot["Страница 1"].datetime = datetime(2026, 7, 15)
+        self.wikiroot["Страница 2"].datetime = datetime(2026, 7, 13)
+        self.wikiroot["Страница 3"].datetime = datetime(2026, 7, 14)
+
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 1"]
+
+        self.application.actionController.getAction(
+            SortSiblingsByModifiedDateAscAction.stringId
+        ).run(None)
+
+        self.assertEqual(self.wikiroot["Страница 2"].order, 0)
+        self.assertEqual(self.wikiroot["Страница 3"].order, 1)
+        self.assertEqual(self.wikiroot["Страница 1"].order, 2)
+
+    def test_modified_date_desc_siblings(self):
+        factory = TextPageFactory()
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot, "Страница 3", [])
+
+        self.wikiroot["Страница 1"].order = 0
+        self.wikiroot["Страница 2"].order = 1
+        self.wikiroot["Страница 3"].order = 2
+
+        self.wikiroot["Страница 1"].datetime = datetime(2026, 7, 15)
+        self.wikiroot["Страница 2"].datetime = datetime(2026, 7, 13)
+        self.wikiroot["Страница 3"].datetime = datetime(2026, 7, 14)
+
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 1"]
+
+        self.application.actionController.getAction(
+            SortSiblingsByModifiedDateDescAction.stringId
+        ).run(None)
+
+        self.assertEqual(self.wikiroot["Страница 1"].order, 0)
+        self.assertEqual(self.wikiroot["Страница 3"].order, 1)
+        self.assertEqual(self.wikiroot["Страница 2"].order, 2)

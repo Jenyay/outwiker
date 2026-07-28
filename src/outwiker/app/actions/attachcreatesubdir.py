@@ -16,11 +16,11 @@ class AttachCreateSubdirAction(BaseAction):
 
     @property
     def title(self):
-        return _('Create new attached folder')
+        return _('Create attached folder')
 
     @property
     def description(self):
-        return _('Create a new folder in the current attached folder')
+        return _('Create a folder in the current attached folder')
 
     @testreadonly
     def run(self, params):
@@ -33,4 +33,4 @@ class AttachCreateSubdirActionForAttachPanel(AttachCreateSubdirAction):
 
     @property
     def description(self):
-        return _('Create a new folder in the current attached folder. Action for attachments panel')
+        return _('Create a folder in the current attached folder. Action for attachments panel')

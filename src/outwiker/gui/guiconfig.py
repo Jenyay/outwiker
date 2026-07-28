@@ -1297,6 +1297,104 @@ class TagsConfig:
             self.ENABLE_TOOLTIPS_DEFAULT,
         )
 
+        self.normalFontColor = StringOption(
+            self.config,
+            self.SECTION,
+            "NormalFontColor",
+            "",
+        )
+
+        self.normalHoverBackColor = StringOption(
+            self.config,
+            self.SECTION,
+            "NormalHoverBackColor",
+            "",
+        )
+
+        self.normalHoverBorderColor = StringOption(
+            self.config,
+            self.SECTION,
+            "NormalHoverBorderColor",
+            "",
+        )
+
+        self.normalHoverFontColor = StringOption(
+            self.config,
+            self.SECTION,
+            "NormalHoverFontColor",
+            "",
+        )
+
+        self.addButtonColor = StringOption(
+            self.config,
+            self.SECTION,
+            "AddButtonColor",
+            "",
+        )
+
+        self.hoverAddButtonColor = StringOption(
+            self.config,
+            self.SECTION,
+            "HoverAddButtonColor",
+            "",
+        )
+
+        self.markedBackColor = StringOption(
+            self.config,
+            self.SECTION,
+            "MarkedBackColor",
+            "",
+        )
+
+        self.markedBorderColor = StringOption(
+            self.config,
+            self.SECTION,
+            "MarkedBorderColor",
+            "",
+        )
+
+        self.markedFontColor = StringOption(
+            self.config,
+            self.SECTION,
+            "MarkedFontColor",
+            "",
+        )
+
+        self.markedHoverBackColor = StringOption(
+            self.config,
+            self.SECTION,
+            "MarkedHoverBackColor",
+            "",
+        )
+
+        self.markedHoverBorderColor = StringOption(
+            self.config,
+            self.SECTION,
+            "MarkedHoverBorderColor",
+            "",
+        )
+
+        self.markedHoverFontColor = StringOption(
+            self.config,
+            self.SECTION,
+            "MarkedHoverFontColor",
+            "",
+        )
+
+        self.removeButtonColor = StringOption(
+            self.config,
+            self.SECTION,
+            "RemoveButtonColor",
+            "",
+        )
+
+        self.hoverRemoveButtonColor = StringOption(
+            self.config,
+            self.SECTION,
+            "HoverRemoveButtonColor",
+            "",
+        )
+
 
 class TabsConfig:
     SECTION = "Tabs"

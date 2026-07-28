@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime
-
 import wx
 
 from outwiker.app.actions.addbookmark import AddBookmarkAction
@@ -28,8 +26,20 @@ from outwiker.app.actions.reloadwiki import ReloadWikiAction
 from outwiker.app.actions.removepage import RemovePageAction
 from outwiker.app.actions.renamepage import RenamePageAction
 from outwiker.app.actions.save import SaveAction
-from outwiker.app.actions.sortchildalpha import SortChildAlphabeticalAction
-from outwiker.app.actions.sortsiblingsalpha import SortSiblingsAlphabeticalAction
+from outwiker.app.actions.sortchild import (
+    SortChildAlphabeticalAction,
+    SortChildByCreationDateAscAction,
+    SortChildByCreationDateDescAction,
+    SortChildByModifiedDateAscAction,
+    SortChildByModifiedDateDescAction,
+)
+from outwiker.app.actions.sortsiblings import (
+    SortSiblingsAlphabeticalAction,
+    SortSiblingsByCreationDateAscAction,
+    SortSiblingsByCreationDateDescAction,
+    SortSiblingsByModifiedDateAscAction,
+    SortSiblingsByModifiedDateDescAction,
+)
 from outwiker.app.actions.tabs import (
     AddTabAction,
     CloseTabAction,
@@ -84,7 +94,15 @@ class MainWndController:
             MovePageDownAction,
             MovePageUpAction,
             SortChildAlphabeticalAction,
+            SortChildByCreationDateAscAction,
+            SortChildByCreationDateDescAction,
+            SortChildByModifiedDateAscAction,
+            SortChildByModifiedDateDescAction,
             SortSiblingsAlphabeticalAction,
+            SortSiblingsByCreationDateAscAction,
+            SortSiblingsByCreationDateDescAction,
+            SortSiblingsByModifiedDateAscAction,
+            SortSiblingsByModifiedDateDescAction,
             RenamePageAction,
             RemovePageAction,
             EditPagePropertiesAction,

@@ -10,12 +10,12 @@ from .i18n import set_
 
 class PluginSource(Plugin):
     """
-    Плагин, добавляющий обработку команды (:source:) в википарсер
+    Plugin that adds (:source:) command support to wiki parser
     """
 
     def __init__(self, application):
         """
-        application - экземпляр класса core.application.ApplicationParams
+        application - instance of core.application.Application class
         """
         super().__init__(application)
 
@@ -153,8 +153,8 @@ if __name__ == "__main__":
 
     def destroy(self):
         """
-        Уничтожение (выгрузка) плагина.
-        Здесь плагин должен отписаться от всех событий
+        Plugin destruction (unloading).
+        The plugin should unsubscribe from all events here.
         """
         self.__controller.destroy()
 

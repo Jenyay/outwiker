@@ -133,6 +133,7 @@ class AppearanceController(BasePageDialogController):
                 if newTitleColor is not None
                 else ""
             )
+            page.updateDateTime()
             page.root.onPageUpdate(page, change=PAGE_UPDATE_COLOR)
         return True
 

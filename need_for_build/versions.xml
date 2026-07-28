@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="5.0.0.975">
+    <version number="5.0.0.979">
         <changes>
         </changes>
 
@@ -8,11 +8,23 @@
         </changes>
     </version>
 
-    <version number="4.1.0.977" status="dev">
+    <version number="4.1.0.978" status="beta" date="2026-07-28">
         <changes>
+            <change>Fixed numerous interface labels.</change>
+            <change>Added note sorting by creation or modification date.</change>
+            <change>Added tag cloud color settings.</change>
+            <change>Moved some notifications from popups to the status bar.</change>
+            <change>Added tooltips for notes with long titles in the note tree.</change>
+            <change>Bug fixes.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Многочисленные исправления надписей в интерфейсе приложения.</change>
+            <change>Добавлена возможность сортировки заметок по дате создания или изменения.</change>
+            <change>Добавлена настройка цветов облака тегов.</change>
+            <change>Некоторые уведомления из всплывающих окон перенесены в строку состояния.</change>
+            <change>Для заметок с длинным заголовком в дереве заметок добавлены всплывающие подсказки.</change>
+            <change>Исправлены ошибки.</change>
         </changes>
     </version>
 

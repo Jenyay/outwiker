@@ -58,8 +58,8 @@ class Controller:
         """
         prefPanel = PreferencePanel(dialog.treeBook, self._application)
 
-        panelName = _("PageTypeColor [Plugin]")
-        dialog.addPage(prefPanel, _("PageTypeColor [Plugin]"), parent_page_tag=PREF_PANEL_PLUGINS)
+        panelName = _("PageTypeColor")
+        dialog.addPage(prefPanel, panelName, parent_page_tag=PREF_PANEL_PLUGINS)
 
     def __onPageDialogInit(self, page, params):
         self._updateColors()

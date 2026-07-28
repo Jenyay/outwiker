@@ -1,54 +1,54 @@
 # -*- coding: utf-8 -*-
 
 """
-Константы для команды (:source:)
+Constants for (:source:) command
 """
 
-# Параметры команды source
+# Source command parameters
 
-# Имя параметра для указания прикрепленного файла
+# Parameter name for attached file
 FILE_PARAM_NAME = "file"
 
-# Имя параметра для указания языка
+# Parameter name for language
 LANGUAGE_PARAM_NAME = "lang"
 
-# Имя параметра для указания кодировки прикрепленного файла
+# Parameter name for encoding of attached file
 ENCODING_PARAM_NAME = "encoding"
 
-# Имя параметра для размера табуляции
+# Parameter name for tab size
 TAB_WIDTH_PARAM_NAME = "tabwidth"
 
-# Имя параметра для задания стиля оформления
+# Parameter name for style
 STYLE_PARAM_NAME = "style"
 
-# Имя параметра, указывающий, что надо использовать фон страницы в блоке кода
+# Parameter name to use page background in code block
 PARENT_BACKGROUND_PARAM_NAME = "parentbg"
 
-# Имя параметра, указывающий, что надо добавить номера строк
+# Parameter name to add line numbers
 LINE_NUM_PARAM_NAME = "linenum"
 
 
-# Значения по умолчанию
+# Default values
 
-# Язык программирования по умолчанию
+# Default programming language
 LANGUAGE_DEFAULT = "text"
 
-# Используемая кодировка по умолчанию
+# Default encoding
 ENCODING_DEFAULT = "utf8"
 
-# Размер табуляции по умолчанию
+# Default tab size
 TAB_WIDTH_DEFAULT = 4
 
-# Имя стиля по умолчанию
+# Default style name
 STYLE_DEFAULT = "default"
 
 
-# Дополнительные cтили
+# Additional styles
 
-# Стиль для общего div
+# Style for main div
 HIGHLIGHT_STYLE = "{padding: 1em; }"
 
-# Список языков программирования по умолчанию
+# Default programming languages list
 LANGUAGE_LIST_DEFAULT = [
     "text",
     "c",

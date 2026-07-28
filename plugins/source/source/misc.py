@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Небольшие функции, которые могут быть использованы в разных классах
+Helper functions that can be used across different classes
 """
 
 import os.path
@@ -13,8 +13,8 @@ from .params import STYLE_DEFAULT
 
 def getFileName(fileParam) -> str:
     """
-    Получить имя прикрепленного файла по параметру file
-    fileParam - значение параметра file
+    Get the attached file name from file parameter.
+    fileParam - value of the file parameter
     """
     fname = fileParam.strip()
     attach_string = AttachToken.attachString
@@ -27,7 +27,7 @@ def getFileName(fileParam) -> str:
 
 def getImagePath(imageName) -> str:
     """
-    Получить полный путь до картинки
+    Get full path to an image
     """
     imagedir = os.path.join(os.path.dirname(__file__), "images")
     fname = os.path.join(imagedir, imageName)
@@ -36,7 +36,7 @@ def getImagePath(imageName) -> str:
 
 def getDefaultStyle(config) -> str:
     """
-    Получить стиль, который используется по уомлчанию
+    Get the default style
     """
     from pygments.styles import STYLE_MAP
 
@@ -50,11 +50,11 @@ def getDefaultStyle(config) -> str:
 
 def fillStyleComboBox(config, comboBox, selectedStyle):
     """
-    Заполнить ComboBox имеющимися стилями
-    config - конфиг, откда будут читаться настройки
-        (экземпляр класса SourceConfig)
-    comboBox - ComboBox, который будет заполняться
-    selectedStyle - стиль, который должен быть выбран по умолчанию
+    Fill ComboBox with available styles
+    config - config to read settings from
+        (SourceConfig instance)
+    comboBox - ComboBox to fill
+    selectedStyle - style that should be selected by default
     """
     from pygments.styles import STYLE_MAP
 

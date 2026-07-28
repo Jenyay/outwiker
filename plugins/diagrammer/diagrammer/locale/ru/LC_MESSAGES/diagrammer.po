@@ -1,22 +1,22 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: diagrammer\n"
+"Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:51+0300\n"
-"PO-Revision-Date: 2018-08-23 13:01+0300\n"
-"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
-"Language-Team: jenyay.net <jenyay.iln@gmail.com>\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
+"PO-Revision-Date: 2026-07-26 10:59+0300\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
-"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Project-ID: 7620\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: diagrammer.pot\n"
+"X-Crowdin-File-ID: 102\n"
+"X-Generator: Poedit 3.9\n"
 
 #: controller.py:103 controller.py:104
 msgid "Diagrammer"
@@ -28,7 +28,7 @@ msgstr "Ошибка разбора диаграммы"
 
 #: actions/help.py:23
 msgid "Online Help"
-msgstr "Справка Online"
+msgstr "Онлайн-справка"
 
 #: actions/help.py:27
 msgid "Diagrammer. Go to blockdiag webpage"
@@ -68,19 +68,19 @@ msgstr "Diagrammer. Вставить ребро без стрелок"
 
 #: actions/insertedge.py:79
 msgid "Insert edge with the right arrow"
-msgstr "Вставить ребро со стрелкой направо"
+msgstr "Вставить ребро со стрелкой вправо"
 
 #: actions/insertedge.py:83
 msgid "Diagrammer. Insert edge with the right arrow"
-msgstr "Diagrammer. Вставить ребро со стрелкой направо"
+msgstr "Diagrammer. Вставить ребро со стрелкой вправо"
 
 #: actions/insertedge.py:103
 msgid "Insert edge with the left arrow"
-msgstr "Вставить ребро со стрелкой налево"
+msgstr "Вставить ребро со стрелкой влево"
 
 #: actions/insertedge.py:107
 msgid "Diagrammer. Insert edge with the left arrow"
-msgstr "Diagrammer. Вставить ребро со стрелкой налево"
+msgstr "Diagrammer. Вставить ребро со стрелкой влево"
 
 #: actions/insertedge.py:127
 msgid "Insert edge with the both arrows"
@@ -231,11 +231,11 @@ msgstr "Стиль рамки (style)"
 
 #: gui/propertyfactory.py:22
 msgid "Landscape"
-msgstr "Пейзажная (landscape)"
+msgstr "Альбомная"
 
 #: gui/propertyfactory.py:23
 msgid "Portrait"
-msgstr "Портретная (portrait)"
+msgstr "Книжная"
 
 #: gui/propertyfactory.py:349 gui/propertyfactory.py:406
 #: gui/insertnodedialog.py:35
@@ -289,6 +289,3 @@ msgstr "Установить высоту (height)"
 #: gui/insertnodedialog.py:174
 msgid "Name of a node can't be empty"
 msgstr "Имя узла не должно быть пустым"
-
-#~ msgid "http://jenyay.net/Outwiker/DiagrammerEn"
-#~ msgstr "http://jenyay.net/Outwiker/Diagrammer"

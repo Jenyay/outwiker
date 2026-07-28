@@ -14,13 +14,13 @@ from .actions import InsertSourceAction
 
 class Controller:
     """
-    Класс отвечает за основную работу интерфейса плагина
+    This class is responsible for the main plugin interface functionality
     """
 
     def __init__(self, plugin, application):
         """
-        plugin - Владелец контроллера(экземпляр класса PluginSource)
-        application - экземпляр класса ApplicationParams
+        plugin - Plugin owner (instance of PluginSource class)
+        application - instance of Application class
         """
         self._plugin = plugin
         self._application = application
@@ -32,8 +32,8 @@ class Controller:
 
     def initialize(self):
         """
-        Инициализация контроллера при активации плагина.
-        Подписка на нужные события
+        Controller initialization on plugin activation.
+        Subscribe to required events
         """
         global _
         _ = get_()
@@ -59,7 +59,7 @@ class Controller:
 
     def destroy(self):
         """
-        Вызывается при отключении плагина
+        Called when the plugin is disabled
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
@@ -71,7 +71,7 @@ class Controller:
 
     def __onWikiParserPrepare(self, parser):
         """
-        Вызывается до разбора викитекста. Добавление команды(:source:)
+        Called before wiki text parsing. Adding (:source:) command
         """
         from .commandsource import CommandSource
 
@@ -79,12 +79,12 @@ class Controller:
 
     def __onPreferencesDialogCreate(self, dialog):
         """
-        Добавление страницы с настройками
+        Adding preferences page
         """
         prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
         dialog.addPage(
             prefPanel,
-            _("Source [Plugin]"),
+            _("Source"),
             parent_page_tag=PREF_PANEL_PLUGINS,
             icon_fname=self._get_image_full_path("source.svg"),
         )

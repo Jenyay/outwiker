@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: thumbgallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:47+0300\n"
-"PO-Revision-Date: 2018-08-23 13:41+0300\n"
+"POT-Creation-Date: 2026-07-25 11:54+0300\n"
+"PO-Revision-Date: 2026-07-25 11:55+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en_GB\n"
@@ -16,47 +16,46 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.9\n"
 
-#: thumbdialog.py:24
-msgid "Gallery"
-msgstr "Thumbnails Gallery (:thumbgallery:)"
-
-#: thumbdialog.py:35
-msgid "Columns count (0 - without table)"
-msgstr "Columns count (0 - without table)"
-
-#: thumbdialog.py:45
-msgid "Thumbnails size (0 - default size)"
-msgstr "Thumbnails size (0 - default size)"
-
-#: thumbdialog.py:56
-msgid "All Images"
-msgstr "All Images"
-
-#: thumbdialog.py:59
-msgid "Clear"
-msgstr "Clear"
-
-#: plugin.py:47
-msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "https://jenyay.net/Outwiker/ThumbGalleryEn"
-
-#: plugin.py:53
-msgid "locale/description.html"
-msgstr "locale/en/LC_MESSAGES/description.html"
-
-#: plugin.py:60
-msgid "Can't load description"
-msgstr "Can't load description"
-
-#: actions.py:24
+#: actions.py:29
 msgid "Gallery (:thumbgallery:)"
 msgstr "Gallery (:thumbgallery:)"
 
-#: actions.py:28
-msgid "Insert (:thumbgallery:) wiki command to create the gallery."
-msgstr "Insert (:thumbgallery:) wiki command to create the gallery."
+#: actions.py:33
+#| msgid "Insert (:thumbgallery:) wiki command to create the gallery."
+msgid "Insert (:thumbgallery:) wiki command to create the gallery"
+msgstr "Insert (:thumbgallery:) wiki command to create the gallery"
+
+#: plugin.py:48
+msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "https://jenyay.net/Outwiker/ThumbGalleryEn"
+
+#: plugin.py:54
+msgid "locale/description.html"
+msgstr "locale/en/LC_MESSAGES/description.html"
+
+#: plugin.py:62
+msgid "Can't load description"
+msgstr "Can't load description"
+
+#: thumbdialog.py:34
+msgid "Gallery"
+msgstr "Thumbnails Gallery (:thumbgallery:)"
+
+#: thumbdialog.py:40
+msgid "Columns count (0 - without table)"
+msgstr "Columns count (0 - without table)"
+
+#: thumbdialog.py:47
+msgid "Thumbnails size (0 - default size)"
+msgstr "Thumbnails size (0 - default size)"
+
+#~ msgid "All Images"
+#~ msgstr "All Images"
+
+#~ msgid "Clear"
+#~ msgstr "Clear"
 
 #~ msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
 #~ msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"

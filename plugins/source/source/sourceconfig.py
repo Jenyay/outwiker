@@ -21,28 +21,28 @@ class SourceConfig:
 
         self.section = "SourcePlugin"
 
-        # Размер табуляции по умолчанию
+        # Default tab size
         tabWidthOption = "TabWidth"
 
         self.__tabWidth = IntegerOption(
             self.__config, self.section, tabWidthOption, TAB_WIDTH_DEFAULT
         )
 
-        # Язык программирования по умолчанию
+        # Default programming language
         defaultLanguageOption = "DefaultLanguage"
 
         self.__defaultLanguage = StringOption(
             self.__config, self.section, defaultLanguageOption, LANGUAGE_DEFAULT
         )
 
-        # Список выбранных языков программирования
+        # List of selected programming languages
         languageListOption = "LanguageList"
 
         self.__languageList = ListOption(
             self.__config, self.section, languageListOption, LANGUAGE_LIST_DEFAULT
         )
 
-        # Стиль, используемый по умолчанию (если стиль не указан явно)
+        # Default style (used if style is not specified explicitly)
         defaultStyleOption = "DefaultStyle"
 
         self.__defaultStyle = StringOption(
@@ -64,7 +64,7 @@ class SourceConfig:
             self.__config, self.section, dialogHeightOption, self.DEFAULT_DIALOG_HEIGHT
         )
 
-        # Настройка "Использовать фон страницы в блоке кода"
+        # "Use page background in code block" setting
         self.DEFAULT_PARENT_BACKGROUND = False
         parentBgOption = "ParentBg"
 
@@ -72,7 +72,7 @@ class SourceConfig:
             self.__config, self.section, parentBgOption, self.DEFAULT_PARENT_BACKGROUND
         )
 
-        # Настройка для добавления нумерации строк
+        # Setting for line numbering
         self.DEFAULT_LINE_NUM = False
         lineNumOption = "LineNum"
 
@@ -104,10 +104,9 @@ class SourceConfig:
     def style(self):
         styleOption = "Style"
 
-        # Стиль, выбранный в диалоге по умолчанию
-        # Переменная, отвечающая за параметр создается здесь,
-        # чтобы можно было использовать значение по умолчанию,
-        # прочитанное из defaultStyle
+        # Style selected in dialog by default
+        # Variable for parameter is created here to use the default value
+        # read from defaultStyle
         style = StringOption(
             self.__config, self.section, styleOption, self.defaultStyle.value
         )
