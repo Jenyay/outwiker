@@ -51,13 +51,13 @@
 <body>
 <h1 class="ow-wiki">Пользовательские стили оформления текста</h1>
 <br/>
-Если вы знакомы с языком CSS, то можете создавать собственные <a class="ow-wiki ow-link-page" href="page://textstyles">стили оформления текста</a>, которые затем можно будет использовать на викистраницах с помощью команды <span class="code">%your-style%Текст с оформлением%%</span>.<br/>
+Если вы знакомы с языком CSS, то можете создавать собственные <a class="ow-wiki ow-link-page" href="page://textstyles">стили оформления текста</a>, которые затем можно будет использовать на вики-страницах с помощью команды <span class="code">%your-style%Текст с оформлением%%</span>.<br/>
 <br/>
 Все стили оформления хранятся в поддиректории <span class="notice">textstyles</span> в <a class="ow-wiki ow-link-page" href="page://config-dirs">директории настроек</a>. Строковые стили хранятся в поддиректории <span class="notice">textstyles/inline</span>, а блоковые - в папке <span class="notice">textstyles/block</span>.<br/>
 <br/>
 Чтобы добавить новый стиль, в одной из перечисленных директорий нужно создать файл с расширением <span class="notice">.css</span>, а имя этого файла должно соответствовать имени создаваемого стиля. Например, если вы хотите создать новый <i>блоковый</i> стиль <span class="notice">my-cool-style</span>, то вы должны создать файл <span class="notice">my-cool-style.css</span> в директории <span class="notice">textstyles/block</span>. Если вы хотите создать одноименный строковый стиль, то вы должны создать файл <span class="notice">my-cool-style.css</span> в директории <span class="notice">textstyles/inline</span>.<br/>
 <br/>
-Созданный файл должен содержать код CSS, который будет вставлен в код викистраницы. При этом нужно учитывать, что строковые стили будут применяться к тегу <span class="code">&lt;span&gt;</span>, а блоковые - к тегу <span class="code">&lt;div&gt;</span>. Поэтому строковый стиль <span class="notice">my-cool-style</span> должен содержать код:<br/>
+Созданный файл должен содержать код CSS, который будет вставлен в код вики-страницы. При этом нужно учитывать, что строковые стили будут применяться к тегу <span class="code">&lt;span&gt;</span>, а блоковые - к тегу <span class="code">&lt;div&gt;</span>. Поэтому строковый стиль <span class="notice">my-cool-style</span> должен содержать код:<br/>
 <br/>
 <div class="code">
 <pre>span.my-cool-style {
@@ -85,7 +85,7 @@
 После этого новый стиль <span class="notice">object</span> можно будет использовать следующим образом:<br/>
 <br/>
 <div class="border">Обычный текст. <span class="code">%object%Текст со стилем "object"%%</span>. Опять обычный текст.</div><br/>
-Также в файл стиля можно добавлять произвольный CSS-код, который также будет вставлен в HTML-код викистраницы.<br/>
+Также в файл стиля можно добавлять произвольный CSS-код, который также будет вставлен в HTML-код вики-страницы.<br/>
 <hr>
 <b>См. также:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://textstyles">Стили текста</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://config-dirs">Директории настроек</a></li>
 </ul>

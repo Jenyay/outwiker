@@ -1,10 +1,10 @@
 [General]
 type = wiki
-tags = метки
+tags = теги
 order = 1
-datetime = 2026-04-27 09:29:56.755885
+datetime = 2026-07-28 18:02:36.028579
 cursorposition = 31
-alias = Метки
+alias = Теги
 uid = tags
 creationdatetime = 2026-02-28 18:51:27.007314
 
