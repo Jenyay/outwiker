@@ -34,7 +34,7 @@
 </ul>
 <h2 class="ow-wiki">Подходы для создания таблиц</h2>
 <br/>
-Для создания таблиц на викистраницах существует подхода: <ul class="ow-wiki"><li class="ow-wiki">использование упрощенной викинотации для создания небольших таблиц;</li><li class="ow-wiki">использование викикоманды <span class="code">(:table:)...(:tableend:)</span> с возможностью более тонкой настройки внешнего вида таблиц.</li>
+Для создания таблиц на вики-страницах существует подхода: <ul class="ow-wiki"><li class="ow-wiki">использование упрощенной викинотации для создания небольших таблиц;</li><li class="ow-wiki">использование вики-команды <span class="code">(:table:)...(:tableend:)</span> с возможностью более тонкой настройки внешнего вида таблиц.</li>
 </ul>
 Далее будут рассмотрены оба подхода.<br/>
 <br/>
@@ -70,7 +70,7 @@
 <h2 class="ow-wiki"><a id="wikicommand"></a> Использование команды (:table:)</h2>
 <h3 class="ow-wiki"><a id="syntax"></a> Синтаксис</h3>
 <br/>
-С помощью <a class="ow-wiki ow-link-page" href="page://wikicommand">викикоманды</a> <span class="code">(:table:)</span> удобнее создавать большие таблицы в форматированием текста внутри ячеек. Синтаксис этой команды следующий:<br/>
+С помощью <a class="ow-wiki ow-link-page" href="page://wikicommand">вики-команды</a> <span class="code">(:table:)</span> удобнее создавать большие таблицы в форматированием текста внутри ячеек. Синтаксис этой команды следующий:<br/>
 <br/>
 <span class="code">(:table параметры:)<br/>
 (:row параметры:)<br/>
@@ -174,7 +174,7 @@
 <br/>
 <h3 class="ow-wiki"><a id="nested"></a> Вложенные таблицы</h3>
 <br/>
-Чтобы одна таблица располагалась в ячейке другой таблицы, недостаточно одной команды <span class="code">(:table:)</span>, в этом случае википарсер не будет знать, где заканчивается таблица верхнего уровня, а где вложенная таблица, поэтому для явного указания начала и конца команды создания таблицы были добавлены команды <span class="code">(:table:)</span> с номерами: <span class="code">(:table1:)</span>, <span class="code">(:table2:)</span>, <span class="code">(:table3:)</span>, <span class="code">(:table4:)</span> и <span class="code">(:table5:)</span>. Они могут использоваться точно также, как и команда <span class="code">(:table:)</span>, но создавались они именно для создания вложенных таблиц. В соответствии с правилами форматирования <a class="ow-wiki ow-link-page" href="page://wikicommand">викикоманд</a>, перечисленные нумерованные команды закрываются с помощью выражений <span class="code">(:table1end:)</span>, <span class="code">(:table2end:)</span>, <span class="code">(:table3end:)</span>, <span class="code">(:table4end:)</span> и <span class="code">(:table5end:)</span> соответственно. <br/>
+Чтобы одна таблица располагалась в ячейке другой таблицы, недостаточно одной команды <span class="code">(:table:)</span>, в этом случае википарсер не будет знать, где заканчивается таблица верхнего уровня, а где вложенная таблица, поэтому для явного указания начала и конца команды создания таблицы были добавлены команды <span class="code">(:table:)</span> с номерами: <span class="code">(:table1:)</span>, <span class="code">(:table2:)</span>, <span class="code">(:table3:)</span>, <span class="code">(:table4:)</span> и <span class="code">(:table5:)</span>. Они могут использоваться точно также, как и команда <span class="code">(:table:)</span>, но создавались они именно для создания вложенных таблиц. В соответствии с правилами форматирования <a class="ow-wiki ow-link-page" href="page://wikicommand">вики-команд</a>, перечисленные нумерованные команды закрываются с помощью выражений <span class="code">(:table1end:)</span>, <span class="code">(:table2end:)</span>, <span class="code">(:table3end:)</span>, <span class="code">(:table4end:)</span> и <span class="code">(:table5end:)</span> соответственно. <br/>
 <br/>
 Внутри команды вида <span class="code">(:tableN:)</span> (где N = 1, 2, ..., 5) для создания строк и ячеек должны использоваться также нумерованные команды <span class="code">(:rowN:)</span>, <span class="code">(:cellN:)</span> и <span class="code">(:hcellN:)</span>. Эта особенность добавляет наглядности, какой именно таблице какая строка или ячейка принадлежит.<br/>
 <br/>
@@ -237,7 +237,7 @@
 <br/>
 Нумерация таблиц не обязательно должна показывать уровень вложенности. Например, на данной странице справки для оформления последнего примера наружная таблица создается с помощью команды <span class="code">(:table3:)</span>, а вложенные - с помощью команд <span class="code">(:table:)</span> и <span class="code">(:table2:)</span>.<br/>
 <hr>
-<b>См. также:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-format-text">Форматирование текста</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-links">Ссылки</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wikicommand">Викикоманды</a></li>
+<b>См. также:</b><ul class="ow-wiki"><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-format-text">Форматирование текста</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wiki-links">Ссылки</a></li><li class="ow-wiki"><a class="ow-wiki ow-link-page" href="page://wikicommand">Вики-команды</a></li>
 </ul>
 </body>
 </html>

@@ -7,7 +7,7 @@
 * Директория со значками для заметок - %info%iconset%%.
 * Директория со словарями для проверки орфографии - %info%spell%%.
 * Директория со стилями страниц - %info%styles%%.
-* Директория со стилями оформления текста для викистраниц - %info%textstyles%%.
+* Директория со стилями оформления текста для вики-страниц - %info%textstyles%%.
 
 Имеется несколько путей, где OutWiker пытается найти директории настроек. 
 
@@ -20,7 +20,7 @@
 * Директория со значками для заметок - %info%lib\outwiker\data\iconset%%.
 * Директория со словарями для проверки орфографии - %info%lib\outwiker\data\spell%%.
 * Директория со стилями страниц - %info%lib\outwiker\data\styles%%.
-* Директория со стилями оформления текста для викистраниц - %info%lib\outwiker\data\textstyles%%.
+* Директория со стилями оформления текста для вики-страниц - %info%lib\outwiker\data\textstyles%%.
 
 !!! [[#normal_win]] Обычный режим (версия под Windows)
 
@@ -31,7 +31,7 @@
 * Директория со значками для заметок - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\iconset%%.
 * Директория со словарями для проверки орфографии - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\spell%%.
 * Директория со стилями страниц - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\styles%%.
-* Директория со стилями оформления текста для викистраниц - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\textstyles%%.
+* Директория со стилями оформления текста для вики-страниц - %info%C:\Users\USERNAME\AppData\Roaming\outwiker\textstyles%%.
 
 Здесь предполагается, что директория пользователя расположена на диске C: по адресу %info%C:\Users\'''USERNAME'''\%%, где '''USERNAME''' - это имя пользователя в системе.
 
@@ -55,7 +55,7 @@
 * Директория со значками для заметок - %info%iconset%%.
 * Директория со словарями для проверки орфографии - %info%spell%%.
 * Директория со стилями страниц - %info%styles%%.
-* Директория со стилями оформления текста для викистраниц - %info%textstyles%%.
+* Директория со стилями оформления текста для вики-страниц - %info%textstyles%%.
 
 !!! Переменная окружения OUTWIKER_PATH
 
