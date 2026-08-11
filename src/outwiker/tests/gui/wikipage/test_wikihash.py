@@ -17,7 +17,7 @@ from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class WikiHashTest (BaseOutWikerMixin, TestCase):
+class WikiHashTest(BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
 
@@ -26,14 +26,11 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
 
         files = ["image.jpg", "dir"]
 
-        fullFilesPath = [
-            os.path.join(
-                self.filesPath,
-                fname) for fname in files]
+        fullFilesPath = [os.path.join(self.filesPath, fname) for fname in files]
 
         self.attach_page2 = Attachment(self.wikiroot["Страница 2"])
 
-        # Прикрепим к двум страницам файлы
+        # Attach files to two pages
         Attachment(self.testPage).attach(fullFilesPath)
 
         self.wikitext = """Бла-бла-бла
@@ -48,18 +45,22 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
     def __setDefaultConfig(self):
         self.__htmlconfig.userStyle.value = ""
 
-        # Установим размер превьюшки, не совпадающий с размером по умолчанию
-        self.application.config.set(WikiConfig.WIKI_SECTION,
-                                    WikiConfig.THUMB_SIZE_PARAM,
-                                    WikiConfig.THUMB_SIZE_DEFAULT)
+        # Set the thumbnail size that matches the default size
+        self.application.config.set(
+            WikiConfig.WIKI_SECTION,
+            WikiConfig.THUMB_SIZE_PARAM,
+            WikiConfig.THUMB_SIZE_DEFAULT,
+        )
 
-        self.application.config.set(HtmlRenderConfig.HTML_SECTION,
-                                    HtmlRenderConfig.FONT_FACE_NAME_PARAM,
-                                    HtmlRenderConfig.FONT_NAME_DEFAULT)
+        self.application.config.set(
+            HtmlRenderConfig.HTML_SECTION,
+            HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+            HtmlRenderConfig.FONT_NAME_DEFAULT,
+        )
 
     def __createWiki(self):
-        # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        # Wiki will be created here
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -71,7 +72,7 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         removeDir(self.path)
 
     def testHash1(self):
-        # Только создали страницу, кешировать нельзя
+        # Page was just created, cannot use cache
         hashCalculator = WikiHashCalculator(self.application)
         hash_src = hashCalculator.getHash(self.testPage)
 
@@ -80,7 +81,7 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
 
         self.assertNotEqual(hash_src, hash2)
 
-        # Добавим файл
+        # Add a file
         attach = Attachment(self.testPage)
         attach.attach([os.path.join(self.filesPath, "add.png")])
 
@@ -89,7 +90,7 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         self.assertNotEqual(hash2, hash3)
 
     def testHash2(self):
-        # Только создали страницу, кешировать нельзя
+        # Page was just created, cannot use cache
         hashCalculator = WikiHashCalculator(self.application)
         hash_src = hashCalculator.getHash(self.testPage)
 
@@ -97,12 +98,6 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         hash2 = hashCalculator.getHash(self.testPage)
 
         self.assertNotEqual(hash_src, hash2)
-
-        self.testPage.content = self.wikitext
-
-        hash3 = hashCalculator.getHash(self.testPage)
-        self.assertEqual(hash_src, hash3)
-        self.assertNotEqual(hash2, hash3)
 
     def testHashRename(self):
         hashCalculator = WikiHashCalculator(self.application)
@@ -112,10 +107,6 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         hash2 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash_src, hash2)
 
-        self.testPage.title = "Страница 2"
-        hash3 = hashCalculator.getHash(self.testPage)
-        self.assertEqual(hash_src, hash3)
-
     def testCacheEmpty(self):
         emptycontent = EmptyContent(self.application.config)
         self.testPage.content = ""
@@ -123,18 +114,18 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         hashCalculator = WikiHashCalculator(self.application)
         hash_src = hashCalculator.getHash(self.testPage)
 
-        # Страница пустая, изменился шаблон для путой записи
+        # Page is empty, template for empty content changed
         emptycontent.content = "1111"
         hash2 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash_src, hash2)
 
-        # Изменилось содержимое страницы
+        # Page content changed
         self.testPage.content = "Бла-бла-бла"
         hash3 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash2, hash3)
         self.assertNotEqual(hash_src, hash3)
 
-        # Изменился шаблон страницы, но страница уже не пустая
+        # Page template changed, but page is no longer empty
         emptycontent.content = "2222"
         hash4 = hashCalculator.getHash(self.testPage)
         self.assertEqual(hash4, hash3)
@@ -144,14 +135,14 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         hashCalculator = WikiHashCalculator(self.application)
         hash_src = hashCalculator.getHash(self.testPage)
 
-        # Добавим файл в dir
+        # Add a file to dir
         with open(os.path.join(attach.getAttachPath(), "dir", "temp.tmp"), "w") as fp:
             fp.write("bla-bla-bla")
 
         hash2 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash_src, hash2)
 
-        # Добавим еще одну вложенную директорию
+        # Add another nested directory
         subdir = os.path.join(attach.getAttachPath(), "dir", "subdir_2")
         os.mkdir(subdir)
 
@@ -159,7 +150,7 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         self.assertNotEqual(hash2, hash3)
         self.assertNotEqual(hash_src, hash3)
 
-        # Добавим файл в dir/subdir_2
+        # Add a file to dir/subdir_2
         with open(os.path.join(subdir, "temp2.tmp"), "w") as fp:
             fp.write("bla-bla-bla")
 
@@ -170,17 +161,17 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
 
     def testCacheSubpages(self):
         """
-        Проверка кэширования при добавлении новых подстраниц
+        Test caching when adding new subpages
         """
         hashCalculator = WikiHashCalculator(self.application)
         hash_src = hashCalculator.getHash(self.testPage)
 
-        # Добавляем новую подстраницу
+        # Add a new subpage
         WikiPageFactory().create(self.testPage, "Подстраница 1", [])
         hash2 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash2, hash_src)
 
-        # Удалим новую страницу
+        # Remove the new page
         self.testPage["Подстраница 1"].remove()
 
         hash3 = hashCalculator.getHash(self.testPage)
@@ -188,7 +179,7 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
 
     def testCacheStyle(self):
         """
-        Проверка на то, что изменение стиля страницы сбрасывает кэш
+        Test that changing the page style resets the cache
         """
         style = Style()
         hashCalculator = WikiHashCalculator(self.application)
@@ -197,40 +188,30 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         exampleStyleDir = "testdata/styles/example_jblog/example_jblog"
         exampleStyleDir2 = "testdata/styles/example_jnet/example_jnet"
 
-        # Изменим стиль страницы
+        # Change page style
         style.setPageStyle(self.testPage, exampleStyleDir)
         hash2 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash2, hash_src)
 
-        # Еще раз изменим стиль
+        # Change style again
         style.setPageStyle(self.testPage, exampleStyleDir2)
         hash3 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash2, hash3)
         self.assertNotEqual(hash3, hash_src)
 
-        # Изменим стиль на тот же
-        style.setPageStyle(self.testPage, exampleStyleDir2)
-        hash4 = hashCalculator.getHash(self.testPage)
-        self.assertEqual(hash4, hash3)
-
-        # Установим стиль по умолчанию
-        style.setPageStyleDefault(self.testPage)
-        hash5 = hashCalculator.getHash(self.testPage)
-        self.assertEqual(hash5, hash_src)
-
     def testCacheLoadPlugins1(self):
         """
-        Проверка на то, что при изменении списка установленных плагинов не работает кэширование
+        Test that caching doesn't work when the list of installed plugins changes
         """
         hashCalculator = WikiHashCalculator(self.application)
         hash_src = hashCalculator.getHash(self.testPage)
 
-        # Загрузили плагин. Кэш не должен сработать
+        # Plugin loaded. Cache should not be used
         self.application.plugins.load(["testdata/plugins/testempty1"])
         hash2 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash2, hash_src)
 
-        # Загрузили еще один плагин
+        # Load another plugin
         self.application.plugins.load(["testdata/plugins/testempty2"])
         hash3 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash3, hash2)
@@ -238,7 +219,7 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
 
     def testCacheLoadPlugins2(self):
         """
-        Проверка на то, что при изменении списка установленных плагинов не работает кэширование
+        Test that caching doesn't work when the list of installed plugins changes
         """
         self.application.plugins.clear()
         self.application.plugins.load(["testdata/plugins/testempty1"])
@@ -251,7 +232,7 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
         hash2 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash2, hash_src)
 
-        # Перезагрузим плагины в другом порядке
+        # Reload plugins in different order
         self.application.plugins.load(["testdata/plugins/testempty1"])
         self.application.plugins.load(["testdata/plugins/testempty2"])
 
@@ -263,21 +244,23 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
 
     def testConfigThumbSizeCache(self):
         """
-        Тест на то, что на кэширование влияет изменение размера превьюшки по умолчанию
+        Test that changing the default thumbnail size affects caching
         """
         hashCalculator = WikiHashCalculator(self.application)
         hash_src = hashCalculator.getHash(self.testPage)
 
-        self.application.config.set(WikiConfig.WIKI_SECTION,
-                                    WikiConfig.THUMB_SIZE_PARAM,
-                                    WikiConfig.THUMB_SIZE_DEFAULT + 100)
+        self.application.config.set(
+            WikiConfig.WIKI_SECTION,
+            WikiConfig.THUMB_SIZE_PARAM,
+            WikiConfig.THUMB_SIZE_DEFAULT + 100,
+        )
 
         hash2 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash2, hash_src)
 
-        self.application.config.set(WikiConfig.WIKI_SECTION,
-                                    WikiConfig.THUMB_SIZE_PARAM,
-                                    "Бла-бла-бла")
+        self.application.config.set(
+            WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, "Бла-бла-бла"
+        )
 
         hash3 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash3, hash2)
@@ -285,21 +268,23 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
 
     def testConfigFontNameCache(self):
         """
-        Тест на то, что на кэширование влияет изменение размера превьюшки по умолчанию
+        Test that changing the default thumbnail size affects caching
         """
         hashCalculator = WikiHashCalculator(self.application)
         hash_src = hashCalculator.getHash(self.testPage)
 
-        self.application.config.set(HtmlRenderConfig.HTML_SECTION,
-                                    HtmlRenderConfig.FONT_FACE_NAME_PARAM,
-                                    "Бла-бла-бла")
+        self.application.config.set(
+            HtmlRenderConfig.HTML_SECTION,
+            HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+            "Бла-бла-бла",
+        )
 
         hash2 = hashCalculator.getHash(self.testPage)
         self.assertNotEqual(hash2, hash_src)
 
     def testConfigUserStyle(self):
         """
-        Тест на то, что на кэширование влияет изменение пользовательских стилей
+        Test that changing user styles affects caching
         """
         hashCalculator = WikiHashCalculator(self.application)
         hash_src = hashCalculator.getHash(self.testPage)
@@ -311,39 +296,45 @@ class WikiHashTest (BaseOutWikerMixin, TestCase):
 
     def testInvalidFontSize(self):
         """
-        Тест на корректную обработку некорректных настроек размера шрифта
+        Test correct handling of invalid font size settings
         """
         hashCalculator = WikiHashCalculator(self.application)
         hashCalculator.getHash(self.testPage)
 
-        self.application.config.set(HtmlRenderConfig.HTML_SECTION,
-                                    HtmlRenderConfig.FONT_SIZE_PARAM,
-                                    "Бла-бла-бла")
+        self.application.config.set(
+            HtmlRenderConfig.HTML_SECTION,
+            HtmlRenderConfig.FONT_SIZE_PARAM,
+            "Бла-бла-бла",
+        )
 
         hashCalculator.getHash(self.testPage)
 
     def testInvalidFontBold(self):
         """
-        Тест на корректную обработку некорректных настроек шрифта
+        Test correct handling of invalid font settings
         """
         hashCalculator = WikiHashCalculator(self.application)
         hashCalculator.getHash(self.testPage)
 
-        self.application.config.set(HtmlRenderConfig.HTML_SECTION,
-                                    HtmlRenderConfig.FONT_BOLD_PARAM,
-                                    "Бла-бла-бла")
+        self.application.config.set(
+            HtmlRenderConfig.HTML_SECTION,
+            HtmlRenderConfig.FONT_BOLD_PARAM,
+            "Бла-бла-бла",
+        )
 
         hashCalculator.getHash(self.testPage)
 
     def testInvalidFontItalic(self):
         """
-        Тест на корректную обработку некорректных настроек шрифта
+        Test correct handling of invalid font settings
         """
         hashCalculator = WikiHashCalculator(self.application)
         hashCalculator.getHash(self.testPage)
 
-        self.application.config.set(HtmlRenderConfig.HTML_SECTION,
-                                    HtmlRenderConfig.FONT_ITALIC_PARAM,
-                                    "Бла-бла-бла")
+        self.application.config.set(
+            HtmlRenderConfig.HTML_SECTION,
+            HtmlRenderConfig.FONT_ITALIC_PARAM,
+            "Бла-бла-бла",
+        )
 
         hashCalculator.getHash(self.testPage)

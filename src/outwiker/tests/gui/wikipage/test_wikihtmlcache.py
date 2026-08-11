@@ -18,7 +18,7 @@ from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
+class WikiHtmlCacheTest(BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
         self.filesPath = "testdata/samplefiles/"
@@ -26,14 +26,11 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
         files = ["image.jpg", "dir"]
 
-        fullFilesPath = [
-            os.path.join(
-                self.filesPath,
-                fname) for fname in files]
+        fullFilesPath = [os.path.join(self.filesPath, fname) for fname in files]
 
         self.attach_page2 = Attachment(self.wikiroot["Страница 2"])
 
-        # Прикрепим к двум страницам файлы
+        # Attach files to two pages
         Attachment(self.testPage).attach(fullFilesPath)
 
         self.wikitext = """Бла-бла-бла
@@ -42,24 +39,27 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
         self.testPage.content = self.wikitext
 
-        self.__htmlconfig = HtmlRenderConfig(self.application.config)
         self.__setDefaultConfig()
 
         self.resultPath = os.path.join(self.testPage.path, PAGE_RESULT_HTML)
 
     def __setDefaultConfig(self):
-        # Установим размер превьюшки, не совпадающий с размером по умолчанию
-        self.application.config.set(WikiConfig.WIKI_SECTION,
-                                    WikiConfig.THUMB_SIZE_PARAM,
-                                    WikiConfig.THUMB_SIZE_DEFAULT)
+        # Set thumbnail size that differs from the default size
+        self.application.config.set(
+            WikiConfig.WIKI_SECTION,
+            WikiConfig.THUMB_SIZE_PARAM,
+            WikiConfig.THUMB_SIZE_DEFAULT,
+        )
 
-        self.application.config.set(HtmlRenderConfig.HTML_SECTION,
-                                    HtmlRenderConfig.FONT_FACE_NAME_PARAM,
-                                    HtmlRenderConfig.FONT_NAME_DEFAULT)
+        self.application.config.set(
+            HtmlRenderConfig.HTML_SECTION,
+            HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+            HtmlRenderConfig.FONT_NAME_DEFAULT,
+        )
 
     def __createWiki(self):
-        # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        # Wiki will be created here
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -71,25 +71,25 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
         removeDir(self.path)
 
     def testCache1(self):
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
-        # После того, как один раз сгенерили страницу, если ничего не
-        # изменилось, можно кешировать
+        # After generating the page once, if nothing changed, can cache
         cache.saveHash()
         self.assertTrue(cache.canReadFromCache())
 
+
         self.testPage.content = "бла-бла-бла"
 
-        # Изменили содержимое страницы, опять нельзя кешировать
+        # Changed page content, cannot cache again
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
 
         self.assertTrue(cache.canReadFromCache())
 
-        # Добавим файл
+        # Add a file
         attach = Attachment(self.testPage)
         attach.attach([os.path.join(self.filesPath, "add.png")])
 
@@ -99,25 +99,24 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
         self.assertTrue(cache.canReadFromCache())
 
     def testCacheRename(self):
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
 
-        # После того, как один раз сгенерили страницу, если ничего не
-        # изменилось, можно кешировать
+        # After generating the page once, if nothing changed, can cache
         self.assertTrue(cache.canReadFromCache())
 
         self.testPage.content = "бла-бла-бла"
 
-        # Изменили содержимое страницы, опять нельзя кешировать
+        # Changed page content, cannot cache again
         self.assertFalse(cache.canReadFromCache())
         cache.saveHash()
 
         self.assertTrue(cache.canReadFromCache())
 
-        # Изменили заголовок
+        # Changed the title
         self.testPage.title = "Новый заголовок"
 
         self.assertFalse(cache.canReadFromCache())
@@ -129,19 +128,19 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
         emptycontent = EmptyContent(self.application.config)
         self.testPage.content = ""
 
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
 
         self.assertFalse(cache.canReadFromCache())
         cache.saveHash()
 
-        # Страница пустая, изменился шаблон для путой записи
+        # Page is empty, the template for empty content changed
         emptycontent.content = "1111"
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
 
-        # Изменилось содержимое страницы
+        # Page content changed
         self.testPage.content = "Бла-бла-бла"
         self.assertFalse(cache.canReadFromCache())
 
@@ -150,24 +149,23 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
         self.assertTrue(cache.canReadFromCache())
         cache.saveHash()
 
-        # Изменился шаблон страницы, но страница уже не пустая
+        # Page template changed, but the page is no longer empty
         emptycontent.content = "2222"
         self.assertTrue(cache.canReadFromCache())
 
     def testCacheSubdir(self):
         attach = Attachment(self.testPage)
 
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
 
-        # После того, как один раз сгенерили страницу, если ничего не
-        # изменилось, можно кешировать
+        # After generating the page once, if nothing changed, can cache
         self.assertTrue(cache.canReadFromCache())
 
-        # Добавим файл в dir
+        # Add a file to dir
         with open(os.path.join(attach.getAttachPath(), "dir", "temp.tmp"), "w") as fp:
             fp.write("bla-bla-bla")
 
@@ -175,14 +173,14 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
         cache.saveHash()
 
-        # Добавим еще одну вложенную директорию
+        # Add another nested directory
         subdir = os.path.join(attach.getAttachPath(), "dir", "subdir_2")
         os.mkdir(subdir)
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
 
-        # Добавим файл в dir/subdir_2
+        # Add a file to dir/subdir_2
         with open(os.path.join(subdir, "temp2.tmp"), "w") as fp:
             fp.write("bla-bla-bla")
 
@@ -190,9 +188,9 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
     def testCacheSubpages(self):
         """
-        Проверка кэширования при добавлении новых подстраниц
+        Test caching when adding new subpages
         """
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
@@ -200,7 +198,7 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
         self.assertTrue(cache.canReadFromCache())
 
-        # Добавляем новую подстраницу
+        # Add a new subpage
         WikiPageFactory().create(self.testPage, "Подстраница 1", [])
         self.assertFalse(cache.canReadFromCache())
 
@@ -209,11 +207,11 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
     def testCacheStyle(self):
         """
-        Проверка на то, что изменение стиля страницы сбрасывает кэш
+        Test that changing the page style resets the cache
         """
         style = Style()
 
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
@@ -223,7 +221,7 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
         exampleStyleDir = "testdata/styles/example_jblog/example_jblog"
         exampleStyleDir2 = "testdata/styles/example_jnet/example_jnet"
 
-        # Изменим стиль страницы
+        # Change page style
         style.setPageStyle(self.testPage, exampleStyleDir)
 
         self.assertFalse(cache.canReadFromCache())
@@ -231,7 +229,7 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
         cache.saveHash()
         self.assertTrue(cache.canReadFromCache())
 
-        # Еще раз изменим стиль
+        # Change the style once more
         style.setPageStyle(self.testPage, exampleStyleDir2)
 
         self.assertFalse(cache.canReadFromCache())
@@ -239,7 +237,7 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
         cache.saveHash()
         self.assertTrue(cache.canReadFromCache())
 
-        # Установим стиль по умолчанию
+        # Set default style
         style.setPageStyleDefault(self.testPage)
 
         self.assertFalse(cache.canReadFromCache())
@@ -249,36 +247,36 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
     def testCacheLoadPlugins1(self):
         """
-        Проверка на то, что при изменении списка установленных плагинов не работает кэширование
+        Test that caching doesn't work when the list of installed plugins changes
         """
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
-        # После того, как один раз сгенерили страницу, если ничего не
-        # изменилось, можно кешировать
+
+        # After generating the page once, if nothing changed, can cache
         self.assertTrue(cache.canReadFromCache())
 
-        # Загрузили плагин. Кэш не должен сработать
+        # Loaded a plugin. Cache should not work
         self.application.plugins.load(["testdata/plugins/testempty1"])
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
 
-        # Загрузили еще один плагин
+        # Loaded another plugin
         self.application.plugins.load(["testdata/plugins/testempty2"])
         self.assertFalse(cache.canReadFromCache())
 
     def testCacheLoadPlugins2(self):
         """
-        Проверка на то, что при изменении списка установленных плагинов не работает кэширование
+        Test that caching doesn't work when the list of installed plugins changes
         """
         self.application.plugins.clear()
         self.application.plugins.load(["testdata/plugins/testempty1"])
         self.application.plugins.load(["testdata/plugins/testempty2"])
 
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
@@ -288,7 +286,7 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
         self.assertFalse(cache.canReadFromCache())
 
-        # Перезагрузим плагины в другом порядке
+        # Reload plugins in different order
         self.application.plugins.load(["testdata/plugins/testempty2"])
         self.application.plugins.load(["testdata/plugins/testempty1"])
 
@@ -298,21 +296,22 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
     def testConfigThumbSizeCache(self):
         """
-        Тест на то, что на кэширование влияет изменение размера превьюшки по умолчанию
+        Test that changing the default thumbnail size affects caching
         """
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
-        # После того, как один раз сгенерили страницу, если ничего не
-        # изменилось, можно кешировать
+
+        # After generating the page once, if nothing changed, can cache
         self.assertTrue(cache.canReadFromCache())
 
         self.application.config.set(
             WikiConfig.WIKI_SECTION,
             WikiConfig.THUMB_SIZE_PARAM,
-            WikiConfig.THUMB_SIZE_DEFAULT + 100)
+            WikiConfig.THUMB_SIZE_DEFAULT + 100,
+        )
 
         self.assertFalse(cache.canReadFromCache())
 
@@ -320,34 +319,36 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
         self.assertTrue(cache.canReadFromCache())
 
         self.application.config.set(
-            WikiConfig.WIKI_SECTION,
-            WikiConfig.THUMB_SIZE_PARAM,
-            "Бла-бла-бла")
+            WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, "Бла-бла-бла"
+        )
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
         self.application.config.set(
             WikiConfig.WIKI_SECTION,
             WikiConfig.THUMB_SIZE_PARAM,
-            WikiConfig.THUMB_SIZE_DEFAULT)
+            WikiConfig.THUMB_SIZE_DEFAULT,
+        )
         self.assertTrue(cache.canReadFromCache())
 
     def testConfigFontNameCache(self):
         """
-        Тест на то, что на кэширование влияет изменение размера превьюшки по умолчанию
+        Test that changing the default thumbnail size affects caching
         """
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
-        # После того, как один раз сгенерили страницу, если ничего не
-        # изменилось, можно кешировать
+
+        # After generating the page once, if nothing changed, can cache
         self.assertTrue(cache.canReadFromCache())
 
-        self.application.config.set(HtmlRenderConfig.HTML_SECTION,
-                                    HtmlRenderConfig.FONT_FACE_NAME_PARAM,
-                                    "Бла-бла-бла")
+        self.application.config.set(
+            HtmlRenderConfig.HTML_SECTION,
+            HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+            "Бла-бла-бла",
+        )
 
         self.assertFalse(cache.canReadFromCache())
 
@@ -355,21 +356,20 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
         self.assertTrue(cache.canReadFromCache())
 
     def testResetHash1(self):
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
         self.assertFalse(cache.canReadFromCache())
 
         cache.saveHash()
 
-        # После того, как один раз сгенерили страницу, если ничего не
-        # изменилось, можно кешировать
+        # After generating the page once, if nothing changed, can cache
         self.assertTrue(cache.canReadFromCache())
 
         cache.resetHash()
         self.assertFalse(cache.canReadFromCache())
 
     def testResetHash2(self):
-        # Только создали страницу, кешировать нельзя
+        # Just created the page, cannot cache
         cache = HtmlCache(self.testPage, self.application)
 
         self.assertFalse(cache.canReadFromCache())
@@ -377,8 +377,7 @@ class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):
 
         cache.saveHash()
 
-        # После того, как один раз сгенерили страницу, если ничего не
-        # изменилось, можно кешировать
+        # After generating the page once, if nothing changed, can cache
         self.assertTrue(cache.canReadFromCache())
 
         cache.resetHash()
