@@ -17,6 +17,7 @@ import wx
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
+from outwiker.core.tree import WikiPage
 
 
 def removeDir(path):
@@ -80,11 +81,26 @@ def remove_notes_tree(wikiroot):
     removeDir(wikiroot.path)
 
 
-def attach_files(page, files: List[str], subdir: str = '.'):
+def attach_files(page: WikiPage, files: List[str], subdir: str = '.'):
     attach = Attachment(page)
     if subdir != '.':
         attach.createSubdir(subdir)
 
-    attach_dir = Path('testdata', 'samplefiles')
-    attaches = [attach_dir / fname for fname in files]
+    src_dir = Path('testdata', 'samplefiles')
+    attaches = [src_dir / fname for fname in files]
     attach.attach(attaches, subdir)
+
+
+def copy_test_files_to_attachments(wikipage: WikiPage, files: List[str]) -> List[str]:
+    """Copy files but not change edit datetime"""
+    src_dir = os.path.join('testdata', 'samplefiles')
+
+    attach = Attachment(wikipage)
+    attach_dir = attach.getAttachPath(create=True)
+
+    src_full_paths = [os.path.join(src_dir, fname) for fname in files]
+    atach_full_paths = [os.path.join(attach_dir, fname) for fname in files]
+    for fname in src_full_paths:
+        shutil.copy(fname, attach_dir)
+
+    return atach_full_paths

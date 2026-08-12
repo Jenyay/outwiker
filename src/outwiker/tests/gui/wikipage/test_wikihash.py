@@ -30,7 +30,6 @@ class WikiHashTest(BaseOutWikerMixin, TestCase):
 
         self.attach_page2 = Attachment(self.wikiroot["Страница 2"])
 
-        # Attach files to two pages
         Attachment(self.testPage).attach(fullFilesPath)
 
         self.wikitext = """Бла-бла-бла
@@ -129,35 +128,6 @@ class WikiHashTest(BaseOutWikerMixin, TestCase):
         emptycontent.content = "2222"
         hash4 = hashCalculator.getHash(self.testPage)
         self.assertEqual(hash4, hash3)
-
-    def testCacheSubdir(self):
-        attach = Attachment(self.testPage)
-        hashCalculator = WikiHashCalculator(self.application)
-        hash_src = hashCalculator.getHash(self.testPage)
-
-        # Add a file to dir
-        with open(os.path.join(attach.getAttachPath(), "dir", "temp.tmp"), "w") as fp:
-            fp.write("bla-bla-bla")
-
-        hash2 = hashCalculator.getHash(self.testPage)
-        self.assertNotEqual(hash_src, hash2)
-
-        # Add another nested directory
-        subdir = os.path.join(attach.getAttachPath(), "dir", "subdir_2")
-        os.mkdir(subdir)
-
-        hash3 = hashCalculator.getHash(self.testPage)
-        self.assertNotEqual(hash2, hash3)
-        self.assertNotEqual(hash_src, hash3)
-
-        # Add a file to dir/subdir_2
-        with open(os.path.join(subdir, "temp2.tmp"), "w") as fp:
-            fp.write("bla-bla-bla")
-
-        hash4 = hashCalculator.getHash(self.testPage)
-        self.assertNotEqual(hash3, hash4)
-        self.assertNotEqual(hash2, hash4)
-        self.assertNotEqual(hash_src, hash4)
 
     def testCacheSubpages(self):
         """

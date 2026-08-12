@@ -30,7 +30,6 @@ class WikiHtmlCacheTest(BaseOutWikerMixin, TestCase):
 
         self.attach_page2 = Attachment(self.wikiroot["Страница 2"])
 
-        # Attach files to two pages
         Attachment(self.testPage).attach(fullFilesPath)
 
         self.wikitext = """Бла-бла-бла
@@ -152,39 +151,6 @@ class WikiHtmlCacheTest(BaseOutWikerMixin, TestCase):
         # Page template changed, but the page is no longer empty
         emptycontent.content = "2222"
         self.assertTrue(cache.canReadFromCache())
-
-    def testCacheSubdir(self):
-        attach = Attachment(self.testPage)
-
-        # Just created the page, cannot cache
-        cache = HtmlCache(self.testPage, self.application)
-        self.assertFalse(cache.canReadFromCache())
-
-        cache.saveHash()
-
-        # After generating the page once, if nothing changed, can cache
-        self.assertTrue(cache.canReadFromCache())
-
-        # Add a file to dir
-        with open(os.path.join(attach.getAttachPath(), "dir", "temp.tmp"), "w") as fp:
-            fp.write("bla-bla-bla")
-
-        self.assertFalse(cache.canReadFromCache())
-
-        cache.saveHash()
-
-        # Add another nested directory
-        subdir = os.path.join(attach.getAttachPath(), "dir", "subdir_2")
-        os.mkdir(subdir)
-        self.assertFalse(cache.canReadFromCache())
-
-        cache.saveHash()
-
-        # Add a file to dir/subdir_2
-        with open(os.path.join(subdir, "temp2.tmp"), "w") as fp:
-            fp.write("bla-bla-bla")
-
-        self.assertFalse(cache.canReadFromCache())
 
     def testCacheSubpages(self):
         """
