@@ -118,6 +118,7 @@ class CommandSource(Command):
         """
         fname = getFileName(params_dict[FILE_PARAM_NAME])
         fname = fname.replace("\\", "/")
+        self.parser.addWatchAttachments([fname])
         encoding = self._getEncoding(params_dict)
 
         # Full path to the attached file
