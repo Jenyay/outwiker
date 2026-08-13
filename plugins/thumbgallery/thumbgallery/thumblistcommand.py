@@ -14,38 +14,40 @@ from .thumbtablegenerator import ThumbTableGenerator
 
 class ThumbListCommand(Command):
     """
-    Викикоманда, добавляющая стили к заголовку страницы
-    Использование:
+    Wiki command that adds styles to the page header.
+    Usage:
 
-    (:thumblist параметры:)
-    Список файлов
+    (:thumblist params:)
+    List of files
     (:thumblistend:)
     """
 
     def __init__(self, parser):
         """
-        parser - экземпляр парсера
+        parser - parser instance
         """
         super().__init__(parser)
 
     @property
     def name(self):
         """
-        Возвращает имя команды, которую обрабатывает класс
+        Returns the name of the command processed by the class
         """
         return "thumblist"
 
     def execute(self, params, content):
         """
-        Запустить команду на выполнение.
-        Метод возвращает текст, который будет
-        вставлен на место команды в вики-нотации
+        Execute the command.
+        The method returns the text that will be
+        inserted in place of the command in wiki notation
         """
         paramsDict = Command.parseParams(params)
         thumbsize = self._getThumbSize(paramsDict)
         columnsCount = self._getColumnsCount(paramsDict)
 
         lineItems = self._parseContent(content)
+        files = [item[0] for item in lineItems]
+        self.parser.addWatchAttachments(files)
 
         if columnsCount == 0:
             generator = ThumbStreamGenerator(lineItems, thumbsize, self.parser)
@@ -60,16 +62,15 @@ class ThumbListCommand(Command):
         attach = Attachment(self.parser.page)
         root_dir = attach.getAttachPath(create=False)
 
-        filesList = [
-            (item[0].replace("\\", "/"), item[1])
-            for item in self._getLinesItems(content)
-        ]
-        allFiles = attach.getAttachRelative()
-        allFiles.sort()
-
         if len(content) == 0:
+            allFiles = attach.getAttachRelative()
+            allFiles.sort()
             files = [(fname, "") for fname in allFiles if isImage(fname)]
         else:
+            filesList = [
+                (item[0].replace("\\", "/"), item[1])
+                for item in self._getLinesItems(content)
+            ]
             files = [
                 lineitem
                 for lineitem in filesList
@@ -80,9 +81,9 @@ class ThumbListCommand(Command):
 
     def _getLinesItems(self, content):
         """
-        Возвращает список файлов и комментариев к ним,
-        перечисленных в теле команды.
-        Возвращает список кортежей: (имя файла, комментарий)
+        Returns a list of files and their comments
+        listed in the command body.
+        Returns a list of tuples: (filename, comment)
         """
 
         def _removeAttach(line):
@@ -105,8 +106,8 @@ class ThumbListCommand(Command):
 
     def _parse_line(self, line: str) -> List[Tuple[str, str]]:
         """
-        Из строки в формате "Имя файла | Комментарий" делает список кортежей
-        (Имя файла, Комментарий)
+        Converts a string in the format "Filename | Comment" into a list of tuples
+        (Filename, Comment)
         """
         # Extract comment
         splitItems = line.rsplit("|", 1)
@@ -151,7 +152,7 @@ class ThumbListCommand(Command):
 
     def _getColumnsCount(self, paramsDict):
         """
-        Возвращает количество столбцов для таблицы
+        Returns the number of columns for the table
         """
         paramname = "cols"
         cols = 0

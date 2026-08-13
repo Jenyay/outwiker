@@ -5,14 +5,14 @@ from .thumblistcommand import ThumbListCommand
 
 class ThumbGalleryCommand(ThumbListCommand):
     """
-    Команда (:thumbgallery:) полностью повторяет команду (:thumblist:) и
-    создана для совместимости с командой (:thumbgallery:) из плагина
-    thumblist для pmWiki - http://www.pmwiki.org/wiki/Cookbook/ThumbList
+    The (:thumbgallery:) command fully replicates the (:thumblist:) command and
+    is created for compatibility with the (:thumbgallery:) command from the
+    thumblist plugin for pmWiki - http://www.pmwiki.org/wiki/Cookbook/ThumbList
     """
 
     @property
     def name(self):
         """
-        Возвращает имя команды, которую обрабатывает класс
+        Returns the name of the command processed by the class
         """
         return "thumbgallery"
