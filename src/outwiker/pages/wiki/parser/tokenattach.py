@@ -59,7 +59,7 @@ class AttachToken(metaclass=ABCMeta):
         token3 = Literal(self.attachString) + fname_without_space_token
 
         finalToken = concatenate([token1, token2, token3])(self._getTokenName())
-        finalToken = finalToken.setParseAction(self._convertToLink)
+        finalToken = finalToken.setParseAction(self._convertToHTML)
         return finalToken
 
     @abstractmethod
@@ -71,7 +71,7 @@ class AttachToken(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def _convertToLink(self, s, l, t):
+    def _convertToHTML(self, s, l, t):
         pass
 
     @abstractmethod
@@ -86,7 +86,7 @@ class AttachAllToken(AttachToken):
     def _getRegexWithSpaces(self):
         return Regex(attach_regex_with_spaces, re.I)
 
-    def _convertToLink(self, s, l, t):
+    def _convertToHTML(self, s, l, t):
         fname = t[1]
         fname_fix_slash = fname.replace("\\", "/")
         href = "{dirname}/{fname}".format(
@@ -118,7 +118,7 @@ class AttachImagesToken(AttachToken):
         regexp_str = r"[\w\s.=,#@^&$%;()`~/\\-]+?" + "(?:{})".format(ext_list)
         return Regex(regexp_str, re.I)
 
-    def _convertToLink(self, s, l, t):
+    def _convertToHTML(self, s, l, t):
         fname = t[1]
         fname_fix_slash = fname.replace("\\", "/")
         rnd = random.randrange(1000)
@@ -129,6 +129,7 @@ class AttachImagesToken(AttachToken):
         )
 
         if Attachment(self.parser.page).exists(fname_fix_slash):
+            self.parser.addWatchAttachments([fname_fix_slash])
             return create_image(src, [css.CSS_IMAGE])
 
         return create_invalid_attached_file(fname)

@@ -3,10 +3,12 @@
 import traceback
 from typing import Dict, List
 
+from outwiker.core.hashcalculator import SimpleHashCalculator
 from outwiker.core.htmlformatter import HtmlFormatter
 from outwiker.core.thumbnails import Thumbnails
 from outwiker.core.application import Application
 import outwiker.core.cssclasses as css
+from outwiker.core.tree import WikiPage
 
 from .markup import Markup
 from .tokenfonts import FontsFactory
@@ -34,7 +36,7 @@ from .tokenmultilineblock import MultilineBlockFactory
 
 
 class Parser:
-    def __init__(self, page, application: Application):
+    def __init__(self, page: WikiPage, application: Application):
         self.page = page
         self.application = application
         self.config = application.config
@@ -43,17 +45,20 @@ class Parser:
         # Dictionary with nonstandard parameters (for plugins for example)
         self.customProps = {}
 
-        # Массив строк, которые надо добавить в заголовок страницы
+        # Array of strings to add to the page header
         self.__headers: List[str] = []
 
         self.__footers: List[str] = []
 
         self.__styles: Dict[str, str] = {}
 
-        # Команды, которые обрабатывает парсер.
-        # Формат команд: (:name params... :) content...(:nameend:)
-        # Ключ - имя команды, значение - экземпляр класса команды
+        # Commands processed by the parser.
+        # Command format: (:name params... :) content...(:nameend:)
+        # Key - command name, value - command class instance
         self.commands = {}
+
+        self._hash_calculator = SimpleHashCalculator(self.application)
+        self._hash_calculator.clearWatchAttachments(self.page)
 
         self.italicized = FontsFactory.makeItalic(self)
         self.bolded = FontsFactory.makeBold(self)
@@ -259,14 +264,14 @@ class Parser:
     @property
     def head(self):
         """
-        Свойство возвращает строку из добавленных заголовочных элементов
-        (то, что должно быть внутри тега <head>...</head>)
+        Property returns a string of added header elements
+        (what should be inside the <head>...</head> tag)
         """
         return "".join(self.__headers)
 
     def appendToHead(self, header):
         """
-        Добавить строку в заголовок
+        Add a string to the header
         """
         self.__headers.append(header)
 
@@ -313,7 +318,7 @@ class Parser:
 
     def toHtml(self, text):
         """
-        Сгенерить HTML без заголовков типа <html> и т.п.
+        Generate HTML without headers like <html> etc.
         """
         thumb = Thumbnails(self.page)
         thumb.clearDir()
@@ -351,3 +356,6 @@ class Parser:
     def removeCommand(self, commandName):
         if commandName in self.commands:
             del self.commands[commandName]
+
+    def addWatchAttachments(self, attachments_relative: List[str]):
+        self._hash_calculator.addWatchAttachments(self.page, attachments_relative)
