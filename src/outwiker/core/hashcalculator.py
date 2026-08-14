@@ -3,59 +3,87 @@
 import os
 import os.path
 import hashlib
-from abc import ABCMeta, abstractmethod
-from typing import List
+from typing import Callable, List
 
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
+from outwiker.core.tree import WikiPage
 
-class BaseHashCalculator(metaclass=ABCMeta):
-    def __init__(self, application):
+
+class BaseHashCalculator:
+    def __init__(self, application: Application):
         self._application = application
+        self._content_functions: List[Callable[[WikiPage, List[str]], None]] = []
 
-    @abstractmethod
-    def getFullContent(self, page) -> List[str]:
+    def getFullContent(self, page: WikiPage) -> List[str]:
         """
         Get the content for calculating the checksum, which determines
         whether the page needs to be updated
         """
+        content: List[str] = []
+        for func in self._content_functions:
+            func(page, content)
+        return content
+
+    def addContentFunction(self, func: Callable[[WikiPage, List[str]], None]):
+        self._content_functions.append(func)
 
     @property
     def application(self):
         return self._application
 
-    def getHash(self, page) -> str:
+    def getHash(self, page: WikiPage) -> str:
         text = "".join(self.getFullContent(page))
         return hashlib.md5(text.encode("utf-8", errors="ignore")).hexdigest()
 
 
 class SimpleHashCalculator(BaseHashCalculator):
-    def getFullContent(self, page) -> List[str]:
-        """
-        Get the content for calculating the checksum, which determines
-        whether the page needs to be updated
-        """
-        # Here we accumulate the list of interesting strings (by which we determine
-        # whether the page has changed)
-        items: List[str] = []
+    def __init__(self, application: Application):
+        super().__init__(application)
+        self.addContentFunction(self._getPageModDateContent)
+        self.addContentFunction(self._getAttachContent)
+        self.addContentFunction(self._getPluginsListContent)
+        self.addContentFunction(self._getPageChildrenContent)
 
-        self._getPageTitleContent(page, items)
-        self._getPageContent(page, items)
-        self._getDirContent(page, items)
-        self._getPluginsListContent(items)
-        self._getPageChildrenContent(page, items)
-        return items
+        self._WATCHED_ATTACHMENTS_PARAM = "watch_attachments"
+        self._watched_attachments_separator = "|"
 
-    def _getPageTitleContent(self, page, content: List[str]) -> None:
-        content.append(page.title)
+    def clearWatchAttachments(self, page: WikiPage):
+        registry = page.root.registry.get_page_registry(page)
+        registry.set(self._WATCHED_ATTACHMENTS_PARAM, "")
 
-    def _getPageContent(self, page, content: List[str]) -> None:
-        content.append(page.content)
+    def getWatchAttachments(self, page: WikiPage) -> List[str]:
+        registry = page.root.registry.get_page_registry(page)
+        return [
+            item
+            for item in registry.getstr(
+                self._WATCHED_ATTACHMENTS_PARAM, default=""
+            ).split(self._watched_attachments_separator)
+            if len(item) != 0
+        ]
 
-    def _getPageChildrenContent(self, page, content: List[str]) -> None:
+    def addWatchAttachments(self, page: WikiPage, attachments_relative: List[str]):
+        if not attachments_relative:
+            return
+
+        registry = page.root.registry.get_page_registry(page)
+        src_str_items = registry.getstr(self._WATCHED_ATTACHMENTS_PARAM, default="")
+        new_items = self._watched_attachments_separator.join(attachments_relative)
+        new_str_items = (
+            new_items
+            if not src_str_items
+            else self._watched_attachments_separator.join([src_str_items, new_items])
+        )
+        registry.set(self._WATCHED_ATTACHMENTS_PARAM, new_str_items)
+
+    def _getPageModDateContent(self, page: WikiPage, content: List[str]) -> None:
+        content.append(str(page.datetime))
+
+    def _getPageChildrenContent(self, page: WikiPage, content: List[str]) -> None:
         for child in page.children:
             content.append(child.display_title)
 
-    def _getPluginsListContent(self, content: List[str]) -> None:
+    def _getPluginsListContent(self, page: WikiPage, content: List[str]) -> None:
         """
         Create a list of plugins with version numbers
         Returns a string
@@ -69,7 +97,7 @@ class SimpleHashCalculator(BaseHashCalculator):
         for item in items:
             content.append(item)
 
-    def _getDirContent(self, page, content: List[str], dirname=".") -> None:
+    def _getAttachContent(self, page: WikiPage, content: List[str]) -> None:
         """
         Form a list of string elements for hash calculation based on data in the nested
         subdirectory dirname (path relative to __attach)
@@ -77,22 +105,14 @@ class SimpleHashCalculator(BaseHashCalculator):
         """
         attach = Attachment(page)
         attachroot = attach.getAttachPath()
+        watch_attach_list = [os.path.join(attachroot, fname) for fname in self.getWatchAttachments(page)]
 
-        attachlist = attach.getAttachRelative(dirname)
-        attachlist.sort(key=str.lower)
+        for fullpath in watch_attach_list:
+            if not os.path.exists(fullpath):
+                content.append("None")
+                continue
 
-        for fname in attachlist:
-            fullpath = os.path.join(attachroot, dirname, fname)
-
-            # Skip directories that start with __
-            if not os.path.isdir(fname) or not fname.startswith("__"):
-                try:
-                    content.append(fname)
-                    content.append(str(os.stat(fullpath).st_mtime))
-
-                    if os.path.isdir(fullpath):
-                        self._getDirContent(page, content, os.path.join(dirname, fname))
-                except OSError:
-                    # If there are access issues with the file, we don't
-                    # pay attention to them here
-                    pass
+            try:
+                content.append(str(os.stat(fullpath).st_mtime))
+            except OSError:
+                content.append("None")

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os
 
 import wx
@@ -19,6 +20,9 @@ from .listautocomplete import listComplete_wiki
 from .wikicolorizercontroller import WikiColorizerController
 from .wikipage import WikiPageFactory
 from .wikipreferences import WikiPrefGeneralPanel
+
+
+logger = logging.getLogger("outwiker.pages.wiki.wikipagecontroller")
 
 
 class WikiPageController:
@@ -108,8 +112,10 @@ class WikiPageController:
 
         # Проверим, можно ли прочитать уже готовый HTML
         if cache.canReadFromCache() and os.path.exists(path):
+            logger.debug("Use cached HTML file for page")
             return
 
+        logger.debug("Generate new HTML file for page")
         style = Style()
         stylepath = style.getPageStyle(page)
         generator = HtmlGenerator(page, self._application)

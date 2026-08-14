@@ -18,19 +18,17 @@ from outwiker.pages.wiki.parser.attachregex import (
 
 class IncludeCommand(Command):
     """
-    Команда для вставки в текст страницы текста прикрепленного файла
-    Синтаксис: (:include Attach:"fname" [params...] :)
-    params - необязательные параметры:
-        encoding="xxx" - указывает кодировку прикрепленного файла
-        htmlescape - заменить символы <, > и т.п. на их HTML-аналоги
-            (&lt;, &gt; и т.п.)
-        wikiparse - содержимое прикрепленного файла предварительно нужно
-            пропустить через википарсер
+    Command to insert the text of an attached file into the page text.
+    Syntax: (:include Attach:"fname" [params...] :)
+    params - optional parameters:
+        encoding="xxx" - specifies the encoding of the attached file
+        htmlescape - replace characters <, > etc. with their HTML equivalents (&lt;, &gt; etc.)
+        wikiparse - the content of the attached file should first be processed through the wiki parser
     """
 
     def __init__(self, parser):
         """
-        parser - экземпляр парсера
+        parser - parser instance
         """
         super().__init__(parser)
         self._attach_regex_no_spaces = re.compile(
@@ -44,20 +42,20 @@ class IncludeCommand(Command):
     @property
     def name(self):
         """
-        Возвращает имя команды, которую обрабатывает класс
+        Returns the name of the command handled by the class
         """
         return "include"
 
     def execute(self, params, content):
         """
-        Запустить команду на выполнение.
-        Метод возвращает текст, который будет вставлен на место команды
-            в вики-нотации
+        Execute the command.
+        Method returns the text that will be inserted at the command's place in wiki notation
         """
         (fname_relative, params_tail) = self._getAttach(params)
         if fname_relative is None:
             return ""
 
+        self.parser.addWatchAttachments([fname_relative])
         if isImage(fname_relative):
             return self._execute_image(fname_relative)
         else:
@@ -76,7 +74,7 @@ class IncludeCommand(Command):
 
         try:
             with open(fname_full_path, encoding=encoding) as fp:
-                # Почему-то в конце всегда оказывается перевод строки
+                # There's always a newline at the end for some reason
                 text = fp.read().rstrip()
         except IOError:
             error_message = _("Can't open file '{}'").format(fname)
@@ -89,7 +87,7 @@ class IncludeCommand(Command):
 
     def _postprocessText(self, text, params_dict):
         """
-        Выполнить манипуляции согласно настройкам с прочитанным текстом
+        Perform manipulations with the read text according to settings
         """
         result = text
 
@@ -110,8 +108,8 @@ class IncludeCommand(Command):
 
     def _getAttach(self, params_str: str):
         """
-        Возвращает имя прикрепленного файла, который хотим вставить на
-            страницу и хвост параметров после имени файла
+        Returns the name of the attached file to be inserted into the
+            page and the tail of parameters after the filename
         """
         match = self._attach_regex_no_spaces.match(params_str)
         if match is None:
@@ -121,5 +119,5 @@ class IncludeCommand(Command):
             return (None, params_str)
 
         fname = match.group("fname").replace("\\", "/")
-        tail = params_str[match.end():]
+        tail = params_str[match.end() :]
         return (fname, tail)

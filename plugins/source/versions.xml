@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.28.4">
+		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.28.4.zip">
+			<requirements>
+				<api>4.980</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Update sources caching.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Обновление способа кэширования исходников.</change>
+		</changes>
+	</version>
+
 	<version number="1.28.3" date="2026-07-28">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.28.3.zip">
 			<requirements>

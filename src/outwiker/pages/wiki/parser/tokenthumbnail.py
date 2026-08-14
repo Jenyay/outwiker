@@ -68,6 +68,7 @@ class ThumbnailToken:
             func = self.thumbmaker.createThumbByMaxSize
 
         fname = t["fname"]
+        self.parser.addWatchAttachments([fname])
 
         try:
             thumb = func(self.parser.page, fname, size)
