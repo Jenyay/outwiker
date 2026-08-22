@@ -26,7 +26,7 @@ class ParserMultilineBlockTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -36,43 +36,37 @@ class ParserMultilineBlockTest(unittest.TestCase):
         text = "[{}]"
         result = ""
 
-        self.assertEqual(self.parser.toHtml(text),
-                         result)
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testMultilineBlockSimple_01(self):
         text = "Блаблабла [{Блок}] блабла"
         result = "Блаблабла Блок блабла"
 
-        self.assertEqual(self.parser.toHtml(text),
-                         result)
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testMultilineBlockSimple_02(self):
         text = "[{\\t}]"
         result = "\\t"
 
-        self.assertEqual(self.parser.toHtml(text),
-                         result)
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testMultilineBlockFormat_01(self):
         text = "Блаблабла [{Цитата '''полужирный шрифт''' [[Ссылка -> http://jenyay.net]] }] блабла"
         result = f'Блаблабла Цитата <b>полужирный шрифт</b> <a class="{css.CSS_WIKI}" href="http://jenyay.net">Ссылка</a>  блабла'
 
-        self.assertEqual(self.parser.toHtml(text),
-                         result)
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testMultilineBlockFormat_02(self):
         text = "[{[[Ссылка -> http://jenyay.net]]}]"
         result = f'<a class="{css.CSS_WIKI}" href="http://jenyay.net">Ссылка</a>'
 
-        self.assertEqual(self.parser.toHtml(text),
-                         result)
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testMultilineBlockFormat_03(self):
         text = "[{'''test'''}]"
-        result = '<b>test</b>'
+        result = "<b>test</b>"
 
-        self.assertEqual(self.parser.toHtml(text),
-                         result)
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testMultilineBlockMultiline1(self):
         text = """Блаблабла [{это длинная
@@ -83,8 +77,7 @@ class ParserMultilineBlockTest(unittest.TestCase):
 мнотострочная
 цитата блабла"""
 
-        self.assertEqual(self.parser.toHtml(text),
-                         result)
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testMultilineBlockMultiline2(self):
         text = """Блаблабла

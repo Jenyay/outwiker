@@ -437,8 +437,10 @@ class HtmlPageView(BaseHtmlPanel):
 
         # Ненумерованный список
         actionController.getAction(LIST_BULLETS_STR_ID).setFunc(
-            lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(
-                "<ul>\n", "</ul>", "<li>", "</li>"
+            lambda param: (
+                self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(
+                    "<ul>\n", "</ul>", "<li>", "</li>"
+                )
             )
         )
 
@@ -452,8 +454,10 @@ class HtmlPageView(BaseHtmlPanel):
 
         # Нумерованный список
         actionController.getAction(LIST_NUMBERS_STR_ID).setFunc(
-            lambda param: self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(
-                "<ol>\n", "</ol>", "<li>", "</li>"
+            lambda param: (
+                self._application.mainWindow.pagePanel.pageView.codeEditor.turnList(
+                    "<ol>\n", "</ol>", "<li>", "</li>"
+                )
             )
         )
 
@@ -627,10 +631,12 @@ class HtmlPageView(BaseHtmlPanel):
             os.path.join(self.imagesDir, "picture.svg"),
             fullUpdate=False,
         )
-        
+
         # Текущая дата
         actionController.getAction(CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor, self._application)
+            lambda param: insertCurrentDate(
+                self.mainWindow, self.codeEditor, self._application
+            )
         )
 
         actionController.appendMenuItem(CURRENT_DATE, menu)
@@ -640,7 +646,7 @@ class HtmlPageView(BaseHtmlPanel):
             getBuiltinImagePath("date.svg"),
             fullUpdate=False,
         )
-        
+
         # Вставить якорь
         actionController.getAction(ANCHOR_STR_ID).setFunc(
             lambda param: self.turnText('<a name="', '"></a>')

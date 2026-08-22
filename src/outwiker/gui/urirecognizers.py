@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Classes to recognize href URI for HtmlRenders
-'''
+"""
 
 from abc import ABCMeta, abstractmethod
 from pathlib import Path
@@ -13,27 +13,27 @@ import os
 import idna
 
 
-logger = logging.getLogger('outwiker.gui.urirecognizers')
+logger = logging.getLogger("outwiker.gui.urirecognizers")
 
 
 class Recognizer(metaclass=ABCMeta):
-    '''
+    """
     Base class for all recognizers
-    '''
+    """
 
     def __init__(self, basepath: str):
-        '''
+        """
         basepath - path to directory with current HTML file for HTML render.
-        '''
-        self._basepath = basepath.replace('\\', '/')
+        """
+        self._basepath = basepath.replace("\\", "/")
         self._basepath = self._removeAnchor(self._basepath)
 
     def _removeAnchor(self, basepath: str) -> str:
-        last_slash_pos = basepath.rfind('/')
+        last_slash_pos = basepath.rfind("/")
         if last_slash_pos == -1:
             return basepath
 
-        sharp_pos = basepath.rfind('#')
+        sharp_pos = basepath.rfind("#")
         if sharp_pos > last_slash_pos:
             return basepath[:sharp_pos]
 
@@ -49,7 +49,7 @@ class Recognizer(metaclass=ABCMeta):
     def _prepareHref(self, href: str) -> str:
         # WebKit appends 'file://' string to end of URI without protocol.
         href = self._removeFileProtokol(href)
-        href = href.replace('\\', '/')
+        href = href.replace("\\", "/")
         return href
 
     def _removeFileProtokol(self, href):
@@ -58,7 +58,7 @@ class Recognizer(metaclass=ABCMeta):
         """
         fileprotocol = "file://"
         if href.startswith(fileprotocol):
-            return href[len(fileprotocol):]
+            return href[len(fileprotocol) :]
 
         return href
 
@@ -69,49 +69,58 @@ class Recognizer(metaclass=ABCMeta):
 
 # URL recognizer
 class URLRecognizer(Recognizer):
-    '''
+    """
     Recognize internet URL
-    '''
+    """
 
     def _prepareHref(self, href: str) -> str:
         return href
 
     def _recognize(self, href: str) -> Optional[str]:
-        isUrl = (href.lower().startswith("http:") or
-                 href.lower().startswith("https:") or
-                 href.lower().startswith("ftp:") or
-                 href.lower().startswith("mailto:"))
+        isUrl = (
+            href.lower().startswith("http:")
+            or href.lower().startswith("https:")
+            or href.lower().startswith("ftp:")
+            or href.lower().startswith("mailto:")
+        )
 
         return href if isUrl else None
 
 
 # Anchor recognizers
 
+
 class AnchorRecognizerBase(Recognizer, metaclass=ABCMeta):
     def _recognizeAnchor(self, href: str, basepath: str) -> Optional[str]:
         anchor = None
-        logger.debug("AnchorRecognizerBase. href= '%s'; basepath = '%s'", href, basepath)
-        if (href.lower().startswith(basepath.lower()) and
-                len(href) > len(basepath) and
-                href[len(basepath)] == "#"):
-            anchor = href[len(basepath):]
+        logger.debug(
+            "AnchorRecognizerBase. href= '%s'; basepath = '%s'", href, basepath
+        )
+        if (
+            href.lower().startswith(basepath.lower())
+            and len(href) > len(basepath)
+            and href[len(basepath)] == "#"
+        ):
+            anchor = href[len(basepath) :]
         else:
             pos = href.rfind("/#")
             if pos != -1:
-                anchor = href[pos + 1:]
+                anchor = href[pos + 1 :]
 
         return anchor
 
 
 class AnchorRecognizerIE(AnchorRecognizerBase):
-    '''
+    """
     Recognize an anchor in href.
     For Internet Explorer engine.
-    '''
+    """
 
     def _recognize(self, href: str) -> Optional[str]:
-        logger.debug("AnchorRecognizerIE. href= '%s'; _basepath = '%s'", href, self._basepath)
-        if href.startswith('/'):
+        logger.debug(
+            "AnchorRecognizerIE. href= '%s'; _basepath = '%s'", href, self._basepath
+        )
+        if href.startswith("/"):
             href = href[1:]
 
         basepath = self._basepath
@@ -122,20 +131,21 @@ class AnchorRecognizerIE(AnchorRecognizerBase):
 
 
 class AnchorRecognizerWebKit(AnchorRecognizerBase):
-    '''
+    """
     Recognize an anchor in href.
     For WebKit engine.
-    '''
+    """
 
     def _recognize(self, href: str) -> Optional[str]:
         basepath = self._basepath
-        if not basepath.endswith('/'):
-            basepath += '/'
+        if not basepath.endswith("/"):
+            basepath += "/"
 
         return self._recognizeAnchor(href, basepath)
 
 
 # File recognizers
+
 
 class FileRecognizerBase(Recognizer):
     def _recognize(self, href: str) -> Optional[str]:
@@ -172,6 +182,7 @@ class FileRecognizerWebKit(FileRecognizerBase):
 
 # Page recognizers
 
+
 class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
     def __init__(self, basepath: str, application):
         super().__init__(basepath)
@@ -194,7 +205,7 @@ class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
             href = href[:anchorpos]
 
         if href.startswith(protocol):
-            uid = href[len(protocol):]
+            uid = href[len(protocol) :]
 
             try:
                 uid = idna.decode(uid)
@@ -205,15 +216,16 @@ class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
             if uid.endswith("/"):
                 uid = uid[:-1]
 
-            page = (self._application.wikiroot.getPageByUid(uid) or
-                    self._application.selectedPage[uid] or
-                    self._application.wikiroot[uid])
+            page = (
+                self._application.wikiroot.getPageByUid(uid)
+                or self._application.selectedPage[uid]
+                or self._application.wikiroot[uid]
+            )
 
         return page
 
     def _recognize(self, href: str):
-        page = (self._findPageByProtocol(href) or
-                self._findPageByPath(href))
+        page = self._findPageByProtocol(href) or self._findPageByPath(href)
         return page
 
 
@@ -228,8 +240,8 @@ class PageRecognizerWebKit(PageRecognizerBase):
             return currentPage
 
         if href.startswith(self._basepath):
-            href = href[len(self._basepath):]
-            if href.startswith('/'):
+            href = href[len(self._basepath) :]
+            if href.startswith("/"):
                 href = href[1:]
 
         if len(href) == 0:
@@ -239,7 +251,7 @@ class PageRecognizerWebKit(PageRecognizerBase):
 
         if href[0] == "/":
             if href.startswith(currentPage.root.path):
-                href = href[len(currentPage.root.path):]
+                href = href[len(currentPage.root.path) :]
 
             if len(href) > 1 and href.endswith("/"):
                 href = href[:-1]
@@ -273,16 +285,16 @@ class PageRecognizerIE(PageRecognizerBase):
         if anchor is not None and currentPage[anchor.replace("\\", "/")] is not None:
             return currentPage[anchor.replace("\\", "/")]
 
-        if href.startswith('/'):
+        if href.startswith("/"):
             href = href[1:]
 
         href = unquote(href)
 
         if len(href) > 1 and href[1] == ":":
             if href.startswith(currentPage.path.replace("\\", "/")):
-                href = href[len(currentPage.path) + 1:]
+                href = href[len(currentPage.path) + 1 :]
             elif href.startswith(currentPage.root.path.replace("\\", "/")):
-                href = href[len(currentPage.root.path):]
+                href = href[len(currentPage.root.path) :]
             else:
                 href = href[2:]
 
@@ -309,15 +321,15 @@ class PageRecognizerIE(PageRecognizerBase):
         """
         Удалить about: и about:blank из начала адреса
         """
-        about_full = u"about:blank"
-        about_short = u"about:"
+        about_full = "about:blank"
+        about_short = "about:"
 
         result = href
         if result.startswith(about_full):
-            result = result[len(about_full):]
+            result = result[len(about_full) :]
 
         elif result.startswith(about_short):
-            result = result[len(about_short):]
+            result = result[len(about_short) :]
 
         return result
 
@@ -326,9 +338,11 @@ class PageRecognizerIE(PageRecognizerBase):
         Проверить, а не указывает ли href на якорь
         """
         anchor = None
-        if (href.startswith(self._basepath) and
-                len(href) > len(self._basepath) and
-                href[len(self._basepath)] == "#"):
-            anchor = href[len(self._basepath):]
+        if (
+            href.startswith(self._basepath)
+            and len(href) > len(self._basepath)
+            and href[len(self._basepath)] == "#"
+        ):
+            anchor = href[len(self._basepath) :]
 
         return anchor

@@ -11,7 +11,7 @@ from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class WikiCommandsTest (BaseOutWikerMixin, TestCase):
+class WikiCommandsTest(BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
 
@@ -23,7 +23,7 @@ class WikiCommandsTest (BaseOutWikerMixin, TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -57,9 +57,7 @@ class WikiCommandsTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(params["Параметр4"], "")
         self.assertEqual(params["Параметр5"], "111")
         self.assertEqual(params["Параметр6"], " 222 ")
-        self.assertEqual(
-            params["Параметр7"],
-            " проверка 'бла бла бла' проверка")
+        self.assertEqual(params["Параметр7"], " проверка 'бла бла бла' проверка")
         self.assertEqual(params["Параметр8"], ' проверка "bla-bla-bla" тест ')
         self.assertEqual(params["Параметр9"], "-1")
         self.assertEqual(params["Параметр10"], "-10.5")
@@ -82,27 +80,27 @@ class WikiCommandsTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(params["Параметр"], "-1")
 
     def testParamsParsing5(self):
-        params_text = 'Параметр= -1 '
+        params_text = "Параметр= -1 "
         params = Command.parseParams(params_text)
         self.assertEqual(params["Параметр"], "-1")
 
     def testParamsParsing6(self):
-        params_text = 'Параметр=Бла-бла-бла'
+        params_text = "Параметр=Бла-бла-бла"
         params = Command.parseParams(params_text)
         self.assertEqual(params["Параметр"], "Бла-бла-бла")
 
     def testParamsParsing7(self):
-        params_text = 'Параметр= Бла-бла-бла'
+        params_text = "Параметр= Бла-бла-бла"
         params = Command.parseParams(params_text)
         self.assertEqual(params["Параметр"], "Бла-бла-бла")
 
     def testParamsParsing8(self):
-        params_text = 'Параметр=Бла_бла_бла'
+        params_text = "Параметр=Бла_бла_бла"
         params = Command.parseParams(params_text)
         self.assertEqual(params["Параметр"], "Бла_бла_бла")
 
     def testParamsParsing9(self):
-        params_text = 'Параметр= Бла_бла_бла'
+        params_text = "Параметр= Бла_бла_бла"
         params = Command.parseParams(params_text)
         self.assertEqual(params["Параметр"], "Бла_бла_бла")
 
@@ -119,12 +117,8 @@ class WikiCommandsTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(params["Параметр1.Подпараметр"], "")
         self.assertEqual(params["Пар_аме_тр2"], "111")
         self.assertEqual(params["Параметр3.Еще.Подпар_аметр"], "")
-        self.assertEqual(
-            params["Пар.ам.етр4"],
-            " проверка 'бла бла бла' проверка")
-        self.assertEqual(
-            params["Пар.аме.тр5"],
-            ' проверка "bla-bla-bla" тест ')
+        self.assertEqual(params["Пар.ам.етр4"], " проверка 'бла бла бла' проверка")
+        self.assertEqual(params["Пар.аме.тр5"], ' проверка "bla-bla-bla" тест ')
 
     def testCommandTest1(self):
         self.parser.addCommand(ExampleCommand(self.parser))
@@ -316,13 +310,13 @@ content: """
         result = self.parser.toHtml(text)
         self.assertEqual(result_right, result)
 
-        self.parser.removeCommand('абырвалг')
+        self.parser.removeCommand("абырвалг")
 
         result = self.parser.toHtml(text)
         self.assertEqual(result_right, result)
 
 
-class ExampleCommand (Command):
+class ExampleCommand(Command):
     """
     Тестовая команда. Обрабатывает команды вида
         (:test params... :) content (:testend:)
@@ -343,7 +337,7 @@ class ExampleCommand (Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"test"
+        return "test"
 
     def execute(self, params, content):
         """
@@ -351,18 +345,19 @@ class ExampleCommand (Command):
         Метод возвращает текст, который будет вставлен на место команды
         в вики-нотации
         """
-        params_result = params if params is not None else u""
-        content_result = content if content is not None else u""
+        params_result = params if params is not None else ""
+        content_result = content if content is not None else ""
 
-        result = u"""Command name: test
+        result = """Command name: test
 params: {params}
-content: {content}""".format(params=params_result.strip(),
-                             content=content_result.strip())
+content: {content}""".format(
+            params=params_result.strip(), content=content_result.strip()
+        )
 
         return result
 
 
-class ExceptionCommand (Command):
+class ExceptionCommand(Command):
     """
     Тестовая команда, которая бросает исключение Exception
     """
@@ -378,7 +373,7 @@ class ExceptionCommand (Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"exception"
+        return "exception"
 
     def execute(self, params, content):
         raise Exception

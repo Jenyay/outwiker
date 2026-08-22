@@ -29,11 +29,8 @@ def find_all(text: str, sub: str, start=0, end=None):
     return _textutils.find_all(text, sub, start, end)
 
 
-def positionInside(text: str,
-                   position: int,
-                   open_str: str,
-                   close_str: str) -> bool:
-    '''
+def positionInside(text: str, position: int, open_str: str, close_str: str) -> bool:
+    """
     Return true if position located between open_str and close_str strings
-    '''
+    """
     return _textutils.positionInside(text, position, open_str, close_str)

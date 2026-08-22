@@ -6,22 +6,23 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
 
 
-class WikiChildListAction (BaseAction):
+class WikiChildListAction(BaseAction):
     """
     Вставка команды для показа списка дочерних страниц
     """
-    stringId = u"WikiChildList"
+
+    stringId = "WikiChildList"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Children (:childlist:)")
+        return _("Children (:childlist:)")
 
     @property
     def description(self):
-        return _(u"Insert (:childlist:) command")
+        return _("Insert (:childlist:) command")
 
     def run(self, params):
         assert self._application.mainWindow is not None
@@ -33,25 +34,26 @@ class WikiChildListAction (BaseAction):
             text = controller.getDialogResult()
             if text is not None:
                 self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(
-                    text)
+                    text
+                )
 
 
-class ChildListDialogController (object):
+class ChildListDialogController(object):
     def __init__(self, dialog):
         # Параметры сортировки
         self._sortStrings = [
-            u"order",
-            u"name",
-            u"creation",
-            u"edit",
+            "order",
+            "name",
+            "creation",
+            "edit",
         ]
 
         # Строки сортировки, которые будут показаны в комбобоксе диалога
         self._dialogSortStrings = [
-            _(u"as in tree"),
-            _(u"by name"),
-            _(u"by creation date"),
-            _(u"by changing date"),
+            _("as in tree"),
+            _("by name"),
+            _("by creation date"),
+            _("by changing date"),
         ]
 
         self._dialog = dialog
@@ -64,7 +66,7 @@ class ChildListDialogController (object):
 
     def _getCommand(self):
         params = self._getParams()
-        return u"(:childlist{}:)".format(params)
+        return "(:childlist{}:)".format(params)
 
     def _getParams(self):
         """
@@ -74,23 +76,23 @@ class ChildListDialogController (object):
         descend = self._dialog.isDescend
 
         if sortIndex == 0 and not descend:
-            return u""
+            return ""
 
         sortname = self._sortStrings[sortIndex]
         if descend:
             sortname = "descend" + sortname
 
-        return u" sort={}".format(sortname)
+        return " sort={}".format(sortname)
 
 
-class ChildListDialog (TestedDialog):
+class ChildListDialog(TestedDialog):
     """
     Диалог для вставки команды (:childlist:)
     """
 
     def __init__(self, parent):
         super(ChildListDialog, self).__init__(parent)
-        self.SetTitle(_(u"Insert (:childlist:) command"))
+        self.SetTitle(_("Insert (:childlist:) command"))
 
         self.__createGui()
         self.__layout()
@@ -100,10 +102,9 @@ class ChildListDialog (TestedDialog):
         self._sortComboBox.AppendItems(sortStrings)
 
     def __createGui(self):
-        self._sortLabel = wx.StaticText(self, label=_(u"Sort"))
+        self._sortLabel = wx.StaticText(self, label=_("Sort"))
 
-        self._sortComboBox = wx.ComboBox(
-            self, style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self._sortComboBox = wx.ComboBox(self, style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self._descendCheckBox = wx.CheckBox(self, label=_("Descending sort"))
         self._buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
@@ -112,16 +113,29 @@ class ChildListDialog (TestedDialog):
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableCol(1)
 
-        mainSizer.Add(self._sortLabel, 0, flag=wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL, border=2)
-        mainSizer.Add(self._sortComboBox, 0, flag=wx.EXPAND |
-                      wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        mainSizer.Add(self._descendCheckBox, 0, flag=wx.EXPAND |
-                      wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        mainSizer.Add(
+            self._sortLabel, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        mainSizer.Add(
+            self._sortComboBox,
+            0,
+            flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
+        mainSizer.Add(
+            self._descendCheckBox,
+            0,
+            flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
         mainSizer.AddStretchSpacer()
         mainSizer.AddStretchSpacer()
-        mainSizer.Add(self._buttonsSizer, 0, flag=wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, border=2)
+        mainSizer.Add(
+            self._buttonsSizer,
+            0,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            border=2,
+        )
 
         self.SetSizer(mainSizer)
         self.Fit()

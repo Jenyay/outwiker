@@ -19,7 +19,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         self.thumbmaker = PageThumbmaker()
 
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -27,9 +27,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3"],
-                       "Страница 4",
-                       [])
+        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
     def tearDown(self):
@@ -47,9 +45,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         newwidth = 250
         newheight = 182
 
-        thumb_fname = self.thumbmaker.createThumbByWidth(page,
-                                                         fname_in,
-                                                         newwidth)
+        thumb_fname = self.thumbmaker.createThumbByWidth(page, fname_in, newwidth)
         thumb_path = os.path.join(page.path, thumb_fname)
 
         (width, height) = getImageSize(thumb_path)
@@ -69,9 +65,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         newwidth = 250
         newheight = 215
 
-        thumb_fname = self.thumbmaker.createThumbByWidth(page,
-                                                         fname_in,
-                                                         newwidth)
+        thumb_fname = self.thumbmaker.createThumbByWidth(page, fname_in, newwidth)
         thumb_path = os.path.join(page.path, thumb_fname)
 
         (width, height) = getImageSize(thumb_path)
@@ -91,9 +85,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         newwidth = 249
         newheight = 182
 
-        thumb_fname = self.thumbmaker.createThumbByHeight(page,
-                                                          fname_in,
-                                                          newheight)
+        thumb_fname = self.thumbmaker.createThumbByHeight(page, fname_in, newheight)
         thumb_path = os.path.join(page.path, thumb_fname)
 
         (width, height) = getImageSize(thumb_path)
@@ -113,9 +105,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         newwidth = 249
         newheight = 215
 
-        thumb_fname = self.thumbmaker.createThumbByHeight(page,
-                                                          fname_in,
-                                                          newheight)
+        thumb_fname = self.thumbmaker.createThumbByHeight(page, fname_in, newheight)
         thumb_path = os.path.join(page.path, thumb_fname)
 
         (width, height) = getImageSize(thumb_path)
@@ -137,9 +127,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         newwidth = 250
         newheight = 182
 
-        thumb_fname = self.thumbmaker.createThumbByMaxSize(page,
-                                                           fname_in,
-                                                           maxsize)
+        thumb_fname = self.thumbmaker.createThumbByMaxSize(page, fname_in, maxsize)
         thumb_path = os.path.join(page.path, thumb_fname)
 
         (width, height) = getImageSize(thumb_path)
@@ -161,9 +149,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         newwidth = 182
         newheight = 250
 
-        thumb_fname = self.thumbmaker.createThumbByMaxSize(page,
-                                                           fname_in,
-                                                           maxsize)
+        thumb_fname = self.thumbmaker.createThumbByMaxSize(page, fname_in, maxsize)
         thumb_path = os.path.join(page.path, thumb_fname)
 
         (width, height) = getImageSize(thumb_path)
@@ -185,9 +171,7 @@ class PageThumbmakerTest(BaseWxTestCase):
         newwidth = 250
         newheight = 215
 
-        thumb_fname = self.thumbmaker.createThumbByMaxSize(page,
-                                                           fname_in,
-                                                           maxsize)
+        thumb_fname = self.thumbmaker.createThumbByMaxSize(page, fname_in, maxsize)
         thumb_path = os.path.join(page.path, thumb_fname)
 
         (width, height) = getImageSize(thumb_path)

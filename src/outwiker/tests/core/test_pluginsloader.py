@@ -32,9 +32,11 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
 
     def testLoadedPlugins(self):
         # Test for remove plugin
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
@@ -52,9 +54,11 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
         # Добавим плагин TestEmpty1 в черный список
         self.config.disabledPlugins.value = ["TestEmpty1"]
 
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
@@ -62,26 +66,25 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
         self.assertEqual(len(loader), 2)
         self.assertEqual(loader["TestEmpty2"].name, "TestEmpty2")
         self.assertEqual(loader["TestEmpty2"].version, "0.1")
-        self.assertEqual(loader["TestEmpty2"].description,
-                         "This plugin is empty")
+        self.assertEqual(loader["TestEmpty2"].description, "This plugin is empty")
 
         self.assertEqual(loader["TestWikiCommand"].name, "TestWikiCommand")
         self.assertEqual(loader["TestWikiCommand"].version, "0.1")
 
         self.assertEqual(len(loader.disabledPlugins), 1)
-        self.assertEqual(loader.disabledPlugins["TestEmpty1"].name,
-                         "TestEmpty1")
+        self.assertEqual(loader.disabledPlugins["TestEmpty1"].name, "TestEmpty1")
+        self.assertEqual(loader.disabledPlugins["TestEmpty1"].version, "0.1")
         self.assertEqual(
-            loader.disabledPlugins["TestEmpty1"].version, "0.1"
+            loader.disabledPlugins["TestEmpty1"].description, "This plugin is empty"
         )
-        self.assertEqual(loader.disabledPlugins["TestEmpty1"].description,
-                         "This plugin is empty")
 
     def testRemove(self):
         # Test for remove plugin
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
@@ -114,9 +117,11 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
 
     def testOnOffPlugins1(self):
         # Тест на включение/выключение плагинов
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
@@ -132,14 +137,15 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
         self.assertEqual(len(loader.disabledPlugins), 1)
 
         self.assertEqual(loader["TestEmpty2"].name, "TestEmpty2")
-        self.assertEqual(loader.disabledPlugins["TestEmpty1"].name,
-                         "TestEmpty1")
+        self.assertEqual(loader.disabledPlugins["TestEmpty1"].name, "TestEmpty1")
 
     def testOnOffPlugins2(self):
         # Тест на включение/выключение плагинов
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
@@ -155,9 +161,11 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
 
     def testOnOffPlugins3(self):
         # Тест на включение/выключение плагинов
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
@@ -174,14 +182,18 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
 
     def testOnOffPlugins4(self):
         # Тест на включение/выключение плагинов
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+        ]
 
         # Сразу заблокируем все плагины
-        self.config.disabledPlugins.value = ["TestEmpty1",
-                                             "TestEmpty2",
-                                             "TestWikiCommand"]
+        self.config.disabledPlugins.value = [
+            "TestEmpty1",
+            "TestEmpty2",
+            "TestWikiCommand",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
@@ -197,14 +209,18 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
 
     def testOnOffPlugins5(self):
         # Тест на включение/выключение плагинов
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+        ]
 
         # Сразу заблокируем все плагины
-        self.config.disabledPlugins.value = ["TestEmpty1",
-                                             "TestEmpty2",
-                                             "TestWikiCommand"]
+        self.config.disabledPlugins.value = [
+            "TestEmpty1",
+            "TestEmpty2",
+            "TestWikiCommand",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
@@ -221,9 +237,11 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
 
     def testOnOffPlugins6(self):
         # Тест на включение/выключение плагинов
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
@@ -245,48 +263,44 @@ class PluginsLoaderRepositoryTest(unittest.TestCase):
         self.assertTrue(loader["TestEmpty1"].enabled)
 
     def testDisable(self):
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2"]
+        dirlist = ["testdata/plugins/testempty1", "testdata/plugins/testempty2"]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader.loadedPlugins), 2)
 
-        loader.disable('TestEmpty1')
+        loader.disable("TestEmpty1")
 
         self.assertEqual(len(loader.disabledPlugins), 1)
 
     def testDoubleDisable(self):
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2"]
+        dirlist = ["testdata/plugins/testempty1", "testdata/plugins/testempty2"]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader.loadedPlugins), 2)
 
-        loader.disable('TestEmpty1')
-        loader.disable('TestEmpty1')
+        loader.disable("TestEmpty1")
+        loader.disable("TestEmpty1")
 
         self.assertEqual(len(loader.disabledPlugins), 1)
 
     def testEnable(self):
-        self.config.disabledPlugins.value = ["TestEmpty1",
-                                             "TestEmpty2"]
+        self.config.disabledPlugins.value = ["TestEmpty1", "TestEmpty2"]
 
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2"]
+        dirlist = ["testdata/plugins/testempty1", "testdata/plugins/testempty2"]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader.disabledPlugins), 2)
 
-        loader.enable('TestEmpty1')
+        loader.enable("TestEmpty1")
 
         self.assertEqual(len(loader), 1)
         self.assertEqual(len(loader.disabledPlugins), 1)
 
-        loader.enable('TestEmpty2')
-        loader.enable('TestEmpty2')
+        loader.enable("TestEmpty2")
+        loader.enable("TestEmpty2")
 
         self.assertEqual(len(loader), 2)
         self.assertEqual(len(loader.disabledPlugins), 0)
@@ -315,28 +329,29 @@ class PluginsLoaderImportTest(unittest.TestCase):
         self.assertEqual(len(loader), 0)
 
     def testLoad(self):
-        dirlist = ["testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testempty2"]
+        dirlist = [
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testempty2",
+        ]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 2)
         self.assertEqual(loader["TestEmpty1"].name, "TestEmpty1")
         self.assertEqual(loader["TestEmpty1"].version, "0.1")
-        self.assertEqual(loader["TestEmpty1"].description,
-                         "This plugin is empty")
+        self.assertEqual(loader["TestEmpty1"].description, "This plugin is empty")
         self.assertEqual(loader["TestEmpty1"].application, self.application)
 
         self.assertEqual(loader["TestEmpty2"].name, "TestEmpty2")
         self.assertEqual(loader["TestEmpty2"].version, "0.1")
-        self.assertEqual(loader["TestEmpty2"].description,
-                         "This plugin is empty")
+        self.assertEqual(loader["TestEmpty2"].description, "This plugin is empty")
 
         # Проверим, как работает итерация
         for plugin in loader:
-            self.assertTrue(plugin == loader["TestEmpty1"] or
-                            plugin == loader["TestEmpty2"])
+            self.assertTrue(
+                plugin == loader["TestEmpty1"] or plugin == loader["TestEmpty2"]
+            )
 
         loader.clear()
         self.assertEqual(len(loader), 0)
@@ -353,8 +368,10 @@ class PluginsLoaderImportTest(unittest.TestCase):
         tmp_plugin_dir = "testdata/plugins/testreload"
 
         # init test
-        shutil.copyfile('testdata/plugins/testreload/testreload/testreload.v1',
-                        'testdata/plugins/testreload/testreload/plugin.py')
+        shutil.copyfile(
+            "testdata/plugins/testreload/testreload/testreload.v1",
+            "testdata/plugins/testreload/testreload/plugin.py",
+        )
 
         dirlist = [tmp_plugin_dir]
         loader = PluginsLoader(self.application)
@@ -366,10 +383,12 @@ class PluginsLoaderImportTest(unittest.TestCase):
         self.assertEqual(loader["TestReload"].version, "0.1")
 
         # replace plugin file to ver 0.2
-        os.remove('testdata/plugins/testreload/testreload/plugin.py')
+        os.remove("testdata/plugins/testreload/testreload/plugin.py")
         sleep(1)
-        shutil.copyfile('testdata/plugins/testreload/testreload/testreload.v2',
-                        'testdata/plugins/testreload/testreload/plugin.py')
+        shutil.copyfile(
+            "testdata/plugins/testreload/testreload/testreload.v2",
+            "testdata/plugins/testreload/testreload/plugin.py",
+        )
 
         # observation
         loader.reload("TestReload")
@@ -378,7 +397,7 @@ class PluginsLoaderImportTest(unittest.TestCase):
         self.assertEqual(loader["TestReload"].version, "0.2")
 
         # restore
-        os.remove('testdata/plugins/testreload/testreload/plugin.py')
+        os.remove("testdata/plugins/testreload/testreload/plugin.py")
 
     def testVersion_01(self):
         dirlist = ["testdata/plugins/testempty3"]
@@ -399,23 +418,24 @@ class PluginsLoaderImportTest(unittest.TestCase):
         self.assertEqual(loader["TestEmpty4"].version, None)
 
     def testLoadInvalid_01(self):
-        dirlist = ["testdata/plugins/testinvalid",            # Нет такой директории
-                   "testdata/plugins/testinvalid1",
-                   "testdata/plugins/testinvalid2",
-                   "testdata/plugins/testinvalid4",
-                   "testdata/plugins/testinvalid5",
-                   "testdata/plugins/testinvalid6",
-                   "testdata/plugins/testinvalid7",
-                   # no plugin.py file in the packages
-                   "testdata/plugins/testinvalid8",
-                   "testdata/plugins/testempty1",
-                   "testdata/plugins/testempty2",
-                   # Ссылка на плагин testempty2 повторяется еще раз
-                   "testdata/plugins/testempty2",
-                   "testdata/plugins/testwikicommand",
-                   "testdata/plugins/testoutdated",
-                   "testdata/plugins/testfromfuture",
-                   ]
+        dirlist = [
+            "testdata/plugins/testinvalid",  # Нет такой директории
+            "testdata/plugins/testinvalid1",
+            "testdata/plugins/testinvalid2",
+            "testdata/plugins/testinvalid4",
+            "testdata/plugins/testinvalid5",
+            "testdata/plugins/testinvalid6",
+            "testdata/plugins/testinvalid7",
+            # no plugin.py file in the packages
+            "testdata/plugins/testinvalid8",
+            "testdata/plugins/testempty1",
+            "testdata/plugins/testempty2",
+            # Ссылка на плагин testempty2 повторяется еще раз
+            "testdata/plugins/testempty2",
+            "testdata/plugins/testwikicommand",
+            "testdata/plugins/testoutdated",
+            "testdata/plugins/testfromfuture",
+        ]
 
         loader = PluginsLoader(self.application)
         loader.enableOutput = False
@@ -424,13 +444,11 @@ class PluginsLoaderImportTest(unittest.TestCase):
         self.assertEqual(len(loader), 3)
         self.assertEqual(loader["TestEmpty1"].name, "TestEmpty1")
         self.assertEqual(loader["TestEmpty1"].version, "0.1")
-        self.assertEqual(loader["TestEmpty1"].description,
-                         "This plugin is empty")
+        self.assertEqual(loader["TestEmpty1"].description, "This plugin is empty")
 
         self.assertEqual(loader["TestEmpty2"].name, "TestEmpty2")
         self.assertEqual(loader["TestEmpty2"].version, "0.1")
-        self.assertEqual(loader["TestEmpty2"].description,
-                         "This plugin is empty")
+        self.assertEqual(loader["TestEmpty2"].description, "This plugin is empty")
 
         self.assertEqual(loader["TestWikiCommand"].name, "TestWikiCommand")
         self.assertEqual(loader["TestWikiCommand"].version, "0.1")
@@ -445,7 +463,7 @@ class PluginsLoaderImportTest(unittest.TestCase):
         self.assertEqual(len(loader), 0)
         self.assertEqual(len(loader.invalidPlugins), 1)
 
-        self.assertIn('TypeError', loader.invalidPlugins[0].description)
+        self.assertIn("TypeError", loader.invalidPlugins[0].description)
 
     def testLoadInvalid_03(self):
         dirlist = ["testdata/plugins/testfromfuture"]
@@ -468,7 +486,9 @@ class PluginsLoaderImportTest(unittest.TestCase):
         self.assertEqual(len(loader.invalidPlugins), 1)
 
     def testGetInfo(self):
-        dirlist = ["testdata/plugins/testempty1", ]
+        dirlist = [
+            "testdata/plugins/testempty1",
+        ]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
@@ -483,7 +503,9 @@ class PluginsLoaderImportTest(unittest.TestCase):
         # Добавим плагин TestEmpty1 в черный список
         self.config.disabledPlugins.value = ["TestEmpty1"]
 
-        dirlist = ["testdata/plugins/testempty1", ]
+        dirlist = [
+            "testdata/plugins/testempty1",
+        ]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
@@ -494,7 +516,9 @@ class PluginsLoaderImportTest(unittest.TestCase):
         self.assertIsInstance(plugInfo, AppInfo)
 
     def testGetInfo_None(self):
-        dirlist = ["testdata/plugins/testempty1", ]
+        dirlist = [
+            "testdata/plugins/testempty1",
+        ]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 

@@ -3,18 +3,18 @@
 from pyparsing import Regex
 
 
-class LineJoinFactory (object):
+class LineJoinFactory(object):
     @staticmethod
     def make(parser):
         return LineJoinToken().getToken()
 
 
-class LineJoinToken (object):
+class LineJoinToken(object):
     """
     Токен для горизонтальной линии
     """
 
     def getToken(self):
         token = Regex(r"\\\n")
-        token = token.setParseAction(lambda s, l, t: u"")("linejoin")
+        token = token.setParseAction(lambda s, l, t: "")("linejoin")
         return token

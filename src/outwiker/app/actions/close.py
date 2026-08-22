@@ -8,6 +8,7 @@ class CloseAction(BaseAction):
     """
     Закрытие дерева заметок
     """
+
     stringId = "CloseWiki"
 
     def __init__(self, application):

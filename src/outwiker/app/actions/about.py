@@ -6,20 +6,20 @@ from outwiker.gui.baseaction import BaseAction
 
 
 class AboutAction(BaseAction):
-    '''Open the About dialog'''
+    """Open the About dialog"""
 
-    stringId = 'About'
+    stringId = "About"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _('About…')
+        return _("About…")
 
     @property
     def description(self):
-        return _('View application information')
+        return _("View application information")
 
     def run(self, params):
         assert self._application.mainWindow is not None

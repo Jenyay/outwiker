@@ -12,7 +12,7 @@ from outwiker.tests.utils import removeDir
 import outwiker.core.cssclasses as css
 
 
-class ParserFontTest (unittest.TestCase):
+class ParserFontTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
         self.encoding = "utf8"
@@ -26,7 +26,7 @@ class ParserFontTest (unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -108,98 +108,104 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUnderline_01(self):
-        text = 'бла-бла-бла \nкхм {+ это подчеркивание+} %% бла-бла-бла\nбла-бла-бла'
-        result = 'бла-бла-бла \nкхм <u> это подчеркивание</u> %% бла-бла-бла\nбла-бла-бла'
+        text = "бла-бла-бла \nкхм {+ это подчеркивание+} %% бла-бла-бла\nбла-бла-бла"
+        result = (
+            "бла-бла-бла \nкхм <u> это подчеркивание</u> %% бла-бла-бла\nбла-бла-бла"
+        )
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testUnderline_02(self):
-        text = '{+\\t+}'
-        result = '<u>\\t</u>'
+        text = "{+\\t+}"
+        result = "<u>\\t</u>"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testStrike_01(self):
-        text = 'бла-бла-бла \nкхм {-это зачеркнутый текст-} %% бла-бла-бла\nбла-бла-бла'
-        result = 'бла-бла-бла \nкхм <strike>это зачеркнутый текст</strike> %% бла-бла-бла\nбла-бла-бла'
+        text = "бла-бла-бла \nкхм {-это зачеркнутый текст-} %% бла-бла-бла\nбла-бла-бла"
+        result = "бла-бла-бла \nкхм <strike>это зачеркнутый текст</strike> %% бла-бла-бла\nбла-бла-бла"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testStrike_02(self):
-        text = '{-\\t-}'
-        result = '<strike>\\t</strike>'
+        text = "{-\\t-}"
+        result = "<strike>\\t</strike>"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testStrikeUnderline(self):
-        text = 'бла-бла-бла \nкхм {-{+это зачеркнутый подчеркнутый текст+}-} %% бла-бла-бла\nбла-бла-бла'
-        result = 'бла-бла-бла \nкхм <strike><u>это зачеркнутый подчеркнутый текст</u></strike> %% бла-бла-бла\nбла-бла-бла'
+        text = "бла-бла-бла \nкхм {-{+это зачеркнутый подчеркнутый текст+}-} %% бла-бла-бла\nбла-бла-бла"
+        result = "бла-бла-бла \nкхм <strike><u>это зачеркнутый подчеркнутый текст</u></strike> %% бла-бла-бла\nбла-бла-бла"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSuperscript_01(self):
         text = "бла-бла-бла \nкхм '^ это верхний индекс^' бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \nкхм <sup> это верхний индекс</sup> бла-бла-бла\nбла-бла-бла'
+        result = (
+            "бла-бла-бла \nкхм <sup> это верхний индекс</sup> бла-бла-бла\nбла-бла-бла"
+        )
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSuperscript_02(self):
         text = "'^\\t^'"
-        result = '<sup>\\t</sup>'
+        result = "<sup>\\t</sup>"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSubscript_01(self):
         text = "бла-бла-бла \nкхм '_ это нижний индекс_' бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \nкхм <sub> это нижний индекс</sub> бла-бла-бла\nбла-бла-бла'
+        result = (
+            "бла-бла-бла \nкхм <sub> это нижний индекс</sub> бла-бла-бла\nбла-бла-бла"
+        )
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSubscript_02(self):
         text = "'_\\t_'"
-        result = '<sub>\\t</sub>'
+        result = "<sub>\\t</sub>"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSmall1(self):
         text = "бла-бла-бла \nкхм [-мелкий шрифт-] бла-бла-бла\nбла-бла-бла"
@@ -208,8 +214,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSmall2(self):
         text = "бла-бла-бла \nкхм [--мелкий шрифт--] бла-бла-бла\nбла-бла-бла"
@@ -218,8 +224,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSmall3(self):
         text = "бла-бла-бла \nкхм [---мелкий шрифт---] бла-бла-бла\nбла-бла-бла"
@@ -228,8 +234,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSmall4(self):
         text = "бла-бла-бла \nкхм [----мелкий шрифт----] бла-бла-бла\nбла-бла-бла"
@@ -238,8 +244,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSmall5(self):
         text = "бла-бла-бла \nкхм [-----мелкий шрифт-----] бла-бла-бла\nбла-бла-бла"
@@ -248,8 +254,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSmall6(self):
         text = "бла-бла-бла \nкхм [--мелкий шрифт-] бла-бла-бла\nбла-бла-бла"
@@ -258,8 +264,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSmall7(self):
         text = "[-\\t-]"
@@ -268,8 +274,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSmallLink(self):
         text = "бла-бла-бла \nкхм [-[[мелкий шрифт -> http://jenyay.net]]-] бла-бла-бла\nбла-бла-бла"
@@ -278,8 +284,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSmallHeading(self):
         text = "бла-бла-бла \n!! Кхм [-мелкий шрифт-] бла-бла-бла\nбла-бла-бла"
@@ -288,8 +294,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBig1(self):
         text = "бла-бла-бла \nкхм [+ крупный шрифт+] бла-бла-бла\nбла-бла-бла"
@@ -298,8 +304,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBig2(self):
         text = "бла-бла-бла \nкхм [++крупный шрифт++] бла-бла-бла\nбла-бла-бла"
@@ -308,8 +314,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBig3(self):
         text = "бла-бла-бла \nкхм [+++крупный шрифт+++] бла-бла-бла\nбла-бла-бла"
@@ -318,8 +324,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBig4(self):
         text = "бла-бла-бла \nкхм [++++крупный шрифт++++] бла-бла-бла\nбла-бла-бла"
@@ -328,8 +334,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBig5(self):
         text = "бла-бла-бла \nкхм [+++++крупный шрифт+++++] бла-бла-бла\nбла-бла-бла"
@@ -338,8 +344,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBig6(self):
         text = "бла-бла-бла \nкхм [++++++крупный шрифт++++++] бла-бла-бла\nбла-бла-бла"
@@ -348,8 +354,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBig7(self):
         text = "бла-бла-бла \nкхм [++крупный шрифт+] бла-бла-бла\nбла-бла-бла"
@@ -358,8 +364,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBig8(self):
         text = "[+\\t+]"
@@ -368,8 +374,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBigLink(self):
         text = "бла-бла-бла \nкхм [+[[крупный шрифт -> http://jenyay.net]]+] бла-бла-бла\nбла-бла-бла"
@@ -378,8 +384,8 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBigHeading(self):
         text = "бла-бла-бла \n!! Кхм [+крупный шрифт+] бла-бла-бла\nбла-бла-бла"
@@ -388,28 +394,28 @@ class ParserFontTest (unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testMark_01(self):
         text = "бла-бла-бла \nкхм [! это верхний индекс!] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \nкхм <mark> это верхний индекс</mark> бла-бла-бла\nбла-бла-бла'
+        result = "бла-бла-бла \nкхм <mark> это верхний индекс</mark> бла-бла-бла\nбла-бла-бла"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testMark_02(self):
         text = "[!\\t!]"
-        result = '<mark>\\t</mark>'
+        result = "<mark>\\t</mark>"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testManyBold(self):
         text = "'''''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111''' '''111'''"

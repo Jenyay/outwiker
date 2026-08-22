@@ -14,7 +14,7 @@ class WikiLinkDialogController(BaseLinkDialogController):
 
     def prepareAttachLink(self, text: str) -> str:
         if text.startswith(AttachToken.attachString):
-            text = text[len(AttachToken.attachString):]
+            text = text[len(AttachToken.attachString) :]
 
             if text.startswith('"') and text.endswith('"'):
                 self._quotes = '"'
@@ -40,9 +40,8 @@ class WikiLinkDialogController(BaseLinkDialogController):
         Создать ссылку на прикрепленный файл
         """
         # Add quotes for path with spaces and slashes and if user add quotes to comment
-        if ((' ' in fname or '\\' in fname or '/' in fname) or
-                self._quotes is not None):
+        if (" " in fname or "\\" in fname or "/" in fname) or self._quotes is not None:
             quotes = self._quotes if self._quotes is not None else '"'
-            return 'Attach:{quotes}{fname}{quotes}'.format(fname=fname, quotes=quotes)
+            return "Attach:{quotes}{fname}{quotes}".format(fname=fname, quotes=quotes)
 
-        return 'Attach:{fname}'.format(fname=fname)
+        return "Attach:{fname}".format(fname=fname)

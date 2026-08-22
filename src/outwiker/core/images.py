@@ -11,7 +11,7 @@ def isImage(fname: Union[Path, str]) -> bool:
     """
     fnameLower = str(fname).lower()
     for extension in IMAGES_EXTENSIONS:
-        if fnameLower.endswith('.' + extension):
+        if fnameLower.endswith("." + extension):
             return True
 
     return False
@@ -19,7 +19,7 @@ def isImage(fname: Union[Path, str]) -> bool:
 
 def isSVG(fname: Union[Path, str]) -> bool:
     fnameLower = str(fname).lower()
-    return fnameLower.endswith('.svg')
+    return fnameLower.endswith(".svg")
 
 
 def convert_name_to_svg(fname: str) -> str:
@@ -31,9 +31,10 @@ def convert_name_to_svg(fname: str) -> str:
 
     return fname
 
+
 def find_svg(fname: str) -> str:
     fname_svg = convert_name_to_svg(fname)
     if os.path.exists(fname_svg):
         return fname_svg
-    
+
     return fname

@@ -8,6 +8,7 @@ class AttachPasteLinkActionForAttachPanel(BaseAction):
     """
     Insert link to selected files to editor.
     """
+
     stringId = "AttachPasteLink"
 
     def __init__(self, application):
@@ -25,8 +26,9 @@ class AttachPasteLinkActionForAttachPanel(BaseAction):
         attachPanel = self._application.mainWindow.attachPanel.panel
         files = attachPanel.getSelectedFiles()
         if len(files) == 0:
-            showError(self._application.mainWindow,
-                      _("You did not select any attachments"))
+            showError(
+                self._application.mainWindow, _("You did not select any attachments")
+            )
             return
 
         self._application.onAttachmentPaste(files)

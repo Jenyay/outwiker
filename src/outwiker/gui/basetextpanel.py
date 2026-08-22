@@ -302,7 +302,7 @@ class BaseTextPanel(BasePagePanel):
 
         mainMenu.Remove(self.searchMenuIndex)
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        
+
         if self._isEnableGui():
             editMenu.Remove(self.linesMenuItem)
 
@@ -323,7 +323,7 @@ class BaseTextPanel(BasePagePanel):
         assert self.mainWindow is not None
         self.searchMenu = wx.Menu()
         mainMenu = self._application.mainWindow.menuController.getRootMenu()
-        
+
         mainMenu.Insert(self.searchMenuIndex, self.searchMenu, _("Search"))
 
         toolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
@@ -598,11 +598,11 @@ class BaseTextPanel(BasePagePanel):
             self.linesMenuItem = editMenu.Insert(
                 position, wx.ID_ANY, _("Lines"), self.linesMenu
             )
-        
+
     def _insertSeparator(self, menu, position):
         if self._isEnableGui():
             self._menuSeparators.append((menu, menu.InsertSeparator(position)))
-            
+
     def _isEnableGui(self) -> bool:
         return wx.GetApp().enableActionsGui
 

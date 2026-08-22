@@ -12,14 +12,22 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class MainPanesTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication(enableActionsGui=True, createTreePanel=True, createAttachPanel=True, createTagsPanel=True)
+        self.initApplication(
+            enableActionsGui=True,
+            createTreePanel=True,
+            createAttachPanel=True,
+            createTagsPanel=True,
+        )
 
         self.attachAction = self.application.actionController.getAction(
-            ShowHideAttachesAction.stringId)
+            ShowHideAttachesAction.stringId
+        )
         self.treeAction = self.application.actionController.getAction(
-            ShowHideTreeAction.stringId)
+            ShowHideTreeAction.stringId
+        )
         self.tagsAction = self.application.actionController.getAction(
-            ShowHideTagsAction.stringId)
+            ShowHideTagsAction.stringId
+        )
 
     def tearDown(self):
         self.destroyApplication()
@@ -45,8 +53,7 @@ class MainPanesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._testClose(self.tagsAction, self.mainWindow.tagsCloudPanel)
 
     def _testClose(self, action, panel):
-        actionInfo = self.application.actionController.getActionInfo(
-            action.stringId)
+        actionInfo = self.application.actionController.getActionInfo(action.stringId)
 
         self.assertTrue(actionInfo.menuItem.IsChecked())
 

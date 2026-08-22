@@ -63,13 +63,13 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._getEditor().GetSelectedText(), "А")
 
         self._getEditor().SetSelection(0, -1)
-        self.assertEqual(self._getEditor().GetSelectedText(), text[0: -1])
+        self.assertEqual(self._getEditor().GetSelectedText(), text[0:-1])
 
         self._getEditor().SetSelection(0, len(text))
         self.assertEqual(self._getEditor().GetSelectedText(), text)
 
         self._getEditor().SetSelection(11, 16)
-        self.assertEqual(self._getEditor().GetSelectedText(), text[11: 16])
+        self.assertEqual(self._getEditor().GetSelectedText(), text[11:16])
 
     def testReplaceText(self):
         text = """Абырвалг
@@ -84,29 +84,38 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self._getEditor().SetText(text)
         self._getEditor().replaceText("Абырвалг")
-        self.assertEqual(self._getEditor().GetText(), """АбырвалгАбырвалг
+        self.assertEqual(
+            self._getEditor().GetText(),
+            """АбырвалгАбырвалг
 проверка
 раз два три
 четыре
-""")
+""",
+        )
 
         self._getEditor().SetText(text)
         self._getEditor().SetSelection(0, 3)
         self._getEditor().replaceText("Замена")
-        self.assertEqual(self._getEditor().GetText(), """Заменарвалг
+        self.assertEqual(
+            self._getEditor().GetText(),
+            """Заменарвалг
 проверка
 раз два три
 четыре
-""")
+""",
+        )
 
         self._getEditor().SetText(text)
         self._getEditor().SetSelection(1, 5)
         self._getEditor().replaceText("Замена")
-        self.assertEqual(self._getEditor().GetText(), """АЗаменаалг
+        self.assertEqual(
+            self._getEditor().GetText(),
+            """АЗаменаалг
 проверка
 раз два три
 четыре
-""")
+""",
+        )
 
     def testEscapeHtmlEmpty(self):
         self._getEditor().escapeHtml()
@@ -122,14 +131,12 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._getEditor().SetText(text)
         self._getEditor().SetSelection(0, 10)
         self._getEditor().escapeHtml()
-        self.assertEqual(self._getEditor().GetText(),
-                         "Проверка &gt; тест < 1234")
+        self.assertEqual(self._getEditor().GetText(), "Проверка &gt; тест < 1234")
 
         self._getEditor().SetText(text)
         self._getEditor().SetSelection(0, -1)
         self._getEditor().escapeHtml()
-        self.assertEqual(self._getEditor().GetText(),
-                         "Проверка &gt; тест &lt; 1234")
+        self.assertEqual(self._getEditor().GetText(), "Проверка &gt; тест &lt; 1234")
 
     def testTurnTextEmpty(self):
         self._getEditor().turnText("Лево", "Право")
@@ -141,20 +148,17 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._getEditor().SetText(text)
         self._getEditor().SetSelection(0, 1)
         self._getEditor().turnText("Лево", "Право")
-        self.assertEqual(self._getEditor().GetText(),
-                         "ЛевоППравороверка абырвалг")
+        self.assertEqual(self._getEditor().GetText(), "ЛевоППравороверка абырвалг")
 
         self._getEditor().SetText(text)
         self._getEditor().SetSelection(1, 3)
         self._getEditor().turnText("Лево", "Право")
-        self.assertEqual(self._getEditor().GetText(),
-                         "ПЛевороПравоверка абырвалг")
+        self.assertEqual(self._getEditor().GetText(), "ПЛевороПравоверка абырвалг")
 
         self._getEditor().SetText(text)
         self._getEditor().SetSelection(0, len(text))
         self._getEditor().turnText("Лево", "Право")
-        self.assertEqual(self._getEditor().GetText(),
-                         "ЛевоПроверка абырвалгПраво")
+        self.assertEqual(self._getEditor().GetText(), "ЛевоПроверка абырвалгПраво")
 
     def testTurnTextSelection_01(self):
         text = "Проверка абырвалг"
@@ -168,8 +172,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(self._getEditor().GetSelectedText(), "абырвалг")
 
-        self.assertEqual(self._getEditor().GetText(),
-                         "Проверка Лево абырвалг Право")
+        self.assertEqual(self._getEditor().GetText(), "Проверка Лево абырвалг Право")
 
     def testTurnTextSelection_02(self):
         text = "Проверка  абырвалг"
@@ -183,8 +186,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(self._getEditor().GetSelectedText(), "")
 
-        self.assertEqual(self._getEditor().GetText(),
-                         "Проверка Лево  Право абырвалг")
+        self.assertEqual(self._getEditor().GetText(), "Проверка Лево  Право абырвалг")
 
     def testGetCurrentPositionEmpty(self):
         self.assertEqual(self._getEditor().GetCurrentPosition(), 0)
@@ -439,8 +441,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         searchController.setReplacePhrase("Абырвалг111")
         searchController.replaceAll()
 
-        self.assertEqual(editor.GetText(),
-                         "qqq Абырвалг111 проверка Абырвалг111 qqq")
+        self.assertEqual(editor.GetText(), "qqq Абырвалг111 проверка Абырвалг111 qqq")
 
     def testReplaceAll4(self):
         editor = self._getEditor()
@@ -453,8 +454,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         searchController.setReplacePhrase("111Абырвалг")
         searchController.replaceAll()
 
-        self.assertEqual(editor.GetText(),
-                         "qqq 111Абырвалг проверка 111Абырвалг qqq")
+        self.assertEqual(editor.GetText(), "qqq 111Абырвалг проверка 111Абырвалг qqq")
 
     def testReplaceAll5(self):
         editor = self._getEditor()
@@ -467,8 +467,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         searchController.setReplacePhrase("Абырвалг")
         searchController.replaceAll()
 
-        self.assertEqual(editor.GetText(),
-                         "qqq Абырвалг проверка Абырвалг qqq")
+        self.assertEqual(editor.GetText(), "qqq Абырвалг проверка Абырвалг qqq")
 
     def testReplaceAll6(self):
         editor = self._getEditor()
@@ -481,8 +480,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         searchController.setReplacePhrase("111Абырвалг")
         searchController.replaceAll()
 
-        self.assertEqual(editor.GetText(),
-                         "111Абырвалг проверка 111Абырвалг qqq")
+        self.assertEqual(editor.GetText(), "111Абырвалг проверка 111Абырвалг qqq")
 
     def testReplaceAll7(self):
         editor = self._getEditor()
@@ -495,8 +493,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         searchController.setReplacePhrase("Абырвалг111")
         searchController.replaceAll()
 
-        self.assertEqual(editor.GetText(),
-                         "Абырвалг111 проверка Абырвалг111 qqq")
+        self.assertEqual(editor.GetText(), "Абырвалг111 проверка Абырвалг111 qqq")
 
     def testReplaceAll8(self):
         editor = self._getEditor()
@@ -509,8 +506,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         searchController.setReplacePhrase("111Абырвалг")
         searchController.replaceAll()
 
-        self.assertEqual(editor.GetText(),
-                         "ыыы 111Абырвалг проверка 111Абырвалг")
+        self.assertEqual(editor.GetText(), "ыыы 111Абырвалг проверка 111Абырвалг")
 
     def testReplaceAll9(self):
         editor = self._getEditor()
@@ -523,8 +519,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         searchController.setReplacePhrase("Абырвалг111")
         searchController.replaceAll()
 
-        self.assertEqual(editor.GetText(),
-                         "ыыы Абырвалг111 проверка Абырвалг111")
+        self.assertEqual(editor.GetText(), "ыыы Абырвалг111 проверка Абырвалг111")
 
     def testReplaceAll10(self):
         editor = self._getEditor()
@@ -542,7 +537,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSetLine_01(self):
         editor = self._getEditor()
         editor.SetText("Абырвалг Абырвалг")
-        editor.SetLine(0, 'Проверка')
+        editor.SetLine(0, "Проверка")
 
         self.assertEqual(editor.GetText(), "Проверка")
 
@@ -551,73 +546,88 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         editor.SetText("""Строка 1
 Строка 2
 Строка 3""")
-        editor.SetLine(0, 'Проверка\n')
+        editor.SetLine(0, "Проверка\n")
 
-        self.assertEqual(editor.GetText(), """Проверка
+        self.assertEqual(
+            editor.GetText(),
+            """Проверка
 Строка 2
-Строка 3""")
+Строка 3""",
+        )
 
     def testSetLine_03(self):
         editor = self._getEditor()
         editor.SetText("""Строка 1
 Строка 2
 Строка 3""")
-        editor.SetLine(1, 'Проверка\n')
+        editor.SetLine(1, "Проверка\n")
 
-        self.assertEqual(editor.GetText(), """Строка 1
+        self.assertEqual(
+            editor.GetText(),
+            """Строка 1
 Проверка
-Строка 3""")
+Строка 3""",
+        )
 
     def testSetLine_04(self):
         editor = self._getEditor()
         editor.SetText("""Строка 1
 Строка 2
 Строка 3""")
-        editor.SetLine(2, 'Проверка')
+        editor.SetLine(2, "Проверка")
 
-        self.assertEqual(editor.GetText(), """Строка 1
+        self.assertEqual(
+            editor.GetText(),
+            """Строка 1
 Строка 2
-Проверка""")
+Проверка""",
+        )
 
     def testSetLine_05(self):
         editor = self._getEditor()
-        editor.SetText('')
-        editor.SetLine(0, 'Проверка')
-        self.assertEqual(editor.GetText(), 'Проверка')
+        editor.SetText("")
+        editor.SetLine(0, "Проверка")
+        self.assertEqual(editor.GetText(), "Проверка")
 
     def testSetLine_06(self):
         editor = self._getEditor()
         editor.SetText("""Строка 1
 Строка 2
 Строка 3""")
-        editor.SetLine(0, 'Проверка')
+        editor.SetLine(0, "Проверка")
 
-        self.assertEqual(editor.GetText(), """ПроверкаСтрока 2
-Строка 3""")
+        self.assertEqual(
+            editor.GetText(),
+            """ПроверкаСтрока 2
+Строка 3""",
+        )
 
     def testSetLine_07(self):
         editor = self._getEditor()
         editor.SetText("""Строка 1
 Строка 2
 Строка 3""")
-        editor.SetLine(2, 'Проверка')
+        editor.SetLine(2, "Проверка")
 
-        self.assertEqual(editor.GetText(), """Строка 1
+        self.assertEqual(
+            editor.GetText(),
+            """Строка 1
 Строка 2
-Проверка""")
+Проверка""",
+        )
 
     def testGetLine_01(self):
         editor = self._getEditor()
         editor.SetText("""Строка 1
 Строка 2
 Строка 3""")
-        self.assertEqual(editor.GetLine(0), 'Строка 1\n')
-        self.assertEqual(editor.GetLine(1), 'Строка 2\n')
-        self.assertEqual(editor.GetLine(2), 'Строка 3')
+        self.assertEqual(editor.GetLine(0), "Строка 1\n")
+        self.assertEqual(editor.GetLine(1), "Строка 2\n")
+        self.assertEqual(editor.GetLine(2), "Строка 3")
 
     def testGetSelectionLines_01(self):
         editor = self._getEditor()
-        editor.SetText('')
+        editor.SetText("")
         editor.SetSelection(0, 0)
         start, end = editor.GetSelectionLines()
         self.assertEqual(start, 0)
@@ -625,7 +635,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testGetSelectionLines_02(self):
         editor = self._getEditor()
-        editor.SetText('''Проверка\n''')
+        editor.SetText("""Проверка\n""")
         editor.SetSelection(0, 8)
         start, end = editor.GetSelectionLines()
         self.assertEqual(start, 0)
@@ -633,7 +643,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testGetSelectionLines_03(self):
         editor = self._getEditor()
-        editor.SetText('''Проверка\n''')
+        editor.SetText("""Проверка\n""")
         editor.SetSelection(0, 9)
         start, end = editor.GetSelectionLines()
         self.assertEqual(start, 0)
@@ -641,7 +651,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testGetSelectionLines_04(self):
         editor = self._getEditor()
-        editor.SetText('''Проверка\nПроверка\nПроверка''')
+        editor.SetText("""Проверка\nПроверка\nПроверка""")
         editor.SetSelection(9, 18)
         start, end = editor.GetSelectionLines()
         self.assertEqual(start, 1)
@@ -649,301 +659,320 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_toddleLinePrefix_01(self):
         editor = self._getEditor()
-        editor.SetText('')
+        editor.SetText("")
 
-        editor.toddleLinePrefix(0, 'Тест ')
-        self.assertEqual(editor.GetText(), 'Тест ')
+        editor.toddleLinePrefix(0, "Тест ")
+        self.assertEqual(editor.GetText(), "Тест ")
 
-        editor.toddleLinePrefix(0, 'Тест ')
-        self.assertEqual(editor.GetText(), '')
+        editor.toddleLinePrefix(0, "Тест ")
+        self.assertEqual(editor.GetText(), "")
 
     def test_toddleLinePrefix_02(self):
         editor = self._getEditor()
-        editor.SetText('Проверка')
+        editor.SetText("Проверка")
 
-        editor.toddleLinePrefix(0, 'Тест ')
-        self.assertEqual(editor.GetText(), 'Тест Проверка')
+        editor.toddleLinePrefix(0, "Тест ")
+        self.assertEqual(editor.GetText(), "Тест Проверка")
 
-        editor.toddleLinePrefix(0, 'Тест ')
-        self.assertEqual(editor.GetText(), 'Проверка')
+        editor.toddleLinePrefix(0, "Тест ")
+        self.assertEqual(editor.GetText(), "Проверка")
 
     def test_toddleLinePrefix_03(self):
         editor = self._getEditor()
-        editor.SetText('''Проверка
+        editor.SetText("""Проверка
 Проверка
-Проверка''')
+Проверка""")
 
-        editor.toddleLinePrefix(0, 'Тест ')
-        self.assertEqual(editor.GetText(),
-                         '''Тест Проверка
+        editor.toddleLinePrefix(0, "Тест ")
+        self.assertEqual(
+            editor.GetText(),
+            """Тест Проверка
 Проверка
-Проверка''')
+Проверка""",
+        )
 
-        editor.toddleLinePrefix(0, 'Тест ')
-        self.assertEqual(editor.GetText(),
-                         '''Проверка
+        editor.toddleLinePrefix(0, "Тест ")
+        self.assertEqual(
+            editor.GetText(),
+            """Проверка
 Проверка
-Проверка''')
+Проверка""",
+        )
 
     def test_toddleLinePrefix_04(self):
         editor = self._getEditor()
-        editor.SetText('''Проверка
+        editor.SetText("""Проверка
 Проверка
-Проверка''')
+Проверка""")
 
-        editor.toddleLinePrefix(1, 'Тест ')
-        self.assertEqual(editor.GetText(),
-                         '''Проверка
+        editor.toddleLinePrefix(1, "Тест ")
+        self.assertEqual(
+            editor.GetText(),
+            """Проверка
 Тест Проверка
-Проверка''')
+Проверка""",
+        )
 
-        editor.toddleLinePrefix(1, 'Тест ')
-        self.assertEqual(editor.GetText(),
-                         '''Проверка
+        editor.toddleLinePrefix(1, "Тест ")
+        self.assertEqual(
+            editor.GetText(),
+            """Проверка
 Проверка
-Проверка''')
+Проверка""",
+        )
 
     def test_toddleLinePrefix_05(self):
         editor = self._getEditor()
-        editor.SetText('''Проверка
+        editor.SetText("""Проверка
 Проверка
-Проверка''')
+Проверка""")
 
-        editor.toddleLinePrefix(2, 'Тест ')
-        self.assertEqual(editor.GetText(),
-                         '''Проверка
+        editor.toddleLinePrefix(2, "Тест ")
+        self.assertEqual(
+            editor.GetText(),
+            """Проверка
 Проверка
-Тест Проверка''')
+Тест Проверка""",
+        )
 
-        editor.toddleLinePrefix(2, 'Тест ')
-        self.assertEqual(editor.GetText(),
-                         '''Проверка
+        editor.toddleLinePrefix(2, "Тест ")
+        self.assertEqual(
+            editor.GetText(),
+            """Проверка
 Проверка
-Проверка''')
+Проверка""",
+        )
 
     def test_GetLineStartPosition_01(self):
         editor = self._getEditor()
-        editor.SetText('')
+        editor.SetText("")
         lineStart = editor.GetLineStartPosition(0)
         self.assertEqual(lineStart, 0)
 
     def test_GetLineStartPosition_02(self):
         editor = self._getEditor()
-        editor.SetText('Проверка')
+        editor.SetText("Проверка")
         lineStart = editor.GetLineStartPosition(0)
         self.assertEqual(lineStart, 0)
 
     def test_GetLineStartPosition_03(self):
         editor = self._getEditor()
-        editor.SetText('Проверка\nПроверка')
+        editor.SetText("Проверка\nПроверка")
         lineStart = editor.GetLineStartPosition(1)
         self.assertEqual(lineStart, 9)
 
     def test_GetLineEndPosition_01(self):
         editor = self._getEditor()
-        editor.SetText('')
+        editor.SetText("")
         lineEnd = editor.GetLineEndPosition(0)
         self.assertEqual(lineEnd, 0)
 
     def test_GetLineEndPosition_02(self):
         editor = self._getEditor()
-        editor.SetText('Проверка')
+        editor.SetText("Проверка")
         lineEnd = editor.GetLineEndPosition(0)
         self.assertEqual(lineEnd, 8)
 
     def test_GetLineEndPosition_03(self):
         editor = self._getEditor()
-        editor.SetText('Проверка\n')
+        editor.SetText("Проверка\n")
         lineEnd = editor.GetLineEndPosition(0)
         self.assertEqual(lineEnd, 8)
 
     def test_GetLineEndPosition_04(self):
         editor = self._getEditor()
-        editor.SetText('Проверка\nПроверка')
+        editor.SetText("Проверка\nПроверка")
         lineEnd = editor.GetLineEndPosition(1)
         self.assertEqual(lineEnd, 17)
 
     def test_toddleSelectedLinesPrefix_01(self):
         editor = self._getEditor()
-        editor.SetText('')
+        editor.SetText("")
         editor.SetSelection(0, 0)
 
-        editor.toddleSelectedLinesPrefix('Тест ')
-        self.assertEqual(editor.GetText(), 'Тест ')
+        editor.toddleSelectedLinesPrefix("Тест ")
+        self.assertEqual(editor.GetText(), "Тест ")
 
-        editor.toddleSelectedLinesPrefix('Тест ')
-        self.assertEqual(editor.GetText(), '')
+        editor.toddleSelectedLinesPrefix("Тест ")
+        self.assertEqual(editor.GetText(), "")
 
     def test_toddleSelectedLinesPrefix_02(self):
         editor = self._getEditor()
-        editor.SetText('Проверка')
+        editor.SetText("Проверка")
         editor.SetSelection(0, 0)
 
-        editor.toddleSelectedLinesPrefix('Тест ')
-        self.assertEqual(editor.GetText(), 'Тест Проверка')
+        editor.toddleSelectedLinesPrefix("Тест ")
+        self.assertEqual(editor.GetText(), "Тест Проверка")
 
-        editor.toddleSelectedLinesPrefix('Тест ')
-        self.assertEqual(editor.GetText(), 'Проверка')
+        editor.toddleSelectedLinesPrefix("Тест ")
+        self.assertEqual(editor.GetText(), "Проверка")
 
     def test_toddleSelectedLinesPrefix_03(self):
         editor = self._getEditor()
-        editor.SetText('Проверка\nПроверка')
+        editor.SetText("Проверка\nПроверка")
         editor.SetSelection(2, 5)
 
-        editor.toddleSelectedLinesPrefix('Тест ')
-        self.assertEqual(editor.GetText(), 'Тест Проверка\nПроверка')
+        editor.toddleSelectedLinesPrefix("Тест ")
+        self.assertEqual(editor.GetText(), "Тест Проверка\nПроверка")
 
-        editor.toddleSelectedLinesPrefix('Тест ')
-        self.assertEqual(editor.GetText(), 'Проверка\nПроверка')
+        editor.toddleSelectedLinesPrefix("Тест ")
+        self.assertEqual(editor.GetText(), "Проверка\nПроверка")
 
     def test_toddleSelectedLinesPrefix_04(self):
         editor = self._getEditor()
-        editor.SetText('Проверка\nПроверка')
+        editor.SetText("Проверка\nПроверка")
         editor.SetSelection(2, 9)
 
-        editor.toddleSelectedLinesPrefix('Тест ')
-        self.assertEqual(editor.GetText(), 'Тест Проверка\nТест Проверка')
+        editor.toddleSelectedLinesPrefix("Тест ")
+        self.assertEqual(editor.GetText(), "Тест Проверка\nТест Проверка")
 
-        editor.toddleSelectedLinesPrefix('Тест ')
-        self.assertEqual(editor.GetText(), 'Проверка\nПроверка')
+        editor.toddleSelectedLinesPrefix("Тест ")
+        self.assertEqual(editor.GetText(), "Проверка\nПроверка")
 
     def test_MoveSelectedLinesDown_01(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(0, 0)
 
         editor.MoveSelectedLinesDown()
-        self.assertEqual(editor.GetText(),
-                         'Строка 2\nСтрока 1\nСтрока 3\nСтрока 4')
+        self.assertEqual(editor.GetText(), "Строка 2\nСтрока 1\nСтрока 3\nСтрока 4")
 
     def test_MoveSelectedLinesDown_02(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(9, 9)
 
         editor.MoveSelectedLinesDown()
-        self.assertEqual(editor.GetText(),
-                         'Строка 1\nСтрока 3\nСтрока 2\nСтрока 4')
+        self.assertEqual(editor.GetText(), "Строка 1\nСтрока 3\nСтрока 2\nСтрока 4")
 
     def test_MoveSelectedLinesDown_03(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(0, 10)
 
         editor.MoveSelectedLinesDown()
-        self.assertEqual(editor.GetText(),
-                         'Строка 3\nСтрока 1\nСтрока 2\nСтрока 4')
+        self.assertEqual(editor.GetText(), "Строка 3\nСтрока 1\nСтрока 2\nСтрока 4")
 
     def test_MoveSelectedLinesDown_04(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(0, 18)
 
         editor.MoveSelectedLinesDown()
-        self.assertEqual(editor.GetText(),
-                         'Строка 3\nСтрока 1\nСтрока 2\nСтрока 4')
+        self.assertEqual(editor.GetText(), "Строка 3\nСтрока 1\nСтрока 2\nСтрока 4")
 
     def test_MoveSelectedLinesUp_01(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(9, 9)
 
         editor.MoveSelectedLinesUp()
-        self.assertEqual(editor.GetText(),
-                         'Строка 2\nСтрока 1\nСтрока 3\nСтрока 4')
+        self.assertEqual(editor.GetText(), "Строка 2\nСтрока 1\nСтрока 3\nСтрока 4")
 
     def test_MoveSelectedLinesUp_02(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(9, 23)
 
         editor.MoveSelectedLinesUp()
-        self.assertEqual(editor.GetText(),
-                         'Строка 2\nСтрока 3\nСтрока 1\nСтрока 4')
+        self.assertEqual(editor.GetText(), "Строка 2\nСтрока 3\nСтрока 1\nСтрока 4")
 
     def test_LineDuplicate_01(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(0, 0)
 
         editor.LineDuplicate()
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 1\nСтрока 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "Строка 1\nСтрока 1\nСтрока 2\nСтрока 3\nСтрока 4",
+        )
 
     def test_LineDuplicate_02(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(9, 9)
 
         editor.LineDuplicate()
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 1\nСтрока 2\nСтрока 2\nСтрока 3\nСтрока 4')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "Строка 1\nСтрока 2\nСтрока 2\nСтрока 3\nСтрока 4",
+        )
 
     def test_LineDelete_01(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(0, 0)
 
         editor.LineDelete()
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 2\nСтрока 3\nСтрока 4')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "Строка 2\nСтрока 3\nСтрока 4"
+        )
 
     def test_LineDelete_02(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(10, 10)
 
         editor.LineDelete()
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 1\nСтрока 3\nСтрока 4')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "Строка 1\nСтрока 3\nСтрока 4"
+        )
 
     def test_LineDelete_03_empty(self):
         editor = self._getEditor()
-        editor.SetText('')
+        editor.SetText("")
         editor.SetSelection(0, 0)
 
         editor.LineDelete()
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'), '')
+        self.assertEqual(editor.GetText().replace("\r\n", "\n"), "")
 
     def test_JoinLines_01(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(0, 0)
 
         editor.JoinLines()
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 1Строка 2\nСтрока 3\nСтрока 4')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "Строка 1Строка 2\nСтрока 3\nСтрока 4",
+        )
 
     def test_JoinLines_02(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(0, 13)
 
         editor.JoinLines()
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 1Строка 2\nСтрока 3\nСтрока 4')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "Строка 1Строка 2\nСтрока 3\nСтрока 4",
+        )
 
     def test_JoinLines_03(self):
         editor = self._getEditor()
-        editor.SetText('Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetText("Строка 1\nСтрока 2\nСтрока 3\nСтрока 4")
         editor.SetSelection(0, 20)
 
         editor.JoinLines()
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 1Строка 2Строка 3\nСтрока 4')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "Строка 1Строка 2Строка 3\nСтрока 4"
+        )
 
     def test_JoinLines_04(self):
-        text = 'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4'
+        text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
         editor = self._getEditor()
         editor.SetText(text)
         editor.SetSelection(len(text) - 1, len(text) - 1)
 
         editor.JoinLines()
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4",
+        )
 
     def test_GoToWordStart_01(self):
-        text = ''
+        text = ""
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(0)
@@ -952,7 +981,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 0)
 
     def test_GoToWordStart_02(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(0)
@@ -961,7 +990,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 0)
 
     def test_GoToWordStart_03(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(3)
@@ -970,7 +999,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 0)
 
     def test_GoToWordStart_04(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(5)
@@ -979,7 +1008,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 0)
 
     def test_GoToWordStart_05(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(6)
@@ -988,7 +1017,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 6)
 
     def test_GoToWordStart_06(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(7)
@@ -997,7 +1026,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 6)
 
     def test_GoToWordStart_07(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(13)
@@ -1006,7 +1035,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 13)
 
     def test_GoToWordStart_08(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(14)
@@ -1015,7 +1044,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 13)
 
     def test_GoToWordStart_09(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(25)
@@ -1024,7 +1053,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 13)
 
     def test_GoToWordEnd_01(self):
-        text = ''
+        text = ""
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(0)
@@ -1033,7 +1062,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 0)
 
     def test_GoToWordEnd_02(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(0)
@@ -1042,7 +1071,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 5)
 
     def test_GoToWordEnd_03(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(1)
@@ -1051,7 +1080,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 5)
 
     def test_GoToWordEnd_04(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(6)
@@ -1060,7 +1089,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 12)
 
     def test_GoToWordEnd_05(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(12)
@@ -1069,7 +1098,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 12)
 
     def test_GoToWordEnd_06(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(13)
@@ -1078,7 +1107,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 25)
 
     def test_GoToWordEnd_07(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(14)
@@ -1087,7 +1116,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 25)
 
     def test_GoToWordEnd_08(self):
-        text = 'слово слово2 ещеоднослово'
+        text = "слово слово2 ещеоднослово"
         editor = self._getEditor()
         editor.SetText(text)
         editor.GotoPos(25)
@@ -1096,7 +1125,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetCurrentPosition(), 25)
 
     def test_WordStartPosition_01(self):
-        text = ''
+        text = ""
         editor = self._getEditor()
         editor.SetText(text)
         wordStart = editor.WordStartPosition(0)
@@ -1104,7 +1133,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordStart, 0)
 
     def test_WordStartPosition_02(self):
-        text = 'слово'
+        text = "слово"
         editor = self._getEditor()
         editor.SetText(text)
         wordStart = editor.WordStartPosition(0)
@@ -1112,7 +1141,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordStart, 0)
 
     def test_WordStartPosition_03(self):
-        text = 'слово'
+        text = "слово"
         editor = self._getEditor()
         editor.SetText(text)
         wordStart = editor.WordStartPosition(3)
@@ -1120,7 +1149,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordStart, 0)
 
     def test_WordStartPosition_04(self):
-        text = ' слово'
+        text = " слово"
         editor = self._getEditor()
         editor.SetText(text)
         wordStart = editor.WordStartPosition(3)
@@ -1128,7 +1157,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordStart, 1)
 
     def test_WordStartPosition_05(self):
-        text = ' слово слово2'
+        text = " слово слово2"
         editor = self._getEditor()
         editor.SetText(text)
         wordStart = editor.WordStartPosition(7)
@@ -1136,7 +1165,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordStart, 7)
 
     def test_WordStartPosition_06(self):
-        text = ' слово слово2'
+        text = " слово слово2"
         editor = self._getEditor()
         editor.SetText(text)
         wordStart = editor.WordStartPosition(9)
@@ -1144,7 +1173,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordStart, 7)
 
     def test_WordEndPosition_01(self):
-        text = ''
+        text = ""
         editor = self._getEditor()
         editor.SetText(text)
         wordEnd = editor.WordEndPosition(0)
@@ -1152,7 +1181,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordEnd, 0)
 
     def test_WordEndPosition_02(self):
-        text = 'слово'
+        text = "слово"
         editor = self._getEditor()
         editor.SetText(text)
         wordEnd = editor.WordEndPosition(0)
@@ -1160,7 +1189,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordEnd, 5)
 
     def test_WordEndPosition_03(self):
-        text = 'слово'
+        text = "слово"
         editor = self._getEditor()
         editor.SetText(text)
         wordEnd = editor.WordEndPosition(3)
@@ -1168,7 +1197,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordEnd, 5)
 
     def test_WordEndPosition_04(self):
-        text = ' слово'
+        text = " слово"
         editor = self._getEditor()
         editor.SetText(text)
         wordEnd = editor.WordEndPosition(3)
@@ -1176,7 +1205,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordEnd, 6)
 
     def test_WordEndPosition_05(self):
-        text = ' слово слово2'
+        text = " слово слово2"
         editor = self._getEditor()
         editor.SetText(text)
         wordEnd = editor.WordEndPosition(7)
@@ -1184,7 +1213,7 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordEnd, 13)
 
     def test_WordEndPosition_06(self):
-        text = ' слово слово2'
+        text = " слово слово2"
         editor = self._getEditor()
         editor.SetText(text)
         wordEnd = editor.WordEndPosition(9)
@@ -1192,73 +1221,73 @@ class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(wordEnd, 13)
 
     def test_GetWord_01(self):
-        text = ''
+        text = ""
         editor = self._getEditor()
         editor.SetText(text)
         word = editor.GetWord(0)
 
-        self.assertEqual(word, '')
+        self.assertEqual(word, "")
 
     def test_GetWord_02(self):
-        text = ''
+        text = ""
         editor = self._getEditor()
         editor.SetText(text)
         word = editor.GetWord(10)
 
-        self.assertEqual(word, '')
+        self.assertEqual(word, "")
 
     def test_GetWord_03(self):
-        text = 'слово'
+        text = "слово"
         editor = self._getEditor()
         editor.SetText(text)
         word = editor.GetWord(0)
 
-        self.assertEqual(word, 'слово')
+        self.assertEqual(word, "слово")
 
     def test_GetWord_04(self):
-        text = ' слово '
+        text = " слово "
         editor = self._getEditor()
         editor.SetText(text)
         word = editor.GetWord(1)
 
-        self.assertEqual(word, 'слово')
+        self.assertEqual(word, "слово")
 
     def test_GetWord_05(self):
-        text = ' слово '
+        text = " слово "
         editor = self._getEditor()
         editor.SetText(text)
         word = editor.GetWord(6)
 
-        self.assertEqual(word, 'слово')
+        self.assertEqual(word, "слово")
 
     def test_GetWord_06(self):
-        text = ' слово слово2'
+        text = " слово слово2"
         editor = self._getEditor()
         editor.SetText(text)
         word = editor.GetWord(7)
 
-        self.assertEqual(word, 'слово2')
+        self.assertEqual(word, "слово2")
 
     def test_GetWord_07(self):
-        text = ' слово слово2'
+        text = " слово слово2"
         editor = self._getEditor()
         editor.SetText(text)
         word = editor.GetWord(13)
 
-        self.assertEqual(word, 'слово2')
+        self.assertEqual(word, "слово2")
 
     def test_GetWord_08(self):
-        text = ' слово слово2 '
+        text = " слово слово2 "
         editor = self._getEditor()
         editor.SetText(text)
         word = editor.GetWord(13)
 
-        self.assertEqual(word, 'слово2')
+        self.assertEqual(word, "слово2")
 
     def test_GetWord_09(self):
-        text = ' слово слово2 '
+        text = " слово слово2 "
         editor = self._getEditor()
         editor.SetText(text)
         word = editor.GetWord(100)
 
-        self.assertEqual(word, '')
+        self.assertEqual(word, "")

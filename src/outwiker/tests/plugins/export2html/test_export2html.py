@@ -58,44 +58,29 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
 
         exporter = ExporterFactory.getExporter(self.root[pagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=False,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=False,
+            alwaysOverwrite=False,
+        )
 
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename +
-                    ".html")))
+            os.path.exists(os.path.join(self.outputdir, pagename + ".html"))
+        )
         self.assertTrue(
-            os.path.isfile(
-                os.path.join(
-                    self.outputdir,
-                    pagename +
-                    ".html")))
+            os.path.isfile(os.path.join(self.outputdir, pagename + ".html"))
+        )
 
         self.assertTrue(os.path.exists(os.path.join(self.outputdir, pagename)))
         self.assertTrue(os.path.isdir(os.path.join(self.outputdir, pagename)))
 
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "__icon.png")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "__icon.png"))
+        )
 
-        self.assertFalse(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    "__index.html")))
-        self.assertFalse(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    PAGE_RESULT_HTML)))
+        self.assertFalse(os.path.exists(os.path.join(self.outputdir, "__index.html")))
+        self.assertFalse(os.path.exists(os.path.join(self.outputdir, PAGE_RESULT_HTML)))
 
     def testExportWithName(self):
         """
@@ -107,39 +92,24 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         exportname = "Бла-бла-бла"
 
         exporter = ExporterFactory.getExporter(self.root[pagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=exportname,
-                        imagesonly=False,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=exportname,
+            imagesonly=False,
+            alwaysOverwrite=False,
+        )
 
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    exportname +
-                    ".html")))
+            os.path.exists(os.path.join(self.outputdir, exportname + ".html"))
+        )
         self.assertTrue(
-            os.path.isfile(
-                os.path.join(
-                    self.outputdir,
-                    exportname +
-                    ".html")))
+            os.path.isfile(os.path.join(self.outputdir, exportname + ".html"))
+        )
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, exportname)))
+        self.assertTrue(os.path.isdir(os.path.join(self.outputdir, exportname)))
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    exportname)))
-        self.assertTrue(
-            os.path.isdir(
-                os.path.join(
-                    self.outputdir,
-                    exportname)))
-        self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    exportname,
-                    "__icon.png")))
+            os.path.exists(os.path.join(self.outputdir, exportname, "__icon.png"))
+        )
 
     def testAttachesSinglePage(self):
         """
@@ -149,47 +119,31 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         pagename = "Страница 1"
         exporter = ExporterFactory.getExporter(self.root[pagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=False,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=False,
+            alwaysOverwrite=False,
+        )
 
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "__init__.py")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "__init__.py"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "source.py")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "source.py"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "add.png")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "add.png"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "memorial.gif")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "memorial.gif"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "wall.gif")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "wall.gif"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "image.tif")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "image.tif"))
+        )
 
     def testAttachesImagesSinglePage(self):
         """
@@ -200,47 +154,31 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
 
         exporter = ExporterFactory.getExporter(self.root[pagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=True,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=True,
+            alwaysOverwrite=False,
+        )
 
         self.assertFalse(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "__init__.py")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "__init__.py"))
+        )
         self.assertFalse(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "source.py")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "source.py"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "add.png")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "add.png"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "memorial.gif")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "memorial.gif"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "wall.gif")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "wall.gif"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "image.tif")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "image.tif"))
+        )
 
     def testLinkToFilesHtml(self):
         """
@@ -252,31 +190,48 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
 
         exporter = ExporterFactory.getExporter(self.root[pagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=True,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=True,
+            alwaysOverwrite=False,
+        )
 
         text = readTextFile(os.path.join(self.outputdir, pagename + ".html"))
 
         self.assertTrue(
-            '<img src="{pagename}/add.png">'.format(pagename=pagename) in text)
+            '<img src="{pagename}/add.png">'.format(pagename=pagename) in text
+        )
 
         self.assertTrue(
-            '<img alt="Картинка" src="{pagename}/add.png" border="1">'.format(pagename=pagename) in text)
+            '<img alt="Картинка" src="{pagename}/add.png" border="1">'.format(
+                pagename=pagename
+            )
+            in text
+        )
 
         self.assertTrue(
-            '<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format(pagename=pagename) in text)
+            '<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format(
+                pagename=pagename
+            )
+            in text
+        )
 
         self.assertTrue(
             '<a title="Это title" href="{pagename}/wall1.gif">ссылка на файл</a>.'.format(
-                pagename=pagename) in text)
+                pagename=pagename
+            )
+            in text
+        )
 
         self.assertTrue(
             '<a href="{pagename}/wall1.gif" title="Это title">ссылка на файл</a>.'.format(
-                pagename=pagename) in text)
+                pagename=pagename
+            )
+            in text
+        )
 
-        self.assertTrue('А этот __attach/ содержится в тексте' in text)
+        self.assertTrue("А этот __attach/ содержится в тексте" in text)
 
         self.assertFalse('<img src="__attach/add.png">' in text)
 
@@ -291,18 +246,25 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         exportname = "Бла-бла-бла"
 
         exporter = ExporterFactory.getExporter(self.root[pagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=exportname,
-                        imagesonly=True,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=exportname,
+            imagesonly=True,
+            alwaysOverwrite=False,
+        )
 
         text = readTextFile(os.path.join(self.outputdir, exportname + ".html"))
 
         self.assertTrue(
-            '<img src="{pagename}/add.png">'.format(pagename=exportname) in text)
+            '<img src="{pagename}/add.png">'.format(pagename=exportname) in text
+        )
         self.assertTrue(
-            '<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format(pagename=exportname) in text)
-        self.assertTrue('А этот __attach/ содержится в тексте' in text)
+            '<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format(
+                pagename=exportname
+            )
+            in text
+        )
+        self.assertTrue("А этот __attach/ содержится в тексте" in text)
 
     def testLinkToFilesWiki(self):
         """
@@ -315,21 +277,31 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "wiki-страница"
 
         exporter = ExporterFactory.getExporter(self.root[fullpagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=True,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=True,
+            alwaysOverwrite=False,
+        )
 
         text = readTextFile(os.path.join(self.outputdir, pagename + ".html"))
 
         self.assertTrue(
-            '<img src="{pagename}/add.png"/>'.format(pagename=pagename) in text)
+            '<img src="{pagename}/add.png"/>'.format(pagename=pagename) in text
+        )
         self.assertTrue(
-            '<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format(pagename=pagename) in text)
-        self.assertTrue('А этот __attach/ содержится в тексте' in text)
+            '<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format(
+                pagename=pagename
+            )
+            in text
+        )
+        self.assertTrue("А этот __attach/ содержится в тексте" in text)
         self.assertTrue(
             '<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg"/></a>'.format(
-                pagename=pagename) in text)
+                pagename=pagename
+            )
+            in text
+        )
 
     def testLinkToFilesWikiWithName(self):
         """
@@ -342,24 +314,36 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         exportname = "Бла-бла-бла"
 
         exporter = ExporterFactory.getExporter(self.root[fullpagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=exportname,
-                        imagesonly=True,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=exportname,
+            imagesonly=True,
+            alwaysOverwrite=False,
+        )
 
         text = ""
 
-        with open(os.path.join(self.outputdir, exportname + ".html"), encoding='utf8') as fp:
+        with open(
+            os.path.join(self.outputdir, exportname + ".html"), encoding="utf8"
+        ) as fp:
             text = fp.read()
 
         self.assertTrue(
-            '<img src="{pagename}/add.png"/>'.format(pagename=exportname) in text)
+            '<img src="{pagename}/add.png"/>'.format(pagename=exportname) in text
+        )
         self.assertTrue(
-            '<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format(pagename=exportname) in text)
-        self.assertTrue('А этот __attach/ содержится в тексте' in text)
+            '<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format(
+                pagename=exportname
+            )
+            in text
+        )
+        self.assertTrue("А этот __attach/ содержится в тексте" in text)
         self.assertTrue(
             '<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg"/></a>'.format(
-                pagename=exportname) in text)
+                pagename=exportname
+            )
+            in text
+        )
 
     def testWikiPageThumb(self):
         """
@@ -371,23 +355,19 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "wiki-страница"
 
         exporter = ExporterFactory.getExporter(self.root[fullpagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=True,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=True,
+            alwaysOverwrite=False,
+        )
 
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "image.jpg")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "image.jpg"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "__thumb")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "__thumb"))
+        )
 
     def testFilesExportTextPage(self):
         """
@@ -399,23 +379,19 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Текстовая страница"
 
         exporter = ExporterFactory.getExporter(self.root[fullpagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=False,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=False,
+            alwaysOverwrite=False,
+        )
 
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename +
-                    ".html")))
+            os.path.exists(os.path.join(self.outputdir, pagename + ".html"))
+        )
         self.assertTrue(
-            os.path.isfile(
-                os.path.join(
-                    self.outputdir,
-                    pagename +
-                    ".html")))
+            os.path.isfile(os.path.join(self.outputdir, pagename + ".html"))
+        )
         self.assertTrue(os.path.exists(os.path.join(self.outputdir, pagename)))
         self.assertTrue(os.path.isdir(os.path.join(self.outputdir, pagename)))
 
@@ -429,41 +405,28 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Текстовая страница"
 
         exporter = ExporterFactory.getExporter(self.root[fullpagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=False,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=False,
+            alwaysOverwrite=False,
+        )
 
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "__init__.py")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "__init__.py"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "source.py")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "source.py"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "anchor.png")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "anchor.png"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "application.png")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "application.png"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "box.png")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "box.png"))
+        )
 
     def testHtmlFromTextPage(self):
         """
@@ -476,18 +439,23 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Текстовая страница"
 
         exporter = ExporterFactory.getExporter(self.root[fullpagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=True,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=True,
+            alwaysOverwrite=False,
+        )
 
         text = ""
 
-        with open(os.path.join(self.outputdir, pagename + ".html"), encoding='utf8') as fp:
+        with open(
+            os.path.join(self.outputdir, pagename + ".html"), encoding="utf8"
+        ) as fp:
             text = fp.read()
 
         self.assertTrue(
-            '&lt;a href=&quot;http://jenyay.net&quot;&gt;bla-bla-bla&lt;/a&gt;' in text)
+            "&lt;a href=&quot;http://jenyay.net&quot;&gt;bla-bla-bla&lt;/a&gt;" in text
+        )
 
     def testTextTemplate(self):
         """
@@ -501,23 +469,27 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         exporter = ExporterFactory.getExporter(self.root[fullpagename])
 
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=True,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=True,
+            alwaysOverwrite=False,
+        )
 
         text = ""
 
-        with open(os.path.join(self.outputdir, pagename + ".html"), encoding='utf8') as fp:
+        with open(
+            os.path.join(self.outputdir, pagename + ".html"), encoding="utf8"
+        ) as fp:
             text = fp.read()
 
-        self.assertTrue('<head>' in text)
-        self.assertTrue('</head>' in text)
-        self.assertTrue('<body>' in text)
-        self.assertTrue('</body>' in text)
-        self.assertTrue('<pre>' in text)
-        self.assertTrue('</pre>' in text)
-        self.assertTrue('<title>Текстовая страница</title>' in text)
+        self.assertTrue("<head>" in text)
+        self.assertTrue("</head>" in text)
+        self.assertTrue("<body>" in text)
+        self.assertTrue("</body>" in text)
+        self.assertTrue("<pre>" in text)
+        self.assertTrue("</pre>" in text)
+        self.assertTrue("<title>Текстовая страница</title>" in text)
 
     def testAttachesImagesExportTextPage(self):
         """
@@ -529,41 +501,28 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Текстовая страница"
 
         exporter = ExporterFactory.getExporter(self.root[fullpagename])
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=True,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=True,
+            alwaysOverwrite=False,
+        )
 
         self.assertFalse(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "__init__.py")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "__init__.py"))
+        )
         self.assertFalse(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "source.py")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "source.py"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "anchor.png")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "anchor.png"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "application.png")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "application.png"))
+        )
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    pagename,
-                    "box.png")))
+            os.path.exists(os.path.join(self.outputdir, pagename, "box.png"))
+        )
 
     def testFileExists(self):
         """
@@ -574,22 +533,28 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         exporter = ExporterFactory.getExporter(self.root[pagename])
 
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=False,
-                        alwaysOverwrite=False)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=False,
+            alwaysOverwrite=False,
+        )
 
-        self.assertRaises(BaseException,
-                          exporter.export,
-                          outdir=self.outputdir,
-                          exportname=pagename,
-                          imagesonly=False,
-                          alwaysOverwrite=False)
+        self.assertRaises(
+            BaseException,
+            exporter.export,
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=False,
+            alwaysOverwrite=False,
+        )
 
-        exporter.export(outdir=self.outputdir,
-                        exportname=pagename,
-                        imagesonly=False,
-                        alwaysOverwrite=True)
+        exporter.export(
+            outdir=self.outputdir,
+            exportname=pagename,
+            imagesonly=False,
+            alwaysOverwrite=True,
+        )
 
     def testInvalidFormat(self):
         """
@@ -599,9 +564,9 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         pagename = "Типы страниц/Страница поиска"
 
-        self.assertRaises(BaseException,
-                          ExporterFactory.getExporter,
-                          page=self.root[pagename])
+        self.assertRaises(
+            BaseException, ExporterFactory.getExporter, page=self.root[pagename]
+        )
 
     def testExportBranchFiles(self):
         """
@@ -613,72 +578,100 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = LongNameGenerator(self.root[pagename])
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, self.application)
+            self.root[pagename], namegenerator, self.application
+        )
 
         result = branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
         self.assertEqual(len(result), 0)
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename)))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + ".html")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename, "__icon.png")))
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, pagename)))
+        self.assertTrue(
+            os.path.exists(os.path.join(self.outputdir, pagename + ".html"))
+        )
+        self.assertTrue(
+            os.path.exists(os.path.join(self.outputdir, pagename, "__icon.png"))
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2.html")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2", "__icon.gif")))
+        self.assertTrue(
+            os.path.exists(os.path.join(self.outputdir, pagename + "_Страница 2"))
+        )
+        self.assertTrue(
+            os.path.exists(os.path.join(self.outputdir, pagename + "_Страница 2.html"))
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(self.outputdir, pagename + "_Страница 2", "__icon.gif")
+            )
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2_Страница 5")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2_Страница 5.html")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2_Страница 5", "__icon.gif")))
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(self.outputdir, pagename + "_Страница 2_Страница 5")
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(self.outputdir, pagename + "_Страница 2_Страница 5.html")
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    self.outputdir, pagename + "_Страница 2_Страница 5", "__icon.gif"
+                )
+            )
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2_Страница 6")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2_Страница 6.html")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2_Страница 6", "__icon.png")))
-
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2_Страница 6_Страница 7")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2_Страница 6_Страница 7.html")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + "_Страница 2_Страница 6_Страница 7", "__icon.png")))
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(self.outputdir, pagename + "_Страница 2_Страница 6")
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(self.outputdir, pagename + "_Страница 2_Страница 6.html")
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    self.outputdir, pagename + "_Страница 2_Страница 6", "__icon.png"
+                )
+            )
+        )
 
         self.assertTrue(
             os.path.exists(
                 os.path.join(
-                    self.outputdir,
-                    "__index.html")))
+                    self.outputdir, pagename + "_Страница 2_Страница 6_Страница 7"
+                )
+            )
+        )
         self.assertTrue(
-            os.path.isfile(
+            os.path.exists(
                 os.path.join(
-                    self.outputdir,
-                    "__index.html")))
-
+                    self.outputdir, pagename + "_Страница 2_Страница 6_Страница 7.html"
+                )
+            )
+        )
         self.assertTrue(
             os.path.exists(
                 os.path.join(
                     self.outputdir,
-                    PAGE_RESULT_HTML)))
-        self.assertTrue(
-            os.path.isfile(
-                os.path.join(
-                    self.outputdir,
-                    PAGE_RESULT_HTML)))
+                    pagename + "_Страница 2_Страница 6_Страница 7",
+                    "__icon.png",
+                )
+            )
+        )
+
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "__index.html")))
+        self.assertTrue(os.path.isfile(os.path.join(self.outputdir, "__index.html")))
+
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, PAGE_RESULT_HTML)))
+        self.assertTrue(os.path.isfile(os.path.join(self.outputdir, PAGE_RESULT_HTML)))
 
     def testExportBranchRoot(self):
         """
@@ -692,37 +685,75 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         result = branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
         self.assertEqual(len(result), 3)
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1.html")))
+        self.assertTrue(
+            os.path.exists(os.path.join(self.outputdir, wikiname + "_Страница 1"))
+        )
+        self.assertTrue(
+            os.path.exists(os.path.join(self.outputdir, wikiname + "_Страница 1.html"))
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1_Страница 2")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1_Страница 2.html")))
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(self.outputdir, wikiname + "_Страница 1_Страница 2")
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(self.outputdir, wikiname + "_Страница 1_Страница 2.html")
+            )
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1_Страница 2_Страница 5")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1_Страница 2_Страница 5.html")))
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    self.outputdir, wikiname + "_Страница 1_Страница 2_Страница 5"
+                )
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    self.outputdir, wikiname + "_Страница 1_Страница 2_Страница 5.html"
+                )
+            )
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1_Страница 2_Страница 6")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1_Страница 2_Страница 6.html")))
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    self.outputdir, wikiname + "_Страница 1_Страница 2_Страница 6"
+                )
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    self.outputdir, wikiname + "_Страница 1_Страница 2_Страница 6.html"
+                )
+            )
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1_Страница 2_Страница 6_Страница 7")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    wikiname + "_Страница 1_Страница 2_Страница 6_Страница 7.html")))
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    self.outputdir,
+                    wikiname + "_Страница 1_Страница 2_Страница 6_Страница 7",
+                )
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(
+                    self.outputdir,
+                    wikiname + "_Страница 1_Страница 2_Страница 6_Страница 7.html",
+                )
+            )
+        )
 
     def testExportBranchFilesTitleNames(self):
         """
@@ -734,72 +765,47 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = TitleNameGenerator(self.outputdir)
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, self.application)
+            self.root[pagename], namegenerator, self.application
+        )
 
         result = branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
         self.assertEqual(len(result), 0, str(result))
 
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename)))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    pagename + ".html")))
-
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 2")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 2.html")))
-
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 2 (1)")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 2 (1).html")))
-
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 2 (2)")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 2 (2).html")))
-
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 5")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 5.html")))
-
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 6")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 6.html")))
-
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 7")))
-        self.assertTrue(os.path.exists(os.path.join(self.outputdir,
-                                                    "Страница 7.html")))
-
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, pagename)))
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    "__index.html")))
-        self.assertTrue(
-            os.path.isfile(
-                os.path.join(
-                    self.outputdir,
-                    "__index.html")))
+            os.path.exists(os.path.join(self.outputdir, pagename + ".html"))
+        )
 
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 2")))
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 2.html")))
+
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 2 (1)")))
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.outputdir,
-                    PAGE_RESULT_HTML)))
+            os.path.exists(os.path.join(self.outputdir, "Страница 2 (1).html"))
+        )
+
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 2 (2)")))
         self.assertTrue(
-            os.path.isfile(
-                os.path.join(
-                    self.outputdir,
-                    PAGE_RESULT_HTML)))
+            os.path.exists(os.path.join(self.outputdir, "Страница 2 (2).html"))
+        )
+
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 5")))
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 5.html")))
+
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 6")))
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 6.html")))
+
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 7")))
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "Страница 7.html")))
+
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, "__index.html")))
+        self.assertTrue(os.path.isfile(os.path.join(self.outputdir, "__index.html")))
+
+        self.assertTrue(os.path.exists(os.path.join(self.outputdir, PAGE_RESULT_HTML)))
+        self.assertTrue(os.path.isfile(os.path.join(self.outputdir, PAGE_RESULT_HTML)))
 
     def testBranchContentTitleNames1(self):
         """
@@ -811,22 +817,19 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = TitleNameGenerator(self.outputdir)
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, self.application)
-
-        branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            self.root[pagename], namegenerator, self.application
         )
 
-        text = readTextFile(
-            os.path.join(
-                self.outputdir,
-                "Страница 2 (1).html"))
+        branchExporter.export(
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
+        )
+
+        text = readTextFile(os.path.join(self.outputdir, "Страница 2 (1).html"))
 
         self.assertTrue('<img src="Страница 2 (1)/cake.png"/>' in text)
         self.assertTrue(
-            '<a href="Страница 2 (1)/calendar.png">calendar.png</a>' in text)
+            '<a href="Страница 2 (1)/calendar.png">calendar.png</a>' in text
+        )
 
     def testBranchContentTitleNames2(self):
         """
@@ -838,22 +841,17 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = TitleNameGenerator(self.outputdir)
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, self.application)
-
-        branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            self.root[pagename], namegenerator, self.application
         )
 
-        text = readTextFile(
-            os.path.join(
-                self.outputdir,
-                "Страница 2 (2).html"))
+        branchExporter.export(
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
+        )
+
+        text = readTextFile(os.path.join(self.outputdir, "Страница 2 (2).html"))
 
         self.assertTrue('<img src="Страница 2 (2)/cd.png"/>' in text)
-        self.assertTrue(
-            '<a href="Страница 2 (2)/cd_go.png">cd_go.png</a>' in text)
+        self.assertTrue('<a href="Страница 2 (2)/cd_go.png">cd_go.png</a>' in text)
 
     def testLinkToPagesHtmlLongNames(self):
         """
@@ -865,38 +863,48 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = LongNameGenerator(self.root[pagename])
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, self.application)
+            self.root[pagename], namegenerator, self.application
+        )
 
         branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
         text = readTextFile(
-            os.path.join(
-                self.outputdir,
-                "Страница 1_Страница 2_Страница 6.html"))
+            os.path.join(self.outputdir, "Страница 1_Страница 2_Страница 6.html")
+        )
 
         self.assertTrue('<A HREF="/Типы страниц">/Типы страниц</A>' in text)
 
         self.assertTrue(
-            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>'
+            in text
+        )
 
         self.assertTrue(
-            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Страница 7/Страница 2</A>' in text)
+            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Страница 7/Страница 2</A>'
+            in text
+        )
 
         self.assertTrue(
-            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Еще одна ссылка</A>' in text)
+            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Еще одна ссылка</A>'
+            in text
+        )
 
         self.assertTrue(
-            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html">Страница 7</A>' in text)
+            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html">Страница 7</A>'
+            in text
+        )
 
         self.assertTrue(
-            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>'
+            in text
+        )
 
         self.assertTrue(
-            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)
+            '<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>'
+            in text
+        )
 
     def testLinkToPagesHtmlTitleNames(self):
         """
@@ -908,12 +916,11 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         pagename = "Страница 1"
         namegenerator = TitleNameGenerator(self.outputdir)
         branchExporter = BranchExporter(
-            self.root[pagename], namegenerator, self.application)
+            self.root[pagename], namegenerator, self.application
+        )
 
         branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
         text = readTextFile(os.path.join(self.outputdir, "Страница 6.html"))
@@ -921,21 +928,27 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue('<A HREF="/Типы страниц">/Типы страниц</A>' in text)
 
         self.assertTrue(
-            '<A HREF="Страница 2 (2).html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+            '<A HREF="Страница 2 (2).html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>'
+            in text
+        )
 
         self.assertTrue(
-            '<A HREF="Страница 2 (2).html">Страница 7/Страница 2</A>' in text)
+            '<A HREF="Страница 2 (2).html">Страница 7/Страница 2</A>' in text
+        )
 
-        self.assertTrue(
-            '<A HREF="Страница 2 (2).html">Еще одна ссылка</A>' in text)
+        self.assertTrue('<A HREF="Страница 2 (2).html">Еще одна ссылка</A>' in text)
 
         self.assertTrue('<A HREF="Страница 7.html">Страница 7</A>' in text)
 
         self.assertTrue(
-            '<A HREF="Страница 2 (2).html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+            '<A HREF="Страница 2 (2).html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>'
+            in text
+        )
 
         self.assertTrue(
-            '<A HREF="Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)
+            '<A HREF="Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>'
+            in text
+        )
 
     def testLinkToPageByProticolLongNames(self):
         """
@@ -949,19 +962,15 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
-        text = readTextFile(
-            os.path.join(
-                self.outputdir,
-                "samplewiki_Страница 1.html"))
+        text = readTextFile(os.path.join(self.outputdir, "samplewiki_Страница 1.html"))
 
         self.assertIn(
             '<a href="samplewiki_Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">',
-            text)
+            text,
+        )
 
     def testLinkToPageByProticolTitleNames_01(self):
         """
@@ -975,9 +984,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
         text = readTextFile(os.path.join(self.outputdir, "Страница 1.html"))
@@ -996,15 +1003,10 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
-        text = readTextFile(
-            os.path.join(
-                self.outputdir,
-                "Страница 2 (2).html"))
+        text = readTextFile(os.path.join(self.outputdir, "Страница 2 (2).html"))
 
         self.assertIn('<a href="Страница 2 (1).html">', text)
 
@@ -1020,15 +1022,10 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
-        text = readTextFile(
-            os.path.join(
-                self.outputdir,
-                "Страница 2 (2).html"))
+        text = readTextFile(os.path.join(self.outputdir, "Страница 2 (2).html"))
 
         self.assertIn('<a href="Страница 3.html">', text)
 
@@ -1044,15 +1041,10 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
-        text = readTextFile(
-            os.path.join(
-                self.outputdir,
-                "Страница 2 (2).html"))
+        text = readTextFile(os.path.join(self.outputdir, "Страница 2 (2).html"))
 
         self.assertIn('<a href="Страница 7.html#anchor">', text)
 
@@ -1068,15 +1060,10 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
-        text = readTextFile(
-            os.path.join(
-                self.outputdir,
-                "Страница 2 (2).html"))
+        text = readTextFile(os.path.join(self.outputdir, "Страница 2 (2).html"))
 
         self.assertIn('<a href="Страница 2 (1).html">', text)
 
@@ -1092,14 +1079,9 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
         branchExporter = BranchExporter(self.root, namegenerator, self.application)
 
         branchExporter.export(
-            outdir=self.outputdir,
-            imagesonly=False,
-            alwaysOverwrite=False
+            outdir=self.outputdir, imagesonly=False, alwaysOverwrite=False
         )
 
-        text = readTextFile(
-            os.path.join(
-                self.outputdir,
-                "Страница 2 (2).html"))
+        text = readTextFile(os.path.join(self.outputdir, "Страница 2 (2).html"))
 
         self.assertIn('<a href="Страница 7.html">', text)

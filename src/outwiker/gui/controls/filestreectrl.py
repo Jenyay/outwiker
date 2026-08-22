@@ -4,9 +4,12 @@ from pathlib import Path
 from typing import List, Union, Callable, Optional
 
 import wx
-from wx.lib.agw.customtreectrl import (CustomTreeCtrl, GenericTreeItem,
-                                       TR_AUTO_CHECK_CHILD,
-                                       TR_AUTO_CHECK_PARENT)
+from wx.lib.agw.customtreectrl import (
+    CustomTreeCtrl,
+    GenericTreeItem,
+    TR_AUTO_CHECK_CHILD,
+    TR_AUTO_CHECK_PARENT,
+)
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.system import getOS
@@ -27,15 +30,16 @@ class FilesTreeCtrl(wx.Panel):
 
         self._fileIcons = getOS().fileIcons
 
-        agwStyle = (wx.TR_HAS_BUTTONS |
-                    wx.TR_LINES_AT_ROOT |
-                    wx.TR_HAS_VARIABLE_ROW_HEIGHT |
-                    TR_AUTO_CHECK_CHILD |
-                    TR_AUTO_CHECK_PARENT)
+        agwStyle = (
+            wx.TR_HAS_BUTTONS
+            | wx.TR_LINES_AT_ROOT
+            | wx.TR_HAS_VARIABLE_ROW_HEIGHT
+            | TR_AUTO_CHECK_CHILD
+            | TR_AUTO_CHECK_PARENT
+        )
         self._tree_ctrl = CustomTreeCtrl(self, agwStyle=agwStyle)
         self._tree_ctrl.SetImageList(self._fileIcons.imageList)
-        self._tree_ctrl.Bind(wx.EVT_TREE_SEL_CHANGED,
-                             handler=self._onSelChanged)
+        self._tree_ctrl.Bind(wx.EVT_TREE_SEL_CHANGED, handler=self._onSelChanged)
         self._layout()
 
     def GetFilesListRelative(self):
@@ -54,8 +58,9 @@ class FilesTreeCtrl(wx.Panel):
     def _onSelChanged(self, event):
         full_path = self.GetSelectionFull()
         relative_path = self.GetSelectionRelative()
-        new_event = FilesTreeSelChangedEvent(full_path=full_path,
-                                             relative_path=relative_path)
+        new_event = FilesTreeSelChangedEvent(
+            full_path=full_path, relative_path=relative_path
+        )
         wx.PostEvent(self, new_event)
 
     def _getItemType(self):
@@ -81,10 +86,11 @@ class FilesTreeCtrl(wx.Panel):
         self.Clear()
         if self._root_dir is not None and self._root_dir.exists():
             root_item = self._tree_ctrl.AddRoot(
-                _('Attachments'),
+                _("Attachments"),
                 ct_type=self._getItemType(),
                 image=self._fileIcons.FOLDER_ICON,
-                data=self._root_dir)
+                data=self._root_dir,
+            )
             self._addChildren(root_item, self._root_dir)
             self._tree_ctrl.ExpandAll()
 
@@ -115,7 +121,7 @@ class FilesTreeCtrl(wx.Panel):
         return full_path
 
     def SetSelectionRelative(self, path_relative: Union[str, Path]) -> bool:
-        path_relative = str(path_relative).replace('\\', '/')
+        path_relative = str(path_relative).replace("\\", "/")
         item = self._items_relative.get(path_relative)
 
         if item == self._tree_ctrl.GetSelection():
@@ -127,7 +133,7 @@ class FilesTreeCtrl(wx.Panel):
         return item is not None
 
     def SetSelectionFull(self, path_full: Union[str, Path]) -> bool:
-        path_full = str(path_full).replace('\\', '/')
+        path_full = str(path_full).replace("\\", "/")
         item = self._items_full.get(path_full)
 
         if item == self._tree_ctrl.GetSelection():
@@ -149,8 +155,7 @@ class FilesTreeCtrl(wx.Panel):
                     checked_list.append(item.GetData())
 
                 self._getCheckedChildren(item, checked_list)
-                item, cookie = self._tree_ctrl.GetNextChild(
-                    parent_item, cookie)
+                item, cookie = self._tree_ctrl.GetNextChild(parent_item, cookie)
 
     def _addChildren(self, parent_item: GenericTreeItem, parent_dir: Path):
         children_files = list(parent_dir.iterdir())
@@ -159,11 +164,12 @@ class FilesTreeCtrl(wx.Panel):
 
         children_files.sort(key=lambda path: str.lower(str(path)))
         children_files.sort(
-            key=lambda path: Attachment.sortByType(str(path)), reverse=True)
+            key=lambda path: Attachment.sortByType(str(path)), reverse=True
+        )
 
         for child in children_files:
             child_full = str(child)
-            child_relative = str(child.relative_to(self._root_dir)).replace('\\', '/')
+            child_relative = str(child.relative_to(self._root_dir)).replace("\\", "/")
 
             if child.is_dir():
                 item = self._tree_ctrl.AppendItem(
@@ -171,7 +177,8 @@ class FilesTreeCtrl(wx.Panel):
                     str(child.name),
                     self._getItemType(),
                     image=self._fileIcons.FOLDER_ICON,
-                    data=child)
+                    data=child,
+                )
 
                 self._addChildren(item, child)
             else:
@@ -180,7 +187,8 @@ class FilesTreeCtrl(wx.Panel):
                     str(child.name),
                     self._getItemType(),
                     image=self._fileIcons.getFileImage(str(child)),
-                    data=child)
+                    data=child,
+                )
 
             self._items_full[child_full] = item
             self._items_relative[child_relative] = item

@@ -7,7 +7,7 @@ from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class HtmlFormatterTest (unittest.TestCase, BaseOutWikerMixin):
+class HtmlFormatterTest(unittest.TestCase, BaseOutWikerMixin):
     """Тесты плагина HtmlFormatter"""
 
     def setUp(self):
@@ -26,6 +26,7 @@ class HtmlFormatterTest (unittest.TestCase, BaseOutWikerMixin):
 
     def testFactory(self):
         from htmlformatter.paragraphimprover import ParagraphHtmlImprover
+
         factory = HtmlImproverFactory(self.application)
 
-        self.assertEqual(type(factory['pimprover']), ParagraphHtmlImprover)
+        self.assertEqual(type(factory["pimprover"]), ParagraphHtmlImprover)

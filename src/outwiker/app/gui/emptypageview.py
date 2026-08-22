@@ -3,17 +3,15 @@
 import wx
 # from line_profiler import profile
 
-from outwiker.app.services.tree import (openWiki,
-                                        createNewWiki,
-                                        openWikiWithDialog)
+from outwiker.app.services.tree import openWiki, createNewWiki, openWikiWithDialog
 
 from outwiker.gui.basepagepanel import BasePagePanel
 
 
 class ClosedTreePanel(BasePagePanel):
-    '''
+    """
     The panel showed when note tree is closed
-    '''
+    """
 
     def __init__(self, parent, application):
         super().__init__(parent, application)
@@ -23,52 +21,44 @@ class ClosedTreePanel(BasePagePanel):
     def _createGUI(self):
         # Button to create new note tree
         self._createNotesTreeButton = wx.Button(
-            self,
-            label=_('Create new note tree...'))
+            self, label=_("Create new note tree...")
+        )
 
-        self._createNotesTreeButton.Bind(wx.EVT_BUTTON,
-                                         handler=self._onCreateNotes)
+        self._createNotesTreeButton.Bind(wx.EVT_BUTTON, handler=self._onCreateNotes)
 
         # Button to open note tree
         self._openNotesTreeButton = wx.Button(
-            self,
-            label=_('Open note tree from disk...'))
-        self._openNotesTreeButton.Bind(wx.EVT_BUTTON,
-                                       handler=self._onOpenNotes)
+            self, label=_("Open note tree from disk...")
+        )
+        self._openNotesTreeButton.Bind(wx.EVT_BUTTON, handler=self._onOpenNotes)
 
         # Buttons sizer
         buttonsSizer = wx.BoxSizer(wx.HORIZONTAL)
-        buttonsSizer.Add(self._createNotesTreeButton,
-                         flag=wx.ALL,
-                         border=4)
-        buttonsSizer.Add(self._openNotesTreeButton,
-                         flag=wx.ALL,
-                         border=4)
+        buttonsSizer.Add(self._createNotesTreeButton, flag=wx.ALL, border=4)
+        buttonsSizer.Add(self._openNotesTreeButton, flag=wx.ALL, border=4)
 
         # Recently opened note tree
-        recentlyText = wx.StaticText(
-            self,
-            label=_('Recently used note tree:'))
+        recentlyText = wx.StaticText(self, label=_("Recently used note tree:"))
 
         self._recentlyListBox = wx.ListBox(self, style=wx.LB_SINGLE)
-        self._recentlyListBox.Bind(wx.EVT_LISTBOX_DCLICK,
-                                   handler=self._onOpenSelectedNotesTree)
+        self._recentlyListBox.Bind(
+            wx.EVT_LISTBOX_DCLICK, handler=self._onOpenSelectedNotesTree
+        )
 
-        self._recentlyOpenButton = wx.Button(self, label=_('Open'))
-        self._recentlyOpenButton.Bind(wx.EVT_BUTTON,
-                                      handler=self._onOpenSelectedNotesTree)
+        self._recentlyOpenButton = wx.Button(self, label=_("Open"))
+        self._recentlyOpenButton.Bind(
+            wx.EVT_BUTTON, handler=self._onOpenSelectedNotesTree
+        )
 
         self._recentlySizer = wx.FlexGridSizer(cols=1)
         self._recentlySizer.AddGrowableCol(0)
         self._recentlySizer.AddGrowableRow(1)
 
         self._recentlySizer.Add(recentlyText, flag=wx.ALL, border=4)
-        self._recentlySizer.Add(self._recentlyListBox,
-                                flag=wx.ALL | wx.EXPAND,
-                                border=4)
-        self._recentlySizer.Add(self._recentlyOpenButton,
-                                flag=wx.ALL,
-                                border=4)
+        self._recentlySizer.Add(
+            self._recentlyListBox, flag=wx.ALL | wx.EXPAND, border=4
+        )
+        self._recentlySizer.Add(self._recentlyOpenButton, flag=wx.ALL, border=4)
 
         # Main sizer
         sizer = wx.FlexGridSizer(cols=1)

@@ -14,8 +14,9 @@ class ImageListCache:
         self._defaultImage = readImage(defaultImage, width, height)
         assert self._defaultImage.IsOk()
 
-        self._imagelist = SafeImageList(self._defaultImage.Width,
-                                        self._defaultImage.Height)
+        self._imagelist = SafeImageList(
+            self._defaultImage.Width, self._defaultImage.Height
+        )
 
         self._iconsCache: Dict[str, int] = {}
         self._defaultId = None
@@ -30,9 +31,9 @@ class ImageListCache:
         return self._height
 
     def add(self, fname: str) -> int:
-        '''
+        """
         Return image ID from ImageList or default image ID
-        '''
+        """
         if fname in self._iconsCache:
             return self._iconsCache[fname]
 
@@ -46,10 +47,10 @@ class ImageListCache:
         return imageId
 
     def replace(self, fname: str) -> int:
-        '''
+        """
         Replace an existing picture in ImageList and return image ID.
         If the picture does not exist in the list, it will be added.
-        '''
+        """
         imageId = self.getDefaultImageId()
         if fname not in self._iconsCache:
             return self.add(fname)

@@ -9,18 +9,19 @@ class AttachCreateSubdirAction(BaseAction):
     """
     Create new subdirectory for current attach subdirectory of selected page
     """
-    stringId = 'AttachCreateSubdir'
+
+    stringId = "AttachCreateSubdir"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _('Create attached folder')
+        return _("Create attached folder")
 
     @property
     def description(self):
-        return _('Create a folder in the current attached folder')
+        return _("Create a folder in the current attached folder")
 
     @testreadonly
     def run(self, params):
@@ -29,8 +30,10 @@ class AttachCreateSubdirAction(BaseAction):
 
 
 class AttachCreateSubdirActionForAttachPanel(AttachCreateSubdirAction):
-    stringId = 'AttachCreateSubdirForAttachPanel'
+    stringId = "AttachCreateSubdirForAttachPanel"
 
     @property
     def description(self):
-        return _('Create a folder in the current attached folder. Action for attachments panel')
+        return _(
+            "Create a folder in the current attached folder. Action for attachments panel"
+        )

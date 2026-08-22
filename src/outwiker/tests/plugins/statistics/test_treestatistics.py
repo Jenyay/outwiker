@@ -11,7 +11,7 @@ from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
+class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты для плагина Statistics, относящиеся к статистике дерева"""
 
     def setUp(self):
@@ -27,10 +27,7 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         filesPath = "testdata/samplefiles/"
         self.files = ["accept.png", "add.png", "anchor.png", "dir"]
-        self.fullFilesPath = [
-            os.path.join(
-                filesPath,
-                fname) for fname in self.files]
+        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
 
     def tearDown(self):
         self.loader.clear()
@@ -73,7 +70,8 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
         WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"], "Страница 3", [])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", []
+        )
 
         treeStat = TreeStat(self.wikiroot)
 
@@ -85,7 +83,8 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
         WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"], "Страница 3", [])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", []
+        )
         WikiPageFactory().create(self.wikiroot, "Страница 4", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 5", [])
 
@@ -116,8 +115,8 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(treeStat.maxDepth), 1)
         self.assertEqual(treeStat.maxDepth[0][0], 2)
         self.assertEqual(
-            treeStat.maxDepth[0][1],
-            self.wikiroot["Страница 1/Страница 2"])
+            treeStat.maxDepth[0][1], self.wikiroot["Страница 1/Страница 2"]
+        )
 
     def testMaxDepth3(self):
         from statistics.treestat import TreeStat
@@ -136,7 +135,8 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
         WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"], "Страница 3", [])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", []
+        )
         WikiPageFactory().create(self.wikiroot, "Страница 4", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 5", [])
 
@@ -145,8 +145,8 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(treeStat.maxDepth), 1)
         self.assertEqual(treeStat.maxDepth[0][0], 3)
         self.assertEqual(
-            treeStat.maxDepth[0][1],
-            self.wikiroot["Страница 1/Страница 2/Страница 3"])
+            treeStat.maxDepth[0][1], self.wikiroot["Страница 1/Страница 2/Страница 3"]
+        )
 
     def testMaxDepth5(self):
         from statistics.treestat import TreeStat
@@ -177,8 +177,8 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         from statistics.treestat import TreeStat
 
         WikiPageFactory().create(
-            self.wikiroot, "Страница 1", [
-                "Тег 1", "Тег 2", "Тег 3"])
+            self.wikiroot, "Страница 1", ["Тег 1", "Тег 2", "Тег 3"]
+        )
 
         treeStat = TreeStat(self.wikiroot)
 
@@ -188,16 +188,12 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         from statistics.treestat import TreeStat
 
         WikiPageFactory().create(
-            self.wikiroot, "Страница 1", [
-                "Тег 1", "Тег 2", "Тег 3"])
+            self.wikiroot, "Страница 1", ["Тег 1", "Тег 2", "Тег 3"]
+        )
+        WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", ["Тег 4"])
         WikiPageFactory().create(
-            self.wikiroot["Страница 1"],
-            "Страница 2",
-            ["Тег 4"])
-        WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"],
-            "Страница 3",
-            ["Тег 1", "Тег 2"])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", ["Тег 1", "Тег 2"]
+        )
         WikiPageFactory().create(self.wikiroot, "Страница 4", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 5", [])
 
@@ -228,9 +224,7 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
     def testFrequentTags3(self):
         from statistics.treestat import TreeStat
 
-        WikiPageFactory().create(
-            self.wikiroot, "Страница 1", [
-                "тег 1", "тег2"])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", ["тег 1", "тег2"])
 
         treeStat = TreeStat(self.wikiroot)
 
@@ -240,15 +234,14 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         from statistics.treestat import TreeStat
 
         WikiPageFactory().create(
-            self.wikiroot, "Страница 1", [
-                "тег 1", "тег 2", "тег 3"])
+            self.wikiroot, "Страница 1", ["тег 1", "тег 2", "тег 3"]
+        )
         WikiPageFactory().create(
-            self.wikiroot["Страница 1"], "Страница 2", [
-                "тег 1", "тег 3"])
+            self.wikiroot["Страница 1"], "Страница 2", ["тег 1", "тег 3"]
+        )
         WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"],
-            "Страница 3",
-            ["тег 3"])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", ["тег 3"]
+        )
         WikiPageFactory().create(self.wikiroot, "Страница 4", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 5", [])
 
@@ -287,22 +280,21 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
         WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"], "Страница 3", [])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", []
+        )
 
         self.wikiroot["Страница 1"].datetime = datetime.datetime(2013, 4, 23)
-        self.wikiroot["Страница 1/Страница 2"].datetime = datetime.datetime(
-            2013, 4, 20)
+        self.wikiroot["Страница 1/Страница 2"].datetime = datetime.datetime(2013, 4, 20)
         self.wikiroot["Страница 1/Страница 2/Страница 3"].datetime = datetime.datetime(
-            2013, 4, 30)
+            2013, 4, 30
+        )
 
         self.assertEqual(len(treeStat.pageDate), 3)
         self.assertEqual(
-            treeStat.pageDate[0],
-            self.wikiroot["Страница 1/Страница 2/Страница 3"])
+            treeStat.pageDate[0], self.wikiroot["Страница 1/Страница 2/Страница 3"]
+        )
         self.assertEqual(treeStat.pageDate[1], self.wikiroot["Страница 1"])
-        self.assertEqual(
-            treeStat.pageDate[2],
-            self.wikiroot["Страница 1/Страница 2"])
+        self.assertEqual(treeStat.pageDate[2], self.wikiroot["Страница 1/Страница 2"])
 
     def testPageDate4(self):
         from statistics.treestat import TreeStat
@@ -311,31 +303,27 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
         WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"], "Страница 3", [])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", []
+        )
         WikiPageFactory().create(self.wikiroot, "Страница 4", [])
         WikiPageFactory().create(self.wikiroot["Страница 4"], "Страница 5", [])
 
         self.wikiroot["Страница 1"].datetime = datetime.datetime(2013, 4, 23)
-        self.wikiroot["Страница 1/Страница 2"].datetime = datetime.datetime(
-            2013, 4, 20)
+        self.wikiroot["Страница 1/Страница 2"].datetime = datetime.datetime(2013, 4, 20)
         self.wikiroot["Страница 1/Страница 2/Страница 3"].datetime = datetime.datetime(
-            2013, 4, 30)
+            2013, 4, 30
+        )
         self.wikiroot["Страница 4"].datetime = datetime.datetime(2010, 1, 1)
-        self.wikiroot["Страница 4/Страница 5"].datetime = datetime.datetime(
-            2009, 1, 1)
+        self.wikiroot["Страница 4/Страница 5"].datetime = datetime.datetime(2009, 1, 1)
 
         self.assertEqual(len(treeStat.pageDate), 5)
         self.assertEqual(
-            treeStat.pageDate[0],
-            self.wikiroot["Страница 1/Страница 2/Страница 3"])
+            treeStat.pageDate[0], self.wikiroot["Страница 1/Страница 2/Страница 3"]
+        )
         self.assertEqual(treeStat.pageDate[1], self.wikiroot["Страница 1"])
-        self.assertEqual(
-            treeStat.pageDate[2],
-            self.wikiroot["Страница 1/Страница 2"])
+        self.assertEqual(treeStat.pageDate[2], self.wikiroot["Страница 1/Страница 2"])
         self.assertEqual(treeStat.pageDate[3], self.wikiroot["Страница 4"])
-        self.assertEqual(
-            treeStat.pageDate[4],
-            self.wikiroot["Страница 4/Страница 5"])
+        self.assertEqual(treeStat.pageDate[4], self.wikiroot["Страница 4/Страница 5"])
 
     def testPageContentLength1(self):
         from statistics.treestat import TreeStat
@@ -365,13 +353,16 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
         WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"], "Страница 3", [])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", []
+        )
         WikiPageFactory().create(self.wikiroot, "Страница 4", [])
 
         self.wikiroot["Страница 1"].content = "Бла"
         self.wikiroot["Страница 1/Страница 2"].content = "   Бла-бла-бла   "
         self.wikiroot["Страница 1/Страница 2/Страница 3"].content = "Бла-"
-        self.wikiroot["Страница 4"].content = " Бла-бла                                  "
+        self.wikiroot[
+            "Страница 4"
+        ].content = " Бла-бла                                  "
 
         treeStat = TreeStat(self.wikiroot)
 
@@ -379,17 +370,15 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(len(pagesList), 4)
 
-        self.assertEqual(
-            pagesList[0][0],
-            self.wikiroot["Страница 1/Страница 2"])
+        self.assertEqual(pagesList[0][0], self.wikiroot["Страница 1/Страница 2"])
         self.assertEqual(pagesList[0][1], 11)
 
         self.assertEqual(pagesList[1][0], self.wikiroot["Страница 4"])
         self.assertEqual(pagesList[1][1], 7)
 
         self.assertEqual(
-            pagesList[2][0],
-            self.wikiroot["Страница 1/Страница 2/Страница 3"])
+            pagesList[2][0], self.wikiroot["Страница 1/Страница 2/Страница 3"]
+        )
         self.assertEqual(pagesList[2][1], 4)
 
         self.assertEqual(pagesList[3][0], self.wikiroot["Страница 1"])
@@ -401,14 +390,17 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
         WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"], "Страница 3", [])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", []
+        )
         WikiPageFactory().create(self.wikiroot, "Страница 4", [])
         SearchPageFactory().create(self.wikiroot, "Страница 5", [])
 
         self.wikiroot["Страница 1"].content = "Бла"
         self.wikiroot["Страница 1/Страница 2"].content = "   Бла-бла-бла   "
         self.wikiroot["Страница 1/Страница 2/Страница 3"].content = "Бла-"
-        self.wikiroot["Страница 4"].content = " Бла-бла                                  "
+        self.wikiroot[
+            "Страница 4"
+        ].content = " Бла-бла                                  "
 
         treeStat = TreeStat(self.wikiroot)
 
@@ -458,15 +450,18 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
         WikiPageFactory().create(
-            self.wikiroot["Страница 1/Страница 2"], "Страница 3", [])
+            self.wikiroot["Страница 1/Страница 2"], "Страница 3", []
+        )
         WikiPageFactory().create(self.wikiroot, "Страница 4", [])
         SearchPageFactory().create(self.wikiroot, "Страница 5", [])
 
         Attachment(self.wikiroot["Страница 1"]).attach([])
-        Attachment(self.wikiroot["Страница 1/Страница 2"]
-                   ).attach(self.fullFilesPath[0:1])
-        Attachment(
-            self.wikiroot["Страница 1/Страница 2/Страница 3"]).attach(self.fullFilesPath[0:2])
+        Attachment(self.wikiroot["Страница 1/Страница 2"]).attach(
+            self.fullFilesPath[0:1]
+        )
+        Attachment(self.wikiroot["Страница 1/Страница 2/Страница 3"]).attach(
+            self.fullFilesPath[0:2]
+        )
         Attachment(self.wikiroot["Страница 4"]).attach(self.fullFilesPath[0:3])
         Attachment(self.wikiroot["Страница 5"]).attach(self.fullFilesPath)
 

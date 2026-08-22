@@ -6,7 +6,6 @@ from outwiker.tests.basetestcases import PluginLoadingMixin
 
 
 class ExternalToolsLoadingTest(PluginLoadingMixin, unittest.TestCase):
-
     def getPluginDir(self):
         """
         Должен возвращать путь до папки с тестируемым плагином

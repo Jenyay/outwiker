@@ -7,7 +7,7 @@ from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class ParagraphHtmlImproverTest (unittest.TestCase, BaseOutWikerMixin):
+class ParagraphHtmlImproverTest(unittest.TestCase, BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         dirlist = ["plugins/htmlformatter"]
@@ -16,62 +16,62 @@ class ParagraphHtmlImproverTest (unittest.TestCase, BaseOutWikerMixin):
         self.loader.load(dirlist)
 
         factory = HtmlImproverFactory(self.application)
-        self.improver = factory['pimprover']
+        self.improver = factory["pimprover"]
 
     def tearDown(self):
         self.loader.clear()
         self.destroyApplication()
 
     def test_empty(self):
-        src = ''
-        expectedResult = ''
+        src = ""
+        expectedResult = ""
 
         result = self.improver.run(src)
         self.assertEqual(expectedResult, result)
 
     def test_text_single_line(self):
-        src = 'Абырвалг'
-        expectedResult = '<p>Абырвалг</p>'
+        src = "Абырвалг"
+        expectedResult = "<p>Абырвалг</p>"
 
         result = self.improver.run(src)
         self.assertEqual(expectedResult, result)
 
     def test_text_br(self):
-        src = '''Абырвалг
+        src = """Абырвалг
 Foo
-Bar'''
-        expectedResult = '''<p>Абырвалг<br/>
+Bar"""
+        expectedResult = """<p>Абырвалг<br/>
 Foo<br/>
-Bar</p>'''
+Bar</p>"""
 
         result = self.improver.run(src)
 
         self.assertEqual(expectedResult, result)
 
     def test_text_p_01(self):
-        src = '''Абырвалг
+        src = """Абырвалг
 
-Второй параграф'''
+Второй параграф"""
 
-        expectedResult = '''<p>Абырвалг</p>
-<p>Второй параграф</p>'''
+        expectedResult = """<p>Абырвалг</p>
+<p>Второй параграф</p>"""
 
         result = self.improver.run(src)
 
         self.assertEqual(expectedResult, result)
 
     def test_text_p_02(self):
-        src = '''Абырвалг
+        src = """Абырвалг
 
 Второй параграф
 
 
 
 
-'''
+"""
 
-        expectedResult = '''<p>Абырвалг</p>
-<p>Второй параграф</p>'''
+        expectedResult = """<p>Абырвалг</p>
+<p>Второй параграф</p>"""
 
         result = self.improver.run(src)
 

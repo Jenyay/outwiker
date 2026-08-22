@@ -49,8 +49,10 @@ class Attachment:
         Пути до файлов полные
         """
         path = self.getAttachPath()
-        return [os.path.normpath(os.path.join(path, subdir, fname))
-                for fname in self.getAttachRelative(subdir)]
+        return [
+            os.path.normpath(os.path.join(path, subdir, fname))
+            for fname in self.getAttachRelative(subdir)
+        ]
 
     def createSubdir(self, subdir: Union[str, Path]) -> Path:
         if self.page.readonly:
@@ -83,7 +85,9 @@ class Attachment:
 
         return os.listdir(fullpath)
 
-    def attach(self, files: List[Union[Path, str]], subdir: Union[Path, str] = '.') -> None:
+    def attach(
+        self, files: List[Union[Path, str]], subdir: Union[Path, str] = "."
+    ) -> None:
         """
         Прикрепить файлы к странице
         files -- список файлов (или папок), которые надо прикрепить
@@ -106,8 +110,7 @@ class Attachment:
                 shutil.copy(name, subdir_path)
 
         self.page.updateDateTime()
-        self.page.root.onAttachListChanged(self.page,
-                                           AttachListChangedParams())
+        self.page.root.onAttachListChanged(self.page, AttachListChangedParams())
 
     def removeAttach(self, files):
         """
@@ -127,13 +130,11 @@ class Attachment:
                 else:
                     os.remove(path)
             except OSError:
-                self.page.root.onAttachListChanged(self.page,
-                                                   AttachListChangedParams())
-                raise IOError(u"Can't remove %s" % fname)
+                self.page.root.onAttachListChanged(self.page, AttachListChangedParams())
+                raise IOError("Can't remove %s" % fname)
 
         self.page.updateDateTime()
-        self.page.root.onAttachListChanged(self.page,
-                                           AttachListChangedParams())
+        self.page.root.onAttachListChanged(self.page, AttachListChangedParams())
 
     def fixCurrentSubdir(self):
         """
@@ -145,7 +146,7 @@ class Attachment:
 
         # Check if root attach directory exists
         if not self._dirExists(root):
-            if self.page.currentAttachSubdir != '.':
+            if self.page.currentAttachSubdir != ".":
                 self.page.currentAttachSubdir = None
             return None
 
@@ -157,13 +158,13 @@ class Attachment:
             return current_path
 
         # Find first existed parent directory
-        while current_subdir != '':
+        while current_subdir != "":
             if self._dirExists(os.path.join(root, current_subdir)):
                 break
             current_subdir = os.path.dirname(current_subdir)
 
         # Walk to parent?
-        if current_subdir == '':
+        if current_subdir == "":
             current_subdir = None
 
         # Current page must be fixed
@@ -289,16 +290,15 @@ class Attachment:
         return os.path.join(self.getAttachPath(create), fname)
 
     def query(self, mask: str) -> List[str]:
-        mask = mask.replace('\\', '/').strip()
+        mask = mask.replace("\\", "/").strip()
         if len(mask) == 0:
             return []
 
-        if mask.find('..') != -1:
+        if mask.find("..") != -1:
             return []
 
-        if mask.startswith('/'):
+        if mask.startswith("/"):
             return []
-
 
         root_dir = Path(self.getAttachPath(create=False))
         if not root_dir.exists():
@@ -306,8 +306,9 @@ class Attachment:
 
         glob_result = root_dir.glob(mask)
 
-        return [str(fname.relative_to(root_dir)).replace('\\', '/')
-                for fname in glob_result]
+        return [
+            str(fname.relative_to(root_dir)).replace("\\", "/") for fname in glob_result
+        ]
 
-    def exists(self, fname: Union[Path, str], subdir: Union[Path, str] = '.') -> bool:
+    def exists(self, fname: Union[Path, str], subdir: Union[Path, str] = ".") -> bool:
         return Path(self.getAttachPath(), subdir, fname).exists()

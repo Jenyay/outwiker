@@ -14,8 +14,8 @@ class ButtonsDialog(TestedDialog):
 
     Version 1.1
     """
-    def __init__(self, parent, message, caption, buttons,
-                 default=0, cancel=-1):
+
+    def __init__(self, parent, message, caption, buttons, default=0, cancel=-1):
         """
         parent - parent window
         message - text message to show in the dialog.
@@ -36,19 +36,17 @@ class ButtonsDialog(TestedDialog):
         self.__cancel = cancel
 
         self.SetTitle(caption)
-        self.__textLabel = wx.StaticText(self,
-                                         -1,
-                                         message,
-                                         style=wx.ALIGN_CENTRE)
+        self.__textLabel = wx.StaticText(self, -1, message, style=wx.ALIGN_CENTRE)
 
         self.__createButtons(buttons, default, cancel)
         self.__do_layout()
         self.Center(wx.BOTH)
 
     def __createButtons(self, buttons, default, cancel):
-        self.__buttons = [wx.Button(self, self.ID_MIN + index, text)
-                          for text, index
-                          in zip(buttons, range(len(buttons)))]
+        self.__buttons = [
+            wx.Button(self, self.ID_MIN + index, text)
+            for text, index in zip(buttons, range(len(buttons)))
+        ]
 
         if default >= 0:
             default_id = self.__buttons[default].GetId() + self.ID_MIN
@@ -69,10 +67,10 @@ class ButtonsDialog(TestedDialog):
 
         for n in range(count):
             if n <= 9:
-                entries[n].Set(0, ord('1') + n, self.ID_MIN + n)
-                text = u'{n}. {title}'.format(
-                    n=n + 1,
-                    title=self.__buttons[n].GetLabel())
+                entries[n].Set(0, ord("1") + n, self.ID_MIN + n)
+                text = "{n}. {title}".format(
+                    n=n + 1, title=self.__buttons[n].GetLabel()
+                )
                 self.__buttons[n].SetLabel(text)
 
         entries[count].Set(0, wx.WXK_ESCAPE, wx.ID_CANCEL)
@@ -93,7 +91,8 @@ class ButtonsDialog(TestedDialog):
             self.__textLabel,
             0,
             wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,
-            border=8)
+            border=8,
+        )
 
         for button in self.__buttons:
             sizer_2.Add(button, 0, wx.ALL, border=4)

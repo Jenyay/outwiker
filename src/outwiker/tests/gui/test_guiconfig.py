@@ -24,20 +24,18 @@ def gui_config(config: Config) -> GuiConfig:
 
 
 def test_load_window_size_default(gui_config: GuiConfig):
-    prefix = 'test'
+    prefix = "test"
     default_width = 10000
     default_height = 20000
 
-    width, height = gui_config.loadWindowSize(
-            prefix, default_width, default_height
-    )
+    width, height = gui_config.loadWindowSize(prefix, default_width, default_height)
 
     assert width == default_width
     assert height == default_height
 
 
 def test_save_size(gui_config: GuiConfig):
-    prefix = 'test'
+    prefix = "test"
     default_width = 10000
     default_height = 20000
 
@@ -46,16 +44,14 @@ def test_save_size(gui_config: GuiConfig):
 
     gui_config.saveWindowSize(prefix, new_width, new_height)
 
-    width, height = gui_config.loadWindowSize(
-            prefix, default_width, default_height
-    )
+    width, height = gui_config.loadWindowSize(prefix, default_width, default_height)
 
     assert width == new_width
     assert height == new_height
 
 
 def test_default_width(gui_config: GuiConfig):
-    prefix = 'test'
+    prefix = "test"
     default_width = 10000
     default_height = 20000
 
@@ -64,16 +60,14 @@ def test_default_width(gui_config: GuiConfig):
 
     gui_config.saveWindowSize(prefix, new_width, new_height)
 
-    width, height = gui_config.loadWindowSize(
-            prefix, default_width, default_height
-    )
+    width, height = gui_config.loadWindowSize(prefix, default_width, default_height)
 
     assert width == default_width
     assert height == new_height
 
 
 def test_default_height(gui_config: GuiConfig):
-    prefix = 'test'
+    prefix = "test"
     default_width = 10000
     default_height = 20000
 
@@ -82,9 +76,7 @@ def test_default_height(gui_config: GuiConfig):
 
     gui_config.saveWindowSize(prefix, new_width, new_height)
 
-    width, height = gui_config.loadWindowSize(
-            prefix, default_width, default_height
-    )
+    width, height = gui_config.loadWindowSize(prefix, default_width, default_height)
 
     assert width == new_width
     assert height == default_height

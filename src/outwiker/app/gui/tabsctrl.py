@@ -1020,9 +1020,7 @@ class TabRender:
         return height
 
     # @profile
-    def _draw_icon(
-        self, gc: wx.GraphicsContext, tab: SingleTabGeometry
-    ) -> None:
+    def _draw_icon(self, gc: wx.GraphicsContext, tab: SingleTabGeometry) -> None:
         if not self._theme.get(Theme.SECTION_TABS, Theme.TABS_SHOW_ICONS):
             return
 
@@ -1094,7 +1092,9 @@ class TabRender:
         return _get_trimmed_title(title, cut_count)
 
     # @profile
-    def _draw_title(self, dc: wx.DC, gc: wx.GraphicsContext, tab: SingleTabGeometry, tab_state: int) -> None:
+    def _draw_title(
+        self, dc: wx.DC, gc: wx.GraphicsContext, tab: SingleTabGeometry, tab_state: int
+    ) -> None:
         assert tab.text_left is not None
         assert tab.text_right is not None
         assert tab.title is not None
@@ -1143,7 +1143,9 @@ class TabRender:
         gc.DrawRectangle(tab.left, tab.top, tab.width, tab.height)
 
     # @profile
-    def _draw_tab(self, gc: wx.GraphicsContext, tab: SingleTabGeometry, state: int) -> None:
+    def _draw_tab(
+        self, gc: wx.GraphicsContext, tab: SingleTabGeometry, state: int
+    ) -> None:
         assert tab.left is not None
         assert tab.right is not None
         assert tab.top is not None
@@ -1174,15 +1176,15 @@ class TabRender:
         pen = self._pens.FindOrCreatePen(border_color, 2)
         pen.SetQuality(wx.PEN_QUALITY_HIGH)
         gc.SetPen(pen)
-        gc.SetBrush(
-            self._brushes.FindOrCreateBrush(background_color)
-        )
+        gc.SetBrush(self._brushes.FindOrCreateBrush(background_color))
 
         r = tab.rounding_radius
 
         path = gc.CreatePath()
         path.MoveToPoint(tab.left, tab.top + r)
-        path.AddArc(tab.left + r, tab.top + r, r, math.pi, math.pi * 1.5, clockwise=True)
+        path.AddArc(
+            tab.left + r, tab.top + r, r, math.pi, math.pi * 1.5, clockwise=True
+        )
         path.AddLineToPoint(tab.left + r, tab.top)
         path.AddArc(tab.right - r, tab.top + r, r, -math.pi / 2, 0, clockwise=True)
         path.AddLineToPoint(tab.right, tab.bottom)

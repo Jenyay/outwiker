@@ -17,7 +17,7 @@ class ThumbmakerWx(ThumbmakerBase):
         pass
 
     def _getSize(self, image):
-        return(image.GetWidth(), image.GetHeight())
+        return (image.GetWidth(), image.GetHeight())
 
     def __getImageType(self, fname):
         if fname.lower().endswith(".jpg") or fname.lower().endswith(".jpeg"):

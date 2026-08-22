@@ -15,6 +15,7 @@ class OpenHelpAction(BaseAction):
     """
     Open the OutWiker help
     """
+
     stringId = "Help"
 
     def __init__(self, application):
@@ -31,13 +32,11 @@ class OpenHelpAction(BaseAction):
     def run(self, params):
         help_dir = "help"
         current_help = _("help_en")
-        path = os.path.join(getMainModuleDataPath(),
-                            help_dir,
-                            current_help)
+        path = os.path.join(getMainModuleDataPath(), help_dir, current_help)
 
-        args = ['--normal', '--readonly']
+        args = ["--normal", "--readonly"]
         if params is not None:
-            args.append('-p')
+            args.append("-p")
             args.append(params.pagelink)
 
         openInNewWindow(path, args)

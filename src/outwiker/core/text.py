@@ -22,14 +22,11 @@ def dictToStr(paramsDict: Dict[str, Any]) -> str:
         else:
             quote = '"'
 
-        paramStr = '{name}={quote}{value}{quote}'.format(
-            name=name,
-            quote=quote,
-            value=valueStr
+        paramStr = "{name}={quote}{value}{quote}".format(
+            name=name, quote=quote, value=valueStr
         )
 
         items.append(paramStr)
 
     items.sort()
-    return ', '.join(items)
-
+    return ", ".join(items)

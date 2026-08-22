@@ -32,13 +32,20 @@ class BaseFileIcons(metaclass=ABCMeta):
         from outwiker.core.system import getBuiltinImagePath
 
         self._imageList.Add(
-                readImage(getBuiltinImagePath("file_icon_default.svg"), ICONS_WIDTH, ICONS_HEIGHT))
+            readImage(
+                getBuiltinImagePath("file_icon_default.svg"), ICONS_WIDTH, ICONS_HEIGHT
+            )
+        )
 
         self._imageList.Add(
-            readImage(getBuiltinImagePath("folder.svg"), ICONS_WIDTH, ICONS_HEIGHT))
+            readImage(getBuiltinImagePath("folder.svg"), ICONS_WIDTH, ICONS_HEIGHT)
+        )
 
         self._imageList.Add(
-            readImage(getBuiltinImagePath("arrow_go_to_parent.svg"), ICONS_WIDTH, ICONS_HEIGHT))
+            readImage(
+                getBuiltinImagePath("arrow_go_to_parent.svg"), ICONS_WIDTH, ICONS_HEIGHT
+            )
+        )
 
     def getFileImage(self, filepath):
         if self.imageListCount == 0:
@@ -116,8 +123,9 @@ class UnixFileIcons(BaseFileIcons):
         Получить картинку по расширению или None, если такой картинки нет
         """
         from outwiker.core.system import getBuiltinImagePath
+
         iconfolder = "fileicons"
-        filename = u"file_extension_{}.png".format(ext)
+        filename = "file_extension_{}.png".format(ext)
 
         imagePath = getBuiltinImagePath(iconfolder, filename)
 
@@ -163,7 +171,7 @@ class WindowsFileIcons(BaseFileIcons):
 
         fname = nntype[1]
         index = nntype[2]
-        return self._loadFromResource('{};{}'.format(fname, index))
+        return self._loadFromResource("{};{}".format(fname, index))
 
     def _getFileImage(self, filepath):
         """

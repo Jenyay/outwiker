@@ -15,15 +15,17 @@ class MainPanesController:
         self.__mainWindow = mainWindow
         self.auiManager = mainWindow.auiManager
 
-        self.__actions = [ShowHideTreeAction,
-                          ShowHideTagsAction,
-                          ShowHideAttachesAction]
+        self.__actions = [
+            ShowHideTreeAction,
+            ShowHideTagsAction,
+            ShowHideAttachesAction,
+        ]
 
         self._panels = [
-                        # self.__application.mainWindow.treePanel,
-                        # self.__application.mainWindow.tagsCloudPanel,
-                        # self.__application.mainWindow.attachPanel,
-                        ]
+            # self.__application.mainWindow.treePanel,
+            # self.__application.mainWindow.tagsCloudPanel,
+            # self.__application.mainWindow.attachPanel,
+        ]
 
         if self.__mainWindow.treePanel is not None:
             self._panels.append(self.__mainWindow.treePanel)
@@ -59,8 +61,10 @@ class MainPanesController:
         Возвращает список всех _экземпляров_ действий
         """
         actionController = self.__application.actionController
-        return [actionController.getAction(actionType.stringId)
-                for actionType in self.__actions]
+        return [
+            actionController.getAction(actionType.stringId)
+            for actionType in self.__actions
+        ]
 
     def fromFullscreen(self):
         """
@@ -116,21 +120,17 @@ class MainPanesController:
         """
         if self.__mainWindow.attachPanel is not None:
             self.__application.actionController.check(
-                ShowHideAttachesAction.stringId,
-                self.__mainWindow.attachPanel.isShown()
+                ShowHideAttachesAction.stringId, self.__mainWindow.attachPanel.isShown()
             )
-
 
         if self.__mainWindow.treePanel is not None:
             self.__application.actionController.check(
-                ShowHideTreeAction.stringId,
-                self.__mainWindow.treePanel.isShown()
+                ShowHideTreeAction.stringId, self.__mainWindow.treePanel.isShown()
             )
 
         if self.__mainWindow.tagsCloudPanel is not None:
             self.__application.actionController.check(
-                ShowHideTagsAction.stringId,
-                self.__mainWindow.tagsCloudPanel.isShown()
+                ShowHideTagsAction.stringId, self.__mainWindow.tagsCloudPanel.isShown()
             )
 
         self.auiManager.Update()

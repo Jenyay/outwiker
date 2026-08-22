@@ -10,7 +10,7 @@ from outwiker.tests.utils import SkipLogFilter
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-logger = logging.getLogger('UpdateNotifierPlugin')
+logger = logging.getLogger("UpdateNotifierPlugin")
 logger.addFilter(SkipLogFilter())
 
 
@@ -29,51 +29,48 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_empty_01(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        plugin = self.loader['UpdateNotifier']
+        plugin = self.loader["UpdateNotifier"]
         controller = UpdateController(self.application, plugin)
 
         currentVersionsDict = {}
         latestVersionsDict = {}
 
-        result = controller.filterUpdatedApps(currentVersionsDict,
-                                              latestVersionsDict)
+        result = controller.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
 
         self.assertEqual(result, {})
 
     def test_filter_empty_02(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        plugin = self.loader['UpdateNotifier']
+        plugin = self.loader["UpdateNotifier"]
         controller = UpdateController(self.application, plugin)
 
-        currentVersionsDict = {'test_01': '0.1'}
+        currentVersionsDict = {"test_01": "0.1"}
         latestVersionsDict = {}
 
-        result = controller.filterUpdatedApps(currentVersionsDict,
-                                              latestVersionsDict)
+        result = controller.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
 
         self.assertEqual(result, {})
 
     def test_filter_empty_03(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        plugin = self.loader['UpdateNotifier']
+        plugin = self.loader["UpdateNotifier"]
         controller = UpdateController(self.application, plugin)
 
         currentVersionsDict = {}
         latestVersionsDict = {
-            'test_01': AppInfo('test', None),
+            "test_01": AppInfo("test", None),
         }
 
-        result = controller.filterUpdatedApps(currentVersionsDict,
-                                              latestVersionsDict)
+        result = controller.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
 
         self.assertEqual(result, {})
 
     def test_filter_empty_04(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        plugin = self.loader['UpdateNotifier']
+        plugin = self.loader["UpdateNotifier"]
         controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 0)
@@ -81,122 +78,105 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         currentVersionsDict = {}
         latestVersionsDict = {
-            'test_01': AppInfo('test',
-                               None,
-                               versionsList=[latestVersionInfo]),
+            "test_01": AppInfo("test", None, versionsList=[latestVersionInfo]),
         }
 
-        result = controller.filterUpdatedApps(currentVersionsDict,
-                                              latestVersionsDict)
+        result = controller.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
 
         self.assertEqual(result, {})
 
     def test_filter_empty_05(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        plugin = self.loader['UpdateNotifier']
+        plugin = self.loader["UpdateNotifier"]
         controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 0)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {'test_02': '1.0'}
+        currentVersionsDict = {"test_02": "1.0"}
         latestVersionsDict = {
-            'test_01': AppInfo('test',
-                               None,
-                               versionsList=[latestVersionInfo]),
+            "test_01": AppInfo("test", None, versionsList=[latestVersionInfo]),
         }
 
-        result = controller.filterUpdatedApps(currentVersionsDict,
-                                              latestVersionsDict)
+        result = controller.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
 
         self.assertEqual(result, {})
 
     def test_filter_empty_06(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        plugin = self.loader['UpdateNotifier']
+        plugin = self.loader["UpdateNotifier"]
         controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 0)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {'test_01': '1.0'}
+        currentVersionsDict = {"test_01": "1.0"}
         latestVersionsDict = {
-            'test_01': AppInfo('test',
-                               None,
-                               versionsList=[latestVersionInfo]),
+            "test_01": AppInfo("test", None, versionsList=[latestVersionInfo]),
         }
 
-        result = controller.filterUpdatedApps(currentVersionsDict,
-                                              latestVersionsDict)
+        result = controller.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
 
         self.assertEqual(result, {})
 
     def test_filter_07(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        plugin = self.loader['UpdateNotifier']
+        plugin = self.loader["UpdateNotifier"]
         controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 1)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {'test_01': '1.0'}
+        currentVersionsDict = {"test_01": "1.0"}
         latestVersionsDict = {
-            'test_01': AppInfo('test',
-                               None,
-                               versionsList=[latestVersionInfo]),
+            "test_01": AppInfo("test", None, versionsList=[latestVersionInfo]),
         }
 
-        result = controller.filterUpdatedApps(currentVersionsDict,
-                                              latestVersionsDict)
+        result = controller.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
 
         self.assertEqual(len(result), 1)
-        self.assertEqual(result['test_01'].appname, 'test')
+        self.assertEqual(result["test_01"].appname, "test")
 
     def test_filter_empty_08(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        plugin = self.loader['UpdateNotifier']
+        plugin = self.loader["UpdateNotifier"]
         controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(0, 9)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {'test_01': '1.0'}
+        currentVersionsDict = {"test_01": "1.0"}
         latestVersionsDict = {
-            'test_01': AppInfo('test',
-                               None,
-                               versionsList=[latestVersionInfo]),
+            "test_01": AppInfo("test", None, versionsList=[latestVersionInfo]),
         }
 
-        result = controller.filterUpdatedApps(currentVersionsDict,
-                                              latestVersionsDict)
+        result = controller.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
 
         self.assertEqual(result, {})
 
     def test_filter_09(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        plugin = self.loader['UpdateNotifier']
+        plugin = self.loader["UpdateNotifier"]
         controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 1)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {'test_01': '1.0',
-                               'test_02': '2.0',
-                               }
-
-        latestVersionsDict = {
-            'test_01': AppInfo('test',
-                               None,
-                               versionsList=[latestVersionInfo]),
+        currentVersionsDict = {
+            "test_01": "1.0",
+            "test_02": "2.0",
         }
 
-        result = controller.filterUpdatedApps(currentVersionsDict,
-                                              latestVersionsDict)
+        latestVersionsDict = {
+            "test_01": AppInfo("test", None, versionsList=[latestVersionInfo]),
+        }
+
+        result = controller.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
 
         self.assertEqual(len(result), 1)
-        self.assertEqual(result['test_01'].appname, 'test')
+        self.assertEqual(result["test_01"].appname, "test")

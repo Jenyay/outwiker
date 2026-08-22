@@ -5,7 +5,7 @@ import unittest
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class DescriptionActionTest (unittest.TestCase, BaseOutWikerGUIMixin):
+class DescriptionActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for search empty title and description of actions
     """

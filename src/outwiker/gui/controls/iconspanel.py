@@ -11,7 +11,9 @@ class IconsPanel(wx.Panel):
     def __init__(self, parent, theme: Theme):
         super().__init__(parent)
         self._theme = theme
-        self._groupsButtonHeight = int(self._theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE) * 1.8)
+        self._groupsButtonHeight = int(
+            self._theme.get(Theme.SECTION_TREE, Theme.TREE_ICON_SIZE) * 1.8
+        )
         self._createGui()
 
     def _createGui(self):

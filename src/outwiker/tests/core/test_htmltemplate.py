@@ -31,9 +31,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 </body>
 </html>"""
 
-        templatepath = os.path.join(getTemplatesDir(),
-                                    "__default",
-                                    "__style.html")
+        templatepath = os.path.join(getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
@@ -123,7 +121,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         result_right = "бла-бла-бла Заголовок"
 
         tpl = HtmlTemplate(self.application, style)
-        result = tpl.substitute(content=content, title='Заголовок')
+        result = tpl.substitute(content=content, title="Заголовок")
 
         self.assertEqual(result, result_right)
 
@@ -143,9 +141,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
         self.config.fontName.value = "Arial"
         content = "бла-бла-бла"
 
-        templatepath = os.path.join(getTemplatesDir(),
-                                    "__default",
-                                    "__style.html")
+        templatepath = os.path.join(getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
@@ -154,9 +150,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
     def testChangeFontSize(self):
         self.config.fontSize.value = 20
         content = "бла-бла-бла"
-        templatepath = os.path.join(getTemplatesDir(),
-                                    "__default",
-                                    "__style.html")
+        templatepath = os.path.join(getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
@@ -169,26 +163,24 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 
         content = "бла-бла-бла"
 
-        templatepath = os.path.join(getTemplatesDir(),
-                                    "__default",
-                                    "__style.html")
+        templatepath = os.path.join(getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
         self.assertTrue(HtmlTemplate.minimize_css(style) in result, result)
 
     def testChangeUserStyleRussian(self):
-        style = ("p {background-color: maroon; " +
-                 "/* Цвет фона под текстом параграфа */ color: white; " +
-                 "/* Цвет текста */ }")
+        style = (
+            "p {background-color: maroon; "
+            + "/* Цвет фона под текстом параграфа */ color: white; "
+            + "/* Цвет текста */ }"
+        )
 
         self.config.userStyle.value = style
 
         content = "бла-бла-бла"
 
-        templatepath = os.path.join(getTemplatesDir(),
-                                    "__default",
-                                    "__style.html")
+        templatepath = os.path.join(getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
         result = tpl.substitute(content=content)
 
@@ -217,9 +209,7 @@ class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
 </ul>
 </ul>"""
 
-        templatepath = os.path.join(getTemplatesDir(),
-                                    "__default",
-                                    "__style.html")
+        templatepath = os.path.join(getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
 
         result = tpl.substitute(BrHtmlImprover().run(src))
@@ -235,9 +225,7 @@ Attach:file.odt<br>
 <a href="__attach/file with spaces.pdf">file with spaces.pdf</a>
 <h2>Images</h2>"""
 
-        templatepath = os.path.join(getTemplatesDir(),
-                                    "__default",
-                                    "__style.html")
+        templatepath = os.path.join(getTemplatesDir(), "__default", "__style.html")
         tpl = HtmlTemplate(self.application, readTextFile(templatepath).strip())
 
         result = tpl.substitute(BrHtmlImprover().run(src))

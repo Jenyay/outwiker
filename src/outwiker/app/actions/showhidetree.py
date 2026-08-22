@@ -8,6 +8,7 @@ class ShowHideTreeAction(BaseAction):
     """
     Показать / скрыть панель с деревом заметок
     """
+
     stringId = "ShowHideTree"
 
     def __init__(self, application):

@@ -18,7 +18,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         from diagrammer.gui.insertnodedialog import (
             InsertNodeDialog,
-            InsertNodeController
+            InsertNodeController,
         )
 
         self._dlg = InsertNodeDialog(None)
@@ -229,7 +229,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.label = "Абырвалг"
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг')
+        self.assertEqual(result, "Абырвалг")
 
     def testColor_01(self):
         Tester.dialogTester.appendOk()
@@ -256,7 +256,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.backColor = "#AAAAAA"
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг')
+        self.assertEqual(result, "Абырвалг")
 
     def testColor_04(self):
         Tester.dialogTester.appendOk()
@@ -266,8 +266,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.backColor = "#AAAAAA"
 
         result = self._controller.getResult()
-        self.assertEqual(result,
-                         'Абырвалг [shape = actor, color = "#AAAAAA"];')
+        self.assertEqual(result, 'Абырвалг [shape = actor, color = "#AAAAAA"];')
 
     def testTextColor_01(self):
         Tester.dialogTester.appendOk()
@@ -294,7 +293,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.textColor = "#AAAAAA"
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг')
+        self.assertEqual(result, "Абырвалг")
 
     def testTextColor_04(self):
         Tester.dialogTester.appendOk()
@@ -304,8 +303,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.textColor = "#AAAAAA"
 
         result = self._controller.getResult()
-        self.assertEqual(result,
-                         'Абырвалг [shape = actor, textcolor = "#AAAAAA"];')
+        self.assertEqual(result, 'Абырвалг [shape = actor, textcolor = "#AAAAAA"];')
 
     def testFontSize_01(self):
         Tester.dialogTester.appendOk()
@@ -314,7 +312,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.fontSize = 20
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [fontsize = 20];')
+        self.assertEqual(result, "Абырвалг [fontsize = 20];")
 
     def testFontSize_02(self):
         Tester.dialogTester.appendOk()
@@ -323,7 +321,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.fontSize = 20
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг')
+        self.assertEqual(result, "Абырвалг")
 
     def testFontSize_03(self):
         Tester.dialogTester.appendOk()
@@ -333,7 +331,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.fontSize = 20
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [shape = actor, fontsize = 20];')
+        self.assertEqual(result, "Абырвалг [shape = actor, fontsize = 20];")
 
     def testWidth_01(self):
         Tester.dialogTester.appendOk()
@@ -342,7 +340,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.width = 200
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [width = 200];')
+        self.assertEqual(result, "Абырвалг [width = 200];")
 
     def testWidth_02(self):
         Tester.dialogTester.appendOk()
@@ -351,7 +349,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.width = 200
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг')
+        self.assertEqual(result, "Абырвалг")
 
     def testWidth_03(self):
         Tester.dialogTester.appendOk()
@@ -361,7 +359,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.width = 200
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [shape = actor, width = 200];')
+        self.assertEqual(result, "Абырвалг [shape = actor, width = 200];")
 
     def testHeight_01(self):
         Tester.dialogTester.appendOk()
@@ -370,7 +368,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.height = 200
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [height = 200];')
+        self.assertEqual(result, "Абырвалг [height = 200];")
 
     def testHeight_02(self):
         Tester.dialogTester.appendOk()
@@ -379,7 +377,7 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.height = 200
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг')
+        self.assertEqual(result, "Абырвалг")
 
     def testHeight_03(self):
         Tester.dialogTester.appendOk()
@@ -389,4 +387,4 @@ class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._dlg.height = 200
 
         result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [shape = actor, height = 200];')
+        self.assertEqual(result, "Абырвалг [shape = actor, height = 200];")

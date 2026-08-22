@@ -2,10 +2,10 @@
 
 
 def update_recent(items, new_item, max_count):
-    '''
+    """
     Move or insert a new_item to begin of items.
     Return new list
-    '''
+    """
     result = items[:]
 
     if new_item in result:

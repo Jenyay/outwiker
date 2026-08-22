@@ -10,6 +10,7 @@ class HistoryBackAction(BaseAction):
     """
     Назад
     """
+
     stringId = "HistoryBack"
 
     def __init__(self, application):
@@ -31,6 +32,7 @@ class HistoryForwardAction(BaseAction):
     """
     Вперед
     """
+
     stringId = "HistoryForward"
 
     def __init__(self, application):

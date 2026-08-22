@@ -47,7 +47,7 @@ class PageFactory(metaclass=ABCMeta):
         tags: List[str],
         order_calculator: Callable[
             [BasePage, str, List[str]], int
-        ] = orderCalculatorBottom
+        ] = orderCalculatorBottom,
     ) -> WikiPage:
         """
         Создать страницу. Вызывать этот метод вместо конструктора

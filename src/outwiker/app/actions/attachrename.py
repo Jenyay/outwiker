@@ -8,6 +8,7 @@ class RenameAttachActionForAttachPanel(BaseAction):
     """
     Begin renaming selected attached file
     """
+
     stringId = "AttachRename"
 
     def __init__(self, application):
@@ -23,4 +24,5 @@ class RenameAttachActionForAttachPanel(BaseAction):
 
     def run(self, params):
         self._application.onBeginAttachRenaming(
-            self._application.selectedPage, BeginAttachRenamingParams())
+            self._application.selectedPage, BeginAttachRenamingParams()
+        )

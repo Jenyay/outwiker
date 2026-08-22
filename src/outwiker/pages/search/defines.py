@@ -1,2 +1,1 @@
-PAGE_TYPE_STRING = 'search'
-
+PAGE_TYPE_STRING = "search"

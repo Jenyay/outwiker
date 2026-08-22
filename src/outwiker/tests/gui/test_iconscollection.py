@@ -238,7 +238,7 @@ class IconsCollectionTest(BaseWxTestCase):
         self.assertEqual(len(icons), 1)
         self.assertIn("new.png", icons[0])
         self.assertIsNone(collection.getCover(None))
-        
+
     def testAddIcons_svg(self):
         files = ["new.svg"]
         fullPaths = [os.path.join(self.images_dir, fname) for fname in files]
@@ -251,7 +251,7 @@ class IconsCollectionTest(BaseWxTestCase):
         self.assertEqual(len(icons), 1)
         self.assertIn("new.svg", icons[0])
         self.assertIsNone(collection.getCover(None))
-        
+
     def testAddIcons_png_and_svg(self):
         files = ["new.png", "new.svg"]
         fullPaths = [os.path.join(self.images_dir, fname) for fname in files]

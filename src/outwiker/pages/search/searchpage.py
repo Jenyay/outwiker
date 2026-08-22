@@ -121,6 +121,7 @@ class SearchPageFactory(PageFactory):
     """
     Фабрика для создания страниц поиска и их представлений
     """
+
     @property
     def title(self):
         """

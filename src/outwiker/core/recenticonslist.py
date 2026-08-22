@@ -8,17 +8,18 @@ from outwiker.core.defines import RECENT_ICONS_SECTION, RECENT_ICONS_PARAM_NAME
 
 
 class RecentIconsList(object):
-    '''
+    """
     Class to keep recent used icons in the config file.
-    '''
+    """
+
     def __init__(self, maxcount, config, builtin_icons_path):
         self._maxcount = maxcount
         self._config = config
         self._builtin_icons_path = builtin_icons_path
 
-        self._recentIconsConfig = StringListSection(self._config,
-                                                    RECENT_ICONS_SECTION,
-                                                    RECENT_ICONS_PARAM_NAME)
+        self._recentIconsConfig = StringListSection(
+            self._config, RECENT_ICONS_SECTION, RECENT_ICONS_PARAM_NAME
+        )
         self._recentIcons = []
 
     def getRecentIcons(self):
@@ -36,7 +37,7 @@ class RecentIconsList(object):
                 self._recentIcons.append(icon_path)
 
         if self._maxcount >= 0:
-            self._recentIcons = self._recentIcons[:self._maxcount]
+            self._recentIcons = self._recentIcons[: self._maxcount]
 
         return self.getRecentIcons()
 
@@ -48,7 +49,7 @@ class RecentIconsList(object):
             self._recentIcons.remove(icon_path)
 
         self._recentIcons.insert(0, icon_path)
-        self._recentIcons = self._recentIcons[0: self._maxcount]
+        self._recentIcons = self._recentIcons[0 : self._maxcount]
         self.save()
 
     def save(self):

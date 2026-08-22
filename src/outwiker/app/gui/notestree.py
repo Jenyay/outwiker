@@ -319,9 +319,7 @@ class NotesTree(wx.Window):
         bookmarks = self._application.bookmarks
         for item in items:
             item.clearExtraIcons()
-            if enableBookmarkExtraIcons and bookmarks.pageMarked(
-                item.getPage()
-            ):
+            if enableBookmarkExtraIcons and bookmarks.pageMarked(item.getPage()):
                 item.addExtraIcon(*self._pagesExtraIcons[self._EXTRA_ICON_BOOKMARK])
 
             if enableReadOnlyExtraIcons and item.getPage().readonly:

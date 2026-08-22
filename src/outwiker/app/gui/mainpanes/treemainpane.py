@@ -19,19 +19,30 @@ class TreeMainPane(MainPane):
 
     @property
     def caption(self):
-        return _(u"Notes")
+        return _("Notes")
 
     def _createPane(self):
         pane = self._loadPaneInfo(self.config.pane)
 
         if pane is None:
-            pane = wx.aui.AuiPaneInfo().Name("treePane").Caption(self.caption).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
+            pane = (
+                wx.aui.AuiPaneInfo()
+                .Name("treePane")
+                .Caption(self.caption)
+                .Gripper(False)
+                .CaptionVisible(True)
+                .Layer(1)
+                .Position(0)
+                .CloseButton(True)
+                .MaximizeButton(False)
+                .Left()
+                .Dock()
+            )
 
         pane.Dock()
         pane.CloseButton()
         pane.Caption(self.caption)
 
-        pane.BestSize((self.config.width.value,
-                       self.config.height.value))
+        pane.BestSize((self.config.width.value, self.config.height.value))
 
         return pane

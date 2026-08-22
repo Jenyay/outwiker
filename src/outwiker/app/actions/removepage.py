@@ -8,6 +8,7 @@ class RemovePageAction(BaseAction):
     """
     Удалить текущую страницу
     """
+
     stringId = "RemovePage"
 
     def __init__(self, application):

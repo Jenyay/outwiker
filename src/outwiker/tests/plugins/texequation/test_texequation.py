@@ -14,9 +14,7 @@ class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
-        self.testPage = WikiPageFactory().create(self.wikiroot,
-                                                 "Страница 1",
-                                                 [])
+        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
         self.filesPath = "testdata/samplefiles/"
         dirlist = ["plugins/texequation"]
@@ -37,6 +35,7 @@ class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_inline_01(self):
         from texequation.defines import KATEX_DIR_NAME
+
         eqn = "y = f(x)"
         text = "{{$ {eqn} $}}".format(eqn=eqn)
 
@@ -64,6 +63,7 @@ class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_inline_02(self):
         from texequation.defines import KATEX_DIR_NAME
+
         eqn1 = "y = f1(x)"
         eqn2 = "y = f2(x)"
         text = "{{$ {eqn1} $}} {{$ {eqn2} $}}".format(eqn1=eqn1, eqn2=eqn2)
@@ -96,15 +96,19 @@ class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_inline_03(self):
         eqn = "y = f(x)"
         text = "Это строчная формула. {{$ {eqn} $}} Она не разрывает строку.".format(
-            eqn=eqn)
+            eqn=eqn
+        )
 
         result = self.parser.toHtml(text)
 
-        self.assertIn('Это строчная формула. <span class="texequation-inline" id="texequation-inline-0"></span> Она не разрывает строку.',
-                      result)
+        self.assertIn(
+            'Это строчная формула. <span class="texequation-inline" id="texequation-inline-0"></span> Она не разрывает строку.',
+            result,
+        )
 
     def test_block_01(self):
         from texequation.defines import KATEX_DIR_NAME
+
         eqn = "y = f(x)"
         text = "{{$$ {eqn} $$}}".format(eqn=eqn)
 
@@ -132,11 +136,11 @@ class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_block_02(self):
         from texequation.defines import KATEX_DIR_NAME
+
         eqn1 = "y = f1(x)"
         eqn2 = "y = f2(x)"
 
-        text = "{{$$ {eqn1} $$}} {{$$ {eqn2} $$}}".format(eqn1=eqn1,
-                                                          eqn2=eqn2)
+        text = "{{$$ {eqn1} $$}} {{$$ {eqn2} $$}}".format(eqn1=eqn1, eqn2=eqn2)
 
         path = os.path.join(Thumbnails.getRelativeThumbDir(), KATEX_DIR_NAME)
 
@@ -165,11 +169,11 @@ class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_mixed_01(self):
         from texequation.defines import KATEX_DIR_NAME
+
         eqn1 = "y = f1(x)"
         eqn2 = "y = f2(x)"
 
-        text = "{{$$ {eqn1} $$}} {{$ {eqn2} $}}".format(eqn1=eqn1,
-                                                        eqn2=eqn2)
+        text = "{{$$ {eqn1} $$}} {{$ {eqn2} $}}".format(eqn1=eqn1, eqn2=eqn2)
 
         path = os.path.join(Thumbnails.getRelativeThumbDir(), KATEX_DIR_NAME)
 

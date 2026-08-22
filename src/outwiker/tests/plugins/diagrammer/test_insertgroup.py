@@ -18,7 +18,7 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         from diagrammer.gui.insertgroupdialog import (
             InsertGroupDialog,
-            InsertGroupController
+            InsertGroupController,
         )
 
         self._dlg = InsertGroupDialog(None)
@@ -36,8 +36,8 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
-    '''
+        valid_begin = """group {
+    """
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n}")
@@ -48,8 +48,8 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group Абырвалг {
-    '''
+        valid_begin = """group Абырвалг {
+    """
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n}")
@@ -61,10 +61,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     color = "blue";
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n}")
@@ -76,8 +76,8 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
-    '''
+        valid_begin = """group {
+    """
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n}")
@@ -89,10 +89,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     color = "#AAAAAA";
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n}")
@@ -104,10 +104,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     orientation = landscape;
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -118,10 +118,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     orientation = portrait;
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -132,8 +132,8 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
-    '''
+        valid_begin = """group {
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -146,11 +146,11 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     color = "blue";
     orientation = portrait;
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -160,10 +160,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     label = "Абырвалг";
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -173,8 +173,8 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
-    '''
+        valid_begin = """group {
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -185,10 +185,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     textcolor = "blue";
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n}")
@@ -200,8 +200,8 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
-    '''
+        valid_begin = """group {
+    """
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n}")
@@ -213,10 +213,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     textcolor = "#AAAAAA";
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n}")
@@ -228,10 +228,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     shape = box;
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -242,10 +242,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     shape = line;
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -256,8 +256,8 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
-    '''
+        valid_begin = """group {
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -270,11 +270,11 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     shape = line;
     style = solid;
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -287,8 +287,8 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
-    '''
+        valid_begin = """group {
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -301,10 +301,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     shape = box;
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -317,11 +317,11 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     shape = line;
     style = dotted;
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -334,11 +334,11 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     shape = line;
     style = dashed;
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -351,11 +351,11 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     shape = line;
     style = "1,2,3,4";
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)
 
@@ -368,10 +368,10 @@ class InsertGroupTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''group {
+        valid_begin = """group {
     shape = line;
     style = "1,2,3,4";
 
-    '''
+    """
 
         self.assertEqual(begin, valid_begin)

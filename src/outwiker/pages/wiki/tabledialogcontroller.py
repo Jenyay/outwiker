@@ -16,25 +16,25 @@ class BaseTableDialogController:
         self._suffix = suffix
 
     def _getCells(self):
-        cell = '\n(:cell{}:)'.format(self._suffix)
-        cells = ''.join([cell] * self._dialog.colsCount)
+        cell = "\n(:cell{}:)".format(self._suffix)
+        cells = "".join([cell] * self._dialog.colsCount)
         return cells
 
     def _getHCells(self):
-        cell = '\n(:hcell{}:)'.format(self._suffix)
-        cells = ''.join([cell] * self._dialog.colsCount)
+        cell = "\n(:hcell{}:)".format(self._suffix)
+        cells = "".join([cell] * self._dialog.colsCount)
         return cells
 
     def _getRows(self):
         cells = self._getCells()
-        row = '\n(:row{}:)'.format(self._suffix) + cells
+        row = "\n(:row{}:)".format(self._suffix) + cells
 
         if self._dialog.headerCells:
             hcells = self._getHCells()
-            hrow = '\n(:row{}:)'.format(self._suffix) + hcells
-            body = ''.join([hrow] + [row] *(self._dialog.rowsCount - 1))
+            hrow = "\n(:row{}:)".format(self._suffix) + hcells
+            body = "".join([hrow] + [row] * (self._dialog.rowsCount - 1))
         else:
-            body = ''.join([row] * self._dialog.rowsCount)
+            body = "".join([row] * self._dialog.rowsCount)
 
         return body
 
@@ -62,13 +62,13 @@ class TableDialogController(BaseTableDialogController):
         params = dictToStr(self._getTableParams())
 
         if params:
-            params = u' ' + params
+            params = " " + params
 
-        begin = '(:table{}{}:)'.format(self._suffix, params)
+        begin = "(:table{}{}:)".format(self._suffix, params)
         body = self._getRows()
-        end = '\n(:table{}end:)'.format(self._suffix)
+        end = "\n(:table{}end:)".format(self._suffix)
 
-        result = u''.join([begin, body, end])
+        result = "".join([begin, body, end])
         return result
 
     def _getTableParams(self):
@@ -77,7 +77,7 @@ class TableDialogController(BaseTableDialogController):
         """
         params = {}
         if self._dialog.borderWidth != 0:
-            params['border'] = str(self._dialog.borderWidth)
+            params["border"] = str(self._dialog.borderWidth)
 
         return params
 

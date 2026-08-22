@@ -7,6 +7,7 @@ class AttachSelectAllAction(BaseAction):
     """
     Select all attachments on attachments panel
     """
+
     stringId = "AttachSelectAll"
 
     def __init__(self, application):

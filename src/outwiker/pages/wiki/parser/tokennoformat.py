@@ -5,16 +5,17 @@ from pyparsing import QuotedString
 from .utils import noConvert
 
 
-class NoFormatFactory (object):
+class NoFormatFactory(object):
     """
     Фабрика для создания токена "без форматирования"
     """
+
     @staticmethod
     def make(parser):
         return NoFormatToken(parser).getToken()
 
 
-class NoFormatToken (object):
+class NoFormatToken(object):
     noFormatStart = "[="
     noFormatEnd = "=]"
 
@@ -22,7 +23,9 @@ class NoFormatToken (object):
         self.parser = parser
 
     def getToken(self):
-        return QuotedString(self.noFormatStart,
-                            endQuoteChar=self.noFormatEnd,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(noConvert)("noformat")
+        return QuotedString(
+            self.noFormatStart,
+            endQuoteChar=self.noFormatEnd,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(noConvert)("noformat")

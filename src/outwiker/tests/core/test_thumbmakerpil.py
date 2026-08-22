@@ -10,7 +10,7 @@ from outwiker.tests.utils import getImageSize
 from outwiker.tests.basetestcases import BaseWxTestCase
 
 
-class ThumbmakerPilTest (BaseWxTestCase):
+class ThumbmakerPilTest(BaseWxTestCase):
     """
     Тесты для создателя превьюшек с помощью ThumbmakerPil
     """
@@ -193,7 +193,8 @@ class ThumbmakerPilTest (BaseWxTestCase):
         newheight = 8
 
         self.thumbmaker.thumbByMaxSize(
-            self.fname_in, newsize, self.fname_out, larger=False)
+            self.fname_in, newsize, self.fname_out, larger=False
+        )
         (width, height) = getImageSize(self.fname_out)
 
         self.assertEqual(width, newwidth)
@@ -216,7 +217,8 @@ class ThumbmakerPilTest (BaseWxTestCase):
         newheight = 16
 
         self.thumbmaker.thumbByMaxSize(
-            self.fname_in, newsize, self.fname_out, larger=True)
+            self.fname_in, newsize, self.fname_out, larger=True
+        )
         (width, height) = getImageSize(self.fname_out)
 
         self.assertEqual(width, newwidth)
@@ -239,7 +241,8 @@ class ThumbmakerPilTest (BaseWxTestCase):
         newheight = 8
 
         self.thumbmaker.thumbByMaxSize(
-            self.fname_in, newsize, self.fname_out, larger=False)
+            self.fname_in, newsize, self.fname_out, larger=False
+        )
         (width, height) = getImageSize(self.fname_out)
 
         self.assertEqual(width, newwidth)
@@ -262,7 +265,8 @@ class ThumbmakerPilTest (BaseWxTestCase):
         newheight = 8
 
         self.thumbmaker.thumbByMaxSize(
-            self.fname_in, newsize, self.fname_out, larger=True)
+            self.fname_in, newsize, self.fname_out, larger=True
+        )
         (width, height) = getImageSize(self.fname_out)
 
         self.assertEqual(width, newwidth)
@@ -285,7 +289,8 @@ class ThumbmakerPilTest (BaseWxTestCase):
         newheight = 16
 
         self.thumbmaker.thumbByMaxSize(
-            self.fname_in, newsize, self.fname_out, larger=True)
+            self.fname_in, newsize, self.fname_out, larger=True
+        )
         (width, height) = getImageSize(self.fname_out)
 
         self.assertEqual(width, newwidth)
@@ -308,7 +313,8 @@ class ThumbmakerPilTest (BaseWxTestCase):
         newheight = 16
 
         self.thumbmaker.thumbByMaxSize(
-            self.fname_in, newsize, self.fname_out, larger=False)
+            self.fname_in, newsize, self.fname_out, larger=False
+        )
         (width, height) = getImageSize(self.fname_out)
 
         self.assertEqual(width, newwidth)
@@ -324,9 +330,24 @@ class ThumbmakerPilTest (BaseWxTestCase):
 
         self.thumbmaker = ThumbmakerPil()
 
-        self.assertRaises(ThumbException, self.thumbmaker.thumbByWidth,
-                          self.fname_in, newsize, self.fname_out)
-        self.assertRaises(ThumbException, self.thumbmaker.thumbByHeight,
-                          self.fname_in, newsize, self.fname_out)
-        self.assertRaises(ThumbException, self.thumbmaker.thumbByMaxSize,
-                          self.fname_in, newsize, self.fname_out)
+        self.assertRaises(
+            ThumbException,
+            self.thumbmaker.thumbByWidth,
+            self.fname_in,
+            newsize,
+            self.fname_out,
+        )
+        self.assertRaises(
+            ThumbException,
+            self.thumbmaker.thumbByHeight,
+            self.fname_in,
+            newsize,
+            self.fname_out,
+        )
+        self.assertRaises(
+            ThumbException,
+            self.thumbmaker.thumbByMaxSize,
+            self.fname_in,
+            newsize,
+            self.fname_out,
+        )

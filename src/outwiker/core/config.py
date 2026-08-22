@@ -88,8 +88,8 @@ class Config:
 
     def save(self):
         """
-            Save changes.
-            Returns True if save was successful and False otherwise.
+        Save changes.
+        Returns True if save was successful and False otherwise.
         """
         if self.readonly:
             return False
@@ -101,28 +101,28 @@ class Config:
 
     def remove_section(self, section):
         """
-            Remove section from config file.
-            section - name of the section to remove.
+        Remove section from config file.
+        section - name of the section to remove.
         """
         result = self._config.remove_section(section) and self.save()
         return result
 
     def remove_option(self, section, option):
         """
-            Remove option from config file.
-            section - name of the section that contains the option.
-            option - name of the option to remove.
+        Remove option from config file.
+        section - name of the section that contains the option.
+        option - name of the option to remove.
         """
         result = self._config.remove_option(section, option) and self.save()
         return result
 
     def getbool(self, section, param):
         """
-            Get boolean value from config.
-            section - section name in config file.
-            param - parameter name.
-            Returns string with the read value.
-            Can raise exceptions.
+        Get boolean value from config.
+        section - section name in config file.
+        param - parameter name.
+        Returns string with the read value.
+        Can raise exceptions.
         """
         val = self.get(section, param)
 

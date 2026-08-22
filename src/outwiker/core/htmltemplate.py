@@ -16,6 +16,7 @@ class MyTemplate(Template):
     Regular expression implementation is partially taken from
     http://stackoverflow.com/a/12769116
     """
+
     pattern = r"""
       %(delim)s(?:
       (?P<escaped>^$) |          # Disable $$ replacement
@@ -23,9 +24,7 @@ class MyTemplate(Template):
       {(?P<braced>%(id)s)} |     # delimiter and a braced identifier
       (?P<invalid>^$)            # never matches (the regex is not multilined)
     )
-    """ % dict(
-        delim=re.escape(Template.delimiter), id=Template.idpattern
-    )
+    """ % dict(delim=re.escape(Template.delimiter), id=Template.idpattern)
 
 
 class HtmlTemplate:
@@ -53,7 +52,9 @@ class HtmlTemplate:
         if "title" not in kwargs:
             kwargs["title"] = ""
 
-        custom_styles_str = "\n".join(kwargs.get("custom_styles", []) + [self.userStyle])
+        custom_styles_str = "\n".join(
+            kwargs.get("custom_styles", []) + [self.userStyle]
+        )
         custom_styles_str = HtmlTemplate.minimize_css(custom_styles_str)
 
         default_styles = HtmlTemplate.minimize_css(css.getDefaultStyles())

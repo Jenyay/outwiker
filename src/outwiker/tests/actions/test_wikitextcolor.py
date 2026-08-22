@@ -15,8 +15,7 @@ class WikiTextColorActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.initApplication()
         self.wikiroot = self.createWiki()
         self.actionController = self.application.actionController
-        self.action = self.application.actionController.getAction(
-            TEXT_COLOR_STR_ID)
+        self.action = self.application.actionController.getAction(TEXT_COLOR_STR_ID)
 
         WikiPageFactory().create(self.wikiroot, "wiki", [])
         self.testedPage = self.wikiroot["wiki"]
@@ -41,9 +40,9 @@ class WikiTextColorActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Tester.dialogTester.append(dialog_func)
         self.action.run(None)
 
-        result_right = '''%red%
+        result_right = """%red%
 
-%%'''
+%%"""
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)
@@ -58,9 +57,9 @@ class WikiTextColorActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Tester.dialogTester.append(dialog_func)
         self.action.run(None)
 
-        result_right = '''%#0a141e%
+        result_right = """%#0a141e%
 
-%%'''
+%%"""
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)
@@ -74,12 +73,12 @@ class WikiTextColorActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Tester.dialogTester.append(dialog_func)
 
-        text = 'Блок текста бла-бла-бла'
+        text = "Блок текста бла-бла-бла"
         self.editor.SetText(text)
         self.editor.SetSelection(5, 11)
         self.action.run(None)
 
-        result_right = 'Блок %blue%текста%% бла-бла-бла'
+        result_right = "Блок %blue%текста%% бла-бла-бла"
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)
@@ -93,20 +92,20 @@ class WikiTextColorActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Tester.dialogTester.append(dialog_func)
 
-        text = '''Блок текста
+        text = """Блок текста
 Бла-бла-бла
 
-Еще текст'''
+Еще текст"""
         self.editor.SetText(text)
         self.editor.SetSelection(12, 23)
         self.action.run(None)
 
-        result_right = '''Блок текста
+        result_right = """Блок текста
 %blue%
 Бла-бла-бла
 %%
 
-Еще текст'''
+Еще текст"""
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)
@@ -120,18 +119,18 @@ class WikiTextColorActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Tester.dialogTester.append(dialog_func)
 
-        text = '''Блок текста
+        text = """Блок текста
 Бла-бла-бла
-Еще текст'''
+Еще текст"""
         self.editor.SetText(text)
         self.editor.SetSelection(12, 23)
         self.action.run(None)
 
-        result_right = '''Блок текста
+        result_right = """Блок текста
 %blue%
 Бла-бла-бла
 %%
-Еще текст'''
+Еще текст"""
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)

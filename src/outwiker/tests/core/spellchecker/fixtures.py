@@ -11,12 +11,12 @@ from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
 
 @pytest.fixture
 def spell_factory():
-    dst_path_to_dicts = mkdtemp(prefix='tmp spell test')
+    dst_path_to_dicts = mkdtemp(prefix="tmp spell test")
 
     if not os.path.exists(dst_path_to_dicts):
         os.mkdir(dst_path_to_dicts)
 
-    src_dict_path = os.path.join('src', 'outwiker', 'data', 'spell')
+    src_dict_path = os.path.join("src", "outwiker", "data", "spell")
     _copy_dict_from("ru_RU", src_dict_path, dst_path_to_dicts)
     _copy_dict_from("en_US", src_dict_path, dst_path_to_dicts)
 

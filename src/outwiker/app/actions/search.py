@@ -22,6 +22,7 @@ class SearchAction(BaseSearchAction):
     """
     Начать поиск на странице
     """
+
     stringId = "Search"
 
     @property
@@ -45,6 +46,7 @@ class SearchNextAction(BaseSearchAction):
     """
     Найти следующее вхождение на странице
     """
+
     stringId = "SearchNext"
 
     @property
@@ -67,6 +69,7 @@ class SearchPrevAction(BaseSearchAction):
     """
     Найти предыдущее вхождение на странице
     """
+
     stringId = "SearchPrev"
 
     @property
@@ -89,6 +92,7 @@ class SearchAndReplaceAction(BaseSearchAction):
     """
     Начать поиск и замену на странице
     """
+
     stringId = "SearchReplace"
 
     @property

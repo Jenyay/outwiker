@@ -105,7 +105,9 @@ class SimpleHashCalculator(BaseHashCalculator):
         """
         attach = Attachment(page)
         attachroot = attach.getAttachPath()
-        watch_attach_list = [os.path.join(attachroot, fname) for fname in self.getWatchAttachments(page)]
+        watch_attach_list = [
+            os.path.join(attachroot, fname) for fname in self.getWatchAttachments(page)
+        ]
 
         for fullpath in watch_attach_list:
             if not os.path.exists(fullpath):

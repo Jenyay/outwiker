@@ -19,4 +19,3 @@ def toggleBookmarkForCurrentPage(application: Application) -> Optional[bool]:
     else:
         bookmarks.add(selected_page)
         return True
-

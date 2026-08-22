@@ -6,10 +6,11 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.pages.search.searchpage import GlobalSearch
 
 
-class GlobalSearchAction (BaseAction):
+class GlobalSearchAction(BaseAction):
     """
     Создать страницу с глобальным поиском
     """
+
     stringId = "GlobalSearch"
 
     def __init__(self, application):
@@ -32,5 +33,4 @@ class GlobalSearchAction (BaseAction):
             try:
                 GlobalSearch.create(self._application.wikiroot)
             except IOError:
-                showError(self._application.mainWindow,
-                          _("Can't create page"))
+                showError(self._application.mainWindow, _("Can't create page"))

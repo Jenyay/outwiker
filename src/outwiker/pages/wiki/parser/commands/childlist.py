@@ -51,20 +51,21 @@ class SimpleView:
     Класс для простого представления списка дочерних страниц - каждая страница
     на отдельной строке
     """
+
     @staticmethod
     def make(title: str, children, parser: Parser, params) -> str:
         """
         children - список упорядоченных дочерних страниц
         """
         if not children:
-            return ''
+            return ""
 
-        links = [create_link_to_page('page://{}'.format(page.title),
-                                     page.display_title)
-                for page in children]
-        items = [f'<li class="{css.CSS_CHILD_LIST_ITEM}">{link}</li>'
-                 for link in links]
-        all_items_str = ''.join(items)
+        links = [
+            create_link_to_page("page://{}".format(page.title), page.display_title)
+            for page in children
+        ]
+        items = [f'<li class="{css.CSS_CHILD_LIST_ITEM}">{link}</li>' for link in links]
+        all_items_str = "".join(items)
         result = f'<ul class="{css.CSS_CHILD_LIST}"><span class="{css.CSS_CHILD_LIST_TITLE}">{title}</span><ul class="{css.CSS_CHILD_LIST}">{all_items_str}</ul></ul>'
 
         parser.addStyle(CSS_ID_STYLES, CSS_STYLES)
@@ -125,14 +126,14 @@ class ChildListCommand(Command):
         # Ключ - название сортировки,
         # значение - кортеж из (функция ключа сортировки, reverse)
         sortdict = {
-            "name":             (self._sortByNameKey, False),
-            "descendname":      (self._sortByNameKey, True),
-            "order":            (self._sortByOrder, False),
-            "descendorder":     (self._sortByOrder, True),
-            "edit":             (self._sortByEditDate, False),
-            "descendedit":      (self._sortByEditDate, True),
-            "creation":         (self._sortByCreationDate, False),
-            "descendcreation":  (self._sortByCreationDate, True),
+            "name": (self._sortByNameKey, False),
+            "descendname": (self._sortByNameKey, True),
+            "order": (self._sortByOrder, False),
+            "descendorder": (self._sortByOrder, True),
+            "edit": (self._sortByEditDate, False),
+            "descendedit": (self._sortByEditDate, True),
+            "creation": (self._sortByCreationDate, False),
+            "descendcreation": (self._sortByCreationDate, True),
         }
 
         if sort in sortdict:

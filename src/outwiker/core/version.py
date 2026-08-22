@@ -41,6 +41,7 @@ class StatusSet(object):
     """
     Set of standard statuses
     """
+
     DEV = Status("dev", 0)
     NIGHTLY = Status("nightly", 1)
 
@@ -74,9 +75,7 @@ class StatusSet(object):
 class Version(object):
     def __init__(self, major, *args, **kwargs):
         self.version = [major] + [int(arg) for arg in args]
-        self.status = (kwargs["status"]
-                       if "status" in kwargs
-                       else StatusSet.RELEASE)
+        self.status = kwargs["status"] if "status" in kwargs else StatusSet.RELEASE
 
     def __eq__(self, other):
         if not isinstance(other, Version):
@@ -88,21 +87,24 @@ class Version(object):
 
     def __lt__(self, other):
         assert isinstance(other, Version)
-        return self.version < other.version or (self.version == other.version and self.status < other.status)
+        return self.version < other.version or (
+            self.version == other.version and self.status < other.status
+        )
 
     def __le__(self, other):
         return self.__lt__(other) or self.__eq__(other)
 
     def __gt__(self, other):
         assert isinstance(other, Version)
-        return self.version > other.version or(self.version == other.version and self.status > other.status)
+        return self.version > other.version or (
+            self.version == other.version and self.status > other.status
+        )
 
     def __ge__(self, other):
         return self.__gt__(other) or self.__eq__(other)
 
     def __str__(self):
-        result = reduce(lambda x, y: str(x) + "." + str(y),
-                        self.version, "")
+        result = reduce(lambda x, y: str(x) + "." + str(y), self.version, "")
         result += " " + self.status.name
 
         # Drop the first dot
@@ -151,10 +153,24 @@ class Version(object):
             raise ValueError
 
         major = int(m.group("major"))
-        minors = [int(minor) for minor in
-                  m.group("minor").split(".")
-                  if len(minor.strip()) > 0] if m.group("minor") is not None else []
+        minors = (
+            [
+                int(minor)
+                for minor in m.group("minor").split(".")
+                if len(minor.strip()) > 0
+            ]
+            if m.group("minor") is not None
+            else []
+        )
 
-        status = Version.parseStatus(m.group("status").strip()) if m.group("status") is not None else None
+        status = (
+            Version.parseStatus(m.group("status").strip())
+            if m.group("status") is not None
+            else None
+        )
 
-        return Version(major, *minors, status=status) if status else Version(major, *minors)
+        return (
+            Version(major, *minors, status=status)
+            if status
+            else Version(major, *minors)
+        )

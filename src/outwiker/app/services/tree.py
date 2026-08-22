@@ -82,7 +82,9 @@ def openWikiWithDialog(parent, application: Application, readonly=False):
     return wikiroot
 
 
-def openWiki(path: str, application: Application, readonly: bool = False) -> Optional[WikiDocument]:
+def openWiki(
+    path: str, application: Application, readonly: bool = False
+) -> Optional[WikiDocument]:
     def threadFunc(path, readonly):
         try:
             return NotesTreeLoader().loadNotesTree(path, readonly)
@@ -277,7 +279,8 @@ def movePage(page, newParent):
     except TreeException:
         # Невозможно переместить по другой причине
         showError(
-            wx.GetApp().getMainWindow(), _("Can't move page: {}".format(page.display_title))
+            wx.GetApp().getMainWindow(),
+            _("Can't move page: {}".format(page.display_title)),
         )
 
 
@@ -307,4 +310,6 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
                 application.wikiroot.selectedPage = firstPage
             except (IOError, OSError) as e:
                 # TODO: проверить под Windows
-                showError(wx.GetApp().getMainWindow(), _("Can't create wiki\n") + e.filename)
+                showError(
+                    wx.GetApp().getMainWindow(), _("Can't create wiki\n") + e.filename
+                )

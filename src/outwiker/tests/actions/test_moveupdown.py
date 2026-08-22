@@ -24,21 +24,20 @@ class MovePageUpDownActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testNoneWiki(self):
         self.application.wikiroot = None
 
-        self.application.actionController.getAction(
-            MovePageUpAction.stringId).run(None)
-        self.application.actionController.getAction(
-            MovePageDownAction.stringId).run(None)
+        self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
 
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount, 2)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 2)
 
     def testEmpty(self):
         self.application.wikiroot = self.wikiroot
 
-        self.application.actionController.getAction(
-            MovePageUpAction.stringId).run(None)
-        self.application.actionController.getAction(
-            MovePageDownAction.stringId).run(None)
+        self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
 
     def testMove_01(self):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -48,7 +47,9 @@ class MovePageUpDownActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = None
 
         self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
-        self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
 
     def testMove_02(self):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -57,11 +58,17 @@ class MovePageUpDownActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
-        self.assertTrue(self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order)
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
+        self.assertTrue(
+            self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order
+        )
 
         self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
-        self.assertTrue(self.wikiroot["Страница 1"].order < self.wikiroot["Страница 2"].order)
+        self.assertTrue(
+            self.wikiroot["Страница 1"].order < self.wikiroot["Страница 2"].order
+        )
 
     def testMove_03(self):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -70,13 +77,23 @@ class MovePageUpDownActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
-        self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
-        self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
-        self.assertTrue(self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order)
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
+        self.assertTrue(
+            self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order
+        )
 
         self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
-        self.assertTrue(self.wikiroot["Страница 1"].order < self.wikiroot["Страница 2"].order)
+        self.assertTrue(
+            self.wikiroot["Страница 1"].order < self.wikiroot["Страница 2"].order
+        )
 
     def testMove_04(self):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -85,16 +102,26 @@ class MovePageUpDownActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
-        self.assertTrue(self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order)
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
+        self.assertTrue(
+            self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order
+        )
 
         self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
         self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
         self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
-        self.assertTrue(self.wikiroot["Страница 1"].order < self.wikiroot["Страница 2"].order)
+        self.assertTrue(
+            self.wikiroot["Страница 1"].order < self.wikiroot["Страница 2"].order
+        )
 
-        self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
-        self.assertTrue(self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order)
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
+        self.assertTrue(
+            self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order
+        )
 
     def testMoveReadonly_01(self):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -105,13 +132,11 @@ class MovePageUpDownActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.wikiroot["Страница 1"].readonly = True
 
         self.application.mainWindow.toaster.counter.clear()
-        self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.application.actionController.getAction(MovePageDownAction.stringId).run(
+            None
+        )
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
         self.application.mainWindow.toaster.counter.clear()
         self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)

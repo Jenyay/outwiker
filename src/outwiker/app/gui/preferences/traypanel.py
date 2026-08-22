@@ -10,8 +10,12 @@ from outwiker.gui.preferences.prefpanel import BasePrefPanel
 class TrayPanel(BasePrefPanel):
     def __init__(self, parent, application):
         super().__init__(parent)
-        self._minimize_button_actions = [_('Minimize window'), _('Hide to tray') ]
-        self._close_button_actions = [_('Close window'), _('Minimize window'), _('Hide to tray') ]
+        self._minimize_button_actions = [_("Minimize window"), _("Hide to tray")]
+        self._close_button_actions = [
+            _("Close window"),
+            _("Minimize window"),
+            _("Hide to tray"),
+        ]
 
         self.trayConfig = TrayConfig(application.config)
         self._createTrayGui()
@@ -35,18 +39,26 @@ class TrayPanel(BasePrefPanel):
         self._buttons_sizer.AddGrowableCol(1)
 
         # Minimize button actions
-        minimizeButtonLabel = wx.StaticText(self, label=_('Minimize button'))
+        minimizeButtonLabel = wx.StaticText(self, label=_("Minimize button"))
         self.minimizeComboBox = wx.ComboBox(self, style=wx.CB_READONLY)
 
-        self._buttons_sizer.Add(minimizeButtonLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
-        self._buttons_sizer.Add(self.minimizeComboBox, flag=wx.ALIGN_RIGHT | wx.ALL, border=2)
+        self._buttons_sizer.Add(
+            minimizeButtonLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2
+        )
+        self._buttons_sizer.Add(
+            self.minimizeComboBox, flag=wx.ALIGN_RIGHT | wx.ALL, border=2
+        )
 
         # Close button actions
-        closeButtonLabel = wx.StaticText(self, label=_('Close button'))
+        closeButtonLabel = wx.StaticText(self, label=_("Close button"))
         self.closeComboBox = wx.ComboBox(self, style=wx.CB_READONLY)
 
-        self._buttons_sizer.Add(closeButtonLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
-        self._buttons_sizer.Add(self.closeComboBox, flag=wx.ALIGN_RIGHT | wx.ALL, border=2)
+        self._buttons_sizer.Add(
+            closeButtonLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2
+        )
+        self._buttons_sizer.Add(
+            self.closeComboBox, flag=wx.ALIGN_RIGHT | wx.ALL, border=2
+        )
 
     def _createTrayGui(self):
         """
@@ -54,15 +66,9 @@ class TrayPanel(BasePrefPanel):
         """
         self._createMainWindowButtonsGui()
 
-        self.startIconizedCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _("Start minimized to tray"))
+        self.startIconizedCheckBox = wx.CheckBox(self, -1, _("Start minimized to tray"))
 
-        self.alwaysInTrayCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _("Always show tray icon"))
+        self.alwaysInTrayCheckBox = wx.CheckBox(self, -1, _("Always show tray icon"))
 
     def _layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)
@@ -80,28 +86,26 @@ class TrayPanel(BasePrefPanel):
         """
         # Action for the minimize button
         self.minimizeButtonActions = configelements.ComboBoxListElement(
-                self.trayConfig.minimizeToTray,
-                self.minimizeComboBox,
-                self._minimize_button_actions
-                )
+            self.trayConfig.minimizeToTray,
+            self.minimizeComboBox,
+            self._minimize_button_actions,
+        )
 
         # Action for the close button
         self.closeButtonActions = configelements.ComboBoxListElement(
-                self.trayConfig.closeButtonAction,
-                self.closeComboBox,
-                self._close_button_actions
-                )
+            self.trayConfig.closeButtonAction,
+            self.closeComboBox,
+            self._close_button_actions,
+        )
 
         # Всегда показывать иконку в трее
         self.alwaysInTray = configelements.BooleanElement(
-            self.trayConfig.alwaysShowTrayIcon,
-            self.alwaysInTrayCheckBox
+            self.trayConfig.alwaysShowTrayIcon, self.alwaysInTrayCheckBox
         )
 
         # Запускаться свернутым?
         self.startIconized = configelements.BooleanElement(
-            self.trayConfig.startIconized,
-            self.startIconizedCheckBox
+            self.trayConfig.startIconized, self.startIconizedCheckBox
         )
 
     def Save(self):

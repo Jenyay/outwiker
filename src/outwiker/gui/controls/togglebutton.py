@@ -5,20 +5,22 @@ from wx.lib.buttons import ThemedGenBitmapTextToggleButton
 
 
 class ToggleButton(ThemedGenBitmapTextToggleButton):
-    def __init__(self,
-                 parent,
-                 id=-1,
-                 bitmap=None,
-                 label='',
-                 pos=wx.DefaultPosition,
-                 size=wx.DefaultSize,
-                 style=0,
-                 validator=wx.DefaultValidator,
-                 name="togglebutton",
-                 align=wx.ALIGN_LEFT):
-        super(ToggleButton, self).__init__(parent, id, bitmap,
-                                           label, pos, size,
-                                           style, validator, name)
+    def __init__(
+        self,
+        parent,
+        id=-1,
+        bitmap=None,
+        label="",
+        pos=wx.DefaultPosition,
+        size=wx.DefaultSize,
+        style=0,
+        validator=wx.DefaultValidator,
+        name="togglebutton",
+        align=wx.ALIGN_LEFT,
+    ):
+        super(ToggleButton, self).__init__(
+            parent, id, bitmap, label, pos, size, style, validator, name
+        )
         self.colorNormal = wx.Colour(255, 255, 255)
         self.colorToggled = wx.Colour(144, 195, 212)
         self.colorShadow = wx.Colour(200, 200, 200)
@@ -38,8 +40,7 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
 
     def _updateMinSize(self):
         contentWidth = self.GetContentWidth()
-        self.SetMinSize((contentWidth + self.padding * 2 + self.toggleShiftX,
-                         -1))
+        self.SetMinSize((contentWidth + self.padding * 2 + self.toggleShiftX, -1))
 
     def GetColorNormal(self):
         return self.colorNormal
@@ -157,11 +158,13 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
             shiftX = 0
             shiftY = 0
 
-        dc.DrawRoundedRectangle(bw+2 + shiftX,
-                                bw+2 + shiftY,
-                                w-bw*2-5 - self.toggleShiftX,
-                                h-bw*2-5 - self.toggleShiftY,
-                                self.roundRadius)
+        dc.DrawRoundedRectangle(
+            bw + 2 + shiftX,
+            bw + 2 + shiftY,
+            w - bw * 2 - 5 - self.toggleShiftX,
+            h - bw * 2 - 5 - self.toggleShiftY,
+            self.roundRadius,
+        )
 
         dc.SetLogicalFunction(wx.COPY)
 
@@ -187,9 +190,13 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
 
         dc.SetBrush(brushShadow)
         dc.SetPen(penShadow)
-        dc.DrawRoundedRectangle(self.toggleShiftX, self.toggleShiftY,
-                                rect_width, rect_height,
-                                self.roundRadius)
+        dc.DrawRoundedRectangle(
+            self.toggleShiftX,
+            self.toggleShiftY,
+            rect_width,
+            rect_height,
+            self.roundRadius,
+        )
 
         # Draw button
         color = self.colorToggled if self.GetToggle() else self.colorNormal
@@ -199,9 +206,9 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
 
         dc.SetBrush(brush)
         dc.SetPen(pen)
-        dc.DrawRoundedRectangle(rect_x0, rect_y0,
-                                rect_width, rect_height,
-                                self.roundRadius)
+        dc.DrawRoundedRectangle(
+            rect_x0, rect_y0, rect_width, rect_height, self.roundRadius
+        )
 
         dc.SetBrush(wx.NullBrush)
 
@@ -277,7 +284,7 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
             # draw bitmap if available
             dc.DrawBitmap(bmp, pos_x, (height - bh) // 2 + dy, hasMask)
 
-        dc.DrawText(label, pos_x + bw + self.marginImage, (height-th)//2+dy)
+        dc.DrawText(label, pos_x + bw + self.marginImage, (height - th) // 2 + dy)
 
 
 class MyTestFrame(wx.Frame):
@@ -288,20 +295,24 @@ class MyTestFrame(wx.Frame):
         # Build a bitmap button and a normal one
         bmp = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION, wx.ART_OTHER, (16, 16))
 
-        btn = ToggleButton(panel, -1, label=u'adsfasdf', pos=(10, 10))
+        btn = ToggleButton(panel, -1, label="adsfasdf", pos=(10, 10))
         btn.SetSize((150, 75))
 
-        btn2 = ToggleButton(panel, -1, bmp, label=u'adsfasdf', pos=(10, 110), align=wx.ALIGN_CENTER)
+        btn2 = ToggleButton(
+            panel, -1, bmp, label="adsfasdf", pos=(10, 110), align=wx.ALIGN_CENTER
+        )
         btn2.SetSize((150, 75))
 
-        btn3 = ToggleButton(panel, -1, bmp, label=u'adsfasdfadsf', pos=(10, 210), align=wx.ALIGN_CENTER)
+        btn3 = ToggleButton(
+            panel, -1, bmp, label="adsfasdfadsf", pos=(10, 210), align=wx.ALIGN_CENTER
+        )
         btn3.SetSize(btn3.GetMinSize())
         btn3.SetRoundRadius(0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = wx.App()
-    frame = MyTestFrame(None, 'ToggleButton Test')
+    frame = MyTestFrame(None, "ToggleButton Test")
     frame.Show()
     frame.SetSize((500, 600))
     app.MainLoop()

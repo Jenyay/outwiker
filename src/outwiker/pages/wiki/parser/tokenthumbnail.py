@@ -17,6 +17,7 @@ class ThumbnailFactory:
     """
     Класс для создания токена ThumbnailToken
     """
+
     @staticmethod
     def make(parser):
         return ThumbnailToken(parser).getToken()
@@ -34,7 +35,8 @@ class ThumbnailToken:
         self._html_formatter = HtmlFormatter([CSS_WIKI])
 
     def getToken(self):
-        result = Regex(r"""%\s*?
+        result = Regex(
+            r"""%\s*?
                         (?:
                             (?:thumb\s+)?
                             (?:width\s*?=\s*?(?P<width>\d+)
@@ -45,7 +47,8 @@ class ThumbnailToken:
                         )\s*?
                         %\s*?
                         Attach:(?P<quote>["']?)(?P<fname>.*?\.(?:jpe?g|bmp|gif|tiff?|png|webp))(?P=quote)\s*?%%""",
-                       re.IGNORECASE | re.VERBOSE)
+            re.IGNORECASE | re.VERBOSE,
+        )
         result = result.setParseAction(self.__convertThumb)("thumbnail")
         return result
 
@@ -73,7 +76,7 @@ class ThumbnailToken:
         try:
             thumb = func(self.parser.page, fname, size)
         except (ThumbException, IOError):
-            text = _("Can't create thumbnail for <b>\"{}\"</b>").format(fname)
+            text = _('Can\'t create thumbnail for <b>"{}"</b>').format(fname)
             return self._html_formatter.error(text)
 
         thumb_url = thumb.replace("\\", "/")

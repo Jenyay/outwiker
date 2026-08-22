@@ -9,8 +9,9 @@ def parseTagsList(tagsString: str) -> List[str]:
     """
     Convert a comma-separated tag string to a list
     """
-    tags = [tag.strip() for tag in tagsString.lower().split(",")
-            if len(tag.strip()) > 0]
+    tags = [
+        tag.strip() for tag in tagsString.lower().split(",") if len(tag.strip()) > 0
+    ]
 
     return tags
 

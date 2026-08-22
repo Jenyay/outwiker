@@ -19,12 +19,12 @@ class Plugin(metaclass=ABCMeta):
     def __init__(self, application):
         self._application = application
 
-        self._pluginPath = os.path.dirname(os.path.abspath(
-            sys.modules[self.__class__.__module__].__file__)
+        self._pluginPath = os.path.dirname(
+            os.path.abspath(sys.modules[self.__class__.__module__].__file__)
         )
 
         # Load plugin's information
-        self._version = '0.0'
+        self._version = "0.0"
 
         self.logger = logging.getLogger(self.name)
         self.gettext = self._init_i18n()
@@ -44,7 +44,7 @@ class Plugin(metaclass=ABCMeta):
         if lang is not None:
             return lang.gettext
         else:
-            self.logger.debug('Localization not found.')
+            self.logger.debug("Localization not found.")
             return lambda text: text
 
     @property
@@ -61,9 +61,9 @@ class Plugin(metaclass=ABCMeta):
 
     @property
     def pluginPath(self):
-        '''
+        """
         Return path to plugin's directory.
-        '''
+        """
         return self._pluginPath
 
     ###################################

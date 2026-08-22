@@ -28,7 +28,7 @@ class MoveTest(unittest.TestCase):
         self._application = Application()
 
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wiki = createNotesTree(self.path)
 
@@ -95,66 +95,69 @@ class MoveTest(unittest.TestCase):
         self.assertEqual(self.wiki["Страница 1"], None)
         self.assertTrue(
             os.path.exists(
-                os.path.join(self.wiki["Страница 2/Страница 3"].path,
-                             "Страница 1")
+                os.path.join(self.wiki["Страница 2/Страница 3"].path, "Страница 1")
             )
         )
 
         self.assertEqual(len(self.wiki["Страница 2/Страница 3"]), 2)
         self.assertEqual(len(self.wiki), 3)
-        self.assertEqual(self.wiki["Страница 2/Страница 3/Страница 1"].title,
-                         "Страница 1")
         self.assertEqual(
-            self.wiki["Страница 2/Страница 3/Страница 1/Страница 5"].title,
-            "Страница 5"
+            self.wiki["Страница 2/Страница 3/Страница 1"].title, "Страница 1"
+        )
+        self.assertEqual(
+            self.wiki["Страница 2/Страница 3/Страница 1/Страница 5"].title, "Страница 5"
         )
         self.assertEqual(
             self.wiki["Страница 2/Страница 3/Страница 1"].subpath,
-            "Страница 2/Страница 3/Страница 1"
+            "Страница 2/Страница 3/Страница 1",
         )
 
         self.assertEqual(
             self.wiki["Страница 2/Страница 3/Страница 1/Страница 5"].subpath,
-            "Страница 2/Страница 3/Страница 1/Страница 5")
+            "Страница 2/Страница 3/Страница 1/Страница 5",
+        )
 
     def test3(self):
         self.assertRaises(
             DuplicateTitle,
             self.wiki["Страница 2/Страница 3/Страница 4"].moveTo,
-            self.wiki
+            self.wiki,
         )
 
     def test4(self):
         self.wiki["страница 4"].moveTo(self.wiki["страница 444"])
 
         self.assertEqual(self.wiki["страница 4"], None)
-        self.assertTrue(os.path.exists(
-            os.path.join(self.wiki["страница 444"].path,
-                         "страница 4")))
+        self.assertTrue(
+            os.path.exists(os.path.join(self.wiki["страница 444"].path, "страница 4"))
+        )
         self.assertEqual(len(self.wiki["страница 444"]), 1)
-        self.assertEqual(self.wiki["страница 444/страница 4"].title,
-                         "страница 4")
+        self.assertEqual(self.wiki["страница 444/страница 4"].title, "страница 4")
 
     def testMoveToSelf(self):
-        self.assertRaises(TreeException,
-                          self.wiki["Страница 1"].moveTo,
-                          self.wiki["Страница 1"])
+        self.assertRaises(
+            TreeException, self.wiki["Страница 1"].moveTo, self.wiki["Страница 1"]
+        )
 
         self.assertNotEqual(self.wiki["Страница 1"], None)
         self.assertEqual(len(self.wiki), 4)
 
     def testMoveToChild1(self):
-        self.assertRaises(TreeException,
-                          self.wiki["Страница 2"].moveTo,
-                          self.wiki["Страница 2/Страница 3"])
+        self.assertRaises(
+            TreeException,
+            self.wiki["Страница 2"].moveTo,
+            self.wiki["Страница 2/Страница 3"],
+        )
 
         self.assertNotEqual(self.wiki["Страница 2"], None)
         self.assertEqual(len(self.wiki), 4)
 
     def testMoveToChild2(self):
-        self.assertRaises(TreeException,
-                          self.wiki["Страница 2"].moveTo,
-                          self.wiki["Страница 2/Страница 3/Страница 4"])
+        self.assertRaises(
+            TreeException,
+            self.wiki["Страница 2"].moveTo,
+            self.wiki["Страница 2/Страница 3/Страница 4"],
+        )
 
         self.assertNotEqual(self.wiki["Страница 2"], None)
         self.assertEqual(len(self.wiki), 4)
@@ -176,17 +179,18 @@ class MoveTest(unittest.TestCase):
                 page.moveTo(self.wiki["Страница 2/Страница 3"])
             except TreeException:
                 # Если не удалось переместить страницу
-                self.assertEqual(
-                    self.wiki["Страница 2/Страница 3/Страница 1"],
-                    None
-                )
+                self.assertEqual(self.wiki["Страница 2/Страница 3/Страница 1"], None)
                 self.assertNotEqual(self.wiki["Страница 1"], None)
                 self.assertEqual(len(self.wiki["Страница 2/Страница 3"]), 1)
 
                 self.assertTrue(os.path.exists(page.path))
-                self.assertFalse(os.path.exists(
-                    os.path.join(self.wiki["Страница 2/Страница 3"].path,
-                                 "Страница 1")))
+                self.assertFalse(
+                    os.path.exists(
+                        os.path.join(
+                            self.wiki["Страница 2/Страница 3"].path, "Страница 1"
+                        )
+                    )
+                )
 
                 self.assertTrue(os.path.exists(attach.getFullPath(attachname)))
             else:
@@ -196,24 +200,25 @@ class MoveTest(unittest.TestCase):
                 self.assertTrue(
                     os.path.exists(
                         os.path.join(
-                            self.wiki["Страница 2/Страница 3"].path,
-                            "Страница 1")
+                            self.wiki["Страница 2/Страница 3"].path, "Страница 1"
+                        )
                     )
                 )
 
                 self.assertEqual(len(self.wiki["Страница 2/Страница 3"]), 2)
                 self.assertEqual(len(self.wiki), 3)
                 self.assertEqual(
-                    self.wiki["Страница 2/Страница 3/Страница 1"].title,
-                    "Страница 1"
+                    self.wiki["Страница 2/Страница 3/Страница 1"].title, "Страница 1"
                 )
                 self.assertEqual(
                     self.wiki["Страница 2/Страница 3/Страница 1/Страница 5"].title,
-                    "Страница 5"
+                    "Страница 5",
                 )
                 self.assertEqual(
                     self.wiki["Страница 2/Страница 3/Страница 1"].subpath,
-                    "Страница 2/Страница 3/Страница 1")
+                    "Страница 2/Страница 3/Страница 1",
+                )
                 self.assertEqual(
                     self.wiki["Страница 2/Страница 3/Страница 1/Страница 5"].subpath,
-                    "Страница 2/Страница 3/Страница 1/Страница 5")
+                    "Страница 2/Страница 3/Страница 1/Страница 5",
+                )

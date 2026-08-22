@@ -8,6 +8,7 @@ class PrintAction(BaseAction):
     """
     Закрытие дерева заметок
     """
+
     stringId = "Print"
 
     def __init__(self, application):

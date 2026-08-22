@@ -11,6 +11,7 @@ class TestedDialog(wx.Dialog):
     поскольку ему можно заранее установить результат
     будущего вызова метода ShowModal
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -43,46 +44,53 @@ class TestedFileDialog(TestedStandardDialogMixin, wx.FileDialog):
     """
     Диалог для выбора файлов, который можно тестировать
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def GetPath(self):
-        return (self._testedValue if self._testedValue is not None
-                else super().GetPath())
+        return self._testedValue if self._testedValue is not None else super().GetPath()
 
 
 class TestedColourDialog(TestedStandardDialogMixin, wx.ColourDialog):
     """
     Диалог для выбора цвета, который можно тестировать
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def GetColourData(self) -> wx.ColourData:
-        return (self._testedValue if self._testedValue is not None
-                else super().GetColourData())
+        return (
+            self._testedValue
+            if self._testedValue is not None
+            else super().GetColourData()
+        )
 
 
-class TestedSingleChoiceDialog(TestedStandardDialogMixin,
-                               wx.SingleChoiceDialog):
+class TestedSingleChoiceDialog(TestedStandardDialogMixin, wx.SingleChoiceDialog):
     """
     Диалог для выбора строки из списка, который можно тестировать
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def GetStringSelection(self) -> str:
-        return (self._testedValue if self._testedValue is not None
-                else super().GetStringSelection())
+        return (
+            self._testedValue
+            if self._testedValue is not None
+            else super().GetStringSelection()
+        )
 
 
 class TestedDirDialog(TestedStandardDialogMixin, wx.DirDialog):
     """
-    Testable select directory dialog 
+    Testable select directory dialog
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def GetPath(self):
-        return (self._testedValue if self._testedValue is not None
-                else super().GetPath())
+        return self._testedValue if self._testedValue is not None else super().GetPath()

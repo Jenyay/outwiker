@@ -12,6 +12,7 @@ class AttachExecuteFilesAction(BaseAction):
     """
     Execute selected attachment action
     """
+
     stringId = "AttachExecuteFiles"
 
     def __init__(self, application):
@@ -31,13 +32,16 @@ class AttachExecuteFilesAction(BaseAction):
             files = attachPanel.getSelectedFiles()
 
             if len(files) == 0:
-                showError(self._application.mainWindow,
-                          _("You did not select an attachment to execute"))
+                showError(
+                    self._application.mainWindow,
+                    _("You did not select an attachment to execute"),
+                )
                 return
 
             for file in files:
-                fullpath = os.path.join(Attachment(
-                    self._application.selectedPage).getAttachPath(), file)
+                fullpath = os.path.join(
+                    Attachment(self._application.selectedPage).getAttachPath(), file
+                )
                 try:
                     getOS().startFile(fullpath)
                 except OSError:

@@ -10,26 +10,22 @@ class DictToStrTest(unittest.TestCase):
         params = {}
         result = dictToStr(params)
 
-        validResult = ''
+        validResult = ""
 
         self.assertEqual(result, validResult)
 
-
     def testDictToStr_02(self):
-        params = {
-            'param1': 10
-        }
+        params = {"param1": 10}
         result = dictToStr(params)
 
         validResult = 'param1="10"'
 
         self.assertEqual(result, validResult)
 
-
     def testDictToStr_03(self):
         params = {
-            'param1': 10,
-            'Параметр2': 'абырвалг',
+            "param1": 10,
+            "Параметр2": "абырвалг",
         }
         result = dictToStr(params)
 
@@ -37,11 +33,10 @@ class DictToStrTest(unittest.TestCase):
 
         self.assertEqual(result, validResult)
 
-
     def testDictToStr_04(self):
         params = {
-            'param1': 10,
-            'Параметр2': "абыр'валг",
+            "param1": 10,
+            "Параметр2": "абыр'валг",
         }
         result = dictToStr(params)
 
@@ -49,11 +44,10 @@ class DictToStrTest(unittest.TestCase):
 
         self.assertEqual(result, validResult)
 
-
     def testDictToStr_05(self):
         params = {
-            'param1': 10,
-            'Параметр2': 'абыр"валг',
+            "param1": 10,
+            "Параметр2": 'абыр"валг',
         }
         result = dictToStr(params)
 
@@ -61,11 +55,10 @@ class DictToStrTest(unittest.TestCase):
 
         self.assertEqual(result, validResult)
 
-
     def testDictToStr_06(self):
         params = {
-            'param1': 10,
-            'Параметр2': 'аб\'ыр"валг',
+            "param1": 10,
+            "Параметр2": "аб'ыр\"валг",
         }
         result = dictToStr(params)
 
@@ -73,11 +66,10 @@ class DictToStrTest(unittest.TestCase):
 
         self.assertEqual(result, validResult, result)
 
-
     def testDictToStr_07(self):
         params = {
-            'param1': 10,
-            'Параметр2': '',
+            "param1": 10,
+            "Параметр2": "",
         }
         result = dictToStr(params)
 

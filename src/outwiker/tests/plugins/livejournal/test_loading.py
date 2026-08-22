@@ -6,7 +6,6 @@ from outwiker.tests.basetestcases import PluginLoadingMixin
 
 
 class LivejournalLoadingTest(PluginLoadingMixin, unittest.TestCase):
-
     def getPluginDir(self):
         """
         Должен возвращать путь до папки с тестируемым плагином

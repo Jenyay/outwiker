@@ -41,6 +41,7 @@ class SimpleView:
     """
     Класс для простого представления списка прикрепленных файлов - каждая страница на отдельной строке
     """
+
     def __init__(self):
         self._list_template = '<ul class="ow-attach-list">{title}<ul class="ow-attach-list">{content}</ul></ul>'
         self._item_template = '<li class="{css_class}"><a class="ow-link-attach {css_class}" href="{link}">{title}</a></li>'
@@ -52,24 +53,28 @@ class SimpleView:
         """
         content_items = [self._get_item_dir(subdir, name, name) for name in dirnames]
         content_items += [self._get_item_file(subdir, name, name) for name in fnames]
-        content = ''.join(content_items)
+        content = "".join(content_items)
         title = self._get_title(subdir)
 
         parser.addStyle(CSS_ID_STYLES, CSS_STYLES)
         return self._list_template.format(content=content, title=title)
 
     def _get_title(self, subdir: str) -> str:
-        title = subdir if subdir else _('Attachments')
-        result = self._get_item_dir(subdir, '', title)
+        title = subdir if subdir else _("Attachments")
+        result = self._get_item_dir(subdir, "", title)
         return result
 
     def _get_item_dir(self, subdir: str, dirname: str, title: str) -> str:
         link = self._get_attach_path(subdir, dirname)
-        return self._item_template.format(link=link, title=title, css_class=css.CSS_ATTACH_DIR)
+        return self._item_template.format(
+            link=link, title=title, css_class=css.CSS_ATTACH_DIR
+        )
 
     def _get_item_file(self, subdir: str, name: str, title: str) -> str:
         link = self._get_attach_path(subdir, name)
-        return self._item_template.format(link=link, title=title, css_class=css.CSS_ATTACH_FILE)
+        return self._item_template.format(
+            link=link, title=title, css_class=css.CSS_ATTACH_FILE
+        )
 
     def _get_attach_path(self, subdir: str, fname: str) -> str:
         return os.path.join(PAGE_ATTACH_DIR, subdir, fname).replace("\\", "/")
@@ -88,10 +93,11 @@ class AttachListCommand(Command):
         sort=size - сортировка по размеру
         sort=descendsize - сортировка по размеру в обратном направлении
     """
+
     def __init__(self, parser):
         super().__init__(parser)
-        self.PARAM_SORT = 'sort'
-        self.PARAM_SUBDIR = 'subdir'
+        self.PARAM_SORT = "sort"
+        self.PARAM_SUBDIR = "subdir"
 
     @property
     def name(self):
@@ -103,9 +109,9 @@ class AttachListCommand(Command):
 
         # For empty attach list
         if not attach.getAttachFull():
-            return ''
+            return ""
 
-        subdir = params_dict.get(self.PARAM_SUBDIR, '')
+        subdir = params_dict.get(self.PARAM_SUBDIR, "")
 
         attachlist = attach.getAttachRelative(subdir)
         attachpath = Path(attach.getAttachPath())
@@ -118,12 +124,23 @@ class AttachListCommand(Command):
         view = SimpleView()
         return view.make(self.parser, dirs, files, subdir)
 
-    def separateDirFiles(self, attachlist: List[str], attachpath: Path) -> Tuple[List[str], List[str]]:
+    def separateDirFiles(
+        self, attachlist: List[str], attachpath: Path
+    ) -> Tuple[List[str], List[str]]:
         """
         Разделить файлы и директории, заодно отбросить директории, начинающиеся с "__"
         """
-        dirs = list(filter(lambda name: Path(attachpath, name).is_dir() and not name.startswith('__'), attachlist))
-        files = list(filter(lambda name: not Path(attachpath, name).is_dir(), attachlist))
+        dirs = list(
+            filter(
+                lambda name: (
+                    Path(attachpath, name).is_dir() and not name.startswith("__")
+                ),
+                attachlist,
+            )
+        )
+        files = list(
+            filter(lambda name: not Path(attachpath, name).is_dir(), attachlist)
+        )
 
         return (dirs, files)
 

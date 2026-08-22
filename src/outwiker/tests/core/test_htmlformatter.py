@@ -5,7 +5,7 @@ from outwiker.core.cssclasses import CSS_ERROR, CSS_IMAGE
 
 
 def test_image_no_common_classes():
-    content = 'image.png'
+    content = "image.png"
     formatter = HtmlFormatter()
 
     expected = f'<img class="{CSS_IMAGE}" src="{content}" />'
@@ -13,8 +13,8 @@ def test_image_no_common_classes():
 
 
 def test_image_with_common_classes():
-    content = 'image.png'
-    classes = ['class-1', 'class-2']
+    content = "image.png"
+    classes = ["class-1", "class-2"]
     formatter = HtmlFormatter(classes)
 
     expected = f'<img class="class-1 class-2 {CSS_IMAGE}" src="{content}" />'
@@ -22,7 +22,7 @@ def test_image_with_common_classes():
 
 
 def test_error_no_common_classes():
-    content = 'bla-bla-bla'
+    content = "bla-bla-bla"
     formatter = HtmlFormatter()
 
     expected = f'<div class="{CSS_ERROR}">{content}</div>'
@@ -30,8 +30,8 @@ def test_error_no_common_classes():
 
 
 def test_error_with_common_classes():
-    content = 'bla-bla-bla'
-    classes = ['class-1', 'class-2']
+    content = "bla-bla-bla"
+    classes = ["class-1", "class-2"]
     formatter = HtmlFormatter(classes)
 
     expected = f'<div class="class-1 class-2 {CSS_ERROR}">{content}</div>'
@@ -39,7 +39,7 @@ def test_error_with_common_classes():
 
 
 def test_block_no_classes():
-    content = 'bla-bla-bla'
+    content = "bla-bla-bla"
     formatter = HtmlFormatter()
 
     expected = f'<div class="">{content}</div>'
@@ -47,8 +47,8 @@ def test_block_no_classes():
 
 
 def test_block_with_common_classes():
-    content = 'bla-bla-bla'
-    common_classes = ['class-1', 'class-2']
+    content = "bla-bla-bla"
+    common_classes = ["class-1", "class-2"]
     formatter = HtmlFormatter(common_classes)
 
     expected = f'<div class="class-1 class-2">{content}</div>'
@@ -56,9 +56,9 @@ def test_block_with_common_classes():
 
 
 def test_block_with_common_classes_with_other_classes():
-    content = 'bla-bla-bla'
-    common_classes = ['class-1', 'class-2']
-    other_classes = ['class-3', 'class-4']
+    content = "bla-bla-bla"
+    common_classes = ["class-1", "class-2"]
+    other_classes = ["class-3", "class-4"]
     formatter = HtmlFormatter(common_classes)
 
     expected = f'<div class="class-1 class-2 class-3 class-4">{content}</div>'

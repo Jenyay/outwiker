@@ -3,6 +3,7 @@
 """
 Classes for global wiki search
 """
+
 import os.path
 
 from outwiker.core.attachment import Attachment
@@ -12,6 +13,7 @@ class AllTagsSearchStrategy(object):
     """
     Tag search strategy when all tags must be found
     """
+
     @staticmethod
     def testTags(tags, page):
         result = True
@@ -30,6 +32,7 @@ class AnyTagSearchStrategy(object):
     """
     Tag search strategy when it's enough to find one tag
     """
+
     @staticmethod
     def testTags(tags, page):
         if len(tags) == 0:
@@ -65,8 +68,9 @@ class Searcher(object):
         result = []
 
         for page in root.children:
-            if(self.tagsStrategy.testTags(self.tags, page) and
-                    self.__testFullContent(page)):
+            if self.tagsStrategy.testTags(self.tags, page) and self.__testFullContent(
+                page
+            ):
                 result.append(page)
 
             result += self.find(page)
@@ -78,10 +82,12 @@ class Searcher(object):
         Search for the desired text in different parts of the note
         (content, title, tags)
         """
-        return (self.__testTitle(page) or
-                self.__testContent(page) or
-                self.__testTagsContent(page) or
-                self.__testAttachment(page))
+        return (
+            self.__testTitle(page)
+            or self.__testContent(page)
+            or self.__testTagsContent(page)
+            or self.__testAttachment(page)
+        )
 
     def __testTitle(self, page):
         title = page.title.lower()
@@ -118,10 +124,12 @@ class Searcher(object):
         lowerPhrase = self.phrase.lower()
 
         for root, subfolders, files in os.walk(attach.getAttachPath()):
-            filterfiles = ([fname for fname in files if lowerPhrase in fname.lower()])
-            filterdirs = ([dirname for dirname in subfolders if lowerPhrase in dirname.lower()])
+            filterfiles = [fname for fname in files if lowerPhrase in fname.lower()]
+            filterdirs = [
+                dirname for dirname in subfolders if lowerPhrase in dirname.lower()
+            ]
 
-            if (len(filterfiles) != 0 or len(filterdirs) != 0):
+            if len(filterfiles) != 0 or len(filterdirs) != 0:
                 return True
 
         return False

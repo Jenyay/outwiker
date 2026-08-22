@@ -7,7 +7,7 @@ from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
+class TOC_WikiMakerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты плагина TableOfContents"""
 
     def setUp(self):
@@ -25,78 +25,78 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
     def testEmpty(self):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
-        text = ''''''
+        text = """"""
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = ''''''
+        result_valid = """"""
 
         self.assertEqual(result, result_valid)
 
     def test_01(self):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
-        text = '''  !! Абырвалг'''
+        text = """  !! Абырвалг"""
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = ''''''
+        result_valid = """"""
 
         self.assertEqual(result, result_valid)
 
     def test_02(self):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
-        text = '''!! Абырвалг'''
+        text = """!! Абырвалг"""
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* Абырвалг'''
+        result_valid = """* Абырвалг"""
 
         self.assertEqual(result, result_valid)
 
     def test_03(self):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
-        text = '''!!    Абырвалг    '''
+        text = """!!    Абырвалг    """
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* Абырвалг'''
+        result_valid = """* Абырвалг"""
 
         self.assertEqual(result, result_valid)
 
     def test_04(self):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
-        text = '''!! Абырвалг\\
- 123'''
+        text = """!! Абырвалг\\
+ 123"""
 
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* Абырвалг 123'''
+        result_valid = """* Абырвалг 123"""
 
         self.assertEqual(result, result_valid)
 
     def test_05(self):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
-        text = '''!! Абырвалг 123
-!!! Абырвалг 234'''
+        text = """!! Абырвалг 123
+!!! Абырвалг 234"""
 
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* Абырвалг 123
-** Абырвалг 234'''
+        result_valid = """* Абырвалг 123
+** Абырвалг 234"""
 
         self.assertEqual(result, result_valid)
 
     def test_06(self):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [=
 ывп ывап ыва
@@ -111,13 +111,13 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* Абырвалг 123
-** Абырвалг 234'''
+        result_valid = """* Абырвалг 123
+** Абырвалг 234"""
 
         self.assertEqual(result, result_valid)
 
@@ -125,7 +125,7 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
         WikiConfig(self.application.config).linkStyleOptions.value = 0
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [=
 ывп ывап ыва
@@ -141,13 +141,13 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
 выапывп ываап ывап
 
 [[#якорь2]]
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* [[Абырвалг 123 -> #якорь1]]
-** [[Абырвалг 234 -> #якорь2]]'''
+        result_valid = """* [[Абырвалг 123 -> #якорь1]]
+** [[Абырвалг 234 -> #якорь2]]"""
 
         self.assertEqual(result, result_valid)
 
@@ -155,7 +155,7 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
         WikiConfig(self.application.config).linkStyleOptions.value = 1
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [=
 ывп ывап ыва
@@ -171,13 +171,13 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
 выапывп ываап ывап
 
 [[#якорь2]]
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* [[#якорь1 | Абырвалг 123]]
-** [[#якорь2 | Абырвалг 234]]'''
+        result_valid = """* [[#якорь1 | Абырвалг 123]]
+** [[#якорь2 | Абырвалг 234]]"""
 
         self.assertEqual(result, result_valid)
 
@@ -185,7 +185,7 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
         WikiConfig(self.application.config).linkStyleOptions.value = 0
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [=
 ывп ывап ыва
@@ -201,13 +201,13 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
 выапывп ываап ывап
 
 [[#якорь2]]
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* [[Абырвалг 123 -> #якорь1]]
-** [[Абырвалг 234 -> #якорь2]]'''
+        result_valid = """* [[Абырвалг 123 -> #якорь1]]
+** [[Абырвалг 234 -> #якорь2]]"""
 
         self.assertEqual(result, result_valid)
 
@@ -215,7 +215,7 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
         WikiConfig(self.application.config).linkStyleOptions.value = 1
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [=
 ывп ывап ыва
@@ -231,13 +231,13 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
 выапывп ываап ывап
 
 [[#якорь2]]
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* [[#якорь1 | Абырвалг 123]]
-** [[#якорь2 | Абырвалг 234]]'''
+        result_valid = """* [[#якорь1 | Абырвалг 123]]
+** [[#якорь2 | Абырвалг 234]]"""
 
         self.assertEqual(result, result_valid)
 
@@ -245,7 +245,7 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
         from tableofcontents.tocwikimaker import TocWikiMaker
 
         WikiConfig(self.application.config).linkStyleOptions.value = 1
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [=
 ывп ывап ыва
@@ -261,12 +261,12 @@ class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):
 выапывп ываап ывап
 
 [[#якорь2]]
-!!!!! Абырвалг 234'''
+!!!!! Абырвалг 234"""
 
         maker = TocWikiMaker(self.application.config)
         result = maker.make(text)
 
-        result_valid = '''* [[#якорь1 | Абырвалг 123]]
-** [[#якорь2 | Абырвалг 234]]'''
+        result_valid = """* [[#якорь1 | Абырвалг 123]]
+** [[#якорь2 | Абырвалг 234]]"""
 
         self.assertEqual(result, result_valid)

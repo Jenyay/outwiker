@@ -11,20 +11,21 @@ class XmlAppInfoParser:
     """
     Class to read and write application info in XML format.
     """
-    ATTRIBUTE_LANGUAGE = 'lang'
 
-    TAG_APP_NAME = 'name'
-    TAG_WEBSITE = 'website'
-    TAG_DESCRIPTION = 'description'
-    TAG_AUTHOR = 'author'
-    TAG_AUTHOR_NAME = 'name'
-    TAG_AUTHOR_EMAIL = 'email'
-    TAG_AUTHOR_WEBSITE = 'website'
-    TAG_VERSION = 'version'
-    ATTRIBUTE_VERSION_NUMBER = 'number'
-    ATTRIBUTE_VERSION_STATUS = 'status'
+    ATTRIBUTE_LANGUAGE = "lang"
 
-    def parse(self, text: str) -> 'XmlAppInfo':
+    TAG_APP_NAME = "name"
+    TAG_WEBSITE = "website"
+    TAG_DESCRIPTION = "description"
+    TAG_AUTHOR = "author"
+    TAG_AUTHOR_NAME = "name"
+    TAG_AUTHOR_EMAIL = "email"
+    TAG_AUTHOR_WEBSITE = "website"
+    TAG_VERSION = "version"
+    ATTRIBUTE_VERSION_NUMBER = "number"
+    ATTRIBUTE_VERSION_STATUS = "status"
+
+    def parse(self, text: str) -> "XmlAppInfo":
         appinfo = XmlAppInfo()
 
         try:
@@ -41,36 +42,37 @@ class XmlAppInfoParser:
 
         return appinfo
 
-    def _setRequirements(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
+    def _setRequirements(self, root: ElementTree.Element, appinfo: "XmlAppInfo"):
         requirements = XmlRequirementsFactory.fromXml(root)
         appinfo.requirements.os_list = requirements.os_list[:]
         appinfo.requirements.api_list = requirements.api_list[:]
 
-    def _setTextForLanguage(self,
-                            root: ElementTree.Element,
-                            tag_name: str,
-                            data_for_language: 'DataForLanguage'):
-        '''
+    def _setTextForLanguage(
+        self,
+        root: ElementTree.Element,
+        tag_name: str,
+        data_for_language: "DataForLanguage",
+    ):
+        """
         Fill data_for_language with text from tag with name tag_name
-        '''
+        """
         for tag in root.findall(tag_name):
-            language = tag.get(self.ATTRIBUTE_LANGUAGE, '')
-            text = tag.text if tag.text is not None else ''
+            language = tag.get(self.ATTRIBUTE_LANGUAGE, "")
+            text = tag.text if tag.text is not None else ""
             data_for_language.set_for_language(language, text)
 
-    def _setAppName(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
+    def _setAppName(self, root: ElementTree.Element, appinfo: "XmlAppInfo"):
         self._setTextForLanguage(root, self.TAG_APP_NAME, appinfo.app_name)
 
-    def _setWebsite(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
+    def _setWebsite(self, root: ElementTree.Element, appinfo: "XmlAppInfo"):
         self._setTextForLanguage(root, self.TAG_WEBSITE, appinfo.website)
 
-    def _setDescription(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
-        self._setTextForLanguage(
-            root, self.TAG_DESCRIPTION, appinfo.description)
+    def _setDescription(self, root: ElementTree.Element, appinfo: "XmlAppInfo"):
+        self._setTextForLanguage(root, self.TAG_DESCRIPTION, appinfo.description)
 
-    def _setAuthor(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
+    def _setAuthor(self, root: ElementTree.Element, appinfo: "XmlAppInfo"):
         for tag in root.findall(self.TAG_AUTHOR):
-            language = tag.get(self.ATTRIBUTE_LANGUAGE, '')
+            language = tag.get(self.ATTRIBUTE_LANGUAGE, "")
 
             name = self._getTextValue(tag, self.TAG_AUTHOR_NAME)
             email = self._getTextValue(tag, self.TAG_AUTHOR_EMAIL)
@@ -82,13 +84,13 @@ class XmlAppInfoParser:
 
             appinfo.authors[language].append(author_info)
 
-    def _setVersion(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
+    def _setVersion(self, root: ElementTree.Element, appinfo: "XmlAppInfo"):
         tag_version = root.find(self.TAG_VERSION)
         if tag_version is None:
             return
 
         number = tag_version.get(self.ATTRIBUTE_VERSION_NUMBER)
-        status = tag_version.get(self.ATTRIBUTE_VERSION_STATUS, '')
+        status = tag_version.get(self.ATTRIBUTE_VERSION_STATUS, "")
 
         if number is not None:
             appinfo.version = XmlVersionInfo(number, status)
@@ -103,5 +105,5 @@ class XmlAppInfoParser:
             result = result_tag.text
 
         if result is None:
-            result = ''
+            result = ""
         return result

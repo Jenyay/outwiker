@@ -6,15 +6,17 @@ from unittest import TestCase
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.pages.wiki.parser.commands.dates import (CommandDateCreation,
-                                                       CommandDateEdition)
+from outwiker.pages.wiki.parser.commands.dates import (
+    CommandDateCreation,
+    CommandDateEdition,
+)
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 from outwiker.tests.utils import removeDir
 
 
-class WikiCommandDatesTest (BaseOutWikerMixin, TestCase):
+class WikiCommandDatesTest(BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
 
@@ -33,7 +35,7 @@ class WikiCommandDatesTest (BaseOutWikerMixin, TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -46,168 +48,168 @@ class WikiCommandDatesTest (BaseOutWikerMixin, TestCase):
         self._config.dateTimeFormat.value = self._srcDateFormat
 
     def testCreationEmpty_01(self):
-        self._config.dateTimeFormat.value = '%d.%m.%Y'
+        self._config.dateTimeFormat.value = "%d.%m.%Y"
 
         command = CommandDateCreation(self.parser)
-        params = ''
+        params = ""
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "20.08.2014"
 
         self.assertEqual(result_right, result)
 
     def testCreationEmpty_02(self):
-        self._config.dateTimeFormat.value = '%d.%m'
+        self._config.dateTimeFormat.value = "%d.%m"
 
         command = CommandDateCreation(self.parser)
-        params = ''
+        params = ""
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "20.08"
 
         self.assertEqual(result_right, result)
 
     def testCreationParams_01(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateCreation(self.parser)
         params = 'format="%d.%m.%Y"'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "20.08.2014"
 
         self.assertEqual(result_right, result)
 
     def testCreationParams_02(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateCreation(self.parser)
         params = 'format = ""'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = ""
 
         self.assertEqual(result_right, result)
 
     def testCreationParams_03(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateCreation(self.parser)
         params = 'format="%d.%m Абырвалг"'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "20.08 Абырвалг"
 
         self.assertEqual(result_right, result)
 
     def testCreationParams_04(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateCreation(self.parser)
         params = 'format="%d.%m Абырвалг 😁"'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "20.08 Абырвалг 😁"
 
         self.assertEqual(result_right, result)
 
     def testCreationParams_05(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateCreation(self.parser)
         params = 'format="%d.%m Абырвалг \\u1234"'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "20.08 Абырвалг \\u1234"
 
         self.assertEqual(result_right, result)
 
     def testEditEmpty_01(self):
-        self._config.dateTimeFormat.value = '%d.%m.%Y'
+        self._config.dateTimeFormat.value = "%d.%m.%Y"
 
         command = CommandDateEdition(self.parser)
-        params = ''
+        params = ""
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "21.09.2015"
 
         self.assertEqual(result_right, result)
 
     def testEditEmpty_02(self):
-        self._config.dateTimeFormat.value = '%d.%m'
+        self._config.dateTimeFormat.value = "%d.%m"
 
         command = CommandDateEdition(self.parser)
-        params = ''
+        params = ""
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "21.09"
 
         self.assertEqual(result_right, result)
 
     def testEditParams_01(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateEdition(self.parser)
         params = 'format="%d.%m.%Y"'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "21.09.2015"
 
         self.assertEqual(result_right, result)
 
     def testEditParams_02(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateEdition(self.parser)
         params = 'format = ""'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = ""
 
         self.assertEqual(result_right, result)
 
     def testEditParams_03(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateEdition(self.parser)
         params = 'format="%d.%m Абырвалг"'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "21.09 Абырвалг"
 
         self.assertEqual(result_right, result)
 
     def testEditParams_04(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateEdition(self.parser)
         params = 'format="%d.%m Абырвалг 😁"'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "21.09 Абырвалг 😁"
 
         self.assertEqual(result_right, result)
 
     def testEditParams_05(self):
-        self._config.dateTimeFormat.value = '%c'
+        self._config.dateTimeFormat.value = "%c"
 
         command = CommandDateEdition(self.parser)
         params = 'format="%d.%m Абырвалг \\u1234"'
 
-        result = command.execute(params, '')
+        result = command.execute(params, "")
 
         result_right = "21.09 Абырвалг \\u1234"
 

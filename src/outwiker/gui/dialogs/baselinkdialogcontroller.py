@@ -29,8 +29,8 @@ class BaseLinkDialogController(metaclass=ABCMeta):
         self._dlg = dialog
         self._selectedString = selectedString
 
-        self._link = ''
-        self._comment = ''
+        self._link = ""
+        self._comment = ""
 
     @property
     def link(self):
@@ -90,8 +90,8 @@ class BaseLinkDialogController(metaclass=ABCMeta):
             self._dlg.link = self._findLink()
 
         if self._isPageLink(self._dlg.link):
-            prefix = 'page://'
-            uid = self._dlg.link[len(prefix):]
+            prefix = "page://"
+            uid = self._dlg.link[len(prefix) :]
             page = self._page.root.getPageByUid(uid)
             if page is not None and not self._selectedString:
                 self._dlg.comment = page.display_title
@@ -109,14 +109,14 @@ class BaseLinkDialogController(metaclass=ABCMeta):
         if clipboardText is not None and self._isLink(clipboardText):
             return clipboardText
 
-        return ''
+        return ""
 
     def _isLinkToAttach(self, text):
         if not text.strip():
             return False
 
         attach = Attachment(self._page)
-        path = Path(attach.getAttachPath(create=False), text.replace('\\', '/'))
+        path = Path(attach.getAttachPath(create=False), text.replace("\\", "/"))
         try:
             return path.exists()
         except OSError:
@@ -124,13 +124,15 @@ class BaseLinkDialogController(metaclass=ABCMeta):
 
     def _isLink(self, text):
         lowerString = text.lower()
-        return (lowerString.startswith('http://') or
-                lowerString.startswith('https://') or
-                lowerString.startswith('ftp://') or
-                lowerString.startswith('page://') or
-                text.startswith('#') or
-                self._isLinkToAttach(text))
+        return (
+            lowerString.startswith("http://")
+            or lowerString.startswith("https://")
+            or lowerString.startswith("ftp://")
+            or lowerString.startswith("page://")
+            or text.startswith("#")
+            or self._isLinkToAttach(text)
+        )
 
     def _isPageLink(self, text):
         lowerString = text.lower()
-        return lowerString.startswith('page://')
+        return lowerString.startswith("page://")

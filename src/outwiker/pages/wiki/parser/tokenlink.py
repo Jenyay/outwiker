@@ -99,7 +99,7 @@ class LinkToken:
 
     def _removeQuotes(self, text):
         if (text.startswith("'") and text.endswith("'")) or (
-            (text.startswith('"') and text.endswith('"'))
+            text.startswith('"') and text.endswith('"')
         ):
             text = text[1:-1]
 

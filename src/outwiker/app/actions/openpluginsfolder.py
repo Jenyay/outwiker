@@ -9,6 +9,7 @@ class OpenPluginsFolderAction(BaseAction):
     """
     Открыть папку с плагинами
     """
+
     stringId = "OpenPluginsFolder"
 
     def __init__(self, application):

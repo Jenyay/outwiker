@@ -30,7 +30,9 @@ class SortChildPagesBaseAction(BaseAction, metaclass=ABCMeta):
             return
 
         if self._application.wikiroot.selectedPage is not None:
-            self._application.wikiroot.selectedPage.sortChildren(self.sort_func, self.reverse())
+            self._application.wikiroot.selectedPage.sortChildren(
+                self.sort_func, self.reverse()
+            )
         else:
             self._application.wikiroot.sortChildren(self.sort_func, self.reverse())
 

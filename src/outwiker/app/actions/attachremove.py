@@ -14,6 +14,7 @@ class RemoveAttachesActionForAttachPanel(BaseAction):
 
     Hidden action.
     """
+
     stringId = "RemoveAttachesForAttachPanel"
 
     def __init__(self, application):
@@ -34,19 +35,23 @@ class RemoveAttachesActionForAttachPanel(BaseAction):
             files = attachPanel.getSelectedFiles()
 
             if len(files) == 0:
-                showError(self._application.mainWindow,
-                          _("You did not select any attachment to remove"))
+                showError(
+                    self._application.mainWindow,
+                    _("You did not select any attachment to remove"),
+                )
                 return
 
-            files_str = '\n'.join(files)
-            text = _("Remove selected attachments?") + '\n\n' + files_str
+            files_str = "\n".join(files)
+            text = _("Remove selected attachments?") + "\n\n" + files_str
 
-            if MessageBox(text,
-                          _("Removing attachments"),
-                          wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
+            if (
+                MessageBox(
+                    text, _("Removing attachments"), wx.YES_NO | wx.ICON_QUESTION
+                )
+                == wx.YES
+            ):
                 try:
-                    Attachment(
-                        self._application.selectedPage).removeAttach(files)
+                    Attachment(self._application.selectedPage).removeAttach(files)
                 except IOError as e:
                     showError(self._application.mainWindow, str(e))
 

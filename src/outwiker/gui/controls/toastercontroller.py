@@ -41,47 +41,52 @@ class ToasterController:
             toasterbox = tb.ToasterBox(
                 self._parent,
                 tbstyle=tb.TB_COMPLEX,
-                closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
+                closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK,
             )
             toasterbox.CleanList()
             tb.winlist = []
 
     def showError(self, message):
-        title = _('Error')
-        captionBackgroundColor = self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_ERROR_CAPTION_BACKGROUND_COLOR)
-        captionForegroundColor = self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_ERROR_CAPTION_TEXT_COLOR)
-        self.showMessage(message,
-                         title,
-                         captionBackgroundColor,
-                         captionForegroundColor)
+        title = _("Error")
+        captionBackgroundColor = self._theme.get(
+            Theme.SECTION_NOTIFICATION,
+            Theme.NOTIFICATION_ERROR_CAPTION_BACKGROUND_COLOR,
+        )
+        captionForegroundColor = self._theme.get(
+            Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_ERROR_CAPTION_TEXT_COLOR
+        )
+        self.showMessage(message, title, captionBackgroundColor, captionForegroundColor)
         self.counter.incShowErrorCount()
 
     def showInfo(self, title, message):
-        captionBackgroundColor = self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_INFO_CAPTION_BACKGROUND_COLOR)
-        captionForegroundColor = self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_INFO_CAPTION_TEXT_COLOR)
-        self.showMessage(message,
-                         title,
-                         captionBackgroundColor,
-                         captionForegroundColor)
+        captionBackgroundColor = self._theme.get(
+            Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_INFO_CAPTION_BACKGROUND_COLOR
+        )
+        captionForegroundColor = self._theme.get(
+            Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_INFO_CAPTION_TEXT_COLOR
+        )
+        self.showMessage(message, title, captionBackgroundColor, captionForegroundColor)
         self.counter.incShowInfoCount()
 
-    def showMessage(self,
-                    message,
-                    title,
-                    captionBackgroundColor,
-                    captionForegroundColor):
+    def showMessage(
+        self, message, title, captionBackgroundColor, captionForegroundColor
+    ):
         if not self._application.testMode:
             toasterbox = tb.ToasterBox(
                 self._parent,
                 tbstyle=tb.TB_COMPLEX,
-                closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
+                closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK,
             )
 
             parent = toasterbox.GetToasterBoxWindow()
-            panel = InfoPanel(parent,
-                              message, title,
-                              captionBackgroundColor, captionForegroundColor)
-            parent.SetBackgroundColour(self._theme.get(Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_BACKGROUND_COLOR))
+            panel = InfoPanel(
+                parent, message, title, captionBackgroundColor, captionForegroundColor
+            )
+            parent.SetBackgroundColour(
+                self._theme.get(
+                    Theme.SECTION_NOTIFICATION, Theme.NOTIFICATION_BACKGROUND_COLOR
+                )
+            )
             toasterbox.AddPanel(panel)
             toasterbox.SetPopupPauseTime(self.toaster_delay)
 
@@ -95,12 +100,9 @@ class ToasterController:
 
 
 class InfoPanel(wx.Panel):
-    def __init__(self,
-                 parent,
-                 message,
-                 title,
-                 captionBackgroundColor,
-                 captionForegroundColor):
+    def __init__(
+        self, parent, message, title, captionBackgroundColor, captionForegroundColor
+    ):
         super().__init__(parent, style=wx.BORDER_SIMPLE)
         self._margin = 4
         self._margin_bottom = 15
@@ -126,7 +128,7 @@ class InfoPanel(wx.Panel):
         self.Fit()
 
     def _createMessageLabel(self, message: str) -> wx.StaticText:
-        messageLabel = wx.StaticText(self, label=message + '\n')
+        messageLabel = wx.StaticText(self, label=message + "\n")
 
         label_width = self._width - 2 * self._margin
         messageLabel.Wrap(label_width)
@@ -153,7 +155,8 @@ class InfoPanel(wx.Panel):
         sizer.Add(
             captionLabel,
             flag=wx.ALIGN_CENTER | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-            border=4)
+            border=4,
+        )
 
         captionPanel.SetSizer(sizer)
         captionLabel.Bind(wx.EVT_LEFT_DOWN, handler=self._onClick)

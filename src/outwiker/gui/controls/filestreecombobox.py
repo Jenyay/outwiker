@@ -94,8 +94,7 @@ class FilesTreeComboPopup(wx.ComboPopup):
     # ComboPopup base class.
     def Create(self, parent):
         self._tree_ctrl = FilesTreeCtrl(parent)
-        self._tree_ctrl.Bind(EVT_FILES_TREE_SEL_CHANGED,
-                             handler=self._onFileSelected)
+        self._tree_ctrl.Bind(EVT_FILES_TREE_SEL_CHANGED, handler=self._onFileSelected)
         return True
 
     def GetControl(self):

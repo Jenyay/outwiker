@@ -2,17 +2,17 @@
 
 import wx
 
-ROOT_MENU_ID = '__root__'
+ROOT_MENU_ID = "__root__"
 
 
 class MenuInfo:
     def __init__(self, menu_id, menu, parent=None, menuitem=None):
-        '''
+        """
         menu_id -- unique menu identifier.
         menu -- wx.Menu instance
         parent -- MenuInfo instance or None
         menuitem -- instance of the wx.MenuItem
-        '''
+        """
         self.menu_id = menu_id
         self.menu = menu
         self.parent = parent
@@ -23,9 +23,9 @@ class MenuInfo:
 
 class MenuController:
     def __init__(self, root):
-        '''
+        """
         root -- instance of the wx.MenuBar or wx.Menu
-        '''
+        """
         self._menu = {}
         self.addMenu(ROOT_MENU_ID, root)
 
@@ -36,9 +36,9 @@ class MenuController:
         return menu_id in self._menu
 
     def addMenu(self, menu_id, menu):
-        '''
+        """
         Add existing menu
-        '''
+        """
         assert menu is not None
         if menu_id in self._menu:
             raise KeyError()

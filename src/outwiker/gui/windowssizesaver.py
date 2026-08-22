@@ -12,9 +12,9 @@ class WindowSizeSaver:
         self._config = GuiConfig(config)
 
     def restoreSize(self, wnd: wx.Window):
-        width, height = self._config.loadWindowSize(self._prefix,
-                                                    wx.DefaultCoord,
-                                                    wx.DefaultCoord)
+        width, height = self._config.loadWindowSize(
+            self._prefix, wx.DefaultCoord, wx.DefaultCoord
+        )
         wnd.SetSize(width, height)
 
     def saveSize(self, wnd: wx.Window):

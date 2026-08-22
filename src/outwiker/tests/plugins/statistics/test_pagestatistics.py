@@ -12,7 +12,7 @@ from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class PageStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
+class PageStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты плагина Statistics применительно к статистике страницы"""
 
     def setUp(self):
@@ -27,8 +27,7 @@ class PageStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         filesPath = "testdata/samplefiles/"
         self.files = ["accept.png", "add.png", "anchor.png", "dir"]
-        self.fullFilesPath = [os.path.join(filesPath, fname)
-                              for fname in self.files]
+        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
 
     def tearDown(self):
         self.loader.clear()
