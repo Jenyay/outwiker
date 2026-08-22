@@ -72,7 +72,7 @@ class HotkeyCtrl(wx.TextCtrl):
         self.Bind(wx.EVT_CHAR_HOOK, self._onKeyPressed)
 
     def _onKeyPressed(self, event):
-        keycode = event.GetUnicodeKey()
+        keycode = event.GetKeyCode()
         modifiers = event.GetModifiers()
 
         if keycode == wx.WXK_TAB and modifiers == 0:
@@ -90,12 +90,12 @@ class HotkeyCtrl(wx.TextCtrl):
             self.SetValue(hotkey)
 
     def SetValue(self, value):
-        super(HotkeyCtrl, self).SetValue(self._key2str(value))
+        super().SetValue(self._key2str(value))
         event = HotkeyEditEvent(hotkey=value)
         wx.PostEvent(self, event)
 
     def GetValue(self):
-        text = super(HotkeyCtrl, self).GetValue()
+        text = super().GetValue()
         if len(text) == 0:
             return None
 
@@ -135,6 +135,9 @@ class HotkeyCtrl(wx.TextCtrl):
 
         if keycode in self.KEYMAP:
             return True
+
+        if keycode > 255:
+            return False
 
         try:
             chr(keycode)
