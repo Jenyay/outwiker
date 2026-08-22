@@ -35,23 +35,23 @@ class HotKeysPanel(BasePrefPanel):
 
         newhotkey = event.hotkey
         oldActionStrId = self.__findConflict(
-            newhotkey,
-            self._application.actionController.getArea(newActionStrId))
+            newhotkey, self._application.actionController.getArea(newActionStrId)
+        )
 
         if oldActionStrId is not None:
-            newAction = self._application.actionController.getTitle(
-                newActionStrId)
-            oldAction = self._application.actionController.getTitle(
-                oldActionStrId)
+            newAction = self._application.actionController.getTitle(newActionStrId)
+            oldAction = self._application.actionController.getTitle(oldActionStrId)
 
-            text = _('{hotkey} shortcut assigned for "{old}".\nAssign this shortcut for "{new}"?').format(
-                hotkey=newhotkey,
-                old=oldAction,
-                new=newAction)
+            text = _(
+                '{hotkey} shortcut assigned for "{old}".\nAssign this shortcut for "{new}"?'
+            ).format(hotkey=newhotkey, old=oldAction, new=newAction)
 
-            if (MessageBox(text,
-                           _('Shortcuts conflict'),
-                           wx.ICON_QUESTION | wx.YES | wx.NO) == wx.YES):
+            if (
+                MessageBox(
+                    text, _("Shortcuts conflict"), wx.ICON_QUESTION | wx.YES | wx.NO
+                )
+                == wx.YES
+            ):
                 self.__hotkeys[oldActionStrId] = None
             else:
                 self.__hotkeyCtrl.SetValue(self.__hotkeys[newActionStrId])
@@ -83,16 +83,12 @@ class HotKeysPanel(BasePrefPanel):
         filterSizer = wx.FlexGridSizer(cols=2)
         filterSizer.AddGrowableCol(1)
 
-        filterLabel = wx.StaticText(self, label=_('Search'))
+        filterLabel = wx.StaticText(self, label=_("Search"))
         self.__filterText = wx.TextCtrl(self)
 
-        filterSizer.Add(filterLabel,
-                        flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                        border=2)
+        filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
 
-        filterSizer.Add(self.__filterText,
-                        flag=wx.EXPAND | wx.ALL,
-                        border=2)
+        filterSizer.Add(self.__filterText, flag=wx.EXPAND | wx.ALL, border=2)
 
         # Sizer for hotkey and label for it
         hotkeySizer = wx.FlexGridSizer(cols=2)
@@ -100,35 +96,32 @@ class HotKeysPanel(BasePrefPanel):
 
         # Comment to hotkeysCtrl
         hotkeyLabel = wx.StaticText(
-            self,
-            -1,
-            _('Shortcut.\nPress the Backspace key to clear'))
+            self, -1, _("Shortcut.\nPress the Backspace key to clear")
+        )
 
         # Горячая клавиша
         self.__hotkeyCtrl = HotkeyCtrl(self)
         self.__hotkeyCtrl.Disable()
         self.__hotkeyCtrl.SetMinSize((200, -1))
 
-        hotkeySizer.Add(hotkeyLabel,
-                        flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                        border=2)
+        hotkeySizer.Add(hotkeyLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
 
         hotkeySizer.Add(
             self.__hotkeyCtrl,
             flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx.ALIGN_RIGHT,
-            border=2)
+            border=2,
+        )
 
         # Описание action
         self.__descriptionText = wx.TextCtrl(
-            self,
-            style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY)
+            self, style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY
+        )
         self.__descriptionText.SetMinSize((-1, 75))
         self.__descriptionText.Disable()
 
         mainSizer.Add(filterSizer, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add(self.__actionsList, flag=wx.EXPAND | wx.ALL, border=2)
-        mainSizer.Add(self.__descriptionText,
-                      flag=wx.EXPAND | wx.ALL, border=2)
+        mainSizer.Add(self.__descriptionText, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add(hotkeySizer, flag=wx.EXPAND | wx.ALL, border=2)
 
         self.SetSizer(mainSizer)
@@ -142,8 +135,10 @@ class HotKeysPanel(BasePrefPanel):
         for strid, hotkeyCurrent in self.__hotkeys.items():
             if stridCurrent == strid or hotkey is None:
                 continue
-            if (hotkey == hotkeyCurrent and
-                    self._application.actionController.getArea(strid) == area):
+            if (
+                hotkey == hotkeyCurrent
+                and self._application.actionController.getArea(strid) == area
+            ):
                 return strid
 
         return None
@@ -163,20 +158,23 @@ class HotKeysPanel(BasePrefPanel):
 
     def __getActionsStrId(self):
         actionController = self._application.actionController
-        return [strid
-                for strid in actionController.getActionsStrId()
-                if not actionController.isHidden(strid)]
+        return [
+            strid
+            for strid in actionController.getActionsStrId()
+            if not actionController.isHidden(strid)
+        ]
 
     def __onFilterEdit(self, event):
         self.__fillActionsList()
 
     def __onActionSelect(self, event):
-        self.__descriptionText.Value = ''
+        self.__descriptionText.Value = ""
 
         strid = event.GetClientData()
         if strid is not None:
             self.__descriptionText.Value = self._application.actionController.getAction(
-                strid).description
+                strid
+            ).description
             self.__hotkeyCtrl.Enable()
             self.__hotkeyCtrl.SetValue(self.__hotkeys[strid])
 
@@ -197,7 +195,7 @@ class HotKeysPanel(BasePrefPanel):
         titleStridList.sort()
 
         self.__actionsList.Clear()
-        for (title, strid) in titleStridList:
+        for title, strid in titleStridList:
             self.__actionsList.Append(title, strid)
 
     def __filter(self, action):
@@ -206,8 +204,10 @@ class HotKeysPanel(BasePrefPanel):
 
         filterText = self.__filterText.Value.lower()
 
-        return (filterText in action.title.lower() or
-                filterText in action.description.lower())
+        return (
+            filterText in action.title.lower()
+            or filterText in action.description.lower()
+        )
 
     def Save(self):
         newHotkeys = list(self.__hotkeys.items())
