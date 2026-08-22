@@ -8,6 +8,7 @@ class ShowHideAttachesAction(BaseAction):
     """
     Показать / скрыть панель с прикрепленными файлами
     """
+
     stringId = "ShowHideAttaches"
 
     def __init__(self, application):

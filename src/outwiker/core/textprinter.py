@@ -13,6 +13,7 @@ class TextPrinter:
     """
     Interface for printing text pages
     """
+
     def __init__(self, parent, application):
         self.parent = parent
 
@@ -26,11 +27,13 @@ class TextPrinter:
         # distance between header/footer and text in mm
         headerspace = 0.0
 
-        self.margins = (self.config.marginTop.value,
-                        self.config.marginBottom.value,
-                        self.config.marginLeft.value,
-                        self.config.marginRight.value,
-                        headerspace)
+        self.margins = (
+            self.config.marginTop.value,
+            self.config.marginBottom.value,
+            self.config.marginLeft.value,
+            self.config.marginRight.value,
+            headerspace,
+        )
 
         self.paperId = self.config.paperId.value
 
@@ -58,11 +61,13 @@ class TextPrinter:
     def _getPrintout(self, htmltext):
         printout = wx.html.HtmlPrintout()
         printout.SetFonts(self.normalFont, self.monoFont, self.fontSizes)
-        printout.SetMargins(self.margins[0],
-                            self.margins[1],
-                            self.margins[2],
-                            self.margins[3],
-                            self.margins[4])
+        printout.SetMargins(
+            self.margins[0],
+            self.margins[1],
+            self.margins[2],
+            self.margins[3],
+            self.margins[4],
+        )
         printout.SetHtmlText(htmltext)
         return printout
 
@@ -93,7 +98,6 @@ class TextPrinter:
         printer.Print(self.parent, printout, True)
 
         if printer.GetLastError() == wx.PRINTER_ERROR:
-            MessageBox(_(u"Printing error"),
-                       _(u"Error"),
-                       wx.OK | wx.ICON_ERROR,
-                       self.parent)
+            MessageBox(
+                _("Printing error"), _("Error"), wx.OK | wx.ICON_ERROR, self.parent
+            )

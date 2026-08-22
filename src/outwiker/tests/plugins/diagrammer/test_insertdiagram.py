@@ -18,7 +18,7 @@ class InsertDiagramTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         from diagrammer.gui.insertdiagramdialog import (
             InsertDiagramDialog,
-            InsertDiagramController
+            InsertDiagramController,
         )
 
         self._dlg = InsertDiagramDialog(None)
@@ -45,9 +45,9 @@ class InsertDiagramTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_shape = actor;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n(:diagramend:)")
@@ -58,9 +58,9 @@ default_shape = actor;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_shape = beginpoint;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
         self.assertEqual(end, "\n(:diagramend:)")
@@ -83,12 +83,12 @@ default_shape = beginpoint;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_node_color = "white";
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testNodeColor_02(self):
         Tester.dialogTester.appendOk()
@@ -97,8 +97,8 @@ default_node_color = "white";
 
         begin, end = self._controller.getResult()
 
-        self.assertEqual(begin, '(:diagram:)\n')
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(begin, "(:diagram:)\n")
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testNodeColor_03(self):
         Tester.dialogTester.appendOk()
@@ -107,12 +107,12 @@ default_node_color = "white";
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_node_color = "#AAAAAA";
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testNodeColor_04(self):
         Tester.dialogTester.appendOk()
@@ -122,13 +122,13 @@ default_node_color = "#AAAAAA";
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_shape = actor;
 default_node_color = "#AAAAAA";
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testTextColor_01(self):
         Tester.dialogTester.appendOk()
@@ -137,12 +137,12 @@ default_node_color = "#AAAAAA";
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_textcolor = "white";
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testTextColor_02(self):
         Tester.dialogTester.appendOk()
@@ -151,8 +151,8 @@ default_textcolor = "white";
 
         begin, end = self._controller.getResult()
 
-        self.assertEqual(begin, '(:diagram:)\n')
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(begin, "(:diagram:)\n")
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testTextColor_03(self):
         Tester.dialogTester.appendOk()
@@ -161,12 +161,12 @@ default_textcolor = "white";
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_textcolor = "#AAAAAA";
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testTextColor_04(self):
         Tester.dialogTester.appendOk()
@@ -176,13 +176,13 @@ default_textcolor = "#AAAAAA";
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_shape = actor;
 default_textcolor = "#AAAAAA";
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testFontSize_01(self):
         Tester.dialogTester.appendOk()
@@ -191,12 +191,12 @@ default_textcolor = "#AAAAAA";
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_fontsize = 20;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testFontSize_02(self):
         Tester.dialogTester.appendOk()
@@ -205,11 +205,11 @@ default_fontsize = 20;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
-'''
+        valid_begin = """(:diagram:)
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testFontSize_03(self):
         Tester.dialogTester.appendOk()
@@ -219,13 +219,13 @@ default_fontsize = 20;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_shape = actor;
 default_fontsize = 20;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testWidth_01(self):
         Tester.dialogTester.appendOk()
@@ -234,12 +234,12 @@ default_fontsize = 20;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 node_width = 200;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testWidth_02(self):
         Tester.dialogTester.appendOk()
@@ -248,11 +248,11 @@ node_width = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
-'''
+        valid_begin = """(:diagram:)
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testWidth_03(self):
         Tester.dialogTester.appendOk()
@@ -262,13 +262,13 @@ node_width = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_shape = actor;
 node_width = 200;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testHeight_01(self):
         Tester.dialogTester.appendOk()
@@ -277,12 +277,12 @@ node_width = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 node_height = 200;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testHeight_02(self):
         Tester.dialogTester.appendOk()
@@ -291,11 +291,11 @@ node_height = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
-'''
+        valid_begin = """(:diagram:)
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testHeight_03(self):
         Tester.dialogTester.appendOk()
@@ -305,13 +305,13 @@ node_height = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_shape = actor;
 node_height = 200;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testOrientation_01(self):
         self._dlg.orientationIndex = 0
@@ -320,11 +320,11 @@ node_height = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
-'''
+        valid_begin = """(:diagram:)
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testOrientation_02(self):
         self._dlg.orientationIndex = 1
@@ -333,12 +333,12 @@ node_height = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 orientation = portrait;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testOrientation_03(self):
         self._dlg.orientationIndex = 1
@@ -348,13 +348,13 @@ orientation = portrait;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 orientation = portrait;
 default_shape = actor;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testSpanWidth_01(self):
         Tester.dialogTester.appendOk()
@@ -363,12 +363,12 @@ default_shape = actor;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 span_width = 200;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testSpanWidth_02(self):
         Tester.dialogTester.appendOk()
@@ -377,11 +377,11 @@ span_width = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
-'''
+        valid_begin = """(:diagram:)
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testSpanWidth_03(self):
         Tester.dialogTester.appendOk()
@@ -391,13 +391,13 @@ span_width = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_shape = actor;
 span_width = 200;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testSpanHeight_01(self):
         Tester.dialogTester.appendOk()
@@ -406,12 +406,12 @@ span_width = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 span_height = 200;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testSpanHeight_02(self):
         Tester.dialogTester.appendOk()
@@ -420,11 +420,11 @@ span_height = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
-'''
+        valid_begin = """(:diagram:)
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")
 
     def testSpanHeight_03(self):
         Tester.dialogTester.appendOk()
@@ -434,10 +434,10 @@ span_height = 200;
 
         begin, end = self._controller.getResult()
 
-        valid_begin = '''(:diagram:)
+        valid_begin = """(:diagram:)
 default_shape = actor;
 span_height = 200;
-'''
+"""
 
         self.assertEqual(begin, valid_begin)
-        self.assertEqual(end, '\n(:diagramend:)')
+        self.assertEqual(end, "\n(:diagramend:)")

@@ -35,8 +35,7 @@ class ThumbDialogController:
         # Строка, полученная из параметров, выбанных в диалоге
         self.result = ""
 
-        self._size_saver = WindowSizeSaver('wiki_thumb_dialog',
-                                           application.config)
+        self._size_saver = WindowSizeSaver("wiki_thumb_dialog", application.config)
 
     @property
     def filesList(self):
@@ -49,19 +48,21 @@ class ThumbDialogController:
     def _get_selected_file(self, selected_text: str) -> Optional[str]:
         prefix = "Attach:"
         selected_file = None
-        selected_text = selected_text.replace('\\', '/')
+        selected_text = selected_text.replace("\\", "/")
 
-        if (selected_text.startswith(prefix)):
-            selected_file = selected_text[len(prefix):]
-            if ((selected_file.startswith('"') and selected_file.endswith('"')) or
-                    (selected_file.startswith("'") and selected_file.endswith("'"))):
+        if selected_text.startswith(prefix):
+            selected_file = selected_text[len(prefix) :]
+            if (selected_file.startswith('"') and selected_file.endswith('"')) or (
+                selected_file.startswith("'") and selected_file.endswith("'")
+            ):
                 selected_file = selected_file[1:-1]
 
             if not isImage(selected_file):
                 return None
 
-            file_path = Path(Attachment(self._page).getAttachPath(create=False),
-                             selected_file)
+            file_path = Path(
+                Attachment(self._page).getAttachPath(create=False), selected_file
+            )
 
             if not file_path.exists() or file_path.is_dir():
                 return None
@@ -87,8 +88,7 @@ class ThumbDialogController:
 
                     self._size_saver.saveSize(dlg)
             else:
-                showError(self._parent,
-                          _("Current page does not have any attachments"))
+                showError(self._parent, _("Current page does not have any attachments"))
 
         return resultDlg
 
@@ -108,12 +108,11 @@ class ThumbDialogController:
         else:
             raise NotImplementedError
 
-        fname = fname.replace('\\', '/')
+        fname = fname.replace("\\", "/")
         if len(fname) > 0:
             fileText = "Attach:{fname}".format(fname=fname)
         else:
             fileText = ""
 
-        result = "%thumb{scale}%{fname}%%".format(
-            scale=scaleText, fname=fileText)
+        result = "%thumb{scale}%{fname}%%".format(scale=scaleText, fname=fileText)
         return result

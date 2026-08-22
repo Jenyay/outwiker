@@ -13,19 +13,19 @@ class ChangeItem:
 
 
 class DownloadInfo:
-    def __init__(self,
-                 href: str,
-                 requirements: Optional[Requirements] = None):
+    def __init__(self, href: str, requirements: Optional[Requirements] = None):
         self.href = href
         self.requirements = requirements
 
 
 class VersionInfo:
-    def __init__(self,
-                 version: Version,
-                 date: Optional[datetime],
-                 downloads: 'List[DownloadInfo]',
-                 changes: 'List[ChangeItem]'):
+    def __init__(
+        self,
+        version: Version,
+        date: Optional[datetime],
+        downloads: "List[DownloadInfo]",
+        changes: "List[ChangeItem]",
+    ):
         self.version = version
         self.date = date
         self.downloads = downloads

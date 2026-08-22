@@ -12,13 +12,19 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 class FullScreenTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
-        self.initApplication(enableActionsGui=True, createTreePanel=True, createAttachPanel=True, createTagsPanel=True)
+        self.initApplication(
+            enableActionsGui=True,
+            createTreePanel=True,
+            createAttachPanel=True,
+            createTagsPanel=True,
+        )
 
     def testFullScreenStart(self):
         fullScreenActionInfo = self.application.actionController.getActionInfo(
-            FullScreenAction.stringId)
+            FullScreenAction.stringId
+        )
 
-        if getOS().name == 'windows':
+        if getOS().name == "windows":
             self.assertFalse(self.mainWindow.IsFullScreen())
 
         self.assertFalse(fullScreenActionInfo.menuItem.IsChecked())
@@ -31,15 +37,18 @@ class FullScreenTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testFullScreen(self):
         showHideTreeActionInfo = self.application.actionController.getActionInfo(
-            ShowHideTreeAction.stringId)
+            ShowHideTreeAction.stringId
+        )
         showHideAttachesActionInfo = self.application.actionController.getActionInfo(
-            ShowHideAttachesAction.stringId)
+            ShowHideAttachesAction.stringId
+        )
         showHideTagsActionInfo = self.application.actionController.getActionInfo(
-            ShowHideTagsAction.stringId)
+            ShowHideTagsAction.stringId
+        )
 
         self.application.actionController.check(FullScreenAction.stringId, True)
 
-        if getOS().name == 'windows':
+        if getOS().name == "windows":
             self.assertTrue(self.mainWindow.IsFullScreen())
 
         self.assertFalse(self.mainWindow.treePanel.isShown())
@@ -52,7 +61,7 @@ class FullScreenTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.check(FullScreenAction.stringId, False)
 
-        if getOS().name == 'windows':
+        if getOS().name == "windows":
             self.assertFalse(self.mainWindow.IsFullScreen())
 
         self.assertTrue(self.mainWindow.treePanel.isShown())

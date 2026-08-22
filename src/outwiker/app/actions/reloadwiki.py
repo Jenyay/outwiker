@@ -11,6 +11,7 @@ class ReloadWikiAction(BaseAction):
     """
     Перезагрузка wiki
     """
+
     stringId = "ReloadWiki"
 
     def __init__(self, application):
@@ -26,8 +27,11 @@ class ReloadWikiAction(BaseAction):
 
     def run(self, params):
         if self._application.wikiroot is not None:
-            result = (MessageBox(_("Save current page before reload?"),
-                                 _("Save?"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION))
+            result = MessageBox(
+                _("Save current page before reload?"),
+                _("Save?"),
+                wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION,
+            )
 
             if result == wx.CANCEL:
                 return

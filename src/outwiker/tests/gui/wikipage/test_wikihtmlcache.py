@@ -78,7 +78,6 @@ class WikiHtmlCacheTest(BaseOutWikerMixin, TestCase):
         cache.saveHash()
         self.assertTrue(cache.canReadFromCache())
 
-
         self.testPage.content = "бла-бла-бла"
 
         # Changed page content, cannot cache again

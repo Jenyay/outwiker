@@ -13,8 +13,7 @@ def printCurrentPage(application):
 
 
 def openInNewWindow(path, args=[]):
-    """ Open wiki tree in the new OutWiker window
-    """
+    """Open wiki tree in the new OutWiker window"""
     return _system.openInNewWindow(path, args)
 
 
@@ -31,9 +30,9 @@ def getImagesDir() -> str:
 
 
 def getBuiltinImagePath(*relative_image_name: str) -> str:
-    '''
+    """
     Return absolute path to image file from "images" directory
-    '''
+    """
     return _system.getBuiltinImagePath(*relative_image_name)
 
 

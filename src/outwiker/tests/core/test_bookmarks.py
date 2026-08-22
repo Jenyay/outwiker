@@ -233,8 +233,13 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarks[0].title, "Страница 1")
 
     def testSubpathBookmarks(self):
-        config = StringListSection(self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION)
-        config.value = [self.wikiroot["Страница 1"].subpath, self.wikiroot["Страница 2/Страница 3"].subpath]
+        config = StringListSection(
+            self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION
+        )
+        config.value = [
+            self.wikiroot["Страница 1"].subpath,
+            self.wikiroot["Страница 2/Страница 3"].subpath,
+        ]
 
         bookmarks = Bookmarks()
         bookmarks.setWikiRoot(self.wikiroot)
@@ -243,9 +248,13 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(bookmarks[1].title, "Страница 3")
 
     def testPageUIDBookmarks(self):
-        config = StringListSection(self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION)
-        config.value = [self.wikiroot["Страница 1"].getUid(generate=True),
-                        self.wikiroot["Страница 2/Страница 3"].getUid(generate=True)]
+        config = StringListSection(
+            self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION
+        )
+        config.value = [
+            self.wikiroot["Страница 1"].getUid(generate=True),
+            self.wikiroot["Страница 2/Страница 3"].getUid(generate=True),
+        ]
 
         bookmarks = Bookmarks()
         bookmarks.setWikiRoot(self.wikiroot)

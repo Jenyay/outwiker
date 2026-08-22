@@ -64,37 +64,39 @@ class ListToken:
     """
     Класс для разбора списков
     """
+
     unorderList = "*"
     orderList = "#"
 
     unorderListCSS = [
-            ('[]', css.CSS_LIST_ITEM_EMPTY, CSS_STYLE_EMPTY),
-            ('[ ]', css.CSS_LIST_ITEM_TODO, CSS_STYLE_TODO),
-            ('[/]', css.CSS_LIST_ITEM_INCOMPLETE, CSS_STYLE_INCOMPLETE),
-            ('[\\]', css.CSS_LIST_ITEM_INCOMPLETE, CSS_STYLE_INCOMPLETE),
-            ('[x]', css.CSS_LIST_ITEM_COMPLETE, CSS_STYLE_COMPLETE),
-            ('[X]', css.CSS_LIST_ITEM_COMPLETE, CSS_STYLE_COMPLETE),
-            ('[*]', css.CSS_LIST_ITEM_STAR, CSS_STYLE_STAR),
-            ('[+]', css.CSS_LIST_ITEM_PLUS, CSS_STYLE_PLUS),
-            ('[-]', css.CSS_LIST_ITEM_MINUS, CSS_STYLE_MINUS),
-            ('[o]', css.CSS_LIST_ITEM_CIRCLE, CSS_STYLE_CIRCLE),
-            ('[O]', css.CSS_LIST_ITEM_CIRCLE, CSS_STYLE_CIRCLE),
-            ('[v]', css.CSS_LIST_ITEM_CHECK, CSS_STYLE_CHECK),
-            ('[V]', css.CSS_LIST_ITEM_CHECK, CSS_STYLE_CHECK),
-            ('[<]', css.CSS_LIST_ITEM_LT, CSS_STYLE_LT),
-            ('[>]', css.CSS_LIST_ITEM_GT, CSS_STYLE_GT),
-            ]
+        ("[]", css.CSS_LIST_ITEM_EMPTY, CSS_STYLE_EMPTY),
+        ("[ ]", css.CSS_LIST_ITEM_TODO, CSS_STYLE_TODO),
+        ("[/]", css.CSS_LIST_ITEM_INCOMPLETE, CSS_STYLE_INCOMPLETE),
+        ("[\\]", css.CSS_LIST_ITEM_INCOMPLETE, CSS_STYLE_INCOMPLETE),
+        ("[x]", css.CSS_LIST_ITEM_COMPLETE, CSS_STYLE_COMPLETE),
+        ("[X]", css.CSS_LIST_ITEM_COMPLETE, CSS_STYLE_COMPLETE),
+        ("[*]", css.CSS_LIST_ITEM_STAR, CSS_STYLE_STAR),
+        ("[+]", css.CSS_LIST_ITEM_PLUS, CSS_STYLE_PLUS),
+        ("[-]", css.CSS_LIST_ITEM_MINUS, CSS_STYLE_MINUS),
+        ("[o]", css.CSS_LIST_ITEM_CIRCLE, CSS_STYLE_CIRCLE),
+        ("[O]", css.CSS_LIST_ITEM_CIRCLE, CSS_STYLE_CIRCLE),
+        ("[v]", css.CSS_LIST_ITEM_CHECK, CSS_STYLE_CHECK),
+        ("[V]", css.CSS_LIST_ITEM_CHECK, CSS_STYLE_CHECK),
+        ("[<]", css.CSS_LIST_ITEM_LT, CSS_STYLE_LT),
+        ("[>]", css.CSS_LIST_ITEM_GT, CSS_STYLE_GT),
+    ]
 
     def __init__(self, parser):
         self.allListsParams = [
-            ListParams(ListToken.unorderList, f'<ul class="{css.CSS_WIKI}">', '</ul>'),
-            ListParams(ListToken.orderList, f'<ol class="{css.CSS_WIKI}">', '</ol>'),
+            ListParams(ListToken.unorderList, f'<ul class="{css.CSS_WIKI}">', "</ul>"),
+            ListParams(ListToken.orderList, f'<ol class="{css.CSS_WIKI}">', "</ol>"),
         ]
 
         self.parser = parser
         self._maxDepthLevel = 500
-        self._blockToken = MultilineBlockFactory.make(
-            self.parser).setParseAction(noConvert)
+        self._blockToken = MultilineBlockFactory.make(self.parser).setParseAction(
+            noConvert
+        )
 
     def _addDeeperLevel(self, depth, item, currItem):
         """
@@ -122,7 +124,7 @@ class ListToken:
         return result
 
     def _closeListStartList(self, level, item, currItem):
-        result = ''
+        result = ""
 
         result += self._closeLists(1, currItem)
         result += self._getStartListTag(item[0], self.allListsParams)
@@ -136,7 +138,7 @@ class ListToken:
         currLevel = 0
         currItem = []
 
-        result = ''
+        result = ""
 
         for item in items:
             if len(item.strip()) == 0:
@@ -146,16 +148,13 @@ class ListToken:
             if level > self._maxDepthLevel:
                 level = self._maxDepthLevel
 
-            if (level == currLevel and
-                    len(currItem) > 0 and
-                    item[0] == currItem[-1]):
+            if level == currLevel and len(currItem) > 0 and item[0] == currItem[-1]:
                 # Новый элемент в текущем списке
                 result += self._getListItemTag(item, level)
 
             elif level > currLevel:
                 # Более глубокий уровень
-                result += self._addDeeperLevel(level -
-                                                currLevel, item, currItem)
+                result += self._addDeeperLevel(level - currLevel, item, currItem)
                 result += self._getListItemTag(item, level)
 
             elif level < currLevel:
@@ -182,12 +181,18 @@ class ListToken:
 
     def getToken(self):
         text = Regex(r"(?:\\\n|.)*?$", re.MULTILINE)
-        line_break = Regex(r'\n{0,2}', re.MULTILINE)
+        line_break = Regex(r"\n{0,2}", re.MULTILINE)
 
-        item = Combine(Regex(r'^(?:(?:\*+)|(?:#+))\s*', re.MULTILINE) +
-                       (self._blockToken | text) +
-                       line_break).leaveWhitespace()
-        fullList = OneOrMore(item).setParseAction(self._convertList).ignoreWhitespace(False)("list")
+        item = Combine(
+            Regex(r"^(?:(?:\*+)|(?:#+))\s*", re.MULTILINE)
+            + (self._blockToken | text)
+            + line_break
+        ).leaveWhitespace()
+        fullList = (
+            OneOrMore(item)
+            .setParseAction(self._convertList)
+            .ignoreWhitespace(False)("list")
+        )
 
         return fullList
 
@@ -229,7 +234,9 @@ class ListToken:
             css_classes += other_css
 
         itemText = self.parser.parseListItemMarkup(text)
-        return '<li class="{css_class}">{text}</li>'.format(text=itemText, css_class=' '.join(css_classes))
+        return '<li class="{css_class}">{text}</li>'.format(
+            text=itemText, css_class=" ".join(css_classes)
+        )
 
     def _processUnorderClasses(self, text) -> Tuple[str, List[str]]:
         result_text = text
@@ -237,7 +244,7 @@ class ListToken:
 
         for prefix, css_class, css_style in self.unorderListCSS:
             if text.startswith(prefix):
-                result_text = text[len(prefix):].strip()
+                result_text = text[len(prefix) :].strip()
                 classes.append(css_class)
                 self.parser.addStyle(css_class, css_style)
                 break

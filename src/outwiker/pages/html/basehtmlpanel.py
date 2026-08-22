@@ -27,7 +27,11 @@ from outwiker.core.defines import (
     REGISTRY_PAGE_PREVIEW_SCROLL_POSITION_X,
     REGISTRY_PAGE_PREVIEW_SCROLL_POSITION_Y,
 )
-from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams, PreviewScrolledParams
+from outwiker.core.events import (
+    PageUpdateNeededParams,
+    PageModeChangeParams,
+    PreviewScrolledParams,
+)
 from outwiker.core.system import getImagesDir
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.defines import STATUSBAR_MESSAGE_ITEM
@@ -319,7 +323,11 @@ class BaseHtmlPanel(BaseTextPanel):
     def _updatePage(self):
         assert self._currentpage is not None
 
-        setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, _("Page rendered. Please wait…"))
+        setStatusText(
+            self._application.mainWindow,
+            STATUSBAR_MESSAGE_ITEM,
+            _("Page rendered. Please wait…"),
+        )
         self._application.onHtmlRenderingBegin(self._currentpage, self.htmlWindow)
 
         self._application.onPageUpdateNeeded(
@@ -335,7 +343,11 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         assert self._currentpage is not None
 
-        setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, _("Page loading. Please wait…"))
+        setStatusText(
+            self._application.mainWindow,
+            STATUSBAR_MESSAGE_ITEM,
+            _("Page loading. Please wait…"),
+        )
 
         try:
             path = getPageHtmlPath(self._currentpage)

@@ -13,6 +13,7 @@ class BookmarksController:
     """
     Класс для организации работы GUI с закладками
     """
+
     def __init__(self, mainWndController, application: Application):
         """
         mainWndController - экземпляр класса MainWndController
@@ -63,10 +64,11 @@ class BookmarksController:
         self._updateBookmarksMenu()
 
     def _updateBookmarksMenu(self):
-        menu_bookmarks = self.mainWndController.mainWindow.menuController[MENU_BOOKMARKS]
+        menu_bookmarks = self.mainWndController.mainWindow.menuController[
+            MENU_BOOKMARKS
+        ]
         self.mainWndController.removeMenuItemsById(
-            menu_bookmarks,
-            list(self._bookmarksId.keys())
+            menu_bookmarks, list(self._bookmarksId.keys())
         )
         self._bookmarksId.clear()
 
@@ -88,9 +90,9 @@ class BookmarksController:
                 label = page.display_title
 
             menu_bookmarks.Append(control_id, label, "", wx.ITEM_NORMAL)
-            self.mainWndController.mainWindow.Bind(wx.EVT_MENU,
-                                                   self._onSelectBookmark,
-                                                   id=control_id)
+            self.mainWndController.mainWindow.Bind(
+                wx.EVT_MENU, self._onSelectBookmark, id=control_id
+            )
 
     def _onSelectBookmark(self, event):
         subpath = self._bookmarksId[event.Id]

@@ -29,7 +29,9 @@ class AttachCreateSubdirTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyWiki(self.wikiroot)
 
     def _getAction(self):
-        return self.application.actionController.getAction(AttachCreateSubdirAction.stringId)
+        return self.application.actionController.getAction(
+            AttachCreateSubdirAction.stringId
+        )
 
     def testSingleRun(self):
         action = self._getAction()
@@ -45,7 +47,7 @@ class AttachCreateSubdirTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue(new_subdir.is_dir())
 
     def testSingleSubdirRun(self):
-        subdir = 'subdir'
+        subdir = "subdir"
         action = self._getAction()
         attach = Attachment(self.page)
         attach.createSubdir(subdir)
@@ -69,8 +71,8 @@ class AttachCreateSubdirTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         root = Path(attach.getAttachPath(create=False))
         new_subdir_1 = root / getDefaultSubdirName()
-        new_subdir_2 = root / (getDefaultSubdirName() + ' (1)')
-        new_subdir_3 = root / (getDefaultSubdirName() + ' (2)')
+        new_subdir_2 = root / (getDefaultSubdirName() + " (1)")
+        new_subdir_3 = root / (getDefaultSubdirName() + " (2)")
 
         self.assertTrue(root.exists())
         self.assertTrue(new_subdir_1.exists())
@@ -89,12 +91,12 @@ class AttachCreateSubdirTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         root = Path(attach.getAttachPath(create=True))
         fname = root / getDefaultSubdirName()
-        with open(fname, 'w'):
+        with open(fname, "w"):
             pass
 
         action.run(None)
 
-        new_subdir = root / (getDefaultSubdirName() + ' (1)')
+        new_subdir = root / (getDefaultSubdirName() + " (1)")
 
         self.assertTrue(new_subdir.exists())
         self.assertTrue(new_subdir.is_dir())

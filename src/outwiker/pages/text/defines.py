@@ -1,1 +1,1 @@
-PAGE_TYPE_STRING = 'text'
+PAGE_TYPE_STRING = "text"

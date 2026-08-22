@@ -28,20 +28,20 @@ class TextPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testType(self):
         self.application.wikiroot = self.wikiroot
-        self.assertEqual(RootPagePanel,
-                         type(self.mainWindow.pagePanel.pageView))
+        self.assertEqual(RootPagePanel, type(self.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = self.wikiroot["Страница"]
-        self.assertEqual(TextPanel,
-                         type(self.application.mainWindow.pagePanel.pageView))
+        self.assertEqual(
+            TextPanel, type(self.application.mainWindow.pagePanel.pageView)
+        )
 
         self.application.selectedPage = self.wikiroot["Страница 2"]
-        self.assertEqual(TextPanel,
-                         type(self.application.mainWindow.pagePanel.pageView))
+        self.assertEqual(
+            TextPanel, type(self.application.mainWindow.pagePanel.pageView)
+        )
 
         self.application.selectedPage = None
-        self.assertEqual(RootPagePanel,
-                         type(self.mainWindow.pagePanel.pageView))
+        self.assertEqual(RootPagePanel, type(self.mainWindow.pagePanel.pageView))
 
     def testCursorPosition_01(self):
         self.application.wikiroot = self.wikiroot

@@ -12,6 +12,7 @@ class Thumbnails:
     """
     Class for working with attachments directory
     """
+
     thumbDir = "__thumb"
 
     def __init__(self, page):
@@ -26,8 +27,9 @@ class Thumbnails:
         Get the full path to the thumbnails directory
         create - whether to create the directory if it doesn't exist
         """
-        path = os.path.join(Attachment(self.page).getAttachPath(create=create),
-                            Thumbnails.thumbDir)
+        path = os.path.join(
+            Attachment(self.page).getAttachPath(create=create), Thumbnails.thumbDir
+        )
 
         if create and not os.path.exists(path):
             os.mkdir(path)

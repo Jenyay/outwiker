@@ -38,19 +38,16 @@ class PageListPopup(ResizablePopupWindow):
 
 
 class PageListForTagsCloud(PageList):
-    '''
+    """
     Page list to use in the PageListPopup
-    '''
+    """
 
-    def __init__(self,
-                 parent: wx.Window,
-                 popupWindow: ResizablePopupWindow):
+    def __init__(self, parent: wx.Window, popupWindow: ResizablePopupWindow):
         super().__init__(parent)
         # Key - MenuItem ID, value - item from self._columns
-        self._popupMenuColumnItems = {}        # type: Dict[int, BaseColumn]
+        self._popupMenuColumnItems = {}  # type: Dict[int, BaseColumn]
 
-        self._listCtrl.Bind(ULC.EVT_LIST_COL_RIGHT_CLICK,
-                            handler=self._onColRightClick)
+        self._listCtrl.Bind(ULC.EVT_LIST_COL_RIGHT_CLICK, handler=self._onColRightClick)
         self.Bind(wx.EVT_MENU, handler=self._onPopupMenuClick)
 
     def _onColRightClick(self, event):
@@ -62,7 +59,7 @@ class PageListForTagsCloud(PageList):
             menu_item.Check(col.visible)
             self._popupMenuColumnItems[menu_item.GetId()] = col
 
-        if getOS().name != 'windows':
+        if getOS().name != "windows":
             # In Linux popup menu deactivates parent window
             self.GetParent().setDeactivateCount(1)
         self.PopupMenu(menu)

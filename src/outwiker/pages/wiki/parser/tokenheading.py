@@ -22,9 +22,13 @@ class HeadingToken:
         """
         Токены для заголовков H1, H2,...
         """
-        return Regex(self.heading_Regex, re.MULTILINE).setParseAction(self.convertToHeading)("heading")
+        return Regex(self.heading_Regex, re.MULTILINE).setParseAction(
+            self.convertToHeading
+        )("heading")
 
     def convertToHeading(self, s, l, t):
         level = len(t["header"]) - 1
         content = self.parser.parseHeadingMarkup(t["title"])
-        return '<h{level} class="{css_class}">{content}</h{level}>'.format(level=level, content=content, css_class=css.CSS_WIKI)
+        return '<h{level} class="{css_class}">{content}</h{level}>'.format(
+            level=level, content=content, css_class=css.CSS_WIKI
+        )

@@ -4,8 +4,10 @@ import wx
 import wx.aui
 
 from outwiker.core.config import BooleanOption
-from outwiker.core.defines import (CONFIG_TOOLBARS_SECTION,
-                                   CONFIG_TOOLBARS_VISIBLE_SUFFIX)
+from outwiker.core.defines import (
+    CONFIG_TOOLBARS_SECTION,
+    CONFIG_TOOLBARS_VISIBLE_SUFFIX,
+)
 from outwiker.gui.defines import TOOLBAR_ORDER_PLUGIN
 
 
@@ -22,9 +24,8 @@ class ToolBarInfo:
         self.order = order
 
     def __str__(self):
-        return '{title}: order={order}'.format(
-            title=self.menu_item.GetText(),
-            order=self.order
+        return "{title}: order={order}".format(
+            title=self.menu_item.GetText(), order=self.order
         )
 
 
@@ -32,6 +33,7 @@ class ToolBarsController:
     """
     Класс для управления панелями инструментов и меню, связанными с ними
     """
+
     def __init__(self, parentMenu, toolbarcontainer, config):
         self._toolbarcontainer = toolbarcontainer
         self._config = config
@@ -47,8 +49,7 @@ class ToolBarsController:
     def __getitem__(self, toolbarname):
         return self._toolbarcontainer[toolbarname]
 
-    def createToolBar(self, toolbar_id,
-                      title, order=TOOLBAR_ORDER_PLUGIN):
+    def createToolBar(self, toolbar_id, title, order=TOOLBAR_ORDER_PLUGIN):
         toolbar = self._toolbarcontainer.createToolBar(toolbar_id, order=order)
         menu_item_index = self._getMenuItemIndex(order)
         menu_item = self._addMenu(toolbar, title, menu_item_index)
@@ -59,9 +60,9 @@ class ToolBarsController:
         toolbar.Show(is_visible)
 
     def _getMenuItemIndex(self, order):
-        menu_items = sorted(self._toolbars.values(),
-                            key=lambda item: item.order,
-                            reverse=True)
+        menu_items = sorted(
+            self._toolbars.values(), key=lambda item: item.order, reverse=True
+        )
         index = 0
 
         for item in menu_items:
@@ -77,16 +78,14 @@ class ToolBarsController:
         menu_item = self._toolbarsMenu.InsertCheckItem(index, wx.ID_ANY, title)
         menu_item.Check(toolbar.IsShown())
 
-        self._toolbarsMenu.Bind(wx.EVT_MENU,
-                                self._onToolBarMenuClick,
-                                menu_item)
+        self._toolbarsMenu.Bind(wx.EVT_MENU, self._onToolBarMenuClick, menu_item)
         return menu_item
 
     def _removeMenu(self, toolbarinfo):
         self._toolbarsMenu.Delete(toolbarinfo.menu_item)
-        self._toolbarsMenu.Unbind(wx.EVT_MENU,
-                                  source=toolbarinfo.menu_item,
-                                  handler=self._onToolBarMenuClick)
+        self._toolbarsMenu.Unbind(
+            wx.EVT_MENU, source=toolbarinfo.menu_item, handler=self._onToolBarMenuClick
+        )
 
     def _onToolBarMenuClick(self, event):
         toolbar_id, toolbarinfo = self._getToolBarByMenuId(event.GetId())
@@ -103,10 +102,9 @@ class ToolBarsController:
     def _getVisibleOption(self, toolbar_id):
         param_name = toolbar_id + CONFIG_TOOLBARS_VISIBLE_SUFFIX
 
-        visible_option = BooleanOption(self._config,
-                                       CONFIG_TOOLBARS_SECTION,
-                                       param_name,
-                                       True)
+        visible_option = BooleanOption(
+            self._config, CONFIG_TOOLBARS_SECTION, param_name, True
+        )
         return visible_option
 
     def _getToolBarByMenuId(self, menuid):

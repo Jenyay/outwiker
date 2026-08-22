@@ -24,9 +24,8 @@ class MarkdownPolyactionsTest(BaseEditorPolyactionsFixture, unittest.TestCase):
 
     def _createPage(self):
         from markdown.markdownpage import MarkdownPageFactory
-        return MarkdownPageFactory().create(self.wikiroot,
-                                            "Markdown-страница",
-                                            [])
+
+        return MarkdownPageFactory().create(self.wikiroot, "Markdown-страница", [])
 
     def _getEditor(self):
         return self.application.mainWindow.pagePanel.pageView.codeEditor

@@ -8,6 +8,7 @@ class ShowHideTagsAction(BaseAction):
     """
     Показать / скрыть панель с тегами
     """
+
     stringId = "ShowHideTags"
 
     def __init__(self, application):

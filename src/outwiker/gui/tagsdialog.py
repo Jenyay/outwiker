@@ -29,7 +29,9 @@ class TagsDialog(wx.Dialog):
 
     def __createControls(self):
         self.__tagsLabel = wx.StaticText(self, -1, _("Tags (comma separated)"))
-        self.__tagsSelector = TagsSelector(self, self.__theme, enable_active_tags_filter=False)
+        self.__tagsSelector = TagsSelector(
+            self, self.__theme, enable_active_tags_filter=False
+        )
         self.__tagsSelector.SetMinSize((350, -1))
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
@@ -40,7 +42,11 @@ class TagsDialog(wx.Dialog):
         mainSizer.Add(self.__tagsLabel, flag=wx.ALIGN_CENTER_VERTICAL)
         mainSizer.Add(self.__tagsSelector, flag=wx.EXPAND)
         mainSizer.AddStretchSpacer()
-        mainSizer.Add(buttonsSizer, flag=wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.TOP | wx.BOTTOM, border=CONTROLS_MARGIN)
+        mainSizer.Add(
+            buttonsSizer,
+            flag=wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.TOP | wx.BOTTOM,
+            border=CONTROLS_MARGIN,
+        )
 
         marginSizer = MarginSizer()
         marginSizer.Add(mainSizer)

@@ -23,9 +23,11 @@ class ExecDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._loader.load(dirlist)
 
         from externaltools.config import ExternalToolsConfig
+
         ExternalToolsConfig(self.application.config).clearAll()
 
         from externaltools.commandexec.execdialog import ExecDialog
+
         self._dlg = ExecDialog(self.application.mainWindow)
         Tester.dialogTester.clear()
         Tester.dialogTester.appendOk()
@@ -35,6 +37,7 @@ class ExecDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._loader.clear()
 
         from externaltools.config import ExternalToolsConfig
+
         ExternalToolsConfig(self.application.config).clearAll()
 
         self.destroyApplication()
@@ -42,42 +45,33 @@ class ExecDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testDefault(self):
         from externaltools.commandexec.execdialogcontroller import ExecDialogController
 
-        controller = ExecDialogController(
-            self._dlg,
-            self.application
-        )
+        controller = ExecDialogController(self._dlg, self.application)
 
         result = controller.showDialog()
         begin, end = controller.getResult()
 
         self.assertEqual(result, wx.ID_OK)
-        self.assertEqual(begin, '(:exec:)')
-        self.assertEqual(end, '(:execend:)')
+        self.assertEqual(begin, "(:exec:)")
+        self.assertEqual(end, "(:execend:)")
 
     def testTitle(self):
         from externaltools.commandexec.execdialogcontroller import ExecDialogController
 
-        controller = ExecDialogController(
-            self._dlg,
-            self.application
-        )
+        controller = ExecDialogController(self._dlg, self.application)
 
-        self._dlg.title = 'Заголовок команды'
+        self._dlg.title = "Заголовок команды"
 
         result = controller.showDialog()
         begin, end = controller.getResult()
 
         self.assertEqual(result, wx.ID_OK)
         self.assertEqual(begin, '(:exec title="Заголовок команды":)')
-        self.assertEqual(end, '(:execend:)')
+        self.assertEqual(end, "(:execend:)")
 
     def testFormat(self):
         from externaltools.commandexec.execdialogcontroller import ExecDialogController
 
-        controller = ExecDialogController(
-            self._dlg,
-            self.application
-        )
+        controller = ExecDialogController(self._dlg, self.application)
 
         self._dlg.format = 1
 
@@ -86,23 +80,19 @@ class ExecDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(result, wx.ID_OK)
         self.assertEqual(begin, '(:exec format="button":)')
-        self.assertEqual(end, '(:execend:)')
+        self.assertEqual(end, "(:execend:)")
 
     def testTitleFormat(self):
         from externaltools.commandexec.execdialogcontroller import ExecDialogController
 
-        controller = ExecDialogController(
-            self._dlg,
-            self.application
-        )
+        controller = ExecDialogController(self._dlg, self.application)
 
-        self._dlg.title = 'Заголовок команды'
+        self._dlg.title = "Заголовок команды"
         self._dlg.format = 1
 
         result = controller.showDialog()
         begin, end = controller.getResult()
 
         self.assertEqual(result, wx.ID_OK)
-        self.assertEqual(
-            begin, '(:exec title="Заголовок команды" format="button":)')
-        self.assertEqual(end, '(:execend:)')
+        self.assertEqual(begin, '(:exec title="Заголовок команды" format="button":)')
+        self.assertEqual(end, "(:execend:)")

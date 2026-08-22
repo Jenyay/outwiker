@@ -7,6 +7,7 @@ class FormatCtrl(wx.Panel):
     """
     Контрол для ввода форматов данных с кнопкой-подсказкой
     """
+
     def __init__(self, parent, defaultFormat, hintsList, hintButtonBitmap):
         """
         defaultFormat - значение по умолчанию
@@ -38,8 +39,7 @@ class FormatCtrl(wx.Panel):
         (sel_from, sel_to) = self.formatCtrl.GetSelection()
         self.formatCtrl.Replace(sel_from, sel_to, hint[0])
         self.formatCtrl.SetFocus()
-        self.formatCtrl.SetSelection(sel_from + len(hint[0]),
-                                     sel_from + len(hint[0]))
+        self.formatCtrl.SetSelection(sel_from + len(hint[0]), sel_from + len(hint[0]))
 
     def GetValue(self):
         return self.formatCtrl.GetValue()
@@ -55,18 +55,20 @@ class FormatCtrl(wx.Panel):
         self._menuItemsId = {}
 
         for hint in self._hints:
-            text = u"{0} - {1}".format(hint[0], hint[1])
+            text = "{0} - {1}".format(hint[0], hint[1])
             newid = self._menu.Append(wx.ID_ANY, text).GetId()
             self._menuItemsId[newid] = hint
 
     def __layout(self):
         mainSizer = wx.FlexGridSizer(cols=2)
         mainSizer.AddGrowableCol(0)
-        mainSizer.Add(self.formatCtrl,
-                      flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                      border=2)
-        mainSizer.Add(self.hintBtn,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
-                      border=0)
+        mainSizer.Add(
+            self.formatCtrl,
+            flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=2,
+        )
+        mainSizer.Add(
+            self.hintBtn, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, border=0
+        )
 
         self.SetSizer(mainSizer)

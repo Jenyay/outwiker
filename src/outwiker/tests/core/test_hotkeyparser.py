@@ -7,7 +7,6 @@ from outwiker.gui.hotkey import HotKey
 
 
 class HotKeyParserTest(unittest.TestCase):
-
     def setUp(self):
         pass
 
@@ -18,30 +17,28 @@ class HotKeyParserTest(unittest.TestCase):
         self.assertEqual(HotKeyParser.toString(HotKey("A")), "A")
         self.assertEqual(HotKeyParser.toString(HotKey("F1")), "F1")
 
-        self.assertEqual(HotKeyParser.toString(HotKey("A", ctrl=True)),
-                         "Ctrl+A")
+        self.assertEqual(HotKeyParser.toString(HotKey("A", ctrl=True)), "Ctrl+A")
 
-        self.assertEqual(HotKeyParser.toString(HotKey("A", shift=True)),
-                         "Shift+A")
+        self.assertEqual(HotKeyParser.toString(HotKey("A", shift=True)), "Shift+A")
 
-        self.assertEqual(HotKeyParser.toString(HotKey("A", alt=True)),
-                         "Alt+A")
+        self.assertEqual(HotKeyParser.toString(HotKey("A", alt=True)), "Alt+A")
 
-        self.assertEqual(HotKeyParser.toString(
-            HotKey("A", ctrl=True, alt=True)),
-            "Ctrl+Alt+A")
+        self.assertEqual(
+            HotKeyParser.toString(HotKey("A", ctrl=True, alt=True)), "Ctrl+Alt+A"
+        )
 
-        self.assertEqual(HotKeyParser.toString(
-            HotKey("A", ctrl=True, shift=True)),
-            "Ctrl+Shift+A")
+        self.assertEqual(
+            HotKeyParser.toString(HotKey("A", ctrl=True, shift=True)), "Ctrl+Shift+A"
+        )
 
-        self.assertEqual(HotKeyParser.toString(
-            HotKey("A", alt=True, shift=True)),
-            "Shift+Alt+A")
+        self.assertEqual(
+            HotKeyParser.toString(HotKey("A", alt=True, shift=True)), "Shift+Alt+A"
+        )
 
-        self.assertEqual(HotKeyParser.toString(
-            HotKey("A", ctrl=True, alt=True, shift=True)),
-            "Ctrl+Shift+Alt+A")
+        self.assertEqual(
+            HotKeyParser.toString(HotKey("A", ctrl=True, alt=True, shift=True)),
+            "Ctrl+Shift+Alt+A",
+        )
 
     def testParse1(self):
         hotkey = HotKeyParser.fromString("A")

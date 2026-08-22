@@ -6,7 +6,7 @@ from outwiker.tests.utils import attach_files
 
 
 def test_no_attaches_empty_query(wikipage):
-    query = ''
+    query = ""
     attach = Attachment(wikipage)
     result = attach.query(query)
 
@@ -14,8 +14,8 @@ def test_no_attaches_empty_query(wikipage):
 
 
 def test_empty_query(wikipage):
-    files = ['image.png', 'add.png']
-    query = ''
+    files = ["image.png", "add.png"]
+    query = ""
     attach_files(wikipage, files)
 
     attach = Attachment(wikipage)
@@ -25,8 +25,8 @@ def test_empty_query(wikipage):
 
 
 def test_invalid_query_space(wikipage):
-    files = ['image.png', 'add.png']
-    query = '\n\t '
+    files = ["image.png", "add.png"]
+    query = "\n\t "
     attach_files(wikipage, files)
 
     attach = Attachment(wikipage)
@@ -36,8 +36,8 @@ def test_invalid_query_space(wikipage):
 
 
 def test_invalid_query_double_dots(wikipage):
-    files = ['image.png', 'add.png']
-    query = '../*.*'
+    files = ["image.png", "add.png"]
+    query = "../*.*"
     attach_files(wikipage, files)
 
     attach = Attachment(wikipage)
@@ -47,8 +47,8 @@ def test_invalid_query_double_dots(wikipage):
 
 
 def test_invalid_query_root_slash(wikipage):
-    files = ['image.png', 'add.png']
-    query = '/*.*'
+    files = ["image.png", "add.png"]
+    query = "/*.*"
     attach_files(wikipage, files)
 
     attach = Attachment(wikipage)
@@ -58,7 +58,7 @@ def test_invalid_query_root_slash(wikipage):
 
 
 def test_attach_not_exists(wikipage):
-    query = '*.*'
+    query = "*.*"
 
     attach = Attachment(wikipage)
     result = attach.query(query)
@@ -67,10 +67,10 @@ def test_attach_not_exists(wikipage):
 
 
 def test_select_all_root(wikipage):
-    files = ['image.png', 'add.png']
-    query = '*.*'
+    files = ["image.png", "add.png"]
+    query = "*.*"
     attach_files(wikipage, files)
-    expected = ['add.png', 'image.png']
+    expected = ["add.png", "image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -79,10 +79,10 @@ def test_select_all_root(wikipage):
 
 
 def test_select_all_root_single_star(wikipage):
-    files = ['image.png', 'add.png']
-    query = '*'
+    files = ["image.png", "add.png"]
+    query = "*"
     attach_files(wikipage, files)
-    expected = ['add.png', 'image.png']
+    expected = ["add.png", "image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -91,10 +91,10 @@ def test_select_all_root_single_star(wikipage):
 
 
 def test_select_by_extension(wikipage):
-    files = ['image.png', 'add.png', 'image.jpg']
-    query = '*.png'
+    files = ["image.png", "add.png", "image.jpg"]
+    query = "*.png"
     attach_files(wikipage, files)
-    expected = ['add.png', 'image.png']
+    expected = ["add.png", "image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -103,10 +103,10 @@ def test_select_by_extension(wikipage):
 
 
 def test_select_by_name(wikipage):
-    files = ['image.png', 'add.png', 'image.jpg']
-    query = 'image.*'
+    files = ["image.png", "add.png", "image.jpg"]
+    query = "image.*"
     attach_files(wikipage, files)
-    expected = ['image.jpg', 'image.png']
+    expected = ["image.jpg", "image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -115,10 +115,10 @@ def test_select_by_name(wikipage):
 
 
 def test_select_by_name_with_question_marks(wikipage):
-    files = ['image.png', 'add.png', 'image.jpg']
-    query = 'ima??.*'
+    files = ["image.png", "add.png", "image.jpg"]
+    query = "ima??.*"
     attach_files(wikipage, files)
-    expected = ['image.jpg', 'image.png']
+    expected = ["image.jpg", "image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -127,10 +127,10 @@ def test_select_by_name_with_question_marks(wikipage):
 
 
 def test_select_by_name_with_star(wikipage):
-    files = ['image.png', 'add.png', 'image.jpg']
-    query = 'ima*.png'
+    files = ["image.png", "add.png", "image.jpg"]
+    query = "ima*.png"
     attach_files(wikipage, files)
-    expected = ['image.png']
+    expected = ["image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -139,11 +139,11 @@ def test_select_by_name_with_star(wikipage):
 
 
 def test_query_in_subdir(wikipage):
-    subdir = 'subdir'
-    files = ['image.png', 'add.png', 'image.jpg']
-    query = 'subdir/*.png'
+    subdir = "subdir"
+    files = ["image.png", "add.png", "image.jpg"]
+    query = "subdir/*.png"
     attach_files(wikipage, files, subdir)
-    expected = ['subdir/add.png', 'subdir/image.png']
+    expected = ["subdir/add.png", "subdir/image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -152,11 +152,11 @@ def test_query_in_subdir(wikipage):
 
 
 def test_select_all_in_subdir_single_star(wikipage):
-    subdir = 'subdir'
-    files = ['image.png', 'add.png', 'image.jpg']
-    query = 'subdir/*'
+    subdir = "subdir"
+    files = ["image.png", "add.png", "image.jpg"]
+    query = "subdir/*"
     attach_files(wikipage, files, subdir)
-    expected = ['subdir/add.png', 'subdir/image.jpg', 'subdir/image.png']
+    expected = ["subdir/add.png", "subdir/image.jpg", "subdir/image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -165,11 +165,11 @@ def test_select_all_in_subdir_single_star(wikipage):
 
 
 def test_select_all_in_subdir_double_star(wikipage):
-    subdir = 'subdir'
-    files = ['image.png', 'add.png', 'image.jpg']
-    query = 'subdir/*.*'
+    subdir = "subdir"
+    files = ["image.png", "add.png", "image.jpg"]
+    query = "subdir/*.*"
     attach_files(wikipage, files, subdir)
-    expected = ['subdir/add.png', 'subdir/image.jpg', 'subdir/image.png']
+    expected = ["subdir/add.png", "subdir/image.jpg", "subdir/image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -178,13 +178,15 @@ def test_select_all_in_subdir_double_star(wikipage):
 
 
 def test_select_all_with_subdir(wikipage):
-    subdir = 'subdir/subdir2'
-    files = ['image.png', 'add.png', 'image.jpg']
-    query = '**/*.*'
+    subdir = "subdir/subdir2"
+    files = ["image.png", "add.png", "image.jpg"]
+    query = "**/*.*"
     attach_files(wikipage, files, subdir)
-    expected = ['subdir/subdir2/add.png',
-                'subdir/subdir2/image.jpg',
-                'subdir/subdir2/image.png']
+    expected = [
+        "subdir/subdir2/add.png",
+        "subdir/subdir2/image.jpg",
+        "subdir/subdir2/image.png",
+    ]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))
@@ -193,12 +195,11 @@ def test_select_all_with_subdir(wikipage):
 
 
 def test_select_mask_with_subdir(wikipage):
-    subdir = 'subdir/subdir2'
-    files = ['image.png', 'add.png', 'image.jpg']
-    query = '**/*.png'
+    subdir = "subdir/subdir2"
+    files = ["image.png", "add.png", "image.jpg"]
+    query = "**/*.png"
     attach_files(wikipage, files, subdir)
-    expected = ['subdir/subdir2/add.png',
-                'subdir/subdir2/image.png']
+    expected = ["subdir/subdir2/add.png", "subdir/subdir2/image.png"]
 
     attach = Attachment(wikipage)
     result = sorted(attach.query(query))

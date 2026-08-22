@@ -21,9 +21,7 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.__pluginname = "Source"
         self.initApplication()
         self.wikiroot = self.createWiki()
-        self.testPage = WikiPageFactory().create(self.wikiroot,
-                                                 "Страница 1",
-                                                 [])
+        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
         dirlist = ["plugins/source"]
 
@@ -50,7 +48,8 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Явное задание кодировки
         """
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_cp1251.cs")])
+            [os.path.join(self.samplefilesPath, "source_cp1251.cs")]
+        )
         content = '(:source file="source_cp1251.cs"  encoding="cp1251":)'
         self.testPage.content = content
 
@@ -58,15 +57,18 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>' in result)
-        self.assertTrue('Ошибка соединения с сервером' in result)
+            '<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>'
+            in result
+        )
+        self.assertTrue("Ошибка соединения с сервером" in result)
 
     def testHighlightFileEncoding2(self):
         """
         Явное задание неправильной кодировки
         """
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_cp1251.cs")])
+            [os.path.join(self.samplefilesPath, "source_cp1251.cs")]
+        )
         content = '(:source file="source_cp1251.cs"  encoding="utf8":)'
         self.testPage.content = content
 
@@ -74,17 +76,20 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
-        self.assertTrue('Ошибка соединения с сервером' not in result)
+            '<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>'
+            not in result
+        )
+        self.assertTrue("Ошибка соединения с сервером" not in result)
 
-        self.assertTrue('Source' in result)
+        self.assertTrue("Source" in result)
 
     def testHighlightFileEncoding3(self):
         """
         Явное задание неправильной кодировки(которой нет в списке кодировок)
         """
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_cp1251.cs")])
+            [os.path.join(self.samplefilesPath, "source_cp1251.cs")]
+        )
         content = '(:source file="source_cp1251.cs"  encoding="blablabla":)'
         self.testPage.content = content
 
@@ -92,17 +97,20 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
-        self.assertTrue('Ошибка соединения с сервером' not in result)
+            '<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>'
+            not in result
+        )
+        self.assertTrue("Ошибка соединения с сервером" not in result)
 
-        self.assertTrue('Source' in result)
+        self.assertTrue("Source" in result)
 
     def testHighlightFileEncoding4(self):
         """
         Явное задание неправильной кодировки(которой нет в списке кодировок)
         """
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="source_utf8.py"  encoding="blablabla":)'
         self.testPage.content = content
 
@@ -110,11 +118,15 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="kn">import</span> <span class="nn">os.path</span>' not in result)
+            '<span class="kn">import</span> <span class="nn">os.path</span>'
+            not in result
+        )
 
         self.assertTrue(
-            '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' not in result)
+            '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>'
+            not in result
+        )
 
-        self.assertTrue('Уничтожение(выгрузка) плагина.' not in result)
+        self.assertTrue("Уничтожение(выгрузка) плагина." not in result)
 
-        self.assertTrue('Source' in result)
+        self.assertTrue("Source" in result)

@@ -10,9 +10,7 @@ from tempfile import mkdtemp
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
 from outwiker.core.event import Event, CustomEvents
 from outwiker.core.application import Application
-from outwiker.core.events import (PAGE_UPDATE_CONTENT,
-                                  PAGE_UPDATE_TAGS,
-                                  PAGE_UPDATE_ICON)
+from outwiker.core.events import PAGE_UPDATE_CONTENT, PAGE_UPDATE_TAGS, PAGE_UPDATE_ICON
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
@@ -197,53 +195,53 @@ class EventTest(unittest.TestCase):
 
     def testCustomEvent_01(self):
         cevent = CustomEvents()
-        cevent.bind('event4', self.event4)
+        cevent.bind("event4", self.event4)
 
-        cevent('event4', None)
+        cevent("event4", None)
         self.assertEqual(self.value4, 1)
 
-        cevent('event4', None)
+        cevent("event4", None)
         self.assertEqual(self.value4, 2)
 
-        cevent.unbind('event4', self.event4)
+        cevent.unbind("event4", self.event4)
 
-        cevent('event4', None)
+        cevent("event4", None)
         self.assertEqual(self.value4, 2)
 
     def testCustomEvent_02(self):
         cevent = CustomEvents()
-        cevent.bind('event4', self.event4)
+        cevent.bind("event4", self.event4)
 
-        cevent('event4', None)
+        cevent("event4", None)
         self.assertEqual(self.value4, 1)
 
-        cevent('event4', None)
+        cevent("event4", None)
         self.assertEqual(self.value4, 2)
 
-        cevent.clear('event4')
+        cevent.clear("event4")
 
-        cevent('event4', None)
+        cevent("event4", None)
         self.assertEqual(self.value4, 2)
 
     def testCustomEvent_03(self):
         cevent = CustomEvents()
         param = []
-        cevent.bind('eventAdd1', self.eventAdd_1)
-        cevent('eventAdd1', param)
+        cevent.bind("eventAdd1", self.eventAdd_1)
+        cevent("eventAdd1", param)
 
         self.assertEqual(param, [1])
-        cevent.clear('eventAdd1')
+        cevent.clear("eventAdd1")
 
     def testCustomEvent_04(self):
         cevent = CustomEvents()
-        cevent('unknown', None)
+        cevent("unknown", None)
 
 
 class EventsTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
         self._application.wikiroot = None
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.isPageUpdate = False
         self.isPageCreate = False
@@ -354,8 +352,7 @@ class EventsTest(unittest.TestCase):
         TextPageFactory().create(rootwiki["Страница 2"], "Страница 3", [])
 
         self.assertTrue(self.isPageCreate)
-        self.assertEqual(self.pageCreateSender,
-                         rootwiki["Страница 2/Страница 3"])
+        self.assertEqual(self.pageCreateSender, rootwiki["Страница 2/Страница 3"])
 
         self._application.onTreeUpdate -= self._onTreeUpdate
         self._application.onPageCreate -= self._onPageCreate
@@ -575,11 +572,9 @@ class EventsTest(unittest.TestCase):
 
         rootwiki.selectedPage = rootwiki["Страница 2/Страница 3"]
 
-        self.assertEqual(rootwiki.selectedPage,
-                         rootwiki["Страница 2/Страница 3"])
+        self.assertEqual(rootwiki.selectedPage, rootwiki["Страница 2/Страница 3"])
         self.assertEqual(self.isPageSelect, True)
-        self.assertEqual(self.pageSelectSender,
-                         rootwiki["Страница 2/Страница 3"])
+        self.assertEqual(self.pageSelectSender, rootwiki["Страница 2/Страница 3"])
         self.assertEqual(self.pageSelectCount, 2)
 
         self._application.onPageSelect -= self._onPageSelect
@@ -627,11 +622,9 @@ class EventsTest(unittest.TestCase):
 
         document.selectedPage = document["Страница 2/Страница 3"]
 
-        self.assertEqual(document.selectedPage,
-                         document["Страница 2/Страница 3"])
+        self.assertEqual(document.selectedPage, document["Страница 2/Страница 3"])
         self.assertEqual(self.isPageSelect, True)
-        self.assertEqual(self.pageSelectSender,
-                         document["Страница 2/Страница 3"])
+        self.assertEqual(self.pageSelectSender, document["Страница 2/Страница 3"])
         self.assertEqual(self.pageSelectCount, 2)
 
         self._application.onPageSelect -= self._onPageSelect
@@ -644,7 +637,7 @@ class EventsTest(unittest.TestCase):
         page = TextPageFactory().create(rootwiki, "Страница 1", [])
         self._application.wikiroot = rootwiki
 
-        page.currentAttachSubdir = 'xxx'
+        page.currentAttachSubdir = "xxx"
 
         self.assertEqual(self.pageAttachChangeSubdirCount, 1)
 

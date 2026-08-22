@@ -15,7 +15,7 @@ class HtmlSearchPanelControllerUnix(BaseHtmlSearchPanelController):
         Начать поиск
         """
         self.setSearchPhrase(self.getSearchPhrase())
-        self.htmlRender.Find('')
+        self.htmlRender.Find("")
         self.getPanel().getSearchTextCtrl().SetSelection(-1, -1)
         self.getPanel().getSearchTextCtrl().SetFocus()
         self._search(True)

@@ -18,7 +18,7 @@ class HistoryTest(unittest.TestCase):
         self.treeUpdateSender = None
 
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wiki = createNotesTree(self.path)
 
@@ -113,8 +113,7 @@ class HistoryTest(unittest.TestCase):
         self.assertEqual(history.backLength, 2)
         self.assertEqual(history.forwardLength, 1)
         self.assertEqual(page, self.wiki["Страница 2/Страница 3"])
-        self.assertEqual(history.currentPage,
-                         self.wiki["Страница 2/Страница 3"])
+        self.assertEqual(history.currentPage, self.wiki["Страница 2/Страница 3"])
 
         page = history.back()
 
@@ -142,16 +141,16 @@ class HistoryTest(unittest.TestCase):
         self.assertEqual(history.backLength, 2)
         self.assertEqual(history.forwardLength, 1)
         self.assertEqual(page, self.wiki["Страница 2/Страница 3"])
-        self.assertEqual(history.currentPage,
-                         self.wiki["Страница 2/Страница 3"])
+        self.assertEqual(history.currentPage, self.wiki["Страница 2/Страница 3"])
 
         page = history.forward()
 
         self.assertEqual(history.backLength, 3)
         self.assertEqual(history.forwardLength, 0)
         self.assertEqual(page, self.wiki["Страница 2/Страница 3/Страница 4"])
-        self.assertEqual(history.currentPage,
-                         self.wiki["Страница 2/Страница 3/Страница 4"])
+        self.assertEqual(
+            history.currentPage, self.wiki["Страница 2/Страница 3/Страница 4"]
+        )
 
     def testBackForward_03(self):
         history = History()
@@ -219,8 +218,7 @@ class HistoryTest(unittest.TestCase):
         history.goto(None)
         page = history.back()
 
-        self.assertEqual(page,
-                         self.wiki["Страница 2/Страница 3/Новый заголовок"])
+        self.assertEqual(page, self.wiki["Страница 2/Страница 3/Новый заголовок"])
 
     def testRemove_01(self):
         history = History()
@@ -295,8 +293,7 @@ class HistoryTest(unittest.TestCase):
 
         history.back()
 
-        self.wiki["Страница 2/Страница 3/Страница 4"].moveTo(
-            self.wiki["Страница 1"])
+        self.wiki["Страница 2/Страница 3/Страница 4"].moveTo(self.wiki["Страница 1"])
 
         page = history.forward()
         self.assertEqual(page, self.wiki["Страница 1/Страница 4"])
@@ -308,8 +305,7 @@ class HistoryTest(unittest.TestCase):
         history.goto(self.wiki["Страница 2/Страница 3"])
         history.goto(self.wiki["Страница 2/Страница 3/Страница 4"])
 
-        self.wiki["Страница 2/Страница 3/Страница 4"].moveTo(
-            self.wiki["Страница 1"])
+        self.wiki["Страница 2/Страница 3/Страница 4"].moveTo(self.wiki["Страница 1"])
 
         history.back()
         page = history.forward()

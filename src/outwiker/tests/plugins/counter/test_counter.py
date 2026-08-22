@@ -29,7 +29,7 @@ class CounterTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -217,51 +217,51 @@ class CounterTest(unittest.TestCase):
         self.assertEqual(result, validResult)
 
     def testParent_01(self):
-        text = '''(:counter name="level 1":)
+        text = """(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 2" parent="level 1":)
-(:counter name="level 2" parent="level 1":)'''
+(:counter name="level 2" parent="level 1":)"""
 
-        validResult = '''1
+        validResult = """1
 1.1
 1.2
-1.3'''
+1.3"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testParent_02(self):
-        text = '''(:counter name="level 1":)
+        text = """(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 3" parent="level 2":)
-(:counter name="level 3" parent="level 2":)'''
+(:counter name="level 3" parent="level 2":)"""
 
-        validResult = '''1
+        validResult = """1
 1.1
 1.1.1
-1.1.2'''
+1.1.2"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testParent_03(self):
-        text = '''(:counter name="level 1":)
+        text = """(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
-(:counter name="level 2" parent="level 1":)'''
+(:counter name="level 2" parent="level 1":)"""
 
-        validResult = '''1
+        validResult = """1
 1.1
 2
 2.1
-2.2'''
+2.2"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testParent_04(self):
-        text = '''(:counter name="level 1":)
+        text = """(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 3" parent="level 2":)
 (:counter name="level 3" parent="level 2":)
@@ -273,9 +273,9 @@ class CounterTest(unittest.TestCase):
 (:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 3" parent="level 2":)
-(:counter name="level 3" parent="level 2":)'''
+(:counter name="level 3" parent="level 2":)"""
 
-        validResult = '''1
+        validResult = """1
 1.1
 1.1.1
 1.1.2
@@ -287,43 +287,43 @@ class CounterTest(unittest.TestCase):
 2
 2.1
 2.1.1
-2.1.2'''
+2.1.2"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testInvalidParent_01(self):
-        text = '''(:counter name="level 1" parent="level 1":)'''
+        text = """(:counter name="level 1" parent="level 1":)"""
 
-        validResult = '''1'''
+        validResult = """1"""
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testInvalidParent_02(self):
-        text = '''(:counter name="level 1":)
+        text = """(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 1" parent="level 2":)
-(:counter name="level 2" parent="level 1":)'''
+(:counter name="level 2" parent="level 1":)"""
 
-        validResult = '''1
+        validResult = """1
 1.1
 1.1.1
-1.1.1.1'''
+1.1.1.1"""
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testInvalidParent_03(self):
-        text = '''(:counter name="level 1" parent="invalid":)
-(:counter name="level 1" parent="invalid":)'''
+        text = """(:counter name="level 1" parent="invalid":)
+(:counter name="level 1" parent="invalid":)"""
 
-        validResult = '''1
-2'''
+        validResult = """1
+2"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testFull_01(self):
-        text = '''Раздел (:counter name="level 1":)
+        text = """Раздел (:counter name="level 1":)
 Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 3" parent="level 2":)
@@ -340,9 +340,9 @@ class CounterTest(unittest.TestCase):
 Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
-Раздел (:counter name="level 2" parent="level 1":)'''
+Раздел (:counter name="level 2" parent="level 1":)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 2
 Раздел 2.1
 Раздел 2.1.1
@@ -359,13 +359,13 @@ class CounterTest(unittest.TestCase):
 Раздел 3
 Раздел 3.1
 Раздел 3.2
-Раздел 3.3'''
+Раздел 3.3"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testFull_02(self):
-        text = '''Раздел (:counter:)
+        text = """Раздел (:counter:)
 Раздел (:counter:)
 Раздел (:counter name="level 2" parent="":)
 Раздел (:counter name="level 3" parent="level 2":)
@@ -382,9 +382,9 @@ class CounterTest(unittest.TestCase):
 Раздел (:counter:)
 Раздел (:counter name="level 2" parent="":)
 Раздел (:counter name="level 2" parent="":)
-Раздел (:counter name="level 2" parent="":)'''
+Раздел (:counter name="level 2" parent="":)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 2
 Раздел 2.1
 Раздел 2.1.1
@@ -401,183 +401,183 @@ class CounterTest(unittest.TestCase):
 Раздел 3
 Раздел 3.1
 Раздел 3.2
-Раздел 3.3'''
+Раздел 3.3"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testFull_03(self):
-        text = '''Раздел (:counter name="level 1":)
+        text = """Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=10:)
-Раздел (:counter name="level 2" parent="level 1":)'''
+Раздел (:counter name="level 2" parent="level 1":)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 1.1
 Раздел 1.2
 Раздел 1.10
-Раздел 1.11'''
+Раздел 1.11"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testFull_04(self):
-        text = '''Раздел (:counter name="level 1":)
+        text = """Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=10:)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
-Раздел (:counter name="level 2" parent="level 1":)'''
+Раздел (:counter name="level 2" parent="level 1":)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 1.10
 Раздел 1.11
 Раздел 1.12
-Раздел 1.13'''
+Раздел 1.13"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testHide_01(self):
-        text = '''(:counter hide:)'''
+        text = """(:counter hide:)"""
 
-        validResult = ''''''
+        validResult = """"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testHide_02(self):
-        text = '''Раздел (:counter name="level 1":)
+        text = """Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1" hide:)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=10 hide:)
-Раздел (:counter name="level 2" parent="level 1":)'''
+Раздел (:counter name="level 2" parent="level 1":)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 1.1
 Раздел 
 Раздел 1.3
 Раздел 
-Раздел 1.11'''
+Раздел 1.11"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testHide_03(self):
-        text = '''(:counter start=100 hide:)(:counter:)'''
+        text = """(:counter start=100 hide:)(:counter:)"""
 
-        validResult = '''101'''
+        validResult = """101"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testStep_01(self):
-        text = '''(:counter:) (:counter step=2:)'''
+        text = """(:counter:) (:counter step=2:)"""
 
-        validResult = '''1 3'''
+        validResult = """1 3"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testStep_02(self):
-        text = '''(:counter step=2:)'''
+        text = """(:counter step=2:)"""
 
-        validResult = '''2'''
+        validResult = """2"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testStep_03(self):
-        text = '''(:counter step=2:) (:counter step=3:) (:counter step=4:)'''
+        text = """(:counter step=2:) (:counter step=3:) (:counter step=4:)"""
 
-        validResult = '''2 5 9'''
+        validResult = """2 5 9"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testStep_04(self):
-        text = '''Раздел (:counter name="level 1":)
+        text = """Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" step=2:)
-Раздел (:counter name="level 2" parent="level 1" step=2:)'''
+Раздел (:counter name="level 2" parent="level 1" step=2:)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 1.2
-Раздел 1.4'''
+Раздел 1.4"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testStep_05(self):
-        text = '''Раздел (:counter name="level 1":)
+        text = """Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=10 step="100":)
 Раздел (:counter name="level 2" parent="level 1" step="100":)
 Раздел (:counter name="level 2" parent="level 1" step="100":)
-Раздел (:counter name="level 2" parent="level 1" step="100":)'''
+Раздел (:counter name="level 2" parent="level 1" step="100":)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 1.10
 Раздел 1.110
 Раздел 1.210
-Раздел 1.310'''
+Раздел 1.310"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testStep_06(self):
-        text = '''Раздел (:counter name="level 1":)
+        text = """Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=0:)
 Раздел (:counter name="level 2" parent="level 1" step=-100:)
 Раздел (:counter name="level 2" parent="level 1" step=-100:)
-Раздел (:counter name="level 2" parent="level 1" step=-100:)'''
+Раздел (:counter name="level 2" parent="level 1" step=-100:)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 1.0
 Раздел 1.-100
 Раздел 1.-200
-Раздел 1.-300'''
+Раздел 1.-300"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testStep_07(self):
-        text = '''(:counter start=0 step=2:)'''
+        text = """(:counter start=0 step=2:)"""
 
-        validResult = '''0'''
+        validResult = """0"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testSeparator_01(self):
-        text = '''Раздел (:counter name="level 1":)
+        text = """Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" separator="/":)
 Раздел (:counter name="level 2" parent="level 1" separator="/":)
-Раздел (:counter name="level 2" parent="level 1" separator="/":)'''
+Раздел (:counter name="level 2" parent="level 1" separator="/":)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 1/1
 Раздел 1/2
-Раздел 1/3'''
+Раздел 1/3"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)
 
     def testSeparator_02(self):
-        text = '''Раздел (:counter:)
+        text = """Раздел (:counter:)
 Раздел (:counter name="level 2" parent="" separator=":":)
 Раздел (:counter name="level 3" parent="level 2" separator="-":)
 Раздел (:counter name="level 3" parent="level 2" separator="-":)
 Раздел (:counter name="level 3" parent="level 2" separator="-":)
 Раздел (:counter name="level 2" parent="" separator=":":)
-Раздел (:counter name="level 2" parent="" separator="-":)'''
+Раздел (:counter name="level 2" parent="" separator="-":)"""
 
-        validResult = '''Раздел 1
+        validResult = """Раздел 1
 Раздел 1:1
 Раздел 1:1-1
 Раздел 1:1-2
 Раздел 1:1-3
 Раздел 1:2
-Раздел 1-3'''
+Раздел 1-3"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, validResult)

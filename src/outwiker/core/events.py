@@ -450,6 +450,7 @@ class ForceNotesTreeItemsUpdate:
     """
     Parameters for onForceNotesTreeItemsUpdate
     """
+
     pages: List["outwiker.core.tree.BaseWikiPage"] = field(default_factory=list)
 
 
@@ -458,6 +459,7 @@ class RequestSelectedTextResult:
     """
     Result for RequestSelectedText event
     """
+
     selected_text: Optional[str] = None
 
 
@@ -466,5 +468,6 @@ class PreviewScrolledParams:
     """
     Parameters for onPreviewScrolled event
     """
+
     position_x: int
     position_y: int

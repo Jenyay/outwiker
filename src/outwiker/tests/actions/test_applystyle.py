@@ -19,6 +19,7 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for SetStyleToBranchAction
     """
+
     styleFile = "__style.html"
 
     def setUp(self):
@@ -45,14 +46,16 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         path = os.path.join(self.wikiroot.path, self.styleFile)
 
         self.application.actionController.getAction(
-            SetStyleToBranchAction.stringId).run(None)
+            SetStyleToBranchAction.stringId
+        ).run(None)
         self.assertFalse(os.path.exists(path))
 
     def testNoneWiki(self):
         self.application.wikiroot = None
 
         self.application.actionController.getAction(
-            SetStyleToBranchAction.stringId).run(None)
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
     def testSingle_01(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница", [])
@@ -65,7 +68,8 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Tester.dialogTester.append(self.__selectSecond)
 
         self.application.actionController.getAction(
-            SetStyleToBranchAction.stringId).run(None)
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertTrue(os.path.exists(path))
@@ -81,7 +85,9 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Tester.dialogTester.append(self.__selectSecond)
 
-        self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+        self.application.actionController.getAction(
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertTrue(os.path.exists(path))
@@ -97,7 +103,9 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Tester.dialogTester.append(self.__selectDefault)
 
-        self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+        self.application.actionController.getAction(
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertFalse(os.path.exists(path))
@@ -111,14 +119,18 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = page
 
         Tester.dialogTester.append(self.__selectSecond)
-        self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+        self.application.actionController.getAction(
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertTrue(os.path.exists(path))
         self.assertTrue(os.path.exists(getPageHtmlPath(page)))
 
         Tester.dialogTester.append(self.__selectDefault)
-        self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+        self.application.actionController.getAction(
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertFalse(os.path.exists(path))
@@ -127,76 +139,102 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         WikiPageFactory().create(self.wikiroot, "Викистраница 1", [])
         WikiPageFactory().create(self.wikiroot, "Викистраница 2", [])
 
-        fname_1 = os.path.join(self.wikiroot["Викистраница 1"].path,
-                               self.styleFile)
-        fname_2 = os.path.join(self.wikiroot["Викистраница 2"].path,
-                               self.styleFile)
+        fname_1 = os.path.join(self.wikiroot["Викистраница 1"].path, self.styleFile)
+        fname_2 = os.path.join(self.wikiroot["Викистраница 2"].path, self.styleFile)
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = None
 
         Tester.dialogTester.append(self.__selectSecond)
-        self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+        self.application.actionController.getAction(
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertTrue(os.path.exists(fname_1))
         self.assertTrue(os.path.exists(fname_2))
-        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"])))
-        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 2"])))
+        self.assertTrue(
+            os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"]))
+        )
+        self.assertTrue(
+            os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 2"]))
+        )
 
     def testMulti_02(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница 1", [])
         WikiPageFactory().create(self.wikiroot["Викистраница 1"], "Викистраница 2", [])
 
         fname_1 = os.path.join(self.wikiroot["Викистраница 1"].path, self.styleFile)
-        fname_2 = os.path.join(self.wikiroot["Викистраница 1/Викистраница 2"].path, self.styleFile)
+        fname_2 = os.path.join(
+            self.wikiroot["Викистраница 1/Викистраница 2"].path, self.styleFile
+        )
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = None
 
         Tester.dialogTester.append(self.__selectSecond)
-        self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+        self.application.actionController.getAction(
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertTrue(os.path.exists(fname_1))
         self.assertTrue(os.path.exists(fname_2))
-        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"])))
-        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1/Викистраница 2"])))
+        self.assertTrue(
+            os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"]))
+        )
+        self.assertTrue(
+            os.path.exists(
+                getPageHtmlPath(self.wikiroot["Викистраница 1/Викистраница 2"])
+            )
+        )
 
     def testMulti_03(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница 1", [])
         WikiPageFactory().create(self.wikiroot["Викистраница 1"], "Викистраница 2", [])
 
         fname_1 = os.path.join(self.wikiroot["Викистраница 1"].path, self.styleFile)
-        fname_2 = os.path.join(self.wikiroot["Викистраница 1/Викистраница 2"].path, self.styleFile)
+        fname_2 = os.path.join(
+            self.wikiroot["Викистраница 1/Викистраница 2"].path, self.styleFile
+        )
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Викистраница 1"]
 
         Tester.dialogTester.append(self.__selectSecond)
-        self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+        self.application.actionController.getAction(
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertTrue(os.path.exists(fname_1))
         self.assertTrue(os.path.exists(fname_2))
-        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"])))
-        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1/Викистраница 2"])))
+        self.assertTrue(
+            os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"]))
+        )
+        self.assertTrue(
+            os.path.exists(
+                getPageHtmlPath(self.wikiroot["Викистраница 1/Викистраница 2"])
+            )
+        )
 
     def testMulti_04(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница 1", [])
         WikiPageFactory().create(self.wikiroot, "Викистраница 2", [])
 
-        fname_1 = os.path.join(self.wikiroot["Викистраница 1"].path,
-                               self.styleFile)
-        fname_2 = os.path.join(self.wikiroot["Викистраница 2"].path,
-                               self.styleFile)
+        fname_1 = os.path.join(self.wikiroot["Викистраница 1"].path, self.styleFile)
+        fname_2 = os.path.join(self.wikiroot["Викистраница 2"].path, self.styleFile)
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Викистраница 1"]
 
         Tester.dialogTester.append(self.__selectSecond)
-        self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+        self.application.actionController.getAction(
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertTrue(os.path.exists(fname_1))
         self.assertFalse(os.path.exists(fname_2))
-        self.assertTrue(os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"])))
+        self.assertTrue(
+            os.path.exists(getPageHtmlPath(self.wikiroot["Викистраница 1"]))
+        )
 
     def testMultitype_01(self):
         WikiPageFactory().create(self.wikiroot, "Викистраница", [])
@@ -212,7 +250,9 @@ class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Tester.dialogTester.append(self.__selectSecond)
 
-        self.application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+        self.application.actionController.getAction(
+            SetStyleToBranchAction.stringId
+        ).run(None)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertTrue(os.path.exists(path))

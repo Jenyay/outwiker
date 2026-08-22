@@ -15,9 +15,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.__pluginname = "Spoiler"
         self.initApplication()
         self.wikiroot = self.createWiki()
-        self.testPage = WikiPageFactory().create(self.wikiroot,
-                                                 "Страница 1",
-                                                 [])
+        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
         dirlist = ["plugins/spoiler"]
 
@@ -36,7 +34,7 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(self.loader), 1)
 
     def testEmptyCommand(self):
-        text = '''bla-bla-bla (:spoiler:) bla-bla-bla'''
+        text = """bla-bla-bla (:spoiler:) bla-bla-bla"""
 
         self.testPage.content = text
 
@@ -59,7 +57,8 @@ class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSimpleNumbers(self):
         for index in range(10):
             text = "бла-бла-бла (:spoiler{index}:)Текст(:spoiler{index}end:)".format(
-                index=index)
+                index=index
+            )
 
             self.testPage.content = text
 

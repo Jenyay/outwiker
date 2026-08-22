@@ -11,6 +11,7 @@ class FontsFactory:
     """
     Фабрика для создания шрифтовых / блочных токенов
     """
+
     @staticmethod
     def makeItalic(parser):
         """
@@ -93,76 +94,92 @@ class CodeToken(TextBlockToken):
     """
     Токен для кода
     """
+
     start = "@@"
     end = "@@"
 
     def getToken(self):
-        return QuotedString(CodeToken.start,
-                            endQuoteChar=CodeToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<code>", "</code>"))("code")
+        return QuotedString(
+            CodeToken.start,
+            endQuoteChar=CodeToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self.convertToHTML("<code>", "</code>"))("code")
 
 
 class SuperscriptToken(TextBlockToken):
     """
     Токен для верхнего индекса
     """
+
     start = "'^"
     end = "^'"
 
     def getToken(self):
-        return QuotedString(SuperscriptToken.start,
-                            endQuoteChar=SuperscriptToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<sup>", "</sup>"))("superscript")
+        return QuotedString(
+            SuperscriptToken.start,
+            endQuoteChar=SuperscriptToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self.convertToHTML("<sup>", "</sup>"))("superscript")
 
 
 class SubscriptToken(TextBlockToken):
     """
     Токен для нижнего индекса
     """
+
     start = "'_"
     end = "_'"
 
     def getToken(self):
-        return QuotedString(SubscriptToken.start,
-                            endQuoteChar=SubscriptToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<sub>", "</sub>"))("subscript")
+        return QuotedString(
+            SubscriptToken.start,
+            endQuoteChar=SubscriptToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self.convertToHTML("<sub>", "</sub>"))("subscript")
 
 
 class UnderlineToken(TextBlockToken):
     """
     Токен для подчеркнутого текста
     """
+
     start = "{+"
     end = "+}"
 
     def getToken(self):
-        return QuotedString(UnderlineToken.start,
-                            endQuoteChar=UnderlineToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<u>", "</u>"))("underline")
+        return QuotedString(
+            UnderlineToken.start,
+            endQuoteChar=UnderlineToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self.convertToHTML("<u>", "</u>"))("underline")
 
 
 class StrikeToken(TextBlockToken):
     """
     Токен для зачеркнутого текста
     """
+
     start = "{-"
     end = "-}"
 
     def getToken(self):
-        return QuotedString(StrikeToken.start,
-                            endQuoteChar=StrikeToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<strike>", "</strike>"))("strike")
+        return QuotedString(
+            StrikeToken.start,
+            endQuoteChar=StrikeToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self.convertToHTML("<strike>", "</strike>"))("strike")
 
 
 class ItalicToken:
     """
     Токен для курсива
     """
+
     start = "''"
     end = "''"
 
@@ -170,16 +187,21 @@ class ItalicToken:
         self.parser = parser
 
     def getToken(self):
-        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(self._parseAction)("italic")
+        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(
+            self._parseAction
+        )("italic")
 
     def _parseAction(self, s, l, t):
-        return '<i>{}</i>'.format(self.parser.parseTextLevelMarkup(t[0][len(self.start):-len(self.end)]))
+        return "<i>{}</i>".format(
+            self.parser.parseTextLevelMarkup(t[0][len(self.start) : -len(self.end)])
+        )
 
 
 class BoldToken:
     """
     Токен для полужирного шрифта
     """
+
     start = "'''"
     end = "'''"
 
@@ -187,16 +209,21 @@ class BoldToken:
         self.parser = parser
 
     def getToken(self):
-        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(self._parseAction)("bold")
+        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(
+            self._parseAction
+        )("bold")
 
     def _parseAction(self, s, l, t):
-        return '<b>{}</b>'.format(self.parser.parseTextLevelMarkup(t[0][len(self.start):-len(self.end)]))
+        return "<b>{}</b>".format(
+            self.parser.parseTextLevelMarkup(t[0][len(self.start) : -len(self.end)])
+        )
 
 
 class BoldItalicToken:
     """
     Токен для полужирного курсивного шрифта
     """
+
     start = "''''"
     end = "''''"
 
@@ -204,42 +231,51 @@ class BoldItalicToken:
         self.parser = parser
 
     def getToken(self):
-        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(self._parseAction)("bold_italic")
+        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(
+            self._parseAction
+        )("bold_italic")
 
     def _parseAction(self, s, l, t):
-        return '<b><i>{}</i></b>'.format(self.parser.parseTextLevelMarkup(t[0][len(self.start):-len(self.end)]))
+        return "<b><i>{}</i></b>".format(
+            self.parser.parseTextLevelMarkup(t[0][len(self.start) : -len(self.end)])
+        )
 
 
 class SmallFontToken(TextBlockToken):
     """
     Токен для мелкого шрифта
     """
+
     def getToken(self):
-        return Regex(r"\[(?P<count>-{1,4})(?P<text>.*?)\1\]",
-                     re.MULTILINE | re.DOTALL).setParseAction(self.__parse)("small")
+        return Regex(
+            r"\[(?P<count>-{1,4})(?P<text>.*?)\1\]", re.MULTILINE | re.DOTALL
+        ).setParseAction(self.__parse)("small")
 
     def __parse(self, s, l, t):
         # Расчет масштаба в зависимости от количества минусов
         size = 100 - len(t["count"]) * 20
 
-        return u'<span style="font-size:{size}%">{text}</span>'.format(size=size, text=self.parser.parseTextLevelMarkup(t["text"]))
+        return '<span style="font-size:{size}%">{text}</span>'.format(
+            size=size, text=self.parser.parseTextLevelMarkup(t["text"])
+        )
 
 
 class BigFontToken(TextBlockToken):
     """
     Токен для крупного шрифта
     """
+
     def getToken(self):
-        return Regex(r"\[(?P<count>\+{1,5})(?P<text>.*?)\1\]",
-                     re.MULTILINE | re.DOTALL).setParseAction(self.__parse)("big")
+        return Regex(
+            r"\[(?P<count>\+{1,5})(?P<text>.*?)\1\]", re.MULTILINE | re.DOTALL
+        ).setParseAction(self.__parse)("big")
 
     def __parse(self, s, l, t):
         # Расчет масштаба в зависимости от количества минусов
         size = 100 + len(t["count"]) * 20
 
-        return u'<span style="font-size:{size}%">{text}</span>'.format(
-            size=size,
-            text=self.parser.parseTextLevelMarkup(t["text"])
+        return '<span style="font-size:{size}%">{text}</span>'.format(
+            size=size, text=self.parser.parseTextLevelMarkup(t["text"])
         )
 
 
@@ -247,11 +283,14 @@ class MarkToken(TextBlockToken):
     """
     Mark text token
     """
+
     start = "[!"
     end = "!]"
 
     def getToken(self):
-        return QuotedString(MarkToken.start,
-                            endQuoteChar=MarkToken.end,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<mark>", "</mark>"))("mark")
+        return QuotedString(
+            MarkToken.start,
+            endQuoteChar=MarkToken.end,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self.convertToHTML("<mark>", "</mark>"))("mark")

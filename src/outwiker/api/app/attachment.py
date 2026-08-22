@@ -1,14 +1,16 @@
-from typing import List 
+from typing import List
 
 import wx
 
 import outwiker.app.services.attachment as _attach
 
 
-def renameAttach(parent: wx.Window,
-                 page: 'outwiker.core.tree.WikiPage',
-                 fname_src: str,
-                 fname_dest: str) -> bool:
+def renameAttach(
+    parent: wx.Window,
+    page: "outwiker.core.tree.WikiPage",
+    fname_src: str,
+    fname_dest: str,
+) -> bool:
     """
     Rename attached file. Show overwrite dialog if necessary
     parent - parent for dialog window
@@ -21,10 +23,12 @@ def renameAttach(parent: wx.Window,
     return _attach.renameAttach(parent, page, fname_src, fname_dest)
 
 
-def attachFiles(parent: wx.Window,
-                page: 'outwiker.core.tree.WikiPage',
-                files: List[str],
-                subdir: str = '.'):
+def attachFiles(
+    parent: wx.Window,
+    page: "outwiker.core.tree.WikiPage",
+    files: List[str],
+    subdir: str = ".",
+):
     """
     Attach files to page. Show overwrite dialog if necessary
     parent - parent for dialog window

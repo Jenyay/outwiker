@@ -8,6 +8,7 @@ class OpenReadOnlyAction(BaseAction):
     """
     Открытие дерева заметок
     """
+
     stringId = "OpenTreeReadOnly"
 
     def __init__(self, application):

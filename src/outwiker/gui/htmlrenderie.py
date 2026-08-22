@@ -207,7 +207,14 @@ class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
             filename = FileRecognizerIE(basepath).recognize(href)
             anchor = AnchorRecognizerIE(basepath).recognize(href)
 
-            logger.debug("_identifyUri. url_message=%s. url=%s. page=%s. filename=%s. anchor=%s", url_message, url, page, filename, anchor)
+            logger.debug(
+                "_identifyUri. url_message=%s. url=%s. page=%s. filename=%s. anchor=%s",
+                url_message,
+                url,
+                page,
+                filename,
+                anchor,
+            )
 
             return (url_message, url, page, filename, anchor)
 
@@ -302,7 +309,9 @@ class HtmlRenderIEGeneral(HtmlRenderIEBase):
             filename = FileRecognizerIE(basepath).recognize(href)
             anchor = AnchorRecognizerIE(basepath).recognize(href)
 
-            logger.debug("_identifyUri. url=%s. filename=%s. anchor=%s", url, filename, anchor)
+            logger.debug(
+                "_identifyUri. url=%s. filename=%s. anchor=%s", url, filename, anchor
+            )
 
             return (url, filename, anchor)
 

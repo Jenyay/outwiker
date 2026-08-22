@@ -5,9 +5,7 @@ import unittest
 import wx
 
 from outwiker.api.core.tree import loadNotesTree
-from outwiker.core.defines import (PAGE_MODE_TEXT,
-                                   PAGE_MODE_PREVIEW,
-                                   PAGE_MODE_HTML)
+from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW, PAGE_MODE_HTML
 from outwiker.gui.rootpagepanel import RootPagePanel
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipageview import WikiPageView
@@ -41,39 +39,39 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testType(self):
         self.application.wikiroot = self.wikiroot
-        self.assertEqual(RootPagePanel,
-                         type(self.mainWindow.pagePanel.pageView))
+        self.assertEqual(RootPagePanel, type(self.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = self.wikiroot["Викистраница"]
-        self.assertEqual(WikiPageView,
-                         type(self.application.mainWindow.pagePanel.pageView))
+        self.assertEqual(
+            WikiPageView, type(self.application.mainWindow.pagePanel.pageView)
+        )
 
         self.application.selectedPage = self.wikiroot["Викистраница 2"]
-        self.assertEqual(WikiPageView,
-                         type(self.application.mainWindow.pagePanel.pageView))
+        self.assertEqual(
+            WikiPageView, type(self.application.mainWindow.pagePanel.pageView)
+        )
 
         self.application.selectedPage = None
-        self.assertEqual(RootPagePanel,
-                         type(self.mainWindow.pagePanel.pageView))
+        self.assertEqual(RootPagePanel, type(self.mainWindow.pagePanel.pageView))
 
     def testSwitch(self):
         WikiConfig(self.application.config).showHtmlCodeOptions.value = True
 
         self.application.wikiroot = self.wikiroot
-        self.assertEqual(RootPagePanel,
-                         type(self.mainWindow.pagePanel.pageView))
+        self.assertEqual(RootPagePanel, type(self.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = self.wikiroot["Викистраница"]
-        self.assertEqual(WikiPageView,
-                         type(self.application.mainWindow.pagePanel.pageView))
+        self.assertEqual(
+            WikiPageView, type(self.application.mainWindow.pagePanel.pageView)
+        )
 
         self.application.selectedPage = self.wikiroot["Викистраница 2"]
-        self.assertEqual(WikiPageView,
-                         type(self.application.mainWindow.pagePanel.pageView))
+        self.assertEqual(
+            WikiPageView, type(self.application.mainWindow.pagePanel.pageView)
+        )
 
         self.application.selectedPage = None
-        self.assertEqual(RootPagePanel,
-                         type(self.mainWindow.pagePanel.pageView))
+        self.assertEqual(RootPagePanel, type(self.mainWindow.pagePanel.pageView))
 
     def testDefaultSelectedPage(self):
         """
@@ -84,8 +82,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         self.wikiroot["Викистраница 2"].content = "Бла-бла-бла"
         self.application.selectedPage = self.wikiroot["Викистраница 2"]
@@ -94,7 +92,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         # вкладка с просмотром
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_PREVIEW)
+            PAGE_MODE_PREVIEW,
+        )
 
     def testSelectedPage(self):
         """
@@ -105,28 +104,27 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
-        self.application.mainWindow.pagePanel.pageView.SetPageMode(
-            PAGE_MODE_PREVIEW)
-
-        self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_PREVIEW)
-
-        self.application.mainWindow.pagePanel.pageView.SetPageMode(
-            PAGE_MODE_TEXT)
+        self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_PREVIEW)
 
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            PAGE_MODE_PREVIEW,
+        )
+
+        self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_TEXT)
+
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_HTML)
 
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_HTML)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_HTML
+        )
 
     def testResultHtmlPage1(self):
         """
@@ -157,8 +155,9 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_HTML)
 
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_HTML)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_HTML
+        )
         self.assertEqual(self.application.mainWindow.pagePanel.pageView.pageCount, 3)
 
     def testInvalidPageIndex(self):
@@ -166,33 +165,42 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Викистраница"]
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_TEXT)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         self.application.mainWindow.pagePanel.pageView._selectedPageIndex = 100
 
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_TEXT)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         self.application.mainWindow.pagePanel.pageView._selectedPageIndex = -1
 
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_TEXT)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_PREVIEW)
 
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_PREVIEW)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
+            PAGE_MODE_PREVIEW,
+        )
 
         self.application.mainWindow.pagePanel.pageView._selectedPageIndex = 1000
 
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_PREVIEW)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
+            PAGE_MODE_PREVIEW,
+        )
 
         self.application.mainWindow.pagePanel.pageView._selectedPageIndex = -1
 
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_PREVIEW)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
+            PAGE_MODE_PREVIEW,
+        )
 
     def testSavePageIndex1(self):
         """
@@ -208,8 +216,10 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         wx.GetApp().Yield()
 
         # В начале по умолчанию выбирается вкладка с просмотром
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_PREVIEW)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
+            PAGE_MODE_PREVIEW,
+        )
 
         # Переключимся на вкладку с кодом
         self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_TEXT)
@@ -219,8 +229,10 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Викистраница 2"]
 
         wx.GetApp().Yield()
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_PREVIEW)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
+            PAGE_MODE_PREVIEW,
+        )
 
         # Переключимся на результирующий HTML
         self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_HTML)
@@ -230,15 +242,17 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Викистраница"]
 
         wx.GetApp().Yield()
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_TEXT)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         # При переключении на другую страницу, выбиается вкладка с результирующим HTML
         self.application.selectedPage = self.wikiroot["Викистраница 2"]
 
         wx.GetApp().Yield()
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_HTML)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_HTML
+        )
 
     def testSavePageIndex2(self):
         """
@@ -251,8 +265,10 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         # В начале по умолчанию выбирается вкладка с просмотром
         wx.GetApp().Yield()
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_PREVIEW)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
+            PAGE_MODE_PREVIEW,
+        )
 
         # Переключимся на вкладку с кодом
         self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_TEXT)
@@ -262,8 +278,10 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Викистраница 2"]
 
         wx.GetApp().Yield()
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_PREVIEW)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
+            PAGE_MODE_PREVIEW,
+        )
 
         # Переключимся на результирующий HTML
         self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_HTML)
@@ -273,15 +291,17 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Викистраница"]
 
         wx.GetApp().Yield()
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_TEXT)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         # При переключении на другую страницу, выбиается вкладка с результирующим HTML
         self.application.selectedPage = self.wikiroot["Викистраница 2"]
 
         wx.GetApp().Yield()
-        self.assertEqual(self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-                         PAGE_MODE_HTML)
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_HTML
+        )
 
     def testCursorPosition_01(self):
         self.application.wikiroot = self.wikiroot
@@ -521,7 +541,7 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(page.content, "Абырвалг")
 
     def test_list_autocomplete_none_01(self):
-        text = ''
+        text = ""
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -535,7 +555,7 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetText(), text)
 
     def test_list_autocomplete_none_02(self):
-        text = '** бла-бла-бла'
+        text = "** бла-бла-бла"
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -549,7 +569,7 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetText(), text)
 
     def test_list_autocomplete_none_03(self):
-        text = '** бла-бла-бла'
+        text = "** бла-бла-бла"
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -563,7 +583,7 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetText(), text)
 
     def test_list_autocomplete_none_04(self):
-        text = '** бла-бла-бла\n** бла-бла-бла'
+        text = "** бла-бла-бла\n** бла-бла-бла"
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -577,8 +597,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetText(), text)
 
     def test_list_autocomplete_01(self):
-        text = '* бла-бла-бла'
-        text_result = '* бла-бла-бла\n* '
+        text = "* бла-бла-бла"
+        text_result = "* бла-бла-бла\n* "
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -593,8 +613,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetSelectionStart(), len(text_result))
 
     def test_list_autocomplete_02(self):
-        text = '* бла-бла-бла'
-        text_result = '* бла\n* -бла-бла'
+        text = "* бла-бла-бла"
+        text_result = "* бла\n* -бла-бла"
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -609,8 +629,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetSelectionStart(), 8)
 
     def test_list_autocomplete_03(self):
-        text = '** бла-бла-бла'
-        text_result = '** бла-бла-бла\n** '
+        text = "** бла-бла-бла"
+        text_result = "** бла-бла-бла\n** "
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -625,8 +645,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetSelectionStart(), len(text_result))
 
     def test_list_autocomplete_04(self):
-        text = '** бла-бла-бла'
-        text_result = '** бла\n** -бла-бла'
+        text = "** бла-бла-бла"
+        text_result = "** бла\n** -бла-бла"
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -641,8 +661,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetSelectionStart(), 10)
 
     def test_list_autocomplete_05(self):
-        text = '# бла-бла-бла'
-        text_result = '# бла-бла-бла\n# '
+        text = "# бла-бла-бла"
+        text_result = "# бла-бла-бла\n# "
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -657,8 +677,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetSelectionStart(), len(text_result))
 
     def test_list_autocomplete_06(self):
-        text = '## бла-бла-бла'
-        text_result = '## бла-бла-бла\n## '
+        text = "## бла-бла-бла"
+        text_result = "## бла-бла-бла\n## "
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -673,8 +693,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetSelectionStart(), len(text_result))
 
     def test_list_autocomplete_07(self):
-        text = '* бла-бла-бла'
-        text_result = '*\n*  бла-бла-бла'
+        text = "* бла-бла-бла"
+        text_result = "*\n*  бла-бла-бла"
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page
@@ -689,8 +709,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(editor.GetSelectionStart(), 4)
 
     def test_list_autocomplete_remove_01(self):
-        text = '* '
-        text_result = ''
+        text = "* "
+        text_result = ""
         page = self.wikiroot["Викистраница"]
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = page

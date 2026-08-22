@@ -12,16 +12,17 @@ class ParserFactory:
     """
     Класс, создающий википарсер и добавляющий в него нужные команды
     """
+
     def __init__(self):
         # Список типов команд.
         # Экземпляры команд создаются при заполнении командами парсера
-        self.__commands = [IncludeCommand,
-                           ChildListCommand,
-                           AttachListCommand,
-                           CommandDateCreation,
-                           CommandDateEdition,
-                           ]
-
+        self.__commands = [
+            IncludeCommand,
+            ChildListCommand,
+            AttachListCommand,
+            CommandDateCreation,
+            CommandDateEdition,
+        ]
 
     def make(self, page, application):
         """
@@ -33,7 +34,6 @@ class ParserFactory:
         self._addCommands(parser)
         application.onWikiParserPrepare(parser)
         return parser
-
 
     def _addCommands(self, parser):
         """

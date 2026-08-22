@@ -16,7 +16,7 @@ class SnippetsLoaderTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
-        self._dir_snippets = mkdtemp('outwiker_snippets')
+        self._dir_snippets = mkdtemp("outwiker_snippets")
 
     def tearDown(self):
         self.loader.clear()
@@ -24,11 +24,12 @@ class SnippetsLoaderTest(unittest.TestCase, BaseOutWikerGUIMixin):
         removeDir(self._dir_snippets)
 
     def _create(self, fname):
-        with open(fname, 'w'):
+        with open(fname, "w"):
             pass
 
     def test_empty_01(self):
         from snippets.snippetsloader import SnippetsLoader
+
         loader = SnippetsLoader(self._dir_snippets)
         snippets = loader.getSnippets()
 
@@ -39,30 +40,34 @@ class SnippetsLoaderTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_empty_02_invalid(self):
         from snippets.snippetsloader import SnippetsLoader
-        loader = SnippetsLoader('Invalid dir')
+
+        loader = SnippetsLoader("Invalid dir")
         snippets = loader.getSnippets()
 
-        self.assertEqual(snippets.name, 'Invalid dir')
+        self.assertEqual(snippets.name, "Invalid dir")
         self.assertEqual(len(snippets), 0)
         self.assertEqual(snippets.dirs, [])
         self.assertEqual(snippets.snippets, [])
 
     def test_snippets_01(self):
         from snippets.snippetsloader import SnippetsLoader
-        files = ['Шаблон']
+
+        files = ["Шаблон"]
         for fname in files:
             self._create(os.path.join(self._dir_snippets, fname))
 
         loader = SnippetsLoader(self._dir_snippets)
         snippets = loader.getSnippets()
         self.assertEqual(snippets.dirs, [])
-        self.assertEqual(snippets.snippets,
-                         [os.path.join(self._dir_snippets, 'Шаблон')])
+        self.assertEqual(
+            snippets.snippets, [os.path.join(self._dir_snippets, "Шаблон")]
+        )
         self.assertEqual(len(snippets), 1)
 
     def test_snippets_02(self):
         from snippets.snippetsloader import SnippetsLoader
-        files = ['Шаблон 01', 'Шаблон 02', 'Шаблон 03.txt']
+
+        files = ["Шаблон 01", "Шаблон 02", "Шаблон 03.txt"]
         for fname in files:
             self._create(os.path.join(self._dir_snippets, fname))
 
@@ -70,23 +75,20 @@ class SnippetsLoaderTest(unittest.TestCase, BaseOutWikerGUIMixin):
         snippets = loader.getSnippets()
         self.assertEqual(snippets.dirs, [])
 
-        self.assertIn(
-            os.path.join(self._dir_snippets, 'Шаблон 01'),
-            snippets.snippets)
+        self.assertIn(os.path.join(self._dir_snippets, "Шаблон 01"), snippets.snippets)
+
+        self.assertIn(os.path.join(self._dir_snippets, "Шаблон 02"), snippets.snippets)
 
         self.assertIn(
-            os.path.join(self._dir_snippets, 'Шаблон 02'),
-            snippets.snippets)
-
-        self.assertIn(
-            os.path.join(self._dir_snippets, 'Шаблон 03.txt'),
-            snippets.snippets)
+            os.path.join(self._dir_snippets, "Шаблон 03.txt"), snippets.snippets
+        )
 
         self.assertEqual(len(snippets), 3)
 
     def test_subdir_01(self):
         from snippets.snippetsloader import SnippetsLoader
-        subdir = os.path.join(self._dir_snippets, 'Поддиректория 01')
+
+        subdir = os.path.join(self._dir_snippets, "Поддиректория 01")
         os.mkdir(subdir)
 
         loader = SnippetsLoader(self._dir_snippets)
@@ -95,12 +97,13 @@ class SnippetsLoaderTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         subdir = snippets.dirs[0]
         self.assertEqual(len(subdir), 0)
-        self.assertEqual(subdir.name, 'Поддиректория 01')
+        self.assertEqual(subdir.name, "Поддиректория 01")
 
     def test_subdir_02(self):
         from snippets.snippetsloader import SnippetsLoader
-        subdir_1 = os.path.join(self._dir_snippets, 'Поддиректория 01')
-        subdir_2 = os.path.join(self._dir_snippets, 'Поддиректория 02')
+
+        subdir_1 = os.path.join(self._dir_snippets, "Поддиректория 01")
+        subdir_2 = os.path.join(self._dir_snippets, "Поддиректория 02")
         os.mkdir(subdir_1)
         os.mkdir(subdir_2)
 
@@ -115,8 +118,9 @@ class SnippetsLoaderTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_subdir_03(self):
         from snippets.snippetsloader import SnippetsLoader
-        subdir_1 = os.path.join(self._dir_snippets, 'Поддиректория 01')
-        subdir_2 = os.path.join(subdir_1, 'Поддиректория 02')
+
+        subdir_1 = os.path.join(self._dir_snippets, "Поддиректория 01")
+        subdir_2 = os.path.join(subdir_1, "Поддиректория 02")
         os.mkdir(subdir_1)
         os.mkdir(subdir_2)
 
@@ -131,18 +135,20 @@ class SnippetsLoaderTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_full_01(self):
         from snippets.snippetsloader import SnippetsLoader
-        subdir_1 = os.path.join(self._dir_snippets, 'Поддиректория 01')
-        subdir_2 = os.path.join(subdir_1, 'Поддиректория 02')
+
+        subdir_1 = os.path.join(self._dir_snippets, "Поддиректория 01")
+        subdir_2 = os.path.join(subdir_1, "Поддиректория 02")
         os.mkdir(subdir_1)
         os.mkdir(subdir_2)
 
-        files = [os.path.join(self._dir_snippets, 'root_01'),
-                 os.path.join(self._dir_snippets, 'root_02'),
-                 os.path.join(subdir_1, 'dir_01_01'),
-                 os.path.join(subdir_1, 'dir_01_02'),
-                 os.path.join(subdir_2, 'dir_02_01'),
-                 os.path.join(subdir_2, 'dir_02_02'),
-                 ]
+        files = [
+            os.path.join(self._dir_snippets, "root_01"),
+            os.path.join(self._dir_snippets, "root_02"),
+            os.path.join(subdir_1, "dir_01_01"),
+            os.path.join(subdir_1, "dir_01_02"),
+            os.path.join(subdir_2, "dir_02_01"),
+            os.path.join(subdir_2, "dir_02_02"),
+        ]
 
         list([self._create(fname) for fname in files])
         loader = SnippetsLoader(self._dir_snippets)

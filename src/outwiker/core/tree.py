@@ -108,7 +108,9 @@ class BasePage(metaclass=ABCMeta):
     def isExpanded(self) -> bool:
         if self._expanded is None:
             page_registry = self.root.registry.get_page_registry(self)
-            self._expanded = page_registry.getbool(self._expanded_option_name, default=False)
+            self._expanded = page_registry.getbool(
+                self._expanded_option_name, default=False
+            )
         return self._expanded
 
     def expand(self, expanded: bool):
@@ -168,7 +170,9 @@ class BasePage(metaclass=ABCMeta):
 
         return page
 
-    def sortChildren(self, key_func: Callable[["WikiPage"], Any], reverse: bool = False):
+    def sortChildren(
+        self, key_func: Callable[["WikiPage"], Any], reverse: bool = False
+    ):
         """
         Sort children pages
         """
@@ -464,6 +468,7 @@ class WikiPage(BasePage, metaclass=ABCMeta):
     """
     Page in tree.
     """
+
     iconController = IconController(getIconsDirList()[0])
 
     def __init__(self, path, title, parent, readonly=False):
@@ -969,7 +974,9 @@ class PageAdapter:
     def __getitem__(self, path: str) -> Optional[Union[BasePage, WikiPage]]:
         return self._page[path]
 
-    def sortChildren(self, key_func: Callable[["WikiPage"], Any], reverse: bool = False):
+    def sortChildren(
+        self, key_func: Callable[["WikiPage"], Any], reverse: bool = False
+    ):
         self._page.sortChildren(key_func, reverse)
 
     def changeChildOrder(self, page, neworder):

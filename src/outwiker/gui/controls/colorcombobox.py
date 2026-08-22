@@ -2,6 +2,7 @@ from typing import List, Optional
 import wx
 import wx.adv
 
+
 class ColorComboBox(wx.adv.OwnerDrawnComboBox):
     def __init__(self, parent):
         super().__init__(parent, style=wx.CB_READONLY)

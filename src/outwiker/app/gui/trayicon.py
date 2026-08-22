@@ -12,18 +12,16 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import TrayConfig
 
 
-logger = logging.getLogger('outwiker.gui.trayicon')
+logger = logging.getLogger("outwiker.gui.trayicon")
 
 
-def getTrayIconController(application, parentWnd) -> 'TrayIconController':
+def getTrayIconController(application, parentWnd) -> "TrayIconController":
     if os.name == "nt":
-        fname = 'outwiker_16x16.png'
+        fname = "outwiker_16x16.png"
     else:
-        fname = 'outwiker_64x64.png'
+        fname = "outwiker_64x64.png"
 
-    return TrayIconController(application,
-                              parentWnd,
-                              getBuiltinImagePath(fname))
+    return TrayIconController(application, parentWnd, getBuiltinImagePath(fname))
 
 
 class TrayIconController(wx.EvtHandler):
@@ -65,8 +63,7 @@ class TrayIconController(wx.EvtHandler):
         self.mainWnd.SetFocus()
 
     def _bind(self):
-        self._trayIcon.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN,
-                            self._onTrayLeftClick)
+        self._trayIcon.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self._onTrayLeftClick)
 
         self._trayIcon.Bind(wx.EVT_MENU, self._onPopupMenu)
 
@@ -76,8 +73,9 @@ class TrayIconController(wx.EvtHandler):
         self._application.onEndTreeUpdate += self._onTaskBarUpdate
 
     def _unbind(self):
-        self._trayIcon.Unbind(wx.adv.EVT_TASKBAR_LEFT_DOWN,
-                              handler=self._onTrayLeftClick)
+        self._trayIcon.Unbind(
+            wx.adv.EVT_TASKBAR_LEFT_DOWN, handler=self._onTrayLeftClick
+        )
 
         self._trayIcon.Unbind(wx.EVT_MENU, handler=self._onPopupMenu)
 
@@ -121,7 +119,7 @@ class TrayIcon(wx.adv.TaskBarIcon):
         self.mainWnd = mainWnd
         self._iconFileName = iconFileName
 
-        logger.debug('Tray icon available: %r', self.IsAvailable())
+        logger.debug("Tray icon available: %r", self.IsAvailable())
 
         self.ID_RESTORE = None
         self.ID_EXIT = None

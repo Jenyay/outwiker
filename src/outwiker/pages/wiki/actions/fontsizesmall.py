@@ -3,19 +3,20 @@
 from .fontsizebase import WikiFontSizeBaseAction
 
 
-class WikiFontSizeSmallAction (WikiFontSizeBaseAction):
+class WikiFontSizeSmallAction(WikiFontSizeBaseAction):
     """
     Действие для выделения текста мелким шрифтом
     """
-    stringId = u"WikiSmallFont"
+
+    stringId = "WikiSmallFont"
 
     @property
     def title(self):
-        return _(u"Small font")
+        return _("Small font")
 
     @property
     def description(self):
-        return _(u"Small font")
+        return _("Small font")
 
     def run(self, params):
         self.selectFontSize(3)

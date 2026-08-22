@@ -6,7 +6,7 @@ from outwiker.gui.controls.searchreplacepanel import SearchReplacePanel
 
 
 class SearchReplacePanelController:
-    _recentSearch = ''
+    _recentSearch = ""
 
     def __init__(self, searchPanel: SearchReplacePanel, editor):
         """
@@ -84,10 +84,11 @@ class SearchReplacePanelController:
         Возвращает True, если удалось сделать замену
         """
         phrase = self.getSearchPhrase()
-        searchResult = SearchResult(self.editor.GetSelectionStart(),
-                                    self.editor.GetSelectedText())
+        searchResult = SearchResult(
+            self.editor.GetSelectionStart(), self.editor.GetSelectedText()
+        )
 
-        if (len(phrase) > 0 and self._searcher.inResult(searchResult)):
+        if len(phrase) > 0 and self._searcher.inResult(searchResult):
             self.editor.replaceText(self.getReplacePhrase())
             self.nextSearch()
             return True
@@ -114,7 +115,7 @@ class SearchReplacePanelController:
         position = 0
 
         for currResult in self._searcher.result:
-            newtext += text[position: currResult.position]
+            newtext += text[position : currResult.position]
             newtext += replace
             position = currResult.position + len(currResult.phrase)
 
@@ -206,8 +207,9 @@ class SearchReplacePanelController:
         if result is not None:
             self.panel.getResultLabel().SetLabel("")
             self.editor.GotoPos(result.position)
-            self.editor.SetSelection(result.position,
-                                     result.position + len(result.phrase))
+            self.editor.SetSelection(
+                result.position, result.position + len(result.phrase)
+            )
         else:
             self.panel.getResultLabel().SetLabel(_("Not found"))
 
@@ -277,6 +279,7 @@ class SearchResult(object):
     """
     Результат поиска по странице
     """
+
     def __init__(self, position, phrase):
         """
         position - начало найденного текста
@@ -289,6 +292,7 @@ class LocalSearcher(object):
     """
     Класс для поиска по странице
     """
+
     def __init__(self):
         self._result = []
 
@@ -318,8 +322,10 @@ class LocalSearcher(object):
         редакторе фрагмент на соответствие поисковой фразе
         """
         for resultItem in self._result:
-            if (testResult.position == resultItem.position and
-                    testResult.phrase.lower() == resultItem.phrase.lower()):
+            if (
+                testResult.position == resultItem.position
+                and testResult.phrase.lower() == resultItem.phrase.lower()
+            ):
                 return True
 
         return False

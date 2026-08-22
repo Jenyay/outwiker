@@ -10,6 +10,7 @@ class OpenAttachFolderAction(BaseAction):
     """
     Открыть папку с прикрепленными файлами в системном файловом менеджере
     """
+
     stringId = "OpenAttachFolder"
 
     def __init__(self, application):

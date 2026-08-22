@@ -64,8 +64,7 @@ class ThumbDialog(TestedDialog):
 
     def _createGui(self):
         # "Select attached image" label
-        self.filenameLabel = wx.StaticText(self,
-                                           label=_("Select attached image"))
+        self.filenameLabel = wx.StaticText(self, label=_("Select attached image"))
         font = self.filenameLabel.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         self.filenameLabel.SetFont(font)
@@ -81,9 +80,7 @@ class ThumbDialog(TestedDialog):
         self.scaleLabel = wx.StaticText(self, label=_("Thumbnail size"))
 
         scaleItems = [_("Width"), _("Height"), _("Max size")]
-        self.scaleCombo = wx.ComboBox(self,
-                                      choices=scaleItems,
-                                      style=wx.CB_READONLY)
+        self.scaleCombo = wx.ComboBox(self, choices=scaleItems, style=wx.CB_READONLY)
         self.scaleCombo.SetSelection(0)
         self.scaleCombo.SetMinSize((250, -1))
 
@@ -100,7 +97,9 @@ class ThumbDialog(TestedDialog):
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(5)
 
-        mainSizer.Add(self.filenameLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
+        mainSizer.Add(
+            self.filenameLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4
+        )
         mainSizer.Add(
             self.filesListCombo,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,

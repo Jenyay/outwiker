@@ -20,7 +20,7 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller = MenuController(root)
 
         menu = wx.Menu()
-        menu_id = 'menu_01'
+        menu_id = "menu_01"
         controller.addMenu(menu_id, menu)
 
         self.assertIn(menu_id, controller)
@@ -31,7 +31,7 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller = MenuController(root)
 
         menu = wx.Menu()
-        menu_id = 'menu_01'
+        menu_id = "menu_01"
         controller.addMenu(menu_id, menu)
 
         self.assertIn(menu_id, controller)
@@ -42,11 +42,11 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller = MenuController(root)
 
         menu_01 = wx.Menu()
-        menu_id_01 = 'menu_01'
+        menu_id_01 = "menu_01"
         controller.addMenu(menu_id_01, menu_01)
 
         menu_02 = wx.Menu()
-        menu_id_02 = 'menu_02'
+        menu_id_02 = "menu_02"
         controller.addMenu(menu_id_02, menu_02)
 
         self.assertIn(menu_id_01, controller)
@@ -60,11 +60,11 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller = MenuController(root)
 
         menu_01 = wx.Menu()
-        menu_id_01 = 'menu_01'
+        menu_id_01 = "menu_01"
         controller.addMenu(menu_id_01, menu_01)
 
         menu_02 = wx.Menu()
-        menu_id_02 = 'menu_02'
+        menu_id_02 = "menu_02"
         controller.addMenu(menu_id_02, menu_02)
 
         self.assertIn(menu_id_01, controller)
@@ -78,43 +78,41 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller = MenuController(root)
 
         menu_01 = wx.Menu()
-        menu_id = 'menu_01'
+        menu_id = "menu_01"
         menu_02 = wx.Menu()
 
         controller.addMenu(menu_id, menu_01)
-        self.assertRaises(KeyError, controller.addMenu,
-                          menu_id, menu_02)
+        self.assertRaises(KeyError, controller.addMenu, menu_id, menu_02)
 
     def test_add_error_menu(self):
         root = wx.Menu()
         controller = MenuController(root)
 
         menu_01 = wx.Menu()
-        menu_id = 'menu_01'
+        menu_id = "menu_01"
         menu_02 = wx.Menu()
 
         controller.addMenu(menu_id, menu_01)
-        self.assertRaises(KeyError, controller.addMenu,
-                          menu_id, menu_02)
+        self.assertRaises(KeyError, controller.addMenu, menu_id, menu_02)
 
     def test_get_error_menubar(self):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        self.assertRaises(KeyError, controller.__getitem__, 'menu_01')
+        self.assertRaises(KeyError, controller.__getitem__, "menu_01")
 
     def test_get_error_menu(self):
         root = wx.Menu()
         controller = MenuController(root)
 
-        self.assertRaises(KeyError, controller.__getitem__, 'menu_01')
+        self.assertRaises(KeyError, controller.__getitem__, "menu_01")
 
     def test_create_01_menubar(self):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title = 'Menu title'
-        menu_id = 'menu_id'
+        title = "Menu title"
+        menu_id = "menu_id"
 
         controller.createSubMenu(menu_id, title)
         self.assertIn(menu_id, controller)
@@ -124,8 +122,8 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title = 'Menu title'
-        menu_id = 'menu_id'
+        title = "Menu title"
+        menu_id = "menu_id"
 
         controller.createSubMenu(menu_id, title)
         self.assertIn(menu_id, controller)
@@ -135,53 +133,49 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title = 'Menu title'
+        title = "Menu title"
 
-        self.assertRaises(KeyError, controller.createSubMenu,
-                          ROOT_MENU_ID, title)
+        self.assertRaises(KeyError, controller.createSubMenu, ROOT_MENU_ID, title)
 
     def test_create_02_error_menu(self):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title = 'Menu title'
+        title = "Menu title"
 
-        self.assertRaises(KeyError, controller.createSubMenu,
-                          ROOT_MENU_ID, title)
+        self.assertRaises(KeyError, controller.createSubMenu, ROOT_MENU_ID, title)
 
     def test_create_03_error_menubar(self):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title = 'Menu title'
-        menu_id = 'menu_id'
+        title = "Menu title"
+        menu_id = "menu_id"
 
         controller.createSubMenu(menu_id, title)
 
-        self.assertRaises(KeyError, controller.createSubMenu,
-                          menu_id, title)
+        self.assertRaises(KeyError, controller.createSubMenu, menu_id, title)
 
     def test_create_03_error_menu(self):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title = 'Menu title'
-        menu_id = 'menu_id'
+        title = "Menu title"
+        menu_id = "menu_id"
 
         controller.createSubMenu(menu_id, title)
 
-        self.assertRaises(KeyError, controller.createSubMenu,
-                          menu_id, title)
+        self.assertRaises(KeyError, controller.createSubMenu, menu_id, title)
 
     def test_create_04_menubar(self):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
         menu_01 = controller.createSubMenu(menu_id_01, title_01)
         menu_02 = controller.createSubMenu(menu_id_02, title_02)
@@ -194,11 +188,11 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
         menu_01 = controller.createSubMenu(menu_id_01, title_01)
         menu_02 = controller.createSubMenu(menu_id_02, title_02)
@@ -211,15 +205,14 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
         menu_01 = controller.createSubMenu(menu_id_01, title_01)
-        menu_02 = controller.createSubMenu(menu_id_02, title_02,
-                                           menu_id_01)
+        menu_02 = controller.createSubMenu(menu_id_02, title_02, menu_id_01)
 
         self.assertIn(menu_id_02, controller)
         self.assertEqual(controller[menu_id_01], menu_01)
@@ -229,15 +222,14 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
         menu_01 = controller.createSubMenu(menu_id_01, title_01)
-        menu_02 = controller.createSubMenu(menu_id_02, title_02,
-                                           menu_id_01)
+        menu_02 = controller.createSubMenu(menu_id_02, title_02, menu_id_01)
 
         self.assertIn(menu_id_02, controller)
         self.assertEqual(controller[menu_id_01], menu_01)
@@ -247,13 +239,13 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        self.assertRaises(KeyError, controller.removeMenu, 'menu_01')
+        self.assertRaises(KeyError, controller.removeMenu, "menu_01")
 
     def test_remove_01_error_menu(self):
         root = wx.Menu()
         controller = MenuController(root)
 
-        self.assertRaises(KeyError, controller.removeMenu, 'menu_01')
+        self.assertRaises(KeyError, controller.removeMenu, "menu_01")
 
     def test_remove_02_error_menubar(self):
         root = wx.MenuBar()
@@ -271,11 +263,11 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02)
@@ -290,11 +282,11 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02)
@@ -309,11 +301,11 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02, menu_id_01)
@@ -328,11 +320,11 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02, menu_id_01)
@@ -347,14 +339,14 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
-        title_03 = 'Menu title_03'
-        menu_id_03 = 'menu_id_03'
+        title_03 = "Menu title_03"
+        menu_id_03 = "menu_id_03"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02, menu_id_01)
@@ -371,14 +363,14 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
-        title_03 = 'Menu title_03'
-        menu_id_03 = 'menu_id_03'
+        title_03 = "Menu title_03"
+        menu_id_03 = "menu_id_03"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02, menu_id_01)
@@ -395,14 +387,14 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
-        title_03 = 'Menu title_03'
-        menu_id_03 = 'menu_id_03'
+        title_03 = "Menu title_03"
+        menu_id_03 = "menu_id_03"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02, menu_id_01)
@@ -419,14 +411,14 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
-        title_03 = 'Menu title_03'
-        menu_id_03 = 'menu_id_03'
+        title_03 = "Menu title_03"
+        menu_id_03 = "menu_id_03"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02, menu_id_01)
@@ -443,14 +435,14 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.MenuBar()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
-        title_03 = 'Menu title_03'
-        menu_id_03 = 'menu_id_03'
+        title_03 = "Menu title_03"
+        menu_id_03 = "menu_id_03"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02, menu_id_01)
@@ -464,14 +456,14 @@ class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         root = wx.Menu()
         controller = MenuController(root)
 
-        title_01 = 'Menu title_01'
-        menu_id_01 = 'menu_id_01'
+        title_01 = "Menu title_01"
+        menu_id_01 = "menu_id_01"
 
-        title_02 = 'Menu title_02'
-        menu_id_02 = 'menu_id_02'
+        title_02 = "Menu title_02"
+        menu_id_02 = "menu_id_02"
 
-        title_03 = 'Menu title_03'
-        menu_id_03 = 'menu_id_03'
+        title_03 = "Menu title_03"
+        menu_id_03 = "menu_id_03"
 
         controller.createSubMenu(menu_id_01, title_01)
         controller.createSubMenu(menu_id_02, title_02, menu_id_01)

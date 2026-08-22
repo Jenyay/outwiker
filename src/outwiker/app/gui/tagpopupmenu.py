@@ -22,7 +22,9 @@ class TagPopupMenu:
         self.ID_RENAME_TAG = menu.Append(wx.ID_ANY, _("Rename tag")).GetId()
         menu.Bind(wx.EVT_MENU, handler=self._onRenameTag, id=self.ID_RENAME_TAG)
 
-        self.ID_DESTROY_TAG = menu.Append(wx.ID_ANY, _("Remove tag from all pages")).GetId()
+        self.ID_DESTROY_TAG = menu.Append(
+            wx.ID_ANY, _("Remove tag from all pages")
+        ).GetId()
         menu.Bind(wx.EVT_MENU, handler=self._onDestroyTag, id=self.ID_DESTROY_TAG)
 
         return menu
@@ -30,7 +32,9 @@ class TagPopupMenu:
     @testreadonly
     def _onRenameTag(self, event):
         tag_name_old = self._tag_name
-        with wx.TextEntryDialog(self._parent, _("Enter new tag name"), _("Tag renaming"), value=tag_name_old) as dlg:
+        with wx.TextEntryDialog(
+            self._parent, _("Enter new tag name"), _("Tag renaming"), value=tag_name_old
+        ) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
                 wikiroot = self._application.wikiroot
                 tag_name_new = dlg.GetValue()
@@ -38,7 +42,15 @@ class TagPopupMenu:
 
     @testreadonly
     def _onDestroyTag(self, event):
-        if MessageBox(_("Remove tags from all pages?"), _("Tag removing"), wx.YES_NO, self._application.mainWindow) == wx.YES:
+        if (
+            MessageBox(
+                _("Remove tags from all pages?"),
+                _("Tag removing"),
+                wx.YES_NO,
+                self._application.mainWindow,
+            )
+            == wx.YES
+        ):
             removeTagsFromBranch(self._application.wikiroot, [self._tag_name])
 
     @property

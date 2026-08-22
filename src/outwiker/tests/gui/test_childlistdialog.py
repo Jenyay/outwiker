@@ -2,8 +2,10 @@
 
 import unittest
 
-from outwiker.pages.wiki.actions.childlist import (ChildListDialog,
-                                                   ChildListDialogController)
+from outwiker.pages.wiki.actions.childlist import (
+    ChildListDialog,
+    ChildListDialogController,
+)
 from outwiker.gui.tester import Tester
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 

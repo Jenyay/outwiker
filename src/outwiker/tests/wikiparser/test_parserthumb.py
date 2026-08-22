@@ -86,10 +86,8 @@ class ParserThumbTest(BaseOutWikerMixin, TestCase):
         text = '% width = 100 px % Attach:"dir/attach.png" %%'
         path = os.path.join("__attach", "__thumb", "dir", "th_width_100_attach.png")
 
-        expected_regex = (
-            '<a href="__attach/dir/attach.png"><img src="{path}\\?rnd=\\d+"/></a>'.format(
-                path=path.replace("\\", "/")
-            )
+        expected_regex = '<a href="__attach/dir/attach.png"><img src="{path}\\?rnd=\\d+"/></a>'.format(
+            path=path.replace("\\", "/")
         )
 
         result = self.parser.toHtml(text)
@@ -105,10 +103,8 @@ class ParserThumbTest(BaseOutWikerMixin, TestCase):
         text = "% width = 100 px % Attach:'dir/attach.png' %%"
         path = os.path.join("__attach", "__thumb", "dir", "th_width_100_attach.png")
 
-        expected_regex = (
-            '<a href="__attach/dir/attach.png"><img src="{path}\\?rnd=\\d+"/></a>'.format(
-                path=path.replace("\\", "/")
-            )
+        expected_regex = '<a href="__attach/dir/attach.png"><img src="{path}\\?rnd=\\d+"/></a>'.format(
+            path=path.replace("\\", "/")
         )
 
         result = self.parser.toHtml(text)

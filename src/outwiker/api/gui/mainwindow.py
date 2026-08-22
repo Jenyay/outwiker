@@ -9,7 +9,9 @@ def getMainWindowTitle(application) -> str:
     return _tools.getMainWindowTitle(application)
 
 
-def addStatusBarItem(mainWindow, name: str, width: int = -1, position: Optional[int] = None) -> None:
+def addStatusBarItem(
+    mainWindow, name: str, width: int = -1, position: Optional[int] = None
+) -> None:
     return _tools.addStatusBarItem(mainWindow, name, width, position)
 
 

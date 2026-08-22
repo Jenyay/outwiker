@@ -13,18 +13,19 @@ class ListItemStyleAction(BaseAction):
     """
     Show dialog to select list item style (bullet)
     """
-    stringId = 'ListItemStyle'
+
+    stringId = "ListItemStyle"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _('List item style...')
+        return _("List item style...")
 
     @property
     def description(self):
-        return _('Select list item style (bullet)')
+        return _("Select list item style (bullet)")
 
     def run(self, params):
         assert self._application.mainWindow is not None
@@ -39,9 +40,11 @@ class ListItemStyleAction(BaseAction):
                 first_line, last_line = editor.GetSelectionLines()
                 new_lines_str = []
                 for line_number in range(first_line, last_line + 1):
-                    new_lines_str.append(self._process_line(editor, line_number, style_str))
+                    new_lines_str.append(
+                        self._process_line(editor, line_number, style_str)
+                    )
 
-                new_text = '\n'.join(new_lines_str)
+                new_text = "\n".join(new_lines_str)
                 first_line_pos, last_line_pos = self._get_selection_full_lines(editor)
                 editor.SetSelection(first_line_pos, last_line_pos)
                 editor.replaceText(new_text)
@@ -72,27 +75,31 @@ class ListItemStyleAction(BaseAction):
 
     def _process_line(self, editor, line_number, style_str) -> str:
         line_str = editor.GetLine(line_number)
-        if line_str.endswith('\n'):
+        if line_str.endswith("\n"):
             line_str = line_str[:-1]
 
         list_token_re = re.compile(r"^\*+(?P<style>\s*\[.?\])?")
         match = list_token_re.search(line_str)
         list_token_end = match.end(0) if match is not None else 0
-        style_token_start = match.start("style") if match is not None else list_token_end
+        style_token_start = (
+            match.start("style") if match is not None else list_token_end
+        )
         if style_token_start == -1:
             style_token_start = list_token_end
 
-        prefix = ' '
-        suffix = ''
+        prefix = " "
+        suffix = ""
         if list_token_end == 0:
-            prefix = ListToken.unorderList + ' '
+            prefix = ListToken.unorderList + " "
 
         if not list_token_end and style_str:
-            suffix = ' '
+            suffix = " "
 
         if list_token_end and not style_str and not suffix:
-            prefix = ''
+            prefix = ""
 
-        insert_str = '{prefix}{style}{suffix}'.format(prefix=prefix, style=style_str, suffix=suffix)
+        insert_str = "{prefix}{style}{suffix}".format(
+            prefix=prefix, style=style_str, suffix=suffix
+        )
 
-        return line_str[: style_token_start] + insert_str + line_str[list_token_end:]
+        return line_str[:style_token_start] + insert_str + line_str[list_token_end:]

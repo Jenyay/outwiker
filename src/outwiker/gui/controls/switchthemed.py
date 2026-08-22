@@ -50,8 +50,7 @@ class SwitchThemed(ScrolledPanel):
         self.SetMinSize((minWidth + scrollWidth, -1))
 
     def Notify(self):
-        wx.PostEvent(self,
-                     SwitchEvent(self.GetId(), index=self.GetSelection()))
+        wx.PostEvent(self, SwitchEvent(self.GetId(), index=self.GetSelection()))
 
     def SetTheme(self, theme):
         self._theme = theme
@@ -61,11 +60,9 @@ class SwitchThemed(ScrolledPanel):
         else:
             self.SetBackgroundColour(wx.Colour(255, 255, 255))
 
-        [button.SetTheme(self._theme)
-         for button
-         in self._buttons + self._otherItems]
+        [button.SetTheme(self._theme) for button in self._buttons + self._otherItems]
 
-    def Append(self, label=u'', bitmap=None):
+    def Append(self, label="", bitmap=None):
         button = StickyButtonThemed(self, label=label, bitmap=bitmap)
 
         if self._theme is not None:
@@ -112,9 +109,7 @@ class SwitchThemed(ScrolledPanel):
 
     def SetButtonsHeight(self, height):
         self._buttonsHeight = height
-        [button.SetMinSize((-1, self._buttonsHeight))
-         for button
-         in self._buttons]
+        [button.SetMinSize((-1, self._buttonsHeight)) for button in self._buttons]
         self.Layout()
 
 
@@ -125,7 +120,7 @@ class MyFrame(wx.Frame):
         self.switch.Bind(EVT_SWITCH, self._onSwitch)
 
         for n in range(20):
-            self.switch.Append(u'Кнопка {}'.format(n))
+            self.switch.Append("Кнопка {}".format(n))
 
         self.switch.SetSelection(4)
 
@@ -134,8 +129,8 @@ class MyFrame(wx.Frame):
         print(self.switch.GetSelection())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = wx.App()
-    frame = MyFrame(None, 'SwitchThemed Test')
+    frame = MyFrame(None, "SwitchThemed Test")
     frame.Show()
     app.MainLoop()

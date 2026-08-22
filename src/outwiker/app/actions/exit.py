@@ -8,6 +8,7 @@ class ExitAction(BaseAction):
     """
     Закрытие дерева заметок
     """
+
     stringId = "Exit"
 
     def __init__(self, application):

@@ -3,17 +3,13 @@
 from .baseaction import BaseAction
 
 
-class PolyAction (BaseAction):
+class PolyAction(BaseAction):
     """
     Класс для полиморфного действия, поведение которого можно менять во
     время работы
     """
 
-    def __init__(self,
-                 application,
-                 strid,
-                 title,
-                 description):
+    def __init__(self, application, strid, title, description):
         self._application = application
         self._strid = strid
         self._title = title

@@ -11,6 +11,7 @@ class WikiThumbAction(BaseAction):
     """
     Вставка миниатюры
     """
+
     stringId = "WikiThumbnail"
 
     def __init__(self, application):
@@ -27,10 +28,12 @@ class WikiThumbAction(BaseAction):
     def run(self, params):
         codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
 
-        dlgController = ThumbDialogController(self._application,
-                                              self._application.mainWindow,
-                                              self._application.selectedPage,
-                                              codeEditor.GetSelectedText())
+        dlgController = ThumbDialogController(
+            self._application,
+            self._application.mainWindow,
+            self._application.selectedPage,
+            codeEditor.GetSelectedText(),
+        )
 
         if dlgController.showDialog() == wx.ID_OK:
             codeEditor.replaceText(dlgController.result)

@@ -66,7 +66,7 @@ class HackPage_SetAliasTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_set_alias_01(self):
         from hackpage.utils import setAliasWithDialog
 
-        alias = 'Псевдоним страницы'
+        alias = "Псевдоним страницы"
 
         Tester.dialogTester.append(self._setValue, alias)
 
@@ -78,7 +78,7 @@ class HackPage_SetAliasTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_set_alias_02(self):
         from hackpage.utils import setAliasWithDialog
 
-        alias = '   Псевдоним страницы   '
+        alias = "   Псевдоним страницы   "
 
         Tester.dialogTester.append(self._setValue, alias)
 
@@ -90,9 +90,9 @@ class HackPage_SetAliasTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_set_alias_03(self):
         from hackpage.utils import setAliasWithDialog
 
-        self.testPage.alias = 'Псевдоним страницы'
+        self.testPage.alias = "Псевдоним страницы"
 
-        Tester.dialogTester.append(self._setValue, '')
+        Tester.dialogTester.append(self._setValue, "")
 
         setAliasWithDialog(self.testPage, self.application)
 

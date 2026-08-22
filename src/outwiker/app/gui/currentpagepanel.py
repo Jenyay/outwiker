@@ -18,7 +18,6 @@ from outwiker.gui.images import readImage
 from outwiker.gui.theme import Theme, ThemeChangedParams
 
 
-
 class CurrentPagePanel(wx.Panel):
     # @profile
     def __init__(self, parent, application: Application):
@@ -38,8 +37,14 @@ class CurrentPagePanel(wx.Panel):
         # Флаг обозначает, что выполняется метод Save
         self.__saveProcessing = False
 
-        self._bookmarkInactiveImg = readImage(getBuiltinImagePath("bookmark.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
-        self._bookmarkActiveImg = readImage(getBuiltinImagePath("bookmark_active.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
+        self._bookmarkInactiveImg = readImage(
+            getBuiltinImagePath("bookmark.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+        )
+        self._bookmarkActiveImg = readImage(
+            getBuiltinImagePath("bookmark_active.svg"),
+            BUTTON_ICON_WIDTH,
+            BUTTON_ICON_HEIGHT,
+        )
 
         self.tabsCtrl = TabsCtrl(self, self._application, self._theme)
         self.bookmarkButton = wx.BitmapButton(
@@ -222,7 +227,9 @@ class CurrentPagePanel(wx.Panel):
         self.contentSizer.AddGrowableRow(0)
         self.contentSizer.AddGrowableCol(0)
         tabsSizer = wx.FlexGridSizer(1, 0, 0, 0)
-        tabsSizer.Add(self.bookmarkButton, flag=wx.ALIGN_TOP | wx.LEFT | wx.RIGHT, border=4)
+        tabsSizer.Add(
+            self.bookmarkButton, flag=wx.ALIGN_TOP | wx.LEFT | wx.RIGHT, border=4
+        )
         tabsSizer.Add(self.tabsCtrl, flag=wx.EXPAND)
         tabsSizer.AddGrowableCol(1)
 
@@ -314,7 +321,9 @@ class CurrentPagePanel(wx.Panel):
         assert not self.__htmlRenderorrowed
 
         if self.__htmlRender is None:
-            self.__htmlRender = getOS().getHtmlRenderForPage(new_parent, self._application)
+            self.__htmlRender = getOS().getHtmlRenderForPage(
+                new_parent, self._application
+            )
         else:
             self.__htmlRender.Awake()
             self.__htmlRender.Reparent(new_parent)

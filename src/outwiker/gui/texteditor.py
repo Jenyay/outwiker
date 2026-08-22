@@ -105,7 +105,11 @@ class TextEditor(TextEditorBase):
         event.Skip()
 
     def sanitize_color(self, param: StringOption):
-        return param.value if StcStyle.checkColorString(param.value) else param.defaultValue
+        return (
+            param.value
+            if StcStyle.checkColorString(param.value)
+            else param.defaultValue
+        )
 
     def setDefaultSettings(self):
         """
@@ -155,7 +159,9 @@ class TextEditor(TextEditorBase):
         )
         self.textCtrl.IndicatorSetForeground(self.SPELL_ERROR_INDICATOR, "red")
         self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_LINENUMBER, marginBackColor)
-        self.textCtrl.StyleSetForeground(wx.stc.STC_STYLE_LINENUMBER, lineNumberFontColor)
+        self.textCtrl.StyleSetForeground(
+            wx.stc.STC_STYLE_LINENUMBER, lineNumberFontColor
+        )
         self._styleSet = False
 
     def _setHotKeys(self):

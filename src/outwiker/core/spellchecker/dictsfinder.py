@@ -10,6 +10,7 @@ class DictsFinder:
     """
     Class for searching spell dictionaries in many folders
     """
+
     dictExtensions = [".aff", ".dic"]
 
     def __init__(self, dirlist):
@@ -45,7 +46,7 @@ class DictsFinder:
 
         for fname in os.listdir(path):
             if fname.endswith(self.dictExtensions[0]):
-                lang = fname[:-len(self.dictExtensions[0])]
+                lang = fname[: -len(self.dictExtensions[0])]
                 if lang == CUSTOM_DICT_LANG:
                     continue
 

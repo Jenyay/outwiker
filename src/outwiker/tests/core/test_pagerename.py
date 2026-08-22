@@ -16,7 +16,7 @@ from outwiker.tests.utils import removeDir
 class RenameTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -24,9 +24,7 @@ class RenameTest(unittest.TestCase):
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3"],
-                       "Страница 4",
-                       [])
+        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
         factory.create(self.wikiroot, "Страница 6", [])
 
@@ -87,8 +85,9 @@ class RenameTest(unittest.TestCase):
         def rename(page, newtitle):
             page.title = newtitle
 
-        self.assertRaises(DuplicateTitle, rename,
-                          self.wikiroot["Страница 1"], "СтраНица 6")
+        self.assertRaises(
+            DuplicateTitle, rename, self.wikiroot["Страница 1"], "СтраНица 6"
+        )
 
     def testRename2(self):
         page = self.wikiroot["Страница 2/Страница 3"]
@@ -106,10 +105,7 @@ class RenameTest(unittest.TestCase):
         page3.title = "Страница 3 new"
 
         self.assertEqual(page3["Страница 4"], page4)
-        self.assertEqual(
-            self.wikiroot["Страница 2/Страница 3 new/Страница 4"],
-            page4
-        )
+        self.assertEqual(self.wikiroot["Страница 2/Страница 3 new/Страница 4"], page4)
 
     def testRename4(self):
         page = self.wikiroot["Страница 1"]
@@ -134,19 +130,14 @@ class RenameTest(unittest.TestCase):
 
         page2.title = "Страница 2 new"
 
-        self.assertEqual(page2.path,
-                         os.path.join(self.path, "Страница 2 new"))
-        self.assertEqual(page3.path,
-                         os.path.join(self.path,
-                                      "Страница 2 new",
-                                      "Страница 3")
-                         )
-        self.assertEqual(page4.path,
-                         os.path.join(self.path,
-                                      "Страница 2 new",
-                                      "Страница 3",
-                                      "Страница 4")
-                         )
+        self.assertEqual(page2.path, os.path.join(self.path, "Страница 2 new"))
+        self.assertEqual(
+            page3.path, os.path.join(self.path, "Страница 2 new", "Страница 3")
+        )
+        self.assertEqual(
+            page4.path,
+            os.path.join(self.path, "Страница 2 new", "Страница 3", "Страница 4"),
+        )
 
     def testConfig(self):
         page2 = self.wikiroot["Страница 2"]
@@ -173,7 +164,5 @@ class RenameTest(unittest.TestCase):
             except OSError:
                 pass
             else:
-                self.assertTrue(
-                    os.path.exists(self.wikiroot["Новое имя"].path)
-                )
+                self.assertTrue(os.path.exists(self.wikiroot["Новое имя"].path))
                 self.assertEqual(self.wikiroot["Страница 2"], None)

@@ -102,7 +102,7 @@ class IconsCollection:
             ):
                 fullpath_svg = convert_name_to_svg(fullpath)
                 # Skip bitmap icon if vector icon with same name exists
-                if not os.path.exists(fullpath_svg) or fullpath == fullpath_svg: 
+                if not os.path.exists(fullpath_svg) or fullpath == fullpath_svg:
                     result.append(fullpath)
 
         return result
@@ -216,7 +216,9 @@ class IconsCollection:
         Add single icon with full path iconpath into folder groupPath.
         Not images will be skipped.
         """
-        if (not isImage(iconpath) and not isSVG(iconpath)) or not os.path.exists(iconpath):
+        if (not isImage(iconpath) and not isSVG(iconpath)) or not os.path.exists(
+            iconpath
+        ):
             return
 
         iconname = os.path.basename(iconpath)

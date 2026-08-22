@@ -26,9 +26,9 @@ class PageData:
 class PageList(wx.Panel):
     def __init__(self, parent: wx.Window):
         super().__init__(parent)
-        self._columns = []                     # type: List[BaseColumn]
-        self._pages = []                       # type: List[outwiker.core.tree.WikiPage]
-        self._defaultIcon = getBuiltinImagePath('page.svg')
+        self._columns = []  # type: List[BaseColumn]
+        self._pages = []  # type: List[outwiker.core.tree.WikiPage]
+        self._defaultIcon = getBuiltinImagePath("page.svg")
         self._imageList = ImageListCache(self._defaultIcon, ICONS_WIDTH, ICONS_HEIGHT)
 
         self._propagationLevel = 15
@@ -40,17 +40,21 @@ class PageList(wx.Panel):
 
         self._listCtrl = ULC.UltimateListCtrl(
             self,
-            agwStyle=ULC.ULC_REPORT | ULC.ULC_SINGLE_SEL | ULC.ULC_VRULES | ULC.ULC_HRULES | ULC.ULC_SHOW_TOOLTIPS | ULC.ULC_NO_HIGHLIGHT
+            agwStyle=ULC.ULC_REPORT
+            | ULC.ULC_SINGLE_SEL
+            | ULC.ULC_VRULES
+            | ULC.ULC_HRULES
+            | ULC.ULC_SHOW_TOOLTIPS
+            | ULC.ULC_NO_HIGHLIGHT,
         )
 
-        self._listCtrl.Bind(ULC.EVT_LIST_ITEM_HYPERLINK,
-                            handler=self._onPageClick)
-        self._listCtrl.Bind(ULC.EVT_LIST_COL_CLICK,
-                            handler=self._onColClick)
+        self._listCtrl.Bind(ULC.EVT_LIST_ITEM_HYPERLINK, handler=self._onPageClick)
+        self._listCtrl.Bind(ULC.EVT_LIST_COL_CLICK, handler=self._onColClick)
         self._listCtrl.SetHyperTextNewColour(wx.BLUE)
         self._listCtrl.SetHyperTextVisitedColour(wx.BLUE)
-        self._listCtrl.AssignImageList(self._imageList.getImageList(),
-                                       wx.IMAGE_LIST_SMALL)
+        self._listCtrl.AssignImageList(
+            self._imageList.getImageList(), wx.IMAGE_LIST_SMALL
+        )
 
         self._sizer.Add(self._listCtrl, flag=wx.EXPAND)
         self.SetSizer(self._sizer)
@@ -126,9 +130,7 @@ class PageList(wx.Panel):
 
     def _fillPageList(self):
         for page in self._pages:
-            items = [column.getCellContent(page)
-                     for column
-                     in self._visibleColumns]
+            items = [column.getCellContent(page) for column in self._visibleColumns]
             item_index = self._listCtrl.Append(items)
             for n, column in enumerate(self._visibleColumns):
                 column.setCellProperties(self, item_index, n, page)

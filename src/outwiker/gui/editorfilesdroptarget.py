@@ -25,15 +25,14 @@ class EditorFilesDropTarget(wx.FileDropTarget):
     def OnDropFiles(self, _x, _y, files):
         assert self._application.selectedPage is not None
 
-        if len(files) == 1 and '\n' in files[0]:
-            files = files[0].split('\n')
+        if len(files) == 1 and "\n" in files[0]:
+            files = files[0].split("\n")
 
-        file_protocol = 'file://'
+        file_protocol = "file://"
 
         # Prepare absolute path for attach folder
         attach = Attachment(self._application.selectedPage)
-        attach_path = os.path.realpath(
-            os.path.abspath(attach.getAttachPath(False)))
+        attach_path = os.path.realpath(os.path.abspath(attach.getAttachPath(False)))
 
         if not attach_path.endswith(os.sep):
             attach_path += os.sep
@@ -47,7 +46,7 @@ class EditorFilesDropTarget(wx.FileDropTarget):
 
             # Remove file:// protocol
             if fname.startswith(file_protocol):
-                fname = fname[len(file_protocol):]
+                fname = fname[len(file_protocol) :]
 
             corrected_fname = os.path.realpath(os.path.abspath(fname))
 
@@ -55,14 +54,14 @@ class EditorFilesDropTarget(wx.FileDropTarget):
             prefix = os.path.commonprefix([corrected_fname, attach_path])
             if prefix == attach_path:
                 is_attached = True
-                corrected_fname = corrected_fname[len(prefix):]
+                corrected_fname = corrected_fname[len(prefix) :]
 
             correctedFiles.append(corrected_fname)
 
         if is_attached:
             self._application.onAttachmentPaste(correctedFiles)
         else:
-            text = ' '.join(correctedFiles)
+            text = " ".join(correctedFiles)
             self._editor.replaceText(text)
 
         return True

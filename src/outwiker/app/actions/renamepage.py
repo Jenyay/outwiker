@@ -7,6 +7,7 @@ class RenamePageAction(BaseAction):
     """
     Переименование страницы
     """
+
     stringId = "RenamePage"
 
     def __init__(self, application):

@@ -10,14 +10,14 @@ from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 
 
-class ManualEditTest (unittest.TestCase):
+class ManualEditTest(unittest.TestCase):
     """
     Класс тестов, связанных с изменением страниц внешними средствами
     """
 
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -25,8 +25,7 @@ class ManualEditTest (unittest.TestCase):
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-        factory.create(
-            self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
+        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
         self.wikiroot["Страница 1"].content = "1234567"
@@ -36,11 +35,15 @@ class ManualEditTest (unittest.TestCase):
 
         self.wikiroot["Страница 1"].tags = ["метка 1"]
         self.wikiroot["Страница 2/Страница 3"].tags = ["метка 2", "метка 3"]
-        self.wikiroot["Страница 2/Страница 3/Страница 4"].tags = ["метка 1",
-                                                                  "метка 2",
-                                                                  "метка 4"]
+        self.wikiroot["Страница 2/Страница 3/Страница 4"].tags = [
+            "метка 1",
+            "метка 2",
+            "метка 4",
+        ]
 
-        self.wikiroot["Страница 2/Страница 3/Страница 4"].icon = "testdata/images/feed.gif"
+        self.wikiroot[
+            "Страница 2/Страница 3/Страница 4"
+        ].icon = "testdata/images/feed.gif"
 
     def tearDown(self):
         removeDir(self.path)

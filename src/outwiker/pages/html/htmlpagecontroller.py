@@ -25,21 +25,29 @@ class HtmlPageController:
     def __init__(self, application):
         self._application = application
         self._spellController = SimpleSpellController(
-            self._application,
-            PAGE_TYPE_STRING)
+            self._application, PAGE_TYPE_STRING
+        )
 
     def initialize(self):
-        self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
+        self._application.onPageDialogPageTypeChanged += (
+            self.__onPageDialogPageTypeChanged
+        )
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
-        self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageDialogPageFactoriesNeeded += (
+            self.__onPageDialogPageFactoriesNeeded
+        )
         self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
 
     def clear(self):
-        self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
+        self._application.onPageDialogPageTypeChanged -= (
+            self.__onPageDialogPageTypeChanged
+        )
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
-        self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageDialogPageFactoriesNeeded -= (
+            self.__onPageDialogPageFactoriesNeeded
+        )
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
         if not self._application.testMode:
@@ -85,16 +93,16 @@ class HtmlPageController:
             tpl = HtmlTemplate(self._application, readTextFile(style.getDefaultStyle()))
 
         content = self._changeContentByEvent(
-            page,
-            PreprocessingParams(page.content),
-            self._application.onPreprocessing)
+            page, PreprocessingParams(page.content), self._application.onPreprocessing
+        )
 
         pageAdapter = HtmlPageFactory().createPageAdapter(page)
         if pageAdapter.autoLineWrap:
             content = self._changeContentByEvent(
                 page,
                 PreHtmlImprovingParams(content),
-                self._application.onPreHtmlImproving)
+                self._application.onPreHtmlImproving,
+            )
 
             config = HtmlRenderConfig(self._application.config)
             improverFactory = HtmlImproverFactory(self._application)
@@ -104,9 +112,9 @@ class HtmlPageController:
 
         result = tpl.substitute(content=text, title=page.display_title)
 
-        result = self._changeContentByEvent(page,
-                                            PostprocessingParams(result),
-                                            self._application.onPostprocessing)
+        result = self._changeContentByEvent(
+            page, PostprocessingParams(result), self._application.onPostprocessing
+        )
         return result
 
     def _changeContentByEvent(self, page, params, event):

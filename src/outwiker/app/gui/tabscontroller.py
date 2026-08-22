@@ -150,7 +150,9 @@ class TabsController:
         self._tabsCtrl.Bind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
         self._tabsCtrl.Bind(EVT_TABSCTRL_END_DRAG_TAB, handler=self.__onMoveTab)
         self._tabsCtrl.Bind(EVT_TABSCTRL_CLOSED_TAB, handler=self.__onTabClosed)
-        self._tabsCtrl.Bind(EVT_TABSCTRL_DOUBLE_CLICK_TAB, handler=self.__onTabDoubleClick)
+        self._tabsCtrl.Bind(
+            EVT_TABSCTRL_DOUBLE_CLICK_TAB, handler=self.__onTabDoubleClick
+        )
 
     def __unbindGuiEvents(self):
         self._tabsCtrl.Unbind(EVT_TABSCTRL_PAGE_CHANGED, handler=self.__onTabChanged)
@@ -158,7 +160,9 @@ class TabsController:
         self._tabsCtrl.Unbind(EVT_TABSCTRL_ADD_NEW_TAB, handler=self.__onAddNewTab)
         self._tabsCtrl.Unbind(EVT_TABSCTRL_END_DRAG_TAB, handler=self.__onMoveTab)
         self._tabsCtrl.Unbind(EVT_TABSCTRL_CLOSED_TAB, handler=self.__onTabClosed)
-        self._tabsCtrl.Unbind(EVT_TABSCTRL_DOUBLE_CLICK_TAB, handler=self.__onTabDoubleClick)
+        self._tabsCtrl.Unbind(
+            EVT_TABSCTRL_DOUBLE_CLICK_TAB, handler=self.__onTabDoubleClick
+        )
 
     def __bindEvents(self):
         self._application.onWikiOpen += self.__onWikiOpen
@@ -204,9 +208,7 @@ class TabsController:
     def __onTabDoubleClick(self, event):
         page = event.page
         if page is not None:
-            editPage(self._application.mainWindow,
-                     page,
-                     self._application)
+            editPage(self._application.mainWindow, page, self._application)
 
     def __loadTabs(self, wikiroot):
         if wikiroot is not None:
@@ -285,7 +287,10 @@ class TabsController:
         self.__saveTabs()
 
     def __onThemeChanged(self, params: ThemeChangedParams):
-        if Theme.SECTION_GENERAL in params.changed_sections or Theme.SECTION_TABS in params.changed_sections:
+        if (
+            Theme.SECTION_GENERAL in params.changed_sections
+            or Theme.SECTION_TABS in params.changed_sections
+        ):
             self._tabsCtrl.Recalculate(True)
             self._tabsCtrl.GetParent().Layout()
 

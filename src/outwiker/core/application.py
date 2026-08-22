@@ -6,7 +6,11 @@ from typing import Optional
 from outwiker.core.bookmarks import Bookmarks
 from outwiker.core.config import Config
 from outwiker.core.event import Event, CustomEvents
-from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams, RequestSelectedTextResult
+from outwiker.core.events import (
+    PostWikiCloseParams,
+    PreWikiCloseParams,
+    RequestSelectedTextResult,
+)
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
@@ -14,7 +18,7 @@ from outwiker.core.system import getSpellDirList
 from outwiker.core.tree import WikiDocument
 from outwiker.gui.theme import Theme
 
-logger = logging.getLogger('outwiker.core.application')
+logger = logging.getLogger("outwiker.core.application")
 
 
 class Application:
@@ -448,7 +452,7 @@ class Application:
             preWikiCloseParams = PreWikiCloseParams(self.__wikiroot)
             self.onPreWikiClose(self.selectedPage, preWikiCloseParams)
             if preWikiCloseParams.abortClose:
-                logger.debug('Wiki closing aborted: %s', wikiPath)
+                logger.debug("Wiki closing aborted: %s", wikiPath)
                 return
 
             self.__unbindWikiEvents(self.__wikiroot)
@@ -537,8 +541,7 @@ class Application:
         """
         Set page as selected
         """
-        if (self.__wikiroot is not None and
-                self.__wikiroot.selectedPage != page):
+        if self.__wikiroot is not None and self.__wikiroot.selectedPage != page:
             self.__wikiroot.selectedPage = page
 
     def getEvent(self, name):

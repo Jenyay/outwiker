@@ -37,28 +37,30 @@ class FactorySelectorTest(unittest.TestCase):
         wikiroot = loadNotesTree(self.path)
         html_page = wikiroot["Типы страниц/HTML-страница"]
         self.assertEqual(
-            type(FactorySelector.getFactory(html_page.getTypeString())),
-            HtmlPageFactory)
+            type(FactorySelector.getFactory(html_page.getTypeString())), HtmlPageFactory
+        )
 
         text_page = wikiroot["Типы страниц/Текстовая страница"]
         self.assertEqual(
-            type(FactorySelector.getFactory(text_page.getTypeString())),
-            TextPageFactory)
+            type(FactorySelector.getFactory(text_page.getTypeString())), TextPageFactory
+        )
 
         wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
-            type(FactorySelector.getFactory(wiki_page.getTypeString())),
-            WikiPageFactory)
+            type(FactorySelector.getFactory(wiki_page.getTypeString())), WikiPageFactory
+        )
 
         search_page = wikiroot["Типы страниц/Страница поиска"]
         self.assertEqual(
             type(FactorySelector.getFactory(search_page.getTypeString())),
-            SearchPageFactory)
+            SearchPageFactory,
+        )
 
         test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual(
             type(FactorySelector.getFactory(test_page.getTypeString())),
-            UnknownPageTypeFactory)
+            UnknownPageTypeFactory,
+        )
 
     def testAddFactory(self):
         FactorySelector.addFactory(ExamplePageFactory())
@@ -68,7 +70,8 @@ class FactorySelectorTest(unittest.TestCase):
         test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual(
             type(FactorySelector.getFactory(test_page.getTypeString())),
-            ExamplePageFactory)
+            ExamplePageFactory,
+        )
 
     def testRemoveFactory_01(self):
         FactorySelector.removeFactory(WikiPageFactory().getPageTypeString())
@@ -78,7 +81,8 @@ class FactorySelectorTest(unittest.TestCase):
         wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(wiki_page.getTypeString())),
-            UnknownPageTypeFactory)
+            UnknownPageTypeFactory,
+        )
 
     def testRemoveFactory_02(self):
         wikiroot = loadNotesTree(self.path)
@@ -88,13 +92,15 @@ class FactorySelectorTest(unittest.TestCase):
         wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(wiki_page.getTypeString())),
-            UnknownPageTypeFactory)
+            UnknownPageTypeFactory,
+        )
 
 
 class ExamplePageAdapter(PageAdapter):
     """
     Класс тестовых страниц
     """
+
     def getTypeString(self):
         return TEST_PAGE_TYPE_STRING
 
@@ -106,6 +112,7 @@ class ExamplePageFactory(PageFactory):
     которая на самом деле является той же текстовой страницей,
     что и TextWikiPage.
     """
+
     @property
     def title(self):
         """

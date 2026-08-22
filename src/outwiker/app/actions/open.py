@@ -4,10 +4,11 @@ from outwiker.app.services.tree import openWikiWithDialog
 from outwiker.gui.baseaction import BaseAction
 
 
-class OpenAction (BaseAction):
+class OpenAction(BaseAction):
     """
     Открытие дерева заметок
     """
+
     stringId = "OpenTree"
 
     def __init__(self, application):

@@ -124,13 +124,11 @@ actionsList = [
     ActionInfo(MovePageDownAction, HotKey("Down", ctrl=True, shift=True)),
     ActionInfo(RenamePageAction, HotKey("F2")),
     ActionInfo(RemovePageAction, HotKey("F8", ctrl=True, shift=True)),
-
     ActionInfo(SortChildAlphabeticalAction, None),
     ActionInfo(SortChildByCreationDateAscAction, None),
     ActionInfo(SortChildByCreationDateDescAction, None),
     ActionInfo(SortChildByModifiedDateAscAction, None),
     ActionInfo(SortChildByModifiedDateDescAction, None),
-
     ActionInfo(SortSiblingsAlphabeticalAction, None),
     ActionInfo(SortSiblingsByCreationDateAscAction, None),
     ActionInfo(SortSiblingsByCreationDateDescAction, None),

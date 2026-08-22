@@ -31,27 +31,20 @@ class HtmlEditorPanel(BasePrefPanel):
         self.Layout()
 
     def LoadState(self):
-        self._stylesList.addStyle(_(u"Tag"),
-                                  self._config.tag.value)
+        self._stylesList.addStyle(_("Tag"), self._config.tag.value)
 
-        self._stylesList.addStyle(_(u"Unknown tag"),
-                                  self._config.tagUnknown.value)
+        self._stylesList.addStyle(_("Unknown tag"), self._config.tagUnknown.value)
 
-        self._stylesList.addStyle(_(u"Attribute"),
-                                  self._config.attribute.value)
+        self._stylesList.addStyle(_("Attribute"), self._config.attribute.value)
 
-        self._stylesList.addStyle(_(u"Unknown attribute"),
-                                  self._config.attributeUnknown.value)
+        self._stylesList.addStyle(
+            _("Unknown attribute"), self._config.attributeUnknown.value
+        )
 
-        self._stylesList.addStyle(_(u"Number"),
+        self._stylesList.addStyle(_("Number"), self._config.number.value)
+        self._stylesList.addStyle(_("String"), self._config.string.value)
 
-                                  self._config.number.value)
-        self._stylesList.addStyle(_(u"String"),
-
-                                  self._config.string.value)
-
-        self._stylesList.addStyle(_(u"Comment"),
-                                  self._config.comment.value)
+        self._stylesList.addStyle(_("Comment"), self._config.comment.value)
 
     def Save(self):
         self._config.tag.value = self._stylesList.getStyle(0)

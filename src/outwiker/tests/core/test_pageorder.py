@@ -27,7 +27,7 @@ class PageOrderTest(unittest.TestCase):
         self._application = Application()
 
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         self._application.onPageOrderChange += self.onPageOrder
@@ -47,8 +47,7 @@ class PageOrderTest(unittest.TestCase):
 
         self.assertEqual(self.wikiroot["Страница 1"].order, 0)
         self.assertEqual(len(self.wikiroot.children), 1)
-        self.assertEqual(self.wikiroot.children[0],
-                         self.wikiroot["Страница 1"])
+        self.assertEqual(self.wikiroot.children[0], self.wikiroot["Страница 1"])
 
     def testCreateOrder1(self):
         TextPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -59,10 +58,8 @@ class PageOrderTest(unittest.TestCase):
 
         self.assertEqual(len(self.wikiroot.children), 2)
 
-        self.assertEqual(self.wikiroot.children[0],
-                         self.wikiroot["Страница 2"])
-        self.assertEqual(self.wikiroot.children[1],
-                         self.wikiroot["Страница 1"])
+        self.assertEqual(self.wikiroot.children[0], self.wikiroot["Страница 2"])
+        self.assertEqual(self.wikiroot.children[1], self.wikiroot["Страница 1"])
 
     def testCreateOrder2(self):
         TextPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -75,12 +72,9 @@ class PageOrderTest(unittest.TestCase):
 
         self.assertEqual(len(self.wikiroot.children), 3)
 
-        self.assertEqual(self.wikiroot.children[0],
-                         self.wikiroot["Страница 1"])
-        self.assertEqual(self.wikiroot.children[1],
-                         self.wikiroot["Страница 3"])
-        self.assertEqual(self.wikiroot.children[2],
-                         self.wikiroot["Страница 2"])
+        self.assertEqual(self.wikiroot.children[0], self.wikiroot["Страница 1"])
+        self.assertEqual(self.wikiroot.children[1], self.wikiroot["Страница 3"])
+        self.assertEqual(self.wikiroot.children[2], self.wikiroot["Страница 2"])
 
     def testCreateOrder4(self):
         TextPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -184,42 +178,51 @@ class PageOrderTest(unittest.TestCase):
         self.assertEqual(wiki["Тест"].order, 2)
 
     def testCreateOrder9(self):
-        TextPageFactory().create(self.wikiroot, "Страница 5",
-                                 [], ocf.orderCalculatorAlphabetically)
+        TextPageFactory().create(
+            self.wikiroot, "Страница 5", [], ocf.orderCalculatorAlphabetically
+        )
 
-        TextPageFactory().create(self.wikiroot, "Страница 1",
-                                 [], ocf.orderCalculatorAlphabetically)
+        TextPageFactory().create(
+            self.wikiroot, "Страница 1", [], ocf.orderCalculatorAlphabetically
+        )
 
-        TextPageFactory().create(self.wikiroot, "Страница 2",
-                                 [], ocf.orderCalculatorAlphabetically)
+        TextPageFactory().create(
+            self.wikiroot, "Страница 2", [], ocf.orderCalculatorAlphabetically
+        )
 
         self.assertEqual(self.wikiroot["Страница 1"].order, 0)
         self.assertEqual(self.wikiroot["Страница 2"].order, 1)
         self.assertEqual(self.wikiroot["Страница 5"].order, 2)
 
     def testCreateOrder10(self):
-        TextPageFactory().create(self.wikiroot, "Страница 5",
-                                 [], ocf.orderCalculatorTop)
+        TextPageFactory().create(
+            self.wikiroot, "Страница 5", [], ocf.orderCalculatorTop
+        )
 
-        TextPageFactory().create(self.wikiroot, "Страница 1",
-                                 [], ocf.orderCalculatorTop)
+        TextPageFactory().create(
+            self.wikiroot, "Страница 1", [], ocf.orderCalculatorTop
+        )
 
-        TextPageFactory().create(self.wikiroot, "Страница 2",
-                                 [], ocf.orderCalculatorTop)
+        TextPageFactory().create(
+            self.wikiroot, "Страница 2", [], ocf.orderCalculatorTop
+        )
 
         self.assertEqual(self.wikiroot["Страница 2"].order, 0)
         self.assertEqual(self.wikiroot["Страница 1"].order, 1)
         self.assertEqual(self.wikiroot["Страница 5"].order, 2)
 
     def testCreateOrder11(self):
-        TextPageFactory().create(self.wikiroot, "Страница 5",
-                                 [], ocf.orderCalculatorBottom)
+        TextPageFactory().create(
+            self.wikiroot, "Страница 5", [], ocf.orderCalculatorBottom
+        )
 
-        TextPageFactory().create(self.wikiroot, "Страница 1",
-                                 [], ocf.orderCalculatorBottom)
+        TextPageFactory().create(
+            self.wikiroot, "Страница 1", [], ocf.orderCalculatorBottom
+        )
 
-        TextPageFactory().create(self.wikiroot, "Страница 2",
-                                 [], ocf.orderCalculatorBottom)
+        TextPageFactory().create(
+            self.wikiroot, "Страница 2", [], ocf.orderCalculatorBottom
+        )
 
         self.assertEqual(self.wikiroot["Страница 5"].order, 0)
         self.assertEqual(self.wikiroot["Страница 1"].order, 1)
@@ -526,18 +529,30 @@ class PageOrderTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 2", [])
 
         # Удалим параметры order
-        IntegerOption(self.wikiroot["Страница 0"].params,
-                      PageConfig.sectionName,
-                      PageConfig.orderParamName, -1).remove_option()
-        IntegerOption(self.wikiroot["Страница 1"].params,
-                      PageConfig.sectionName,
-                      PageConfig.orderParamName, -1).remove_option()
-        IntegerOption(self.wikiroot["Страница 2"].params,
-                      PageConfig.sectionName,
-                      PageConfig.orderParamName, -1).remove_option()
-        IntegerOption(self.wikiroot["Страница 3"].params,
-                      PageConfig.sectionName,
-                      PageConfig.orderParamName, -1).remove_option()
+        IntegerOption(
+            self.wikiroot["Страница 0"].params,
+            PageConfig.sectionName,
+            PageConfig.orderParamName,
+            -1,
+        ).remove_option()
+        IntegerOption(
+            self.wikiroot["Страница 1"].params,
+            PageConfig.sectionName,
+            PageConfig.orderParamName,
+            -1,
+        ).remove_option()
+        IntegerOption(
+            self.wikiroot["Страница 2"].params,
+            PageConfig.sectionName,
+            PageConfig.orderParamName,
+            -1,
+        ).remove_option()
+        IntegerOption(
+            self.wikiroot["Страница 3"].params,
+            PageConfig.sectionName,
+            PageConfig.orderParamName,
+            -1,
+        ).remove_option()
 
         wikiroot = loadNotesTree(self.path)
 
@@ -556,18 +571,30 @@ class PageOrderTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 2", [])
 
         # Удалим параметры order
-        IntegerOption(self.wikiroot["Страница 0"].params,
-                      PageConfig.sectionName,
-                      PageConfig.orderParamName, -1).remove_option()
-        IntegerOption(self.wikiroot["Страница 1"].params,
-                      PageConfig.sectionName,
-                      PageConfig.orderParamName, -1).remove_option()
-        IntegerOption(self.wikiroot["Страница 2"].params,
-                      PageConfig.sectionName,
-                      PageConfig.orderParamName, -1).remove_option()
-        IntegerOption(self.wikiroot["Страница 3"].params,
-                      PageConfig.sectionName,
-                      PageConfig.orderParamName, -1).remove_option()
+        IntegerOption(
+            self.wikiroot["Страница 0"].params,
+            PageConfig.sectionName,
+            PageConfig.orderParamName,
+            -1,
+        ).remove_option()
+        IntegerOption(
+            self.wikiroot["Страница 1"].params,
+            PageConfig.sectionName,
+            PageConfig.orderParamName,
+            -1,
+        ).remove_option()
+        IntegerOption(
+            self.wikiroot["Страница 2"].params,
+            PageConfig.sectionName,
+            PageConfig.orderParamName,
+            -1,
+        ).remove_option()
+        IntegerOption(
+            self.wikiroot["Страница 3"].params,
+            PageConfig.sectionName,
+            PageConfig.orderParamName,
+            -1,
+        ).remove_option()
 
         wikiroot = loadNotesTree(self.path)
 

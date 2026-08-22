@@ -16,9 +16,7 @@ class SimpleSpellController(BaseTextStylingController):
         return threading.Thread(
             None,
             self._colorizeThreadFunc,
-            args=(params.text,
-                  params.editor,
-                  params.enableSpellChecking)
+            args=(params.text, params.editor, params.enableSpellChecking),
         )
 
     def _colorizeThreadFunc(self, text, editor, enableSpellChecking):
@@ -36,11 +34,12 @@ class SimpleSpellController(BaseTextStylingController):
 
     def _checkSpell(self, editor, text, start, end, spellStatusFlags):
         spellChecker = editor.getSpellChecker()
-        errors = spellChecker.findErrors(text[start: end])
+        errors = spellChecker.findErrors(text[start:end])
 
         for _word, err_start, err_end in errors:
-            spellStatusFlags[err_start + start:
-                             err_end + start] = [False] * (err_end - err_start)
+            spellStatusFlags[err_start + start : err_end + start] = [False] * (
+                err_end - err_start
+            )
 
     def _splitText(self, text):
         """
@@ -51,7 +50,7 @@ class SimpleSpellController(BaseTextStylingController):
         length = len(text)
 
         while position < length:
-            newposition = text.rfind(' ', position, position + portion)
+            newposition = text.rfind(" ", position, position + portion)
             if newposition != -1:
                 yield (position, newposition)
                 position = newposition + 1

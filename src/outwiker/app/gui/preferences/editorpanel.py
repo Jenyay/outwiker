@@ -29,7 +29,9 @@ class EditorPanel(BasePrefPanel):
         self.fontLabel = wx.StaticText(self, -1, _("Font"))
         self.fontPicker = wx.FontPickerCtrl(self, -1)
         self.lineNumbersCheckBox = wx.CheckBox(self, -1, _("Show line numbers"))
-        self.tabUseSpacesCheckBox = wx.CheckBox(self, -1, _("Use spaces instead of tabs"))
+        self.tabUseSpacesCheckBox = wx.CheckBox(
+            self, -1, _("Use spaces instead of tabs")
+        )
         self.tabWidthLabel = wx.StaticText(self, -1, _("Tab size"))
 
         self.tabWidthSpin = wx.SpinCtrl(
@@ -40,7 +42,9 @@ class EditorPanel(BasePrefPanel):
             style=wx.SP_ARROW_KEYS,
         )
 
-        self.marginWidthLabel = wx.StaticText(self, label=_("Line number margin width\n0 - default value"))
+        self.marginWidthLabel = wx.StaticText(
+            self, label=_("Line number margin width\n0 - default value")
+        )
 
         self.marginWidthSpin = wx.SpinCtrl(
             self,
@@ -123,7 +127,9 @@ class EditorPanel(BasePrefPanel):
         mainSizer.Add(
             self.lineNumbersCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
-        mainSizer.Add(self.tabUseSpacesCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        mainSizer.Add(
+            self.tabUseSpacesCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
         mainSizer.Add(tabWidthSizer, 1, wx.EXPAND, 0)
         mainSizer.Add(marginWidthSizer, 1, wx.EXPAND, 0)
         mainSizer.Add(homeEndSizer, 1, wx.EXPAND, 0)
@@ -138,8 +144,8 @@ class EditorPanel(BasePrefPanel):
 
         # Use spaces instead tabs
         self.tabUseSpaces = configelements.BooleanElement(
-                self.__config.tabUseSpaces, self.tabUseSpacesCheckBox
-                )
+            self.__config.tabUseSpaces, self.tabUseSpacesCheckBox
+        )
 
         # Шрифт для редактора
         fontOption = FontOption(

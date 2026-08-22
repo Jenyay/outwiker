@@ -9,13 +9,14 @@ from wx.lib.scrolledpanel import ScrolledPanel
 
 from outwiker.core.event import Event
 
-logger = logging.getLogger('outwiker.gui.pasepagepanel')
+logger = logging.getLogger("outwiker.gui.pasepagepanel")
 
 
 class BasePagePanel(ScrolledPanel):
     """
     Базовый класс для панелей представления страниц
     """
+
     def __init__(self, parent, application):
         style = wx.TAB_TRAVERSAL | wx.HSCROLL | wx.VSCROLL
         super().__init__(parent, style=style)
@@ -51,14 +52,18 @@ class BasePagePanel(ScrolledPanel):
 
     def removeTool(self, idstring, fullUpdate=True):
         if idstring not in self._tools:
-            logger.error('BasePagePanel.removeTool. Invalid idstring: %s', idstring)
+            logger.error("BasePagePanel.removeTool. Invalid idstring: %s", idstring)
             return
 
         tool = self._tools[idstring]
 
-        if (tool.panelname in self.mainWindow.toolbars and
-                self.mainWindow.toolbars[tool.panelname].FindById(tool.id) is not None):
-            self.mainWindow.toolbars[tool.panelname].DeleteTool(tool.id, fullUpdate=fullUpdate)
+        if (
+            tool.panelname in self.mainWindow.toolbars
+            and self.mainWindow.toolbars[tool.panelname].FindById(tool.id) is not None
+        ):
+            self.mainWindow.toolbars[tool.panelname].DeleteTool(
+                tool.id, fullUpdate=fullUpdate
+            )
 
         tool.menu.Remove(tool.id)
 
@@ -118,6 +123,7 @@ class BasePagePanel(ScrolledPanel):
     @page.setter
     def page(self, page):
         from outwiker.core.factoryselector import FactorySelector
+
         self.Save()
         if page is not None:
             factory = FactorySelector.getFactory(page.getTypeString())

@@ -10,24 +10,25 @@ class HotKeyParser:
     Класс для создания экземпляра класса HotKey из строки
     и создания строки по HotKey
     """
+
     # Регулярное выражение для получения горячей клавиши по строке
-    _regex = re.compile(r"((?P<ctrl>\s*ctrl\s*\+)|(?P<shift>\s*shift\s*\+)|(?P<alt>\s*alt\s*\+))*(?P<key>.*)",
-                        re.I | re.U)
+    _regex = re.compile(
+        r"((?P<ctrl>\s*ctrl\s*\+)|(?P<shift>\s*shift\s*\+)|(?P<alt>\s*alt\s*\+))*(?P<key>.*)",
+        re.I | re.U,
+    )
 
     @staticmethod
     def toString(hotkey):
         """
         Создание строки по экземпляру класса HotKey
         """
-        ctrlStr = u"Ctrl+" if hotkey.ctrl else u""
-        shiftStr = u"Shift+" if hotkey.shift else u""
-        altStr = u"Alt+" if hotkey.alt else u""
+        ctrlStr = "Ctrl+" if hotkey.ctrl else ""
+        shiftStr = "Shift+" if hotkey.shift else ""
+        altStr = "Alt+" if hotkey.alt else ""
 
-        return u"{ctrl}{shift}{alt}{key}".format(
-            ctrl=ctrlStr,
-            shift=shiftStr,
-            alt=altStr,
-            key=hotkey.key)
+        return "{ctrl}{shift}{alt}{key}".format(
+            ctrl=ctrlStr, shift=shiftStr, alt=altStr, key=hotkey.key
+        )
 
     @staticmethod
     def fromString(hotkeyStr):
@@ -49,8 +50,7 @@ class HotKeyParser:
         if len(key) == 0:
             return None
 
-        if (u" " in key or
-                u"\t" in key):
+        if " " in key or "\t" in key:
             return None
 
         return HotKey(key, ctrl=ctrl, shift=shift, alt=alt)

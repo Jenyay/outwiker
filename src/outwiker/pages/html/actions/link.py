@@ -15,9 +15,8 @@ def insertLink(application):
 
     with LinkDialog(application.mainWindow) as dlg:
         linkController = HtmlLinkDialogController(
-            application.selectedPage,
-            dlg,
-            codeEditor.GetSelectedText())
+            application.selectedPage, dlg, codeEditor.GetSelectedText()
+        )
 
         if linkController.showDialog() == wx.ID_OK:
             codeEditor.replaceText(linkController.linkResult)

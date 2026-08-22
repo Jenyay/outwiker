@@ -24,7 +24,7 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.initApplication()
         self.wikiroot = self.createWiki()
 
-        self.path2 = mkdtemp(prefix='Абырвалг абырвалг')
+        self.path2 = mkdtemp(prefix="Абырвалг абырвалг")
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
@@ -154,38 +154,38 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_findPage_03(self):
         self.application.wikiroot = self.wikiroot
-        page = findPage(self.application, 'Страница 1')
+        page = findPage(self.application, "Страница 1")
 
         self.assertIsNotNone(page)
-        self.assertEqual(page.title, 'Страница 1')
+        self.assertEqual(page.title, "Страница 1")
 
     def test_findPage_04(self):
         self.application.wikiroot = self.wikiroot
-        page = findPage(self.application, 'Страница 2/Страница 3')
+        page = findPage(self.application, "Страница 2/Страница 3")
 
         self.assertIsNotNone(page)
-        self.assertEqual(page.title, 'Страница 3')
+        self.assertEqual(page.title, "Страница 3")
 
     def test_findPage_05(self):
         self.application.wikiroot = self.wikiroot
-        page = findPage(self.application, '/Страница 2/Страница 3')
+        page = findPage(self.application, "/Страница 2/Страница 3")
 
         self.assertIsNotNone(page)
-        self.assertEqual(page.title, 'Страница 3')
+        self.assertEqual(page.title, "Страница 3")
 
     def test_findPage_06(self):
         self.application.wikiroot = self.wikiroot
-        uid = self.wikiroot['/Страница 2/Страница 3'].getUid()
+        uid = self.wikiroot["/Страница 2/Страница 3"].getUid()
 
         page = findPage(self.application, uid)
         self.assertIsNotNone(page)
-        self.assertEqual(page.title, 'Страница 3')
+        self.assertEqual(page.title, "Страница 3")
 
     def test_findPage_07(self):
         self.application.wikiroot = self.wikiroot
-        uid = self.wikiroot['/Страница 2/Страница 3'].getUid()
-        uid = 'page://' + uid
+        uid = self.wikiroot["/Страница 2/Страница 3"].getUid()
+        uid = "page://" + uid
 
         page = findPage(self.application, uid)
         self.assertIsNotNone(page)
-        self.assertEqual(page.title, 'Страница 3')
+        self.assertEqual(page.title, "Страница 3")

@@ -5,7 +5,7 @@ import unittest
 from outwiker.tests.basetestcases import PluginLoadingMixin
 
 
-class MarkdownLoadingTest (PluginLoadingMixin, unittest.TestCase):
+class MarkdownLoadingTest(PluginLoadingMixin, unittest.TestCase):
     def getPluginDir(self):
         """
         Must return path to plugin

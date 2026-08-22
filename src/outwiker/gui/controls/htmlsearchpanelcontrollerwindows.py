@@ -15,7 +15,7 @@ class HtmlSearchPanelControllerWindows(BaseHtmlSearchPanelController):
         Начать поиск
         """
         self.setSearchPhrase(self.getSearchPhrase())
-        self.htmlRender.Find('')
+        self.htmlRender.Find("")
         self.getPanel().getSearchTextCtrl().SetSelection(-1, -1)
         self.getPanel().getSearchTextCtrl().SetFocus()
         self._search(True)
@@ -38,7 +38,7 @@ class HtmlSearchPanelControllerWindows(BaseHtmlSearchPanelController):
 
         # The last found phrase?
         if not newSearch and result == -1:
-            self.htmlRender.Find('')
+            self.htmlRender.Find("")
             result = self.htmlRender.Find(phrase)
             if result != -1:
                 self.htmlRender.Find(phrase)

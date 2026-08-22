@@ -42,7 +42,9 @@ class PageThumbmaker:
         path_res = os.path.join(subdir_full, fname_res)
 
         # Путь, относительный к корню страницы
-        relative_path = os.path.join(Thumbnails.getRelativeThumbDir(), fname_subdir, fname_res)
+        relative_path = os.path.join(
+            Thumbnails.getRelativeThumbDir(), fname_subdir, fname_res
+        )
 
         if os.path.exists(path_res):
             return relative_path
@@ -63,7 +65,9 @@ class PageThumbmaker:
 
         Возвращает путь относительно корня страницы
         """
-        return self.__createThumb(page, fname, width, "width", self.thumbmaker.thumbByWidth)
+        return self.__createThumb(
+            page, fname, width, "width", self.thumbmaker.thumbByWidth
+        )
 
     def createThumbByHeight(self, page, fname, height):
         """
@@ -74,7 +78,9 @@ class PageThumbmaker:
 
         Возвращает путь относительно корня страницы
         """
-        return self.__createThumb(page, fname, height, "height", self.thumbmaker.thumbByHeight)
+        return self.__createThumb(
+            page, fname, height, "height", self.thumbmaker.thumbByHeight
+        )
 
     def createThumbByMaxSize(self, page, fname, maxsize):
         """
@@ -85,4 +91,6 @@ class PageThumbmaker:
 
         Возвращает путь относительно корня страницы
         """
-        return self.__createThumb(page, fname, maxsize, "maxsize", self.thumbmaker.thumbByMaxSize)
+        return self.__createThumb(
+            page, fname, maxsize, "maxsize", self.thumbmaker.thumbByMaxSize
+        )

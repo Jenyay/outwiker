@@ -9,6 +9,7 @@ class AutosaveTimer(wx.EvtHandler):
     """
     Класс для автосохранения по таймеру
     """
+
     def __init__(self, application):
         wx.EvtHandler.__init__(self)
 

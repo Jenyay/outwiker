@@ -2,13 +2,13 @@
 
 from typing import Dict, Generic, List, Optional, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class DataForLanguage(Generic[T]):
     def __init__(self):
         # Key - language, value - data
-        self._data = {}             # type: Dict[str, T]
+        self._data = {}  # type: Dict[str, T]
 
     def set_for_language(self, language: str, data: T) -> None:
         self._data[language] = data
@@ -26,12 +26,12 @@ class DataForLanguage(Generic[T]):
         return len(self._data) == 0
 
     def get(self, language: str, default: Optional[T] = None) -> Optional[T]:
-        DEFAULT_LANGUAGE = ''
+        DEFAULT_LANGUAGE = ""
         # lang_list example: ['ru_RU', 'ru', '']
         lang_list = [language]
-        underscore_pos = language.find('_')
+        underscore_pos = language.find("_")
         if underscore_pos != -1:
-            lang_list.append(language[: underscore_pos])
+            lang_list.append(language[:underscore_pos])
         lang_list.append(DEFAULT_LANGUAGE)
 
         for current_lang in lang_list:

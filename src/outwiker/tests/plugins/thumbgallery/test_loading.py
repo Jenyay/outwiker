@@ -5,7 +5,7 @@ import unittest
 from outwiker.tests.basetestcases import PluginLoadingMixin
 
 
-class ThumbGalleryLoadingTest (PluginLoadingMixin, unittest.TestCase):
+class ThumbGalleryLoadingTest(PluginLoadingMixin, unittest.TestCase):
     def getPluginDir(self):
         """
         Должен возвращать путь до папки с тестируемым плагином

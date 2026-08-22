@@ -14,7 +14,7 @@ from outwiker.tests.utils import removeDir
 
 @pytest.fixture
 def wikipage():
-    path = mkdtemp(prefix='outwiker_wiki')
+    path = mkdtemp(prefix="outwiker_wiki")
     factory = TextPageFactory()
     wikiroot = createNotesTree(path)
     page = factory.create(wikiroot, "Страница 1", [])

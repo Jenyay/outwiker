@@ -15,7 +15,7 @@ class ParserFormatTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.filesPath = "testdata/samplefiles/"
 
@@ -75,41 +75,43 @@ class ParserFormatTest(unittest.TestCase):
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_comments_01(self):
-        text = '<!-- Комментарий -->'
-        result = ''
+        text = "<!-- Комментарий -->"
+        result = ""
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_comments_02(self):
-        text = '[=<!-- Комментарий -->=]'
-        result = '<!-- Комментарий -->'
+        text = "[=<!-- Комментарий -->=]"
+        result = "<!-- Комментарий -->"
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_comments_03(self):
-        text = '''<!-- Комментарий 
+        text = """<!-- Комментарий 
 Бла-бла-бла
--->'''
-        result = ''
+-->"""
+        result = ""
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_comments_04(self):
-        text = '''Текст 1 <!-- Комментарий 
+        text = """Текст 1 <!-- Комментарий 
 Бла-бла-бла
--->Текст 2'''
-        result = 'Текст 1 Текст 2'
+-->Текст 2"""
+        result = "Текст 1 Текст 2"
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_comments_05(self):
-        text = '* Текст<!-- Комментарий -->'
-        result = f'<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Текст</li></ul>'
+        text = "* Текст<!-- Комментарий -->"
+        result = (
+            f'<ul class="{css.CSS_WIKI}"><li class="{css.CSS_WIKI}">Текст</li></ul>'
+        )
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_comments_06(self):
-        text = '!! Текст<!-- Комментарий -->'
+        text = "!! Текст<!-- Комментарий -->"
         result = f'<h1 class="{css.CSS_WIKI}">Текст</h1>'
 
         self.assertEqual(self.parser.toHtml(text), result)

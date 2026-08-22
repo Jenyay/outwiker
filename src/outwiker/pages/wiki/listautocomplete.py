@@ -3,20 +3,25 @@
 import re
 
 
-def listComplete_generic(editor: 'outwiker.gui.texeditor.TextEditor',
-                         list_regexp: str,
-                         ) -> bool:
-    '''
+def listComplete_generic(
+    editor: "outwiker.gui.texeditor.TextEditor",
+    list_regexp: str,
+) -> bool:
+    """
     Process the Enter key pressing to complete lists.
     editor - instance of the TextEditor
     list_regexp - wiki list regular expression
 
     Returns True if enterPressed() change text else returns False.
-    '''
+    """
     regexp = re.compile(list_regexp, re.I)
     current_line = editor.GetCurrentLineText()
     current_line_number = editor.GetCurrentLine()
-    line_start_position = 0 if current_line_number == 0 else editor.GetLineEndPosition(current_line_number - 1) + 1
+    line_start_position = (
+        0
+        if current_line_number == 0
+        else editor.GetLineEndPosition(current_line_number - 1) + 1
+    )
     cursor_position = editor.GetSelectionEnd()
     line_cursor_position = cursor_position - line_start_position
 
@@ -36,16 +41,16 @@ def listComplete_generic(editor: 'outwiker.gui.texeditor.TextEditor',
         editor.DelLineLeft()
         return True
 
-    editor.replaceText('\n' + list_text)
+    editor.replaceText("\n" + list_text)
     return True
 
 
-def listComplete_wiki(editor: 'outwiker.gui.texeditor.TextEditor') -> bool:
-    '''
+def listComplete_wiki(editor: "outwiker.gui.texeditor.TextEditor") -> bool:
+    """
     Process the Enter key pressing to complete lists.
     editor - instance of the TextEditor
 
     Returns True if enterPressed() change text else returns False.
-    '''
-    wiki_regexp = r'(^\*+\s*(\[.?\]\s*)?)|(^#+\s*)'
+    """
+    wiki_regexp = r"(^\*+\s*(\[.?\]\s*)?)|(^#+\s*)"
     return listComplete_generic(editor, wiki_regexp)

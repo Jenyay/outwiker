@@ -10,43 +10,41 @@ from .version_requirements_factory import RequirementsFactory
 
 
 class AppInfoFactory:
-    '''
+    """
     Class to create AppInfo instance
-    '''
+    """
 
     @classmethod
     def fromString(cls, text: str, language: str) -> AppInfo:
-        xmlAppInfo = XmlAppInfoParser().parse(text)         # type: XmlAppInfo
+        xmlAppInfo = XmlAppInfoParser().parse(text)  # type: XmlAppInfo
         return cls.fromXmlAppInfo(xmlAppInfo, language)
 
     @classmethod
-    def fromXmlAppInfo(cls,
-                       xmlAppInfo: XmlAppInfo,
-                       language: str) -> AppInfo:
-        app_name = xmlAppInfo.app_name.get(language, '')
+    def fromXmlAppInfo(cls, xmlAppInfo: XmlAppInfo, language: str) -> AppInfo:
+        app_name = xmlAppInfo.app_name.get(language, "")
         if app_name is None:
-            app_name = ''
+            app_name = ""
 
-        website = xmlAppInfo.website.get(language, '')
+        website = xmlAppInfo.website.get(language, "")
         if website is None:
-            website = ''
+            website = ""
 
-        description = xmlAppInfo.description.get(language, '')
+        description = xmlAppInfo.description.get(language, "")
         if description is None:
-            description = ''
+            description = ""
 
         authors = cls._getAuthors(xmlAppInfo, language)
         version = cls._getVersion(xmlAppInfo)
-        requirements = RequirementsFactory.fromXmlRequirements(
-            xmlAppInfo.requirements)
+        requirements = RequirementsFactory.fromXmlRequirements(xmlAppInfo.requirements)
 
-        result = AppInfo(app_name=app_name,
-                         website=website,
-                         description=description,
-                         authors=authors,
-                         requirements=requirements,
-                         version=version
-                         )
+        result = AppInfo(
+            app_name=app_name,
+            website=website,
+            description=description,
+            authors=authors,
+            requirements=requirements,
+            version=version,
+        )
         return result
 
     @classmethod
@@ -54,10 +52,13 @@ class AppInfoFactory:
         if xmlAppInfo.version is None:
             return None
 
-        return Version.parse(xmlAppInfo.version.number +
-                             ' ' + xmlAppInfo.version.status)
+        return Version.parse(
+            xmlAppInfo.version.number + " " + xmlAppInfo.version.status
+        )
 
     @classmethod
     def _getAuthors(cls, xmlAppInfo: XmlAppInfo, language: str) -> List[AuthorInfo]:
-        return [AuthorInfo(author.name, author.email, author.website)
-                for author in xmlAppInfo.authors.get(language, [])]
+        return [
+            AuthorInfo(author.name, author.email, author.website)
+            for author in xmlAppInfo.authors.get(language, [])
+        ]

@@ -5,7 +5,7 @@ from abc import abstractmethod
 from outwiker.pages.wiki.parser.command import Command
 
 
-class TableCommand (Command):
+class TableCommand(Command):
     """
     Command for parsing text like
 
@@ -40,7 +40,7 @@ class TableCommand (Command):
     (:table2end:)
     """
 
-    def __init__(self, parser, suffix=u''):
+    def __init__(self, parser, suffix=""):
         """
         parser - parser instance
         """
@@ -59,12 +59,11 @@ class TableCommand (Command):
 
     @property
     def name(self):
-        return u'table' + self.suffix
+        return "table" + self.suffix
 
     def execute(self, params, content):
-        start = (u'<table>' if not params.strip()
-                 else u'<table {}>'.format(params.strip()))
-        end = u'</table>'
+        start = "<table>" if not params.strip() else "<table {}>".format(params.strip())
+        end = "</table>"
 
         rowCommand = RowCommand(self.parser, self)
         cellCommand = CellCommand(self.parser, self)
@@ -78,10 +77,10 @@ class TableCommand (Command):
             body = self.parser.parseWikiMarkup(content)
 
             if self.lastCellTag is not None:
-                body += u'</{}>'.format(self.lastCellTag)
+                body += "</{}>".format(self.lastCellTag)
 
             if not self.firstRow:
-                body += u'</tr>'
+                body += "</tr>"
         finally:
             self.parser.removeCommand(rowCommand.name)
             self.parser.removeCommand(cellCommand.name)
@@ -89,12 +88,12 @@ class TableCommand (Command):
 
         result = start + body + end
 
-        result = result.replace(u'\n</tr>', u'</tr>')
-        result = result.replace(u'\n<tr', u'<tr')
-        result = result.replace(u'\n</td>', u'</td>')
-        result = result.replace(u'\n<td', u'<td')
-        result = result.replace(u'\n</th>', u'</th>')
-        result = result.replace(u'\n<th', u'<th')
+        result = result.replace("\n</tr>", "</tr>")
+        result = result.replace("\n<tr", "<tr")
+        result = result.replace("\n</td>", "</td>")
+        result = result.replace("\n<td", "<td")
+        result = result.replace("\n</th>", "</th>")
+        result = result.replace("\n<th", "<th")
 
         self.firstRow = True
         self.lastCellTag = None
@@ -102,26 +101,25 @@ class TableCommand (Command):
         return result
 
 
-class RowCommand (Command):
+class RowCommand(Command):
     def __init__(self, parser, table):
         super(RowCommand, self).__init__(parser)
         self._table = table
 
     @property
     def name(self):
-        return u'row' + self._table.suffix
+        return "row" + self._table.suffix
 
     def execute(self, params, content):
-        tag = u''
+        tag = ""
 
         if self._table.lastCellTag is not None:
-            tag = u'</{}>'.format(self._table.lastCellTag)
+            tag = "</{}>".format(self._table.lastCellTag)
 
         if not self._table.firstRow:
-            tag = tag + u'</tr>'
+            tag = tag + "</tr>"
 
-        tag += (u'<tr>' if not params.strip()
-                else u'<tr {}>'.format(params.strip()))
+        tag += "<tr>" if not params.strip() else "<tr {}>".format(params.strip())
 
         self._table.firstRow = False
         self._table.lastCellTag = None
@@ -131,7 +129,7 @@ class RowCommand (Command):
         return result
 
 
-class BaseCellCommand (Command):
+class BaseCellCommand(Command):
     def __init__(self, parser, table):
         super(BaseCellCommand, self).__init__(parser)
         self._table = table
@@ -143,15 +141,18 @@ class BaseCellCommand (Command):
     def execute(self, params, content):
         currentTag = self._getTag()
 
-        tag = (u'<{}>'.format(currentTag) if not params.strip()
-               else u'<{} {}>'.format(currentTag, params.strip()))
+        tag = (
+            "<{}>".format(currentTag)
+            if not params.strip()
+            else "<{} {}>".format(currentTag, params.strip())
+        )
 
         if self._table.firstRow:
-            tag = u'<tr>' + tag
+            tag = "<tr>" + tag
             self._table.firstRow = False
 
         if self._table.lastCellTag is not None:
-            tag = u'</{}>'.format(self._table.lastCellTag) + tag
+            tag = "</{}>".format(self._table.lastCellTag) + tag
 
         self._table.lastCellTag = currentTag
 
@@ -159,21 +160,19 @@ class BaseCellCommand (Command):
         return tag
 
 
-class CellCommand (BaseCellCommand):
-
+class CellCommand(BaseCellCommand):
     @property
     def name(self):
-        return u'cell' + self._table.suffix
+        return "cell" + self._table.suffix
 
     def _getTag(self):
-        return u'td'
+        return "td"
 
 
-class HCellCommand (BaseCellCommand):
-
+class HCellCommand(BaseCellCommand):
     @property
     def name(self):
-        return u'hcell' + self._table.suffix
+        return "hcell" + self._table.suffix
 
     def _getTag(self):
-        return u'th'
+        return "th"

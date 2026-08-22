@@ -23,7 +23,7 @@ class AttachmentTest(unittest.TestCase):
         self.pageUpdateSender = None
 
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -31,13 +31,16 @@ class AttachmentTest(unittest.TestCase):
         self.page = self.wikiroot["Страница 1"]
 
         self.filesPath = "testdata/samplefiles/"
-        self.files = ["accept.png",
-                      "add.png",
-                      "anchor.png",
-                      "файл с пробелами.tmp",
-                      "dir"]
-        self.fullFilesPath = [os.path.join(self.filesPath, fname)
-                              for fname in self.files]
+        self.files = [
+            "accept.png",
+            "add.png",
+            "anchor.png",
+            "файл с пробелами.tmp",
+            "dir",
+        ]
+        self.fullFilesPath = [
+            os.path.join(self.filesPath, fname) for fname in self.files
+        ]
 
         self._application.wikiroot = self.wikiroot
 
@@ -50,8 +53,9 @@ class AttachmentTest(unittest.TestCase):
 
     def testAttachPath1(self):
         attach = Attachment(self.page)
-        self.assertEqual(attach.getAttachPath(),
-                         os.path.join(self.page.path, PAGE_ATTACH_DIR))
+        self.assertEqual(
+            attach.getAttachPath(), os.path.join(self.page.path, PAGE_ATTACH_DIR)
+        )
 
     def testAttachPath2(self):
         attach = Attachment(self.page)
@@ -84,7 +88,7 @@ class AttachmentTest(unittest.TestCase):
         attach = Attachment(self.page)
 
         # Прикрепим к двум страницам файлы
-        attach.attach(self.fullFilesPath[: 2])
+        attach.attach(self.fullFilesPath[:2])
 
         self.assertEqual(self.pageUpdateCount, 1)
         self.assertEqual(self.pageUpdateSender, self.page)
@@ -100,11 +104,9 @@ class AttachmentTest(unittest.TestCase):
         attach = Attachment(self.page)
         attach.attach(self.fullFilesPath)
 
-        self.assertEqual(len(attach.attachmentFull),
-                         len(self.fullFilesPath))
+        self.assertEqual(len(attach.attachmentFull), len(self.fullFilesPath))
 
-        attachBasenames = [os.path.basename(path)
-                           for path in attach.attachmentFull]
+        attachBasenames = [os.path.basename(path) for path in attach.attachmentFull]
 
         for path in self.fullFilesPath:
             self.assertTrue(os.path.basename(path) in attachBasenames, path)
@@ -119,11 +121,9 @@ class AttachmentTest(unittest.TestCase):
         attach.attach(self.fullFilesPath)
 
         self.assertTrue(attach != attach2)
-        self.assertEqual(len(attach2.attachmentFull),
-                         len(self.fullFilesPath))
+        self.assertEqual(len(attach2.attachmentFull), len(self.fullFilesPath))
 
-        attachBasenames = [os.path.basename(path)
-                           for path in attach2.attachmentFull]
+        attachBasenames = [os.path.basename(path) for path in attach2.attachmentFull]
 
         for path in self.fullFilesPath:
             self.assertTrue(os.path.basename(path) in attachBasenames, path)
@@ -136,8 +136,7 @@ class AttachmentTest(unittest.TestCase):
         self.assertTrue(attach != attach2)
         self.assertEqual(len(attach2.attachmentFull), len(self.fullFilesPath))
 
-        attachBasenames = [os.path.basename(path)
-                           for path in attach2.attachmentFull]
+        attachBasenames = [os.path.basename(path) for path in attach2.attachmentFull]
 
         for path in self.fullFilesPath:
             self.assertTrue(os.path.basename(path) in attachBasenames, path)
@@ -146,10 +145,11 @@ class AttachmentTest(unittest.TestCase):
         attach = Attachment(self.page)
         attach.attach(self.fullFilesPath)
 
-        attachBasenames = [os.path.basename(path)
-                           for path in attach.getAttachFull('dir')]
+        attachBasenames = [
+            os.path.basename(path) for path in attach.getAttachFull("dir")
+        ]
 
-        expected_files = ['subdir', 'attach.png', 'dir.xxx']
+        expected_files = ["subdir", "attach.png", "dir.xxx"]
         for fname in expected_files:
             self.assertTrue(fname in attachBasenames)
 
@@ -157,11 +157,17 @@ class AttachmentTest(unittest.TestCase):
         attach = Attachment(self.page)
         attach.attach(self.fullFilesPath)
 
-        attachBasenames = [os.path.basename(path)
-                           for path in attach.getAttachFull('dir/subdir/subdir2/')]
+        attachBasenames = [
+            os.path.basename(path)
+            for path in attach.getAttachFull("dir/subdir/subdir2/")
+        ]
 
-        expected_files = ['image.png', 'картинка с пробелами.png',
-                          'application.py', 'файл с пробелами.tmp']
+        expected_files = [
+            "image.png",
+            "картинка с пробелами.png",
+            "application.py",
+            "файл с пробелами.tmp",
+        ]
         for fname in expected_files:
             self.assertTrue(fname in attachBasenames)
 
@@ -185,15 +191,13 @@ class AttachmentTest(unittest.TestCase):
 
         attach.removeAttach([self.files[0]])
 
-        self.assertEqual(len(attach.attachmentFull),
-                         len(self.fullFilesPath) - 1)
+        self.assertEqual(len(attach.attachmentFull), len(self.fullFilesPath) - 1)
         self.assertEqual(self.pageUpdateCount, 1)
         self.assertEqual(self.pageUpdateSender, self.page)
 
         attach.removeAttach([self.files[1], self.files[2]])
 
-        self.assertEqual(len(attach.attachmentFull),
-                         len(self.fullFilesPath) - 3)
+        self.assertEqual(len(attach.attachmentFull), len(self.fullFilesPath) - 3)
         self.assertEqual(self.pageUpdateCount, 2)
         self.assertEqual(self.pageUpdateSender, self.page)
 
@@ -206,11 +210,9 @@ class AttachmentTest(unittest.TestCase):
 
         attach.removeAttach([self.files[0]])
 
-        self.assertEqual(len(attach.attachmentFull),
-                         len(self.fullFilesPath[1:]))
+        self.assertEqual(len(attach.attachmentFull), len(self.fullFilesPath[1:]))
 
-        attachBasenames = [os.path.basename(path)
-                           for path in attach.attachmentFull]
+        attachBasenames = [os.path.basename(path) for path in attach.attachmentFull]
 
         for path in self.fullFilesPath[1:]:
             self.assertTrue(os.path.basename(path) in attachBasenames, path)
@@ -226,11 +228,9 @@ class AttachmentTest(unittest.TestCase):
 
         attach.removeAttach([self.files[0]])
 
-        self.assertEqual(len(attach2.attachmentFull),
-                         len(self.fullFilesPath[1:]))
+        self.assertEqual(len(attach2.attachmentFull), len(self.fullFilesPath[1:]))
 
-        attachBasenames = [os.path.basename(path)
-                           for path in attach2.attachmentFull]
+        attachBasenames = [os.path.basename(path) for path in attach2.attachmentFull]
 
         for path in self.fullFilesPath[1:]:
             self.assertTrue(os.path.basename(path) in attachBasenames, path)
@@ -243,13 +243,10 @@ class AttachmentTest(unittest.TestCase):
 
         attach2.removeAttach([self.files[0]])
 
-        self.assertEqual(len(attach.attachmentFull),
-                         len(self.fullFilesPath[1:]))
-        self.assertEqual(len(attach2.attachmentFull),
-                         len(self.fullFilesPath[1:]))
+        self.assertEqual(len(attach.attachmentFull), len(self.fullFilesPath[1:]))
+        self.assertEqual(len(attach2.attachmentFull), len(self.fullFilesPath[1:]))
 
-        attachBasenames = [os.path.basename(path)
-                           for path in attach.attachmentFull]
+        attachBasenames = [os.path.basename(path) for path in attach.attachmentFull]
 
         for path in self.fullFilesPath[1:]:
             self.assertTrue(os.path.basename(path) in attachBasenames, path)
@@ -261,8 +258,7 @@ class AttachmentTest(unittest.TestCase):
 
         attach.removeAttach(["dir"])
 
-        self.assertEqual(len(attach.attachmentFull),
-                         len(self.fullFilesPath[1:]))
+        self.assertEqual(len(attach.attachmentFull), len(self.fullFilesPath[1:]))
 
     def testInvalidRemoveAttaches(self):
         """
@@ -275,20 +271,25 @@ class AttachmentTest(unittest.TestCase):
         self.assertRaises(IOError, attach.removeAttach, ["dir_111"])
 
     def testSortByName(self):
-        files = ["add.png", "Anchor.png",
-                 "image2.png", "image.png",
-                 "add.png2", "файл с пробелами.tmp",
-                 "filename"]
+        files = [
+            "add.png",
+            "Anchor.png",
+            "image2.png",
+            "image.png",
+            "add.png2",
+            "файл с пробелами.tmp",
+            "filename",
+        ]
 
-        fullFilesPath = [os.path.join("testdata/samplefiles/for_sort", fname)
-                         for fname in files]
+        fullFilesPath = [
+            os.path.join("testdata/samplefiles/for_sort", fname) for fname in files
+        ]
 
         attach = Attachment(self.page)
         attach.attach(fullFilesPath)
 
         attach2 = Attachment(self.page)
-        files_list = [os.path.basename(fname)
-                      for fname in attach2.attachmentFull]
+        files_list = [os.path.basename(fname) for fname in attach2.attachmentFull]
         files_list.sort(key=str.lower)
 
         self.assertEqual(files_list[0], "add.png")
@@ -300,20 +301,25 @@ class AttachmentTest(unittest.TestCase):
         self.assertEqual(files_list[6], "файл с пробелами.tmp")
 
     def testSortByExt(self):
-        files = ["add.png", "Anchor.png",
-                 "image2.png", "image.png",
-                 "add.png2", "файл с пробелами.tmp",
-                 "filename"]
+        files = [
+            "add.png",
+            "Anchor.png",
+            "image2.png",
+            "image.png",
+            "add.png2",
+            "файл с пробелами.tmp",
+            "filename",
+        ]
 
-        fullFilesPath = [os.path.join("testdata/samplefiles/for_sort", fname)
-                         for fname in files]
+        fullFilesPath = [
+            os.path.join("testdata/samplefiles/for_sort", fname) for fname in files
+        ]
 
         attach = Attachment(self.page)
         attach.attach(fullFilesPath)
 
         attach2 = Attachment(self.page)
-        files_list = [os.path.basename(fname)
-                      for fname in attach2.attachmentFull]
+        files_list = [os.path.basename(fname) for fname in attach2.attachmentFull]
         files_list.sort(key=Attachment.sortByExt)
 
         self.assertEqual(files_list[0], "filename")
@@ -325,13 +331,19 @@ class AttachmentTest(unittest.TestCase):
         self.assertEqual(files_list[6], "файл с пробелами.tmp")
 
     def testSortByDate(self):
-        files = ["add.png", "Anchor.png",
-                 "image2.png", "image.png",
-                 "add.png2", "файл с пробелами.tmp",
-                 "filename"]
+        files = [
+            "add.png",
+            "Anchor.png",
+            "image2.png",
+            "image.png",
+            "add.png2",
+            "файл с пробелами.tmp",
+            "filename",
+        ]
 
-        fullFilesPath = [os.path.join("testdata/samplefiles/for_sort", fname)
-                         for fname in files]
+        fullFilesPath = [
+            os.path.join("testdata/samplefiles/for_sort", fname) for fname in files
+        ]
 
         attach = Attachment(self.page)
         attach.attach(fullFilesPath)
@@ -352,17 +364,24 @@ class AttachmentTest(unittest.TestCase):
         files_list2.sort(key=Attachment.sortByDate)
 
         for n in range(1, len(files)):
-            self.assertTrue(os.stat(files_list2[n - 1]).st_mtime <=
-                            os.stat(files_list2[n]).st_mtime)
+            self.assertTrue(
+                os.stat(files_list2[n - 1]).st_mtime <= os.stat(files_list2[n]).st_mtime
+            )
 
     def testSortByDateRelative(self):
-        files = ["add.png", "Anchor.png",
-                 "image2.png", "image.png",
-                 "add.png2", "файл с пробелами.tmp",
-                 "filename"]
+        files = [
+            "add.png",
+            "Anchor.png",
+            "image2.png",
+            "image.png",
+            "add.png2",
+            "файл с пробелами.tmp",
+            "filename",
+        ]
 
-        fullFilesPath = [os.path.join("testdata/samplefiles/for_sort", fname)
-                         for fname in files]
+        fullFilesPath = [
+            os.path.join("testdata/samplefiles/for_sort", fname) for fname in files
+        ]
 
         attach = Attachment(self.page)
         attach.attach(fullFilesPath)
@@ -383,17 +402,25 @@ class AttachmentTest(unittest.TestCase):
         files_list2.sort(key=attach2.sortByDateRelative)
 
         for n in range(1, len(files)):
-            self.assertTrue(os.stat(attach2.getFullPath(files_list2[n - 1])).st_mtime <=
-                            os.stat(attach2.getFullPath(files_list2[n])).st_mtime)
+            self.assertTrue(
+                os.stat(attach2.getFullPath(files_list2[n - 1])).st_mtime
+                <= os.stat(attach2.getFullPath(files_list2[n])).st_mtime
+            )
 
     def testSortBySize(self):
-        files = ["add.png", "Anchor.png",
-                 "image2.png", "image.png",
-                 "add.png2", "файл с пробелами.tmp",
-                 "filename"]
+        files = [
+            "add.png",
+            "Anchor.png",
+            "image2.png",
+            "image.png",
+            "add.png2",
+            "файл с пробелами.tmp",
+            "filename",
+        ]
 
-        fullFilesPath = [os.path.join("testdata/samplefiles/for_sort", fname)
-                         for fname in files]
+        fullFilesPath = [
+            os.path.join("testdata/samplefiles/for_sort", fname) for fname in files
+        ]
 
         attach = Attachment(self.page)
         attach.attach(fullFilesPath)
@@ -404,17 +431,24 @@ class AttachmentTest(unittest.TestCase):
         files_list.sort(key=Attachment.sortBySize)
 
         for n in range(1, len(files_list)):
-            self.assertTrue(os.stat(files_list[n - 1]).st_size <=
-                            os.stat(files_list[n]).st_size)
+            self.assertTrue(
+                os.stat(files_list[n - 1]).st_size <= os.stat(files_list[n]).st_size
+            )
 
     def testSortBySizeRelative(self):
-        files = ["add.png", "Anchor.png",
-                 "image2.png", "image.png",
-                 "add.png2", "файл с пробелами.tmp",
-                 "filename"]
+        files = [
+            "add.png",
+            "Anchor.png",
+            "image2.png",
+            "image.png",
+            "add.png2",
+            "файл с пробелами.tmp",
+            "filename",
+        ]
 
-        fullFilesPath = [os.path.join("testdata/samplefiles/for_sort", fname)
-                         for fname in files]
+        fullFilesPath = [
+            os.path.join("testdata/samplefiles/for_sort", fname) for fname in files
+        ]
 
         attach = Attachment(self.page)
         attach.attach(fullFilesPath)
@@ -425,8 +459,10 @@ class AttachmentTest(unittest.TestCase):
         files_list.sort(key=attach2.sortBySizeRelative)
 
         for n in range(1, len(files_list)):
-            self.assertTrue(os.stat(attach2.getFullPath(files_list[n - 1])).st_size <=
-                            os.stat(attach2.getFullPath(files_list[n])).st_size)
+            self.assertTrue(
+                os.stat(attach2.getFullPath(files_list[n - 1])).st_size
+                <= os.stat(attach2.getFullPath(files_list[n])).st_size
+            )
 
     def testGetFullPath1(self):
         attach = Attachment(self.page)
@@ -499,22 +535,22 @@ class AttachmentTest(unittest.TestCase):
         self.assertRaises(OSError, attach.getAttachRelative, "invaliddir")
 
     def testAttachSubdir(self):
-        subdir = 'dir/subdir/subdir2/'
+        subdir = "dir/subdir/subdir2/"
         attach = Attachment(self.page)
         attach.attach(self.fullFilesPath)
 
         self.assertEqual(len(attach.getAttachFull(subdir)), 4)
 
-        new_file = os.path.join(self.filesPath, 'dir.png')
+        new_file = os.path.join(self.filesPath, "dir.png")
         attach.attach([new_file], subdir)
 
         self.assertEqual(len(attach.getAttachFull(subdir)), 5)
 
     def testAttachNewSubdir(self):
-        subdir = 'new_subdir'
+        subdir = "new_subdir"
         attach = Attachment(self.page)
 
-        new_file = os.path.join(self.filesPath, 'dir.png')
+        new_file = os.path.join(self.filesPath, "dir.png")
         attach.attach([new_file], subdir=subdir)
         self.assertTrue(Path(attach.getAttachPath(), subdir).exists())
 
@@ -523,77 +559,81 @@ class AttachmentTest(unittest.TestCase):
         expected = None
 
         result = attach.fixCurrentSubdir()
-        current_path = os.path.join(attach.getAttachPath(create=False),
-                                    self.page.currentAttachSubdir)
+        current_path = os.path.join(
+            attach.getAttachPath(create=False), self.page.currentAttachSubdir
+        )
 
         self.assertEqual(result, expected)
         self.assertFalse(os.path.exists(current_path))
-        self.assertEqual(self.page.currentAttachSubdir, '')
+        self.assertEqual(self.page.currentAttachSubdir, "")
 
     def testFixSubdirRootNotExistsSubdir(self):
-        subdir = 'invalid'
+        subdir = "invalid"
         self.page.currentAttachSubdir = subdir
 
         attach = Attachment(self.page)
         expected = None
 
         result = attach.fixCurrentSubdir()
-        current_path = os.path.join(attach.getAttachPath(create=False),
-                                    self.page.currentAttachSubdir)
+        current_path = os.path.join(
+            attach.getAttachPath(create=False), self.page.currentAttachSubdir
+        )
 
         self.assertEqual(result, expected)
         self.assertFalse(os.path.exists(current_path))
-        self.assertEqual(self.page.currentAttachSubdir, '')
+        self.assertEqual(self.page.currentAttachSubdir, "")
 
     def testFixSubdir_01(self):
-        subdir = 'invalid'
+        subdir = "invalid"
         self.page.currentAttachSubdir = subdir
 
         attach = Attachment(self.page)
         expected = attach.getAttachPath(create=True)
 
         result = attach.fixCurrentSubdir()
-        current_path = os.path.join(attach.getAttachPath(create=False),
-                                    self.page.currentAttachSubdir)
+        current_path = os.path.join(
+            attach.getAttachPath(create=False), self.page.currentAttachSubdir
+        )
 
         self.assertTrue(os.path.samefile(result, expected))
         self.assertTrue(os.path.exists(current_path))
-        self.assertEqual(self.page.currentAttachSubdir, '')
+        self.assertEqual(self.page.currentAttachSubdir, "")
 
     def testFixSubSubdir_1(self):
-        subdir = 'sub1/sub2'
+        subdir = "sub1/sub2"
         self.page.currentAttachSubdir = subdir
 
         attach = Attachment(self.page)
         expected = attach.getAttachPath(create=True)
 
         result = attach.fixCurrentSubdir()
-        current_path = os.path.join(attach.getAttachPath(create=False),
-                                    self.page.currentAttachSubdir)
+        current_path = os.path.join(
+            attach.getAttachPath(create=False), self.page.currentAttachSubdir
+        )
 
         self.assertTrue(os.path.samefile(result, expected))
         self.assertTrue(os.path.exists(current_path))
-        self.assertEqual(self.page.currentAttachSubdir, '')
+        self.assertEqual(self.page.currentAttachSubdir, "")
 
     def testFixSubSubdir_2(self):
-        subdir = 'sub1/sub2'
+        subdir = "sub1/sub2"
         self.page.currentAttachSubdir = subdir
 
         attach = Attachment(self.page)
         root = attach.getAttachPath(create=True)
 
-        expected = os.path.join(root, 'sub1')
+        expected = os.path.join(root, "sub1")
         os.mkdir(expected)
 
         result = attach.fixCurrentSubdir()
-        current_path = os.path.join(attach.getAttachPath(create=False), 'sub1')
+        current_path = os.path.join(attach.getAttachPath(create=False), "sub1")
 
         self.assertTrue(os.path.samefile(result, expected))
         self.assertTrue(os.path.exists(current_path))
-        self.assertEqual(self.page.currentAttachSubdir, 'sub1')
+        self.assertEqual(self.page.currentAttachSubdir, "sub1")
 
     def testFixSubSubdir_3_Ok(self):
-        subdir = 'sub1/sub2'
+        subdir = "sub1/sub2"
         self.page.currentAttachSubdir = subdir
 
         attach = Attachment(self.page)
@@ -610,24 +650,24 @@ class AttachmentTest(unittest.TestCase):
         self.assertEqual(self.page.currentAttachSubdir, subdir)
 
     def testFixSubSubdir_4(self):
-        subdir = 'sub1/sub2/sub3'
+        subdir = "sub1/sub2/sub3"
         self.page.currentAttachSubdir = subdir
 
         attach = Attachment(self.page)
         root = attach.getAttachPath(create=True)
 
-        expected = os.path.join(root, 'sub1/sub2')
+        expected = os.path.join(root, "sub1/sub2")
         os.makedirs(expected)
 
         result = attach.fixCurrentSubdir()
-        current_path = os.path.join(attach.getAttachPath(create=False), 'sub1/sub2')
+        current_path = os.path.join(attach.getAttachPath(create=False), "sub1/sub2")
 
         self.assertTrue(os.path.samefile(result, expected))
         self.assertTrue(os.path.exists(current_path))
-        self.assertEqual(self.page.currentAttachSubdir, 'sub1/sub2')
+        self.assertEqual(self.page.currentAttachSubdir, "sub1/sub2")
 
     def testCreateSubdirSimple(self):
-        subdir = 'subdir'
+        subdir = "subdir"
         attach = Attachment(self.page)
 
         result = Path(attach.createSubdir(subdir)).resolve()
@@ -638,7 +678,7 @@ class AttachmentTest(unittest.TestCase):
         self.assertTrue(path_expected.is_dir())
 
     def testCreateNestedDir(self):
-        subdir = Path('subdir1', 'subdir2')
+        subdir = Path("subdir1", "subdir2")
         attach = Attachment(self.page)
 
         result = Path(attach.createSubdir(subdir)).resolve()
@@ -649,8 +689,8 @@ class AttachmentTest(unittest.TestCase):
         self.assertTrue(path_expected.is_dir())
 
     def testCreateSubdir(self):
-        subdir1 = 'subdir1'
-        subdir2 = Path(subdir1, 'subdir2')
+        subdir1 = "subdir1"
+        subdir2 = Path(subdir1, "subdir2")
 
         attach = Attachment(self.page)
 
@@ -663,20 +703,20 @@ class AttachmentTest(unittest.TestCase):
         self.assertTrue(path_expected.is_dir())
 
     def testCreateSubdirReadonly(self):
-        subdir = 'subdir'
+        subdir = "subdir"
         self.page.readonly = True
         attach = Attachment(self.page)
 
         self.assertRaises(ReadonlyException, attach.createSubdir, subdir)
 
     def testCreateSubdirWithParentPath_01(self):
-        subdir = '../subdir'
+        subdir = "../subdir"
         attach = Attachment(self.page)
 
         self.assertRaises(OSError, attach.createSubdir, subdir)
 
     def testCreateSubdirWithParentPath_02(self):
-        subdir = '..'
+        subdir = ".."
         attach = Attachment(self.page)
 
         self.assertRaises(OSError, attach.createSubdir, subdir)
@@ -685,11 +725,11 @@ class AttachmentTest(unittest.TestCase):
         attach = Attachment(self.page)
         attach.attach(self.fullFilesPath)
 
-        self.assertTrue(attach.exists('accept.png'))
-        self.assertFalse(attach.exists('invalid.png'))
+        self.assertTrue(attach.exists("accept.png"))
+        self.assertFalse(attach.exists("invalid.png"))
 
-        self.assertTrue(attach.exists('attach.png', subdir='dir'))
-        self.assertFalse(attach.exists('invalid.png', subdir='dir'))
+        self.assertTrue(attach.exists("attach.png", subdir="dir"))
+        self.assertFalse(attach.exists("invalid.png", subdir="dir"))
 
-        self.assertTrue(attach.exists('dir/attach.png'))
-        self.assertFalse(attach.exists('dir/invalid.png'))
+        self.assertTrue(attach.exists("dir/attach.png"))
+        self.assertFalse(attach.exists("dir/invalid.png"))

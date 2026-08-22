@@ -17,7 +17,7 @@ class BaseHtmlSearchPanelController(metaclass=ABCMeta):
         self._panel = searchPanel
         self._htmlRender = htmlRender
 
-        self.setSearchPhrase('')
+        self.setSearchPhrase("")
         self._panel.setReplaceGuiVisible(False)
         self._panel.setPrevButtonVisible(False)
         self._panel.setResultLabelVisible(False)

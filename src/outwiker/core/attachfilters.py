@@ -16,12 +16,14 @@ def getDirOnlyFilter() -> Callable[[Path], bool]:
 
 
 def getHiddenFilter(page) -> Callable[[Path], bool]:
-    '''
+    """
     Returns filter for skipping hidden directories (starts with "__")
-    '''
+    """
     attach = Attachment(page)
     root_dir = attach.getAttachPath(create=False)
-    return lambda path: path.is_dir() and str(path.relative_to(root_dir)).startswith('__')
+    return lambda path: (
+        path.is_dir() and str(path.relative_to(root_dir)).startswith("__")
+    )
 
 
 def andFilter(*filter_list: Callable[[Path], bool]) -> Callable[[Path], bool]:
@@ -59,10 +61,8 @@ def getImageRecursiveFilter() -> Callable[[Path], bool]:
 
 
 def getNotHiddenImageRecursiveFilter(page):
-    return andFilter(getImageRecursiveFilter(),
-                     notFilter(getHiddenFilter(page)))
+    return andFilter(getImageRecursiveFilter(), notFilter(getHiddenFilter(page)))
 
 
 def getNotHiddenDirOnlyFilter(page):
-    return andFilter(getDirOnlyFilter(),
-                     notFilter(getHiddenFilter(page)))
+    return andFilter(getDirOnlyFilter(), notFilter(getHiddenFilter(page)))

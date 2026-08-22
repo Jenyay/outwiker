@@ -5,13 +5,13 @@ import re
 from pyparsing import Regex
 
 
-class CommandFactory (object):
+class CommandFactory(object):
     @staticmethod
     def make(parser):
         return CommandToken(parser).getToken()
 
 
-class CommandToken (object):
+class CommandToken(object):
     """
     Токен для обработки команд вида (:commandname params... :) content (:commandnameend:)
     Команда может состоять только из первой скобки (:commandname params... :)
@@ -20,6 +20,7 @@ class CommandToken (object):
     Этот токен находит в тексте команду, а затем в парсере ищет обработчика данной команды.
     Если обработчика нет, возвращается исходный текст команды
     """
+
     regex = r"""\(:\s*(?P<name>[\w][-\w<>]+)          # Имя команды "(:name"
             (?:\s+(?P<params>.*?)\s*)?:\)             # Параметры команды "params... :)"
             ((?P<content>.*?)                         # Контент между (:name:) и (:nameend:)
@@ -30,7 +31,9 @@ class CommandToken (object):
         self.parser = parser
 
     def getToken(self):
-        return Regex(self.regex, flags=re.MULTILINE | re.DOTALL | re.IGNORECASE | re.VERBOSE).setParseAction(self.execute)("command")
+        return Regex(
+            self.regex, flags=re.MULTILINE | re.DOTALL | re.IGNORECASE | re.VERBOSE
+        ).setParseAction(self.execute)("command")
 
     def execute(self, s, l, t):
         """
@@ -47,10 +50,10 @@ class CommandToken (object):
             return t[0]
 
         if params is None:
-            params = u""
+            params = ""
 
         if content is None:
-            content = u""
+            content = ""
 
         argcount = command.execute.__code__.co_argcount
 

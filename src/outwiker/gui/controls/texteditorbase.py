@@ -587,7 +587,7 @@ class TextEditorBase(wx.Panel):
 
     def Paste(self):
         self.textCtrl.Paste()
-        
+
     def SelectAll(self):
         self.textCtrl.SelectAll()
 

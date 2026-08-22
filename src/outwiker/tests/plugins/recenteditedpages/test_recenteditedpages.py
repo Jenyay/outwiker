@@ -29,7 +29,7 @@ class PluginNameTest(BaseOutWikerGUIMixin, unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = self.path = mkdtemp(prefix='Абырвалг абыр RecentEditedPages')
+        self.path = self.path = mkdtemp(prefix="Абырвалг абыр RecentEditedPages")
         removeDir(self.path)
 
         self.rootwiki = WikiDocument.create(self.path)

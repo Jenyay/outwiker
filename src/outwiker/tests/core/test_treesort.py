@@ -19,7 +19,7 @@ class TreeSortTest(unittest.TestCase):
         self._sort_by_title = lambda page: page.display_title.lower()
 
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -91,8 +91,8 @@ class TreeSortTest(unittest.TestCase):
 
     def testSortAlphabeticalNoEvent(self):
         """
-        Не устанавливает свойство self._application.wikiroot, поэтому событие не
- должно срабатывать
+               Не устанавливает свойство self._application.wikiroot, поэтому событие не
+        должно срабатывать
         """
         self._application.onEndTreeUpdate += self.onEndTreeUpdate
 

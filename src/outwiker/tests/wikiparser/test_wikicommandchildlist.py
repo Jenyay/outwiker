@@ -14,7 +14,7 @@ from outwiker.tests.utils import removeDir
 from .utils import get_styles_count
 
 
-class WikiChildListCommandTest (unittest.TestCase):
+class WikiChildListCommandTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
         self.__createWiki()
@@ -24,7 +24,7 @@ class WikiChildListCommandTest (unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -32,12 +32,10 @@ class WikiChildListCommandTest (unittest.TestCase):
         self.page_1 = factory.create(self.wikiroot, "Страница 1", [])
         time.sleep(0.1)
 
-        self.page_2 = factory.create(
-            self.wikiroot["Страница 1"], "Страница 2", [])
+        self.page_2 = factory.create(self.wikiroot["Страница 1"], "Страница 2", [])
         time.sleep(0.1)
 
-        self.page_4 = factory.create(
-            self.wikiroot["Страница 1"], "Страница 4", [])
+        self.page_4 = factory.create(self.wikiroot["Страница 1"], "Страница 4", [])
         time.sleep(0.1)
 
         self.page_3 = factory.create(self.wikiroot["Страница 1"], "СТРАНИЦА 3", [])
@@ -59,21 +57,27 @@ class WikiChildListCommandTest (unittest.TestCase):
         command = ChildListCommand(self.parser)
         result = command.execute("", "")
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            ],
+        )
 
     def test2(self):
         text = "(:childlist:)"
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            ],
+        )
 
     def test_styles(self):
         text = "(:childlist:)(:childlistend:) (:childlist:)(:childlistend:)"
@@ -85,64 +89,82 @@ class WikiChildListCommandTest (unittest.TestCase):
         self.wikiroot["Страница 1/Страница 4"].order = 0
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            ],
+        )
 
     def test4(self):
         text = "(:childlist sort=name:)"
         self.wikiroot["Страница 1/Страница 4"].order = 0
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            ],
+        )
 
     def test5(self):
         text = "(:childlist sort=descendname:)"
         self.wikiroot["Страница 1/Страница 4"].order = 0
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            ],
+        )
 
     def test6(self):
         text = "(:childlist sort=descendorder:)"
         self.wikiroot["Страница 1/Страница 4"].order = 0
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            ],
+        )
 
     def testSortCreation_01(self):
         text = "(:childlist sort=creation:)"
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            ],
+        )
 
     def testSortCreation_02(self):
         text = "(:childlist sort=descendcreation:)"
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            ],
+        )
 
     def testSortEdit_01(self):
         text = "(:childlist sort=edit:)"
@@ -155,11 +177,14 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+            ],
+        )
 
     def testSortEdit_02(self):
         text = "(:childlist sort=descendedit:)"
@@ -172,11 +197,14 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+            ],
+        )
 
     def testSortEdit_03(self):
         text = "(:childlist sort=edit:)"
@@ -189,11 +217,14 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Страница 4</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+            ],
+        )
 
     def testAlias_01(self):
         text = "(:childlist:)"
@@ -206,11 +237,14 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">Абырвалг</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">Страница 2</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">СТРАНИЦА 3</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">Абырвалг</a>',
+            ],
+        )
 
     def testAlias_sort(self):
         text = "(:childlist sort=name:)"
@@ -225,8 +259,11 @@ class WikiChildListCommandTest (unittest.TestCase):
 
         result = self.parser.toHtml(text)
 
-        self._check_items_order(result, [
-            '<a class="ow-wiki ow-link-page" href="page://Страница 4">AAAA</a>',
-            '<a class="ow-wiki ow-link-page" href="page://Страница 2">BBBB</a>',
-            '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">CCCC</a>',
-            ])
+        self._check_items_order(
+            result,
+            [
+                '<a class="ow-wiki ow-link-page" href="page://Страница 4">AAAA</a>',
+                '<a class="ow-wiki ow-link-page" href="page://Страница 2">BBBB</a>',
+                '<a class="ow-wiki ow-link-page" href="page://СТРАНИЦА 3">CCCC</a>',
+            ],
+        )

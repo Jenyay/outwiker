@@ -7,8 +7,9 @@ OUTWIKER_MUST_BE_UPGRADED = 1
 PLUGIN_MUST_BE_UPGRADED = 2
 
 
-def checkSingleVersion(current_api_version: List[int],
-                       required_version: List[int]) -> int:
+def checkSingleVersion(
+    current_api_version: List[int], required_version: List[int]
+) -> int:
     if current_api_version[0] > required_version[0]:
         return PLUGIN_MUST_BE_UPGRADED
 
@@ -21,8 +22,7 @@ def checkSingleVersion(current_api_version: List[int],
     return VERSION_OK
 
 
-def checkVersion(current_api_version: List[int],
-                 requiredlist: List[List[int]]) -> int:
+def checkVersion(current_api_version: List[int], requiredlist: List[List[int]]) -> int:
     """
     current_api_version - current package version.
     requiredlist - list of the supported versions.

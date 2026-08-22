@@ -1,6 +1,7 @@
 from datetime import datetime
 import re
 
+
 def strftime_safe(date: datetime, format: str) -> str:
     # Workaround for the bug https://bugs.python.org/issue8304
     pattern = re.compile(r"%[%a-zA-Z]")

@@ -25,49 +25,43 @@ class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyWiki(self.wikiroot)
 
     def testDefault(self):
-        suffix = ''
+        suffix = ""
         dlg = TableDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
 
-        controller = TableDialogController(dlg,
-                                           suffix,
-                                           self.application.config)
+        controller = TableDialogController(dlg, suffix, self.application.config)
         controller.showDialog()
 
         result = controller.getResult()
 
-        validResult = '''(:table border="1":)
+        validResult = """(:table border="1":)
 (:row:)
 (:cell:)
-(:tableend:)'''
+(:tableend:)"""
 
         self.assertEqual(result, validResult, result)
 
     def testDefault_suffix(self):
-        suffix = '20'
+        suffix = "20"
         dlg = TableDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
 
-        controller = TableDialogController(dlg,
-                                           suffix,
-                                           self.application.config)
+        controller = TableDialogController(dlg, suffix, self.application.config)
         controller.showDialog()
 
         result = controller.getResult()
 
-        validResult = '''(:table20 border="1":)
+        validResult = """(:table20 border="1":)
 (:row20:)
 (:cell20:)
-(:table20end:)'''
+(:table20end:)"""
 
         self.assertEqual(result, validResult, result)
 
     def testCells(self):
-        suffix = ''
+        suffix = ""
         dlg = TableDialog(self.mainWindow)
-        controller = TableDialogController(dlg,
-                                           suffix,
-                                           self.application.config)
+        controller = TableDialogController(dlg, suffix, self.application.config)
 
         dlg.colsCount = 5
         Tester.dialogTester.appendOk()
@@ -76,23 +70,21 @@ class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''(:table border="1":)
+        validResult = """(:table border="1":)
 (:row:)
 (:cell:)
 (:cell:)
 (:cell:)
 (:cell:)
 (:cell:)
-(:tableend:)'''
+(:tableend:)"""
 
         self.assertEqual(result, validResult, result)
 
     def testRowsCells(self):
-        suffix = ''
+        suffix = ""
         dlg = TableDialog(self.mainWindow)
-        controller = TableDialogController(dlg,
-                                           suffix,
-                                           self.application.config)
+        controller = TableDialogController(dlg, suffix, self.application.config)
 
         dlg.colsCount = 5
         dlg.rowsCount = 3
@@ -102,7 +94,7 @@ class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''(:table border="1":)
+        validResult = """(:table border="1":)
 (:row:)
 (:cell:)
 (:cell:)
@@ -121,16 +113,14 @@ class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 (:cell:)
 (:cell:)
 (:cell:)
-(:tableend:)'''
+(:tableend:)"""
 
         self.assertEqual(result, validResult, result)
 
     def testBorder_01(self):
-        suffix = ''
+        suffix = ""
         dlg = TableDialog(self.mainWindow)
-        controller = TableDialogController(dlg,
-                                           suffix,
-                                           self.application.config)
+        controller = TableDialogController(dlg, suffix, self.application.config)
         Tester.dialogTester.appendOk()
 
         dlg.borderWidth = 10
@@ -138,19 +128,17 @@ class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''(:table border="10":)
+        validResult = """(:table border="10":)
 (:row:)
 (:cell:)
-(:tableend:)'''
+(:tableend:)"""
 
         self.assertEqual(result, validResult, result)
 
     def testBorder_02(self):
-        suffix = ''
+        suffix = ""
         dlg = TableDialog(self.mainWindow)
-        controller = TableDialogController(dlg,
-                                           suffix,
-                                           self.application.config)
+        controller = TableDialogController(dlg, suffix, self.application.config)
         Tester.dialogTester.appendOk()
 
         dlg.borderWidth = 0
@@ -158,28 +146,24 @@ class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''(:table:)
+        validResult = """(:table:)
 (:row:)
 (:cell:)
-(:tableend:)'''
+(:tableend:)"""
 
         self.assertEqual(result, validResult, result)
 
     def testColsCount(self):
-        suffix = ''
+        suffix = ""
         dlg = TableDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
 
-        controller = TableDialogController(dlg,
-                                           suffix,
-                                           self.application.config)
+        controller = TableDialogController(dlg, suffix, self.application.config)
         dlg.colsCount = 10
         controller.showDialog()
 
         dlg2 = TableDialog(self.mainWindow)
-        controller2 = TableDialogController(dlg2,
-                                            suffix,
-                                            self.application.config)
+        controller2 = TableDialogController(dlg2, suffix, self.application.config)
 
         self.assertEqual(dlg2.colsCount, 10)
 
@@ -187,11 +171,9 @@ class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller2.showDialog()
 
     def testHCells(self):
-        suffix = ''
+        suffix = ""
         dlg = TableDialog(self.mainWindow)
-        controller = TableDialogController(dlg,
-                                           suffix,
-                                           self.application.config)
+        controller = TableDialogController(dlg, suffix, self.application.config)
 
         dlg.colsCount = 5
         dlg.rowsCount = 3
@@ -202,7 +184,7 @@ class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''(:table border="1":)
+        validResult = """(:table border="1":)
 (:row:)
 (:hcell:)
 (:hcell:)
@@ -221,6 +203,6 @@ class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 (:cell:)
 (:cell:)
 (:cell:)
-(:tableend:)'''
+(:tableend:)"""
 
         self.assertEqual(result, validResult, result)

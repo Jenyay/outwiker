@@ -3,16 +3,14 @@
 import re
 
 
-class StcStyle (object):
+class StcStyle(object):
     """
     Набор свойств стиля для класса StyledTextCtrl
     """
 
-    def __init__(self, fore=u"#000000",
-                 back=u"#FFFFFF",
-                 bold=False,
-                 italic=False,
-                 underline=False):
+    def __init__(
+        self, fore="#000000", back="#FFFFFF", bold=False, italic=False, underline=False
+    ):
         self.fore = fore
         self.back = back
         self.bold = bold
@@ -27,21 +25,21 @@ class StcStyle (object):
         items = []
 
         if len(self.fore) != 0:
-            items.append(u"fore:{}".format(self.fore))
+            items.append("fore:{}".format(self.fore))
 
         if len(self.back) != 0:
-            items.append(u"back:{}".format(self.back))
+            items.append("back:{}".format(self.back))
 
         if self.bold:
-            items.append(u"bold")
+            items.append("bold")
 
         if self.italic:
             items.append("italic")
 
         if self.underline:
-            items.append(u"underline")
+            items.append("underline")
 
-        return u",".join(items)
+        return ",".join(items)
 
     @staticmethod
     def parse(string):
@@ -49,28 +47,27 @@ class StcStyle (object):
         Создать класс StcStyle по ее строке представления.
         Возвращает None, если в строке представления есть ошибки
         """
-        items = [item.strip()
-                 for item in string.split(",") if len(item.strip()) != 0]
+        items = [item.strip() for item in string.split(",") if len(item.strip()) != 0]
 
         style = StcStyle()
         for item in items:
-            if item.lower().startswith(u"fore:"):
-                style.fore = item[len(u"fore:"):]
+            if item.lower().startswith("fore:"):
+                style.fore = item[len("fore:") :]
                 continue
 
-            if item.lower().startswith(u"back:"):
-                style.back = item[len(u"back:"):]
+            if item.lower().startswith("back:"):
+                style.back = item[len("back:") :]
                 continue
 
-            if item.lower() == u"bold":
+            if item.lower() == "bold":
                 style.bold = True
                 continue
 
-            if item.lower() == u"italic":
+            if item.lower() == "italic":
                 style.italic = True
                 continue
 
-            if item.lower() == u"underline":
+            if item.lower() == "underline":
                 style.underline = True
                 continue
 

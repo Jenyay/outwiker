@@ -9,7 +9,12 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag
 
 from outwiker.gui.controls.pagelist import EVT_PAGE_CLICK
-from outwiker.gui.tagscloud import EVT_TAG_LEFT_DOWN, EVT_TAG_RIGHT_UP, EVT_TAG_ADD, EVT_TAG_REMOVE
+from outwiker.gui.tagscloud import (
+    EVT_TAG_LEFT_DOWN,
+    EVT_TAG_RIGHT_UP,
+    EVT_TAG_ADD,
+    EVT_TAG_REMOVE,
+)
 
 
 class TagsPanelController:
@@ -76,7 +81,9 @@ class TagsPanelController:
         """
         assert self.__currentTags is not None
 
-        self.__tagPopupMenu = TagPopupMenu(self.__application.mainWindow, event.text, self.__application)
+        self.__tagPopupMenu = TagPopupMenu(
+            self.__application.mainWindow, event.text, self.__application
+        )
         self.__tagsPanel.PopupMenu(self.__tagPopupMenu.menu)
 
     def __onTagAdd(self, event):
@@ -85,8 +92,7 @@ class TagsPanelController:
             return
 
         if selectedPage.readonly:
-            showError(self.__application.mainWindow,
-                      _('Page is opened as read-only'))
+            showError(self.__application.mainWindow, _("Page is opened as read-only"))
             return
 
         appendTag(selectedPage, event.text)
@@ -97,8 +103,7 @@ class TagsPanelController:
             return
 
         if selectedPage.readonly:
-            showError(self.__application.mainWindow,
-                      _('Page is opened as read-only'))
+            showError(self.__application.mainWindow, _("Page is opened as read-only"))
             return
 
         removeTag(selectedPage, event.text)

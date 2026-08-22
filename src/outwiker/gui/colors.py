@@ -38,6 +38,7 @@ def rgb_to_xyz(rgb):
 
     return [x, y, z]
 
+
 def xyz_to_lab(xyz):
     x, y, z = xyz
     x /= 95.047
@@ -45,17 +46,17 @@ def xyz_to_lab(xyz):
     z /= 108.883
 
     if x > 0.008856:
-        x = x ** (1/3)
+        x = x ** (1 / 3)
     else:
         x = (7.787 * x) + (16 / 116)
 
     if y > 0.008856:
-        y = y ** (1/3)
+        y = y ** (1 / 3)
     else:
         y = (7.787 * y) + (16 / 116)
 
     if z > 0.008856:
-        z = z ** (1/3)
+        z = z ** (1 / 3)
     else:
         z = (7.787 * z) + (16 / 116)
 
@@ -65,24 +66,25 @@ def xyz_to_lab(xyz):
 
     return [l, a, b]
 
+
 def lab_to_xyz(lab):
     l, a, b = lab
     y = (l + 16) / 116
     x = a / 500 + y
     z = y - b / 200
 
-    if y ** 3 > 0.008856:
-        y = y ** 3
+    if y**3 > 0.008856:
+        y = y**3
     else:
         y = (y - 16 / 116) / 7.787
 
-    if x ** 3 > 0.008856:
-        x = x ** 3
+    if x**3 > 0.008856:
+        x = x**3
     else:
         x = (x - 16 / 116) / 7.787
 
-    if z ** 3 > 0.008856:
-        z = z ** 3
+    if z**3 > 0.008856:
+        z = z**3
     else:
         z = (z - 16 / 116) / 7.787
 
@@ -91,6 +93,7 @@ def lab_to_xyz(lab):
     z *= 108.883
 
     return [x, y, z]
+
 
 def xyz_to_rgb(xyz):
     x, y, z = xyz
@@ -123,15 +126,18 @@ def xyz_to_rgb(xyz):
 
     return [int(r * 255), int(g * 255), int(b * 255)]
 
+
 def rgb_to_lab(rgb):
     xyz = rgb_to_xyz(rgb)
     lab = xyz_to_lab(xyz)
     return lab
 
+
 def lab_to_rgb(lab):
     xyz = lab_to_xyz(lab)
     rgb = xyz_to_rgb(xyz)
     return rgb
+
 
 if __name__ == "__main__":
     # rgb_color = [0, 0, 0]
@@ -142,4 +148,3 @@ if __name__ == "__main__":
 
     converted_rgb_color = lab_to_rgb(lab_color)
     print("Lab to RGB:", converted_rgb_color)
-

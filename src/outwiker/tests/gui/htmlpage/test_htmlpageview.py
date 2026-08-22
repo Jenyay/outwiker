@@ -39,20 +39,20 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testType(self):
         self.application.wikiroot = self.wikiroot
-        self.assertEqual(RootPagePanel,
-                         type(self.mainWindow.pagePanel.pageView))
+        self.assertEqual(RootPagePanel, type(self.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = self.wikiroot["HTML-страница"]
-        self.assertEqual(HtmlPageView,
-                         type(self.application.mainWindow.pagePanel.pageView))
+        self.assertEqual(
+            HtmlPageView, type(self.application.mainWindow.pagePanel.pageView)
+        )
 
         self.application.selectedPage = self.wikiroot["HTML-страница 2"]
-        self.assertEqual(HtmlPageView,
-                         type(self.application.mainWindow.pagePanel.pageView))
+        self.assertEqual(
+            HtmlPageView, type(self.application.mainWindow.pagePanel.pageView)
+        )
 
         self.application.selectedPage = None
-        self.assertEqual(RootPagePanel,
-                         type(self.mainWindow.pagePanel.pageView))
+        self.assertEqual(RootPagePanel, type(self.mainWindow.pagePanel.pageView))
 
     def testDefaultSelectedPage(self):
         """
@@ -63,8 +63,8 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         self.wikiroot["HTML-страница 2"].content = "Бла-бла-бла"
         self.application.selectedPage = self.wikiroot["HTML-страница 2"]
@@ -73,7 +73,8 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         # вкладка с просмотром
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_PREVIEW)
+            PAGE_MODE_PREVIEW,
+        )
 
     def testSelectedPage(self):
         """
@@ -84,20 +85,25 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
-        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
-
-        self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_PREVIEW)
-
-        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = (
+            HtmlPageView.RESULT_PAGE_INDEX
+        )
 
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            PAGE_MODE_PREVIEW,
+        )
+
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = (
+            HtmlPageView.CODE_PAGE_INDEX
+        )
+
+        self.assertEqual(
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
     def testInvalidPageIndex(self):
         self.application.wikiroot = self.wikiroot
@@ -105,38 +111,43 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         self.application.mainWindow.pagePanel.pageView._selectedPageIndex = 100
 
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         self.application.mainWindow.pagePanel.pageView._selectedPageIndex = -1
 
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
-        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = (
+            HtmlPageView.RESULT_PAGE_INDEX
+        )
 
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_PREVIEW)
+            PAGE_MODE_PREVIEW,
+        )
 
         self.application.mainWindow.pagePanel.pageView._selectedPageIndex = 1000
 
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_PREVIEW)
+            PAGE_MODE_PREVIEW,
+        )
 
         self.application.mainWindow.pagePanel.pageView._selectedPageIndex = -1
 
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_PREVIEW)
+            PAGE_MODE_PREVIEW,
+        )
 
     def testSavePageIndex(self):
         """
@@ -151,17 +162,20 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         # В начале по умолчанию выбирается вкладка с просмотром
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_PREVIEW)
+            PAGE_MODE_PREVIEW,
+        )
 
         # Переключимся на вкладку с кодом
-        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = (
+            HtmlPageView.CODE_PAGE_INDEX
+        )
 
         self.application.selectedPage = self.wikiroot["HTML-страница"]
         wx.GetApp().Yield()
 
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         # Переключимся на другую страницу. Опять должна быть выбрана
         # вкладка с просмотром
@@ -170,7 +184,8 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            HtmlPageView.RESULT_PAGE_INDEX)
+            HtmlPageView.RESULT_PAGE_INDEX,
+        )
 
         # А при возврате на предыдущую страницу, должна быть выбрана
         # страница с кодом
@@ -178,8 +193,8 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         wx.GetApp().Yield()
 
         self.assertEqual(
-            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_TEXT)
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(), PAGE_MODE_TEXT
+        )
 
         # При переключении на другую страницу, выбиается вкладка с
         # результирующим HTML
@@ -188,7 +203,8 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
-            PAGE_MODE_PREVIEW)
+            PAGE_MODE_PREVIEW,
+        )
 
     def testCursorPosition_01(self):
         self.application.wikiroot = self.wikiroot
@@ -262,8 +278,9 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.onPostprocessing -= self._onPostProcessing
 
-        result = readTextFile(os.path.join(self.wikiroot["HTML-страница"].path,
-                                           PAGE_RESULT_HTML))
+        result = readTextFile(
+            os.path.join(self.wikiroot["HTML-страница"].path, PAGE_RESULT_HTML)
+        )
 
         self.assertTrue(result.endswith(" 111"))
 
@@ -301,8 +318,9 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.onPostprocessing -= self._onPostProcessing
 
-        result = readTextFile(os.path.join(self.wikiroot["HTML-страница"].path,
-                                           PAGE_RESULT_HTML))
+        result = readTextFile(
+            os.path.join(self.wikiroot["HTML-страница"].path, PAGE_RESULT_HTML)
+        )
 
         self.assertTrue(result.endswith(" 111"))
         self.assertFalse(result.endswith(" 111 111"))
@@ -332,8 +350,9 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.onPreprocessing -= self._onPreProcessing
 
-        result = readTextFile(os.path.join(self.wikiroot["HTML-страница"].path,
-                                           PAGE_RESULT_HTML))
+        result = readTextFile(
+            os.path.join(self.wikiroot["HTML-страница"].path, PAGE_RESULT_HTML)
+        )
 
         self.assertIn("Абырвалг 000", result)
 

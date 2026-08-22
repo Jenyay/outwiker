@@ -86,7 +86,7 @@ class FileIconsTestUnix(TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(index, 0)
 
 
-@skipIf(os.name != "nt", 'Test executed under Windows only')
+@skipIf(os.name != "nt", "Test executed under Windows only")
 class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()

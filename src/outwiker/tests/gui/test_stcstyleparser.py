@@ -44,7 +44,9 @@ class StcStyleParserTest(TestCase):
 
     def testToString_04(self):
         style = StcStyle(bold=True, italic=True, underline=True)
-        self.assertEqual(style.tostr(), "fore:#000000,back:#FFFFFF,bold,italic,underline")
+        self.assertEqual(
+            style.tostr(), "fore:#000000,back:#FFFFFF,bold,italic,underline"
+        )
 
     def testToString_05(self):
         style = StcStyle(fore="#AAAAAA", back="#BBBBBB", bold=True)
@@ -149,7 +151,9 @@ class StcStyleParserTest(TestCase):
         self.assertEqual(style.back, "#222222")
 
     def testParse_11(self):
-        style = StcStyle.parse(" fore:#AAAAAA , back:#222222 , bold,italic , underline ")
+        style = StcStyle.parse(
+            " fore:#AAAAAA , back:#222222 , bold,italic , underline "
+        )
 
         self.assertEqual(style.bold, True)
         self.assertEqual(style.italic, True)

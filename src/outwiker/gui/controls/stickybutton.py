@@ -26,29 +26,26 @@ class MyTestFrame(wx.Frame):
         panel = wx.Panel(self)
 
         # Build a bitmap button and a normal one
-        bmp = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION,
-                                       wx.ART_OTHER,
-                                       (16, 16))
+        bmp = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION, wx.ART_OTHER, (16, 16))
 
-        btn = StickyButton(panel, -1, bmp, label=u'adsfasdf', pos=(10, 10))
+        btn = StickyButton(panel, -1, bmp, label="adsfasdf", pos=(10, 10))
         btn.SetSize((150, 75))
 
-        btn2 = StickyButton(panel,
-                            -1,
-                            bmp,
-                            label=u'adsfasdf',
-                            pos=(10, 110),
-                            align=wx.ALIGN_CENTER)
+        btn2 = StickyButton(
+            panel, -1, bmp, label="adsfasdf", pos=(10, 110), align=wx.ALIGN_CENTER
+        )
         btn2.SetSize((150, 75))
 
-        btn3 = StickyButton(panel, -1, bmp, label=u'adsfasdfadsf', pos=(10, 210), align=wx.ALIGN_CENTER)
+        btn3 = StickyButton(
+            panel, -1, bmp, label="adsfasdfadsf", pos=(10, 210), align=wx.ALIGN_CENTER
+        )
         btn3.SetSize(btn3.GetMinSize())
         btn3.SetRoundRadius(0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = wx.App()
-    frame = MyTestFrame(None, 'StickyButton Test')
+    frame = MyTestFrame(None, "StickyButton Test")
     frame.Show()
     frame.SetSize((500, 600))
     app.MainLoop()

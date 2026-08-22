@@ -11,6 +11,7 @@ def create_link_to_page(href: str, text: str) -> str:
     css_classes = [css.CSS_WIKI, css.CSS_LINK_PAGE]
     return html.link(href, text, css_classes)
 
+
 def create_invalid_link_to_page(href: str, text: str) -> str:
     html = HtmlFormatter()
     css_classes = [css.CSS_WIKI, css.CSS_LINK_PAGE, css.CSS_LINK_PAGE_ERROR]
@@ -31,7 +32,9 @@ def create_invalid_attached_file(filename: str) -> str:
 
 def create_image(src: str, css_classes: Optional[List[str]] = None) -> str:
     if css_classes:
-        css_class = ' '.join(css_classes)
-        return '<img class="{css_class}" src="{src}"/>'.format(css_class=css_class, src=src)
+        css_class = " ".join(css_classes)
+        return '<img class="{css_class}" src="{src}"/>'.format(
+            css_class=css_class, src=src
+        )
     else:
         return '<img src="{src}"/>'.format(src=src)

@@ -15,9 +15,7 @@ class SourcePluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.__pluginname = "Source"
         self.initApplication()
         self.wikiroot = self.createWiki()
-        self.testPage = WikiPageFactory().create(self.wikiroot,
-                                                 "Страница 1",
-                                                 [])
+        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
         dirlist = ["plugins/source"]
 
@@ -45,7 +43,7 @@ class SourcePluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertGreater(len(self.loader[self.__pluginname].url), 0)
 
     def testEmptyCommand(self):
-        text = '''bla-bla-bla (:source:) bla-bla-bla'''
+        text = """bla-bla-bla (:source:) bla-bla-bla"""
 
         self.testPage.content = text
 
@@ -55,7 +53,7 @@ class SourcePluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue("bla-bla-bla" in result)
 
     def test1S(self):
-        text = '''(:source lang="1s":)
+        text = """(:source lang="1s":)
 Функция УстановитьФизическиеЛица(Выборка)
     Пока Выборка.Следующий() Цикл
         //УстановитьФизическоеЛицо
@@ -66,15 +64,14 @@ class SourcePluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Сообщить("" + Пользователь + " " + Пользователь.ФизическоеЛицо + "-[ОК!]");
     КонецЦикла;
 КонецФункции
-(:sourceend:)'''
+(:sourceend:)"""
 
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn(
-            '<span class="c">//УстановитьФизическоеЛицо</span>', result)
+        self.assertIn('<span class="c">//УстановитьФизическоеЛицо</span>', result)
         self.assertIn('<span class="k">КонецФункции</span>', result)
 
     def testFullHtmlPython(self):
@@ -179,8 +176,8 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '        print &quot;Hello world!!!&quot;'
-        innerString3 = 'def hello (count):'
+        innerString2 = "        print &quot;Hello world!!!&quot;"
+        innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result, result)
         self.assertTrue(innerString2 in result)
@@ -207,8 +204,8 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '        print &quot;Hello world!!!&quot;'
-        innerString3 = 'def hello (count):'
+        innerString2 = "        print &quot;Hello world!!!&quot;"
+        innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -235,8 +232,8 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '        print &quot;Hello world!!!&quot;'
-        innerString3 = 'def hello (count):'
+        innerString2 = "        print &quot;Hello world!!!&quot;"
+        innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -276,16 +273,15 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '        print &quot;Hello world!!!&quot;'
-        innerString3 = 'def hello (count):'
+        innerString2 = "        print &quot;Hello world!!!&quot;"
+        innerString3 = "def hello (count):"
         innerString4 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString5 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
 
         # Проверка того, что стиль добавился только один раз
-        self.assertTrue(result.find(innerString1) ==
-                        result.rfind(innerString1))
+        self.assertTrue(result.find(innerString1) == result.rfind(innerString1))
 
         self.assertTrue(innerString2 in result)
         self.assertTrue(innerString3 in result)
@@ -314,8 +310,8 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '          for i in range (10)'
-        innerString3 = 'def hello (count):'
+        innerString2 = "          for i in range (10)"
+        innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -343,8 +339,8 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '          for i in range (10)'
-        innerString3 = 'def hello (count):'
+        innerString2 = "          for i in range (10)"
+        innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -372,8 +368,8 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '    for i in range (10)'
-        innerString3 = 'def hello (count):'
+        innerString2 = "    for i in range (10)"
+        innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)
@@ -401,8 +397,8 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '    for i in range (10)'
-        innerString3 = 'def hello (count):'
+        innerString2 = "    for i in range (10)"
+        innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result)
         self.assertTrue(innerString2 in result)

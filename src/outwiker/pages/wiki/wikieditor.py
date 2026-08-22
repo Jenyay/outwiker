@@ -78,18 +78,12 @@ class WikiEditor(TextEditor):
         styles[self.STYLE_LINK_BOLD_UNDERLINE_ID] = (
             styles[self.STYLE_LINK_ID] + ",bold,underline"
         )
-        styles[self.STYLE_LINK_UNDERLINE_ID] = (
-            styles[self.STYLE_LINK_ID] + ",underline"
-        )
+        styles[self.STYLE_LINK_UNDERLINE_ID] = styles[self.STYLE_LINK_ID] + ",underline"
         styles[self.STYLE_LINK_BOLD_ITALIC_ID] = (
             styles[self.STYLE_LINK_ID] + ",bold,italic"
         )
-        styles[self.STYLE_LINK_ITALIC_ID] = (
-            styles[self.STYLE_LINK_ID] + ",italic"
-        )
-        styles[self.STYLE_LINK_BOLD_ID] = (
-            styles[self.STYLE_LINK_ID] + ",bold"
-        )
+        styles[self.STYLE_LINK_ITALIC_ID] = styles[self.STYLE_LINK_ID] + ",italic"
+        styles[self.STYLE_LINK_BOLD_ID] = styles[self.STYLE_LINK_ID] + ",bold"
         styles[self.STYLE_HEADING_ID] = config.heading.value.tostr()
         styles[self.STYLE_COMMAND_ID] = config.command.value.tostr()
         styles[self.STYLE_COMMENT_ID] = config.comment.value.tostr()
@@ -121,9 +115,7 @@ class WikiEditor(TextEditor):
             self.textCtrl.StyleSetFaceName(styleid, font_name)
             self.textCtrl.StyleSetBackground(styleid, back_color)
 
-        self.textCtrl.StyleSetSpec(
-            self.STYLE_HEADING_ID, styles[self.STYLE_HEADING_ID]
-        )
+        self.textCtrl.StyleSetSpec(self.STYLE_HEADING_ID, styles[self.STYLE_HEADING_ID])
         self.textCtrl.StyleSetSize(self.STYLE_HEADING_ID, font_size + 2)
         self.textCtrl.StyleSetFaceName(self.STYLE_HEADING_ID, font_name)
         self.textCtrl.StyleSetBackground(self.STYLE_HEADING_ID, back_color)

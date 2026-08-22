@@ -6,4 +6,4 @@ __version_str__ = ".".join([str(n) for n in __version__])
 
 
 def getVersionStr() -> str:
-    return '.'.join([str(item) for item in __version__]) + ' ' + __status__
+    return ".".join([str(item) for item in __version__]) + " " + __status__

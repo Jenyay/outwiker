@@ -10,12 +10,14 @@ def getSortStrategies():
     """
     Возвращает список существующих стратегий сортировок
     """
-    return [TitleAlphabeticalSort(),
-            TitleAlphabeticalInverseSort(),
-            DateDescendingSort(),
-            DateAscendingSort(),
-            CreationDateDescendingSort(),
-            CreationDateAscendingSort()]
+    return [
+        TitleAlphabeticalSort(),
+        TitleAlphabeticalInverseSort(),
+        DateDescendingSort(),
+        DateAscendingSort(),
+        CreationDateDescendingSort(),
+        CreationDateAscendingSort(),
+    ]
 
 
 class BaseSortStrategy(object, metaclass=ABCMeta):
@@ -61,7 +63,7 @@ class TitleAlphabeticalSort(BaseSortStrategy):
 
     @property
     def title(self):
-        return _(u"Title")
+        return _("Title")
 
 
 class TitleAlphabeticalInverseSort(BaseSortStrategy):
@@ -78,7 +80,7 @@ class TitleAlphabeticalInverseSort(BaseSortStrategy):
 
     @property
     def title(self):
-        return _(u"Title (inverse)")
+        return _("Title (inverse)")
 
 
 class DateDescendingSort(BaseSortStrategy):
@@ -95,7 +97,7 @@ class DateDescendingSort(BaseSortStrategy):
 
     @property
     def title(self):
-        return _(u"Changing date (newest first)")
+        return _("Changing date (newest first)")
 
 
 class DateAscendingSort(BaseSortStrategy):
@@ -112,7 +114,7 @@ class DateAscendingSort(BaseSortStrategy):
 
     @property
     def title(self):
-        return _(u"Changing date (oldest first)")
+        return _("Changing date (oldest first)")
 
 
 class CreationDateDescendingSort(BaseSortStrategy):
@@ -129,7 +131,7 @@ class CreationDateDescendingSort(BaseSortStrategy):
 
     @property
     def title(self):
-        return _(u"Creation date (newest first)")
+        return _("Creation date (newest first)")
 
 
 class CreationDateAscendingSort(BaseSortStrategy):
@@ -146,4 +148,4 @@ class CreationDateAscendingSort(BaseSortStrategy):
 
     @property
     def title(self):
-        return _(u"Creation date (oldest first)")
+        return _("Creation date (oldest first)")

@@ -28,19 +28,29 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
-        files = ["text_utf8.txt", "text utf8.txt", "text_utf8.txt2",
-                 "filename.tmp", "текст_utf8.txt", "text_1251.txt", "html.txt",
-                 "html_1251.txt", "wiki.txt", 'image.png', 'image.jpg',
-                 'image.jpeg', 'image.gif']
+        files = [
+            "text_utf8.txt",
+            "text utf8.txt",
+            "text_utf8.txt2",
+            "filename.tmp",
+            "текст_utf8.txt",
+            "text_1251.txt",
+            "html.txt",
+            "html_1251.txt",
+            "wiki.txt",
+            "image.png",
+            "image.jpg",
+            "image.jpeg",
+            "image.gif",
+        ]
 
-        fullFilesPath = [os.path.join(self.filesPath, fname)
-                         for fname in files]
+        fullFilesPath = [os.path.join(self.filesPath, fname) for fname in files]
 
         # Прикрепим к двум страницам файлы
         Attachment(self.testPage).attach(fullFilesPath)
@@ -249,7 +259,10 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_invalid_file_2(self):
         text = """бла-бла-бла(:include Attach:filename.tmp :)"""
 
-        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-wiki-include ow-error">Encoding error in file 'filename.tmp'</div>"""
+        result_right = (
+            """бла-бла-бла"""
+            + """<div class="ow-wiki ow-wiki-include ow-error">Encoding error in file 'filename.tmp'</div>"""
+        )
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -257,7 +270,10 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_invalid_file_with_encoding(self):
         text = """бла-бла-бла(:include Attach:filename.tmp encoding=base64 :)"""
 
-        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-wiki-include ow-error">Encoding error in file 'filename.tmp'</div>"""
+        result_right = (
+            """бла-бла-бла"""
+            + """<div class="ow-wiki ow-wiki-include ow-error">Encoding error in file 'filename.tmp'</div>"""
+        )
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -271,8 +287,8 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         self.assertEqual(result, result_right, result)
 
     def test_subdir(self):
-        subdir = 'subdir'
-        fname = 'text utf8.txt'
+        subdir = "subdir"
+        fname = "text utf8.txt"
 
         text = """бла-бла-бла
 (:include Attach:"{}/{}" :)""".format(subdir, fname)
@@ -290,8 +306,8 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         self.assertEqual(result, result_right, result)
 
     def test_subdir_with_spaces_forward_slash(self):
-        subdir = 'subdir with spaces'
-        fname = 'text utf8.txt'
+        subdir = "subdir with spaces"
+        fname = "text utf8.txt"
 
         text = """бла-бла-бла
 (:include Attach:"{}/{}" :)""".format(subdir, fname)
@@ -309,8 +325,8 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         self.assertEqual(result, result_right, result)
 
     def test_subdir_with_spaces_back_slash(self):
-        subdir = 'subdir with spaces'
-        fname = 'text utf8.txt'
+        subdir = "subdir with spaces"
+        fname = "text utf8.txt"
 
         text = """бла-бла-бла
 (:include Attach:"{}\\{}" :)""".format(subdir, fname)
@@ -376,8 +392,8 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         self.assertEqual(result, result_right, result)
 
     def test_images_subdir_forward_slash(self):
-        subdir = 'subdir'
-        fname = Path(self.filesPath, 'image.png')
+        subdir = "subdir"
+        fname = Path(self.filesPath, "image.png")
         attach = Attachment(self.testPage)
         attach.createSubdir(subdir)
         attach.attach([fname], subdir=subdir)
@@ -390,8 +406,8 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         self.assertEqual(result, result_right, result)
 
     def test_images_subdir_back_slash(self):
-        subdir = 'subdir'
-        fname = Path(self.filesPath, 'image.png')
+        subdir = "subdir"
+        fname = Path(self.filesPath, "image.png")
         attach = Attachment(self.testPage)
         attach.createSubdir(subdir)
         attach.attach([fname], subdir=subdir)

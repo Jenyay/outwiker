@@ -89,7 +89,11 @@ def test_right_border(calculator: TabsGeometryCalculator, theme: Theme):
 def test_two_rows(calculator: TabsGeometryCalculator, theme: Theme):
     tabs_count = 3
     text_height = 12
-    parent_width = 155 + calculator.horizontal_gap_after_tab + theme.get(Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE)
+    parent_width = (
+        155
+        + calculator.horizontal_gap_after_tab
+        + theme.get(Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE)
+    )
     parent_height = 10
     tabs: List[TabInfo] = []
     for _ in range(tabs_count):
@@ -104,8 +108,7 @@ def test_two_rows(calculator: TabsGeometryCalculator, theme: Theme):
     assert result[2].top > result[1].bottom
 
 
-def test_single_line_full_height(
-    calculator: TabsGeometryCalculator, theme: Theme):
+def test_single_line_full_height(calculator: TabsGeometryCalculator, theme: Theme):
     text_height = 12
     parent_width = (
         4 * theme.get(Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE)
@@ -120,8 +123,7 @@ def test_single_line_full_height(
     assert result[0].top == 0
 
 
-def test_single_line_bottom_align(
-    calculator: TabsGeometryCalculator, theme: Theme):
+def test_single_line_bottom_align(calculator: TabsGeometryCalculator, theme: Theme):
     text_height = 50
     parent_width = (
         4 * theme.get(Theme.SECTION_TABS, Theme.TABS_ADD_BUTTON_SIZE)

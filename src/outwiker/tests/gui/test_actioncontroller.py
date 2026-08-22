@@ -58,14 +58,13 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.initApplication()
 
         self.actionController = ActionController(
-            self.mainWindow, self.application.config, Theme())
-        self.application.config.remove_section(
-            self.actionController.configSection)
+            self.mainWindow, self.application.config, Theme()
+        )
+        self.application.config.remove_section(self.actionController.configSection)
         self.fileMenu = self.mainWindow.menuController[MENU_FILE]
 
     def tearDown(self):
-        self.application.config.remove_section(
-            self.actionController.configSection)
+        self.application.config.remove_section(self.actionController.configSection)
         self.destroyApplication()
 
     def testRegisterAction(self):
@@ -87,10 +86,8 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action1, hotkey1)
         self.actionController.register(action2, hotkey2)
 
-        self.assertEqual(self.actionController.getHotKey(action1.stringId),
-                         hotkey1)
-        self.assertEqual(self.actionController.getHotKey(action2.stringId),
-                         hotkey2)
+        self.assertEqual(self.actionController.getHotKey(action1.stringId), hotkey1)
+        self.assertEqual(self.actionController.getHotKey(action2.stringId), hotkey2)
 
     def testTitles(self):
         action1 = ExampleAction()
@@ -99,10 +96,12 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action1)
         self.actionController.register(action2)
 
-        self.assertEqual(self.actionController.getTitle(action1.stringId),
-                         action1.title)
-        self.assertEqual(self.actionController.getTitle(action2.stringId),
-                         action2.title)
+        self.assertEqual(
+            self.actionController.getTitle(action1.stringId), action1.title
+        )
+        self.assertEqual(
+            self.actionController.getTitle(action2.stringId), action2.title
+        )
 
     def testAppendMenu(self):
         action = ExampleAction()
@@ -128,9 +127,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.actionController.register(action)
         self.actionController.appendMenuItem(action.stringId, menu)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
         toolbar.Realize()
 
         self.assertEqual(len(self.actionController.getActionsStrId()), 1)
@@ -152,9 +149,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.actionController.register(action)
         self.actionController.appendMenuItem(action.stringId, menu)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
 
         menuItemId = self._getMenuItemId(action.stringId)
         toolItemId = self._getToolItemId(action.stringId)
@@ -201,9 +196,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.actionController.register(action)
         self.actionController.appendMenuItem(action.stringId, menu)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
         toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
@@ -219,9 +212,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         image = "testdata/images/save.png"
 
         self.actionController.register(action)
-        self.actionController.appendToolbarCheckButton(action.stringId,
-                                                       toolbar,
-                                                       image)
+        self.actionController.appendToolbarCheckButton(action.stringId, toolbar, image)
         toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
@@ -237,9 +228,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         image = "testdata/images/save.png"
 
         self.actionController.register(action)
-        self.actionController.appendToolbarCheckButton(action.stringId,
-                                                       toolbar,
-                                                       image)
+        self.actionController.appendToolbarCheckButton(action.stringId, toolbar, image)
 
         toolItemId = self._getToolItemId(action.stringId)
 
@@ -261,9 +250,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         image = "testdata/images/save.png"
 
         self.actionController.register(action)
-        self.actionController.appendToolbarCheckButton(action.stringId,
-                                                       toolbar,
-                                                       image)
+        self.actionController.appendToolbarCheckButton(action.stringId, toolbar, image)
         self.actionController.appendMenuCheckItem(action.stringId, menu)
 
         menuItem = self._getMenuItem(action.stringId)
@@ -290,9 +277,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         image = "testdata/images/save.png"
 
         self.actionController.register(action)
-        self.actionController.appendToolbarCheckButton(action.stringId,
-                                                       toolbar,
-                                                       image)
+        self.actionController.appendToolbarCheckButton(action.stringId, toolbar, image)
         self.actionController.appendMenuCheckItem(action.stringId, menu)
 
         menuItem = self._getMenuItem(action.stringId)
@@ -333,9 +318,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         image = "testdata/images/save.png"
 
         self.actionController.register(action)
-        self.actionController.appendToolbarCheckButton(action.stringId,
-                                                       toolbar,
-                                                       image)
+        self.actionController.appendToolbarCheckButton(action.stringId, toolbar, image)
 
         self.actionController.appendMenuCheckItem(action.stringId, menu)
         self.actionController.removeMenuItem(action.stringId)
@@ -359,9 +342,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         image = "testdata/images/save.png"
 
         self.actionController.register(action)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
         toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
@@ -379,9 +360,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.actionController.register(action)
         self.actionController.appendMenuItem(action.stringId, menu)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
 
         menuItemId = self._getMenuItemId(action.stringId)
 
@@ -399,9 +378,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         image = "testdata/images/save.png"
 
         self.actionController.register(action)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
 
         toolItemId = self._getToolItemId(action.stringId)
 
@@ -421,9 +398,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.actionController.register(action)
         self.actionController.appendMenuItem(action.stringId, menu)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
         toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
@@ -460,9 +435,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         image = "testdata/images/save.png"
 
         self.actionController.register(action)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
         toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
@@ -482,9 +455,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.actionController.register(action)
         self.actionController.appendMenuItem(action.stringId, menu)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
         toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
@@ -502,8 +473,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         hotkey = HotKey("T", ctrl=True)
 
         self.actionController.register(action, hotkey=hotkey)
-        self.assertEqual(self.actionController.getHotKey(action.stringId),
-                         hotkey)
+        self.assertEqual(self.actionController.getHotKey(action.stringId), hotkey)
 
         self.actionController.appendMenuItem(action.stringId, menu)
 
@@ -516,16 +486,14 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         image = "testdata/images/save.png"
 
         self.actionController.register(action, hotkey=hotkey)
-        self.assertEqual(self.actionController.getHotKey(action.stringId),
-                         hotkey)
+        self.assertEqual(self.actionController.getHotKey(action.stringId), hotkey)
 
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
 
-        self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
-                         "{0} ({1})".format(action.title,
-                                            HotKeyParser.toString(hotkey)))
+        self.assertEqual(
+            self._getToolItemLabel(toolbar, action.stringId),
+            "{0} ({1})".format(action.title, HotKeyParser.toString(hotkey)),
+        )
 
     def testDisableTools(self):
         action = ExampleAction()
@@ -535,9 +503,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.actionController.register(action, hotkey=hotkey)
 
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
 
         toolid = self._getToolItemId(action.stringId)
 
@@ -574,9 +540,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action, hotkey=hotkey)
 
         self.actionController.appendMenuItem(action.stringId, menu)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
 
         menuItemId = self._getMenuItemId(action.stringId)
         toolid = self._getToolItemId(action.stringId)
@@ -603,33 +567,31 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action1)
         self.actionController.register(action2)
 
-        self.assertEqual(self.actionController.getAction(action1.stringId),
-                         action1)
-        self.assertEqual(self.actionController.getAction(action2.stringId),
-                         action2)
+        self.assertEqual(self.actionController.getAction(action1.stringId), action1)
+        self.assertEqual(self.actionController.getAction(action2.stringId), action2)
 
     def testGetActions2(self):
         action1 = ExampleAction()
         action2 = ExampleCheckAction()
         self.actionController.register(action1)
 
-        self.assertRaises(KeyError, self.actionController.getAction,
-                          action2.stringId)
+        self.assertRaises(KeyError, self.actionController.getAction, action2.stringId)
 
     def testHotKeyLoadConfig(self):
         action = ExampleAction()
         hotKeyFromConfig = HotKey("F11")
-        HotKeyOption(self.application.config,
-                     self.actionController.configSection,
-                     action.stringId, None).value = hotKeyFromConfig
+        HotKeyOption(
+            self.application.config,
+            self.actionController.configSection,
+            action.stringId,
+            None,
+        ).value = hotKeyFromConfig
 
         self.actionController.register(action, HotKey("F12", ctrl=True))
 
-        self.assertEqual(self.actionController.getHotKey(action.stringId).key,
-                         "F11")
+        self.assertEqual(self.actionController.getHotKey(action.stringId).key, "F11")
         self.assertFalse(self.actionController.getHotKey(action.stringId).ctrl)
-        self.assertFalse(
-            self.actionController.getHotKey(action.stringId).shift)
+        self.assertFalse(self.actionController.getHotKey(action.stringId).shift)
         self.assertFalse(self.actionController.getHotKey(action.stringId).alt)
 
     def testHotKeySaveConfig1(self):
@@ -639,16 +601,14 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController(self.mainWindow,
-                                                 self.application.config,
-                                                 Theme())
+        otherActionController = ActionController(
+            self.mainWindow, self.application.config, Theme()
+        )
         otherActionController.register(action)
 
-        self.assertEqual(otherActionController.getHotKey(action.stringId).key,
-                         "F11")
+        self.assertEqual(otherActionController.getHotKey(action.stringId).key, "F11")
         self.assertTrue(otherActionController.getHotKey(action.stringId).ctrl)
-        self.assertFalse(
-            otherActionController.getHotKey(action.stringId).shift)
+        self.assertFalse(otherActionController.getHotKey(action.stringId).shift)
         self.assertFalse(otherActionController.getHotKey(action.stringId).alt)
 
     def testHotKeySaveConfig2(self):
@@ -658,16 +618,14 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController(self.mainWindow,
-                                                 self.application.config,
-                                                 Theme())
+        otherActionController = ActionController(
+            self.mainWindow, self.application.config, Theme()
+        )
         otherActionController.register(action, HotKey("F1", shift=True))
 
-        self.assertEqual(otherActionController.getHotKey(action.stringId).key,
-                         "F11")
+        self.assertEqual(otherActionController.getHotKey(action.stringId).key, "F11")
         self.assertTrue(otherActionController.getHotKey(action.stringId).ctrl)
-        self.assertFalse(
-            otherActionController.getHotKey(action.stringId).shift)
+        self.assertFalse(otherActionController.getHotKey(action.stringId).shift)
         self.assertFalse(otherActionController.getHotKey(action.stringId).alt)
 
     def testHotKeySaveConfig3(self):
@@ -676,9 +634,9 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController(self.mainWindow,
-                                                 self.application.config,
-                                                 Theme())
+        otherActionController = ActionController(
+            self.mainWindow, self.application.config, Theme()
+        )
         otherActionController.register(action)
 
         self.assertIsNone(otherActionController.getHotKey(action.stringId))
@@ -689,8 +647,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         hotkey = HotKey("F11", ctrl=True)
         self.actionController.changeHotkeys([(action.stringId, hotkey)])
-        self.assertEqual(self.actionController.getHotKey(action.stringId),
-                         hotkey)
+        self.assertEqual(self.actionController.getHotKey(action.stringId), hotkey)
 
     def testChangeHotkeyGui(self):
         menu = self.fileMenu
@@ -703,17 +660,19 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action, None)
 
         self.actionController.appendMenuItem(action.stringId, menu)
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
 
         self.actionController.changeHotkeys([(action.stringId, hotkey)])
 
-        self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
-                         "{} ({})".format(action.title, "Ctrl+F11"))
+        self.assertEqual(
+            self._getToolItemLabel(toolbar, action.stringId),
+            "{} ({})".format(action.title, "Ctrl+F11"),
+        )
 
-        self.assertEqual(self._getMenuItem(action.stringId).GetItemLabel(),
-                         "{}\t{}".format(action.title, "Ctrl+F11"))
+        self.assertEqual(
+            self._getMenuItem(action.stringId).GetItemLabel(),
+            "{}\t{}".format(action.title, "Ctrl+F11"),
+        )
 
     def testChangeHotkeyGuiMenu(self):
         menu = self.fileMenu
@@ -727,8 +686,10 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.actionController.changeHotkeys([(action.stringId, hotkey)])
 
-        self.assertEqual(self._getMenuItem(action.stringId).GetItemLabel(),
-                         "{}\t{}".format(action.title, "Ctrl+F11"))
+        self.assertEqual(
+            self._getMenuItem(action.stringId).GetItemLabel(),
+            "{}\t{}".format(action.title, "Ctrl+F11"),
+        )
 
     def testChangeHotkeyToolbar(self):
         toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
@@ -739,14 +700,14 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         action = ExampleAction()
         self.actionController.register(action, None)
 
-        self.actionController.appendToolbarButton(action.stringId,
-                                                  toolbar,
-                                                  image)
+        self.actionController.appendToolbarButton(action.stringId, toolbar, image)
 
         self.actionController.changeHotkeys([(action.stringId, hotkey)])
 
-        self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
-                         "{} ({})".format(action.title, "Ctrl+F11"))
+        self.assertEqual(
+            self._getToolItemLabel(toolbar, action.stringId),
+            "{} ({})".format(action.title, "Ctrl+F11"),
+        )
 
     def testChangeHotkeyGuiChecked1(self):
         menu = self.fileMenu
@@ -759,17 +720,19 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action, None)
 
         self.actionController.appendMenuCheckItem(action.stringId, menu)
-        self.actionController.appendToolbarCheckButton(action.stringId,
-                                                       toolbar,
-                                                       image)
+        self.actionController.appendToolbarCheckButton(action.stringId, toolbar, image)
 
         self.actionController.changeHotkeys([(action.stringId, hotkey)])
 
-        self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
-                         "{} ({})".format(action.title, "Ctrl+F11"))
+        self.assertEqual(
+            self._getToolItemLabel(toolbar, action.stringId),
+            "{} ({})".format(action.title, "Ctrl+F11"),
+        )
 
-        self.assertEqual(self._getMenuItem(action.stringId).GetItemLabel(),
-                         "{}\t{}".format(action.title, "Ctrl+F11"))
+        self.assertEqual(
+            self._getMenuItem(action.stringId).GetItemLabel(),
+            "{}\t{}".format(action.title, "Ctrl+F11"),
+        )
 
     def testChangeHotkeyGuiChecked2(self):
         menu = self.fileMenu
@@ -782,9 +745,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action, None)
 
         self.actionController.appendMenuCheckItem(action.stringId, menu)
-        self.actionController.appendToolbarCheckButton(action.stringId,
-                                                       toolbar,
-                                                       image)
+        self.actionController.appendToolbarCheckButton(action.stringId, toolbar, image)
 
         menuItem = self._getMenuItem(action.stringId)
         toolItem = self._getToolItem(toolbar, action.stringId)
@@ -805,8 +766,9 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         menuItem = menu.FindItemById(menuItemId)
 
         if hotkey is not None:
-            self.assertEqual(menuItem.GetItemLabel(),
-                             title + "\t" + HotKeyParser.toString(hotkey))
+            self.assertEqual(
+                menuItem.GetItemLabel(), title + "\t" + HotKeyParser.toString(hotkey)
+            )
         else:
             self.assertEqual(menuItem.GetItemLabel(), title)
 
