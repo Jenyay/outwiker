@@ -4,6 +4,7 @@ from abc import abstractmethod
 import json
 import logging
 import os
+from typing import Optional
 import urllib.parse
 import wx.html2
 
@@ -36,7 +37,8 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
     def __init__(self, parent, application):
         super().__init__(parent, application)
         self._basepath = None
-        self.canOpenUrl = set()
+        self.canOpenUrl: Optional[str] = None
+        self._current_href: Optional[str] = None
         self._navigate_id = 1
         self._history_href = []
 
@@ -131,7 +133,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         if anchor:
             path += anchor
 
-        self.canOpenUrl.add(path)
+        self.canOpenUrl = path
         self.render.SetPage(htmltext, path)
 
     def Sleep(self):
@@ -140,7 +142,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
 
     def Awake(self):
-        self.canOpenUrl = set()
+        self.canOpenUrl = None
         self._navigate_id = 1
 
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
@@ -200,7 +202,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
             return
 
         # Link clicked
-        if href_decoded not in self.canOpenUrl:
+        if self.canOpenUrl is None:
             # Disable the Back button
             # if len(self._history_href) >= 2 and href_decoded == self._history_href[-2]:
             #     logger.debug('_onNavigating ({nav_id}). Cancel return back.'.format(nav_id=nav_id))
@@ -208,18 +210,22 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
             #     return
 
             logger.debug("_onNavigating (%s). Link clicked.", nav_id)
-            processed = self._onLinkClicked(href_decoded)
+            processed = (self._current_href != href_decoded) and self._onLinkClicked(href_decoded)
             if processed:
                 event.Veto()
                 logger.debug("_onNavigating (%s) end. Veto", nav_id)
             else:
+                self._current_href = href_decoded
                 logger.debug(
                     "_onNavigating (%s) end. Allow href processing. href=%s",
                     nav_id,
                     href,
                 )
         else:
-            self.canOpenUrl.remove(href_decoded)
+            if self.canOpenUrl != href_decoded:
+                event.Veto()
+            self.canOpenUrl = None
+            self._current_href = href_decoded
             logger.debug(
                 "_onNavigating (%s) end. canOpenUrl=%s", nav_id, self.canOpenUrl
             )
@@ -254,7 +260,7 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
             anchor = self._application.sharedData[APP_DATA_KEY_ANCHOR]
             del self._application.sharedData[APP_DATA_KEY_ANCHOR]
 
-        self.canOpenUrl.add(fname)
+        self.canOpenUrl = fname
         if anchor is not None:
             fname += anchor
 
@@ -361,7 +367,7 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
             html = readTextFile(fname)
         except IOError:
             text = _("Can't read file %s") % (fname)
-            self.canOpenUrl.add(fname)
+            self.canOpenUrl = fname
             self.SetPage(text, os.path.dirname(fname))
 
         basepath = os.path.dirname(fname)
