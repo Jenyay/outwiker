@@ -39,25 +39,37 @@ class TagsPanel(BasePrefPanel):
         modeSizer.AddGrowableCol(0)
 
         modeLabel = wx.StaticText(self, label=_("Tag cloud display mode"))
-        self._modeList = wx.ComboBox(self, choices=[_("Continuous text"), _("List")], style=wx.CB_READONLY)
+        self._modeList = wx.ComboBox(
+            self, choices=[_("Continuous text"), _("List")], style=wx.CB_READONLY
+        )
         self._modeList.SetMinSize((200, -1))
 
-        modeSizer.Add(modeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND| wx.ALL, border=2)
-        modeSizer.Add(self._modeList, flag=wx.ALIGN_RIGHT | wx.EXPAND| wx.ALL, border=2)
+        modeSizer.Add(
+            modeLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL, border=2
+        )
+        modeSizer.Add(
+            self._modeList, flag=wx.ALIGN_RIGHT | wx.EXPAND | wx.ALL, border=2
+        )
         mainsizer.Add(modeSizer, 0, wx.EXPAND | wx.ALL, border=2)
 
     def _createFontGui(self, mainsizer):
         fontSizer = wx.FlexGridSizer(cols=2)
         fontSizer.AddGrowableCol(0)
 
-        self._minFontSizeCtrl = self._createLabelAndSpin(_("Minimum font size"), 4, 32, fontSizer)[1]
-        self._maxFontSizeCtrl = self._createLabelAndSpin(_("Maximum font size"), 4, 32, fontSizer)[1]
+        self._minFontSizeCtrl = self._createLabelAndSpin(
+            _("Minimum font size"), 4, 32, fontSizer
+        )[1]
+        self._maxFontSizeCtrl = self._createLabelAndSpin(
+            _("Maximum font size"), 4, 32, fontSizer
+        )[1]
 
         mainsizer.Add(fontSizer, 0, wx.EXPAND | wx.ALL, border=2)
 
     def _createTooltipsGui(self, mainsizer):
         self._enableTooltips = wx.CheckBox(self, label=_("Show tooltips"))
-        mainsizer.Add(self._enableTooltips, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
+        mainsizer.Add(
+            self._enableTooltips, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2
+        )
 
     def _fillHeaders(self):
         factory = ColumnsFactory()
@@ -92,7 +104,9 @@ class TagsPanel(BasePrefPanel):
         self._fillHeaders()
         self._minFontSizeCtrl.SetValue(self._config.minFontSize.value)
         self._maxFontSizeCtrl.SetValue(self._config.maxFontSize.value)
-        self._modeList.SetSelection(1 if self._config.tagsCloudMode.value == TAGS_CLOUD_MODE_LIST else 0)
+        self._modeList.SetSelection(
+            1 if self._config.tagsCloudMode.value == TAGS_CLOUD_MODE_LIST else 0
+        )
         self._enableTooltips.SetValue(self._config.enableTooltips.value)
 
     def Save(self):

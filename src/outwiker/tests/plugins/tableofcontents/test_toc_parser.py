@@ -39,7 +39,7 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''  !! Абырвалг'''
+        text = """  !! Абырвалг"""
 
         contents = parser.parse(text)
 
@@ -50,7 +50,7 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''!! Абырвалг'''
+        text = """!! Абырвалг"""
 
         contents = parser.parse(text)
 
@@ -64,7 +64,7 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''!!    Абырвалг    '''
+        text = """!!    Абырвалг    """
 
         contents = parser.parse(text)
 
@@ -78,7 +78,7 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''!! Абырвалг 123'''
+        text = """!! Абырвалг 123"""
 
         contents = parser.parse(text)
 
@@ -92,13 +92,13 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''!! Абырвалг\\
- 123'''
+        text = """!! Абырвалг\\
+ 123"""
 
         contents = parser.parse(text)
 
         self.assertEqual(len(contents), 1)
-        self.assertEqual(contents[0].title, '''Абырвалг 123''')
+        self.assertEqual(contents[0].title, """Абырвалг 123""")
         self.assertEqual(contents[0].level, 1)
         self.assertEqual(contents[0].anchor, "")
 
@@ -107,8 +107,8 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''!! Абырвалг 123
-!!! Абырвалг 234'''
+        text = """!! Абырвалг 123
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -126,9 +126,9 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''!! Абырвалг 123
+        text = """!! Абырвалг 123
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -146,14 +146,14 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг 123
 
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -171,7 +171,7 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -182,7 +182,7 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -200,7 +200,7 @@ class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -214,7 +214,7 @@ asdf
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -232,7 +232,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -246,7 +246,7 @@ asdf
 !!!! Еще один заголовок
 
 фывафыва
-'''
+"""
 
         contents = parser.parse(text)
 
@@ -257,7 +257,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! [[#якорь1]]Абырвалг 123
 
@@ -271,7 +271,7 @@ asdf
 !!!! Еще один заголовок
 
 фывафыва
-'''
+"""
 
         contents = parser.parse(text)
 
@@ -289,7 +289,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! [[# якорь1  ]]Абырвалг 123
 
@@ -303,7 +303,7 @@ asdf
 !!!! Еще один заголовок
 
 фывафыва
-'''
+"""
 
         contents = parser.parse(text)
 
@@ -321,7 +321,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [[#якорь1]]
 !! Абырвалг 123
@@ -337,7 +337,7 @@ asdf
 !!!! Еще один заголовок
 
 фывафыва
-'''
+"""
 
         contents = parser.parse(text)
 
@@ -355,7 +355,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [[#якорь1]]
 !! Абырвалг 123
@@ -371,7 +371,7 @@ asdf
 !!!! Еще один заголовок
 
 фывафыва
-'''
+"""
 
         contents = parser.parse(text)
 
@@ -389,7 +389,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг 123 [[#якорь1]]
 
@@ -403,7 +403,7 @@ asdf
 !!!! Еще один заголовок
 
 фывафыва
-'''
+"""
 
         contents = parser.parse(text)
 
@@ -421,7 +421,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг 123 [[#якорь1]]
 
@@ -435,7 +435,7 @@ asdf
 !!!! Еще один заголовок
 
 фывафыва
-'''
+"""
 
         contents = parser.parse(text)
 
@@ -453,7 +453,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг [=123=] [[#якорь1]]
 
@@ -467,7 +467,7 @@ asdf
 !!!! Еще один заголовок
 
 фывафыва
-'''
+"""
 
         contents = parser.parse(text)
 
@@ -485,7 +485,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -499,7 +499,7 @@ asdf
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -517,7 +517,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -531,7 +531,7 @@ asdfasdf   =]
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -549,7 +549,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [= asfsaf fasdg=]
 
@@ -565,7 +565,7 @@ asdfasdf   =]
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -583,7 +583,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [= asfsaf fasdg
 
@@ -592,7 +592,7 @@ asdfasdf   =]
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -610,7 +610,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
  asfsaf fasdg
 
@@ -621,7 +621,7 @@ asdfasdf   =]
 
 !!! Абырвалг 234
 
-=]'''
+=]"""
 
         contents = parser.parse(text)
 
@@ -639,7 +639,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 =]
  asfsaf fasdg
@@ -651,7 +651,7 @@ asdfasdf   =]
 
 !!! Абырвалг 234
 
-=]'''
+=]"""
 
         contents = parser.parse(text)
 
@@ -669,7 +669,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [[#якорь1_2]]
 !! [[#якорь1_1]] Абырвалг 123
@@ -685,7 +685,7 @@ asdfasdf   =]
 !!!! Еще один заголовок
 
 фывафыва
-'''
+"""
 
         contents = parser.parse(text)
 
@@ -703,7 +703,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -714,7 +714,7 @@ asdfasdf   =]
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 
@@ -732,7 +732,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = '''ывп ыфвп ваы
+        text = """ывп ыфвп ваы
 
 [=
 !! Это не заголовок
@@ -749,7 +749,7 @@ asdfasdf   =]
 ывапыва ывп выап
 выапывп ываап ывап
 
-!!! Абырвалг 234'''
+!!! Абырвалг 234"""
 
         contents = parser.parse(text)
 

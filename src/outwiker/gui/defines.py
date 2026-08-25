@@ -7,18 +7,18 @@ ID_MOUSE_RIGHT = 3
 ID_KEY_SHIFT = 1
 ID_KEY_CTRL = 4
 
-MENU_FILE = 'Menu_File'
-MENU_EDIT = 'Menu_Edit'
-MENU_TREE = 'Menu_Tree'
-MENU_TOOLS = 'Menu_Tools'
-MENU_BOOKMARKS = 'Menu_Bookmarks'
-MENU_VIEW = 'Menu_View'
-MENU_VIEW_GOTO = 'Menu_View_Goto'
-MENU_HELP = 'Menu_Help'
-MENU_TOOLBARS = 'Menu_Toolbars'
+MENU_FILE = "Menu_File"
+MENU_EDIT = "Menu_Edit"
+MENU_TREE = "Menu_Tree"
+MENU_TOOLS = "Menu_Tools"
+MENU_BOOKMARKS = "Menu_Bookmarks"
+MENU_VIEW = "Menu_View"
+MENU_VIEW_GOTO = "Menu_View_Goto"
+MENU_HELP = "Menu_Help"
+MENU_TOOLBARS = "Menu_Toolbars"
 
-TOOLBAR_GENERAL = 'General'
-TOOLBAR_PLUGINS = 'Plugins'
+TOOLBAR_GENERAL = "General"
+TOOLBAR_PLUGINS = "Plugins"
 
 # Period for check changes in the attach folder (in ms)
 ATTACH_CHECK_PERIOD = 300
@@ -34,13 +34,13 @@ CLOSE_BUTTON_ACTION_CLOSE = 0
 CLOSE_BUTTON_ACTION_MINIMIZE = 1
 CLOSE_BUTTON_ACTION_HIDE_TO_TRAY = 2
 
-STATUSBAR_MESSAGE_ITEM = 'MESSAGE'
-STATUSBAR_PAGE_DATETIME_ITEM = 'PAGE_DATETIME'
+STATUSBAR_MESSAGE_ITEM = "MESSAGE"
+STATUSBAR_PAGE_DATETIME_ITEM = "PAGE_DATETIME"
 
-ATTACH_ACTIONS_AREA = 'attach_panel'
+ATTACH_ACTIONS_AREA = "attach_panel"
 
-TAGS_CLOUD_MODE_CONTINUOUS = 'cont'
-TAGS_CLOUD_MODE_LIST = 'list'
+TAGS_CLOUD_MODE_CONTINUOUS = "cont"
+TAGS_CLOUD_MODE_LIST = "list"
 
 # Preferences panels tags
 PREF_PANEL_INTERFACE = "interface_panel"

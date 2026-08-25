@@ -12,7 +12,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 from outwiker.tests.utils import removeDir
 
 
-class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
+class WebPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """WebPage plugin tests"""
 
     def setUp(self):
@@ -20,7 +20,8 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.dirlist = ["plugins/webpage"]
         self.path = mkdtemp(
-            prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
+            prefix="OutWiker_Абырвалг абырвалг_" + str(self.__class__.__name__)
+        )
 
         self.loader = PluginsLoader(self.application)
         self.loader.load(self.dirlist)
@@ -45,17 +46,20 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(test_page.getTypeString(), factory.getPageTypeString())
 
         self.assertEqual(
-            type(FactorySelector.getFactory(test_page.getTypeString())),
-            WebPageFactory)
+            type(FactorySelector.getFactory(test_page.getTypeString())), WebPageFactory
+        )
 
         self.loader.clear()
-        self.assertEqual(type(FactorySelector.getFactory(test_page.getTypeString())),
-                         UnknownPageTypeFactory)
+        self.assertEqual(
+            type(FactorySelector.getFactory(test_page.getTypeString())),
+            UnknownPageTypeFactory,
+        )
 
         self.loader.load(self.dirlist)
 
-        self.assertEqual(type(FactorySelector.getFactory(test_page.getTypeString())),
-                         WebPageFactory)
+        self.assertEqual(
+            type(FactorySelector.getFactory(test_page.getTypeString())), WebPageFactory
+        )
 
     def testClear_01(self):
         from webpage.webnotepage import WebPageFactory

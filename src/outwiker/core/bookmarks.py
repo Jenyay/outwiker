@@ -13,6 +13,7 @@ class Bookmarks:
     """
     Class that stores favorite pages within the wiki
     """
+
     CONFIG_SECTION = "Bookmarks"
     CONFIG_OPTION = "bookmark_"
 
@@ -34,7 +35,9 @@ class Bookmarks:
         self._config = None
 
         if self._wikiroot is not None:
-            self._config = StringListSection(self._wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION)
+            self._config = StringListSection(
+                self._wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION
+            )
             self._pages = self._config.value
 
     def pageRenamed(self, page, oldSubpath):

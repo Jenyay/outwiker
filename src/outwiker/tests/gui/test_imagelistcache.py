@@ -9,7 +9,7 @@ def test_empty():
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = 'testdata/images/new.png'
+    defaultImage = "testdata/images/new.png"
     cache = ImageListCache(defaultImage, 16, 16)
 
     imageList = cache.getImageList()
@@ -18,16 +18,16 @@ def test_empty():
 
 
 def test_single():
-    '''
+    """
     Add single image to empty ImageList
-    '''
+    """
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = 'testdata/images/new.png'
+    defaultImage = "testdata/images/new.png"
     cache = ImageListCache(defaultImage, 16, 16)
 
-    index = cache.add('testdata/images/16x16.png')
+    index = cache.add("testdata/images/16x16.png")
 
     imageList = cache.getImageList()
     assert index == 1
@@ -35,16 +35,16 @@ def test_single():
 
 
 def test_error_not_exists():
-    '''
+    """
     Try add file which not exists
-    '''
+    """
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = 'testdata/images/new.png'
+    defaultImage = "testdata/images/new.png"
     cache = ImageListCache(defaultImage, 16, 16)
 
-    index = cache.add('testdata/images/not_exists.png')
+    index = cache.add("testdata/images/not_exists.png")
 
     imageList = cache.getImageList()
     assert index == 0
@@ -52,16 +52,16 @@ def test_error_not_exists():
 
 
 def test_error_invalid_file():
-    '''
+    """
     Try add invalid file (not image)
-    '''
+    """
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = 'testdata/images/new.png'
+    defaultImage = "testdata/images/new.png"
     cache = ImageListCache(defaultImage, 16, 16)
 
-    index = cache.add('testdata/images/invalid.png')
+    index = cache.add("testdata/images/invalid.png")
 
     imageList = cache.getImageList()
     assert index == 0
@@ -69,17 +69,17 @@ def test_error_invalid_file():
 
 
 def test_duplicate():
-    '''
+    """
     Add duplicate image to empty ImageList
-    '''
+    """
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = 'testdata/images/new.png'
+    defaultImage = "testdata/images/new.png"
     cache = ImageListCache(defaultImage, 16, 16)
 
-    cache.add('testdata/images/16x16.png')
-    index = cache.add('testdata/images/16x16.png')
+    cache.add("testdata/images/16x16.png")
+    index = cache.add("testdata/images/16x16.png")
 
     imageList = cache.getImageList()
     assert index == 1

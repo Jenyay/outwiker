@@ -59,7 +59,8 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_change_uid_01(self):
         from hackpage.utils import changeUidWithDialog
-        uid = 'dsfsfsfssg'
+
+        uid = "dsfsfsfssg"
 
         Tester.dialogTester.append(self._setValue, uid)
 
@@ -72,7 +73,8 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_change_uid_02(self):
         from hackpage.utils import changeUidWithDialog
-        uid = '     dsfsfsfssg      '
+
+        uid = "     dsfsfsfssg      "
 
         Tester.dialogTester.append(self._setValue, uid)
 
@@ -85,9 +87,10 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_uid_validate_simple(self):
         from hackpage.validators import ChangeUidValidator
+
         Tester.dialogTester.appendOk()
 
-        uid = 'dofiads7f89qwhrj'
+        uid = "dofiads7f89qwhrj"
         uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
@@ -95,9 +98,10 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_uid_validate_underline(self):
         from hackpage.validators import ChangeUidValidator
+
         Tester.dialogTester.appendOk()
 
-        uid = '__dofiads7f89qwhrj__'
+        uid = "__dofiads7f89qwhrj__"
         uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
@@ -105,9 +109,10 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_uid_validate_russian(self):
         from hackpage.validators import ChangeUidValidator
+
         Tester.dialogTester.appendOk()
 
-        uid = 'ывдратфыщшатф4е6'
+        uid = "ывдратфыщшатф4е6"
         uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
@@ -115,9 +120,10 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_uid_validate_error_spaces(self):
         from hackpage.validators import ChangeUidValidator
+
         Tester.dialogTester.appendOk()
 
-        uid = 'dsfsf sfssgs'
+        uid = "dsfsf sfssgs"
         uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertFalse(uidvalidator(uid))
@@ -125,6 +131,7 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_uid_validate_error_duplicate(self):
         from hackpage.validators import ChangeUidValidator
+
         Tester.dialogTester.appendOk()
 
         uid = self.testPage2.getUid(generate=True)
@@ -135,9 +142,10 @@ class HackPage_ChangePageUidTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_uid_validate_spaces_begin_end(self):
         from hackpage.validators import ChangeUidValidator
+
         Tester.dialogTester.appendOk()
 
-        uid = '  dsfsfsfssgs  '
+        uid = "  dsfsfsfssgs  "
         uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))

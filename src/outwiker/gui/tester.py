@@ -7,6 +7,7 @@ class DialogTester:
     """
     Класс, используемый для тестирования GUI (диалогов)
     """
+
     def __init__(self):
         # Список кортежей: (функция, *args, **kwargs),
         # Функции нужно вызывать при попытке вызова
@@ -18,11 +19,11 @@ class DialogTester:
         self._dialogActions = []
 
     def append(self, func, *args, **kwargs):
-        '''
+        """
         Append function to queue.
         Function signature:
             def func(dialog, *args, **kwags):
-        '''
+        """
         self._dialogActions.append((func, args, kwargs))
 
     def clear(self):

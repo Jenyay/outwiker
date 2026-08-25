@@ -12,9 +12,13 @@ class Treebook2(wx.SplitterWindow):
         super().__init__(parent)
         self._theme = theme
 
-        self._icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        self._icon_size = self._theme.get(
+            Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE
+        )
         self._default_icon = defaultIcon
-        self._iconsCache = ImageListCache(self._default_icon, self._icon_size, self._icon_size)
+        self._iconsCache = ImageListCache(
+            self._default_icon, self._icon_size, self._icon_size
+        )
 
         self._current_page: Optional[wx.Panel] = None
         self._default_leftSize = 300

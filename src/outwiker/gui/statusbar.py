@@ -18,9 +18,7 @@ class StatusBarItemInfo:
 
 
 class StatusBarController:
-    def __init__(self,
-                 statusbar: wx.StatusBar,
-                 application: Application):
+    def __init__(self, statusbar: wx.StatusBar, application: Application):
         self._statusbar = statusbar
         self._application = application
         self._mainWindowConfig = MainWindowConfig(self._application.config)
@@ -29,7 +27,9 @@ class StatusBarController:
         self.addItem(STATUSBAR_MESSAGE_ITEM)
         self._bindEvents()
 
-    def addItem(self, name: str, width: int = -1, position: Optional[int] = None) -> None:
+    def addItem(
+        self, name: str, width: int = -1, position: Optional[int] = None
+    ) -> None:
         if position:
             item = StatusBarItemInfo(name, position, width)
             self._statusbar_items.insert(position, item)

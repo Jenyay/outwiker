@@ -4,8 +4,9 @@ from wx.svg import SVGimage
 from outwiker.core.exceptions import InvalidImageFormat
 from outwiker.core.images import isSVG, isImage
 
+
 def readSVG(fname: str, width: int, height: int) -> wx.Bitmap:
-    with open(fname, 'rb') as fp:
+    with open(fname, "rb") as fp:
         data = fp.read()
         svg = SVGimage.CreateFromBytes(data)
     return svg.ConvertToScaledBitmap((width, height))
@@ -40,9 +41,11 @@ def resizeBitmap(bitmap: wx.Bitmap, width: int, height: int):
 
     max_scale = max(scale_x, scale_y)
     image_new = bitmap.ConvertToImage()
-    image_new.Rescale(int(size_src[0] / max_scale),
-                      int(size_src[1] / max_scale),
-                      wx.IMAGE_QUALITY_HIGH)
+    image_new.Rescale(
+        int(size_src[0] / max_scale),
+        int(size_src[1] / max_scale),
+        wx.IMAGE_QUALITY_HIGH,
+    )
 
     size_new = image_new.GetSize()
     result_image = bitmap_new.ConvertToImage()

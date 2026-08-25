@@ -32,7 +32,9 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def _getChildrenCountRecursive(self, item: NotesTreeItem) -> int:
         return len(self._getChildrenRecursive(item))
 
-    def _addChildrenToList(self, item: NotesTreeItem, children: List[NotesTreeItem]) -> None:
+    def _addChildrenToList(
+        self, item: NotesTreeItem, children: List[NotesTreeItem]
+    ) -> None:
         children += item.getChildren()
         for child in item.getChildren():
             self._addChildrenToList(child, children)
@@ -46,24 +48,36 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
+        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(
-            self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
-        factory.create(
-            self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", [])
+            self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", []
+        )
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
-        factory.create(
-            self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
+        factory.create(self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
 
         self.application.wikiroot = self.wikiroot
         tree = self._getTreeCtrl()
 
         self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 1"]), None)
         self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2"]), None)
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3"]), None
+        )
+        self.assertEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None
+        )
+        self.assertEqual(
+            tree.getTreeItem(
+                self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+            ),
+            None,
+        )
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 1/Страница 5"]), None
+        )
+        self.assertEqual(
+            tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None
+        )
 
     def testExpand(self):
         factory = TextPageFactory()
@@ -71,7 +85,9 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
         factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", [])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", []
+        )
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
         factory.create(self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
 
@@ -79,28 +95,53 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         tree = self._getTreeCtrl()
 
         # Разворот 1
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 1/Страница 5"]), None
+        )
+        self.assertEqual(
+            tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None
+        )
 
         tree.expand(self.wikiroot["Страница 1"])
         wx.SafeYield()
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None
+        )
 
         # Разворот 2
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+        self.assertEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None
+        )
+        self.assertEqual(
+            tree.getTreeItem(
+                self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+            ),
+            None,
+        )
 
         tree.expand(self.wikiroot["Страница 2"])
         wx.SafeYield()
 
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None
+        )
+        self.assertEqual(
+            tree.getTreeItem(
+                self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+            ),
+            None,
+        )
 
         # Разворот 3
         tree.expand(self.wikiroot["Страница 2/Страница 3"])
         wx.SafeYield()
 
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(
+                self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+            ),
+            None,
+        )
 
     def testExpandReadOnly(self):
         factory = TextPageFactory()
@@ -108,7 +149,9 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
         factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", [])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", []
+        )
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
         factory.create(self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
 
@@ -118,28 +161,53 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         tree = self._getTreeCtrl()
 
         # Разворот 1
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 1/Страница 5"]), None
+        )
+        self.assertEqual(
+            tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None
+        )
 
         tree.expand(self.wikiroot["Страница 1"])
         wx.SafeYield()
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 1/Страница 5/Страница 7"]), None
+        )
 
         # Разворот 2
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+        self.assertEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None
+        )
+        self.assertEqual(
+            tree.getTreeItem(
+                self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+            ),
+            None,
+        )
 
         tree.expand(self.wikiroot["Страница 2"])
         wx.SafeYield()
 
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None
+        )
+        self.assertEqual(
+            tree.getTreeItem(
+                self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+            ),
+            None,
+        )
 
         # Разворот 3
         tree.expand(self.wikiroot["Страница 2/Страница 3"])
         wx.SafeYield()
 
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(
+                self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+            ),
+            None,
+        )
 
     def testSelectCollapsed(self):
         factory = TextPageFactory()
@@ -147,22 +215,44 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
         factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", [])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", []
+        )
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
         factory.create(self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
 
         self.application.wikiroot = self.wikiroot
         tree = self._getTreeCtrl()
 
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
-        self.assertEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3"]), None)
+        self.assertEqual(
+            tree.getTreeItem(
+                self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+            ),
+            None,
+        )
+        self.assertEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None
+        )
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3"]), None
+        )
 
-        self.application.selectedPage = self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+        self.application.selectedPage = self.wikiroot[
+            "Страница 2/Страница 3/Страница 4/Страница 6"
+        ]
 
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3"]), None)
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None)
-        self.assertNotEqual(tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]), None)
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3"]), None
+        )
+        self.assertNotEqual(
+            tree.getTreeItem(self.wikiroot["Страница 2/Страница 3/Страница 4"]), None
+        )
+        self.assertNotEqual(
+            tree.getTreeItem(
+                self.wikiroot["Страница 2/Страница 3/Страница 4/Страница 6"]
+            ),
+            None,
+        )
 
     def testTreeLoadingEmpty(self):
         tree = self._getTreeCtrl()
@@ -170,8 +260,7 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
 
         rootitem = tree.getRootItem(0)
-        self.assertEqual(rootitem.getTitle(),
-                          os.path.basename(self.wikiroot.path))
+        self.assertEqual(rootitem.getTitle(), os.path.basename(self.wikiroot.path))
         self.assertEqual(rootitem.getChildrenCount(), 0)
         self.assertEqual(rootitem.getPage(), self.wikiroot)
 
@@ -353,7 +442,9 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         rootitem = tree.getRootItem(0)
         newPageItem = rootitem.getChildren()[1]
 
-        self.assertEqual(newPageItem.getPage(), self.wikiroot["Переименованная страница"])
+        self.assertEqual(
+            newPageItem.getPage(), self.wikiroot["Переименованная страница"]
+        )
         self.assertEqual(newPageItem.getTitle(), "Переименованная страница")
         self.assertEqual(newPageItem.getChildrenCount(), 1)
         self.assertEqual(self._getChildrenCountRecursive(newPageItem), 2)
@@ -363,7 +454,7 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         factory = TextPageFactory()
         page = factory.create(self.wikiroot, "Страница 1", [])
-        icon_name = 'testdata/images/invalid.png'
+        icon_name = "testdata/images/invalid.png"
         assert os.path.exists(icon_name)
 
         page.icon = icon_name

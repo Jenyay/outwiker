@@ -5,9 +5,7 @@ import os.path
 from tempfile import mkdtemp
 
 from outwiker.api.core.tree import createNotesTree, loadNotesTree
-from outwiker.core.search import (Searcher,
-                                  AllTagsSearchStrategy,
-                                  AnyTagSearchStrategy)
+from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.pages.search.searchpage import GlobalSearch, SearchPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 from outwiker.tests.utils import removeDir
@@ -19,51 +17,65 @@ class SearcherTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
         self.initApplication()
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "page 1", ["метка 1", "Метка 2"])
         factory.create(self.wikiroot, "Страница 2", ["Метка 1", "Метка 3"])
-        factory.create(self.wikiroot["Страница 2"],
-                       "Страница 3",
-                       ["Метка 2"])
-        factory.create(self.wikiroot["Страница 2/Страница 3"],
-                       "Страница 4",
-                       ["Метка 1"])
-        factory.create(self.wikiroot["page 1"],
-                       "page 5",
-                       ["Метка 1", "метка 2"])
+        factory.create(self.wikiroot["Страница 2"], "Страница 3", ["Метка 2"])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3"], "Страница 4", ["Метка 1"]
+        )
+        factory.create(self.wikiroot["page 1"], "page 5", ["Метка 1", "метка 2"])
 
-        self.wikiroot["page 1"].content = r"1  декабря.(Перечеркнуто, поправлено) 1 января 1925 г. Фотографирован \
+        self.wikiroot[
+            "page 1"
+        ].content = (
+            r"1  декабря.(Перечеркнуто, поправлено) 1 января 1925 г. Фотографирован \
             утром. Счастливо лает 'абыр', повторяя это слово громко и как бы радостно."
+        )
 
-        self.wikiroot["page 1/page 5"].content = r"Сегодня после того, как у него отвалился хвост, он  произнес совершенно\
+        self.wikiroot[
+            "page 1/page 5"
+        ].content = (
+            r"Сегодня после того, как у него отвалился хвост, он  произнес совершенно\
             отчетливо слово 'пивная'"
+        )
 
-        self.wikiroot["Страница 2"].content = r"30  Декабря. Выпадение  шерсти  приняло  характер  общего  облысения.\
+        self.wikiroot[
+            "Страница 2"
+        ].content = (
+            r"30  Декабря. Выпадение  шерсти  приняло  характер  общего  облысения.\
             Взвешивание  дало неожиданный  результат - 30 кг  за счет роста(удлинение)\
             костей. Пес по-прежнему лежит."
+        )
 
-        self.wikiroot["Страница 2/Страница 3"].content = r"29 Декабря. Внезапно обнаружено выпадение  шерсти на лбу  \
+        self.wikiroot[
+            "Страница 2/Страница 3"
+        ].content = r"29 Декабря. Внезапно обнаружено выпадение  шерсти на лбу  \
             и на боках туловища."
 
-        self.wikiroot["Страница 2/Страница 3/Страница 4"].content = r"2 Января. Фотографирован во время  улыбки при магнии. \
+        self.wikiroot[
+            "Страница 2/Страница 3/Страница 4"
+        ].content = r"2 Января. Фотографирован во время  улыбки при магнии. \
             Встал с постели и уверенно держался полчаса на задних лапах. Моего почти роста."
 
         filesPath = "testdata/samplefiles/"
-        self.files = ["accept.png",
-                      "add.png",
-                      "anchor.png",
-                      "файл с пробелами.tmp",
-                      "dir"]
-        self.fullFilesPath = [os.path.join(filesPath, fname)
-                              for fname in self.files]
+        self.files = [
+            "accept.png",
+            "add.png",
+            "anchor.png",
+            "файл с пробелами.tmp",
+            "dir",
+        ]
+        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
 
         Attachment(self.wikiroot["page 1"]).attach(self.fullFilesPath)
-        Attachment(self.wikiroot["Страница 2/Страница 3"]
-                   ).attach(self.fullFilesPath[0:3])
+        Attachment(self.wikiroot["Страница 2/Страница 3"]).attach(
+            self.fullFilesPath[0:3]
+        )
         Attachment(self.wikiroot["Страница 2"]).attach([self.fullFilesPath[0]])
 
     def testSearchContentAll(self):
@@ -279,37 +291,52 @@ class SearchPageTest(unittest.TestCase):
     """
     Тест на создание страниц с поиском
     """
+
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "page 1", ["Метка 1", "Метка 2"])
         factory.create(self.wikiroot, "Страница 2", ["Метка 1", "Метка 3"])
-        factory.create(self.wikiroot["Страница 2"],
-                       "Страница 3",
-                       ["Метка 2"])
-        factory.create(self.wikiroot["Страница 2/Страница 3"],
-                       "Страница 4",
-                       ["Метка 1"])
+        factory.create(self.wikiroot["Страница 2"], "Страница 3", ["Метка 2"])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3"], "Страница 4", ["Метка 1"]
+        )
         factory.create(self.wikiroot["page 1"], "page 5", ["Метка 4"])
 
-        self.wikiroot["page 1"].content = r"1  декабря.(Перечеркнуто, поправлено) 1 января 1925 г. Фотографирован \
+        self.wikiroot[
+            "page 1"
+        ].content = (
+            r"1  декабря.(Перечеркнуто, поправлено) 1 января 1925 г. Фотографирован \
             утром. Счастливо лает 'абыр', повторяя это слово громко и как бы радостно."
+        )
 
-        self.wikiroot["page 1/page 5"].content = r"Сегодня после того, как у него отвалился хвост, он  произнес совершенно\
+        self.wikiroot[
+            "page 1/page 5"
+        ].content = (
+            r"Сегодня после того, как у него отвалился хвост, он  произнес совершенно\
             отчетливо слово 'пивная'"
+        )
 
-        self.wikiroot["Страница 2"].content = r"30  Декабря. Выпадение  шерсти  приняло  характер  общего  облысения.\
+        self.wikiroot[
+            "Страница 2"
+        ].content = (
+            r"30  Декабря. Выпадение  шерсти  приняло  характер  общего  облысения.\
             Взвешивание  дало неожиданный  результат - 30 кг  за счет роста(удлинение)\
             костей. Пес по-прежнему лежит."
+        )
 
-        self.wikiroot["Страница 2/Страница 3"].content = r"29 Декабря. Внезапно обнаружено выпадение  шерсти на лбу  \
+        self.wikiroot[
+            "Страница 2/Страница 3"
+        ].content = r"29 Декабря. Внезапно обнаружено выпадение  шерсти на лбу  \
             и на боках туловища."
 
-        self.wikiroot["Страница 2/Страница 3/Страница 4"].content = r"2 Января. Фотографирован во время  улыбки при магнии. \
+        self.wikiroot[
+            "Страница 2/Страница 3/Страница 4"
+        ].content = r"2 Января. Фотографирован во время  улыбки при магнии. \
             Встал с постели и уверенно держался полчаса на задних лапах. Моего почти роста."
 
     def tearDown(self):
@@ -348,10 +375,12 @@ class SearchPageTest(unittest.TestCase):
         self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testCreateSearchAllPage(self):
-        page = GlobalSearch.create(self.wikiroot,
-                                   phrase="декабрь",
-                                   tags=["Метка 1", "Метка 2"],
-                                   strategy=AllTagsSearchStrategy)
+        page = GlobalSearch.create(
+            self.wikiroot,
+            phrase="декабрь",
+            tags=["Метка 1", "Метка 2"],
+            strategy=AllTagsSearchStrategy,
+        )
         self.assertNotEqual(page, None)
 
         page_adapter = SearchPageFactory().createPageAdapter(page)
@@ -363,10 +392,12 @@ class SearchPageTest(unittest.TestCase):
         self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testLoadSearchPage(self):
-        newpage = GlobalSearch.create(self.wikiroot,
-                                      phrase="декабрь",
-                                      tags=["Метка 1", "Метка 2"],
-                                      strategy=AllTagsSearchStrategy)
+        newpage = GlobalSearch.create(
+            self.wikiroot,
+            phrase="декабрь",
+            tags=["Метка 1", "Метка 2"],
+            strategy=AllTagsSearchStrategy,
+        )
         search_title = newpage.title
 
         wiki = loadNotesTree(self.path)
@@ -383,10 +414,12 @@ class SearchPageTest(unittest.TestCase):
     def testManySearchPages1(self):
         GlobalSearch.create(self.wikiroot)
 
-        new_page = GlobalSearch.create(self.wikiroot,
-                                       phrase="декабрь",
-                                       tags=["Метка 1", "Метка 2"],
-                                       strategy=AllTagsSearchStrategy)
+        new_page = GlobalSearch.create(
+            self.wikiroot,
+            phrase="декабрь",
+            tags=["Метка 1", "Метка 2"],
+            strategy=AllTagsSearchStrategy,
+        )
         search_title = new_page.title
 
         wiki = loadNotesTree(self.path)
@@ -402,15 +435,17 @@ class SearchPageTest(unittest.TestCase):
         self.assertEqual(page_adapter.strategy, AllTagsSearchStrategy)
 
     def testManySearchPages2(self):
-        TextPageFactory().create(self.wikiroot, '# Search', [])
+        TextPageFactory().create(self.wikiroot, "# Search", [])
 
-        GlobalSearch.create(self.wikiroot,
-                            phrase="декабрь",
-                            tags=["Метка 1", "Метка 2"],
-                            strategy=AllTagsSearchStrategy)
+        GlobalSearch.create(
+            self.wikiroot,
+            phrase="декабрь",
+            tags=["Метка 1", "Метка 2"],
+            strategy=AllTagsSearchStrategy,
+        )
 
         wiki = loadNotesTree(self.path)
-        page = wiki['_ Search' + " (1)"]
+        page = wiki["_ Search" + " (1)"]
         page_adapter = SearchPageFactory().createPageAdapter(page)
 
         self.assertNotEqual(page, None)
@@ -422,18 +457,20 @@ class SearchPageTest(unittest.TestCase):
 
     def testManySearchPages3(self):
         factory = TextPageFactory()
-        factory.create(self.wikiroot, '# Search', [])
-        factory.create(self.wikiroot, '# Search', [])
-        factory.create(self.wikiroot, '# Search', [])
-        factory.create(self.wikiroot, '# Search', [])
+        factory.create(self.wikiroot, "# Search", [])
+        factory.create(self.wikiroot, "# Search", [])
+        factory.create(self.wikiroot, "# Search", [])
+        factory.create(self.wikiroot, "# Search", [])
 
-        GlobalSearch.create(self.wikiroot,
-                            phrase="декабрь",
-                            tags=["Метка 1", "Метка 2"],
-                            strategy=AllTagsSearchStrategy)
+        GlobalSearch.create(
+            self.wikiroot,
+            phrase="декабрь",
+            tags=["Метка 1", "Метка 2"],
+            strategy=AllTagsSearchStrategy,
+        )
 
         wiki = loadNotesTree(self.path)
-        page = wiki['_ Search' + " (4)"]
+        page = wiki["_ Search" + " (4)"]
         self.assertNotEqual(page, None)
 
         page_adapter = SearchPageFactory().createPageAdapter(page)

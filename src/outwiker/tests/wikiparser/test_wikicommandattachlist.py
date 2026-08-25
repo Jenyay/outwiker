@@ -19,7 +19,7 @@ import outwiker.core.cssclasses as css
 from .utils import get_styles_count
 
 
-class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
+class WikiAttachListCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
         self.initApplication()
         self.encoding = "utf8"
@@ -37,25 +37,25 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
             "anchor.png",
             "файл с пробелами.tmp",
             "dir",
-            "for_sort"]
-        self.fullFilesPath = [
-            os.path.join(
-                filesPath,
-                fname) for fname in self.files]
+            "for_sort",
+        ]
+        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
 
-        self.template = '<a class="ow-link-attach {css_class}" href="{link}">{title}</a>'
+        self.template = (
+            '<a class="ow-link-attach {css_class}" href="{link}">{title}</a>'
+        )
 
     def tearDown(self):
         self.destroyApplication()
         removeDir(self.path)
 
-    def _attach_files(self, subdir: str = '.'):
+    def _attach_files(self, subdir: str = "."):
         attach = Attachment(self.testPage)
         attach.attach(self.fullFilesPath, subdir)
 
     def _create_wiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -71,109 +71,92 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
     def _create_link_to_file(self, subdir, fname, title):
         attachdir = Path("__attach")
         link = str(attachdir / subdir / fname).replace("\\", "/")
-        return self.template.format(css_class=css.CSS_ATTACH_FILE, link=link, title=title)
+        return self.template.format(
+            css_class=css.CSS_ATTACH_FILE, link=link, title=title
+        )
 
     def _create_link_to_dir(self, subdir, dirname, title):
         attachdir = Path("__attach")
         link = str(attachdir / subdir / dirname).replace("\\", "/")
-        return self.template.format(css_class=css.CSS_ATTACH_DIR, link=link, title=title)
+        return self.template.format(
+            css_class=css.CSS_ATTACH_DIR, link=link, title=title
+        )
 
-    def _create_items(self, subdir: str, expected_dirs: List[str], expected_files: List[str]) -> List[str]:
-        return (
-                [self._create_link_to_dir(subdir, dirname, dirname) for dirname in expected_dirs] + 
-                [self._create_link_to_file(subdir, fname, fname) for fname in expected_files]
-                )
+    def _create_items(
+        self, subdir: str, expected_dirs: List[str], expected_files: List[str]
+    ) -> List[str]:
+        return [
+            self._create_link_to_dir(subdir, dirname, dirname)
+            for dirname in expected_dirs
+        ] + [
+            self._create_link_to_file(subdir, fname, fname) for fname in expected_files
+        ]
 
     def test_сommand(self):
         self._attach_files()
         cmd = AttachListCommand(self.parser)
-        result = cmd.execute('', '')
+        result = cmd.execute("", "")
 
         expected_dirs = ["dir", "for_sort"]
-        expected_files = [
-                "add.png",
-                "anchor.png",
-                "image.jpg",
-                "файл с пробелами.tmp"
-                ]
+        expected_files = ["add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_styles(self):
         self._attach_files()
         cmd = AttachListCommand(self.parser)
-        cmd.execute('', '')
+        cmd.execute("", "")
         self.assertEqual(get_styles_count(self.parser, CSS_STYLES), 1)
 
     def test_subdir_double_quotes(self):
-        subdir = 'test_subdir'
+        subdir = "test_subdir"
         self._attach_files(subdir)
         cmd = AttachListCommand(self.parser)
         params = 'subdir="{}"'.format(subdir)
-        result = cmd.execute(params, '')
+        result = cmd.execute(params, "")
 
         expected_dirs = ["dir", "for_sort"]
-        expected_files = [
-                "add.png",
-                "anchor.png",
-                "image.jpg",
-                "файл с пробелами.tmp"
-                ]
+        expected_files = ["add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
         items = self._create_items(subdir, expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_subdir_single_quotes(self):
-        subdir = 'test_subdir'
+        subdir = "test_subdir"
         self._attach_files(subdir)
         cmd = AttachListCommand(self.parser)
         params = "subdir='{}'".format(subdir)
-        result = cmd.execute(params, '')
+        result = cmd.execute(params, "")
 
         expected_dirs = ["dir", "for_sort"]
-        expected_files = [
-                "add.png",
-                "anchor.png",
-                "image.jpg",
-                "файл с пробелами.tmp"
-                ]
+        expected_files = ["add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
         items = self._create_items(subdir, expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_subsubdir_forward_slashes(self):
-        subdir = 'subdir_1/subdir_2'
+        subdir = "subdir_1/subdir_2"
         self._attach_files(subdir)
         cmd = AttachListCommand(self.parser)
         params = 'subdir="{}"'.format(subdir)
-        result = cmd.execute(params, '')
+        result = cmd.execute(params, "")
 
         expected_dirs = ["dir", "for_sort"]
-        expected_files = [
-                "add.png",
-                "anchor.png",
-                "image.jpg",
-                "файл с пробелами.tmp"
-                ]
+        expected_files = ["add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
         items = self._create_items(subdir, expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_subsubdir_back_slashes(self):
-        subdir = 'subdir_1\\subdir_2'
+        subdir = "subdir_1\\subdir_2"
         self._attach_files(subdir)
         cmd = AttachListCommand(self.parser)
         params = 'subdir="{}"'.format(subdir)
-        result = cmd.execute(params, '')
+        result = cmd.execute(params, "")
 
         expected_dirs = ["dir", "for_sort"]
-        expected_files = [
-                "add.png",
-                "anchor.png",
-                "image.jpg",
-                "файл с пробелами.tmp"
-                ]
+        expected_files = ["add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
         items = self._create_items(subdir, expected_dirs, expected_files)
         self._check_items_order(result, items)
@@ -184,14 +167,9 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
         result = self.parser.toHtml(text)
 
         expected_dirs = ["dir", "for_sort"]
-        expected_files = [
-                "add.png",
-                "anchor.png",
-                "image.jpg",
-                "файл с пробелами.tmp"
-                ]
+        expected_files = ["add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_parsing_ignore_thumbs(self):
@@ -203,7 +181,7 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
         text = "(:attachlist:)"
         result = self.parser.toHtml(text)
 
-        self.assertNotIn('__thumb', result)
+        self.assertNotIn("__thumb", result)
 
     def test_command_sort_by_name(self):
         self._attach_files()
@@ -211,14 +189,9 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
         result = cmd.execute("sort=name", "")
 
         expected_dirs = ["dir", "for_sort"]
-        expected_files = [
-                "add.png",
-                "anchor.png",
-                "image.jpg",
-                "файл с пробелами.tmp"
-                ]
+        expected_files = ["add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_parsing_sort_by_name(self):
@@ -227,14 +200,9 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
         result = self.parser.toHtml(text)
 
         expected_dirs = ["dir", "for_sort"]
-        expected_files = [
-                "add.png",
-                "anchor.png",
-                "image.jpg",
-                "файл с пробелами.tmp"
-                ]
+        expected_files = ["add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_command_sort_descend_name(self):
@@ -244,13 +212,13 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
 
         expected_dirs = ["for_sort", "dir"]
         expected_files = [
-                "файл с пробелами.tmp",
-                "image.jpg",
-                "anchor.png",
-                "add.png",
-                ]
+            "файл с пробелами.tmp",
+            "image.jpg",
+            "anchor.png",
+            "add.png",
+        ]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_parsing_sort_descend_name(self):
@@ -260,13 +228,13 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
 
         expected_dirs = ["for_sort", "dir"]
         expected_files = [
-                "файл с пробелами.tmp",
-                "image.jpg",
-                "anchor.png",
-                "add.png",
-                ]
+            "файл с пробелами.tmp",
+            "image.jpg",
+            "anchor.png",
+            "add.png",
+        ]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_parsing_sort_by_ext(self):
@@ -276,13 +244,13 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
 
         expected_dirs = ["dir", "for_sort"]
         expected_files = [
-                "image.jpg",
-                "add.png",
-                "anchor.png",
-                "файл с пробелами.tmp",
-                ]
+            "image.jpg",
+            "add.png",
+            "anchor.png",
+            "файл с пробелами.tmp",
+        ]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_parsing_sort_descend_ext(self):
@@ -292,13 +260,13 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
 
         expected_dirs = ["for_sort", "dir"]
         expected_files = [
-                "файл с пробелами.tmp",
-                "anchor.png",
-                "add.png",
-                "image.jpg",
-                ]
+            "файл с пробелами.tmp",
+            "anchor.png",
+            "add.png",
+            "image.jpg",
+        ]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_parsing_sort_by_size(self):
@@ -308,13 +276,13 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
 
         expected_dirs = ["dir", "for_sort"]
         expected_files = [
-                "файл с пробелами.tmp",
-                "anchor.png",
-                "add.png",
-                "image.jpg",
-                ]
+            "файл с пробелами.tmp",
+            "anchor.png",
+            "add.png",
+            "image.jpg",
+        ]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_parsing__sort_descend_size(self):
@@ -324,25 +292,29 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
 
         expected_dirs = ["for_sort", "dir"]
         expected_files = [
-                "image.jpg",
-                "add.png",
-                "anchor.png",
-                "файл с пробелами.tmp",
-                ]
+            "image.jpg",
+            "add.png",
+            "anchor.png",
+            "файл с пробелами.tmp",
+        ]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_parsing_sort_by_date(self):
-        files = ["add.png", "Anchor.png",
-                 "image2.png", "image.png",
-                 "add.png2", "файл с пробелами.tmp",
-                 "filename"]
+        files = [
+            "add.png",
+            "Anchor.png",
+            "image2.png",
+            "image.png",
+            "add.png2",
+            "файл с пробелами.tmp",
+            "filename",
+        ]
 
         fullFilesPath = [
-                os.path.join(
-                    "testdata/samplefiles/for_sort",
-                    fname) for fname in files]
+            os.path.join("testdata/samplefiles/for_sort", fname) for fname in files
+        ]
 
         attach = Attachment(self.testPage)
         attach.attach(fullFilesPath)
@@ -360,28 +332,32 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
 
         expected_dirs = []
         expected_files = [
-                files[3],
-                files[0],
-                files[2],
-                files[6],
-                files[4],
-                files[5],
-                files[1],
-                ]
+            files[3],
+            files[0],
+            files[2],
+            files[6],
+            files[4],
+            files[5],
+            files[1],
+        ]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)
 
     def test_parsing_sort_descend_date(self):
-        files = ["add.png", "Anchor.png",
-                 "image2.png", "image.png",
-                 "add.png2", "файл с пробелами.tmp",
-                 "filename"]
+        files = [
+            "add.png",
+            "Anchor.png",
+            "image2.png",
+            "image.png",
+            "add.png2",
+            "файл с пробелами.tmp",
+            "filename",
+        ]
 
         fullFilesPath = [
-                os.path.join(
-                    "testdata/samplefiles/for_sort",
-                    fname) for fname in files]
+            os.path.join("testdata/samplefiles/for_sort", fname) for fname in files
+        ]
 
         attach = Attachment(self.testPage)
         attach.attach(fullFilesPath)
@@ -399,14 +375,14 @@ class WikiAttachListCommandTest (BaseOutWikerMixin, unittest.TestCase):
 
         expected_dirs = []
         expected_files = [
-                files[1],
-                files[5],
-                files[4],
-                files[6],
-                files[2],
-                files[0],
-                files[3]
-                ]
+            files[1],
+            files[5],
+            files[4],
+            files[6],
+            files[2],
+            files[0],
+            files[3],
+        ]
 
-        items = self._create_items('', expected_dirs, expected_files)
+        items = self._create_items("", expected_dirs, expected_files)
         self._check_items_order(result, items)

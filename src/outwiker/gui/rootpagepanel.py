@@ -55,9 +55,10 @@ class RootPagePanel(BasePagePanel):
 
 
 class ButtonsPanel(wx.Panel):
-    '''
+    """
     Panel with buttons
-    '''
+    """
+
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
@@ -71,13 +72,10 @@ class ButtonsPanel(wx.Panel):
 
     def _createGUI(self):
         buttonsSizer = wx.BoxSizer(wx.HORIZONTAL)
-        self._addNewPageButton = wx.Button(self,
-                                           label=_('Create new page...'))
+        self._addNewPageButton = wx.Button(self, label=_("Create new page..."))
         self._addNewPageButton.Bind(wx.EVT_BUTTON, handler=self._onNewPage)
 
-        buttonsSizer.Add(self._addNewPageButton,
-                         flag=wx.ALIGN_LEFT | wx.ALL,
-                         border=4)
+        buttonsSizer.Add(self._addNewPageButton, flag=wx.ALIGN_LEFT | wx.ALL, border=4)
 
         self.SetSizer(buttonsSizer)
 
@@ -86,9 +84,10 @@ class ButtonsPanel(wx.Panel):
 
 
 class NotesTreePathPanel(wx.Panel):
-    '''
+    """
     Panel with information about path to current note tree
-    '''
+    """
+
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
@@ -103,30 +102,32 @@ class NotesTreePathPanel(wx.Panel):
 
     def _createGUI(self):
         self._pathStaticText = wx.StaticText(
-            self,
-            label=_('Path to current note tree'),
-            style=wx.ALIGN_CENTER_HORIZONTAL)
+            self, label=_("Path to current note tree"), style=wx.ALIGN_CENTER_HORIZONTAL
+        )
 
-        self._pathTextCtrl = wx.TextCtrl(self,
-                                         style=wx.TE_READONLY,
-                                         value=self._application.wikiroot.path)
+        self._pathTextCtrl = wx.TextCtrl(
+            self, style=wx.TE_READONLY, value=self._application.wikiroot.path
+        )
 
         pathSizer = wx.FlexGridSizer(cols=2)
         pathSizer.AddGrowableCol(1)
-        pathSizer.Add(self._pathStaticText,
-                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                      border=4)
-        pathSizer.Add(self._pathTextCtrl,
-                      flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL,
-                      border=4)
+        pathSizer.Add(
+            self._pathStaticText, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=4
+        )
+        pathSizer.Add(
+            self._pathTextCtrl,
+            flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL,
+            border=4,
+        )
 
         self.SetSizer(pathSizer)
 
 
 class BookmarksPanel(wx.Panel):
-    '''
+    """
     Panel with bookmarks list
-    '''
+    """
+
     def __init__(self, parent, application: Application):
         super().__init__(parent)
         self._application = application
@@ -146,10 +147,9 @@ class BookmarksPanel(wx.Panel):
 
         # wikiroot = self._application.wikiroot
         bookmarks = self._application.bookmarks
-        page_list = [bookmarks[n]
-                     for n
-                     in range(len(bookmarks))
-                     if bookmarks[n] is not None]
+        page_list = [
+            bookmarks[n] for n in range(len(bookmarks)) if bookmarks[n] is not None
+        ]
         self._pageList.setPageList(page_list)
 
     def _createPageList(self):
@@ -157,7 +157,9 @@ class BookmarksPanel(wx.Panel):
         pageList.SetMinSize((-1, 250))
 
         columnsFactory = ColumnsFactory()
-        columns = columnsFactory.createColumnsFromString(self._config.bookmarksHeaders.value)
+        columns = columnsFactory.createColumnsFromString(
+            self._config.bookmarksHeaders.value
+        )
         if not columns:
             columns = columnsFactory.createDefaultColumns()
 
@@ -166,20 +168,18 @@ class BookmarksPanel(wx.Panel):
         return pageList
 
     def _createGUI(self):
-        self._bookmarksLabel = wx.StaticText(self, label=_('Bookmarks'))
+        self._bookmarksLabel = wx.StaticText(self, label=_("Bookmarks"))
         self._pageList = self._createPageList()
 
         bookmarksSizer = wx.FlexGridSizer(cols=1)
         bookmarksSizer.AddGrowableCol(0)
         bookmarksSizer.AddGrowableRow(1)
 
-        bookmarksSizer.Add(self._bookmarksLabel,
-                           flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                           border=4)
+        bookmarksSizer.Add(
+            self._bookmarksLabel, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=4
+        )
 
-        bookmarksSizer.Add(self._pageList,
-                           flag=wx.EXPAND | wx.ALL,
-                           border=4)
+        bookmarksSizer.Add(self._pageList, flag=wx.EXPAND | wx.ALL, border=4)
 
         self.SetSizer(bookmarksSizer)
 

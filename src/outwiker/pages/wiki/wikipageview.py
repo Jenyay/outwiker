@@ -636,7 +636,9 @@ class WikiPageView(BaseWikiPageView):
 
         # Текущая дата
         actionController.getAction(CURRENT_DATE).setFunc(
-            lambda param: insertCurrentDate(self.mainWindow, self.codeEditor, self._application)
+            lambda param: insertCurrentDate(
+                self.mainWindow, self.codeEditor, self._application
+            )
         )
 
         actionController.appendMenuItem(CURRENT_DATE, menu)
@@ -672,7 +674,7 @@ class WikiPageView(BaseWikiPageView):
             getBuiltinImagePath("link.svg"),
             fullUpdate=False,
         )
-        
+
         # Вставка горизонтальной линии
         actionController.getAction(HORLINE_STR_ID).setFunc(
             lambda param: self.replaceText("----")

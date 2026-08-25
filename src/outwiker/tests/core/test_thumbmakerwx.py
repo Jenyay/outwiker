@@ -9,7 +9,7 @@ from outwiker.tests.utils import getImageSize
 from outwiker.tests.basetestcases import BaseWxTestCase
 
 
-class ThumbmakerWxTest (BaseWxTestCase):
+class ThumbmakerWxTest(BaseWxTestCase):
     """
     Тесты для создателя превьюшек с помощью ThumbmakerWx
     """
@@ -185,9 +185,24 @@ class ThumbmakerWxTest (BaseWxTestCase):
 
         self.thumbmaker = ThumbmakerWx()
 
-        self.assertRaises(ThumbException, self.thumbmaker.thumbByWidth,
-                          self.fname_in, newsize, self.fname_out)
-        self.assertRaises(ThumbException, self.thumbmaker.thumbByHeight,
-                          self.fname_in, newsize, self.fname_out)
-        self.assertRaises(ThumbException, self.thumbmaker.thumbByMaxSize,
-                          self.fname_in, newsize, self.fname_out)
+        self.assertRaises(
+            ThumbException,
+            self.thumbmaker.thumbByWidth,
+            self.fname_in,
+            newsize,
+            self.fname_out,
+        )
+        self.assertRaises(
+            ThumbException,
+            self.thumbmaker.thumbByHeight,
+            self.fname_in,
+            newsize,
+            self.fname_out,
+        )
+        self.assertRaises(
+            ThumbException,
+            self.thumbmaker.thumbByMaxSize,
+            self.fname_in,
+            newsize,
+            self.fname_out,
+        )

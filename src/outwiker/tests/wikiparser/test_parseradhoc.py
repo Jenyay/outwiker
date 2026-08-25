@@ -18,12 +18,11 @@ class ParserAdHocTest(unittest.TestCase):
         self.filesPath = "testdata/samplefiles/"
 
         self.url1 = "http://example.com"
-        self.url2 = "http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
+        self.url2 = (
+            "http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
+        )
 
-        self.pagelinks = [
-            "Страница 1",
-            "/Страница 1",
-            "/Страница 2/Страница 3"]
+        self.pagelinks = ["Страница 1", "/Страница 1", "/Страница 2/Страница 3"]
         self.pageComments = ["Страницо 1", "Страницо 1", "Страницо 3"]
 
         self.__createWiki()
@@ -33,7 +32,7 @@ class ParserAdHocTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -44,96 +43,96 @@ class ParserAdHocTest(unittest.TestCase):
 
     def testBoldSubscript(self):
         text = "бла-бла-бла '''x'_c_'''' бла-бла-бла"
-        result = 'бла-бла-бла <b>x<sub>c</sub></b> бла-бла-бла'
+        result = "бла-бла-бла <b>x<sub>c</sub></b> бла-бла-бла"
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSubscriptBold_1(self):
         text = "бла-бла-бла '_'''xc'''_' бла-бла-бла"
-        result = 'бла-бла-бла <sub><b>xc</b></sub> бла-бла-бла'
+        result = "бла-бла-бла <sub><b>xc</b></sub> бла-бла-бла"
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBoldSubscript_2(self):
         text = "'''bold''' text '_subscript_' '''bold'''"
-        valid_result = '<b>bold</b> text <sub>subscript</sub> <b>bold</b>'
+        valid_result = "<b>bold</b> text <sub>subscript</sub> <b>bold</b>"
         result = self.parser.toHtml(text)
         self.assertEqual(result, valid_result)
 
     def testBoldSuperscript_1(self):
         text = "бла-бла-бла '''x'^c^'''' бла-бла-бла"
-        result = 'бла-бла-бла <b>x<sup>c</sup></b> бла-бла-бла'
+        result = "бла-бла-бла <b>x<sup>c</sup></b> бла-бла-бла"
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBoldSuperscript_2(self):
         text = "'''bold''' text '^superscript^' '''bold'''"
-        valid_result = '<b>bold</b> text <sup>superscript</sup> <b>bold</b>'
+        valid_result = "<b>bold</b> text <sup>superscript</sup> <b>bold</b>"
         result = self.parser.toHtml(text)
         self.assertEqual(result, valid_result)
 
     def testSuperscriptBold(self):
         text = "бла-бла-бла '^'''xc'''^' бла-бла-бла"
-        result = 'бла-бла-бла <sup><b>xc</b></sup> бла-бла-бла'
+        result = "бла-бла-бла <sup><b>xc</b></sup> бла-бла-бла"
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testSuperscriptItalic(self):
         text = "бла-бла-бла '^''xc''^' бла-бла-бла"
-        result = 'бла-бла-бла <sup><i>xc</i></sup> бла-бла-бла'
+        result = "бла-бла-бла <sup><i>xc</i></sup> бла-бла-бла"
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testItalicSubscript(self):
         text = "бла-бла-бла ''x'_c_''' бла-бла-бла"
-        result = 'бла-бла-бла <i>x<sub>c</sub></i> бла-бла-бла'
+        result = "бла-бла-бла <i>x<sub>c</sub></i> бла-бла-бла"
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testItalicSuperscript(self):
         text = "бла-бла-бла ''x'^c^''' бла-бла-бла"
-        result = 'бла-бла-бла <i>x<sup>c</sup></i> бла-бла-бла'
+        result = "бла-бла-бла <i>x<sup>c</sup></i> бла-бла-бла"
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBoldItalicSubscript_01(self):
         text = "бла-бла-бла ''''x'_c_''''' бла-бла-бла"
-        result = 'бла-бла-бла <b><i>x<sub>c</sub></i></b> бла-бла-бла'
+        result = "бла-бла-бла <b><i>x<sub>c</sub></i></b> бла-бла-бла"
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBoldItalicSuperscript(self):
         text = "бла-бла-бла ''''x'^c^''''' бла-бла-бла"
-        result = 'бла-бла-бла <b><i>x<sup>c</sup></i></b> бла-бла-бла'
+        result = "бла-бла-бла <b><i>x<sup>c</sup></i></b> бла-бла-бла"
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBoldItalicSubscript_02(self):
         text = "''курсив'' _'''должен быть жирный''' нормальный"
@@ -141,8 +140,8 @@ class ParserAdHocTest(unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBoldItalicSubscript_03(self):
         text = "''курсив'' _''''должен быть жирный'''' нормальный"
@@ -150,8 +149,8 @@ class ParserAdHocTest(unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testItalicSubscript_03(self):
         text = "'''_Бла-бла-бла_'''"
@@ -159,8 +158,8 @@ class ParserAdHocTest(unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testItalicSuperscript_02(self):
         text = "''курсив'' ^'''должен быть жирный''' нормальный"
@@ -168,8 +167,8 @@ class ParserAdHocTest(unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBoldItalicSuperscript_03(self):
         text = "''курсив'' ^''''должен быть жирный'''' нормальный"
@@ -177,8 +176,8 @@ class ParserAdHocTest(unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testItalicSuperscript_03(self):
         text = "'''^Бла-бла-бла^'''"
@@ -186,8 +185,8 @@ class ParserAdHocTest(unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBoldItalicSuperscript_02(self):
         text = "'''''^Бла-бла-бла^'''''"
@@ -195,8 +194,8 @@ class ParserAdHocTest(unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testBoldItalicSubscript_04(self):
         text = "'''''_Бла-бла-бла_'''''"
@@ -204,5 +203,5 @@ class ParserAdHocTest(unittest.TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )

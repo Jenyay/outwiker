@@ -10,13 +10,14 @@ from outwiker.core.treetools import findPage
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
-logger = logging.getLogger('outwiker.app.core.starter')
+logger = logging.getLogger("outwiker.app.core.starter")
 
 
 class StarterExit(Exception):
     """
     Исключение бросается, если нужно прервать выполнение программы
     """
+
     pass
 
 
@@ -25,6 +26,7 @@ class Starter:
     Класс для выполнения команд из командной строки (не для разбора параметров)
     и начального открытия вики
     """
+
     def __init__(self, application):
         self._application = application
         self._commandLine = self.__parseCommandLine(sys.argv[1:])
@@ -53,7 +55,11 @@ class Starter:
             self.__openRecentWiki()
         else:
             logger.debug('Open wiki "%s"', self._commandLine.wikipath)
-            openWiki(self._commandLine.wikipath, self._application, self._commandLine.readonly)
+            openWiki(
+                self._commandLine.wikipath,
+                self._application,
+                self._commandLine.readonly,
+            )
 
         if self._commandLine is not None:
             page = findPage(self._application, self._commandLine.page_id)
@@ -91,5 +97,5 @@ class Starter:
         openRecent = self._config.autoopen.value
 
         if openRecent and len(self._application.recentWiki) > 0:
-            logger.debug('Open recently used wiki')
+            logger.debug("Open recently used wiki")
             openWiki(self._application.recentWiki[0], self._application)

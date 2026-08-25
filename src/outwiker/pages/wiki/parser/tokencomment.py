@@ -7,6 +7,7 @@ class CommentFactory:
     """
     A factory to make a comment token
     """
+
     @staticmethod
     def make(parser):
         return CommentToken(parser).getToken()
@@ -24,7 +25,8 @@ class CommentToken:
             self.commentStart,
             endQuoteChar=self.commentEnd,
             multiline=True,
-            convertWhitespaceEscapes=False).setParseAction(self.__convertComment)("comment")
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self.__convertComment)("comment")
 
     def __convertComment(self, s, l, t):
-        return ''
+        return ""

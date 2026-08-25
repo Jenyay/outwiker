@@ -34,9 +34,9 @@ class HtmlTableRowsDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<tr>
+        validResult = """<tr>
 <td></td>
-</tr>'''
+</tr>"""
 
         self.assertEqual(result, validResult, result)
 
@@ -51,13 +51,13 @@ class HtmlTableRowsDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<tr>
+        validResult = """<tr>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-</tr>'''
+</tr>"""
 
         self.assertEqual(result, validResult, result)
 
@@ -73,7 +73,7 @@ class HtmlTableRowsDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<tr>
+        validResult = """<tr>
 <td></td>
 <td></td>
 <td></td>
@@ -93,7 +93,7 @@ class HtmlTableRowsDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 <td></td>
 <td></td>
 <td></td>
-</tr>'''
+</tr>"""
 
         self.assertEqual(result, validResult, result)
 
@@ -126,7 +126,7 @@ class HtmlTableRowsDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<tr>
+        validResult = """<tr>
 <th></th>
 <th></th>
 <th></th>
@@ -146,6 +146,6 @@ class HtmlTableRowsDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 <td></td>
 <td></td>
 <td></td>
-</tr>'''
+</tr>"""
 
         self.assertEqual(result, validResult, result)

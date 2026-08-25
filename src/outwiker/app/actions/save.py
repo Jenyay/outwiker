@@ -7,6 +7,7 @@ class SaveAction(BaseAction):
     """
     Сохранить заметку
     """
+
     stringId = "SaveNote"
 
     def __init__(self, application):

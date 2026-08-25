@@ -16,7 +16,8 @@ class WikiStyleNameActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.wikiroot = self.createWiki()
         self.actionController = self.application.actionController
         self.action = self.application.actionController.getAction(
-            WikiStyleOnlyAction.stringId)
+            WikiStyleOnlyAction.stringId
+        )
 
         WikiPageFactory().create(self.wikiroot, "wiki", [])
         self.testedPage = self.wikiroot["wiki"]
@@ -33,80 +34,80 @@ class WikiStyleNameActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_empty_editor_set_style_name(self):
         def dialog_func(dialog):
-            dialog.SetDataForTest('test-style')
+            dialog.SetDataForTest("test-style")
             return wx.ID_OK
 
         Tester.dialogTester.append(dialog_func)
         self.action.run(None)
 
-        result_right = '''%test-style%
+        result_right = """%test-style%
 
-%%'''
+%%"""
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)
 
     def test_incapsulate_inline(self):
         def dialog_func(dialog):
-            dialog.SetDataForTest('test-style')
+            dialog.SetDataForTest("test-style")
             return wx.ID_OK
 
         Tester.dialogTester.append(dialog_func)
 
-        text = 'Блок текста бла-бла-бла'
+        text = "Блок текста бла-бла-бла"
         self.editor.SetText(text)
         self.editor.SetSelection(5, 11)
         self.action.run(None)
 
-        result_right = 'Блок %test-style%текста%% бла-бла-бла'
+        result_right = "Блок %test-style%текста%% бла-бла-бла"
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)
 
     def test_incapsulate_block_01(self):
         def dialog_func(dialog):
-            dialog.SetDataForTest('test-style')
+            dialog.SetDataForTest("test-style")
             return wx.ID_OK
 
         Tester.dialogTester.append(dialog_func)
 
-        text = '''Блок текста
+        text = """Блок текста
 Бла-бла-бла
 
-Еще текст'''
+Еще текст"""
         self.editor.SetText(text)
         self.editor.SetSelection(12, 23)
         self.action.run(None)
 
-        result_right = '''Блок текста
+        result_right = """Блок текста
 %test-style%
 Бла-бла-бла
 %%
 
-Еще текст'''
+Еще текст"""
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)
 
     def test_incapsulate_block_02(self):
         def dialog_func(dialog):
-            dialog.SetDataForTest('test-style')
+            dialog.SetDataForTest("test-style")
             return wx.ID_OK
 
         Tester.dialogTester.append(dialog_func)
 
-        text = '''Блок текста
+        text = """Блок текста
 Бла-бла-бла
-Еще текст'''
+Еще текст"""
         self.editor.SetText(text)
         self.editor.SetSelection(12, 23)
         self.action.run(None)
 
-        result_right = '''Блок текста
+        result_right = """Блок текста
 %test-style%
 Бла-бла-бла
 %%
-Еще текст'''
+Еще текст"""
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)

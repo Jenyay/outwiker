@@ -9,10 +9,10 @@ class TableRowsDialog(TestedDialog):
     def __init__(self, parent):
         super(TableRowsDialog, self).__init__(parent)
         self._SPIN_SIZE = 150
-        self._headerCells = None    # type: wx.CheckBox
+        self._headerCells = None  # type: wx.CheckBox
         self._createGui()
 
-        self.SetTitle(_(u'Insert rows'))
+        self.SetTitle(_("Insert rows"))
 
     @property
     def colsCount(self):
@@ -52,13 +52,9 @@ class TableRowsDialog(TestedDialog):
         spin.SetRange(1, 100)
         spin.SetMinSize((self._SPIN_SIZE, -1))
 
-        sizer.Add(label,
-                  flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                  border=2)
+        sizer.Add(label, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
 
-        sizer.Add(spin,
-                  flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                  border=2)
+        sizer.Add(spin, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
 
         return spin
 
@@ -70,17 +66,13 @@ class TableRowsDialog(TestedDialog):
         sizeSizer.AddGrowableCol(0)
         sizeSizer.AddGrowableCol(1)
 
-        self._colsCount = self._createTextAndSpin(
-            self, _(u'Columns count'), sizeSizer)
+        self._colsCount = self._createTextAndSpin(self, _("Columns count"), sizeSizer)
         self._colsCount.SetValue(1)
 
-        self._rowsCount = self._createTextAndSpin(
-            self, _(u'Rows count'), sizeSizer)
+        self._rowsCount = self._createTextAndSpin(self, _("Rows count"), sizeSizer)
         self._rowsCount.SetValue(1)
 
-        mainSizer.Add(sizeSizer,
-                      flag=wx.ALL | wx.EXPAND,
-                      border=2)
+        mainSizer.Add(sizeSizer, flag=wx.ALL | wx.EXPAND, border=2)
 
         mainSizer.AddSpacer(10)
         self._createAdvancedControls(mainSizer)
@@ -92,26 +84,18 @@ class TableRowsDialog(TestedDialog):
         self.Fit()
 
     def _createAdvancedControls(self, mainSizer):
-        advancedPanel = wx.CollapsiblePane(self, label=_(u'Advanced'))
+        advancedPanel = wx.CollapsiblePane(self, label=_("Advanced"))
         pane = advancedPanel.GetPane()
 
         paneSizer = wx.FlexGridSizer(cols=1)
         paneSizer.AddGrowableCol(0)
 
-        self._headerCells = wx.CheckBox(
-            pane,
-            label=_(u'Header cells for first row')
-        )
+        self._headerCells = wx.CheckBox(pane, label=_("Header cells for first row"))
 
         paneSizer.Add(
-            self._headerCells,
-            1,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-            border=2
+            self._headerCells, 1, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
 
         pane.SetSizer(paneSizer)
 
-        mainSizer.Add(advancedPanel,
-                      flag=wx.ALL | wx.EXPAND,
-                      border=2)
+        mainSizer.Add(advancedPanel, flag=wx.ALL | wx.EXPAND, border=2)

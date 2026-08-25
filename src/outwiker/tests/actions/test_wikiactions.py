@@ -39,12 +39,12 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         ]
 
         self._headingsSyntax = [
-            (HEADING_1_STR_ID, '!!'),
-            (HEADING_2_STR_ID, '!!!'),
-            (HEADING_3_STR_ID, '!!!!'),
-            (HEADING_4_STR_ID, '!!!!!'),
-            (HEADING_5_STR_ID, '!!!!!!'),
-            (HEADING_6_STR_ID, '!!!!!!!'),
+            (HEADING_1_STR_ID, "!!"),
+            (HEADING_2_STR_ID, "!!!"),
+            (HEADING_3_STR_ID, "!!!!"),
+            (HEADING_4_STR_ID, "!!!!!"),
+            (HEADING_5_STR_ID, "!!!!!!"),
+            (HEADING_6_STR_ID, "!!!!!!!"),
         ]
 
         WikiPageFactory().create(self.wikiroot, "Викистраница", [])
@@ -74,8 +74,7 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self.application.selectedPage = self.testpage
 
             self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(),
-                             syntax[1] + syntax[2])
+            self.assertEqual(self._getEditor().GetText(), syntax[1] + syntax[2])
 
     def testTurnSyntaxSelectedAll(self):
         text = "Бла-бла-бла"
@@ -88,8 +87,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self._getEditor().SetSelection(0, len(text))
 
             self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(),
-                             syntax[1] + "Бла-бла-бла" + syntax[2])
+            self.assertEqual(
+                self._getEditor().GetText(), syntax[1] + "Бла-бла-бла" + syntax[2]
+            )
 
     def testTurnSyntaxSelectedPart(self):
         text = "Бла-бла-бла"
@@ -104,7 +104,8 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self.application.actionController.getAction(syntax[0]).run(None)
             self.assertEqual(
                 self._getEditor().GetText(),
-                "Бла-{}бла{}-бла".format(syntax[1], syntax[2]))
+                "Бла-{}бла{}-бла".format(syntax[1], syntax[2]),
+            )
 
     def testReplaceSyntaxEmpty(self):
         for syntax in self._replaceSyntax:
@@ -139,16 +140,16 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self._getEditor().SetSelection(4, 7)
 
             self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(),
-                             "Бла-{}-бла".format(syntax[1]))
+            self.assertEqual(
+                self._getEditor().GetText(), "Бла-{}-бла".format(syntax[1])
+            )
 
     def testListBulletsEmpty(self):
         self.application.selectedPage = self.temppage
         self.testpage.content = ""
         self.application.selectedPage = self.testpage
 
-        self.application.actionController.getAction(
-            LIST_BULLETS_STR_ID).run(None)
+        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
         self.assertEqual(self._getEditor().GetText(), "* ")
 
     def testListNumbersEmpty(self):
@@ -156,8 +157,7 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.testpage.content = ""
         self.application.selectedPage = self.testpage
 
-        self.application.actionController.getAction(
-            LIST_NUMBERS_STR_ID).run(None)
+        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
         self.assertEqual(self._getEditor().GetText(), "# ")
 
     def testListBulletsSelectedAll(self):
@@ -228,9 +228,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListNumbersSelectedPart_01(self):
         text = """йцкуйцук
@@ -256,9 +256,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListBulletsSelectedPart_02(self):
         text = """йцукен
@@ -284,9 +284,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListBulletsSelectedPart_03(self):
         text = """йцукен
@@ -312,9 +312,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListNumbersSelectedPart_02(self):
         text = """йцукен
@@ -340,9 +340,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListNumbersSelectedPart_03(self):
         text = """йцукен
@@ -368,9 +368,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListBulletsSelectedPart_04(self):
         text = """йцукен
@@ -396,9 +396,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListNumbersSelectedPart_04(self):
         text = """йцукен
@@ -424,9 +424,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListBulletsSelectedPart_05(self):
         text = """йцукен
@@ -452,9 +452,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListNumbersSelectedPart_05(self):
         text = """йцукен
@@ -480,9 +480,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListBulletsSelectedPart_06(self):
         text = """* йцукен
@@ -508,9 +508,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListNumbersSelectedPart_06(self):
         text = """# йцукен
@@ -536,9 +536,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListBulletsSelectedPart_07(self):
         text = """# йцукен
@@ -564,9 +564,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListNumbersSelectedPart_07(self):
         text = """* йцукен
@@ -592,8 +592,7 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result)
+        self.assertEqual(self._getEditor().GetText(), result)
 
     def testListBulletsSelectedPart_08(self):
         text = """йцукен
@@ -619,9 +618,9 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def testListNumbersSelectedPart_08(self):
         text = """йцукен
@@ -647,159 +646,171 @@ class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
 
-        self.assertEqual(self._getEditor().GetText(),
-                         result,
-                         self._getEditor().GetText())
+        self.assertEqual(
+            self._getEditor().GetText(), result, self._getEditor().GetText()
+        )
 
     def test_heading1_01(self):
         editor = self._getEditor()
         actionController = self.application.actionController
-        text = ''
+        text = ""
         for action_str, syntax in self._headingsSyntax:
-            result = '{} '.format(syntax)
+            result = "{} ".format(syntax)
 
             editor.SetText(text)
             editor.SetSelection(0, 0)
 
             actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                             result)
+            self.assertEqual(editor.GetText().replace("\r\n", "\n"), result)
 
             actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                             text)
+            self.assertEqual(editor.GetText().replace("\r\n", "\n"), text)
 
     def test_heading1_02(self):
         editor = self._getEditor()
         actionController = self.application.actionController
-        text = 'Строка 1\nСтрока 2\nСтрока 3'
+        text = "Строка 1\nСтрока 2\nСтрока 3"
         for action_str, syntax in self._headingsSyntax:
-            result = '{} Строка 1\nСтрока 2\nСтрока 3'.format(syntax)
+            result = "{} Строка 1\nСтрока 2\nСтрока 3".format(syntax)
 
             editor.SetText(text)
             editor.SetSelection(5, 5)
 
             actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                             result)
+            self.assertEqual(editor.GetText().replace("\r\n", "\n"), result)
 
             actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                             text)
+            self.assertEqual(editor.GetText().replace("\r\n", "\n"), text)
 
     def test_heading1_03(self):
         editor = self._getEditor()
         actionController = self.application.actionController
-        text = 'Строка 1\nСтрока 2\nСтрока 3'
+        text = "Строка 1\nСтрока 2\nСтрока 3"
         for action_str, syntax in self._headingsSyntax:
-            result = 'Строка 1\n{} Строка 2\nСтрока 3'.format(syntax)
+            result = "Строка 1\n{} Строка 2\nСтрока 3".format(syntax)
 
             editor.SetText(text)
             editor.SetSelection(10, 10)
 
             actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                             result)
+            self.assertEqual(editor.GetText().replace("\r\n", "\n"), result)
 
             actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                             text)
+            self.assertEqual(editor.GetText().replace("\r\n", "\n"), text)
 
     def test_heading1_04(self):
         editor = self._getEditor()
         actionController = self.application.actionController
-        text = 'Строка 1\nСтрока 2\nСтрока 3'
+        text = "Строка 1\nСтрока 2\nСтрока 3"
         for action_str, syntax in self._headingsSyntax:
-            result = '{syntax} Строка 1\n{syntax} Строка 2\nСтрока 3'.format(
-                syntax=syntax)
+            result = "{syntax} Строка 1\n{syntax} Строка 2\nСтрока 3".format(
+                syntax=syntax
+            )
 
             editor.SetText(text)
             editor.SetSelection(0, 10)
 
             actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                             result)
+            self.assertEqual(editor.GetText().replace("\r\n", "\n"), result)
 
             actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                             text)
+            self.assertEqual(editor.GetText().replace("\r\n", "\n"), text)
 
     def test_heading_switch_01(self):
         editor = self._getEditor()
         actionController = self.application.actionController
-        text = 'Строка 1\nСтрока 2\nСтрока 3'
+        text = "Строка 1\nСтрока 2\nСтрока 3"
 
         editor.SetText(text)
         editor.SetSelection(0, 0)
 
         actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!! Строка 1\nСтрока 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "!! Строка 1\nСтрока 2\nСтрока 3"
+        )
 
         actionController.getAction(HEADING_2_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!!! Строка 1\nСтрока 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "!!! Строка 1\nСтрока 2\nСтрока 3"
+        )
 
         actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!! Строка 1\nСтрока 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "!! Строка 1\nСтрока 2\nСтрока 3"
+        )
 
         actionController.getAction(HEADING_6_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!!!!!!! Строка 1\nСтрока 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "!!!!!!! Строка 1\nСтрока 2\nСтрока 3",
+        )
 
         actionController.getAction(HEADING_5_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!!!!!! Строка 1\nСтрока 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "!!!!!! Строка 1\nСтрока 2\nСтрока 3",
+        )
 
         actionController.getAction(HEADING_5_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 1\nСтрока 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "Строка 1\nСтрока 2\nСтрока 3"
+        )
 
     def test_heading_switch_02(self):
         editor = self._getEditor()
         actionController = self.application.actionController
-        text = 'Строка 1\nСтрока 2\nСтрока 3'
+        text = "Строка 1\nСтрока 2\nСтрока 3"
 
         editor.SetText(text)
         editor.SetSelection(0, 12)
 
         actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!! Строка 1\n!! Строка 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "!! Строка 1\n!! Строка 2\nСтрока 3"
+        )
 
         actionController.getAction(HEADING_2_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!!! Строка 1\n!!! Строка 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "!!! Строка 1\n!!! Строка 2\nСтрока 3",
+        )
 
         actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!! Строка 1\n!! Строка 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "!! Строка 1\n!! Строка 2\nСтрока 3"
+        )
 
         actionController.getAction(HEADING_6_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!!!!!!! Строка 1\n!!!!!!! Строка 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "!!!!!!! Строка 1\n!!!!!!! Строка 2\nСтрока 3",
+        )
 
         actionController.getAction(HEADING_5_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!!!!!! Строка 1\n!!!!!! Строка 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"),
+            "!!!!!! Строка 1\n!!!!!! Строка 2\nСтрока 3",
+        )
 
         actionController.getAction(HEADING_5_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         'Строка 1\nСтрока 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "Строка 1\nСтрока 2\nСтрока 3"
+        )
 
     def test_heading_switch_03(self):
         editor = self._getEditor()
         actionController = self.application.actionController
-        text = '! Строка 1\nСтрока 2\nСтрока 3'
+        text = "! Строка 1\nСтрока 2\nСтрока 3"
 
         editor.SetText(text)
         editor.SetSelection(0, 0)
 
         actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '!! ! Строка 1\nСтрока 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "!! ! Строка 1\nСтрока 2\nСтрока 3"
+        )
 
         actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(editor.GetText().replace('\r\n', '\n'),
-                         '! Строка 1\nСтрока 2\nСтрока 3')
+        self.assertEqual(
+            editor.GetText().replace("\r\n", "\n"), "! Строка 1\nСтрока 2\nСтрока 3"
+        )

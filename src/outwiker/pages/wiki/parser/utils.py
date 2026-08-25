@@ -27,12 +27,14 @@ def convertToHTML(opening, closing, parser):
     closing - закрывающийся тег(и)
     parser - парсер, у которого есть метод parseWikiMarkup()
     """
+
     def conversionParseAction(s, l, t):
         return opening + parser.parseWikiMarkup(t[0]) + closing
+
     return conversionParseAction
 
 
 def escapeTextForRE(text):
-    for char in r'\^$.*+?[]{}()|#':
-        text = text.replace(char, '\\' + char)
+    for char in r"\^$.*+?[]{}()|#":
+        text = text.replace(char, "\\" + char)
     return text

@@ -106,7 +106,7 @@ class TagsCloudPanel(wx.Panel):
             max_font_size=max_font_size,
             mode=mode,
             enable_tooltips=enable_tooltips,
-            enable_active_tags_filter=True
+            enable_active_tags_filter=True,
         )
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)

@@ -11,11 +11,11 @@ class ControlNotify:
         self._control = control
 
     def ShowError(self, title, text):
-        if getOS().name == 'windows':
+        if getOS().name == "windows":
             tooltip = RichToolTip(title, text)
         else:
             # Title is cut off in Linux
-            tooltip = RichToolTip('', text)
+            tooltip = RichToolTip("", text)
 
         tooltip.SetIcon(wx.ICON_ERROR)
         tooltip.SetBackgroundColour("#F6D1C8", "#F6D1C8")

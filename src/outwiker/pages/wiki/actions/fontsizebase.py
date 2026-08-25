@@ -4,7 +4,7 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.pages.wiki.fontsizeselector import FontSizeSelector
 
 
-class WikiFontSizeBaseAction (BaseAction):
+class WikiFontSizeBaseAction(BaseAction):
     """
     Базовый класс для actions для выбора размера шрифта
     (крупный, мелкий и т.п.)

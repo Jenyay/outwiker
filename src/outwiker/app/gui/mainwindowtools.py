@@ -16,16 +16,18 @@ def getMainWindowTitle(application):
         subpath = "" if page is None else page.display_subpath
         filename = os.path.basename(application.wikiroot.path)
 
-        result = (template
-                  .replace("{file}", filename)
-                  .replace("{page}", pageTitle)
-                  .replace("{subpath}", subpath)
-                  )
+        result = (
+            template.replace("{file}", filename)
+            .replace("{page}", pageTitle)
+            .replace("{subpath}", subpath)
+        )
 
     return result
 
 
-def addStatusBarItem(mainWindow, name: str, width: int = -1, position: Optional[int] = None) -> None:
+def addStatusBarItem(
+    mainWindow, name: str, width: int = -1, position: Optional[int] = None
+) -> None:
     if mainWindow:
         mainWindow.statusbar.addItem(name, width, position)
 

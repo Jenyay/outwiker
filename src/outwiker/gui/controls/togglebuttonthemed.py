@@ -11,6 +11,10 @@ class ToggleButtonThemed(ToggleButton):
         self.SetColorShadow(theme.get(Theme.SECTION_GENERAL, Theme.SHADOW_COLOR))
         self.SetColorTextNormal(theme.colorText)
         self.SetColorTextToggled(theme.colorTextSelected)
-        self.SetColorBorderToggled(theme.get(Theme.SECTION_GENERAL, Theme.CONTROL_BORDER_SELECTED_COLOR))
-        self.SetColorBorder(theme.get(Theme.SECTION_GENERAL, Theme.CONTROL_BORDER_COLOR))
+        self.SetColorBorderToggled(
+            theme.get(Theme.SECTION_GENERAL, Theme.CONTROL_BORDER_SELECTED_COLOR)
+        )
+        self.SetColorBorder(
+            theme.get(Theme.SECTION_GENERAL, Theme.CONTROL_BORDER_COLOR)
+        )
         self.SetRoundRadius(theme.get(Theme.SECTION_GENERAL, Theme.ROUND_RADIUS))

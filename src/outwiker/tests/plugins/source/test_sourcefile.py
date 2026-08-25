@@ -12,7 +12,7 @@ from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
+class SourceFilePluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты на работу с раскраской прикрепленных файлов
     """
@@ -21,9 +21,7 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.__pluginname = "Source"
         self.initApplication()
         self.wikiroot = self.createWiki()
-        self.testPage = WikiPageFactory().create(self.wikiroot,
-                                                 "Страница 1",
-                                                 [])
+        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
         dirlist = ["plugins/source"]
 
@@ -47,7 +45,8 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testHighlightFile1(self):
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="source_utf8.py" lang="text":)'
         self.testPage.content = content
 
@@ -56,11 +55,13 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )
 
     def testHighlightFile2(self):
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="Attach:source_utf8.py" lang="text":)'
         self.testPage.content = content
 
@@ -69,11 +70,13 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )
 
     def testHighlightFile3(self):
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="  source_utf8.py  " lang="text":)'
         self.testPage.content = content
 
@@ -82,11 +85,13 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )
 
     def testHighlightFile4(self):
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="  Attach:source_utf8.py  " lang="text":)'
         self.testPage.content = content
 
@@ -95,11 +100,13 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )
 
     def testHighlightFile5(self):
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="source_utf8.py" lang="text":)(:sourceend:)'
         self.testPage.content = content
 
@@ -108,11 +115,13 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )
 
     def testHighlightFile6(self):
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="source_utf8.py" lang="text":)bla-bla-bla(:sourceend:)'
         self.testPage.content = content
 
@@ -121,7 +130,8 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )
         self.assertTrue("bla-bla-bla" not in result)
 
     def testHighlightFile7(self):
@@ -129,7 +139,8 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         Явное задание языка для раскраски
         """
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="source_utf8.py" lang="python":)'
         self.testPage.content = content
 
@@ -137,16 +148,21 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>' in result)
+            '<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>'
+            in result
+        )
         self.assertTrue(
-            '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' in result)
+            '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>'
+            in result
+        )
 
     def testHighlightFile8(self):
         """
         Нет явного задания языка
         """
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="source_utf8.py":)'
         self.testPage.content = content
 
@@ -154,16 +170,21 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>' in result)
+            '<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>'
+            in result
+        )
         self.assertTrue(
-            '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' in result)
+            '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>'
+            in result
+        )
 
     def testHighlightFile9(self):
         """
         Явное задание языка, не соответствующее расширению файла
         """
         Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")])
+            [os.path.join(self.samplefilesPath, "source_utf8.py")]
+        )
         content = '(:source file="source_utf8.py" lang="text":)'
         self.testPage.content = content
 
@@ -171,11 +192,15 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>' not in result)
-        self.assertTrue('import os.path' in result)
+            '<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>'
+            not in result
+        )
+        self.assertTrue("import os.path" in result)
 
         self.assertTrue(
-            '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' not in result)
+            '<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>'
+            not in result
+        )
         self.assertTrue("__correctSysPath()" in result)
 
     def testHighlightFile10(self):
@@ -188,10 +213,10 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertTrue('source_utf8111.py' in result, result)
+        self.assertTrue("source_utf8111.py" in result, result)
 
     def testHighlightFileSubdirForwardSlash(self):
-        subdir = 'subdir 1/subdir 2/'
+        subdir = "subdir 1/subdir 2/"
         attach = Attachment(self.testPage)
         attach.createSubdir(subdir)
 
@@ -206,10 +231,11 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )
 
     def testHighlightFileSubdirBackSlash(self):
-        subdir = 'subdir 1/subdir 2/'
+        subdir = "subdir 1/subdir 2/"
         attach = Attachment(self.testPage)
         attach.createSubdir(subdir)
 
@@ -224,17 +250,20 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )
 
     def testHighlightFileSubdirForwardSlashWithAttach(self):
-        subdir = 'subdir 1/subdir 2/'
+        subdir = "subdir 1/subdir 2/"
         attach = Attachment(self.testPage)
         attach.createSubdir(subdir)
 
         files = [os.path.join(self.samplefilesPath, "source_utf8.py")]
         attach.attach(files, subdir=subdir)
 
-        content = '(:source file="Attach:subdir 1/subdir 2/source_utf8.py" lang="text":)'
+        content = (
+            '(:source file="Attach:subdir 1/subdir 2/source_utf8.py" lang="text":)'
+        )
         self.testPage.content = content
 
         generator = HtmlGenerator(self.testPage, self.application)
@@ -242,17 +271,20 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )
 
     def testHighlightFileSubdirBackSlashWithAttach(self):
-        subdir = 'subdir 1/subdir 2/'
+        subdir = "subdir 1/subdir 2/"
         attach = Attachment(self.testPage)
         attach.createSubdir(subdir)
 
         files = [os.path.join(self.samplefilesPath, "source_utf8.py")]
         attach.attach(files, subdir=subdir)
 
-        content = r'(:source file="Attach:subdir 1\subdir 2\source_utf8.py" lang="text":)'
+        content = (
+            r'(:source file="Attach:subdir 1\subdir 2\source_utf8.py" lang="text":)'
+        )
         self.testPage.content = content
 
         generator = HtmlGenerator(self.testPage, self.application)
@@ -260,4 +292,5 @@ class SourceFilePluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("__correctSysPath()" in result)
         self.assertTrue(
-            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result)
+            "Плагин, добавляющий обработку команды (:source:) в википарсер" in result
+        )

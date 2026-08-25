@@ -3,25 +3,27 @@
 import unittest
 from pathlib import Path
 
-from outwiker.pages.wiki.actions.attachlist import (AttachListDialog,
-                                                    AttachListDialogController)
+from outwiker.pages.wiki.actions.attachlist import (
+    AttachListDialog,
+    AttachListDialogController,
+)
 from outwiker.gui.tester import Tester
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class AttachListDialogTest (unittest.TestCase, BaseOutWikerGUIMixin):
+class AttachListDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты диалога для вставки команды (:attachlist:)
     """
 
     def setUp(self):
         self.initApplication()
-        self.files_path = Path('testdata/samplefiles/')
+        self.files_path = Path("testdata/samplefiles/")
 
         self.wikiroot = self.createWiki()
         factory = TextPageFactory()
-        self.page = factory.create(self.wikiroot, 'Страница 1', [])
+        self.page = factory.create(self.wikiroot, "Страница 1", [])
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.page
@@ -135,7 +137,7 @@ class AttachListDialogTest (unittest.TestCase, BaseOutWikerGUIMixin):
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 0
         self._dialog.isDescend = False
-        self._dialog.subdir = '.'
+        self._dialog.subdir = "."
 
         result = controller.getDialogResult()
 
@@ -143,7 +145,7 @@ class AttachListDialogTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testSortByNameSubdir_01(self):
         controller = AttachListDialogController(self._dialog)
-        subdir = 'subdir_1'
+        subdir = "subdir_1"
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 0
@@ -156,7 +158,7 @@ class AttachListDialogTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testSortByNameSubdir_02(self):
         controller = AttachListDialogController(self._dialog)
-        subdir = 'subdir_1/subdir_2'
+        subdir = "subdir_1/subdir_2"
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 0
@@ -169,7 +171,7 @@ class AttachListDialogTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testSortByNameSubdir_03(self):
         controller = AttachListDialogController(self._dialog)
-        subdir = 'subdir_1\\subdir_2'
+        subdir = "subdir_1\\subdir_2"
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 0

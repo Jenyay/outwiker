@@ -35,9 +35,7 @@ class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         movePage(self.wikiroot["Страница 1"], self.wikiroot["Страница 1"])
 
         self.assertNotEqual(self.wikiroot["Страница 1"], None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
     def test_error_move_to_self(self):
         self.application.mainWindow.toaster.counter.clear()
@@ -45,9 +43,7 @@ class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         movePage(self.wikiroot["Страница 1"], self.wikiroot["Страница 1"])
 
         self.assertNotEqual(self.wikiroot["Страница 1"], None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
     def testCommandMove_03(self):
         movePage(self.wikiroot["Страница 1"], self.wikiroot)
@@ -67,12 +63,10 @@ class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertNotEqual(self.wikiroot["Страница 2/Страница 1"], None)
 
     def testCommandMove_06(self):
-        movePage(self.wikiroot["Страница 1"],
-                 self.wikiroot["Страница 2/Страница 3"])
+        movePage(self.wikiroot["Страница 1"], self.wikiroot["Страница 2/Страница 3"])
 
         self.assertEqual(self.wikiroot["Страница 1"], None)
-        self.assertNotEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"],
-                            None)
+        self.assertNotEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"], None)
 
     def test_error_move_to_child(self):
         self.application.mainWindow.toaster.counter.clear()
@@ -81,9 +75,7 @@ class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertNotEqual(self.wikiroot["Страница 3"], None)
         self.assertNotEqual(self.wikiroot["Страница 2/Страница 3"], None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
     # TODO: Problem. Tests crash with segmentation fault with this test
     # def test_error_duplicate_title(self):
@@ -98,8 +90,7 @@ class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     #         1)
 
     def testCommandMove_09(self):
-        self.assertRaises(AssertionError,
-                          movePage, self.wikiroot["Страница 1"], None)
+        self.assertRaises(AssertionError, movePage, self.wikiroot["Страница 1"], None)
         self.assertRaises(AssertionError, movePage, None, self.wikiroot)
 
     def testCommandMove_10_readonly(self):
@@ -107,45 +98,33 @@ class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.wikiroot["Страница 2/Страница 3"].readonly = True
 
         self.application.mainWindow.toaster.counter.clear()
-        movePage(self.wikiroot["Страница 1"],
-                 self.wikiroot["Страница 2/Страница 3"])
+        movePage(self.wikiroot["Страница 1"], self.wikiroot["Страница 2/Страница 3"])
 
         self.assertNotEqual(self.wikiroot["Страница 1"], None)
-        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"],
-                         None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"], None)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
     def testCommandMove_11_readonly(self):
         self.wikiroot["Страница 1"].readonly = False
         self.wikiroot["Страница 2/Страница 3"].readonly = True
 
         self.application.mainWindow.toaster.counter.clear()
-        movePage(self.wikiroot["Страница 1"],
-                 self.wikiroot["Страница 2/Страница 3"])
+        movePage(self.wikiroot["Страница 1"], self.wikiroot["Страница 2/Страница 3"])
 
-        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"],
-                         None)
+        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"], None)
         self.assertNotEqual(self.wikiroot["Страница 1"], None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
     def testCommandMove_12_readonly(self):
         self.wikiroot["Страница 1"].readonly = True
         self.wikiroot["Страница 2/Страница 3"].readonly = False
 
         self.application.mainWindow.toaster.counter.clear()
-        movePage(self.wikiroot["Страница 1"],
-                 self.wikiroot["Страница 2/Страница 3"])
+        movePage(self.wikiroot["Страница 1"], self.wikiroot["Страница 2/Страница 3"])
 
         self.assertNotEqual(self.wikiroot["Страница 1"], None)
-        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"],
-                         None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"], None)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
     def testCommandMove_13_readonly(self):
         self.wikiroot["Страница 1"].readonly = True
@@ -155,11 +134,8 @@ class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         movePage(self.wikiroot["Страница 1"], self.wikiroot["Страница 2/Страница 3"])
 
         self.assertNotEqual(self.wikiroot["Страница 1"], None)
-        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"],
-                         None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"], None)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
     def testCommandMove_14_readonly(self):
         self.wikiroot["Страница 1"].readonly = True
@@ -169,8 +145,5 @@ class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         movePage(self.wikiroot["Страница 1"], self.wikiroot["Страница 2/Страница 3"])
 
         self.assertNotEqual(self.wikiroot["Страница 1"], None)
-        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"],
-                         None)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 1"], None)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)

@@ -53,6 +53,7 @@ class WikiPageFactory(PageFactory):
     """
     Фабрика для создания викистраниц и их представлений
     """
+
     @property
     def title(self):
         """
@@ -71,13 +72,19 @@ class WikiPageFactory(PageFactory):
         """
         Зарегистрировать все действия, связанные с викистраницей
         """
-        [application.actionController.register(actionTuple.action_type(application), actionTuple.hotkey)
-         for actionTuple in wiki_actions]
+        [
+            application.actionController.register(
+                actionTuple.action_type(application), actionTuple.hotkey
+            )
+            for actionTuple in wiki_actions
+        ]
 
     @staticmethod
     def removeActions(application):
-        [application.actionController.removeAction(actionTuple.action_type.stringId)
-         for actionTuple in wiki_actions]
+        [
+            application.actionController.removeAction(actionTuple.action_type.stringId)
+            for actionTuple in wiki_actions
+        ]
 
     def getPageTypeString(self):
         return PAGE_TYPE_STRING

@@ -2,16 +2,24 @@
 
 import re
 
-from pyparsing import Regex, OneOrMore, Optional, LineEnd, LineStart, Literal, AtLineStart
+from pyparsing import (
+    Regex,
+    OneOrMore,
+    Optional,
+    LineEnd,
+    LineStart,
+    Literal,
+    AtLineStart,
+)
 
 
-class TableFactory (object):
+class TableFactory(object):
     @staticmethod
     def make(parser):
         return TableToken(parser).getToken()
 
 
-class TableToken (object):
+class TableToken(object):
     """
     Токен для таблиц
     """
@@ -23,17 +31,21 @@ class TableToken (object):
         tableCell = Regex(r"(?P<text>(.|(\\\n))*?)\|\|")
         tableCell.setParseAction(self.__convertTableCell)
 
-        tableRow = AtLineStart(Literal("||") + OneOrMore(tableCell.leaveWhitespace()) + Optional(LineEnd()))
+        tableRow = AtLineStart(
+            Literal("||") + OneOrMore(tableCell.leaveWhitespace()) + Optional(LineEnd())
+        )
         tableRow.setParseAction(self.__convertTableRow)
 
-        table = AtLineStart(Regex(r"\|\| *(?P<params>.+)?") + LineEnd() + OneOrMore(tableRow))
+        table = AtLineStart(
+            Regex(r"\|\| *(?P<params>.+)?") + LineEnd() + OneOrMore(tableRow)
+        )
         table = table.setParseAction(self.__convertTable)("table")
 
         return table
 
     def __convertTableCell(self, s, loc, toks):
         text = toks["text"]
-        text = re.sub(r'\\\n', '', text)
+        text = re.sub(r"\\\n", "", text)
 
         leftAlign = toks["text"][-1] in " \t"
 
@@ -42,19 +54,18 @@ class TableToken (object):
         # первая ячейка в строке или нет
         rightAlign = loc > 0 and (s[loc - 1] in " \t" or s[loc] in " \t")
 
-        align = u''
+        align = ""
 
         if not text.strip():
-            align = ''
+            align = ""
         elif leftAlign and rightAlign:
-            align = u' align="center"'
+            align = ' align="center"'
         elif leftAlign:
-            align = u' align="left"'
+            align = ' align="left"'
         elif rightAlign:
-            align = u' align="right"'
+            align = ' align="right"'
 
-        result = u'<td%s>%s</td>' % (align,
-                                     self.parser.parseWikiMarkup(text.strip()))
+        result = "<td%s>%s</td>" % (align, self.parser.parseWikiMarkup(text.strip()))
 
         return result
 
@@ -64,8 +75,8 @@ class TableToken (object):
         else:
             lastindex = len(t)
 
-        result = u"<tr>"
-        for element in t[1: lastindex]:
+        result = "<tr>"
+        for element in t[1:lastindex]:
             result += element
 
         result += "</tr>"
@@ -73,7 +84,7 @@ class TableToken (object):
         return result
 
     def __convertTable(self, s, l, t):
-        result = u"<table %s>" % t[0][2:].strip()
+        result = "<table %s>" % t[0][2:].strip()
         for element in t[2:]:
             result += element
 

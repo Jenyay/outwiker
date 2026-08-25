@@ -52,8 +52,7 @@ class MainPane(metaclass=ABCMeta):
         return pane
 
     def loadPaneSize(self):
-        self.pane.BestSize((self.config.width.value,
-                            self.config.height.value))
+        self.pane.BestSize((self.config.width.value, self.config.height.value))
 
     def show(self):
         self.pane.Show()
@@ -70,8 +69,7 @@ class MainPane(metaclass=ABCMeta):
         self._panel = None
 
     def saveParams(self):
-        self._savePaneInfo(self.config.pane,
-                           self._auiManager.GetPane(self.panel))
+        self._savePaneInfo(self.config.pane, self._auiManager.GetPane(self.panel))
 
         self.config.width.value = self.panel.GetSize()[0]
         self.config.height.value = self.panel.GetSize()[1]

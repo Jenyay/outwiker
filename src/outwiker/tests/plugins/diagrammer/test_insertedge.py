@@ -30,8 +30,7 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testArrows_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerNone(
-            self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerNone(self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -44,8 +43,7 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testArrows_02(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerLeft(
-            self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerLeft(self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -58,7 +56,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testArrows_03(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -128,7 +128,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testLabel_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -142,7 +144,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testStyleLine_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -151,12 +155,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б')
+        self.assertEqual(result, "А -> Б")
 
     def testStyleLine_02(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -165,12 +171,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [style = solid]')
+        self.assertEqual(result, "А -> Б [style = solid]")
 
     def testStyleLine_03(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -179,12 +187,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [style = dotted]')
+        self.assertEqual(result, "А -> Б [style = dotted]")
 
     def testStyleLine_04(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -193,12 +203,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [style = dashed]')
+        self.assertEqual(result, "А -> Б [style = dashed]")
 
     def testStyleLine_05(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -213,7 +225,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testStyleArrow_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -222,12 +236,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б')
+        self.assertEqual(result, "А -> Б")
 
     def testStyleArrow_02(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -236,12 +252,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [hstyle = generalization]')
+        self.assertEqual(result, "А -> Б [hstyle = generalization]")
 
     def testStyleArrow_03(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -250,12 +268,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [hstyle = composition]')
+        self.assertEqual(result, "А -> Б [hstyle = composition]")
 
     def testStyleArrow_04(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -264,12 +284,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [hstyle = aggregation]')
+        self.assertEqual(result, "А -> Б [hstyle = aggregation]")
 
     def testStyleArrow_05(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -279,12 +301,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [style = dashed, hstyle = aggregation]')
+        self.assertEqual(result, "А -> Б [style = dashed, hstyle = aggregation]")
 
     def testLineColor_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -299,7 +323,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testLineColor_02(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -309,12 +335,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б')
+        self.assertEqual(result, "А -> Б")
 
     def testLineColor_03(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -329,7 +357,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testLineColor_04(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -345,7 +375,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testFontSize_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -355,12 +387,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [fontsize = 11]')
+        self.assertEqual(result, "А -> Б [fontsize = 11]")
 
     def testFontSize_02(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -370,12 +404,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б')
+        self.assertEqual(result, "А -> Б")
 
     def testFontSize_03(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -391,7 +427,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testTextColor_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -406,7 +444,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testTextColor_02(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -416,12 +456,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б')
+        self.assertEqual(result, "А -> Б")
 
     def testTextColor_03(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -436,7 +478,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testTextColor_04(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -452,7 +496,9 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testThick_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -461,12 +507,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [thick]')
+        self.assertEqual(result, "А -> Б [thick]")
 
     def testThick_02(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -475,12 +523,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б')
+        self.assertEqual(result, "А -> Б")
 
     def testThick_03(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -490,12 +540,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [style = solid, thick]')
+        self.assertEqual(result, "А -> Б [style = solid, thick]")
 
     def testFolded_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -504,12 +556,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [folded]')
+        self.assertEqual(result, "А -> Б [folded]")
 
     def testFolded_02(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -518,12 +572,14 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б')
+        self.assertEqual(result, "А -> Б")
 
     def testFolded_03(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
+            self._dlg
+        )
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -533,4 +589,4 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        self.assertEqual(result, 'А -> Б [style = solid, folded]')
+        self.assertEqual(result, "А -> Б [style = solid, folded]")

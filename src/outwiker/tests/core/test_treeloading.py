@@ -41,56 +41,63 @@ class WikiPagesTest(unittest.TestCase):
         Проверка доступа к отдельным страницам и
         правильности установки заголовков
         """
-        self.assertEqual(self.root["page 4"].title,
-                         "page 4")
+        self.assertEqual(self.root["page 4"].title, "page 4")
 
-        self.assertEqual(self.root["Страница 1"].title,
-                         "Страница 1")
+        self.assertEqual(self.root["Страница 1"].title, "Страница 1")
 
-        self.assertEqual(self.root["стрАниЦа 3"].title,
-                         "Страница 3")
+        self.assertEqual(self.root["стрАниЦа 3"].title, "Страница 3")
 
-        self.assertEqual(self.root["Страница 1/Страница 2"].title,
-                         "Страница 2")
+        self.assertEqual(self.root["Страница 1/Страница 2"].title, "Страница 2")
 
-        self.assertEqual(self.root["СтраНица 1/стРаниЦА 2/СтраНицА 5"].title,
-                         "Страница 5")
+        self.assertEqual(
+            self.root["СтраНица 1/стРаниЦА 2/СтраНицА 5"].title, "Страница 5"
+        )
 
-        self.assertEqual(self.root["Страница 1"]["Страница 2"].title,
-                         "Страница 2")
+        self.assertEqual(self.root["Страница 1"]["Страница 2"].title, "Страница 2")
 
         self.assertEqual(self.root["Страница 111"], None)
         self.assertEqual(self.root["/"], self.root)
 
     def testPageAccess2(self):
-        self.assertEqual(self.root["Страница 1"]["Страница 2"],
-                         self.root["Страница 1/Страница 2"])
+        self.assertEqual(
+            self.root["Страница 1"]["Страница 2"], self.root["Страница 1/Страница 2"]
+        )
 
-        self.assertEqual(self.root["СтраНица 1"]["стРаниЦА 2/СтраНицА 5"],
-                         self.root["СтраНица 1/стРаниЦА 2/СтраНицА 5"])
+        self.assertEqual(
+            self.root["СтраНица 1"]["стРаниЦА 2/СтраНицА 5"],
+            self.root["СтраНица 1/стРаниЦА 2/СтраНицА 5"],
+        )
 
     def testPageAccess3(self):
-        self.assertEqual(self.root["Страница 1"]["/Страница 1/Страница 2"],
-                         self.root["Страница 1/Страница 2"])
+        self.assertEqual(
+            self.root["Страница 1"]["/Страница 1/Страница 2"],
+            self.root["Страница 1/Страница 2"],
+        )
 
-        self.assertEqual(self.root["СтраНица 1"]["/СтраНица 1/стРаниЦА 2/СтраНицА 5"],
-                         self.root["СтраНица 1/стРаниЦА 2/СтраНицА 5"])
+        self.assertEqual(
+            self.root["СтраНица 1"]["/СтраНица 1/стРаниЦА 2/СтраНицА 5"],
+            self.root["СтраНица 1/стРаниЦА 2/СтраНицА 5"],
+        )
 
     def testAccessRoot(self):
         self.assertEqual(self.root["Страница 1"]["/"], self.root)
 
     def testPageType(self):
-        self.assertEqual(self.root["Типы страниц/HTML-страница"].getTypeString(),
-                         HTML_TS)
+        self.assertEqual(
+            self.root["Типы страниц/HTML-страница"].getTypeString(), HTML_TS
+        )
 
-        self.assertEqual(self.root["Типы страниц/wiki-страница"].getTypeString(),
-                         WIKI_TS)
+        self.assertEqual(
+            self.root["Типы страниц/wiki-страница"].getTypeString(), WIKI_TS
+        )
 
-        self.assertEqual(self.root["Типы страниц/Страница поиска"].getTypeString(),
-                         SEARCH_TS)
+        self.assertEqual(
+            self.root["Типы страниц/Страница поиска"].getTypeString(), SEARCH_TS
+        )
 
-        self.assertEqual(self.root["Типы страниц/Текстовая страница"].getTypeString(),
-                         TEXT_TS)
+        self.assertEqual(
+            self.root["Типы страниц/Текстовая страница"].getTypeString(), TEXT_TS
+        )
 
     def testPagesParent(self):
         """
@@ -99,9 +106,12 @@ class WikiPagesTest(unittest.TestCase):
         self.assertEqual(self.root["page 4"].parent, self.root)
         self.assertEqual(self.root["Страница 1"].parent, self.root)
         self.assertEqual(
-            self.root["Страница 1/Страница 2"].parent, self.root["Страница 1"])
+            self.root["Страница 1/Страница 2"].parent, self.root["Страница 1"]
+        )
         self.assertEqual(
-            self.root["Страница 1/Страница 2/Страница 5"].parent, self.root["Страница 1/Страница 2"])
+            self.root["Страница 1/Страница 2/Страница 5"].parent,
+            self.root["Страница 1/Страница 2"],
+        )
 
         self.assertEqual(self.root.parent, None)
 
@@ -109,12 +119,13 @@ class WikiPagesTest(unittest.TestCase):
         """
         Проверка правильности путей до страниц
         """
-        self.assertEqual(self.root["page 4"].path,
-                         os.path.join(self.path, "page 4"))
-        self.assertEqual(self.root["Страница 1"].path,
-                         os.path.join(self.path, "Страница 1"))
-        self.assertEqual(self.root["Страница 3"].path,
-                         os.path.join(self.path, "Страница 3"))
+        self.assertEqual(self.root["page 4"].path, os.path.join(self.path, "page 4"))
+        self.assertEqual(
+            self.root["Страница 1"].path, os.path.join(self.path, "Страница 1")
+        )
+        self.assertEqual(
+            self.root["Страница 3"].path, os.path.join(self.path, "Страница 3")
+        )
 
         fullpath = os.path.join(self.path, "Страница 1")
         fullpath = os.path.join(fullpath, "Страница 2")
@@ -123,7 +134,9 @@ class WikiPagesTest(unittest.TestCase):
 
     def testTags(self):
         self.assertTrue("тест" in self.root["Страница 1"].tags)
-        self.assertTrue("test" in self.root["Страница 1"].tags, self.root["Страница 1"].tags)
+        self.assertTrue(
+            "test" in self.root["Страница 1"].tags, self.root["Страница 1"].tags
+        )
         self.assertTrue("двойной тег" in self.root["Страница 1"].tags)
         self.assertEqual(len(self.root["Страница 1"].tags), 3)
 
@@ -142,11 +155,15 @@ class WikiPagesTest(unittest.TestCase):
         self.assertEqual(self.root["Страница 1/Страница 2"].getTypeString(), TEXT_TS)
         self.assertEqual(self.root["Страница 3"].getTypeString(), HTML_TS)
         self.assertEqual(self.root["page 4"].getTypeString(), TEXT_TS)
-        self.assertEqual(self.root["Страница 1/Страница 2/Страница 5"].getTypeString(), TEXT_TS)
+        self.assertEqual(
+            self.root["Страница 1/Страница 2/Страница 5"].getTypeString(), TEXT_TS
+        )
 
     def testChildren(self):
         self.assertEqual(len(self.root["Страница 1"].children), 1)
-        self.assertEqual(self.root["Страница 1"].children[0], self.root["Страница 1/Страница 2"])
+        self.assertEqual(
+            self.root["Страница 1"].children[0], self.root["Страница 1/Страница 2"]
+        )
 
         self.assertEqual(len(self.root["Страница 1/Страница 2"].children), 2)
         self.assertEqual(len(self.root["Страница 3"].children), 0)
@@ -154,7 +171,9 @@ class WikiPagesTest(unittest.TestCase):
 
     def testIcons(self):
         self.assertEqual(os.path.basename(self.root["Страница 1"].icon), "__icon.png")
-        self.assertEqual(os.path.basename(self.root["Страница 1/Страница 2"].icon), "__icon.gif")
+        self.assertEqual(
+            os.path.basename(self.root["Страница 1/Страница 2"].icon), "__icon.gif"
+        )
         self.assertEqual(self.root["Страница 3"].icon, None)
 
     def testParams(self):
@@ -171,8 +190,10 @@ class WikiPagesTest(unittest.TestCase):
     def testSubpath_01(self):
         self.assertEqual(self.root["Страница 1"].subpath, "Страница 1")
 
-        self.assertEqual(self.root["Страница 1/Страница 2/Страница 5"].subpath,
-                         "Страница 1/Страница 2/Страница 5")
+        self.assertEqual(
+            self.root["Страница 1/Страница 2/Страница 5"].subpath,
+            "Страница 1/Страница 2/Страница 5",
+        )
 
     def testSubpath_02(self):
         page = self.root["Страница 1"]
@@ -209,13 +230,18 @@ class WikiPagesTest(unittest.TestCase):
         self.assertTrue(self.root.isChild(self.root))
 
     def testIsChild3(self):
-        self.assertTrue(self.root["Страница 1"].isChild(self.root["Страница 1/Страница 2/Страница 5"]))
+        self.assertTrue(
+            self.root["Страница 1"].isChild(
+                self.root["Страница 1/Страница 2/Страница 5"]
+            )
+        )
 
 
 class SubWikiTest(unittest.TestCase):
     """
     Тест на открытие подстраниц вики как полноценную вики
     """
+
     def setUp(self):
         self.rootpath = "testdata/samplewiki"
 
@@ -231,6 +257,7 @@ class TextPageAttachmentTest(unittest.TestCase):
     """
     Тест для проверки работы с прикрепленными файлами
     """
+
     def setUp(self):
         self._application = Application()
         # Количество срабатываний событий при обновлении страницы
@@ -238,7 +265,7 @@ class TextPageAttachmentTest(unittest.TestCase):
         self.pageUpdateSender = None
 
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         self._application.wikiroot = self.wikiroot
@@ -334,15 +361,29 @@ class TextPageAttachmentTest(unittest.TestCase):
         self.assertEqual(len(Attachment(self.wikiroot["Страница 2"]).attachmentFull), 0)
 
         # Проверим пути до прикрепленных файлов
-        attachPathPage1 = TextPageAttachmentTest.getFullAttachPath(self.wikiroot, page1, files)
-        attachPathPage3 = TextPageAttachmentTest.getFullAttachPath(self.wikiroot, page3, files)
+        attachPathPage1 = TextPageAttachmentTest.getFullAttachPath(
+            self.wikiroot, page1, files
+        )
+        attachPathPage3 = TextPageAttachmentTest.getFullAttachPath(
+            self.wikiroot, page3, files
+        )
 
-        self.assertTrue(attachPathPage1[0] in Attachment(self.wikiroot[page1]).attachmentFull)
-        self.assertTrue(attachPathPage1[1] in Attachment(self.wikiroot[page1]).attachmentFull)
-        self.assertTrue(attachPathPage1[2] in Attachment(self.wikiroot[page1]).attachmentFull)
+        self.assertTrue(
+            attachPathPage1[0] in Attachment(self.wikiroot[page1]).attachmentFull
+        )
+        self.assertTrue(
+            attachPathPage1[1] in Attachment(self.wikiroot[page1]).attachmentFull
+        )
+        self.assertTrue(
+            attachPathPage1[2] in Attachment(self.wikiroot[page1]).attachmentFull
+        )
 
-        self.assertTrue(attachPathPage3[0] in Attachment(self.wikiroot[page3]).attachmentFull)
-        self.assertTrue(attachPathPage3[1] in Attachment(self.wikiroot[page3]).attachmentFull)
+        self.assertTrue(
+            attachPathPage3[0] in Attachment(self.wikiroot[page3]).attachmentFull
+        )
+        self.assertTrue(
+            attachPathPage3[1] in Attachment(self.wikiroot[page3]).attachmentFull
+        )
 
     @staticmethod
     def getFullAttachPath(wiki, pageSubpath, fnames):

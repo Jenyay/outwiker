@@ -32,11 +32,11 @@ class HTMLEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
         files = []
         self.dropTarget.OnDropFiles(0, 0, files)
 
-        expected_text = ''
+        expected_text = ""
         self.assertEqual(self.editor.GetText(), expected_text)
 
     def test_drop_single_external(self):
-        files = [os.path.abspath('testdata/images/icon.png')]
+        files = [os.path.abspath("testdata/images/icon.png")]
         self.dropTarget.OnDropFiles(0, 0, files)
 
         expected_text = files[0]
@@ -44,31 +44,30 @@ class HTMLEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_drop_several_external(self):
         files = [
-            os.path.abspath('testdata/images/icon.png'),
-            os.path.abspath('testdata/images/first.png'),
+            os.path.abspath("testdata/images/icon.png"),
+            os.path.abspath("testdata/images/first.png"),
         ]
         self.dropTarget.OnDropFiles(0, 0, files)
 
-        expected_text = ' '.join(files)
+        expected_text = " ".join(files)
         self.assertEqual(self.editor.GetText(), expected_text)
 
     def test_drop_single_attach(self):
         attach = Attachment(self.testpage)
-        attach.attach(['testdata/images/icon.png'])
+        attach.attach(["testdata/images/icon.png"])
 
         files = sorted(attach.attachmentFull)
         self.dropTarget.OnDropFiles(0, 0, files)
 
-        expected_text = '__attach/icon.png'
+        expected_text = "__attach/icon.png"
         self.assertEqual(self.editor.GetText(), expected_text)
 
     def test_drop_several_attach(self):
         attach = Attachment(self.testpage)
-        attach.attach(['testdata/images/icon.png',
-                      'testdata/images/first.png'])
+        attach.attach(["testdata/images/icon.png", "testdata/images/first.png"])
 
         files = sorted(attach.attachmentFull)
         self.dropTarget.OnDropFiles(0, 0, files)
 
-        expected_text = '__attach/first.png __attach/icon.png'
+        expected_text = "__attach/first.png __attach/icon.png"
         self.assertEqual(self.editor.GetText(), expected_text)

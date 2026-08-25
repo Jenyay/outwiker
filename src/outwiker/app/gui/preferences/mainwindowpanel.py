@@ -32,7 +32,9 @@ class MainWindowPanel(BasePrefPanel):
         self.SetSizer(main_sizer)
 
     def _createStatusbarGUI(self, main_sizer: wx.Sizer):
-        self.statusbarVisibleCheckBox = self._createCheckBox(_("Show status bar"), main_sizer)
+        self.statusbarVisibleCheckBox = self._createCheckBox(
+            _("Show status bar"), main_sizer
+        )
 
     def _createTitleFormatGUI(self, main_sizer):
         """

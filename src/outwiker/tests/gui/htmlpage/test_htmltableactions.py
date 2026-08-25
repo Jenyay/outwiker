@@ -5,9 +5,11 @@ import unittest
 from outwiker.gui.tester import Tester
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.actions.polyactionsid import (TABLE_STR_ID,
-                                            TABLE_ROW_STR_ID,
-                                            TABLE_CELL_STR_ID)
+from outwiker.actions.polyactionsid import (
+    TABLE_STR_ID,
+    TABLE_ROW_STR_ID,
+    TABLE_CELL_STR_ID,
+)
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
@@ -34,11 +36,11 @@ class HtmlTableActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         editor = self._getCodeEditor()
         self.application.actionController.getAction(TABLE_STR_ID).run(None)
 
-        validResult = '''<table border="1">
+        validResult = """<table border="1">
 <tr>
 <td></td>
 </tr>
-</table>'''
+</table>"""
 
         self.assertEqual(editor.GetText(), validResult)
 
@@ -46,18 +48,17 @@ class HtmlTableActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         editor = self._getCodeEditor()
         self.application.actionController.getAction(TABLE_ROW_STR_ID).run(None)
 
-        validResult = '''<tr>
+        validResult = """<tr>
 <td></td>
-</tr>'''
+</tr>"""
 
         self.assertEqual(editor.GetText(), validResult)
 
     def testInsertCell_01(self):
         editor = self._getCodeEditor()
-        self.application.actionController.getAction(
-            TABLE_CELL_STR_ID).run(None)
+        self.application.actionController.getAction(TABLE_CELL_STR_ID).run(None)
 
-        validResult = '''<td></td>'''
+        validResult = """<td></td>"""
 
         self.assertEqual(editor.GetText(), validResult)
 

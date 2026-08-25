@@ -17,7 +17,7 @@ class PageUidDepotTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -80,7 +80,9 @@ class PageUidDepotTest(unittest.TestCase):
         new_uid = "new_uid"
         self.page_1.setUid(new_uid)
 
-        self.assertEqual(self.wikiroot.getPageByUid(new_uid).subpath, self.page_1.subpath)
+        self.assertEqual(
+            self.wikiroot.getPageByUid(new_uid).subpath, self.page_1.subpath
+        )
         self.assertIsNone(self.wikiroot.getPageByUid(old_uid))
 
     def test_change_uid_not_unique(self):

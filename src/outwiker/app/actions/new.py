@@ -8,6 +8,7 @@ class NewAction(BaseAction):
     """
     Создание нового дерева заметок
     """
+
     stringId = "NewTree"
 
     def __init__(self, application):

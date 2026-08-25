@@ -18,30 +18,24 @@ class WikiColorizerController(BaseTextStylingController):
             return threading.Thread(
                 None,
                 self._colorizeThreadFunc,
-                args=(params.text,
-                      params.editor,
-                      params.editor.colorizeSyntax,
-                      params.editor.enableSpellChecking,
-                      runEvent)
+                args=(
+                    params.text,
+                    params.editor,
+                    params.editor.colorizeSyntax,
+                    params.editor.enableSpellChecking,
+                    runEvent,
+                ),
             )
         else:
             return None
 
-    def _colorizeThreadFunc(self,
-                            text,
-                            editor,
-                            colorizeSyntax,
-                            enableSpellChecking,
-                            runEvent):
-        colorizer = WikiColorizer(editor,
-                                  colorizeSyntax,
-                                  enableSpellChecking,
-                                  runEvent)
+    def _colorizeThreadFunc(
+        self, text, editor, colorizeSyntax, enableSpellChecking, runEvent
+    ):
+        colorizer = WikiColorizer(editor, colorizeSyntax, enableSpellChecking, runEvent)
         stylingInfo = colorizer.colorize(text)
 
         if self._runColorizingEvent.is_set():
-            self.updateStyles(editor,
-                              text,
-                              stylingInfo.styleBytes)
+            self.updateStyles(editor, text, stylingInfo.styleBytes)
 
         wx.CallAfter(editor.markSpellErrors, stylingInfo.spellStatusFlags)

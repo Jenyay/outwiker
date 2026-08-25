@@ -37,7 +37,7 @@ class AttachMainPane(MainPane):
     @property
     def caption(self):
         page = self._application.selectedPage
-        title = _('Attachments')
+        title = _("Attachments")
         if page is None:
             return title
 
@@ -45,7 +45,7 @@ class AttachMainPane(MainPane):
         if not subdir:
             return title
 
-        caption = '{title} [{subdir}]'.format(title = title, subdir=subdir)
+        caption = "{title} [{subdir}]".format(title=title, subdir=subdir)
         return caption
 
     def _createPane(self):
@@ -61,8 +61,19 @@ class AttachMainPane(MainPane):
         return pane
 
     def _getPaneDefault(self):
-        pane = wx.aui.AuiPaneInfo().Name("attachesPane").Caption(self.caption).Gripper(False).CaptionVisible(
-            True).Layer(0).Position(0).CloseButton(True).MaximizeButton(False).Bottom().Dock()
+        pane = (
+            wx.aui.AuiPaneInfo()
+            .Name("attachesPane")
+            .Caption(self.caption)
+            .Gripper(False)
+            .CaptionVisible(True)
+            .Layer(0)
+            .Position(0)
+            .CloseButton(True)
+            .MaximizeButton(False)
+            .Bottom()
+            .Dock()
+        )
 
         return pane
 

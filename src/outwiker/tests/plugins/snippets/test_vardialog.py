@@ -16,6 +16,7 @@ class SnippetsVarDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.loader.load(plugins_dir)
 
         from snippets.gui.variablesdialog import VariablesDialog
+
         self._dialog = VariablesDialog(mainWnd, self.application)
 
     def tearDown(self):
@@ -28,30 +29,26 @@ class SnippetsVarDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(variables, {})
 
     def test_single_empty(self):
-        self._dialog.addStringVariable('test')
+        self._dialog.addStringVariable("test")
         variables = self._dialog.getVarDict()
-        self.assertEqual(variables, {'test': ''})
+        self.assertEqual(variables, {"test": ""})
 
     def test_single(self):
-        self._dialog.addStringVariable('test')
-        self._dialog.setStringVariable('test', 'Проверка')
+        self._dialog.addStringVariable("test")
+        self._dialog.setStringVariable("test", "Проверка")
 
         variables = self._dialog.getVarDict()
-        self.assertEqual(variables, {'test': 'Проверка'})
+        self.assertEqual(variables, {"test": "Проверка"})
 
     def test_two_items(self):
-        self._dialog.addStringVariable('test_1')
-        self._dialog.addStringVariable('test_2')
+        self._dialog.addStringVariable("test_1")
+        self._dialog.addStringVariable("test_2")
 
-        self._dialog.setStringVariable('test_1', 'Проверка_1')
-        self._dialog.setStringVariable('test_2', 'Проверка_2')
+        self._dialog.setStringVariable("test_1", "Проверка_1")
+        self._dialog.setStringVariable("test_2", "Проверка_2")
 
         variables = self._dialog.getVarDict()
-        self.assertEqual(variables, {'test_1': 'Проверка_1',
-                                     'test_2': 'Проверка_2'})
+        self.assertEqual(variables, {"test_1": "Проверка_1", "test_2": "Проверка_2"})
 
     def test_no_item(self):
-        self.assertRaises(KeyError,
-                          self._dialog.setStringVariable,
-                          'test',
-                          'test')
+        self.assertRaises(KeyError, self._dialog.setStringVariable, "test", "test")

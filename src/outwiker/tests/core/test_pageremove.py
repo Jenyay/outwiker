@@ -14,7 +14,7 @@ from outwiker.tests.utils import removeDir
 class RemovePagesTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
         self._application.wikiroot = None
 
         self.wikiroot = createNotesTree(self.path)
@@ -23,15 +23,9 @@ class RemovePagesTest(unittest.TestCase):
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3"],
-                       "Страница 4",
-                       [])
-        factory.create(self.wikiroot["Страница 1"],
-                       "Страница 5",
-                       [])
-        factory.create(self.wikiroot,
-                       "Страница 6",
-                       [])
+        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
+        factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
+        factory.create(self.wikiroot, "Страница 6", [])
 
         self.pageRemoveCount = 0
         self._application.wikiroot = None
@@ -65,8 +59,7 @@ class RemovePagesTest(unittest.TestCase):
 
         self.assertEqual(len(self.wikiroot["Страница 2"]), 0)
         self.assertEqual(self.wikiroot["Страница 2/Страница 3"], None)
-        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 4"],
-                         None)
+        self.assertEqual(self.wikiroot["Страница 2/Страница 3/Страница 4"], None)
         self.assertTrue(page3.isRemoved)
         self.assertTrue(page4.isRemoved)
         self.assertEqual(self.pageRemoveCount, 3)
@@ -83,7 +76,9 @@ class RemovePagesTest(unittest.TestCase):
 
     def testRemove3(self):
         self._application.wikiroot = self.wikiroot
-        self._application.selectedPage = self.wikiroot["Страница 2/Страница 3/Страница 4"]
+        self._application.selectedPage = self.wikiroot[
+            "Страница 2/Страница 3/Страница 4"
+        ]
 
         self.wikiroot["Страница 2"].remove()
 
@@ -142,8 +137,9 @@ class RemovePagesTest(unittest.TestCase):
         # то выбранной страницей становится родитель
         self.wikiroot.selectedPage = self.wikiroot["Страница 2/Страница 3/Страница 4"]
         self.wikiroot.selectedPage.remove()
-        self.assertEqual(self.wikiroot.selectedPage,
-                         self.wikiroot["Страница 2/Страница 3"])
+        self.assertEqual(
+            self.wikiroot.selectedPage, self.wikiroot["Страница 2/Страница 3"]
+        )
 
     def testRemoveSelectedPage2(self):
         """
@@ -153,8 +149,9 @@ class RemovePagesTest(unittest.TestCase):
         # то выбранной страницей становится родитель
         self.wikiroot.selectedPage = self.wikiroot["Страница 2/Страница 3/Страница 4"]
         self.wikiroot.selectedPage.remove()
-        self.assertEqual(self.wikiroot.selectedPage,
-                         self.wikiroot["Страница 2/Страница 3"])
+        self.assertEqual(
+            self.wikiroot.selectedPage, self.wikiroot["Страница 2/Страница 3"]
+        )
 
     def testRemoveError1(self):
         page = self.wikiroot["Страница 2"]
@@ -170,15 +167,11 @@ class RemovePagesTest(unittest.TestCase):
             except IOError:
                 self.assertTrue(os.path.exists(pagepath))
                 self.assertNotEqual(self.wikiroot["Страница 2"], None)
-                self.assertTrue(
-                    os.path.exists(self.wikiroot["Страница 2"].path)
-                )
+                self.assertTrue(os.path.exists(self.wikiroot["Страница 2"].path))
                 self.assertEqual(len(self.wikiroot), 3)
-                self.assertNotEqual(self.wikiroot["Страница 2/Страница 3"],
-                                    None)
+                self.assertNotEqual(self.wikiroot["Страница 2/Страница 3"], None)
                 self.assertNotEqual(
-                    self.wikiroot["Страница 2/Страница 3/Страница 4"],
-                    None
+                    self.wikiroot["Страница 2/Страница 3/Страница 4"], None
                 )
             else:
                 self.assertEqual(self.wikiroot["Страница 2"], None)
@@ -200,15 +193,12 @@ class RemovePagesTest(unittest.TestCase):
             except IOError:
                 self.assertTrue(os.path.exists(pagepath))
                 self.assertNotEqual(self.wikiroot["Страница 2"], None)
-                self.assertTrue(
-                    os.path.exists(self.wikiroot["Страница 2"].path)
-                )
+                self.assertTrue(os.path.exists(self.wikiroot["Страница 2"].path))
                 self.assertEqual(len(self.wikiroot), 3)
-                self.assertNotEqual(self.wikiroot["Страница 2/Страница 3"],
-                                    None)
+                self.assertNotEqual(self.wikiroot["Страница 2/Страница 3"], None)
                 self.assertNotEqual(
-                    self.wikiroot["Страница 2/Страница 3/Страница 4"],
-                    None)
+                    self.wikiroot["Страница 2/Страница 3/Страница 4"], None
+                )
             else:
                 self.assertEqual(self.wikiroot["Страница 2"], None)
                 self.assertFalse(os.path.exists(pagepath))

@@ -21,28 +21,26 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         self.htmlCodeCheckbox = wx.CheckBox(self, -1, _("Show HTML code tab"))
 
         # Highlight the wiki notation?
-        self.colorizeWiki = wx.CheckBox(
-            self, -1, _("Highlight wiki notation"))
+        self.colorizeWiki = wx.CheckBox(self, -1, _("Highlight wiki notation"))
 
         # Thumbnails default size
         self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))
         self.thumbSize = wx.SpinCtrl(self, -1, "250", min=1, max=10000)
 
         # Template for the empty page
-        self.emptyTplLabel = wx.StaticText(
-            self, -1, _("Template for empty page"))
-        self.emptyTplTextCtrl = wx.TextCtrl(self, -1, "",
-                                            style=wx.TE_MULTILINE | wx.HSCROLL | wx.TE_WORDWRAP)
+        self.emptyTplLabel = wx.StaticText(self, -1, _("Template for empty page"))
+        self.emptyTplTextCtrl = wx.TextCtrl(
+            self, -1, "", style=wx.TE_MULTILINE | wx.HSCROLL | wx.TE_WORDWRAP
+        )
 
         # Стиль ссылок по умолчанию (при создании через диалог)
-        self.linkStyleLabel = wx.StaticText(
-            self, label=_("Default link style"))
+        self.linkStyleLabel = wx.StaticText(self, label=_("Default link style"))
         self.linkStyleCombo = wx.ComboBox(
-            self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
-        self.linkStyleCombo.AppendItems([
-            _("[[comment -> link]]"),
-            _("[[link | comment]]")
-        ])
+            self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY
+        )
+        self.linkStyleCombo.AppendItems(
+            [_("[[comment -> link]]"), _("[[link | comment]]")]
+        )
         self.linkStyleCombo.SetSelection(0)
 
         self.__do_layout()
@@ -53,19 +51,16 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         mainSizer.AddGrowableCol(0)
 
         # Показывать ли результирующий HTML?
-        mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL, 2)
+        mainSizer.Add(self.htmlCodeCheckbox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
         # Highlight the wiki notation?
-        mainSizer.Add(self.colorizeWiki, 0, wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL, 2)
+        mainSizer.Add(self.colorizeWiki, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
         # Размер миниатюр
         thumbSizer = wx.FlexGridSizer(1, 2, 0, 0)
         thumbSizer.AddGrowableCol(0)
         thumbSizer.AddGrowableCol(1)
-        thumbSizer.Add(self.thumbSizeLabel, 0, wx.ALL |
-                       wx.ALIGN_CENTER_VERTICAL, 2)
+        thumbSizer.Add(self.thumbSizeLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         thumbSizer.Add(self.thumbSize, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
         mainSizer.Add(thumbSizer, 1, wx.EXPAND, 0)
 
@@ -73,10 +68,15 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         linkStyleSizer = wx.FlexGridSizer(1, 2, 0, 0)
         linkStyleSizer.AddGrowableCol(0)
         linkStyleSizer.AddGrowableCol(1)
-        linkStyleSizer.Add(self.linkStyleLabel, 0,
-                           flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        linkStyleSizer.Add(self.linkStyleCombo, 0,
-                           flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
+        linkStyleSizer.Add(
+            self.linkStyleLabel, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        linkStyleSizer.Add(
+            self.linkStyleCombo,
+            0,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=2,
+        )
         mainSizer.Add(linkStyleSizer, 1, wx.EXPAND, 0)
 
         # Шаблон для пустых страниц
@@ -89,13 +89,15 @@ class WikiPrefGeneralPanel(BasePrefPanel):
     def LoadState(self):
         # Показывать ли вкладку с кодом HTML
         self.showHtmlCodeOption = BooleanElement(
-            self.config.showHtmlCodeOptions, self.htmlCodeCheckbox)
+            self.config.showHtmlCodeOptions, self.htmlCodeCheckbox
+        )
 
         self.colorizeWiki.SetValue(self.config.colorizeSyntax.value)
 
         # Размер превьюшек по умолчанию
         self.thumbSizeOption = IntegerElement(
-            self.config.thumbSizeOptions, self.thumbSize, 1, 10000)
+            self.config.thumbSizeOptions, self.thumbSize, 1, 10000
+        )
 
         # Шаблон для пустых страниц
         emptycontent = EmptyContent(self._application.config)
@@ -104,11 +106,16 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         # Стиль ссылок по умолчанию
         linkStyle = self.config.linkStyleOptions.value
         self.linkStyleCombo.SetSelection(
-            linkStyle if linkStyle >= 0 and linkStyle < self.linkStyleCombo.GetCount() else 0)
+            linkStyle
+            if linkStyle >= 0 and linkStyle < self.linkStyleCombo.GetCount()
+            else 0
+        )
 
     def Save(self):
-        changed = (self.showHtmlCodeOption.isValueChanged() or
-                   self.thumbSizeOption.isValueChanged())
+        changed = (
+            self.showHtmlCodeOption.isValueChanged()
+            or self.thumbSizeOption.isValueChanged()
+        )
 
         self.showHtmlCodeOption.save()
         self.thumbSizeOption.save()

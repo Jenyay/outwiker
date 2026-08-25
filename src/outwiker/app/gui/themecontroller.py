@@ -68,9 +68,11 @@ class ThemeController:
         )
 
         if self._first_load:
-            self._theme.set(Theme.SECTION_GENERAL,
-                            Theme.BUTTONS_ICON_SIZE,
-                            mainWindowConfig.buttonsIconSize.value)
+            self._theme.set(
+                Theme.SECTION_GENERAL,
+                Theme.BUTTONS_ICON_SIZE,
+                mainWindowConfig.buttonsIconSize.value,
+            )
 
     def _loadTreeConfig(self):
         assert self._theme is not None

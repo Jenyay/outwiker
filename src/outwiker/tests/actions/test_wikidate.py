@@ -6,8 +6,10 @@ import wx
 
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.pages.wiki.actions.dates import (WikiDateCreationAction,
-                                               WikiDateEditionAction)
+from outwiker.pages.wiki.actions.dates import (
+    WikiDateCreationAction,
+    WikiDateEditionAction,
+)
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
@@ -43,7 +45,8 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Tester.dialogTester.appendCancel()
         self.application.selectedPage = self._wikipage
         self.application.actionController.getAction(
-            WikiDateCreationAction.stringId).run(None)
+            WikiDateCreationAction.stringId
+        ).run(None)
 
         self._savePage()
 
@@ -53,8 +56,9 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testCancelEddate(self):
         Tester.dialogTester.appendCancel()
         self.application.selectedPage = self._wikipage
-        self.application.actionController.getAction(
-            WikiDateEditionAction.stringId).run(None)
+        self.application.actionController.getAction(WikiDateEditionAction.stringId).run(
+            None
+        )
 
         self._savePage()
 
@@ -65,7 +69,8 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Tester.dialogTester.appendOk()
         self.application.selectedPage = self._wikipage
         self.application.actionController.getAction(
-            WikiDateCreationAction.stringId).run(None)
+            WikiDateCreationAction.stringId
+        ).run(None)
 
         self._savePage()
 
@@ -75,7 +80,9 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testEmptyEddate_01(self):
         Tester.dialogTester.appendOk()
         self.application.selectedPage = self._wikipage
-        self.application.actionController.getAction(WikiDateEditionAction.stringId).run(None)
+        self.application.actionController.getAction(WikiDateEditionAction.stringId).run(
+            None
+        )
 
         self._savePage()
 
@@ -85,7 +92,9 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSetFormatCrdate_01(self):
         Tester.dialogTester.append(self._setFormat)
         self.application.selectedPage = self._wikipage
-        self.application.actionController.getAction(WikiDateCreationAction.stringId).run(None)
+        self.application.actionController.getAction(
+            WikiDateCreationAction.stringId
+        ).run(None)
 
         self._savePage()
 
@@ -95,7 +104,9 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSetFormatEddate_01(self):
         Tester.dialogTester.append(self._setFormat)
         self.application.selectedPage = self._wikipage
-        self.application.actionController.getAction(WikiDateEditionAction.stringId).run(None)
+        self.application.actionController.getAction(WikiDateEditionAction.stringId).run(
+            None
+        )
 
         self._savePage()
 
@@ -108,9 +119,13 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._wikipage.content = text
 
         self.application.selectedPage = self._wikipage
-        self.application.mainWindow.pagePanel.pageView.codeEditor.SetSelection(len(text), len(text))
+        self.application.mainWindow.pagePanel.pageView.codeEditor.SetSelection(
+            len(text), len(text)
+        )
 
-        self.application.actionController.getAction(WikiDateCreationAction.stringId).run(None)
+        self.application.actionController.getAction(
+            WikiDateCreationAction.stringId
+        ).run(None)
 
         self._savePage()
 
@@ -123,9 +138,13 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._wikipage.content = text
 
         self.application.selectedPage = self._wikipage
-        self.application.mainWindow.pagePanel.pageView.codeEditor.SetSelection(len(text), len(text))
+        self.application.mainWindow.pagePanel.pageView.codeEditor.SetSelection(
+            len(text), len(text)
+        )
 
-        self.application.actionController.getAction(WikiDateEditionAction.stringId).run(None)
+        self.application.actionController.getAction(WikiDateEditionAction.stringId).run(
+            None
+        )
 
         self._savePage()
 
@@ -140,7 +159,9 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self._wikipage
         self.application.mainWindow.pagePanel.pageView.codeEditor.SetSelection(0, 3)
 
-        self.application.actionController.getAction(WikiDateCreationAction.stringId).run(None)
+        self.application.actionController.getAction(
+            WikiDateCreationAction.stringId
+        ).run(None)
 
         self._savePage()
 
@@ -155,7 +176,9 @@ class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self._wikipage
         self.application.mainWindow.pagePanel.pageView.codeEditor.SetSelection(0, 3)
 
-        self.application.actionController.getAction(WikiDateEditionAction.stringId).run(None)
+        self.application.actionController.getAction(WikiDateEditionAction.stringId).run(
+            None
+        )
 
         self._savePage()
 

@@ -41,61 +41,67 @@ class RegistryNotesTreeTest(TestCase):
         saver = SimpleSaver({})
         reg = NotesTreeRegistry(saver)
 
-        reg.get_section_or_create('раздел-1')
-        reg.has_section('раздел-1')
+        reg.get_section_or_create("раздел-1")
+        reg.has_section("раздел-1")
 
     def test_get_section_or_create_02(self):
         saver = SimpleSaver({})
         reg = NotesTreeRegistry(saver)
 
-        reg.get_section_or_create('раздел-1', 'раздел-2')
-        reg.has_section('раздел-1', 'раздел-2')
+        reg.get_section_or_create("раздел-1", "раздел-2")
+        reg.has_section("раздел-1", "раздел-2")
 
     def test_get_section_or_create_03(self):
-        saver = SimpleSaver({
-            'бла-бла-бла': 1000,
-        })
+        saver = SimpleSaver(
+            {
+                "бла-бла-бла": 1000,
+            }
+        )
         reg = NotesTreeRegistry(saver)
 
-        reg.get_section_or_create('бла-бла-бла')
-        reg.has_section('бла-бла-бла')
+        reg.get_section_or_create("бла-бла-бла")
+        reg.has_section("бла-бла-бла")
 
     def test_get_section_or_create_04(self):
-        saver = SimpleSaver({
-            'раздел-1': {
-                'бла-бла-бла': 1000,
-            },
-        })
+        saver = SimpleSaver(
+            {
+                "раздел-1": {
+                    "бла-бла-бла": 1000,
+                },
+            }
+        )
         reg = NotesTreeRegistry(saver)
 
-        reg.get_section_or_create('раздел-1', 'бла-бла-бла')
-        reg.has_section('раздел-1', 'бла-бла-бла')
+        reg.get_section_or_create("раздел-1", "бла-бла-бла")
+        reg.has_section("раздел-1", "бла-бла-бла")
 
     def test_get_section_or_create_05(self):
         saver = SimpleSaver({})
         reg = NotesTreeRegistry(saver)
 
-        subreg = reg.get_section_or_create('раздел-1', 'раздел-2', 'раздел-3')
+        subreg = reg.get_section_or_create("раздел-1", "раздел-2", "раздел-3")
 
-        subreg.set('параметр', 100)
-        self.assertEqual(reg.getint('раздел-1', 'раздел-2', 'раздел-3',
-                                    'параметр'),
-                         100)
+        subreg.set("параметр", 100)
+        self.assertEqual(
+            reg.getint("раздел-1", "раздел-2", "раздел-3", "параметр"), 100
+        )
 
     def test_get_section_or_create_06_invalid_type(self):
-        saver = SimpleSaver({
-            'раздел-1': {
-                'раздел-2': 0,
+        saver = SimpleSaver(
+            {
+                "раздел-1": {
+                    "раздел-2": 0,
+                }
             }
-        })
+        )
         reg = NotesTreeRegistry(saver)
 
-        subreg = reg.get_section_or_create('раздел-1', 'раздел-2', 'раздел-3')
+        subreg = reg.get_section_or_create("раздел-1", "раздел-2", "раздел-3")
 
-        subreg.set('параметр', 100)
-        self.assertEqual(reg.getint('раздел-1', 'раздел-2', 'раздел-3',
-                                    'параметр'),
-                         100)
+        subreg.set("параметр", 100)
+        self.assertEqual(
+            reg.getint("раздел-1", "раздел-2", "раздел-3", "параметр"), 100
+        )
 
 
 class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
@@ -146,55 +152,55 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         factory = TextPageFactory()
         page1 = factory.create(self.wikiroot, "Страница 1", [])
         reg = self.wikiroot.registry.get_page_registry(page1)
-        reg.set('option', 1000)
+        reg.set("option", 1000)
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
 
-        page1.title = 'Бла-бла-бла'
+        page1.title = "Бла-бла-бла"
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
 
         reg_new = self.wikiroot.registry.get_page_registry(page1)
-        self.assertEqual(reg_new.getint('option'), 1000)
+        self.assertEqual(reg_new.getint("option"), 1000)
 
     def test_registry_rename_page_02_subpage(self):
         factory = TextPageFactory()
         page1 = factory.create(self.wikiroot, "Страница 1", [])
         page2 = factory.create(page1, "Страница 2", [])
         reg = self.wikiroot.registry.get_page_registry(page2)
-        reg.set('option', 1000)
+        reg.set("option", 1000)
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
 
-        page2.title = 'Бла-бла-бла'
+        page2.title = "Бла-бла-бла"
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
 
         reg_new = self.wikiroot.registry.get_page_registry(page2)
-        self.assertEqual(reg_new.getint('option'), 1000)
+        self.assertEqual(reg_new.getint("option"), 1000)
 
     def test_registry_rename_page_03_with_children(self):
         factory = TextPageFactory()
         page1 = factory.create(self.wikiroot, "Страница 1", [])
         page2 = factory.create(page1, "Страница 20", [])
         reg = self.wikiroot.registry.get_page_registry(page2)
-        reg.set('option', 1000)
+        reg.set("option", 1000)
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
 
-        page1.title = 'Бла-бла-бла'
+        page1.title = "Бла-бла-бла"
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
 
         reg_new = self.wikiroot.registry.get_page_registry(page2)
-        self.assertEqual(reg_new.getint('option'), 1000)
+        self.assertEqual(reg_new.getint("option"), 1000)
 
     def test_registry_move_page_01(self):
         factory = TextPageFactory()
         page1 = factory.create(self.wikiroot, "Страница 1", [])
         page2 = factory.create(self.wikiroot, "Страница 200", [])
         reg = self.wikiroot.registry.get_page_registry(page1)
-        reg.set('option', 1000)
+        reg.set("option", 1000)
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
 
@@ -203,7 +209,7 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
 
         reg_new = self.wikiroot.registry.get_page_registry(page1)
-        self.assertEqual(reg_new.getint('option'), 1000)
+        self.assertEqual(reg_new.getint("option"), 1000)
 
     def test_registry_move_page_02(self):
         factory = TextPageFactory()
@@ -212,7 +218,7 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         page3 = factory.create(page1, "Страница", [])
 
         reg = self.wikiroot.registry.get_page_registry(page3)
-        reg.set('option', 1000)
+        reg.set("option", 1000)
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
 
@@ -221,7 +227,7 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
 
         reg_new = self.wikiroot.registry.get_page_registry(page3)
-        self.assertEqual(reg_new.getint('option'), 1000)
+        self.assertEqual(reg_new.getint("option"), 1000)
 
     def test_registry_move_page_03(self):
         factory = TextPageFactory()
@@ -230,7 +236,7 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         page3 = factory.create(page2, "Страница", [])
 
         reg = self.wikiroot.registry.get_page_registry(page3)
-        reg.set('option', 1000)
+        reg.set("option", 1000)
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
 
@@ -239,7 +245,7 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
 
         reg_new = self.wikiroot.registry.get_page_registry(page3)
-        self.assertEqual(reg_new.getint('option'), 1000)
+        self.assertEqual(reg_new.getint("option"), 1000)
 
     def test_registry_move_page_04(self):
         factory = TextPageFactory()
@@ -248,7 +254,7 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         page3 = factory.create(page2, "Страница", [])
 
         reg = self.wikiroot.registry.get_page_registry(page3)
-        reg.set('option', 1000)
+        reg.set("option", 1000)
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
 
@@ -257,7 +263,7 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
 
         reg_new = self.wikiroot.registry.get_page_registry(page3)
-        self.assertEqual(reg_new.getint('option'), 1000)
+        self.assertEqual(reg_new.getint("option"), 1000)
 
     def test_registry_move_page_05(self):
         factory = TextPageFactory()
@@ -266,7 +272,7 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         page3 = factory.create(self.wikiroot, "Страница", [])
 
         reg = self.wikiroot.registry.get_page_registry(page3)
-        reg.set('option', 1000)
+        reg.set("option", 1000)
 
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
 
@@ -275,4 +281,4 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
 
         reg_new = self.wikiroot.registry.get_page_registry(page3)
-        self.assertEqual(reg_new.getint('option'), 1000)
+        self.assertEqual(reg_new.getint("option"), 1000)

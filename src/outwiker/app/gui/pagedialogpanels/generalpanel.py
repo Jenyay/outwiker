@@ -98,7 +98,9 @@ class GeneralPanel(wx.Panel):
 
         # Open in new tab checkbox
         generalSizer.AddStretchSpacer()
-        generalSizer.Add(self.openInNewTabCheckBox, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
+        generalSizer.Add(
+            self.openInNewTabCheckBox, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT
+        )
 
         marginSizer = MarginSizer()
         marginSizer.Add(generalSizer)
@@ -130,10 +132,14 @@ class GeneralPanel(wx.Panel):
 
         # Tags
         self.tagsLabel = wx.StaticText(self, -1, _("Tags (comma separated)"))
-        self.tagsSelector = TagsSelector(self, self._theme, enable_active_tags_filter=False)
+        self.tagsSelector = TagsSelector(
+            self, self._theme, enable_active_tags_filter=False
+        )
 
         # Open in new tab checkbox
-        self.openInNewTabCheckBox = wx.CheckBox(self, label=_("Open the created page in a new tab"))
+        self.openInNewTabCheckBox = wx.CheckBox(
+            self, label=_("Open the created page in a new tab")
+        )
 
     def setOpenInNewTabVisible(self, visible: bool) -> None:
         self.openInNewTabCheckBox.Show(visible)

@@ -11,6 +11,7 @@ class MovePageDownAction(BaseAction):
     """
     Переместить страницу на одну позицию вниз
     """
+
     stringId = "MovePageDown"
 
     def __init__(self, application):

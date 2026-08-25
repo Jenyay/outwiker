@@ -11,7 +11,7 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.utils import removeDir
 
 
-class ParserMiscTest (unittest.TestCase):
+class ParserMiscTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
         self.encoding = "utf8"
@@ -25,7 +25,7 @@ class ParserMiscTest (unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -36,12 +36,13 @@ class ParserMiscTest (unittest.TestCase):
 
     def testHorLine(self):
         text = "бла-бла-бла \nкхм ---- бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \nкхм <hr> бла-бла-бла\nбла-бла-бла'
+        result = "бла-бла-бла \nкхм <hr> бла-бла-бла\nбла-бла-бла"
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(self.encoding))
+            self.parser.toHtml(text).encode(self.encoding),
+        )
 
     def testParseWithoutAttaches(self):
         pagetitle = "Страница 666"

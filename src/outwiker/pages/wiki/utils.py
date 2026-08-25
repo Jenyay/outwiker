@@ -5,31 +5,33 @@ import re
 from outwiker.pages.wiki.parser.tokencommand import CommandToken
 
 
-def getCommandsByPos (text, position):
+def getCommandsByPos(text, position):
     """
     Return matches list with command which cover position
     """
-    regex = re.compile (CommandToken.regex, re.U | re.M | re.S | re.X)
+    regex = re.compile(CommandToken.regex, re.U | re.M | re.S | re.X)
     result = []
 
     startpos = 0
-    endpos = len (text)
+    endpos = len(text)
 
     found = True
 
     while found:
-        parsedText = text[startpos: endpos]
+        parsedText = text[startpos:endpos]
         found = False
 
-        matches = list (regex.finditer (parsedText))
+        matches = list(regex.finditer(parsedText))
         if not matches:
             break
 
         for match in matches:
-            if (position > match.start() + startpos and
-                    position <= match.end() + startpos - 1 and
-                    not match.groupdict()['name'].endswith(u'end')):
-                result.append (match)
+            if (
+                position > match.start() + startpos
+                and position <= match.end() + startpos - 1
+                and not match.groupdict()["name"].endswith("end")
+            ):
+                result.append(match)
                 startpos = startpos + match.start() + 1
                 endpos = startpos + match.end()
                 found = True

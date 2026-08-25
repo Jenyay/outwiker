@@ -8,4 +8,3 @@ def get_styles_count(parser: Parser, css_class: str) -> int:
             find_style_count += 1
 
     return find_style_count
-

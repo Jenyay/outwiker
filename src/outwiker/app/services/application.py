@@ -14,12 +14,13 @@ def exit(application):
         generalConfig = GeneralGuiConfig(application.config)
         askBeforeExit = generalConfig.askBeforeExit.value
 
-        return (not askBeforeExit or
-                MessageBox(_("Really exit?"),
-                           _("Exit"),
-                           wx.YES_NO | wx.ICON_QUESTION) == wx.YES)
+        return (
+            not askBeforeExit
+            or MessageBox(_("Really exit?"), _("Exit"), wx.YES_NO | wx.ICON_QUESTION)
+            == wx.YES
+        )
 
-    if (_allow_exit(application)):
+    if _allow_exit(application):
         application.mainWindow.Destroy()
 
 

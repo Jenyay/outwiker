@@ -21,19 +21,22 @@ class GlobalSearchActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testNoneWiki(self):
         self.application.wikiroot = None
-        self.application.actionController.getAction(
-            GlobalSearchAction.stringId).run(None)
+        self.application.actionController.getAction(GlobalSearchAction.stringId).run(
+            None
+        )
 
     def testEmptyWiki(self):
         self.application.wikiroot = self.wikiroot
 
         self.assertEqual(len(self.application.wikiroot.children), 0)
-        self.application.actionController.getAction(
-            GlobalSearchAction.stringId).run(None)
+        self.application.actionController.getAction(GlobalSearchAction.stringId).run(
+            None
+        )
 
         self.assertEqual(len(self.application.wikiroot.children), 1)
-        self.assertEqual(self.application.selectedPage,
-                         self.application.wikiroot.children[0])
+        self.assertEqual(
+            self.application.selectedPage, self.application.wikiroot.children[0]
+        )
 
     def testReadOnly(self):
         self.application.wikiroot = self.wikiroot
@@ -41,18 +44,23 @@ class GlobalSearchActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.application.mainWindow.toaster.counter.clear()
 
-        self.application.actionController.getAction(
-            GlobalSearchAction.stringId).run(None)
+        self.application.actionController.getAction(GlobalSearchAction.stringId).run(
+            None
+        )
 
         self.assertEqual(len(self.application.wikiroot.children), 0)
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
     def testExecSeveralTimes(self):
         self.application.wikiroot = self.wikiroot
-        self.application.actionController.getAction(GlobalSearchAction.stringId).run(None)
-        self.application.actionController.getAction(GlobalSearchAction.stringId).run(None)
-        self.application.actionController.getAction(GlobalSearchAction.stringId).run(None)
+        self.application.actionController.getAction(GlobalSearchAction.stringId).run(
+            None
+        )
+        self.application.actionController.getAction(GlobalSearchAction.stringId).run(
+            None
+        )
+        self.application.actionController.getAction(GlobalSearchAction.stringId).run(
+            None
+        )
 
         self.assertEqual(len(self.application.wikiroot.children), 1)

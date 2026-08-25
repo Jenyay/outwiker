@@ -11,7 +11,9 @@ def removePage(page: WikiPage) -> None:
     return _tree.removePage(page)
 
 
-def openWikiWithDialog(parent: wx.Window, application: Application, readonly=False) -> Optional[WikiDocument]:
+def openWikiWithDialog(
+    parent: wx.Window, application: Application, readonly=False
+) -> Optional[WikiDocument]:
     """
     Показать диалог открытия вики и вернуть открытую wiki
     parent -- родительское окно
@@ -19,7 +21,9 @@ def openWikiWithDialog(parent: wx.Window, application: Application, readonly=Fal
     return _tree.openWikiWithDialog(parent, application, readonly)
 
 
-def openWiki(path: str, application: Application, readonly: bool = False) -> Optional[WikiDocument]:
+def openWiki(
+    path: str, application: Application, readonly: bool = False
+) -> Optional[WikiDocument]:
     return _tree.openWiki(path, application, readonly)
 
 

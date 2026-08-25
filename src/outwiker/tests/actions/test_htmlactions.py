@@ -24,10 +24,10 @@ class HtmlActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             (STRIKE_STR_ID, "<strike>", "</strike>"),
             (SUBSCRIPT_STR_ID, "<sub>", "</sub>"),
             (SUPERSCRIPT_STR_ID, "<sup>", "</sup>"),
-            (ALIGN_LEFT_STR_ID, '<div align="left">', '</div>'),
-            (ALIGN_CENTER_STR_ID, '<div align="center">', '</div>'),
-            (ALIGN_RIGHT_STR_ID, '<div align="right">', '</div>'),
-            (ALIGN_JUSTIFY_STR_ID, '<div align="justify">', '</div>'),
+            (ALIGN_LEFT_STR_ID, '<div align="left">', "</div>"),
+            (ALIGN_CENTER_STR_ID, '<div align="center">', "</div>"),
+            (ALIGN_RIGHT_STR_ID, '<div align="right">', "</div>"),
+            (ALIGN_JUSTIFY_STR_ID, '<div align="justify">', "</div>"),
             (HEADING_1_STR_ID, "<h1>", "</h1>"),
             (HEADING_2_STR_ID, "<h2>", "</h2>"),
             (HEADING_3_STR_ID, "<h3>", "</h3>"),
@@ -37,7 +37,7 @@ class HtmlActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             (PREFORMAT_STR_ID, "<pre>", "</pre>"),
             (CODE_STR_ID, "<code>", "</code>"),
             (ANCHOR_STR_ID, '<a name="', '"></a>'),
-            (QUOTE_STR_ID, '<blockquote>', '</blockquote>'),
+            (QUOTE_STR_ID, "<blockquote>", "</blockquote>"),
             (IMAGE_STR_ID, '<img src="', '"/>'),
         ]
 
@@ -71,8 +71,7 @@ class HtmlActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self.application.selectedPage = self.testpage
 
             self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(),
-                             syntax[1] + syntax[2])
+            self.assertEqual(self._getEditor().GetText(), syntax[1] + syntax[2])
 
     def testTurnSyntaxSelectedAll(self):
         text = "Бла-бла-бла"
@@ -85,8 +84,9 @@ class HtmlActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self._getEditor().SetSelection(0, len(text))
 
             self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(),
-                             syntax[1] + "Бла-бла-бла" + syntax[2])
+            self.assertEqual(
+                self._getEditor().GetText(), syntax[1] + "Бла-бла-бла" + syntax[2]
+            )
 
     def testTurnSyntaxSelectedPart(self):
         text = "Бла-бла-бла"
@@ -99,8 +99,10 @@ class HtmlActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self._getEditor().SetSelection(4, 7)
 
             self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(),
-                             "Бла-{}бла{}-бла".format(syntax[1], syntax[2]))
+            self.assertEqual(
+                self._getEditor().GetText(),
+                "Бла-{}бла{}-бла".format(syntax[1], syntax[2]),
+            )
 
     def testReplaceSyntaxEmpty(self):
         for syntax in self._replaceSyntax:
@@ -135,8 +137,9 @@ class HtmlActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self._getEditor().SetSelection(4, 7)
 
             self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(),
-                             "Бла-{}-бла".format(syntax[1]))
+            self.assertEqual(
+                self._getEditor().GetText(), "Бла-{}-бла".format(syntax[1])
+            )
 
     def testListBulletsEmpty(self):
         result = """<ul>
@@ -147,8 +150,7 @@ class HtmlActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.testpage.content = ""
         self.application.selectedPage = self.testpage
 
-        self.application.actionController.getAction(
-            LIST_BULLETS_STR_ID).run(None)
+        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
         self.assertEqual(self._getEditor().GetText(), result)
 
     def testListNumbersEmpty(self):
@@ -182,7 +184,7 @@ class HtmlActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.testpage.content = text
         self.application.selectedPage = self.testpage
 
-        self._getEditor().SetSelection(0, len (text))
+        self._getEditor().SetSelection(0, len(text))
 
         self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
         self.assertEqual(self._getEditor().GetText(), result)

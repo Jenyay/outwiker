@@ -32,81 +32,77 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Tester.dialogTester.clear()
 
     def test_rename_simple(self):
-        page = self.wikiroot['Страница 1']
-        renamePage(page, 'Новое имя')
+        page = self.wikiroot["Страница 1"]
+        renamePage(page, "Новое имя")
 
-        self.assertIsNone(self.wikiroot['Страница 1'])
-        self.assertIsNotNone(self.wikiroot['Новое имя'])
-        self.assertEqual(page.display_title, 'Новое имя')
+        self.assertIsNone(self.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.wikiroot["Новое имя"])
+        self.assertEqual(page.display_title, "Новое имя")
         self.assertIsNone(page.alias)
 
     def test_rename_simple_spaces(self):
-        page = self.wikiroot['Страница 1']
-        renamePage(page, '   Новое имя   ')
+        page = self.wikiroot["Страница 1"]
+        renamePage(page, "   Новое имя   ")
 
-        self.assertIsNone(self.wikiroot['Страница 1'])
-        self.assertIsNotNone(self.wikiroot['Новое имя'])
-        self.assertEqual(page.display_title, 'Новое имя')
+        self.assertIsNone(self.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.wikiroot["Новое имя"])
+        self.assertEqual(page.display_title, "Новое имя")
         self.assertIsNone(page.alias)
 
     def test_rename_special_chars(self):
-        page = self.wikiroot['Страница 1']
+        page = self.wikiroot["Страница 1"]
         renamePage(page, 'Тест ><|?*:"\\/#% проверка')
 
-        self.assertIsNone(self.wikiroot['Страница 1'])
-        self.assertIsNotNone(self.wikiroot['Тест ___________ проверка'])
+        self.assertIsNone(self.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.wikiroot["Тест ___________ проверка"])
         self.assertEqual(page.display_title, 'Тест ><|?*:"\\/#% проверка')
         self.assertEqual(page.alias, 'Тест ><|?*:"\\/#% проверка')
 
     def test_rename_duplicate_01(self):
-        renamePage(self.wikiroot['Страница 2'], 'Страница 1')
+        renamePage(self.wikiroot["Страница 2"], "Страница 1")
 
-        self.assertIsNone(self.wikiroot['Страница 2'])
-        self.assertIsNotNone(self.wikiroot['Страница 1 (1)'])
-        self.assertEqual(self.wikiroot['Страница 1 (1)'].alias, 'Страница 1')
-        self.assertEqual(self.wikiroot['Страница 1 (1)'].display_title,
-                         'Страница 1')
+        self.assertIsNone(self.wikiroot["Страница 2"])
+        self.assertIsNotNone(self.wikiroot["Страница 1 (1)"])
+        self.assertEqual(self.wikiroot["Страница 1 (1)"].alias, "Страница 1")
+        self.assertEqual(self.wikiroot["Страница 1 (1)"].display_title, "Страница 1")
 
     def test_rename_duplicate_02(self):
-        renamePage(self.wikiroot['Страница 2'], 'Страница 1')
-        renamePage(self.wikiroot['Страница 4'], 'Страница 1')
+        renamePage(self.wikiroot["Страница 2"], "Страница 1")
+        renamePage(self.wikiroot["Страница 4"], "Страница 1")
 
-        self.assertIsNone(self.wikiroot['Страница 2'])
-        self.assertIsNotNone(self.wikiroot['Страница 1 (1)'])
-        self.assertEqual(self.wikiroot['Страница 1 (1)'].alias, 'Страница 1')
-        self.assertEqual(self.wikiroot['Страница 1 (1)'].display_title,
-                         'Страница 1')
+        self.assertIsNone(self.wikiroot["Страница 2"])
+        self.assertIsNotNone(self.wikiroot["Страница 1 (1)"])
+        self.assertEqual(self.wikiroot["Страница 1 (1)"].alias, "Страница 1")
+        self.assertEqual(self.wikiroot["Страница 1 (1)"].display_title, "Страница 1")
 
-        self.assertIsNone(self.wikiroot['Страница 4'])
-        self.assertIsNotNone(self.wikiroot['Страница 1 (2)'])
-        self.assertEqual(self.wikiroot['Страница 1 (2)'].alias, 'Страница 1')
-        self.assertEqual(self.wikiroot['Страница 1 (2)'].display_title,
-                         'Страница 1')
+        self.assertIsNone(self.wikiroot["Страница 4"])
+        self.assertIsNotNone(self.wikiroot["Страница 1 (2)"])
+        self.assertEqual(self.wikiroot["Страница 1 (2)"].alias, "Страница 1")
+        self.assertEqual(self.wikiroot["Страница 1 (2)"].display_title, "Страница 1")
 
     def test_alias(self):
-        self.wikiroot['Страница 1'].alias = 'Бла-бла-бла'
-        renamePage(self.wikiroot['Страница 1'], 'Викистраница')
+        self.wikiroot["Страница 1"].alias = "Бла-бла-бла"
+        renamePage(self.wikiroot["Страница 1"], "Викистраница")
 
-        self.assertIsNotNone(self.wikiroot['Викистраница'])
-        self.assertIsNone(self.wikiroot['Викистраница'].alias)
-        self.assertEqual(self.wikiroot['Викистраница'].title, 'Викистраница')
-        self.assertEqual(self.wikiroot['Викистраница'].display_title,
-                         'Викистраница')
+        self.assertIsNotNone(self.wikiroot["Викистраница"])
+        self.assertIsNone(self.wikiroot["Викистраница"].alias)
+        self.assertEqual(self.wikiroot["Викистраница"].title, "Викистраница")
+        self.assertEqual(self.wikiroot["Викистраница"].display_title, "Викистраница")
 
     def test_some_name(self):
-        page = self.wikiroot['Страница 1']
-        renamePage(page, 'Страница 1')
+        page = self.wikiroot["Страница 1"]
+        renamePage(page, "Страница 1")
 
-        self.assertIsNotNone(self.wikiroot['Страница 1'])
-        self.assertEqual(page.display_title, 'Страница 1')
+        self.assertIsNotNone(self.wikiroot["Страница 1"])
+        self.assertEqual(page.display_title, "Страница 1")
         self.assertIsNone(page.alias)
 
     def test_some_name_spaces(self):
-        page = self.wikiroot['Страница 1']
-        renamePage(page, '    Страница 1    ')
+        page = self.wikiroot["Страница 1"]
+        renamePage(page, "    Страница 1    ")
 
-        self.assertIsNotNone(self.wikiroot['Страница 1'])
-        self.assertEqual(page.display_title, 'Страница 1')
+        self.assertIsNotNone(self.wikiroot["Страница 1"])
+        self.assertEqual(page.display_title, "Страница 1")
         self.assertIsNone(page.alias)
 
     def testCommand_02(self):
@@ -144,7 +140,7 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertIsNone(self.wikiroot["Страница 1"])
         self.assertIsNotNone(self.wikiroot["--asdasdf"])
-        self.assertEqual(self.wikiroot["--asdasdf"].alias, '__asdasdf')
+        self.assertEqual(self.wikiroot["--asdasdf"].alias, "__asdasdf")
 
     def testCommand_begins_underlines_02(self):
         Tester.dialogTester.appendError()
@@ -152,7 +148,7 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertIsNone(self.wikiroot["Страница 1"])
         self.assertIsNotNone(self.wikiroot["--asdasdf"])
-        self.assertEqual(self.wikiroot["--asdasdf"].alias, '##asdasdf')
+        self.assertEqual(self.wikiroot["--asdasdf"].alias, "##asdasdf")
 
     def testCommand_07_readonly(self):
         self.application.mainWindow.toaster.counter.clear()
@@ -162,9 +158,7 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertIsNotNone(self.wikiroot["Страница 1"])
         self.assertIsNone(self.wikiroot["Абырвалг"])
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)
 
     def testCommand_double_dots(self):
         Tester.dialogTester.appendError()
@@ -172,7 +166,7 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertIsNone(self.wikiroot["Страница 1"])
         self.assertIsNotNone(self.wikiroot["(1)"])
-        self.assertEqual(self.wikiroot["(1)"].alias, '..')
+        self.assertEqual(self.wikiroot["(1)"].alias, "..")
 
     def testCommand_dots(self):
         Tester.dialogTester.appendError()
@@ -181,7 +175,7 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertIsNone(self.wikiroot["Страница 1"])
         self.assertIsNotNone(self.wikiroot["..."])
         self.assertIsNotNone(self.wikiroot["(1)"])
-        self.assertEqual(self.wikiroot["(1)"].alias, '...')
+        self.assertEqual(self.wikiroot["(1)"].alias, "...")
 
     def testCommand_09(self):
         Tester.dialogTester.appendError()
@@ -224,6 +218,4 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertEqual(self.wikiroot.title, basename(self.wikiroot.path))
-        self.assertEqual(
-            self.application.mainWindow.toaster.counter.showErrorCount,
-            1)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 1)

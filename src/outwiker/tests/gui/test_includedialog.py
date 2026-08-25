@@ -3,8 +3,7 @@
 import os.path
 import unittest
 
-from outwiker.pages.wiki.actions.include import (IncludeDialog,
-                                                 IncludeDialogController)
+from outwiker.pages.wiki.actions.include import IncludeDialog, IncludeDialogController
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.attachment import Attachment
 from outwiker.gui.tester import Tester
@@ -26,10 +25,14 @@ class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.testedPage = self.wikiroot["Викистраница"]
 
         filesPath = "testdata/samplefiles/"
-        self.files = ["accept.png", "add.png",
-                      "anchor.png", "файл с пробелами.tmp", "dir"]
-        self.fullFilesPath = [os.path.join(
-            filesPath, fname) for fname in self.files]
+        self.files = [
+            "accept.png",
+            "add.png",
+            "anchor.png",
+            "файл с пробелами.tmp",
+            "dir",
+        ]
+        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
 
         Attachment(self.testedPage).attach(self.fullFilesPath)
         Tester.dialogTester.clear()
@@ -82,8 +85,7 @@ class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getDialogResult()
 
-        self.assertEqual(
-            result, '(:include Attach:"accept.png" encoding="utf-16":)')
+        self.assertEqual(result, '(:include Attach:"accept.png" encoding="utf-16":)')
 
     def test_encoding_02(self):
         controller = IncludeDialogController(self._dialog, self.testedPage)
@@ -97,7 +99,8 @@ class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         result = controller.getDialogResult()
 
         self.assertEqual(
-            result, '(:include Attach:"accept.png" encoding="mac_cyrillic":)')
+            result, '(:include Attach:"accept.png" encoding="mac_cyrillic":)'
+        )
 
     def test_encoding_04(self):
         controller = IncludeDialogController(self._dialog, self.testedPage)
@@ -136,7 +139,9 @@ class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getDialogResult()
 
-        self.assertEqual(result, '(:include Attach:"accept.png" encoding="utf-16" htmlescape:)')
+        self.assertEqual(
+            result, '(:include Attach:"accept.png" encoding="utf-16" htmlescape:)'
+        )
 
     def test_wikiparse_01(self):
         controller = IncludeDialogController(self._dialog, self.testedPage)
@@ -162,7 +167,9 @@ class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getDialogResult()
 
-        self.assertEqual(result, '(:include Attach:"accept.png" encoding="utf-16" wikiparse:)')
+        self.assertEqual(
+            result, '(:include Attach:"accept.png" encoding="utf-16" wikiparse:)'
+        )
 
     def test_wikiparse_escapehtml(self):
         controller = IncludeDialogController(self._dialog, self.testedPage)
@@ -175,4 +182,7 @@ class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getDialogResult()
 
-        self.assertEqual(result, '(:include Attach:"accept.png" encoding="utf-16" htmlescape wikiparse:)')
+        self.assertEqual(
+            result,
+            '(:include Attach:"accept.png" encoding="utf-16" htmlescape wikiparse:)',
+        )

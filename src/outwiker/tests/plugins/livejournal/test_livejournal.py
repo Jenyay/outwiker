@@ -58,7 +58,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("бла-бла-бла" in result)
         self.assertTrue(
-            """<span class='ljuser ljuser-name_a_str' lj:user='a_str' style='white-space:nowrap'><a href='https://a-str.livejournal.com/profile'><img src='https://l-stat.livejournal.net/img/userinfo_v8.svg' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://a-str.livejournal.com/' style='text-decoration-line:none;'><b style='color: #00a3d9;'>a_str</b></a></span>""" in result)
+            """<span class='ljuser ljuser-name_a_str' lj:user='a_str' style='white-space:nowrap'><a href='https://a-str.livejournal.com/profile'><img src='https://l-stat.livejournal.net/img/userinfo_v8.svg' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://a-str.livejournal.com/' style='text-decoration-line:none;'><b style='color: #00a3d9;'>a_str</b></a></span>"""
+            in result
+        )
 
     def testCommunity1(self):
         text = "бла-бла-бла  (:ljcomm american_gangst:)"
@@ -70,16 +72,17 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue("бла-бла-бла" in result)
         self.assertTrue(
-            """<span class='ljuser ljuser-name_american_gangst' lj:user='american_gangst' style='white-space:nowrap'><a href='https://american-gangst.livejournal.com/profile'><img src='https://l-stat.livejournal.net/img/community.gif' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://american-gangst.livejournal.com/' style='text-decoration-line:none;'><b style='color: #00a3d9;'>american_gangst</b></a></span>""" in result)
+            """<span class='ljuser ljuser-name_american_gangst' lj:user='american_gangst' style='white-space:nowrap'><a href='https://american-gangst.livejournal.com/profile'><img src='https://l-stat.livejournal.net/img/community.gif' alt='[info]' width='16' height='16' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://american-gangst.livejournal.com/' style='text-decoration-line:none;'><b style='color: #00a3d9;'>american_gangst</b></a></span>"""
+            in result
+        )
 
     def testUserDialog_01(self):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import UserDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -96,10 +99,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import UserDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -110,18 +112,16 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         valid_result = "(:ljuser jenyay:)"
 
         self.assertEqual(controller.result, valid_result)
-        self.assertEqual(
-            LJConfig(self.application.config).users.value, ["jenyay"])
+        self.assertEqual(LJConfig(self.application.config).users.value, ["jenyay"])
 
     def testUserDialog_03(self):
         from livejournal.ljconfig import LJConfig
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import UserDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
 
@@ -139,10 +139,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import UserDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -154,8 +153,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller2 = UserDialogController(dlg, self.application, "jenyay_test")
         controller2.showDialog()
 
-        self.assertEqual(LJConfig(self.application.config).users.value, [
-                         "jenyay", "jenyay_test"])
+        self.assertEqual(
+            LJConfig(self.application.config).users.value, ["jenyay", "jenyay_test"]
+        )
         self.assertEqual(LJConfig(self.application.config).communities.value, [""])
 
     def testUserDialog_05(self):
@@ -163,10 +163,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import UserDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -181,8 +180,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller3 = UserDialogController(dlg, self.application, "jenyay")
         controller3.showDialog()
 
-        self.assertEqual(LJConfig(self.application.config).users.value, [
-                         "jenyay", "jenyay_test"])
+        self.assertEqual(
+            LJConfig(self.application.config).users.value, ["jenyay", "jenyay_test"]
+        )
         self.assertEqual(LJConfig(self.application.config).communities.value, [""])
 
     def testUserDialog_06(self):
@@ -190,10 +190,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import UserDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -212,10 +211,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import UserDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -226,10 +224,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller2 = UserDialogController(dlg, self.application, "jenyay_test")
         controller2.showDialog()
 
-        dlg2 = ComboBoxDialog(self.application.mainWindow,
-                              "",
-                              "",
-                              wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg2 = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg2.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -242,10 +239,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import CommunityDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -262,10 +258,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import CommunityDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -277,7 +272,8 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(controller.result, valid_result)
         self.assertEqual(
-            LJConfig(self.application.config).communities.value, ["jenyay"])
+            LJConfig(self.application.config).communities.value, ["jenyay"]
+        )
         self.assertEqual(LJConfig(self.application.config).users.value, [""])
 
     def testCommDialog_03(self):
@@ -285,10 +281,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import CommunityDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -300,7 +295,8 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller2.showDialog()
 
         self.assertEqual(
-            LJConfig(self.application.config).communities.value, ["jenyay"])
+            LJConfig(self.application.config).communities.value, ["jenyay"]
+        )
         self.assertEqual(LJConfig(self.application.config).users.value, [""])
 
     def testCommDialog_04(self):
@@ -308,10 +304,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import CommunityDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -319,12 +314,13 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller.showDialog()
 
         Tester.dialogTester.appendOk()
-        controller2 = CommunityDialogController(
-            dlg, self.application, "jenyay_test")
+        controller2 = CommunityDialogController(dlg, self.application, "jenyay_test")
         controller2.showDialog()
 
-        self.assertEqual(LJConfig(self.application.config).communities.value, [
-                         "jenyay", "jenyay_test"])
+        self.assertEqual(
+            LJConfig(self.application.config).communities.value,
+            ["jenyay", "jenyay_test"],
+        )
         self.assertEqual(LJConfig(self.application.config).users.value, [""])
 
     def testCommDialog_05(self):
@@ -332,10 +328,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import CommunityDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -343,16 +338,17 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller.showDialog()
 
         Tester.dialogTester.appendOk()
-        controller2 = CommunityDialogController(
-            dlg, self.application, "jenyay_test")
+        controller2 = CommunityDialogController(dlg, self.application, "jenyay_test")
         controller2.showDialog()
 
         Tester.dialogTester.appendOk()
         controller3 = CommunityDialogController(dlg, self.application, "jenyay")
         controller3.showDialog()
 
-        self.assertEqual(LJConfig(self.application.config).communities.value, [
-                         "jenyay", "jenyay_test"])
+        self.assertEqual(
+            LJConfig(self.application.config).communities.value,
+            ["jenyay", "jenyay_test"],
+        )
         self.assertEqual(LJConfig(self.application.config).users.value, [""])
 
     def testCommDialog_06(self):
@@ -360,16 +356,14 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import CommunityDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
 
-        LJConfig(self.application.config).communities.value = [
-            "jenyay", "jenyay_test"]
+        LJConfig(self.application.config).communities.value = ["jenyay", "jenyay_test"]
 
         controller = CommunityDialogController(dlg, self.application, "")
         controller.showDialog()
@@ -383,10 +377,9 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from livejournal.comboboxdialog import ComboBoxDialog
         from livejournal.dialogcontroller import CommunityDialogController
 
-        dlg = ComboBoxDialog(self.application.mainWindow,
-                             "",
-                             "",
-                             wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()
@@ -394,14 +387,12 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller.showDialog()
 
         Tester.dialogTester.appendOk()
-        controller2 = CommunityDialogController(
-            dlg, self.application, "jenyay_test")
+        controller2 = CommunityDialogController(dlg, self.application, "jenyay_test")
         controller2.showDialog()
 
-        dlg2 = ComboBoxDialog(self.application.mainWindow,
-                              "",
-                              "",
-                              wx.CB_DROPDOWN | wx.CB_SORT)
+        dlg2 = ComboBoxDialog(
+            self.application.mainWindow, "", "", wx.CB_DROPDOWN | wx.CB_SORT
+        )
 
         # dlg2.SetModalResult (wx.ID_OK)
         Tester.dialogTester.appendOk()

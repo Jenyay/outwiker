@@ -22,11 +22,9 @@ class EmptyContentTest(unittest.TestCase):
 (:childlist:)
 """
 
-
     def tearDown(self):
         if os.path.exists(self.path):
             os.remove(self.path)
-
 
     def test1(self):
         config = Config(self.path)
@@ -35,14 +33,12 @@ class EmptyContentTest(unittest.TestCase):
         content.content = self.text
         self.assertEqual(content.content, self.text)
 
-
     def testDefault(self):
         config = Config(self.path)
         content = EmptyContent(config)
 
         # Проверим, что есть какое-то непустое значение по умолчанию
         self.assertNotEqual(len(content.content.strip()), 0)
-
 
     def testRead(self):
         config = Config(self.path)
@@ -54,7 +50,6 @@ class EmptyContentTest(unittest.TestCase):
         # Проверим, что есть какое-то непустое значение по умолчанию
         self.assertEqual(content2.content, self.text)
         self.assertEqual(content2.content, content1.content)
-
 
     def testRead2(self):
         config = Config(self.path)

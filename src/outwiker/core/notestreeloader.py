@@ -49,9 +49,11 @@ class NotesTreeLoader:
             fullpath = os.path.join(parentPage.path, name)
             config_path = os.path.join(fullpath, PAGE_OPT_FILE)
 
-            if (not name.startswith("__") and 
-                    os.path.isdir(fullpath) and 
-                    os.path.exists(config_path)):
+            if (
+                not name.startswith("__")
+                and os.path.isdir(fullpath)
+                and os.path.exists(config_path)
+            ):
                 try:
                     page = self._loadPage(
                         fullpath, parentPage, parentPage.root.readonly

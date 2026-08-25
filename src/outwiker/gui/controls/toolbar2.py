@@ -5,9 +5,9 @@ import wx
 
 class ToolBar2(wx.Panel):
     def __init__(self, parent, order=0):
-        '''
+        """
         parent - instance of the ToolBar2Container
-        '''
+        """
 
         super().__init__(parent)
         self._parent = parent
@@ -19,25 +19,25 @@ class ToolBar2(wx.Panel):
         self.SetSizer(self._sizer)
 
     def AddButton(self, label, bitmap, button_id=wx.ID_ANY):
-        '''
+        """
         label - tool tip for the button.
         bitmap - wx.Bitmap or file name.
-        '''
+        """
         bmp = wx.Bitmap(bitmap)
         new_id = self._toolbar.AddTool(button_id, label, bmp, label).GetId()
         self._setToolbarUpdated()
         return new_id
 
     def AddCheckButton(self, label, bitmap, button_id=wx.ID_ANY):
-        '''
+        """
         label - tool tip for the button.
         bitmap - wx.Bitmap or file name.
-        '''
+        """
         self._setToolbarUpdated()
         bmp = wx.Bitmap(bitmap)
-        new_id = self._toolbar.AddTool(button_id, label,
-                                       bmp, label,
-                                       wx.ITEM_CHECK).GetId()
+        new_id = self._toolbar.AddTool(
+            button_id, label, bmp, label, wx.ITEM_CHECK
+        ).GetId()
         return new_id
 
     def AddSeparator(self):
@@ -127,10 +127,9 @@ class ToolBar2Container(wx.Panel):
         toolbar = ToolBar2(self, order=order)
         self._toolbars[toolbar_id] = toolbar
         index = self._getToolBarIndex(order)
-        self._mainSizer.Insert(index,
-                               toolbar,
-                               flag=wx.EXPAND | wx.ALIGN_TOP | wx.ALL,
-                               border=4)
+        self._mainSizer.Insert(
+            index, toolbar, flag=wx.EXPAND | wx.ALIGN_TOP | wx.ALL, border=4
+        )
         self.GetParent().Layout()
         return toolbar
 

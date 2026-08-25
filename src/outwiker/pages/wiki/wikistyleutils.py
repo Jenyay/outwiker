@@ -12,21 +12,21 @@ from outwiker.utilites.textfile import readTextFile
 
 
 def turnBlockOrInline(editor, text_begin, text_end):
-    '''
+    """
     Turn text like "text_begin ... text_end" for inline string or
     "text_begin
     ...
     text_end"
 
     for block string.
-    '''
+    """
     sel_text = editor.GetSelectedText()
 
     if isSelectedBlock(editor):
-        if not sel_text.startswith('\n'):
-            text_begin = text_begin + '\n'
-        if not sel_text.endswith('\n'):
-            text_end = '\n' + text_end
+        if not sel_text.startswith("\n"):
+            text_begin = text_begin + "\n"
+        if not sel_text.endswith("\n"):
+            text_end = "\n" + text_end
 
     editor.turnText(text_begin, text_end)
 
@@ -38,16 +38,16 @@ def isSelectedBlock(editor):
     text_length = len(full_text)
 
     # If selected full paragraph (full line)
-    is_begin_line = (sel_start == 0) or (full_text[sel_start - 1] == '\n')
-    is_end_line = sel_end == text_length or full_text[sel_end] == '\n'
+    is_begin_line = (sel_start == 0) or (full_text[sel_start - 1] == "\n")
+    is_end_line = sel_end == text_length or full_text[sel_end] == "\n"
 
     return is_begin_line and is_end_line
 
 
 def selectColor(parent, title, colorsList):
-    '''
+    """
     Select color with dialog
-    '''
+    """
     color_data = wx.ColourData()
     color_data.SetChooseFull(True)
     for n, color in enumerate(colorsList[:RECENT_COLORS_COUNT]):
@@ -68,7 +68,7 @@ def selectColor(parent, title, colorsList):
 
 def loadCustomStyles(dir_list):
     styles = {}
-    extension = '.css'
+    extension = ".css"
 
     for folder in dir_list:
         if not os.path.exists(folder):
@@ -76,7 +76,7 @@ def loadCustomStyles(dir_list):
 
         for fname in os.listdir(folder):
             if fname.endswith(extension):
-                name = fname[:-len(extension)]
+                name = fname[: -len(extension)]
                 try:
                     css = readTextFile(os.path.join(folder, fname))
                     styles[name] = css
@@ -85,13 +85,13 @@ def loadCustomStyles(dir_list):
     return styles
 
 
-def loadCustomStylesFromConfig(config: Config,
-                               section_name: str,
-                               option_name: str) -> Dict[str, str]:
-    '''
+def loadCustomStylesFromConfig(
+    config: Config, section_name: str, option_name: str
+) -> Dict[str, str]:
+    """
     Load saved styles from page config in JSON format.
     Return dictionary: key - style name, value - CSS style.
-    '''
+    """
     result = {}
     opt = JSONOption(config, section_name, option_name, None)
     styles = opt.value
@@ -106,26 +106,26 @@ def loadCustomStylesFromConfig(config: Config,
     return result
 
 
-def saveCustomStylesToConfig(config: Config,
-                             section_name: str,
-                             option_name: str,
-                             styles: Dict[str, str]) -> None:
-    '''
+def saveCustomStylesToConfig(
+    config: Config, section_name: str, option_name: str, styles: Dict[str, str]
+) -> None:
+    """
     Save custom styles to config in JSON format
-    '''
+    """
     opt = JSONOption(config, section_name, option_name, None)
     opt.value = styles
 
 
 def getCustomStylesNames(dir_list):
     styles = []
-    extension = '.css'
+    extension = ".css"
 
     for folder in dir_list:
         if os.path.exists(folder):
-            styles += [fname[: -len(extension)]
-                       for fname
-                       in os.listdir(folder)
-                       if fname.endswith(extension)]
+            styles += [
+                fname[: -len(extension)]
+                for fname in os.listdir(folder)
+                if fname.endswith(extension)
+            ]
 
     return list(set(styles))

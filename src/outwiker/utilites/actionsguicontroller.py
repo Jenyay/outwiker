@@ -33,15 +33,13 @@ class ActionsGUIController:
         self._new_toolbars = []
         self._new_menus = []
 
-    def initialize(self, action_gui_info_list,
-                   new_toolbars=None, new_menus=None):
-        '''
+    def initialize(self, action_gui_info_list, new_toolbars=None, new_menus=None):
+        """
         new_toolbars - list of the tuples (toolbar_id, toolbar_title)
         new_menus - list of the tuples (menu_id, title, parent_menu_id)
-        '''
+        """
         self._actionsInfoList = action_gui_info_list[:]
-        self._new_toolbars = (new_toolbars[:] if new_toolbars is not None
-                              else [])
+        self._new_toolbars = new_toolbars[:] if new_toolbars is not None else []
         self._new_menus = new_menus[:] if new_menus is not None else []
 
         self._application.onPageViewCreate += self._onPageViewCreate
@@ -74,7 +72,8 @@ class ActionsGUIController:
             if action_info.menu_id is not None:
                 self._application.actionController.appendMenuItem(
                     action_info.action.stringId,
-                    mainWindow.menuController[action_info.menu_id])
+                    mainWindow.menuController[action_info.menu_id],
+                )
 
             if action_info.button_info is not None:
                 assert os.path.exists(action_info.button_info.image_fname)
@@ -82,7 +81,8 @@ class ActionsGUIController:
                     action_info.action.stringId,
                     mainWindow.toolbars[action_info.button_info.toolbar_id],
                     action_info.button_info.image_fname,
-                    False)
+                    False,
+                )
 
         self._application.actionController.updateToolbars()
         self._enableTools()
@@ -95,9 +95,9 @@ class ActionsGUIController:
     def _createMenus(self):
         mainWindow = self._application.mainWindow
         for menu_info in self._new_menus:
-            mainWindow.menuController.createSubMenu(menu_id=menu_info[0],
-                                                    title=menu_info[1],
-                                                    parent_id=menu_info[2])
+            mainWindow.menuController.createSubMenu(
+                menu_id=menu_info[0], title=menu_info[1], parent_id=menu_info[2]
+            )
 
     def _destroyToolBars(self):
         mainWindow = self._application.mainWindow
@@ -120,8 +120,7 @@ class ActionsGUIController:
                 actionController.removeMenuItem(action_info.action.stringId)
 
             if action_info.button_info is not None:
-                actionController.removeToolbarButton(
-                    action_info.action.stringId)
+                actionController.removeToolbarButton(action_info.action.stringId)
 
         self._destroyToolBars()
         self._destroyMenus()
@@ -141,8 +140,10 @@ class ActionsGUIController:
 
     def _enableTools(self):
         pageView = self._getPageView()
-        enabled = (pageView.GetPageMode() == PAGE_MODE_TEXT and
-                   not self._application.selectedPage.readonly)
+        enabled = (
+            pageView.GetPageMode() == PAGE_MODE_TEXT
+            and not self._application.selectedPage.readonly
+        )
 
         actionController = self._application.actionController
         for action_info in self._actionsInfoList:
@@ -163,8 +164,7 @@ class ActionsGUIController:
             self._application.onPageModeChange += self._onTabChanged
 
     def _isRequestedPageType(self, page):
-        return (page is not None and
-                page.getTypeString() == self._pageTypeString)
+        return page is not None and page.getTypeString() == self._pageTypeString
 
     def _onPageViewDestroy(self, page):
         """

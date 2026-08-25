@@ -8,6 +8,7 @@ class PreferencesAction(BaseAction):
     """
     Вызов диалога настроек
     """
+
     stringId = "Preferences"
 
     def __init__(self, application):

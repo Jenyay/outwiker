@@ -6,7 +6,9 @@ from .version_requirements import Requirements
 
 class RequirementsFactory:
     @classmethod
-    def fromXmlRequirements(cls, requirements: Optional[XmlRequirements]) -> Requirements:
+    def fromXmlRequirements(
+        cls, requirements: Optional[XmlRequirements]
+    ) -> Requirements:
         if requirements is None:
             return Requirements([], [])
 

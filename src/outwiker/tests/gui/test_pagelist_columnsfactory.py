@@ -13,26 +13,26 @@ def test_createDefaultColumns_len():
 
 def test_createColumn():
     factory = pl.ColumnsFactory()
-    assert type(factory.createColumn('title')) == pl.PageTitleColumn
-    assert type(factory.createColumn('parent')) == pl.ParentPageColumn
-    assert type(factory.createColumn('tags')) == pl.TagsColumn
-    assert type(factory.createColumn('moddate')) == pl.ModifyDateColumn
+    assert type(factory.createColumn("title")) == pl.PageTitleColumn
+    assert type(factory.createColumn("parent")) == pl.ParentPageColumn
+    assert type(factory.createColumn("tags")) == pl.TagsColumn
+    assert type(factory.createColumn("moddate")) == pl.ModifyDateColumn
 
 
 def test_createColumn_invalid_empty():
     factory = pl.ColumnsFactory()
     with pytest.raises(ValueError):
-        factory.createColumn('')
+        factory.createColumn("")
 
 
 def test_createColumn_invalid_name():
     factory = pl.ColumnsFactory()
     with pytest.raises(ValueError):
-        factory.createColumn('invalid')
+        factory.createColumn("invalid")
 
 
 def test_createColumnsFromString_empty():
-    text = ''
+    text = ""
     factory = pl.ColumnsFactory()
     columns = factory.createColumnsFromString(text)
 
@@ -40,7 +40,7 @@ def test_createColumnsFromString_empty():
 
 
 def test_createColumnsFromString_single_title():
-    text = 'title:100:True'
+    text = "title:100:True"
     factory = pl.ColumnsFactory()
     columns = factory.createColumnsFromString(text)
 
@@ -51,7 +51,7 @@ def test_createColumnsFromString_single_title():
 
 
 def test_createColumnsFromString_single_parent():
-    text = 'parent:200:False'
+    text = "parent:200:False"
     factory = pl.ColumnsFactory()
     columns = factory.createColumnsFromString(text)
 
@@ -62,7 +62,7 @@ def test_createColumnsFromString_single_parent():
 
 
 def test_createColumnsFromString_single_tags():
-    text = 'tags:300:True'
+    text = "tags:300:True"
     factory = pl.ColumnsFactory()
     columns = factory.createColumnsFromString(text)
 
@@ -73,7 +73,7 @@ def test_createColumnsFromString_single_tags():
 
 
 def test_createColumnsFromString_single_moddate():
-    text = 'moddate:400:True'
+    text = "moddate:400:True"
     factory = pl.ColumnsFactory()
     columns = factory.createColumnsFromString(text)
 
@@ -84,7 +84,7 @@ def test_createColumnsFromString_single_moddate():
 
 
 def test_createColumnsFromString_several():
-    text = 'moddate:400:False,title:200:True'
+    text = "moddate:400:False,title:200:True"
     factory = pl.ColumnsFactory()
     columns = factory.createColumnsFromString(text)
 
@@ -100,14 +100,14 @@ def test_createColumnsFromString_several():
 def test_toString_empty():
     factory = pl.ColumnsFactory()
     columns = []
-    assert factory.toString(columns) == ''
+    assert factory.toString(columns) == ""
 
 
 def test_toString_two_items():
     factory = pl.ColumnsFactory()
     columns = [
-        factory.createColumn('title', 100, True),
-        factory.createColumn('parent', 200, False),
+        factory.createColumn("title", 100, True),
+        factory.createColumn("parent", 200, False),
     ]
 
-    assert factory.toString(columns) == 'title:100:True,parent:200:False'
+    assert factory.toString(columns) == "title:100:True,parent:200:False"

@@ -7,6 +7,7 @@ from outwiker.core.tree import WikiPage
 from outwiker.tests.fixtures import application, wikipage
 from outwiker.tests.utils import copy_test_files_to_attachments
 
+
 def set_file_times(file_path, new_datetime):
     stat = os.stat(file_path)
     atime = stat.st_atime
@@ -49,7 +50,9 @@ def test_add_two_files_two_steps(application: Application, wikipage: WikiPage):
     assert watched_attachments == ["image.png", "dirname/file.txt"]
 
 
-def test_add_two_files_separate_calculators(application: Application, wikipage: WikiPage):
+def test_add_two_files_separate_calculators(
+    application: Application, wikipage: WikiPage
+):
     hash_calculator = SimpleHashCalculator(application)
     hash_calculator.addWatchAttachments(wikipage, ["image.png", "dirname/file.txt"])
 
@@ -83,7 +86,7 @@ def test_files_dont_exist(application: Application, wikipage: WikiPage):
     hash_calculator = SimpleHashCalculator(application)
 
     hash_1 = hash_calculator.getHash(wikipage)
-    
+
     hash_calculator.addWatchAttachments(wikipage, ["image.png"])
     hash_2 = hash_calculator.getHash(wikipage)
 

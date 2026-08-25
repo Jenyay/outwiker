@@ -29,7 +29,7 @@ class LightboxPluginTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -57,13 +57,19 @@ class LightboxPluginTest(unittest.TestCase):
         self.parser.toHtml(text)
 
         self.assertTrue(
-            '<script type="text/javascript" src="./__attach/__thumb/jquery-1.7.2.min.js"></script>' in self.parser.head)
+            '<script type="text/javascript" src="./__attach/__thumb/jquery-1.7.2.min.js"></script>'
+            in self.parser.head
+        )
 
         self.assertTrue(
-            '<link rel="stylesheet" href="./__attach/__thumb/jquery.fancybox.css" type="text/css" media="screen" />' in self.parser.head)
+            '<link rel="stylesheet" href="./__attach/__thumb/jquery.fancybox.css" type="text/css" media="screen" />'
+            in self.parser.head
+        )
 
         self.assertTrue(
-            '<script type="text/javascript" src="./__attach/__thumb/jquery.fancybox.pack.js"></script>' in self.parser.head)
+            '<script type="text/javascript" src="./__attach/__thumb/jquery.fancybox.pack.js"></script>'
+            in self.parser.head
+        )
 
     def testSingleHeaders(self):
         """
@@ -86,13 +92,14 @@ class LightboxPluginTest(unittest.TestCase):
         self.parser.toHtml(text)
 
         dirname = "__attach/__thumb"
-        files = ["jquery.fancybox.css",
-                 "blank.gif",
-                 "fancybox_loading.gif",
-                 "jquery-1.7.2.min.js",
-                 "jquery.fancybox.pack.js",
-                 "fancybox_sprite.png"
-                 ]
+        files = [
+            "jquery.fancybox.css",
+            "blank.gif",
+            "fancybox_loading.gif",
+            "jquery-1.7.2.min.js",
+            "jquery.fancybox.pack.js",
+            "fancybox_sprite.png",
+        ]
 
         for fname in files:
             fullpath = os.path.join(self.testPage.path, dirname, fname)

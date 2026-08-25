@@ -11,26 +11,25 @@ from .xmlchangelogparser import XmlChangelogParser
 
 class ChangeLogFactory:
     @classmethod
-    def fromXmlChangeLog(cls,
-                         xmlChangeLog: XmlChangeLog,
-                         language: str) -> ChangeLog:
+    def fromXmlChangeLog(cls, xmlChangeLog: XmlChangeLog, language: str) -> ChangeLog:
         versions = cls._getVersions(xmlChangeLog, language)
         return ChangeLog(versions)
 
     @classmethod
     def fromString(cls, text: str, language: str) -> ChangeLog:
-        xmlChangeLog = XmlChangelogParser.parse(text)     # type: XmlChangeLog
+        xmlChangeLog = XmlChangelogParser.parse(text)  # type: XmlChangeLog
         return cls.fromXmlChangeLog(xmlChangeLog, language)
 
     @classmethod
-    def _getVersions(cls,
-                     xmlChangeLog: XmlChangeLog,
-                     language: str) -> List[VersionInfo]:
+    def _getVersions(
+        cls, xmlChangeLog: XmlChangeLog, language: str
+    ) -> List[VersionInfo]:
         versions = []
         for xmlversion in xmlChangeLog.versions:
             try:
-                version = Version.parse('{} {}'.format(
-                    xmlversion.number, xmlversion.status))
+                version = Version.parse(
+                    "{} {}".format(xmlversion.number, xmlversion.status)
+                )
             except ValueError:
                 continue
 
@@ -53,7 +52,8 @@ class ChangeLogFactory:
 
         for xmldownload in xmldownloads:
             requirements = RequirementsFactory.fromXmlRequirements(
-                xmldownload.requirements)
+                xmldownload.requirements
+            )
             download = DownloadInfo(xmldownload.href, requirements)
             downloads.append(download)
 

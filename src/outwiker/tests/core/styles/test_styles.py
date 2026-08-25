@@ -14,7 +14,7 @@ from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class StylesTest (unittest.TestCase, BaseOutWikerMixin):
+class StylesTest(unittest.TestCase, BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         # Количество срабатываний особытий при обновлении страницы
@@ -22,7 +22,7 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         self._pageUpdateSender = None
 
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
         self.eventcount = 0
 
         self.wikiroot = createNotesTree(self.path)
@@ -34,8 +34,7 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         self._exampleStyleDir = "testdata/styles/example_jblog/example_jblog"
         self._exampleStyleDir2 = "testdata/styles/example_jnet/example_jnet"
         self._invalidStyleDir = "../styles/invalid"
-        self._testStylePath = os.path.join(
-            self._exampleStyleDir, self._styleFname)
+        self._testStylePath = os.path.join(self._exampleStyleDir, self._styleFname)
 
         self.application.wikiroot = self.wikiroot
         self.application.onPageUpdate += self.onPageUpdate
@@ -55,8 +54,10 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         """
         style = Style()
         defaultStyle = style.getDefaultStyle()
-        self.assertEqual(os.path.abspath(defaultStyle),
-                         os.path.abspath("src/outwiker/data/styles/__default/__style.html"))
+        self.assertEqual(
+            os.path.abspath(defaultStyle),
+            os.path.abspath("src/outwiker/data/styles/__default/__style.html"),
+        )
 
     def testStylePageDefault(self):
         """
@@ -130,8 +131,7 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         self.assertFalse(os.path.exists(pageStyleDir))
         self.assertFalse(os.path.exists(pageStyleFname))
 
-        style.setPageStyle(page, os.path.join(
-            self._exampleStyleDir, self._styleFname))
+        style.setPageStyle(page, os.path.join(self._exampleStyleDir, self._styleFname))
 
         self.assertTrue(os.path.exists(pageStyleDir))
         self.assertTrue(os.path.exists(pageStyleFname))
@@ -191,8 +191,7 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         style = Style()
         page = self.wikiroot["Викистраница 1"]
 
-        self.assertRaises(IOError, style.setPageStyle,
-                          page, self._invalidStyleDir)
+        self.assertRaises(IOError, style.setPageStyle, page, self._invalidStyleDir)
 
     def testSelfDefault(self):
         style = Style()
@@ -200,8 +199,10 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         page = self.wikiroot["Викистраница 1"]
         style.setPageStyle(page, style.getPageStyle(page))
 
-        self.assertEqual(os.path.abspath(style.getPageStyle(page)),
-                         os.path.abspath(style.getDefaultStyle()))
+        self.assertEqual(
+            os.path.abspath(style.getPageStyle(page)),
+            os.path.abspath(style.getDefaultStyle()),
+        )
 
     def testSelfSpecial(self):
         style = Style()

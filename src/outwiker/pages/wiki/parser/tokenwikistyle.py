@@ -4,34 +4,34 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 import re
 from typing import List, Tuple, Dict
 
-from pyparsing import (Regex, Forward, Literal,
-                       LineEnd, NoMatch, AtLineStart,
-                       SkipTo)
+from pyparsing import Regex, Forward, Literal, LineEnd, NoMatch, AtLineStart, SkipTo
 
-from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
-                                   STYLES_INLINE_FOLDER_NAME
-                                   )
-from ..defines import (CONFIG_STYLES_SECTION,
-                       CONFIG_STYLES_INLINE_OPTION,
-                       CONFIG_STYLES_BLOCK_OPTION,
-                       )
+from outwiker.core.defines import STYLES_BLOCK_FOLDER_NAME, STYLES_INLINE_FOLDER_NAME
+from ..defines import (
+    CONFIG_STYLES_SECTION,
+    CONFIG_STYLES_INLINE_OPTION,
+    CONFIG_STYLES_BLOCK_OPTION,
+)
 from outwiker.core.standardcolors import standardColorNames
 from outwiker.core.system import getSpecialDirList
 from .tokennoformat import NoFormatFactory
-from ..wikistyleutils import (loadCustomStyles,
-                              loadCustomStylesFromConfig,
-                              saveCustomStylesToConfig)
+from ..wikistyleutils import (
+    loadCustomStyles,
+    loadCustomStylesFromConfig,
+    saveCustomStylesToConfig,
+)
 
 
-PARAM_NAME_COLOR = 'color'
-PARAM_NAME_BACKGROUND_COLOR = 'bgcolor'
-PARAM_NAME_STYLE = 'style'
+PARAM_NAME_COLOR = "color"
+PARAM_NAME_BACKGROUND_COLOR = "bgcolor"
+PARAM_NAME_STYLE = "style"
 
 
 class WikiStyleInlineFactory:
     """
     A factory to create inline wiki style tokens.
     """
+
     @staticmethod
     def make(parser):
         return WikiStyleInlineToken(parser).getToken()
@@ -41,12 +41,13 @@ class WikiStyleBlockFactory:
     """
     A factory to create block wiki style tokens.
     """
+
     @staticmethod
     def make(parser):
         return WikiStyleBlockToken(parser).getToken()
 
 
-class WikiStyleBase( metaclass=ABCMeta):
+class WikiStyleBase(metaclass=ABCMeta):
     def __init__(self, parser):
         self.parser = parser
         self._custom_styles_on_page = {}
@@ -54,7 +55,7 @@ class WikiStyleBase( metaclass=ABCMeta):
         styles_from_page_params = loadCustomStylesFromConfig(
             parser.page.params,
             CONFIG_STYLES_SECTION,
-            self._getOptionNameForCustomStylesFromPage()
+            self._getOptionNameForCustomStylesFromPage(),
         )
 
         styles_folder_name = self._getStylesFolder()
@@ -101,8 +102,9 @@ class WikiStyleBase( metaclass=ABCMeta):
         no_format = NoFormatFactory.make(self.parser)
 
         token = Forward()
-        inside = SkipTo(end, failOn=forbidden,
-                        ignore=no_format | token).leaveWhitespace()
+        inside = SkipTo(
+            end, failOn=forbidden, ignore=no_format | token
+        ).leaveWhitespace()
         token << begin + inside + end
 
         token = token.setParseAction(self.conversionParseAction)(self.name)
@@ -110,34 +112,33 @@ class WikiStyleBase( metaclass=ABCMeta):
         return token
 
     def conversionParseAction(self, s, l, t):
-        params_list = self._parseParams(t['params'])
+        params_list = self._parseParams(t["params"])
 
         styles_info = self._style_generator.getStyle(params_list)
-        classes = styles_info.unknown_classes + \
-            list(styles_info.custom_classes.keys())
+        classes = styles_info.unknown_classes + list(styles_info.custom_classes.keys())
 
         for class_name, css in styles_info.custom_classes.items():
             if class_name not in self._custom_styles_on_page:
-                html_style = '<style>{content}</style>\n'.format(content=css)
+                html_style = "<style>{content}</style>\n".format(content=css)
                 self.parser.appendToHead(html_style)
                 self._custom_styles_on_page[class_name] = css
-                saveCustomStylesToConfig(self.parser.page.params,
-                                         CONFIG_STYLES_SECTION,
-                                         self._getOptionNameForCustomStylesFromPage(),
-                                         self._custom_styles_on_page)
+                saveCustomStylesToConfig(
+                    self.parser.page.params,
+                    CONFIG_STYLES_SECTION,
+                    self._getOptionNameForCustomStylesFromPage(),
+                    self._custom_styles_on_page,
+                )
 
-        classes_str = ' class="' + ' '.join(classes) + '"' if classes else ''
-        style_str = ' style="' + styles_info.user_css + \
-            '"' if styles_info.user_css else ''
+        classes_str = ' class="' + " ".join(classes) + '"' if classes else ""
+        style_str = (
+            ' style="' + styles_info.user_css + '"' if styles_info.user_css else ""
+        )
 
         content = self._prepareContent(t[1])
         inside = self.parser.parseWikiMarkup(content)
         tag = self._getTag()
-        result = '<{tag}{classes}{style}>{inside}</{tag}>'.format(
-            tag=tag,
-            classes=classes_str,
-            style=style_str,
-            inside=inside
+        result = "<{tag}{classes}{style}>{inside}</{tag}>".format(
+            tag=tag, classes=classes_str, style=style_str, inside=inside
         )
 
         return result
@@ -163,7 +164,7 @@ class WikiStyleBase( metaclass=ABCMeta):
             name = match.group("name")
             param = match.group("param")
             if param is None:
-                param = u""
+                param = ""
 
             result.append((name.lower(), self._removeQuotes(param)))
 
@@ -174,65 +175,66 @@ class WikiStyleBase( metaclass=ABCMeta):
         Удалить начальные и конечные кавычки,
         которые остались после разбора параметров
         """
-        if (len(text) > 0 and
-                (text[0] == text[-1] == "'" or text[0] == text[-1] == '"')):
+        if len(text) > 0 and (text[0] == text[-1] == "'" or text[0] == text[-1] == '"'):
             return text[1:-1]
 
         return text
 
 
 class WikiStyleInlineToken(WikiStyleBase):
-    '''
+    """
     Token for inline style: %class-name...% ... %%
-    '''
+    """
+
     @property
     def name(self):
-        return 'style_inline'
+        return "style_inline"
 
     def _getBeginToken(self):
         return Regex(r'%(?P<params>[a-zA-Z_#][\w\s."\'_=:;#(),-]+?)\s*%') + ~LineEnd()
 
     def _getEndToken(self):
-        return Literal('%%')
+        return Literal("%%")
 
     def _getTag(self):
-        return 'span'
+        return "span"
 
     def _getStylesFolder(self):
         return STYLES_INLINE_FOLDER_NAME
 
     def _getForbiddenToken(self):
-        return Literal('\n\n').leaveWhitespace()
+        return Literal("\n\n").leaveWhitespace()
 
     def _getOptionNameForCustomStylesFromPage(self) -> str:
         return CONFIG_STYLES_INLINE_OPTION
 
 
 class WikiStyleBlockToken(WikiStyleBase):
-    '''
+    """
     Token for block style:
         %class-name...%
         ...
         %%
-    '''
+    """
+
     @property
     def name(self):
-        return 'style_block'
+        return "style_block"
 
     def _getBeginToken(self):
-        return (AtLineStart(
-                Regex(r'%(?P<params>[a-zA-Z_#][\w\s."\'_=:;#(),-]+?)\s*%[ \t]*')
-                + LineEnd().suppress()
-                ))
+        return AtLineStart(
+            Regex(r'%(?P<params>[a-zA-Z_#][\w\s."\'_=:;#(),-]+?)\s*%[ \t]*')
+            + LineEnd().suppress()
+        )
 
     def _getEndToken(self):
-        return AtLineStart(Regex(r'%%[ \t]*') + LineEnd())
+        return AtLineStart(Regex(r"%%[ \t]*") + LineEnd())
 
     def _getTag(self):
-        return 'div'
+        return "div"
 
     def _prepareContent(self, content):
-        if content.endswith('\n'):
+        if content.endswith("\n"):
             content = content[:-1]
         return content
 
@@ -245,22 +247,22 @@ class WikiStyleBlockToken(WikiStyleBase):
 
 class StylesInfo(object):
     def __init__(self):
-        self.custom_classes = {}        # type: Dict[str, str]
-        self.unknown_classes = []       # type: List[str]
-        self.user_css = ''              # type: str
+        self.custom_classes = {}  # type: Dict[str, str]
+        self.unknown_classes = []  # type: List[str]
+        self.user_css = ""  # type: str
 
 
 class StyleGenerator(object):
     def __init__(self, custom_styles):
-        '''
+        """
         custom_styles - dictionary. A key is style name,
             a value is CSS description.
         If inline is True then CSS will be created for the <span> tag else for
             the <div> tag.
-        '''
+        """
         self._custom_styles = custom_styles
 
-        self._class_name_tpl = 'style-{index}'
+        self._class_name_tpl = "style-{index}"
         self._class_name_index = 1
 
         # Key - string of params, value - style name.
@@ -279,11 +281,11 @@ class StyleGenerator(object):
 
                 if class_name in self._custom_styles:
                     info.custom_classes[class_name] = self._custom_styles[class_name]
-                elif class_name in standardColorNames or param.startswith('#'):
+                elif class_name in standardColorNames or param.startswith("#"):
                     color = param
-                elif ((class_name.startswith('bg-') or
-                        class_name.startswith('bg_')) and
-                        class_name[3:] in standardColorNames):
+                elif (
+                    class_name.startswith("bg-") or class_name.startswith("bg_")
+                ) and class_name[3:] in standardColorNames:
                     bgcolor = class_name[3:]
                 else:
                     info.unknown_classes.append(class_name)
@@ -298,26 +300,26 @@ class StyleGenerator(object):
         return info
 
     def _createCSS(self, color=None, bgcolor=None, other_styles=None):
-        result = ''
+        result = ""
 
         if color:
-            result += ' color: {color};'.format(color=color)
+            result += " color: {color};".format(color=color)
 
         if bgcolor:
-            result += ' background-color: {bgcolor};'.format(bgcolor=bgcolor)
+            result += " background-color: {bgcolor};".format(bgcolor=bgcolor)
 
         if other_styles:
             other_styles = other_styles.strip()
-            if not other_styles.endswith(';'):
-                other_styles += ';'
+            if not other_styles.endswith(";"):
+                other_styles += ";"
 
-            result += ' ' + other_styles
+            result += " " + other_styles
 
         return result.strip()
 
     def _calcHash(self, params_list):
-        result = ''
+        result = ""
         for param, value in params_list:
-            result += param + '=' + value
+            result += param + "=" + value
 
         return result

@@ -19,12 +19,14 @@ class WikiIncludeAction(BaseAction):
     """
     Вставка команды для вставки содержимого прикрепленного файла
     """
+
     stringId = "WikiInclude"
 
     def __init__(self, application):
         self._application = application
-        self._size_saver = WindowSizeSaver('wiki_include_dialog',
-                                           self._application.config)
+        self._size_saver = WindowSizeSaver(
+            "wiki_include_dialog", self._application.config
+        )
 
     @property
     def title(self):
@@ -39,8 +41,10 @@ class WikiIncludeAction(BaseAction):
         assert self._application.mainWindow.pagePanel is not None
 
         if len(Attachment(self._application.selectedPage).attachmentFull) == 0:
-            showError(self._application.mainWindow,
-                      _("Current page does not have any attachments"))
+            showError(
+                self._application.mainWindow,
+                _("Current page does not have any attachments"),
+            )
             return
 
         with IncludeDialog(self._application.mainWindow) as dlg:
@@ -49,9 +53,12 @@ class WikiIncludeAction(BaseAction):
 
             text = controller.getDialogResult()
             if text is not None:
-                self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(text)
+                self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(
+                    text
+                )
 
             self._size_saver.saveSize(dlg)
+
 
 class IncludeDialogController:
     def __init__(self, dialog, selectedPage):
@@ -91,8 +98,7 @@ class IncludeDialogController:
         params.append('Attach:"{}"'.format(self._dialog.selectedAttachment))
 
         if self._dialog.selectedEncoding != "utf-8":
-            params.append("encoding=" + '"' +
-                          self._dialog.selectedEncoding + '"')
+            params.append("encoding=" + '"' + self._dialog.selectedEncoding + '"')
 
         if self._dialog.escapeHtml:
             params.append("htmlescape")
@@ -105,8 +111,7 @@ class IncludeDialogController:
 
 class IncludeDialog(TestedDialog):
     def __init__(self, parent):
-        super().__init__(parent,
-                         style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        super().__init__(parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.SetTitle(_("Insert (:include:) command"))
 
         self._createGui()
@@ -160,11 +165,11 @@ class IncludeDialog(TestedDialog):
 
         # Преобразовывать символы HTML?
         self._escapeHtmlCheckBox = wx.CheckBox(
-            self, label=_("Escape HTML special characters"))
+            self, label=_("Escape HTML special characters")
+        )
 
         # Делать разбор викинотации?
-        self._wikiParseCheckBox = wx.CheckBox(
-            self, label=_("Parse wiki notation"))
+        self._wikiParseCheckBox = wx.CheckBox(self, label=_("Parse wiki notation"))
 
         self._buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
@@ -178,38 +183,45 @@ class IncludeDialog(TestedDialog):
         main_sizer.AddGrowableCol(0)
         main_sizer.AddGrowableRow(5)
 
-        main_sizer.Add(self._attachLabel,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=4)
-        main_sizer.Add(self._attachComboBox,
-                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=2)
+        main_sizer.Add(
+            self._attachLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4
+        )
+        main_sizer.Add(
+            self._attachComboBox,
+            flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
 
         second_sizer = wx.FlexGridSizer(cols=2)
         second_sizer.AddGrowableCol(1)
         second_sizer.AddGrowableRow(0)
 
-        second_sizer.Add(self._encodingLabel,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=2)
-        second_sizer.Add(self._encodingComboBox,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-                      border=2)
+        second_sizer.Add(
+            self._encodingLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        second_sizer.Add(
+            self._encodingComboBox,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            border=2,
+        )
 
         main_sizer.Add(second_sizer, flag=wx.EXPAND | wx.ALL, border=2)
 
-        main_sizer.Add(self._escapeHtmlCheckBox,
-                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=2)
-
-        main_sizer.Add(self._wikiParseCheckBox,
-                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=2)
+        main_sizer.Add(
+            self._escapeHtmlCheckBox,
+            flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
 
         main_sizer.Add(
-            self._buttonsSizer,
-            flag=wx.ALL | wx.ALIGN_BOTTOM | wx.ALIGN_RIGHT,
-            border=2)
+            self._wikiParseCheckBox,
+            flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            border=2,
+        )
+
+        main_sizer.Add(
+            self._buttonsSizer, flag=wx.ALL | wx.ALIGN_BOTTOM | wx.ALIGN_RIGHT, border=2
+        )
 
         self.SetSizer(main_sizer)
         self.Fit()

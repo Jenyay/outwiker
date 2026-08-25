@@ -7,10 +7,11 @@ from outwiker.app.services.messages import showError
 from outwiker.gui.baseaction import BaseAction
 
 
-class MovePageUpAction (BaseAction):
+class MovePageUpAction(BaseAction):
     """
     Переместить страницу на одну позицию вверх
     """
+
     stringId = "MovePageUp"
 
     def __init__(self, application):

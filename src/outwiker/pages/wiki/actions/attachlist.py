@@ -15,6 +15,7 @@ class WikiAttachListAction(BaseAction):
     """
     Вставка команды для показа списка прикрепленных файлов
     """
+
     stringId = "WikiAttachList"
 
     def __init__(self, application):
@@ -33,17 +34,20 @@ class WikiAttachListAction(BaseAction):
         assert self._application.mainWindow.pagePanel is not None
         assert self._application.selectedPage is not None
 
-        with AttachListDialog(self._application.mainWindow, self._application.selectedPage) as dlg:
+        with AttachListDialog(
+            self._application.mainWindow, self._application.selectedPage
+        ) as dlg:
             controller = AttachListDialogController(dlg)
 
             text = controller.getDialogResult()
             if text is not None:
                 self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(
-                    text)
+                    text
+                )
 
 
 class AttachListDialogController:
-    def __init__(self, dialog: 'AttachListDialog'):
+    def __init__(self, dialog: "AttachListDialog"):
         self._sortStringsDialog = [
             _("Name"),
             _("Extension"),
@@ -81,10 +85,10 @@ class AttachListDialogController:
 
         params.append("sort={}".format(sortname))
 
-        if self._dialog.subdir != '.':
+        if self._dialog.subdir != ".":
             params.append('subdir="{}"'.format(self._dialog.subdir))
 
-        return ' '.join(params)
+        return " ".join(params)
 
 
 class AttachListDialog(TestedDialog):
@@ -92,7 +96,7 @@ class AttachListDialog(TestedDialog):
         super(AttachListDialog, self).__init__(parent)
         self._page = page
 
-        self.SetTitle(_('Insert (:attachlist:) command'))
+        self.SetTitle(_("Insert (:attachlist:) command"))
 
         self.__createGui()
         self.__layout()
@@ -102,43 +106,53 @@ class AttachListDialog(TestedDialog):
         self._sortComboBox.AppendItems(sortStrings)
 
     def __createGui(self):
-        self._subdirLabel = wx.StaticText(self, label=_('Folder'))
+        self._subdirLabel = wx.StaticText(self, label=_("Folder"))
 
         self._subdirCtrl = FilesTreeComboBox(self)
         attach_dir = Attachment(self._page).getAttachPath(create=True)
         self._subdirCtrl.SetRootDir(attach_dir)
         self._subdirCtrl.SetFilterFunc(getNotHiddenDirOnlyFilter(self._page))
-        self._subdirCtrl.SetValue('.')
+        self._subdirCtrl.SetValue(".")
 
-        self._sortLabel = wx.StaticText(self, label=_('Sort by'))
+        self._sortLabel = wx.StaticText(self, label=_("Sort by"))
 
-        self._sortComboBox = wx.ComboBox(
-            self, style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self._sortComboBox = wx.ComboBox(self, style=wx.CB_DROPDOWN | wx.CB_READONLY)
 
-        self._descendCheckBox = wx.CheckBox(self, label=_('Descending sort'))
+        self._descendCheckBox = wx.CheckBox(self, label=_("Descending sort"))
         self._buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
     def __layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
 
-        main_sizer.Add(self._subdirLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        main_sizer.Add(self._subdirCtrl, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)
+        main_sizer.Add(
+            self._subdirLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        main_sizer.Add(
+            self._subdirCtrl,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            border=2,
+        )
 
         sort_sizer = wx.FlexGridSizer(cols=2)
         sort_sizer.AddGrowableCol(0)
         sort_sizer.AddGrowableCol(1)
 
-        sort_sizer.Add(self._sortLabel, 0, flag=wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL, border=2)
-        sort_sizer.Add(self._sortComboBox, 0, flag=wx.EXPAND |
-                      wx.ALL, border=2)
-        sort_sizer.Add(self._descendCheckBox, 0, flag=wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL, border=2)
+        sort_sizer.Add(
+            self._sortLabel, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        sort_sizer.Add(self._sortComboBox, 0, flag=wx.EXPAND | wx.ALL, border=2)
+        sort_sizer.Add(
+            self._descendCheckBox, 0, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
         sort_sizer.AddStretchSpacer()
         sort_sizer.AddStretchSpacer()
-        sort_sizer.Add(self._buttonsSizer, 0, flag=wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, border=2)
+        sort_sizer.Add(
+            self._buttonsSizer,
+            0,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            border=2,
+        )
 
         main_sizer.Add(sort_sizer, flag=wx.ALL | wx.EXPAND, border=2)
         self.SetSizer(main_sizer)

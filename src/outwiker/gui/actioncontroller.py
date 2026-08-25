@@ -386,9 +386,7 @@ class ActionController:
         bitmap = readImage(image, image_size, image_size)
         if not bitmap.IsOk():
             logger.error("Invalid bitmap for %s", image)
-            bitmap = readImage(
-                getBuiltinImagePath("cross.svg"), image_size, image_size
-            )
+            bitmap = readImage(getBuiltinImagePath("cross.svg"), image_size, image_size)
 
         if issubclass(type(toolbar), ToolBar2):
             toolbarItemId = toolbar.AddButton(title, bitmap, wx.ID_ANY)

@@ -5,8 +5,7 @@ import unittest
 from outwiker.tests.basetestcases import PluginLoadingMixin
 
 
-class UpdateNotifierLoadingTest (PluginLoadingMixin, unittest.TestCase):
-
+class UpdateNotifierLoadingTest(PluginLoadingMixin, unittest.TestCase):
     def getPluginDir(self):
         """
         Должен возвращать путь до папки с тестируемым плагином

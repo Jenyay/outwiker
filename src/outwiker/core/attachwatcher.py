@@ -61,9 +61,7 @@ class AttachWatcher:
         self._checkAttachListForPage(self._application.selectedPage)
 
     def _checkAttachListForPage(self, page):
-        if (page is None or
-                self._watchedPage != page or
-                self._watchedPage.isRemoved):
+        if page is None or self._watchedPage != page or self._watchedPage.isRemoved:
             return
 
         attach = Attachment(page)
@@ -71,5 +69,4 @@ class AttachWatcher:
         current_list = attach.getAttachRelative(page.currentAttachSubdir)
         if set(self._oldFilesList) != set(current_list):
             eventParam = AttachListChangedParams()
-            self._application.onAttachListChanged(self._watchedPage,
-                                                  eventParam)
+            self._application.onAttachListChanged(self._watchedPage, eventParam)

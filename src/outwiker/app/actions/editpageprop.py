@@ -8,6 +8,7 @@ class EditPagePropertiesAction(BaseAction):
     """
     Редактировать свойства текущей страницы
     """
+
     stringId = "EditPageProperties"
 
     def __init__(self, application):
@@ -23,6 +24,8 @@ class EditPagePropertiesAction(BaseAction):
 
     def run(self, params):
         if self._application.selectedPage is not None:
-            editPage(self._application.mainWindow,
-                     self._application.selectedPage,
-                     self._application)
+            editPage(
+                self._application.mainWindow,
+                self._application.selectedPage,
+                self._application,
+            )

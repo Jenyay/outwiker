@@ -20,16 +20,15 @@ class AttachRenameTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.wikiroot = self.createWiki()
 
         factory = TextPageFactory()
-        factory.create(self.wikiroot, 'Страница 1', [])
-        factory.create(self.wikiroot, 'Страница 2', [])
-        factory.create(self.wikiroot['Страница 2'], 'Страница 3', [])
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
 
-        self.page = self.wikiroot['Страница 2/Страница 3']
+        self.page = self.wikiroot["Страница 2/Страница 3"]
 
-        filesPath = 'testdata/samplefiles/'
-        self.files = ['accept.png', 'add.png']
-        self.fullFilesPath = [os.path.join(
-            filesPath, fname) for fname in self.files]
+        filesPath = "testdata/samplefiles/"
+        self.files = ["accept.png", "add.png"]
+        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
 
         attach = Attachment(self.page)
         attach.attach(self.fullFilesPath)
@@ -44,8 +43,8 @@ class AttachRenameTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testRenameOk(self):
         window = self.mainWindow
         page = self.page
-        fname_src = 'accept.png'
-        fname_new = 'accept_renamed.png'
+        fname_src = "accept.png"
+        fname_new = "accept_renamed.png"
 
         renameAttach(window, page, fname_src, fname_new)
         attach = Attachment(self.page)
@@ -55,7 +54,7 @@ class AttachRenameTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testRenameSelf(self):
         window = self.mainWindow
         page = self.page
-        fname = 'accept.png'
+        fname = "accept.png"
 
         renameAttach(window, page, fname, fname)
         attach = Attachment(self.page)
@@ -64,8 +63,8 @@ class AttachRenameTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testRenameCancelId(self):
         window = self.mainWindow
         page = self.page
-        fname_src = 'accept.png'
-        fname_new = 'add.png'
+        fname_src = "accept.png"
+        fname_new = "add.png"
 
         Tester.dialogTester.appendCancel()
 
@@ -77,8 +76,8 @@ class AttachRenameTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testRenameCancelButton(self):
         window = self.mainWindow
         page = self.page
-        fname_src = 'accept.png'
-        fname_new = 'add.png'
+        fname_src = "accept.png"
+        fname_new = "add.png"
 
         Tester.dialogTester.append(getButtonId, "cancel")
 
@@ -90,8 +89,8 @@ class AttachRenameTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testRenameOverwrite(self):
         window = self.mainWindow
         page = self.page
-        fname_src = 'accept.png'
-        fname_new = 'add.png'
+        fname_src = "accept.png"
+        fname_new = "add.png"
 
         Tester.dialogTester.append(getButtonId, "overwrite")
 

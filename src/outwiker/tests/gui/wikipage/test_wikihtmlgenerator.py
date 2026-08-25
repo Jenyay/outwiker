@@ -22,7 +22,7 @@ from outwiker.tests.basetestcases import BaseOutWikerMixin
 class ExampleFooterWikiCommand(Command):
     def execute(self, params, content):
         self.parser.appendToFooter(content)
-        return ''
+        return ""
 
     @property
     def name(self):
@@ -32,7 +32,7 @@ class ExampleFooterWikiCommand(Command):
 class ExampleHeadWikiCommand(Command):
     def execute(self, params, content):
         self.parser.appendToHead(content)
-        return ''
+        return ""
 
     @property
     def name(self):
@@ -46,13 +46,12 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
         self.__createWiki()
 
         files = ["image.jpg", "dir"]
-        self.wikicommands = [ExampleFooterWikiCommand,
-                             ExampleHeadWikiCommand,
-                             ]
+        self.wikicommands = [
+            ExampleFooterWikiCommand,
+            ExampleHeadWikiCommand,
+        ]
 
-        fullFilesPath = [os.path.join(self.filesPath, fname)
-                         for fname
-                         in files]
+        fullFilesPath = [os.path.join(self.filesPath, fname) for fname in files]
 
         self.attach_page2 = Attachment(self.wikiroot["Страница 2"])
 
@@ -74,17 +73,21 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
 
     def __setDefaultConfig(self):
         # Установим размер превьюшки, не совпадающий с размером по умолчанию
-        self.application.config.set(WikiConfig.WIKI_SECTION,
-                                    WikiConfig.THUMB_SIZE_PARAM,
-                                    WikiConfig.THUMB_SIZE_DEFAULT)
+        self.application.config.set(
+            WikiConfig.WIKI_SECTION,
+            WikiConfig.THUMB_SIZE_PARAM,
+            WikiConfig.THUMB_SIZE_DEFAULT,
+        )
 
-        self.application.config.set(HtmlRenderConfig.HTML_SECTION,
-                                    HtmlRenderConfig.FONT_FACE_NAME_PARAM,
-                                    HtmlRenderConfig.FONT_NAME_DEFAULT)
+        self.application.config.set(
+            HtmlRenderConfig.HTML_SECTION,
+            HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+            HtmlRenderConfig.FONT_NAME_DEFAULT,
+        )
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
 
@@ -92,8 +95,7 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
         self.testPage = self.wikiroot["Страница 2"]
 
     def __onWikiParserPrepare(self, parser):
-        list([parser.addCommand(command(parser))
-              for command in self.wikicommands])
+        list([parser.addCommand(command(parser)) for command in self.wikicommands])
 
     def tearDown(self):
         self.destroyApplication()
@@ -128,44 +130,45 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
         self.assertTrue("image.jpg" in result)
 
     def testFooter_01(self):
-        text = 'Бла-бла-бла(:footer:)Подвал 1(:footerend:)'
+        text = "Бла-бла-бла(:footer:)Подвал 1(:footerend:)"
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('Бла-бла-бла<br/>\nПодвал 1\n</body>',
-                      result.replace('\r\n', '\n'))
+        self.assertIn(
+            "Бла-бла-бла<br/>\nПодвал 1\n</body>", result.replace("\r\n", "\n")
+        )
 
     def testFooter_02(self):
-        text = 'Бла-бла-бла(:footer:)Подвал 1(:footerend:)(:footer:)Подвал 2(:footerend:)11111'
+        text = "Бла-бла-бла(:footer:)Подвал 1(:footerend:)(:footer:)Подвал 2(:footerend:)11111"
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('Бла-бла-бла11111<br/>\nПодвал 1Подвал 2\n</body>',
-                      result.replace('\r\n', '\n'))
+        self.assertIn(
+            "Бла-бла-бла11111<br/>\nПодвал 1Подвал 2\n</body>",
+            result.replace("\r\n", "\n"),
+        )
 
     def testHead_01(self):
-        text = 'Бла-бла-бла(:head:)Заголовок 1(:headend:)'
+        text = "Бла-бла-бла(:head:)Заголовок 1(:headend:)"
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('Заголовок 1\n</head>',
-                      result.replace('\r\n', '\n'))
+        self.assertIn("Заголовок 1\n</head>", result.replace("\r\n", "\n"))
 
     def testHead_02(self):
-        text = '''Бла-бла-бла
+        text = """Бла-бла-бла
 (:head:)Заголовок 1(:headend:)
 (:head:)Заголовок 2(:headend:)
-'''
+"""
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('Заголовок 1Заголовок 2\n</head>',
-                      result.replace('\r\n', '\n'))
+        self.assertIn("Заголовок 1Заголовок 2\n</head>", result.replace("\r\n", "\n"))

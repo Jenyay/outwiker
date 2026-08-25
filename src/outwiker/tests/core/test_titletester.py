@@ -2,13 +2,15 @@
 
 import unittest
 
-from outwiker.core.pagetitletester import (WindowsPageTitleTester,
-                                           LinuxPageTitleTester,
-                                           PageTitleError,
-                                           PageTitleWarning)
+from outwiker.core.pagetitletester import (
+    WindowsPageTitleTester,
+    LinuxPageTitleTester,
+    PageTitleError,
+    PageTitleWarning,
+)
 
 
-class PageTitleTesterTest (unittest.TestCase):
+class PageTitleTesterTest(unittest.TestCase):
     def testValidWin(self):
         title = "Обычный нормальный заголовок %gg"
 
@@ -68,7 +70,7 @@ class PageTitleTesterTest (unittest.TestCase):
             self.assertRaises(PageTitleError, tester.test, title)
 
     def testInvalidSymbolsLinux(self):
-        invalidCharacters = '\0\\/'
+        invalidCharacters = "\0\\/"
 
         template = "Бла-бла-бла {0} И еще текст"
         tester = LinuxPageTitleTester()
@@ -88,24 +90,26 @@ class PageTitleTesterTest (unittest.TestCase):
             self.assertRaises(PageTitleWarning, tester.test, title)
 
     def testWarningPercentWindows(self):
-        titleList = ["Заголовок %10 бла-бла-бла",
-                     "Заголовок %aa бла-бла-бла",
-                     "Заголовок %AA бла-бла-бла",
-                     "Заголовок %1f бла-бла-бла",
-                     "Заголовок %1F бла-бла-бла"
-                     ]
+        titleList = [
+            "Заголовок %10 бла-бла-бла",
+            "Заголовок %aa бла-бла-бла",
+            "Заголовок %AA бла-бла-бла",
+            "Заголовок %1f бла-бла-бла",
+            "Заголовок %1F бла-бла-бла",
+        ]
 
         tester = WindowsPageTitleTester()
         for title in titleList:
             self.assertRaises(PageTitleWarning, tester.test, title)
 
     def testWarningPercentLinux(self):
-        titleList = ["Заголовок %10 бла-бла-бла",
-                     "Заголовок %aa бла-бла-бла",
-                     "Заголовок %AA бла-бла-бла",
-                     "Заголовок %1f бла-бла-бла",
-                     "Заголовок %1F бла-бла-бла"
-                     ]
+        titleList = [
+            "Заголовок %10 бла-бла-бла",
+            "Заголовок %aa бла-бла-бла",
+            "Заголовок %AA бла-бла-бла",
+            "Заголовок %1f бла-бла-бла",
+            "Заголовок %1F бла-бла-бла",
+        ]
 
         tester = LinuxPageTitleTester()
         for title in titleList:
@@ -127,12 +131,12 @@ class PageTitleTesterTest (unittest.TestCase):
         title = 'А>б<ы|р?в\\а:л"г*А/бырвалг'
         tester = WindowsPageTitleTester()
 
-        result = tester.replaceDangerousSymbols(title, '_')
-        self.assertEqual(result, 'А_б_ы_р_в_а_л_г_А_бырвалг')
+        result = tester.replaceDangerousSymbols(title, "_")
+        self.assertEqual(result, "А_б_ы_р_в_а_л_г_А_бырвалг")
 
     def testReplace_02(self):
-        title = 'Абырвалг%aa%12%1a%a1Абырвалг'
+        title = "Абырвалг%aa%12%1a%a1Абырвалг"
         tester = WindowsPageTitleTester()
 
-        result = tester.replaceDangerousSymbols(title, '_')
-        self.assertEqual(result, 'Абырвалг____Абырвалг')
+        result = tester.replaceDangerousSymbols(title, "_")
+        self.assertEqual(result, "Абырвалг____Абырвалг")

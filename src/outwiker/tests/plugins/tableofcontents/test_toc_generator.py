@@ -7,7 +7,7 @@ from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
+class TOC_GeneratorTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты плагина TableOfContents"""
 
     def setUp(self):
@@ -29,7 +29,7 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = ''''''
+        result_valid = """"""
 
         self.assertEqual(result, result_valid)
 
@@ -42,7 +42,7 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* Абырвалг 123'''
+        result_valid = """* Абырвалг 123"""
 
         self.assertEqual(result, result_valid)
 
@@ -58,8 +58,8 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* Абырвалг 123
-* Абырвалг 12345'''
+        result_valid = """* Абырвалг 123
+* Абырвалг 12345"""
 
         self.assertEqual(result, result_valid)
 
@@ -75,8 +75,8 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* Абырвалг 123
-** Абырвалг 12345'''
+        result_valid = """* Абырвалг 123
+** Абырвалг 12345"""
 
         self.assertEqual(result, result_valid)
 
@@ -92,8 +92,8 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* Абырвалг 123
-***** Абырвалг 12345'''
+        result_valid = """* Абырвалг 123
+***** Абырвалг 12345"""
 
         self.assertEqual(result, result_valid)
 
@@ -111,10 +111,10 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* Абырвалг 1
+        result_valid = """* Абырвалг 1
 ** Абырвалг 2
 *** Абырвалг 3
-* Абырвалг 1'''
+* Абырвалг 1"""
 
         self.assertEqual(result, result_valid)
 
@@ -130,8 +130,8 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* Абырвалг 123
-** Абырвалг 12345'''
+        result_valid = """* Абырвалг 123
+** Абырвалг 12345"""
 
         self.assertEqual(result, result_valid)
 
@@ -147,8 +147,8 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* Абырвалг 123
-* Абырвалг 12345'''
+        result_valid = """* Абырвалг 123
+* Абырвалг 12345"""
 
         self.assertEqual(result, result_valid)
 
@@ -166,8 +166,8 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* [[Абырвалг 1 -> #якорь1]]
-** [[Абырвалг 2 -> #якорь2]]'''
+        result_valid = """* [[Абырвалг 1 -> #якорь1]]
+** [[Абырвалг 2 -> #якорь2]]"""
 
         self.assertEqual(result, result_valid)
 
@@ -185,8 +185,8 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* [[#якорь1 | Абырвалг 1]]
-** [[#якорь2 | Абырвалг 2]]'''
+        result_valid = """* [[#якорь1 | Абырвалг 1]]
+** [[#якорь2 | Абырвалг 2]]"""
 
         self.assertEqual(result, result_valid)
 
@@ -204,7 +204,7 @@ class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = generator.make(items)
 
-        result_valid = '''* [[Абырвалг 1 -> #якорь1]]
-** [[Абырвалг 2 -> #якорь2]]'''
+        result_valid = """* [[Абырвалг 1 -> #якорь1]]
+** [[Абырвалг 2 -> #якорь2]]"""
 
         self.assertEqual(result, result_valid)

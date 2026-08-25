@@ -8,7 +8,7 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.dateformatdialog import DateFormatDialog
 
 
-class WikiDateBaseAction (BaseAction, metaclass=ABCMeta):
+class WikiDateBaseAction(BaseAction, metaclass=ABCMeta):
     def __init__(self, application):
         self._application = application
 
@@ -20,53 +20,59 @@ class WikiDateBaseAction (BaseAction, metaclass=ABCMeta):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
 
-        with DateFormatDialog(self._application.mainWindow,
-                              _(u"Date format\n(empty string - format from program setting)"),
-                              _(u"Date format"),
-                              u"") as dlg:
+        with DateFormatDialog(
+            self._application.mainWindow,
+            _("Date format\n(empty string - format from program setting)"),
+            _("Date format"),
+            "",
+        ) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
-                params = u' format="{}"'.format(
-                    dlg.Value) if len(dlg.Value) != 0 else u""
-                text = u"(:{}{}:)".format(self.getCommandName(), params)
+                params = ' format="{}"'.format(dlg.Value) if len(dlg.Value) != 0 else ""
+                text = "(:{}{}:)".format(self.getCommandName(), params)
 
                 self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(
-                    text)
+                    text
+                )
 
 
-class WikiDateCreationAction (WikiDateBaseAction):
+class WikiDateCreationAction(WikiDateBaseAction):
     """
     Вставка команды для вывода даты создания страницы
     """
-    stringId = u"WikiDateCreation"
+
+    stringId = "WikiDateCreation"
 
     @property
     def title(self):
-        return _(u"Creation date (:crdate:)")
+        return _("Creation date (:crdate:)")
 
     @property
     def description(self):
-        return _(u"Insert command (:crdate:) for show date of creation of the page")
+        return _("Insert command (:crdate:) for show date of creation of the page")
 
     def getCommandName(self):
-        return u"crdate"
+        return "crdate"
 
 
-class WikiDateEditionAction (WikiDateBaseAction):
+class WikiDateEditionAction(WikiDateBaseAction):
     """
     Вставка команды для вывода даты последнего редактирования страницы
     """
-    stringId = u"WikiDateEdit"
+
+    stringId = "WikiDateEdit"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Edition date (:eddate:)")
+        return _("Edition date (:eddate:)")
 
     @property
     def description(self):
-        return _(u"Insert command (:eddate:) for show date of last modification of the page")
+        return _(
+            "Insert command (:eddate:) for show date of last modification of the page"
+        )
 
     def getCommandName(self):
-        return u"eddate"
+        return "eddate"

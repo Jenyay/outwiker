@@ -124,12 +124,14 @@ EVT_COLOURSELECT = wx.PyEventBinder(wxEVT_COMMAND_COLOURSELECT, 1)
 
 # ----------------------------------------------------------------------------
 
+
 class CustomColourData(object):
     """
     A simple container for tracking custom colours to be shown in the colour
     dialog, and which facilitates reuse of this collection across multiple
     instances or multiple invocations of the :class:`ColorPicker` button.
     """
+
     COUNT = 16
 
     def __init__(self):
@@ -156,9 +158,17 @@ class ColorPicker(wx.Button):
     display a colour selection dialog.
     """
 
-    def __init__(self, parent, id=wx.ID_ANY, label="", colour=wx.BLACK,
-                 pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 callback=None, style=0):
+    def __init__(
+        self,
+        parent,
+        id=wx.ID_ANY,
+        label="",
+        colour=wx.BLACK,
+        pos=wx.DefaultPosition,
+        size=wx.DefaultSize,
+        callback=None,
+        style=0,
+    ):
         """
         Default class constructor.
 
@@ -181,9 +191,9 @@ class ColorPicker(wx.Button):
 
         size = wx.Size(*size)
 
-        super(ColorPicker, self).__init__(parent, id,
-                                           pos=pos, size=size, style=style,
-                                           name='ColorPicker')
+        super(ColorPicker, self).__init__(
+            parent, id, pos=pos, size=size, style=style, name="ColorPicker"
+        )
 
         if type(colour) == type(()):
             colour = wx.Colour(*colour)
@@ -277,7 +287,7 @@ class ColorPicker(wx.Button):
         if self.customColours is None:
             self.customColours = CustomColourData()
 
-        self.customColours.Colours = colours[:CustomColourData.COUNT]
+        self.customColours.Colours = colours[: CustomColourData.COUNT]
 
     Colour = property(GetColour, SetColour)
     Value = property(GetValue, SetValue)
@@ -285,7 +295,7 @@ class ColorPicker(wx.Button):
     CustomColours = property(GetCustomColours, SetCustomColours)
 
     def OnChange(self):
-        """ Fires the ``EVT_COLOURSELECT`` event, as the user has changed the current colour. """
+        """Fires the ``EVT_COLOURSELECT`` event, as the user has changed the current colour."""
 
         evt = ColourSelectEvent(self.GetId(), self.GetValue())
         evt.SetEventObject(self)
@@ -315,8 +325,9 @@ class ColorPicker(wx.Button):
             data = dlg.GetColourData()
             self.SetColour(data.GetColour())
             if self.customColours:
-                self.customColours.Colours = \
-                    [data.GetCustomColour(idx) for idx in range(0, 16)]
+                self.customColours.Colours = [
+                    data.GetCustomColour(idx) for idx in range(0, 16)
+                ]
 
         dlg.Destroy()
 

@@ -32,11 +32,11 @@ class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<table border="1">
+        validResult = """<table border="1">
 <tr>
 <td></td>
 </tr>
-</table>'''
+</table>"""
 
         self.assertEqual(result, validResult, result)
 
@@ -51,7 +51,7 @@ class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<table border="1">
+        validResult = """<table border="1">
 <tr>
 <td></td>
 <td></td>
@@ -59,7 +59,7 @@ class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 <td></td>
 <td></td>
 </tr>
-</table>'''
+</table>"""
 
         self.assertEqual(result, validResult, result)
 
@@ -75,7 +75,7 @@ class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<table border="1">
+        validResult = """<table border="1">
 <tr>
 <td></td>
 <td></td>
@@ -97,7 +97,7 @@ class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 <td></td>
 <td></td>
 </tr>
-</table>'''
+</table>"""
 
         self.assertEqual(result, validResult, result)
 
@@ -111,11 +111,11 @@ class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<table border="10">
+        validResult = """<table border="10">
 <tr>
 <td></td>
 </tr>
-</table>'''
+</table>"""
 
         self.assertEqual(result, validResult, result)
 
@@ -129,11 +129,11 @@ class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<table>
+        validResult = """<table>
 <tr>
 <td></td>
 </tr>
-</table>'''
+</table>"""
 
         self.assertEqual(result, validResult, result)
 
@@ -166,7 +166,7 @@ class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getResult()
 
-        validResult = '''<table border="1">
+        validResult = """<table border="1">
 <tr>
 <th></th>
 <th></th>
@@ -188,6 +188,6 @@ class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 <td></td>
 <td></td>
 </tr>
-</table>'''
+</table>"""
 
         self.assertEqual(result, validResult, result)

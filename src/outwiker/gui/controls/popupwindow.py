@@ -31,9 +31,9 @@ def _getBestPosition(popupWindow, mainWindow) -> Tuple[int, int]:
 
 
 class PopupWindow(wx.PopupTransientWindow):
-    '''
+    """
     Popup window with accurate position
-    '''
+    """
 
     def __init__(self, parent, theme: Theme):
         super().__init__(parent, flags=wx.PU_CONTAINS_CONTROLS | wx.BORDER_SIMPLE)
@@ -43,7 +43,12 @@ class PopupWindow(wx.PopupTransientWindow):
     def createGUI(self):
         pass
 
-    def Popup(self, mainWindow: wx.Window, position: Optional[Tuple[int, int]] = None, size: Optional[Tuple[int, int]] = None):
+    def Popup(
+        self,
+        mainWindow: wx.Window,
+        position: Optional[Tuple[int, int]] = None,
+        size: Optional[Tuple[int, int]] = None,
+    ):
         self.Dismiss()
         self.Layout()
         if position is not None:
@@ -58,14 +63,15 @@ class PopupWindow(wx.PopupTransientWindow):
 
 
 class ResizablePopupWindow(wx.MiniFrame):
-    '''
+    """
     Popup window with accurate position
-    '''
+    """
 
     def __init__(self, parent):
         super().__init__(
             parent,
-            style=wx.RESIZE_BORDER | wx.FRAME_NO_TASKBAR | wx.FRAME_FLOAT_ON_PARENT)
+            style=wx.RESIZE_BORDER | wx.FRAME_NO_TASKBAR | wx.FRAME_FLOAT_ON_PARENT,
+        )
 
         # To skip closing after deactivate
         self._skipDeactivateCount = 0
@@ -75,9 +81,9 @@ class ResizablePopupWindow(wx.MiniFrame):
         self.Bind(wx.EVT_ACTIVATE, handler=self._onActivate)
 
     def setDeactivateCount(self, value: int):
-        '''
+        """
         value - How many times to skip deactivate
-        '''
+        """
         self._skipDeactivateCount = value
 
     def _onActivate(self, event: wx.ActivateEvent):

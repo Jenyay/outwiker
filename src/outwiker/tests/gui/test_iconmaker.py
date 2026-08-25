@@ -21,8 +21,8 @@ class IconMakerTest(unittest.TestCase):
         removeDir(self._tempDir)
 
     def test_no_resize_png(self):
-        fname_in = 'testdata/images/icon.png'
-        fname_out = join(self._tempDir, 'result.png')
+        fname_in = "testdata/images/icon.png"
+        fname_out = join(self._tempDir, "result.png")
 
         iconmaker = IconMaker()
         iconmaker.create(fname_in, fname_out)
@@ -33,8 +33,8 @@ class IconMakerTest(unittest.TestCase):
             self.assertEqual(img.size, (ICONS_WIDTH, ICONS_HEIGHT))
 
     def test_overwrite(self):
-        fname_in = 'testdata/images/icon.png'
-        fname_out = join(self._tempDir, 'result.png')
+        fname_in = "testdata/images/icon.png"
+        fname_out = join(self._tempDir, "result.png")
 
         iconmaker = IconMaker()
         iconmaker.create(fname_in, fname_out)
@@ -46,21 +46,21 @@ class IconMakerTest(unittest.TestCase):
 
     def test_resize(self):
         fnames_in = [
-            'testdata/images/16x16.png',
-            'testdata/images/16x8.png',
-            'testdata/images/8x8.png',
-            'testdata/images/8x16.png',
-            'testdata/images/16x15.png',
-            'testdata/images/16x17.png',
-            'testdata/images/15x16.png',
-            'testdata/images/17x16.png',
-            'testdata/images/15x15.png',
-            'testdata/images/17x17.png',
-            'testdata/images/first.png',
-            'testdata/images/first_vertical.png',
+            "testdata/images/16x16.png",
+            "testdata/images/16x8.png",
+            "testdata/images/8x8.png",
+            "testdata/images/8x16.png",
+            "testdata/images/16x15.png",
+            "testdata/images/16x17.png",
+            "testdata/images/15x16.png",
+            "testdata/images/17x16.png",
+            "testdata/images/15x15.png",
+            "testdata/images/17x17.png",
+            "testdata/images/first.png",
+            "testdata/images/first_vertical.png",
         ]
 
-        fname_out = join(self._tempDir, 'result.png')
+        fname_out = join(self._tempDir, "result.png")
         iconmaker = IconMaker()
 
         for fname in fnames_in:

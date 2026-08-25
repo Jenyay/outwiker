@@ -17,14 +17,16 @@ from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.app.services.messages import showError
 
 
-logger = logging.getLogger('outwiker.app.services.attachment')
+logger = logging.getLogger("outwiker.app.services.attachment")
 
 
 @testreadonly
-def renameAttach(parent: wx.Window,
-                 page: 'outwiker.core.tree.WikiPage',
-                 fname_src: str,
-                 fname_dest: str) -> bool:
+def renameAttach(
+    parent: wx.Window,
+    page: "outwiker.core.tree.WikiPage",
+    fname_src: str,
+    fname_dest: str,
+) -> bool:
     """
     Rename attached file. Show overwrite dialog if necessary
     parent - parent for dialog window
@@ -56,9 +58,7 @@ def renameAttach(parent: wx.Window,
                 dest_file_stat = os.stat(fname_dest_full)
             except FileNotFoundError:
                 return False
-            result = overwriteDialog.ShowDialog(text,
-                                                src_file_stat,
-                                                dest_file_stat)
+            result = overwriteDialog.ShowDialog(text, src_file_stat, dest_file_stat)
 
             if result == overwriteDialog.ID_SKIP or result == wx.ID_CANCEL:
                 return False
@@ -66,7 +66,9 @@ def renameAttach(parent: wx.Window,
     try:
         os.replace(fname_src_full, fname_dest_full)
     except (IOError, shutil.Error) as e:
-        text = _('Error renaming file\n{} -> {}\n{}').format(fname_src, fname_dest, str(e))
+        text = _("Error renaming file\n{} -> {}\n{}").format(
+            fname_src, fname_dest, str(e)
+        )
         logger.error(text)
         showError(parent, text)
         return False
@@ -76,10 +78,12 @@ def renameAttach(parent: wx.Window,
 
 
 @testreadonly
-def attachFiles(parent: wx.Window,
-                page: 'outwiker.core.tree.WikiPage',
-                files: List[str],
-                subdir: str = '.'):
+def attachFiles(
+    parent: wx.Window,
+    page: "outwiker.core.tree.WikiPage",
+    files: List[str],
+    subdir: str = ".",
+):
     """
     Attach files to page. Show overwrite dialog if necessary
     parent - parent for dialog window
@@ -101,7 +105,7 @@ def attachFiles(parent: wx.Window,
         for fname in files:
             item = Path(fname)
             if not item.exists():
-                text = _('File not exists\n{0}').format(item)
+                text = _("File not exists\n{0}").format(item)
                 logger.error(text)
                 showError(parent, text)
                 return []
@@ -114,12 +118,14 @@ def attachFiles(parent: wx.Window,
 
         return result
 
-    def _getRelativeSubdirs(root: Path, expanded_files: Iterable[Union[str, Path]]) -> List[Path]:
+    def _getRelativeSubdirs(
+        root: Path, expanded_files: Iterable[Union[str, Path]]
+    ) -> List[Path]:
         result = []
         for fname in expanded_files:
             path = Path(fname)
             parent = path.relative_to(root).parent
-            if str(parent) != '.' and str(parent) != '/':
+            if str(parent) != "." and str(parent) != "/":
                 result.append(parent)
 
         # Remove duplicates and sort directories alphabetically
@@ -130,8 +136,9 @@ def attachFiles(parent: wx.Window,
 
     source_root_dir = Path(files[0]).parent
     expanded_files = _expandFiles(files)
-    relative_source_files = [fname.relative_to(source_root_dir)
-                             for fname in expanded_files]
+    relative_source_files = [
+        fname.relative_to(source_root_dir) for fname in expanded_files
+    ]
 
     new_relative_attaches = []
     with OverwriteDialog(parent) as overwriteDialog:
@@ -147,9 +154,7 @@ def attachFiles(parent: wx.Window,
                 old_file_stat = old_path.stat()
                 new_file_stat = source_path.stat()
 
-                result = overwriteDialog.ShowDialog(text,
-                                                    old_file_stat,
-                                                    new_file_stat)
+                result = overwriteDialog.ShowDialog(text, old_file_stat, new_file_stat)
 
                 if result == overwriteDialog.ID_SKIP:
                     continue
@@ -175,14 +180,14 @@ def attachFiles(parent: wx.Window,
         try:
             Attachment(page).attach([source_full], attach_subdir)
         except (IOError, shutil.Error) as e:
-            text = _('Error copying files\n{0}').format(str(e))
+            text = _("Error copying files\n{0}").format(str(e))
             logger.error(text)
             showError(parent, text)
             return
 
 
 def getDefaultSubdirName() -> str:
-    return _('New folder')
+    return _("New folder")
 
 
 @testreadonly
@@ -197,13 +202,20 @@ def createSubdir(page, application):
         index = 1
 
         while (root / dirname).exists():
-            dirname = '{name} ({index})'.format(name=default_subdir_name, index=index)
+            dirname = "{name} ({index})".format(name=default_subdir_name, index=index)
             index += 1
 
         try:
             attach.createSubdir(Path(page.currentAttachSubdir, dirname))
-            application.onBeginAttachRenaming(page, BeginAttachRenamingParams(str(dirname)))
+            application.onBeginAttachRenaming(
+                page, BeginAttachRenamingParams(str(dirname))
+            )
         except IOError as e:
             message = _("Can't create folder {} for attachments").format(dirname)
             showError(application.mainWindow, message)
-            logger.error("Can't create attachments subdir %s for the page '%s'. Error: %s", dirname, page.subpath, str(e))
+            logger.error(
+                "Can't create attachments subdir %s for the page '%s'. Error: %s",
+                dirname,
+                page.subpath,
+                str(e),
+            )

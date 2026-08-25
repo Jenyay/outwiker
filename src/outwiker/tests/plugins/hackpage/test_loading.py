@@ -5,7 +5,7 @@ import unittest
 from outwiker.tests.basetestcases import PluginLoadingMixin
 
 
-class HackPage_LoadingTest (PluginLoadingMixin, unittest.TestCase):
+class HackPage_LoadingTest(PluginLoadingMixin, unittest.TestCase):
     def getPluginDir(self):
         return "plugins/hackpage"
 

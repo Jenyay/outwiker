@@ -11,17 +11,14 @@ from outwiker.tests.utils import removeDir
 import outwiker.core.cssclasses as css
 
 
-class ParserLineBreakTest (unittest.TestCase):
+class ParserLineBreakTest(unittest.TestCase):
     def setUp(self):
         self._application = Application()
         self.encoding = "utf8"
 
         self.filesPath = "testdata/samplefiles/"
 
-        self.pagelinks = [
-            "Страница 1",
-            "/Страница 1",
-            "/Страница 2/Страница 3"]
+        self.pagelinks = ["Страница 1", "/Страница 1", "/Страница 2/Страница 3"]
         self.pageComments = ["Страницо 1", "Страницо 1", "Страницо 3"]
 
         self.__createWiki()
@@ -31,7 +28,7 @@ class ParserLineBreakTest (unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
 
         self.wikiroot = createNotesTree(self.path)
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])

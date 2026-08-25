@@ -1,34 +1,34 @@
-CSS_WIKI = 'ow-wiki'
-CSS_ERROR = 'ow-error'
-CSS_IMAGE = 'ow-image'
-CSS_LINK_PAGE = 'ow-link-page'
-CSS_LINK_PAGE_ERROR = 'ow-link-page-error'
-CSS_LINK_ATTACH = 'ow-link-attach'
-CSS_ATTACH_FILE = 'ow-attach-file'
-CSS_ATTACH_IMAGE = 'ow-attach-image'
-CSS_ATTACH_DIR = 'ow-attach-dir'
-CSS_ATTACH_LIST = 'ow-attach-list'
-CSS_ATTACH_LIST_ITEM = 'ow-attach-list-item'
-CSS_ATTACH_ERROR = 'ow-attach-error'
-CSS_CHILD_LIST = 'ow-child-list'
-CSS_CHILD_LIST_TITLE = 'ow-child-list-title'
-CSS_CHILD_LIST_ITEM = 'ow-child-list-item'
-CSS_WIKI_INCLUDE = 'ow-wiki-include'
-CSS_LIST_ITEM_EMPTY = 'ow-li-empty'
-CSS_LIST_ITEM_TODO = 'ow-li-todo'
-CSS_LIST_ITEM_INCOMPLETE = 'ow-li-incomplete'
-CSS_LIST_ITEM_COMPLETE = 'ow-li-complete'
-CSS_LIST_ITEM_STAR = 'ow-li-star'
-CSS_LIST_ITEM_PLUS = 'ow-li-plus'
-CSS_LIST_ITEM_MINUS = 'ow-li-minus'
-CSS_LIST_ITEM_CIRCLE = 'ow-li-circle'
-CSS_LIST_ITEM_CHECK = 'ow-li-check'
-CSS_LIST_ITEM_LT = 'ow-li-lt'
-CSS_LIST_ITEM_GT = 'ow-li-gt'
+CSS_WIKI = "ow-wiki"
+CSS_ERROR = "ow-error"
+CSS_IMAGE = "ow-image"
+CSS_LINK_PAGE = "ow-link-page"
+CSS_LINK_PAGE_ERROR = "ow-link-page-error"
+CSS_LINK_ATTACH = "ow-link-attach"
+CSS_ATTACH_FILE = "ow-attach-file"
+CSS_ATTACH_IMAGE = "ow-attach-image"
+CSS_ATTACH_DIR = "ow-attach-dir"
+CSS_ATTACH_LIST = "ow-attach-list"
+CSS_ATTACH_LIST_ITEM = "ow-attach-list-item"
+CSS_ATTACH_ERROR = "ow-attach-error"
+CSS_CHILD_LIST = "ow-child-list"
+CSS_CHILD_LIST_TITLE = "ow-child-list-title"
+CSS_CHILD_LIST_ITEM = "ow-child-list-item"
+CSS_WIKI_INCLUDE = "ow-wiki-include"
+CSS_LIST_ITEM_EMPTY = "ow-li-empty"
+CSS_LIST_ITEM_TODO = "ow-li-todo"
+CSS_LIST_ITEM_INCOMPLETE = "ow-li-incomplete"
+CSS_LIST_ITEM_COMPLETE = "ow-li-complete"
+CSS_LIST_ITEM_STAR = "ow-li-star"
+CSS_LIST_ITEM_PLUS = "ow-li-plus"
+CSS_LIST_ITEM_MINUS = "ow-li-minus"
+CSS_LIST_ITEM_CIRCLE = "ow-li-circle"
+CSS_LIST_ITEM_CHECK = "ow-li-check"
+CSS_LIST_ITEM_LT = "ow-li-lt"
+CSS_LIST_ITEM_GT = "ow-li-gt"
 
 
 def getDefaultStyles() -> str:
-    css = '''
+    css = """
 		img {
             border:none;
             vertical-align:middle;
@@ -128,6 +128,6 @@ def getDefaultStyles() -> str:
 		  background-color: #f9f9f9;
 		  color: #222;
 		}
-    '''
+    """
 
     return css

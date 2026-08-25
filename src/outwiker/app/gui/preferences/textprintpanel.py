@@ -23,9 +23,9 @@ class TextPrintPanel(BasePrefPanel):
         self.SetupScrolling()
 
     def __createGuiElements(self):
-        self.sharedTextLabel = wx.StaticText(self, -1,
-                                             _("This options for text printing only"),
-                                             style=wx.ALIGN_CENTRE)
+        self.sharedTextLabel = wx.StaticText(
+            self, -1, _("This options for text printing only"), style=wx.ALIGN_CENTRE
+        )
         self.fontLabel = wx.StaticText(self, -1, _("Font"))
         self.fontPicker = wx.FontPickerCtrl(self, -1)
         self.pageOptionsBtn = wx.Button(self, -1, _("Page setup…"))
@@ -56,8 +56,12 @@ class TextPrintPanel(BasePrefPanel):
         pd = wx.PrintData()
         psdd = wx.PageSetupDialogData(pd)
 
-        psdd.SetMarginTopLeft(wx.Point(self.config.marginLeft.value, self.config.marginTop.value))
-        psdd.SetMarginBottomRight(wx.Point(self.config.marginRight.value, self.config.marginBottom.value))
+        psdd.SetMarginTopLeft(
+            wx.Point(self.config.marginLeft.value, self.config.marginTop.value)
+        )
+        psdd.SetMarginBottomRight(
+            wx.Point(self.config.marginRight.value, self.config.marginBottom.value)
+        )
         psdd.SetPaperId(self.config.paperId.value)
 
         dlg = wx.PageSetupDialog(self, psdd)
@@ -78,10 +82,12 @@ class TextPrintPanel(BasePrefPanel):
 
     def LoadState(self):
         # Обычный шрифт
-        fontOption = FontOption(self.config.fontName,
-                                self.config.fontSize,
-                                self.config.fontIsBold,
-                                self.config.fontIsItalic)
+        fontOption = FontOption(
+            self.config.fontName,
+            self.config.fontSize,
+            self.config.fontIsBold,
+            self.config.fontIsItalic,
+        )
 
         self.font = configelements.FontElement(fontOption, self.fontPicker)
 

@@ -9,6 +9,7 @@ class PreFormatFactory(object):
     """
     Фабрика для создания токена "без форматирования"ы
     """
+
     @staticmethod
     def make(parser):
         return PreFormatToken(parser).getToken()
@@ -22,10 +23,12 @@ class PreFormatToken(object):
         self.parser = parser
 
     def getToken(self):
-        return QuotedString(PreFormatToken.preFormatStart,
-                            endQuoteChar=PreFormatToken.preFormatEnd,
-                            multiline=True,
-                            convertWhitespaceEscapes=False).setParseAction(self.__convertPreformat)("preformat")
+        return QuotedString(
+            PreFormatToken.preFormatStart,
+            endQuoteChar=PreFormatToken.preFormatEnd,
+            multiline=True,
+            convertWhitespaceEscapes=False,
+        ).setParseAction(self.__convertPreformat)("preformat")
 
     def __convertPreformat(self, s, l, t):
-        return u"<pre>" + html.escape(t[0], False) + u"</pre>"
+        return "<pre>" + html.escape(t[0], False) + "</pre>"

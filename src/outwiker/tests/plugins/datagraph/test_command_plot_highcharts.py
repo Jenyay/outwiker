@@ -22,7 +22,7 @@ class CommandPlotHighchartsTest(BaseOutWikerMixin, unittest.TestCase):
         self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix="Абырвалг абыр")
         self.wikiroot = createNotesTree(self.path)
         self.page = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         self.application.wikiroot = None
@@ -34,7 +34,7 @@ class CommandPlotHighchartsTest(BaseOutWikerMixin, unittest.TestCase):
         removeDir(self.path)
 
     def testEmpty(self):
-        text = '(:plot:)'
+        text = "(:plot:)"
 
         self.page.content = text
 
@@ -44,33 +44,32 @@ class CommandPlotHighchartsTest(BaseOutWikerMixin, unittest.TestCase):
         attachpath = Attachment(self.page).getAttachPath()
 
         self.assertIn(
-            '<div id="graph-0" style="width:700px; height:300px;"></div>',
-            result)
+            '<div id="graph-0" style="width:700px; height:300px;"></div>', result
+        )
         self.assertIn('excanvas.min.js">', result)
         self.assertIn('jquery.min.js">', result)
         self.assertIn('highcharts.js">', result)
         self.assertIn("$('#graph-0').highcharts({", result)
 
-        self.assertTrue(os.path.exists(os.path.join(attachpath,
-                                                    '__thumb',
-                                                    '__js',
-                                                    'excanvas.min.js')))
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(attachpath, "__thumb", "__js", "excanvas.min.js")
+            )
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(attachpath,
-                                                    '__thumb',
-                                                    '__js',
-                                                    'jquery.min.js')))
+        self.assertTrue(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "jquery.min.js"))
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(attachpath,
-                                                    '__thumb',
-                                                    '__js',
-                                                    'highcharts.js')))
+        self.assertTrue(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "highcharts.js"))
+        )
 
     def testHeads_01(self):
-        text = '''(:htmlhead:)
+        text = """(:htmlhead:)
 excanvas.min.js
 (:htmlheadend:)
-(:plot:)'''
+(:plot:)"""
 
         self.page.content = text
 
@@ -80,8 +79,8 @@ excanvas.min.js
         attachpath = Attachment(self.page).getAttachPath()
 
         self.assertIn(
-            '<div id="graph-0" style="width:700px; height:300px;"></div>',
-            result)
+            '<div id="graph-0" style="width:700px; height:300px;"></div>', result
+        )
 
         self.assertNotIn('excanvas.min.js">', result)
         self.assertIn('jquery.min.js">', result)
@@ -89,26 +88,25 @@ excanvas.min.js
 
         self.assertIn("$('#graph-0').highcharts({", result)
 
-        self.assertFalse(os.path.exists(os.path.join(attachpath,
-                                                     '__thumb',
-                                                     '__js',
-                                                     'excanvas.min.js')))
+        self.assertFalse(
+            os.path.exists(
+                os.path.join(attachpath, "__thumb", "__js", "excanvas.min.js")
+            )
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(attachpath,
-                                                    '__thumb',
-                                                    '__js',
-                                                    'jquery.min.js')))
+        self.assertTrue(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "jquery.min.js"))
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(attachpath,
-                                                    '__thumb',
-                                                    '__js',
-                                                    'highcharts.js')))
+        self.assertTrue(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "highcharts.js"))
+        )
 
     def testHeads_02(self):
-        text = '''(:htmlhead:)
+        text = """(:htmlhead:)
 jquery.min.js
 (:htmlheadend:)
-(:plot:)'''
+(:plot:)"""
 
         self.page.content = text
 
@@ -118,8 +116,8 @@ jquery.min.js
         attachpath = Attachment(self.page).getAttachPath()
 
         self.assertIn(
-            '<div id="graph-0" style="width:700px; height:300px;"></div>',
-            result)
+            '<div id="graph-0" style="width:700px; height:300px;"></div>', result
+        )
 
         self.assertIn('excanvas.min.js">', result)
         self.assertNotIn('jquery.min.js">', result)
@@ -127,26 +125,25 @@ jquery.min.js
 
         self.assertIn("$('#graph-0').highcharts({", result)
 
-        self.assertTrue(os.path.exists(os.path.join(attachpath,
-                                                    '__thumb',
-                                                    '__js',
-                                                    'excanvas.min.js')))
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(attachpath, "__thumb", "__js", "excanvas.min.js")
+            )
+        )
 
-        self.assertFalse(os.path.exists(os.path.join(attachpath,
-                                                     '__thumb',
-                                                     '__js',
-                                                     'jquery.min.js')))
+        self.assertFalse(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "jquery.min.js"))
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(attachpath,
-                                                    '__thumb',
-                                                    '__js',
-                                                    'highcharts.js')))
+        self.assertTrue(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "highcharts.js"))
+        )
 
     def testHeads_03(self):
-        text = '''(:htmlhead:)
+        text = """(:htmlhead:)
 highcharts.js
 (:htmlheadend:)
-(:plot:)'''
+(:plot:)"""
 
         self.page.content = text
 
@@ -155,8 +152,9 @@ highcharts.js
 
         attachpath = Attachment(self.page).getAttachPath()
 
-        self.assertIn('<div id="graph-0" style="width:700px; height:300px;"></div>',
-                      result)
+        self.assertIn(
+            '<div id="graph-0" style="width:700px; height:300px;"></div>', result
+        )
 
         self.assertIn('excanvas.min.js">', result)
         self.assertIn('jquery.min.js">', result)
@@ -164,28 +162,27 @@ highcharts.js
 
         self.assertIn("$('#graph-0').highcharts({", result)
 
-        self.assertTrue(os.path.exists(os.path.join(attachpath,
-                                                    '__thumb',
-                                                    '__js',
-                                                    'excanvas.min.js')))
+        self.assertTrue(
+            os.path.exists(
+                os.path.join(attachpath, "__thumb", "__js", "excanvas.min.js")
+            )
+        )
 
-        self.assertTrue(os.path.exists(os.path.join(attachpath,
-                                                    '__thumb',
-                                                    '__js',
-                                                    'jquery.min.js')))
+        self.assertTrue(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "jquery.min.js"))
+        )
 
-        self.assertFalse(os.path.exists(os.path.join(attachpath,
-                                                     '__thumb',
-                                                     '__js',
-                                                     'highcharts.js')))
+        self.assertFalse(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "highcharts.js"))
+        )
 
     def testHeads_04(self):
-        text = '''(:htmlhead:)
+        text = """(:htmlhead:)
 excanvas.min.js
 jquery.min.js
 highcharts.js
 (:htmlheadend:)
-(:plot:)'''
+(:plot:)"""
 
         self.page.content = text
 
@@ -194,8 +191,9 @@ highcharts.js
 
         attachpath = Attachment(self.page).getAttachPath()
 
-        self.assertIn('<div id="graph-0" style="width:700px; height:300px;"></div>',
-                      result)
+        self.assertIn(
+            '<div id="graph-0" style="width:700px; height:300px;"></div>', result
+        )
 
         self.assertNotIn('excanvas.min.js">', result)
         self.assertNotIn('jquery.min.js">', result)
@@ -203,96 +201,95 @@ highcharts.js
 
         self.assertIn("$('#graph-0').highcharts({", result)
 
-        self.assertFalse(os.path.exists(os.path.join(attachpath,
-                                                     '__thumb',
-                                                     '__js',
-                                                     'excanvas.min.js')))
+        self.assertFalse(
+            os.path.exists(
+                os.path.join(attachpath, "__thumb", "__js", "excanvas.min.js")
+            )
+        )
 
-        self.assertFalse(os.path.exists(os.path.join(attachpath,
-                                                     '__thumb',
-                                                     '__js',
-                                                     'jquery.min.js')))
+        self.assertFalse(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "jquery.min.js"))
+        )
 
-        self.assertFalse(os.path.exists(os.path.join(attachpath,
-                                                     '__thumb',
-                                                     '__js',
-                                                     'highcharts.js')))
+        self.assertFalse(
+            os.path.exists(os.path.join(attachpath, "__thumb", "__js", "highcharts.js"))
+        )
 
     def testData_01(self):
-        text = '''(:plot:)
+        text = """(:plot:)
 10
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
+        text = "[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]"
 
         self.assertIn(text, result)
 
     def testData_02(self):
-        text = '''(:plot:)
+        text = """(:plot:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+        text = "[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]"
 
         self.assertIn(text, result)
 
     def testXCol_01(self):
-        text = '''(:plot curve.xcol="number":)
+        text = """(:plot curve.xcol="number":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
+        text = "[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]"
 
         self.assertIn(text, result)
 
     def testXCol_02(self):
-        text = '''(:plot curve.xcol="  number  ":)
+        text = """(:plot curve.xcol="  number  ":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
+        text = "[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]"
 
         self.assertIn(text, result)
 
     def testXCol_03(self):
-        text = '''(:plot curve.xcol=10:)
+        text = """(:plot curve.xcol=10:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -303,12 +300,12 @@ highcharts.js
         self.assertNotIn('"series"', result)
 
     def testXCol_04(self):
-        text = '''(:plot curve.xcol=" 10 ":)
+        text = """(:plot curve.xcol=" 10 ":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -319,46 +316,46 @@ highcharts.js
         self.assertNotIn('"series"', result)
 
     def testXCol_05(self):
-        text = '''(:plot curve.xcol=1:)
+        text = """(:plot curve.xcol=1:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+        text = "[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]"
 
         self.assertIn(text, result)
 
     def testXCol_06(self):
-        text = '''(:plot curve.xcol=2:)
+        text = """(:plot curve.xcol=2:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[10.0, 10.0], [20.0, 20.0], [30.0, 30.0], [40.0, 40.0]'
+        text = "[10.0, 10.0], [20.0, 20.0], [30.0, 30.0], [40.0, 40.0]"
 
         self.assertIn(text, result)
 
     def testXCol_07(self):
-        text = '''(:plot curve.xcol="0":)
+        text = """(:plot curve.xcol="0":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -369,12 +366,12 @@ highcharts.js
         self.assertNotIn('"series"', result)
 
     def testXCol_08(self):
-        text = '''(:plot curve.xcol="asdfasdf":)
+        text = """(:plot curve.xcol="asdfasdf":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -385,46 +382,46 @@ highcharts.js
         self.assertNotIn('"series"', result)
 
     def testYCol_01(self):
-        text = '''(:plot curve.ycol=1:)
+        text = """(:plot curve.ycol=1:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[0.5, 0.5], [1.5, 1.5], [2.0, 2.0], [4.0, 4.0]'
+        text = "[0.5, 0.5], [1.5, 1.5], [2.0, 2.0], [4.0, 4.0]"
 
         self.assertIn(text, result)
 
     def testYCol_02(self):
-        text = '''(:plot curve.ycol=2:)
+        text = """(:plot curve.ycol=2:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+        text = "[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]"
 
         self.assertIn(text, result)
 
     def testYCol_03(self):
-        text = '''(:plot curve.ycol=0:)
+        text = """(:plot curve.ycol=0:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -435,12 +432,12 @@ highcharts.js
         self.assertNotIn('"series"', result)
 
     def testYCol_04(self):
-        text = '''(:plot curve.ycol=3:)
+        text = """(:plot curve.ycol=3:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -451,12 +448,12 @@ highcharts.js
         self.assertNotIn('"series"', result)
 
     def testYCol_05(self):
-        text = '''(:plot curve.ycol=30:)
+        text = """(:plot curve.ycol=30:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -467,12 +464,12 @@ highcharts.js
         self.assertNotIn('"series"', result)
 
     def testYCol_06(self):
-        text = '''(:plot curve.ycol="абырвалг":)
+        text = """(:plot curve.ycol="абырвалг":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -483,48 +480,48 @@ highcharts.js
         self.assertNotIn('"series"', result)
 
     def testYCol_07(self):
-        text = '''(:plot curve.ycol=" 2  ":)
+        text = """(:plot curve.ycol=" 2  ":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+        text = "[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]"
 
         self.assertIn(text, result)
 
     def testCurves_01(self):
-        text = '''(:plot curve2.xcol="number":)
+        text = """(:plot curve2.xcol="number":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text1 = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
-        text2 = '[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]'
+        text1 = "[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]"
+        text2 = "[0, 10.0], [1, 20.0], [2, 30.0], [3, 40.0]"
 
         self.assertIn(text1, result)
         self.assertIn(text2, result)
 
     def testAxis_01(self):
-        text = '''(:plot:)
+        text = """(:plot:)
 10
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -536,12 +533,12 @@ highcharts.js
         self.assertIn(text, result)
 
     def testAxisTitle_01(self):
-        text = '''(:plot x.title="Ось X" y.title="Ось Y":)
+        text = """(:plot x.title="Ось X" y.title="Ось Y":)
 10
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -555,12 +552,12 @@ highcharts.js
         self.assertIn(text2, result)
 
     def testAxisTitle_02(self):
-        text = '''(:plot x.title="Ось X":)
+        text = """(:plot x.title="Ось X":)
 10
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -574,12 +571,12 @@ highcharts.js
         self.assertIn(text2, result)
 
     def testAxisMinMax_01(self):
-        text = '''(:plot x.min=-2 x.max="5" y.min="-10" y.max="20":)
+        text = """(:plot x.min=-2 x.max="5" y.min="-10" y.max="20":)
 10
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -597,12 +594,12 @@ highcharts.js
         self.assertIn(text4, result)
 
     def testAxisMinMax_02(self):
-        text = '''(:plot:)
+        text = """(:plot:)
 10
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -613,12 +610,12 @@ highcharts.js
         self.assertNotIn('"max"', result)
 
     def testAxisMinMax_03(self):
-        text = '''(:plot x.min=-2 x.max="Абырвалг":)
+        text = """(:plot x.min=-2 x.max="Абырвалг":)
 10
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -631,12 +628,12 @@ highcharts.js
         self.assertNotIn('"max"', result)
 
     def testAxisMinMax_04(self):
-        text = '''(:plot x.min="Абырвалг" x.max=-2:)
+        text = """(:plot x.min="Абырвалг" x.max=-2:)
 10
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -649,12 +646,12 @@ highcharts.js
         self.assertNotIn('"min"', result)
 
     def testAxisMinMax_05(self):
-        text = '''(:plot x.min = -2.1 x.max = 2.3:)
+        text = """(:plot x.min = -2.1 x.max = 2.3:)
 10
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -668,7 +665,7 @@ highcharts.js
         self.assertIn(text2, result)
 
     def testAxisMinMax_06(self):
-        text = '''(:plot
+        text = """(:plot
 x.min = -0.2
 x.max = 0.2
 :)
@@ -676,7 +673,7 @@ x.max = 0.2
 20
 30
 40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -690,12 +687,12 @@ x.max = 0.2
         self.assertIn(text2, result)
 
     def testAxisDateTime_01(self):
-        text = '''(:plot:)
+        text = """(:plot:)
 01.01.2014    10
 02.03.2014    20
 29.05.2014    30
 02.06.2015    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -705,12 +702,12 @@ x.max = 0.2
         self.assertNotIn('"type"', result)
 
     def testAxisDateTime_02(self):
-        text = '''(:plot x.type="datetime":)
+        text = """(:plot x.type="datetime":)
 01.01.2014    10    01.02.1905
 02.03.2014    20    05.12.1905
 29.05.2014    30    06.05.1906
 02.06.2015    40    17.10.1917
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -720,12 +717,12 @@ x.max = 0.2
         self.assertIn('"type": "datetime"', result)
 
     def testAxisDateTime_03(self):
-        text = '''(:plot y.type="datetime":)
+        text = """(:plot y.type="datetime":)
 01.01.2014    10    01.02.1905
 02.03.2014    20    05.12.1905
 29.05.2014    30    06.05.1906
 02.06.2015    40    17.10.1917
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -735,12 +732,12 @@ x.max = 0.2
         self.assertIn('"type": "datetime"', result)
 
     def testCurveColor_01(self):
-        text = '''(:plot curve.color="#aabbcc" curve2.color="#001100":)
+        text = """(:plot curve.color="#aabbcc" curve2.color="#001100":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -751,12 +748,12 @@ x.max = 0.2
         self.assertIn('"color": "#001100"', result)
 
     def testGraphTitle_01(self):
-        text = '''(:plot title="Abyrvalg":)
+        text = """(:plot title="Abyrvalg":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -766,12 +763,12 @@ x.max = 0.2
         self.assertIn('"text": "Abyrvalg"', result)
 
     def testTooltip_01(self):
-        text = '''(:plot:)
+        text = """(:plot:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -780,12 +777,12 @@ x.max = 0.2
         self.assertIn('"tooltip": {"enabled": false}', result)
 
     def testTooltip_02(self):
-        text = '''(:plot tooltip:)
+        text = """(:plot tooltip:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -794,12 +791,12 @@ x.max = 0.2
         self.assertIn('"tooltip": {"enabled": true}', result)
 
     def testTooltip_03(self):
-        text = '''(:plot tooltip=0:)
+        text = """(:plot tooltip=0:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -808,12 +805,12 @@ x.max = 0.2
         self.assertIn('"tooltip": {"enabled": false}', result)
 
     def testTooltip_04(self):
-        text = '''(:plot tooltip=42:)
+        text = """(:plot tooltip=42:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -822,12 +819,12 @@ x.max = 0.2
         self.assertIn('"tooltip": {"enabled": true}', result)
 
     def testCurveTitle_01(self):
-        text = '''(:plot curve.title="abyrvalg":)
+        text = """(:plot curve.title="abyrvalg":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -837,67 +834,75 @@ x.max = 0.2
         self.assertIn('"name": "abyrvalg"', result)
 
     def testLegend_01(self):
-        text = '''(:plot:)
+        text = """(:plot:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
-        self.assertTrue('"legend": {"enabled": false, "symbolWidth": 60}' in result or
-                        '"legend": {"symbolWidth": 60, "enabled": false}' in result)
+        self.assertTrue(
+            '"legend": {"enabled": false, "symbolWidth": 60}' in result
+            or '"legend": {"symbolWidth": 60, "enabled": false}' in result
+        )
 
     def testLegend_02(self):
-        text = '''(:plot legend:)
+        text = """(:plot legend:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
-        self.assertTrue('"legend": {"enabled": true, "symbolWidth": 60}' in result or
-                        '"legend": {"symbolWidth": 60, "enabled": true}' in result)
+        self.assertTrue(
+            '"legend": {"enabled": true, "symbolWidth": 60}' in result
+            or '"legend": {"symbolWidth": 60, "enabled": true}' in result
+        )
 
     def testLegend_03(self):
-        text = '''(:plot legend=0:)
+        text = """(:plot legend=0:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
-        self.assertTrue('"legend": {"enabled": false, "symbolWidth": 60}' in result or
-                        '"legend": {"symbolWidth": 60, "enabled": false}' in result)
+        self.assertTrue(
+            '"legend": {"enabled": false, "symbolWidth": 60}' in result
+            or '"legend": {"symbolWidth": 60, "enabled": false}' in result
+        )
 
     def testLegend_04(self):
-        text = '''(:plot legend=42:)
+        text = """(:plot legend=42:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
-        self.assertTrue('"legend": {"enabled": true, "symbolWidth": 60}' in result or
-                        '"legend": {"symbolWidth": 60, "enabled": true}' in result)
+        self.assertTrue(
+            '"legend": {"enabled": true, "symbolWidth": 60}' in result
+            or '"legend": {"symbolWidth": 60, "enabled": true}' in result
+        )
 
     def testSkipRows_01(self):
-        text = '''(:plot curve.data.skiprows="3":)
+        text = """(:plot curve.data.skiprows="3":)
 Бла-бла-бла
 Бла-бла
 ----
@@ -905,19 +910,19 @@ x.max = 0.2
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]'
+        text = "[0.5, 10.0], [1.5, 20.0], [2.0, 30.0], [4.0, 40.0]"
 
         self.assertIn(text, result)
 
     def testSkipRows_02(self):
-        text = '''(:plot curve.data.skiprows="6":)
+        text = """(:plot curve.data.skiprows="6":)
 Бла-бла-бла
 Бла-бла
 ----
@@ -925,19 +930,19 @@ x.max = 0.2
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[4.0, 40.0]'
+        text = "[4.0, 40.0]"
 
         self.assertIn(text, result)
 
     def testSkipRows_03(self):
-        text = '''(:plot curve.data.skiprows="7":)
+        text = """(:plot curve.data.skiprows="7":)
 Бла-бла-бла
 Бла-бла
 ----
@@ -945,19 +950,19 @@ x.max = 0.2
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[4.0, 40.0]'
+        text = "[4.0, 40.0]"
 
         self.assertNotIn(text, result)
 
     def testSkipRows_04(self):
-        text = '''(:plot curve.data.skiprows="70":)
+        text = """(:plot curve.data.skiprows="70":)
 Бла-бла-бла
 Бла-бла
 ----
@@ -965,24 +970,24 @@ x.max = 0.2
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        text = '[4.0, 40.0]'
+        text = "[4.0, 40.0]"
 
         self.assertNotIn(text, result)
 
     def testCurveHide_01(self):
-        text = '''(:plot curve.title="abyrvalg" curve.hide :)
+        text = """(:plot curve.title="abyrvalg" curve.hide :)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -992,12 +997,12 @@ x.max = 0.2
         self.assertNotIn('"name": "abyrvalg"', result)
 
     def testCurveHide_02(self):
-        text = '''(:plot curve.title="abyrvalg" curve.hide = 0 :)
+        text = """(:plot curve.title="abyrvalg" curve.hide = 0 :)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1007,12 +1012,12 @@ x.max = 0.2
         self.assertIn('"name": "abyrvalg"', result)
 
     def testCurveStyle_01(self):
-        text = '''(:plot:)
+        text = """(:plot:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1022,12 +1027,12 @@ x.max = 0.2
         self.assertIn('"dashStyle": "solid"', result)
 
     def testCurveStyle_02(self):
-        text = '''(:plot curve.style="Dot":)
+        text = """(:plot curve.style="Dot":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1037,12 +1042,12 @@ x.max = 0.2
         self.assertIn('"dashStyle": "dot"', result)
 
     def testCurveStyle_03(self):
-        text = '''(:plot curve.style="  Dot  ":)
+        text = """(:plot curve.style="  Dot  ":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1052,12 +1057,12 @@ x.max = 0.2
         self.assertIn('"dashStyle": "dot"', result)
 
     def testCurveStyle_04(self):
-        text = '''(:plot curve.style=1:)
+        text = """(:plot curve.style=1:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1067,12 +1072,12 @@ x.max = 0.2
         self.assertIn('"dashStyle": "solid"', result)
 
     def testCurveStyle_05(self):
-        text = '''(:plot curve.style=5:)
+        text = """(:plot curve.style=5:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1082,12 +1087,12 @@ x.max = 0.2
         self.assertIn('"dashStyle": "shortdashdot"', result)
 
     def testCurveStyle_06(self):
-        text = '''(:plot curve1.style=auto curve2.style=auto curve3.style=auto:)
+        text = """(:plot curve1.style=auto curve2.style=auto curve3.style=auto:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1099,12 +1104,12 @@ x.max = 0.2
         self.assertIn('"dashStyle": "shortdash"', result)
 
     def testCurveStyle_07(self):
-        text = '''(:plot curve.style=0:)
+        text = """(:plot curve.style=0:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1114,12 +1119,12 @@ x.max = 0.2
         self.assertIn('"dashStyle": "longdashdotdot"', result)
 
     def testCurveStyle_08(self):
-        text = '''(:plot curve.style="-1":)
+        text = """(:plot curve.style="-1":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1129,12 +1134,12 @@ x.max = 0.2
         self.assertIn('"dashStyle": "longdashdot"', result)
 
     def testCurveStyle_09(self):
-        text = '''(:plot curve.style=12:)
+        text = """(:plot curve.style=12:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1144,12 +1149,12 @@ x.max = 0.2
         self.assertIn('"dashStyle": "solid"', result)
 
     def testTickInterval_01(self):
-        text = '''(:plot:)
+        text = """(:plot:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1159,12 +1164,12 @@ x.max = 0.2
         self.assertNotIn('"tickInterval"', result)
 
     def testTickInterval_02(self):
-        text = '''(:plot x.tickstep="":)
+        text = """(:plot x.tickstep="":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1174,12 +1179,12 @@ x.max = 0.2
         self.assertNotIn('"tickInterval"', result)
 
     def testTickInterval_03(self):
-        text = '''(:plot x.tickstep="sadfasdf":)
+        text = """(:plot x.tickstep="sadfasdf":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1189,12 +1194,12 @@ x.max = 0.2
         self.assertNotIn('"tickInterval"', result)
 
     def testTickInterval_04(self):
-        text = '''(:plot x.tickstep="1":)
+        text = """(:plot x.tickstep="1":)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1204,12 +1209,12 @@ x.max = 0.2
         self.assertIn('"tickInterval": 1.0', result)
 
     def testTickInterval_05(self):
-        text = '''(:plot x.tickstep=-1:)
+        text = """(:plot x.tickstep=-1:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1219,12 +1224,12 @@ x.max = 0.2
         self.assertNotIn('"tickInterval"', result)
 
     def testTickInterval_06(self):
-        text = '''(:plot x.tickstep=0:)
+        text = """(:plot x.tickstep=0:)
 0.5    10
 1.5    20
 2.0    30
 4.0    40
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
@@ -1234,7 +1239,7 @@ x.max = 0.2
         self.assertNotIn('"tickInterval"', result)
 
     def testColSep_01(self):
-        text = '''(:plot
+        text = """(:plot
 curve.data.colsep=",\\s*"
 :)
 1, 10, 20, 30, 40
@@ -1247,19 +1252,19 @@ curve.data.colsep=",\\s*"
 8, 20, 30, 38, 46
 9, 20, 30, 38, 46
 10, 20, 30, 38, 46
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        self.assertIn('10.0', result)
-        self.assertIn('18.0', result)
-        self.assertIn('20.0', result)
+        self.assertIn("10.0", result)
+        self.assertIn("18.0", result)
+        self.assertIn("20.0", result)
 
     def testColSep_02(self):
-        text = '''(:plot
+        text = """(:plot
 curve.data.colsep=","
 :)
 1, 10, 20, 30, 40
@@ -1272,13 +1277,13 @@ curve.data.colsep=","
 8, 20, 30, 38, 46
 9, 20, 30, 38, 46
 10, 20, 30, 38, 46
-(:plotend:)'''
+(:plotend:)"""
 
         self.page.content = text
 
         generator = HtmlGenerator(self.page, self.application)
         result = generator.makeHtml(Style().getPageStyle(self.page))
 
-        self.assertIn('10.0', result)
-        self.assertIn('18.0', result)
-        self.assertIn('20.0', result)
+        self.assertIn("10.0", result)
+        self.assertIn("18.0", result)
+        self.assertIn("20.0", result)

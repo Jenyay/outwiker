@@ -417,14 +417,14 @@ Attach:file.odt<br/>
         self.assertEqual(expectedResult, result)
 
     def test_table_01(self):
-        src = r'''<table><tr><td>Абырвалг</td><td>Абырвалг</td><td>Абырвалг</td></tr></table>'''
-        expectedResult = '''<table>
+        src = r"""<table><tr><td>Абырвалг</td><td>Абырвалг</td><td>Абырвалг</td></tr></table>"""
+        expectedResult = """<table>
 <tr>
 <td>Абырвалг</td>
 <td>Абырвалг</td>
 <td>Абырвалг</td>
 </tr>
-</table>'''
+</table>"""
 
         result = BrHtmlImprover().run(src)
         self.assertEqual(expectedResult, result)

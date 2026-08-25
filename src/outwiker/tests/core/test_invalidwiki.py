@@ -25,9 +25,10 @@ class InvalidWikiTest(unittest.TestCase):
         """
         Тест на обработку ошибки в файле __page.opt корня вики
         """
+
         def __createInvalidWiki1():
             # Здесь будет создаваться вики
-            path = mkdtemp(prefix='Абырвалг абыр')
+            path = mkdtemp(prefix="Абырвалг абыр")
 
             rootwiki = createNotesTree(path)
 
@@ -50,9 +51,10 @@ class InvalidWikiTest(unittest.TestCase):
         """
         Тест на обработку ошибки в файле __page.opt корня вики
         """
+
         def __createInvalidWiki2():
             # Здесь будет создаваться вики
-            path = mkdtemp(prefix='Абырвалг абыр')
+            path = mkdtemp(prefix="Абырвалг абыр")
             removeDir(path)
 
             rootwiki = createNotesTree(path)
@@ -64,7 +66,8 @@ class InvalidWikiTest(unittest.TestCase):
             # Испортим файл __page.opt
             with open(os.path.join(rootwiki.path, "__page.opt"), "w") as fp:
                 fp.write(
-                    "[General]\naaa=xxx\n<<<<<<<<wsfsdf sdf sdfasdfdsf \nasfasdsadf")
+                    "[General]\naaa=xxx\n<<<<<<<<wsfsdf sdf sdfasdfdsf \nasfasdsadf"
+                )
 
             return path
 
@@ -102,8 +105,7 @@ class InvalidWikiTest(unittest.TestCase):
         Attachment(wiki["Страница без аттачей"]).attach(attaches)
 
         self.assertEqual(
-            len(Attachment(wiki["Страница без аттачей"]).attachmentFull),
-            3
+            len(Attachment(wiki["Страница без аттачей"]).attachmentFull), 3
         )
 
         # Удалим прикрепленные файлы
