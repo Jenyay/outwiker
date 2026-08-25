@@ -31,10 +31,10 @@ class HotKey:
         return self._shift
 
     def isEmpty(self):
-        """
-        Added in outwiker.gui 1.5
-        """
         return len(self.key) == 0
+
+    def __hash__(self) -> int:
+        return hash(f"{self._key}{self._ctrl}{self._alt}{self._shift}")
 
     def __eq__(self, other):
         return (

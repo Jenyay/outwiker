@@ -15,6 +15,7 @@ from outwiker.app.services.messages import showError
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR, URL_PROTOCOL
 from outwiker.core.urlmessage import parse_urlmessage
 from outwiker.gui.defines import ID_KEY_CTRL, ID_MOUSE_LEFT
+from outwiker.gui.hotkey import HotKey
 from outwiker.utilites.textfile import readTextFile
 
 
@@ -109,7 +110,13 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
 
     def _handleJSMessage(self, event):
         key_obj = json.loads(event.GetString())
-        logger.debug("HTML render. Key pressed: %s", key_obj)
+        hotkey = HotKey(key_obj["key"], ctrl=key_obj["ctrl"], alt=key_obj["alt"], shift=key_obj["shift"])
+        logger.debug("HTML render. Key pressed: %s", hotkey)
+        action_controller = self._application.actionController
+        if action_controller is not None:
+            action = action_controller.getActionByHotkey(hotkey)
+            if action is not None:
+                action.run(None)
         # key_event = wx.KeyEvent()
         # key_event.SetUnicodeKey(ord(obj["key"]))
         # key_event.SetAltDown(obj["alt"])

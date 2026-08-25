@@ -6,6 +6,7 @@ from typing import List, Optional, Tuple, Dict
 import wx
 from outwiker.core.system import getBuiltinImagePath
 
+from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.images import readImage
 from outwiker.gui.controls.toolbar2 import ToolBar2
 from outwiker.gui.hotkey import HotKey
@@ -65,6 +66,8 @@ class ActionController:
         # значение - экземпляр класса ActionInfoInternal
         self._actionsInfo: Dict[str, ActionInfoInternal] = {}
 
+        self._hotkeysActionsInfo: Dict[HotKey, ActionInfoInternal] = {}
+
         self._configSection = "HotKeys"
         self._enabledGui = True
 
@@ -74,7 +77,8 @@ class ActionController:
     def destroy(self):
         self._mainWindow = None
         self._config = None
-        self._actionsInfo = {}
+        self._actionsInfo.clear()
+        self._hotkeysActionsInfo.clear()
 
     @property
     def configSection(self):
@@ -86,8 +90,12 @@ class ActionController:
         """
         return list(self._actionsInfo.keys())
 
-    def getAction(self, strid):
+    def getAction(self, strid) -> BaseAction:
         return self._actionsInfo[strid].action
+
+    def getActionByHotkey(self, hotkey: HotKey) -> Optional[BaseAction]:
+        action_info = self._hotkeysActionsInfo.get(hotkey)
+        return None if action_info is None else action_info.action
 
     def getActionInfo(self, strid):
         """
@@ -115,14 +123,18 @@ class ActionController:
         # Не должно быть одинаковых идентификаторов действий
         assert action.stringId not in self._actionsInfo
 
+        hotkey=self._getHotKeyForAction(action, hotkey)
         actionInfo = ActionInfoInternal(
             action,
-            hotkey=self._getHotKeyForAction(action, hotkey),
+            hotkey=hotkey,
             area=area,
             hidden=hidden,
         )
         self._actionsInfo[action.stringId] = actionInfo
-        logging.debug('Action registered: "%s" (%s)', action.title, str(hotkey))
+        if hotkey is not None and area is None:
+            self._hotkeysActionsInfo[hotkey] = actionInfo
+
+        logging.debug('Action registered: "%s" (%s) [%s]', action.title, str(hotkey), area)
 
     def _getHotKeyForAction(self, action, defaultHotKey: Optional[HotKey]) -> HotKey:
         """
@@ -227,8 +239,16 @@ class ActionController:
                 title = self._getToolbarItemTitle(strid)
                 actionInfo.toolbar.SetToolShortHelp(actionInfo.toolItemId, title)
 
+        self._updateHotkeysActionsInfo()
         self._updateAcceleratorTables()
         self.saveHotKeys()
+
+    def _updateHotkeysActionsInfo(self):
+        self._hotkeysActionsInfo.clear()
+        for actionInfo in self._actionsInfo.values():
+            hotkey = actionInfo.hotkey
+            if hotkey is not None and actionInfo.area is None:
+                self._hotkeysActionsInfo[hotkey] = actionInfo
 
     def _bindHotkey(self, actionInfo: ActionInfoInternal):
         if actionInfo.hotkey is not None:
@@ -305,6 +325,9 @@ class ActionController:
         strid - строковый идентификатор удаляемого действия
         """
         self.removeGui(strid)
+        hotkey = self._actionsInfo[strid].hotkey
+        if hotkey is not None:
+            del self._hotkeysActionsInfo[hotkey]
         del self._actionsInfo[strid]
 
     def removeGui(self, strid):
