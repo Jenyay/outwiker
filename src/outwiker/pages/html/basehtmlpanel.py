@@ -357,6 +357,7 @@ class BaseHtmlPanel(BaseTextPanel):
             )
 
         setStatusText(self._application.mainWindow, STATUSBAR_MESSAGE_ITEM, "")
+        wx.SafeYield()
 
     def _enableAllTools(self):
         """

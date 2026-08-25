@@ -124,7 +124,7 @@ class HtmlRenderBase(wx.Panel):
         self._render.Reload()
 
     def RunScript(self, script: str) -> None:
-        self._render.RunScript(script)
+        self._render.RunScriptAsync(script)
 
     def _process_scrolled_message(self, urlmessage: URLMessage):
         try:
