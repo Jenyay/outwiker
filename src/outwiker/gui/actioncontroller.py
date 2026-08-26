@@ -66,6 +66,7 @@ class ActionController:
         # значение - экземпляр класса ActionInfoInternal
         self._actionsInfo: Dict[str, ActionInfoInternal] = {}
 
+        # Used for the Edge HTML engine in Windows
         self._hotkeysActionsInfo: Dict[HotKey, ActionInfoInternal] = {}
 
         self._configSection = "HotKeys"
@@ -544,6 +545,13 @@ class ActionController:
             return
 
         actionInfo = self._actionsInfo[strid]
+        hotkey = actionInfo.hotkey
+
+        if actionInfo.area is None and hotkey is not None:
+            if enabled:
+                self._hotkeysActionsInfo[hotkey] = actionInfo
+            elif hotkey in self._hotkeysActionsInfo:
+                del self._hotkeysActionsInfo[hotkey]
 
         if actionInfo.toolItemId is not None:
             actionInfo.toolbar.EnableTool(actionInfo.toolItemId, enabled)
