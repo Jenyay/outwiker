@@ -211,10 +211,10 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         # Link clicked
         if self.canOpenUrl != href_decoded:
             # Disable the Back button
-            # if len(self._history_href) >= 2 and href_decoded == self._history_href[-2]:
-            #     logger.debug('_onNavigating ({nav_id}). Cancel return back.'.format(nav_id=nav_id))
-            #     event.Veto()
-            #     return
+            if len(self._history_href) >= 2 and href_decoded == self._history_href[-2]:
+                logger.debug('_onNavigating ({nav_id}). Cancel return back.'.format(nav_id=nav_id))
+                event.Veto()
+                return
 
             logger.debug("_onNavigating (%s). Link clicked.", nav_id)
             processed = self._onLinkClicked(href_decoded)
