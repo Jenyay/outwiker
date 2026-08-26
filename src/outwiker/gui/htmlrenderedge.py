@@ -39,7 +39,6 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         super().__init__(parent, application)
         self._basepath = None
         self.canOpenUrl: Optional[str] = None
-        self._current_href: Optional[str] = None
         self._navigate_id = 1
         self._history_href = []
 
@@ -144,6 +143,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
         self.render.SetPage(htmltext, path)
 
     def Sleep(self):
+        self.render.Stop()
         self.render.Unbind(wx.html2.EVT_WEBVIEW_NAVIGATING, handler=self._onNavigating)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
@@ -209,7 +209,7 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
             return
 
         # Link clicked
-        if self.canOpenUrl is None:
+        if self.canOpenUrl != href_decoded:
             # Disable the Back button
             # if len(self._history_href) >= 2 and href_decoded == self._history_href[-2]:
             #     logger.debug('_onNavigating ({nav_id}). Cancel return back.'.format(nav_id=nav_id))
@@ -217,22 +217,17 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
             #     return
 
             logger.debug("_onNavigating (%s). Link clicked.", nav_id)
-            processed = (self._current_href != href_decoded) and self._onLinkClicked(href_decoded)
+            processed = self._onLinkClicked(href_decoded)
             if processed:
                 event.Veto()
                 logger.debug("_onNavigating (%s) end. Veto", nav_id)
             else:
-                self._current_href = href_decoded
                 logger.debug(
                     "_onNavigating (%s) end. Allow href processing. href=%s",
                     nav_id,
                     href,
                 )
         else:
-            if self.canOpenUrl != href_decoded:
-                event.Veto()
-            self.canOpenUrl = None
-            self._current_href = href_decoded
             logger.debug(
                 "_onNavigating (%s) end. canOpenUrl=%s", nav_id, self.canOpenUrl
             )
