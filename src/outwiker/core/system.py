@@ -209,6 +209,7 @@ class Windows(System):
             return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderedge import HtmlRenderEdgeGeneral
+            from outwiker.gui.htmlrenderie import HtmlRenderIEGeneral
             return HtmlRenderEdgeGeneral(parent, application) if self._isEdgeEngineAvaible() else HtmlRenderIEGeneral(parent, application)
 
     def getHtmlRenderForPage(self, parent, application):
@@ -218,6 +219,7 @@ class Windows(System):
             return HtmlRenderFake(parent, application)
         else:
             from outwiker.gui.htmlrenderedge import HtmlRenderEdgeForPage
+            from outwiker.gui.htmlrenderie import HtmlRenderIEForPage
             return HtmlRenderEdgeForPage(parent, application) if self._isEdgeEngineAvaible() else HtmlRenderIEForPage(parent, application)
 
     def getHtmlRenderSearchController(self, searchPanel, htmlRender):
