@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="1.28.4">
+	<version number="1.28.4" date="2026-08-29">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.28.4.zip">
 			<requirements>
 				<api>4.980</api>
