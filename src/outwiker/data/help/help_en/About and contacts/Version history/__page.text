@@ -1,3 +1,14 @@
+!!! 4.1 (September 2026)
+
+* Added the ability to immediately open a new note in a new tab when creating it.
+* Added the ability to create a note based on the selected text in an open note.
+* Added scroll position saving in the view mode.
+* Added note sorting by creation or modification date.
+* Added tag cloud color settings.
+* Fixed application startup and operation in window managers running via Wayland on Linux.
+* Fixed numerous interface labels.
+* Bug fixes and interface improvements.
+
 !!! 4.0 (June 2026)
 
 * Added the ability to change the order of notes using the mouse.
