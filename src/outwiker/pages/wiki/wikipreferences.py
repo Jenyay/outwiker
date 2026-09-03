@@ -24,7 +24,7 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         self.colorizeWiki = wx.CheckBox(self, -1, _("Highlight wiki notation"))
 
         # Thumbnails default size
-        self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))
+        self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnails size"))
         self.thumbSize = wx.SpinCtrl(self, -1, "250", min=1, max=10000)
 
         # Template for the empty page

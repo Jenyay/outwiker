@@ -8,7 +8,7 @@ When switching a wiki page to %notice%Preview%% mode, HTML code is generated in 
 
 The %notice%Highlight wiki notation%% check box allows you to enable or disable syntax highlighting on the wiki page.
 
-The %notice%Thumbnail size%% parameter sets the default size for image thumbnails created using the [[[=%thumb%Attach:filename%%=] -> page://wiki-attachments/#thumb]] syntax, provided that the thumbnail size is not explicitly defined within the wiki tag's additional parameters.
+The %notice%Thumbnails size%% parameter sets the default size for image thumbnails created using the [[[=%thumb%Attach:filename%%=] -> page://wiki-attachments/#thumb]] syntax, provided that the thumbnail size is not explicitly defined within the wiki tag's additional parameters.
 
 [[Links -> page://wiki-links]] on wiki pages can be represented in two formats:
 

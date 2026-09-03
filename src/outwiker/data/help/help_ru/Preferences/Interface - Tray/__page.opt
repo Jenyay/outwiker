@@ -3,9 +3,9 @@ type = wiki
 tags = настройки
 order = 5
 creationdatetime = 2020-05-10 09:51:06.758211
-datetime = 2026-04-26 18:14:27.941628
+datetime = 2026-09-03 20:21:16.553755
 uid = settings_interface_tray
-alias = Интерфейс - Значок на панели задач
+alias = Интерфейс - Значок в области уведомлений
 
 [Wiki]
 recentstylename = notice
