@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-03 10:06+0300\n"
+"POT-Creation-Date: 2026-09-03 21:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1739,11 +1739,11 @@ msgid "Confirm before exit"
 msgstr ""
 
 #: outwiker/app/gui/preferences/generalpanel.py:145
-msgid "Recent icons history size"
+msgid "Number of recent icons"
 msgstr ""
 
 #: outwiker/app/gui/preferences/generalpanel.py:157
-msgid "Recent note tree history size"
+msgid "Number of recent note trees"
 msgstr ""
 
 #: outwiker/app/gui/preferences/generalpanel.py:169

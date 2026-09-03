@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-03 10:06+0300\n"
+"POT-Creation-Date: 2026-09-03 21:03+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1715,7 +1715,6 @@ msgid "New page title template"
 msgstr "New page title template"
 
 #: outwiker/app/gui/preferences/generalpanel.py:39
-#| msgid "Recent used"
 msgid "Last used"
 msgstr "Last used"
 
@@ -1738,12 +1737,14 @@ msgid "Confirm before exit"
 msgstr "Confirm before exit"
 
 #: outwiker/app/gui/preferences/generalpanel.py:145
-msgid "Recent icons history size"
-msgstr "Recent icons history size"
+#| msgid "Number of notes: {}"
+msgid "Number of recent icons"
+msgstr "Number of recent icons"
 
 #: outwiker/app/gui/preferences/generalpanel.py:157
-msgid "Recent note tree history size"
-msgstr "Recent note tree history size"
+#| msgid "Path to current note tree"
+msgid "Number of recent note trees"
+msgstr "Number of recent note trees"
 
 #: outwiker/app/gui/preferences/generalpanel.py:169
 msgid "Open last note tree on startup"
@@ -3278,6 +3279,12 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:42
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Recent icons history size"
+#~ msgstr "Recent icons history size"
+
+#~ msgid "Recent note tree history size"
+#~ msgstr "Recent note tree history size"
 
 #~| msgid "Selected tag background"
 #~ msgid "Selected tag background color"

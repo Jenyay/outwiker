@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-03 10:06+0300\n"
-"PO-Revision-Date: 2026-09-03 20:41+0300\n"
+"POT-Creation-Date: 2026-09-03 21:03+0300\n"
+"PO-Revision-Date: 2026-09-03 21:05+0300\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1752,12 +1752,12 @@ msgid "Confirm before exit"
 msgstr "Спрашивать подтверждение перед выходом"
 
 #: outwiker/app/gui/preferences/generalpanel.py:145
-msgid "Recent icons history size"
-msgstr "Размер истории недавних значков"
+msgid "Number of recent icons"
+msgstr "Количество недавних значков"
 
 #: outwiker/app/gui/preferences/generalpanel.py:157
-msgid "Recent note tree history size"
-msgstr "Размер истории недавних деревьев заметок"
+msgid "Number of recent note trees"
+msgstr "Количество недавних деревьев заметок"
 
 #: outwiker/app/gui/preferences/generalpanel.py:169
 msgid "Open last note tree on startup"
@@ -3293,6 +3293,12 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:42
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Recent icons history size"
+#~ msgstr "Размер истории недавних значков"
+
+#~ msgid "Recent note tree history size"
+#~ msgstr "Размер истории недавних деревьев заметок"
 
 #~ msgid "Selected tag background color"
 #~ msgstr "Цвет фона выбранного тега"
