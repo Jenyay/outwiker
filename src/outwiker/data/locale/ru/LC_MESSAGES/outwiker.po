@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-26 22:36+0300\n"
-"PO-Revision-Date: 2026-07-26 22:37+0300\n"
+"PO-Revision-Date: 2026-09-03 09:27+0300\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2814,7 +2814,7 @@ msgstr "Код / Просмотр"
 
 #: outwiker/pages/html/actions/switchcoderesult.py:22
 msgid "Switch Code <--> Preview for HTML and wiki pages"
-msgstr "Переключение Код <--> Просмотр для HTML- и викистраниц"
+msgstr "Переключение Код <--> Просмотр для HTML- и вики-страниц"
 
 #: outwiker/pages/html/basehtmlpanel.py:234
 #: outwiker/pages/html/htmlpageview.py:32
@@ -3098,7 +3098,7 @@ msgstr "Код HTML"
 
 #: outwiker/pages/wiki/actions/openhtmlcode.py:21
 msgid "Open HTML code for wiki page"
-msgstr "Открыть код HTML для викистраницы"
+msgstr "Открыть код HTML для вики-страницы"
 
 #: outwiker/pages/wiki/actions/thumb.py:25
 msgid "Insert thumbnail"
@@ -3110,7 +3110,7 @@ msgstr "Обновить код HTML"
 
 #: outwiker/pages/wiki/actions/updatehtml.py:22
 msgid "Update HTML code for wiki page"
-msgstr "Обновить код HTML для викистраницы"
+msgstr "Обновить код HTML для вики-страницы"
 
 #: outwiker/pages/wiki/actions/wikistyle.py:41
 msgid "Text style..."
@@ -3242,11 +3242,11 @@ msgstr "0 - размер по умолчанию"
 
 #: outwiker/pages/wiki/wikipage.py:61
 msgid "Wiki Page"
-msgstr "Викистраница"
+msgstr "Вики-страница"
 
 #: outwiker/pages/wiki/wikipagecontroller.py:69
 msgid "Wiki page"
-msgstr "Викистраница"
+msgstr "Вики-страница"
 
 #: outwiker/pages/wiki/wikipageview.py:54
 #: outwiker/pages/wiki/wikipageview.py:57
