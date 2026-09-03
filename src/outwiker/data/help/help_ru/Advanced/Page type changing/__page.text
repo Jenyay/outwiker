@@ -6,7 +6,7 @@ OutWiker поддерживает разные [[типы страниц -> page
 
 * %code%text%% - [[Текстовая страница -> page://text-page]]
 * %code%html%% - [[HTML-страница -> page://html-page]], 
-* %code%wiki%% - [[Wiki-страница -> page://wiki-page]] 
+* %code%wiki%% - [[Вики-страница -> page://wiki-page]] 
 * %code%search%% - [[Страница поиска -> page://search-page]]
 
 Типы страниц, поддерживаемые с помощью плагинов:

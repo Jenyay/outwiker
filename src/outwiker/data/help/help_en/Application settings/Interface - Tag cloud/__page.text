@@ -14,7 +14,7 @@ The tag cloud can operate in two modes, which are toggled via the %notice%Tag cl
 
 The %notice%Show tooltips%% check box allows you to enable or disable the hints that appear when you hover your mouse over a tag. These tooltips contain information about the number of notes associated with that specific tag.
 
-Additionally, the %notice%Titles in popup window%% group of check boxes allows you to enable or disable the display of page titles in the window that appears when a tag is clicked.
+Additionally, the %notice%Headers in popup window%% group of check boxes allows you to enable or disable the display of page titles in the window that appears when a tag is clicked.
 
 %center%%thumb width=700%Attach:popup.png%%
 
