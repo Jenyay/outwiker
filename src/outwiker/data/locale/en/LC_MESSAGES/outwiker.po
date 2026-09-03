@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-03 21:03+0300\n"
+"POT-Creation-Date: 2026-09-03 21:39+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1737,12 +1737,10 @@ msgid "Confirm before exit"
 msgstr "Confirm before exit"
 
 #: outwiker/app/gui/preferences/generalpanel.py:145
-#| msgid "Number of notes: {}"
 msgid "Number of recent icons"
 msgstr "Number of recent icons"
 
 #: outwiker/app/gui/preferences/generalpanel.py:157
-#| msgid "Path to current note tree"
 msgid "Number of recent note trees"
 msgstr "Number of recent note trees"
 
@@ -3261,8 +3259,9 @@ msgid "Highlight wiki notation"
 msgstr "Highlight wiki notation"
 
 #: outwiker/pages/wiki/wikipreferences.py:27
-msgid "Thumbnail Size"
-msgstr "Thumbnail Size"
+#| msgid "Thumbnail size"
+msgid "Thumbnails size"
+msgstr "Thumbnails size"
 
 #: outwiker/pages/wiki/wikipreferences.py:31
 msgid "Template for empty page"
@@ -3279,6 +3278,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:42
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "Thumbnail Size"
+#~ msgstr "Thumbnail Size"
 
 #~ msgid "Recent icons history size"
 #~ msgstr "Recent icons history size"

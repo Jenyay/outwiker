@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-03 21:03+0300\n"
-"PO-Revision-Date: 2026-09-03 21:05+0300\n"
+"POT-Creation-Date: 2026-09-03 21:39+0300\n"
+"PO-Revision-Date: 2026-09-03 21:40+0300\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -3275,7 +3275,7 @@ msgid "Highlight wiki notation"
 msgstr "Раскрашивать вики-нотацию"
 
 #: outwiker/pages/wiki/wikipreferences.py:27
-msgid "Thumbnail Size"
+msgid "Thumbnails size"
 msgstr "Размер миниатюр"
 
 #: outwiker/pages/wiki/wikipreferences.py:31
@@ -3293,6 +3293,9 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:42
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Thumbnail Size"
+#~ msgstr "Размер миниатюр"
 
 #~ msgid "Recent icons history size"
 #~ msgstr "Размер истории недавних значков"

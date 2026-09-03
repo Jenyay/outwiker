@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-03 21:03+0300\n"
+"POT-Creation-Date: 2026-09-03 21:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -3223,7 +3223,7 @@ msgid "Highlight wiki notation"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipreferences.py:27
-msgid "Thumbnail Size"
+msgid "Thumbnails size"
 msgstr ""
 
 #: outwiker/pages/wiki/wikipreferences.py:31
