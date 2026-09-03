@@ -36,7 +36,7 @@ class GeneralPanel(BasePrefPanel):
         self.MAX_TOASTER_DELAY = 600
 
         self.pageTabChoises = [
-            (_("Recent used"), GeneralGuiConfig.PAGE_TAB_RECENT),
+            (_("Last used"), GeneralGuiConfig.PAGE_TAB_RECENT),
             (_("Preview"), GeneralGuiConfig.PAGE_TAB_RESULT),
             (_("Edit"), GeneralGuiConfig.PAGE_TAB_CODE),
         ]
