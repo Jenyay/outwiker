@@ -6,9 +6,9 @@
 
 The %notice%Autosave interval in seconds%% field allows you to specify how frequently the currently open note is saved. If set to 0, the timer-based autosave is disabled. However, notes are still saved during other events, such as exiting the program, switching between notes, or toggling between the "Wiki," "View," and "HTML" tabs. Additionally, you can manually save a note using the %notice%File - Save%% menu item.
 
-The %notice%Recent icons history size%% field sets the number of icons stored in the "recently used" list within the page creation and property dialogs.
+The %notice%Number of recent icons%% field sets the number of icons stored in the "recently used" list within the page creation and property dialogs.
 
-The %notice%Recent note tree history size%% field determines the number of recently opened note trees displayed in the %notice%File%% menu.
+The %notice%Number of recent note trees%% field determines the number of recently opened note trees displayed in the %notice%File%% menu.
 
 If the %notice%Open last note tree on startup%% check box is selected, the last used note tree will automatically open when the program starts.
 

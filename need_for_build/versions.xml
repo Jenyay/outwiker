@@ -1,6 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="5.0.0.980" status="alpha" date="2026-08-29">
+    <version number="5.0.0.981" status="dev" date="2026-08-29">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
+    <version number="4.1.0.980" status="beta" date="2026-08-29">
         <changes>
             <change>Bug fixes.</change>
             <change>Added new vector icons.</change>

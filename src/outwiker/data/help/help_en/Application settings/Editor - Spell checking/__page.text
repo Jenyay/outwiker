@@ -12,7 +12,7 @@ Among the available dictionaries, there is a special %notice%html%% dictionary t
 
 The dictionaries used by OutWiker are located in the %info%spell%% folder within the [[configuration directories -> page://config-dirs]]. OutWiker uses the LibreOffice dictionary format for the hunspell engine. You can find additional dictionaries at [[this link -> https://github.com/LibreOffice/dictionaries/]] and copy them into the %info%spell%% folder.
 
-The %notice%User dictionary%% field lists words that have been added by the user. Words are added to this list via the "Add to dictionary" context menu item when right-clicking a misspelled word in the editor. In this settings section, you can also manually add or remove words to be treated as correct. Each word must be entered on a new line.
+The %notice%Custom dictionary%% field lists words that have been added by the user. Words are added to this list via the "Add to dictionary" context menu item when right-clicking a misspelled word in the editor. In this settings section, you can also manually add or remove words to be treated as correct. Each word must be entered on a new line.
 
 ----
 '''See also:'''
