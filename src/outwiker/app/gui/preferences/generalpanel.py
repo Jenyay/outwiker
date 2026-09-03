@@ -142,7 +142,7 @@ class GeneralPanel(BasePrefPanel):
         Создать элементы интерфейса, связанные с историей открытых файлов
         """
         # Count of recently used icons
-        recentIconsLabel = wx.StaticText(self, -1, _("Recent icons history size"))
+        recentIconsLabel = wx.StaticText(self, -1, _("Number of recent icons"))
 
         self.iconsHistoryLengthSpin = wx.SpinCtrl(
             self,
@@ -154,7 +154,7 @@ class GeneralPanel(BasePrefPanel):
         )
 
         # Recently opened files
-        history_label = wx.StaticText(self, -1, _("Recent note tree history size"))
+        history_label = wx.StaticText(self, -1, _("Number of recent note trees"))
 
         self.historySpin = wx.SpinCtrl(
             self,
