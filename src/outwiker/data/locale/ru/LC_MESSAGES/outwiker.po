@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-03 10:06+0300\n"
-"PO-Revision-Date: 2026-09-03 10:08+0300\n"
+"PO-Revision-Date: 2026-09-03 20:41+0300\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -3066,7 +3066,7 @@ msgstr "Преобразовать HTML-символы"
 
 #: outwiker/pages/wiki/actions/include.py:172
 msgid "Parse wiki notation"
-msgstr "Включить разбор викинотации"
+msgstr "Включить разбор вики-нотации"
 
 #: outwiker/pages/wiki/actions/listitemstyle.py:24
 msgid "List item style..."
@@ -3272,7 +3272,7 @@ msgstr "Показывать вкладку с кодом HTML"
 
 #: outwiker/pages/wiki/wikipreferences.py:24
 msgid "Highlight wiki notation"
-msgstr "Раскрашивать викинотацию"
+msgstr "Раскрашивать вики-нотацию"
 
 #: outwiker/pages/wiki/wikipreferences.py:27
 msgid "Thumbnail Size"
