@@ -5,6 +5,7 @@ import os
 import html
 import unittest
 from tempfile import mkdtemp
+from urllib.parse import quote
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
@@ -132,7 +133,7 @@ class ParserLinkTest(unittest.TestCase):
 
     def testLink8(self):
         text = "[[\\t]]"
-        result = '<a class="ow-wiki ow-link-page" href="page://\\t">\\t</a>'
+        result = '<a class="ow-wiki ow-link-page" href="page://{link}">\\t</a>'.format(link=quote("\\t"))
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -236,7 +237,7 @@ class ParserLinkTest(unittest.TestCase):
         for link in self.pagelinks:
             text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(link)
             result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
-                link, link
+                quote(link), link
             )
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -265,7 +266,7 @@ class ParserLinkTest(unittest.TestCase):
                 link
             )
             result = "бла-бла-бла \n<a class=\"ow-wiki ow-link-page\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
-                link
+                quote(link)
             )
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -276,7 +277,7 @@ class ParserLinkTest(unittest.TestCase):
                 link
             )
             result = "бла-бла-бла \n<a class=\"ow-wiki ow-link-page\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
-                link
+                quote(link)
             )
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -290,7 +291,7 @@ class ParserLinkTest(unittest.TestCase):
                 link, comment
             )
             result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
-                link, comment
+                quote(link), comment
             )
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -304,7 +305,7 @@ class ParserLinkTest(unittest.TestCase):
                 comment, link
             )
             result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
-                link, comment
+                quote(link), comment
             )
 
             self.assertEqual(self.parser.toHtml(text), result)

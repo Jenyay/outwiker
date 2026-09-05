@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Вспомогательные функции для тестов
+Helper functions for tests
 """
 
 import logging
@@ -9,6 +9,7 @@ import os
 import shutil
 import time
 import gc
+import re
 from pathlib import Path
 from tempfile import mkdtemp
 from typing import List
@@ -22,7 +23,7 @@ from outwiker.core.tree import WikiPage
 
 def removeDir(path):
     """
-    Удалить вики из указанной папки
+    Remove the wiki from the specified directory
     """
     if os.path.exists(path):
         try:
@@ -34,8 +35,8 @@ def removeDir(path):
 
 def getImageSize(fname):
     """
-    Получить размер картинки.
-    Возвращает кортеж (ширина, высота)
+    Get the image size.
+    Returns a tuple (width, height)
     """
     image = wx.Image(fname)
     width = image.GetWidth()
@@ -46,6 +47,27 @@ def getImageSize(fname):
 def createFile(fname):
     fp = open(fname, "w")
     fp.close()
+
+
+def check_tag(text: str, tagname: str, **kwargs) -> bool:
+    """
+    Check whether the text contains the HTML tag tagname with the specified attributes.
+
+    Attributes and their values are passed in kwargs in any order.
+    Returns True if the tag is present in the text and contains all the specified
+    attributes, or False otherwise.
+    """
+    tag_re = re.compile(fr"<{tagname}(?:\s+[^>]*)?/?>")
+    tag = tag_re.search(text)
+    if tag is None:
+        return False
+
+    return all(_check_attribute(tag.group(), name, value) for name, value in kwargs.items())
+
+
+def _check_attribute(tag: str, name: str, value) -> bool:
+    pattern = rf'\b{re.escape(name)}\s*=\s*["\']?{re.escape(str(value))}["\']?'
+    return re.search(pattern, tag) is not None
 
 
 class SkipLogFilter(logging.Filter):
@@ -104,3 +126,19 @@ def copy_test_files_to_attachments(wikipage: WikiPage, files: List[str]) -> List
         shutil.copy(fname, attach_dir)
 
     return atach_full_paths
+
+
+def test_check_tag():
+    assert check_tag("<b>text</b>", "b")
+    assert check_tag("before <b>text</b> after", "b")
+    assert check_tag(
+        'before <a href="http://example.com" title="link">text</a> after',
+        "a",
+        href="http://example.com",
+        title="link",
+    )
+    assert check_tag('<br/>', "br")
+    assert check_tag("text <br/> after", "br")
+
+    assert not check_tag('<a href="http://example.com">text</a>', "a", title="link")
+    assert not check_tag('before <a href="http://example.com">text</a> after', "a", title="link")

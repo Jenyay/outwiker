@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import html
+import urllib.parse
 
 from pyparsing import QuotedString
 
@@ -117,7 +118,7 @@ class LinkToken:
             and not url.startswith("#")
             and not url.startswith("mailto:")
         ):
-            url = self.page_protocol + url
+            url = self.page_protocol + urllib.parse.quote(url)
 
         if url.startswith(self.attach_prefix) and not self._isHasImage(comment):
             if Attachment(self.parser.page).exists(url[len(self.attach_prefix) :]):

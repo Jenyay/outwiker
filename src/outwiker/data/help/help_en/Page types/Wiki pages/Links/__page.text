@@ -26,10 +26,10 @@ Wiki pages text can contain links to websites on the Internet, as well as to oth
 ||%code%[=[[#anchor]]=]%%||Add an anchor named #anchor||Resulting HTML code: %code%&lt;a name=&quot;#anchor&quot;&gt;&lt;/a&gt;%%||
 ||%code%[=[[#anchor | Link to anchor]]=]%%||[[#anchor | Link to anchor]]||Link to an anchor named anchor on the current page||
 ||%code%[=[[Link to anchor -> #anchor]]=]%%||[[#anchor | Link to anchor]]||Link to an anchor named anchor on the current page||
-||%code%[=[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]=]%%||[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]||Link to an anchor named anchor on another page||
-||%code%[=page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor=]%%||page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor||Link to an anchor named anchor on another page||
-||%code%[=[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor | Link to anchor on another page]]=]%%||[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor | Link to anchor on another page]]||Link to an anchor named anchor on another page with a comment||
-||%code%[=[[Link to anchor on another page -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]=]%%||[[Link to anchor on another page -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]||Link to an anchor named anchor on another page with a comment||
+||%code%[=[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#thanks]]=]%%||[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#thanks]]||Link to an anchor named anchor on another page||
+||%code%[=page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#thanks=]%%||page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#thanks||Link to an anchor named anchor on another page||
+||%code%[=[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#thanks | Link to anchor on another page]]=]%%||[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#thanks | Link to anchor on another page]]||Link to an anchor named anchor on another page with a comment||
+||%code%[=[[Link to anchor on another page -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#thanks]]=]%%||[[Link to anchor on another page -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#thanks]]||Link to an anchor named anchor on another page with a comment||
 
 
 
