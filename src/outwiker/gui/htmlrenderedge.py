@@ -251,8 +251,8 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
         self._currentPage = value
 
     def LoadPage(self, fname):
-        fname = fname.replace("\\", "/")
         logger.debug("LoadPage(%s). fname=%s", self._navigate_id, fname)
+        fname = fname.replace("\\", "/")
         self.render.Stop()
         self._basepath = fname
 
@@ -270,6 +270,8 @@ class HtmlRenderEdgeForPage(HtmlRenderEdgeBase, HTMLRenderForPageMixin):
         if len(self._history_href) > 2:
             del self._history_href[0]
 
+        fname = "file:///" + fname
+        logger.debug("LoadPage(%s). fname=%s", self._navigate_id, fname)
         self.render.LoadURL(fname)
 
     def _identifyUri(self, href):
