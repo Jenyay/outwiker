@@ -109,7 +109,12 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
 
     def _handleJSMessage(self, event):
         key_obj = json.loads(event.GetString())
-        hotkey = HotKey(key_obj["key"], ctrl=key_obj["ctrl"], alt=key_obj["alt"], shift=key_obj["shift"])
+        hotkey = HotKey(
+            key_obj["key"],
+            ctrl=key_obj["ctrl"],
+            alt=key_obj["alt"],
+            shift=key_obj["shift"],
+        )
         logger.debug("HTML render. Key pressed: %s", hotkey)
         action_controller = self._application.actionController
         if action_controller is not None:
@@ -208,28 +213,33 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
             event.Veto()
             return
 
-        # Link clicked
-        if self.canOpenUrl != href_decoded:
-            # Disable the Back button
-            if len(self._history_href) >= 2 and href_decoded == self._history_href[-2]:
-                logger.debug('_onNavigating ({nav_id}). Cancel return back.'.format(nav_id=nav_id))
-                event.Veto()
-                return
-
-            logger.debug("_onNavigating (%s). Link clicked.", nav_id)
-            processed = self._onLinkClicked(href_decoded)
-            if processed:
-                event.Veto()
-                logger.debug("_onNavigating (%s) end. Veto", nav_id)
-            else:
-                logger.debug(
-                    "_onNavigating (%s) end. Allow href processing. href=%s",
-                    nav_id,
-                    href,
-                )
-        else:
+        if self.canOpenUrl is not None and (
+            self.canOpenUrl == href_decoded or href_decoded == "file:" + self.canOpenUrl
+        ):
             logger.debug(
                 "_onNavigating (%s) end. canOpenUrl=%s", nav_id, self.canOpenUrl
+            )
+            return
+
+        # Link clicked
+        # Disable the Back button
+        if len(self._history_href) >= 2 and href_decoded == self._history_href[-2]:
+            logger.debug(
+                "_onNavigating ({nav_id}). Cancel return back.".format(nav_id=nav_id)
+            )
+            event.Veto()
+            return
+
+        logger.debug("_onNavigating (%s). Link clicked.", nav_id)
+        processed = self._onLinkClicked(href_decoded)
+        if processed:
+            event.Veto()
+            logger.debug("_onNavigating (%s) end. Veto", nav_id)
+        else:
+            logger.debug(
+                "_onNavigating (%s) end. Allow href processing. href=%s",
+                nav_id,
+                href,
             )
 
 
