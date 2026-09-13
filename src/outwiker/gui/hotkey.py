@@ -33,6 +33,9 @@ class HotKey:
     def isEmpty(self):
         return len(self.key) == 0
 
+    def __hash__(self) -> int:
+        return hash(f"{self._key}{self._ctrl}{self._alt}{self._shift}")
+
     def __eq__(self, other):
         return (
             other is not None

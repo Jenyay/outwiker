@@ -130,6 +130,15 @@ class AnchorRecognizerIE(AnchorRecognizerBase):
         return self._recognizeAnchor(href, basepath)
 
 
+class AnchorRecognizerEdge(AnchorRecognizerIE):
+    '''
+    Recognize an anchor in href.
+    For Edge engine.
+    '''
+    pass
+
+
+
 class AnchorRecognizerWebKit(AnchorRecognizerBase):
     """
     Recognize an anchor in href.
@@ -173,6 +182,10 @@ class FileRecognizerBase(Recognizer):
 
 
 class FileRecognizerIE(FileRecognizerBase):
+    pass
+
+
+class FileRecognizerEdge(FileRecognizerBase):
     pass
 
 
@@ -346,3 +359,7 @@ class PageRecognizerIE(PageRecognizerBase):
             anchor = href[len(self._basepath) :]
 
         return anchor
+
+
+class PageRecognizerEdge(PageRecognizerIE):
+    pass

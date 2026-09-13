@@ -6,12 +6,6 @@ from outwiker.gui.hotkey import HotKey
 
 
 class HotKeyTest(unittest.TestCase):
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     def testHotKey1(self):
         hotkey = HotKey("F1")
 
@@ -87,3 +81,27 @@ class HotKeyTest(unittest.TestCase):
         hotkey2 = HotKey("F1", ctrl=True, alt=True)
 
         self.assertTrue(hotkey1 != hotkey2)
+
+    def testHash_01(self):
+        hotkey1 = HotKey("F1")
+        hotkey2 = HotKey("F1")
+
+        self.assertEqual(hash(hotkey1), hash(hotkey2))
+
+    def testHash_02(self):
+        hotkey1 = HotKey("F1")
+        hotkey2 = HotKey("F1", ctrl=True)
+
+        self.assertNotEqual(hash(hotkey1), hash(hotkey2))
+
+    def testHash_03(self):
+        hotkey1 = HotKey("F1", ctrl=True, shift=True)
+        hotkey2 = HotKey("F1", ctrl=True, shift=True)
+
+        self.assertEqual(hash(hotkey1), hash(hotkey2))
+
+    def testHash_04(self):
+        hotkey1 = HotKey("F1")
+        hotkey2 = HotKey("F2")
+
+        self.assertNotEqual(hash(hotkey1), hash(hotkey2))

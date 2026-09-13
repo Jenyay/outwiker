@@ -198,15 +198,19 @@ class Windows(System):
         windll.ole32.CoTaskMemFree(p_path)
         return path
 
+    def _isEdgeEngineAvaible(self):
+        import wx.html2 as webview
+        return webview.WebView.IsBackendAvailable(webview.WebViewBackendEdge)
+
     def getHtmlRender(self, parent, application):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
 
             return HtmlRenderFake(parent, application)
         else:
+            from outwiker.gui.htmlrenderedge import HtmlRenderEdgeGeneral
             from outwiker.gui.htmlrenderie import HtmlRenderIEGeneral
-
-            return HtmlRenderIEGeneral(parent, application)
+            return HtmlRenderEdgeGeneral(parent, application) if self._isEdgeEngineAvaible() else HtmlRenderIEGeneral(parent, application)
 
     def getHtmlRenderForPage(self, parent, application):
         if wx.GetApp().use_fake_html_render:
@@ -214,9 +218,9 @@ class Windows(System):
 
             return HtmlRenderFake(parent, application)
         else:
+            from outwiker.gui.htmlrenderedge import HtmlRenderEdgeForPage
             from outwiker.gui.htmlrenderie import HtmlRenderIEForPage
-
-            return HtmlRenderIEForPage(parent, application)
+            return HtmlRenderEdgeForPage(parent, application) if self._isEdgeEngineAvaible() else HtmlRenderIEForPage(parent, application)
 
     def getHtmlRenderSearchController(self, searchPanel, htmlRender):
         from outwiker.gui.controls.htmlsearchpanelcontrollerwindows import (

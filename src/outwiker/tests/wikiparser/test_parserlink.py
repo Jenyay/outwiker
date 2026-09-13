@@ -5,6 +5,7 @@ import os
 import html
 import unittest
 from tempfile import mkdtemp
+from urllib.parse import quote
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
@@ -26,8 +27,9 @@ class ParserLinkTest(unittest.TestCase):
         )
         self.urlimage = "http://example.com/image.png"
 
-        self.pagelinks = ["Страница 1", "/Страница 1", "/Страница 2/Страница 3"]
-        self.pageComments = ["Страницо 1", "Страницо 1", "Страницо 3"]
+        self._invalid_page_links = ["Отсутствующая страница 1", "/Отсутствующая страница 1", "/Страница 2/Отсутствующая страница 3"]
+        self._page_links = ["Страница 2", "/Страница 2", "Страница 2/Страница 3", "/Страница 2/Страница 3"]
+        self.pageComments = ["Комментарий 1", "Комментарий 2", "Комментарий 3"]
 
         self._createWiki()
 
@@ -42,8 +44,9 @@ class ParserLinkTest(unittest.TestCase):
 
         factory = WikiPageFactory()
         factory.create(self.wikiroot, "Страница 2", [])
-        factory.create(self.wikiroot["Страница 2"], "Страница3", [])
+        factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 4", [])
+
         self.testPage = self.wikiroot["Страница 2"]
 
         files = [
@@ -132,7 +135,7 @@ class ParserLinkTest(unittest.TestCase):
 
     def testLink8(self):
         text = "[[\\t]]"
-        result = '<a class="ow-wiki ow-link-page" href="page://\\t">\\t</a>'
+        result = '<a class="ow-wiki ow-link-page ow-link-page-error" href="page://{link}">\\t</a>'.format(link=quote("\\t"))
 
         self.assertEqual(self.parser.toHtml(text), result)
 
@@ -232,14 +235,27 @@ class ParserLinkTest(unittest.TestCase):
 
         self.assertEqual(self.parser.toHtml(text), result)
 
-    def testPageLinks(self):
-        for link in self.pagelinks:
+    def testEmptyPageLinks(self):
+        for link in self._page_links:
             text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(link)
-            result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
-                link, link
+            expected = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+                quote(link), link
             )
 
-            self.assertEqual(self.parser.toHtml(text), result)
+            result = self.parser.toHtml(text)
+
+            self.assertEqual(result, expected)
+
+    def testEmptyInvalidPageLinks(self):
+        for link in self._invalid_page_links:
+            text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(link)
+            expected = 'бла-бла-бла \n<a class="ow-wiki ow-link-page ow-link-page-error" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+                quote(link), link
+            )
+
+            result = self.parser.toHtml(text)
+
+            self.assertEqual(result, expected)
 
     def testAnchor1(self):
         """
@@ -260,51 +276,67 @@ class ParserLinkTest(unittest.TestCase):
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testNoFormatLinks1(self):
-        for link in self.pagelinks:
+        for link in self._invalid_page_links:
             text = "бла-бла-бла \n[[{} | [='''ля-ля-ля'''=] ]] бла-бла-бла\nбла-бла-бла".format(
                 link
             )
-            result = "бла-бла-бла \n<a class=\"ow-wiki ow-link-page\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
-                link
+            result = "бла-бла-бла \n<a class=\"ow-wiki ow-link-page ow-link-page-error\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
+                quote(link)
             )
 
             self.assertEqual(self.parser.toHtml(text), result)
 
     def testNoFormatLinks2(self):
-        for link in self.pagelinks:
+        for link in self._invalid_page_links:
             text = "бла-бла-бла \n[[[='''ля-ля-ля'''=] -> {}]] бла-бла-бла\nбла-бла-бла".format(
                 link
             )
-            result = "бла-бла-бла \n<a class=\"ow-wiki ow-link-page\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
-                link
+            result = "бла-бла-бла \n<a class=\"ow-wiki ow-link-page ow-link-page-error\" href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
+                quote(link)
             )
 
             self.assertEqual(self.parser.toHtml(text), result)
 
-    def testPageCommentsLinks1(self):
-        for n in range(len(self.pagelinks)):
-            link = self.pagelinks[n]
-            comment = self.pageComments[n]
-
+    def testPageLinksWithPipeComment(self):
+        for link, comment in zip(self._page_links, self.pageComments):
             text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
                 link, comment
             )
             result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
-                link, comment
+                quote(link), comment
             )
 
             self.assertEqual(self.parser.toHtml(text), result)
 
-    def testPageCommentsLinks2(self):
-        for n in range(len(self.pagelinks)):
-            link = self.pagelinks[n]
-            comment = self.pageComments[n]
+    def testInvalidPageLinksWithPipeComment(self):
+        for link, comment in zip(self._invalid_page_links, self.pageComments):
+            text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
+                link, comment
+            )
+            result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page ow-link-page-error" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+                quote(link), comment
+            )
 
+            self.assertEqual(self.parser.toHtml(text), result)
+
+    def testPageLinksWithArrowComment(self):
+        for link, comment in zip(self._page_links, self.pageComments):
             text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
                 comment, link
             )
             result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
-                link, comment
+                quote(link), comment
+            )
+
+            self.assertEqual(self.parser.toHtml(text), result)
+
+    def testInvalidPageLinksWithArrowComment(self):
+        for link, comment in zip(self._invalid_page_links, self.pageComments):
+            text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
+                comment, link
+            )
+            result = 'бла-бла-бла \n<a class="ow-wiki ow-link-page ow-link-page-error" href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+                quote(link), comment
             )
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -452,11 +484,13 @@ class ParserLinkTest(unittest.TestCase):
         text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, self.urlimage
         )
-        result = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><img class="ow-image" src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+        expected = 'бла-бла-бла \n<a class="ow-wiki" href="{}"><img class="ow-image" src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, self.urlimage
         )
 
-        self.assertEqual(self.parser.toHtml(text), result)
+        result = self.parser.toHtml(text)
+
+        self.assertEqual(result, expected, result)
 
     def testLinkUnderline1(self):
         comment = "Ссылко"
@@ -1149,10 +1183,28 @@ class ParserLinkTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
 
+    def testPageProtocolLinkQuotes(self):
+        uid = "пример-страницы"
+        self.testPage.setUid(uid)
+        text = f"бла-бла-бла [[page://{uid}]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{quote(uid)}">{self.testPage.display_title}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
     def testPageProtocolLinkAnchor(self):
         uid = self.testPage.getUid()
         text = f"бла-бла-бла [[page://{uid}/#anchor]] бла-бла-бла"
         expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{uid}/#anchor">{self.testPage.display_title}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testPageProtocolLinkWithAnchorQuoted(self):
+        uid = "пример-страницы"
+        self.testPage.setUid(uid)
+        text = f"бла-бла-бла [[page://{uid}/#anchor]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{quote(uid)}/#anchor">{self.testPage.display_title}</a> бла-бла-бла'
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
@@ -1164,3 +1216,104 @@ class ParserLinkTest(unittest.TestCase):
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
+
+    def testPageProtocolLinkInvalidUidQuotes(self):
+        uid = "неправильный-uid"
+        text = f"бла-бла-бла [[page://{uid}]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page ow-link-page-error" href="page://{quote(uid)}">page://{uid}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testPageProtocolLinkQuotesArrowComment(self):
+        comment = "Комментарий к ссылке"
+        uid = "пример-страницы"
+        self.testPage.setUid(uid)
+        text = f"бла-бла-бла [[{comment} -> page://{uid}]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{quote(uid)}">{comment}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testPageProtocolInvalidLinkQuotesArrowComment(self):
+        comment = "Комментарий к ссылке"
+        uid = "неправильный-uid"
+        text = f"бла-бла-бла [[{comment} -> page://{uid}]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page ow-link-page-error" href="page://{quote(uid)}">{comment}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testPageProtocolLinkWithAnchorQuotesArrowComment(self):
+        comment = "Комментарий к ссылке"
+        uid = "пример-страницы"
+        self.testPage.setUid(uid)
+        text = f"бла-бла-бла [[{comment} -> page://{uid}/#anchor]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{quote(uid)}/#anchor">{comment}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testPageProtocolLinkQuotesPipeComment(self):
+        comment = "Комментарий к ссылке"
+        uid = "пример-страницы"
+        self.testPage.setUid(uid)
+        text = f"бла-бла-бла [[page://{uid} | {comment}]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{quote(uid)}">{comment}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testPageProtocolInvalidLinkQuotesPipeComment(self):
+        comment = "Комментарий к ссылке"
+        uid = "неправильный-uid"
+        text = f"бла-бла-бла [[page://{uid} | {comment}]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page ow-link-page-error" href="page://{quote(uid)}">{comment}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testPageProtocolLinkWithAnchorQuotesPipeComment(self):
+        comment = "Комментарий к ссылке"
+        uid = "пример-страницы"
+        self.testPage.setUid(uid)
+        text = f"бла-бла-бла [[page://{uid}/#anchor | {comment}]] бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page" href="page://{quote(uid)}/#anchor">{comment}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testNonLatinURL(self):
+        url = "https://пример.рф"
+        text = f"бла-бла-бла \n[[{url}]] бла-бла-бла\nбла-бла-бла"
+        expected = f'бла-бла-бла \n<a class="ow-wiki" href="{url}">{url}</a> бла-бла-бла\nбла-бла-бла'
+
+        self.assertEqual(self.parser.toHtml(text), expected)
+
+    def testNonLatinURLArrowSpaces(self):
+        url = "https://пример.рф"
+        comment = "Комментарий"
+        text = f"бла-бла-бла \n[[{comment} -> {url}]] бла-бла-бла\nбла-бла-бла"
+        expected = f'бла-бла-бла \n<a class="ow-wiki" href="{url}">{comment}</a> бла-бла-бла\nбла-бла-бла'
+        self.assertEqual(self.parser.toHtml(text), expected)
+
+    def testNonLatinURLArrowNoSpaces(self):
+        url = "https://пример.рф"
+        comment = "Комментарий"
+        text = f"бла-бла-бла \n[[{comment}->{url}]] бла-бла-бла\nбла-бла-бла"
+        expected = f'бла-бла-бла \n<a class="ow-wiki" href="{url}">{comment}</a> бла-бла-бла\nбла-бла-бла'
+        self.assertEqual(self.parser.toHtml(text), expected)
+
+    def testNonLatinURLPipeSpaces(self):
+        url = "https://пример.рф"
+        comment = "Комментарий"
+        text = f"бла-бла-бла \n[[{url} | {comment}]] бла-бла-бла\nбла-бла-бла"
+        expected = f'бла-бла-бла \n<a class="ow-wiki" href="{url}">{comment}</a> бла-бла-бла\nбла-бла-бла'
+        self.assertEqual(self.parser.toHtml(text), expected)
+
+    def testNonLatinURLPipeNoSpaces(self):
+        url = "https://пример.рф"
+        comment = "Комментарий"
+        text = f"бла-бла-бла \n[[{url}|{comment}]] бла-бла-бла\nбла-бла-бла"
+        expected = f'бла-бла-бла \n<a class="ow-wiki" href="{url}">{comment}</a> бла-бла-бла\nбла-бла-бла'
+        self.assertEqual(self.parser.toHtml(text), expected)
