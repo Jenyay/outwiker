@@ -28,37 +28,37 @@
   <update_contact>jenyay.ilin@gmail.com</update_contact>
   <screenshots>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_01.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.1_linux_en_01.png</image>
       <caption>The main application window with a formatted text note in view mode.</caption>
       <caption xml:lang="ru">Главное окно программы с заметкой, содержащей форматированный текст, в режиме просмотра.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_02.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.1_linux_en_02.png</image>
       <caption>The main application window with a formatted text note in wiki mode.</caption>
       <caption xml:lang="ru">Главное окно программы с заметкой, содержащей форматированный текст, в режиме вики.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_03.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.1_linux_en_03.png</image>
       <caption>Note properties dialog.</caption>
       <caption xml:lang="ru">Диалог свойств заметки.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_04.png</image>
-      <caption>The note tree opened as read-only. A note containing attached images is opened in view mode.</caption>
-      <caption xml:lang="ru">Дерево заметок открыто только для чтения. Заметка, содержащая вложенные изображения, открыта в режиме просмотра.</caption>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.1_linux_en_04.png</image>
+      <caption>A note containing attached images is opened in view mode.</caption>
+      <caption xml:lang="ru">Заметка, содержащая вложенные изображения, открыта в режиме просмотра.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_05.png</image>
-      <caption>The note tree opened as read-only. A note containing attached images is opened in wiki mode.</caption>
-      <caption xml:lang="ru">Дерево заметок открыто только для чтения. Заметка, содержащая вложенные изображения, открыта в режиме вики.</caption>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.1_linux_en_05.png</image>
+      <caption>A note containing attached images is opened in wiki mode.</caption>
+      <caption xml:lang="ru">Заметка, содержащая вложенные изображения, открыта в режиме вики.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_06.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.1_linux_en_06.png</image>
       <caption>Note icon selection dialog.</caption>
       <caption xml:lang="ru">Диалог выбора значка для заметки.</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.0_linux_en_07.png</image>
+      <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_4.1_linux_en_07.png</image>
       <caption>Search notes by tag dialog.</caption>
       <caption xml:lang="ru">Диалог поиска заметок по метке.</caption>
     </screenshot>
