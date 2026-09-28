@@ -1,48 +1,26 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-    <version number="4.0.0" date="2026-06-06">
+    <version number="4.1.0" date="2026-09-26">
         <changes>
-            <change>New note tree.</change>
-            <change>Added the ability to reorder notes using the mouse.</change>
-            <change>Added the ability to change note colors in the note tree.</change>
-            <change>Added the ability to change the font size in the note tree.</change>
-            <change>Added the ability to zoom the note tree using the mouse wheel.</change>
-            <change>Added an additional icon in the note tree indicating that a note is bookmarked.</change>
-            <change>Added an additional icon in the note tree indicating that a note is opened in read-only mode.</change>
-            <change>Added a new RecentEditedPages plugin.</change>
-            <change>Added new built-in bookmark icons for notes.</change>
-            <change>New interface for selecting tags for a page.</change>
-            <change>New tabs that can be arranged in multiple rows.</change>
-            <change>Added appearance settings for tabs.</change>
-            <change>Added the ability to change the icon size in the note tree.</change>
-            <change>Added numerous appearance settings for the interface.</change>
-            <change>Added a setting to change the button size on toolbars.</change>
-            <change>Added new text styles for wiki pages.</change>
-            <change>Added handling of links like page://... and [[page://...]] on other pages for wiki pages.</change>
-            <change>Added new vector icons for notes.</change>
-            <change>New API version for plugins.</change>
+            <change>Added the ability to immediately open a new note in a new tab when creating it.</change>
+            <change>Added the ability to create a note based on the selected text in an open note.</change>
+            <change>Added scroll position saving in the view mode.</change>
+            <change>Added note sorting by creation or modification date.</change>
+            <change>Added tag cloud color settings.</change>
+            <change>Fixed application startup and operation in window managers running via Wayland on Linux.</change>
+            <change>Fixed numerous interface labels.</change>
+            <change>Bug fixes and interface improvements.</change>
         </changes>
 
         <changes lang="ru">
-            <change>Новое дерево заметок.</change>
-            <change>Добавлена возможность изменения порядка следования заметок с помощью мыши.</change>
-            <change>Добавлена возможность изменения цвета заметок в дереве заметок.</change>
-            <change>Добавлена возможность изменения размера шрифта в дереве заметок.</change>
-            <change>Добавлена возможность масштабирования дерева заметок с помощью колесика мыши.</change>
-            <change>В дереве заметок добавлен дополнительный значок, обозначающий, что заметка добавлена в закладки.</change>
-            <change>В дереве заметок добавлен дополнительный значок, обозначающий, что заметка открыта в режиме только для чтения.</change>
-            <change>Добавлен новый плагин RecentEditedPages.</change>
-            <change>Добавлены новые встроенные значки с закладками для заметок.</change>
-            <change>Новый интерфейс выбора меток для страницы.</change>
-            <change>Новые вкладки, которые могут располагаться в несколько рядов.</change>
-            <change>Добавлены настройки внешнего вида вкладок.</change>
-            <change>Добавлена возможность изменения размера значков в дереве заметок.</change>
-            <change>Добавлено множество настроек внешнего вида интерфейса.</change>
-            <change>Добавлена настройка для изменения размера кнопок на панелях инструментов.</change>
-            <change>Добавлены новые стили текста для викистраниц.</change>
-            <change>Для викистраниц добавлена обработка ссылок вида page://... и [[page://...]] на другие страницы.</change>
-            <change>Добавлена новые векторные значки для заметок.</change>
-            <change>Новая версия API для плагинов.</change>
+            <change>Добавлена возможность при создании новой заметки сразу открывать ее в новой вкладке.</change>
+            <change>Добавлена возможность создания заметки на основе выделенного текста в открытой заметке.</change>
+            <change>Добавлена возможность сортировки заметок по дате создания или изменения.</change>
+            <change>Добавлена настройка цветов облака тегов.</change>
+            <change>Добавлено сохранение положения прокрутки в режиме просмотра.</change>
+            <change>Исправлен запуск и работа приложения в оконных менеджерах, работающих через Wayland в Linux.</change>
+            <change>Многочисленные исправления надписей в интерфейсе приложения.</change>
+            <change>Исправления ошибок и улучшения в интерфейсе приложения.</change>
         </changes>
     </version>
 </versions>
