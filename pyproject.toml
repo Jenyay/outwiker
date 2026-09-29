@@ -53,8 +53,7 @@ Repository = "https://github.com/Jenyay/outwiker"
 
 [project.optional-dependencies]
 gui = [ 
-    #"wxPython==4.2.2" 
-    "wxPython==4.2.5",
+    "wxPython==4.3.1",
 ]
 
 [project.scripts]
