@@ -62,7 +62,7 @@ jobs:
           uv pip install https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp312-cp312-linux_x86_64.whl
 
       - name: Sync dependencies
-        run: uv sync --dev --extra gui
+        run: uv sync --dev --extra gui-ubuntu2404
 
       - name: Verify wxPython
         run: uv pip show wxPython && uv run python -c "import wx; print(wx.VERSION)"
