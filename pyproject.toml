@@ -77,7 +77,7 @@ dev = [
 
 [tool.uv]
 default-groups = ["dev"]
-no-binary-package = ["wxPython"]
+#no-binary-package = ["wxPython"]
 
 [tool.uv.sources]
 wxPython = [
