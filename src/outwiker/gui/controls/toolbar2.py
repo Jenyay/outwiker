@@ -3,6 +3,86 @@
 import wx
 
 
+class MyWrapSizer(wx.Sizer):
+    """
+    Custom sizer that places its items from left to right and moves an item
+    to the next line if it does not fit into the current line.
+
+    Standard wx.WrapSizer is broken in wxPython 4.3.1
+    """
+    def __init__(self) -> None:
+        super().__init__()
+        self._items_size: list[list[tuple[wx.SizerItem, wx.Size]]] = []
+
+    def CalcMin(self) -> wx.Size:
+        """
+        Calculate the minimum size of the sizer for the current width of the
+        containing window.
+        """
+        min_width = self._getAvailableWidth()
+        bottom = 0
+
+        self._items_size = self._wrapItems(min_width)
+        for items in self._items_size:
+            for item, _ in items:
+                bottom = max(bottom, item.Rect.Bottom)
+
+        return wx.Size(min_width, bottom)
+
+    def RepositionChildren(self, minSize: wx.Size) -> None:
+        """
+        Place the items line by line.
+        """
+        y = 0
+        for items in self._items_size:
+            x = 0
+            row_height = 0
+
+            for item, item_size in items:
+                item.SetDimension(wx.Point(x, y), item_size)
+                x += item_size.width
+                row_height = max(row_height, item_size.height)
+
+            y += row_height
+
+    def _getAvailableWidth(self) -> int:
+        """
+        Return the width that is available to place the items.
+        """
+        window = self.GetContainingWindow()
+        return window.GetClientSize().width if window is not None else 0
+
+    def _wrapItems(self, width: int) -> list[list[tuple[wx.SizerItem, wx.Size]]]:
+        """
+        Split the items into lines. Return a list of tuples
+        (list of pairs (item, item size), total width of the line).
+
+        If the width is not positive, all the items are placed into one line.
+        """
+        rows: list[list[tuple[wx.SizerItem, wx.Size]]] = []
+        row: list[tuple[wx.SizerItem, wx.Size]] = []
+        row_width = 0
+
+        for item in self.GetChildren():
+            if not item.IsShown():
+                continue
+
+            item_size = item.CalcMin()
+
+            if row and width > 0 and row_width + item_size.width > width:
+                rows.append(row)
+                row = []
+                row_width = 0
+
+            row.append((item, item_size))
+            row_width += item_size.width
+
+        if row:
+            rows.append(row)
+
+        return rows
+
+
 class ToolBar2(wx.Panel):
     def __init__(self, parent, order=0):
         """
@@ -33,16 +113,16 @@ class ToolBar2(wx.Panel):
         label - tool tip for the button.
         bitmap - wx.Bitmap or file name.
         """
-        self._setToolbarUpdated()
         bmp = wx.Bitmap(bitmap)
         new_id = self._toolbar.AddTool(
             button_id, label, bmp, label, wx.ITEM_CHECK
         ).GetId()
+        self._setToolbarUpdated()
         return new_id
 
     def AddSeparator(self):
-        self._setToolbarUpdated()
         new_id = self._toolbar.AddSeparator().GetId()
+        self._setToolbarUpdated()
         return new_id
 
     def _setToolbarUpdated(self):
@@ -107,7 +187,7 @@ class ToolBar2Container(wx.Panel):
         self._isUpdated = False
         self._oldClientSize = self.GetClientSize()
 
-        self._mainSizer = wx.WrapSizer()
+        self._mainSizer = MyWrapSizer()
         self.SetSizer(self._mainSizer)
         self.Bind(wx.EVT_SIZE, handler=self._onSize)
 
