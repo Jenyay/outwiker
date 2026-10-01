@@ -189,6 +189,7 @@ class ToolBar2Container(wx.Panel):
 
         self._mainSizer = MyWrapSizer()
         self.SetSizer(self._mainSizer)
+        self.Bind(wx.EVT_SIZE, handler=self._onSize)
 
     def __getitem__(self, toolbar_id):
         return self._toolbars[toolbar_id]
@@ -252,4 +253,12 @@ class ToolBar2Container(wx.Panel):
     def _onIdle(self, event):
         self._isUpdated = False
         self.Unbind(wx.EVT_IDLE, handler=self._onIdle)
-        self.Layout()
+        self.GetParent().Layout()
+
+    def _onSize(self, event):
+        newClientSize = self.GetClientSize()
+        if newClientSize != self._oldClientSize:
+            self._oldClientSize = newClientSize
+            self.setToolbarsUpdated()
+
+        event.Skip()
