@@ -26,7 +26,12 @@ class FormatCtrl(wx.Panel):
         self._menuItemsId = {}
 
         self.formatCtrl = wx.TextCtrl(self, -1, defaultFormat)
+
+        button_height = self.formatCtrl.GetSize().height
+        button_width = button_height
+
         self.hintBtn = wx.BitmapButton(self, wx.ID_ANY, hintButtonBitmap)
+        self.hintBtn.SetMinSize(wx.Size(button_width, button_height))
 
         self.__createMenu()
         self.__layout()
@@ -62,13 +67,7 @@ class FormatCtrl(wx.Panel):
     def __layout(self):
         mainSizer = wx.FlexGridSizer(cols=2)
         mainSizer.AddGrowableCol(0)
-        mainSizer.Add(
-            self.formatCtrl,
-            flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-            border=2,
-        )
-        mainSizer.Add(
-            self.hintBtn, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, border=0
-        )
+        mainSizer.Add(self.formatCtrl, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        mainSizer.Add(self.hintBtn, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
 
         self.SetSizer(mainSizer)

@@ -745,7 +745,7 @@ class TagsCloud(wx.Panel):
         self._tags_panel.SetBackgroundStyle(wx.BG_STYLE_PAINT)
 
         self._search_ctrl = wx.SearchCtrl(self)
-        icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.TOOLBAR_ICON_SIZE)
         tagBitmap = readImage(getBuiltinImagePath("tag.svg"), icon_size, icon_size)
         self._active_tags_flag = wx.BitmapToggleButton(self, label=tagBitmap)
         self._active_tags_flag.SetToolTip(_("Applied tags only"))

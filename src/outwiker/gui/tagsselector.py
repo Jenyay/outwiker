@@ -103,9 +103,13 @@ class TagsSelector(wx.Panel):
 
         self.tagsTextCtrl = wx.TextCtrl(self, -1, "")
 
-        icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        button_height = self.tagsTextCtrl.GetSize().height
+        button_width = button_height
+        icon_size = button_height - self._theme.get(Theme.SECTION_GENERAL, Theme.BITMAP_BUTTON_PADDING) * 2
+
         tagBitmap = readImage(getBuiltinImagePath("tag.svg"), icon_size, icon_size)
         self.tagsButton = wx.BitmapButton(self, bitmap=tagBitmap)
+        self.tagsButton.SetMinSize(wx.Size(button_width, button_height))
 
         self._tagsCloudPopup: TagsPopupWindow = TagsPopupWindow(
             self, self._theme, enable_active_tags_filter=enable_active_tags_filter
@@ -141,7 +145,7 @@ class TagsSelector(wx.Panel):
         mainSizer = wx.FlexGridSizer(cols=2)
         mainSizer.AddGrowableCol(0)
         mainSizer.Add(self.tagsTextCtrl, flag=wx.EXPAND)
-        mainSizer.Add(self.tagsButton, flag=wx.ALIGN_RIGHT)
+        mainSizer.Add(self.tagsButton, flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
 
         self.SetSizer(mainSizer)
         self.Layout()

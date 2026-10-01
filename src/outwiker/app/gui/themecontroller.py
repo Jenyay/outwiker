@@ -70,7 +70,7 @@ class ThemeController:
         if self._first_load:
             self._theme.set(
                 Theme.SECTION_GENERAL,
-                Theme.BUTTONS_ICON_SIZE,
+                Theme.TOOLBAR_ICON_SIZE,
                 mainWindowConfig.buttonsIconSize.value,
             )
 

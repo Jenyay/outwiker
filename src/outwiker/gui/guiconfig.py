@@ -826,8 +826,8 @@ class MainWindowConfig:
     MAIN_PANES_TEXT_COLOR_PARAM = "main_panes_text_color"
     MAIN_PANES_TEXT_COLOR_DEFAULT = ""
 
-    BUTTONS_ICON_SIZE_PARAM = "ButtonsIconSize"
-    BUTTONS_ICON_SIZE_DEFAULT = 16
+    TOOLBAR_ICON_SIZE_PARAM = "ButtonsIconSize"
+    TOOLBAR_ICON_SIZE_DEFAULT = 16
 
     def __init__(self, config):
         self.config = config
@@ -912,8 +912,8 @@ class MainWindowConfig:
         self.buttonsIconSize = IntegerOption(
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
-            self.BUTTONS_ICON_SIZE_PARAM,
-            self.BUTTONS_ICON_SIZE_DEFAULT,
+            self.TOOLBAR_ICON_SIZE_PARAM,
+            self.TOOLBAR_ICON_SIZE_DEFAULT,
         )
 
 

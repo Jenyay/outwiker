@@ -194,7 +194,7 @@ class PrefController:
         )
 
     def _createIconsetPage(self):
-        iconsetPage = IconsetPanel(self._dialog.treeBook)
+        iconsetPage = IconsetPanel(self._dialog.treeBook, self._application.theme)
         self._dialog.treeBook.AddPage(
             iconsetPage,
             _("Custom icons"),

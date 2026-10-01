@@ -9,7 +9,7 @@ PopupButtonMenuClick, EVT_POPUP_BUTTON_MENU_CLICK = NewEvent()
 
 class PopupButton(wx.Panel):
     def __init__(self, parent, bitmap):
-        super(PopupButton, self).__init__(parent)
+        super().__init__(parent)
         # Key - menu item's id
         # Value - user's object
         self._items = {}

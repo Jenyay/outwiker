@@ -68,6 +68,8 @@ class GeneralPanel(wx.Panel):
         self._POPUP_WIDTH = 500
         self._POPUP_HEIGHT = 350
 
+        self._icon_size: int | None = None
+
         self.__createGeneralControls()
         self.__layout()
 
@@ -80,7 +82,7 @@ class GeneralPanel(wx.Panel):
         titleAntIconSizer.AddGrowableCol(0)
 
         titleAntIconSizer.Add(self.titleTextCtrl, flag=wx.EXPAND)
-        titleAntIconSizer.Add(self.iconBtn, flag=wx.ALIGN_RIGHT)
+        titleAntIconSizer.Add(self.iconBtn, flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
         generalSizer.Add(self.titleLabel, flag=wx.ALIGN_CENTER_VERTICAL)
         generalSizer.Add(titleAntIconSizer, flag=wx.EXPAND)
 
@@ -113,8 +115,14 @@ class GeneralPanel(wx.Panel):
         self.titleTextCtrl = wx.TextCtrl(self, value="")
 
         # Page icon
+        button_height = self.titleTextCtrl.GetSize().height
+        button_width = button_height
+        self._icon_size = button_height - self._theme.get(Theme.SECTION_GENERAL, Theme.BITMAP_BUTTON_PADDING) * 2
+
         self.iconBtn = wx.BitmapButton(self)
         self.iconBtn.SetToolTip(_("Page icon"))
+        self.iconBtn.SetMinSize(wx.Size(button_width, button_height))
+
         self.iconsPopup = IconsListPopup(self, self._theme)
         self.iconsPopup.SetSize((self._POPUP_WIDTH, self._POPUP_HEIGHT))
 
@@ -164,8 +172,9 @@ class GeneralPanel(wx.Panel):
         self.titleTextCtrl.SetValue(value)
 
     def setPageIcon(self, iconFileName: str) -> None:
-        icon_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
-        bitmap = readImage(iconFileName, icon_size, icon_size)
+        assert self._icon_size is not None
+
+        bitmap = readImage(iconFileName, self._icon_size, self._icon_size)
         self.iconBtn.SetBitmapLabel(bitmap)
         # Need in Windows
         self.Layout()

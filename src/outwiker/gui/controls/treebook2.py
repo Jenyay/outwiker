@@ -13,7 +13,7 @@ class Treebook2(wx.SplitterWindow):
         self._theme = theme
 
         self._icon_size = self._theme.get(
-            Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE
+            Theme.SECTION_GENERAL, Theme.TOOLBAR_ICON_SIZE
         )
         self._default_icon = defaultIcon
         self._iconsCache = ImageListCache(

@@ -102,6 +102,9 @@ class SearchReplacePanel(wx.Panel):
         # Кнопка "Заменить все"
         self._replaceAllBtn = wx.Button(self, -1, _("Replace All"))
 
+        button_height = self._nextSearchBtn.GetSize().height
+        button_width = button_height
+
         self._closeBtn = wx.BitmapButton(
             self,
             -1,
@@ -109,6 +112,7 @@ class SearchReplacePanel(wx.Panel):
                 getBuiltinImagePath("close.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
             ),
         )
+        self._closeBtn.SetMinSize(wx.Size(button_width, button_height))
 
         self._layout()
 

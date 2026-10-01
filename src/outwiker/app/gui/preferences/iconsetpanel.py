@@ -1,5 +1,6 @@
 import os
 
+from outwiker.gui.controls.treebook2 import Treebook2
 from outwiker.gui.images import readImage
 
 import wx
@@ -9,19 +10,25 @@ from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.defines import (
     ICONS_WIDTH,
     ICONS_HEIGHT,
-    BUTTON_ICON_WIDTH,
-    BUTTON_ICON_HEIGHT,
 )
 from outwiker.gui.dialogs.messagebox import MessageBox
 from outwiker.gui.controls.iconlistctrl import IconListCtrl
 from outwiker.gui.iconscollection import IconsCollection, DuplicateGroupError
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.gui.preferences.prefpanel import BasePrefPanel
+from outwiker.gui.theme import Theme
 
 
 class IconsetPanel(BasePrefPanel):
-    def __init__(self, parent):
+    def __init__(self, parent: Treebook2, theme: Theme):
         super().__init__(parent)
+        self._theme = theme
+        self._button_height = wx.Button.GetDefaultSize().height
+        self._button_width = self._button_height
+        self._icon_size = (
+            self._button_height
+            - self._theme.get(Theme.SECTION_GENERAL, Theme.BITMAP_BUTTON_PADDING) * 2
+        )
 
         self._default_group_cover = getBuiltinImagePath("icons_cover_default.svg")
 
@@ -61,9 +68,10 @@ class IconsetPanel(BasePrefPanel):
         self.addGroupBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
-                getBuiltinImagePath("add.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+                getBuiltinImagePath("add.svg"), self._icon_size, self._icon_size
             ),
         )
+        self.addGroupBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
         self.addGroupBtn.SetToolTip(_("Add new group"))
         self.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self.__onAddGroup)
 
@@ -71,9 +79,10 @@ class IconsetPanel(BasePrefPanel):
         self.removeGroupBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
-                getBuiltinImagePath("remove.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+                getBuiltinImagePath("remove.svg"), self._icon_size, self._icon_size
             ),
         )
+        self.removeGroupBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
         self.removeGroupBtn.SetToolTip(_("Remove group"))
         self.removeGroupBtn.Bind(wx.EVT_BUTTON, handler=self.__onRemoveGroup)
 
@@ -81,9 +90,10 @@ class IconsetPanel(BasePrefPanel):
         self.renameGroupBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
-                getBuiltinImagePath("pencil.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+                getBuiltinImagePath("pencil.svg"), self._icon_size, self._icon_size
             ),
         )
+        self.renameGroupBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
         self.renameGroupBtn.SetToolTip(_("Rename group"))
         self.renameGroupBtn.Bind(wx.EVT_BUTTON, handler=self.__onRenameGroup)
 
@@ -110,9 +120,10 @@ class IconsetPanel(BasePrefPanel):
         self.addIconsBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
-                getBuiltinImagePath("add.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+                getBuiltinImagePath("add.svg"), self._icon_size, self._icon_size
             ),
         )
+        self.addIconsBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
         self.addIconsBtn.SetToolTip(_("Add icons"))
         self.addIconsBtn.Bind(wx.EVT_BUTTON, handler=self.__onAddIcons)
 
@@ -120,9 +131,10 @@ class IconsetPanel(BasePrefPanel):
         self.removeIconsBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
-                getBuiltinImagePath("remove.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+                getBuiltinImagePath("remove.svg"), self._icon_size, self._icon_size
             ),
         )
+        self.removeIconsBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
         self.removeIconsBtn.SetToolTip(_("Remove selected icons"))
         self.removeIconsBtn.Bind(wx.EVT_BUTTON, handler=self.__onRemoveIcons)
 
@@ -131,10 +143,11 @@ class IconsetPanel(BasePrefPanel):
             self,
             bitmap=readImage(
                 getBuiltinImagePath("folder_picture.svg"),
-                BUTTON_ICON_WIDTH,
-                BUTTON_ICON_HEIGHT,
+                self._icon_size,
+                self._icon_size,
             ),
         )
+        self.setCoverBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
         self.setCoverBtn.SetToolTip(_("Set icon as group cover"))
         self.setCoverBtn.Bind(wx.EVT_BUTTON, handler=self.__onSetCover)
 

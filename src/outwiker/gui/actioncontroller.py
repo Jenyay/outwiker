@@ -383,7 +383,7 @@ class ActionController:
 
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
-        image_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        image_size = self._theme.get(Theme.SECTION_GENERAL, Theme.TOOLBAR_ICON_SIZE)
         bitmap = readImage(image, image_size, image_size)
         if not bitmap.IsOk():
             logger.error("Invalid bitmap for %s", image)
@@ -439,7 +439,7 @@ class ActionController:
 
         assert strid in self._actionsInfo
         title = self._getToolbarItemTitle(strid)
-        image_size = self._theme.get(Theme.SECTION_GENERAL, Theme.BUTTONS_ICON_SIZE)
+        image_size = self._theme.get(Theme.SECTION_GENERAL, Theme.TOOLBAR_ICON_SIZE)
         bitmap = readImage(image, image_size, image_size)
 
         if issubclass(type(toolbar), ToolBar2):
