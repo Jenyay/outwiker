@@ -2,9 +2,10 @@
 
 import wx
 
-from outwiker.api.gui.actions import BaseAction
+from outwiker.api.core import Application
 from outwiker.api.core.tree import testreadonly
 from outwiker.api.core.exceptions import ReadonlyException
+from outwiker.api.gui.actions import BaseAction
 
 from .i18n import get_
 from .sourceconfig import SourceConfig
@@ -19,7 +20,7 @@ class InsertSourceAction(BaseAction):
 
     stringId = "Source_InsertSource"
 
-    def __init__(self, application):
+    def __init__(self, application: Application):
         self._application = application
 
         global _
@@ -48,7 +49,7 @@ class InsertSourceAction(BaseAction):
 
         config = SourceConfig(self._application.config)
 
-        with InsertDialog(self._application.mainWindow) as dlg:
+        with InsertDialog(self._application.mainWindow, self._application.theme) as dlg:
             dlgController = InsertDialogController(
                 self._application.selectedPage, dlg, config
             )

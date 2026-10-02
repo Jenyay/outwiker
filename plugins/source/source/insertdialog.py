@@ -5,6 +5,7 @@ import wx
 from outwiker.api.gui.dialogs import TestedDialog
 from outwiker.api.gui.controls import FilesTreeComboBox
 from outwiker.api.gui.images import readImage
+from outwiker.api.gui.controls import Theme
 
 from .i18n import get_
 from .misc import getImagePath
@@ -15,7 +16,7 @@ class InsertDialog(TestedDialog):
     Dialog for inserting (:source:) command
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent: wx.Window, theme: Theme):
         global _
         _ = get_()
 
@@ -25,8 +26,7 @@ class InsertDialog(TestedDialog):
             title=_("Source code"),
         )
 
-        self.ICONS_WIDTH = 16
-        self.ICONS_HEIGHT = 16
+        self._theme = theme
 
         # Indent size
         self._indent = 50
@@ -242,29 +242,30 @@ class InsertDialog(TestedDialog):
             border=2,
         )
 
-        # Button for attaching a new file
-        attachImage = readImage(
-            getImagePath("attach.svg"), self.ICONS_WIDTH, self.ICONS_HEIGHT
-        )
-        self.attachButton = wx.BitmapButton(parent, -1, attachImage)
-        self.attachButton.SetToolTip(_("Attach new files"))
-
         # List for selecting attached files
         self.attachmentComboBox = FilesTreeComboBox(parent)
+
+        # Button for attaching a new file
+        button_height = wx.Button.GetDefaultSize().height
+        button_width = button_height
+        icon_size = button_height - 2 * self._theme.get(Theme.SECTION_GENERAL, Theme.BITMAP_BUTTON_PADDING)
+
+        attachImage = readImage(getImagePath("attach.svg"), icon_size, icon_size)
+        self.attachButton = wx.BitmapButton(parent, -1, attachImage)
+        self.attachButton.SetToolTip(_("Attach new files"))
+        self.attachButton.SetMinSize(wx.Size(button_width, button_height))
 
         fileSizer = wx.FlexGridSizer(cols=2)
         fileSizer.AddGrowableCol(0)
 
         fileSizer.Add(
             self.attachmentComboBox,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-            border=2,
+            flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
         )
 
         fileSizer.Add(
             self.attachButton,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
-            border=2,
+            flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
         )
 
         # File encoding selection
