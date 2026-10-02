@@ -2,10 +2,11 @@
 
 import wx
 
+from outwiker.api.core import Application
 from outwiker.api.gui.actions import BaseAction
+from outwiker.api.gui.controls import Theme
 from outwiker.api.gui.dialogs import TestedDialog, MessageBox
 from outwiker.api.gui.images import readImage
-from outwiker.api.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 
 from .i18n import get_
 from .sessionstorage import SessionStorage
@@ -49,18 +50,14 @@ class EditSessionsAction(BaseAction):
 
 
 class EditSessionsDialog(TestedDialog):
-    def __init__(self, parent, application, guicreator):
-        """
-        parent - родительское окно
-        application - экземпляр класса Application
-        guicreator - экземпляр класса GuiCreator
-        """
-        super(EditSessionsDialog, self).__init__(
+    def __init__(self, parent: wx.Window, application: Application, guicreator):
+        super().__init__(
             parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         )
 
         self._application = application
         self._guicreator = guicreator
+        self._theme = self._application.theme
 
         self._storage = SessionStorage(self._application.config)
 
@@ -143,29 +140,35 @@ class EditSessionsDialog(TestedDialog):
 
         mainButtonsSizer = wx.BoxSizer(wx.VERTICAL)
 
+        button_height = wx.Button.GetDefaultSize().height
+        button_width = button_height
+        icon_size = button_height - 2 * self._theme.get(Theme.SECTION_GENERAL, Theme.BITMAP_BUTTON_PADDING)
+
         self._renameButton = wx.BitmapButton(
             self,
             wx.ID_ANY,
             readImage(
-                getImagePath("rename.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+                getImagePath("rename.svg"), icon_size, icon_size
             ),
         )
         self._renameButton.SetToolTip(_("Rename session..."))
+        self._renameButton.SetMinSize(wx.Size(button_width, button_height))
 
         self._removeButton = wx.BitmapButton(
             self,
             wx.ID_ANY,
             readImage(
-                getImagePath("remove.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+                getImagePath("remove.svg"), icon_size, icon_size
             ),
         )
         self._removeButton.SetToolTip(_("Remove session..."))
+        self._removeButton.SetMinSize(wx.Size(button_width, button_height))
 
-        mainButtonsSizer.Add(self._renameButton, 0, wx.ALL, border=2)
-        mainButtonsSizer.Add(self._removeButton, 0, wx.ALL, border=2)
+        mainButtonsSizer.Add(self._renameButton, 0, wx.RIGHT | wx.BOTTOM, border=2)
+        mainButtonsSizer.Add(self._removeButton, 0, wx.TOP | wx.RIGHT | wx.BOTTOM, border=2)
 
-        actionsSizer.Add(self._actionsList, 1, wx.EXPAND | wx.ALL, border=2)
-        actionsSizer.Add(mainButtonsSizer, 1, wx.ALL, border=2)
+        actionsSizer.Add(self._actionsList, 1, wx.EXPAND)
+        actionsSizer.Add(mainButtonsSizer)
 
         buttonsSizer = self.CreateButtonSizer(wx.OK)
         mainSizer.Add(actionsSizer, 1, wx.EXPAND | wx.ALL, border=2)
