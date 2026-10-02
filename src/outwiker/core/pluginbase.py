@@ -3,7 +3,7 @@
 import logging
 import os
 import sys
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 
 from outwiker.core.i18n import getLanguageFromConfig, loadLanguage
 
@@ -16,7 +16,7 @@ class Plugin(metaclass=ABCMeta):
     should be redefined in real class.
     """
 
-    def __init__(self, application):
+    def __init__(self, application: "outwiker.core.application.Application"):
         self._application = application
 
         self._pluginPath = os.path.dirname(
@@ -70,14 +70,16 @@ class Plugin(metaclass=ABCMeta):
     # Abstract properties and methods #
     ###################################
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def name(self):
         """
         The property should return the plugin's name
         """
         pass
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def description(self):
         """
         The property should return the plugin's description
