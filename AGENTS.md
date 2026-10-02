@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-- Language: Python >=3.8, <3.13
+- Language: Python >=3.12, <3.13
 - GUI Framework: wxPython
 - Dependency Manager: uv
 
@@ -24,6 +24,7 @@
 - Test location: `src/outwiker/tests`
 - Test runner: pytest
 - Wiki notation tests: `src/outwiker/tests/wikiparser/`
+- Plugins tests: `src/outwiker/tests/plugins/`
 - Activate the virtual environment from `.venv` before running tests
 - Run tests without the `-q` flag
 
