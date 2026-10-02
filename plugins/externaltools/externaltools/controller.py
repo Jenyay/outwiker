@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.api.pages.wiki.defines import MENU_WIKI, PAGE_TYPE_STRING
+from outwiker.api.core import Application
 from outwiker.api.gui.actions import ActionsGUIController, ActionGUIInfo
 from outwiker.api.gui.defines import PREF_PANEL_PLUGINS
+from outwiker.api.pages.wiki.defines import MENU_WIKI, PAGE_TYPE_STRING
 
 from .i18n import get_
 from .menutoolscontroller import MenuToolsController
@@ -23,7 +24,7 @@ class Controller:
     Этот класс отвечает за основную работу плагина
     """
 
-    def __init__(self, plugin, application):
+    def __init__(self, plugin, application: Application):
         self._plugin = plugin
         self._application = application
 
@@ -81,5 +82,5 @@ class Controller:
     def __onPreferencesDialogCreate(self, dialog):
         from .preferencespanel import PreferencesPanel
 
-        prefPanel = PreferencesPanel(dialog.treeBook, self._application.config)
+        prefPanel = PreferencesPanel(dialog.treeBook, self._application.config, self._application.theme)
         dialog.addPage(prefPanel, _("ExternalTools"), parent_page_tag=PREF_PANEL_PLUGINS)

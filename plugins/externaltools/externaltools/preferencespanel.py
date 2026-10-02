@@ -7,6 +7,7 @@ import wx
 from outwiker.api.gui.dialogs import MessageBox
 from outwiker.api.core.exceptions import PreferencesException
 from outwiker.api.gui.preferences import BasePrefPanel
+from outwiker.api.gui.controls import Theme
 
 from .toolslistpanel import ToolsListPanel
 from .i18n import get_
@@ -18,13 +19,14 @@ class PreferencesPanel(BasePrefPanel):
     Панель с настройками
     """
 
-    def __init__(self, parent, config):
+    def __init__(self, parent, config, theme: Theme):
         """
         parent - родитель панели(должен быть wx.Treebook)
         config - настройки из plugin._application.config
         """
-        super(PreferencesPanel, self).__init__(parent)
+        super().__init__(parent)
         self._config = config
+        self._theme = theme
 
         global _
         _ = get_()
@@ -40,7 +42,7 @@ class PreferencesPanel(BasePrefPanel):
 
         self.toolsLabel = wx.StaticText(self, -1, _("Tools List"))
         self.appendToolsButton = wx.Button(self, -1, _("Append Tools"))
-        self.toolsListPanel = ToolsListPanel(self)
+        self.toolsListPanel = ToolsListPanel(self, self._theme)
 
         self.appendToolsButton.Bind(wx.EVT_BUTTON, self.__onAppendTools)
         self.__layout()

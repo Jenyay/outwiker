@@ -6,8 +6,8 @@ import os.path
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
+from outwiker.api.gui.controls import Theme
 from outwiker.api.gui.images import readImage
-from outwiker.api.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
 
 from .toolsinfo import ToolsInfo
 from .i18n import get_
@@ -22,8 +22,9 @@ class ToolsListPanel(ScrolledPanel):
     Окно со списком всех добавленных инструментов
     """
 
-    def __init__(self, parent):
-        super(ToolsListPanel, self).__init__(parent)
+    def __init__(self, parent, theme: Theme):
+        super().__init__(parent)
+        self._theme = theme
 
         global _
         _ = get_()
@@ -76,7 +77,7 @@ class ToolsListPanel(ScrolledPanel):
         toolsItem - экземпляр класса ToolsInfo или None,
         если нужно создать новый инструмент
         """
-        toolGuiElement = ToolsItemCtrl(self, toolsItem)
+        toolGuiElement = ToolsItemCtrl(self, toolsItem, self._theme)
         self._toolsGuiElements.append(toolGuiElement)
         self._mainSizer.Add(toolGuiElement, 1, wx.EXPAND | wx.ALL, border=2)
         self.Layout()
@@ -87,14 +88,12 @@ class ToolsItemCtrl(wx.Panel):
     Контрол для выбора одного инструмента
     """
 
-    def __init__(self, parent, toolItem):
+    def __init__(self, parent, toolItem, theme: Theme):
         """
         parent - родительское окно
         toolItem - экземпляр класса ToolsInfo
         """
-        super(ToolsItemCtrl, self).__init__(
-            parent, style=wx.BORDER_NONE | wx.TAB_TRAVERSAL
-        )
+        super().__init__(parent, style=wx.BORDER_NONE | wx.TAB_TRAVERSAL)
 
         self._toolItem = toolItem
 
@@ -103,13 +102,23 @@ class ToolsItemCtrl(wx.Panel):
         else:
             self._pathTextCtrl = wx.TextCtrl(self, -1, toolItem.command)
 
-        browseBitmap = readImage(self.__getImagePath("browse.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
+        button_height = self._pathTextCtrl.GetSize().height
+        button_width = button_height
+        icon_size = button_height - 2 * theme.get(Theme.SECTION_GENERAL, Theme.BITMAP_BUTTON_PADDING)
+
+        browseBitmap = readImage(
+            self.__getImagePath("browse.svg"), icon_size, icon_size
+        )
         self._browseButton = wx.BitmapButton(self, bitmap=browseBitmap)
         self._browseButton.SetToolTip(_("Open file dialog..."))
+        self._browseButton.SetMinSize(wx.Size(button_width, button_height))
 
-        removeBitmap = readImage(self.__getImagePath("cross.svg"), BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT)
+        removeBitmap = readImage(
+            self.__getImagePath("cross.svg"), icon_size, icon_size
+        )
         self._removeButton = wx.BitmapButton(self, bitmap=removeBitmap)
         self._removeButton.SetToolTip(_("Remove tool"))
+        self._removeButton.SetMinSize(wx.Size(button_width, button_height))
 
         self._browseButton.Bind(wx.EVT_BUTTON, self.__onBrowse)
         self._removeButton.Bind(wx.EVT_BUTTON, self.__onRemove)
@@ -138,11 +147,11 @@ class ToolsItemCtrl(wx.Panel):
         return os.path.join(os.path.dirname(__file__), "images", fname)
 
     def __layout(self):
-        sizer = wx.FlexGridSizer(1, 3, 0, 0)
+        sizer = wx.FlexGridSizer(cols=3)
         sizer.AddGrowableCol(0)
-        sizer.Add(self._pathTextCtrl, 1, wx.EXPAND | wx.ALL, border=2)
-        sizer.Add(self._browseButton, 1, wx.RIGHT | wx.TOP | wx.BOTTOM, border=2)
-        sizer.Add(self._removeButton, 1, wx.ALL, border=2)
+        sizer.Add(self._pathTextCtrl, flag=wx.EXPAND | wx.TOP | wx.BOTTOM, border=2)
+        sizer.Add(self._browseButton, flag=wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(self._removeButton, flag=wx.ALIGN_CENTER_VERTICAL)
 
         self.SetSizer(sizer)
         self.Layout()
