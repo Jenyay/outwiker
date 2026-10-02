@@ -6,10 +6,10 @@ import os
 import wx
 from wx.lib.newevent import NewEvent
 
+from outwiker.api.core import Application
 from outwiker.api.core.events import Event
-from outwiker.api.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+from outwiker.api.gui.controls import TextEditorBase, Theme
 from outwiker.api.gui.dialogs import TestedDialog
-from outwiker.api.gui.controls import TextEditorBase
 from outwiker.api.gui.images import readImage
 
 from snippets.snippetparser import SnippetParser
@@ -29,7 +29,7 @@ class VariablesDialog(TestedDialog):
     Dialog to enter variables and preview result
     """
 
-    def __init__(self, parent, application):
+    def __init__(self, parent, application: Application):
         super().__init__(parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         global _
         _ = get_()
@@ -45,7 +45,7 @@ class VariablesDialog(TestedDialog):
         mainSizer.AddGrowableRow(0)
 
         # Panel with variables
-        self._varPanel = VaraiblesPanel(self)
+        self._varPanel = VaraiblesPanel(self, self._application.theme)
         self._varPanel.Hide()
 
         self._notebook = wx.Notebook(self)
@@ -148,7 +148,7 @@ class VariablesDialog(TestedDialog):
         self._varPanel.setFocusToFirstVariable()
 
 
-class VariablesDialogController(object):
+class VariablesDialogController:
     """
     Controller to manage VariablesDialog.
     """
@@ -286,8 +286,9 @@ class VaraiblesPanel(wx.ScrolledWindow):
     Panel with controls to enter variables from snippet.
     """
 
-    def __init__(self, parent):
-        super(VaraiblesPanel, self).__init__(parent)
+    def __init__(self, parent: wx.Window, theme: Theme):
+        super().__init__(parent)
+        self._theme = theme
 
         # List of the tuples. First element - variable's name,
         # second element - Control to enter variable's value
@@ -306,7 +307,7 @@ class VaraiblesPanel(wx.ScrolledWindow):
             self._varControls[0][1].SetFocus()
 
     def addStringVariable(self, varname):
-        newCtrl = StringVariableCtrl(self, varname)
+        newCtrl = StringVariableCtrl(self, varname, self._theme)
         self._varControls.append((varname, newCtrl))
         self._mainSizer.Add(newCtrl, 1, flag=wx.EXPAND | wx.ALL, border=2)
         self.Layout()
@@ -341,23 +342,17 @@ class StringVariableCtrl(wx.Panel):
     Control to edit string variable
     """
 
-    _expandBitmap = readImage(
-        os.path.join(getImagesPath(), "expand.svg"),
-        BUTTON_ICON_WIDTH,
-        BUTTON_ICON_HEIGHT,
-    )
-    _collapseBitmap = readImage(
-        os.path.join(getImagesPath(), "collapse.svg"),
-        BUTTON_ICON_WIDTH,
-        BUTTON_ICON_HEIGHT,
-    )
-
-    def __init__(self, parent, varname):
+    def __init__(self, parent: wx.Window, varname: str, theme: Theme):
         super(StringVariableCtrl, self).__init__(parent)
 
         self._TEXT_CTRL_SIZER_POSITION = 2
 
+        self._expandBitmap: wx.Bitmap | None = None
+        self._collapseBitmap: wx.Bitmap | None = None
+
         self._varname = varname
+        self._theme = theme
+
         self._createGUI()
 
     def SetFocus(self):
@@ -381,9 +376,25 @@ class StringVariableCtrl(wx.Panel):
         self._textCtrlCollapsed.Bind(wx.EVT_TEXT, handler=self._onTextEdit)
         self._textCtrlCollapsed.Bind(wx.EVT_CHAR_HOOK, handler=self._onChar)
 
+        button_height = self._textCtrlCollapsed.GetSize().height
+        button_width = button_height
+        icon_size = button_height - 2 * self._theme.get(Theme.SECTION_GENERAL, Theme.BITMAP_BUTTON_PADDING)
+
+        self._expandBitmap = readImage(
+            os.path.join(getImagesPath(), "expand.svg"),
+            icon_size,
+            icon_size
+        )
+        self._collapseBitmap = readImage(
+            os.path.join(getImagesPath(), "collapse.svg"),
+            icon_size,
+            icon_size
+        )
+
         # Expand / Collapse button
         self._expandButton = wx.BitmapButton(self, bitmap=self._expandBitmap)
         self._expandButton.SetToolTip(_("Expand (Shift+Enter)"))
+        self._expandButton.SetMinSize(wx.Size(button_width, button_height))
         self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onExpand)
 
         self._mainSizer = wx.FlexGridSizer(cols=2)
@@ -444,6 +455,7 @@ class StringVariableCtrl(wx.Panel):
         self._textCtrlExpanded.SetInsertionPointEnd()
 
     def _onCollapse(self, event):
+        assert self._expandBitmap is not None
         self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onExpand)
         self._expandButton.Unbind(wx.EVT_BUTTON, handler=self._onCollapse)
         self._expandButton.SetBitmapLabel(self._expandBitmap)

@@ -8,12 +8,13 @@ import wx
 
 from outwiker.api.app.config import MainWindowConfig
 from outwiker.api.app.application import getSpecialDirList
-from outwiker.api.gui.defines import BUTTON_ICON_WIDTH, BUTTON_ICON_HEIGHT
+from outwiker.api.core.text import readTextFile, writeTextFile
+from outwiker.api.core import Application
 from outwiker.api.gui.dialogs import MessageBox
 from outwiker.api.gui.controls import PopupButton, EVT_POPUP_BUTTON_MENU_CLICK
 from outwiker.api.gui.controls import SafeImageList
 from outwiker.api.gui.images import readImage
-from outwiker.api.core.text import readTextFile, writeTextFile
+from outwiker.api.gui.controls import Theme
 
 from snippets.events import RunSnippetParams
 from snippets.gui.snippeteditor import SnippetEditor
@@ -42,7 +43,7 @@ class EditSnippetsDialog(wx.Frame):
     Dialog to create, edit and remove snippets and folders.
     """
 
-    def __init__(self, parent, application):
+    def __init__(self, parent, application: Application):
         super().__init__(
             parent,
             style=wx.CAPTION
@@ -63,8 +64,6 @@ class EditSnippetsDialog(wx.Frame):
 
         self.ICON_WIDTH = 16
         self.ICON_HEIGHT = 16
-        self.BUTTON_MENU_ICON_WIDTH = 28
-        self.BUTTON_MENU_ICON_HEIGHT = 16
 
         self._imagesPath = getImagesPath()
         self._dirImageId = None
@@ -94,6 +93,16 @@ class EditSnippetsDialog(wx.Frame):
             (_("{% include %}"), ("{% include '", "' %}")),
             (_("{# comment #}"), ("{# ", " #}")),
         ]
+
+        self._button_height = wx.Button.GetDefaultSize().height
+        self._button_width = self._button_height
+        self._icon_size = self._button_height - 2 * self._application.theme.get(
+            Theme.SECTION_GENERAL, Theme.BITMAP_BUTTON_PADDING
+        )
+
+        self._popup_button_width = int(self._button_width * 1.8)
+        self._popup_button_icon_height = self._icon_size
+        self._popup_button_icon_width = int(self._icon_size * 1.8)
 
         self._createGUI()
         self.SetTitle(_("Snippets management"))
@@ -131,94 +140,100 @@ class EditSnippetsDialog(wx.Frame):
             self,
             bitmap=readImage(
                 os.path.join(self._imagesPath, "folder_add.svg"),
-                BUTTON_ICON_WIDTH,
-                BUTTON_ICON_HEIGHT,
+                self._icon_size,
+                self._icon_size
             ),
         )
         self.addGroupBtn.SetToolTip(_("Add new snippets group"))
-        groupButtonsSizer.Add(self.addGroupBtn, flag=wx.ALL, border=0)
+        self.addGroupBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
+        groupButtonsSizer.Add(self.addGroupBtn, flag=wx.ALL, border=1)
 
         # Add a snippet button
         self.addSnippetBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
                 os.path.join(self._imagesPath, "snippet_add.svg"),
-                BUTTON_ICON_WIDTH,
-                BUTTON_ICON_HEIGHT,
+                self._icon_size,
+                self._icon_size
             ),
         )
         self.addSnippetBtn.SetToolTip(_("Create new snippet"))
-        groupButtonsSizer.Add(self.addSnippetBtn, flag=wx.ALL, border=0)
+        self.addSnippetBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
+        groupButtonsSizer.Add(self.addSnippetBtn, flag=wx.ALL, border=1)
 
         # Rename group or snippet button
         self.renameBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
                 os.path.join(self._imagesPath, "rename.svg"),
-                BUTTON_ICON_WIDTH,
-                BUTTON_ICON_HEIGHT,
+                self._icon_size,
+                self._icon_size
             ),
         )
         self.renameBtn.SetToolTip(_("Rename"))
-        groupButtonsSizer.Add(self.renameBtn, flag=wx.ALL, border=0)
+        self.renameBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
+        groupButtonsSizer.Add(self.renameBtn, flag=wx.ALL, border=1)
 
         # Remove group or snippet button
         self.removeBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
                 os.path.join(self._imagesPath, "remove.svg"),
-                BUTTON_ICON_WIDTH,
-                BUTTON_ICON_HEIGHT,
+                self._icon_size,
+                self._icon_size
             ),
         )
         self.removeBtn.SetToolTip(_("Remove"))
-        groupButtonsSizer.Add(self.removeBtn, flag=wx.ALL, border=0)
+        self.removeBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
+        groupButtonsSizer.Add(self.removeBtn, flag=wx.ALL, border=1)
 
         # Run snippet
         self.runSnippetBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
                 os.path.join(self._imagesPath, "execute.svg"),
-                BUTTON_ICON_WIDTH,
-                BUTTON_ICON_HEIGHT,
+                self._icon_size,
+                self._icon_size
             ),
         )
         self.runSnippetBtn.SetToolTip(_("Run snippet"))
-        groupButtonsSizer.Add(self.runSnippetBtn, flag=wx.ALL, border=0)
+        self.runSnippetBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
+        groupButtonsSizer.Add(self.runSnippetBtn, flag=wx.ALL, border=1)
 
         # Open help
         self.openHelpBtn = wx.BitmapButton(
             self,
             bitmap=readImage(
                 os.path.join(self._imagesPath, "help.svg"),
-                BUTTON_ICON_WIDTH,
-                BUTTON_ICON_HEIGHT,
+                self._icon_size,
+                self._icon_size
             ),
         )
         self.openHelpBtn.SetToolTip(_("Open help..."))
-        groupButtonsSizer.Add(self.openHelpBtn, flag=wx.ALL, border=0)
+        self.openHelpBtn.SetMinSize(wx.Size(self._button_width, self._button_height))
+        groupButtonsSizer.Add(self.openHelpBtn, flag=wx.ALL, border=1)
 
-    def _createImagesList(self):
+    def _createImageList(self):
         self._imagelist = SafeImageList(self.ICON_WIDTH, self.ICON_HEIGHT)
 
         self._dirImageId = self._imagelist.Add(
             readImage(
                 os.path.join(self._imagesPath, "folder.svg"),
-                BUTTON_ICON_WIDTH,
-                BUTTON_ICON_HEIGHT,
+                self._icon_size,
+                self._icon_size
             )
         )
 
         self._snippetImageId = self._imagelist.Add(
             readImage(
                 os.path.join(self._imagesPath, "snippet.svg"),
-                BUTTON_ICON_WIDTH,
-                BUTTON_ICON_HEIGHT,
+                self._icon_size,
+                self._icon_size
             )
         )
 
     def _createTreePanel(self, mainSizer):
-        self._createImagesList()
+        self._createImageList()
 
         self.snippetsTree = wx.TreeCtrl(
             self, style=wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER
@@ -246,11 +261,12 @@ class EditSnippetsDialog(wx.Frame):
             parent,
             bitmap=readImage(
                 os.path.join(self._imagesPath, "variables-menu.svg"),
-                self.BUTTON_MENU_ICON_WIDTH,
-                self.BUTTON_MENU_ICON_HEIGHT,
+                self._popup_button_icon_width,
+                self._popup_button_icon_height
             ),
         )
         self.insertVariableBtn.SetToolTip(_("Insert variable"))
+        self.insertVariableBtn.SetMinSize(wx.Size(self._popup_button_width, self._button_height))
 
         for menuitem in self._varMenuItems:
             data = "{{" + menuitem[1] + "}}"
@@ -266,11 +282,12 @@ class EditSnippetsDialog(wx.Frame):
             parent,
             bitmap=readImage(
                 os.path.join(self._imagesPath, "block-menu.svg"),
-                self.BUTTON_MENU_ICON_WIDTH,
-                self.BUTTON_MENU_ICON_HEIGHT,
+                self._popup_button_icon_width,
+                self._popup_button_icon_height
             ),
         )
         self.insertBlockBtn.SetToolTip(_("Insert block"))
+        self.insertBlockBtn.SetMinSize(wx.Size(self._popup_button_width, self._button_height))
 
         for menuitem in self._blocksMenuItems:
             data = menuitem[1]
