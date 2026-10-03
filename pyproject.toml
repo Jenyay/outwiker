@@ -9,10 +9,9 @@ license = {file = "LICENSE.txt"}
 keywords = ["outliner", "notepad", "notes", "wiki"]
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "six==1.17.0",
     "Pillow==10.4.0",
-    "idna==3.15",
-    "pyparsing==3.1.4",
+    "idna==3.20",
+    "pyparsing==3.3.3",
     "psutil==7.2.2",
     "rcssmin==1.2.2",
     "attrdict3==2.0.2",
@@ -26,17 +25,12 @@ classifiers=[
     "Natural Language :: Ukrainian",
     "Natural Language :: Swedish",
     "Natural Language :: German",
-    "Operating System :: Microsoft :: Windows :: Windows 7",
     "Operating System :: Microsoft :: Windows :: Windows 10",
     "Operating System :: Microsoft :: Windows :: Windows 11",
     "Operating System :: Unix",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Desktop Environment :: File Managers",
     "Topic :: Office/Business",
@@ -61,15 +55,15 @@ outwiker = "outwiker.__main__:main"
 
 [dependency-groups]
 dev = [
-    "invoke==2.2.1",
+    "invoke==3.0.3",
     "cx-freeze==7.2.10",
     "pympler==1.1",
     "pytest==8.3.5",
-    "coverage==7.6.1",
+    "coverage==7.16.2",
     "jinja2==3.1.6",
     "colorama==0.4.6",
     "sphinx==7.1.2",
-    "line-profiler==4.2.0",
+    "line-profiler==5.0.2",
     "owbuildtools",
 ]
 
