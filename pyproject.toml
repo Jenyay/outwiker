@@ -16,7 +16,7 @@ dependencies = [
     "psutil==7.2.2",
     "rcssmin==1.2.2",
     "attrdict3==2.0.2",
-    "chunspell==2.0.4",
+    "chunspell==2.0.5",
 ]
 classifiers=[
     "Development Status :: 3 - Beta",
@@ -69,7 +69,6 @@ dev = [
     "jinja2==3.1.6",
     "colorama==0.4.6",
     "sphinx==7.1.2",
-    "lief==0.15.1",
     "line-profiler==4.2.0",
     "owbuildtools",
 ]
@@ -81,7 +80,8 @@ default-groups = ["dev"]
 
 [tool.uv.sources]
 wxPython = [
-    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp312-cp312-linux_x86_64.whl", marker = "sys_platform == 'linux'" },
+    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp312-cp312-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.12.*'" },
+    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp313-cp313-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.13.*'" },
 ]
 owbuildtools = { path = "./owbuildtools", editable = true }
 
