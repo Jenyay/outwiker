@@ -18,10 +18,10 @@ class LineBreakToken(object):
     expression2 = "[[&lt;&lt;]]"
 
     def getToken(self):
-        token1 = Literal(LineBreakToken.expression1).setParseAction(
+        token1 = Literal(LineBreakToken.expression1).set_parse_action(
             lambda s, l, t: "<br/>"
         )
-        token2 = Literal(LineBreakToken.expression2).setParseAction(
+        token2 = Literal(LineBreakToken.expression2).set_parse_action(
             lambda s, l, t: "<br/>"
         )
         return (token1 | token2)("linebreak")

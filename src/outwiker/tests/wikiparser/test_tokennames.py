@@ -94,7 +94,7 @@ class TokenNamesTest(unittest.TestCase):
         self.parser = factory.make(self.testPage, self._application)
 
     def _checkToken(self, testtoken, text, validname):
-        tokens_result = testtoken.scanString(text)
+        tokens_result = testtoken.scan_string(text)
 
         isOk = False
         for token in tokens_result:
@@ -105,28 +105,28 @@ class TokenNamesTest(unittest.TestCase):
         self.assertTrue(isOk)
 
     def testLinkName1(self):
-        testtoken = LinkFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = LinkFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "[[бла-бла-бла -> http://jenyay.net]]"
         validname = "link"
 
         self._checkToken(testtoken, text, validname)
 
     def testLinkName2(self):
-        testtoken = LinkFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = LinkFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "[[http://jenyay.net | бла-бла-бла]]"
         validname = "link"
 
         self._checkToken(testtoken, text, validname)
 
     def testLinkName3(self):
-        testtoken = LinkFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = LinkFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "[[http://jenyay.net]]"
         validname = "link"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontItalic(self):
-        testtoken = FontsFactory.makeItalic(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeItalic(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "''Бла-бла-бла''"
@@ -135,7 +135,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testFontBold(self):
-        testtoken = FontsFactory.makeBold(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeBold(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "'''Бла-бла-бла'''"
@@ -144,7 +144,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testFontBoldItalic(self):
-        testtoken = FontsFactory.makeBoldItalic(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeBoldItalic(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "''''Бла-бла-бла''''"
@@ -153,7 +153,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testFontUnderline(self):
-        testtoken = FontsFactory.makeUnderline(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeUnderline(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "{+Бла-бла-бла+}"
@@ -162,7 +162,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testFontStrike(self):
-        testtoken = FontsFactory.makeStrike(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeStrike(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "{-Бла-бла-бла-}"
@@ -171,7 +171,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testFontSubscript(self):
-        testtoken = FontsFactory.makeSubscript(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeSubscript(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "'_Бла-бла-бла_'"
@@ -180,7 +180,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testFontSuperscript(self):
-        testtoken = FontsFactory.makeSuperscript(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeSuperscript(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "'^Бла-бла-бла^'"
@@ -189,7 +189,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testFontCode(self):
-        testtoken = FontsFactory.makeCode(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeCode(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "@@Бла-бла-бла@@"
@@ -198,7 +198,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testFontSmall(self):
-        testtoken = FontsFactory.makeSmall(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeSmall(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "[-Бла-бла-бла-]"
@@ -207,7 +207,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testFontBig(self):
-        testtoken = FontsFactory.makeBig(FakeParser()).setParseAction(
+        testtoken = FontsFactory.makeBig(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "[+Бла-бла-бла+]"
@@ -216,14 +216,14 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testQuote(self):
-        testtoken = QuoteFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = QuoteFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "[>Бла-бла-бла<]"
         validname = "quote"
 
         self._checkToken(testtoken, text, validname)
 
     def testHeading(self):
-        testtoken = HeadingFactory.make(FakeParser()).setParseAction(
+        testtoken = HeadingFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "!! Бла-бла-бла"
@@ -232,7 +232,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testNoFormat(self):
-        testtoken = NoFormatFactory.make(FakeParser()).setParseAction(
+        testtoken = NoFormatFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "[=Бла-бла-бла=]"
@@ -241,7 +241,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testPreFormat(self):
-        testtoken = PreFormatFactory.make(FakeParser()).setParseAction(
+        testtoken = PreFormatFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "[@Бла-бла-бла@]"
@@ -250,7 +250,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testHorline(self):
-        testtoken = HorLineFactory.make(FakeParser()).setParseAction(
+        testtoken = HorLineFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = """Бла-бла-бла
@@ -260,35 +260,35 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testAlignCenter(self):
-        testtoken = AlignFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = AlignFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = """%center% Бла-бла-бла"""
         validname = "alignment"
 
         self._checkToken(testtoken, text, validname)
 
     def testAlignLeft(self):
-        testtoken = AlignFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = AlignFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "%left% Бла-бла-бла"
         validname = "alignment"
 
         self._checkToken(testtoken, text, validname)
 
     def testAlignRight(self):
-        testtoken = AlignFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = AlignFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "%right% Бла-бла-бла"
         validname = "alignment"
 
         self._checkToken(testtoken, text, validname)
 
     def testUrl(self):
-        testtoken = UrlFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = UrlFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "http://jenyay.net"
         validname = "url"
 
         self._checkToken(testtoken, text, validname)
 
     def testUrlImage(self):
-        testtoken = UrlImageFactory.make(FakeParser()).setParseAction(
+        testtoken = UrlImageFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "http://jenyay.net/image.png"
@@ -297,49 +297,49 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testBoldSubscript(self):
-        testtoken = AdHocFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = AdHocFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "''''_Бла-бла-бла_''''"
         validname = "bold_subscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testBoldSuperscript(self):
-        testtoken = AdHocFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = AdHocFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "''''^Бла-бла-бла^''''"
         validname = "bold_superscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testItalicSubscript(self):
-        testtoken = AdHocFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = AdHocFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "'''_Бла-бла-бла_'''"
         validname = "italic_subscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testItalicSuperscript(self):
-        testtoken = AdHocFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = AdHocFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "'''^Бла-бла-бла^'''"
         validname = "italic_superscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testBoldItalicSubscript(self):
-        testtoken = AdHocFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = AdHocFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "'''''_Бла-бла-бла_'''''"
         validname = "bold_italic_subscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testBoldItalicSuperscript(self):
-        testtoken = AdHocFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = AdHocFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = "'''''^Бла-бла-бла^'''''"
         validname = "bold_italic_superscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testList1(self):
-        testtoken = ListFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = ListFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = """* Бла-бла-бла
 ** фвывфаыва
 """
@@ -348,7 +348,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testList2(self):
-        testtoken = ListFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = ListFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = """# Бла-бла-бла
 ## фвывфаыва
 """
@@ -357,7 +357,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testTable(self):
-        testtoken = TableFactory.make(FakeParser()).setParseAction(lambda s, l, t: None)
+        testtoken = TableFactory.make(FakeParser()).set_parse_action(lambda s, l, t: None)
         text = """||border=1
 ||Бла-бла-бла || asdfasdfsdaf ||
 ||Бла-бла-бла || asdfasdfsdaf ||"""
@@ -366,7 +366,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testLineBreak1(self):
-        testtoken = LineBreakFactory.make(FakeParser()).setParseAction(
+        testtoken = LineBreakFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "Бла-бла-бла [[<<]]"
@@ -375,7 +375,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testLineBreak2(self):
-        testtoken = LineBreakFactory.make(FakeParser()).setParseAction(
+        testtoken = LineBreakFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "Бла-бла-бла [[&lt;&lt;]]"
@@ -384,7 +384,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testLineJoin(self):
-        testtoken = LineJoinFactory.make(FakeParser()).setParseAction(
+        testtoken = LineJoinFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "Бла-бла-бла \\\ndfaadsfdasf"
@@ -393,7 +393,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testCommand(self):
-        testtoken = CommandFactory.make(FakeParser()).setParseAction(
+        testtoken = CommandFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "(:command:)Бла-бла-бла(:commandend:)"
@@ -402,7 +402,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testThumbnail(self):
-        testtoken = ThumbnailFactory.make(FakeParser()).setParseAction(
+        testtoken = ThumbnailFactory.make(FakeParser()).set_parse_action(
             lambda s, l, t: None
         )
         text = "%thumb%Attach:fname.png%%"
@@ -412,7 +412,7 @@ class TokenNamesTest(unittest.TestCase):
 
     def testAttachmentSimple(self):
         self.__createWiki()
-        testtoken = AttachFactory.make(self.parser).setParseAction(lambda s, l, t: None)
+        testtoken = AttachFactory.make(self.parser).set_parse_action(lambda s, l, t: None)
         text = "бла-бла-бла Attach:xxx.tmp ыфваыфвафв"
         validname = "attach"
 
@@ -420,7 +420,7 @@ class TokenNamesTest(unittest.TestCase):
 
     def testAttachmentSingleQuotes(self):
         self.__createWiki()
-        testtoken = AttachFactory.make(self.parser).setParseAction(lambda s, l, t: None)
+        testtoken = AttachFactory.make(self.parser).set_parse_action(lambda s, l, t: None)
         text = "бла-бла-бла Attach:'xxx.tmp' ыфваыфвафв"
         validname = "attach"
 
@@ -428,7 +428,7 @@ class TokenNamesTest(unittest.TestCase):
 
     def testAttachmentDoubleQuotes(self):
         self.__createWiki()
-        testtoken = AttachFactory.make(self.parser).setParseAction(lambda s, l, t: None)
+        testtoken = AttachFactory.make(self.parser).set_parse_action(lambda s, l, t: None)
         text = 'бла-бла-бла Attach:"xxx.tmp" ыфваыфвафв'
         validname = "attach"
 
@@ -436,7 +436,7 @@ class TokenNamesTest(unittest.TestCase):
 
     def testAttachmentWithSpace(self):
         self.__createWiki()
-        testtoken = AttachFactory.make(self.parser).setParseAction(lambda s, l, t: None)
+        testtoken = AttachFactory.make(self.parser).set_parse_action(lambda s, l, t: None)
         text = "бла-бла-бла Attach:'файл с пробелами.tmp' ыфваыфвафв"
         validname = "attach"
 
@@ -444,7 +444,7 @@ class TokenNamesTest(unittest.TestCase):
 
     def testImageAttachmentSimple(self):
         self.__createWiki()
-        testtoken = AttachImagesFactory.make(self.parser).setParseAction(
+        testtoken = AttachImagesFactory.make(self.parser).set_parse_action(
             lambda s, l, t: None
         )
         text = "бла-бла-бла Attach:image.jpg ыфваыфвафв"
@@ -454,7 +454,7 @@ class TokenNamesTest(unittest.TestCase):
 
     def testImageAttachmentSingleQuotes(self):
         self.__createWiki()
-        testtoken = AttachImagesFactory.make(self.parser).setParseAction(
+        testtoken = AttachImagesFactory.make(self.parser).set_parse_action(
             lambda s, l, t: None
         )
         text = "бла-бла-бла Attach:'image.jpg' ыфваыфвафв"
@@ -464,7 +464,7 @@ class TokenNamesTest(unittest.TestCase):
 
     def testImageAttachmentDoubleQuotes(self):
         self.__createWiki()
-        testtoken = AttachImagesFactory.make(self.parser).setParseAction(
+        testtoken = AttachImagesFactory.make(self.parser).set_parse_action(
             lambda s, l, t: None
         )
         text = 'бла-бла-бла Attach:"image.jpg" ыфваыфвафв'

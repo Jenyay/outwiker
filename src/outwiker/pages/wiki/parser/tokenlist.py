@@ -94,7 +94,7 @@ class ListToken:
 
         self.parser = parser
         self._maxDepthLevel = 500
-        self._blockToken = MultilineBlockFactory.make(self.parser).setParseAction(
+        self._blockToken = MultilineBlockFactory.make(self.parser).set_parse_action(
             noConvert
         )
 
@@ -187,11 +187,11 @@ class ListToken:
             Regex(r"^(?:(?:\*+)|(?:#+))\s*", re.MULTILINE)
             + (self._blockToken | text)
             + line_break
-        ).leaveWhitespace()
+        ).leave_whitespace()
         fullList = (
             OneOrMore(item)
-            .setParseAction(self._convertList)
-            .ignoreWhitespace(False)("list")
+            .set_parse_action(self._convertList)
+            .ignore_whitespace(False)("list")
         )
 
         return fullList

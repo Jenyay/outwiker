@@ -23,10 +23,10 @@ class CommentToken:
     def getToken(self):
         return QuotedString(
             self.commentStart,
-            endQuoteChar=self.commentEnd,
+            end_quote_char=self.commentEnd,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.__convertComment)("comment")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.__convertComment)("comment")
 
     def __convertComment(self, s, l, t):
         return ""

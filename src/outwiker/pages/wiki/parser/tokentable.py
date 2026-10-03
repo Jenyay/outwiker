@@ -29,17 +29,17 @@ class TableToken(object):
 
     def getToken(self):
         tableCell = Regex(r"(?P<text>(.|(\\\n))*?)\|\|")
-        tableCell.setParseAction(self.__convertTableCell)
+        tableCell.set_parse_action(self.__convertTableCell)
 
         tableRow = AtLineStart(
-            Literal("||") + OneOrMore(tableCell.leaveWhitespace()) + Optional(LineEnd())
+            Literal("||") + OneOrMore(tableCell.leave_whitespace()) + Optional(LineEnd())
         )
-        tableRow.setParseAction(self.__convertTableRow)
+        tableRow.set_parse_action(self.__convertTableRow)
 
         table = AtLineStart(
             Regex(r"\|\| *(?P<params>.+)?") + LineEnd() + OneOrMore(tableRow)
         )
-        table = table.setParseAction(self.__convertTable)("table")
+        table = table.set_parse_action(self.__convertTable)("table")
 
         return table
 

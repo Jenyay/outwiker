@@ -12,11 +12,11 @@ class LinkFactory:
 class LinkToken:
     def getToken(self):
         token = (
-            QuotedString("[", endQuoteChar="]", convertWhitespaceEscapes=False)(
+            QuotedString("[", end_quote_char="]", convert_whitespace_escapes=False)(
                 "comment"
             )
             + QuotedString(
-                "(", endQuoteChar=")", convertWhitespaceEscapes=False
-            ).leaveWhitespace()("url")
+                "(", end_quote_char=")", convert_whitespace_escapes=False
+            ).leave_whitespace()("url")
         )("link")
         return token

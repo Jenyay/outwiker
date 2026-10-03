@@ -75,7 +75,7 @@ class MarkdownColorizer:
             )
 
     def _colorizeText(self, text, start, end, parser, stylelist, spellStatusFlags):
-        tokens = parser.scanString(text[start:end])
+        tokens = parser.scan_string(text[start:end])
 
         for token in tokens:
             if not self._runEvent.is_set():

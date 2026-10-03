@@ -330,7 +330,7 @@ class Parser:
             markup = self._createMarkup(tokens)
 
         try:
-            return markup.transformString(text)
+            return markup.transform_string(text)
         except Exception:
             error = traceback.format_exc()
             return self._html_formatter.error(error)

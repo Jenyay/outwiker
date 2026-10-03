@@ -9,5 +9,5 @@ class Markup:
         for token in tokens_list:
             self._markup |= token
 
-    def transformString(self, text):
-        return self._markup.transformString(text)
+    def transform_string(self, text):
+        return self._markup.transform_string(text)

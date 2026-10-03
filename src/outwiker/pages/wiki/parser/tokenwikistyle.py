@@ -103,11 +103,11 @@ class WikiStyleBase(metaclass=ABCMeta):
 
         token = Forward()
         inside = SkipTo(
-            end, failOn=forbidden, ignore=no_format | token
-        ).leaveWhitespace()
+            end, fail_on=forbidden, ignore=no_format | token
+        ).leave_whitespace()
         token << begin + inside + end
 
-        token = token.setParseAction(self.conversionParseAction)(self.name)
+        token = token.set_parse_action(self.conversionParseAction)(self.name)
 
         return token
 
@@ -203,7 +203,7 @@ class WikiStyleInlineToken(WikiStyleBase):
         return STYLES_INLINE_FOLDER_NAME
 
     def _getForbiddenToken(self):
-        return Literal("\n\n").leaveWhitespace()
+        return Literal("\n\n").leave_whitespace()
 
     def _getOptionNameForCustomStylesFromPage(self) -> str:
         return CONFIG_STYLES_INLINE_OPTION

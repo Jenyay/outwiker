@@ -26,10 +26,10 @@ class MultilineBlockToken:
     def getToken(self):
         return QuotedString(
             MultilineBlockToken.start,
-            endQuoteChar=MultilineBlockToken.end,
+            end_quote_char=MultilineBlockToken.end,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.__convertMultilineBlock)("block")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.__convertMultilineBlock)("block")
 
     def __convertMultilineBlock(self, s, l, t):
         return self.parser.parseTextLevelMarkup(t[0])

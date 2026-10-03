@@ -101,10 +101,10 @@ class CodeToken(TextBlockToken):
     def getToken(self):
         return QuotedString(
             CodeToken.start,
-            endQuoteChar=CodeToken.end,
+            end_quote_char=CodeToken.end,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.convertToHTML("<code>", "</code>"))("code")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.convertToHTML("<code>", "</code>"))("code")
 
 
 class SuperscriptToken(TextBlockToken):
@@ -118,10 +118,10 @@ class SuperscriptToken(TextBlockToken):
     def getToken(self):
         return QuotedString(
             SuperscriptToken.start,
-            endQuoteChar=SuperscriptToken.end,
+            end_quote_char=SuperscriptToken.end,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.convertToHTML("<sup>", "</sup>"))("superscript")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.convertToHTML("<sup>", "</sup>"))("superscript")
 
 
 class SubscriptToken(TextBlockToken):
@@ -135,10 +135,10 @@ class SubscriptToken(TextBlockToken):
     def getToken(self):
         return QuotedString(
             SubscriptToken.start,
-            endQuoteChar=SubscriptToken.end,
+            end_quote_char=SubscriptToken.end,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.convertToHTML("<sub>", "</sub>"))("subscript")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.convertToHTML("<sub>", "</sub>"))("subscript")
 
 
 class UnderlineToken(TextBlockToken):
@@ -152,10 +152,10 @@ class UnderlineToken(TextBlockToken):
     def getToken(self):
         return QuotedString(
             UnderlineToken.start,
-            endQuoteChar=UnderlineToken.end,
+            end_quote_char=UnderlineToken.end,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.convertToHTML("<u>", "</u>"))("underline")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.convertToHTML("<u>", "</u>"))("underline")
 
 
 class StrikeToken(TextBlockToken):
@@ -169,10 +169,10 @@ class StrikeToken(TextBlockToken):
     def getToken(self):
         return QuotedString(
             StrikeToken.start,
-            endQuoteChar=StrikeToken.end,
+            end_quote_char=StrikeToken.end,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.convertToHTML("<strike>", "</strike>"))("strike")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.convertToHTML("<strike>", "</strike>"))("strike")
 
 
 class ItalicToken:
@@ -187,7 +187,7 @@ class ItalicToken:
         self.parser = parser
 
     def getToken(self):
-        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(
+        return Regex(self.start + "(.+?)" + self.end, re.S).set_parse_action(
             self._parseAction
         )("italic")
 
@@ -209,7 +209,7 @@ class BoldToken:
         self.parser = parser
 
     def getToken(self):
-        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(
+        return Regex(self.start + "(.+?)" + self.end, re.S).set_parse_action(
             self._parseAction
         )("bold")
 
@@ -231,7 +231,7 @@ class BoldItalicToken:
         self.parser = parser
 
     def getToken(self):
-        return Regex(self.start + "(.+?)" + self.end, re.S).setParseAction(
+        return Regex(self.start + "(.+?)" + self.end, re.S).set_parse_action(
             self._parseAction
         )("bold_italic")
 
@@ -249,7 +249,7 @@ class SmallFontToken(TextBlockToken):
     def getToken(self):
         return Regex(
             r"\[(?P<count>-{1,4})(?P<text>.*?)\1\]", re.MULTILINE | re.DOTALL
-        ).setParseAction(self.__parse)("small")
+        ).set_parse_action(self.__parse)("small")
 
     def __parse(self, s, l, t):
         # Расчет масштаба в зависимости от количества минусов
@@ -268,7 +268,7 @@ class BigFontToken(TextBlockToken):
     def getToken(self):
         return Regex(
             r"\[(?P<count>\+{1,5})(?P<text>.*?)\1\]", re.MULTILINE | re.DOTALL
-        ).setParseAction(self.__parse)("big")
+        ).set_parse_action(self.__parse)("big")
 
     def __parse(self, s, l, t):
         # Расчет масштаба в зависимости от количества минусов
@@ -290,7 +290,7 @@ class MarkToken(TextBlockToken):
     def getToken(self):
         return QuotedString(
             MarkToken.start,
-            endQuoteChar=MarkToken.end,
+            end_quote_char=MarkToken.end,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.convertToHTML("<mark>", "</mark>"))("mark")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.convertToHTML("<mark>", "</mark>"))("mark")

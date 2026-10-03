@@ -40,7 +40,7 @@ class AlignToken(object):
         )
 
         alignText = start + text
-        alignText.setParseAction(self._alignText)
+        alignText.set_parse_action(self._alignText)
         alignText = alignText("alignment")
 
         return alignText

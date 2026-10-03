@@ -27,5 +27,5 @@ class UrlImageToken:
         token = Regex(
             r"(https?|ftp)://[a-z0-9-]+(\.[a-z0-9-]+)+(/[-._\w%+]+)*/[-\w_.%+]+\.(gif|png|jpe?g|bmp|tiff?|webp)",
             re.IGNORECASE,
-        ).setParseAction(lambda s, l, t: create_image(t[0], [css.CSS_IMAGE]))("image")
+        ).set_parse_action(lambda s, l, t: create_image(t[0], [css.CSS_IMAGE]))("image")
         return token

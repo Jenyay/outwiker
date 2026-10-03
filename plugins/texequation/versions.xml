@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="2.6.17">
+		<download href="https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.6.17.zip">
+			<requirements>
+                <api>4.984</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Migrate to new API.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на новый API.</change>
+		</changes>
+	</version>
+
 	<version number="2.6.16" date="2026-07-28">
 		<download href="https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.6.16.zip">
 			<requirements>

@@ -59,7 +59,7 @@ class AttachToken(metaclass=ABCMeta):
         token3 = Literal(self.attachString) + fname_without_space_token
 
         finalToken = concatenate([token1, token2, token3])(self._getTokenName())
-        finalToken = finalToken.setParseAction(self._convertToHTML)
+        finalToken = finalToken.set_parse_action(self._convertToHTML)
         return finalToken
 
     @abstractmethod

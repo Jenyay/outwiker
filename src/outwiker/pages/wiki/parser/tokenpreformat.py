@@ -25,10 +25,10 @@ class PreFormatToken(object):
     def getToken(self):
         return QuotedString(
             PreFormatToken.preFormatStart,
-            endQuoteChar=PreFormatToken.preFormatEnd,
+            end_quote_char=PreFormatToken.preFormatEnd,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.__convertPreformat)("preformat")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.__convertPreformat)("preformat")
 
     def __convertPreformat(self, s, l, t):
         return "<pre>" + html.escape(t[0], False) + "</pre>"

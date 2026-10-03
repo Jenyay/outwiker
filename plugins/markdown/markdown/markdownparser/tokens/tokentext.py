@@ -19,5 +19,5 @@ class TextToken:
     def getToken(self):
         textRegex = r"(?:(?:[^\W_]-[^\W_])|[^\W_])+"
         token = Regex(textRegex, re.UNICODE)("text")
-        token.leaveWhitespace()
+        token.leave_whitespace()
         return token

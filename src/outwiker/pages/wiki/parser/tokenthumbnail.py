@@ -49,7 +49,7 @@ class ThumbnailToken:
                         Attach:(?P<quote>["']?)(?P<fname>.*?\.(?:jpe?g|bmp|gif|tiff?|png|webp))(?P=quote)\s*?%%""",
             re.IGNORECASE | re.VERBOSE,
         )
-        result = result.setParseAction(self.__convertThumb)("thumbnail")
+        result = result.set_parse_action(self.__convertThumb)("thumbnail")
         return result
 
     def __convertThumb(self, s, l, t):

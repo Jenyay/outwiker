@@ -34,34 +34,34 @@ class WikiColorizer:
         self._runEvent = runEvent
 
         self.text = TextFactory.make(None)
-        self.empty_bold_italic = AdHocFactory.makeEmptyBoldItalic(None).setParseAction(
+        self.empty_bold_italic = AdHocFactory.makeEmptyBoldItalic(None).set_parse_action(
             lambda s, l, t: None
         )
-        self.empty_bold = AdHocFactory.makeEmptyBold(None).setParseAction(
+        self.empty_bold = AdHocFactory.makeEmptyBold(None).set_parse_action(
             lambda s, l, t: None
         )
-        self.bold = FontsFactory.makeBold(None).setParseAction(lambda s, l, t: None)
-        self.italic = FontsFactory.makeItalic(None).setParseAction(lambda s, l, t: None)
-        self.bold_italic = FontsFactory.makeBoldItalic(None).setParseAction(
+        self.bold = FontsFactory.makeBold(None).set_parse_action(lambda s, l, t: None)
+        self.italic = FontsFactory.makeItalic(None).set_parse_action(lambda s, l, t: None)
+        self.bold_italic = FontsFactory.makeBoldItalic(None).set_parse_action(
             lambda s, l, t: None
         )
-        self.underline = FontsFactory.makeUnderline(None).setParseAction(
+        self.underline = FontsFactory.makeUnderline(None).set_parse_action(
             lambda s, l, t: None
         )
-        self.heading = HeadingFactory.make(None).setParseAction(lambda s, l, t: None)
-        self.command = CommandFactory.make(None).setParseAction(lambda s, l, t: None)
-        self.link = LinkFactory.make(None).setParseAction(lambda s, l, t: None)
-        self.url = UrlFactory.make(None).setParseAction(lambda s, l, t: None)
-        self.linebreak = LineBreakFactory.make(None).setParseAction(
+        self.heading = HeadingFactory.make(None).set_parse_action(lambda s, l, t: None)
+        self.command = CommandFactory.make(None).set_parse_action(lambda s, l, t: None)
+        self.link = LinkFactory.make(None).set_parse_action(lambda s, l, t: None)
+        self.url = UrlFactory.make(None).set_parse_action(lambda s, l, t: None)
+        self.linebreak = LineBreakFactory.make(None).set_parse_action(
             lambda s, l, t: None
         )
-        self.noformat = NoFormatFactory.make(None).setParseAction(lambda s, l, t: None)
-        self.preformat = PreFormatFactory.make(None).setParseAction(
+        self.noformat = NoFormatFactory.make(None).set_parse_action(lambda s, l, t: None)
+        self.preformat = PreFormatFactory.make(None).set_parse_action(
             lambda s, l, t: None
         )
-        self.comment = CommentFactory.make(None).setParseAction(lambda s, l, t: None)
-        self.attachment = AttachFactory.make(None).setParseAction(lambda s, l, t: None)
-        self.thumbnail = ThumbnailFactory.make(None).setParseAction(
+        self.comment = CommentFactory.make(None).set_parse_action(lambda s, l, t: None)
+        self.attachment = AttachFactory.make(None).set_parse_action(lambda s, l, t: None)
+        self.thumbnail = ThumbnailFactory.make(None).set_parse_action(
             lambda s, l, t: None
         )
 
@@ -126,7 +126,7 @@ class WikiColorizer:
             )
 
     def _colorizeText(self, text, start, end, parser, stylelist, spellStatusFlags):
-        tokens = parser.scanString(text[start:end])
+        tokens = parser.scan_string(text[start:end])
 
         for token in tokens:
             if not self._runEvent.is_set():

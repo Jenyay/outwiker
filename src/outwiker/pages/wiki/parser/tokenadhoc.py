@@ -101,7 +101,7 @@ class BoldSubscriptToken(AdHocToken):
         token = self.getDefaultToken(
             BoldToken.start, BoldToken.end, SubscriptToken.start, SubscriptToken.end
         )("bold_subscript")
-        token.setParseAction(self.getAction("<b>", "</b>"))
+        token.set_parse_action(self.getAction("<b>", "</b>"))
         return token
 
 
@@ -115,7 +115,7 @@ class BoldSuperscriptToken(AdHocToken):
             BoldToken.start, BoldToken.end, SuperscriptToken.start, SuperscriptToken.end
         )("bold_superscript")
 
-        token.setParseAction(self.getAction("<b>", "</b>"))
+        token.set_parse_action(self.getAction("<b>", "</b>"))
         return token
 
 
@@ -129,7 +129,7 @@ class ItalicSubscriptToken(AdHocToken):
             ItalicToken.start, ItalicToken.end, SubscriptToken.start, SubscriptToken.end
         )("italic_subscript")
 
-        token.setParseAction(self.getAction("<i>", "</i>"))
+        token.set_parse_action(self.getAction("<i>", "</i>"))
         return token
 
 
@@ -146,7 +146,7 @@ class ItalicSuperscriptToken(AdHocToken):
             SuperscriptToken.end,
         )("italic_superscript")
 
-        token.setParseAction(self.getAction("<i>", "</i>"))
+        token.set_parse_action(self.getAction("<i>", "</i>"))
         return token
 
 
@@ -163,7 +163,7 @@ class BoldItalicSubscriptToken(AdHocToken):
             SubscriptToken.end,
         )("bold_italic_subscript")
 
-        token.setParseAction(self.getAction("<b><i>", "</i></b>"))
+        token.set_parse_action(self.getAction("<b><i>", "</i></b>"))
         return token
 
 
@@ -180,17 +180,17 @@ class BoldItalicSuperscriptToken(AdHocToken):
             SuperscriptToken.end,
         )("bold_italic_superscript")
 
-        token.setParseAction(self.getAction("<b><i>", "</i></b>"))
+        token.set_parse_action(self.getAction("<b><i>", "</i></b>"))
         return token
 
 
 class EmptyBoldToken:
     def getToken(self):
-        return Literal("''''''").setParseAction(lambda s, l, t: "<b></b>")("bold")
+        return Literal("''''''").set_parse_action(lambda s, l, t: "<b></b>")("bold")
 
 
 class EmptyBoldItalicToken:
     def getToken(self):
-        return Literal("''''''''").setParseAction(lambda s, l, t: "<b><i></i></b>")(
+        return Literal("''''''''").set_parse_action(lambda s, l, t: "<b><i></i></b>")(
             "bold_italic"
         )

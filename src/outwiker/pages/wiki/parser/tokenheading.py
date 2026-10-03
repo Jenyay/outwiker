@@ -22,7 +22,7 @@ class HeadingToken:
         """
         Токены для заголовков H1, H2,...
         """
-        return Regex(self.heading_Regex, re.MULTILINE).setParseAction(
+        return Regex(self.heading_Regex, re.MULTILINE).set_parse_action(
             self.convertToHeading
         )("heading")
 

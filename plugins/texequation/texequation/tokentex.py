@@ -66,10 +66,10 @@ katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnEr
     def getToken(self):
         return QuotedString(
             self.texStart,
-            endQuoteChar=self.texEnd,
+            end_quote_char=self.texEnd,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.makeTexEquation)("inlinetex")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.makeTexEquation)("inlinetex")
 
     @abstractmethod
     def _getDisplayParam(self):

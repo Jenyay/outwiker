@@ -27,7 +27,7 @@ class UrlToken:
             re.IGNORECASE,
         )("url")
 
-        token.setParseAction(self.__convertToUrlLink)
+        token.set_parse_action(self.__convertToUrlLink)
         return token
 
     def __convertToUrlLink(self, s, l, t):

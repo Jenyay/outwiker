@@ -25,7 +25,7 @@ class NoFormatToken(object):
     def getToken(self):
         return QuotedString(
             self.noFormatStart,
-            endQuoteChar=self.noFormatEnd,
+            end_quote_char=self.noFormatEnd,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(noConvert)("noformat")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(noConvert)("noformat")

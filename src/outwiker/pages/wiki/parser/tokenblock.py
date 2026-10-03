@@ -2,7 +2,7 @@
 
 from abc import ABCMeta, abstractmethod
 
-from pyparsing import nestedExpr, originalTextFor
+from pyparsing import nested_expr, original_text_for
 
 
 class TextBlockToken:
@@ -57,12 +57,12 @@ class NestedBlockBase(metaclass=ABCMeta):
         assert self.end_html is not None
         assert self.name is not None
 
-        token = originalTextFor(
-            nestedExpr(
-                opener=self.start, closer=self.end, content=None, ignoreExpr=self.ignore
+        token = original_text_for(
+            nested_expr(
+                opener=self.start, closer=self.end, content=None, ignore_expr=self.ignore
             )
         )
-        token = token.setParseAction(
+        token = token.set_parse_action(
             self.convertToHTML(self.start_html, self.end_html)
         )(self.name)
 

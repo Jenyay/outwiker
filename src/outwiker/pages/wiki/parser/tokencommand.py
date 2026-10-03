@@ -33,7 +33,7 @@ class CommandToken(object):
     def getToken(self):
         return Regex(
             self.regex, flags=re.MULTILINE | re.DOTALL | re.IGNORECASE | re.VERBOSE
-        ).setParseAction(self.execute)("command")
+        ).set_parse_action(self.execute)("command")
 
     def execute(self, s, l, t):
         """

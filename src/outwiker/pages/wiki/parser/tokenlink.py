@@ -40,10 +40,10 @@ class LinkToken:
     def getToken(self):
         return QuotedString(
             LinkToken.linkStart,
-            endQuoteChar=LinkToken.linkEnd,
+            end_quote_char=LinkToken.linkEnd,
             multiline=False,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self._convertToLink)("link")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self._convertToLink)("link")
 
     def _isHasImage(self, text: str) -> bool:
         return "<img" in text.lower()

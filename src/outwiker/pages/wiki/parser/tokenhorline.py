@@ -15,4 +15,4 @@ class HorLineToken:
     """
 
     def getToken(self):
-        return Regex("----+").setParseAction(lambda s, l, t: "<hr>")("horline")
+        return Regex("----+").set_parse_action(lambda s, l, t: "<hr>")("horline")

@@ -18,7 +18,7 @@ class DebugToken(TextBlockToken):
     def getToken(self):
         return QuotedString(
             DebugToken.start,
-            endQuoteChar=DebugToken.end,
+            end_quote_char=DebugToken.end,
             multiline=True,
-            convertWhitespaceEscapes=False,
-        ).setParseAction(self.convertToHTML("<font color='red'>", "</font>"))("debug")
+            convert_whitespace_escapes=False,
+        ).set_parse_action(self.convertToHTML("<font color='red'>", "</font>"))("debug")
