@@ -58,4 +58,5 @@ class UrlToken:
         if page is not None:
             return create_link_to_page(url, page.display_title)
         else:
-            return create_invalid_link_to_page(url, url)
+            url_unquoted = self.page_protocol + page_uid + params_pos
+            return create_invalid_link_to_page(url, url_unquoted)

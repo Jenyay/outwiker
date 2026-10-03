@@ -2,6 +2,7 @@
 
 import unittest
 from tempfile import mkdtemp
+from urllib.parse import quote
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
@@ -347,6 +348,14 @@ class ParserUrlTest(unittest.TestCase):
         uid = "invalid_uid"
         text = f"бла-бла-бла page://{uid}/ бла-бла-бла"
         expected = f'бла-бла-бла <a class="ow-wiki ow-link-page ow-link-page-error" href="page://{uid}">page://{uid}</a> бла-бла-бла'
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testPageProtocolInvalidUidCyr(self):
+        uid = "неправильный-uid"
+        text = f"бла-бла-бла page://{uid} бла-бла-бла"
+        expected = f'бла-бла-бла <a class="ow-wiki ow-link-page ow-link-page-error" href="page://{quote(uid)}">page://{uid}</a> бла-бла-бла'
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
