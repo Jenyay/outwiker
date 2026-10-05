@@ -100,6 +100,6 @@ parts:
       - xdg-user-dirs
       - libcanberra-gtk3-module
     override-build: |
-      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib Pillow==10.4.0 idna==3.20 pyparsing==3.3.3 rcssmin==1.2.1 psutil==6.1.1 attrdict3==2.0.2 chunspell==2.0.5 wheel setuptools https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp312-cp312-linux_x86_64.whl
+      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib Pillow==10.4.0 idna==3.20 pyparsing==3.2.5 rcssmin==1.2.1 psutil==6.1.1 attrdict3==2.0.2 chunspell==2.0.5 wheel setuptools https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp312-cp312-linux_x86_64.whl
       cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
       chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
