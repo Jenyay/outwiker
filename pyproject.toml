@@ -16,6 +16,7 @@ dependencies = [
     "rcssmin==1.2.2",
     "attrdict3==2.0.2",
     "chunspell==2.0.5",
+    "six==1.17.0",
 ]
 classifiers=[
     "Development Status :: 3 - Beta",
