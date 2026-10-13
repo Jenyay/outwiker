@@ -25,7 +25,7 @@ OutputBaseFilename=$resultname
 OutputDir=.
 Compression=lzma
 SolidCompression=yes
-LicenseFile=LICENSE.txt
+LicenseFile=outwiker_exe\LICENSE.txt
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline dialog
 
@@ -87,7 +87,7 @@ Name: "plugins\webpage"; Description: "WebPage"; Types: full custom
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
+Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "portable"; Description: "{cm:InstallPortableVersion}"; GroupDescription: "{cm:InstallationMode}"; Flags: unchecked; Check: not IsAdminInstallMode
 
 [Files]
