@@ -138,13 +138,14 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
         ]
 
     def get_additional_files(self):
-        return []
+        return [
+            ("LICENSE.txt", "."),
+            ("copyright.txt", "."),
+        ]
 
     def _copy_additional_files(self):
-        root_dir = os.path.join(self._dist_dir, "outwiker")
-
         for fname, subpath in self.get_additional_files():
-            dest_dir = os.path.join(root_dir, subpath)
+            dest_dir = os.path.join(self._dest_dir, subpath)
             if not os.path.exists(dest_dir):
                 os.makedirs(dest_dir)
             print_info("Copy: {} -> {}".format(fname, dest_dir))
@@ -157,11 +158,6 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     def __init__(self, c: Context, src_dir, dest_dir, temp_dir):
         super().__init__(c, src_dir, dest_dir, temp_dir)
 
-        # The path where the folder with the assembly will be created
-        # (before copying to self.dest_dir)
-        # build/tmp/build
-        self._dist_dir = os.path.join(temp_dir, "build")
-
     def get_remove_list(self):
         """Return list of the files or dirs to remove after build."""
         return []
@@ -171,7 +167,7 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
             "--optimize=2",
             "--silent",
             "--base-name Win32GUI",
-            '--target-dir "{}"'.format(self._dist_dir),
+            '--target-dir "{}"'.format(self._dest_dir),
             "--target-name outwiker",
             "--includes {}".format(",".join(self.get_includes())),
             "--excludes {}".format(",".join(self.get_excludes())),
@@ -191,15 +187,9 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
         self._remove_files()
         self._copy_additional_files()
 
-        print_info(
-            "Copy files to dest path: {} -> {}".format(self._dist_dir, self._dest_dir)
-        )
-
-        shutil.copytree(self._dist_dir, self._dest_dir)
-
     def _remove_files(self):
         toRemove = [
-            os.path.join(self._dist_dir, "outwiker", fname)
+            os.path.join(self._dest_dir, "outwiker", fname)
             for fname in self.get_remove_list()
         ]
 
@@ -227,7 +217,7 @@ class CxFreezeBuilderWindows(BaseCxFreezeBuilder):
 
         to_remove += [
             fname.name
-            for fname in Path(self._dist_dir, "outwiker").glob("api-ms-win*.dll")
+            for fname in Path(self._dest_dir, "outwiker").glob("api-ms-win*.dll")
         ]
 
         return to_remove

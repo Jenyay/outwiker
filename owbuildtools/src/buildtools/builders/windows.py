@@ -66,7 +66,6 @@ class BuilderWindows(BuilderBase):
         print_info("Create installer: {}".format(self._create_installer))
         print_info("Create archives: {}".format(self._create_archives))
 
-        self._copy_necessary_files()
         self._create_plugins_dir()
         self._create_binary()
         self._clear_dest_plugins_dir()
@@ -140,11 +139,6 @@ class BuilderWindows(BuilderBase):
                 os.path.join(src_pluginsdir, plugin, plugin),
                 os.path.join(self._dest_plugins_dir, plugin),
             )
-
-    def _copy_necessary_files(self):
-        print_info("Copy necessary files...")
-        shutil.copy("copyright.txt", self.facts.temp_dir)
-        shutil.copy("LICENSE.txt", self.facts.temp_dir)
 
     def _create_archives_without_plugins(self):
         if not self._create_archives:
