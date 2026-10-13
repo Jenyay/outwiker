@@ -141,6 +141,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
         return [
             ("LICENSE.txt", "."),
             ("copyright.txt", "."),
+            (os.path.join(".venv", "Lib", "site-packages", "chunspell.libs", "msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll"), "lib"),
         ]
 
     def _copy_additional_files(self):
