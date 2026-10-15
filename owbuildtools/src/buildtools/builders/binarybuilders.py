@@ -6,7 +6,8 @@ import os.path
 from pathlib import Path
 import shutil
 
-from invoke import Context
+from cx_Freeze import Executable, Freezer
+from invoke.context import Context
 from buildtools.utilites import remove, print_info
 
 
@@ -18,6 +19,10 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
         self._src_dir = src_dir
         self._dest_dir = dest_dir
         self._temp_dir = temp_dir
+
+        print_info(f"Temporary directory: {self._temp_dir}")
+        print_info(f"Src directory: {self._src_dir}")
+        print_info(f"Dest directory: {self._dest_dir}")
 
     @abstractmethod
     def build(self):
@@ -128,7 +133,6 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             "json",
             "asyncio",
             "html.parser",
-            "pkg_resources",
             "hunspell",
         ]
 
@@ -141,7 +145,6 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
         return [
             ("LICENSE.txt", "."),
             ("copyright.txt", "."),
-            (os.path.join(".venv", "Lib", "site-packages", "chunspell.libs", "msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll"), "lib"),
         ]
 
     def _copy_additional_files(self):
@@ -163,62 +166,60 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
         """Return list of the files or dirs to remove after build."""
         return []
 
-    def get_params(self):
-        params = [
-            "--optimize=2",
-            "--silent",
-            "--base-name Win32GUI",
-            '--target-dir "{}"'.format(self._dest_dir),
-            "--target-name outwiker",
-            "--includes {}".format(",".join(self.get_includes())),
-            "--excludes {}".format(",".join(self.get_excludes())),
-            "--include-files {}".format(",".join(self.get_includes_dirs())),
-            "--icon outwiker/data/images/outwiker.ico",
-        ]
+    def _get_executable(self) -> Executable:
+        """
+        Return the description of the executable file to create.
 
-        return params
+        The paths in the description are relative to the source directory
+        (self._src_dir).
+        """
+        return Executable(
+            script=os.path.join(self._src_dir, "outwiker/__main__.py"),
+            base="gui",
+            target_name="outwiker",
+            icon=os.path.join(self._src_dir, "outwiker/data/images/outwiker.ico"),
+        )
+
+    def _get_freezer_params(self):
+        """
+        Return the parameters for the cx_Freeze Freezer class.
+
+        The paths in the parameters are relative to the source directory
+        (self._src_dir).
+        """
+        return {
+            "includes": self.get_includes(),
+            "excludes": self.get_excludes(),
+            "include_files": self.get_includes_dirs(),
+            "optimize": 2,
+            "silent": 1,
+        }
 
     def build(self):
-        params = self.get_params()
-        command = "cxfreeze outwiker/__main__.py " + " ".join(params)
-        with self.context.cd(self._src_dir):
-            print_info(command)
-            self.context.run(command)
-
+        self._create_application()
         self._remove_files()
         self._copy_additional_files()
 
-    def _remove_files(self):
-        toRemove = [
-            os.path.join(self._dest_dir, "outwiker", fname)
-            for fname in self.get_remove_list()
-        ]
+    def _create_application(self):
+        """
+        Create the application files with cx_Freeze.
+        """
+        dest_dir = os.path.abspath(self._dest_dir)
 
-        for fname in toRemove:
+        params = self._get_freezer_params()
+
+        print_info("Run cx_Freeze with the parameters:")
+        for key, value in params.items():
+            print_info(f"    {key} = {value}")
+
+        freezer = Freezer([self._get_executable()], target_dir=dest_dir, **params)
+        freezer.freeze()
+
+    def _remove_files(self):
+        for fname in self.get_remove_list():
             print_info("Remove: {}".format(fname))
             remove(fname)
 
-    def get_files_by_mask(self, directory, mask):
-        return [str(fname.resolve()) for fname in Path(directory).glob(mask)]
-
 
 class CxFreezeBuilderWindows(BaseCxFreezeBuilder):
-    def get_remove_list(self):
-        """Return list of the files or dirs to remove after build."""
-        to_remove = [
-            "_win32sysloader.pyd",
-            "win32com.shell.shell.pyd",
-            "win32trace.pyd",
-            "win32wnet.pyd",
-            "iconv.dll",
-            "_winxptheme.pyd",
-            "mfc140u.dll",
-            "include",
-        ]
-
-        to_remove += [
-            fname.name
-            for fname in Path(self._dest_dir, "outwiker").glob("api-ms-win*.dll")
-        ]
-
-        return to_remove
+    pass
