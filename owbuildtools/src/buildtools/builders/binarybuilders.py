@@ -134,6 +134,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             "asyncio",
             "html.parser",
             "hunspell",
+            "urllib.request",
         ]
 
     def get_includes_dirs(self):

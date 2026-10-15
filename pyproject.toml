@@ -9,7 +9,7 @@ license = {file = "LICENSE.txt"}
 keywords = ["outliner", "notepad", "notes", "wiki"]
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "Pillow==10.4.0",
+    "Pillow==12.3.0",
     "idna==3.20",
     "pyparsing==3.2.5",
     "psutil==7.2.2",
