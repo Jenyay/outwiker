@@ -7,7 +7,7 @@ authors = [
 readme = "README.md"
 license = {file = "LICENSE.txt"}
 keywords = ["outliner", "notepad", "notes", "wiki"]
-requires-python = ">=3.12,<3.16"
+requires-python = ">=3.12,<3.15"
 dependencies = [
     "Pillow==12.3.0",
     "idna==3.20",
@@ -35,7 +35,6 @@ classifiers=[
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
-    "Programming Language :: Python :: 3.15",
     "Topic :: Desktop Environment :: File Managers",
     "Topic :: Office/Business",
     "Topic :: Text Editors",
@@ -51,7 +50,7 @@ Repository = "https://github.com/Jenyay/outwiker"
 
 [project.optional-dependencies]
 gui = [ 
-    "wxPython==4.3.2",
+    "wxPython==4.3.1",
 ]
 
 [project.scripts]
@@ -78,8 +77,9 @@ default-groups = ["dev"]
 
 [tool.uv.sources]
 wxPython = [
-    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.2/wxpython-4.3.2+ubuntu2404-cp312-cp312-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.12.*'" },
-    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.2/wxpython-4.3.2+ubuntu2404-cp313-cp313-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.13.*'" },
+    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp312-cp312-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.12.*'" },
+    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp313-cp313-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.13.*'" },
+    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp313-cp313-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.14.*'" },
 ]
 owbuildtools = { path = "./owbuildtools", editable = true }
 
