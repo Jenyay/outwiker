@@ -17,7 +17,7 @@ class SnippetsVarPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         from snippets.gui.variablesdialog import VaraiblesPanel
 
-        self._panel = VaraiblesPanel(mainWnd)
+        self._panel = VaraiblesPanel(mainWnd, self.application.theme)
 
     def tearDown(self):
         self.loader.clear()

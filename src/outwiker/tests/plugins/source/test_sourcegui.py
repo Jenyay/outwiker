@@ -36,7 +36,7 @@ class SourceGuiPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         from source.insertdialogcontroller import InsertDialogController
         from source.insertdialog import InsertDialog
 
-        self.dialog = InsertDialog(self.application.mainWindow)
+        self.dialog = InsertDialog(self.application.mainWindow, self.application.theme)
         self.controller = InsertDialogController(
             self.testPage, self.dialog, self.config
         )
