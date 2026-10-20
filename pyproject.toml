@@ -9,11 +9,11 @@ license = {file = "LICENSE.txt"}
 keywords = ["outliner", "notepad", "notes", "wiki"]
 requires-python = ">=3.12,<3.15"
 dependencies = [
-    "Pillow==12.3.0",
+    "Pillow==13.0.0",
     "idna==3.20",
     "pyparsing==3.2.5",
     "psutil==7.2.2",
-    "rcssmin==1.2.2",
+    "rcssmin==1.3.0",
     "attrdict3==2.0.2",
     "chunspell==2.0.5",
     "six==1.17.0",
@@ -59,9 +59,9 @@ outwiker = "outwiker.__main__:main"
 [dependency-groups]
 dev = [
     "invoke==3.0.3",
-    "cx-freeze==8.7.1",
+    "cx-freeze==8.7.2",
     "pympler==1.1",
-    "pytest==8.3.5",
+    "pytest==9.1.1",
     "coverage==7.16.2",
     "jinja2==3.1.6",
     "colorama==0.4.6",
