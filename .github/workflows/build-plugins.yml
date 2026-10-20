@@ -31,12 +31,9 @@ jobs:
         run: |
           uv run python -m invoke plugins
 
-      - name: Create tar archive
-        run: tar -cvf build/${{ env.OUTWIKER_VERSION }}/plugins.tar build/${{ env.OUTWIKER_VERSION }}/plugins
-
       - name: Upload plugins artifact
         uses: actions/upload-artifact@v7
         with:
           name: outwiker_plugins_${{ env.OUTWIKER_VERSION }}
           path: |
-            build/${{ env.OUTWIKER_VERSION }}/plugins.tar
+            build/${{ env.OUTWIKER_VERSION }}/plugins
