@@ -37,7 +37,7 @@ jobs:
 
       - name: Build OutWiker (Windows)
         run: |
-          uv run inv win
+          uv run python -m invoke win
 
       - name: Upload all artifacts
         uses: actions/upload-artifact@v7
