@@ -9,12 +9,13 @@ import urllib.parse
 from invoke import Context
 
 from .base import BuilderBase
-from buildtools.defines import (PLUGINS_DIR,
-                                PLUGINS_LIST)
-from buildtools.versions import (readAppInfo,
-                                 getPluginInfoPath,
-                                 getPluginChangelogPath,
-                                 downloadAppInfo)
+from buildtools.defines import PLUGINS_DIR, PLUGINS_LIST
+from buildtools.versions import (
+    readAppInfo,
+    getPluginInfoPath,
+    getPluginChangelogPath,
+    downloadAppInfo,
+)
 
 
 class BuilderPlugins(BuilderBase):
@@ -22,15 +23,16 @@ class BuilderPlugins(BuilderBase):
     Create archives with plug-ins
     """
 
-    def __init__(self,
-                 c: Context,
-                 updatedOnly: bool = False,
-                 build_dir: str = PLUGINS_DIR,
-                 plugins_list=None):
+    def __init__(
+        self,
+        c: Context,
+        updatedOnly: bool = False,
+        build_dir: str = PLUGINS_DIR,
+        plugins_list=None,
+    ):
         super().__init__(c, build_dir)
-        self._all_plugins_fname = u'outwiker-plugins-all.zip'
-        self._plugins_list = (plugins_list if plugins_list is not None
-                              else PLUGINS_LIST)
+        self._all_plugins_fname = "outwiker-plugins-all.zip"
+        self._plugins_list = plugins_list if plugins_list is not None else PLUGINS_LIST
         self._updatedOnly = updatedOnly
 
     def get_plugins_pack_path(self):
@@ -68,7 +70,7 @@ class BuilderPlugins(BuilderBase):
             # Archive a single plug-in
             if not skip_plugin:
                 version = str(localAppInfo.version)
-                archive_name = u'{}-{}.zip'.format(plugin, version)
+                archive_name = "{}-{}.zip".format(plugin, version)
 
                 # Subpath to current plug-in archive
                 plugin_dir_path = self._getSubpath(plugin)
@@ -82,12 +84,18 @@ class BuilderPlugins(BuilderBase):
                 # Archive a single plug-in
                 with self.context.cd("plugins/{}".format(plugin)):
                     self.context.run(
-                        '7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!doc -x!versions.xml "{}" ./*'.format(archive_path))
+                        '7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!__pycache__ -xr!.ruff_cache -x!doc -x!versions.xml "{}" ./*'.format(
+                            archive_path
+                        )
+                    )
 
             # Add a plug-in to full archive
             with self.context.cd("plugins/{}".format(plugin)):
                 self.context.run(
-                    '7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!versions.xml -w../ "{}" ./*'.format(full_archive_path))
+                    '7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!__pycache__ -xr!.ruff_cache -x!versions.xml -w../ "{}" ./*'.format(
+                        full_archive_path
+                    )
+                )
 
     def _getSubpath(self, *args):
         """

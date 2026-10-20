@@ -4,8 +4,6 @@
 import builtins
 import os
 import os.path
-import glob
-import sys
 import shutil
 import re
 from typing import List, Tuple, Callable, TextIO
@@ -17,10 +15,8 @@ from buildtools.utilites import getPython
 from buildtools.defines import COVERAGE_PARAMS
 from buildtools.builders import (
     BuilderWindows,
-    BuilderSources,
     BuilderPlugins,
     BuilderSnap,
-    BuilderWxPython,
 )
 from buildtools.versionstools import (
     display_version,
@@ -40,33 +36,6 @@ def plugins(c):
 
 
 @task
-def plugins_clear(c):
-    """
-    Remove an archive with plugins (7z required)
-    """
-    builder = BuilderPlugins(c)
-    builder.clear()
-
-
-@task
-def sources(c, is_stable=False):
-    """
-    Create the sources archives
-    """
-    builder = BuilderSources(c, is_stable=is_stable)
-    builder.build()
-
-
-@task
-def sources_clear(c):
-    """
-    Remove the sources archives.
-    """
-    builder = BuilderSources(c)
-    builder.clear()
-
-
-@task
 def win(c, is_stable=False, skiparchives=False, skipinstaller=False):
     """
     Build OutWiker for Windows
@@ -81,21 +50,11 @@ def win(c, is_stable=False, skiparchives=False, skipinstaller=False):
 
 
 @task
-def win_clear(c):
-    """
-    Remove assemblies under Windows
-    """
-    builder = BuilderWindows(c)
-    builder.clear()
-
-
-@task
 def run(c, args=""):
     """
     Run OutWiker from sources
     """
-    with c.cd("src"):
-        c.run("{} -m outwiker {}".format(getPython(), args))
+    c.run("{} -m outwiker {}".format(getPython(), args))
 
 
 @task(iterable=["params"])
@@ -104,57 +63,9 @@ def test(c, params):
     Run the unit tests
     """
     if not params:
-        params = ["buildtools/src/buildtools/tests", "src/outwiker/tests"]
+        params = ["owbuildtools/src/buildtools/tests", "src/outwiker/tests"]
 
-    # command = getPython() if params else "coverage run {}".format(COVERAGE_PARAMS)
-
-    # c.run("{command} runtests.py {args}".format(command=command, args=" ".join(params)))
     c.run("coverage run runtests.py {args}".format(args=" ".join(params)))
-
-
-def _runTests(c, testdir, prefix, section="", *args):
-    files = [
-        fname[len(testdir) + 1 :]
-        for fname in glob.glob(
-            "{path}/{prefix}*.py".format(path=testdir, prefix=prefix)
-        )
-    ]
-    files.sort()
-
-    with c.cd(testdir):
-        if section:
-            c.run(
-                "{python} {prefix}{section}.py {params}".format(
-                    python=getPython(),
-                    prefix=prefix,
-                    section=section,
-                    params=" ".join(args),
-                )
-            )
-        else:
-            # with settings(warn_only=True):
-            for fname in files:
-                c.run(
-                    "{python} {fname} {params}".format(
-                        python=getPython(), fname=fname, params=" ".join(args)
-                    )
-                )
-
-
-@task
-def clear(c):
-    """
-    Remove artifacts after all assemblies
-    """
-    plugins_clear()
-    sources_clear()
-
-    if sys.platform.startswith("linux"):
-        linux_clear()
-        # deb_clear()
-        deb_binary_clear()
-    elif sys.platform.startswith("win32"):
-        win_clear()
 
 
 @task
@@ -164,13 +75,9 @@ def create_tree(c, maxlevel, nsiblings, path):
     """
     from outwiker.core.tree import WikiDocument
 
-    builtins._ = _empty
+    builtins._ = lambda x: x
     wikiroot = WikiDocument.create(path)
     _create_tree(1, int(maxlevel), int(nsiblings), wikiroot)
-
-
-def _empty(param):
-    return param
 
 
 def _create_tree(level, maxlevel, nsiblings, parent):
@@ -185,21 +92,6 @@ def _create_tree(level, maxlevel, nsiblings, parent):
             newpage.content = "Абырвалг"
             newpage.icon = "images/outwiker_16.png"
             _create_tree(level + 1, maxlevel, nsiblings, newpage)
-
-
-@task
-def build(c, is_stable=False):
-    """
-    Create artifacts for current version.
-    """
-    if is_stable:
-        build(False)
-
-    sources(c, is_stable)
-    plugins(c)
-
-    if sys.platform.startswith("win32"):
-        win(c, is_stable)
 
 
 @task
@@ -222,30 +114,6 @@ def coverage(c):
     """
     c.run("coverage report {} -i".format(COVERAGE_PARAMS))
     c.run("coverage html {} -i".format(COVERAGE_PARAMS))
-
-
-@task
-def docker_build_create(c):
-    """
-    Create a Docker image to build process
-    """
-    with c.cd("need_for_build/build_docker"):
-        c.run("docker build -t outwiker/build_linux .")
-
-
-@task
-def docker_build(c, *args):
-    """
-    Run the build process inside the Docker container
-    """
-    docker_build_create()
-
-    tasks_str = " ".join(args)
-    current_dir = os.path.abspath(".")
-    command = 'docker run -v "{path}:/home/user/project" --user $(id -u):$(id -g) -i -t outwiker/build_linux {tasks}'.format(
-        path=current_dir, tasks=tasks_str
-    )
-    c.run(command)
 
 
 @task(iterable=["params"])
@@ -294,13 +162,6 @@ def set_release_date(c, date=""):
 
     for fname, updater in _get_version_updaters():
         _set_release_date_for_file(fname, updater, date)
-
-
-@task
-def build_wxpython(c):
-    """Build wxPython from depends"""
-    builder = BuilderWxPython(c)
-    builder.build()
 
 
 def _get_version_updaters():

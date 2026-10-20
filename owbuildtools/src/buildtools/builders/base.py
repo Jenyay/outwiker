@@ -22,7 +22,7 @@ class BuilderBase(metaclass=abc.ABCMeta):
 
         self.facts = BuildFacts()
         self.build_dir = os.path.join(self.facts.version_dir, subdir_name)
-        self.temp_sources_dir = os.path.join(self.facts.temp_dir, 'src')
+        self.temp_sources_dir = os.path.join(self.facts.temp_dir, "src")
 
     @abc.abstractmethod
     def _build(self):
@@ -39,7 +39,7 @@ class BuilderBase(metaclass=abc.ABCMeta):
 
     def build(self):
         self._createRootDir()
-        print_info('Clearing...')
+        print_info("Clearing...")
         self.clear()
 
         self._remove(self.facts.temp_dir)
@@ -50,7 +50,7 @@ class BuilderBase(metaclass=abc.ABCMeta):
 
         self._copy_sources_to_temp()
 
-        print_info('Build to {}'.format(self.build_dir))
+        print_info("Build to {}".format(self.build_dir))
         self._build()
         self._postBuild()
         return self._getBuildReturnValue()
@@ -71,26 +71,31 @@ class BuilderBase(metaclass=abc.ABCMeta):
                 shutil.rmtree(path)
 
     def _copy_sources_to_temp(self):
-        print_info('Copy sources to {}...'.format(self.temp_sources_dir))
-        shutil.copytree('src',
-                        self.temp_sources_dir,
-                        ignore=shutil.ignore_patterns('__pycache__',
-                                                      '.pytest_cache',
-                                                      '.mypy_cache',
-                                                      'OutWiker.egg-info',
-                                                      'outwiker.egg-info',
-                                                      'tests'))
+        print_info("Copy sources to {}...".format(self.temp_sources_dir))
+        shutil.copytree(
+            "src",
+            self.temp_sources_dir,
+            ignore=shutil.ignore_patterns(
+                "__pycache__",
+                ".pytest_cache",
+                ".mypy_cache",
+                "OutWiker.egg-info",
+                "outwiker.egg-info",
+                "tests",
+                ".ruff_cache",
+            ),
+        )
 
     def _clear_sources(self):
-        '''
+        """
         Remove tests and dev scripts from sources
-        '''
+        """
 
     def _create_plugins_dir(self):
         """
         Create empty 'plugins' dir if it not exists
         """
-        pluginsdir = os.path.join(self.temp_sources_dir, 'plugins')
+        pluginsdir = os.path.join(self.temp_sources_dir, "plugins")
 
         # Create the plugins folder(it is not appened to the git repository)
         if not os.path.exists(pluginsdir):
@@ -99,17 +104,24 @@ class BuilderBase(metaclass=abc.ABCMeta):
         return pluginsdir
 
     def _copy_plugins(self, plugins_dir):
-        print_info('Copy plugins:')
+        print_info("Copy plugins:")
         if not os.path.exists(plugins_dir):
             os.mkdir(plugins_dir)
 
         for plugin_name in PLUGINS_LIST:
-            print_info('    {}'.format(plugin_name))
+            print_info("    {}".format(plugin_name))
 
-            src_dir = os.path.join(self.facts.src_plugins_dir,
-                                   plugin_name,
-                                   plugin_name)
-            shutil.copytree(src_dir,
-                            os.path.join(plugins_dir, plugin_name),
-                            ignore=shutil.ignore_patterns('__pycache__',
-                                                          '.mypy_cache'))
+            src_dir = os.path.join(self.facts.src_plugins_dir, plugin_name, plugin_name)
+            shutil.copytree(
+                src_dir,
+                os.path.join(plugins_dir, plugin_name),
+                ignore=shutil.ignore_patterns(
+                    "__pycache__",
+                    ".pytest_cache",
+                    ".mypy_cache",
+                    "OutWiker.egg-info",
+                    "outwiker.egg-info",
+                    "tests",
+                    ".ruff_cache",
+                ),
+            )

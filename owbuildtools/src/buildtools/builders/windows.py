@@ -172,12 +172,12 @@ class BuilderWindows(BuilderBase):
             )
 
             self.context.run(
-                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ropeproject'.format(
+                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ruff_cache -xr!.ropeproject'.format(
                     path_zip
                 )
             )
             self.context.run(
-                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ropeproject'.format(
+                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ruff_cache -xr!.ropeproject'.format(
                     path_7z
                 )
             )

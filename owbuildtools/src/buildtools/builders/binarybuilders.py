@@ -3,7 +3,6 @@
 from abc import ABCMeta, abstractmethod
 import os
 import os.path
-from pathlib import Path
 import shutil
 
 from cx_Freeze import Executable, Freezer
