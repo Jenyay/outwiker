@@ -79,7 +79,7 @@ default-groups = ["dev"]
 wxPython = [
     { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp312-cp312-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.12.*'" },
     { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp313-cp313-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.13.*'" },
-    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp313-cp313-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.14.*'" },
+    { url = "https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp314-cp314-linux_x86_64.whl", marker = "sys_platform == 'linux' and python_version == '3.14.*'" },
 ]
 owbuildtools = { path = "./owbuildtools", editable = true }
 
