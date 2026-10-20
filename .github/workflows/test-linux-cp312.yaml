@@ -57,10 +57,6 @@ jobs:
       - name: Create virtual environment
         run: uv venv --clear .venv
 
-      #- name: Install wxPython
-      #  run: |
-      #    uv pip install https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp312-cp312-linux_x86_64.whl
-
       - name: Sync dependencies
         run: uv sync --dev --extra gui
 

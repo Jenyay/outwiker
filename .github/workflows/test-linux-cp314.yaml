@@ -1,0 +1,76 @@
+name: Tests (Linux)
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            dpkg-dev \
+            libssl-dev \
+            gettext \
+            autopoint \
+            autoconf \
+            automake \
+            libtool \
+            pkg-config \
+            p7zip-full \
+            xvfb \
+            libgtk-3-0 \
+            ibus-gtk3 \
+            libglu1-mesa \
+            libpng-dev \
+            libjpeg-dev \
+            libtiff-dev \
+            libsdl2-dev \
+            libnotify-dev \
+            freeglut3-dev \
+            libhunspell-dev \
+            libgstreamer1.0-0 \
+            libgstreamer-plugins-base1.0-0 \
+            libsm6 \
+            libxext6 \
+            libxrender1 \
+            xserver-xorg-core \
+            libwebkit2gtk-4.1-0
+
+      - name: Check autopoint
+        run: which autopoint && autopoint --version
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+
+      - name: Create virtual environment
+        run: uv venv --clear .venv
+
+      - name: Sync dependencies
+        run: uv sync --dev --extra gui
+
+      - name: Verify wxPython
+        run: uv pip show wxPython && uv run python -c "import wx; print(wx.VERSION)"
+
+      - name: Run tests
+        run: xvfb-run --server-args="-screen 0 1280x1024x24" uv run inv test
+
+      - name: Coverage report
+        run: uv run inv coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage_report
+          path: build/htmlcov
