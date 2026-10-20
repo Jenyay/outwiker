@@ -3,7 +3,7 @@ name: Tests (Linux, Python 3.14)
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  test-linux:
+  test-linux-cp314:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

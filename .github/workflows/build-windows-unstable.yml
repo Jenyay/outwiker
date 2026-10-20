@@ -3,7 +3,7 @@ name: Build unstable (Windows)
 on: [push, workflow_dispatch]
 
 jobs:
-  build-windows:
+  build-windows-unstable:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7

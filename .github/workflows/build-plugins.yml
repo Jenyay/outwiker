@@ -3,7 +3,7 @@ name: Build plugins
 on: [push, workflow_dispatch]
 
 jobs:
-  build-windows:
+  build-plugins:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
