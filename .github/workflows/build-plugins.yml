@@ -1,0 +1,42 @@
+name: Build unstable (Windows)
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build-windows:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+
+      - name: Sync dependencies
+        run: uv sync --dev
+
+      - name: Get OutWiker version
+        shell: bash
+        run: |
+          OUTWIKER_VERSION=$(uv run python -c "import outwiker; print(outwiker.__version_str__)")
+          echo "OUTWIKER_VERSION=$OUTWIKER_VERSION" >> $GITHUB_ENV
+
+      - name: Build plugins
+        run: |
+          uv run python -m invoke plugins
+
+      - name: Create tar archive:
+          run tar -cvf build/${{ env.OUTWIKER_VERSION }}/plugins.tar build/${{ env.OUTWIKER_VERSION }}/plugins
+
+      - name: Upload plugins artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: outwiker_plugins_${{ env.OUTWIKER_VERSION }}
+          path: |
+            build/${{ env.OUTWIKER_VERSION }}/plugins.tar
