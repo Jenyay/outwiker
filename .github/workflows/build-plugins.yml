@@ -1,4 +1,4 @@
-name: Build unstable (Windows)
+name: Build plugins
 
 on: [push, workflow_dispatch]
 

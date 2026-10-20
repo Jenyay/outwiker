@@ -1,4 +1,4 @@
-name: Tests (Windows 64bit)
+name: Tests (Windows, Python 3.12)
 
 on: [push, pull_request, workflow_dispatch]
 
