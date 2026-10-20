@@ -68,7 +68,7 @@ jobs:
         run: uv pip show wxPython && uv run python -c "import wx; print(wx.VERSION)"
 
       - name: Run tests
-        run: xvfb-run --server-args="-screen 0 1280x1024x24" uv run inv test -p src/outwiker/tests/
+        run: xvfb-run --server-args="-screen 0 1280x1024x24" uv run inv test
 
       - name: Coverage report
         run: uv run inv coverage

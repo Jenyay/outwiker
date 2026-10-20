@@ -22,7 +22,7 @@ jobs:
         run: uv sync --dev --extra gui
 
       - name: Run tests
-        run: uv run inv test -p src/outwiker/tests/
+        run: uv run inv test
 
       - name: Coverage report
         run: uv run inv coverage
