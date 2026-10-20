@@ -94,7 +94,7 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '          <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString2 = '          <span class="nb">print</span> <span class="s2">"Hello world!!!"</span>'
         innerString3 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
@@ -121,7 +121,7 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString2 = '       <span class="nb">print</span> <span class="s2">"Hello world!!!"</span>'
         innerString3 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
@@ -149,7 +149,7 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString2 = '       <span class="nb">print</span> <span class="s2">"Hello world!!!"</span>'
         innerString3 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
@@ -176,7 +176,7 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = "        print &quot;Hello world!!!&quot;"
+        innerString2 = '        print "Hello world!!!"'
         innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result, result)
@@ -204,7 +204,7 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = "        print &quot;Hello world!!!&quot;"
+        innerString2 = '        print "Hello world!!!"'
         innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result)
@@ -232,7 +232,7 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = "        print &quot;Hello world!!!&quot;"
+        innerString2 = '        print "Hello world!!!"'
         innerString3 = "def hello (count):"
 
         self.assertTrue(innerString1 in result)
@@ -273,9 +273,9 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
-        innerString2 = "        print &quot;Hello world!!!&quot;"
+        innerString2 = '        print "Hello world!!!"'
         innerString3 = "def hello (count):"
-        innerString4 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString4 = '       <span class="nb">print</span> <span class="s2">"Hello world!!!"</span>'
         innerString5 = '<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
