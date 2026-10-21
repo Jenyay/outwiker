@@ -79,7 +79,15 @@ class PluginsController(object):
         # Ключ - имя плагина, оно же текст строки
         # Значение - экземпляр плагина
         self.__pluginsItems = {}
+        empty_html = """<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+    <style type='text/css'> body { background-color: white; } </style>
+</head>
+<body> </body>
+</html>"""
 
+        self.__owner.pluginsInfo.SetPage(empty_html, getCurrentDir())
         self.__owner.Bind(wx.EVT_LISTBOX, self.__onSelectItem, self.__owner.pluginsList)
 
     def __onSelectItem(self, event):
@@ -98,6 +106,7 @@ class PluginsController(object):
         infoTemplate = """<html>
 <head>
     <meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+    <style type='text/css'> body {{ background-color: white; }} </style>
 </head>
 
 <body>

@@ -121,15 +121,6 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
             action = action_controller.getActionByHotkey(hotkey)
             if action is not None:
                 action.run(None)
-        # key_event = wx.KeyEvent()
-        # key_event.SetUnicodeKey(ord(obj["key"]))
-        # key_event.SetAltDown(obj["alt"])
-        # key_event.SetShiftDown(obj["shift"])
-        # key_event.SetControlDown(obj["ctrl"])
-        # key_event.ResumePropagation(50)
-        # key_event.SetEventType(wx.wxEVT_KEY_DOWN)
-
-        # wx.PostEvent(self.GetParent(), key_event)
 
     def getBasePath(self) -> str:
         return self._basepath
@@ -196,6 +187,10 @@ class HtmlRenderEdgeBase(HtmlRenderBase):
             return
 
         href = event.GetURL()
+        if href.startswith("data:text/html;"):
+            # Come from SetPage() method
+            return
+
         href_decoded = self._decode_href(href)
         curr_href = self.render.GetCurrentURL()
         logger.debug(
