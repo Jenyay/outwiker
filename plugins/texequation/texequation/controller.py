@@ -27,7 +27,7 @@ class Controller:
             self._application,
             PAGE_TYPE_STRING,
         )
-        self._toolsWindowController = ToolsWindowController(self._application)
+        self._toolsWindowController = ToolsWindowController(self._application, self._plugin._temp_dir_obj.name)
 
     def initialize(self):
         """

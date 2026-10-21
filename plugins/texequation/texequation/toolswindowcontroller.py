@@ -13,8 +13,9 @@ from .defines import TOOLS_PANE_NAME
 
 
 class ToolsWindowController:
-    def __init__(self, application):
+    def __init__(self, application, temp_dir_path):
         self._application = application
+        self._temp_dir_path = temp_dir_path
         self._toolsPane = None
         self._prevPositionInsideEquation = False
         self._auiManager = self._application.mainWindow.auiManager
@@ -68,6 +69,7 @@ class ToolsWindowController:
                 self._application.mainWindow,
                 self._application.mainWindow.auiManager,
                 self._application,
+                self._temp_dir_path,
             )
             self._application.mainWindow.UpdateAuiManager()
 

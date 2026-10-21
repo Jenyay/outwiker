@@ -20,17 +20,16 @@ logger = logging.getLogger("TeXEquation")
 
 
 class ToolsPanel(wx.Panel):
-    def __init__(self, parent, application):
+    def __init__(self, parent, application, temp_dir_path):
         super().__init__(parent)
         self._application = application
+        self._temp_dir_path = temp_dir_path
 
         self._oldEquationHash = ""
         self._template_fname = str(
             Path(__file__).parents[1].joinpath("data", "equation.html")
         )
-        self._katexdir = "file://" + str(
-            Path(__file__).parents[1].joinpath("tools", KATEX_DIR_NAME)
-        ).replace("\\", "/")
+        self._katexdir = KATEX_DIR_NAME
         self._firstLoad = True
 
         self.createGUI()
@@ -65,11 +64,12 @@ class ToolsPanel(wx.Panel):
         equation = equation.replace('"', '\\"')
         equation = equation.replace("\n", "\\\n")
         html = self._getHTML(equation, blockMode)
-        path = (
-            urllib.parse.quote(os.path.abspath(".").replace("\\", "/"))
-            + "/"
-        )
-        self._htmlRender.SetPage(html, path)
+        
+        html_path = os.path.join(self._temp_dir_path, "texequation-preview.html")
+        with open(html_path, "w", encoding="utf-8") as f:
+            f.write(html)
+            
+        self._htmlRender.LoadPage(html_path)
         if self._firstLoad and getOSName() == "windows":
             # self._htmlRender.Reload()
             self._firstLoad = False
@@ -92,11 +92,15 @@ class ToolsPanel(wx.Panel):
 
 
 class ToolsPane(MainPane):
+    def __init__(self, parent, aui_manager, application, temp_dir_path):
+        self._temp_dir_path = temp_dir_path
+        super().__init__(parent, aui_manager, application)
+
     def beginRename(self, page=None):
         self.panel.beginRename(page)
 
     def _createPanel(self):
-        return ToolsPanel(self.parent, self.application)
+        return ToolsPanel(self.parent, self.application, self._temp_dir_path)
 
     def _createConfig(self):
         return TeXConfig(self.application.config)
