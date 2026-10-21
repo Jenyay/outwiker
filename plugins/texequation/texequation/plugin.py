@@ -14,7 +14,7 @@ class PluginTexEquation(Plugin):
         application - экземпляр класса core.application.ApplicationParams
         """
         super().__init__(application)
-        self._temp_dir_obj = tempfile.TemporaryDirectory()
+        self._temp_dir_obj = tempfile.TemporaryDirectory(prefix="outwiker-")
         self.__controller = Controller(self, application)
         self._copy_katex()
 

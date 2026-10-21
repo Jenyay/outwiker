@@ -30,7 +30,6 @@ class ToolsPanel(wx.Panel):
             Path(__file__).parents[1].joinpath("data", "equation.html")
         )
         self._katexdir = KATEX_DIR_NAME
-        self._firstLoad = True
 
         self.createGUI()
 
@@ -64,15 +63,12 @@ class ToolsPanel(wx.Panel):
         equation = equation.replace('"', '\\"')
         equation = equation.replace("\n", "\\\n")
         html = self._getHTML(equation, blockMode)
-        
+
         html_path = os.path.join(self._temp_dir_path, "texequation-preview.html")
         with open(html_path, "w", encoding="utf-8") as f:
             f.write(html)
-            
+
         self._htmlRender.LoadPage(html_path)
-        if self._firstLoad and getOSName() == "windows":
-            # self._htmlRender.Reload()
-            self._firstLoad = False
 
     def _getHTML(self, equation: str, blockMode: bool):
         try:

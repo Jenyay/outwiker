@@ -16,7 +16,6 @@ from outwiker.core.defines import APP_DATA_KEY_ANCHOR, URL_PROTOCOL
 from outwiker.core.urlmessage import parse_urlmessage
 from outwiker.gui.defines import ID_KEY_CTRL, ID_MOUSE_LEFT
 from outwiker.gui.hotkey import HotKey
-from outwiker.utilites.textfile import readTextFile
 
 
 from .htmlrender import HtmlRenderBase, HTMLRenderForPageMixin
@@ -371,20 +370,8 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
     def LoadPage(self, fname):
         logger.debug("LoadPage(%s). fname=%s", self._navigate_id, fname)
         self.render.Stop()
-
-        try:
-            html = readTextFile(fname)
-        except IOError:
-            text = _("Can't read file %s") % (fname)
-            self.canOpenUrl = fname
-            self.SetPage(text, os.path.dirname(fname))
-
-        basepath = os.path.dirname(fname)
-
-        if not basepath.endswith("/"):
-            basepath += "/"
-
-        self.SetPage(html, basepath, anchor=None)
+        self._basepath = fname
+        self.render.LoadURL(fname)
 
     def _identifyUri(self, href):
         """
@@ -393,21 +380,7 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
         uri = self.render.GetCurrentURL()
 
         logger.debug("_identifyUri. href=%s. current URI=%s", href, uri)
-
-        if uri is not None:
-            basepath = self.getBasePath()
-
-            url = URLRecognizer(basepath).recognize(href)
-            filename = FileRecognizerEdge(basepath).recognize(href)
-            anchor = AnchorRecognizerEdge(basepath).recognize(href)
-
-            logger.debug(
-                "_identifyUri. url=%s. filename=%s. anchor=%s", url, filename, anchor
-            )
-
-            return (url, filename, anchor)
-
-        return (None, None, None)
+        return (href, None, None)
 
     def _onLinkClicked(self, href):
         """
@@ -416,23 +389,4 @@ class HtmlRenderEdgeGeneral(HtmlRenderEdgeBase):
         в противном случае - True (если обрабатываем сами)
         href - ссылка
         """
-        source_href = href
-        href = urllib.parse.unquote(href)
-        href = self.decodeIDNA(href)
-
-        logger.debug("_onLinkClicked. href_src=%s", source_href)
-
-        (url, filename, anchor) = self._identifyUri(href)
-
-        if url is not None:
-            self.openUrl(url)
-        elif filename is not None:
-            try:
-                outwiker.core.system.getOS().startFile(filename)
-            except OSError:
-                text = _("Can't execute file '%s'") % filename
-                showError(self._application.mainWindow, text)
-        elif anchor is not None:
-            return False
-
-        return True
+        return False
