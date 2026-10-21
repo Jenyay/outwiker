@@ -1,5 +1,106 @@
-import katex from '../katex.mjs';
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("katex"));
+	else if(typeof define === 'function' && define.amd)
+		define(["katex"], factory);
+	else {
+		var a = typeof exports === 'object' ? factory(require("katex")) : factory(root["katex"]);
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})((typeof self !== 'undefined' ? self : this), function(__WEBPACK_EXTERNAL_MODULE__757__) {
+return /******/ (function() { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
 
+/***/ 757:
+/***/ (function(module) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__757__;
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": function() { return /* binding */ render_a11y_string; }
+});
+
+;// ./src/atoms.ts
+/**
+ * Small module for atom-group constants and type guard.  Kept separate from
+ * `symbols.ts` so that consumers (notably `contrib/render-a11y-string`) can
+ * pull in `isAtom` without dragging in the ~870-line symbol tables.
+ */
+
+const atomList = ["bin", "close", "inner", "open", "punct", "rel"];
+const nonAtomList = ["accent-token", "mathord", "op-token", "spacing", "textord"];
+const Atoms = new Set(atomList);
+const NonAtoms = new Set(nonAtomList);
+function isAtom(value) {
+  return Atoms.has(value);
+}
+// EXTERNAL MODULE: external "katex"
+var external_katex_ = __webpack_require__(757);
+var external_katex_default = /*#__PURE__*/__webpack_require__.n(external_katex_);
+;// ./contrib/render-a11y-string/render-a11y-string.ts
 /**
  * renderA11yString returns a readable string.
  *
@@ -15,7 +116,10 @@ import katex from '../katex.mjs';
  * The commas in the string aim to increase ease of understanding
  * when read by a screenreader.
  */
-var stringMap = {
+
+
+
+const stringMap = {
   "(": "left parenthesis",
   ")": "right parenthesis",
   "[": "open bracket",
@@ -88,22 +192,22 @@ var stringMap = {
   "\\hat": "hat",
   "\\acute": "acute"
 };
-var powerMap = {
+const powerMap = {
   "prime": "prime",
   "degree": "degrees",
   "circle": "degrees",
   "2": "squared",
   "3": "cubed"
 };
-var openMap = {
+const openMap = {
   "|": "open vertical bar",
   ".": ""
 };
-var closeMap = {
+const closeMap = {
   "|": "close vertical bar",
   ".": ""
 };
-var binMap = {
+const binMap = {
   "+": "plus",
   "-": "minus",
   "\\pm": "plus minus",
@@ -115,7 +219,7 @@ var binMap = {
   "\\circ": "circle",
   "\\bullet": "bullet"
 };
-var relMap = {
+const relMap = {
   "=": "equals",
   "\\approx": "approximately equals",
   "≠": "does not equal",
@@ -131,7 +235,7 @@ var relMap = {
   "\\Rightarrow": "right arrow",
   ":": "colon"
 };
-var accentUnderMap = {
+const accentUnderMap = {
   "\\underleftarrow": "left arrow",
   "\\underrightarrow": "right arrow",
   "\\underleftrightarrow": "left-right arrow",
@@ -139,14 +243,11 @@ var accentUnderMap = {
   "\\underlinesegment": "line segment",
   "\\utilde": "tilde"
 };
-
-var buildString = (str, type, a11yStrings) => {
+const buildString = (str, type, a11yStrings) => {
   if (!str) {
     return;
   }
-
-  var ret;
-
+  let ret;
   if (type === "open") {
     ret = str in openMap ? openMap[str] : stringMap[str] || str;
   } else if (type === "close") {
@@ -157,29 +258,24 @@ var buildString = (str, type, a11yStrings) => {
     ret = relMap[str] || str;
   } else {
     ret = stringMap[str] || str;
-  } // If the text to add is a number and there is already a string
+  }
+
+  // If the text to add is a number and there is already a string
   // in the list and the last string is a number then we should
   // combine them into a single number
-
-
-  if (/^\d+$/.test(ret) && a11yStrings.length > 0 && // TODO(kevinb): check that the last item in a11yStrings is a string
-  // I think we might be able to drop the nested arrays, which would make
-  // this easier to type
-  // $FlowFixMe
-  /^\d+$/.test(a11yStrings[a11yStrings.length - 1])) {
+  const last = a11yStrings[a11yStrings.length - 1];
+  if (/^\d+$/.test(ret) && a11yStrings.length > 0 && typeof last === "string" && /^\d+$/.test(last)) {
     a11yStrings[a11yStrings.length - 1] += ret;
   } else if (ret) {
     a11yStrings.push(ret);
   }
 };
-
-var buildRegion = (a11yStrings, callback) => {
-  var regionStrings = [];
+const buildRegion = (a11yStrings, callback) => {
+  const regionStrings = [];
   a11yStrings.push(regionStrings);
   callback(regionStrings);
 };
-
-var handleObject = (tree, a11yStrings, atomType) => {
+const handleObject = (tree, a11yStrings, atomType) => {
   // Everything else is assumed to be an object...
   switch (tree.type) {
     case "accent":
@@ -192,7 +288,6 @@ var handleObject = (tree, a11yStrings, atomType) => {
         });
         break;
       }
-
     case "accentUnder":
       {
         buildRegion(a11yStrings, a11yStrings => {
@@ -203,70 +298,57 @@ var handleObject = (tree, a11yStrings, atomType) => {
         });
         break;
       }
-
     case "accent-token":
       {
         // Used internally by accent symbols.
         break;
       }
-
     case "atom":
       {
-        var {
-          text
-        } = tree;
-
+        const text = tree.text;
         switch (tree.family) {
           case "bin":
             {
               buildString(text, "bin", a11yStrings);
               break;
             }
-
           case "close":
             {
               buildString(text, "close", a11yStrings);
               break;
             }
           // TODO(kevinb): figure out what should be done for inner
-
           case "inner":
             {
               buildString(tree.text, "inner", a11yStrings);
               break;
             }
-
           case "open":
             {
               buildString(text, "open", a11yStrings);
               break;
             }
-
           case "punct":
             {
               buildString(text, "punct", a11yStrings);
               break;
             }
-
           case "rel":
             {
               buildString(text, "rel", a11yStrings);
               break;
             }
-
           default:
             {
               tree.family;
               throw new Error("\"" + tree.family + "\" is not a valid atom type");
             }
         }
-
         break;
       }
-
     case "color":
       {
-        var color = tree.color.replace(/katex-/, "");
+        const color = tree.color.replace(/katex-/, "");
         buildRegion(a11yStrings, regionStrings => {
           regionStrings.push("start color " + color);
           buildA11yStrings(tree.body, regionStrings, atomType);
@@ -274,33 +356,28 @@ var handleObject = (tree, a11yStrings, atomType) => {
         });
         break;
       }
-
     case "color-token":
       {
         // Used by \color, \colorbox, and \fcolorbox but not directly rendered.
         // It's a leaf node and has no children so just break.
         break;
       }
-
     case "delimsizing":
       {
         if (tree.delim && tree.delim !== ".") {
           buildString(tree.delim, "normal", a11yStrings);
         }
-
         break;
       }
-
     case "genfrac":
       {
         buildRegion(a11yStrings, regionStrings => {
           // genfrac can have unbalanced delimiters
-          var {
-            leftDelim,
-            rightDelim
-          } = tree; // NOTE: Not sure if this is a safe assumption
-          // hasBarLine true -> fraction, false -> binomial
+          const leftDelim = tree.leftDelim,
+            rightDelim = tree.rightDelim;
 
+          // NOTE: Not sure if this is a safe assumption
+          // hasBarLine true -> fraction, false -> binomial
           if (tree.hasBarLine) {
             regionStrings.push("start fraction");
             leftDelim && buildString(leftDelim, "open", regionStrings);
@@ -321,20 +398,17 @@ var handleObject = (tree, a11yStrings, atomType) => {
         });
         break;
       }
-
     case "hbox":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "kern":
       {
         // No op: we don't attempt to present kerning information
         // to the screen reader.
         break;
       }
-
     case "leftright":
       {
         buildRegion(a11yStrings, regionStrings => {
@@ -344,54 +418,43 @@ var handleObject = (tree, a11yStrings, atomType) => {
         });
         break;
       }
-
     case "leftright-right":
       {
         // TODO: double check that this is a no-op
         break;
       }
-
     case "lap":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "mathord":
       {
         buildString(tree.text, "normal", a11yStrings);
         break;
       }
-
     case "op":
       {
-        var {
-          body,
-          name
-        } = tree;
-
+        const body = tree.body,
+          name = tree.name;
         if (body) {
           buildA11yStrings(body, a11yStrings, atomType);
         } else if (name) {
           buildString(name, "normal", a11yStrings);
         }
-
         break;
       }
-
     case "op-token":
       {
         // Used internally by operator symbols.
         buildString(tree.text, atomType, a11yStrings);
         break;
       }
-
     case "ordgroup":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "overline":
       {
         buildRegion(a11yStrings, function (a11yStrings) {
@@ -401,123 +464,99 @@ var handleObject = (tree, a11yStrings, atomType) => {
         });
         break;
       }
-
     case "pmb":
       {
         a11yStrings.push("bold");
         break;
       }
-
     case "phantom":
       {
         a11yStrings.push("empty space");
         break;
       }
-
     case "raisebox":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "rule":
       {
         a11yStrings.push("rectangle");
         break;
       }
-
     case "sizing":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "spacing":
       {
         a11yStrings.push("space");
         break;
       }
-
     case "styling":
       {
         // We ignore the styling and just pass through the contents
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "sqrt":
       {
         buildRegion(a11yStrings, regionStrings => {
-          var {
-            body,
-            index
-          } = tree;
-
+          const body = tree.body,
+            index = tree.index;
           if (index) {
-            var indexString = flatten(buildA11yStrings(index, [], atomType)).join(",");
-
+            const indexString = flatten(buildA11yStrings(index, [], atomType)).join(",");
             if (indexString === "3") {
               regionStrings.push("cube root of");
               buildA11yStrings(body, regionStrings, atomType);
               regionStrings.push("end cube root");
               return;
             }
-
             regionStrings.push("root");
             regionStrings.push("start index");
             buildA11yStrings(index, regionStrings, atomType);
             regionStrings.push("end index");
             return;
           }
-
           regionStrings.push("square root of");
           buildA11yStrings(body, regionStrings, atomType);
           regionStrings.push("end square root");
         });
         break;
       }
-
     case "supsub":
       {
-        var {
-          base,
-          sub,
-          sup
-        } = tree;
-        var isLog = false;
-
+        const base = tree.base,
+          sub = tree.sub,
+          sup = tree.sup;
+        let isLog = false;
         if (base) {
           buildA11yStrings(base, a11yStrings, atomType);
           isLog = base.type === "op" && base.name === "\\log";
         }
-
         if (sub) {
-          var regionName = isLog ? "base" : "subscript";
+          const regionName = isLog ? "base" : "subscript";
           buildRegion(a11yStrings, function (regionStrings) {
             regionStrings.push("start " + regionName);
             buildA11yStrings(sub, regionStrings, atomType);
             regionStrings.push("end " + regionName);
           });
         }
-
         if (sup) {
           buildRegion(a11yStrings, function (regionStrings) {
-            var supString = flatten(buildA11yStrings(sup, [], atomType)).join(",");
-
+            const supString = flatten(buildA11yStrings(sup, [], atomType)).join(",");
             if (supString in powerMap) {
               regionStrings.push(powerMap[supString]);
               return;
             }
-
             regionStrings.push("start superscript");
             buildA11yStrings(sup, regionStrings, atomType);
             regionStrings.push("end superscript");
           });
         }
-
         break;
       }
-
     case "text":
       {
         // TODO: handle other fonts
@@ -529,7 +568,6 @@ var handleObject = (tree, a11yStrings, atomType) => {
           });
           break;
         }
-
         buildRegion(a11yStrings, function (regionStrings) {
           regionStrings.push("start text");
           buildA11yStrings(tree.body, regionStrings, atomType);
@@ -537,19 +575,16 @@ var handleObject = (tree, a11yStrings, atomType) => {
         });
         break;
       }
-
     case "textord":
       {
         buildString(tree.text, atomType, a11yStrings);
         break;
       }
-
     case "smash":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "enclose":
       {
         // TODO: create a map for these.
@@ -584,59 +619,44 @@ var handleObject = (tree, a11yStrings, atomType) => {
           });
           break;
         }
-
         throw new Error("KaTeX-a11y: enclose node with " + tree.label + " not supported yet");
       }
-
     case "vcenter":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "vphantom":
       {
         throw new Error("KaTeX-a11y: vphantom not implemented yet");
       }
-
-    case "hphantom":
-      {
-        throw new Error("KaTeX-a11y: hphantom not implemented yet");
-      }
-
     case "operatorname":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "array":
       {
         throw new Error("KaTeX-a11y: array not implemented yet");
       }
-
     case "raw":
       {
         throw new Error("KaTeX-a11y: raw not implemented yet");
       }
-
     case "size":
       {
         // Although there are nodes of type "size" in the parse tree, they have
         // no semantic meaning and should be ignored.
         break;
       }
-
     case "url":
       {
         throw new Error("KaTeX-a11y: url not implemented yet");
       }
-
     case "tag":
       {
         throw new Error("KaTeX-a11y: tag not implemented yet");
       }
-
     case "verb":
       {
         buildString("start verbatim", "normal", a11yStrings);
@@ -644,12 +664,10 @@ var handleObject = (tree, a11yStrings, atomType) => {
         buildString("end verbatim", "normal", a11yStrings);
         break;
       }
-
     case "environment":
       {
         throw new Error("KaTeX-a11y: environment not implemented yet");
       }
-
     case "horizBrace":
       {
         buildString("start " + tree.label.slice(1), "normal", a11yStrings);
@@ -657,18 +675,15 @@ var handleObject = (tree, a11yStrings, atomType) => {
         buildString("end " + tree.label.slice(1), "normal", a11yStrings);
         break;
       }
-
     case "infix":
       {
         // All infix nodes are replace with other nodes.
         break;
       }
-
     case "includegraphics":
       {
         throw new Error("KaTeX-a11y: includegraphics not implemented yet");
       }
-
     case "font":
       {
         // TODO: callout the start/end of specific fonts
@@ -676,18 +691,15 @@ var handleObject = (tree, a11yStrings, atomType) => {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     case "href":
       {
         throw new Error("KaTeX-a11y: href not implemented yet");
       }
-
     case "cr":
       {
         // This is used by environments.
         throw new Error("KaTeX-a11y: cr not implemented yet");
       }
-
     case "underline":
       {
         buildRegion(a11yStrings, function (a11yStrings) {
@@ -697,33 +709,31 @@ var handleObject = (tree, a11yStrings, atomType) => {
         });
         break;
       }
-
     case "xArrow":
       {
         throw new Error("KaTeX-a11y: xArrow not implemented yet");
       }
-
     case "cdlabel":
       {
         throw new Error("KaTeX-a11y: cdlabel not implemented yet");
       }
-
     case "cdlabelparent":
       {
         throw new Error("KaTeX-a11y: cdlabelparent not implemented yet");
       }
-
     case "mclass":
       {
         // \neq and \ne are macros so we let "htmlmathml" render the mathmal
         // side of things and extract the text from that.
-        var _atomType = tree.mclass.slice(1); // $FlowFixMe: drop the leading "m" from the values in mclass
-
-
-        buildA11yStrings(tree.body, a11yStrings, _atomType);
+        // mclass values are prefixed with "m" (e.g. "mrel" -> "rel")
+        const atomType = tree.mclass.slice(1);
+        if (atomType === "normal" || isAtom(atomType)) {
+          buildA11yStrings(tree.body, a11yStrings, atomType);
+        } else {
+          throw new Error("Unexpected mclass atom type: \"" + atomType + "\"");
+        }
         break;
       }
-
     case "mathchoice":
       {
         // TODO: track which style we're using, e.g. display, text, etc.
@@ -731,57 +741,47 @@ var handleObject = (tree, a11yStrings, atomType) => {
         buildA11yStrings(tree.text, a11yStrings, atomType);
         break;
       }
-
     case "htmlmathml":
       {
         buildA11yStrings(tree.mathml, a11yStrings, atomType);
         break;
       }
-
     case "middle":
       {
         buildString(tree.delim, atomType, a11yStrings);
         break;
       }
-
     case "internal":
       {
         // internal nodes are never included in the parse tree
         break;
       }
-
     case "html":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
         break;
       }
-
     default:
-      tree.type;
       throw new Error("KaTeX a11y un-recognized type: " + tree.type);
   }
 };
-
-var buildA11yStrings = function buildA11yStrings(tree, a11yStrings, atomType) {
+const buildA11yStrings = function (tree, a11yStrings, atomType) {
   if (a11yStrings === void 0) {
     a11yStrings = [];
   }
-
   if (tree instanceof Array) {
-    for (var i = 0; i < tree.length; i++) {
+    for (let i = 0; i < tree.length; i++) {
       buildA11yStrings(tree[i], a11yStrings, atomType);
     }
   } else {
     handleObject(tree, a11yStrings, atomType);
   }
-
   return a11yStrings;
 };
-
-var flatten = function flatten(array) {
-  var result = [];
+const flatten = function (array) {
+  let result = [];
   array.forEach(function (item) {
-    if (item instanceof Array) {
+    if (Array.isArray(item)) {
       result = result.concat(flatten(item));
     } else {
       result.push(item);
@@ -789,12 +789,14 @@ var flatten = function flatten(array) {
   });
   return result;
 };
-
-var renderA11yString = function renderA11yString(text, settings) {
-  var tree = katex.__parse(text, settings);
-
-  var a11yStrings = buildA11yStrings(tree, [], "normal");
+const renderA11yString = function (text, settings) {
+  const tree = external_katex_default().__parse(text, settings);
+  const a11yStrings = buildA11yStrings(tree, [], "normal");
   return flatten(a11yStrings).join(", ");
 };
-
-export { renderA11yString as default };
+/* harmony default export */ var render_a11y_string = (renderA11yString);
+__webpack_exports__ = __webpack_exports__["default"];
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
+});
