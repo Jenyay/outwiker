@@ -11,14 +11,14 @@ from pathlib import Path
 
 from invoke import task
 
-from buildtools.utilites import getPython
-from buildtools.defines import COVERAGE_PARAMS
-from buildtools.builders import (
+from outwiker.build.utilites import getPython
+from outwiker.build.defines import COVERAGE_PARAMS
+from outwiker.build.builders import (
     BuilderWindows,
     BuilderPlugins,
     BuilderSnap,
 )
-from buildtools.versionstools import (
+from outwiker.build.versionstools import (
     display_version,
     InitUpdater,
     VersionsXmlUpdater,
@@ -62,10 +62,9 @@ def test(c, params):
     """
     Run the unit tests
     """
-    if not params:
-        params = ["owbuildtools/src/buildtools/tests", "src/outwiker/tests"]
+    params = "src/outwiker/tests"
 
-    c.run("coverage run runtests.py {args}".format(args=" ".join(params)))
+    c.run(f"coverage run runtests.py {params}")
 
 
 @task

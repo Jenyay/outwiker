@@ -2,7 +2,7 @@
 
 import io
 
-from buildtools.versionstools import InitUpdater
+from outwiker.build.versionstools import InitUpdater
 
 
 def test_set_version_01():

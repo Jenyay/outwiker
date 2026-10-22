@@ -2,7 +2,7 @@
 
 from io import StringIO
 
-from buildtools.versionstools import AppDataXmlUpdater
+from outwiker.build.versionstools import AppDataXmlUpdater
 
 
 def test_set_version_01():

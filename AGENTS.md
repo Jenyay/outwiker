@@ -18,7 +18,8 @@
 - Plugin sources: `plugins/`
 
 ### Build Tools
-- Build package sources: `owbuildtools/`
+- Build tools sources: `src/outwiker/build/`
+- Invoke tasks: `tasks.py`
 
 ### Testing
 - Test location: `src/outwiker/tests`

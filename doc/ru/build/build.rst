@@ -21,7 +21,7 @@
 
 Разные классы сборок могут добавлять дополнительные файлы в папку :file:`tmp`.
 
-Описанные возможности реализованы в классе :py:class:`buildtools.builders.base.BuilderBase`.
+Описанные возможности реализованы в классе :py:class:`outwiker.build.builders.base.BuilderBase`.
 
 Сборка осуществляется с помощью команд Invoke (см. раздел :ref:`ru_invoke`).
 
@@ -103,11 +103,11 @@
 Порядок сборки дистрибутивов под Windows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Все действия, связанные со сборкой под Windows сосредоточены в классе :class:`buildtools.builders.windows.BuilderWindows`, который является производным от :class:`buildtools.builders.base.BuilderBase`.
+Все действия, связанные со сборкой под Windows сосредоточены в классе :class:`outwiker.build.builders.windows.BuilderWindows`, который является производным от :class:`outwiker.build.builders.base.BuilderBase`.
 
 В процессе сборки выполняются следующие действия:
 
-Действия, выполняемые классом :class:`buildtools.builders.windows.BuilderBase`.
+Действия, выполняемые классом :class:`outwiker.build.builders.windows.BuilderBase`.
 
 
 #. Создание папки :file:`build`.
@@ -125,7 +125,7 @@
 #. В папке :file:`build/tmp/src` удаляется файл :file:`versions_stable.xml`, если создается нестабильная версия OutWiker, или :file:`versions_stable.xml` переименовывается в :file:`versions.xml`, если создается стабильная версия OutWiker.
 
 
-Действия, выполняемые классом :class:`buildtools.builders.windows.BuilderWindows`.
+Действия, выполняемые классом :class:`outwiker.build.builders.windows.BuilderWindows`.
 
 
 #. В папку :file:`tmp` копируются файлы :file:`copyright.txt` и :file:`LICENSE.txt`.

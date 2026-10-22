@@ -2,7 +2,7 @@
 
 import os.path
 
-from buildtools.versions import getOutwikerVersionStr, getOutwikerVersion
+from outwiker.build.versions import getOutwikerVersionStr, getOutwikerVersion
 from . import defines
 
 

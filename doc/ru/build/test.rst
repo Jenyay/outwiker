@@ -25,7 +25,7 @@
 
 :file:`tests/plugins` - тесты плагинов. Для каждого плагина создана отдельная папка внутри :file:`tests/plugins/`. Например, тесты для плагина markdown_ располагаются в папке :file:`tests/plugins/markdown`.
 
-:file:`tests/buildtools` - Тесты системы сборки.
+:file:`tests/build` - Тесты системы сборки.
 
 
 .. _ru_test_params:

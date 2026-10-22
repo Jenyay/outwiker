@@ -2,7 +2,7 @@
 
 import io
 
-from buildtools.versionstools import VersionsXmlUpdater
+from outwiker.build.versionstools import VersionsXmlUpdater
 
 
 def test_set_version_01():

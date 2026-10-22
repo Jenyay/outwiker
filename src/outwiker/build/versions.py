@@ -8,7 +8,7 @@ from outwiker.core.appinfo import AppInfo
 from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.utilites.textfile import readTextFile
 from outwiker.utilites.downloader import Downloader
-from buildtools.defines import (
+from outwiker.build.defines import (
     DOWNLOAD_TIMEOUT,
     PLUGIN_INFO_FILENAME,
     PLUGINS_DIR,

@@ -6,9 +6,9 @@ import shutil
 
 from invoke import Context
 
-from buildtools.defines import PLUGINS_LIST
-from buildtools.buildfacts import BuildFacts
-from buildtools.utilites import print_info
+from outwiker.build.defines import PLUGINS_LIST
+from outwiker.build.buildfacts import BuildFacts
+from outwiker.build.utilites import print_info
 
 
 class BuilderBase(metaclass=abc.ABCMeta):

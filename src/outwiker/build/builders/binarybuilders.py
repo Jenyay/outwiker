@@ -7,7 +7,7 @@ import shutil
 
 from cx_Freeze import Executable, Freezer
 from invoke.context import Context
-from buildtools.utilites import remove, print_info
+from outwiker.build.utilites import remove, print_info
 
 
 class BaseBinaryBuilder(metaclass=ABCMeta):
@@ -30,6 +30,8 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
     def get_excludes(self):
         """Return modules list to exclude from build."""
         return [
+            "outwiker.build",
+            "outwiker.tests",
             "tkinter",
             "PyQt4",
             "PyQt5",

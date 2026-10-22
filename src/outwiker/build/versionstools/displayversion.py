@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from buildtools.buildfacts import BuildFacts
+from outwiker.build.buildfacts import BuildFacts
 
 
 def display_version():

@@ -7,9 +7,9 @@ import shutil
 from invoke import Context
 
 from ..base import BuilderBase
-from buildtools.defines import SNAP_BUILD_DIR, PLUGINS_DIR
-from buildtools.template import substitute_in_file
-from buildtools.utilites import print_info
+from outwiker.build.defines import SNAP_BUILD_DIR, PLUGINS_DIR
+from outwiker.build.template import substitute_in_file
+from outwiker.build.utilites import print_info
 
 
 class BuilderSnap(BuilderBase):

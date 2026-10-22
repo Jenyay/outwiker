@@ -9,8 +9,8 @@ import urllib.parse
 from invoke import Context
 
 from .base import BuilderBase
-from buildtools.defines import PLUGINS_DIR, PLUGINS_LIST
-from buildtools.versions import (
+from outwiker.build.defines import PLUGINS_DIR, PLUGINS_LIST
+from outwiker.build.versions import (
     readAppInfo,
     getPluginInfoPath,
     getPluginChangelogPath,
