@@ -126,6 +126,7 @@ class TextEditor(TextEditorBase):
         fontColor = self.sanitize_color(self._config.fontColor)
         backColor = self.sanitize_color(self._config.backColor)
         selBackColor = self.sanitize_color(self._config.selBackColor)
+        selFontColor = self.sanitize_color(self._config.selFontColor)
         marginBackColor = self.sanitize_color(self._config.marginBackColor)
         lineNumberFontColor = self.sanitize_color(self._config.lineNumberFontColor)
 
@@ -142,6 +143,12 @@ class TextEditor(TextEditorBase):
         self.textCtrl.StyleClearAll()
 
         self.textCtrl.SetSelBackground(1, selBackColor)
+
+        # The empty value means that the default font color is used
+        if selFontColor:
+            self.textCtrl.SetSelForeground(True, selFontColor)
+        else:
+            self.textCtrl.SetSelForeground(False, fontColor)
 
         self.textCtrl.SetCaretForeground(fontColor)
         self.textCtrl.SetCaretLineBackground(backColor)

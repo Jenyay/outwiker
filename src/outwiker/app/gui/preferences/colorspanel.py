@@ -89,6 +89,11 @@ class ColorsPanel(BasePrefPanel):
         )
         self.addColorParam(
             _("Editor"),
+            _("Font color of the selected text"),
+            self._editorGuiConfig.selFontColor,
+        )
+        self.addColorParam(
+            _("Editor"),
             _("Background color of the selected text"),
             self._editorGuiConfig.selBackColor,
         )

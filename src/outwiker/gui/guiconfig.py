@@ -379,6 +379,10 @@ class EditorConfig:
     BACK_COLOR_PARAM = "BackColor"
     BACK_COLOR_DEFAULT = "#FFFFFF"
 
+    # Selected text font color (empty string means the default font color)
+    SEL_FONT_COLOR_PARAM = "SelFontColor"
+    SEL_FONT_COLOR_DEFAULT = "#000000"
+
     # Selected text background color
     SEL_BACK_COLOR_PARAM = "SelBackColor"
     SEL_BACK_COLOR_DEFAULT = "#C0C0C0"
@@ -484,6 +488,13 @@ class EditorConfig:
             EditorConfig.EDITOR_SECTION,
             EditorConfig.BACK_COLOR_PARAM,
             EditorConfig.BACK_COLOR_DEFAULT,
+        )
+
+        self.selFontColor = StringOption(
+            self.config,
+            EditorConfig.EDITOR_SECTION,
+            EditorConfig.SEL_FONT_COLOR_PARAM,
+            EditorConfig.SEL_FONT_COLOR_DEFAULT,
         )
 
         self.selBackColor = StringOption(
