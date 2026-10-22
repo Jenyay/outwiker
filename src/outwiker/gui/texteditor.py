@@ -142,7 +142,7 @@ class TextEditor(TextEditorBase):
         self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_DEFAULT, backColor)
         self.textCtrl.StyleClearAll()
 
-        self.textCtrl.SetSelBackground(1, selBackColor)
+        self.textCtrl.SetSelBackground(True, selBackColor)
 
         # The empty value means that the default font color is used
         if selFontColor:
