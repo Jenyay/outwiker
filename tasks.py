@@ -62,9 +62,11 @@ def test(c, params):
     """
     Run the unit tests
     """
-    params = "src/outwiker/tests"
+    if not params:
+        params = ["src/outwiker/tests"]
 
-    c.run(f"coverage run runtests.py {params}")
+    params_str = " ".join(params)
+    c.run(f"coverage run runtests.py {params_str}")
 
 
 @task
