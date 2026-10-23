@@ -1,4 +1,0 @@
-#!/bin/sh
-
-cd /app/bin/net.jenyay.Outwiker
-python3 runoutwiker.py "$@"
