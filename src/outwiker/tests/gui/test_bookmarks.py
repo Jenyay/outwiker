@@ -32,11 +32,11 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
 
         self.assertNotEqual(bookmarksMenu, None)
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 2)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
 
         items = bookmarksMenu.GetMenuItems()
-        self.assertFalse(items[0].IsSeparator())
-        self.assertTrue(items[1].IsSeparator())
+        self.assertFalse(items[1].IsSeparator())
+        self.assertTrue(items[2].IsSeparator())
 
     def _getItemText(self, item):
         return item.GetItemLabel().replace("_", "").replace("&", "")
@@ -47,16 +47,16 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
 
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 4)
 
         items = bookmarksMenu.GetMenuItems()
-        self.assertFalse(items[0].IsSeparator())
-        self.assertTrue(items[1].IsSeparator())
+        self.assertFalse(items[1].IsSeparator())
+        self.assertTrue(items[2].IsSeparator())
 
-        self.assertEqual(self._getItemText(items[2]), "Страница 1")
+        self.assertEqual(self._getItemText(items[3]), "Страница 1")
 
         self.bookmarks.remove(self.wikiroot["Страница 1"])
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 2)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
 
     def testAddBookmarks1_AsPageUID(self):
         self.application.wikiroot = self.wikiroot
@@ -64,16 +64,16 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.bookmarks.add(self.wikiroot["Страница 1"])
 
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 4)
 
         items = bookmarksMenu.GetMenuItems()
-        self.assertFalse(items[0].IsSeparator())
-        self.assertTrue(items[1].IsSeparator())
+        self.assertFalse(items[1].IsSeparator())
+        self.assertTrue(items[2].IsSeparator())
 
-        self.assertEqual(self._getItemText(items[2]), "Страница 1")
+        self.assertEqual(self._getItemText(items[3]), "Страница 1")
 
         self.bookmarks.remove(self.wikiroot["Страница 1"])
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 2)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
 
     def testAddBookmarks2_AsSubpath(self):
         self.application.wikiroot = self.wikiroot
@@ -83,23 +83,23 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.bookmarks.add(self.wikiroot["Страница 1"], subpath=True)
         self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"], subpath=True)
 
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 4)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
 
         items = bookmarksMenu.GetMenuItems()
-        self.assertFalse(items[0].IsSeparator())
-        self.assertTrue(items[1].IsSeparator())
+        self.assertFalse(items[1].IsSeparator())
+        self.assertTrue(items[2].IsSeparator())
 
-        self.assertEqual(self._getItemText(items[2]), "Страница 1")
-        self.assertEqual(self._getItemText(items[3]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(items[3]), "Страница 1")
+        self.assertEqual(self._getItemText(items[4]), "Страница 3 [Страница 2]")
 
         self.bookmarks.remove(self.wikiroot["Страница 1"])
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 4)
 
         newitems = bookmarksMenu.GetMenuItems()
-        self.assertFalse(newitems[0].IsSeparator())
-        self.assertTrue(newitems[1].IsSeparator())
+        self.assertFalse(newitems[1].IsSeparator())
+        self.assertTrue(newitems[2].IsSeparator())
 
-        self.assertEqual(self._getItemText(newitems[2]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(newitems[3]), "Страница 3 [Страница 2]")
 
     def testAddBookmarks2_AsPageUID(self):
         self.application.wikiroot = self.wikiroot
@@ -109,23 +109,23 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.bookmarks.add(self.wikiroot["Страница 1"])
         self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
 
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 4)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
 
         items = bookmarksMenu.GetMenuItems()
-        self.assertFalse(items[0].IsSeparator())
-        self.assertTrue(items[1].IsSeparator())
+        self.assertFalse(items[1].IsSeparator())
+        self.assertTrue(items[2].IsSeparator())
 
-        self.assertEqual(self._getItemText(items[2]), "Страница 1")
-        self.assertEqual(self._getItemText(items[3]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(items[3]), "Страница 1")
+        self.assertEqual(self._getItemText(items[4]), "Страница 3 [Страница 2]")
 
         self.bookmarks.remove(self.wikiroot["Страница 1"])
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 4)
 
         newitems = bookmarksMenu.GetMenuItems()
-        self.assertFalse(newitems[0].IsSeparator())
-        self.assertTrue(newitems[1].IsSeparator())
+        self.assertFalse(newitems[1].IsSeparator())
+        self.assertTrue(newitems[2].IsSeparator())
 
-        self.assertEqual(self._getItemText(newitems[2]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(newitems[3]), "Страница 3 [Страница 2]")
 
     def testTitleBookmarks_AsSubpath(self):
         self.application.wikiroot = self.wikiroot
@@ -138,16 +138,16 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self.wikiroot["Страница 2/Страница 3/Страница 4"], subpath=True
         )
 
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 6)
 
         items = bookmarksMenu.GetMenuItems()
-        self.assertFalse(items[0].IsSeparator())
-        self.assertTrue(items[1].IsSeparator())
+        self.assertFalse(items[1].IsSeparator())
+        self.assertTrue(items[2].IsSeparator())
 
-        self.assertEqual(self._getItemText(items[2]), "Страница 1")
-        self.assertEqual(self._getItemText(items[3]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(items[3]), "Страница 1")
+        self.assertEqual(self._getItemText(items[4]), "Страница 3 [Страница 2]")
         self.assertEqual(
-            self._getItemText(items[4]), "Страница 4 [Страница 2/Страница 3]"
+            self._getItemText(items[5]), "Страница 4 [Страница 2/Страница 3]"
         )
 
     def testTitleBookmarks_AsPageUID(self):
@@ -159,16 +159,16 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
         self.bookmarks.add(self.wikiroot["Страница 2/Страница 3/Страница 4"])
 
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 6)
 
         items = bookmarksMenu.GetMenuItems()
-        self.assertFalse(items[0].IsSeparator())
-        self.assertTrue(items[1].IsSeparator())
+        self.assertFalse(items[1].IsSeparator())
+        self.assertTrue(items[2].IsSeparator())
 
-        self.assertEqual(self._getItemText(items[2]), "Страница 1")
-        self.assertEqual(self._getItemText(items[3]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(items[3]), "Страница 1")
+        self.assertEqual(self._getItemText(items[4]), "Страница 3 [Страница 2]")
         self.assertEqual(
-            self._getItemText(items[4]), "Страница 4 [Страница 2/Страница 3]"
+            self._getItemText(items[5]), "Страница 4 [Страница 2/Страница 3]"
         )
 
     def testLoading_AsSubpath(self):
@@ -183,12 +183,12 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
         items = bookmarksMenu.GetMenuItems()
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 6)
 
-        self.assertEqual(self._getItemText(items[2]), "Страница 1")
-        self.assertEqual(self._getItemText(items[3]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(items[3]), "Страница 1")
+        self.assertEqual(self._getItemText(items[4]), "Страница 3 [Страница 2]")
         self.assertEqual(
-            self._getItemText(items[4]), "Страница 4 [Страница 2/Страница 3]"
+            self._getItemText(items[5]), "Страница 4 [Страница 2/Страница 3]"
         )
 
     def testLoading_AsPageUID(self):
@@ -201,12 +201,12 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
         items = bookmarksMenu.GetMenuItems()
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 6)
 
-        self.assertEqual(self._getItemText(items[2]), "Страница 1")
-        self.assertEqual(self._getItemText(items[3]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(items[3]), "Страница 1")
+        self.assertEqual(self._getItemText(items[4]), "Страница 3 [Страница 2]")
         self.assertEqual(
-            self._getItemText(items[4]), "Страница 4 [Страница 2/Страница 3]"
+            self._getItemText(items[5]), "Страница 4 [Страница 2/Страница 3]"
         )
 
     def testAddBookmarkAction1(self):
@@ -215,21 +215,21 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Страница 1"]
 
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 2)
-
-        self.application.actionController.getAction(AddBookmarkAction.stringId).run(
-            None
-        )
-
         self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
+
+        self.application.actionController.getAction(AddBookmarkAction.stringId).run(
+            None
+        )
+
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 4)
         self.assertEqual(
-            self._getItemText(bookmarksMenu.GetMenuItems()[2]), "Страница 1"
+            self._getItemText(bookmarksMenu.GetMenuItems()[3]), "Страница 1"
         )
 
         self.application.actionController.getAction(AddBookmarkAction.stringId).run(
             None
         )
-        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 2)
+        self.assertEqual(bookmarksMenu.GetMenuItemCount(), 3)
 
     def testEnableDisable(self):
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
