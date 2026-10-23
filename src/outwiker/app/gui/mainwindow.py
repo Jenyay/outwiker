@@ -9,6 +9,7 @@ import wx.aui
 
 from outwiker.app.actions.about import AboutAction
 from outwiker.app.actions.addbookmark import AddBookmarkAction
+from outwiker.app.actions.bookmarkmanagement import BookmarkManagementAction
 from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
@@ -583,6 +584,7 @@ class MainWindow(wx.Frame):
         # Добавление / удаление закладки
         menu_bookmarks = self.menuController[guidefines.MENU_BOOKMARKS]
         actionController.appendMenuItem(AddBookmarkAction.stringId, menu_bookmarks)
+        actionController.appendMenuItem(BookmarkManagementAction.stringId, menu_bookmarks)
 
         menu_bookmarks.AppendSeparator()
 

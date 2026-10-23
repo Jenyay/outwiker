@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.app.actions.addbookmark import AddBookmarkAction
+from outwiker.app.actions.bookmarkmanagement import BookmarkManagementAction
 from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
@@ -159,6 +160,7 @@ actionsList = [
     ActionInfo(PreferencesAction, HotKey("F8", ctrl=True)),
     ActionInfo(EditPagePropertiesAction, HotKey("E", ctrl=True)),
     ActionInfo(AddBookmarkAction, HotKey("D", ctrl=True)),
+    ActionInfo(BookmarkManagementAction, None),
     ActionInfo(ReloadWikiAction, None),
     ActionInfo(OpenHelpAction, HotKey("F1")),
     ActionInfo(AboutAction, HotKey("F1", ctrl=True)),

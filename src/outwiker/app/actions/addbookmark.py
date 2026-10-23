@@ -5,7 +5,7 @@ from outwiker.gui.baseaction import BaseAction
 
 
 class AddBookmarkAction(BaseAction):
-    """Добавить (удалить) страницу в (из) закладки."""
+    """Add / remove bookmark"""
 
     stringId = "AddBookmark"
 
