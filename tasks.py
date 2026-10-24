@@ -6,12 +6,14 @@ import os
 import os.path
 import shutil
 import re
+import xml.etree.ElementTree as ET
+from datetime import datetime
 from typing import List, Tuple, Callable, TextIO
 from pathlib import Path
 
 from invoke import task
 
-from outwiker.build.utilites import getPython
+from outwiker.build.utilites import getPython, print_info
 from outwiker.build.defines import COVERAGE_PARAMS
 from outwiker.build.builders import (
     BuilderWindows,
@@ -159,10 +161,19 @@ def set_release_date(c, date=""):
     """Set release date for current version"""
     if not date.strip():
         display_version()
-        date = input("Enter OutWiker release date in the format: YYYY-MM-DD: ")
+        today = datetime.now().strftime("%Y-%m-%d")
+        date = input(
+            f"Enter OutWiker and plugins release date in the format: YYYY-MM-DD "
+            f"(default: {today}): "
+        ).strip()
+        if not date:
+            date = today
 
     for fname, updater in _get_version_updaters():
+        print_info(f"Update file: {fname}")
         _set_release_date_for_file(fname, updater, date)
+
+    _set_release_date_for_plugins(date)
 
 
 def _get_version_updaters():
@@ -174,6 +185,46 @@ def _get_version_updaters():
             AppDataXmlUpdater(),
         ),
     ]
+
+
+def _set_release_date_for_plugins(date_str: str):
+    """
+    Set release date for the first <version> tag in all versions.xml files.
+    Only adds the date attribute if it's not already present.
+    """
+    # List of versions.xml files to process
+    versions_xml_files = []
+
+    # Add all versions.xml files from plugins
+    plugins_dir = Path("plugins")
+    for versions_file in plugins_dir.glob("*/versions.xml"):
+        versions_xml_files.append(versions_file)
+
+    for versions_file in versions_xml_files:
+        _set_release_date_for_version_xml_file(versions_file, date_str)
+
+
+def _set_release_date_for_version_xml_file(path: Path, date_str: str):
+    """
+    Set release date for the first <version> tag in a versions.xml file.
+    Only adds the date attribute if it's not already present.
+    """
+    tree = ET.parse(str(path))
+    root = tree.getroot()
+    version_tag = root.find("version")
+
+    if version_tag is None:
+        return
+
+    if "date" in version_tag.attrib:
+        # Date attribute already exists, skip
+        return
+
+    version_tag.set("date", date_str)
+
+    print_info(f"Update file: {path}")
+    with open(path, "wb") as fp_out:
+        fp_out.write(ET.tostring(root, encoding="UTF-8", xml_declaration=True))
 
 
 def _parse_version(version_str: str) -> Tuple[List[int], str]:
