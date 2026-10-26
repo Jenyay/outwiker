@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
+import sys
 
 from outwiker.api.core.plugins import Plugin
 
@@ -39,7 +41,15 @@ class PluginDataGraph(Plugin):
 
         global _
         _ = self.gettext
+        self.__correctSysPath()
         self.__controller.initialize()
 
     def destroy(self):
         self.__controller.destroy()
+
+    def __correctSysPath(self):
+        cmd_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                  "libs")
+
+        if cmd_folder not in sys.path:
+            sys.path.insert(0, cmd_folder)

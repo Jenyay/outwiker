@@ -10,7 +10,6 @@ import shutil
 
 from outwiker.api.core.attachment import Attachment
 
-from datagraph.libs.dateutil.parser import parser
 from datagraph import defines
 from datagraph.i18n import get_
 
@@ -391,6 +390,7 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         return float(value)
 
     def _createDateTime(self, text):
+        from datagraph.libs.dateutil.parser import parser
         if len(text.strip()) == 0:
             raise ValueError
 
