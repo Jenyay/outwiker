@@ -4,8 +4,8 @@ from typing import List
 
 import wx
 import wx.lib.newevent
+import wx.lib.agw.ultimatelistctrl as ULC
 
-import outwiker.gui.controls.ultimatelistctrl as ULC
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.imagelistcache import ImageListCache
 from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
@@ -135,8 +135,7 @@ class PageList(wx.Panel):
             for n, column in enumerate(self._visibleColumns):
                 column.setCellProperties(self, item_index, n, page)
 
-            data = PageData(page)
-            self._listCtrl.SetItemPyData(item_index, data)
+            self._listCtrl.SetItemData(item_index, page)
 
     def updateColumnsWidth(self):
         n = 0

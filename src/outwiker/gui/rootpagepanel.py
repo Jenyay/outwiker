@@ -141,6 +141,7 @@ class BookmarksPanel(wx.Panel):
         self._pageList.updateColumnsWidth()
         columns_string = ColumnsFactory.toString(self._pageList.getColumns())
         self._config.bookmarksHeaders.value = columns_string
+        wx.SafeYield()
 
     def _updateBookmarks(self):
         assert self._application.wikiroot is not None

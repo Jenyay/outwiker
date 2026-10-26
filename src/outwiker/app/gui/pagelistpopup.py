@@ -3,9 +3,9 @@
 from typing import List, Dict
 
 import wx
+import wx.lib.agw.ultimatelistctrl as ULC
 
 from outwiker.core.system import getOS
-import outwiker.gui.controls.ultimatelistctrl as ULC
 from outwiker.gui.controls.pagelist import PageList, BaseColumn
 from outwiker.gui.controls.popupwindow import ResizablePopupWindow
 
