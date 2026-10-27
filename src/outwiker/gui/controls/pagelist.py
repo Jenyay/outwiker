@@ -73,9 +73,8 @@ class PageList(wx.Panel):
 
     def _onPageClick(self, event):
         item = event.GetItem()
-        pageData = item.GetPyData()
-        if pageData:
-            page = pageData.page
+        page = item.GetData()
+        if page:
             assert page is not None
             event = PageClickEvent(page=page)
             event.ResumePropagation(self._propagationLevel)
