@@ -6,28 +6,21 @@ import wx
 import wx.lib.newevent
 import wx.lib.agw.ultimatelistctrl as ULC
 
+from outwiker.core.tree import WikiPage
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.imagelistcache import ImageListCache
 from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
 from .pagelist_columns import BaseColumn
 
-# For type hints
-import outwiker.core.tree
-
 # Событие, возникающее при клике по элементу, описывающий страницу
 PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
 
 
-class PageData:
-    def __init__(self, page):
-        self.page = page
-
-
 class PageList(wx.Panel):
-    def __init__(self, parent: wx.Window):
+    def __init__(self, parent: wx.Window, sortable: bool = True, selectable: bool = False):
         super().__init__(parent)
-        self._columns = []  # type: List[BaseColumn]
-        self._pages = []  # type: List[outwiker.core.tree.WikiPage]
+        self._columns: list[BaseColumn] = []
+        self._pages: list[WikiPage] = []
         self._defaultIcon = getBuiltinImagePath("page.svg")
         self._imageList = ImageListCache(self._defaultIcon, ICONS_WIDTH, ICONS_HEIGHT)
 
@@ -38,18 +31,23 @@ class PageList(wx.Panel):
         self._sizer.AddGrowableCol(0)
         self._sizer.AddGrowableRow(0)
 
-        self._listCtrl = ULC.UltimateListCtrl(
-            self,
-            agwStyle=ULC.ULC_REPORT
-            | ULC.ULC_SINGLE_SEL
-            | ULC.ULC_VRULES
-            | ULC.ULC_HRULES
-            | ULC.ULC_SHOW_TOOLTIPS
-            | ULC.ULC_NO_HIGHLIGHT,
-        )
+        list_style = (
+                ULC.ULC_REPORT
+                | ULC.ULC_SINGLE_SEL
+                | ULC.ULC_VRULES
+                | ULC.ULC_HRULES
+                | ULC.ULC_SHOW_TOOLTIPS
+                )
+        if not selectable:
+            list_style |= ULC.ULC_NO_HIGHLIGHT
+
+        self._listCtrl = ULC.UltimateListCtrl(self, agwStyle=list_style)
 
         self._listCtrl.Bind(ULC.EVT_LIST_ITEM_HYPERLINK, handler=self._onPageClick)
-        self._listCtrl.Bind(ULC.EVT_LIST_COL_CLICK, handler=self._onColClick)
+
+        if sortable:
+            self._listCtrl.Bind(ULC.EVT_LIST_COL_CLICK, handler=self._onColClick)
+
         self._listCtrl.SetHyperTextNewColour(wx.BLUE)
         self._listCtrl.SetHyperTextVisitedColour(wx.BLUE)
         self._listCtrl.AssignImageList(
@@ -109,11 +107,11 @@ class PageList(wx.Panel):
         for n, column in enumerate(self._visibleColumns):
             column.insertColumn(self._listCtrl, n)
 
-    def setPageList(self, pages):
+    def setPageList(self, pages: list[WikiPage]):
         """
         pages - список страниц, отображаемый в списке
         """
-        self._pages = pages
+        self._pages = list(pages)
         self._updatePageList()
 
     def setColumns(self, columns: List[BaseColumn]):
@@ -129,12 +127,118 @@ class PageList(wx.Panel):
 
     def _fillPageList(self):
         for page in self._pages:
-            items = [column.getCellContent(page) for column in self._visibleColumns]
-            item_index = self._listCtrl.Append(items)
-            for n, column in enumerate(self._visibleColumns):
-                column.setCellProperties(self, item_index, n, page)
+            self._insertPage(self._listCtrl.GetItemCount(), page)
 
-            self._listCtrl.SetItemData(item_index, page)
+    def _insertPage(self, position: int, page: WikiPage) -> int:
+        """
+        Insert the page into the specified position of the list.
+        Return the index of the added item.
+        """
+        items = [column.getCellContent(page) for column in self._visibleColumns]
+        self._listCtrl.InsertStringItem(position, items[0] if items else "")
+
+        for n, column in enumerate(self._visibleColumns):
+            if n > 0:
+                self._listCtrl.SetStringItem(position, n, items[n])
+
+            column.setCellProperties(self, position, n, page)
+
+        self._listCtrl.SetItemData(position, page)
+        return position
+
+    def _findPageIndex(self, page: WikiPage) -> None | int:
+        """
+        Return the index of the page in the internal list or None if the page
+        is not found.
+        """
+        for index, item_page in enumerate(self._pages):
+            if item_page is page:
+                return index
+
+        return None
+
+    def setItemPosition(self, src_position: int, new_position: int):
+        """
+        Move the item from src_position to new_position.
+        The selection is kept: the moved item stays selected if it was selected
+        before the move, other selected items keep their pages selected.
+        Do nothing if src_position or new_position is out of range.
+        """
+        items_count = self._listCtrl.GetItemCount()
+        if src_position < 0 or src_position >= items_count:
+            return
+
+        if new_position < 0 or new_position >= items_count:
+            return
+
+        if len(self._pages) != items_count:
+            return
+
+        if src_position == new_position:
+            return
+
+        selected_pages = [
+            self._pages[index]
+            for index in range(items_count)
+            if self._listCtrl.IsSelected(index)
+            ]
+
+        page = self._pages.pop(src_position)
+        self._pages.insert(new_position, page)
+
+        # The list is refilled from scratch instead of deleting / inserting a
+        # single item: UltimateListCtrl caches line heights and may draw
+        # overlapping rows and empty lines after a delete + insert pair.
+        self._updatePageList()
+
+        first_selected = None
+        for selected_page in selected_pages:
+            index = self._findPageIndex(selected_page)
+            if index is not None:
+                self._listCtrl.Select(index)
+                if first_selected is None:
+                    first_selected = index
+
+        if first_selected is not None:
+            self._listCtrl.EnsureVisible(first_selected)
+
+    def moveSelectedItemUp(self):
+        """
+        Move the first selected item one position up.
+        """
+        selected = self.getSelectedIndex()
+        if selected is None:
+            return
+
+        self.setItemPosition(selected, selected - 1)
+
+    def moveSelectedItemDown(self):
+        """
+        Move the first selected item one position down.
+        """
+        selected = self.getSelectedIndex()
+        if selected is None:
+            return
+
+        self.setItemPosition(selected, selected + 1)
+
+    def removeItem(self, index: int):
+        """
+        Remove the item with the specified index from the list.
+        Do nothing if the index is out of range.
+        """
+        items_count = self._listCtrl.GetItemCount()
+        if index < 0 or index >= items_count:
+            return
+
+        if len(self._pages) != items_count:
+            self._listCtrl.DeleteItem(index)
+            return
+
+        # See setItemPosition(): the list is refilled from scratch to avoid
+        # the UltimateListCtrl line height cache artifacts.
+        self._pages.pop(index)
+        self._updatePageList()
 
     def updateColumnsWidth(self):
         n = 0
@@ -147,3 +251,13 @@ class PageList(wx.Panel):
 
     def getColumns(self) -> List[BaseColumn]:
         return self._columns
+
+    def getSelectedIndex(self) -> None | int:
+        for n in range(self.listCtrl.GetItemCount()):
+            if self.listCtrl.IsSelected(n):
+                return n
+        return None
+
+    def setSelected(self, index: int):
+        for n in range(self.listCtrl.GetItemCount()):
+            self.listCtrl.Select(n, n == index)

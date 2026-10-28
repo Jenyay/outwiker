@@ -1,9 +1,12 @@
 import wx
 
+from outwiker.core.tree import WikiPage
 from outwiker.core.system import getBuiltinImagePath
+from outwiker.gui.controls.pagelist_columns import ColumnsFactory
 from outwiker.gui.images import readImage
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.theme import Theme
+from outwiker.gui.controls.pagelist import PageList
 
 
 class BookmarksDialog(TestedDialog):
@@ -12,6 +15,8 @@ class BookmarksDialog(TestedDialog):
         self.SetTitle(_("Bookmark management"))
         self._theme = theme
         self._create_gui()
+        columns = ColumnsFactory().createDefaultColumns()
+        self.bookmark_list.setColumns(columns)
 
     def _create_gui(self):
         button_height = wx.Button.GetDefaultSize().height
@@ -22,7 +27,7 @@ class BookmarksDialog(TestedDialog):
         )
 
         # Bookmarks list
-        self.bookmarks_list = wx.ListBox(self)
+        self.bookmark_list = PageList(self, sortable=False, selectable=True)
 
         # Move up button
         self.move_up_btn = wx.BitmapButton(
@@ -57,8 +62,8 @@ class BookmarksDialog(TestedDialog):
         self.remove_btn.SetToolTip(_("Remove bookmark"))
         self.remove_btn.Bind(wx.EVT_BUTTON, handler=self._onRemove)
 
-        # OK / Cancel buttons
-        self._ok_cancel = self.CreateButtonSizer(wx.OK | wx.CANCEL)
+        # Close button
+        self._ok_cancel = self.CreateButtonSizer(wx.CLOSE)
         self._layout()
 
     def _layout(self):
@@ -77,13 +82,13 @@ class BookmarksDialog(TestedDialog):
         list_sizer = wx.FlexGridSizer(cols=2)
         list_sizer.AddGrowableCol(0)
         list_sizer.AddGrowableRow(0)
-        list_sizer.Add(self.bookmarks_list, flag=wx.EXPAND)
+        list_sizer.Add(self.bookmark_list, flag=wx.EXPAND)
         list_sizer.Add(buttons_sizer, flag=wx.ALL, border=2)
 
         main_sizer.Add(list_sizer, flag=wx.EXPAND)
         main_sizer.Add(self._ok_cancel, flag=wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM)
 
-        self.SetSize(wx.Size(500, 400))
+        self.SetSize(wx.Size(800, 400))
         self.Layout()
 
     def _onMoveUp(self, event):
@@ -94,3 +99,29 @@ class BookmarksDialog(TestedDialog):
 
     def _onRemove(self, event):
         print("Remove")
+
+
+class BookmarksDialogController:
+    def __init__(self, dialog: BookmarksDialog) -> None:
+        self._dlg = dialog
+        self._dlg.move_up_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveUp)
+        self._dlg.move_down_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveDown)
+        self._dlg.remove_btn.Bind(wx.EVT_BUTTON, handler=self._onRemoveBookmark)
+
+    def show(self):
+        self._dlg.Show()
+
+    def set_bookmark_list(self, pages: list[WikiPage]):
+        self._dlg.bookmark_list.setPageList(pages)
+        self._dlg.bookmark_list.setSelected(0)
+
+    def _onMoveUp(self, event):
+        self._dlg.bookmark_list.moveSelectedItemUp()
+
+    def _onMoveDown(self, event):
+        self._dlg.bookmark_list.moveSelectedItemDown()
+
+    def _onRemoveBookmark(self, event):
+        sel_index = self._dlg.bookmark_list.getSelectedIndex()
+        if sel_index is not None:
+            self._dlg.bookmark_list.removeItem(sel_index)

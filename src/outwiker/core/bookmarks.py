@@ -50,24 +50,21 @@ class Bookmarks:
     def __len__(self) -> int:
         return len(self._pages)
 
-    def __getitem__(self, index) -> Optional[BasePage]:
+    def __getitem__(self, index) -> Optional[WikiPage]:
         if self._wikiroot is None:
             raise IndexError()
 
         page_id = self._pages[index]
         return self._getPage(page_id)
 
-    def _getPage(self, page_id: str) -> Optional[BasePage]:
+    def _getPage(self, page_id: str) -> Optional[WikiPage]:
         """Get page by subpath or page UID"""
         if self._wikiroot is None:
             return None
 
         return self._wikiroot.getPageByUid(page_id) or self._wikiroot[page_id]
 
-    def _getPageId(self, page: BasePage) -> Optional[str]:
-        # if page.parent is None or page.isRemoved:
-        #     return None
-
+    def _getPageId(self, page: WikiPage) -> Optional[str]:
         if page.subpath in self._pages:
             return page.subpath
 

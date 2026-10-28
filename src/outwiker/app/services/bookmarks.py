@@ -2,7 +2,7 @@
 
 from typing import Optional
 
-from outwiker.app.gui.dialogs.bookmarksdialog import BookmarksDialog
+from outwiker.app.gui.dialogs.bookmarksdialog import BookmarksDialog, BookmarksDialogController
 from outwiker.core.application import Application
 
 
@@ -26,5 +26,7 @@ def showBookmarkManagementDialog(application: Application):
     if application.mainWindow is None:
         return
 
-    with BookmarksDialog(application.mainWindow, application.theme) as dlg:
-        dlg.ShowModal()
+    dlg = BookmarksDialog(application.mainWindow, application.theme)
+    dlg_controller = BookmarksDialogController(dlg)
+    dlg_controller.set_bookmark_list([page for page in application.bookmarks if page is not None])
+    dlg_controller.show()
