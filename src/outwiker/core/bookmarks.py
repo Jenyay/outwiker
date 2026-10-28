@@ -3,7 +3,7 @@
 from typing import List, Optional
 
 from outwiker.core.exceptions import ReadonlyException
-from outwiker.core.tree import BasePage, WikiDocument, WikiPage
+from outwiker.core.tree import WikiDocument, WikiPage
 from .event import Event
 from .events import BookmarksChangedParams
 from .config import StringListSection

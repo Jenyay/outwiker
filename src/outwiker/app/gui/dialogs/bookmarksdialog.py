@@ -1,5 +1,6 @@
 import wx
 
+from outwiker.core.application import Application
 from outwiker.core.tree import WikiPage
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.pagelist_columns import ColumnsFactory
@@ -38,7 +39,6 @@ class BookmarksDialog(TestedDialog):
         )
         self.move_up_btn.SetMinSize(wx.Size(button_width, button_height))
         self.move_up_btn.SetToolTip(_("Move bookmark up"))
-        self.move_up_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveUp)
 
         # Move down button
         self.move_down_btn = wx.BitmapButton(
@@ -49,7 +49,6 @@ class BookmarksDialog(TestedDialog):
         )
         self.move_down_btn.SetMinSize(wx.Size(button_width, button_height))
         self.move_down_btn.SetToolTip(_("Move bookmark down"))
-        self.move_down_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveDown)
 
         # Remove button
         self.remove_btn = wx.BitmapButton(
@@ -60,7 +59,6 @@ class BookmarksDialog(TestedDialog):
         )
         self.remove_btn.SetMinSize(wx.Size(button_width, button_height))
         self.remove_btn.SetToolTip(_("Remove bookmark"))
-        self.remove_btn.Bind(wx.EVT_BUTTON, handler=self._onRemove)
 
         # Close button
         self._ok_cancel = self.CreateButtonSizer(wx.CLOSE)
@@ -91,37 +89,38 @@ class BookmarksDialog(TestedDialog):
         self.SetSize(wx.Size(800, 400))
         self.Layout()
 
-    def _onMoveUp(self, event):
-        print("Move up")
-
-    def _onMoveDown(self, event):
-        print("Move down")
-
-    def _onRemove(self, event):
-        print("Remove")
-
 
 class BookmarksDialogController:
-    def __init__(self, dialog: BookmarksDialog) -> None:
+    def __init__(self, dialog: BookmarksDialog, application: Application) -> None:
         self._dlg = dialog
+        self._application = application
         self._dlg.move_up_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveUp)
         self._dlg.move_down_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveDown)
         self._dlg.remove_btn.Bind(wx.EVT_BUTTON, handler=self._onRemoveBookmark)
 
     def show(self):
-        self._dlg.Show()
+        if not self._dlg.IsShown():
+            self._update_bookmark_list()
+            self._dlg.Show()
 
-    def set_bookmark_list(self, pages: list[WikiPage]):
+    def _update_bookmark_list(self):
+        pages = [page for page in self._application.bookmarks if page is not None]
         self._dlg.bookmark_list.setPageList(pages)
         self._dlg.bookmark_list.setSelected(0)
 
     def _onMoveUp(self, event):
         self._dlg.bookmark_list.moveSelectedItemUp()
+        self._save_bookmarks()
 
     def _onMoveDown(self, event):
         self._dlg.bookmark_list.moveSelectedItemDown()
+        self._save_bookmarks()
 
     def _onRemoveBookmark(self, event):
         sel_index = self._dlg.bookmark_list.getSelectedIndex()
         if sel_index is not None:
             self._dlg.bookmark_list.removeItem(sel_index)
+            self._save_bookmarks()
+
+    def _save_bookmarks(self):
+        pages = self._dlg.bookmark_list.getPageList()

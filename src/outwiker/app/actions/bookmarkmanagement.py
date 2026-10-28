@@ -1,4 +1,3 @@
-from outwiker.app.services.bookmarks import showBookmarkManagementDialog
 from outwiker.gui.baseaction import BaseAction
 
 
@@ -19,5 +18,5 @@ class BookmarkManagementAction(BaseAction):
         return _("Show the dialog for bookmarks management")
 
     def run(self, params):
-        showBookmarkManagementDialog(self._application)
-
+        if self._application.mainWindow is not None:
+            self._application.mainWindow.showBookmarkManagementDialog()

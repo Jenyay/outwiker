@@ -72,6 +72,7 @@ import outwiker.app.actions.switchto as switchto
 import outwiker.app.actions.tags as tags
 
 from outwiker.app.gui.bookmarkscontroller import BookmarksController
+from outwiker.app.gui.dialogs.bookmarksdialog import BookmarksDialog, BookmarksDialogController
 from outwiker.app.gui.mainwndcontroller import MainWndController
 from outwiker.app.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.app.gui.mainpanes.attachmainpane import AttachMainPane
@@ -211,6 +212,7 @@ class MainWindow(wx.Frame):
         """
         Создать пункты меню, кнопки на панелях инструментов и т.п.
         """
+        assert self._application is not None
         logger.debug("MainWindow createGui started")
         logger.debug("MainWindow. Setup icon")
         self._setIcon()
@@ -251,6 +253,7 @@ class MainWindow(wx.Frame):
         self.__boomarksController = BookmarksController(
             self.__mainWndController, self._application
         )
+        self.__boomarksDialogController = BookmarksDialogController(BookmarksDialog(self, self._application.theme), self._application)
 
         logger.debug("MainWindow. Create the MainPanesController")
         self.__panesController = MainPanesController(self._application, self)
@@ -790,3 +793,6 @@ class MainWindow(wx.Frame):
     @property
     def statusbar(self) -> StatusBarController:
         return self._statusBarController
+
+    def showBookmarkManagementDialog(self):
+        self.__boomarksDialogController.show()

@@ -114,6 +114,9 @@ class PageList(wx.Panel):
         self._pages = list(pages)
         self._updatePageList()
 
+    def getPageList(self) -> list[WikiPage]:
+        return self._pages[:]
+
     def setColumns(self, columns: List[BaseColumn]):
         self._columns = columns
         self._updatePageList()
