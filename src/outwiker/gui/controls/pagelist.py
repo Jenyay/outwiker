@@ -160,9 +160,6 @@ class PageList(wx.Panel):
     def setItemPosition(self, src_position: int, new_position: int):
         """
         Move the item from src_position to new_position.
-        The selection is kept: the moved item stays selected if it was selected
-        before the move, other selected items keep their pages selected.
-        Do nothing if src_position or new_position is out of range.
         """
         items_count = self._listCtrl.GetItemCount()
         if src_position < 0 or src_position >= items_count:
@@ -186,9 +183,6 @@ class PageList(wx.Panel):
         page = self._pages.pop(src_position)
         self._pages.insert(new_position, page)
 
-        # The list is refilled from scratch instead of deleting / inserting a
-        # single item: UltimateListCtrl caches line heights and may draw
-        # overlapping rows and empty lines after a delete + insert pair.
         self._updatePageList()
 
         first_selected = None
@@ -235,8 +229,6 @@ class PageList(wx.Panel):
             self._listCtrl.DeleteItem(index)
             return
 
-        # See setItemPosition(): the list is refilled from scratch to avoid
-        # the UltimateListCtrl line height cache artifacts.
         self._pages.pop(index)
         self._updatePageList()
 
