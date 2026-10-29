@@ -1124,6 +1124,31 @@ class TagsCloudConfig:
         )
 
 
+class BookmarksDialogConfig:
+    WIDTH_PARAM = "BookmarksDialogWidth"
+    WIDTH_DEFAULT = 800
+
+    HEIGHT_PARAM = "BookmarksDialogHeight"
+    HEIGHT_DEFAULT = 450
+
+    def __init__(self, config):
+        self.config = config
+
+        self.width = IntegerOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.WIDTH_PARAM,
+            self.WIDTH_DEFAULT,
+        )
+
+        self.height = IntegerOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.HEIGHT_PARAM,
+            self.HEIGHT_DEFAULT,
+        )
+
+
 class PageDialogConfig:
     WIDTH_PARAM = "PageDialogWidth"
     WIDTH_DEFAULT = 500

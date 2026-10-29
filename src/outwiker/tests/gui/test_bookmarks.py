@@ -2,8 +2,15 @@
 
 import unittest
 
+import wx
+
 from outwiker.app.actions.addbookmark import AddBookmarkAction
+from outwiker.app.gui.dialogs.bookmarksdialog import (
+    BookmarksDialog,
+    BookmarksDialogController,
+)
 from outwiker.gui.defines import MENU_BOOKMARKS
+from outwiker.gui.guiconfig import BookmarksDialogConfig
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
@@ -372,3 +379,59 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertFalse(self.bookmarks.pageMarked(page2))
         self.assertFalse(self.bookmarks.pageMarked(page3))
         self.assertFalse(self.bookmarks.pageMarked(page4))
+
+
+class BookmarksDialogSizeTest(unittest.TestCase, BaseOutWikerGUIMixin):
+    def setUp(self):
+        self.initApplication()
+        self.wikiroot = self.createWiki()
+
+    def tearDown(self):
+        self.application.wikiroot = None
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
+
+    def _createDialog(self):
+        dialog = BookmarksDialog(self.mainWindow, self.application.theme)
+        controller = BookmarksDialogController(dialog, self.application)
+        return dialog, controller
+
+    def testDefaultSize(self):
+        dialog, _ = self._createDialog()
+        self.assertEqual(tuple(dialog.GetSize()), (500, 350))
+
+    def testSaveSizeOnCloseButton(self):
+        dialog, _ = self._createDialog()
+        dialog.Show()
+        dialog.SetSize(wx.Size(612, 423))
+
+        dialog.close_btn.ProcessEvent(
+            wx.CommandEvent(wx.EVT_BUTTON.typeId, wx.ID_CLOSE)
+        )
+
+        self.assertFalse(dialog.IsShown())
+
+        config = BookmarksDialogConfig(self.application.config)
+        self.assertEqual(config.width.value, 612)
+        self.assertEqual(config.height.value, 423)
+
+    def testSaveSizeOnCloseEvent(self):
+        dialog, _ = self._createDialog()
+        dialog.Show()
+        dialog.SetSize(wx.Size(612, 423))
+
+        dialog.Close()
+
+        self.assertFalse(dialog.IsShown())
+
+        config = BookmarksDialogConfig(self.application.config)
+        self.assertEqual(config.width.value, 612)
+        self.assertEqual(config.height.value, 423)
+
+    def testLoadSavedSize(self):
+        config = BookmarksDialogConfig(self.application.config)
+        config.width.value = 640
+        config.height.value = 480
+
+        dialog, _ = self._createDialog()
+        self.assertEqual(tuple(dialog.GetSize()), (640, 480))

@@ -236,7 +236,8 @@ class ModifyDateColumn(BaseColumn):
     name = "moddate"
 
     def getCellContent(self, page):
-        format = "%d.%m.%Y     %H:%M"
+        # format = "%d.%m.%Y     %H:%M"
+        format = "%c"
         return strftime_safe(page.datetime, format)
 
     def getTitle(self) -> str:

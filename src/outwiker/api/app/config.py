@@ -1,6 +1,7 @@
 from outwiker.gui.guiconfig import (
     GuiConfig,
     AttachConfig,
+    BookmarksDialogConfig,
     EditorConfig,
     GeneralGuiConfig,
     HtmlEditorStylesConfig,

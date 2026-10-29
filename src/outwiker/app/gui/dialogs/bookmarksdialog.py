@@ -1,18 +1,20 @@
 import wx
 
 from outwiker.core.application import Application
-from outwiker.core.tree import WikiPage
+# from outwiker.core.tree import WikiPage
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.pagelist_columns import ColumnsFactory
+from outwiker.gui.guiconfig import BookmarksDialogConfig
 from outwiker.gui.images import readImage
-from outwiker.gui.testeddialog import TestedDialog
+# from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.theme import Theme
 from outwiker.gui.controls.pagelist import PageList
 
 
-class BookmarksDialog(TestedDialog):
+class BookmarksDialog(wx.Frame):
     def __init__(self, parent: wx.Window, theme: Theme):
-        super().__init__(parent, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        super().__init__(parent, style=wx.CAPTION | wx.RESIZE_BORDER | wx.CLOSE_BOX | wx.FRAME_FLOAT_ON_PARENT | wx.DEFAULT_FRAME_STYLE)
+        self.Hide()
         self.SetTitle(_("Bookmark management"))
         self._theme = theme
         self._create_gui()
@@ -61,7 +63,9 @@ class BookmarksDialog(TestedDialog):
         self.remove_btn.SetToolTip(_("Remove bookmark"))
 
         # Close button
-        self._ok_cancel = self.CreateButtonSizer(wx.CLOSE)
+        # self._close_button_sizer = self.CreateButtonSizer(wx.CLOSE)
+        # self.close_btn = self._close_button_sizer.GetChildren()[0].GetWindow()
+        # self.close_btn = self.FindWindowById(wx.ID_CLOSE)
         self._layout()
 
     def _layout(self):
@@ -84,9 +88,8 @@ class BookmarksDialog(TestedDialog):
         list_sizer.Add(buttons_sizer, flag=wx.ALL, border=2)
 
         main_sizer.Add(list_sizer, flag=wx.EXPAND)
-        main_sizer.Add(self._ok_cancel, flag=wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM)
+        # main_sizer.Add(self._close_button_sizer, flag=wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM)
 
-        self.SetSize(wx.Size(800, 400))
         self.Layout()
 
 
@@ -94,12 +97,24 @@ class BookmarksDialogController:
     def __init__(self, dialog: BookmarksDialog, application: Application) -> None:
         self._dlg = dialog
         self._application = application
+        self._config = BookmarksDialogConfig(self._application.config)
+
+        # self._update_dialog_size()
         self._dlg.move_up_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveUp)
         self._dlg.move_down_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveDown)
         self._dlg.remove_btn.Bind(wx.EVT_BUTTON, handler=self._onRemoveBookmark)
+        # self._dlg.close_btn.Bind(wx.EVT_BUTTON, handler=self._onClose)
+        # The dialog is modeless and reusable, so it is hidden when closed.
+        self._dlg.Bind(wx.EVT_CLOSE, handler=self._onClose)
+
+    def _update_dialog_size(self):
+        print("*** Load size:", self._config.width.value, self._config.height.value)
+        # self._dlg.SetInitialSize(wx.Size(self._config.width.value, self._config.height.value))
+        self._dlg.SetSize(wx.Size(self._config.width.value, self._config.height.value))
 
     def show(self):
         if not self._dlg.IsShown():
+            self._update_dialog_size()
             self._update_bookmark_list()
             self._dlg.Show()
 
@@ -124,3 +139,20 @@ class BookmarksDialogController:
 
     def _save_bookmarks(self):
         pages = self._dlg.bookmark_list.getPageList()
+
+    def _onClose(self, event):
+        """
+        Save the dialog size on closing and hide the dialog. The dialog is
+        modeless and reusable, so it is hidden instead of being destroyed.
+        """
+        self._save_size()
+        self._dlg.Hide()
+
+    def _save_size(self):
+        width, height = self._dlg.GetSize()
+
+        if width > 0 and height > 0:
+            self._config.width.value = width
+            self._config.height.value = height
+
+            print("*** save size:", self._config.width.value, self._config.height.value)
