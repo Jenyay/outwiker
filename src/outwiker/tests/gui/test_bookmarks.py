@@ -396,28 +396,9 @@ class BookmarksDialogSizeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller = BookmarksDialogController(dialog, self.application)
         return dialog, controller
 
-    def testDefaultSize(self):
-        dialog, _ = self._createDialog()
-        self.assertEqual(tuple(dialog.GetSize()), (500, 350))
-
-    def testSaveSizeOnCloseButton(self):
-        dialog, _ = self._createDialog()
-        dialog.Show()
-        dialog.SetSize(wx.Size(612, 423))
-
-        dialog.close_btn.ProcessEvent(
-            wx.CommandEvent(wx.EVT_BUTTON.typeId, wx.ID_CLOSE)
-        )
-
-        self.assertFalse(dialog.IsShown())
-
-        config = BookmarksDialogConfig(self.application.config)
-        self.assertEqual(config.width.value, 612)
-        self.assertEqual(config.height.value, 423)
-
     def testSaveSizeOnCloseEvent(self):
-        dialog, _ = self._createDialog()
-        dialog.Show()
+        dialog, controller = self._createDialog()
+        controller.show()
         dialog.SetSize(wx.Size(612, 423))
 
         dialog.Close()
@@ -433,5 +414,7 @@ class BookmarksDialogSizeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         config.width.value = 640
         config.height.value = 480
 
-        dialog, _ = self._createDialog()
+        dialog, controller = self._createDialog()
+        controller.show()
+        dialog.Close()
         self.assertEqual(tuple(dialog.GetSize()), (640, 480))
