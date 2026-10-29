@@ -1131,6 +1131,12 @@ class BookmarksDialogConfig:
     HEIGHT_PARAM = "BookmarksDialogHeight"
     HEIGHT_DEFAULT = 450
 
+    X_PARAM = "BookmarksDialogX"
+    X_DEFAULT = -1
+
+    Y_PARAM = "BookmarksDialogY"
+    Y_DEFAULT = -1
+
     def __init__(self, config):
         self.config = config
 
@@ -1146,6 +1152,20 @@ class BookmarksDialogConfig:
             MainWindowConfig.MAIN_WINDOW_SECTION,
             self.HEIGHT_PARAM,
             self.HEIGHT_DEFAULT,
+        )
+
+        self.x = IntegerOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.X_PARAM,
+            self.X_DEFAULT,
+        )
+
+        self.y = IntegerOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.Y_PARAM,
+            self.Y_DEFAULT,
         )
 
 

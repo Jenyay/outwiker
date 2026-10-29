@@ -699,6 +699,7 @@ class MainWindow(wx.Frame):
         self._destroyCoreControllers()
 
         self.__boomarksController.clear()
+        self.__boomarksDialogController.destroy()
         self.trayController.destroy()
         self.__mainWndController.destroy()
 
