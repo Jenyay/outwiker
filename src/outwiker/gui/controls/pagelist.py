@@ -4,7 +4,8 @@ from typing import List
 
 import wx
 import wx.lib.newevent
-import wx.lib.agw.ultimatelistctrl as ULC
+# import wx.lib.agw.ultimatelistctrl as ULC
+import outwiker.gui.controls.ultimatelistctrl as ULC
 
 from outwiker.core.tree import WikiPage
 from outwiker.core.system import getBuiltinImagePath

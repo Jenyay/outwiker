@@ -3,7 +3,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-import wx.lib.agw.ultimatelistctrl as ULC
+# import wx.lib.agw.ultimatelistctrl as ULC
+import outwiker.gui.controls.ultimatelistctrl as ULC
 
 from outwiker.core.tree import WikiPage
 from outwiker.core.utils import strftime_safe
@@ -157,14 +158,17 @@ class BaseColumn(metaclass=ABCMeta):
     def getTitle(self) -> str:
         pass
 
-    def sortFunction(self, page1: WikiPage, page2: WikiPage) -> int:
+    def sortFunction(self, item1, item2) -> int:
+        page1 = item1.GetData()
+        page2 = item2.GetData()
+
         content1 = self.getCellContent(page1).lower()
         content2 = self.getCellContent(page2).lower()
 
         return (content1 > content2) - (content1 < content2)
 
-    def sortFunctionInverse(self, page1: WikiPage, page2: WikiPage) -> int:
-        return -self.sortFunction(page1, page2)
+    def sortFunctionInverse(self, item1, item2) -> int:
+        return -self.sortFunction(item1, item2)
 
 
 class PageTitleColumn(BaseColumn):
@@ -243,7 +247,10 @@ class ModifyDateColumn(BaseColumn):
     def getTitle(self) -> str:
         return _("Modify date")
 
-    def sortFunction(self, page1: WikiPage, page2: WikiPage) -> int:
+    def sortFunction(self, item1, item2) -> int:
+        page1 = item1.GetData()
+        page2 = item2.GetData()
+
         content1 = page1.datetime
         content2 = page2.datetime
 
