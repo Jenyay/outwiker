@@ -256,3 +256,11 @@ class PageList(wx.Panel):
     def setSelected(self, index: int):
         for n in range(self.listCtrl.GetItemCount()):
             self.listCtrl.Select(n, n == index)
+
+    def Destroy(self) -> bool:
+        self._columns.clear()
+        self._listCtrl.ClearAll()
+        self.imageList.clear()
+        wx.SafeYield()
+        self._listCtrl = None
+        return super().Destroy()
