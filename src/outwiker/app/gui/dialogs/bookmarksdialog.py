@@ -23,25 +23,20 @@ class BookmarksDialog(wx.Frame):
 
         self.Hide()
         self.SetTitle(_("Bookmark management"))
-        self._create_gui()
-        columns = ColumnsFactory().createDefaultColumns()
-        self.bookmark_list.setColumns(columns)
-        self.applyTheme()
+        self.bookmark_list = None
+        self._create_gui_part_1()
 
     def applyTheme(self):
         self.SetBackgroundColour(self._theme.colorBackground)
         self.bookmark_list.SetBackgroundColour(self._theme.colorBackground)
 
-    def _create_gui(self):
+    def _create_buttons(self):
         button_height = wx.Button.GetDefaultSize().height
         button_width = button_height
         icon_size = (
             button_height
             - self._theme.get(Theme.SECTION_GENERAL, Theme.BITMAP_BUTTON_PADDING) * 2
         )
-
-        # Bookmarks list
-        self.bookmark_list = PageList(self, sortable=False, selectable=True)
 
         # Move up button
         self.move_up_btn = wx.BitmapButton(
@@ -68,10 +63,24 @@ class BookmarksDialog(wx.Frame):
         )
         self.remove_btn.SetMinSize(wx.Size(button_width, button_height))
         self.remove_btn.SetToolTip(_("Remove bookmark"))
+
+    def _create_bookmark_list(self):
+        self.bookmark_list = PageList(self, sortable=False, selectable=True)
+        columns = ColumnsFactory().createDefaultColumns()
+        self.bookmark_list.setColumns(columns)
+
+    def _create_gui_part_1(self):
+        self._create_buttons()
+
+    def _create_gui_part_2(self):
+        self._create_bookmark_list()
         self._layout()
+        self.applyTheme()
 
     def _layout(self):
-        main_sizer = wx.FlexGridSizer(cols=1)
+        assert self.bookmark_list is not None
+
+        main_sizer = wx.FlexGridSizer(cols=2)
         main_sizer.AddGrowableCol(0)
         main_sizer.AddGrowableRow(0)
         self.SetSizer(main_sizer)
@@ -82,16 +91,16 @@ class BookmarksDialog(wx.Frame):
         buttons_sizer.Add(self.move_down_btn, flag=wx.ALL, border=2)
         buttons_sizer.Add(self.remove_btn, flag=wx.ALL, border=2)
 
-        # List layout
-        list_sizer = wx.FlexGridSizer(cols=2)
-        list_sizer.AddGrowableCol(0)
-        list_sizer.AddGrowableRow(0)
-        list_sizer.Add(self.bookmark_list, flag=wx.EXPAND)
-        list_sizer.Add(buttons_sizer, flag=wx.ALL, border=2)
-
-        main_sizer.Add(list_sizer, flag=wx.EXPAND)
+        main_sizer.Add(self.bookmark_list, flag=wx.EXPAND)
+        main_sizer.Add(buttons_sizer, flag=wx.ALL, border=2)
 
         self.Layout()
+
+    def Show(self, show: bool = True) -> bool:
+        if self.bookmark_list is None:
+            self._create_gui_part_2()
+
+        return super().Show(show)
 
 
 class BookmarksDialogController:
@@ -108,11 +117,14 @@ class BookmarksDialogController:
     def show(self):
         if not self._dlg.IsShown():
             self._load_dialog_rect()
-            self._update_bookmark_list()
             self._dlg.Show()
+            self._update_bookmark_list()
             self._dlg.SetFocus()
 
     def destroy(self):
+        self._dlg.move_up_btn.Unbind(wx.EVT_BUTTON, handler=self._onMoveUp)
+        self._dlg.move_down_btn.Unbind(wx.EVT_BUTTON, handler=self._onMoveDown)
+        self._dlg.remove_btn.Unbind(wx.EVT_BUTTON, handler=self._onRemoveBookmark)
         self._dlg.Unbind(wx.EVT_CLOSE, handler=self._onClose)
         self._dlg.Close()
         wx.SafeYield()
