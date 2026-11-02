@@ -23,6 +23,10 @@ class BookmarksDialog(wx.Frame):
 
         self.Hide()
         self.SetTitle(_("Bookmark management"))
+        # Uses lazy creation of the UltimateListCtrl class instance.
+        # This control is created upon the first display of the dialog.
+        # This is done due to resource leaks (bitmap), which cause tests
+        # on Windows to fail after reaching 10,000 occupied handlers.
         self.bookmark_list = None
         self._create_gui_part_1()
 
