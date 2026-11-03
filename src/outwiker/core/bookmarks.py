@@ -40,6 +40,19 @@ class Bookmarks:
             )
             self._pages = self._config.value
 
+    def setBookmarks(self, pages: List[WikiPage]):
+        """
+        Set the bookmarks to the provided list of pages
+        """
+        self._pages = [page.getUid(generate=True) for page in pages]
+        self._save()
+        event_params = BookmarksChangedParams(
+            bookmarks=self,
+            page=None,
+            action=3,
+        )
+        self.onBookmarksChanged(event_params)
+
     def pageRenamed(self, page, oldSubpath):
         for n in range(len(self._pages)):
             subpath = self._pages[n]

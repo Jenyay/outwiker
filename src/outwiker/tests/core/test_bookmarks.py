@@ -232,6 +232,27 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(len(self.bookmarks), 1)
         self.assertEqual(self.bookmarks[0].title, "Страница 1")
 
+    def testSetBookmarks(self):
+        # По умолчанию закладок нет
+        self.assertEqual(len(self.bookmarks), 0)
+
+        pages = [self.wikiroot["Страница 1"], self.wikiroot["Страница 2"], self.wikiroot["Страница 2/Страница 3"]]
+        self.bookmarks.setBookmarks(pages)
+
+        self.assertEqual(len(self.bookmarks), 3)
+        self.assertEqual(self.bookmarks[0].title, "Страница 1")
+        self.assertEqual(self.bookmarks[1].title, "Страница 2")
+        self.assertEqual(self.bookmarks[2].title, "Страница 3")
+
+        # Проверим, что закладки сохраняются в конфиг
+        other_bookmarks = Bookmarks()
+        other_bookmarks.setWikiRoot(self.wikiroot)
+
+        self.assertEqual(len(other_bookmarks), 3)
+        self.assertEqual(other_bookmarks[0].title, "Страница 1")
+        self.assertEqual(other_bookmarks[1].title, "Страница 2")
+        self.assertEqual(other_bookmarks[2].title, "Страница 3")
+
     def testSubpathBookmarks(self):
         config = StringListSection(
             self.wikiroot.params, Bookmarks.CONFIG_SECTION, Bookmarks.CONFIG_OPTION

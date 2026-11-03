@@ -1,7 +1,9 @@
 import wx
 
 from outwiker.core.application import Application
+from outwiker.core.events import BookmarksChangedParams
 from outwiker.core.system import getBuiltinImagePath
+from outwiker.core.tree import WikiPage
 from outwiker.gui.controls.pagelist_columns import ColumnsFactory
 from outwiker.gui.guiconfig import BookmarksDialogConfig
 from outwiker.gui.images import readImage
@@ -135,31 +137,57 @@ class BookmarksDialogController:
         self._dlg.Close()
         wx.SafeYield()
 
-    def _onBookmarksChanged(self, params):
+    def _onBookmarksChanged(self, params: BookmarksChangedParams):
         self._update_bookmark_list()
 
     def _update_bookmark_list(self):
         if self._dlg.bookmark_list is not None:
             pages = [page for page in self._application.bookmarks if page is not None]
+            old_selection = self._dlg.bookmark_list.getSelectedIndex()
             self._dlg.bookmark_list.setPageList(pages)
-            self._dlg.bookmark_list.setSelected(0)
+
+            # Update selection
+            if old_selection is None:
+                old_selection = 0
+
+            if old_selection >= len(pages):
+                old_selection = len(pages) - 1
+
+            if old_selection >= 0:
+                self._dlg.bookmark_list.setSelected(old_selection)
 
     def _onMoveUp(self, event):
+        assert self._dlg.bookmark_list is not None
         self._dlg.bookmark_list.moveSelectedItemUp()
         self._save_bookmarks()
 
     def _onMoveDown(self, event):
+        assert self._dlg.bookmark_list is not None
         self._dlg.bookmark_list.moveSelectedItemDown()
         self._save_bookmarks()
 
     def _onRemoveBookmark(self, event):
+        assert self._dlg.bookmark_list is not None
         sel_index = self._dlg.bookmark_list.getSelectedIndex()
         if sel_index is not None:
             self._dlg.bookmark_list.removeItem(sel_index)
             self._save_bookmarks()
 
+            # Update selection
+            pages = self._dlg.bookmark_list.getPageList()
+            if sel_index >= len(pages):
+                sel_index = len(pages) - 1
+
+            if sel_index >= 0:
+                self._dlg.bookmark_list.setSelected(sel_index)
+
     def _save_bookmarks(self):
+        assert self._dlg.bookmark_list is not None
         pages = self._dlg.bookmark_list.getPageList()
+
+        self._application.onBookmarksChanged -= self._onBookmarksChanged
+        self._application.bookmarks.setBookmarks(pages)
+        self._application.onBookmarksChanged += self._onBookmarksChanged
 
     def _onClose(self, event):
         self._save_dialog_rect()
