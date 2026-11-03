@@ -49,7 +49,7 @@ class Bookmarks:
         event_params = BookmarksChangedParams(
             bookmarks=self,
             page=None,
-            action=3,
+            action=BookmarksChangedParams.ACTION_FULL_UPDATE,
         )
         self.onBookmarksChanged(event_params)
 

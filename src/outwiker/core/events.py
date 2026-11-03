@@ -440,6 +440,7 @@ class NotesTreeItemsPreparingParams:
 class BookmarksChangedParams:
     ACTION_ADD_TO_BOOKMARKS = 1
     ACTION_REMOVE_FROM_BOOKMARKS = 2
+    ACTION_FULL_UPDATE = 3
     bookmarks: "outwiker.core.Bookmarks" = None
     page: "WikiPage" = None
     action: int = 0
