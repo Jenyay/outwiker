@@ -113,6 +113,7 @@ class BookmarksDialogController:
         self._application = application
         self._config = BookmarksDialogConfig(self._application.config)
 
+        self._application.onBookmarksChanged += self._onBookmarksChanged
         self._dlg.move_up_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveUp)
         self._dlg.move_down_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveDown)
         self._dlg.remove_btn.Bind(wx.EVT_BUTTON, handler=self._onRemoveBookmark)
@@ -126,6 +127,7 @@ class BookmarksDialogController:
             self._dlg.SetFocus()
 
     def destroy(self):
+        self._application.onBookmarksChanged -= self._onBookmarksChanged
         self._dlg.move_up_btn.Unbind(wx.EVT_BUTTON, handler=self._onMoveUp)
         self._dlg.move_down_btn.Unbind(wx.EVT_BUTTON, handler=self._onMoveDown)
         self._dlg.remove_btn.Unbind(wx.EVT_BUTTON, handler=self._onRemoveBookmark)
@@ -133,10 +135,14 @@ class BookmarksDialogController:
         self._dlg.Close()
         wx.SafeYield()
 
+    def _onBookmarksChanged(self, params):
+        self._update_bookmark_list()
+
     def _update_bookmark_list(self):
-        pages = [page for page in self._application.bookmarks if page is not None]
-        self._dlg.bookmark_list.setPageList(pages)
-        self._dlg.bookmark_list.setSelected(0)
+        if self._dlg.bookmark_list is not None:
+            pages = [page for page in self._application.bookmarks if page is not None]
+            self._dlg.bookmark_list.setPageList(pages)
+            self._dlg.bookmark_list.setSelected(0)
 
     def _onMoveUp(self, event):
         self._dlg.bookmark_list.moveSelectedItemUp()
