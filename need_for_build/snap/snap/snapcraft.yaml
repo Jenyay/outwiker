@@ -8,10 +8,17 @@ description: |
   A notes can to have attached files. OutWiker can contain pages of different types,
   currently supports three types of pages: plain text, HTML pages and wiki pages.
 
-grade: stable # must be 'stable' to release into candidate/stable channels
+title: OutWiker
+contact: jenyay.ilin@gmail.com
+license: GPL-3.0
+issues: https://github.com/jenyay/outwiker/issues
+source-code: https://github.com/jenyay/outwiker
+website: https://jenyay.net/Outwiker/English
+
+grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 icon: usr/share/icons/outwiker.svg
-base: core24
+base: core26
 
 apps:
   outwiker:
@@ -39,14 +46,19 @@ apps:
       LD_LIBRARY_PATH: $SNAP/pylib/hunspell:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/webkit2gtk-4.1/:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pulseaudio:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libgtk-3-0:$LD_LIBRARY_PATH
       PYTHONPATH: $SNAP/pylib
       PATH: $SNAP/usr/bin:$SNAP/pylib:$PATH
+      WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+      #GSETTINGS_SCHEMA_DIR: "$SNAP/usr/share/glib-2.0/schemas"
+      #GIO_EXTRA_MODULES: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules"
 
 layout:
   /usr/lib/locale:
     bind: $SNAP/usr/lib/locale
-  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/webkit2gtk-4.1:
-    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/webkit2gtk-4.1
   /usr/share/xml/iso-codes:
     bind: $SNAP/usr/share/xml/iso-codes
+  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/webkit2gtk-4.1:
+    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/webkit2gtk-4.1
+  /usr/share/glib-2.0/schemas:
+    bind: $SNAP/usr/share/glib-2.0/schemas
 
 plugs:
   gtk-3-themes:
@@ -67,7 +79,7 @@ parts:
     plugin: nil
     source: .
     build-packages:
-      - python3.12-dev
+      - python3.14-dev
       - python3-pip
       - libwebkit2gtk-4.1-dev
       - freeglut3-dev
@@ -79,14 +91,14 @@ parts:
       - libsm-dev
       - libtiff-dev
       - libxtst-dev
-      - g++-10
-      - gcc-10
+      - g++-13
+      - gcc-13
       - build-essential
       - autoconf
       - automake
       - libtool
     stage-packages:
-      - python3.12
+      - python3.14
       - libsdl2-2.0-0
       - libxss1
       - ibus-gtk3
@@ -95,11 +107,36 @@ parts:
       - libenchant-2-2
       - libjavascriptcoregtk-4.1-0
       - libwebkit2gtk-4.1-0
+      - libgtk-3-0
       - libwebpdemux2
       - libgnutls30
       - xdg-user-dirs
       - libcanberra-gtk3-module
+      - adwaita-icon-theme
     override-build: |
-      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib Pillow==13.0.0 idna==3.20 pyparsing==3.2.5 rcssmin==1.3.0 psutil==7.2.2 chunspell==2.0.5 https://github.com/wxWidgets/Phoenix/releases/download/wxPython-4.3.1/wxpython-4.3.1+ubuntu2404-cp312-cp312-linux_x86_64.whl
+      cat > /tmp/isnan_fix.h <<'EOF'
+      #include <cmath>
+      using std::isnan;
+      EOF
+      export CXXFLAGS="-include /tmp/isnan_fix.h"
+      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib Pillow==13.0.0 idna==3.20 pyparsing==3.2.5 rcssmin==1.3.0 psutil==7.2.2 chunspell==2.0.5 cython==3.3.1
+      pip3 install -t $SNAPCRAFT_PART_INSTALL/pylib wxpython==4.3.1 -v
       cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
       chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
+
+lint:
+  ignore:
+    - library:
+        - 'usr/lib/x86_64-linux-gnu/libatk-1.0.so.0*'
+        - 'usr/lib/x86_64-linux-gnu/libcairo.so.2*'
+        - 'usr/lib/x86_64-linux-gnu/libcairo-gobject.so.2*'
+        - 'usr/lib/x86_64-linux-gnu/libfontconfig.so.1*'
+        - 'usr/lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so.0*'
+        - 'usr/lib/x86_64-linux-gnu/libharfbuzz.so.0*'
+        - 'usr/lib/x86_64-linux-gnu/libharfbuzz-icu.so.0*'
+        - 'usr/lib/x86_64-linux-gnu/libpango-1.0.so.0*'
+        - 'usr/lib/x86_64-linux-gnu/libpangocairo-1.0.so.0*'
+        - 'usr/lib/x86_64-linux-gnu/libpangoft2-1.0.so.0*'
+        - 'usr/lib/x86_64-linux-gnu/libpsl.so.5*'
+        - 'usr/lib/x86_64-linux-gnu/librsvg-2.so.2*'
+        - 'usr/lib/x86_64-linux-gnu/libsoup-3.0.so.0*'
