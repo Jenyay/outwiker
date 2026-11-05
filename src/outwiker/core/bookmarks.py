@@ -44,11 +44,14 @@ class Bookmarks:
         """
         Set the bookmarks to the provided list of pages
         """
+        old_pages = list(filter(lambda page: page is not None, [self._getPage(page_id) for page_id in self._pages]))
+        updated_pages = list(set(old_pages + pages))
+
         self._pages = [page.getUid(generate=True) for page in pages]
         self._save()
         event_params = BookmarksChangedParams(
             bookmarks=self,
-            pages=[],
+            pages=updated_pages,
             action=BookmarksChangedParams.ACTION_FULL_UPDATE,
         )
         self.onBookmarksChanged(event_params)

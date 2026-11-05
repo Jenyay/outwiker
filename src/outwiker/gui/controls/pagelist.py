@@ -253,6 +253,12 @@ class PageList(wx.Panel):
                 return n
         return None
 
+    def getSelectedPage(self) -> None | WikiPage:
+        for n in range(self.listCtrl.GetItemCount()):
+            if self.listCtrl.IsSelected(n):
+                return self._pages[n]
+        return None
+
     def setSelected(self, index: int):
         for n in range(self.listCtrl.GetItemCount()):
             self.listCtrl.Select(n, n == index)

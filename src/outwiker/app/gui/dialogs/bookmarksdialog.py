@@ -159,19 +159,19 @@ class BookmarksDialogController:
     def _onMoveUp(self, event):
         assert self._dlg.bookmark_list is not None
         self._dlg.bookmark_list.moveSelectedItemUp()
-        self._save_bookmarks()
+        self._set_bookmark_list()
 
     def _onMoveDown(self, event):
         assert self._dlg.bookmark_list is not None
         self._dlg.bookmark_list.moveSelectedItemDown()
-        self._save_bookmarks()
+        self._set_bookmark_list()
 
     def _onRemoveBookmark(self, event):
         assert self._dlg.bookmark_list is not None
-        sel_index = self._dlg.bookmark_list.getSelectedIndex()
-        if sel_index is not None:
-            self._dlg.bookmark_list.removeItem(sel_index)
-            self._save_bookmarks()
+        selected_page = self._dlg.bookmark_list.getSelectedPage()
+        if selected_page is not None:
+            sel_index = self._dlg.bookmark_list.getSelectedIndex()
+            self._application.bookmarks.remove(selected_page)
 
             # Update selection
             pages = self._dlg.bookmark_list.getPageList()
@@ -181,7 +181,7 @@ class BookmarksDialogController:
             if sel_index >= 0:
                 self._dlg.bookmark_list.setSelected(sel_index)
 
-    def _save_bookmarks(self):
+    def _set_bookmark_list(self):
         assert self._dlg.bookmark_list is not None
         pages = self._dlg.bookmark_list.getPageList()
 
