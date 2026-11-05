@@ -358,7 +358,8 @@ class NotesTree(wx.Window):
         self.treeCtrl.updateTree()
 
     def __onBookmarkChanged(self, params: BookmarksChangedParams):
-        self.treeCtrl.updateItem(params.page)
+        for page in params.pages:
+            self.treeCtrl.updateItem(page)
 
     @property
     def selectedPage(self):

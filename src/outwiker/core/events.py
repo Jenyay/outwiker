@@ -442,7 +442,7 @@ class BookmarksChangedParams:
     ACTION_REMOVE_FROM_BOOKMARKS = 2
     ACTION_FULL_UPDATE = 3
     bookmarks: "outwiker.core.Bookmarks" = None
-    page: "WikiPage" = None
+    pages: List["WikiPage"] = field(default_factory=list)
     action: int = 0
 
 

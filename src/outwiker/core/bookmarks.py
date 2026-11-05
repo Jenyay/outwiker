@@ -48,7 +48,7 @@ class Bookmarks:
         self._save()
         event_params = BookmarksChangedParams(
             bookmarks=self,
-            page=None,
+            pages=[],
             action=BookmarksChangedParams.ACTION_FULL_UPDATE,
         )
         self.onBookmarksChanged(event_params)
@@ -107,7 +107,7 @@ class Bookmarks:
         self._save()
         event_params = BookmarksChangedParams(
             bookmarks=self,
-            page=page,
+            pages=[page],
             action=BookmarksChangedParams.ACTION_ADD_TO_BOOKMARKS,
         )
         self.onBookmarksChanged(event_params)
@@ -122,7 +122,7 @@ class Bookmarks:
             self._pages.remove(page_id)
             event_params = BookmarksChangedParams(
                 bookmarks=self,
-                page=page,
+                pages=[page],
                 action=BookmarksChangedParams.ACTION_REMOVE_FROM_BOOKMARKS,
             )
             self.onBookmarksChanged(event_params)

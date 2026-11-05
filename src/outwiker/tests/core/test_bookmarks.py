@@ -29,6 +29,7 @@ class BookmarksTest(unittest.TestCase):
 
         self.bookmarkCount = 0
         self.bookmarkSender = None
+        self.bookmarkPages = []
         self.bookmarks = Bookmarks()
         self.bookmarks.setWikiRoot(self.wikiroot)
         self._application.wikiroot = None
@@ -41,6 +42,7 @@ class BookmarksTest(unittest.TestCase):
     def onBookmark(self, params: BookmarksChangedParams):
         self.bookmarkCount += 1
         self.bookmarkSender = params.bookmarks
+        self.bookmarkPages = params.pages
 
     def testAddToBookmarks_AsSubpath(self):
         # По умолчанию закладок нет
@@ -124,6 +126,7 @@ class BookmarksTest(unittest.TestCase):
         self._application.bookmarks.add(self.wikiroot["Страница 1"])
         self.assertEqual(self.bookmarkCount, 1)
         self.assertEqual(self.bookmarkSender, self._application.bookmarks)
+        self.assertEqual(self.bookmarkPages, [self.wikiroot["Страница 1"]])
 
         self._application.bookmarks.add(self.wikiroot["Страница 2"])
         self.assertEqual(self.bookmarkCount, 2)
