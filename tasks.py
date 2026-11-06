@@ -16,7 +16,8 @@ from invoke import task
 from outwiker.build.utilites import getPython, print_info
 from outwiker.build.defines import COVERAGE_PARAMS
 from outwiker.build.builders import (
-    BuilderWindows,
+    BuilderWindowsBinary,
+    BuilderLinuxBinary,
     BuilderPlugins,
     BuilderSnap,
 )
@@ -42,11 +43,24 @@ def win(c, is_stable=False, skiparchives=False, skipinstaller=False):
     """
     Build OutWiker for Windows
     """
-    builder = BuilderWindows(
+    builder = BuilderWindowsBinary(
         c,
         is_stable=is_stable,
         create_archives=not skiparchives,
         create_installer=not skipinstaller,
+    )
+    builder.build()
+
+
+@task
+def linux_bin(c, is_stable=False, skiparchives=False):
+    """
+    Build the OutWiker binary distribution for Linux (cx_Freeze)
+    """
+    builder = BuilderLinuxBinary(
+        c,
+        is_stable=is_stable,
+        create_archives=not skiparchives,
     )
     builder.build()
 

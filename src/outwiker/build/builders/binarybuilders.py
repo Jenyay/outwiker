@@ -158,7 +158,7 @@ class BaseBinaryBuilder(metaclass=ABCMeta):
             shutil.copy(fname, dest_dir)
 
 
-class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
+class CxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     """Class for binary assembling creation with cx_freeze."""
 
     def __init__(self, c: Context, src_dir, dest_dir, temp_dir):
@@ -223,5 +223,5 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
             remove(fname)
 
 
-class CxFreezeBuilderWindows(BaseCxFreezeBuilder):
-    pass
+
+
