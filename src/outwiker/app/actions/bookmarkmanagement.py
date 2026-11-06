@@ -15,7 +15,7 @@ class BookmarkManagementAction(BaseAction):
 
     @property
     def description(self):
-        return _("Show the dialog for bookmarks management")
+        return _("Show the dialog for bookmark management")
 
     def run(self, params):
         if self._application.mainWindow is not None:
