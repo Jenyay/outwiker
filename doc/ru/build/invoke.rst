@@ -150,6 +150,9 @@ win_clear
 `linux_clear`
     Удалить созданную бинарную сборку под Linux.
 
+`linux-bin`
+    Создать бинарную сборку под Linux с помощью cx_Freeze_. Результат помещается в папку :file:`build/{{номер версии}}/linux/outwiker_bin`. Подробности см. в разделе :ref:`ru_build_linux`.
+
 
 .. _ru_fabfile_plugins:
 
@@ -272,6 +275,7 @@ win_clear
 
 .. _Fabric: http://www.fabfile.org/
 .. _PyInstaller: http://www.pyinstaller.org/
+.. _cx_Freeze: https://cx-freeze.readthedocs.io/
 .. _`Inno Setup`: http://www.jrsoftware.org/
 .. _VirtualBox: https://www.virtualbox.org/
 .. _Ansible: https://www.ansible.com/

@@ -151,14 +151,114 @@
 #. Папка :file:`tmp/outwiker_exe` перемещается в :file:`build/{{номер версии}}/windows`.
 
 
+.. _ru_build_linux:
+
+Сборка бинарной дистрибутивы под Linux
+--------------------------------------
+
+.. _ru_inv_linux_bin_using:
+
+Использование команды inv linux-bin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Для того, чтобы собрать бинарную дистрибутиву OutWiker под Linux как нестабильную версию, используется команда
+
+.. code:: bash
+
+    inv linux-bin
+
+
+Для того, чтобы собрать бинарную дистрибутиву под Linux как стабильную версию, используется команда
+
+.. code:: bash
+
+    inv linux-bin --is-stable
+
+или
+
+.. code:: bash
+
+    inv linux-bin -i
+
+
+Для нестабильной версии будут созданы следующие артефакты в папке :file:`build/{{номер версии}}/linux`:
+
+* Папка :file:`outwiker_bin`, содержащая все файлы, необходимые для запуска под Linux, включая все плагины в папке :file:`plugins`.
+* :file:`outwiker_linux_unstable.zip` - zip-архив, содержащий содержимое папки :file:`outwiker_bin`, но без плагинов во вложенной папке :file:`plugins`.
+* :file:`outwiker_linux_unstable.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_bin`, но без плагинов во вложенной папке :file:`plugins`.
+* :file:`outwiker_linux_unstable_all_plugins.zip` - zip-архив, содержащий содержимое папки :file:`outwiker_bin`, включая плагины во вложенной папке :file:`plugins`.
+* :file:`outwiker_linux_unstable_all_plugins.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_bin`, включая плагины во вложенной папке :file:`plugins`.
+
+
+Для стабильной версии будут созданы следующие артефакты в папке :file:`build/{{номер версии}}/linux`:
+
+* Папка :file:`outwiker_bin`, содержащая все файлы, необходимые для запуска под Linux, включая все плагины в папке :file:`plugins`.
+* :file:`outwiker_{{x.x.x}}_linux.zip` - zip-архив, содержащий содержимое папки :file:`outwiker_bin`, но без плагинов во вложенной папке :file:`plugins`.
+* :file:`outwiker_{{x.x.x}}_linux.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_bin`, но без плагинов во вложенной папке :file:`plugins`.
+* :file:`outwiker_{{x.x.x}}_linux_all_plugins.zip` - zip-архив, содержащий содержимое папки :file:`outwiker_bin`, включая плагины во вложенной папке :file:`plugins`.
+* :file:`outwiker_{{x.x.x}}_linux_all_plugins.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_bin`, включая плагины во вложенной папке :file:`plugins`.
+
+
+Команде :code:`inv linux-bin` можно передавать следующие дополнительные параметры:
+
+  -i или --is-stable - собрать OutWiker как стабильную версию
+  -s или --skiparchives - при сборке не создавать архивы
+
+В отличие от сборки под Windows, инсталятор для Linux не создается: пользователь может просто распаковать архив (или папку :file:`outwiker_bin`) и запустить файл :file:`outwiker`.
+
+.. _ru_inv_linux_bin_internal:
+
+Порядок сборки бинарной дистрибутивы под Linux
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Все действия, связанные со сборкой бинарной дистрибутивы под Linux, сосредоточены в классе :class:`outwiker.build.builders.linux.bin.BuilderLinux`, который является производным от :class:`outwiker.build.builders.base.BuilderBase`.
+
+В процессе сборки выполняются следующие действия:
+
+Действия, выполняемые классом :class:`outwiker.build.builders.base.BuilderBase`.
+
+
+#. Создание папки :file:`build`.
+
+#. Выполняется команда очистки.
+
+#. Удаляется временная папка :file:`build/tmp`, если она существовала.
+
+#. Создается временная папка :file:`build/tmp`.
+
+#. Создается папка :file:`build/{{номер версии}}/linux`, если она не существовала.
+
+#. Исходники копируются в папку :file:`build/tmp/src`.
+
+
+Действия, выполняемые классом :class:`outwiker.build.builders.linux.bin.BuilderLinux`.
+
+
+#. Создается пустая папка для плагинов :file:`tmp/src/plugins`, если она не была создана.
+
+#. Создается бинарная сборка в :file:`tmp/outwiker_bin` (см. раздел :ref:`ru_inv_binary`). В папку :file:`tmp/outwiker_bin` копируются файлы :file:`copyright.txt` и :file:`LICENSE.txt`.
+
+#. С помощью утилиты `strip` удаляется отладочная информация из всех разделяемых библиотек (файлов \*.so) в папке :file:`tmp/outwiker_bin`.
+
+#. Удаляется и создается заново папка :file:`tmp/outwiker_bin/plugins`.
+
+#. Создаются архивы с бинарной сборкой в формате zip и 7z без плагинов. Созданные архивы помещаются в :file:`build/{{номер версии}}/linux`.
+
+#. Все плагины копируются в папку :file:`tmp/outwiker_bin/plugins`.
+
+#. Создаются архивы с бинарной сборкой в формате zip и 7z с плагинами. Созданные архивы помещаются в :file:`build/{{номер версии}}/linux`.
+
+#. Папка :file:`tmp/outwiker_bin` перемещается в :file:`build/{{номер версии}}/linux`.
+
+
 .. _ru_inv_binary:
 
 Создание бинарной сборки
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Самое важное, что делает команды :code:`inv win` и :code:`inv linux_binary`- это создание запускаемых приложений под Windows и Linux соответственно, чтобы пользователям не требовалось устанавливать интерпретатор Python. Это осуществляется с помощью утилиты cx_Freeze_.
+Самое важное, что делают команды :code:`inv win` и :code:`inv linux-bin` - это создание запускаемых приложений под Windows и Linux соответственно, чтобы пользователям не требовалось устанавливать интерпретатор Python. Это осуществляется с помощью утилиты cx_Freeze_.
 
-В результате выполнения данного скрипта будет создана папка :file:`build/{version}/windows/outwiker_exe` (в Windows) или :file:`build/{version}/outwiker_linux/outwiker_exe` (в Linux), содержащая запускаемый файл :file:`outwiker.exe` (в Windows) или :file:`outwiker` (в Linux), а также дополнительные файлы, необходимые для работы с библиотеками, и папки, необходимые для работы OutWiker. Все необходимые модули cx_Freeze помещает внутрь запускаемого файла (:file:`outwiker.exe` или :file:`outwiker`).
+В результате выполнения данного скрипта будет создана папка :file:`build/{version}/windows/outwiker_exe` (в Windows) или :file:`build/{version}/linux/outwiker_bin` (в Linux), содержащая запускаемый файл :file:`outwiker.exe` (в Windows) или :file:`outwiker` (в Linux), а также дополнительные файлы, необходимые для работы с библиотеками, и папки, необходимые для работы OutWiker. Все необходимые модули cx_Freeze помещает внутрь запускаемого файла (:file:`outwiker.exe` или :file:`outwiker`).
 
 
 .. _ru_build_sources:

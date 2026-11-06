@@ -2,26 +2,21 @@
 
 import os
 import shutil
-from string import Template
 
 from invoke import Context
 
 from .base import BuilderBase
-from .binarybuilders import CxFreezeBuilderWindows
+from .binarybuilders import CxFreezeBuilder
 from outwiker.build.defines import (
-    WINDOWS_BUILD_DIR,
-    PLUGINS_LIST,
-    NEED_FOR_BUILD_DIR,
-    WINDOWS_EXECUTABLE_DIR,
+    LINUX_BUILD_DIR,
+    LINUX_EXECUTABLE_DIR,
 )
 from outwiker.build.utilites import print_info
 
-from outwiker.utilites.textfile import readTextFile, writeTextFile
 
-
-class BuilderWindows(BuilderBase):
+class BuilderLinuxBinary(BuilderBase):
     """
-    Build for Windows
+    Build the binary distribution for Linux with cx_Freeze
     """
 
     def __init__(
@@ -29,116 +24,73 @@ class BuilderWindows(BuilderBase):
         c: Context,
         is_stable: bool = False,
         create_archives: bool = True,
-        create_installer: bool = True,
     ):
-        super().__init__(c, WINDOWS_BUILD_DIR, is_stable)
-        self._create_installer = create_installer
+        super().__init__(c, LINUX_BUILD_DIR, is_stable)
         self._create_archives = create_archives
 
         self._resultBaseName = (
-            "outwiker_{version}_win".format(version=self.facts.version_items[0])
+            "outwiker_{version}_linux".format(version=self.facts.version_items[0])
             if self.is_stable
-            else "outwiker_win_unstable"
+            else "outwiker_linux_unstable"
         )
 
         self._resultWithPluginsBaseName = self._resultBaseName + "_all_plugins"
-        self._plugins_list = PLUGINS_LIST
 
-        self._executable_dir = os.path.join(self.facts.temp_dir, WINDOWS_EXECUTABLE_DIR)
+        self._executable_dir = os.path.join(self.facts.temp_dir, LINUX_EXECUTABLE_DIR)
 
         # Path to copy plugins
         self._dest_plugins_dir = os.path.join(self._executable_dir, "plugins")
 
     def clear(self):
-        toRemove = [
-            os.path.join(self.build_dir, WINDOWS_EXECUTABLE_DIR),
+        to_remove = [
+            os.path.join(self.build_dir, LINUX_EXECUTABLE_DIR),
             os.path.join(self.build_dir, self._resultBaseName + ".7z"),
-            os.path.join(self.build_dir, self._resultBaseName + ".exe"),
             os.path.join(self.build_dir, self._resultBaseName + ".zip"),
             os.path.join(self.build_dir, self._resultWithPluginsBaseName + ".7z"),
             os.path.join(self.build_dir, self._resultWithPluginsBaseName + ".zip"),
         ]
-        for fname in toRemove:
+        for fname in to_remove:
             self._remove(fname)
 
     def _build(self):
         print_info("Is stable: {}".format(self.is_stable))
-        print_info("Create installer: {}".format(self._create_installer))
         print_info("Create archives: {}".format(self._create_archives))
 
         self._create_plugins_dir()
         self._create_binary()
+        self._strip_shared_libraries()
         self._clear_dest_plugins_dir()
         self._create_archives_without_plugins()
-        self._copy_plugins()
-        self._build_installer()
+        self._copy_plugins(self._dest_plugins_dir)
         self._create_archives_with_plugins()
         self._move_executable_dir()
 
     def _create_binary(self):
         """
-        Build with PyInstaller
+        Build with cx_Freeze
         """
         print_info("Create binary files...")
         src_dir = self.temp_sources_dir
         dest_dir = self._executable_dir
         temp_dir = self.facts.temp_dir
 
-        builder = CxFreezeBuilderWindows(self.context, src_dir, dest_dir, temp_dir)
+        builder = CxFreezeBuilder(self.context, src_dir, dest_dir, temp_dir)
         builder.build()
 
-    def _create_plugins_dir(self):
+    def _strip_shared_libraries(self):
         """
-        Create the plugins folder(it is not appened to the git repository)
+        Remove debug information from shared libraries (.so files)
         """
-        pluginsdir = os.path.join(self.temp_sources_dir, "plugins")
-        if not os.path.exists(pluginsdir):
-            os.mkdir(pluginsdir)
+        print_info("Strip debug information from shared libraries...")
+        with self.context.cd(self._executable_dir):
+            self.context.run(
+                r"find . -type f \( -name '*.so' -o -name '*.so.[0-9]*' \) "
+                r"-exec strip --strip-unneeded {} +"
+            )
 
     def _clear_dest_plugins_dir(self):
         self._remove(self._dest_plugins_dir)
         os.mkdir(self._dest_plugins_dir)
-
-    def _build_installer(self):
-        if not self._create_installer:
-            return
-
-        print_info("Create installer...")
-        if self.is_stable:
-            installerName = "outwiker_{}_win".format(self.facts.version_items[0])
-        else:
-            installerName = "outwiker_win_unstable"
-
-        installer_path = os.path.join(self.facts.temp_dir, installerName)
-
-        installer_template = readTextFile(
-            os.path.join(NEED_FOR_BUILD_DIR, "windows", "outwiker_setup.iss.tpl")
-        )
-
-        installer_text = Template(installer_template).safe_substitute(
-            version=self.facts.version, resultname=installerName
-        )
-
-        installer_script_path = os.path.join(self.facts.temp_dir, "outwiker_setup.iss")
-
-        writeTextFile(installer_script_path, installer_text)
-
-        with self.context.cd(self.facts.temp_dir):
-            self.context.run("iscc outwiker_setup.iss")
-
-        shutil.move(installer_path + ".exe", self.build_dir)
-
-    def _copy_plugins(self):
-        """
-        Copy plugins to build folder
-        """
-        print_info("Copy plugins...")
-        src_pluginsdir = "plugins"
-        for plugin in self._plugins_list:
-            shutil.copytree(
-                os.path.join(src_pluginsdir, plugin, plugin),
-                os.path.join(self._dest_plugins_dir, plugin),
-            )
 
     def _create_archives_without_plugins(self):
         if not self._create_archives:
@@ -154,8 +106,8 @@ class BuilderWindows(BuilderBase):
                 os.path.join(self.build_dir, self._resultBaseName + ".7z")
             )
 
-            self.context.run(r'7z a "{}" .\* .\plugins -r -aoa'.format(path_zip))
-            self.context.run(r'7z a "{}" .\* .\plugins -r -aoa'.format(path_7z))
+            self.context.run(r'7z a -r -aoa "{}" ./*'.format(path_zip))
+            self.context.run(r'7z a -r -aoa "{}" ./*'.format(path_7z))
 
     def _create_archives_with_plugins(self):
         if not self._create_archives:
@@ -172,12 +124,12 @@ class BuilderWindows(BuilderBase):
             )
 
             self.context.run(
-                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ruff_cache -xr!.ropeproject'.format(
+                r'7z a -r -aoa -xr!__pycache__ -xr!.ruff_cache -xr!.ropeproject "{}" ./*'.format(
                     path_zip
                 )
             )
             self.context.run(
-                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ruff_cache -xr!.ropeproject'.format(
+                r'7z a -r -aoa -xr!__pycache__ -xr!.ruff_cache -xr!.ropeproject "{}" ./*'.format(
                     path_7z
                 )
             )

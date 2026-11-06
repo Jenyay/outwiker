@@ -6,7 +6,7 @@ import shutil
 
 from invoke import Context
 
-from ..base import BuilderBase
+from .base import BuilderBase
 from outwiker.build.defines import SNAP_BUILD_DIR, PLUGINS_DIR
 from outwiker.build.template import substitute_in_file
 from outwiker.build.utilites import print_info
