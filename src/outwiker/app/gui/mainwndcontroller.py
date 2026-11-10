@@ -3,7 +3,7 @@
 import wx
 
 from outwiker.app.actions.addbookmark import AddBookmarkAction
-from outwiker.app.actions.bookmarkmanagement import BookmarkManagementAction
+from outwiker.app.actions.showhidebookmarks import ShowHideBookmarksAction
 from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
@@ -108,7 +108,7 @@ class MainWndController:
             RemovePageAction,
             EditPagePropertiesAction,
             AddBookmarkAction,
-            BookmarkManagementAction,
+            ShowHideBookmarksAction,
             AddTabAction,
             CloseTabAction,
             PreviousTabAction,

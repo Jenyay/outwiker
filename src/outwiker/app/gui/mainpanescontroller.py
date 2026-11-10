@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import wx
+import wx.aui
 
 from outwiker.app.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.app.actions.showhidetree import ShowHideTreeAction
 from outwiker.app.actions.showhidetags import ShowHideTagsAction
+from outwiker.app.actions.showhidebookmarks import ShowHideBookmarksAction
 
-from outwiker.gui.defines import MENU_VIEW
+from outwiker.gui.defines import MENU_VIEW, MENU_BOOKMARKS
 
 
 class MainPanesController:
@@ -21,11 +23,7 @@ class MainPanesController:
             ShowHideAttachesAction,
         ]
 
-        self._panels = [
-            # self.__application.mainWindow.treePanel,
-            # self.__application.mainWindow.tagsCloudPanel,
-            # self.__application.mainWindow.attachPanel,
-        ]
+        self._panels = []
 
         if self.__mainWindow.treePanel is not None:
             self._panels.append(self.__mainWindow.treePanel)
@@ -36,15 +34,22 @@ class MainPanesController:
         if self.__mainWindow.attachPanel is not None:
             self._panels.append(self.__mainWindow.attachPanel)
 
+        if self.__mainWindow.bookmarksPanel is not None:
+            self._panels.append(self.__mainWindow.bookmarksPanel)
+
         self.auiManager.SetDockSizeConstraint(0.8, 0.8)
         self.auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE, self.__onPaneClose)
         self._fullscreenHidden = []
 
-    def createViewMenuItems(self):
+    def createMenuItems(self):
         actionController = self.__application.actionController
         viewMenu = self.__application.mainWindow.menuController[MENU_VIEW]
+        bookmarksMenu = self.__application.mainWindow.menuController[MENU_BOOKMARKS]
+
         for action in self.__actions:
             actionController.appendMenuCheckItem(action.stringId, viewMenu)
+
+        actionController.appendMenuCheckItem(ShowHideBookmarksAction.stringId, bookmarksMenu)
 
     def __onPaneClose(self, event):
         paneName = event.GetPane().name
@@ -61,10 +66,9 @@ class MainPanesController:
         Возвращает список всех _экземпляров_ действий
         """
         actionController = self.__application.actionController
-        return [
-            actionController.getAction(actionType.stringId)
-            for actionType in self.__actions
-        ]
+        actions = [actionController.getAction(actionType.stringId) for actionType in self.__actions]
+        actions.append(actionController.getAction(ShowHideBookmarksAction.stringId))
+        return actions
 
     def fromFullscreen(self):
         """
@@ -131,6 +135,11 @@ class MainPanesController:
         if self.__mainWindow.tagsCloudPanel is not None:
             self.__application.actionController.check(
                 ShowHideTagsAction.stringId, self.__mainWindow.tagsCloudPanel.isShown()
+            )
+
+        if self.__mainWindow.bookmarksPanel is not None:
+            self.__application.actionController.check(
+                ShowHideBookmarksAction.stringId, self.__mainWindow.bookmarksPanel.isShown()
             )
 
         self.auiManager.Update()

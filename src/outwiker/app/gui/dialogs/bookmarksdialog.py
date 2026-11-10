@@ -3,7 +3,6 @@ import wx
 from outwiker.core.application import Application
 from outwiker.core.events import BookmarksChangedParams
 from outwiker.core.system import getBuiltinImagePath
-from outwiker.core.tree import WikiPage
 from outwiker.gui.controls.pagelist_columns import ColumnsFactory
 from outwiker.gui.guiconfig import BookmarksDialogConfig
 from outwiker.gui.images import readImage

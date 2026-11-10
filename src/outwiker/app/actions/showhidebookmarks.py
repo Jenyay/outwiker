@@ -1,8 +1,9 @@
+from outwiker.app.gui.mainwindowtools import showHideBookmarksPanel
 from outwiker.gui.baseaction import BaseAction
 
 
-class BookmarkManagementAction(BaseAction):
-    """Show dialog for bookmarks edit"""
+class ShowHideBookmarksAction(BaseAction):
+    """Show / hide bookmark panel"""
 
     stringId = "BookmarkManagement"
 
@@ -19,4 +20,4 @@ class BookmarkManagementAction(BaseAction):
 
     def run(self, params):
         if self._application.mainWindow is not None:
-            self._application.mainWindow.showBookmarkManagementDialog()
+            showHideBookmarksPanel(self._application.mainWindow, params)

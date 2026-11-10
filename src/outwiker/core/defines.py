@@ -43,6 +43,7 @@ APP_DATA_DISABLE_PLUGINS = "__disablePlugins"
 APP_DATA_CREATE_TREE_PANEL = "__createTreePanel"
 APP_DATA_CREATE_ATTACH_PANEL = "__createAttachPanel"
 APP_DATA_CREATE_TAGS_PANEL = "__createTagsPanel"
+APP_DATA_CREATE_BOOKMARKS_PANEL = "__createBookmarksPanel"
 
 ICONS_STD_PREFIX = "__std_"
 ICONS_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "bmp", "ico", "svg"]

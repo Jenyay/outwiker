@@ -9,7 +9,6 @@ import wx.aui
 
 from outwiker.app.actions.about import AboutAction
 from outwiker.app.actions.addbookmark import AddBookmarkAction
-from outwiker.app.actions.bookmarkmanagement import BookmarkManagementAction
 from outwiker.app.actions.addchildpage import AddChildPageAction
 from outwiker.app.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.app.actions.applystyle import SetStyleToBranchAction
@@ -78,6 +77,7 @@ from outwiker.app.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.app.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.app.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.app.gui.mainpanes.pagemainpane import PageMainPane
+from outwiker.app.gui.mainpanes.bookmarksmainpane import BookmarksMainPane
 from outwiker.app.gui.mainpanescontroller import MainPanesController
 from outwiker.app.gui.menucontroller import MenuController
 from outwiker.app.gui.preferences.prefcontroller import PrefController
@@ -114,6 +114,7 @@ class MainWindow(wx.Frame):
         self._treePanel = None
         self._attachPanel = None
         self._tagsCloudPanel = None
+        self._bookmarksPanel = None
 
         # Variables to accurate watch for main window state
         self._realSize = None
@@ -139,6 +140,10 @@ class MainWindow(wx.Frame):
     @property
     def tagsCloudPanel(self):
         return self._tagsCloudPanel
+
+    @property
+    def bookmarksPanel(self):
+        return self._bookmarksPanel
 
     def updateTrayIcon(self):
         self.trayController.updateTrayIcon()
@@ -569,7 +574,7 @@ class MainWindow(wx.Frame):
         self._createToolsMenu()
         self._createHelpMenu()
         self._createSwitchToMenu()
-        self.__panesController.createViewMenuItems()
+        self.__panesController.createMenuItems()
 
         actionController = self._application.actionController
 
@@ -587,7 +592,6 @@ class MainWindow(wx.Frame):
         # Добавление / удаление закладки
         menu_bookmarks = self.menuController[guidefines.MENU_BOOKMARKS]
         actionController.appendMenuItem(AddBookmarkAction.stringId, menu_bookmarks)
-        actionController.appendMenuItem(BookmarkManagementAction.stringId, menu_bookmarks)
 
         menu_bookmarks.AppendSeparator()
 
@@ -603,6 +607,8 @@ class MainWindow(wx.Frame):
         """
         Создание плавающих панелей
         """
+        assert self._application is not None
+
         self.pagePanel = PageMainPane(
             self._mainContentPanel, self.auiManager, self._application
         )
@@ -619,6 +625,11 @@ class MainWindow(wx.Frame):
 
         if self._application.sharedData.get(defines.APP_DATA_CREATE_TAGS_PANEL, True):
             self._tagsCloudPanel = TagsCloudMainPane(
+                self._mainContentPanel, self.auiManager, self._application
+            )
+
+        if self._application.sharedData.get(defines.APP_DATA_CREATE_BOOKMARKS_PANEL, True):
+            self._bookmarksPanel = BookmarksMainPane(
                 self._mainContentPanel, self.auiManager, self._application
             )
 
@@ -794,6 +805,3 @@ class MainWindow(wx.Frame):
     @property
     def statusbar(self) -> StatusBarController:
         return self._statusBarController
-
-    def showBookmarkManagementDialog(self):
-        self.__boomarksDialogController.show()

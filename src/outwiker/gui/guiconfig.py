@@ -1084,6 +1084,40 @@ class AttachConfig:
         )
 
 
+class BookmarksPaneConfig:
+    """Options for the bookmarks management pane"""
+
+    WIDTH_PARAM = "BookmarksWidth"
+    WIDTH_DEFAULT = 600
+
+    HEIGHT_PARAM = "BookmarksHeight"
+    HEIGHT_DEFAULT = 200
+
+    PANE_OPTIONS_PARAM = "BookmarksPane"
+    PANE_OPTIONS_DEFAULT = ""
+
+    def __init__(self, config):
+        self.config = config
+        self.width = IntegerOption(
+            config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.WIDTH_PARAM,
+            self.WIDTH_DEFAULT,
+        )
+        self.height = IntegerOption(
+            config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.HEIGHT_PARAM,
+            self.HEIGHT_DEFAULT,
+        )
+        self.pane = StringOption(
+            config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.PANE_OPTIONS_PARAM,
+            self.PANE_OPTIONS_DEFAULT,
+        )
+
+
 class TagsCloudConfig:
     """
     Класс для хранения настроек панели с облагом тегов

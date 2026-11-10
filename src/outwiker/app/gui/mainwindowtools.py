@@ -44,9 +44,9 @@ def setStatusText(mainWindow, item_name: str, text: str) -> None:
 
 def _showHideMainPanel(mainWindow, panel, visible):
     if visible:
-        panel.pane.Show()
+        panel.show()
     else:
-        panel.pane.Hide()
+        panel.hide()
 
     mainWindow.auiManager.Update()
 
@@ -61,3 +61,7 @@ def showHideTagsPanel(mainWindow, visible):
 
 def showHideNotesTreePanel(mainWindow, visible):
     _showHideMainPanel(mainWindow, mainWindow.treePanel, visible)
+
+
+def showHideBookmarksPanel(mainWindow, visible):
+    _showHideMainPanel(mainWindow, mainWindow.bookmarksPanel, visible)

@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 
 import wx.aui
+
+from outwiker.core.application import Application
 # from line_profiler import profile
 
 
@@ -12,7 +14,7 @@ class MainPane(metaclass=ABCMeta):
     """
 
     # @profile
-    def __init__(self, parent, auiManager, application):
+    def __init__(self, parent: wx.Window, auiManager: wx.aui.AuiManager, application: Application):
         """
         parent - родитель панели
         application - экземпляр outwiker.core.application.Application
@@ -83,7 +85,8 @@ class MainPane(metaclass=ABCMeta):
     def setForegroundColour(self, colour):
         self.panel.SetForegroundColour(colour)
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def caption(self):
         pass
 
@@ -93,6 +96,10 @@ class MainPane(metaclass=ABCMeta):
 
     @abstractmethod
     def _createConfig(self):
+        pass
+
+    @abstractmethod
+    def _createPane(self):
         pass
 
     @property
