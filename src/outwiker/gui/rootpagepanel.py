@@ -21,9 +21,9 @@ class RootPagePanel(BasePagePanel):
 
     def _createGUI(self):
         self._panels = [
-            NotesTreePathPanel(self, self._application),
-            ButtonsPanel(self, self._application),
-            BookmarksPanel(self, self._application),
+            _NotesTreePathPanel(self, self._application),
+            _ButtonsPanel(self, self._application),
+            _BookmarksPanel(self, self._application),
         ]
 
         mainSizer = wx.FlexGridSizer(cols=1)
@@ -54,7 +54,7 @@ class RootPagePanel(BasePagePanel):
         pass
 
 
-class ButtonsPanel(wx.Panel):
+class _ButtonsPanel(wx.Panel):
     """
     Panel with buttons
     """
@@ -83,7 +83,7 @@ class ButtonsPanel(wx.Panel):
         createChildPage(self._application.mainWindow, None, self._application)
 
 
-class NotesTreePathPanel(wx.Panel):
+class _NotesTreePathPanel(wx.Panel):
     """
     Panel with information about path to current note tree
     """
@@ -123,7 +123,7 @@ class NotesTreePathPanel(wx.Panel):
         self.SetSizer(pathSizer)
 
 
-class BookmarksPanel(wx.Panel):
+class _BookmarksPanel(wx.Panel):
     """
     Panel with bookmarks list
     """
