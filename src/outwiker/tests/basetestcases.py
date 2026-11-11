@@ -97,6 +97,7 @@ class BaseOutWikerGUIMixin(BaseOutWikerMixin):
         createTreePanel=False,
         createAttachPanel=False,
         createTagsPanel=False,
+        createBookmarksPanel=False,
     ):
         super().initApplication(lang)
         self.application.sharedData[defines.APP_DATA_CREATE_TREE_PANEL] = (
@@ -107,6 +108,12 @@ class BaseOutWikerGUIMixin(BaseOutWikerMixin):
         )
         self.application.sharedData[defines.APP_DATA_CREATE_TAGS_PANEL] = (
             createTagsPanel
+        )
+        self.application.sharedData[defines.APP_DATA_CREATE_TAGS_PANEL] = (
+            createTagsPanel
+        )
+        self.application.sharedData[defines.APP_DATA_CREATE_BOOKMARKS_PANEL] = (
+            createBookmarksPanel
         )
 
         self.outwiker_app = OutWikerApplication(self.application)
