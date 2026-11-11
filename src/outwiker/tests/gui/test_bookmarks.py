@@ -237,20 +237,20 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testEnableDisable(self):
         bookmarksMenu = self.mainWindow.menuController[MENU_BOOKMARKS]
 
-        self.assertFalse(bookmarksMenu.GetMenuItems()[0].IsEnabled())
+        self.assertFalse(bookmarksMenu.GetMenuItems()[1].IsEnabled())
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = None
 
-        self.assertFalse(bookmarksMenu.GetMenuItems()[0].IsEnabled())
+        self.assertFalse(bookmarksMenu.GetMenuItems()[1].IsEnabled())
 
         self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        self.assertTrue(bookmarksMenu.GetMenuItems()[0].IsEnabled())
+        self.assertTrue(bookmarksMenu.GetMenuItems()[1].IsEnabled())
 
         self.application.selectedPage = None
 
-        self.assertFalse(bookmarksMenu.GetMenuItems()[0].IsEnabled())
+        self.assertFalse(bookmarksMenu.GetMenuItems()[1].IsEnabled())
 
     def testRename1_AsSubpath(self):
         self.application.wikiroot = self.wikiroot
