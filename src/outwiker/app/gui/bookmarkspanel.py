@@ -2,10 +2,8 @@ import wx
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import BookmarksPaneConfig
-from outwiker.core.events import BookmarksChangedParams
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.pagelist_columns import ColumnsFactory
-from outwiker.gui.guiconfig import BookmarksDialogConfig
 from outwiker.gui.images import readImage
 from outwiker.gui.theme import Theme
 from outwiker.gui.controls.pagelist import PageList
@@ -66,10 +64,11 @@ class BookmarksPanel(wx.Panel):
     def _create_gui_part_1(self):
         self._create_buttons()
 
-    def _create_gui_part_2(self):
-        self._create_bookmark_list()
-        self._layout()
-        self.applyTheme()
+    def create_gui_part_2(self):
+        if self.bookmark_list is None:
+            self._create_bookmark_list()
+            self._layout()
+            self.applyTheme()
 
     def _layout(self):
         assert self.bookmark_list is not None
@@ -89,9 +88,3 @@ class BookmarksPanel(wx.Panel):
         main_sizer.Add(buttons_sizer, flag=wx.ALL, border=2)
 
         self.Layout()
-
-    def Show(self, show: bool = True) -> bool:
-        if self.bookmark_list is None:
-            self._create_gui_part_2()
-
-        return super().Show(show)

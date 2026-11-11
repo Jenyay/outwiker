@@ -5,10 +5,6 @@ import unittest
 import wx
 
 from outwiker.app.actions.addbookmark import AddBookmarkAction
-from outwiker.app.gui.dialogs.bookmarksdialog import (
-    BookmarksDialog,
-    BookmarksDialogController,
-)
 from outwiker.gui.defines import MENU_BOOKMARKS
 from outwiker.gui.guiconfig import BookmarksDialogConfig
 from outwiker.pages.text.textpage import TextPageFactory

@@ -175,12 +175,6 @@ class AttachPanel(wx.Panel):
         self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
 
     def _onClose(self, _event):
-        actionController = self._application.actionController
-
-        for action, hotkey, hidden in self._actions:
-            actionController.removeHotkey(action.stringId)
-            actionController.removeToolbarButton(action.stringId)
-
         self._dropTarget.destroy()
         self._unbindAppEvents()
         self._unbindGuiEvents()
