@@ -10,7 +10,10 @@ from outwiker.core.events import BookmarksChangedParams
 class BookmarksMainPane(MainPane):
     def _createPanel(self):
         panel = BookmarksPanel(self.parent, self.application)
+
         self.application.onBookmarksChanged += self._onBookmarksChanged
+        self.application.onWikiOpen += self._onWikiOpen
+
         panel.move_up_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveUp)
         panel.move_down_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveDown)
         panel.remove_btn.Bind(wx.EVT_BUTTON, handler=self._onRemoveBookmark)
@@ -37,6 +40,8 @@ class BookmarksMainPane(MainPane):
                 .CloseButton(True)
                 .MaximizeButton(False)
                 .Bottom()
+                .Float()
+                .Hide()
             )
         pane.BestSize((self.config.width.value, self.config.height.value))
         return pane
@@ -52,6 +57,8 @@ class BookmarksMainPane(MainPane):
 
     def close(self):
         self.application.onBookmarksChanged -= self._onBookmarksChanged
+        self.application.onWikiOpen -= self._onWikiOpen
+
         self.panel.move_up_btn.Unbind(wx.EVT_BUTTON, handler=self._onMoveUp)
         self.panel.move_down_btn.Unbind(wx.EVT_BUTTON, handler=self._onMoveDown)
         self.panel.remove_btn.Unbind(wx.EVT_BUTTON, handler=self._onRemoveBookmark)
@@ -60,6 +67,10 @@ class BookmarksMainPane(MainPane):
 
     def _update_bookmark_list(self):
         if self.panel.bookmark_list is not None:
+            if self._application.wikiroot is None:
+                self.panel.bookmark_list.clear()
+                return
+
             pages = [page for page in self._application.bookmarks if page is not None]
             old_selection = self.panel.bookmark_list.getSelectedIndex()
             self.panel.bookmark_list.setPageList(pages)
@@ -108,4 +119,7 @@ class BookmarksMainPane(MainPane):
         self._application.onBookmarksChanged += self._onBookmarksChanged
 
     def _onBookmarksChanged(self, params: BookmarksChangedParams):
+        self._update_bookmark_list()
+
+    def _onWikiOpen(self, wikiroot):
         self._update_bookmark_list()
