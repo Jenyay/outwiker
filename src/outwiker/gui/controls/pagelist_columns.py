@@ -34,7 +34,7 @@ class ColumnsFactory(object):
         raise ValueError
 
     def createDefaultColumns(self) -> List["BaseColumn"]:
-        columns = []
+        columns: List["BaseColumn"] = []
         columns.append(PageTitleColumn(WIDTH_DEFAULT, True))
         columns.append(ParentPageColumn(WIDTH_DEFAULT, True))
         columns.append(TagsColumn(WIDTH_DEFAULT, True))

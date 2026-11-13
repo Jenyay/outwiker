@@ -46,6 +46,7 @@ class PageList(wx.Panel):
 
         self._listCtrl.Bind(ULC.EVT_LIST_ITEM_HYPERLINK, handler=self._onPageClick)
         self._listCtrl.Bind(ULC.EVT_LIST_ITEM_ACTIVATED, handler=self._onPageActivated)
+        self._listCtrl.Bind(wx.EVT_SIZE, handler=self._onSize)
 
         if sortable:
             self._listCtrl.Bind(ULC.EVT_LIST_COL_CLICK, handler=self._onColClick)
@@ -71,6 +72,9 @@ class PageList(wx.Panel):
     def _visibleColumns(self):
         return [col for col in self._columns if col.visible]
 
+    def getVisibleColumnCount(self):
+        return len(self._visibleColumns)
+
     def _onPageClick(self, event):
         item = event.GetItem()
         page = item.GetData()
@@ -86,6 +90,24 @@ class PageList(wx.Panel):
             event = PageActivatedEvent(page=page)
             event.ResumePropagation(self._propagationLevel)
             wx.PostEvent(self, event)
+
+    def _onSize(self, event):
+        self._updateColsWidth()
+        event.Skip()
+
+    def _updateColsWidth(self):
+        count = self.getVisibleColumnCount()
+        if count == 0:
+            return
+
+        full_width = self.GetClientSize().width
+        col_width = full_width // count
+        n = 0
+        for col in self.getColumns():
+            if col.visible:
+                col.width = col_width
+                self._listCtrl.SetColumnWidth(n, col_width)
+                n += 1
 
     def _onColClick(self, event):
         self.sortByColumn(event.GetColumn())
@@ -115,6 +137,8 @@ class PageList(wx.Panel):
     def _createColumns(self):
         for n, column in enumerate(self._visibleColumns):
             column.insertColumn(self._listCtrl, n)
+
+        self._updateColsWidth()
 
     def setPageList(self, pages: list[WikiPage]):
         """

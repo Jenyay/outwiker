@@ -1088,10 +1088,10 @@ class BookmarksPaneConfig:
     """Options for the bookmarks management pane"""
 
     WIDTH_PARAM = "BookmarksWidth"
-    WIDTH_DEFAULT = 600
+    WIDTH_DEFAULT = 950
 
     HEIGHT_PARAM = "BookmarksHeight"
-    HEIGHT_DEFAULT = 200
+    HEIGHT_DEFAULT = 500
 
     PANE_OPTIONS_PARAM = "BookmarksPane"
     PANE_OPTIONS_DEFAULT = ""
