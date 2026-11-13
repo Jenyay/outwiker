@@ -6,7 +6,7 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.pagelist_columns import ColumnsFactory
 from outwiker.gui.images import readImage
 from outwiker.gui.theme import Theme
-from outwiker.gui.controls.pagelist import PageList
+from outwiker.gui.controls.pagelist import PageList, EVT_PAGE_ACTIVATED
 
 
 class BookmarksPanel(wx.Panel):
@@ -60,6 +60,7 @@ class BookmarksPanel(wx.Panel):
         self.bookmark_list = PageList(self, sortable=False, selectable=True)
         columns = ColumnsFactory().createDefaultColumns()
         self.bookmark_list.setColumns(columns)
+        self.bookmark_list.Bind(EVT_PAGE_ACTIVATED, handler=self._onPageActivated)
 
     def _create_gui_part_1(self):
         self._create_buttons()
@@ -88,3 +89,7 @@ class BookmarksPanel(wx.Panel):
         main_sizer.Add(buttons_sizer, flag=wx.ALL, border=2)
 
         self.Layout()
+
+    def _onPageActivated(self, event):
+        page = event.page
+        self._application.selectedPage = page

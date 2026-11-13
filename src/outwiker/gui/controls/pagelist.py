@@ -14,6 +14,7 @@ from .pagelist_columns import BaseColumn
 
 # Событие, возникающее при клике по элементу, описывающий страницу
 PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
+PageActivatedEvent, EVT_PAGE_ACTIVATED = wx.lib.newevent.NewEvent()
 
 
 class PageList(wx.Panel):
@@ -44,6 +45,7 @@ class PageList(wx.Panel):
         self._listCtrl = ULC.UltimateListCtrl(self, agwStyle=list_style)
 
         self._listCtrl.Bind(ULC.EVT_LIST_ITEM_HYPERLINK, handler=self._onPageClick)
+        self._listCtrl.Bind(ULC.EVT_LIST_ITEM_ACTIVATED, handler=self._onPageActivated)
 
         if sortable:
             self._listCtrl.Bind(ULC.EVT_LIST_COL_CLICK, handler=self._onColClick)
@@ -73,8 +75,15 @@ class PageList(wx.Panel):
         item = event.GetItem()
         page = item.GetData()
         if page:
-            assert page is not None
             event = PageClickEvent(page=page)
+            event.ResumePropagation(self._propagationLevel)
+            wx.PostEvent(self, event)
+
+    def _onPageActivated(self, event):
+        item = event.GetItem()
+        page = item.GetData()
+        if page:
+            event = PageActivatedEvent(page=page)
             event.ResumePropagation(self._propagationLevel)
             wx.PostEvent(self, event)
 
