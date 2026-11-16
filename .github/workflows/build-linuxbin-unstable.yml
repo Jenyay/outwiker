@@ -25,6 +25,11 @@ jobs:
             pkg-config \
             p7zip-full \
             xvfb \
+            libgtk-3-dev \
+            libwebkit2gtk-4.1-dev \
+            libgstreamer1.0-dev \
+            libgstreamer-plugins-base1.0-dev \
+            libxtst-dev \
             libgtk-3-0 \
             ibus-gtk3 \
             libglu1-mesa \
