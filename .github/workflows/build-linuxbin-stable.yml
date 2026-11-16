@@ -79,13 +79,13 @@ jobs:
       - name: Upload all artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: outwiker_linux_all_${{ env.OUTWIKER_VERSION }}
+          name: outwiker-full-${{ env.OUTWIKER_VERSION }}-linux-x86_64
           path: |
             build/${{ env.OUTWIKER_VERSION }}/linux/*
 
       - name: Upload bin only
         uses: actions/upload-artifact@v7
         with:
-          name: outwiker_linux_bin_${{ env.OUTWIKER_VERSION }}
+          name: outwiker-${{ env.OUTWIKER_VERSION }}-linux-x86_64
           path: |
             build/${{ env.OUTWIKER_VERSION }}/linux/outwiker_bin
