@@ -42,13 +42,13 @@ jobs:
       - name: Upload all artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: outwiker_unstable_windows_all_${{ env.OUTWIKER_VERSION }}
+          name: outwiker-unstable-full-${{ env.OUTWIKER_VERSION }}-windows-x86_64
           path: |
             build/${{ env.OUTWIKER_VERSION }}/windows/*
 
       - name: Upload exe only
         uses: actions/upload-artifact@v7
         with:
-          name: outwiker_unstable_windows_exe_${{ env.OUTWIKER_VERSION }}
+          name: outwiker-unstable-${{ env.OUTWIKER_VERSION }}-windows-x86_64
           path: |
             build/${{ env.OUTWIKER_VERSION }}/windows/outwiker_exe
