@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import platform
 
 from outwiker.build.versions import getOutwikerVersionStr, getOutwikerVersion
 from . import defines
@@ -8,6 +9,12 @@ from . import defines
 
 class BuildFacts:
     def __init__(self):
+        # x86_64
+        self.arch = platform.machine().replace("AMD64", "x86_64")
+
+        # windows, linux etc
+        self.os = platform.system().lower()
+
         # x.x.x.xxx
         self.version = getOutwikerVersionStr()
 

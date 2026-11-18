@@ -36,7 +36,6 @@ LINUX_BUILD_DIR = "linux"
 WINDOWS_BUILD_DIR = "windows"
 WINDOWS_EXECUTABLE_DIR = "outwiker_exe"
 LINUX_EXECUTABLE_DIR = "outwiker_bin"
-WINDOWS_INSTALLER_FILENAME = "outwiker_win_unstable.exe"
 APPIMAGE_BUILD_DIR = "linux"
 SNAP_BUILD_DIR = "linux"
 
