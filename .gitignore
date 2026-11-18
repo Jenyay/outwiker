@@ -56,3 +56,4 @@ __cache.tmp
 .flatpak-builder
 profile_output*
 invoke.yaml
+.dsh-meow/
