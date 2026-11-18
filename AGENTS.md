@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-- Language: Python >=3.12, <3.13
+- Language: Python >=3.12, <3.15
 - GUI Framework: wxPython
 - Dependency Manager: uv
 
