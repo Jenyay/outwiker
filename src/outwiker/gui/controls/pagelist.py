@@ -134,6 +134,7 @@ class PageList(wx.Panel):
         self._listCtrl.DeleteAllItems()
 
     def _createColumns(self):
+        self._listCtrl.DeleteAllColumns()
         for n, column in enumerate(self._visibleColumns):
             column.insertColumn(self._listCtrl, n)
 
