@@ -33,7 +33,6 @@ class PageListPopup(ResizablePopupWindow):
         self._pagelist.sortByColumn(col_index)
 
     def getColumns(self) -> List[BaseColumn]:
-        self._pagelist.updateColumnsWidth()
         return self._pagelist.getColumns()
 
 
@@ -45,7 +44,7 @@ class PageListForTagsCloud(PageList):
     def __init__(self, parent: wx.Window, popupWindow: ResizablePopupWindow):
         super().__init__(parent)
         # Key - MenuItem ID, value - item from self._columns
-        self._popupMenuColumnItems = {}  # type: Dict[int, BaseColumn]
+        self._popupMenuColumnItems: dict[int, BaseColumn] = {}
 
         self._listCtrl.Bind(ULC.EVT_LIST_COL_RIGHT_CLICK, handler=self._onColRightClick)
         self.Bind(wx.EVT_MENU, handler=self._onPopupMenuClick)
@@ -67,5 +66,5 @@ class PageListForTagsCloud(PageList):
     def _onPopupMenuClick(self, event):
         col = self._popupMenuColumnItems[event.GetId()]
         col.visible = not col.visible
+        self.setColumns(self._columns)
         self._popupMenuColumnItems = {}
-        self._updatePageList()
