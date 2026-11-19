@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Collection, List
+from typing import Collection
 
 import wx
 
@@ -10,7 +10,7 @@ from outwiker.app.gui.pagelistpopup import PageListPopup
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.tagscloud import TagsCloud
-from outwiker.gui.controls.pagelist_columns import BaseColumn, ColumnsFactory
+from outwiker.gui.controls.pagelist_columns import ColumnsFactory
 
 
 class TagsCloudPanel(wx.Panel):
@@ -28,19 +28,6 @@ class TagsCloudPanel(wx.Panel):
         self._tagscloud.setMode(config.tagsCloudMode.value)
         self._tagscloud.enableTooltips(config.enableTooltips.value)
 
-    def _getPageListColumns(self) -> List[BaseColumn]:
-        colFactory = ColumnsFactory()
-        config = TagsConfig(self._application.config)
-        try:
-            columns = colFactory.createColumnsFromString(config.popupHeaders.value)
-        except ValueError:
-            columns = colFactory.createDefaultColumns()
-
-        if not columns:
-            columns = colFactory.createDefaultColumns()
-
-        return columns
-
     def _onPopupClose(self, event):
         assert self._pageListPopup is not None
         config = TagsConfig(self._application.config)
@@ -53,8 +40,7 @@ class TagsCloudPanel(wx.Panel):
 
     def _saveHeaders(self, config: TagsConfig):
         columns = self._pageListPopup.getColumns()
-        headers_str = ColumnsFactory.toString(columns)
-        config.popupHeaders.value = headers_str
+        config.popupHeaders.value = ColumnsFactory.toString(columns)
 
     def _savePopupSize(self, config: TagsConfig):
         width, height = self._pageListPopup.GetClientSize()
@@ -65,7 +51,7 @@ class TagsCloudPanel(wx.Panel):
         assert self._pageListPopup is None
 
         config = TagsConfig(self._application.config)
-        columns = self._getPageListColumns()
+        columns = ColumnsFactory().columnsFromStr(config.popupHeaders.value)
         width = config.popupWidth.value
         height = config.popupHeight.value
 

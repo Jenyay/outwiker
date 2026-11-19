@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
-from typing import List
+from abc import ABC, abstractmethod
 
 import wx.lib.agw.ultimatelistctrl as ULC
 
@@ -11,74 +10,7 @@ from outwiker.core.utils import strftime_safe
 WIDTH_DEFAULT = 200
 
 
-class ColumnsFactory(object):
-    def __init__(self):
-        self._allColTypes = [
-            PageTitleColumn,
-            ParentPageColumn,
-            TagsColumn,
-            ModifyDateColumn,
-        ]
-
-    @property
-    def typesCount(self):
-        return len(self._allColTypes)
-
-    def createColumn(
-        self, name: str, width: int = WIDTH_DEFAULT, visible: bool = True
-    ) -> "BaseColumn":
-        for col_type in self._allColTypes:
-            if name == col_type.name:
-                return col_type(width, visible)
-
-        raise ValueError
-
-    def createDefaultColumns(self) -> List["BaseColumn"]:
-        columns: List["BaseColumn"] = []
-        columns.append(PageTitleColumn(WIDTH_DEFAULT, True))
-        columns.append(ParentPageColumn(WIDTH_DEFAULT, True))
-        columns.append(TagsColumn(WIDTH_DEFAULT, True))
-        columns.append(ModifyDateColumn(WIDTH_DEFAULT, True))
-
-        assert len(columns) == self.typesCount
-        return columns
-
-    def createColumnsFromString(self, string: str) -> List["BaseColumn"]:
-        """
-        The function can raise ValueError exception.
-        """
-        columns = []
-
-        if not string.strip():
-            return columns
-
-        if "," in string:
-            item_params = [item_str.strip() for item_str in string.strip().split(",")]
-        else:
-            item_params = [string.strip()]
-
-        for item in item_params:
-            name, width, visible = item.split(":")
-            width_int = int(width)
-            visible_bool = visible.lower() == "true"
-            column = self.createColumn(name, width_int, visible_bool)
-            columns.append(column)
-
-        return columns
-
-    @staticmethod
-    def toString(columns: List["BaseColumn"]) -> str:
-        return ",".join(
-            [
-                "{name}:{width}:{visible}".format(
-                    name=col.name, width=col.width, visible=col.visible
-                )
-                for col in columns
-            ]
-        )
-
-
-class BaseColumn(metaclass=ABCMeta):
+class BaseColumn(ABC):
     """
     Base class to manage columns
     """
@@ -248,3 +180,84 @@ class ModifyDateColumn(BaseColumn):
         content2 = page2.datetime
 
         return (content1 < content2) - (content1 > content2)
+
+
+class ColumnsFactory:
+    def __init__(self):
+        self._allColTypes = [
+            PageTitleColumn,
+            ParentPageColumn,
+            TagsColumn,
+            ModifyDateColumn,
+        ]
+
+    @property
+    def typesCount(self):
+        return len(self._allColTypes)
+
+    def createColumn(
+        self, name: str, width: int = WIDTH_DEFAULT, visible: bool = True
+    ) -> "BaseColumn":
+        for col_type in self._allColTypes:
+            if name == col_type.name:
+                return col_type(width, visible)
+
+        raise ValueError
+
+    def createDefaultColumns(self) -> list[BaseColumn]:
+        columns: list[BaseColumn] = []
+        columns.append(PageTitleColumn(WIDTH_DEFAULT, True))
+        columns.append(ParentPageColumn(WIDTH_DEFAULT, True))
+        columns.append(TagsColumn(WIDTH_DEFAULT, True))
+        columns.append(ModifyDateColumn(WIDTH_DEFAULT, True))
+
+        assert len(columns) == self.typesCount
+        return columns
+
+    def createColumnsFromString(self, string: str) -> list[BaseColumn]:
+        """
+        The function can raise ValueError exception.
+        """
+        columns = []
+
+        if not string.strip():
+            return columns
+
+        if "," in string:
+            item_params = [item_str.strip() for item_str in string.strip().split(",")]
+        else:
+            item_params = [string.strip()]
+
+        for item in item_params:
+            name, width, visible = item.split(":")
+            width_int = int(width)
+            visible_bool = visible.lower() == "true"
+            column = self.createColumn(name, width_int, visible_bool)
+            columns.append(column)
+
+        return columns
+
+    @staticmethod
+    def toString(columns: list[BaseColumn]) -> str:
+        return ",".join(
+            [
+                "{name}:{width}:{visible}".format(
+                    name=col.name, width=col.width, visible=col.visible
+                )
+                for col in columns
+            ]
+        )
+
+    def columnsFromStr(self, str_value: str | None) -> list[BaseColumn]:
+        if str_value is None:
+            return self.createDefaultColumns()
+
+        try:
+            columns = self.createColumnsFromString(str_value)
+        except ValueError:
+            columns = self.createDefaultColumns()
+
+        if not columns:
+            columns = self.createDefaultColumns()
+
+        return columns

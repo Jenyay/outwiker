@@ -7,7 +7,7 @@ import wx.lib.newevent
 import wx.lib.agw.ultimatelistctrl as ULC
 
 from outwiker.core.tree import WikiPage
-from outwiker.core.system import getBuiltinImagePath
+from outwiker.core.system import getBuiltinImagePath, getOS
 from outwiker.gui.imagelistcache import ImageListCache
 from outwiker.gui.defines import ICONS_WIDTH, ICONS_HEIGHT
 from .pagelist_columns import BaseColumn
@@ -18,7 +18,9 @@ PageActivatedEvent, EVT_PAGE_ACTIVATED = wx.lib.newevent.NewEvent()
 
 
 class PageList(wx.Panel):
-    def __init__(self, parent: wx.Window, sortable: bool = True, selectable: bool = False):
+    def __init__(
+        self, parent: wx.Window, sortable: bool = True, selectable: bool = False
+    ):
         super().__init__(parent)
         self._columns: list[BaseColumn] = []
         self._pages: list[WikiPage] = []
@@ -32,12 +34,12 @@ class PageList(wx.Panel):
         self._sizer.AddGrowableRow(0)
 
         list_style = (
-                ULC.ULC_REPORT
-                | ULC.ULC_SINGLE_SEL
-                | ULC.ULC_VRULES
-                | ULC.ULC_HRULES
-                | ULC.ULC_SHOW_TOOLTIPS
-                )
+            ULC.ULC_REPORT
+            | ULC.ULC_SINGLE_SEL
+            | ULC.ULC_VRULES
+            | ULC.ULC_HRULES
+            | ULC.ULC_SHOW_TOOLTIPS
+        )
         if not selectable:
             list_style |= ULC.ULC_NO_HIGHLIGHT
 
@@ -102,7 +104,7 @@ class PageList(wx.Panel):
         full_width = self.GetClientSize().width
         col_width = full_width // count
         n = 0
-        for col in self.getColumns():
+        for col in self._columns:
             if col.visible:
                 col.width = col_width
                 self._listCtrl.SetColumnWidth(n, col_width)
@@ -213,7 +215,7 @@ class PageList(wx.Panel):
             self._pages[index]
             for index in range(items_count)
             if self._listCtrl.IsSelected(index)
-            ]
+        ]
 
         page = self._pages.pop(src_position)
         self._pages.insert(new_position, page)
@@ -277,7 +279,7 @@ class PageList(wx.Panel):
             n += 1
 
     def getColumns(self) -> List[BaseColumn]:
-        return self._columns
+        return self._columns[:]
 
     def getSelectedIndex(self) -> None | int:
         for n in range(self._listCtrl.GetItemCount()):
@@ -299,3 +301,40 @@ class PageList(wx.Panel):
         result = super().SetBackgroundColour(colour)
         self._listCtrl.SetBackgroundColour(colour)
         return result
+
+
+class PageListChangeHeadersMixin:
+    """Add context menu to show / hide columns"""
+
+    def __init__(self, pageList: PageList):
+        self._pageList = pageList
+        self._page_list_columns: list[BaseColumn] | None = None
+
+        # Key - MenuItem ID, value - item from self._page_list_columns
+        self._popupMenuColumnItems: dict[int, BaseColumn] = {}
+
+        self._pageList.Bind(ULC.EVT_LIST_COL_RIGHT_CLICK, handler=self._onColRightClick)
+        self._pageList.Bind(wx.EVT_MENU, handler=self._onPopupMenuClick)
+
+    def _onColRightClick(self, _event):
+        menu = wx.Menu()
+        self._popupMenuColumnItems = {}
+        self._page_list_columns = self._pageList.getColumns()
+
+        for col in self._page_list_columns[1:]:
+            menu_item = menu.AppendCheckItem(wx.ID_ANY, col.getTitle())
+            menu_item.Check(col.visible)
+            self._popupMenuColumnItems[menu_item.GetId()] = col
+
+        if getOS().name != "windows":
+            # In Linux popup menu deactivates parent window
+            self._pageList.GetParent().setDeactivateCount(1)
+        self._pageList.PopupMenu(menu)
+
+    def _onPopupMenuClick(self, event):
+        assert self._page_list_columns is not None
+
+        col = self._popupMenuColumnItems[event.GetId()]
+        col.visible = not col.visible
+        self._pageList.setColumns(self._page_list_columns)
+        self._popupMenuColumnItems = {}
