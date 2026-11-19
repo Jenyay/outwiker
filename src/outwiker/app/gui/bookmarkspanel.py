@@ -19,8 +19,9 @@ class BookmarksPanel(wx.Panel):
         self._create_gui_part_1()
 
     def applyTheme(self):
-        self.SetBackgroundColour(self._theme.colorBackground)
-        self.bookmark_list.SetBackgroundColour(self._theme.colorBackground)
+        if self.bookmark_list is not None:
+            self.SetBackgroundColour(self._theme.colorBackground)
+            self.bookmark_list.SetBackgroundColour(self._theme.colorBackground)
 
     def _create_buttons(self):
         button_height = wx.Button.GetDefaultSize().height

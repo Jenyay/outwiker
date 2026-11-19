@@ -6,6 +6,7 @@ from outwiker.app.gui.bookmarkspanel import BookmarksPanel
 from outwiker.gui.guiconfig import BookmarksPaneConfig
 from outwiker.gui.mainpanes.mainpane import MainPane
 from outwiker.core.events import BookmarksChangedParams
+from outwiker.gui.theme import Theme, ThemeChangedParams
 
 class BookmarksMainPane(MainPane):
     def _createPanel(self):
@@ -13,6 +14,7 @@ class BookmarksMainPane(MainPane):
 
         self.application.onBookmarksChanged += self._onBookmarksChanged
         self.application.onWikiOpen += self._onWikiOpen
+        self.application.theme.onThemeChanged += self._onThemeChanged
 
         panel.move_up_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveUp)
         panel.move_down_btn.Bind(wx.EVT_BUTTON, handler=self._onMoveDown)
@@ -58,6 +60,7 @@ class BookmarksMainPane(MainPane):
     def close(self):
         self.application.onBookmarksChanged -= self._onBookmarksChanged
         self.application.onWikiOpen -= self._onWikiOpen
+        self.application.theme.onThemeChanged -= self._onThemeChanged
 
         self.panel.move_up_btn.Unbind(wx.EVT_BUTTON, handler=self._onMoveUp)
         self.panel.move_down_btn.Unbind(wx.EVT_BUTTON, handler=self._onMoveDown)
@@ -123,3 +126,7 @@ class BookmarksMainPane(MainPane):
 
     def _onWikiOpen(self, wikiroot):
         self._update_bookmark_list()
+
+    def _onThemeChanged(self, params: ThemeChangedParams):
+        if Theme.SECTION_GENERAL in params.changed_sections:
+            self.panel.applyTheme()

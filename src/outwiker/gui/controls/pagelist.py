@@ -26,7 +26,6 @@ class PageList(wx.Panel):
         self._imageList = ImageListCache(self._defaultIcon, ICONS_WIDTH, ICONS_HEIGHT)
 
         self._propagationLevel = 15
-        self.SetBackgroundColour(wx.Colour(255, 255, 255))
 
         self._sizer = wx.FlexGridSizer(cols=1)
         self._sizer.AddGrowableCol(0)
@@ -132,7 +131,7 @@ class PageList(wx.Panel):
         """
         Удалить все элементы из списка
         """
-        self._listCtrl.ClearAll()
+        self._listCtrl.DeleteAllItems()
 
     def _createColumns(self):
         for n, column in enumerate(self._visibleColumns):
@@ -152,18 +151,17 @@ class PageList(wx.Panel):
 
     def setColumns(self, columns: List[BaseColumn]):
         self._columns = columns
+        self._createColumns()
         self._updatePageList()
 
     def _updatePageList(self):
         self._listCtrl.Freeze()
-        self.clear()
-        self._createColumns()
-        self._fillPageList()
-        self._listCtrl.Thaw()
 
-    def _fillPageList(self):
+        self.clear()
         for page in self._pages:
             self._insertPage(self._listCtrl.GetItemCount(), page)
+
+        self._listCtrl.Thaw()
 
     def _insertPage(self, position: int, page: WikiPage) -> int:
         """
@@ -281,17 +279,22 @@ class PageList(wx.Panel):
         return self._columns
 
     def getSelectedIndex(self) -> None | int:
-        for n in range(self.listCtrl.GetItemCount()):
-            if self.listCtrl.IsSelected(n):
+        for n in range(self._listCtrl.GetItemCount()):
+            if self._listCtrl.IsSelected(n):
                 return n
         return None
 
     def getSelectedPage(self) -> None | WikiPage:
-        for n in range(self.listCtrl.GetItemCount()):
-            if self.listCtrl.IsSelected(n):
+        for n in range(self._listCtrl.GetItemCount()):
+            if self._listCtrl.IsSelected(n):
                 return self._pages[n]
         return None
 
     def setSelected(self, index: int):
-        for n in range(self.listCtrl.GetItemCount()):
-            self.listCtrl.Select(n, n == index)
+        for n in range(self._listCtrl.GetItemCount()):
+            self._listCtrl.Select(n, n == index)
+
+    def SetBackgroundColour(self, colour) -> bool:
+        result = super().SetBackgroundColour(colour)
+        self._listCtrl.SetBackgroundColour(colour)
+        return result
