@@ -29,12 +29,18 @@ class BuilderLinuxBinary(BuilderBase):
         self._create_archives = create_archives
 
         self._resultBaseName = (
-            "outwiker_{version}_linux".format(version=self.facts.version_items[0])
+            f"outwiker-{self.facts.version_items[0]}-{self.facts.os}-{self.facts.arch}"
             if self.is_stable
-            else "outwiker_linux_unstable"
+            else f"outwiker-unstable-{self.facts.version}-{self.facts.os}-{self.facts.arch}"
         )
 
-        self._resultWithPluginsBaseName = self._resultBaseName + "_all_plugins"
+        self._resultWithPluginsBaseName = (
+            self._resultBaseName.replace("outwiker", "outwiker-all-plugins")
+            if self.is_stable
+            else self._resultBaseName.replace(
+                "outwiker-unstable", "outwiker-unstable-all-plugins"
+            )
+        )
 
         self._executable_dir = os.path.join(self.facts.temp_dir, LINUX_EXECUTABLE_DIR)
 
