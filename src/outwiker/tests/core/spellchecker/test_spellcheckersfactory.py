@@ -1,7 +1,5 @@
 from outwiker.core.spellchecker.spellcheckersfactory import SpellCheckersFactory
 
-from .fixtures import spell_factory
-
 
 def test_empty_collection(spell_factory: SpellCheckersFactory):
     assert not spell_factory.isCreated("ru_RU")

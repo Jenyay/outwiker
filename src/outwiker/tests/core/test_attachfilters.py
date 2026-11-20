@@ -14,7 +14,6 @@ from outwiker.core.attachfilters import (
     getImageRecursiveFilter,
 )
 from outwiker.core.attachment import Attachment
-from outwiker.tests.fixtures import wikipage
 
 
 @pytest.mark.parametrize(

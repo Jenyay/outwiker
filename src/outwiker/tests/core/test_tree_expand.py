@@ -1,6 +1,5 @@
 from outwiker.api.core.tree import loadNotesTree
 from outwiker.core.tree import WikiDocument
-from outwiker.tests.fixtures import wikiroot
 
 
 def test_default(wikiroot: WikiDocument):

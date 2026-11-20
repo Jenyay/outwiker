@@ -1,7 +1,6 @@
 # -*- coding=utf-8 -*-
 
 from outwiker.core.attachment import Attachment
-from outwiker.tests.fixtures import wikipage
 from outwiker.tests.utils import attach_files
 
 

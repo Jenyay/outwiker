@@ -4,7 +4,6 @@ import os
 from outwiker.core.application import Application
 from outwiker.core.hashcalculator import SimpleHashCalculator
 from outwiker.core.tree import WikiPage
-from outwiker.tests.fixtures import application, wikipage
 from outwiker.tests.utils import copy_test_files_to_attachments
 
 
