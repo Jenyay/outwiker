@@ -22,6 +22,9 @@ class PageList(wx.Panel):
         self, parent: wx.Window, sortable: bool = True, selectable: bool = False
     ):
         super().__init__(parent)
+        self._oldWidth: int | None = None
+        self._oldHeight: int | None = None
+
         self._columns: list[BaseColumn] = []
         self._pages: list[WikiPage] = []
         self._defaultIcon = getBuiltinImagePath("page.svg")
@@ -93,7 +96,12 @@ class PageList(wx.Panel):
             wx.PostEvent(self, event)
 
     def _onSize(self, event):
-        self._updateColsWidth()
+        new_size = self.GetSize()
+        if new_size.width != self._oldWidth:
+            self._updateColsWidth()
+
+        self._oldWidth = new_size.width
+        self._oldHeight = new_size.height
         event.Skip()
 
     def _updateColsWidth(self):
