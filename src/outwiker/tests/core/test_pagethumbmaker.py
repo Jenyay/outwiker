@@ -1,181 +1,173 @@
 # -*- coding: utf-8 -*-
 
+"""
+Tests for PageThumbmaker
+"""
+
 import os
-import os.path
-from tempfile import mkdtemp
+
+import pytest
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.attachment import Attachment
-from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
 from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
+from outwiker.tests.utils import getImageSize
 
-from outwiker.tests.utils import removeDir, getImageSize
-from outwiker.tests.basetestcases import BaseWxTestCase
+IMAGES_DIR = "testdata/images"
 
 
-class PageThumbmakerTest(BaseWxTestCase):
-    def setUp(self):
-        super().setUp()
-        self.thumbmaker = PageThumbmaker()
+@pytest.fixture
+def wikiroot(tmp_path):
+    root = createNotesTree(tmp_path)
 
-        # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix="Абырвалг абыр")
+    factory = TextPageFactory()
+    factory.create(root, "Страница 1", [])
 
-        self.wikiroot = createNotesTree(self.path)
+    return root
 
-        factory = TextPageFactory()
-        factory.create(self.wikiroot, "Страница 1", [])
-        factory.create(self.wikiroot, "Страница 2", [])
-        factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
-        factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
-    def tearDown(self):
-        super().tearDown()
-        removeDir(self.path)
+def test_thumb_by_width_jpeg(wxapp, wikiroot):
+    fname_in = "first.jpg"
+    page = wikiroot["Страница 1"]
 
-    def testThumbByWidthJpeg(self):
-        images_dir = "testdata/images"
+    Attachment(page).attach([os.path.join(IMAGES_DIR, fname_in)])
 
-        fname_in = "first.jpg"
-        page = self.wikiroot["Страница 1"]
+    thumbmaker = PageThumbmaker()
+    newwidth = 250
+    newheight = 182
 
-        Attachment(page).attach([os.path.join(images_dir, fname_in)])
+    thumb_fname = thumbmaker.createThumbByWidth(page, fname_in, newwidth)
+    thumb_path = os.path.join(page.path, thumb_fname)
 
-        newwidth = 250
-        newheight = 182
+    (width, height) = getImageSize(thumb_path)
 
-        thumb_fname = self.thumbmaker.createThumbByWidth(page, fname_in, newwidth)
-        thumb_path = os.path.join(page.path, thumb_fname)
+    assert os.path.exists(thumb_path), thumb_path
+    assert width == newwidth
+    assert height == newheight
 
-        (width, height) = getImageSize(thumb_path)
 
-        self.assertTrue(os.path.exists(thumb_path), thumb_path)
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
+def test_thumb_by_width_png(wxapp, wikiroot):
+    fname_in = "outwiker_1.1.0_02.png"
+    page = wikiroot["Страница 1"]
 
-    def testThumbByWidthPng(self):
-        images_dir = "testdata/images"
+    Attachment(page).attach([os.path.join(IMAGES_DIR, fname_in)])
 
-        fname_in = "outwiker_1.1.0_02.png"
-        page = self.wikiroot["Страница 1"]
+    thumbmaker = PageThumbmaker()
+    newwidth = 250
+    newheight = 215
 
-        Attachment(page).attach([os.path.join(images_dir, fname_in)])
+    thumb_fname = thumbmaker.createThumbByWidth(page, fname_in, newwidth)
+    thumb_path = os.path.join(page.path, thumb_fname)
 
-        newwidth = 250
-        newheight = 215
+    (width, height) = getImageSize(thumb_path)
 
-        thumb_fname = self.thumbmaker.createThumbByWidth(page, fname_in, newwidth)
-        thumb_path = os.path.join(page.path, thumb_fname)
+    assert os.path.exists(thumb_path), thumb_path
+    assert width == newwidth
+    assert height == newheight
 
-        (width, height) = getImageSize(thumb_path)
 
-        self.assertTrue(os.path.exists(thumb_path), thumb_path)
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
+def test_thumb_by_height_jpeg(wxapp, wikiroot):
+    fname_in = "first.jpg"
+    page = wikiroot["Страница 1"]
 
-    def testThumbByHeightJpeg(self):
-        images_dir = "testdata/images"
+    Attachment(page).attach([os.path.join(IMAGES_DIR, fname_in)])
 
-        fname_in = "first.jpg"
-        page = self.wikiroot["Страница 1"]
+    thumbmaker = PageThumbmaker()
+    newwidth = 249
+    newheight = 182
 
-        Attachment(page).attach([os.path.join(images_dir, fname_in)])
+    thumb_fname = thumbmaker.createThumbByHeight(page, fname_in, newheight)
+    thumb_path = os.path.join(page.path, thumb_fname)
 
-        newwidth = 249
-        newheight = 182
+    (width, height) = getImageSize(thumb_path)
 
-        thumb_fname = self.thumbmaker.createThumbByHeight(page, fname_in, newheight)
-        thumb_path = os.path.join(page.path, thumb_fname)
+    assert os.path.exists(thumb_path), thumb_path
+    assert width == newwidth
+    assert height == newheight
 
-        (width, height) = getImageSize(thumb_path)
 
-        self.assertTrue(os.path.exists(thumb_path), thumb_path)
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
+def test_thumb_by_height_png(wxapp, wikiroot):
+    fname_in = "outwiker_1.1.0_02.png"
+    page = wikiroot["Страница 1"]
 
-    def testThumbByHeightPng(self):
-        images_dir = "testdata/images"
+    Attachment(page).attach([os.path.join(IMAGES_DIR, fname_in)])
 
-        fname_in = "outwiker_1.1.0_02.png"
-        page = self.wikiroot["Страница 1"]
+    thumbmaker = PageThumbmaker()
+    newwidth = 249
+    newheight = 215
 
-        Attachment(page).attach([os.path.join(images_dir, fname_in)])
+    thumb_fname = thumbmaker.createThumbByHeight(page, fname_in, newheight)
+    thumb_path = os.path.join(page.path, thumb_fname)
 
-        newwidth = 249
-        newheight = 215
+    (width, height) = getImageSize(thumb_path)
 
-        thumb_fname = self.thumbmaker.createThumbByHeight(page, fname_in, newheight)
-        thumb_path = os.path.join(page.path, thumb_fname)
+    assert os.path.exists(thumb_path), thumb_path
+    assert width == newwidth
+    assert height == newheight
 
-        (width, height) = getImageSize(thumb_path)
 
-        self.assertTrue(os.path.exists(thumb_path), thumb_path)
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
+def test_thumb_by_max_size_jpeg_1(wxapp, wikiroot):
+    fname_in = "first.jpg"
+    page = wikiroot["Страница 1"]
 
-    def testThumbByMaxSizeJpeg1(self):
-        images_dir = "testdata/images"
+    Attachment(page).attach([os.path.join(IMAGES_DIR, fname_in)])
 
-        fname_in = "first.jpg"
-        page = self.wikiroot["Страница 1"]
+    thumbmaker = PageThumbmaker()
+    maxsize = 250
 
-        Attachment(page).attach([os.path.join(images_dir, fname_in)])
+    newwidth = 250
+    newheight = 182
 
-        maxsize = 250
+    thumb_fname = thumbmaker.createThumbByMaxSize(page, fname_in, maxsize)
+    thumb_path = os.path.join(page.path, thumb_fname)
 
-        newwidth = 250
-        newheight = 182
+    (width, height) = getImageSize(thumb_path)
 
-        thumb_fname = self.thumbmaker.createThumbByMaxSize(page, fname_in, maxsize)
-        thumb_path = os.path.join(page.path, thumb_fname)
+    assert os.path.exists(thumb_path), thumb_path
+    assert width == newwidth
+    assert height == newheight
 
-        (width, height) = getImageSize(thumb_path)
 
-        self.assertTrue(os.path.exists(thumb_path), thumb_path)
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
+def test_thumb_by_max_size_jpeg_2(wxapp, wikiroot):
+    fname_in = "first_vertical.jpeg"
+    page = wikiroot["Страница 1"]
 
-    def testThumbByMaxSizeJpeg2(self):
-        images_dir = "testdata/images"
+    Attachment(page).attach([os.path.join(IMAGES_DIR, fname_in)])
 
-        fname_in = "first_vertical.jpeg"
-        page = self.wikiroot["Страница 1"]
+    thumbmaker = PageThumbmaker()
+    maxsize = 250
 
-        Attachment(page).attach([os.path.join(images_dir, fname_in)])
+    newwidth = 182
+    newheight = 250
 
-        maxsize = 250
+    thumb_fname = thumbmaker.createThumbByMaxSize(page, fname_in, maxsize)
+    thumb_path = os.path.join(page.path, thumb_fname)
 
-        newwidth = 182
-        newheight = 250
+    (width, height) = getImageSize(thumb_path)
 
-        thumb_fname = self.thumbmaker.createThumbByMaxSize(page, fname_in, maxsize)
-        thumb_path = os.path.join(page.path, thumb_fname)
+    assert os.path.exists(thumb_path), thumb_path
+    assert width == newwidth
+    assert height == newheight
 
-        (width, height) = getImageSize(thumb_path)
 
-        self.assertTrue(os.path.exists(thumb_path), thumb_path)
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
+def test_thumb_by_max_size_png(wxapp, wikiroot):
+    fname_in = "outwiker_1.1.0_02.png"
+    page = wikiroot["Страница 1"]
 
-    def testThumbByMaxSizePng(self):
-        images_dir = "testdata/images"
+    Attachment(page).attach([os.path.join(IMAGES_DIR, fname_in)])
 
-        fname_in = "outwiker_1.1.0_02.png"
-        page = self.wikiroot["Страница 1"]
+    thumbmaker = PageThumbmaker()
+    maxsize = 250
 
-        Attachment(page).attach([os.path.join(images_dir, fname_in)])
+    newwidth = 250
+    newheight = 215
 
-        maxsize = 250
+    thumb_fname = thumbmaker.createThumbByMaxSize(page, fname_in, maxsize)
+    thumb_path = os.path.join(page.path, thumb_fname)
 
-        newwidth = 250
-        newheight = 215
+    (width, height) = getImageSize(thumb_path)
 
-        thumb_fname = self.thumbmaker.createThumbByMaxSize(page, fname_in, maxsize)
-        thumb_path = os.path.join(page.path, thumb_fname)
-
-        (width, height) = getImageSize(thumb_path)
-
-        self.assertTrue(os.path.exists(thumb_path), thumb_path)
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
+    assert os.path.exists(thumb_path), thumb_path
+    assert width == newwidth
+    assert height == newheight

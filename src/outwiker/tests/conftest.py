@@ -70,9 +70,8 @@ def wxapp():
 
     yield app
 
-    wx.SafeYield()
     app.MainLoop()
-    del app
+    app.Destroy()
 
 
 @pytest.fixture

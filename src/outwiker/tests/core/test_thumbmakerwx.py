@@ -1,208 +1,164 @@
 # -*- coding: utf-8 -*-
 
+"""
+Tests for ThumbmakerWx
+"""
+
 import os
-import os.path
+
+import pytest
 
 from outwiker.core.thumbmakerwx import ThumbmakerWx
 from outwiker.core.thumbexception import ThumbException
 from outwiker.tests.utils import getImageSize
-from outwiker.tests.basetestcases import BaseWxTestCase
+
+IMAGES_DIR = "testdata/images"
 
 
-class ThumbmakerWxTest(BaseWxTestCase):
-    """
-    Тесты для создателя превьюшек с помощью ThumbmakerWx
-    """
+def test_wx_thumb_width_jpeg(wxapp, tmp_path):
+    fname_in = os.path.join(IMAGES_DIR, "first.jpg")
+    fname_out = str(tmp_path / "first_th.jpg")
 
-    def testWxThumbWidthJpeg(self):
-        self.fname_in = "testdata/images/first.jpg"
-        self.fname_out = "testdata/images/first_th.jpg"
+    thumbmaker = ThumbmakerWx()
+    newwidth = 250
+    newheight = 182
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+    thumbmaker.thumbByWidth(fname_in, newwidth, fname_out)
 
-        self.thumbmaker = ThumbmakerWx()
-        newwidth = 250
-        newheight = 182
+    (width, height) = getImageSize(fname_out)
 
-        self.thumbmaker.thumbByWidth(self.fname_in, newwidth, self.fname_out)
-        (width, height) = getImageSize(self.fname_out)
+    assert width == newwidth
+    assert height == newheight
 
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+def test_wx_thumb_width_png(wxapp, tmp_path):
+    fname_in = os.path.join(IMAGES_DIR, "outwiker_1.1.0_02.png")
+    fname_out = str(tmp_path / "outwiker_1.1.0_02_th.png")
 
-    def testWxThumbWidthPng(self):
-        self.fname_in = "testdata/images/outwiker_1.1.0_02.png"
-        self.fname_out = "testdata/images/outwiker_1.1.0_02_th.png"
+    thumbmaker = ThumbmakerWx()
+    newwidth = 250
+    newheight = 215
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+    thumbmaker.thumbByWidth(fname_in, newwidth, fname_out)
 
-        self.thumbmaker = ThumbmakerWx()
-        newwidth = 250
-        newheight = 215
+    (width, height) = getImageSize(fname_out)
 
-        self.thumbmaker.thumbByWidth(self.fname_in, newwidth, self.fname_out)
-        (width, height) = getImageSize(self.fname_out)
+    assert width == newwidth
+    assert height == newheight
 
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+def test_wx_thumb_width_png_jpg(wxapp, tmp_path):
+    fname_in = os.path.join(IMAGES_DIR, "outwiker_1.1.0_02.png")
+    fname_out = str(tmp_path / "outwiker_1.1.0_02_th.jpeg")
 
-    def testWxThumbWidthPngJpg(self):
-        self.fname_in = "testdata/images/outwiker_1.1.0_02.png"
-        self.fname_out = "testdata/images/outwiker_1.1.0_02_th.jpeg"
+    thumbmaker = ThumbmakerWx()
+    newwidth = 250
+    newheight = 215
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+    thumbmaker.thumbByWidth(fname_in, newwidth, fname_out)
 
-        self.thumbmaker = ThumbmakerWx()
-        newwidth = 250
-        newheight = 215
+    (width, height) = getImageSize(fname_out)
 
-        self.thumbmaker.thumbByWidth(self.fname_in, newwidth, self.fname_out)
-        (width, height) = getImageSize(self.fname_out)
+    assert width == newwidth
+    assert height == newheight
 
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+def test_wx_thumb_width_tiff(wxapp, tmp_path):
+    fname_in = os.path.join(IMAGES_DIR, "outwiker_1.1.0_02.tiff")
+    fname_out = str(tmp_path / "outwiker_1.1.0_02_th.png")
 
-    def testWxThumbWidthTiff(self):
-        self.fname_in = "testdata/images/outwiker_1.1.0_02.tiff"
-        self.fname_out = "testdata/images/outwiker_1.1.0_02_th.png"
+    thumbmaker = ThumbmakerWx()
+    newwidth = 250
+    newheight = 215
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+    thumbmaker.thumbByWidth(fname_in, newwidth, fname_out)
 
-        self.thumbmaker = ThumbmakerWx()
-        newwidth = 250
-        newheight = 215
+    (width, height) = getImageSize(fname_out)
 
-        self.thumbmaker.thumbByWidth(self.fname_in, newwidth, self.fname_out)
-        (width, height) = getImageSize(self.fname_out)
+    assert width == newwidth
+    assert height == newheight
 
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+def test_wx_thumb_height_jpeg(wxapp, tmp_path):
+    fname_in = os.path.join(IMAGES_DIR, "first.jpg")
+    fname_out = str(tmp_path / "first_th.jpg")
 
-    def testWxThumbHeightJpeg(self):
-        self.fname_in = "testdata/images/first.jpg"
-        self.fname_out = "testdata/images/first_th.jpg"
+    thumbmaker = ThumbmakerWx()
+    newheight = 180
+    newwidth = 246
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+    thumbmaker.thumbByHeight(fname_in, newheight, fname_out)
 
-        self.thumbmaker = ThumbmakerWx()
-        newheight = 180
-        newwidth = 246
+    (width, height) = getImageSize(fname_out)
 
-        self.thumbmaker.thumbByHeight(self.fname_in, newheight, self.fname_out)
-        (width, height) = getImageSize(self.fname_out)
+    assert width == newwidth
+    assert height == newheight
 
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+def test_wx_thumb_height_jpeg_png(wxapp, tmp_path):
+    fname_in = os.path.join(IMAGES_DIR, "first.jpg")
+    fname_out = str(tmp_path / "first_th.png")
 
-    def testWxThumbHeightJpegPng(self):
-        self.fname_in = "testdata/images/first.jpg"
-        self.fname_out = "testdata/images/first_th.png"
+    thumbmaker = ThumbmakerWx()
+    newheight = 180
+    newwidth = 246
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+    thumbmaker.thumbByHeight(fname_in, newheight, fname_out)
 
-        self.thumbmaker = ThumbmakerWx()
-        newheight = 180
-        newwidth = 246
+    (width, height) = getImageSize(fname_out)
 
-        self.thumbmaker.thumbByHeight(self.fname_in, newheight, self.fname_out)
-        (width, height) = getImageSize(self.fname_out)
+    assert width == newwidth
+    assert height == newheight
 
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+def test_wx_thumb_max_size_jpeg_1(wxapp, tmp_path):
+    fname_in = os.path.join(IMAGES_DIR, "first.jpg")
+    fname_out = str(tmp_path / "first_th.jpg")
 
-    def testWxThumbMaxSizeJpeg1(self):
-        self.fname_in = "testdata/images/first.jpg"
-        self.fname_out = "testdata/images/first_th.jpg"
+    thumbmaker = ThumbmakerWx()
+    newsize = 250
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+    newwidth = 250
+    newheight = 182
 
-        self.thumbmaker = ThumbmakerWx()
-        newsize = 250
+    thumbmaker.thumbByMaxSize(fname_in, newsize, fname_out)
 
-        newwidth = 250
-        newheight = 182
+    (width, height) = getImageSize(fname_out)
 
-        self.thumbmaker.thumbByMaxSize(self.fname_in, newsize, self.fname_out)
-        (width, height) = getImageSize(self.fname_out)
+    assert width == newwidth
+    assert height == newheight
 
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+def test_wx_thumb_max_size_jpeg_2(wxapp, tmp_path):
+    fname_in = os.path.join(IMAGES_DIR, "first_vertical.jpeg")
+    fname_out = str(tmp_path / "first_vertical_th.jpg")
 
-    def testWxThumbMaxSizeJpeg2(self):
-        self.fname_in = "testdata/images/first_vertical.jpeg"
-        self.fname_out = "testdata/images/first_vertical_th.jpg"
+    thumbmaker = ThumbmakerWx()
+    newsize = 250
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+    newwidth = 182
+    newheight = 250
 
-        self.thumbmaker = ThumbmakerWx()
-        newsize = 250
+    thumbmaker.thumbByMaxSize(fname_in, newsize, fname_out)
 
-        newwidth = 182
-        newheight = 250
+    (width, height) = getImageSize(fname_out)
 
-        self.thumbmaker.thumbByMaxSize(self.fname_in, newsize, self.fname_out)
-        (width, height) = getImageSize(self.fname_out)
+    assert width == newwidth
+    assert height == newheight
 
-        self.assertEqual(width, newwidth)
-        self.assertEqual(height, newheight)
 
-        if os.path.exists(self.fname_out):
-            os.remove(self.fname_out)
+def test_wx_thumb_raises(wxapp, tmp_path):
+    fname_in = os.path.join(IMAGES_DIR, "first_vertical_error.jpeg")
+    fname_out = str(tmp_path / "first_vertical_error_th.jpg")
+    newsize = 250
 
-    def testwxThumbRaises(self):
-        self.fname_in = "testdata/images/first_vertical_error.jpeg"
-        self.fname_out = "testdata/images/first_vertical_error_th.jpg"
-        newsize = 250
+    thumbmaker = ThumbmakerWx()
 
-        self.thumbmaker = ThumbmakerWx()
+    with pytest.raises(ThumbException):
+        thumbmaker.thumbByWidth(fname_in, newsize, fname_out)
 
-        self.assertRaises(
-            ThumbException,
-            self.thumbmaker.thumbByWidth,
-            self.fname_in,
-            newsize,
-            self.fname_out,
-        )
-        self.assertRaises(
-            ThumbException,
-            self.thumbmaker.thumbByHeight,
-            self.fname_in,
-            newsize,
-            self.fname_out,
-        )
-        self.assertRaises(
-            ThumbException,
-            self.thumbmaker.thumbByMaxSize,
-            self.fname_in,
-            newsize,
-            self.fname_out,
-        )
+    with pytest.raises(ThumbException):
+        thumbmaker.thumbByHeight(fname_in, newsize, fname_out)
+
+    with pytest.raises(ThumbException):
+        thumbmaker.thumbByMaxSize(fname_in, newsize, fname_out)

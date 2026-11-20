@@ -43,26 +43,6 @@ class _WikiTestMixin:
         removeDir(wikiroot.path)
 
 
-class BaseWxTestCase(unittest.TestCase):
-    def setUp(self):
-        self._wxapp = wx.App()
-        locale.setlocale(locale.LC_ALL, "")
-        self.mainWindow = None
-
-    def tearDown(self):
-        if self.mainWindow is not None:
-            self.mainWindow.Close()
-
-        wx.SafeYield()
-        self._wxapp.MainLoop()
-        del self._wxapp
-
-    def initMainWindow(self):
-        self.mainWindow = wx.Frame(None)
-        self._wxapp.SetTopWindow(self.mainWindow)
-        return self.mainWindow
-
-
 class BaseOutWikerMixin(_WikiTestMixin):
     def initApplication(self, lang="en"):
         self._config_path = self._getConfigPath()
