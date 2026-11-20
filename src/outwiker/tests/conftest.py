@@ -76,7 +76,7 @@ def wxapp():
 
 
 @pytest.fixture
-def main_window(wxapp):
+def empty_window(wxapp):
     frame = wx.Frame(None)
     wxapp.SetTopWindow(frame)
 

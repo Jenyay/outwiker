@@ -11,9 +11,9 @@ IMAGE_PATH = "testdata/images/16x16.png"
 
 
 @pytest.fixture
-def toolbar_container(main_window: wx.Frame) -> ToolBar2Container:
+def toolbar_container(empty_window: wx.Frame) -> ToolBar2Container:
     """Replaces the setUp() method of the former TestToolbar2 class."""
-    return ToolBar2Container(main_window)
+    return ToolBar2Container(empty_window)
 
 
 def test_init(toolbar_container: ToolBar2Container):
