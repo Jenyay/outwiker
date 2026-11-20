@@ -32,7 +32,7 @@ import outwiker.core.defines as defines
 NullTranslations().install()
 
 
-class WikiTestMixin:
+class _WikiTestMixin:
     def createWiki(self) -> WikiDocument:
         wikipath = mkdtemp(
             prefix="OutWiker_Абырвалг абырвалг_" + str(self.__class__.__name__)
@@ -63,7 +63,7 @@ class BaseWxTestCase(unittest.TestCase):
         return self.mainWindow
 
 
-class BaseOutWikerMixin(WikiTestMixin):
+class BaseOutWikerMixin(_WikiTestMixin):
     def initApplication(self, lang="en"):
         self._config_path = self._getConfigPath()
         self.application = Application()

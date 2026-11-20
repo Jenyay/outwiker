@@ -1,287 +1,260 @@
 # -*- coding: utf-8 -*-
 
+import pytest
 import wx
 
 from outwiker.gui.controls.toolbar2 import ToolBar2Container
-from outwiker.tests.basetestcases import BaseWxTestCase
+
+TOOLBAR_ID = "Панель инструментов 1"
+TOOL_LABEL = "Инструмент 1"
+IMAGE_PATH = "testdata/images/16x16.png"
 
 
-class TestToolbar2(BaseWxTestCase):
-    def setUp(self):
-        super().setUp()
-        self.initMainWindow()
-        self.toolbarContainer = ToolBar2Container(self.mainWindow)
+@pytest.fixture
+def toolbar_container(main_window: wx.Frame) -> ToolBar2Container:
+    """Replaces the setUp() method of the former TestToolbar2 class."""
+    return ToolBar2Container(main_window)
 
-    def test_init(self):
-        self.assertEqual(len(self.toolbarContainer), 0)
 
-    def test_create_toolbar(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
+def test_init(toolbar_container: ToolBar2Container):
+    assert len(toolbar_container) == 0
 
-        self.assertEqual(len(self.toolbarContainer), 1)
-        self.assertEqual(toolbar, self.toolbarContainer[toolbar_id])
-        self.assertEqual(toolbar.GetToolsCount(), 0)
-        self.assertEqual(len(toolbar), 0)
 
-    def test_destroy_toolbar(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
+def test_create_toolbar(toolbar_container: ToolBar2Container):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        self.assertEqual(len(self.toolbarContainer), 1)
-        self.assertEqual(toolbar, self.toolbarContainer[toolbar_id])
-        self.assertEqual(toolbar.GetToolsCount(), 0)
-        self.assertEqual(len(toolbar), 0)
+    assert len(toolbar_container) == 1
+    assert toolbar == toolbar_container[TOOLBAR_ID]
+    assert toolbar.GetToolsCount() == 0
+    assert len(toolbar) == 0
 
-        self.toolbarContainer.destroyToolBar(toolbar_id)
-        self.assertEqual(len(self.toolbarContainer), 0)
 
-    def test_toolbar_create_button_from_image(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
+def test_destroy_toolbar(toolbar_container: ToolBar2Container):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        label = "Инструмент 1"
-        bitmap = "testdata/images/16x16.png"
-        tool_id = toolbar.AddButton(label, bitmap)
-        toolbar.Realize()
+    assert len(toolbar_container) == 1
+    assert toolbar == toolbar_container[TOOLBAR_ID]
+    assert toolbar.GetToolsCount() == 0
+    assert len(toolbar) == 0
 
-        self.assertEqual(toolbar.GetToolsCount(), 1)
-        self.assertEqual(len(toolbar), 1)
-        self.assertIsNotNone(toolbar[tool_id])
-        self.assertIsNotNone(toolbar.FindById(tool_id))
-        self.assertEqual(toolbar[tool_id].GetKind(), wx.ITEM_NORMAL)
+    toolbar_container.destroyToolBar(TOOLBAR_ID)
+    assert len(toolbar_container) == 0
 
-    def test_toolbar_create_button_from_bitmap(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
 
-        label = "Инструмент 1"
-        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
-        tool_id = toolbar.AddButton(label, bitmap)
-        toolbar.Realize()
+def test_toolbar_create_button_from_image(toolbar_container: ToolBar2Container):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        self.assertEqual(toolbar.GetToolsCount(), 1)
-        self.assertEqual(len(toolbar), 1)
-        self.assertIsNotNone(toolbar[tool_id])
-        self.assertIsNotNone(toolbar.FindById(tool_id))
-        self.assertEqual(toolbar[tool_id].GetKind(), wx.ITEM_NORMAL)
+    tool_id = toolbar.AddButton(TOOL_LABEL, IMAGE_PATH)
+    toolbar.Realize()
 
-    def test_toolbar_add_separator(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
+    assert toolbar.GetToolsCount() == 1
+    assert len(toolbar) == 1
+    assert toolbar[tool_id] is not None
+    assert toolbar.FindById(tool_id) is not None
+    assert toolbar[tool_id].GetKind() == wx.ITEM_NORMAL
 
-        toolbar.AddSeparator()
-        self.assertEqual(len(toolbar), 1)
 
-    def test_toolbar_create_checkbutton_from_image(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
+def test_toolbar_create_button_from_bitmap(toolbar_container: ToolBar2Container):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        label = "Инструмент 1"
-        bitmap = "testdata/images/16x16.png"
-        tool_id = toolbar.AddCheckButton(label, bitmap)
-        toolbar.Realize()
+    bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
+    tool_id = toolbar.AddButton(TOOL_LABEL, bitmap)
+    toolbar.Realize()
 
-        self.assertEqual(toolbar.GetToolsCount(), 1)
-        self.assertEqual(len(toolbar), 1)
-        self.assertIsNotNone(toolbar[tool_id])
-        self.assertIsNotNone(toolbar.FindById(tool_id))
-        self.assertEqual(toolbar[tool_id].GetKind(), wx.ITEM_CHECK)
+    assert toolbar.GetToolsCount() == 1
+    assert len(toolbar) == 1
+    assert toolbar[tool_id] is not None
+    assert toolbar.FindById(tool_id) is not None
+    assert toolbar[tool_id].GetKind() == wx.ITEM_NORMAL
 
-    def test_toolbar_create_checkbutton_from_bitmap(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
 
-        label = "Инструмент 1"
-        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
-        tool_id = toolbar.AddCheckButton(label, bitmap)
-        toolbar.Realize()
+def test_toolbar_add_separator(toolbar_container: ToolBar2Container):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        self.assertEqual(toolbar.GetToolsCount(), 1)
-        self.assertEqual(len(toolbar), 1)
-        self.assertIsNotNone(toolbar[tool_id])
-        self.assertIsNotNone(toolbar.FindById(tool_id))
-        self.assertEqual(toolbar[tool_id].GetKind(), wx.ITEM_CHECK)
+    toolbar.AddSeparator()
+    assert len(toolbar) == 1
 
-    def test_toolbar_delete_tool(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
 
-        label = "Инструмент 1"
-        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
-        tool_id = toolbar.AddButton(label, bitmap)
-        toolbar.Realize()
+def test_toolbar_create_checkbutton_from_image(
+    toolbar_container: ToolBar2Container,
+):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        self.assertEqual(len(toolbar), 1)
+    tool_id = toolbar.AddCheckButton(TOOL_LABEL, IMAGE_PATH)
+    toolbar.Realize()
 
-        toolbar.DeleteTool(tool_id)
-        toolbar.Realize()
+    assert toolbar.GetToolsCount() == 1
+    assert len(toolbar) == 1
+    assert toolbar[tool_id] is not None
+    assert toolbar.FindById(tool_id) is not None
+    assert toolbar[tool_id].GetKind() == wx.ITEM_CHECK
 
-        self.assertEqual(len(toolbar), 0)
 
-    def test_toolbar_checkbutton(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
+def test_toolbar_create_checkbutton_from_bitmap(
+    toolbar_container: ToolBar2Container,
+):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        label = "Инструмент 1"
-        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
-        tool_id = toolbar.AddCheckButton(label, bitmap)
-        toolbar.Realize()
+    bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
+    tool_id = toolbar.AddCheckButton(TOOL_LABEL, bitmap)
+    toolbar.Realize()
 
-        self.assertFalse(toolbar.IsChecked(tool_id))
+    assert toolbar.GetToolsCount() == 1
+    assert len(toolbar) == 1
+    assert toolbar[tool_id] is not None
+    assert toolbar.FindById(tool_id) is not None
+    assert toolbar[tool_id].GetKind() == wx.ITEM_CHECK
 
-        toolbar.ToggleTool(tool_id, True)
-        toolbar.Realize()
 
-        self.assertTrue(toolbar.IsChecked(tool_id))
+def test_toolbar_delete_tool(toolbar_container: ToolBar2Container):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        toolbar.ToggleTool(tool_id, False)
-        toolbar.Realize()
+    bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
+    tool_id = toolbar.AddButton(TOOL_LABEL, bitmap)
+    toolbar.Realize()
 
-        self.assertFalse(toolbar.IsChecked(tool_id))
+    assert len(toolbar) == 1
 
-    def test_toolbar_enabled(self):
-        toolbar_id = "Панель инструментов 1"
-        toolbar = self.toolbarContainer.createToolBar(toolbar_id)
+    toolbar.DeleteTool(tool_id)
+    toolbar.Realize()
 
-        label = "Инструмент 1"
-        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
-        tool_id = toolbar.AddButton(label, bitmap)
-        toolbar.Realize()
+    assert len(toolbar) == 0
 
-        toolbar.EnableTool(tool_id, False)
-        toolbar.Realize()
 
-        self.assertFalse(toolbar.GetToolEnabled(tool_id))
+def test_toolbar_checkbutton(toolbar_container: ToolBar2Container):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        toolbar.EnableTool(tool_id, True)
-        toolbar.Realize()
+    bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
+    tool_id = toolbar.AddCheckButton(TOOL_LABEL, bitmap)
+    toolbar.Realize()
 
-        self.assertTrue(toolbar.GetToolEnabled(tool_id))
+    assert not toolbar.IsChecked(tool_id)
 
-    def test_toolbar_order_01(self):
-        toolbar_1_id = "Панель инструментов 1"
-        toolbar_1_order = 10
-        toolbar_1 = self.toolbarContainer.createToolBar(
-            toolbar_1_id, order=toolbar_1_order
-        )
+    toolbar.ToggleTool(tool_id, True)
+    toolbar.Realize()
 
-        toolbar_2_id = "Панель инструментов 2"
-        toolbar_2_order = 20
-        toolbar_2 = self.toolbarContainer.createToolBar(
-            toolbar_2_id, order=toolbar_2_order
-        )
+    assert toolbar.IsChecked(tool_id)
 
-        self.assertEqual(toolbar_1.GetOrder(), toolbar_1_order)
-        self.assertEqual(toolbar_2.GetOrder(), toolbar_2_order)
+    toolbar.ToggleTool(tool_id, False)
+    toolbar.Realize()
 
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(0), toolbar_1)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(1), toolbar_2)
+    assert not toolbar.IsChecked(tool_id)
 
-    def test_toolbar_order_02(self):
-        toolbar_1_id = "Панель инструментов 1"
-        toolbar_1_order = 20
-        toolbar_1 = self.toolbarContainer.createToolBar(
-            toolbar_1_id, order=toolbar_1_order
-        )
 
-        toolbar_2_id = "Панель инструментов 2"
-        toolbar_2_order = 10
-        toolbar_2 = self.toolbarContainer.createToolBar(
-            toolbar_2_id, order=toolbar_2_order
-        )
+def test_toolbar_enabled(toolbar_container: ToolBar2Container):
+    toolbar = toolbar_container.createToolBar(TOOLBAR_ID)
 
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(0), toolbar_2)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(1), toolbar_1)
+    bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
+    tool_id = toolbar.AddButton(TOOL_LABEL, bitmap)
+    toolbar.Realize()
 
-    def test_toolbar_order_03(self):
-        toolbar_1_id = "Панель инструментов 1"
-        toolbar_1_order = 10
-        toolbar_1 = self.toolbarContainer.createToolBar(
-            toolbar_1_id, order=toolbar_1_order
-        )
+    toolbar.EnableTool(tool_id, False)
+    toolbar.Realize()
 
-        toolbar_2_id = "Панель инструментов 2"
-        toolbar_2_order = 10
-        toolbar_2 = self.toolbarContainer.createToolBar(
-            toolbar_2_id, order=toolbar_2_order
-        )
+    assert not toolbar.GetToolEnabled(tool_id)
 
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(0), toolbar_1)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(1), toolbar_2)
+    toolbar.EnableTool(tool_id, True)
+    toolbar.Realize()
 
-    def test_toolbar_order_04(self):
-        toolbar_1_id = "Панель инструментов 1"
-        toolbar_1_order = 10
-        toolbar_1 = self.toolbarContainer.createToolBar(
-            toolbar_1_id, order=toolbar_1_order
-        )
+    assert toolbar.GetToolEnabled(tool_id)
 
-        toolbar_2_id = "Панель инструментов 2"
-        toolbar_2_order = 20
-        toolbar_2 = self.toolbarContainer.createToolBar(
-            toolbar_2_id, order=toolbar_2_order
-        )
 
-        toolbar_3_id = "Панель инструментов 3"
-        toolbar_3_order = 0
-        toolbar_3 = self.toolbarContainer.createToolBar(
-            toolbar_3_id, order=toolbar_3_order
-        )
+def test_toolbar_order_01(toolbar_container: ToolBar2Container):
+    toolbar_1_id = "Панель инструментов 1"
+    toolbar_1_order = 10
+    toolbar_1 = toolbar_container.createToolBar(toolbar_1_id, order=toolbar_1_order)
 
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(0), toolbar_3)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(1), toolbar_1)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(2), toolbar_2)
+    toolbar_2_id = "Панель инструментов 2"
+    toolbar_2_order = 20
+    toolbar_2 = toolbar_container.createToolBar(toolbar_2_id, order=toolbar_2_order)
 
-    def test_toolbar_order_05(self):
-        toolbar_1_id = "Панель инструментов 1"
-        toolbar_1_order = 20
-        toolbar_1 = self.toolbarContainer.createToolBar(
-            toolbar_1_id, order=toolbar_1_order
-        )
+    assert toolbar_1.GetOrder() == toolbar_1_order
+    assert toolbar_2.GetOrder() == toolbar_2_order
 
-        toolbar_2_id = "Панель инструментов 2"
-        toolbar_2_order = 10
-        toolbar_2 = self.toolbarContainer.createToolBar(
-            toolbar_2_id, order=toolbar_2_order
-        )
+    assert toolbar_container.getToolBarByIndex(0) == toolbar_1
+    assert toolbar_container.getToolBarByIndex(1) == toolbar_2
 
-        toolbar_3_id = "Панель инструментов 3"
-        toolbar_3_order = 0
-        toolbar_3 = self.toolbarContainer.createToolBar(
-            toolbar_3_id, order=toolbar_3_order
-        )
 
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(0), toolbar_3)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(1), toolbar_2)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(2), toolbar_1)
+def test_toolbar_order_02(toolbar_container: ToolBar2Container):
+    toolbar_1_id = "Панель инструментов 1"
+    toolbar_1_order = 20
+    toolbar_1 = toolbar_container.createToolBar(toolbar_1_id, order=toolbar_1_order)
 
-    def test_toolbar_order_06(self):
-        toolbar_1_id = "Панель инструментов 1"
-        toolbar_1_order = 20
-        toolbar_1 = self.toolbarContainer.createToolBar(
-            toolbar_1_id, order=toolbar_1_order
-        )
+    toolbar_2_id = "Панель инструментов 2"
+    toolbar_2_order = 10
+    toolbar_2 = toolbar_container.createToolBar(toolbar_2_id, order=toolbar_2_order)
 
-        toolbar_2_id = "Панель инструментов 2"
-        toolbar_2_order = 10
-        toolbar_2 = self.toolbarContainer.createToolBar(
-            toolbar_2_id, order=toolbar_2_order
-        )
+    assert toolbar_container.getToolBarByIndex(0) == toolbar_2
+    assert toolbar_container.getToolBarByIndex(1) == toolbar_1
 
-        toolbar_3_id = "Панель инструментов 3"
-        toolbar_3_order = 0
-        toolbar_3 = self.toolbarContainer.createToolBar(
-            toolbar_3_id, order=toolbar_3_order
-        )
 
-        toolbar_4_id = "Панель инструментов 4"
-        toolbar_4_order = 0
-        toolbar_4 = self.toolbarContainer.createToolBar(
-            toolbar_4_id, order=toolbar_4_order
-        )
+def test_toolbar_order_03(toolbar_container: ToolBar2Container):
+    toolbar_1_id = "Панель инструментов 1"
+    toolbar_1_order = 10
+    toolbar_1 = toolbar_container.createToolBar(toolbar_1_id, order=toolbar_1_order)
 
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(0), toolbar_3)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(1), toolbar_4)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(2), toolbar_2)
-        self.assertEqual(self.toolbarContainer.getToolBarByIndex(3), toolbar_1)
+    toolbar_2_id = "Панель инструментов 2"
+    toolbar_2_order = 10
+    toolbar_2 = toolbar_container.createToolBar(toolbar_2_id, order=toolbar_2_order)
+
+    assert toolbar_container.getToolBarByIndex(0) == toolbar_1
+    assert toolbar_container.getToolBarByIndex(1) == toolbar_2
+
+
+def test_toolbar_order_04(toolbar_container: ToolBar2Container):
+    toolbar_1_id = "Панель инструментов 1"
+    toolbar_1_order = 10
+    toolbar_1 = toolbar_container.createToolBar(toolbar_1_id, order=toolbar_1_order)
+
+    toolbar_2_id = "Панель инструментов 2"
+    toolbar_2_order = 20
+    toolbar_2 = toolbar_container.createToolBar(toolbar_2_id, order=toolbar_2_order)
+
+    toolbar_3_id = "Панель инструментов 3"
+    toolbar_3_order = 0
+    toolbar_3 = toolbar_container.createToolBar(toolbar_3_id, order=toolbar_3_order)
+
+    assert toolbar_container.getToolBarByIndex(0) == toolbar_3
+    assert toolbar_container.getToolBarByIndex(1) == toolbar_1
+    assert toolbar_container.getToolBarByIndex(2) == toolbar_2
+
+
+def test_toolbar_order_05(toolbar_container: ToolBar2Container):
+    toolbar_1_id = "Панель инструментов 1"
+    toolbar_1_order = 20
+    toolbar_1 = toolbar_container.createToolBar(toolbar_1_id, order=toolbar_1_order)
+
+    toolbar_2_id = "Панель инструментов 2"
+    toolbar_2_order = 10
+    toolbar_2 = toolbar_container.createToolBar(toolbar_2_id, order=toolbar_2_order)
+
+    toolbar_3_id = "Панель инструментов 3"
+    toolbar_3_order = 0
+    toolbar_3 = toolbar_container.createToolBar(toolbar_3_id, order=toolbar_3_order)
+
+    assert toolbar_container.getToolBarByIndex(0) == toolbar_3
+    assert toolbar_container.getToolBarByIndex(1) == toolbar_2
+    assert toolbar_container.getToolBarByIndex(2) == toolbar_1
+
+
+def test_toolbar_order_06(toolbar_container: ToolBar2Container):
+    toolbar_1_id = "Панель инструментов 1"
+    toolbar_1_order = 20
+    toolbar_1 = toolbar_container.createToolBar(toolbar_1_id, order=toolbar_1_order)
+
+    toolbar_2_id = "Панель инструментов 2"
+    toolbar_2_order = 10
+    toolbar_2 = toolbar_container.createToolBar(toolbar_2_id, order=toolbar_2_order)
+
+    toolbar_3_id = "Панель инструментов 3"
+    toolbar_3_order = 0
+    toolbar_3 = toolbar_container.createToolBar(toolbar_3_id, order=toolbar_3_order)
+
+    toolbar_4_id = "Панель инструментов 4"
+    toolbar_4_order = 0
+    toolbar_4 = toolbar_container.createToolBar(toolbar_4_id, order=toolbar_4_order)
+
+    assert toolbar_container.getToolBarByIndex(0) == toolbar_3
+    assert toolbar_container.getToolBarByIndex(1) == toolbar_4
+    assert toolbar_container.getToolBarByIndex(2) == toolbar_2
+    assert toolbar_container.getToolBarByIndex(3) == toolbar_1

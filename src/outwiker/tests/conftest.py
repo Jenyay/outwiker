@@ -1,9 +1,11 @@
 # -*- coding=utf-8 -*-
 
+import locale
 import os
 from tempfile import NamedTemporaryFile, mkdtemp
 
 import pytest
+import wx
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.core.application import Application
@@ -59,3 +61,27 @@ def application():
 
     if os.path.exists(config_file_name):
         os.remove(config_file_name)
+
+
+@pytest.fixture(scope="module")
+def wxapp():
+    app = wx.App()
+    locale.setlocale(locale.LC_ALL, "")
+
+    yield app
+
+    wx.SafeYield()
+    app.MainLoop()
+    del app
+
+
+@pytest.fixture
+def main_window(wxapp):
+    frame = wx.Frame(None)
+    wxapp.SetTopWindow(frame)
+
+    yield frame
+
+    if frame:
+        frame.Close()
+    wx.SafeYield()
