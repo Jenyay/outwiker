@@ -326,9 +326,6 @@ class PageListChangeHeadersMixin:
             menu_item.Check(col.visible)
             self._popupMenuColumnItems[menu_item.GetId()] = col
 
-        if getOS().name != "windows":
-            # In Linux popup menu deactivates parent window
-            self._pageList.GetParent().setDeactivateCount(1)
         self._pageList.PopupMenu(menu)
 
     def _onPopupMenuClick(self, event):

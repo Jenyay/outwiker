@@ -6,6 +6,7 @@ from outwiker.app.gui.bookmarkspanel import BookmarksPanel
 from outwiker.gui.guiconfig import BookmarksPaneConfig
 from outwiker.gui.mainpanes.mainpane import MainPane
 from outwiker.core.events import BookmarksChangedParams
+from outwiker.gui.controls.pagelist_columns import ColumnsFactory
 from outwiker.gui.theme import Theme, ThemeChangedParams
 
 class BookmarksMainPane(MainPane):
@@ -27,6 +28,15 @@ class BookmarksMainPane(MainPane):
     @property
     def caption(self):
         return _("Bookmarks")
+
+    def saveParams(self):
+        super().saveParams()
+        self._save_headers()
+
+    def _save_headers(self):
+        if self.panel is not None and self.panel.bookmark_list is not None:
+            columns = self.panel.bookmark_list.getColumns()
+            self.config.headers.value = ColumnsFactory.toString(columns)
 
     def _createPane(self):
         pane = self._loadPaneInfo(self.config.pane)

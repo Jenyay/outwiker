@@ -1087,14 +1087,17 @@ class AttachConfig:
 class BookmarksPaneConfig:
     """Options for the bookmarks management pane"""
 
-    WIDTH_PARAM = "BookmarksWidth"
+    WIDTH_PARAM = "BookmarksPaneWidth"
     WIDTH_DEFAULT = 950
 
-    HEIGHT_PARAM = "BookmarksHeight"
+    HEIGHT_PARAM = "BookmarksPaneHeight"
     HEIGHT_DEFAULT = 500
 
     PANE_OPTIONS_PARAM = "BookmarksPane"
     PANE_OPTIONS_DEFAULT = ""
+
+    HEADERS_PARAM = "BookmarksPaneHeaders"
+    HEADERS_DEFAULT = ""
 
     def __init__(self, config):
         self.config = config
@@ -1115,6 +1118,12 @@ class BookmarksPaneConfig:
             MainWindowConfig.MAIN_WINDOW_SECTION,
             self.PANE_OPTIONS_PARAM,
             self.PANE_OPTIONS_DEFAULT,
+        )
+        self.headers = StringOption(
+            config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.HEADERS_PARAM,
+            self.HEADERS_DEFAULT,
         )
 
 

@@ -6,16 +6,21 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.pagelist_columns import ColumnsFactory
 from outwiker.gui.images import readImage
 from outwiker.gui.theme import Theme
-from outwiker.gui.controls.pagelist import PageList, EVT_PAGE_ACTIVATED
+from outwiker.gui.controls.pagelist import (
+    PageList,
+    EVT_PAGE_ACTIVATED,
+    PageListChangeHeadersMixin,
+)
 
 
 class BookmarksPanel(wx.Panel):
     def __init__(self, parent: wx.Window, application: Application):
         super().__init__(parent)
         self._application = application
-        self._attach_config = BookmarksPaneConfig(self._application.config)
+        self._config = BookmarksPaneConfig(self._application.config)
         self._theme = self._application.theme
         self.bookmark_list = None
+        self._headers_mixin = None
         self._create_gui_part_1()
 
     def applyTheme(self):
@@ -59,8 +64,9 @@ class BookmarksPanel(wx.Panel):
 
     def _create_bookmark_list(self):
         self.bookmark_list = PageList(self, sortable=False, selectable=True)
-        columns = ColumnsFactory().createDefaultColumns()
+        columns = ColumnsFactory().columnsFromStr(self._config.headers.value)
         self.bookmark_list.setColumns(columns)
+        self._headers_mixin = PageListChangeHeadersMixin(self.bookmark_list)
         self.bookmark_list.Bind(EVT_PAGE_ACTIVATED, handler=self._onPageActivated)
 
     def _create_gui_part_1(self):
