@@ -102,3 +102,14 @@ jobs:
           name: outwiker-${{ env.OUTWIKER_VERSION }}-linux-x86_64
           path: |
             build/${{ env.OUTWIKER_VERSION }}/linux/outwiker_bin
+
+      - name: Build plugins
+        run: |
+          uv run python -m invoke plugins
+
+      - name: Upload plugins artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: outwiker_plugins_${{ env.OUTWIKER_VERSION }}
+          path: |
+            build/${{ env.OUTWIKER_VERSION }}/plugins

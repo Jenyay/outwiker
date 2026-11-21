@@ -63,3 +63,14 @@ jobs:
           name: outwiker-unstable-${{ env.OUTWIKER_VERSION }}-windows-x86_64
           path: |
             build/${{ env.OUTWIKER_VERSION }}/windows/outwiker_exe
+
+      - name: Build plugins
+        run: |
+          uv run python -m invoke plugins
+
+      - name: Upload plugins artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: outwiker_plugins_${{ env.OUTWIKER_VERSION }}
+          path: |
+            build/${{ env.OUTWIKER_VERSION }}/plugins
