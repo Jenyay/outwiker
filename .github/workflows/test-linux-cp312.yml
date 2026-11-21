@@ -63,7 +63,7 @@ jobs:
           cache-dependency-glob: pyproject.toml
 
       - name: Cache virtual environment
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .venv
           key: ${{ runner.os }}-cp312-venv-gui-${{ hashFiles('pyproject.toml') }}
