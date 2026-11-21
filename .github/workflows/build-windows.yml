@@ -46,18 +46,36 @@ jobs:
         run: |
           echo "OutWiker version: ${{ env.OUTWIKER_VERSION }}"
 
-      - name: Build OutWiker (Windows)
+      - name: Build unstable OutWiker version
+        run: |
+          uv run python -m invoke win
+
+      - name: Upload artifacts for unstable version
+        uses: actions/upload-artifact@v7
+        with:
+          name: outwiker-unstable-full-${{ env.OUTWIKER_VERSION }}-windows-x86_64
+          path: |
+            build/${{ env.OUTWIKER_VERSION }}/windows/*
+
+      - name: Upload artifacts for unstable executable version
+        uses: actions/upload-artifact@v7
+        with:
+          name: outwiker-unstable-${{ env.OUTWIKER_VERSION }}-windows-x86_64
+          path: |
+            build/${{ env.OUTWIKER_VERSION }}/windows/outwiker_exe
+
+      - name: Build stable OutWiker version
         run: |
           uv run python -m invoke win --is-stable
 
-      - name: Upload all artifacts
+      - name: Upload artifacts for stable version
         uses: actions/upload-artifact@v7
         with:
           name: outwiker-full-${{ env.OUTWIKER_VERSION }}-windows-x86_64
           path: |
             build/${{ env.OUTWIKER_VERSION }}/windows/*
 
-      - name: Upload exe only
+      - name: Upload artifacts for stable executable version
         uses: actions/upload-artifact@v7
         with:
           name: outwiker-${{ env.OUTWIKER_VERSION }}-windows-x86_64

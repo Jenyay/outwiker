@@ -85,18 +85,36 @@ jobs:
         run: |
           echo "OutWiker version: ${{ env.OUTWIKER_VERSION }}"
 
-      - name: Build OutWiker (Linux)
+      - name: Build unstable OutWiker version
+        run: |
+          uv run python -m invoke linux-bin
+
+      - name: Upload artifacts for unstable version
+        uses: actions/upload-artifact@v7
+        with:
+          name: outwiker-unstable-full-${{ env.OUTWIKER_VERSION }}-linux-x86_64
+          path: |
+            build/${{ env.OUTWIKER_VERSION }}/linux/*
+
+      - name: Upload artifacts for unstable executable version
+        uses: actions/upload-artifact@v7
+        with:
+          name: outwiker-unstable-${{ env.OUTWIKER_VERSION }}-linux-x86_64
+          path: |
+            build/${{ env.OUTWIKER_VERSION }}/linux/outwiker_bin
+
+      - name: Build stable OutWiker version
         run: |
           uv run python -m invoke linux-bin --is-stable
 
-      - name: Upload all artifacts
+      - name: Upload artifacts for stable version
         uses: actions/upload-artifact@v7
         with:
           name: outwiker-full-${{ env.OUTWIKER_VERSION }}-linux-x86_64
           path: |
             build/${{ env.OUTWIKER_VERSION }}/linux/*
 
-      - name: Upload bin only
+      - name: Upload artifacts for stable executable version
         uses: actions/upload-artifact@v7
         with:
           name: outwiker-${{ env.OUTWIKER_VERSION }}-linux-x86_64
