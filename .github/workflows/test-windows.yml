@@ -3,7 +3,7 @@ name: Tests on Windows
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  test-windows-cp314:
+  test-windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7

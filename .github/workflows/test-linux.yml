@@ -3,7 +3,7 @@ name: Tests on Linux
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  test-linux-cp314:
+  test-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

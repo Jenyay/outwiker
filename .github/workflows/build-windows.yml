@@ -3,7 +3,7 @@ name: Build for Windows
 on: [push, workflow_dispatch]
 
 jobs:
-  build-windows-stable:
+  build-windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7

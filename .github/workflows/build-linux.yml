@@ -3,7 +3,7 @@ name: Build for Linux
 on: [push, workflow_dispatch]
 
 jobs:
-  build-linuxbin-stable:
+  build-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
