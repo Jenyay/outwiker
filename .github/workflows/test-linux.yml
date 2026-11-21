@@ -1,4 +1,4 @@
-name: Tests (Linux, Python 3.14)
+name: Tests on Linux
 
 on: [push, pull_request, workflow_dispatch]
 

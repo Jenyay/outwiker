@@ -1,4 +1,4 @@
-name: Build stable (Linux)
+name: Build for Linux
 
 on: [push, workflow_dispatch]
 
