@@ -1,18 +1,22 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="5.0.0.985" status="dev">
+    <version number="5.0.0.986" status="alpha" date="2026-11-22">
         <changes>
+            <change>Added a new window for bookmark management.</change>
+            <change>Created a binary build for Linux.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлено новое окно для управления закладками.</change>
+            <change>Создана двоичная сборка под Linux.</change>
         </changes>
     </version>
 
     <version number="5.0.0.984" status="alpha" date="2026-10-24">
         <changes>
-            <change>Migrate to Python 3.12-3.14.</change>
-            <change>Update used libraries.</change>
-            <change>Add editor setting for selected text color.</change>
+            <change>Migrated to Python 3.12-3.14.</change>
+            <change>Updated the libraries in use.</change>
+            <change>Added an editor setting for selected text color.</change>
         </changes>
 
         <changes lang="ru">

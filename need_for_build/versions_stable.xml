@@ -4,10 +4,10 @@
         <changes>
             <change>Added the ability to immediately open a new note in a new tab when creating it.</change>
             <change>Added the ability to create a note based on the selected text in an open note.</change>
-            <change>Added scroll position saving in the view mode.</change>
+            <change>Added preservation of scroll position in view mode.</change>
             <change>Added note sorting by creation or modification date.</change>
             <change>Added tag cloud color settings.</change>
-            <change>Fixed application startup and operation in window managers running via Wayland on Linux.</change>
+            <change>Fixed application startup and operation under Wayland window managers on Linux.</change>
             <change>Fixed numerous interface labels.</change>
             <change>Bug fixes and interface improvements.</change>
         </changes>
