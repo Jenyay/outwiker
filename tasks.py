@@ -169,7 +169,7 @@ def add_new_version(c, version_str=""):
     for fname, updater in _get_version_updaters():
         _update_version_for_file(fname, updater.add_version, version, status)
 
-    set_release_date("now")
+    set_release_date(c, "now")
 
 
 @task
@@ -187,7 +187,7 @@ def set_release_date(c, date=""):
     elif date.strip().lower() == "now":
         date = today
 
-    print_info(f"Set date: {date}")
+    print_info(f"Set release date: {date}")
     for fname, updater in _get_version_updaters():
         print_info(f"Update file: {fname}")
         _set_release_date_for_file(fname, updater, date)
