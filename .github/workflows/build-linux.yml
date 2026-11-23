@@ -117,3 +117,68 @@ jobs:
           name: outwiker_plugins_${{ env.OUTWIKER_VERSION }}
           path: |
             build/${{ env.OUTWIKER_VERSION }}/plugins
+
+  build-snap:
+    runs-on: ubuntu-latest
+    env:
+      # Build in an LXD container. Multipass instances are hard-coded to 2 GB of
+      # RAM by craft-providers, which is not enough to compile wxPython from
+      # source, while LXD instances are not capped and can use the whole runner.
+      SNAPCRAFT_BUILD_ENVIRONMENT: lxd
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - name: Install and initialize LXD
+        run: |
+          sudo snap wait system seed.loaded
+          sudo snap install snapcraft --classic
+          sudo snap install lxd
+          sudo lxd waitready --timeout=300
+          # Put the storage pool on the runner filesystem instead of a loop file,
+          # because the build needs several gigabytes and the runner has ~14 GB.
+          sudo lxd init --auto --storage-backend=dir
+          # Snapcraft talks to the LXD socket as the current user, so the user has
+          # to be in the lxd group. Group changes apply only to new sessions, thus
+          # the build step is executed through `sg lxd`.
+          sudo usermod -aG lxd "$(id -un)"
+          # Fail early instead of after the dependencies are installed.
+          sg lxd -c "lxc info > /dev/null"
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          enable-cache: true
+          cache-dependency-glob: pyproject.toml
+
+      - name: Sync dependencies
+        run: uv sync --dev
+
+      - name: Get OutWiker version
+        run: |
+          OUTWIKER_VERSION=$(uv run python -c "import outwiker; print(outwiker.__version_str__)")
+          echo "OUTWIKER_VERSION=$OUTWIKER_VERSION" >> $GITHUB_ENV
+
+      - name: Check OutWiker version
+        run: |
+          echo "OutWiker version: ${{ env.OUTWIKER_VERSION }}"
+
+      - name: Build snap package
+        run: |
+          # Run with the lxd group, which was only just added to the user, so the
+          # current session does not have it yet.
+          sg lxd -c "uv run python -m invoke snap"
+
+      - name: Upload snap artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: outwiker-${{ env.OUTWIKER_VERSION }}-linux-snap
+          path: |
+            build/${{ env.OUTWIKER_VERSION }}/linux/*.snap
+          if-no-files-found: error
