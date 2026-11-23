@@ -4,7 +4,10 @@ on: [push, workflow_dispatch]
 
 jobs:
   build-linux:
-    runs-on: ubuntu-latest
+    # Pin Ubuntu 24.04 instead of ubuntu-latest: the produced binary has to run
+    # on glibc 2.39+ (Ubuntu 24.04, Debian 13 and newer), while ubuntu-latest
+    # now points to Ubuntu 26.04 and would raise that requirement.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
         with:
@@ -119,7 +122,10 @@ jobs:
             build/${{ env.OUTWIKER_VERSION }}/plugins
 
   build-snap:
-    runs-on: ubuntu-latest
+    # Use the same runner image as the main build. The snap itself is built
+    # inside the core26 container declared in snapcraft.yaml, so this image only
+    # affects the host tooling (snapcraft, LXD).
+    runs-on: ubuntu-24.04
     env:
       # Build in an LXD container. Multipass instances are hard-coded to 2 GB of
       # RAM by craft-providers, which is not enough to compile wxPython from
