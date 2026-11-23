@@ -237,7 +237,7 @@ def _set_release_date_for_version_xml_file(path: Path, date_str: str):
     version_tag.set("date", date_str)
 
     print_info(f"Update file: {path}")
-    with open(path, "wb") as fp_out:
+    with open(path, "wb", encoding="utf-8") as fp_out:
         fp_out.write(ET.tostring(root, encoding="UTF-8", xml_declaration=True))
 
 
@@ -265,8 +265,8 @@ def _update_version_for_file(
 
 
 def _set_release_date_for_file(path: str, updater, date_str: str):
-    with open(path) as fp_in:
+    with open(path, encoding="utf-8") as fp_in:
         content_new = updater.set_release_date(fp_in, date_str)
 
-    with open(path, "w") as fp_out:
+    with open(path, "w", encoding="utf-8") as fp_out:
         fp_out.write(content_new)
