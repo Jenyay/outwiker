@@ -145,6 +145,12 @@ jobs:
           # Put the storage pool on the runner filesystem instead of a loop file,
           # because the build needs several gigabytes and the runner has ~14 GB.
           sudo lxd init --auto --storage-backend=dir
+          # Docker is preinstalled on the runner image and its iptables rules drop
+          # traffic forwarded from the LXD bridge, so the build container would
+          # have no internet access. The runner is an ephemeral VM, so accepting
+          # forwarded traffic is safe. Canonical's action-build does the same:
+          # https://linuxcontainers.org/lxd/docs/master/howto/network_bridge_firewalld/#prevent-issues-with-lxd-and-docker
+          sudo iptables -P FORWARD ACCEPT
           # Snapcraft talks to the LXD socket as the current user, so the user has
           # to be in the lxd group. Group changes apply only to new sessions, thus
           # the build step is executed through `sg lxd`.
