@@ -4,7 +4,9 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   test-windows:
-    runs-on: windows-latest
+    # Pin the runner image: the virtual environment cache key names it, so the
+    # two must not drift apart when the `windows-latest` label moves.
+    runs-on: windows-2025
     steps:
       - uses: actions/checkout@v7
         with:
@@ -25,9 +27,11 @@ jobs:
         uses: actions/cache@v6
         with:
           path: .venv
-          key: ${{ runner.os }}-cp314-venv-${{ hashFiles('pyproject.toml') }}
+          # Name the runner image in the key so a cache cannot leak between
+          # images. Keep it in sync with runs-on.
+          key: ${{ runner.os }}-windows-2025-cp314-venv-${{ hashFiles('pyproject.toml') }}
           restore-keys: |
-            ${{ runner.os }}-cp314-venv-
+            ${{ runner.os }}-windows-2025-cp314-venv-
 
       - name: Sync dependencies
         run: uv sync --dev --extra gui

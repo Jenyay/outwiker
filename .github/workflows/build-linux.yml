@@ -69,9 +69,13 @@ jobs:
         uses: actions/cache@v6
         with:
           path: .venv
-          key: ${{ runner.os }}-cp314-venv-gui-${{ hashFiles('pyproject.toml') }}
+          # wxPython has no Linux wheels, so it is compiled from source inside the
+          # venv and linked against the glibc of the runner image. The key must
+          # therefore include the image: a venv built on 26.04 requires
+          # GLIBC_2.43 and cannot be imported on 24.04.
+          key: ${{ runner.os }}-ubuntu-24.04-cp314-venv-gui-${{ hashFiles('pyproject.toml') }}
           restore-keys: |
-            ${{ runner.os }}-cp314-venv-
+            ${{ runner.os }}-ubuntu-24.04-cp314-venv-
 
       - name: Sync dependencies
         run: uv sync --dev --extra gui

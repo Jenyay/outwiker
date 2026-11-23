@@ -4,7 +4,10 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   test-linux:
-    runs-on: ubuntu-latest
+    # Test on the same image the Linux binary is built on (see build-linux.yml):
+    # wxPython is compiled from source against the image's glibc, so a virtual
+    # environment built on another image may be unusable here.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
         with:
@@ -66,9 +69,12 @@ jobs:
         uses: actions/cache@v6
         with:
           path: .venv
-          key: ${{ runner.os }}-cp314-venv-gui-${{ hashFiles('pyproject.toml') }}
+          # The key names the runner image: a venv built on another image is
+          # linked against another glibc (see build-linux.yml). Keep it in sync
+          # with runs-on.
+          key: ${{ runner.os }}-ubuntu-24.04-cp314-venv-gui-${{ hashFiles('pyproject.toml') }}
           restore-keys: |
-            ${{ runner.os }}-cp314-venv-
+            ${{ runner.os }}-ubuntu-24.04-cp314-venv-
 
       - name: Sync dependencies
         run: uv sync --dev --extra gui
