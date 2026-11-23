@@ -25,6 +25,9 @@ OutputBaseFilename=$resultname
 OutputDir=.
 Compression=lzma
 SolidCompression=yes
+; OutWiker requires 64-bit Windows 10 or later
+MinVersion=10.0
+ArchitecturesAllowed=x64compatible
 LicenseFile=outwiker_exe\LICENSE.txt
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline dialog
