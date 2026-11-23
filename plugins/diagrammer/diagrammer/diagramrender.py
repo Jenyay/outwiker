@@ -90,10 +90,11 @@ class DiagramRender(object):
         from blockdiag.imagedraw.png import setup
         setup(None)
 
-    def renderToFile(self, content, imagePath):
+    def renderToFile(self, content, imagePath, fileType="png"):
         """
         content - текст, описывающий диаграмму
         imagePath - полный путь до создаваемого файла
+        fileType - filetype of the output file, either png or pdf
         """
         from blockdiag.parser import parse_string
         from blockdiag.drawer import DiagramDraw
@@ -112,7 +113,7 @@ class DiagramRender(object):
         tree = parse_string(text)
         diagram = ScreenNodeBuilder.build(tree)
 
-        draw = DiagramDraw("png", diagram, imagePath,
+        draw = DiagramDraw(fileType, diagram, imagePath,
                            fontmap=fontmap, antialias=True)
         draw.draw()
         draw.save()
