@@ -5,7 +5,8 @@ authors = [
 {name = "Eugene Ilin (aka Jenyay)", email = "jenyay.ilin@gmail.com"},
 ]
 readme = "README.md"
-license = {file = "LICENSE.txt"}
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE.txt"]
 keywords = ["outliner", "notepad", "notes", "wiki"]
 requires-python = ">=3.12,<3.15"
 dependencies = [
@@ -18,7 +19,6 @@ dependencies = [
 ]
 classifiers=[
     "Development Status :: 3 - Beta",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Natural Language :: English",
     "Natural Language :: Russian",
     "Natural Language :: Ukrainian",
@@ -93,5 +93,5 @@ outwiker = ["tests*"]
 version = {attr = "outwiker.__version_str__"}
 
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta:__legacy__"
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
