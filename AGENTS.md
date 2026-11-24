@@ -28,6 +28,10 @@
 - Plugins tests: `src/outwiker/tests/plugins/`
 - Activate the virtual environment from `.venv` before running tests
 - Run tests without the `-q` flag
+- Use the `samplefiles_path` fixture from `src/outwiker/tests/conftest.py` for
+  paths to test files instead of a literal `testdata/samplefiles/` string
+- Use the `selected_page` fixture from `src/outwiker/tests/conftest.py` for
+  tests that need a page opened and selected in the application
 
 ### Documentation
 - Documentation sources: `doc/`

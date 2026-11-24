@@ -1,351 +1,423 @@
-# -*- coding=utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from pathlib import Path
-from typing import List
-import unittest
 
 from outwiker.api.app.attachment import attachFiles
+from outwiker.app.gui.mainwindow import MainWindow
 from outwiker.core.attachment import Attachment
+from outwiker.core.tree import WikiPage
 from outwiker.gui.tester import Tester, getButtonId
-from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 from outwiker.utilites.textfile import readTextFile
 
 
-class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
-    def setUp(self):
-        self.initApplication()
-        Tester.dialogTester.clear()
-        self.files_path = Path("testdata/samplefiles/")
+def _get_files_path(samplefiles_path: Path, files: list[str]) -> list[Path]:
+    return [samplefiles_path / fname for fname in files]
 
-        self.wikiroot = self.createWiki()
-        factory = TextPageFactory()
-        self.page = factory.create(self.wikiroot, "Страница 1", [])
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.page
+def _create_attach_subdir(page: WikiPage, subdir: str) -> Path:
+    return Attachment(page).createSubdir(subdir)
 
-    def tearDown(self):
-        self.destroyApplication()
-        self.destroyWiki(self.wikiroot)
 
-    def _getFilesPath(self, files) -> List[str]:
-        return [self.files_path / fname for fname in files]
+def test_attach_simple(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    files = ["image.png", "add.png"]
+    files_full_path = _get_files_path(samplefiles_path, files)
+    attachFiles(main_window, selected_page, files_full_path)
 
-    def _createAttachSubdir(self, page, subdir):
-        return Attachment(self.page).createSubdir(subdir)
+    attach = Attachment(selected_page)
+    assert len(files) == len(attach.getAttachFull())
 
-    def testAttachSimple(self):
-        files = ["image.png", "add.png"]
-        files_full_path = self._getFilesPath(files)
-        attachFiles(self.mainWindow, self.page, files_full_path)
 
-        attach = Attachment(self.page)
-        self.assertEqual(len(files), len(attach.getAttachFull()))
+def test_attach_self(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    files = ["image.png", "add.png"]
+    files_full_path = _get_files_path(samplefiles_path, files)
+    attachFiles(main_window, selected_page, files_full_path)
 
-    def testAttachSelf(self):
-        files = ["image.png", "add.png"]
-        files_full_path = self._getFilesPath(files)
-        attachFiles(self.mainWindow, self.page, files_full_path)
+    attach = Attachment(selected_page)
+    attachFiles(main_window, selected_page, attach.getAttachFull())
 
-        attach = Attachment(self.page)
-        attachFiles(self.mainWindow, self.page, attach.getAttachFull())
+    assert len(files) == len(attach.getAttachFull())
 
-        self.assertEqual(len(files), len(attach.getAttachFull()))
 
-    def testAttachSelfInSubdir(self):
-        fname = "image.png"
-        subdir = "subdir"
-        self._createAttachSubdir(self.page, subdir)
+def test_attach_self_in_subdir(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    fname = "image.png"
+    subdir = "subdir"
+    _create_attach_subdir(selected_page, subdir)
 
-        file_full_path = self._getFilesPath([fname])
-        attachFiles(self.mainWindow, self.page, file_full_path, subdir)
+    file_full_path = _get_files_path(samplefiles_path, [fname])
+    attachFiles(main_window, selected_page, file_full_path, subdir)
 
-        attach = Attachment(self.page)
-        file_new_path = Path(attach.getAttachPath(subdir), fname)
-        attachFiles(self.mainWindow, self.page, [file_new_path])
+    attach = Attachment(selected_page)
+    file_new_path = Path(attach.getAttachPath(subdir), fname)
+    attachFiles(main_window, selected_page, [file_new_path])
 
-        self.assertEqual(len(attach.getAttachFull(subdir)), 1)
+    assert len(attach.getAttachFull(subdir)) == 1
 
-    def testAddAttaches(self):
-        files_full_path_1 = self._getFilesPath(["image.png", "add.png"])
-        files_full_path_2 = self._getFilesPath(["accept.png"])
-        attachFiles(self.mainWindow, self.page, files_full_path_1)
-        attachFiles(self.mainWindow, self.page, files_full_path_2)
 
-        attach = Attachment(self.page)
-        self.assertEqual(
-            len(files_full_path_1) + len(files_full_path_2), len(attach.getAttachFull())
-        )
+def test_add_attaches(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    files_full_path_1 = _get_files_path(samplefiles_path, ["image.png", "add.png"])
+    files_full_path_2 = _get_files_path(samplefiles_path, ["accept.png"])
+    attachFiles(main_window, selected_page, files_full_path_1)
+    attachFiles(main_window, selected_page, files_full_path_2)
 
-    def testAttachDir(self):
-        files_full_path = self._getFilesPath(["dir"])
-        attachFiles(self.mainWindow, self.page, files_full_path)
+    attach = Attachment(selected_page)
+    assert len(files_full_path_1) + len(files_full_path_2) == len(
+        attach.getAttachFull()
+    )
 
-        attach = Attachment(self.page)
-        self.assertEqual(len(files_full_path), len(attach.getAttachFull()))
 
-        attach_dir = Path(attach.getAttachPath())
-        self.assertTrue((attach_dir / "dir").is_dir())
-        self.assertTrue((attach_dir / "dir" / "attach.png").exists())
-        self.assertTrue((attach_dir / "dir" / "subdir").is_dir())
-        self.assertTrue((attach_dir / "dir" / "subdir" / "subdir2").is_dir())
-        self.assertTrue(
-            (attach_dir / "dir" / "subdir" / "subdir2" / "image.png").exists()
-        )
+def test_attach_dir(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    files_full_path = _get_files_path(samplefiles_path, ["dir"])
+    attachFiles(main_window, selected_page, files_full_path)
 
-    def testAttachSubdirRoot(self):
-        files = ["image.png", "add.png"]
-        files_full_path = self._getFilesPath(files)
-        subdir = "."
-        attachFiles(self.mainWindow, self.page, files_full_path, subdir)
+    attach = Attachment(selected_page)
+    assert len(files_full_path) == len(attach.getAttachFull())
 
-        attach = Attachment(self.page)
-        self.assertEqual(len(files), len(attach.getAttachFull()))
+    attach_dir = Path(attach.getAttachPath())
+    assert (attach_dir / "dir").is_dir()
+    assert (attach_dir / "dir" / "attach.png").exists()
+    assert (attach_dir / "dir" / "subdir").is_dir()
+    assert (attach_dir / "dir" / "subdir" / "subdir2").is_dir()
+    assert (attach_dir / "dir" / "subdir" / "subdir2" / "image.png").exists()
 
-    def testAttachSubDir(self):
-        subdir = "dir"
-        subdir_full = self._createAttachSubdir(self.page, subdir)
 
-        files_full_path = self._getFilesPath(["image.png", "add.png"])
-        attachFiles(self.mainWindow, self.page, files_full_path, subdir)
+def test_attach_subdir_root(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    files = ["image.png", "add.png"]
+    files_full_path = _get_files_path(samplefiles_path, files)
+    subdir = "."
+    attachFiles(main_window, selected_page, files_full_path, subdir)
 
-        self.assertTrue((subdir_full / "image.png").exists())
-        self.assertTrue((subdir_full / "add.png").exists())
+    attach = Attachment(selected_page)
+    assert len(files) == len(attach.getAttachFull())
 
-    def testAttachDirToSubDir(self):
-        subdir = "dir"
 
-        # Create __attach directory
-        attach = Attachment(self.page)
-        attach_dir = Path(attach.getAttachPath(create=True))
-        self._createAttachSubdir(self.page, subdir)
+def test_attach_subdir(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    subdir = "dir"
+    subdir_full = _create_attach_subdir(selected_page, subdir)
 
-        files_full_path = self._getFilesPath([Path("dir", "subdir")])
-        attachFiles(self.mainWindow, self.page, files_full_path, subdir)
+    files_full_path = _get_files_path(samplefiles_path, ["image.png", "add.png"])
+    attachFiles(main_window, selected_page, files_full_path, subdir)
 
-        self.assertTrue((attach_dir / "dir" / "subdir").is_dir())
-        self.assertTrue((attach_dir / "dir" / "subdir" / "subdir2").is_dir())
-        self.assertTrue(
-            (attach_dir / "dir" / "subdir" / "subdir2" / "image.png").exists()
-        )
+    assert (subdir_full / "image.png").exists()
+    assert (subdir_full / "add.png").exists()
 
-    def testOverwriteDialogOverwrite(self):
+
+def test_attach_dir_to_subdir(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    subdir = "dir"
+
+    # Create __attach directory
+    attach = Attachment(selected_page)
+    attach_dir = Path(attach.getAttachPath(create=True))
+    _create_attach_subdir(selected_page, subdir)
+
+    files_full_path = _get_files_path(samplefiles_path, [Path("dir", "subdir")])
+    attachFiles(main_window, selected_page, files_full_path, subdir)
+
+    assert (attach_dir / "dir" / "subdir").is_dir()
+    assert (attach_dir / "dir" / "subdir" / "subdir2").is_dir()
+    assert (attach_dir / "dir" / "subdir" / "subdir2" / "image.png").exists()
+
+
+def test_overwrite_dialog_overwrite(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    Tester.dialogTester.append(getButtonId, "overwrite")
+
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"]
+    )
+
+    attachFiles(main_window, selected_page, files_full_path_1)
+    attachFiles(main_window, selected_page, files_full_path_2)
+
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), "file_1.txt")
+
+    text = readTextFile(attach_fname)
+    assert "version 2" in text
+    assert Tester.dialogTester.count == 0
+
+
+def test_overwrite_dialog_overwrite_subdir(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    subdir = "dir"
+    Tester.dialogTester.append(getButtonId, "overwrite")
+    _create_attach_subdir(selected_page, subdir)
+
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"]
+    )
+
+    attachFiles(main_window, selected_page, files_full_path_1, subdir)
+    attachFiles(main_window, selected_page, files_full_path_2, subdir)
+
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), subdir, "file_1.txt")
+
+    text = readTextFile(attach_fname)
+    assert "version 2" in text
+    assert Tester.dialogTester.count == 0
+
+
+def test_overwrite_dialog_overwrite_skip(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    Tester.dialogTester.append(getButtonId, "skip")
+
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"]
+    )
+
+    attachFiles(main_window, selected_page, files_full_path_1)
+    attachFiles(main_window, selected_page, files_full_path_2)
+
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), "file_1.txt")
+
+    text = readTextFile(attach_fname)
+    assert "version 1" in text
+    assert Tester.dialogTester.count == 0
+
+
+def test_overwrite_dialog_overwrite_many(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    count = 5
+
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"] * count
+    )
+
+    for n in range(count):
         Tester.dialogTester.append(getButtonId, "overwrite")
 
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(["for_overwrite/version_2/file_1.txt"])
+    attachFiles(main_window, selected_page, files_full_path_1)
+    attachFiles(main_window, selected_page, files_full_path_2)
 
-        attachFiles(self.mainWindow, self.page, files_full_path_1)
-        attachFiles(self.mainWindow, self.page, files_full_path_2)
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), "file_1.txt")
 
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), "file_1.txt")
+    text = readTextFile(attach_fname)
+    assert "version 2" in text
+    assert Tester.dialogTester.count == 0
 
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 2" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
 
-    def testOverwriteDialogOverwriteSubdir(self):
-        subdir = "dir"
-        Tester.dialogTester.append(getButtonId, "overwrite")
-        self._createAttachSubdir(self.page, subdir)
+def test_overwrite_dialog_overwrite_all(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    count = 5
 
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(["for_overwrite/version_2/file_1.txt"])
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"] * count
+    )
 
-        attachFiles(self.mainWindow, self.page, files_full_path_1, subdir)
-        attachFiles(self.mainWindow, self.page, files_full_path_2, subdir)
+    Tester.dialogTester.append(getButtonId, "overwriteAll")
 
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), subdir, "file_1.txt")
+    attachFiles(main_window, selected_page, files_full_path_1)
+    attachFiles(main_window, selected_page, files_full_path_2)
 
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 2" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), "file_1.txt")
 
-    def testOverwriteDialogOverwriteSkip(self):
+    text = readTextFile(attach_fname)
+    assert "version 2" in text
+    assert Tester.dialogTester.count == 0
+
+
+def test_overwrite_dialog_skip_many(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    count = 5
+
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"] * count
+    )
+
+    for n in range(count):
         Tester.dialogTester.append(getButtonId, "skip")
 
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(["for_overwrite/version_2/file_1.txt"])
+    attachFiles(main_window, selected_page, files_full_path_1)
+    attachFiles(main_window, selected_page, files_full_path_2)
 
-        attachFiles(self.mainWindow, self.page, files_full_path_1)
-        attachFiles(self.mainWindow, self.page, files_full_path_2)
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), "file_1.txt")
 
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), "file_1.txt")
+    text = readTextFile(attach_fname)
+    assert "version 1" in text
+    assert Tester.dialogTester.count == 0
 
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 1" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
 
-    def testOverwriteDialogOverwriteMany(self):
-        count = 5
+def test_overwrite_dialog_skip_all(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    count = 5
 
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(
-            ["for_overwrite/version_2/file_1.txt"] * count
-        )
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"] * count
+    )
 
-        for n in range(count):
-            Tester.dialogTester.append(getButtonId, "overwrite")
+    Tester.dialogTester.append(getButtonId, "skipAll")
 
-        attachFiles(self.mainWindow, self.page, files_full_path_1)
-        attachFiles(self.mainWindow, self.page, files_full_path_2)
+    attachFiles(main_window, selected_page, files_full_path_1)
+    attachFiles(main_window, selected_page, files_full_path_2)
 
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), "file_1.txt")
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), "file_1.txt")
 
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 2" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
+    text = readTextFile(attach_fname)
+    assert "version 1" in text
+    assert Tester.dialogTester.count == 0
 
-    def testOverwriteDialogOverwriteAll(self):
-        count = 5
 
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(
-            ["for_overwrite/version_2/file_1.txt"] * count
-        )
+def test_overwrite_dialog_overwrite_in_subdir(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    Tester.dialogTester.append(getButtonId, "overwrite")
+    subdir = "subdir"
 
-        Tester.dialogTester.append(getButtonId, "overwriteAll")
+    _create_attach_subdir(selected_page, subdir)
 
-        attachFiles(self.mainWindow, self.page, files_full_path_1)
-        attachFiles(self.mainWindow, self.page, files_full_path_2)
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"]
+    )
 
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), "file_1.txt")
+    attachFiles(main_window, selected_page, files_full_path_1, subdir)
+    attachFiles(main_window, selected_page, files_full_path_2, subdir)
 
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 2" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), subdir, "file_1.txt")
 
-    def testOverwriteDialogSkipMany(self):
-        count = 5
+    text = readTextFile(attach_fname)
+    assert "version 2" in text
+    assert Tester.dialogTester.count == 0
 
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(
-            ["for_overwrite/version_2/file_1.txt"] * count
-        )
 
-        for n in range(count):
-            Tester.dialogTester.append(getButtonId, "skip")
+def test_overwrite_dialog_skip_in_subdir(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    Tester.dialogTester.append(getButtonId, "skip")
+    subdir = "subdir"
 
-        attachFiles(self.mainWindow, self.page, files_full_path_1)
-        attachFiles(self.mainWindow, self.page, files_full_path_2)
+    _create_attach_subdir(selected_page, subdir)
 
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), "file_1.txt")
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"]
+    )
 
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 1" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
+    attachFiles(main_window, selected_page, files_full_path_1, subdir)
+    attachFiles(main_window, selected_page, files_full_path_2, subdir)
 
-    def testOverwriteDialogSkipAll(self):
-        count = 5
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), subdir, "file_1.txt")
 
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(
-            ["for_overwrite/version_2/file_1.txt"] * count
-        )
+    text = readTextFile(attach_fname)
+    assert "version 1" in text
+    assert Tester.dialogTester.count == 0
 
-        Tester.dialogTester.append(getButtonId, "skipAll")
 
-        attachFiles(self.mainWindow, self.page, files_full_path_1)
-        attachFiles(self.mainWindow, self.page, files_full_path_2)
+def test_write_to_existing_subdir(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    subdir = "subdir2"
+    files_full_path = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/subdir1/subdir2"]
+    )
 
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), "file_1.txt")
+    _create_attach_subdir(selected_page, subdir)
 
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 1" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
+    attachFiles(main_window, selected_page, files_full_path)
 
-    def testOverwriteDialogOverwriteInSubdir(self):
-        Tester.dialogTester.append(getButtonId, "overwrite")
-        subdir = "subdir"
+    attach = Attachment(selected_page)
+    assert len(attach.getAttachFull(subdir)) == 2
 
-        self._createAttachSubdir(self.page, subdir)
 
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(["for_overwrite/version_2/file_1.txt"])
+def test_overwrite_dialog_cancel_single(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    Tester.dialogTester.appendCancel()
 
-        attachFiles(self.mainWindow, self.page, files_full_path_1, subdir)
-        attachFiles(self.mainWindow, self.page, files_full_path_2, subdir)
+    files_full_path_1 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_1/file_1.txt"]
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path, ["for_overwrite/version_2/file_1.txt"]
+    )
 
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), subdir, "file_1.txt")
+    attachFiles(main_window, selected_page, files_full_path_1)
+    attachFiles(main_window, selected_page, files_full_path_2)
 
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 2" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), "file_1.txt")
 
-    def testOverwriteDialogSkipInSubdir(self):
-        Tester.dialogTester.append(getButtonId, "skip")
-        subdir = "subdir"
+    text = readTextFile(attach_fname)
+    assert "version 1" in text
+    assert Tester.dialogTester.count == 0
 
-        self._createAttachSubdir(self.page, subdir)
 
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(["for_overwrite/version_2/file_1.txt"])
+def test_overwrite_dialog_overwrite_and_cancel(
+    main_window: MainWindow, selected_page: WikiPage, samplefiles_path: Path
+):
+    Tester.dialogTester.append(getButtonId, "overwrite")
+    Tester.dialogTester.appendCancel()
 
-        attachFiles(self.mainWindow, self.page, files_full_path_1, subdir)
-        attachFiles(self.mainWindow, self.page, files_full_path_2, subdir)
+    files_full_path_1 = _get_files_path(
+        samplefiles_path,
+        ["for_overwrite/version_1/file_1.txt", "for_overwrite/version_1/file_2.txt"],
+    )
+    files_full_path_2 = _get_files_path(
+        samplefiles_path,
+        ["for_overwrite/version_2/file_1.txt", "for_overwrite/version_2/file_2.txt"],
+    )
 
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), subdir, "file_1.txt")
+    attachFiles(main_window, selected_page, files_full_path_1)
+    attachFiles(main_window, selected_page, files_full_path_2)
 
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 1" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
+    attach = Attachment(selected_page)
+    attach_fname = Path(attach.getAttachPath(), "file_1.txt")
 
-    def testWriteToExistingSubdir(self):
-        subdir = "subdir2"
-        files_full_path = self._getFilesPath(
-            ["for_overwrite/version_1/subdir1/subdir2"]
-        )
-
-        self._createAttachSubdir(self.page, subdir)
-
-        attachFiles(self.mainWindow, self.page, files_full_path)
-
-        attach = Attachment(self.page)
-        self.assertEqual(len(attach.getAttachFull(subdir)), 2)
-
-    def testOverwriteDialogCancelSingle(self):
-        Tester.dialogTester.appendCancel()
-
-        files_full_path_1 = self._getFilesPath(["for_overwrite/version_1/file_1.txt"])
-        files_full_path_2 = self._getFilesPath(["for_overwrite/version_2/file_1.txt"])
-
-        attachFiles(self.mainWindow, self.page, files_full_path_1)
-        attachFiles(self.mainWindow, self.page, files_full_path_2)
-
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), "file_1.txt")
-
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 1" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
-
-    def testOverwriteDialogOverwriteAndCancel(self):
-        Tester.dialogTester.append(getButtonId, "overwrite")
-        Tester.dialogTester.appendCancel()
-
-        files_full_path_1 = self._getFilesPath(
-            ["for_overwrite/version_1/file_1.txt", "for_overwrite/version_1/file_2.txt"]
-        )
-        files_full_path_2 = self._getFilesPath(
-            ["for_overwrite/version_2/file_1.txt", "for_overwrite/version_2/file_2.txt"]
-        )
-
-        attachFiles(self.mainWindow, self.page, files_full_path_1)
-        attachFiles(self.mainWindow, self.page, files_full_path_2)
-
-        attach = Attachment(self.page)
-        attach_fname = Path(attach.getAttachPath(), "file_1.txt")
-
-        text = readTextFile(attach_fname)
-        self.assertTrue("version 1" in text)
-        self.assertEqual(Tester.dialogTester.count, 0)
+    text = readTextFile(attach_fname)
+    assert "version 1" in text
+    assert Tester.dialogTester.count == 0

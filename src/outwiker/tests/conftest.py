@@ -2,14 +2,16 @@
 
 from collections.abc import Iterator
 import locale
+from pathlib import Path
 from tempfile import mkdtemp
 from gettext import NullTranslations
+
 # from typing import Protocol
 
 import pytest
 import wx
 
-from outwiker.api.core.tree import createNotesTree
+from outwiker.api.core.tree import createNotesTree, WikiPage
 from outwiker.app.gui.mainwindow import MainWindow
 from outwiker.core import defines
 from outwiker.core.application import Application
@@ -19,6 +21,12 @@ from outwiker.tests.utils import removeDir
 from outwiker.app.owapplication import OutWikerApplication
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.tester import Tester
+
+
+@pytest.fixture(scope="session")
+def samplefiles_path() -> Path:
+    """Directory with the sample files used in tests."""
+    return Path("testdata/samplefiles/")
 
 
 @pytest.fixture
@@ -204,3 +212,27 @@ def main_window(ow_application: OutWikerApplication) -> MainWindow:
     window = ow_application.getMainWindow()
     assert window is not None
     return window
+
+
+@pytest.fixture
+def selected_page(
+    ow_application: OutWikerApplication, wikipage: WikiPage
+) -> Iterator[WikiPage]:
+    """
+    Page opened and selected in the application under test.
+
+    The application is shared between the tests of a module, so the wiki is
+    closed on teardown.
+    """
+    application = ow_application.application
+    assert application is not None
+
+    Tester.dialogTester.clear()
+    application.wikiroot = wikipage.root
+    application.selectedPage = wikipage
+
+    yield wikipage
+
+    application.selectedPage = None
+    application.wikiroot = None
+    Tester.dialogTester.clear()
