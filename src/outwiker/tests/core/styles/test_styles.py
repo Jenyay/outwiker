@@ -1,232 +1,278 @@
 # -*- coding: utf-8 -*-
 
-import unittest
-import os.path
+import os
 import shutil
+from collections.abc import Iterator
 from tempfile import mkdtemp
 
+import pytest
+
 from outwiker.api.core.tree import createNotesTree
+from outwiker.core.application import Application
 from outwiker.core.style import Style
-from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.utils import removeDir
-from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class StylesTest(unittest.TestCase, BaseOutWikerMixin):
-    def setUp(self):
-        self.initApplication()
-        # Количество срабатываний особытий при обновлении страницы
-        self._pageUpdateCount = 0
-        self._pageUpdateSender = None
+WIKI_PAGE_TITLE = "Викистраница 1"
+HTML_PAGE_TITLE = "Html-страница 2"
 
-        # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix="Абырвалг абыр")
-        self.eventcount = 0
+STYLE_FNAME = "__style.html"
+STYLE_DIRNAME = "__style"
 
-        self.wikiroot = createNotesTree(self.path)
-        WikiPageFactory().create(self.wikiroot, "Викистраница 1", [])
-        HtmlPageFactory().create(self.wikiroot, "Html-страница 2", [])
+EXAMPLE_STYLE_DIR = "testdata/styles/example_jblog/example_jblog"
+EXAMPLE_STYLE_DIR2 = "testdata/styles/example_jnet/example_jnet"
+INVALID_STYLE_DIR = "../styles/invalid"
+TEST_STYLE_PATH = os.path.join(EXAMPLE_STYLE_DIR, STYLE_FNAME)
+DEFAULT_STYLE_PATH = "src/outwiker/data/styles/__default/__style.html"
 
-        self._styleFname = "__style.html"
-        self._styleDir = "__style"
-        self._exampleStyleDir = "testdata/styles/example_jblog/example_jblog"
-        self._exampleStyleDir2 = "testdata/styles/example_jnet/example_jnet"
-        self._invalidStyleDir = "../styles/invalid"
-        self._testStylePath = os.path.join(self._exampleStyleDir, self._styleFname)
 
-        self.application.wikiroot = self.wikiroot
-        self.application.onPageUpdate += self.onPageUpdate
+@pytest.fixture
+def test_wikiroot(application: Application) -> Iterator[WikiDocument]:
+    """
+    Create a wiki with one wiki page and one HTML page and open it in the
+    application for the duration of the test.
+    """
+    path = mkdtemp(prefix="Абырвалг абыр")
+    wikiroot = createNotesTree(path)
+    WikiPageFactory().create(wikiroot, WIKI_PAGE_TITLE, [])
+    HtmlPageFactory().create(wikiroot, HTML_PAGE_TITLE, [])
 
-    def onPageUpdate(self, sender, **kwargs):
-        self._pageUpdateCount += 1
-        self._pageUpdateSender = sender
+    application.wikiroot = wikiroot
 
-    def tearDown(self):
-        self.application.onPageUpdate -= self.onPageUpdate
-        removeDir(self.path)
-        self.destroyApplication()
+    yield wikiroot
 
-    def testDefault(self):
-        """
-        Проверка того, что возвращается правильный путь до шаблона по умолчанию
-        """
-        style = Style()
-        defaultStyle = style.getDefaultStyle()
-        self.assertEqual(
-            os.path.abspath(defaultStyle),
-            os.path.abspath("src/outwiker/data/styles/__default/__style.html"),
-        )
+    application.wikiroot = None
+    removeDir(path)
 
-    def testStylePageDefault(self):
-        """
-        Проверка на то, что если у страницы нет файла стиля, то возвращается стиль по умолчанию
-        """
-        style = Style()
-        defaultStyle = style.getDefaultStyle()
-        style_page1 = style.getPageStyle(self.wikiroot["Викистраница 1"])
-        style_page2 = style.getPageStyle(self.wikiroot["Html-страница 2"])
 
-        self.assertEqual(style_page1, defaultStyle)
-        self.assertEqual(style_page2, defaultStyle)
+@pytest.fixture
+def page_update_events(application: Application) -> Iterator[list]:
+    """
+    Collect the senders of the onPageUpdate events fired during the test.
+    """
+    senders = []
 
-    def testStylePage1(self):
-        style = Style()
-        page = self.wikiroot["Викистраница 1"]
-        shutil.copy(self._testStylePath, page.path)
+    def on_page_update(sender, **kwargs):
+        senders.append(sender)
 
-        validStyle = os.path.abspath(os.path.join(page.path, self._styleFname))
-        pageStyle = os.path.abspath(style.getPageStyle(page))
+    application.onPageUpdate += on_page_update
 
-        self.assertEqual(pageStyle, validStyle)
+    yield senders
 
-    def testStylePage2(self):
-        style = Style()
-        page = self.wikiroot["Html-страница 2"]
-        shutil.copy(self._testStylePath, page.path)
+    application.onPageUpdate -= on_page_update
 
-        validStyle = os.path.abspath(os.path.join(page.path, self._styleFname))
-        pageStyle = os.path.abspath(style.getPageStyle(page))
 
-        self.assertEqual(pageStyle, validStyle)
+def test_default():
+    """
+    Check that the path to the default template is returned.
+    """
+    style = Style()
+    default_style = style.getDefaultStyle()
 
-    def testFakeStyle(self):
-        style = Style()
-        page = self.wikiroot["Викистраница 1"]
-        os.mkdir(os.path.join(page.path, self._styleFname))
+    assert os.path.abspath(default_style) == os.path.abspath(DEFAULT_STYLE_PATH)
 
-        validStyle = os.path.abspath(style.getDefaultStyle())
-        pageStyle = os.path.abspath(style.getPageStyle(page))
 
-        self.assertEqual(pageStyle, validStyle)
+def test_style_page_default(test_wikiroot: WikiDocument):
+    """
+    Check that pages without a style file use the default style.
+    """
+    style = Style()
+    default_style = style.getDefaultStyle()
 
-    def testSetStyleAsDir(self):
-        style = Style()
-        page = self.wikiroot["Викистраница 1"]
+    style_page1 = style.getPageStyle(test_wikiroot[WIKI_PAGE_TITLE])
+    style_page2 = style.getPageStyle(test_wikiroot[HTML_PAGE_TITLE])
 
-        pageStyleFname = os.path.join(page.path, self._styleFname)
-        pageStyleDir = os.path.join(page.path, self._styleDir)
+    assert style_page1 == default_style
+    assert style_page2 == default_style
 
-        self.assertFalse(os.path.exists(pageStyleDir))
-        self.assertFalse(os.path.exists(pageStyleFname))
 
-        style.setPageStyle(page, self._exampleStyleDir)
+def test_style_page_1(test_wikiroot: WikiDocument):
+    page = test_wikiroot[WIKI_PAGE_TITLE]
+    shutil.copy(TEST_STYLE_PATH, page.path)
 
-        self.assertTrue(os.path.exists(pageStyleDir))
-        self.assertTrue(os.path.exists(pageStyleFname))
+    valid_style = os.path.abspath(os.path.join(page.path, STYLE_FNAME))
+    page_style = os.path.abspath(Style().getPageStyle(page))
 
-        style.setPageStyleDefault(page)
+    assert page_style == valid_style
 
-        self.assertFalse(os.path.exists(pageStyleDir))
-        self.assertFalse(os.path.exists(pageStyleFname))
 
-    def testSetStyleAsFile(self):
-        style = Style()
-        page = self.wikiroot["Викистраница 1"]
+def test_style_page_2(test_wikiroot: WikiDocument):
+    page = test_wikiroot[HTML_PAGE_TITLE]
+    shutil.copy(TEST_STYLE_PATH, page.path)
 
-        pageStyleFname = os.path.join(page.path, self._styleFname)
-        pageStyleDir = os.path.join(page.path, self._styleDir)
+    valid_style = os.path.abspath(os.path.join(page.path, STYLE_FNAME))
+    page_style = os.path.abspath(Style().getPageStyle(page))
 
-        self.assertFalse(os.path.exists(pageStyleDir))
-        self.assertFalse(os.path.exists(pageStyleFname))
+    assert page_style == valid_style
 
-        style.setPageStyle(page, os.path.join(self._exampleStyleDir, self._styleFname))
 
-        self.assertTrue(os.path.exists(pageStyleDir))
-        self.assertTrue(os.path.exists(pageStyleFname))
+def test_fake_style(test_wikiroot: WikiDocument):
+    """
+    A directory named like a style file must not be treated as a style.
+    """
+    style = Style()
+    page = test_wikiroot[WIKI_PAGE_TITLE]
+    os.mkdir(os.path.join(page.path, STYLE_FNAME))
 
-        style.setPageStyleDefault(page)
+    valid_style = os.path.abspath(style.getDefaultStyle())
+    page_style = os.path.abspath(style.getPageStyle(page))
 
-        self.assertFalse(os.path.exists(pageStyleDir))
-        self.assertFalse(os.path.exists(pageStyleFname))
+    assert page_style == valid_style
 
-    def testSetStyle2(self):
-        style = Style()
-        page = self.wikiroot["Викистраница 1"]
 
-        pageStyleFname = os.path.join(page.path, self._styleFname)
-        pageStyleDir = os.path.join(page.path, self._styleDir)
+def test_set_style_as_dir(test_wikiroot: WikiDocument):
+    style = Style()
+    page = test_wikiroot[WIKI_PAGE_TITLE]
 
-        self.assertFalse(os.path.exists(pageStyleDir))
-        self.assertFalse(os.path.exists(pageStyleFname))
+    page_style_fname = os.path.join(page.path, STYLE_FNAME)
+    page_style_dir = os.path.join(page.path, STYLE_DIRNAME)
 
-        style.setPageStyle(page, self._exampleStyleDir)
+    assert not os.path.exists(page_style_dir)
+    assert not os.path.exists(page_style_fname)
 
-        self.assertTrue(os.path.exists(pageStyleDir))
-        self.assertTrue(os.path.exists(pageStyleFname))
+    style.setPageStyle(page, EXAMPLE_STYLE_DIR)
 
-        style.setPageStyle(page, style.getDefaultStyle())
+    assert os.path.exists(page_style_dir)
+    assert os.path.exists(page_style_fname)
 
-        self.assertFalse(os.path.exists(pageStyleDir))
-        self.assertFalse(os.path.exists(pageStyleFname))
+    style.setPageStyleDefault(page)
 
-    def testEvent(self):
-        """
-        Вызов событий при изменении стиля страницы
-        """
-        style = Style()
-        page = self.wikiroot["Викистраница 1"]
+    assert not os.path.exists(page_style_dir)
+    assert not os.path.exists(page_style_fname)
 
-        self.assertEqual(self._pageUpdateCount, 0)
 
-        style.setPageStyle(page, self._exampleStyleDir)
-        self.assertEqual(self._pageUpdateCount, 1)
+def test_set_style_as_file(test_wikiroot: WikiDocument):
+    style = Style()
+    page = test_wikiroot[WIKI_PAGE_TITLE]
 
-        style.setPageStyleDefault(page)
-        self.assertEqual(self._pageUpdateCount, 2)
+    page_style_fname = os.path.join(page.path, STYLE_FNAME)
+    page_style_dir = os.path.join(page.path, STYLE_DIRNAME)
 
-        style.setPageStyle(page, self._exampleStyleDir2)
-        self.assertEqual(self._pageUpdateCount, 3)
+    assert not os.path.exists(page_style_dir)
+    assert not os.path.exists(page_style_fname)
 
-    def testInvalidPage(self):
-        style = Style()
-        style.setPageStyle(None, self._exampleStyleDir)
-        style.setPageStyleDefault(None)
+    style.setPageStyle(page, os.path.join(EXAMPLE_STYLE_DIR, STYLE_FNAME))
 
-        style.setPageStyle(self.wikiroot, self._exampleStyleDir)
-        style.setPageStyleDefault(self.wikiroot)
+    assert os.path.exists(page_style_dir)
+    assert os.path.exists(page_style_fname)
 
-    def testInvalidPath(self):
-        style = Style()
-        page = self.wikiroot["Викистраница 1"]
+    style.setPageStyleDefault(page)
 
-        self.assertRaises(IOError, style.setPageStyle, page, self._invalidStyleDir)
+    assert not os.path.exists(page_style_dir)
+    assert not os.path.exists(page_style_fname)
 
-    def testSelfDefault(self):
-        style = Style()
 
-        page = self.wikiroot["Викистраница 1"]
-        style.setPageStyle(page, style.getPageStyle(page))
+def test_set_style_2(test_wikiroot: WikiDocument):
+    """
+    Setting the default style explicitly must remove the page style.
+    """
+    style = Style()
+    page = test_wikiroot[WIKI_PAGE_TITLE]
 
-        self.assertEqual(
-            os.path.abspath(style.getPageStyle(page)),
-            os.path.abspath(style.getDefaultStyle()),
-        )
+    page_style_fname = os.path.join(page.path, STYLE_FNAME)
+    page_style_dir = os.path.join(page.path, STYLE_DIRNAME)
 
-    def testSelfSpecial(self):
-        style = Style()
-        page = self.wikiroot["Викистраница 1"]
-        style.setPageStyle(page, self._exampleStyleDir)
-        style.setPageStyle(page, style.getPageStyle(page))
+    assert not os.path.exists(page_style_dir)
+    assert not os.path.exists(page_style_fname)
 
-    def testInvalidStyle1(self):
-        style = Style()
-        page = self.wikiroot["Викистраница 1"]
+    style.setPageStyle(page, EXAMPLE_STYLE_DIR)
 
-        fname = os.path.join(page.path, style._styleFname)
-        with open(fname, "w") as fp:
-            fp.write("""<HTML>
-<HEAD>
-</HEAD>
+    assert os.path.exists(page_style_dir)
+    assert os.path.exists(page_style_fname)
 
-<BODY>
-<P>$content</P>
+    style.setPageStyle(page, style.getDefaultStyle())
+
+    assert not os.path.exists(page_style_dir)
+    assert not os.path.exists(page_style_fname)
+
+
+def test_event(test_wikiroot: WikiDocument, page_update_events: list):
+    """
+    Changing the page style must fire the page update event.
+    """
+    style = Style()
+    page = test_wikiroot[WIKI_PAGE_TITLE]
+
+    assert len(page_update_events) == 0
+
+    style.setPageStyle(page, EXAMPLE_STYLE_DIR)
+    assert len(page_update_events) == 1
+
+    style.setPageStyleDefault(page)
+    assert len(page_update_events) == 2
+
+    style.setPageStyle(page, EXAMPLE_STYLE_DIR2)
+    assert len(page_update_events) == 3
+
+
+def test_invalid_page(test_wikiroot: WikiDocument):
+    """
+    Passing None or a wiki root instead of a page must not raise an exception.
+    """
+    style = Style()
+    style.setPageStyle(None, EXAMPLE_STYLE_DIR)
+    style.setPageStyleDefault(None)
+
+    style.setPageStyle(test_wikiroot, EXAMPLE_STYLE_DIR)
+    style.setPageStyleDefault(test_wikiroot)
+
+
+def test_invalid_path(test_wikiroot: WikiDocument):
+    style = Style()
+    page = test_wikiroot[WIKI_PAGE_TITLE]
+
+    with pytest.raises(IOError):
+        style.setPageStyle(page, INVALID_STYLE_DIR)
+
+
+def test_self_default(test_wikiroot: WikiDocument):
+    style = Style()
+    page = test_wikiroot[WIKI_PAGE_TITLE]
+
+    style.setPageStyle(page, style.getPageStyle(page))
+
+    assert os.path.abspath(style.getPageStyle(page)) == os.path.abspath(
+        style.getDefaultStyle()
+    )
+
+
+def test_self_special(test_wikiroot: WikiDocument):
+    """
+    Setting the current page style again must not change the page style.
+    """
+    style = Style()
+    page = test_wikiroot[WIKI_PAGE_TITLE]
+
+    style.setPageStyle(page, EXAMPLE_STYLE_DIR)
+    style.setPageStyle(page, style.getPageStyle(page))
+
+
+def test_invalid_style_1(application: Application, test_wikiroot: WikiDocument):
+    """
+    An unknown key in a style template must not break HTML generation.
+    """
+    style = Style()
+    page = test_wikiroot[WIKI_PAGE_TITLE]
+
+    fname = os.path.join(page.path, style._styleFname)
+    with open(fname, "w") as fp:
+        fp.write(
+            """<html>
+<head>
+</head>
+
+<body>
+<p>$content</p>
 
 $invalidkey
-</BODY>
-</HTML>
-""")
+</body>
+</html>
+"""
+        )
 
-        generator = HtmlGenerator(page, self.application)
-        generator.makeHtml(Style().getPageStyle(page))
+    generator = HtmlGenerator(page, application)
+    generator.makeHtml(Style().getPageStyle(page))

@@ -1,8 +1,9 @@
 # -*- coding=utf-8 -*-
 
+from collections.abc import Iterator
 import locale
-import os
-from tempfile import NamedTemporaryFile, mkdtemp
+from tempfile import mkdtemp
+from gettext import NullTranslations
 
 import pytest
 import wx
@@ -42,10 +43,11 @@ def wikiroot():
     removeDir(path)
 
 
-@pytest.fixture
-def application(tmp_path):
+@pytest.fixture(scope="module")
+def application(tmp_path_factory) -> Iterator[Application]:
     lang = "en"
-    config_file_name = str(tmp_path / "outwiker.ini")
+    NullTranslations().install()
+    config_file_name = str(tmp_path_factory.mktemp("outwiker") / "outwiker.ini")
     application = Application()
     application.clear()
     application.init(config_file_name)
@@ -59,7 +61,7 @@ def application(tmp_path):
 
 
 @pytest.fixture(scope="module")
-def wxapp():
+def wxapp() -> Iterator[wx.App]:
     app = wx.App()
     locale.setlocale(locale.LC_ALL, "")
 
@@ -70,7 +72,7 @@ def wxapp():
 
 
 @pytest.fixture
-def empty_window(wxapp):
+def empty_window(wxapp) -> Iterator[wx.Frame]:
     frame = wx.Frame(None)
     wxapp.SetTopWindow(frame)
 
