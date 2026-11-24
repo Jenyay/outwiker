@@ -43,11 +43,9 @@ def wikiroot():
 
 
 @pytest.fixture
-def application():
+def application(tmp_path):
     lang = "en"
-    with NamedTemporaryFile(prefix="outwiker_config_", delete=False) as tmp_fp:
-        config_file_name = tmp_fp.name
-
+    config_file_name = str(tmp_path / "outwiker.ini")
     application = Application()
     application.clear()
     application.init(config_file_name)
@@ -58,9 +56,6 @@ def application():
     yield application
 
     application.clear()
-
-    if os.path.exists(config_file_name):
-        os.remove(config_file_name)
 
 
 @pytest.fixture(scope="module")
