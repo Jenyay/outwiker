@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import locale
 import os
 from typing import Dict, Any
-import unittest
 from abc import ABCMeta, abstractmethod
 from gettext import NullTranslations
 from tempfile import NamedTemporaryFile, mkdtemp
@@ -14,6 +12,7 @@ import wx
 
 from outwiker.api.core.tree import createNotesTree
 from outwiker.app.owapplication import OutWikerApplication
+from outwiker.core import defines
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
 from outwiker.core.pluginsloader import PluginsLoader
@@ -26,7 +25,6 @@ from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from .utils import removeDir
-import outwiker.core.defines as defines
 
 
 NullTranslations().install()

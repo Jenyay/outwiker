@@ -4,15 +4,21 @@ from collections.abc import Iterator
 import locale
 from tempfile import mkdtemp
 from gettext import NullTranslations
+# from typing import Protocol
 
 import pytest
 import wx
 
 from outwiker.api.core.tree import createNotesTree
+from outwiker.app.gui.mainwindow import MainWindow
+from outwiker.core import defines
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
+from outwiker.app.owapplication import OutWikerApplication
+from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.gui.tester import Tester
 
 
 @pytest.fixture
@@ -43,9 +49,15 @@ def wikiroot():
     removeDir(path)
 
 
-@pytest.fixture(scope="module")
-def application(tmp_path_factory) -> Iterator[Application]:
-    lang = "en"
+def _make_application(
+    tmp_path_factory,
+    *,
+    lang: str = "en",
+    createTreePanel: bool = False,
+    createAttachPanel: bool = False,
+    createTagsPanel: bool = False,
+    createBookmarksPanel: bool = False,
+) -> Application:
     NullTranslations().install()
     config_file_name = str(tmp_path_factory.mktemp("outwiker") / "outwiker.ini")
     application = Application()
@@ -55,9 +67,113 @@ def application(tmp_path_factory) -> Iterator[Application]:
     i18config = I18nConfig(application.config)
     i18config.languageOption.value = lang
 
+    application.sharedData[defines.APP_DATA_CREATE_TREE_PANEL] = createTreePanel
+    application.sharedData[defines.APP_DATA_CREATE_ATTACH_PANEL] = createAttachPanel
+    application.sharedData[defines.APP_DATA_CREATE_TAGS_PANEL] = createTagsPanel
+    application.sharedData[defines.APP_DATA_CREATE_TAGS_PANEL] = createTagsPanel
+    application.sharedData[defines.APP_DATA_CREATE_BOOKMARKS_PANEL] = (
+        createBookmarksPanel
+    )
+    return application
+
+
+@pytest.fixture(scope="module")
+def application(tmp_path_factory) -> Iterator[Application]:
+    application = _make_application(tmp_path_factory)
+
     yield application
 
     application.clear()
+
+
+# class _OWApplicationFactory(Protocol):
+#     def __call__(
+#         self,
+#         *,
+#         lang: str = "en",
+#         enableActionsGui: bool = False,
+#         createTreePanel: bool = False,
+#         createAttachPanel: bool = False,
+#         createTagsPanel: bool = False,
+#         createBookmarksPanel: bool = False,
+#     ) -> tuple[Application, OutWikerApplication]: ...
+
+
+# @pytest.fixture
+# def ow_application_factory(tmp_path_factory) -> Iterator[_OWApplicationFactory]:
+#     applications: list[Application] = []
+#     ow_applications: list[OutWikerApplication] = []
+
+#     def _make(
+#         *,
+#         lang: str = "en",
+#         enableActionsGui: bool = False,
+#         createTreePanel: bool = False,
+#         createAttachPanel: bool = False,
+#         createTagsPanel: bool = False,
+#         createBookmarksPanel: bool = False,
+#     ) -> tuple[Application, OutWikerApplication]:
+#         if len(applications):
+#             application = applications[0]
+#             ow_application = ow_applications[0]
+#         else:
+#             application = _make_application(
+#                 tmp_path_factory,
+#                 lang=lang,
+#                 createTreePanel=createTreePanel,
+#                 createAttachPanel=createAttachPanel,
+#                 createTagsPanel=createTagsPanel,
+#                 createBookmarksPanel=createBookmarksPanel,
+#             )
+#             applications.append(application)
+
+#             ow_application = OutWikerApplication(application)
+#             ow_application.use_fake_html_render = True
+#             ow_application.enableActionsGui = enableActionsGui
+#             ow_application.initMainWindow()
+#             ow_applications.append(ow_application)
+
+#             generalConfig = GeneralGuiConfig(application.config)
+#             generalConfig.askBeforeExit.value = False
+#             wx.Log.SetLogLevel(0)
+#             Tester.dialogTester.clear()
+
+#         return application, ow_application
+
+#     yield _make
+
+#     Tester.dialogTester.clear()
+
+#     ow_application = ow_applications[0]
+#     ow_application.destroyMainWindow()
+#     wx.SafeYield()
+#     ow_application.MainLoop()
+
+#     application = applications[0]
+#     application.clear()
+
+
+@pytest.fixture(scope="module")
+def ow_application(application) -> Iterator[OutWikerApplication]:
+    enableActionsGui = False
+
+    ow_application = OutWikerApplication(application)
+    ow_application.use_fake_html_render = True
+    ow_application.enableActionsGui = enableActionsGui
+    ow_application.initMainWindow()
+
+    generalConfig = GeneralGuiConfig(application.config)
+    generalConfig.askBeforeExit.value = False
+    wx.Log.SetLogLevel(0)
+    Tester.dialogTester.clear()
+
+    yield ow_application
+
+    Tester.dialogTester.clear()
+
+    ow_application.destroyMainWindow()
+    wx.SafeYield()
+    ow_application.MainLoop()
 
 
 @pytest.fixture(scope="module")
@@ -81,3 +197,10 @@ def empty_window(wxapp) -> Iterator[wx.Frame]:
     if frame:
         frame.Close()
     wx.SafeYield()
+
+
+@pytest.fixture
+def main_window(ow_application: OutWikerApplication) -> MainWindow:
+    window = ow_application.getMainWindow()
+    assert window is not None
+    return window
