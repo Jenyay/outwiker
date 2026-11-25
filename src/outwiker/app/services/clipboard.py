@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import time
 from typing import Optional
 
 import wx
@@ -12,37 +13,67 @@ from outwiker.core.attachment import Attachment
 from .messages import showError
 
 
+_CLIPBOARD_RETRY_COUNT = 10
+_CLIPBOARD_RETRY_DELAY = 0.01
+
+
+def _wait_clipboard_retry() -> None:
+    """
+    Pump pending GUI messages and wait before the next clipboard attempt.
+
+    On Windows the OLE clipboard needs a running message loop to finish
+    Open / SetData / GetData. Tests do not run the main loop, so pending
+    events have to be processed explicitly between attempts.
+    """
+    app = wx.GetApp()
+    if app is not None and not app.IsMainLoopRunning():
+        wx.SafeYield()
+    time.sleep(_CLIPBOARD_RETRY_DELAY)
+
+
 def copyTextToClipboard(text: str) -> bool:
-    if not wx.TheClipboard.Open():
-        showError(wx.GetApp().getMainWindow(), _("Can't open clipboard"))
-        return False
+    clipboard_opened = False
 
-    data = wx.TextDataObject(text)
+    for _ in range(_CLIPBOARD_RETRY_COUNT):
+        if wx.TheClipboard.Open():
+            clipboard_opened = True
+            data = wx.TextDataObject(text)
+            if wx.TheClipboard.SetData(data):
+                wx.TheClipboard.Flush()
+                wx.TheClipboard.Close()
+                return True
+            wx.TheClipboard.Close()
 
-    result = True
-    if not wx.TheClipboard.SetData(data):
-        showError(wx.GetApp().getMainWindow(), _("Can't copy text to clipboard"))
-        result = False
+        _wait_clipboard_retry()
 
-    wx.TheClipboard.Flush()
-    wx.TheClipboard.Close()
-    return result
+    message = (
+        _("Can't copy text to clipboard")
+        if clipboard_opened
+        else _("Can't open clipboard")
+    )
+    showError(wx.GetApp().getMainWindow(), message)
+    return False
 
 
 def getClipboardText() -> Optional[str]:
-    if not wx.TheClipboard.Open():
+    clipboard_opened = False
+
+    for _ in range(_CLIPBOARD_RETRY_COUNT):
+        if wx.TheClipboard.Open():
+            clipboard_opened = True
+            data = wx.TextDataObject()
+            getDataResult = wx.TheClipboard.GetData(data)
+            wx.TheClipboard.Close()
+
+            if getDataResult:
+                return data.GetText()
+
+        _wait_clipboard_retry()
+
+    if not clipboard_opened:
         showError(wx.GetApp().getMainWindow(), _("Can't open clipboard"))
-        return
 
-    data = wx.TextDataObject()
-    getDataResult = wx.TheClipboard.GetData(data)
-
-    wx.TheClipboard.Close()
-
-    if not getDataResult:
-        return
-
-    return data.GetText()
+    return None
 
 
 def copyPathToClipboard(page) -> bool:
