@@ -37,7 +37,7 @@ jobs:
         run: uv sync --dev --extra gui
 
       - name: Run tests
-        run: uv run inv test
+        run: uv run pytest --pytest-durations-group-by=module
 
       - name: Coverage report
         run: uv run inv coverage

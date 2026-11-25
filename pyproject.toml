@@ -65,6 +65,7 @@ dev = [
     "colorama==0.4.6",
     "sphinx==9.1.1",
     "line-profiler==5.1.0",
+    "pytest-durations>=1.11.0",
 ]
 
 
