@@ -1,31 +1,41 @@
-# -*- coding: utf-8 -*-
+"""Tests for editor polyactions on Markdown pages."""
 
-import unittest
+from collections.abc import Iterator
 
+import pytest
+
+from outwiker.app.gui.mainwindow import MainWindow
+from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.core.tree import WikiDocument
+from outwiker.gui.actioncontroller import ActionController
+from outwiker.gui.texteditor import TextEditor
+from outwiker.tests.actions.test_editor_polyactions import EditorPolyactionsTests
 
-from outwiker.tests.actions.test_editor_polyactions import BaseEditorPolyactionsFixture
+
+@pytest.fixture
+def editor(
+    application: Application,
+    wikiroot: WikiDocument,
+    main_window: MainWindow,
+    markdown_plugin: PluginsLoader,
+) -> Iterator[TextEditor]:
+    from markdown.markdownpage import MarkdownPageFactory
+
+    page = MarkdownPageFactory().create(wikiroot, "Markdown-страница", [])
+    application.wikiroot = wikiroot
+    application.selectedPage = page
+
+    yield main_window.pagePanel.pageView.codeEditor
+
+    application.selectedPage = None
+    application.wikiroot = None
 
 
-class MarkdownPolyactionsTest(BaseEditorPolyactionsFixture, unittest.TestCase):
+@pytest.fixture
+def action_controller(application: Application) -> ActionController:
+    return application.actionController
+
+
+class TestMarkdownPolyactions(EditorPolyactionsTests):
     """Test polyactions for Markdown pages"""
-
-    def setUp(self):
-        super().setUp()
-
-    def _postInitApplication(self):
-        dirlist = ["plugins/markdown"]
-        self.loader = PluginsLoader(self.application)
-        self.loader.load(dirlist)
-
-    def tearDown(self):
-        self.loader.clear()
-        super().tearDown()
-
-    def _createPage(self):
-        from markdown.markdownpage import MarkdownPageFactory
-
-        return MarkdownPageFactory().create(self.wikiroot, "Markdown-страница", [])
-
-    def _getEditor(self):
-        return self.application.mainWindow.pagePanel.pageView.codeEditor

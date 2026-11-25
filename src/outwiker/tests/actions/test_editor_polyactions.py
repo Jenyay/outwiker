@@ -63,702 +63,711 @@ def action_controller(application: Application) -> ActionController:
     return application.actionController
 
 
-def test_line_duplicate_01(editor: TextEditor, action_controller: ActionController):
-    text = "Строка 1\nСтрока 2\nСтрока 3"
-    editor.SetText(text)
-    editor.SetSelection(0, 0)
+class EditorPolyactionsTests:
+    """
+    Polyactions tests that do not depend on the page type.
+
+    Modules for concrete page types inherit from this class and override the
+    ``editor`` fixture (see the Markdown plug-in tests).
+    """
 
-    result = "Строка 1\nСтрока 1\nСтрока 2\nСтрока 3"
+    def test_line_duplicate_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\nСтрока 3"
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = "Строка 1\nСтрока 1\nСтрока 2\nСтрока 3"
 
-    action_controller.getAction(LINE_DUPLICATE_ID).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
+        action_controller.getAction(LINE_DUPLICATE_ID).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
 
+    def test_line_duplicate_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\nСтрока 3"
+        editor.SetText(text)
+        editor.SetSelection(15, 15)
+
+        result = "Строка 1\nСтрока 2\nСтрока 2\nСтрока 3"
 
-def test_line_duplicate_02(editor: TextEditor, action_controller: ActionController):
-    text = "Строка 1\nСтрока 2\nСтрока 3"
-    editor.SetText(text)
-    editor.SetSelection(15, 15)
+        action_controller.getAction(LINE_DUPLICATE_ID).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
 
-    result = "Строка 1\nСтрока 2\nСтрока 2\nСтрока 3"
+    def test_line_duplicate_03(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = "\n"
 
-    action_controller.getAction(LINE_DUPLICATE_ID).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
+        action_controller.getAction(LINE_DUPLICATE_ID).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
 
+    def test_move_lines_down_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = "Строка 2\nСтрока 1\nСтрока 3\nСтрока 4"
+
+        action_controller.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
+
+    def test_move_lines_down_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
+        editor.SetText(text)
+        editor.SetSelection(0, 15)
+
+        result = "Строка 3\nСтрока 1\nСтрока 2\nСтрока 4"
+
+        action_controller.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
+
+    def test_move_lines_up_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
+        editor.SetText(text)
+        editor.SetSelection(15, 15)
+
+        result = "Строка 2\nСтрока 1\nСтрока 3\nСтрока 4"
 
-def test_line_duplicate_03(editor: TextEditor, action_controller: ActionController):
-    text = ""
-    editor.SetText(text)
-    editor.SetSelection(0, 0)
+        action_controller.getAction(MOVE_SELECTED_LINES_UP_ID).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
+
+    def test_move_lines_up_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
+        editor.SetText(text)
+        editor.SetSelection(10, 21)
+
+        result = "Строка 2\nСтрока 3\nСтрока 1\nСтрока 4"
 
-    result = "\n"
-
-    action_controller.getAction(LINE_DUPLICATE_ID).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-
-def test_move_lines_down_01(editor: TextEditor, action_controller: ActionController):
-    text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
-    editor.SetText(text)
-    editor.SetSelection(0, 0)
-
-    result = "Строка 2\nСтрока 1\nСтрока 3\nСтрока 4"
-
-    action_controller.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-
-def test_move_lines_down_02(editor: TextEditor, action_controller: ActionController):
-    text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
-    editor.SetText(text)
-    editor.SetSelection(0, 15)
-
-    result = "Строка 3\nСтрока 1\nСтрока 2\nСтрока 4"
-
-    action_controller.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-
-def test_move_lines_up_01(editor: TextEditor, action_controller: ActionController):
-    text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
-    editor.SetText(text)
-    editor.SetSelection(15, 15)
-
-    result = "Строка 2\nСтрока 1\nСтрока 3\nСтрока 4"
-
-    action_controller.getAction(MOVE_SELECTED_LINES_UP_ID).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-
-def test_move_lines_up_02(editor: TextEditor, action_controller: ActionController):
-    text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
-    editor.SetText(text)
-    editor.SetSelection(10, 21)
-
-    result = "Строка 2\nСтрока 3\nСтрока 1\nСтрока 4"
-
-    action_controller.getAction(MOVE_SELECTED_LINES_UP_ID).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-
-def test_move_lines_up_down_empty(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = ""
-    editor.SetText(text)
-    editor.SetSelection(0, 0)
-
-    result = ""
-
-    action_controller.getAction(MOVE_SELECTED_LINES_UP_ID).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-    action_controller.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-
-def test_delete_current_line_01(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
-    editor.SetText(text)
-    editor.SetSelection(0, 0)
-
-    result = "Строка 2\nСтрока 3\nСтрока 4"
-
-    action_controller.getAction(DELETE_CURRENT_LINE).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-
-def test_delete_current_line_02(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
-    editor.SetText(text)
-    editor.SetSelection(10, 10)
-
-    result = "Строка 1\nСтрока 3\nСтрока 4"
-
-    action_controller.getAction(DELETE_CURRENT_LINE).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-
-def test_delete_current_line_03_empty(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = ""
-    editor.SetText(text)
-    editor.SetSelection(0, 0)
-
-    result = ""
-
-    action_controller.getAction(DELETE_CURRENT_LINE).run(None)
-    assert editor.GetText().replace("\r\n", "\n") == result
-
-
-def test_goto_next_word_01(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(GOTO_NEXT_WORD).run(None)
-    assert editor.GetCurrentPosition() == 6
-
-    action_controller.getAction(GOTO_NEXT_WORD).run(None)
-    assert editor.GetCurrentPosition() == 13
-
-    action_controller.getAction(GOTO_NEXT_WORD).run(None)
-    assert editor.GetCurrentPosition() == 25
-
-
-def test_goto_prev_word_01(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(25)
-
-    action_controller.getAction(GOTO_PREV_WORD).run(None)
-    assert editor.GetCurrentPosition() == 13
-
-    action_controller.getAction(GOTO_PREV_WORD).run(None)
-    assert editor.GetCurrentPosition() == 6
-
-    action_controller.getAction(GOTO_PREV_WORD).run(None)
-    assert editor.GetCurrentPosition() == 0
-
-
-def test_goto_word_empty(editor: TextEditor, action_controller: ActionController):
-    text = ""
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(GOTO_NEXT_WORD).run(None)
-    assert editor.GetCurrentPosition() == 0
-
-    action_controller.getAction(GOTO_PREV_WORD).run(None)
-    assert editor.GetCurrentPosition() == 0
-
-
-def test_go_to_word_start_01(editor: TextEditor, action_controller: ActionController):
-    text = ""
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(GOTO_WORD_START).run(None)
-    assert editor.GetCurrentPosition() == 0
-
-
-def test_go_to_word_start_02(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(GOTO_WORD_START).run(None)
-    assert editor.GetCurrentPosition() == 0
-
-
-def test_go_to_word_start_03(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(3)
-
-    action_controller.getAction(GOTO_WORD_START).run(None)
-    assert editor.GetCurrentPosition() == 0
-
-
-def test_go_to_word_start_04(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(5)
-
-    action_controller.getAction(GOTO_WORD_START).run(None)
-    assert editor.GetCurrentPosition() == 0
-
-
-def test_go_to_word_start_05(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(6)
-
-    action_controller.getAction(GOTO_WORD_START).run(None)
-    assert editor.GetCurrentPosition() == 6
-
-
-def test_go_to_word_start_06(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(7)
-
-    action_controller.getAction(GOTO_WORD_START).run(None)
-    assert editor.GetCurrentPosition() == 6
-
-
-def test_go_to_word_start_07(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(13)
-
-    action_controller.getAction(GOTO_WORD_START).run(None)
-    assert editor.GetCurrentPosition() == 13
-
-
-def test_go_to_word_start_08(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(14)
-
-    action_controller.getAction(GOTO_WORD_START).run(None)
-    assert editor.GetCurrentPosition() == 13
-
-
-def test_go_to_word_start_09(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(25)
-
-    action_controller.getAction(GOTO_WORD_START).run(None)
-    assert editor.GetCurrentPosition() == 13
-
-
-def test_go_to_word_end_01(editor: TextEditor, action_controller: ActionController):
-    text = ""
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(GOTO_WORD_END).run(None)
-    assert editor.GetCurrentPosition() == 0
-
-
-def test_go_to_word_end_02(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(GOTO_WORD_END).run(None)
-    assert editor.GetCurrentPosition() == 5
-
-
-def test_go_to_word_end_03(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(1)
-
-    action_controller.getAction(GOTO_WORD_END).run(None)
-    assert editor.GetCurrentPosition() == 5
-
-
-def test_go_to_word_end_04(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(6)
-
-    action_controller.getAction(GOTO_WORD_END).run(None)
-    assert editor.GetCurrentPosition() == 12
-
-
-def test_go_to_word_end_05(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(12)
-
-    action_controller.getAction(GOTO_WORD_END).run(None)
-    assert editor.GetCurrentPosition() == 12
-
-
-def test_go_to_word_end_06(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(13)
-
-    action_controller.getAction(GOTO_WORD_END).run(None)
-    assert editor.GetCurrentPosition() == 25
-
-
-def test_go_to_word_end_07(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(14)
-
-    action_controller.getAction(GOTO_WORD_END).run(None)
-    assert editor.GetCurrentPosition() == 25
-
-
-def test_go_to_word_end_08(editor: TextEditor, action_controller: ActionController):
-    text = "слово слово2 ещеоднослово"
-    editor.SetText(text)
-    editor.GotoPos(25)
-
-    action_controller.getAction(GOTO_WORD_END).run(None)
-    assert editor.GetCurrentPosition() == 25
-
-
-def test_copy_line_to_clipboard_01(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = ""
-    editor.SetText(text)
-
-    action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
-    cb_text = getClipboardText()
-
-    assert cb_text == ""
-
-
-def test_copy_line_to_clipboard_02(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "\n"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
-    cb_text = getClipboardText()
-
-    assert cb_text.replace("\r\n", "\n") == "\n"
-
-
-def test_copy_line_to_clipboard_03(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
-    cb_text = getClipboardText()
-
-    assert cb_text.replace("\r\n", "\n") == "Строка 1"
-
-
-def test_copy_line_to_clipboard_04(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1\n"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
-    cb_text = getClipboardText()
-
-    assert cb_text.replace("\r\n", "\n") == "Строка 1\n"
-
-
-def test_copy_line_to_clipboard_05(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1\nСтрока 2"
-    editor.SetText(text)
-    editor.GotoPos(9)
-
-    action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
-    cb_text = getClipboardText()
-
-    assert cb_text.replace("\r\n", "\n") == "Строка 2"
-
-
-def test_copy_line_to_clipboard_06(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1\nСтрока 2\n"
-    editor.SetText(text)
-    editor.GotoPos(9)
-
-    action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
-    cb_text = getClipboardText()
-
-    assert cb_text.replace("\r\n", "\n") == "Строка 2\n"
-
-
-def test_cut_line_to_clipboard_01(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = ""
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
-    cb_text = getClipboardText()
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == ""
-    assert new_text == ""
-
-
-def test_cut_line_to_clipboard_02(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "Строка 1"
-    assert new_text == ""
-
-
-def test_cut_line_to_clipboard_03(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1\n"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "Строка 1\n"
-    assert new_text == ""
-
-
-def test_cut_line_to_clipboard_04(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1\nСтрока 2"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "Строка 1\n"
-    assert new_text == "Строка 2"
-
-
-def test_cut_line_to_clipboard_05(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1\nСтрока 2"
-    editor.SetText(text)
-    editor.GotoPos(9)
-
-    action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "Строка 2"
-    assert new_text == "Строка 1\n"
-
-
-def test_cut_line_to_clipboard_06(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "Строка 1\nСтрока 2\nСтрока 3"
-    editor.SetText(text)
-    editor.GotoPos(9)
-
-    action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "Строка 2\n"
-    assert new_text == "Строка 1\nСтрока 3"
-
-
-def test_copy_word_to_clipboard_01(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = ""
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    assert cb_text == ""
-
-
-def test_copy_word_to_clipboard_02(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    assert cb_text == "слово"
-
-
-def test_copy_word_to_clipboard_03(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово"
-    editor.SetText(text)
-    editor.GotoPos(2)
-
-    action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    assert cb_text == "слово"
-
-
-def test_copy_word_to_clipboard_04(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово"
-    editor.SetText(text)
-    editor.GotoPos(5)
-
-    action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    assert cb_text == "слово"
-
-
-def test_copy_word_to_clipboard_05(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = " слово "
-    editor.SetText(text)
-    editor.GotoPos(1)
-
-    action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    assert cb_text == "слово"
-
-
-def test_copy_word_to_clipboard_06(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = " слово слово2"
-    editor.SetText(text)
-    editor.GotoPos(7)
-
-    action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    assert cb_text == "слово2"
-
-
-def test_cut_word_to_clipboard_01(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = ""
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == ""
-    assert new_text == ""
-
-
-def test_cut_word_to_clipboard_02(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "слово"
-    assert new_text == ""
-
-
-def test_cut_word_to_clipboard_03(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово"
-    editor.SetText(text)
-    editor.GotoPos(2)
-
-    action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "слово"
-    assert new_text == ""
-
-
-def test_cut_word_to_clipboard_04(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово"
-    editor.SetText(text)
-    editor.GotoPos(5)
-
-    action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "слово"
-    assert new_text == ""
-
-
-def test_cut_word_to_clipboard_05(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово слово2"
-    editor.SetText(text)
-    editor.GotoPos(0)
-
-    action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "слово"
-    assert new_text == " слово2"
-
-
-def test_cut_word_to_clipboard_06(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово слово2"
-    editor.SetText(text)
-    editor.GotoPos(5)
-
-    action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "слово"
-    assert new_text == " слово2"
-
-
-def test_cut_word_to_clipboard_07(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово слово2"
-    editor.SetText(text)
-    editor.GotoPos(6)
-
-    action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "слово2"
-    assert new_text == "слово "
-
-
-def test_cut_word_to_clipboard_08(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово слово2"
-    editor.SetText(text)
-    editor.GotoPos(8)
-
-    action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "слово2"
-    assert new_text == "слово "
-
-
-def test_cut_word_to_clipboard_09(
-    editor: TextEditor, action_controller: ActionController
-):
-    text = "слово слово2"
-    editor.SetText(text)
-    editor.GotoPos(12)
-
-    action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
-    cb_text = getClipboardText().replace("\r\n", "\n")
-    new_text = editor.GetText().replace("\r\n", "\n")
-
-    assert cb_text == "слово2"
-    assert new_text == "слово "
+        action_controller.getAction(MOVE_SELECTED_LINES_UP_ID).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
+
+    def test_move_lines_up_down_empty(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = ""
+
+        action_controller.getAction(MOVE_SELECTED_LINES_UP_ID).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
+
+        action_controller.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
+
+    def test_delete_current_line_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = "Строка 2\nСтрока 3\nСтрока 4"
+
+        action_controller.getAction(DELETE_CURRENT_LINE).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
+
+    def test_delete_current_line_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\nСтрока 3\nСтрока 4"
+        editor.SetText(text)
+        editor.SetSelection(10, 10)
+
+        result = "Строка 1\nСтрока 3\nСтрока 4"
+
+        action_controller.getAction(DELETE_CURRENT_LINE).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
+
+    def test_delete_current_line_03_empty(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = ""
+
+        action_controller.getAction(DELETE_CURRENT_LINE).run(None)
+        assert editor.GetText().replace("\r\n", "\n") == result
+
+    def test_goto_next_word_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(GOTO_NEXT_WORD).run(None)
+        assert editor.GetCurrentPosition() == 6
+
+        action_controller.getAction(GOTO_NEXT_WORD).run(None)
+        assert editor.GetCurrentPosition() == 13
+
+        action_controller.getAction(GOTO_NEXT_WORD).run(None)
+        assert editor.GetCurrentPosition() == 25
+
+    def test_goto_prev_word_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(25)
+
+        action_controller.getAction(GOTO_PREV_WORD).run(None)
+        assert editor.GetCurrentPosition() == 13
+
+        action_controller.getAction(GOTO_PREV_WORD).run(None)
+        assert editor.GetCurrentPosition() == 6
+
+        action_controller.getAction(GOTO_PREV_WORD).run(None)
+        assert editor.GetCurrentPosition() == 0
+
+    def test_goto_word_empty(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(GOTO_NEXT_WORD).run(None)
+        assert editor.GetCurrentPosition() == 0
+
+        action_controller.getAction(GOTO_PREV_WORD).run(None)
+        assert editor.GetCurrentPosition() == 0
+
+    def test_go_to_word_start_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(GOTO_WORD_START).run(None)
+        assert editor.GetCurrentPosition() == 0
+
+    def test_go_to_word_start_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(GOTO_WORD_START).run(None)
+        assert editor.GetCurrentPosition() == 0
+
+    def test_go_to_word_start_03(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(3)
+
+        action_controller.getAction(GOTO_WORD_START).run(None)
+        assert editor.GetCurrentPosition() == 0
+
+    def test_go_to_word_start_04(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(5)
+
+        action_controller.getAction(GOTO_WORD_START).run(None)
+        assert editor.GetCurrentPosition() == 0
+
+    def test_go_to_word_start_05(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(6)
+
+        action_controller.getAction(GOTO_WORD_START).run(None)
+        assert editor.GetCurrentPosition() == 6
+
+    def test_go_to_word_start_06(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(7)
+
+        action_controller.getAction(GOTO_WORD_START).run(None)
+        assert editor.GetCurrentPosition() == 6
+
+    def test_go_to_word_start_07(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(13)
+
+        action_controller.getAction(GOTO_WORD_START).run(None)
+        assert editor.GetCurrentPosition() == 13
+
+    def test_go_to_word_start_08(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(14)
+
+        action_controller.getAction(GOTO_WORD_START).run(None)
+        assert editor.GetCurrentPosition() == 13
+
+    def test_go_to_word_start_09(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(25)
+
+        action_controller.getAction(GOTO_WORD_START).run(None)
+        assert editor.GetCurrentPosition() == 13
+
+    def test_go_to_word_end_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(GOTO_WORD_END).run(None)
+        assert editor.GetCurrentPosition() == 0
+
+    def test_go_to_word_end_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(GOTO_WORD_END).run(None)
+        assert editor.GetCurrentPosition() == 5
+
+    def test_go_to_word_end_03(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(1)
+
+        action_controller.getAction(GOTO_WORD_END).run(None)
+        assert editor.GetCurrentPosition() == 5
+
+    def test_go_to_word_end_04(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(6)
+
+        action_controller.getAction(GOTO_WORD_END).run(None)
+        assert editor.GetCurrentPosition() == 12
+
+    def test_go_to_word_end_05(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(12)
+
+        action_controller.getAction(GOTO_WORD_END).run(None)
+        assert editor.GetCurrentPosition() == 12
+
+    def test_go_to_word_end_06(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(13)
+
+        action_controller.getAction(GOTO_WORD_END).run(None)
+        assert editor.GetCurrentPosition() == 25
+
+    def test_go_to_word_end_07(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(14)
+
+        action_controller.getAction(GOTO_WORD_END).run(None)
+        assert editor.GetCurrentPosition() == 25
+
+    def test_go_to_word_end_08(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2 ещеоднослово"
+        editor.SetText(text)
+        editor.GotoPos(25)
+
+        action_controller.getAction(GOTO_WORD_END).run(None)
+        assert editor.GetCurrentPosition() == 25
+
+    def test_copy_line_to_clipboard_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+
+        action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        assert cb_text == ""
+
+    def test_copy_line_to_clipboard_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "\n"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        assert cb_text.replace("\r\n", "\n") == "\n"
+
+    def test_copy_line_to_clipboard_03(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        assert cb_text.replace("\r\n", "\n") == "Строка 1"
+
+    def test_copy_line_to_clipboard_04(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\n"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        assert cb_text.replace("\r\n", "\n") == "Строка 1\n"
+
+    def test_copy_line_to_clipboard_05(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2"
+        editor.SetText(text)
+        editor.GotoPos(9)
+
+        action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        assert cb_text.replace("\r\n", "\n") == "Строка 2"
+
+    def test_copy_line_to_clipboard_06(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\n"
+        editor.SetText(text)
+        editor.GotoPos(9)
+
+        action_controller.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        assert cb_text.replace("\r\n", "\n") == "Строка 2\n"
+
+    def test_cut_line_to_clipboard_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText()
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == ""
+        assert new_text == ""
+
+    def test_cut_line_to_clipboard_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "Строка 1"
+        assert new_text == ""
+
+    def test_cut_line_to_clipboard_03(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\n"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "Строка 1\n"
+        assert new_text == ""
+
+    def test_cut_line_to_clipboard_04(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "Строка 1\n"
+        assert new_text == "Строка 2"
+
+    def test_cut_line_to_clipboard_05(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2"
+        editor.SetText(text)
+        editor.GotoPos(9)
+
+        action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "Строка 2"
+        assert new_text == "Строка 1\n"
+
+    def test_cut_line_to_clipboard_06(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "Строка 1\nСтрока 2\nСтрока 3"
+        editor.SetText(text)
+        editor.GotoPos(9)
+
+        action_controller.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "Строка 2\n"
+        assert new_text == "Строка 1\nСтрока 3"
+
+    def test_copy_word_to_clipboard_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        assert cb_text == ""
+
+    def test_copy_word_to_clipboard_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        assert cb_text == "слово"
+
+    def test_copy_word_to_clipboard_03(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово"
+        editor.SetText(text)
+        editor.GotoPos(2)
+
+        action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        assert cb_text == "слово"
+
+    def test_copy_word_to_clipboard_04(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово"
+        editor.SetText(text)
+        editor.GotoPos(5)
+
+        action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        assert cb_text == "слово"
+
+    def test_copy_word_to_clipboard_05(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = " слово "
+        editor.SetText(text)
+        editor.GotoPos(1)
+
+        action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        assert cb_text == "слово"
+
+    def test_copy_word_to_clipboard_06(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = " слово слово2"
+        editor.SetText(text)
+        editor.GotoPos(7)
+
+        action_controller.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        assert cb_text == "слово2"
+
+    def test_cut_word_to_clipboard_01(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = ""
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == ""
+        assert new_text == ""
+
+    def test_cut_word_to_clipboard_02(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "слово"
+        assert new_text == ""
+
+    def test_cut_word_to_clipboard_03(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово"
+        editor.SetText(text)
+        editor.GotoPos(2)
+
+        action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "слово"
+        assert new_text == ""
+
+    def test_cut_word_to_clipboard_04(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово"
+        editor.SetText(text)
+        editor.GotoPos(5)
+
+        action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "слово"
+        assert new_text == ""
+
+    def test_cut_word_to_clipboard_05(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2"
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "слово"
+        assert new_text == " слово2"
+
+    def test_cut_word_to_clipboard_06(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2"
+        editor.SetText(text)
+        editor.GotoPos(5)
+
+        action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "слово"
+        assert new_text == " слово2"
+
+    def test_cut_word_to_clipboard_07(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2"
+        editor.SetText(text)
+        editor.GotoPos(6)
+
+        action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "слово2"
+        assert new_text == "слово "
+
+    def test_cut_word_to_clipboard_08(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2"
+        editor.SetText(text)
+        editor.GotoPos(8)
+
+        action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "слово2"
+        assert new_text == "слово "
+
+    def test_cut_word_to_clipboard_09(
+        self, editor: TextEditor, action_controller: ActionController
+    ):
+        text = "слово слово2"
+        editor.SetText(text)
+        editor.GotoPos(12)
+
+        action_controller.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace("\r\n", "\n")
+        new_text = editor.GetText().replace("\r\n", "\n")
+
+        assert cb_text == "слово2"
+        assert new_text == "слово "
+
+
+class TestEditorPolyactions(EditorPolyactionsTests):
+    """Tests for polyactions on the pages built into OutWiker."""
