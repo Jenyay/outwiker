@@ -37,4 +37,13 @@ jobs:
         run: uv sync --dev --extra gui
 
       - name: Run tests
-        run: uv run pytest --pytest-durations-group-by=module
+        run: uv run inv test -p --pytest-durations-group-by=module
+
+      - name: Coverage report
+        run: uv run inv coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage_report
+          path: build/htmlcov
