@@ -114,7 +114,7 @@ Source: "outwiker_exe\plugins\sessions\*"; DestDir: "{app}\plugins\sessions\"; F
 Source: "outwiker_exe\plugins\snippets\*"; DestDir: "{app}\plugins\snippets\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\snippets
 Source: "outwiker_exe\plugins\source\*"; DestDir: "{app}\plugins\source\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\source
 Source: "outwiker_exe\plugins\spoiler\*"; DestDir: "{app}\plugins\spoiler\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\spoiler
-Source: "outwiker_exe\plugins\statistics\*"; DestDir: "{app}\plugins\statistics\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\statistics
+Source: "outwiker_exe\plugins\statistics_ow\*"; DestDir: "{app}\plugins\statistics_ow\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\statistics_ow
 Source: "outwiker_exe\plugins\tableofcontents\*"; DestDir: "{app}\plugins\tableofcontents\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\tableofcontents
 Source: "outwiker_exe\plugins\texequation\*"; DestDir: "{app}\plugins\texequation\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\texequation
 Source: "outwiker_exe\plugins\thumbgallery\*"; DestDir: "{app}\plugins\thumbgallery\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\thumbgallery
