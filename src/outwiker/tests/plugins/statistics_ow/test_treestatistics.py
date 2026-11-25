@@ -20,7 +20,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.__pluginname = "Statistics"
 
-        dirlist = ["plugins/statistics"]
+        dirlist = ["plugins/statistics_ow"]
 
         self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
@@ -35,7 +35,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyWiki(self.wikiroot)
 
     def testPageCount1(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
@@ -44,7 +44,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.pageCount, 1)
 
     def testPageCount2(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
@@ -54,7 +54,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.pageCount, 1)
 
     def testPageCount3(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -65,7 +65,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.pageCount, 3)
 
     def testPageCount4(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
@@ -78,7 +78,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.pageCount, 3)
 
     def testPageCount5(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
@@ -93,7 +93,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.pageCount, 5)
 
     def testMaxDepth1(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
@@ -105,7 +105,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.maxDepth[0][1], self.wikiroot["Страница 1"])
 
     def testMaxDepth2(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
@@ -119,7 +119,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         )
 
     def testMaxDepth3(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
@@ -130,7 +130,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.maxDepth[0][0], 1)
 
     def testMaxDepth4(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
@@ -149,14 +149,14 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         )
 
     def testMaxDepth5(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         treeStat = TreeStat(self.wikiroot)
 
         self.assertEqual(len(treeStat.maxDepth), 0)
 
     def testTagsCount1(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
@@ -165,7 +165,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.tagsCount, 0)
 
     def testTagsCount2(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", ["Тег 1"])
 
@@ -174,7 +174,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.tagsCount, 1)
 
     def testTagsCount3(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(
             self.wikiroot, "Страница 1", ["Тег 1", "Тег 2", "Тег 3"]
@@ -185,7 +185,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.tagsCount, 3)
 
     def testTagsCount4(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(
             self.wikiroot, "Страница 1", ["Тег 1", "Тег 2", "Тег 3"]
@@ -202,7 +202,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.tagsCount, 4)
 
     def testFrequentTags1(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
@@ -211,7 +211,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(treeStat.frequentTags), 0)
 
     def testFrequentTags2(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", ["тег 1"])
 
@@ -222,7 +222,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.frequentTags[0][1], 1)
 
     def testFrequentTags3(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", ["тег 1", "тег2"])
 
@@ -231,7 +231,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(treeStat.frequentTags), 2)
 
     def testFrequentTags4(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(
             self.wikiroot, "Страница 1", ["тег 1", "тег 2", "тег 3"]
@@ -258,14 +258,14 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.frequentTags[2][1], 1)
 
     def testPageDate1(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         treeStat = TreeStat(self.wikiroot)
 
         self.assertEqual(len(treeStat.pageDate), 0)
 
     def testPageDate2(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         treeStat = TreeStat(self.wikiroot)
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -274,7 +274,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.pageDate[0], self.wikiroot["Страница 1"])
 
     def testPageDate3(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         treeStat = TreeStat(self.wikiroot)
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -297,7 +297,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.pageDate[2], self.wikiroot["Страница 1/Страница 2"])
 
     def testPageDate4(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         treeStat = TreeStat(self.wikiroot)
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -326,7 +326,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(treeStat.pageDate[4], self.wikiroot["Страница 4/Страница 5"])
 
     def testPageContentLength1(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         treeStat = TreeStat(self.wikiroot)
 
@@ -334,7 +334,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(pagesList), 0)
 
     def testPageContentLength2(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         self.wikiroot["Страница 1"].content = "Бла"
@@ -348,7 +348,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(pagesList[0][1], 3)
 
     def testPageContentLength3(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
@@ -385,7 +385,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(pagesList[3][1], 3)
 
     def testPageContentLength4(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])
@@ -412,7 +412,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(pagesList[4][1], 0)
 
     def testAttachmentSize1(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         treeStat = TreeStat(self.wikiroot)
 
@@ -420,7 +420,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(pagesList), 0)
 
     def testAttachmentSize2(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         treeStat = TreeStat(self.wikiroot)
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -432,7 +432,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(pagesList[0][1], 0)
 
     def testAttachmentSize3(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         treeStat = TreeStat(self.wikiroot)
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -445,7 +445,7 @@ class TreeStatisticsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(pagesList[0][1], 781)
 
     def testAttachmentSize4(self):
-        from statistics.treestat import TreeStat
+        from statistics_ow.treestat import TreeStat
 
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         WikiPageFactory().create(self.wikiroot["Страница 1"], "Страница 2", [])

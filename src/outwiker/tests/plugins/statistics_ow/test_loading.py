@@ -10,7 +10,7 @@ class StatisticsLoadingTest(PluginLoadingMixin, unittest.TestCase):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return "plugins/statistics"
+        return "plugins/statistics_ow"
 
     def getPluginName(self):
         """

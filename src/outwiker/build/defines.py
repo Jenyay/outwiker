@@ -21,7 +21,7 @@ PLUGINS_LIST = [
     "snippets",
     "source",
     "spoiler",
-    "statistics",
+    "statistics_ow",
     "tableofcontents",
     "texequation",
     "thumbgallery",

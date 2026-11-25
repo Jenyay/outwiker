@@ -82,7 +82,7 @@ Name: "plugins\sessions"; Description: "Sessions"; Types: full custom
 Name: "plugins\snippets"; Description: "Snippets"; Types: full custom
 Name: "plugins\source"; Description: "Source"; Types: full custom
 Name: "plugins\spoiler"; Description: "Spoiler"; Types: full custom
-Name: "plugins\statistics"; Description: "Statistics"; Types: full custom
+Name: "plugins\statistics_ow"; Description: "Statistics"; Types: full custom
 Name: "plugins\tableofcontents"; Description: "TableOfContents"; Types: full custom
 Name: "plugins\texequation"; Description: "TeXEquation"; Types: full custom
 Name: "plugins\thumbgallery"; Description: "ThumbGallery"; Types: full custom
