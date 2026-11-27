@@ -1,816 +1,826 @@
 # -*- coding: utf-8 -*-
 
-import unittest
+"""Tests for the actions of the wiki page editor."""
 
+from collections.abc import Iterator
+from tempfile import mkdtemp
+
+import pytest
+
+from outwiker.actions.polyactionsid import (
+    ALIGN_CENTER_STR_ID,
+    ALIGN_JUSTIFY_STR_ID,
+    ALIGN_LEFT_STR_ID,
+    ALIGN_RIGHT_STR_ID,
+    ANCHOR_STR_ID,
+    BOLD_ITALIC_STR_ID,
+    BOLD_STR_ID,
+    CODE_STR_ID,
+    HEADING_1_STR_ID,
+    HEADING_2_STR_ID,
+    HEADING_3_STR_ID,
+    HEADING_4_STR_ID,
+    HEADING_5_STR_ID,
+    HEADING_6_STR_ID,
+    HORLINE_STR_ID,
+    ITALIC_STR_ID,
+    LIST_BULLETS_STR_ID,
+    LIST_NUMBERS_STR_ID,
+    PREFORMAT_STR_ID,
+    QUOTE_STR_ID,
+    STRIKE_STR_ID,
+    SUBSCRIPT_STR_ID,
+    SUPERSCRIPT_STR_ID,
+    UNDERLINE_STR_ID,
+)
+from outwiker.api.core.tree import createNotesTree
+from outwiker.app.gui.mainwindow import MainWindow
+from outwiker.core.application import Application
+from outwiker.core.tree import WikiDocument, WikiPage
+from outwiker.gui.actioncontroller import ActionController
+from outwiker.gui.texteditor import TextEditor
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
-from outwiker.actions.polyactionsid import *
+from outwiker.tests.utils import removeDir
+
+# Actions that wrap the text with the opening and closing syntax
+_TURN_SYNTAX = [
+    (BOLD_STR_ID, "'''", "'''"),
+    (ITALIC_STR_ID, "''", "''"),
+    (BOLD_ITALIC_STR_ID, "''''", "''''"),
+    (UNDERLINE_STR_ID, "{+", "+}"),
+    (STRIKE_STR_ID, "{-", "-}"),
+    (SUBSCRIPT_STR_ID, "'_", "_'"),
+    (SUPERSCRIPT_STR_ID, "'^", "^'"),
+    (ALIGN_LEFT_STR_ID, "%left%", ""),
+    (ALIGN_CENTER_STR_ID, "%center%", ""),
+    (ALIGN_RIGHT_STR_ID, "%right%", ""),
+    (ALIGN_JUSTIFY_STR_ID, "%justify%", ""),
+    (PREFORMAT_STR_ID, "[@", "@]"),
+    (CODE_STR_ID, "@@", "@@"),
+    (ANCHOR_STR_ID, "[[#", "]]"),
+    (QUOTE_STR_ID, "[>", "<]"),
+]
+
+# Actions that replace the selected text
+_REPLACE_SYNTAX = [
+    (HORLINE_STR_ID, "----"),
+]
+
+# Actions that set the heading level
+_HEADINGS_SYNTAX = [
+    (HEADING_1_STR_ID, "!!"),
+    (HEADING_2_STR_ID, "!!!"),
+    (HEADING_3_STR_ID, "!!!!"),
+    (HEADING_4_STR_ID, "!!!!!"),
+    (HEADING_5_STR_ID, "!!!!!!"),
+    (HEADING_6_STR_ID, "!!!!!!!"),
+]
 
 
-class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
+@pytest.fixture
+def wiki(application: Application, main_window: MainWindow) -> Iterator[WikiDocument]:
     """
-    Тесты действий для викистраницы
+    Wiki with the pages used by the tests, opened in the application.
+
+    The main window is created before the wiki is opened.
     """
+    path = mkdtemp(prefix="outwiker_wikiactions")
+    root = createNotesTree(path)
+    factory = WikiPageFactory()
+    factory.create(root, "Викистраница", [])
+    factory.create(root, "temp", [])
 
-    def setUp(self):
-        self.initApplication()
-        self.wikiroot = self.createWiki()
+    application.wikiroot = root
+    application.selectedPage = root["Викистраница"]
 
-        self._turnSyntax = [
-            (BOLD_STR_ID, "'''", "'''"),
-            (ITALIC_STR_ID, "''", "''"),
-            (BOLD_ITALIC_STR_ID, "''''", "''''"),
-            (UNDERLINE_STR_ID, "{+", "+}"),
-            (STRIKE_STR_ID, "{-", "-}"),
-            (SUBSCRIPT_STR_ID, "'_", "_'"),
-            (SUPERSCRIPT_STR_ID, "'^", "^'"),
-            (ALIGN_LEFT_STR_ID, "%left%", ""),
-            (ALIGN_CENTER_STR_ID, "%center%", ""),
-            (ALIGN_RIGHT_STR_ID, "%right%", ""),
-            (ALIGN_JUSTIFY_STR_ID, "%justify%", ""),
-            (PREFORMAT_STR_ID, "[@", "@]"),
-            (CODE_STR_ID, "@@", "@@"),
-            (ANCHOR_STR_ID, "[[#", "]]"),
-            (QUOTE_STR_ID, "[>", "<]"),
-        ]
+    yield root
 
-        self._replaceSyntax = [
-            (HORLINE_STR_ID, "----"),
-        ]
+    application.selectedPage = None
+    application.wikiroot = None
+    removeDir(path)
 
-        self._headingsSyntax = [
-            (HEADING_1_STR_ID, "!!"),
-            (HEADING_2_STR_ID, "!!!"),
-            (HEADING_3_STR_ID, "!!!!"),
-            (HEADING_4_STR_ID, "!!!!!"),
-            (HEADING_5_STR_ID, "!!!!!!"),
-            (HEADING_6_STR_ID, "!!!!!!!"),
-        ]
 
-        WikiPageFactory().create(self.wikiroot, "Викистраница", [])
-        WikiPageFactory().create(self.wikiroot, "temp", [])
+@pytest.fixture
+def test_page(wiki: WikiDocument) -> WikiPage:
+    """Page whose content is changed by the tests."""
+    return wiki["Викистраница"]
 
-        # Страница, куда будем переключаться перед изменением содержимого
-        # основной страницы. Можно было бы вместо temppage использовать None,
-        # но тогда программе пришлось бы каждый раз удалять и создавать панели
-        # инструментов, что медленно
-        self.temppage = self.wikiroot["temp"]
-        self.testpage = self.wikiroot["Викистраница"]
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.testpage
+@pytest.fixture
+def temp_page(wiki: WikiDocument) -> WikiPage:
+    """Page used to switch away from the test page."""
+    return wiki["temp"]
 
-    def tearDown(self):
-        self.destroyApplication()
-        self.destroyWiki(self.wikiroot)
 
-    def _getEditor(self):
-        return self.application.mainWindow.pagePanel.pageView.codeEditor
+@pytest.fixture
+def editor(application: Application, wiki: WikiDocument) -> TextEditor:
+    """Code editor of the test page."""
+    return _get_editor(application)
 
-    def testTurnSyntaxEmpty(self):
-        for syntax in self._turnSyntax:
-            self.application.selectedPage = self.temppage
-            self.testpage.content = ""
-            self.application.selectedPage = self.testpage
 
-            self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(), syntax[1] + syntax[2])
+@pytest.fixture
+def action_controller(application: Application) -> ActionController:
+    """Controller of the application actions."""
+    return application.actionController
 
-    def testTurnSyntaxSelectedAll(self):
-        text = "Бла-бла-бла"
 
-        for syntax in self._turnSyntax:
-            self.application.selectedPage = self.temppage
-            self.testpage.content = text
-            self.application.selectedPage = self.testpage
+def _get_editor(application: Application) -> TextEditor:
+    """Editor of the currently opened page."""
+    return application.mainWindow.pagePanel.pageView.codeEditor
 
-            self._getEditor().SetSelection(0, len(text))
 
-            self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(
-                self._getEditor().GetText(), syntax[1] + "Бла-бла-бла" + syntax[2]
-            )
+def _get_text(editor: TextEditor) -> str:
+    """Text of the editor with the normalized line endings."""
+    return editor.GetText().replace("\r\n", "\n")
 
-    def testTurnSyntaxSelectedPart(self):
-        text = "Бла-бла-бла"
 
-        for syntax in self._turnSyntax:
-            self.application.selectedPage = self.temppage
-            self.testpage.content = text
-            self.application.selectedPage = self.testpage
+def _run_action(action_controller: ActionController, action_str: str) -> None:
+    """Run the action with the given identifier."""
+    action_controller.getAction(action_str).run(None)
 
-            self._getEditor().SetSelection(4, 7)
 
-            self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(
-                self._getEditor().GetText(),
-                "Бла-{}бла{}-бла".format(syntax[1], syntax[2]),
-            )
+def _select_test_page(
+    application: Application,
+    test_page: WikiPage,
+    temp_page: WikiPage,
+    content: str,
+) -> None:
+    """Set the content of the test page and make it current."""
+    application.selectedPage = temp_page
+    test_page.content = content
+    application.selectedPage = test_page
 
-    def testReplaceSyntaxEmpty(self):
-        for syntax in self._replaceSyntax:
-            self.application.selectedPage = self.temppage
-            self.testpage.content = ""
-            self.application.selectedPage = self.testpage
 
-            self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(), syntax[1])
+def test_turn_syntax_empty(application, test_page, temp_page, action_controller):
+    for action_str, begin, end in _TURN_SYNTAX:
+        _select_test_page(application, test_page, temp_page, "")
 
-    def testReplaceSyntaxSelectedAll(self):
-        text = "Бла-бла-бла"
+        _run_action(action_controller, action_str)
+        assert _get_editor(application).GetText() == begin + end
 
-        for syntax in self._replaceSyntax:
-            self.application.selectedPage = self.temppage
-            self.testpage.content = text
-            self.application.selectedPage = self.testpage
 
-            self._getEditor().SetSelection(0, len(text))
+def test_turn_syntax_selected_all(
+    application, test_page, temp_page, action_controller
+):
+    text = "Бла-бла-бла"
 
-            self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(self._getEditor().GetText(), syntax[1])
+    for action_str, begin, end in _TURN_SYNTAX:
+        _select_test_page(application, test_page, temp_page, text)
 
-    def testReplaceSyntaxSelectedPart(self):
-        text = "Бла-бла-бла"
+        _get_editor(application).SetSelection(0, len(text))
 
-        for syntax in self._replaceSyntax:
-            self.application.selectedPage = self.temppage
-            self.testpage.content = text
-            self.application.selectedPage = self.testpage
+        _run_action(action_controller, action_str)
+        assert _get_editor(application).GetText() == begin + text + end
 
-            self._getEditor().SetSelection(4, 7)
 
-            self.application.actionController.getAction(syntax[0]).run(None)
-            self.assertEqual(
-                self._getEditor().GetText(), "Бла-{}-бла".format(syntax[1])
-            )
+def test_turn_syntax_selected_part(
+    application, test_page, temp_page, action_controller
+):
+    text = "Бла-бла-бла"
 
-    def testListBulletsEmpty(self):
-        self.application.selectedPage = self.temppage
-        self.testpage.content = ""
-        self.application.selectedPage = self.testpage
+    for action_str, begin, end in _TURN_SYNTAX:
+        _select_test_page(application, test_page, temp_page, text)
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
-        self.assertEqual(self._getEditor().GetText(), "* ")
+        _get_editor(application).SetSelection(4, 7)
 
-    def testListNumbersEmpty(self):
-        self.application.selectedPage = self.temppage
-        self.testpage.content = ""
-        self.application.selectedPage = self.testpage
+        _run_action(action_controller, action_str)
+        assert _get_editor(application).GetText() == f"Бла-{begin}бла{end}-бла"
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
-        self.assertEqual(self._getEditor().GetText(), "# ")
 
-    def testListBulletsSelectedAll(self):
-        text = """йцкуйцук
+def test_replace_syntax_empty(application, test_page, temp_page, action_controller):
+    for action_str, syntax in _REPLACE_SYNTAX:
+        _select_test_page(application, test_page, temp_page, "")
+
+        _run_action(action_controller, action_str)
+        assert _get_editor(application).GetText() == syntax
+
+
+def test_replace_syntax_selected_all(
+    application, test_page, temp_page, action_controller
+):
+    text = "Бла-бла-бла"
+
+    for action_str, syntax in _REPLACE_SYNTAX:
+        _select_test_page(application, test_page, temp_page, text)
+
+        _get_editor(application).SetSelection(0, len(text))
+
+        _run_action(action_controller, action_str)
+        assert _get_editor(application).GetText() == syntax
+
+
+def test_replace_syntax_selected_part(
+    application, test_page, temp_page, action_controller
+):
+    text = "Бла-бла-бла"
+
+    for action_str, syntax in _REPLACE_SYNTAX:
+        _select_test_page(application, test_page, temp_page, text)
+
+        _get_editor(application).SetSelection(4, 7)
+
+        _run_action(action_controller, action_str)
+        assert _get_editor(application).GetText() == f"Бла-{syntax}-бла"
+
+
+def test_list_bullets_empty(application, test_page, temp_page, action_controller):
+    _select_test_page(application, test_page, temp_page, "")
+
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == "* "
+
+
+def test_list_numbers_empty(application, test_page, temp_page, action_controller):
+    _select_test_page(application, test_page, temp_page, "")
+
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == "# "
+
+
+def test_list_bullets_selected_all(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцкуйцук
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """* йцкуйцук
+    result = """* йцкуйцук
 * укеуке
 * ывапвыап
 * ывапвыапыап
 * ывапываппа"""
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(0, len(text))
+    _get_editor(application).SetSelection(0, len(text))
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
-        self.assertEqual(self._getEditor().GetText(), result)
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-    def testListNumbersSelectedAll(self):
-        text = """йцкуйцук
+
+def test_list_numbers_selected_all(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцкуйцук
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """# йцкуйцук
+    result = """# йцкуйцук
 # укеуке
 # ывапвыап
 # ывапвыапыап
 # ывапываппа"""
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(0, len(text))
+    _get_editor(application).SetSelection(0, len(text))
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
-        self.assertEqual(self._getEditor().GetText(), result)
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-    def testListBulletsSelectedPart_01(self):
-        text = """йцкуйцук
+
+def test_list_bullets_selected_part_01(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцкуйцук
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """* йцкуйцук
+    result = """* йцкуйцук
 * укеуке
 * ывапвыап
 * ывапвыапыап
 * ывапываппа"""
 
-        start = 3
-        end = len(text) - 3
+    start = 3
+    end = len(text) - 3
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListNumbersSelectedPart_01(self):
-        text = """йцкуйцук
+def test_list_numbers_selected_part_01(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцкуйцук
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """# йцкуйцук
+    result = """# йцкуйцук
 # укеуке
 # ывапвыап
 # ывапвыапыап
 # ывапываппа"""
 
-        start = 3
-        end = len(text) - 3
+    start = 3
+    end = len(text) - 3
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListBulletsSelectedPart_02(self):
-        text = """йцукен
+def test_list_bullets_selected_part_02(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """йцукен
+    result = """йцукен
 * укеуке
 * ывапвыап
 * ывапвыапыап
 * ывапываппа"""
 
-        start = 7
-        end = len(text) - 3
+    start = 7
+    end = len(text) - 3
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListBulletsSelectedPart_03(self):
-        text = """йцукен
+def test_list_bullets_selected_part_03(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """йцукен
+    result = """йцукен
 * укеуке
 * ывапвыап
 * ывапвыапыап
 * ывапываппа"""
 
-        start = 10
-        end = len(text) - 3
+    start = 10
+    end = len(text) - 3
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListNumbersSelectedPart_02(self):
-        text = """йцукен
+def test_list_numbers_selected_part_02(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """йцукен
+    result = """йцукен
 # укеуке
 # ывапвыап
 # ывапвыапыап
 # ывапываппа"""
 
-        start = 7
-        end = len(text) - 3
+    start = 7
+    end = len(text) - 3
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListNumbersSelectedPart_03(self):
-        text = """йцукен
+def test_list_numbers_selected_part_03(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """йцукен
+    result = """йцукен
 # укеуке
 # ывапвыап
 # ывапвыапыап
 # ывапываппа"""
 
-        start = 10
-        end = len(text) - 3
+    start = 10
+    end = len(text) - 3
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListBulletsSelectedPart_04(self):
-        text = """йцукен
+def test_list_bullets_selected_part_04(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """* йцукен
+    result = """* йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        start = 0
-        end = 0
+    start = 0
+    end = 0
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListNumbersSelectedPart_04(self):
-        text = """йцукен
+def test_list_numbers_selected_part_04(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """# йцукен
+    result = """# йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        start = 0
-        end = 0
+    start = 0
+    end = 0
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListBulletsSelectedPart_05(self):
-        text = """йцукен
+def test_list_bullets_selected_part_05(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """йцукен
+    result = """йцукен
 * укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        start = 7
-        end = 7
+    start = 7
+    end = 7
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListNumbersSelectedPart_05(self):
-        text = """йцукен
+def test_list_numbers_selected_part_05(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """йцукен
+    result = """йцукен
 # укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        start = 7
-        end = 7
+    start = 7
+    end = 7
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListBulletsSelectedPart_06(self):
-        text = """* йцукен
+def test_list_bullets_selected_part_06(
+    application, test_page, temp_page, action_controller
+):
+    text = """* йцукен
 * укеуке
 * ывапвыап
 * ывапвыапыап
 * ывапываппа"""
 
-        result = """** йцукен
+    result = """** йцукен
 ** укеуке
 ** ывапвыап
 ** ывапвыапыап
 ** ывапываппа"""
 
-        start = 0
-        end = len(text)
+    start = 0
+    end = len(text)
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListNumbersSelectedPart_06(self):
-        text = """# йцукен
+def test_list_numbers_selected_part_06(
+    application, test_page, temp_page, action_controller
+):
+    text = """# йцукен
 # укеуке
 # ывапвыап
 # ывапвыапыап
 # ывапываппа"""
 
-        result = """## йцукен
+    result = """## йцукен
 ## укеуке
 ## ывапвыап
 ## ывапвыапыап
 ## ывапываппа"""
 
-        start = 0
-        end = len(text)
+    start = 0
+    end = len(text)
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListBulletsSelectedPart_07(self):
-        text = """# йцукен
+def test_list_bullets_selected_part_07(
+    application, test_page, temp_page, action_controller
+):
+    text = """# йцукен
 # укеуке
 # ывапвыап
 # ывапвыапыап
 # ывапываппа"""
 
-        result = """* # йцукен
+    result = """* # йцукен
 * # укеуке
 * # ывапвыап
 * # ывапвыапыап
 * # ывапываппа"""
 
-        start = 0
-        end = len(text)
+    start = 0
+    end = len(text)
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListNumbersSelectedPart_07(self):
-        text = """* йцукен
+def test_list_numbers_selected_part_07(
+    application, test_page, temp_page, action_controller
+):
+    text = """* йцукен
 * укеуке
 * ывапвыап
 * ывапвыапыап
 * ывапываппа"""
 
-        result = """# * йцукен
+    result = """# * йцукен
 # * укеуке
 # * ывапвыап
 # * ывапвыапыап
 # * ывапываппа"""
 
-        start = 0
-        end = len(text)
+    start = 0
+    end = len(text)
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(self._getEditor().GetText(), result)
 
-    def testListBulletsSelectedPart_08(self):
-        text = """йцукен
+def test_list_bullets_selected_part_08(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 * укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """йцукен
+    result = """йцукен
 ** укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        start = 7
-        end = 7
+    start = 7
+    end = 7
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_BULLETS_STR_ID).run(None)
+    _run_action(action_controller, LIST_BULLETS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def testListNumbersSelectedPart_08(self):
-        text = """йцукен
+def test_list_numbers_selected_part_08(
+    application, test_page, temp_page, action_controller
+):
+    text = """йцукен
 # укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = """йцукен
+    result = """йцукен
 ## укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        start = 7
-        end = 7
+    start = 7
+    end = 7
 
-        self.application.selectedPage = self.temppage
-        self.testpage.content = text
-        self.application.selectedPage = self.testpage
+    _select_test_page(application, test_page, temp_page, text)
 
-        self._getEditor().SetSelection(start, end)
+    _get_editor(application).SetSelection(start, end)
 
-        self.application.actionController.getAction(LIST_NUMBERS_STR_ID).run(None)
+    _run_action(action_controller, LIST_NUMBERS_STR_ID)
+    assert _get_editor(application).GetText() == result
 
-        self.assertEqual(
-            self._getEditor().GetText(), result, self._getEditor().GetText()
-        )
 
-    def test_heading1_01(self):
-        editor = self._getEditor()
-        actionController = self.application.actionController
-        text = ""
-        for action_str, syntax in self._headingsSyntax:
-            result = "{} ".format(syntax)
+def test_heading_1_01(editor, action_controller):
+    text = ""
 
-            editor.SetText(text)
-            editor.SetSelection(0, 0)
-
-            actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace("\r\n", "\n"), result)
-
-            actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace("\r\n", "\n"), text)
-
-    def test_heading1_02(self):
-        editor = self._getEditor()
-        actionController = self.application.actionController
-        text = "Строка 1\nСтрока 2\nСтрока 3"
-        for action_str, syntax in self._headingsSyntax:
-            result = "{} Строка 1\nСтрока 2\nСтрока 3".format(syntax)
-
-            editor.SetText(text)
-            editor.SetSelection(5, 5)
-
-            actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace("\r\n", "\n"), result)
-
-            actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace("\r\n", "\n"), text)
-
-    def test_heading1_03(self):
-        editor = self._getEditor()
-        actionController = self.application.actionController
-        text = "Строка 1\nСтрока 2\nСтрока 3"
-        for action_str, syntax in self._headingsSyntax:
-            result = "Строка 1\n{} Строка 2\nСтрока 3".format(syntax)
-
-            editor.SetText(text)
-            editor.SetSelection(10, 10)
-
-            actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace("\r\n", "\n"), result)
-
-            actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace("\r\n", "\n"), text)
-
-    def test_heading1_04(self):
-        editor = self._getEditor()
-        actionController = self.application.actionController
-        text = "Строка 1\nСтрока 2\nСтрока 3"
-        for action_str, syntax in self._headingsSyntax:
-            result = "{syntax} Строка 1\n{syntax} Строка 2\nСтрока 3".format(
-                syntax=syntax
-            )
-
-            editor.SetText(text)
-            editor.SetSelection(0, 10)
-
-            actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace("\r\n", "\n"), result)
-
-            actionController.getAction(action_str).run(None)
-            self.assertEqual(editor.GetText().replace("\r\n", "\n"), text)
-
-    def test_heading_switch_01(self):
-        editor = self._getEditor()
-        actionController = self.application.actionController
-        text = "Строка 1\nСтрока 2\nСтрока 3"
+    for action_str, syntax in _HEADINGS_SYNTAX:
+        result = f"{syntax} "
 
         editor.SetText(text)
         editor.SetSelection(0, 0)
 
-        actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"), "!! Строка 1\nСтрока 2\nСтрока 3"
-        )
+        _run_action(action_controller, action_str)
+        assert _get_text(editor) == result
 
-        actionController.getAction(HEADING_2_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"), "!!! Строка 1\nСтрока 2\nСтрока 3"
-        )
+        _run_action(action_controller, action_str)
+        assert _get_text(editor) == text
 
-        actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"), "!! Строка 1\nСтрока 2\nСтрока 3"
-        )
 
-        actionController.getAction(HEADING_6_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"),
-            "!!!!!!! Строка 1\nСтрока 2\nСтрока 3",
-        )
+def test_heading_1_02(editor, action_controller):
+    text = "Строка 1\nСтрока 2\nСтрока 3"
 
-        actionController.getAction(HEADING_5_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"),
-            "!!!!!! Строка 1\nСтрока 2\nСтрока 3",
-        )
-
-        actionController.getAction(HEADING_5_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"), "Строка 1\nСтрока 2\nСтрока 3"
-        )
-
-    def test_heading_switch_02(self):
-        editor = self._getEditor()
-        actionController = self.application.actionController
-        text = "Строка 1\nСтрока 2\nСтрока 3"
+    for action_str, syntax in _HEADINGS_SYNTAX:
+        result = f"{syntax} Строка 1\nСтрока 2\nСтрока 3"
 
         editor.SetText(text)
-        editor.SetSelection(0, 12)
+        editor.SetSelection(5, 5)
 
-        actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"), "!! Строка 1\n!! Строка 2\nСтрока 3"
-        )
+        _run_action(action_controller, action_str)
+        assert _get_text(editor) == result
 
-        actionController.getAction(HEADING_2_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"),
-            "!!! Строка 1\n!!! Строка 2\nСтрока 3",
-        )
+        _run_action(action_controller, action_str)
+        assert _get_text(editor) == text
 
-        actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"), "!! Строка 1\n!! Строка 2\nСтрока 3"
-        )
 
-        actionController.getAction(HEADING_6_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"),
-            "!!!!!!! Строка 1\n!!!!!!! Строка 2\nСтрока 3",
-        )
+def test_heading_1_03(editor, action_controller):
+    text = "Строка 1\nСтрока 2\nСтрока 3"
 
-        actionController.getAction(HEADING_5_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"),
-            "!!!!!! Строка 1\n!!!!!! Строка 2\nСтрока 3",
-        )
-
-        actionController.getAction(HEADING_5_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"), "Строка 1\nСтрока 2\nСтрока 3"
-        )
-
-    def test_heading_switch_03(self):
-        editor = self._getEditor()
-        actionController = self.application.actionController
-        text = "! Строка 1\nСтрока 2\nСтрока 3"
+    for action_str, syntax in _HEADINGS_SYNTAX:
+        result = f"Строка 1\n{syntax} Строка 2\nСтрока 3"
 
         editor.SetText(text)
-        editor.SetSelection(0, 0)
+        editor.SetSelection(10, 10)
 
-        actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"), "!! ! Строка 1\nСтрока 2\nСтрока 3"
-        )
+        _run_action(action_controller, action_str)
+        assert _get_text(editor) == result
 
-        actionController.getAction(HEADING_1_STR_ID).run(None)
-        self.assertEqual(
-            editor.GetText().replace("\r\n", "\n"), "! Строка 1\nСтрока 2\nСтрока 3"
-        )
+        _run_action(action_controller, action_str)
+        assert _get_text(editor) == text
+
+
+def test_heading_1_04(editor, action_controller):
+    text = "Строка 1\nСтрока 2\nСтрока 3"
+
+    for action_str, syntax in _HEADINGS_SYNTAX:
+        result = f"{syntax} Строка 1\n{syntax} Строка 2\nСтрока 3"
+
+        editor.SetText(text)
+        editor.SetSelection(0, 10)
+
+        _run_action(action_controller, action_str)
+        assert _get_text(editor) == result
+
+        _run_action(action_controller, action_str)
+        assert _get_text(editor) == text
+
+
+def test_heading_switch_01(editor, action_controller):
+    text = "Строка 1\nСтрока 2\nСтрока 3"
+
+    editor.SetText(text)
+    editor.SetSelection(0, 0)
+
+    _run_action(action_controller, HEADING_1_STR_ID)
+    assert _get_text(editor) == "!! Строка 1\nСтрока 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_2_STR_ID)
+    assert _get_text(editor) == "!!! Строка 1\nСтрока 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_1_STR_ID)
+    assert _get_text(editor) == "!! Строка 1\nСтрока 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_6_STR_ID)
+    assert _get_text(editor) == "!!!!!!! Строка 1\nСтрока 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_5_STR_ID)
+    assert _get_text(editor) == "!!!!!! Строка 1\nСтрока 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_5_STR_ID)
+    assert _get_text(editor) == text
+
+
+def test_heading_switch_02(editor, action_controller):
+    text = "Строка 1\nСтрока 2\nСтрока 3"
+
+    editor.SetText(text)
+    editor.SetSelection(0, 12)
+
+    _run_action(action_controller, HEADING_1_STR_ID)
+    assert _get_text(editor) == "!! Строка 1\n!! Строка 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_2_STR_ID)
+    assert _get_text(editor) == "!!! Строка 1\n!!! Строка 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_1_STR_ID)
+    assert _get_text(editor) == "!! Строка 1\n!! Строка 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_6_STR_ID)
+    assert _get_text(editor) == "!!!!!!! Строка 1\n!!!!!!! Строка 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_5_STR_ID)
+    assert _get_text(editor) == "!!!!!! Строка 1\n!!!!!! Строка 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_5_STR_ID)
+    assert _get_text(editor) == text
+
+
+def test_heading_switch_03(editor, action_controller):
+    text = "! Строка 1\nСтрока 2\nСтрока 3"
+
+    editor.SetText(text)
+    editor.SetSelection(0, 0)
+
+    _run_action(action_controller, HEADING_1_STR_ID)
+    assert _get_text(editor) == "!! ! Строка 1\nСтрока 2\nСтрока 3"
+
+    _run_action(action_controller, HEADING_1_STR_ID)
+    assert _get_text(editor) == text
