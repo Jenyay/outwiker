@@ -1,6 +1,6 @@
 # -*- coding=utf-8 -*-
 
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 import locale
 from pathlib import Path
 from tempfile import mkdtemp
@@ -16,6 +16,7 @@ from outwiker.app.gui.mainwindow import MainWindow
 from outwiker.core import defines
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
+from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
 from outwiker.app.owapplication import OutWikerApplication
@@ -92,6 +93,34 @@ def application(tmp_path_factory) -> Iterator[Application]:
     yield application
 
     application.clear()
+
+
+@pytest.fixture(scope="module")
+def plugins_loader(
+    application: Application,
+) -> Iterator[Callable[..., PluginsLoader]]:
+    """
+    Factory fixture for loading the plug-ins used by the tests of a module.
+
+    The plug-ins are loaded once per module (repeated calls for the same
+    directories return the same loader) and unloaded after its tests.
+    """
+    loaders: dict[str, PluginsLoader] = {}
+
+    def _load(*plugin_dirs: str) -> PluginsLoader:
+        key = "/".join(plugin_dirs)
+
+        if key not in loaders:
+            loader = PluginsLoader(application)
+            loader.load(list(plugin_dirs))
+            loaders[key] = loader
+
+        return loaders[key]
+
+    yield _load
+
+    for loader in loaders.values():
+        loader.clear()
 
 
 # class _OWApplicationFactory(Protocol):

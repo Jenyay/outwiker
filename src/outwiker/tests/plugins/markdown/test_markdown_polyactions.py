@@ -1,6 +1,6 @@
 """Tests for editor polyactions on Markdown pages."""
 
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 
 import pytest
 
@@ -18,8 +18,10 @@ def editor(
     application: Application,
     wikiroot: WikiDocument,
     main_window: MainWindow,
-    markdown_plugin: PluginsLoader,
+    plugins_loader: Callable[..., PluginsLoader],
 ) -> Iterator[TextEditor]:
+    plugins_loader("plugins/markdown")
+
     from markdown.markdownpage import MarkdownPageFactory
 
     page = MarkdownPageFactory().create(wikiroot, "Markdown-страница", [])
