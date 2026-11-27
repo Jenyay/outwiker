@@ -8,7 +8,7 @@ from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def thumbgallery_loader(
     application: Application,
     plugins_loader: Callable[..., PluginsLoader],
