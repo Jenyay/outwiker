@@ -1,1019 +1,749 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-from tempfile import mkdtemp
-import unittest
+"""Tests for the Sessions plugin."""
 
-from outwiker.api.core.tree import createNotesTree, loadNotesTree
+import os.path
+from collections.abc import Iterator
+from tempfile import mkdtemp
+
+import pytest
+
+from outwiker.api.core.tree import WikiDocument, createNotesTree, loadNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
-from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
-    """Тесты плагина Sessions"""
+@pytest.fixture
+def tabs_controller(main_window):
+    """Tabs controller of the main window."""
+    return main_window.tabsController
 
-    def setUp(self):
-        self.initApplication()
-        self.wikiroot = self.createWiki()
-        self.application.wikiroot = self.wikiroot
-        self.path2 = mkdtemp(prefix="Абырвалг абырвалг")
 
-        self.__createWiki()
+@pytest.fixture(autouse=True)
+def clear_sessions_config(application) -> Iterator[None]:
+    """Configuration section with the saved sessions is empty for each test."""
+    from sessions.sessionstorage import SessionStorage
 
-        dirlist = ["plugins/sessions"]
+    application.config.remove_section(SessionStorage.SECTION_NAME)
 
-        self.loader = PluginsLoader(self.application)
-        self.loader.load(dirlist)
+    yield
 
-        from sessions.sessionstorage import SessionStorage
+    application.config.remove_section(SessionStorage.SECTION_NAME)
 
-        self.application.config.remove_section(SessionStorage.SECTION_NAME)
 
-    def tearDown(self):
-        from sessions.sessionstorage import SessionStorage
+@pytest.fixture
+def wiki(application, ow_application) -> Iterator[WikiDocument]:
+    """
+    Wiki with the pages used by the tests, opened in the application.
 
-        self.application.wikiroot = None
-        self.application.config.remove_section(SessionStorage.SECTION_NAME)
-        self.loader.clear()
-        removeDir(self.path2)
-        self.destroyApplication()
-        self.destroyWiki(self.wikiroot)
+    The main window is created before the wiki is opened.
+    """
+    path = mkdtemp(prefix="outwiker_sessions")
+    root = createNotesTree(path)
+    factory = TextPageFactory()
+    factory.create(root, "Страница 1", [])
+    factory.create(root, "Страница 2", [])
+    factory.create(root["Страница 1"], "Страница 3", [])
+    factory.create(root["Страница 1/Страница 3"], "Страница 4", [])
 
-    def __createWiki(self):
-        TextPageFactory().create(self.wikiroot, "Страница 1", [])
-        TextPageFactory().create(self.wikiroot, "Страница 2", [])
-        TextPageFactory().create(self.wikiroot["Страница 1"], "Страница 3", [])
-        TextPageFactory().create(
-            self.wikiroot["Страница 1/Страница 3"], "Страница 4", []
-        )
+    application.wikiroot = root
 
-    def __createWiki2(self):
-        # Здесь будет создаваться вики
-        wiki2 = createNotesTree(self.path2)
-        TextPageFactory().create(wiki2, "Page 1", [])
-        TextPageFactory().create(wiki2, "Page 2", [])
+    yield root
 
-    def testPluginLoad(self):
-        self.assertEqual(len(self.loader), 1)
+    application.wikiroot = None
+    removeDir(path)
 
-    def testEmptySessions(self):
-        from sessions.sessionstorage import SessionStorage
 
-        storage = SessionStorage(self.application.config)
+@pytest.fixture
+def other_wiki_path() -> Iterator[str]:
+    """Path to the second wiki used by the restore tests."""
+    path = mkdtemp(prefix="Абырвалг абырвалг")
+    root = createNotesTree(path)
+    factory = TextPageFactory()
+    factory.create(root, "Page 1", [])
+    factory.create(root, "Page 2", [])
 
-        self.assertEqual(storage.getSessions(), {})
+    yield path
 
-    def testSessionSingleTab(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    removeDir(path)
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        sessionName = "Имя сессии"
+@pytest.fixture
+def make_storage(sessions_loader: PluginsLoader, application):
+    """Factory for the SessionStorage instances reloaded from the config."""
+    from sessions.sessionstorage import SessionStorage
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+    return lambda: SessionStorage(application.config)
 
-        storage.save(controller.getCurrentSession(), sessionName)
-        sessions = storage.getSessions()
 
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(len(sessions[sessionName].pages), 1)
-        self.assertEqual(
-            sessions[sessionName].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(sessions[sessionName].currentTab, 0)
+@pytest.fixture
+def controller(sessions_loader: PluginsLoader, application):
+    """Sessions controller working with the current application state."""
+    from sessions.sessioncontroller import SessionController
 
-    def testSaveSession_root(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    return SessionController(application)
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = None
 
-        sessionName = "Имя сессии"
+def _get_page_link(page) -> str:
+    """Link to the page that is stored in the sessions."""
+    return "page://" + page.getUid(generate=True)
 
-        controller = SessionController(self.application)
-        SessionStorage(self.application.config).save(
-            controller.getCurrentSession(), sessionName
-        )
 
-        otherStorage = SessionStorage(self.application.config)
+def test_plugin_load(sessions_loader: PluginsLoader):
+    assert len(sessions_loader) == 1
 
-        sessions = otherStorage.getSessions()
 
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(len(sessions[sessionName].pages), 1)
-        self.assertEqual(sessions[sessionName].pages[0], None)
-        self.assertEqual(sessions[sessionName].currentTab, 0)
+def test_empty_sessions(make_storage):
+    storage = make_storage()
 
-    def testSaveSession_01(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    assert storage.getSessions() == {}
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        sessionName = "Имя сессии"
+def test_session_single_tab(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
+    session_name = "Имя сессии"
 
-        controller = SessionController(self.application)
-        SessionStorage(self.application.config).save(
-            controller.getCurrentSession(), sessionName
-        )
+    storage = make_storage()
+    storage.save(controller.getCurrentSession(), session_name)
 
-        otherStorage = SessionStorage(self.application.config)
+    sessions = storage.getSessions()
 
-        sessions = otherStorage.getSessions()
+    assert len(sessions) == 1
+    assert len(sessions[session_name].pages) == 1
+    assert sessions[session_name].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions[session_name].currentTab == 0
 
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(len(sessions[sessionName].pages), 1)
-        self.assertEqual(
-            sessions[sessionName].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(sessions[sessionName].currentTab, 0)
 
-    def testSaveSession_02(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+def test_save_session_root(application, wiki, make_storage, controller):
+    application.selectedPage = None
+    session_name = "Имя сессии"
 
-        tabsController = self.application.mainWindow.tabsController
-        self.application.wikiroot = self.wikiroot
+    make_storage().save(controller.getCurrentSession(), session_name)
+    sessions = make_storage().getSessions()
 
-        self.application.selectedPage = self.wikiroot["Страница 1"]
-        tabsController.openInTab(self.wikiroot["Страница 2"], False)
+    assert len(sessions) == 1
+    assert len(sessions[session_name].pages) == 1
+    assert sessions[session_name].pages[0] is None
+    assert sessions[session_name].currentTab == 0
 
-        sessionName = "Имя сессии"
 
-        controller = SessionController(self.application)
-        SessionStorage(self.application.config).save(
-            controller.getCurrentSession(), sessionName
-        )
+def test_save_session_01(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
+    session_name = "Имя сессии"
 
-        otherStorage = SessionStorage(self.application.config)
+    make_storage().save(controller.getCurrentSession(), session_name)
+    sessions = make_storage().getSessions()
 
-        sessions = otherStorage.getSessions()
+    assert len(sessions) == 1
+    assert len(sessions[session_name].pages) == 1
+    assert sessions[session_name].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions[session_name].currentTab == 0
 
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(len(sessions[sessionName].pages), 2)
-        self.assertEqual(
-            sessions[sessionName].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(
-            sessions[sessionName].pages[1],
-            self._getPageLink(self.wikiroot["Страница 2"]),
-        )
-        self.assertEqual(sessions[sessionName].currentTab, 0)
 
-    def testSaveSession_02_root(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+def test_save_session_02(application, wiki, tabs_controller, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
+    tabs_controller.openInTab(wiki["Страница 2"], False)
 
-        tabsController = self.application.mainWindow.tabsController
-        self.application.wikiroot = self.wikiroot
+    session_name = "Имя сессии"
 
-        self.application.selectedPage = None
-        tabsController.openInTab(self.wikiroot["Страница 2"], False)
+    make_storage().save(controller.getCurrentSession(), session_name)
+    sessions = make_storage().getSessions()
 
-        sessionName = "Имя сессии"
-
-        controller = SessionController(self.application)
-        SessionStorage(self.application.config).save(
-            controller.getCurrentSession(), sessionName
-        )
+    assert len(sessions) == 1
+    assert len(sessions[session_name].pages) == 2
+    assert sessions[session_name].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions[session_name].pages[1] == _get_page_link(wiki["Страница 2"])
+    assert sessions[session_name].currentTab == 0
 
-        otherStorage = SessionStorage(self.application.config)
 
-        sessions = otherStorage.getSessions()
+def test_save_session_02_root(
+    application, wiki, tabs_controller, make_storage, controller
+):
+    application.selectedPage = None
+    tabs_controller.openInTab(wiki["Страница 2"], False)
 
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(len(sessions[sessionName].pages), 2)
-        self.assertEqual(sessions[sessionName].pages[0], None)
-        self.assertEqual(
-            sessions[sessionName].pages[1],
-            self._getPageLink(self.wikiroot["Страница 2"]),
-        )
-        self.assertEqual(sessions[sessionName].currentTab, 0)
+    session_name = "Имя сессии"
 
-    def testSaveSession_03(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    make_storage().save(controller.getCurrentSession(), session_name)
+    sessions = make_storage().getSessions()
 
-        tabsController = self.application.mainWindow.tabsController
-        self.application.wikiroot = self.wikiroot
+    assert len(sessions) == 1
+    assert len(sessions[session_name].pages) == 2
+    assert sessions[session_name].pages[0] is None
+    assert sessions[session_name].pages[1] == _get_page_link(wiki["Страница 2"])
+    assert sessions[session_name].currentTab == 0
 
-        self.application.selectedPage = self.wikiroot["Страница 1"]
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
 
-        sessionName = "Имя сессии"
+def test_save_session_03(application, wiki, tabs_controller, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
+    tabs_controller.openInTab(wiki["Страница 2"], True)
 
-        controller = SessionController(self.application)
-        SessionStorage(self.application.config).save(
-            controller.getCurrentSession(), sessionName
-        )
-
-        otherStorage = SessionStorage(self.application.config)
-
-        sessions = otherStorage.getSessions()
-
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(len(sessions[sessionName].pages), 2)
-        self.assertEqual(
-            sessions[sessionName].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(
-            sessions[sessionName].pages[1],
-            self._getPageLink(self.wikiroot["Страница 2"]),
-        )
-        self.assertEqual(sessions[sessionName].currentTab, 1)
+    session_name = "Имя сессии"
 
-    def testSaveSession_04(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    make_storage().save(controller.getCurrentSession(), session_name)
+    sessions = make_storage().getSessions()
 
-        sessionName1 = "Имя сессии 1"
-        sessionName2 = "Имя сессии 2"
+    assert len(sessions) == 1
+    assert len(sessions[session_name].pages) == 2
+    assert sessions[session_name].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions[session_name].pages[1] == _get_page_link(wiki["Страница 2"])
+    assert sessions[session_name].currentTab == 1
 
-        tabsController = self.application.mainWindow.tabsController
-        self.application.wikiroot = self.wikiroot
 
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+def test_save_session_04(application, wiki, tabs_controller, make_storage, controller):
+    session_name1 = "Имя сессии 1"
+    session_name2 = "Имя сессии 2"
 
-        controller = SessionController(self.application)
+    application.selectedPage = wiki["Страница 1"]
 
-        # Сохраним сессию с одной страницей
-        SessionStorage(self.application.config).save(
-            controller.getCurrentSession(), sessionName1
-        )
+    # Save the session with one page
+    make_storage().save(controller.getCurrentSession(), session_name1)
 
-        # Сохраним сессию с двумя страницами
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
-        SessionStorage(self.application.config).save(
-            controller.getCurrentSession(), sessionName2
-        )
+    # Save the session with two pages
+    tabs_controller.openInTab(wiki["Страница 2"], True)
+    make_storage().save(controller.getCurrentSession(), session_name2)
 
-        otherStorage = SessionStorage(self.application.config)
+    sessions = make_storage().getSessions()
 
-        sessions = otherStorage.getSessions()
+    assert len(sessions) == 2
 
-        self.assertEqual(len(sessions), 2)
+    assert len(sessions[session_name1].pages) == 1
+    assert sessions[session_name1].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions[session_name1].currentTab == 0
 
-        self.assertEqual(len(sessions[sessionName1].pages), 1)
-        self.assertEqual(
-            sessions[sessionName1].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(sessions[sessionName1].currentTab, 0)
+    assert len(sessions[session_name2].pages) == 2
+    assert sessions[session_name2].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions[session_name2].pages[1] == _get_page_link(wiki["Страница 2"])
+    assert sessions[session_name2].currentTab == 1
 
-        self.assertEqual(len(sessions[sessionName2].pages), 2)
-        self.assertEqual(
-            sessions[sessionName2].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(
-            sessions[sessionName2].pages[1],
-            self._getPageLink(self.wikiroot["Страница 2"]),
-        )
-        self.assertEqual(sessions[sessionName2].currentTab, 1)
 
-    def testSaveSession_05(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+def test_save_session_05(application, wiki, tabs_controller, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
+    tabs_controller.openInTab(wiki["Страница 2"], True)
 
-        tabsController = self.application.mainWindow.tabsController
-        self.application.wikiroot = self.wikiroot
+    session_name = "Имя сессии"
+    session = controller.getCurrentSession()
 
-        self.application.selectedPage = self.wikiroot["Страница 1"]
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
+    # Save the same session twice with the same name
+    make_storage().save(session, session_name)
+    make_storage().save(session, session_name)
 
-        sessionName = "Имя сессии"
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
+    sessions = make_storage().getSessions()
 
-        # Сохраним сессию дважды под одним и тем же именем
-        SessionStorage(self.application.config).save(session, sessionName)
-        SessionStorage(self.application.config).save(session, sessionName)
+    assert len(sessions) == 1
+    assert len(sessions[session_name].pages) == 2
+    assert sessions[session_name].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions[session_name].pages[1] == _get_page_link(wiki["Страница 2"])
+    assert sessions[session_name].currentTab == 1
+    assert not sessions[session_name].readonly
 
-        otherStorage = SessionStorage(self.application.config)
 
-        sessions = otherStorage.getSessions()
+def test_save_session_06(application, wiki, tabs_controller, make_storage, controller):
+    uid1 = _get_page_link(wiki["Страница 1"])
+    uid2 = _get_page_link(wiki["Страница 2"])
 
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(len(sessions[sessionName].pages), 2)
-        self.assertEqual(
-            sessions[sessionName].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(
-            sessions[sessionName].pages[1],
-            self._getPageLink(self.wikiroot["Страница 2"]),
-        )
-        self.assertEqual(sessions[sessionName].currentTab, 1)
-        self.assertFalse(sessions[sessionName].readonly)
+    readonly_wiki = loadNotesTree(wiki.path, True)
+    application.wikiroot = readonly_wiki
 
-    def testSaveSession_06(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    application.selectedPage = readonly_wiki["Страница 1"]
+    tabs_controller.openInTab(readonly_wiki["Страница 2"], True)
 
-        tabsController = self.application.mainWindow.tabsController
+    session_name = "Имя сессии"
+    session = controller.getCurrentSession()
 
-        uid1 = self._getPageLink(self.wikiroot["Страница 1"])
-        uid2 = self._getPageLink(self.wikiroot["Страница 2"])
+    # Save the same session twice with the same name
+    make_storage().save(session, session_name)
+    make_storage().save(session, session_name)
 
-        wiki = loadNotesTree(self.wikiroot.path, True)
-        self.application.wikiroot = wiki
+    sessions = make_storage().getSessions()
 
-        self.application.selectedPage = wiki["Страница 1"]
-        tabsController.openInTab(wiki["Страница 2"], True)
+    assert len(sessions) == 1
+    assert len(sessions[session_name].pages) == 2
+    assert sessions[session_name].pages[0] == uid1
+    assert sessions[session_name].pages[1] == uid2
+    assert sessions[session_name].currentTab == 1
+    assert sessions[session_name].readonly
 
-        sessionName = "Имя сессии"
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
 
-        # Сохраним сессию дважды под одним и тем же именем
-        SessionStorage(self.application.config).save(session, sessionName)
-        SessionStorage(self.application.config).save(session, sessionName)
+def test_save_session_07(application, wiki, tabs_controller, make_storage, controller):
+    # Create the UIDs and then check that they are read correctly in the
+    # read-only mode
+    _get_page_link(wiki["Страница 1"])
+    _get_page_link(wiki["Страница 2"])
 
-        otherStorage = SessionStorage(self.application.config)
+    readonly_wiki = loadNotesTree(wiki.path, True)
+    application.wikiroot = readonly_wiki
 
-        sessions = otherStorage.getSessions()
+    application.selectedPage = readonly_wiki["Страница 1"]
+    tabs_controller.openInTab(readonly_wiki["Страница 2"], True)
 
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(len(sessions[sessionName].pages), 2)
-        self.assertEqual(sessions[sessionName].pages[0], uid1)
-        self.assertEqual(sessions[sessionName].pages[1], uid2)
-        self.assertEqual(sessions[sessionName].currentTab, 1)
-        self.assertTrue(sessions[sessionName].readonly)
+    session_name = "Имя сессии"
+    session = controller.getCurrentSession()
 
-    def testSaveSession_07(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    # Save the same session twice with the same name
+    storage = make_storage()
 
-        tabsController = self.application.mainWindow.tabsController
+    storage.save(session, session_name)
+    storage.save(session, session_name)
 
-        # Создадим UID, а потом проверим, что они нормально прочитаются в
-        # режиме только для чтения
-        self._getPageLink(self.wikiroot["Страница 1"])
-        self._getPageLink(self.wikiroot["Страница 2"])
+    sessions = make_storage().getSessions()
 
-        wiki = loadNotesTree(self.wikiroot.path, True)
-        self.application.wikiroot = wiki
+    assert len(sessions) == 1
+    assert len(sessions[session_name].pages) == 2
+    assert sessions[session_name].pages[0] == _get_page_link(
+        readonly_wiki["Страница 1"]
+    )
+    assert sessions[session_name].pages[1] == _get_page_link(
+        readonly_wiki["Страница 2"]
+    )
+    assert sessions[session_name].currentTab == 1
+    assert sessions[session_name].readonly
 
-        self.application.selectedPage = wiki["Страница 1"]
-        tabsController.openInTab(wiki["Страница 2"], True)
 
-        sessionName = "Имя сессии"
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
+def test_save_session_08(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        # Сохраним сессию дважды под одним и тем же именем
-        storage = SessionStorage(self.application.config)
+    storage = make_storage()
 
-        storage.save(session, sessionName)
-        storage.save(session, sessionName)
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
 
-        otherStorage = SessionStorage(self.application.config)
+    sessions = make_storage().getSessions()
 
-        sessions = otherStorage.getSessions()
+    assert len(sessions) == 2
 
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(len(sessions[sessionName].pages), 2)
-        self.assertEqual(
-            sessions[sessionName].pages[0], self._getPageLink(wiki["Страница 1"])
-        )
-        self.assertEqual(
-            sessions[sessionName].pages[1], self._getPageLink(wiki["Страница 2"])
-        )
-        self.assertEqual(sessions[sessionName].currentTab, 1)
-        self.assertTrue(sessions[sessionName].readonly)
+    assert len(sessions["session1"].pages) == 1
+    assert sessions["session1"].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions["session1"].currentTab == 0
 
-    def testSaveSession_08(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    assert len(sessions["session2"].pages) == 1
+    assert sessions["session2"].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions["session2"].currentTab == 0
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+def test_save_session_09(application, wiki, tabs_controller, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
+    storage = make_storage()
 
-        otherStorage = SessionStorage(self.application.config)
+    storage.save(controller.getCurrentSession(), "session1")
 
-        sessions = otherStorage.getSessions()
+    tabs_controller.openInTab(wiki["Страница 2"], True)
+    storage.save(controller.getCurrentSession(), "session2")
 
-        self.assertEqual(len(sessions), 2)
+    sessions = make_storage().getSessions()
 
-        self.assertEqual(len(sessions["session1"].pages), 1)
-        self.assertEqual(
-            sessions["session1"].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(sessions["session1"].currentTab, 0)
+    assert len(sessions) == 2
 
-        self.assertEqual(len(sessions["session2"].pages), 1)
-        self.assertEqual(
-            sessions["session2"].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(sessions["session2"].currentTab, 0)
+    assert len(sessions["session1"].pages) == 1
+    assert sessions["session1"].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions["session1"].currentTab == 0
 
-    def testSaveSession_09(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    assert len(sessions["session2"].pages) == 2
+    assert sessions["session2"].pages[0] == _get_page_link(wiki["Страница 1"])
+    assert sessions["session2"].pages[1] == _get_page_link(wiki["Страница 2"])
+    assert sessions["session2"].currentTab == 1
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+def test_remove_session_01(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        storage.save(controller.getCurrentSession(), "session1")
+    storage = make_storage()
 
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
-        storage.save(controller.getCurrentSession(), "session2")
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
 
-        otherStorage = SessionStorage(self.application.config)
+    assert len(make_storage().getSessions()) == 2
 
-        sessions = otherStorage.getSessions()
+    # Remove a non-existent session. Nothing should happen
+    storage.remove("session_invalid")
 
-        self.assertEqual(len(sessions), 2)
+    assert len(make_storage().getSessions()) == 2
 
-        self.assertEqual(len(sessions["session1"].pages), 1)
-        self.assertEqual(
-            sessions["session1"].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(sessions["session1"].currentTab, 0)
 
-        self.assertEqual(len(sessions["session2"].pages), 2)
-        self.assertEqual(
-            sessions["session2"].pages[0],
-            self._getPageLink(self.wikiroot["Страница 1"]),
-        )
-        self.assertEqual(
-            sessions["session2"].pages[1],
-            self._getPageLink(self.wikiroot["Страница 2"]),
-        )
-        self.assertEqual(sessions["session2"].currentTab, 1)
+def test_remove_session_02(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-    def testRemoveSession_01(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    storage = make_storage()
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+    assert len(make_storage().getSessions()) == 2
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
+    storage.remove("session1")
 
-        otherStorage = SessionStorage(self.application.config)
-        sessions = otherStorage.getSessions()
-        self.assertEqual(len(sessions), 2)
+    other_storage = make_storage()
+    sessions = other_storage.getSessions()
+    assert len(sessions) == 1
+    assert list(sessions.keys())[0] == "session2"
 
-        # Удалим несуществующую сессию. При этом ничего не должно происходить
-        storage.remove("session_invalid")
+    sessions = storage.getSessions()
+    assert len(sessions) == 1
+    assert list(sessions.keys())[0] == "session2"
 
-        otherStorage = SessionStorage(self.application.config)
-        sessions = otherStorage.getSessions()
-        self.assertEqual(len(sessions), 2)
 
-    def testRemoveSession_02(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+def test_rename_01(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    storage = make_storage()
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
+    with pytest.raises(KeyError):
+        storage.rename("invalid", "Абырвалг")
 
-        otherStorage = SessionStorage(self.application.config)
-        sessions = otherStorage.getSessions()
-        self.assertEqual(len(sessions), 2)
 
-        # Удалим несуществующую сессию. При этом ничего не должно происходить
-        storage.remove("session1")
+def test_rename_02(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        otherStorage = SessionStorage(self.application.config)
-        sessions = otherStorage.getSessions()
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(list(sessions.keys())[0], "session2")
+    storage = make_storage()
 
-        sessions = storage.getSessions()
-        self.assertEqual(len(sessions), 1)
-        self.assertEqual(list(sessions.keys())[0], "session2")
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
+    storage.rename("session1", "Абырвалг")
 
-    def testRename_01(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    sessions = make_storage().getSessions()
+    assert len(sessions) == 2
+    assert sorted(sessions.keys())[0] == "session2"
+    assert sorted(sessions.keys())[1] == "Абырвалг"
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    sessions = storage.getSessions()
+    assert len(sessions) == 2
+    assert sorted(sessions.keys())[0] == "session2"
+    assert sorted(sessions.keys())[1] == "Абырвалг"
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
+def test_rename_03(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        self.assertRaises(KeyError, storage.rename, "invalid", "Абырвалг")
+    storage = make_storage()
 
-    def testRename_02(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
+    storage.rename("session1", "session1")
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    sessions = make_storage().getSessions()
+    assert len(sessions) == 2
+    assert sorted(sessions.keys())[0] == "session1"
+    assert sorted(sessions.keys())[1] == "session2"
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+    sessions = storage.getSessions()
+    assert len(sessions) == 2
+    assert sorted(sessions.keys())[0] == "session1"
+    assert sorted(sessions.keys())[1] == "session2"
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
-        storage.rename("session1", "Абырвалг")
 
-        otherStorage = SessionStorage(self.application.config)
+def test_rename_04(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        sessions = otherStorage.getSessions()
-        self.assertEqual(len(sessions), 2)
-        self.assertEqual(sorted(sessions.keys())[0], "session2")
-        self.assertEqual(sorted(sessions.keys())[1], "Абырвалг")
+    storage = make_storage()
 
-        sessions = storage.getSessions()
-        self.assertEqual(len(sessions), 2)
-        self.assertEqual(sorted(sessions.keys())[0], "session2")
-        self.assertEqual(sorted(sessions.keys())[1], "Абырвалг")
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
 
-    def testRename_03(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+    with pytest.raises(ValueError):
+        storage.rename("session1", "session2")
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+def test_rename_05(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
-        storage.rename("session1", "session1")
+    storage = make_storage()
 
-        otherStorage = SessionStorage(self.application.config)
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
 
-        sessions = otherStorage.getSessions()
-        self.assertEqual(len(sessions), 2)
-        self.assertEqual(sorted(sessions.keys())[0], "session1")
-        self.assertEqual(sorted(sessions.keys())[1], "session2")
+    with pytest.raises(ValueError):
+        storage.rename("session1", "session2   ")
 
-        sessions = storage.getSessions()
-        self.assertEqual(len(sessions), 2)
-        self.assertEqual(sorted(sessions.keys())[0], "session1")
-        self.assertEqual(sorted(sessions.keys())[1], "session2")
 
-    def testRename_04(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+def test_rename_06(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    storage = make_storage()
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
+    with pytest.raises(ValueError):
+        storage.rename("session1", "")
 
-        self.assertRaises(ValueError, storage.rename, "session1", "session2")
 
-    def testRename_05(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+def test_rename_07(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    storage = make_storage()
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
+    with pytest.raises(ValueError):
+        storage.rename("session1", "   ")
 
-        self.assertRaises(ValueError, storage.rename, "session1", "session2   ")
 
-    def testRename_06(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+def test_rename_08(application, wiki, make_storage, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    storage = make_storage()
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+    storage.save(controller.getCurrentSession(), "session1")
+    storage.save(controller.getCurrentSession(), "session2")
+    storage.rename("session1", "Абырвалг   ")
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
+    sessions = make_storage().getSessions()
+    assert len(sessions) == 2
+    assert sorted(sessions.keys())[0] == "session2"
+    assert sorted(sessions.keys())[1] == "Абырвалг"
 
-        self.assertRaises(ValueError, storage.rename, "session1", "")
+    sessions = storage.getSessions()
+    assert len(sessions) == 2
+    assert sorted(sessions.keys())[0] == "session2"
+    assert sorted(sessions.keys())[1] == "Абырвалг"
 
-    def testRename_07(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+def test_get_session_info_01(application, wiki, controller):
+    application.selectedPage = wiki["Страница 1"]
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+    session = controller.getCurrentSession()
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
+    assert os.path.realpath(session.path) == os.path.realpath(wiki.path)
+    assert len(session.pages) == 1
+    assert session.pages[0] == _get_page_link(wiki["Страница 1"])
+    assert session.currentTab == 0
 
-        self.assertRaises(ValueError, storage.rename, "session1", "   ")
 
-    def testRename_08(self):
-        from sessions.sessionstorage import SessionStorage
-        from sessions.sessioncontroller import SessionController
+def test_get_session_info_02(application, wiki, tabs_controller, controller):
+    application.selectedPage = wiki["Страница 1"]
+    tabs_controller.openInTab(wiki["Страница 2"], False)
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    session = controller.getCurrentSession()
 
-        controller = SessionController(self.application)
-        storage = SessionStorage(self.application.config)
+    assert os.path.realpath(session.path) == os.path.realpath(wiki.path)
+    assert len(session.pages) == 2
+    assert session.pages[0] == _get_page_link(wiki["Страница 1"])
+    assert session.pages[1] == _get_page_link(wiki["Страница 2"])
+    assert session.currentTab == 0
 
-        storage.save(controller.getCurrentSession(), "session1")
-        storage.save(controller.getCurrentSession(), "session2")
-        storage.rename("session1", "Абырвалг   ")
 
-        otherStorage = SessionStorage(self.application.config)
+def test_get_session_info_03(application, wiki, tabs_controller, controller):
+    application.selectedPage = wiki["Страница 1"]
+    tabs_controller.openInTab(wiki["Страница 2"], True)
 
-        sessions = otherStorage.getSessions()
-        self.assertEqual(len(sessions), 2)
-        self.assertEqual(sorted(sessions.keys())[0], "session2")
-        self.assertEqual(sorted(sessions.keys())[1], "Абырвалг")
+    session = controller.getCurrentSession()
 
-        sessions = storage.getSessions()
-        self.assertEqual(len(sessions), 2)
-        self.assertEqual(sorted(sessions.keys())[0], "session2")
-        self.assertEqual(sorted(sessions.keys())[1], "Абырвалг")
+    assert os.path.realpath(session.path) == os.path.realpath(wiki.path)
+    assert len(session.pages) == 2
+    assert session.pages[0] == _get_page_link(wiki["Страница 1"])
+    assert session.pages[1] == _get_page_link(wiki["Страница 2"])
+    assert session.currentTab == 1
 
-    def testGetSessionInfo_01(self):
-        from sessions.sessioncontroller import SessionController
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+def test_invalid_session_01(application, controller):
+    """There is no opened wiki."""
+    application.wikiroot = None
 
-        controller = SessionController(self.application)
+    session = controller.getCurrentSession()
 
-        session = controller.getCurrentSession()
+    assert session.path == ""
+    assert len(session.pages) == 0
+    assert session.currentTab == 0
 
-        self.assertEqual(
-            os.path.realpath(session.path), os.path.realpath(self.wikiroot.path)
-        )
-        self.assertEqual(len(session.pages), 1)
-        self.assertEqual(
-            session.pages[0], self._getPageLink(self.wikiroot["Страница 1"])
-        )
-        self.assertEqual(session.currentTab, 0)
 
-    def testGetSessionInfo_02(self):
-        from sessions.sessioncontroller import SessionController
+def test_restore_01(application, wiki, tabs_controller, controller):
+    application.selectedPage = wiki["Страница 1"]
+    tabs_controller.openInTab(wiki["Страница 2"], True)
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    session = controller.getCurrentSession()
 
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(self.wikiroot["Страница 2"], False)
+    uid1 = _get_page_link(wiki["Страница 1"])
+    uid2 = _get_page_link(wiki["Страница 2"])
 
-        controller = SessionController(self.application)
+    application.wikiroot = None
+    assert tabs_controller.getTabsCount() == 0
 
-        session = controller.getCurrentSession()
+    controller.restore(session)
 
-        self.assertEqual(
-            os.path.realpath(session.path), os.path.realpath(self.wikiroot.path)
-        )
-        self.assertEqual(len(session.pages), 2)
-        self.assertEqual(
-            session.pages[0], self._getPageLink(self.wikiroot["Страница 1"])
-        )
-        self.assertEqual(
-            session.pages[1], self._getPageLink(self.wikiroot["Страница 2"])
-        )
-        self.assertEqual(session.currentTab, 0)
+    assert os.path.realpath(application.wikiroot.path) == os.path.realpath(wiki.path)
+    assert tabs_controller.getTabsCount() == 2
+    assert tabs_controller.getSelection() == 1
 
-    def testGetSessionInfo_03(self):
-        from sessions.sessioncontroller import SessionController
+    new_session = controller.getCurrentSession()
+    assert new_session.pages[0] == uid1
+    assert new_session.pages[1] == uid2
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
+def test_restore_02(application, wiki, tabs_controller, controller):
+    application.selectedPage = wiki["Страница 1"]
+    tabs_controller.openInTab(wiki["Страница 2"], True)
+    tabs_controller.openInTab(wiki["Страница 1/Страница 3/Страница 4"], True)
+    tabs_controller.openInTab(wiki["Страница 1/Страница 3"], False)
 
-        controller = SessionController(self.application)
+    session = controller.getCurrentSession()
 
-        session = controller.getCurrentSession()
+    uid1 = _get_page_link(wiki["Страница 1"])
+    uid2 = _get_page_link(wiki["Страница 2"])
+    uid3 = _get_page_link(wiki["Страница 1/Страница 3/Страница 4"])
+    uid4 = _get_page_link(wiki["Страница 1/Страница 3"])
 
-        self.assertEqual(
-            os.path.realpath(session.path), os.path.realpath(self.wikiroot.path)
-        )
-        self.assertEqual(len(session.pages), 2)
-        self.assertEqual(
-            session.pages[0], self._getPageLink(self.wikiroot["Страница 1"])
-        )
-        self.assertEqual(
-            session.pages[1], self._getPageLink(self.wikiroot["Страница 2"])
-        )
-        self.assertEqual(session.currentTab, 1)
+    application.wikiroot = None
+    assert tabs_controller.getTabsCount() == 0
 
-    def testInvalidSession_01(self):
-        """
-        Если нет открытых вики
-        """
-        from sessions.sessioncontroller import SessionController
+    controller.restore(session)
 
-        self.application.wikiroot = None
-        controller = SessionController(self.application)
+    assert os.path.realpath(application.wikiroot.path) == os.path.realpath(wiki.path)
+    assert tabs_controller.getTabsCount() == 4
+    assert tabs_controller.getSelection() == 2
 
-        session = controller.getCurrentSession()
+    new_session = controller.getCurrentSession()
+    assert new_session.pages[0] == uid1
+    assert new_session.pages[1] == uid2
+    assert new_session.pages[2] == uid3
+    assert new_session.pages[3] == uid4
 
-        self.assertEqual(session.path, "")
-        self.assertEqual(len(session.pages), 0)
-        self.assertEqual(session.currentTab, 0)
+    assert tabs_controller.getPage(0).title == "Страница 1"
+    assert tabs_controller.getPage(1).title == "Страница 2"
+    assert tabs_controller.getPage(2).title == "Страница 4"
+    assert tabs_controller.getPage(3).title == "Страница 3"
 
-    def testRestore_01(self):
-        from sessions.sessioncontroller import SessionController
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+def test_restore_03(application, wiki, tabs_controller, controller):
+    opened_wiki = loadNotesTree(wiki.path, readonly=False)
+    application.wikiroot = opened_wiki
+    application.selectedPage = opened_wiki["Страница 1"]
 
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
+    tabs_controller.openInTab(opened_wiki["Страница 2"], True)
+    tabs_controller.openInTab(opened_wiki["Страница 1/Страница 3/Страница 4"], True)
+    tabs_controller.openInTab(opened_wiki["Страница 1/Страница 3"], False)
 
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
+    session = controller.getCurrentSession()
 
-        uid1 = self._getPageLink(self.wikiroot["Страница 1"])
-        uid2 = self._getPageLink(self.wikiroot["Страница 2"])
+    tabs_controller.closeTab(1)
+    tabs_controller.closeTab(1)
+    tabs_controller.closeTab(1)
 
-        self.application.wikiroot = None
-        self.assertEqual(tabsController.getTabsCount(), 0)
+    controller.restore(session)
 
-        controller.restore(session)
+    assert os.path.realpath(application.wikiroot.path) == os.path.realpath(wiki.path)
+    assert not application.wikiroot.readonly
 
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertEqual(tabsController.getTabsCount(), 2)
-        self.assertEqual(tabsController.getSelection(), 1)
+    assert tabs_controller.getTabsCount() == 4
+    assert tabs_controller.getSelection() == 2
 
-        newsession = controller.getCurrentSession()
-        self.assertEqual(newsession.pages[0], uid1)
-        self.assertEqual(newsession.pages[1], uid2)
+    assert tabs_controller.getPage(0).title == "Страница 1"
+    assert tabs_controller.getPage(1).title == "Страница 2"
+    assert tabs_controller.getPage(2).title == "Страница 4"
+    assert tabs_controller.getPage(3).title == "Страница 3"
 
-    def testRestore_02(self):
-        from sessions.sessioncontroller import SessionController
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+def test_restore_04(application, wiki, tabs_controller, other_wiki_path, controller):
+    second_wiki = loadNotesTree(other_wiki_path, False)
 
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
-        tabsController.openInTab(
-            self.wikiroot["Страница 1/Страница 3/Страница 4"], True
-        )
-        tabsController.openInTab(self.wikiroot["Страница 1/Страница 3"], False)
+    application.selectedPage = wiki["Страница 1"]
+    tabs_controller.openInTab(wiki["Страница 2"], True)
 
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
+    session = controller.getCurrentSession()
 
-        uid1 = self._getPageLink(self.wikiroot["Страница 1"])
-        uid2 = self._getPageLink(self.wikiroot["Страница 2"])
-        uid3 = self._getPageLink(self.wikiroot["Страница 1/Страница 3/Страница 4"])
-        uid4 = self._getPageLink(self.wikiroot["Страница 1/Страница 3"])
+    uid1 = _get_page_link(wiki["Страница 1"])
+    uid2 = _get_page_link(wiki["Страница 2"])
 
-        self.application.wikiroot = None
-        self.assertEqual(tabsController.getTabsCount(), 0)
+    application.wikiroot = second_wiki
+    assert tabs_controller.getTabsCount() == 1
 
-        controller.restore(session)
+    controller.restore(session)
 
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertEqual(tabsController.getTabsCount(), 4)
-        self.assertEqual(tabsController.getSelection(), 2)
+    assert os.path.realpath(application.wikiroot.path) == os.path.realpath(wiki.path)
+    assert tabs_controller.getTabsCount() == 2
+    assert tabs_controller.getSelection() == 1
 
-        newsession = controller.getCurrentSession()
-        self.assertEqual(newsession.pages[0], uid1)
-        self.assertEqual(newsession.pages[1], uid2)
-        self.assertEqual(newsession.pages[2], uid3)
-        self.assertEqual(newsession.pages[3], uid4)
+    new_session = controller.getCurrentSession()
+    assert new_session.pages[0] == uid1
+    assert new_session.pages[1] == uid2
 
-        self.assertEqual(tabsController.getPage(0).title, "Страница 1")
-        self.assertEqual(tabsController.getPage(1).title, "Страница 2")
-        self.assertEqual(tabsController.getPage(2).title, "Страница 4")
-        self.assertEqual(tabsController.getPage(3).title, "Страница 3")
 
-    def testRestore_03(self):
-        from sessions.sessioncontroller import SessionController
+def test_restore_05(application, wiki, tabs_controller, other_wiki_path, controller):
+    second_wiki = loadNotesTree(other_wiki_path, True)
 
-        wiki = loadNotesTree(self.wikiroot.path, readonly=False)
-        self.application.wikiroot = wiki
-        self.application.selectedPage = wiki["Страница 1"]
+    application.selectedPage = wiki["Страница 1"]
+    tabs_controller.openInTab(wiki["Страница 2"], True)
 
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(wiki["Страница 2"], True)
-        tabsController.openInTab(wiki["Страница 1/Страница 3/Страница 4"], True)
-        tabsController.openInTab(wiki["Страница 1/Страница 3"], False)
+    session = controller.getCurrentSession()
 
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
+    uid1 = _get_page_link(wiki["Страница 1"])
+    uid2 = _get_page_link(wiki["Страница 2"])
 
-        tabsController.closeTab(1)
-        tabsController.closeTab(1)
-        tabsController.closeTab(1)
+    application.wikiroot = second_wiki
+    assert tabs_controller.getTabsCount() == 1
 
-        controller.restore(session)
+    controller.restore(session)
 
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertFalse(self.application.wikiroot.readonly)
+    assert os.path.realpath(application.wikiroot.path) == os.path.realpath(wiki.path)
+    assert tabs_controller.getTabsCount() == 2
+    assert tabs_controller.getSelection() == 1
 
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertEqual(tabsController.getTabsCount(), 4)
-        self.assertEqual(tabsController.getSelection(), 2)
+    new_session = controller.getCurrentSession()
+    assert new_session.pages[0] == uid1
+    assert new_session.pages[1] == uid2
 
-        self.assertEqual(tabsController.getPage(0).title, "Страница 1")
-        self.assertEqual(tabsController.getPage(1).title, "Страница 2")
-        self.assertEqual(tabsController.getPage(2).title, "Страница 4")
-        self.assertEqual(tabsController.getPage(3).title, "Страница 3")
 
-    def testRestore_04(self):
-        from sessions.sessioncontroller import SessionController
+def test_restore_readonly_01(application, wiki, tabs_controller, controller):
+    readonly_wiki = loadNotesTree(wiki.path, readonly=True)
+    application.wikiroot = readonly_wiki
+    application.selectedPage = readonly_wiki["Страница 1"]
 
-        self.__createWiki2()
-        wiki2 = loadNotesTree(self.path2, False)
+    tabs_controller.openInTab(readonly_wiki["Страница 2"], True)
+    tabs_controller.openInTab(
+        readonly_wiki["Страница 1/Страница 3/Страница 4"], True
+    )
+    tabs_controller.openInTab(readonly_wiki["Страница 1/Страница 3"], False)
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    session = controller.getCurrentSession()
 
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
+    application.wikiroot = None
+    assert tabs_controller.getTabsCount() == 0
 
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
+    controller.restore(session)
 
-        uid1 = self._getPageLink(self.wikiroot["Страница 1"])
-        uid2 = self._getPageLink(self.wikiroot["Страница 2"])
+    assert os.path.realpath(application.wikiroot.path) == os.path.realpath(wiki.path)
+    assert application.wikiroot.readonly
 
-        self.application.wikiroot = wiki2
-        self.assertEqual(tabsController.getTabsCount(), 1)
+    assert tabs_controller.getTabsCount() == 4
+    assert tabs_controller.getSelection() == 2
 
-        controller.restore(session)
+    assert tabs_controller.getPage(0).title == "Страница 1"
+    assert tabs_controller.getPage(1).title == "Страница 2"
+    assert tabs_controller.getPage(2).title == "Страница 4"
+    assert tabs_controller.getPage(3).title == "Страница 3"
 
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertEqual(tabsController.getTabsCount(), 2)
-        self.assertEqual(tabsController.getSelection(), 1)
 
-        newsession = controller.getCurrentSession()
-        self.assertEqual(newsession.pages[0], uid1)
-        self.assertEqual(newsession.pages[1], uid2)
+def test_restore_readonly_02(application, wiki, tabs_controller, controller):
+    readonly_wiki = loadNotesTree(wiki.path, readonly=True)
+    application.wikiroot = readonly_wiki
+    application.selectedPage = readonly_wiki["Страница 1"]
 
-    def testRestore_05(self):
-        from sessions.sessioncontroller import SessionController
+    tabs_controller.openInTab(readonly_wiki["Страница 2"], True)
+    tabs_controller.openInTab(
+        readonly_wiki["Страница 1/Страница 3/Страница 4"], True
+    )
+    tabs_controller.openInTab(readonly_wiki["Страница 1/Страница 3"], False)
 
-        self.__createWiki2()
-        wiki2 = loadNotesTree(self.path2, True)
+    session = controller.getCurrentSession()
 
-        self.application.wikiroot = self.wikiroot
-        self.application.selectedPage = self.wikiroot["Страница 1"]
+    tabs_controller.closeTab(1)
+    tabs_controller.closeTab(1)
+    tabs_controller.closeTab(1)
 
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(self.wikiroot["Страница 2"], True)
+    controller.restore(session)
 
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
+    assert os.path.realpath(application.wikiroot.path) == os.path.realpath(wiki.path)
+    assert application.wikiroot.readonly
 
-        uid1 = self._getPageLink(self.wikiroot["Страница 1"])
-        uid2 = self._getPageLink(self.wikiroot["Страница 2"])
+    assert tabs_controller.getTabsCount() == 4
+    assert tabs_controller.getSelection() == 2
 
-        self.application.wikiroot = wiki2
-        self.assertEqual(tabsController.getTabsCount(), 1)
-
-        controller.restore(session)
-
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertEqual(tabsController.getTabsCount(), 2)
-        self.assertEqual(tabsController.getSelection(), 1)
-
-        newsession = controller.getCurrentSession()
-        self.assertEqual(newsession.pages[0], uid1)
-        self.assertEqual(newsession.pages[1], uid2)
-
-    def testRestoreReadonly_01(self):
-        from sessions.sessioncontroller import SessionController
-
-        wiki = loadNotesTree(self.wikiroot.path, readonly=True)
-        self.application.wikiroot = wiki
-        self.application.selectedPage = wiki["Страница 1"]
-
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(wiki["Страница 2"], True)
-        tabsController.openInTab(wiki["Страница 1/Страница 3/Страница 4"], True)
-        tabsController.openInTab(wiki["Страница 1/Страница 3"], False)
-
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
-
-        self.application.wikiroot = None
-        self.assertEqual(tabsController.getTabsCount(), 0)
-
-        controller.restore(session)
-
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertTrue(self.application.wikiroot.readonly)
-
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertEqual(tabsController.getTabsCount(), 4)
-        self.assertEqual(tabsController.getSelection(), 2)
-
-        self.assertEqual(tabsController.getPage(0).title, "Страница 1")
-        self.assertEqual(tabsController.getPage(1).title, "Страница 2")
-        self.assertEqual(tabsController.getPage(2).title, "Страница 4")
-        self.assertEqual(tabsController.getPage(3).title, "Страница 3")
-
-    def testRestoreReadonly_02(self):
-        from sessions.sessioncontroller import SessionController
-
-        wiki = loadNotesTree(self.wikiroot.path, readonly=True)
-        self.application.wikiroot = wiki
-        self.application.selectedPage = wiki["Страница 1"]
-
-        tabsController = self.application.mainWindow.tabsController
-        tabsController.openInTab(wiki["Страница 2"], True)
-        tabsController.openInTab(wiki["Страница 1/Страница 3/Страница 4"], True)
-        tabsController.openInTab(wiki["Страница 1/Страница 3"], False)
-
-        controller = SessionController(self.application)
-        session = controller.getCurrentSession()
-
-        tabsController.closeTab(1)
-        tabsController.closeTab(1)
-        tabsController.closeTab(1)
-
-        controller.restore(session)
-
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertTrue(self.application.wikiroot.readonly)
-
-        self.assertEqual(
-            os.path.realpath(self.application.wikiroot.path),
-            os.path.realpath(self.wikiroot.path),
-        )
-        self.assertEqual(tabsController.getTabsCount(), 4)
-        self.assertEqual(tabsController.getSelection(), 2)
-
-        self.assertEqual(tabsController.getPage(0).title, "Страница 1")
-        self.assertEqual(tabsController.getPage(1).title, "Страница 2")
-        self.assertEqual(tabsController.getPage(2).title, "Страница 4")
-        self.assertEqual(tabsController.getPage(3).title, "Страница 3")
-
-    def _getPageLink(self, page):
-        return "page://" + page.getUid(generate=True)
+    assert tabs_controller.getPage(0).title == "Страница 1"
+    assert tabs_controller.getPage(1).title == "Страница 2"
+    assert tabs_controller.getPage(2).title == "Страница 4"
+    assert tabs_controller.getPage(3).title == "Страница 3"
