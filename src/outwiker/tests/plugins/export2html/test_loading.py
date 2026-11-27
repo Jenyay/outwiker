@@ -1,23 +1,17 @@
-# -*- coding: utf-8 -*-
+"""Loading tests for the Export2Html plugin."""
 
-import unittest
+from typing import Any
 
-from outwiker.tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.plugins.basepluginloading import BasePluginLoadingTests
 
 
-class Export2HtmlLoadingTest(PluginLoadingMixin, unittest.TestCase):
-    def getPluginDir(self):
-        """
-        Должен возвращать путь до папки с тестируемым плагином
-        """
+class TestExport2HtmlLoading(BasePluginLoadingTests):
+    def get_plugin_dir(self) -> str:
         return "plugins/export2html"
 
-    def getPluginName(self):
-        """
-        Должен возвращать имя плагина,
-        по которому его можно найти в PluginsLoader
-        """
+    def get_plugin_name(self) -> str:
         return "Export2Html"
 
-    def isEnabledActionsGui(self) -> bool:
-        return True
+    def get_application_params(self) -> dict[str, Any]:
+        """The plugin inserts its submenu into the main menu."""
+        return {"enableActionsGui": True}

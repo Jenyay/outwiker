@@ -3,6 +3,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Iterator
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -39,6 +40,23 @@ class BasePluginLoadingTests(ABC):
     @abstractmethod
     def get_plugin_name(self) -> str:
         """Return the plugin name as it is known to PluginsLoader."""
+
+    def get_application_params(self) -> dict[str, Any]:
+        """
+        Return the parameters of the main window creation.
+
+        The keys are the keyword arguments of the ow_application_factory
+        fixture: enableActionsGui, createTreePanel, createAttachPanel,
+        createTagsPanel and createBookmarksPanel.
+        """
+        return {}
+
+    # The main window is extracted into a separate fixture so that it is not
+    # created for every test by the loader fixture.
+    @pytest.fixture(scope="module")
+    def ow_application(self, ow_application_factory) -> OutWikerApplication:
+        """Main window configured for the plugin under test."""
+        return ow_application_factory(**self.get_application_params())
 
     @pytest.fixture
     def loader(self, ow_application: OutWikerApplication) -> Iterator[PluginsLoader]:
