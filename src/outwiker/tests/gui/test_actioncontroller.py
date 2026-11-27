@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from collections.abc import Iterator
 
 import pytest
@@ -59,7 +57,7 @@ class ExampleCheckAction(BaseAction):
 
 
 @pytest.fixture
-def action_controller(
+def _action_controller(
     ow_application: OutWikerApplication, main_window: MainWindow
 ) -> Iterator[ActionController]:
     """
@@ -124,41 +122,41 @@ def _emulate_check_button_click(
     main_window.ProcessEvent(event)
 
 
-def _get_menu_item_id(action_controller: ActionController, strid: str):
+def _get_menu_item_id(_action_controller: ActionController, strid: str):
     result = None
 
-    action_info = action_controller.getActionInfo(strid)
+    action_info = _action_controller.getActionInfo(strid)
     if action_info is not None:
         result = action_info.menuItem.GetId()
 
     return result
 
 
-def _get_menu_item(action_controller: ActionController, strid: str):
+def _get_menu_item(_action_controller: ActionController, strid: str):
     result = None
 
-    action_info = action_controller.getActionInfo(strid)
+    action_info = _action_controller.getActionInfo(strid)
     if action_info is not None:
         result = action_info.menuItem
 
     return result
 
 
-def _get_tool_item_id(action_controller: ActionController, strid: str):
+def _get_tool_item_id(_action_controller: ActionController, strid: str):
     """Get the identifier of the toolbar button."""
     result = None
 
-    action_info = action_controller.getActionInfo(strid)
+    action_info = _action_controller.getActionInfo(strid)
     if action_info is not None:
         result = action_info.toolItemId
 
     return result
 
 
-def _get_tool_item_label(action_controller: ActionController, toolbar, strid: str):
+def _get_tool_item_label(_action_controller: ActionController, toolbar, strid: str):
     result = None
 
-    item = _get_tool_item(action_controller, toolbar, strid)
+    item = _get_tool_item(_action_controller, toolbar, strid)
 
     if item is not None:
         result = item.GetShortHelp()
@@ -166,106 +164,106 @@ def _get_tool_item_label(action_controller: ActionController, toolbar, strid: st
     return result
 
 
-def _get_tool_item(action_controller: ActionController, toolbar, strid: str):
+def _get_tool_item(_action_controller: ActionController, toolbar, strid: str):
     result = None
 
-    item_id = _get_tool_item_id(action_controller, strid)
+    item_id = _get_tool_item_id(_action_controller, strid)
     if item_id is not None:
         result = toolbar.FindById(item_id)
 
     return result
 
 
-def test_register_action(action_controller: ActionController):
+def test_register_action(_action_controller: ActionController):
     action = ExampleAction()
 
-    assert len(action_controller.getActionsStrId()) == 0
+    assert len(_action_controller.getActionsStrId()) == 0
 
-    action_controller.register(action)
+    _action_controller.register(action)
 
-    assert len(action_controller.getActionsStrId()) == 1
+    assert len(_action_controller.getActionsStrId()) == 1
 
 
-def test_hot_keys(action_controller: ActionController):
+def test_hot_keys(_action_controller: ActionController):
     hotkey1 = HotKey("F1")
     action1 = ExampleAction()
 
     hotkey2 = HotKey("F2", ctrl=True)
     action2 = ExampleCheckAction()
 
-    action_controller.register(action1, hotkey1)
-    action_controller.register(action2, hotkey2)
+    _action_controller.register(action1, hotkey1)
+    _action_controller.register(action2, hotkey2)
 
-    assert action_controller.getHotKey(action1.stringId) == hotkey1
-    assert action_controller.getHotKey(action2.stringId) == hotkey2
+    assert _action_controller.getHotKey(action1.stringId) == hotkey1
+    assert _action_controller.getHotKey(action2.stringId) == hotkey2
 
 
-def test_titles(action_controller: ActionController):
+def test_titles(_action_controller: ActionController):
     action1 = ExampleAction()
     action2 = ExampleCheckAction()
 
-    action_controller.register(action1)
-    action_controller.register(action2)
+    _action_controller.register(action1)
+    _action_controller.register(action2)
 
-    assert action_controller.getTitle(action1.stringId) == action1.title
-    assert action_controller.getTitle(action2.stringId) == action2.title
+    assert _action_controller.getTitle(action1.stringId) == action1.title
+    assert _action_controller.getTitle(action2.stringId) == action2.title
 
 
-def test_append_menu(action_controller: ActionController, file_menu: wx.Menu):
+def test_append_menu(_action_controller: ActionController, file_menu: wx.Menu):
     action = ExampleAction()
     menu = file_menu
 
-    action_controller.register(action)
-    action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.register(action)
+    _action_controller.appendMenuItem(action.stringId, menu)
     _assert_menu_item_exists(menu, action.title, None)
 
 
-def test_append_check_menu(action_controller: ActionController, file_menu: wx.Menu):
+def test_append_check_menu(_action_controller: ActionController, file_menu: wx.Menu):
     action = ExampleCheckAction()
     menu = file_menu
 
-    action_controller.register(action)
-    action_controller.appendMenuCheckItem(action.stringId, menu)
+    _action_controller.register(action)
+    _action_controller.appendMenuCheckItem(action.stringId, menu)
     _assert_menu_item_exists(menu, action.title, None)
 
 
 def test_remove_action(
-    action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
+    _action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
 ):
     action = ExampleAction()
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendMenuItem(action.stringId, menu)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
     toolbar.Realize()
 
-    assert len(action_controller.getActionsStrId()) == 1
+    assert len(_action_controller.getActionsStrId()) == 1
     _assert_menu_item_exists(menu, action.title, None)
     assert toolbar.GetToolsCount() == 1
 
-    action_controller.removeAction(action.stringId)
+    _action_controller.removeAction(action.stringId)
     toolbar.Realize()
 
-    assert len(action_controller.getActionsStrId()) == 0
+    assert len(_action_controller.getActionsStrId()) == 0
     assert menu.FindItem(action.title) == wx.NOT_FOUND
     assert toolbar.GetToolsCount() == 0
 
 
 def test_remove_action_and_run(
-    action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
+    _action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
 ):
     action = ExampleAction()
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendMenuItem(action.stringId, menu)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    menu_item_id = _get_menu_item_id(action_controller, action.stringId)
-    tool_item_id = _get_tool_item_id(action_controller, action.stringId)
+    menu_item_id = _get_menu_item_id(_action_controller, action.stringId)
+    tool_item_id = _get_tool_item_id(_action_controller, action.stringId)
 
     _emulate_menu_click(main_window, menu_item_id)
     assert action.runCount == 1
@@ -273,7 +271,7 @@ def test_remove_action_and_run(
     _emulate_button_click(main_window, tool_item_id)
     assert action.runCount == 2
 
-    action_controller.removeAction(action.stringId)
+    _action_controller.removeAction(action.stringId)
 
     _emulate_menu_click(main_window, menu_item_id)
     assert action.runCount == 2
@@ -283,21 +281,21 @@ def test_remove_action_and_run(
 
 
 def test_run_action(
-    action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
+    _action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
 ):
     action = ExampleAction()
     menu = file_menu
 
-    action_controller.register(action)
-    action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.register(action)
+    _action_controller.appendMenuItem(action.stringId, menu)
 
-    menu_item_id = _get_menu_item_id(action_controller, action.stringId)
+    menu_item_id = _get_menu_item_id(_action_controller, action.stringId)
 
     _emulate_menu_click(main_window, menu_item_id)
 
     assert action.runCount == 1
 
-    action_controller.removeAction(action.stringId)
+    _action_controller.removeAction(action.stringId)
 
     # The event must not be handled after the menu item is removed
     _emulate_menu_click(main_window, menu_item_id)
@@ -305,7 +303,7 @@ def test_run_action(
 
 
 def test_append_toolbar_button(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -313,47 +311,47 @@ def test_append_toolbar_button(
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendMenuItem(action.stringId, menu)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 1
 
-    action_controller.removeAction(action.stringId)
+    _action_controller.removeAction(action.stringId)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 0
 
 
 def test_append_toolbar_check_button(
-    action_controller: ActionController, main_window: MainWindow
+    _action_controller: ActionController, main_window: MainWindow
 ):
     action = ExampleCheckAction()
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 1
 
-    action_controller.removeAction(action.stringId)
+    _action_controller.removeAction(action.stringId)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 0
 
 
 def test_append_toolbar_check_button_and_run(
-    action_controller: ActionController, main_window: MainWindow
+    _action_controller: ActionController, main_window: MainWindow
 ):
     action = ExampleCheckAction()
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    tool_item_id = _get_tool_item_id(action_controller, action.stringId)
+    tool_item_id = _get_tool_item_id(_action_controller, action.stringId)
 
     _emulate_check_button_click(main_window, toolbar, tool_item_id)
     assert action.runCount == 1
@@ -364,11 +362,11 @@ def test_append_toolbar_check_button_and_run(
     _emulate_check_button_click(main_window, toolbar, tool_item_id)
     assert action.runCount == 1
 
-    action_controller.removeAction(action.stringId)
+    _action_controller.removeAction(action.stringId)
 
 
 def test_check_button_and_menu_with_events(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -376,13 +374,13 @@ def test_check_button_and_menu_with_events(
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
-    action_controller.appendMenuCheckItem(action.stringId, menu)
+    _action_controller.register(action)
+    _action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.appendMenuCheckItem(action.stringId, menu)
 
-    menu_item = _get_menu_item(action_controller, action.stringId)
-    tool_item = _get_tool_item(action_controller, toolbar, action.stringId)
-    tool_item_id = _get_tool_item_id(action_controller, action.stringId)
+    menu_item = _get_menu_item(_action_controller, action.stringId)
+    tool_item = _get_tool_item(_action_controller, toolbar, action.stringId)
+    tool_item_id = _get_tool_item_id(_action_controller, action.stringId)
 
     assert not menu_item.IsChecked()
     assert not tool_item.IsToggled()
@@ -399,7 +397,7 @@ def test_check_button_and_menu_with_events(
 
 
 def test_check_button_and_menu(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -407,36 +405,36 @@ def test_check_button_and_menu(
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
-    action_controller.appendMenuCheckItem(action.stringId, menu)
+    _action_controller.register(action)
+    _action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.appendMenuCheckItem(action.stringId, menu)
 
-    menu_item = _get_menu_item(action_controller, action.stringId)
-    tool_item = _get_tool_item(action_controller, toolbar, action.stringId)
+    menu_item = _get_menu_item(_action_controller, action.stringId)
+    tool_item = _get_tool_item(_action_controller, toolbar, action.stringId)
 
     assert not menu_item.IsChecked()
     assert not tool_item.IsToggled()
     assert action.runCount == 0
 
-    action_controller.check(action.stringId, True)
+    _action_controller.check(action.stringId, True)
 
     assert menu_item.IsChecked()
     assert tool_item.IsToggled()
     assert action.runCount == 1
 
-    action_controller.check(action.stringId, True)
+    _action_controller.check(action.stringId, True)
 
     assert menu_item.IsChecked()
     assert tool_item.IsToggled()
     assert action.runCount == 2
 
-    action_controller.check(action.stringId, False)
+    _action_controller.check(action.stringId, False)
 
     assert not menu_item.IsChecked()
     assert not tool_item.IsToggled()
     assert action.runCount == 1
 
-    action_controller.check(action.stringId, False)
+    _action_controller.check(action.stringId, False)
 
     assert not menu_item.IsChecked()
     assert not tool_item.IsToggled()
@@ -444,7 +442,7 @@ def test_check_button_and_menu(
 
 
 def test_remove_check_menu(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -452,14 +450,14 @@ def test_remove_check_menu(
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    action_controller.appendMenuCheckItem(action.stringId, menu)
-    action_controller.removeMenuItem(action.stringId)
+    _action_controller.appendMenuCheckItem(action.stringId, menu)
+    _action_controller.removeMenuItem(action.stringId)
 
-    tool_item = _get_tool_item(action_controller, toolbar, action.stringId)
-    tool_item_id = _get_tool_item_id(action_controller, action.stringId)
+    tool_item = _get_tool_item(_action_controller, toolbar, action.stringId)
+    tool_item_id = _get_tool_item_id(_action_controller, action.stringId)
 
     assert not tool_item.IsToggled()
 
@@ -473,67 +471,67 @@ def test_remove_check_menu(
 
 
 def test_append_toolbar_button_only(
-    action_controller: ActionController, main_window: MainWindow
+    _action_controller: ActionController, main_window: MainWindow
 ):
     action = ExampleAction()
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 1
 
-    action_controller.removeAction(action.stringId)
+    _action_controller.removeAction(action.stringId)
 
     assert toolbar.GetToolsCount() == 0
     toolbar.Realize()
 
 
 def test_append_toolbar_button_and_run(
-    action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
+    _action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
 ):
     action = ExampleAction()
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendMenuItem(action.stringId, menu)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    menu_item_id = _get_menu_item_id(action_controller, action.stringId)
+    menu_item_id = _get_menu_item_id(_action_controller, action.stringId)
 
     _emulate_menu_click(main_window, menu_item_id)
     assert action.runCount == 1
 
-    action_controller.removeAction(action.stringId)
+    _action_controller.removeAction(action.stringId)
 
     _emulate_menu_click(main_window, menu_item_id)
     assert action.runCount == 1
 
 
 def test_append_toolbar_button_only_and_run(
-    action_controller: ActionController, main_window: MainWindow
+    _action_controller: ActionController, main_window: MainWindow
 ):
     action = ExampleAction()
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    tool_item_id = _get_tool_item_id(action_controller, action.stringId)
+    tool_item_id = _get_tool_item_id(_action_controller, action.stringId)
 
     _emulate_button_click(main_window, tool_item_id)
     assert action.runCount == 1
 
-    action_controller.removeAction(action.stringId)
+    _action_controller.removeAction(action.stringId)
 
     _emulate_button_click(main_window, tool_item_id)
     assert action.runCount == 1
 
 
 def test_remove_tool_button(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -541,15 +539,15 @@ def test_remove_tool_button(
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendMenuItem(action.stringId, menu)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 1
     _assert_menu_item_exists(menu, action.title, None)
 
-    action_controller.removeToolbarButton(action.stringId)
+    _action_controller.removeToolbarButton(action.stringId)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 0
@@ -557,20 +555,20 @@ def test_remove_tool_button(
 
 
 def test_remove_tool_button_invalid(
-    action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
+    _action_controller: ActionController, main_window: MainWindow, file_menu: wx.Menu
 ):
     action = ExampleAction()
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.register(action)
+    _action_controller.appendMenuItem(action.stringId, menu)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 0
     _assert_menu_item_exists(menu, action.title, None)
 
-    action_controller.removeToolbarButton(action.stringId)
+    _action_controller.removeToolbarButton(action.stringId)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 0
@@ -578,7 +576,7 @@ def test_remove_tool_button_invalid(
 
 
 def test_remove_menu_item_invalid(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -586,14 +584,14 @@ def test_remove_menu_item_invalid(
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 1
     assert menu.FindItem(action.title) == wx.NOT_FOUND
 
-    action_controller.removeMenuItem(action.stringId)
+    _action_controller.removeMenuItem(action.stringId)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 1
@@ -601,7 +599,7 @@ def test_remove_menu_item_invalid(
 
 
 def test_remove_menu_item(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -609,89 +607,92 @@ def test_remove_menu_item(
     menu = file_menu
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action)
-    action_controller.appendMenuItem(action.stringId, menu)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.register(action)
+    _action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 1
     _assert_menu_item_exists(menu, action.title, None)
 
-    action_controller.removeMenuItem(action.stringId)
+    _action_controller.removeMenuItem(action.stringId)
     toolbar.Realize()
 
     assert toolbar.GetToolsCount() == 1
     assert menu.FindItem(action.title) == wx.NOT_FOUND
 
 
-def test_hot_keys_default_menu(action_controller: ActionController, file_menu: wx.Menu):
+def test_hot_keys_default_menu(
+    _action_controller: ActionController, file_menu: wx.Menu
+):
     action = ExampleAction()
     menu = file_menu
     hotkey = HotKey("T", ctrl=True)
 
-    action_controller.register(action, hotkey=hotkey)
-    assert action_controller.getHotKey(action.stringId) == hotkey
+    _action_controller.register(action, hotkey=hotkey)
+    assert _action_controller.getHotKey(action.stringId) == hotkey
 
-    action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendMenuItem(action.stringId, menu)
 
     _assert_menu_item_exists(menu, action.title, hotkey)
 
 
 def test_hot_keys_default_toolbar(
-    action_controller: ActionController, main_window: MainWindow
+    _action_controller: ActionController, main_window: MainWindow
 ):
     action = ExampleAction()
     hotkey = HotKey("T", ctrl=True)
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action, hotkey=hotkey)
-    assert action_controller.getHotKey(action.stringId) == hotkey
+    _action_controller.register(action, hotkey=hotkey)
+    assert _action_controller.getHotKey(action.stringId) == hotkey
 
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    assert _get_tool_item_label(
-        action_controller, toolbar, action.stringId
-    ) == "{0} ({1})".format(action.title, HotKeyParser.toString(hotkey))
+    assert (
+        _get_tool_item_label(_action_controller, toolbar, action.stringId)
+        == f"{action.title} ({HotKeyParser.toString(hotkey)})"
+    )
 
 
-def test_disable_tools(action_controller: ActionController, main_window: MainWindow):
+def test_disable_tools(_action_controller: ActionController, main_window: MainWindow):
     action = ExampleAction()
     hotkey = HotKey("T", ctrl=True)
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
-    action_controller.register(action, hotkey=hotkey)
+    _action_controller.register(action, hotkey=hotkey)
 
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    tool_id = _get_tool_item_id(action_controller, action.stringId)
+    tool_id = _get_tool_item_id(_action_controller, action.stringId)
 
-    action_controller.enableTools(action.stringId, False)
+    _action_controller.enableTools(action.stringId, False)
     assert not toolbar.GetToolEnabled(tool_id)
 
-    action_controller.enableTools(action.stringId, True)
+    _action_controller.enableTools(action.stringId, True)
     assert toolbar.GetToolEnabled(tool_id)
 
 
-def test_disable_menu_item(action_controller: ActionController, file_menu: wx.Menu):
+def test_disable_menu_item(_action_controller: ActionController, file_menu: wx.Menu):
     action = ExampleAction()
     hotkey = HotKey("T", ctrl=True)
     menu = file_menu
 
-    action_controller.register(action, hotkey=hotkey)
+    _action_controller.register(action, hotkey=hotkey)
 
-    action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendMenuItem(action.stringId, menu)
 
-    menu_item_id = _get_menu_item_id(action_controller, action.stringId)
+    menu_item_id = _get_menu_item_id(_action_controller, action.stringId)
 
-    action_controller.enableTools(action.stringId, False)
+    _action_controller.enableTools(action.stringId, False)
     assert not menu.IsEnabled(menu_item_id)
 
-    action_controller.enableTools(action.stringId, True)
+    _action_controller.enableTools(action.stringId, True)
     assert menu.IsEnabled(menu_item_id)
 
 
 def test_disable_tools_all(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -700,81 +701,81 @@ def test_disable_tools_all(
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
     menu = file_menu
 
-    action_controller.register(action, hotkey=hotkey)
+    _action_controller.register(action, hotkey=hotkey)
 
-    action_controller.appendMenuItem(action.stringId, menu)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    menu_item_id = _get_menu_item_id(action_controller, action.stringId)
-    tool_id = _get_tool_item_id(action_controller, action.stringId)
+    menu_item_id = _get_menu_item_id(_action_controller, action.stringId)
+    tool_id = _get_tool_item_id(_action_controller, action.stringId)
 
-    action_controller.enableTools(action.stringId, False)
+    _action_controller.enableTools(action.stringId, False)
     assert not toolbar.GetToolEnabled(tool_id)
     assert not menu.IsEnabled(menu_item_id)
 
-    action_controller.enableTools(action.stringId, True)
+    _action_controller.enableTools(action.stringId, True)
     assert toolbar.GetToolEnabled(tool_id)
     assert menu.IsEnabled(menu_item_id)
 
 
-def test_disable_tools_none(action_controller: ActionController):
+def test_disable_tools_none(_action_controller: ActionController):
     action = ExampleAction()
     hotkey = HotKey("T", ctrl=True)
 
-    action_controller.register(action, hotkey=hotkey)
-    action_controller.enableTools(action.stringId, False)
+    _action_controller.register(action, hotkey=hotkey)
+    _action_controller.enableTools(action.stringId, False)
 
 
-def test_get_action_1(action_controller: ActionController):
+def test_get_action_1(_action_controller: ActionController):
     action1 = ExampleAction()
     action2 = ExampleCheckAction()
 
-    action_controller.register(action1)
-    action_controller.register(action2)
+    _action_controller.register(action1)
+    _action_controller.register(action2)
 
-    assert action_controller.getAction(action1.stringId) == action1
-    assert action_controller.getAction(action2.stringId) == action2
+    assert _action_controller.getAction(action1.stringId) == action1
+    assert _action_controller.getAction(action2.stringId) == action2
 
 
-def test_get_action_2(action_controller: ActionController):
+def test_get_action_2(_action_controller: ActionController):
     action1 = ExampleAction()
     action2 = ExampleCheckAction()
-    action_controller.register(action1)
+    _action_controller.register(action1)
 
     with pytest.raises(KeyError):
-        action_controller.getAction(action2.stringId)
+        _action_controller.getAction(action2.stringId)
 
 
 def test_hot_key_load_config(
-    action_controller: ActionController, application: Application
+    _action_controller: ActionController, application: Application
 ):
     action = ExampleAction()
     hotkey_from_config = HotKey("F11")
     HotKeyOption(
         application.config,
-        action_controller.configSection,
+        _action_controller.configSection,
         action.stringId,
         None,
     ).value = hotkey_from_config
 
-    action_controller.register(action, HotKey("F12", ctrl=True))
+    _action_controller.register(action, HotKey("F12", ctrl=True))
 
-    assert action_controller.getHotKey(action.stringId).key == "F11"
-    assert not action_controller.getHotKey(action.stringId).ctrl
-    assert not action_controller.getHotKey(action.stringId).shift
-    assert not action_controller.getHotKey(action.stringId).alt
+    assert _action_controller.getHotKey(action.stringId).key == "F11"
+    assert not _action_controller.getHotKey(action.stringId).ctrl
+    assert not _action_controller.getHotKey(action.stringId).shift
+    assert not _action_controller.getHotKey(action.stringId).alt
 
 
 def test_hot_key_save_config_1(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     application: Application,
 ):
     action = ExampleAction()
     hotkey = HotKey("F11", ctrl=True)
 
-    action_controller.register(action, hotkey)
-    action_controller.saveHotKeys()
+    _action_controller.register(action, hotkey)
+    _action_controller.saveHotKeys()
 
     other_action_controller = ActionController(main_window, application.config, Theme())
     other_action_controller.register(action)
@@ -786,15 +787,15 @@ def test_hot_key_save_config_1(
 
 
 def test_hot_key_save_config_2(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     application: Application,
 ):
     action = ExampleAction()
     hotkey = HotKey("F11", ctrl=True)
 
-    action_controller.register(action, hotkey)
-    action_controller.saveHotKeys()
+    _action_controller.register(action, hotkey)
+    _action_controller.saveHotKeys()
 
     other_action_controller = ActionController(main_window, application.config, Theme())
     other_action_controller.register(action, HotKey("F1", shift=True))
@@ -806,14 +807,14 @@ def test_hot_key_save_config_2(
 
 
 def test_hot_key_save_config_3(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     application: Application,
 ):
     action = ExampleAction()
 
-    action_controller.register(action)
-    action_controller.saveHotKeys()
+    _action_controller.register(action)
+    _action_controller.saveHotKeys()
 
     other_action_controller = ActionController(main_window, application.config, Theme())
     other_action_controller.register(action)
@@ -821,17 +822,17 @@ def test_hot_key_save_config_3(
     assert other_action_controller.getHotKey(action.stringId) is None
 
 
-def test_set_hot_key(action_controller: ActionController):
+def test_set_hot_key(_action_controller: ActionController):
     action = ExampleAction()
-    action_controller.register(action, None)
+    _action_controller.register(action, None)
 
     hotkey = HotKey("F11", ctrl=True)
-    action_controller.changeHotkeys([(action.stringId, hotkey)])
-    assert action_controller.getHotKey(action.stringId) == hotkey
+    _action_controller.changeHotkeys([(action.stringId, hotkey)])
+    assert _action_controller.getHotKey(action.stringId) == hotkey
 
 
 def test_change_hotkey_gui(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -841,62 +842,62 @@ def test_change_hotkey_gui(
     hotkey = HotKey("F11", ctrl=True)
 
     action = ExampleAction()
-    action_controller.register(action, None)
+    _action_controller.register(action, None)
 
-    action_controller.appendMenuItem(action.stringId, menu)
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    action_controller.changeHotkeys([(action.stringId, hotkey)])
+    _action_controller.changeHotkeys([(action.stringId, hotkey)])
 
     assert _get_tool_item_label(
-        action_controller, toolbar, action.stringId
+        _action_controller, toolbar, action.stringId
     ) == "{} ({})".format(action.title, "Ctrl+F11")
 
     assert _get_menu_item(
-        action_controller, action.stringId
+        _action_controller, action.stringId
     ).GetItemLabel() == "{}\t{}".format(action.title, "Ctrl+F11")
 
 
 def test_change_hotkey_gui_menu(
-    action_controller: ActionController, file_menu: wx.Menu
+    _action_controller: ActionController, file_menu: wx.Menu
 ):
     menu = file_menu
 
     hotkey = HotKey("F11", ctrl=True)
 
     action = ExampleAction()
-    action_controller.register(action, None)
+    _action_controller.register(action, None)
 
-    action_controller.appendMenuItem(action.stringId, menu)
+    _action_controller.appendMenuItem(action.stringId, menu)
 
-    action_controller.changeHotkeys([(action.stringId, hotkey)])
+    _action_controller.changeHotkeys([(action.stringId, hotkey)])
 
     assert _get_menu_item(
-        action_controller, action.stringId
+        _action_controller, action.stringId
     ).GetItemLabel() == "{}\t{}".format(action.title, "Ctrl+F11")
 
 
 def test_change_hotkey_toolbar(
-    action_controller: ActionController, main_window: MainWindow
+    _action_controller: ActionController, main_window: MainWindow
 ):
     toolbar = main_window.toolbars[TOOLBAR_PLUGINS]
 
     hotkey = HotKey("F11", ctrl=True)
 
     action = ExampleAction()
-    action_controller.register(action, None)
+    _action_controller.register(action, None)
 
-    action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.appendToolbarButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    action_controller.changeHotkeys([(action.stringId, hotkey)])
+    _action_controller.changeHotkeys([(action.stringId, hotkey)])
 
     assert _get_tool_item_label(
-        action_controller, toolbar, action.stringId
+        _action_controller, toolbar, action.stringId
     ) == "{} ({})".format(action.title, "Ctrl+F11")
 
 
 def test_change_hotkey_gui_checked_1(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -906,24 +907,24 @@ def test_change_hotkey_gui_checked_1(
     hotkey = HotKey("F11", ctrl=True)
 
     action = ExampleCheckAction()
-    action_controller.register(action, None)
+    _action_controller.register(action, None)
 
-    action_controller.appendMenuCheckItem(action.stringId, menu)
-    action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.appendMenuCheckItem(action.stringId, menu)
+    _action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    action_controller.changeHotkeys([(action.stringId, hotkey)])
+    _action_controller.changeHotkeys([(action.stringId, hotkey)])
 
     assert _get_tool_item_label(
-        action_controller, toolbar, action.stringId
+        _action_controller, toolbar, action.stringId
     ) == "{} ({})".format(action.title, "Ctrl+F11")
 
     assert _get_menu_item(
-        action_controller, action.stringId
+        _action_controller, action.stringId
     ).GetItemLabel() == "{}\t{}".format(action.title, "Ctrl+F11")
 
 
 def test_change_hotkey_gui_checked_2(
-    action_controller: ActionController,
+    _action_controller: ActionController,
     main_window: MainWindow,
     file_menu: wx.Menu,
 ):
@@ -933,16 +934,16 @@ def test_change_hotkey_gui_checked_2(
     hotkey = HotKey("F11", ctrl=True)
 
     action = ExampleCheckAction()
-    action_controller.register(action, None)
+    _action_controller.register(action, None)
 
-    action_controller.appendMenuCheckItem(action.stringId, menu)
-    action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
+    _action_controller.appendMenuCheckItem(action.stringId, menu)
+    _action_controller.appendToolbarCheckButton(action.stringId, toolbar, TOOLBAR_IMAGE)
 
-    menu_item = _get_menu_item(action_controller, action.stringId)
-    tool_item = _get_tool_item(action_controller, toolbar, action.stringId)
+    menu_item = _get_menu_item(_action_controller, action.stringId)
+    tool_item = _get_tool_item(_action_controller, toolbar, action.stringId)
 
-    action_controller.changeHotkeys([(action.stringId, hotkey)])
-    action_controller.check(action.stringId, True)
+    _action_controller.changeHotkeys([(action.stringId, hotkey)])
+    _action_controller.check(action.stringId, True)
 
     assert menu_item.IsChecked()
     assert tool_item.IsToggled()

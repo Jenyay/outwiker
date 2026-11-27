@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Tests for the GUI of the Source plugin."""
 
 from pathlib import Path
@@ -7,20 +5,19 @@ from pathlib import Path
 import pytest
 import wx
 
+from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.gui.tester import Tester
-
 
 # Number of styles in the pygments' STYLE_MAP
 STYLES_COUNT = 50
 
 
 @pytest.fixture
-def config(source_loader: PluginsLoader, ow_application):
+def config(source_loader: PluginsLoader, application: Application):
     """Source plugin configuration with an empty config section."""
     plugin_config = source_loader["Source"].config
-    application = ow_application.application
 
     application.config.remove_section(plugin_config.section)
 
@@ -30,11 +27,11 @@ def config(source_loader: PluginsLoader, ow_application):
 
 
 @pytest.fixture
-def dialog(source_loader: PluginsLoader, ow_application, main_window):
+def dialog(source_loader: PluginsLoader, application: Application, main_window):
     """Dialog for inserting the (:source:) command."""
     from source.insertdialog import InsertDialog
 
-    insert_dialog = InsertDialog(main_window, ow_application.application.theme)
+    insert_dialog = InsertDialog(main_window, application.theme)
 
     yield insert_dialog
 

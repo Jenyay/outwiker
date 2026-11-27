@@ -8,7 +8,6 @@ from outwiker.app.gui.mainwindow import MainWindow
 from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
-from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.texteditor import TextEditor
 from outwiker.tests.actions.test_editor_polyactions import EditorPolyactionsTests
 
@@ -30,11 +29,6 @@ def editor(
 
     application.selectedPage = None
     application.wikiroot = None
-
-
-@pytest.fixture
-def action_controller(application: Application) -> ActionController:
-    return application.actionController
 
 
 class TestMarkdownPolyactions(EditorPolyactionsTests):

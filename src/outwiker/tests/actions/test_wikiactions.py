@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Tests for the actions of the wiki page editor."""
 
 from collections.abc import Iterator
@@ -118,12 +116,6 @@ def editor(application: Application, wiki: WikiDocument) -> TextEditor:
     return _get_editor(application)
 
 
-@pytest.fixture
-def action_controller(application: Application) -> ActionController:
-    """Controller of the application actions."""
-    return application.actionController
-
-
 def _get_editor(application: Application) -> TextEditor:
     """Editor of the currently opened page."""
     return application.mainWindow.pagePanel.pageView.codeEditor
@@ -159,9 +151,7 @@ def test_turn_syntax_empty(application, test_page, temp_page, action_controller)
         assert _get_editor(application).GetText() == begin + end
 
 
-def test_turn_syntax_selected_all(
-    application, test_page, temp_page, action_controller
-):
+def test_turn_syntax_selected_all(application, test_page, temp_page, action_controller):
     text = "Бла-бла-бла"
 
     for action_str, begin, end in _TURN_SYNTAX:

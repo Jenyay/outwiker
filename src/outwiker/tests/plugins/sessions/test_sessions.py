@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Tests for the Sessions plugin."""
 
 import os.path
@@ -12,12 +10,6 @@ from outwiker.api.core.tree import WikiDocument, createNotesTree, loadNotesTree
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.utils import removeDir
-
-
-@pytest.fixture
-def tabs_controller(main_window):
-    """Tabs controller of the main window."""
-    return main_window.tabsController
 
 
 @pytest.fixture(autouse=True)
@@ -694,9 +686,7 @@ def test_restore_readonly_01(application, wiki, tabs_controller, controller):
     application.selectedPage = readonly_wiki["Страница 1"]
 
     tabs_controller.openInTab(readonly_wiki["Страница 2"], True)
-    tabs_controller.openInTab(
-        readonly_wiki["Страница 1/Страница 3/Страница 4"], True
-    )
+    tabs_controller.openInTab(readonly_wiki["Страница 1/Страница 3/Страница 4"], True)
     tabs_controller.openInTab(readonly_wiki["Страница 1/Страница 3"], False)
 
     session = controller.getCurrentSession()
@@ -724,9 +714,7 @@ def test_restore_readonly_02(application, wiki, tabs_controller, controller):
     application.selectedPage = readonly_wiki["Страница 1"]
 
     tabs_controller.openInTab(readonly_wiki["Страница 2"], True)
-    tabs_controller.openInTab(
-        readonly_wiki["Страница 1/Страница 3/Страница 4"], True
-    )
+    tabs_controller.openInTab(readonly_wiki["Страница 1/Страница 3/Страница 4"], True)
     tabs_controller.openInTab(readonly_wiki["Страница 1/Страница 3"], False)
 
     session = controller.getCurrentSession()

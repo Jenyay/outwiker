@@ -8,11 +8,13 @@ import wx
 
 from outwiker.api.core.tree import WikiDocument, WikiPage, createNotesTree
 from outwiker.app.gui.mainwindow import MainWindow
+from outwiker.app.gui.tabscontroller import TabsController
 from outwiker.app.owapplication import OutWikerApplication
 from outwiker.core import defines
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
 from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.tester import Tester
 from outwiker.pages.text.textpage import TextPageFactory
@@ -198,6 +200,18 @@ def main_window(ow_application: OutWikerApplication) -> MainWindow:
     window = ow_application.getMainWindow()
     assert window is not None
     return window
+
+
+@pytest.fixture
+def action_controller(application: Application) -> ActionController:
+    """Controller of the application actions."""
+    return application.actionController
+
+
+@pytest.fixture
+def tabs_controller(main_window: MainWindow) -> TabsController:
+    """Tabs controller of the main window."""
+    return main_window.tabsController
 
 
 @pytest.fixture

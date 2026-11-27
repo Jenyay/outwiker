@@ -15,7 +15,9 @@ def sessions_loader(
     """
     Sessions plugin loaded into the application with the main window.
 
-    The plugin is loaded after the main window is created, so it registers
-    its GUI actions too.
+    Unlike the other plugins, this one needs the main window to be loaded:
+    it creates a ``wx.Menu`` while loading, which requires the ``wx.App``
+    created together with the main window, and ``SessionController`` works
+    only with the created tabs controller.
     """
     return plugins_loader("plugins/sessions")

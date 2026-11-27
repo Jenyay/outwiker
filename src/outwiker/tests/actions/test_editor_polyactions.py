@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Tests for editor polyactions on wiki, HTML, and text pages."""
 
 from collections.abc import Iterator
@@ -30,13 +28,10 @@ from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 
-
 PAGE_TYPES = [
     pytest.param((WikiPageFactory, "Викистраница", "codeEditor"), id="wiki"),
     pytest.param((HtmlPageFactory, "HTML-страница", "codeEditor"), id="html"),
-    pytest.param(
-        (TextPageFactory, "Текстовая страница", "textEditor"), id="text"
-    ),
+    pytest.param((TextPageFactory, "Текстовая страница", "textEditor"), id="text"),
 ]
 
 
@@ -56,11 +51,6 @@ def editor(
 
     application.selectedPage = None
     application.wikiroot = None
-
-
-@pytest.fixture
-def action_controller(application: Application) -> ActionController:
-    return application.actionController
 
 
 class EditorPolyactionsTests:
