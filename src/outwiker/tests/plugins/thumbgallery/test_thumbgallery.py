@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-"""Tests for the (:thumbgallery:) wiki command of the Thumb Gallery plug-in."""
+"""Tests for the (:thumbgallery:) wiki command of the Thumb Gallery plugin."""
 
 import os.path
-from collections.abc import Callable
 from pathlib import Path
 
 import pytest
@@ -26,17 +25,15 @@ def test_page(wikiroot) -> WikiPage:
 def parser(
     test_page: WikiPage,
     application,
-    plugins_loader: Callable[..., PluginsLoader],
+    thumbgallery_loader: PluginsLoader,
 ) -> Parser:
-    """Wiki parser with the commands added by the Thumb Gallery plug-in."""
-    plugins_loader("plugins/thumbgallery")
+    """Wiki parser with the commands added by the Thumb Gallery plugin."""
     factory = ParserFactory()
     return factory.make(test_page, application)
 
 
-def test_plugin_load(plugins_loader: Callable[..., PluginsLoader]):
-    loader = plugins_loader("plugins/thumbgallery")
-    assert len(loader) == 1
+def test_plugin_load(thumbgallery_loader: PluginsLoader):
+    assert len(thumbgallery_loader) == 1
 
 
 def test_content_parse_empty(parser):

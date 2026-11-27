@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-"""Tests for downloading web pages by the WebPage plug-in."""
+"""Tests for downloading web pages by the WebPage plugin."""
 
 import urllib.request
-from collections.abc import Callable
 from pathlib import Path
 
 import pytest
@@ -20,7 +19,7 @@ SCRIPT_TEMPLATE = '<script src="{path}"'
 HREF_TEMPLATE = 'href="{path}"'
 CSS_URL_TEMPLATE = 'url("{path}")'
 
-# Directory with the test data of the WebPage plug-in
+# Directory with the test data of the WebPage plugin
 _TESTDATA_PATH = Path("testdata/webpage")
 
 
@@ -76,9 +75,7 @@ def download_dir(temp_dir: Path) -> Path:
 
 
 @pytest.fixture
-def controller(temp_dir: Path, plugins_loader: Callable[..., PluginsLoader]):
-    plugins_loader("plugins/webpage")
-
+def controller(temp_dir: Path, webpage_loader: PluginsLoader):
     from webpage.downloader import DownloadController
 
     return DownloadController(str(temp_dir), STATIC_DIR_NAME)

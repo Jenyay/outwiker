@@ -11,7 +11,7 @@ from outwiker.tests.utils import removeDir
 
 
 class MarkdownTest(unittest.TestCase):
-    """Markdown plug-in tests"""
+    """Markdown plugin tests"""
 
     def setUp(self):
         self._application = Application()

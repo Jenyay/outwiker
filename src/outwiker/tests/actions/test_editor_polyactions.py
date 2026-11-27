@@ -68,7 +68,7 @@ class EditorPolyactionsTests:
     Polyactions tests that do not depend on the page type.
 
     Modules for concrete page types inherit from this class and override the
-    ``editor`` fixture (see the Markdown plug-in tests).
+    ``editor`` fixture (see the Markdown plugin tests).
     """
 
     def test_line_duplicate_01(

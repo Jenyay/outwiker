@@ -1,602 +1,636 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-import unittest
+"""Tests for the GUI of the Source plugin."""
 
+from pathlib import Path
+
+import pytest
 import wx
 
-from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.attachment import Attachment
+from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.gui.tester import Tester
-from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
-
-
-class SourceGuiPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
-    """
-    Тесты интерфейса для плагина Source
-    """
-
-    def setUp(self):
-        self.__pluginname = "Source"
-        self.initApplication()
-        self.wikiroot = self.createWiki()
-        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
-
-        dirlist = ["plugins/source"]
-        self.samplefilesPath = "testdata/samplefiles/sources"
-        self._stylesCount = 50
-
-        self.loader = PluginsLoader(self.application)
-        self.loader.load(dirlist)
-
-        self.config = self.loader[self.__pluginname].config
-        self._clearConfig(self.config)
-
-        from source.insertdialogcontroller import InsertDialogController
-        from source.insertdialog import InsertDialog
-
-        self.dialog = InsertDialog(self.application.mainWindow, self.application.theme)
-        self.controller = InsertDialogController(
-            self.testPage, self.dialog, self.config
-        )
-        Tester.dialogTester.clear()
-
-    def tearDown(self):
-        self._clearConfig(self.config)
-        self.loader.clear()
-        self.destroyApplication()
-        self.destroyWiki(self.wikiroot)
-        Tester.dialogTester.clear()
-
-    def _clearConfig(self, config):
-        self.application.config.remove_section(self.config.section)
-
-    def testDialogController1(self):
-        """
-        Тест контроллера диалога для вставки команды (:source:)
-        """
-        Tester.dialogTester.appendCancel()
-        result = self.controller.showDialog()
-
-        self.assertEqual(result, wx.ID_CANCEL)
-
-    def testDialogController2(self):
-        """
-        Тест контроллера диалога для вставки команды (:source:)
-        """
-        Tester.dialogTester.appendOk()
-        result = self.controller.showDialog()
-
-        self.assertEqual(result, wx.ID_OK)
-
-    def testDialogControllerResult1(self):
-        """
-        Тест контроллера диалога для вставки команды (:source:)
-        """
-        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
-        self.config.defaultLanguage.value = "text"
-
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-
-        self.dialog.tabWidthSpin.SetValue(4)
-        result = self.controller.getCommandStrings()
-
-        self.assertEqual(
-            result, ('(:source lang="text" tabwidth="4":)\n', "\n(:sourceend:)")
-        )
-
-    def testDialogControllerResult2(self):
-        """
-        Тест контроллера диалога для вставки команды (:source:)
-        """
-        self.config.defaultLanguage.value = "python"
-
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-
-        self.dialog.tabWidthSpin.SetValue(8)
-        result = self.controller.getCommandStrings()
-
-        self.assertEqual(
-            result, ('(:source lang="python" tabwidth="8":)\n', "\n(:sourceend:)")
-        )
-
-    def testDialogControllerResult3(self):
-        """
-        Тест контроллера диалога для вставки команды (:source:)
-        """
-        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
-        self.config.defaultLanguage.value = "text"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
 
-        self.dialog.tabWidthSpin.SetValue(4)
-        result = self.controller.getCommandStrings()
+# Number of styles in the pygments' STYLE_MAP
+STYLES_COUNT = 50
 
-        self.assertEqual(
-            result, ('(:source lang="text" tabwidth="4":)\n', "\n(:sourceend:)")
-        )
 
-    def testDialogControllerResult4(self):
-        """
-        Тест контроллера диалога для вставки команды (:source:)
-        """
-        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
-        self.config.defaultLanguage.value = "text"
+@pytest.fixture
+def config(source_loader: PluginsLoader, ow_application):
+    """Source plugin configuration with an empty config section."""
+    plugin_config = source_loader["Source"].config
+    application = ow_application.application
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    application.config.remove_section(plugin_config.section)
 
-        self.dialog.tabWidthSpin.SetValue(0)
-        result = self.controller.getCommandStrings()
+    yield plugin_config
 
-        self.assertEqual(result, ('(:source lang="text":)\n', "\n(:sourceend:)"))
+    application.config.remove_section(plugin_config.section)
 
-    def testDialogControllerResult5(self):
-        """
-        Тест контроллера диалога для вставки команды (:source:)
-        """
-        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
-        self.config.defaultLanguage.value = "text"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+@pytest.fixture
+def dialog(source_loader: PluginsLoader, ow_application, main_window):
+    """Dialog for inserting the (:source:) command."""
+    from source.insertdialog import InsertDialog
 
-        self.dialog.languageComboBox.SetSelection(0)
-        self.dialog.tabWidthSpin.SetValue(0)
-        result = self.controller.getCommandStrings()
+    insert_dialog = InsertDialog(main_window, ow_application.application.theme)
 
-        self.assertEqual(result, ('(:source lang="cpp":)\n', "\n(:sourceend:)"))
+    yield insert_dialog
 
-    def testDialogControllerResult6(self):
-        """
-        Тест контроллера диалога для вставки команды (:source:)
-        """
-        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
-        self.config.defaultLanguage.value = "text"
+    insert_dialog.Destroy()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
 
-        self.dialog.languageComboBox.SetSelection(1)
-        self.dialog.tabWidthSpin.SetValue(0)
-        result = self.controller.getCommandStrings()
+@pytest.fixture
+def controller(config, dialog, wikipage):
+    """Controller of the dialog for inserting the (:source:) command."""
+    from source.insertdialogcontroller import InsertDialogController
 
-        self.assertEqual(result, ('(:source lang="haskell":)\n', "\n(:sourceend:)"))
+    Tester.dialogTester.clear()
+    dialog_controller = InsertDialogController(wikipage, dialog, config)
 
-    def testSourceConfig1(self):
-        self.config.defaultLanguage.value = "python"
-        self.config.tabWidth.value = 8
-        self.config.dialogWidth.value = 100
-        self.config.dialogHeight.value = 200
-        self.config.languageList.value = ["python", "cpp", "haskell"]
+    yield dialog_controller
 
-        self.assertEqual(self.config.defaultLanguage.value, "python")
-        self.assertEqual(self.config.tabWidth.value, 8)
-        self.assertEqual(self.config.dialogWidth.value, 100)
-        self.assertEqual(self.config.dialogHeight.value, 200)
-        self.assertEqual(self.config.languageList.value, ["python", "cpp", "haskell"])
+    Tester.dialogTester.clear()
 
-    def testDialogLanguageValues1(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "haskell"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+def test_dialog_controller1(controller):
+    Tester.dialogTester.appendCancel()
+    result = controller.showDialog()
 
-        self.assertEqual(
-            self.dialog.languageComboBox.GetItems(),
-            ["C++", "Haskell", "Python", "Other..."],
-        )
+    assert result == wx.ID_CANCEL
 
-        self.assertEqual(self.dialog.languageComboBox.GetSelection(), 1)
-        self.assertEqual(self.dialog.languageComboBox.GetValue(), "Haskell")
 
-        self.assertEqual(self.dialog.tabWidthSpin.GetValue(), 0)
+def test_dialog_controller2(controller):
+    Tester.dialogTester.appendOk()
+    result = controller.showDialog()
 
-    def testDialogLanguageValues2(self):
-        self.config.languageList.value = []
-        self.config.defaultLanguage.value = "haskell"
+    assert result == wx.ID_OK
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
 
-        self.assertEqual(self.dialog.languageComboBox.GetItems(), ["text", "Other..."])
+def test_dialog_controller_result1(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell", "text"]
+    config.defaultLanguage.value = "text"
 
-        self.assertEqual(self.dialog.languageComboBox.GetSelection(), 0)
-        self.assertEqual(self.dialog.languageComboBox.GetValue(), "text")
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-    def testDialogLanguageValues3(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "c"
+    dialog.tabWidthSpin.SetValue(4)
+    result = controller.getCommandStrings()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    assert result == (
+        '(:source lang="text" tabwidth="4":)\n',
+        "\n(:sourceend:)",
+    )
 
-        self.assertEqual(
-            self.dialog.languageComboBox.GetItems(),
-            ["C++", "Haskell", "Python", "Other..."],
-        )
 
-        self.assertEqual(self.dialog.languageComboBox.GetSelection(), 0)
-        self.assertEqual(self.dialog.languageComboBox.GetValue(), "C++")
+def test_dialog_controller_result2(config, dialog, controller):
+    config.defaultLanguage.value = "python"
 
-    def testDialogLanguageValues4(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "   haskell   "
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    dialog.tabWidthSpin.SetValue(8)
+    result = controller.getCommandStrings()
 
-        self.assertEqual(
-            self.dialog.languageComboBox.GetItems(),
-            ["C++", "Haskell", "Python", "Other..."],
-        )
+    assert result == (
+        '(:source lang="python" tabwidth="8":)\n',
+        "\n(:sourceend:)",
+    )
 
-        self.assertEqual(self.dialog.languageComboBox.GetSelection(), 1)
-        self.assertEqual(self.dialog.languageComboBox.GetValue(), "Haskell")
 
-        self.assertEqual(self.dialog.tabWidthSpin.GetValue(), 0)
+def test_dialog_controller_result3(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell", "text"]
+    config.defaultLanguage.value = "text"
 
-    def testDialogStyleValues1(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    dialog.tabWidthSpin.SetValue(4)
+    result = controller.getCommandStrings()
 
-        self.assertEqual(self.dialog.styleComboBox.GetCount(), self._stylesCount)
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "default")
+    assert result == (
+        '(:source lang="text" tabwidth="4":)\n',
+        "\n(:sourceend:)",
+    )
 
-        result = self.controller.getCommandStrings()
 
-        self.assertEqual(result, ('(:source lang="python":)\n', "\n(:sourceend:)"))
+def test_dialog_controller_result4(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell", "text"]
+    config.defaultLanguage.value = "text"
 
-    def testDialogStyleValues2(self):
-        self.config.defaultStyle.value = "blablabla"
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        self.assertEqual(self.dialog.styleComboBox.GetCount(), self._stylesCount)
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "default")
+    dialog.tabWidthSpin.SetValue(0)
+    result = controller.getCommandStrings()
 
-    def testDialogStyleValues3(self):
-        self.config.defaultStyle.value = ""
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    assert result == ('(:source lang="text":)\n', "\n(:sourceend:)")
 
-        self.assertEqual(self.dialog.styleComboBox.GetCount(), self._stylesCount)
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "default")
 
-    def testDialogStyleValues4(self):
-        self.config.defaultStyle.value = "vim"
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+def test_dialog_controller_result5(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell", "text"]
+    config.defaultLanguage.value = "text"
 
-        self.assertEqual(self.dialog.styleComboBox.GetCount(), self._stylesCount)
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "vim")
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-    def testDialogStyleValues5(self):
-        self.config.defaultStyle.value = "emacs"
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    dialog.languageComboBox.SetSelection(0)
+    dialog.tabWidthSpin.SetValue(0)
+    result = controller.getCommandStrings()
 
-        self.assertEqual(self.dialog.styleComboBox.GetCount(), self._stylesCount)
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "emacs")
+    assert result == ('(:source lang="cpp":)\n', "\n(:sourceend:)")
 
-    def testDialogStyle1(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
-        self.config.defaultStyle.value = "vim"
-        self.config.style.value = "vim"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+def test_dialog_controller_result6(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell", "text"]
+    config.defaultLanguage.value = "text"
 
-        self.assertEqual(self.dialog.styleComboBox.GetCount(), self._stylesCount)
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "vim")
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        result = self.controller.getCommandStrings()
+    dialog.languageComboBox.SetSelection(1)
+    dialog.tabWidthSpin.SetValue(0)
+    result = controller.getCommandStrings()
 
-        self.assertEqual(result, ('(:source lang="python":)\n', "\n(:sourceend:)"))
+    assert result == ('(:source lang="haskell":)\n', "\n(:sourceend:)")
 
-    def testDialogStyle2(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
-        self.config.defaultStyle.value = "vim"
-        self.config.style.value = "default"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+def test_source_config1(config):
+    config.defaultLanguage.value = "python"
+    config.tabWidth.value = 8
+    config.dialogWidth.value = 100
+    config.dialogHeight.value = 200
+    config.languageList.value = ["python", "cpp", "haskell"]
 
-        self.assertEqual(self.dialog.styleComboBox.GetCount(), self._stylesCount)
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "default")
+    assert config.defaultLanguage.value == "python"
+    assert config.tabWidth.value == 8
+    assert config.dialogWidth.value == 100
+    assert config.dialogHeight.value == 200
+    assert config.languageList.value == ["python", "cpp", "haskell"]
 
-        result = self.controller.getCommandStrings()
 
-        self.assertEqual(
-            result, ('(:source lang="python" style="default":)\n', "\n(:sourceend:)")
-        )
+def test_dialog_language_values1(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "haskell"
 
-    def testDialogStyleText(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.dialog.styleComboBox.SetSelection(0)
+    assert dialog.languageComboBox.GetItems() == [
+        "C++",
+        "Haskell",
+        "Python",
+        "Other...",
+    ]
 
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "abap")
-        self.assertEqual(self.dialog.style, "abap")
+    assert dialog.languageComboBox.GetSelection() == 1
+    assert dialog.languageComboBox.GetValue() == "Haskell"
 
-        result = self.controller.getCommandStrings()
+    assert dialog.tabWidthSpin.GetValue() == 0
 
-        self.assertEqual(
-            result, ('(:source lang="python" style="abap":)\n', "\n(:sourceend:)")
-        )
 
-    def testDialogStyleFile(self):
-        Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")]
-        )
-        Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_cp1251.cs")]
-        )
+def test_dialog_language_values2(config, dialog, controller):
+    config.languageList.value = []
+    config.defaultLanguage.value = "haskell"
 
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    assert dialog.languageComboBox.GetItems() == ["text", "Other..."]
 
-        self.dialog.fileCheckBox.SetValue(True)
-        self.dialog.styleComboBox.SetSelection(0)
-        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
+    assert dialog.languageComboBox.GetSelection() == 0
+    assert dialog.languageComboBox.GetValue() == "text"
 
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "abap")
-        self.assertEqual(self.dialog.style, "abap")
 
-        result = self.controller.getCommandStrings()
+def test_dialog_language_values3(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "c"
 
-        self.assertEqual(
-            result,
-            (
-                '(:source file="Attach:source_cp1251.cs" lang="python" style="abap":)',
-                "(:sourceend:)",
-            ),
-        )
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-    def testDialogStyleFile2(self):
-        Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_utf8.py")]
-        )
-        Attachment(self.testPage).attach(
-            [os.path.join(self.samplefilesPath, "source_cp1251.cs")]
-        )
+    assert dialog.languageComboBox.GetItems() == [
+        "C++",
+        "Haskell",
+        "Python",
+        "Other...",
+    ]
 
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
+    assert dialog.languageComboBox.GetSelection() == 0
+    assert dialog.languageComboBox.GetValue() == "C++"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
 
-        self.dialog.fileCheckBox.SetValue(True)
-        self.dialog.styleComboBox.SetSelection(0)
-        self.dialog.attachmentComboBox.SetValue("source_cp1251.cs")
-        self.dialog.languageComboBox.SetSelection(0)
+def test_dialog_language_values4(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "   haskell   "
 
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "abap")
-        self.assertEqual(self.dialog.style, "abap")
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        result = self.controller.getCommandStrings()
+    assert dialog.languageComboBox.GetItems() == [
+        "C++",
+        "Haskell",
+        "Python",
+        "Other...",
+    ]
 
-        self.assertEqual(
-            result,
-            ('(:source file="Attach:source_cp1251.cs" style="abap":)', "(:sourceend:)"),
-        )
+    assert dialog.languageComboBox.GetSelection() == 1
+    assert dialog.languageComboBox.GetValue() == "Haskell"
 
-    def testDialogStyleText2(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
+    assert dialog.tabWidthSpin.GetValue() == 0
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.dialog.styleComboBox.SetSelection(0)
-        self.dialog.tabWidthSpin.SetValue(5)
 
-        self.assertEqual(self.dialog.styleComboBox.GetValue(), "abap")
-        self.assertEqual(self.dialog.style, "abap")
+def test_dialog_style_values1(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
 
-        result = self.controller.getCommandStrings()
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        self.assertEqual(
-            result,
-            ('(:source lang="python" tabwidth="5" style="abap":)\n', "\n(:sourceend:)"),
-        )
+    assert dialog.styleComboBox.GetCount() == STYLES_COUNT
+    assert dialog.styleComboBox.GetValue() == "default"
 
-    def testStyleConfig1(self):
-        self.config.style.value = "default"
+    result = controller.getCommandStrings()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.assertEqual(self.dialog.style, "default")
+    assert result == ('(:source lang="python":)\n', "\n(:sourceend:)")
 
-    def testStyleConfig2(self):
-        self.config.style.value = "vim"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.assertEqual(self.dialog.style, "vim")
+def test_dialog_style_values2(config, dialog, controller):
+    config.defaultStyle.value = "blablabla"
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-    def testStyleConfig3(self):
-        self.config.style.value = "  vim   "
+    assert dialog.styleComboBox.GetCount() == STYLES_COUNT
+    assert dialog.styleComboBox.GetValue() == "default"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.assertEqual(self.dialog.style, "vim")
 
-    def testStyleConfig4(self):
-        self.config.style.value = "invalid_style"
+def test_dialog_style_values3(config, dialog, controller):
+    config.defaultStyle.value = ""
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.assertEqual(self.dialog.style, "default")
+    assert dialog.styleComboBox.GetCount() == STYLES_COUNT
+    assert dialog.styleComboBox.GetValue() == "default"
 
-    def testStyleConfig5(self):
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.assertEqual(self.dialog.style, "default")
 
-    def testParentBgConfig1(self):
-        self.config.parentbg.value = "  False  "
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+def test_dialog_style_values4(config, dialog, controller):
+    config.defaultStyle.value = "vim"
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        self.assertEqual(self.dialog.parentbg, False)
+    assert dialog.styleComboBox.GetCount() == STYLES_COUNT
+    assert dialog.styleComboBox.GetValue() == "vim"
 
-    def testParentBgConfig2(self):
-        self.config.parentbg.value = "  True  "
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
 
-        self.assertEqual(self.dialog.parentbg, True)
+def test_dialog_style_values5(config, dialog, controller):
+    config.defaultStyle.value = "emacs"
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-    def testParentBgConfig3(self):
-        self.config.parentbg.value = "  блаблабла  "
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    assert dialog.styleComboBox.GetCount() == STYLES_COUNT
+    assert dialog.styleComboBox.GetValue() == "emacs"
 
-        self.assertEqual(self.dialog.parentbg, False)
 
-    def testParentBgConfig4(self):
-        # Если нет вообще записей в файле настроек
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+def test_dialog_style1(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
+    config.defaultStyle.value = "vim"
+    config.style.value = "vim"
 
-        self.assertEqual(self.dialog.parentbg, False)
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-    def testLineNumConfig1(self):
-        # Если нет вообще записей в файле настроек
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    assert dialog.styleComboBox.GetCount() == STYLES_COUNT
+    assert dialog.styleComboBox.GetValue() == "vim"
 
-        self.assertEqual(self.dialog.lineNum, False)
+    result = controller.getCommandStrings()
 
-    def testLineNumConfig2(self):
-        self.config.lineNum.value = "  False  "
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    assert result == ('(:source lang="python":)\n', "\n(:sourceend:)")
 
-        self.assertEqual(self.dialog.lineNum, False)
 
-    def testLineNumConfig3(self):
-        self.config.lineNum.value = "  блаблабла  "
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+def test_dialog_style2(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
+    config.defaultStyle.value = "vim"
+    config.style.value = "default"
 
-        self.assertEqual(self.dialog.lineNum, False)
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-    def testLineNumConfig4(self):
-        self.config.lineNum.value = "True"
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    assert dialog.styleComboBox.GetCount() == STYLES_COUNT
+    assert dialog.styleComboBox.GetValue() == "default"
 
-        self.assertEqual(self.dialog.lineNum, True)
+    result = controller.getCommandStrings()
 
-    def testDialogParengBg(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
+    assert result == (
+        '(:source lang="python" style="default":)\n',
+        "\n(:sourceend:)",
+    )
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.dialog.parentBgCheckBox.SetValue(True)
 
-        result = self.controller.getCommandStrings()
+def test_dialog_style_text(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
 
-        self.assertEqual(
-            result, ('(:source lang="python" parentbg:)\n', "\n(:sourceend:)")
-        )
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+    dialog.styleComboBox.SetSelection(0)
 
-    def testDialogLineNum(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
+    assert dialog.styleComboBox.GetValue() == "abap"
+    assert dialog.style == "abap"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.dialog.lineNumCheckBox.SetValue(True)
+    result = controller.getCommandStrings()
 
-        result = self.controller.getCommandStrings()
+    assert result == (
+        '(:source lang="python" style="abap":)\n',
+        "\n(:sourceend:)",
+    )
 
-        self.assertEqual(
-            result, ('(:source lang="python" linenum:)\n', "\n(:sourceend:)")
-        )
 
-    def testDialogParentBgLineNum(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
+def test_dialog_style_file(
+    config, dialog, controller, wikipage, samplefiles_path: Path
+):
+    sources_path = samplefiles_path / "sources"
+    Attachment(wikipage).attach([sources_path / "source_utf8.py"])
+    Attachment(wikipage).attach([sources_path / "source_cp1251.cs"])
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.dialog.parentBgCheckBox.SetValue(True)
-        self.dialog.lineNumCheckBox.SetValue(True)
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
 
-        result = self.controller.getCommandStrings()
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        self.assertEqual(
-            result, ('(:source lang="python" parentbg linenum:)\n', "\n(:sourceend:)")
-        )
+    dialog.fileCheckBox.SetValue(True)
+    dialog.styleComboBox.SetSelection(0)
+    dialog.attachmentComboBox.SetValue("source_cp1251.cs")
 
-    def testDialogTabWidth(self):
-        self.config.languageList.value = ["python", "cpp", "haskell"]
-        self.config.defaultLanguage.value = "python"
+    assert dialog.styleComboBox.GetValue() == "abap"
+    assert dialog.style == "abap"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
-        self.dialog.tabWidthSpin.SetValue(10)
+    result = controller.getCommandStrings()
 
-        result = self.controller.getCommandStrings()
+    assert result == (
+        '(:source file="Attach:source_cp1251.cs" lang="python" style="abap":)',
+        "(:sourceend:)",
+    )
 
-        self.assertEqual(
-            result, ('(:source lang="python" tabwidth="10":)\n', "\n(:sourceend:)")
-        )
 
-    def testDialogAttachList_empty(self):
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+def test_dialog_style_file2(
+    config, dialog, controller, wikipage, samplefiles_path: Path
+):
+    sources_path = samplefiles_path / "sources"
+    Attachment(wikipage).attach([sources_path / "source_utf8.py"])
+    Attachment(wikipage).attach([sources_path / "source_cp1251.cs"])
 
-        self.assertEqual(0, len(self.dialog.attachmentComboBox.GetItems()))
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
 
-    def testDialogAttachList_single(self):
-        attach = Attachment(self.testPage)
-        attach.attach([os.path.join(self.samplefilesPath, "source_utf8.py")])
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    dialog.fileCheckBox.SetValue(True)
+    dialog.styleComboBox.SetSelection(0)
+    dialog.attachmentComboBox.SetValue("source_cp1251.cs")
+    dialog.languageComboBox.SetSelection(0)
 
-        self.assertEqual(1, len(self.dialog.attachmentComboBox.GetItems()))
+    assert dialog.styleComboBox.GetValue() == "abap"
+    assert dialog.style == "abap"
 
-    def testDialogAttachList_single_subdir(self):
-        subdir = "subdir"
-        attach = Attachment(self.testPage)
-        attach.createSubdir(subdir)
-        attach.attach([os.path.join(self.samplefilesPath, "source_utf8.py")], subdir)
+    result = controller.getCommandStrings()
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    assert result == (
+        '(:source file="Attach:source_cp1251.cs" style="abap":)',
+        "(:sourceend:)",
+    )
 
-        self.assertEqual(2, len(self.dialog.attachmentComboBox.GetItems()))
 
-    def testDialogAttachList_single_hidden_subdir(self):
-        subdir = "subdir"
-        attach = Attachment(self.testPage)
-        attach.createSubdir(subdir)
-        attach.createSubdir("__thumb")
-        attach.attach([os.path.join(self.samplefilesPath, "source_utf8.py")], subdir)
+def test_dialog_style_text2(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
 
-        Tester.dialogTester.appendOk()
-        self.controller.showDialog()
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+    dialog.styleComboBox.SetSelection(0)
+    dialog.tabWidthSpin.SetValue(5)
 
-        self.assertEqual(2, len(self.dialog.attachmentComboBox.GetItems()))
+    assert dialog.styleComboBox.GetValue() == "abap"
+    assert dialog.style == "abap"
+
+    result = controller.getCommandStrings()
+
+    assert result == (
+        '(:source lang="python" tabwidth="5" style="abap":)\n',
+        "\n(:sourceend:)",
+    )
+
+
+def test_style_config1(config, dialog, controller):
+    config.style.value = "default"
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert dialog.style == "default"
+
+
+def test_style_config2(config, dialog, controller):
+    config.style.value = "vim"
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert dialog.style == "vim"
+
+
+def test_style_config3(config, dialog, controller):
+    config.style.value = "  vim   "
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert dialog.style == "vim"
+
+
+def test_style_config4(config, dialog, controller):
+    config.style.value = "invalid_style"
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert dialog.style == "default"
+
+
+def test_style_config5(config, dialog, controller):
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert dialog.style == "default"
+
+
+def test_parent_bg_config1(config, dialog, controller):
+    config.parentbg.value = "  False  "
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert not dialog.parentbg
+
+
+def test_parent_bg_config2(config, dialog, controller):
+    config.parentbg.value = "  True  "
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert dialog.parentbg
+
+
+def test_parent_bg_config3(config, dialog, controller):
+    config.parentbg.value = "  блаблабла  "
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert not dialog.parentbg
+
+
+def test_parent_bg_config4(config, dialog, controller):
+    # If there are no records in the config file at all
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert not dialog.parentbg
+
+
+def test_line_num_config1(config, dialog, controller):
+    # If there are no records in the config file at all
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert not dialog.lineNum
+
+
+def test_line_num_config2(config, dialog, controller):
+    config.lineNum.value = "  False  "
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert not dialog.lineNum
+
+
+def test_line_num_config3(config, dialog, controller):
+    config.lineNum.value = "  блаблабла  "
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert not dialog.lineNum
+
+
+def test_line_num_config4(config, dialog, controller):
+    config.lineNum.value = "True"
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert dialog.lineNum
+
+
+def test_dialog_parent_bg(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+    dialog.parentBgCheckBox.SetValue(True)
+
+    result = controller.getCommandStrings()
+
+    assert result == ('(:source lang="python" parentbg:)\n', "\n(:sourceend:)")
+
+
+def test_dialog_line_num(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+    dialog.lineNumCheckBox.SetValue(True)
+
+    result = controller.getCommandStrings()
+
+    assert result == ('(:source lang="python" linenum:)\n', "\n(:sourceend:)")
+
+
+def test_dialog_parent_bg_line_num(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+    dialog.parentBgCheckBox.SetValue(True)
+    dialog.lineNumCheckBox.SetValue(True)
+
+    result = controller.getCommandStrings()
+
+    assert result == ('(:source lang="python" parentbg linenum:)\n', "\n(:sourceend:)")
+
+
+def test_dialog_tab_width(config, dialog, controller):
+    config.languageList.value = ["python", "cpp", "haskell"]
+    config.defaultLanguage.value = "python"
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+    dialog.tabWidthSpin.SetValue(10)
+
+    result = controller.getCommandStrings()
+
+    assert result == (
+        '(:source lang="python" tabwidth="10":)\n',
+        "\n(:sourceend:)",
+    )
+
+
+def test_dialog_attach_list_empty(dialog, controller):
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert len(dialog.attachmentComboBox.GetItems()) == 0
+
+
+def test_dialog_attach_list_single(
+    dialog, controller, wikipage, samplefiles_path: Path
+):
+    attach = Attachment(wikipage)
+    attach.attach([samplefiles_path / "sources" / "source_utf8.py"])
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert len(dialog.attachmentComboBox.GetItems()) == 1
+
+
+def test_dialog_attach_list_single_subdir(
+    dialog, controller, wikipage, samplefiles_path: Path
+):
+    subdir = "subdir"
+    attach = Attachment(wikipage)
+    attach.createSubdir(subdir)
+    attach.attach([samplefiles_path / "sources" / "source_utf8.py"], subdir)
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert len(dialog.attachmentComboBox.GetItems()) == 2
+
+
+def test_dialog_attach_list_single_hidden_subdir(
+    dialog, controller, wikipage, samplefiles_path: Path
+):
+    subdir = "subdir"
+    attach = Attachment(wikipage)
+    attach.createSubdir(subdir)
+    attach.createSubdir("__thumb")
+    attach.attach([samplefiles_path / "sources" / "source_utf8.py"], subdir)
+
+    Tester.dialogTester.appendOk()
+    controller.showDialog()
+
+    assert len(dialog.attachmentComboBox.GetItems()) == 2

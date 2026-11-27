@@ -100,9 +100,9 @@ def plugins_loader(
     application: Application,
 ) -> Iterator[Callable[..., PluginsLoader]]:
     """
-    Factory fixture for loading the plug-ins used by the tests of a module.
+    Factory fixture for loading the plugins used by the tests of a module.
 
-    The plug-ins are loaded once per module (repeated calls for the same
+    The plugins are loaded once per module (repeated calls for the same
     directories return the same loader) and unloaded after its tests.
     """
     loaders: dict[str, PluginsLoader] = {}

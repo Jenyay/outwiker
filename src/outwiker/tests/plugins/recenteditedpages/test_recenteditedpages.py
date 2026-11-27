@@ -11,7 +11,7 @@ from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class PluginNameTest(BaseOutWikerGUIMixin, unittest.TestCase):
-    """Tests for the RecentEditedPages plug-in"""
+    """Tests for the RecentEditedPages plugin"""
 
     def setUp(self):
         self.initApplication()
