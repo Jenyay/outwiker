@@ -1,592 +1,246 @@
-# -*- coding: utf-8 -*-
 
-import unittest
+"""Tests for the dialog inserting an edge between the diagram nodes."""
 
+import pytest
+
+from outwiker.app.gui.mainwindow import MainWindow
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.gui.tester import Tester
-from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
-    def setUp(self):
-        self.initApplication()
-        self.wikiroot = self.createWiki()
-        dirlist = ["plugins/diagrammer"]
+@pytest.fixture
+def dialog(diagrammer_loader: PluginsLoader, main_window: MainWindow):
+    """Dialog for inserting an edge with the filled node names."""
+    from diagrammer.gui.insertedgedialog import InsertEdgeDialog
 
-        self.loader = PluginsLoader(self.application)
-        self.loader.load(dirlist)
+    edge_dialog = InsertEdgeDialog(main_window)
+    edge_dialog.firstName = "А"
+    edge_dialog.secondName = "Б"
 
-        from diagrammer.gui.insertedgedialog import InsertEdgeDialog
+    yield edge_dialog
 
-        self._dlg = InsertEdgeDialog(None)
-        Tester.dialogTester.clear()
+    edge_dialog.Destroy()
 
-    def tearDown(self):
-        self.loader.clear()
-        self._dlg.Destroy()
-        self.destroyApplication()
-        self.destroyWiki(self.wikiroot)
 
-    def testArrows_01(self):
-        import diagrammer.gui.insertedgedialog
+@pytest.fixture
+def controller(dialog):
+    """Controller building the edge with the arrow pointing to the second node."""
+    from diagrammer.gui.insertedgedialog import InsertEdgeControllerRight
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerNone(self._dlg)
+    return InsertEdgeControllerRight(dialog)
 
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
 
-        result = controller.getResult()
+@pytest.fixture
+def controller_both(dialog):
+    """Controller building the edge with the arrows on the both ends."""
+    from diagrammer.gui.insertedgedialog import InsertEdgeControllerBoth
 
-        self.assertEqual(result, "А -- Б")
+    return InsertEdgeControllerBoth(dialog)
 
-    def testArrows_02(self):
-        import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerLeft(self._dlg)
+@pytest.mark.parametrize(
+    "controller_name, expected",
+    [
+        pytest.param("InsertEdgeControllerNone", "А -- Б", id="none"),
+        pytest.param("InsertEdgeControllerLeft", "А <- Б", id="left"),
+        pytest.param("InsertEdgeControllerRight", "А -> Б", id="right"),
+        pytest.param("InsertEdgeControllerBoth", "А <-> Б", id="both"),
+    ],
+)
+def test_arrows(dialog, controller_name, expected):
+    from diagrammer.gui import insertedgedialog
 
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
+    controller = getattr(insertedgedialog, controller_name)(dialog)
 
-        result = controller.getResult()
+    assert controller.getResult() == expected
 
-        self.assertEqual(result, "А <- Б")
 
-    def testArrows_03(self):
-        import diagrammer.gui.insertedgedialog
+def test_empty_names(dialog, controller_both):
+    dialog.firstName = ""
+    dialog.secondName = ""
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
+    result = controller_both.getResult()
 
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
+    assert "1" in result
+    assert "2" in result
 
-        result = controller.getResult()
 
-        self.assertEqual(result, "А -> Б")
+def test_empty_second_name(dialog, controller_both):
+    dialog.secondName = ""
 
-    def testArrows_04(self):
-        import diagrammer.gui.insertedgedialog
+    result = controller_both.getResult()
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerBoth(self._dlg)
+    assert "1" not in result
+    assert "А" in result
+    assert "2" in result
 
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
 
-        result = controller.getResult()
+def test_empty_first_name(dialog, controller_both):
+    dialog.firstName = ""
 
-        self.assertEqual(result, "А <-> Б")
+    result = controller_both.getResult()
 
-    def testEmptyNames_01(self):
-        import diagrammer.gui.insertedgedialog
+    assert "1" in result
+    assert "2" not in result
+    assert "Б" in result
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerBoth(self._dlg)
 
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = ""
-        self._dlg.secondName = ""
+def test_label(controller, dialog):
+    dialog.label = "Абырвалг"
 
-        result = controller.getResult()
+    assert controller.getResult() == 'А -> Б [label = "Абырвалг"]'
 
-        self.assertIn("1", result)
-        self.assertIn("2", result)
 
-    def testEmptyNames_02(self):
-        import diagrammer.gui.insertedgedialog
+@pytest.mark.parametrize(
+    "selection, expected",
+    [
+        pytest.param(0, "А -> Б", id="default"),
+        pytest.param(1, "А -> Б [style = solid]", id="solid"),
+        pytest.param(2, "А -> Б [style = dotted]", id="dotted"),
+        pytest.param(3, "А -> Б [style = dashed]", id="dashed"),
+    ],
+)
+def test_border_style(controller, dialog, selection, expected):
+    dialog.setStyleIndex(selection)
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerBoth(self._dlg)
+    assert controller.getResult() == expected
 
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = ""
 
-        result = controller.getResult()
-
-        self.assertNotIn("1", result)
-        self.assertIn("А", result)
-        self.assertIn("2", result)
-
-    def testEmptyNames_03(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerBoth(self._dlg)
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = ""
-        self._dlg.secondName = "Б"
-
-        result = controller.getResult()
-
-        self.assertIn("1", result)
-        self.assertNotIn("2", result)
-        self.assertIn("Б", result)
-
-    def testLabel_01(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.label = "Абырвалг"
-
-        result = controller.getResult()
-
-        self.assertEqual(result, 'А -> Б [label = "Абырвалг"]')
-
-    def testStyleLine_01(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.setStyleIndex(0)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б")
-
-    def testStyleLine_02(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.setStyleIndex(1)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [style = solid]")
-
-    def testStyleLine_03(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.setStyleIndex(2)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [style = dotted]")
-
-    def testStyleLine_04(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.setStyleIndex(3)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [style = dashed]")
-
-    def testStyleLine_05(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.label = "Абырвалг"
-        self._dlg.setStyleIndex(3)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, 'А -> Б [label = "Абырвалг", style = dashed]')
-
-    def testStyleArrow_01(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.setArrowStyleIndex(0)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б")
-
-    def testStyleArrow_02(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.setArrowStyleIndex(1)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [hstyle = generalization]")
-
-    def testStyleArrow_03(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.setArrowStyleIndex(2)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [hstyle = composition]")
-
-    def testStyleArrow_04(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.setArrowStyleIndex(3)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [hstyle = aggregation]")
-
-    def testStyleArrow_05(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.setStyleIndex(3)
-        self._dlg.setArrowStyleIndex(3)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [style = dashed, hstyle = aggregation]")
-
-    def testLineColor_01(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isLineColorChanged = True
-        self._dlg.lineColor = "yellow"
-
-        result = controller.getResult()
-
-        self.assertEqual(result, 'А -> Б [color = "yellow"]')
-
-    def testLineColor_02(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isLineColorChanged = False
-        self._dlg.lineColor = "yellow"
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б")
-
-    def testLineColor_03(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isLineColorChanged = True
-        self._dlg.lineColor = "#AAAAAA"
-
-        result = controller.getResult()
-
-        self.assertEqual(result, 'А -> Б [color = "#AAAAAA"]')
-
-    def testLineColor_04(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isLineColorChanged = True
-        self._dlg.lineColor = "#AAAAAA"
-        self._dlg.setArrowStyleIndex(3)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, 'А -> Б [hstyle = aggregation, color = "#AAAAAA"]')
-
-    def testFontSize_01(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isFontSizeChanged = True
-        self._dlg.fontSize = 11
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [fontsize = 11]")
-
-    def testFontSize_02(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isFontSizeChanged = False
-        self._dlg.fontSize = 15
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б")
-
-    def testFontSize_03(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isFontSizeChanged = True
-        self._dlg.fontSize = 11
-        self._dlg.label = "Абырвалг"
-
-        result = controller.getResult()
-
-        self.assertEqual(result, 'А -> Б [label = "Абырвалг", fontsize = 11]')
-
-    def testTextColor_01(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isTextColorChanged = True
-        self._dlg.textColor = "yellow"
-
-        result = controller.getResult()
-
-        self.assertEqual(result, 'А -> Б [textcolor = "yellow"]')
-
-    def testTextColor_02(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isTextColorChanged = False
-        self._dlg.textColor = "yellow"
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б")
-
-    def testTextColor_03(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isTextColorChanged = True
-        self._dlg.textColor = "#AAAAAA"
-
-        result = controller.getResult()
-
-        self.assertEqual(result, 'А -> Б [textcolor = "#AAAAAA"]')
-
-    def testTextColor_04(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.isTextColorChanged = True
-        self._dlg.textColor = "#AAAAAA"
-        self._dlg.setArrowStyleIndex(3)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, 'А -> Б [hstyle = aggregation, textcolor = "#AAAAAA"]')
-
-    def testThick_01(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.thick = True
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [thick]")
-
-    def testThick_02(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.thick = False
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б")
-
-    def testThick_03(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.thick = True
-        self._dlg.setStyleIndex(1)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [style = solid, thick]")
-
-    def testFolded_01(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.folded = True
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [folded]")
-
-    def testFolded_02(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.folded = False
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б")
-
-    def testFolded_03(self):
-        import diagrammer.gui.insertedgedialog
-
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerRight(
-            self._dlg
-        )
-
-        Tester.dialogTester.appendOk()
-        self._dlg.firstName = "А"
-        self._dlg.secondName = "Б"
-        self._dlg.folded = True
-        self._dlg.setStyleIndex(1)
-
-        result = controller.getResult()
-
-        self.assertEqual(result, "А -> Б [style = solid, folded]")
+def test_border_style_with_label(controller, dialog):
+    dialog.label = "Абырвалг"
+    dialog.setStyleIndex(3)
+
+    assert controller.getResult() == 'А -> Б [label = "Абырвалг", style = dashed]'
+
+
+@pytest.mark.parametrize(
+    "selection, expected",
+    [
+        pytest.param(0, "А -> Б", id="default"),
+        pytest.param(1, "А -> Б [hstyle = generalization]", id="generalization"),
+        pytest.param(2, "А -> Б [hstyle = composition]", id="composition"),
+        pytest.param(3, "А -> Б [hstyle = aggregation]", id="aggregation"),
+    ],
+)
+def test_arrow_style(controller, dialog, selection, expected):
+    dialog.setArrowStyleIndex(selection)
+
+    assert controller.getResult() == expected
+
+
+def test_arrow_style_with_border_style(controller, dialog):
+    dialog.setStyleIndex(3)
+    dialog.setArrowStyleIndex(3)
+
+    assert controller.getResult() == "А -> Б [style = dashed, hstyle = aggregation]"
+
+
+@pytest.mark.parametrize(
+    "is_changed, color, selection, expected",
+    [
+        pytest.param(True, "yellow", 0, 'А -> Б [color = "yellow"]', id="color_name"),
+        pytest.param(False, "yellow", 0, "А -> Б", id="color_not_changed"),
+        pytest.param(True, "#AAAAAA", 0, 'А -> Б [color = "#AAAAAA"]', id="color_code"),
+        pytest.param(
+            True,
+            "#AAAAAA",
+            3,
+            'А -> Б [hstyle = aggregation, color = "#AAAAAA"]',
+            id="color_code_with_arrow_style",
+        ),
+    ],
+)
+def test_line_color(controller, dialog, is_changed, color, selection, expected):
+    dialog.isLineColorChanged = is_changed
+    dialog.lineColor = color
+    dialog.setArrowStyleIndex(selection)
+
+    assert controller.getResult() == expected
+
+
+@pytest.mark.parametrize(
+    "is_changed, font_size, expected",
+    [
+        pytest.param(True, 11, "А -> Б [fontsize = 11]", id="size_changed"),
+        pytest.param(False, 15, "А -> Б", id="size_not_changed"),
+    ],
+)
+def test_font_size(controller, dialog, is_changed, font_size, expected):
+    dialog.isFontSizeChanged = is_changed
+    dialog.fontSize = font_size
+
+    assert controller.getResult() == expected
+
+
+def test_font_size_with_label(controller, dialog):
+    dialog.isFontSizeChanged = True
+    dialog.fontSize = 11
+    dialog.label = "Абырвалг"
+
+    assert controller.getResult() == 'А -> Б [label = "Абырвалг", fontsize = 11]'
+
+
+@pytest.mark.parametrize(
+    "is_changed, color, selection, expected",
+    [
+        pytest.param(
+            True, "yellow", 0, 'А -> Б [textcolor = "yellow"]', id="color_name"
+        ),
+        pytest.param(False, "yellow", 0, "А -> Б", id="color_not_changed"),
+        pytest.param(
+            True, "#AAAAAA", 0, 'А -> Б [textcolor = "#AAAAAA"]', id="color_code"
+        ),
+        pytest.param(
+            True,
+            "#AAAAAA",
+            3,
+            'А -> Б [hstyle = aggregation, textcolor = "#AAAAAA"]',
+            id="color_code_with_arrow_style",
+        ),
+    ],
+)
+def test_text_color(controller, dialog, is_changed, color, selection, expected):
+    dialog.isTextColorChanged = is_changed
+    dialog.textColor = color
+    dialog.setArrowStyleIndex(selection)
+
+    assert controller.getResult() == expected
+
+
+@pytest.mark.parametrize(
+    "thick, expected",
+    [
+        pytest.param(True, "А -> Б [thick]", id="thick"),
+        pytest.param(False, "А -> Б", id="not_thick"),
+    ],
+)
+def test_thick(controller, dialog, thick, expected):
+    dialog.thick = thick
+
+    assert controller.getResult() == expected
+
+
+def test_thick_with_border_style(controller, dialog):
+    dialog.thick = True
+    dialog.setStyleIndex(1)
+
+    assert controller.getResult() == "А -> Б [style = solid, thick]"
+
+
+@pytest.mark.parametrize(
+    "folded, expected",
+    [
+        pytest.param(True, "А -> Б [folded]", id="folded"),
+        pytest.param(False, "А -> Б", id="not_folded"),
+    ],
+)
+def test_folded(controller, dialog, folded, expected):
+    dialog.folded = folded
+
+    assert controller.getResult() == expected
+
+
+def test_folded_with_border_style(controller, dialog):
+    dialog.folded = True
+    dialog.setStyleIndex(1)
+
+    assert controller.getResult() == "А -> Б [style = solid, folded]"

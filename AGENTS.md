@@ -36,3 +36,9 @@
 ### Documentation
 - Documentation sources: `doc/`
 
+## Code Quality
+
+- Run `ruff check --fix` instead of a bare `ruff check` so minor warnings are
+  fixed automatically
+- Format the changed files with `ruff format`
+

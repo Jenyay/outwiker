@@ -1,189 +1,142 @@
-# -*- coding: utf-8 -*-
 
-import os
-import os.path
-import unittest
-from tempfile import mkdtemp
+"""Tests for the (:diagram:) wiki command of the Diagrammer plugin."""
 
-from outwiker.api.core.tree import createNotesTree
+from pathlib import Path
+
+import pytest
+
+from outwiker.api.core.tree import WikiPage
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
-from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.core.thumbnails import Thumbnails
+from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from outwiker.tests.utils import removeDir
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 
-class DiagrammerTest(unittest.TestCase):
-    def setUp(self):
-        self.maxDiff = None
-        self._application = Application()
+@pytest.fixture
+def test_page(wikiroot) -> WikiPage:
+    """Wiki page the diagrams are parsed for."""
+    return WikiPageFactory().create(wikiroot, "Страница 1", [])
 
-        self.filesPath = "testdata/samplefiles/"
-        self.__createWiki()
 
-        dirlist = ["plugins/diagrammer"]
+@pytest.fixture
+def parser(
+    test_page: WikiPage,
+    application,
+    diagrammer_loader: PluginsLoader,
+) -> Parser:
+    """Wiki parser with the commands added by the Diagrammer plugin."""
+    factory = ParserFactory()
+    return factory.make(test_page, application)
 
-        self.loader = PluginsLoader(self._application)
-        self.loader.load(dirlist)
 
-        self.factory = ParserFactory()
-        self.parser = self.factory.make(self.testPage, self._application)
+@pytest.fixture
+def thumb_path(test_page: WikiPage) -> Path:
+    """Directory for the rendered diagrams. It is not created in advance."""
+    return Path(Thumbnails(test_page).getThumbPath(create=False))
 
-        self.thumbDir = os.path.join("__attach", "__thumb")
-        self.thumbFullPath = os.path.join(self.testPage.path, self.thumbDir)
 
-    def __createWiki(self):
-        # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix="Абырвалг абыр")
+@pytest.fixture
+def all_shapes() -> list[str]:
+    """Shapes that the plugin is able to draw."""
+    return [
+        "actor",
+        "beginpoint",
+        "box",
+        "circle",
+        "cloud",
+        "diamond",
+        "dots",
+        "ellipse",
+        "endpoint",
+        "mail",
+        "minidiamond",
+        "none",
+        "note",
+        "roundedbox",
+        "square",
+        "textbox",
+        "flowchart.database",
+        "flowchart.input",
+        "flowchart.loopin",
+        "flowchart.loopout",
+        "flowchart.terminator",
+    ]
 
-        self.wikiroot = createNotesTree(self.path)
 
-        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
-        self.testPage = self.wikiroot["Страница 1"]
+def _get_image_prefix() -> str:
+    """Beginning of the <img> tag with the rendered diagram."""
+    return f'<img src="{Thumbnails.getRelativeThumbDir()}/__diagram_'
 
-    def tearDown(self):
-        removeDir(self.path)
-        self.loader.clear()
 
-    def testEmpty(self):
-        text = "(:diagram:)(:diagramend:)"
-        validResult = '<img src="{}/__diagram_'.format(self.thumbDir)
+def _assert_rendered(parser: Parser, thumb_path: Path, text: str, count: int):
+    """Check that the text is rendered to `count` diagrams without errors."""
+    result = parser.toHtml(text)
 
-        result = self.parser.toHtml(text)
-        self.assertIn(validResult, result)
+    assert _get_image_prefix() in result
 
-        # Признак ошибки
-        self.assertNotIn("<b>", result)
+    # The parsing error message is wrapped in the <b> tag
+    assert "<b>" not in result
 
-        self.assertTrue(os.path.exists(self.thumbFullPath))
-        self.assertEqual(len(os.listdir(self.thumbFullPath)), 1)
+    assert thumb_path.exists()
+    assert len(list(thumb_path.iterdir())) == count
 
-    def test_simple(self):
-        text = "(:diagram:)Абырвалг -> Блаблабла(:diagramend:)"
-        validResult = '<img src="{}/__diagram_'.format(self.thumbDir)
 
-        result = self.parser.toHtml(text)
-        self.assertIn(validResult, result)
+@pytest.mark.parametrize(
+    "text, count",
+    [
+        pytest.param("(:diagram:)(:diagramend:)", 1, id="empty"),
+        pytest.param("(:diagram:)Абырвалг -> Блаблабла(:diagramend:)", 1, id="single"),
+        pytest.param(
+            "(:diagram:)Абырвалг -> Блаблабла(:diagramend:)\n"
+            "(:diagram:)Абыр -> валг -> Блаблабла(:diagramend:)",
+            2,
+            id="different",
+        ),
+        pytest.param(
+            "(:diagram:)Абырвалг -> Блаблабла(:diagramend:)\n"
+            "(:diagram:)Абырвалг -> Блаблабла(:diagramend:)",
+            1,
+            id="same",
+        ),
+    ],
+)
+def test_rendered(parser, thumb_path, text, count):
+    _assert_rendered(parser, thumb_path, text, count)
 
-        # Признак ошибки
-        self.assertNotIn("<b>", result)
 
-        self.assertTrue(os.path.exists(self.thumbFullPath))
-        self.assertEqual(len(os.listdir(self.thumbFullPath)), 1)
+def test_error(parser, thumb_path):
+    text = "(:diagram:)a - b(:diagramend:)"
 
-    def test_double(self):
-        text = """(:diagram:)Абырвалг -> Блаблабла(:diagramend:)
-(:diagram:)Абыр -> валг -> Блаблабла(:diagramend:)"""
+    result = parser.toHtml(text)
 
-        validResult = '<img src="{}/__diagram_'.format(self.thumbDir)
+    assert _get_image_prefix() not in result
 
-        result = self.parser.toHtml(text)
-        self.assertIn(validResult, result)
+    # The parsing error message is wrapped in the <b> tag
+    assert "<b>" in result
 
-        # Признак ошибки
-        self.assertNotIn("<b>", result)
+    # The directory for the thumbnails is created anyway
+    assert thumb_path.exists()
 
-        self.assertTrue(os.path.exists(self.thumbFullPath))
-        self.assertEqual(len(os.listdir(self.thumbFullPath)), 2)
 
-    def test_copy(self):
-        text = """(:diagram:)Абырвалг -> Блаблабла(:diagramend:)
-(:diagram:)Абырвалг -> Блаблабла(:diagramend:)"""
+def test_all_shapes(parser, all_shapes):
+    template = "a{n}[shape = {shape}]"
+    lines = ["(:diagram:)"]
 
-        validResult = '<img src="{}/__diagram_'.format(self.thumbDir)
+    for number, shape in enumerate(all_shapes):
+        lines.append(template.format(n=number, shape=shape))
 
-        result = self.parser.toHtml(text)
-        self.assertIn(validResult, result)
+    lines.append("(:diagramend:)")
 
-        # Признак ошибки
-        self.assertNotIn("<b>", result)
+    result = parser.toHtml("\n".join(lines))
 
-        self.assertTrue(os.path.exists(self.thumbFullPath))
-        self.assertEqual(len(os.listdir(self.thumbFullPath)), 1)
+    assert _get_image_prefix() in result
 
-    def testError(self):
-        text = "(:diagram:)a - b(:diagramend:)"
-        validResult = '<img src="{}/__diagram_'.format(self.thumbDir)
+    # The parsing error message is wrapped in the <b> tag
+    assert "<b>" not in result
 
-        result = self.parser.toHtml(text)
-        self.assertNotIn(validResult, result)
 
-        # Признак ошибки
-        self.assertIn("<b>", result)
+def test_shapes_list(diagrammer_loader: PluginsLoader, all_shapes):
+    from diagrammer.diagramrender import DiagramRender
 
-        # Папка для превьюшек все равно создается
-        self.assertTrue(os.path.exists(self.thumbFullPath))
-
-    def testShapes_01(self):
-        template = "a{n}[shape = {shape}]"
-        shapes = [
-            "actor",
-            "beginpoint",
-            "box",
-            "circle",
-            "cloud",
-            "diamond",
-            "dots",
-            "ellipse",
-            "endpoint",
-            "mail",
-            "minidiamond",
-            "none",
-            "note",
-            "roundedbox",
-            "square",
-            "textbox",
-            "flowchart.database",
-            "flowchart.input",
-            "flowchart.loopin",
-            "flowchart.loopout",
-            "flowchart.terminator",
-        ]
-
-        lines = ["(:diagram:)"]
-
-        for n, shape in zip(list(range(len(shapes))), shapes):
-            lines.append(template.format(n=n, shape=shape))
-
-        lines.append("(:diagramend:)")
-        text = "\n".join(lines)
-
-        validResult = '<img src="{}/__diagram_'.format(self.thumbDir)
-        result = self.parser.toHtml(text)
-        self.assertIn(validResult, result)
-
-        # Признак ошибки
-        self.assertNotIn("<b>", result)
-
-    def testShapes_02(self):
-        shapes = sorted(
-            [
-                "actor",
-                "beginpoint",
-                "box",
-                "circle",
-                "cloud",
-                "diamond",
-                "dots",
-                "ellipse",
-                "endpoint",
-                "mail",
-                "minidiamond",
-                "none",
-                "note",
-                "roundedbox",
-                "square",
-                "textbox",
-                "flowchart.database",
-                "flowchart.input",
-                "flowchart.loopin",
-                "flowchart.loopout",
-                "flowchart.terminator",
-            ]
-        )
-
-        from diagrammer.diagramrender import DiagramRender
-
-        diagramShapers = DiagramRender.shapes
-
-        self.assertEqual(shapes, diagramShapers)
+    assert DiagramRender.shapes == sorted(all_shapes)

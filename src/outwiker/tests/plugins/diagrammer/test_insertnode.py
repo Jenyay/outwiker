@@ -1,390 +1,243 @@
-# -*- coding: utf-8 -*-
 
-import unittest
+"""Tests for the dialog inserting a node into a diagram."""
 
+import pytest
+
+from outwiker.app.gui.mainwindow import MainWindow
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.gui.tester import Tester
-from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
-    def setUp(self):
-        self.initApplication()
-        self.wikiroot = self.createWiki()
-        dirlist = ["plugins/diagrammer"]
+@pytest.fixture
+def dialog(diagrammer_loader: PluginsLoader, main_window: MainWindow):
+    """Dialog for inserting a node with the filled node name."""
+    from diagrammer.gui.insertnodedialog import InsertNodeDialog
 
-        self.loader = PluginsLoader(self.application)
-        self.loader.load(dirlist)
+    node_dialog = InsertNodeDialog(main_window)
+    node_dialog.name = "Абырвалг"
 
-        from diagrammer.gui.insertnodedialog import (
-            InsertNodeDialog,
-            InsertNodeController,
-        )
+    yield node_dialog
 
-        self._dlg = InsertNodeDialog(None)
-        self._controller = InsertNodeController(self._dlg)
-        Tester.dialogTester.clear()
+    node_dialog.Destroy()
 
-    def tearDown(self):
-        self._dlg.Destroy()
-        self.loader.clear()
-        self.destroyApplication()
-        self.destroyWiki(self.wikiroot)
 
-    def testDestroy(self):
-        self.application.wikiroot = None
-        self.loader.clear()
+@pytest.fixture
+def controller(dialog):
+    """Controller building the node code from the dialog parameters."""
+    from diagrammer.gui.insertnodedialog import InsertNodeController
 
-    def testName_01(self):
+    return InsertNodeController(dialog)
 
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
 
-        result = self._controller.getResult()
+def test_name(controller):
+    assert controller.getResult() == "Абырвалг"
 
-        self.assertEqual(result, "Абырвалг")
 
-    def testName_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг 111"
+def test_name_with_spaces(controller, dialog):
+    dialog.name = "Абырвалг 111"
 
-        result = self._controller.getResult()
+    assert controller.getResult() == '"Абырвалг 111"'
 
-        self.assertEqual(result, '"Абырвалг 111"')
 
-    def testShapeSelection_01(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.setShapeSelection(0)
+@pytest.mark.parametrize(
+    "selection, expected",
+    [
+        pytest.param(0, "Абырвалг", id="default"),
+        pytest.param(1, "Абырвалг [shape = actor];", id="actor"),
+        pytest.param(10, "Абырвалг [shape = flowchart.database];", id="database"),
+    ],
+)
+def test_shape_selection(controller, dialog, selection, expected):
+    dialog.setShapeSelection(selection)
 
-        result = self._controller.getResult()
+    assert controller.getResult() == expected
 
-        self.assertEqual(result, "Абырвалг")
 
-    def testShapeSelection_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.setShapeSelection(1)
+@pytest.mark.parametrize(
+    "selection, expected",
+    [
+        pytest.param(0, "Абырвалг", id="default"),
+        pytest.param(1, "Абырвалг [style = solid];", id="solid"),
+        pytest.param(2, "Абырвалг [style = dotted];", id="dotted"),
+    ],
+)
+def test_border_style_selection(controller, dialog, selection, expected):
+    dialog.setStyleIndex(selection)
 
-        result = self._controller.getResult()
+    assert controller.getResult() == expected
 
-        self.assertEqual(result, "Абырвалг [shape = actor];")
 
-    def testShapeSelection_03(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
+@pytest.mark.parametrize(
+    "style, expected",
+    [
+        pytest.param("", "Абырвалг", id="empty"),
+        pytest.param("solid", "Абырвалг [style = solid];", id="solid"),
+        pytest.param("Solid", "Абырвалг [style = solid];", id="solid_capitalized"),
+        pytest.param(" Solid ", "Абырвалг [style = solid];", id="solid_with_spaces"),
+        pytest.param("1,2,3", 'Абырвалг [style = "1,2,3"];', id="list"),
+        pytest.param("1, 2, 3", 'Абырвалг [style = "1,2,3"];', id="list_with_spaces"),
+        pytest.param(
+            " 1, 2, 3 ",
+            'Абырвалг [style = "1,2,3"];',
+            id="list_with_outer_spaces",
+        ),
+        pytest.param('"1,2,3"', 'Абырвалг [style = "1,2,3"];', id="list_quoted"),
+    ],
+)
+def test_border_style(controller, dialog, style, expected):
+    dialog.style = style
 
-        self._dlg.setShapeSelection(10)
+    assert controller.getResult() == expected
 
-        result = self._controller.getResult()
 
-        self.assertEqual(result, "Абырвалг [shape = flowchart.database];")
+def test_border_style_with_shape(controller, dialog):
+    dialog.setShapeSelection(1)
+    dialog.style = "dotted"
 
-    def testBorderStyle_01(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
+    assert controller.getResult() == "Абырвалг [shape = actor, style = dotted];"
 
-        self._dlg.setStyleIndex(0)
 
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг")
+def test_stacked(controller, dialog):
+    dialog.stacked = True
 
-    def testBorderStyle_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
+    assert controller.getResult() == "Абырвалг [stacked];"
 
-        self._dlg.setStyleIndex(1)
 
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [style = solid];")
+def test_stacked_with_shape(controller, dialog):
+    dialog.stacked = True
+    dialog.setShapeSelection(1)
 
-    def testBorderStyle_03(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.setStyleIndex(2)
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [style = dotted];")
-
-    def testBorderStyle_04(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.style = ""
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг")
-
-    def testBorderStyle_05(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.style = "solid"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [style = solid];")
-
-    def testBorderStyle_06(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.style = "Solid"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [style = solid];")
-
-    def testBorderStyle_07(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.style = " Solid "
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [style = solid];")
-
-    def testBorderStyle_08(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.style = "1,2,3"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [style = "1,2,3"];')
-
-    def testBorderStyle_09(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.style = "1, 2, 3"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [style = "1,2,3"];')
-
-    def testBorderStyle_10(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.style = " 1, 2, 3 "
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [style = "1,2,3"];')
-
-    def testBorderStyle_11(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.style = '"1,2,3"'
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [style = "1,2,3"];')
-
-    def testBorderStyle_12(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-
-        self._dlg.setShapeSelection(1)
-        self._dlg.style = "dotted"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [shape = actor, style = dotted];")
-
-    def testStacked_01(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.stacked = True
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [stacked];")
-
-    def testStacked_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.stacked = True
-        self._dlg.setShapeSelection(1)
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [shape = actor, stacked];")
-
-    def testLabel_01(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.label = "Превед"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [label = "Превед"];')
-
-    def testLabel_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.setShapeSelection(1)
-        self._dlg.label = "Превед"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [shape = actor, label = "Превед"];')
-
-    def testLabel_03(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.label = "Абырвалг"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг")
-
-    def testColor_01(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isBackColorChanged = True
-        self._dlg.backColor = "white"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [color = "white"];')
-
-    def testColor_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isBackColorChanged = True
-        self._dlg.backColor = "#AAAAAA"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [color = "#AAAAAA"];')
-
-    def testColor_03(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isBackColorChanged = False
-        self._dlg.backColor = "#AAAAAA"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг")
-
-    def testColor_04(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.setShapeSelection(1)
-        self._dlg.isBackColorChanged = True
-        self._dlg.backColor = "#AAAAAA"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [shape = actor, color = "#AAAAAA"];')
-
-    def testTextColor_01(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isTextColorChanged = True
-        self._dlg.textColor = "black"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [textcolor = "black"];')
-
-    def testTextColor_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isTextColorChanged = True
-        self._dlg.textColor = "#AAAAAA"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [textcolor = "#AAAAAA"];')
-
-    def testTextColor_03(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isTextColorChanged = False
-        self._dlg.textColor = "#AAAAAA"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг")
-
-    def testTextColor_04(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.setShapeSelection(1)
-        self._dlg.isTextColorChanged = True
-        self._dlg.textColor = "#AAAAAA"
-
-        result = self._controller.getResult()
-        self.assertEqual(result, 'Абырвалг [shape = actor, textcolor = "#AAAAAA"];')
-
-    def testFontSize_01(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isFontSizeChanged = True
-        self._dlg.fontSize = 20
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [fontsize = 20];")
-
-    def testFontSize_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isFontSizeChanged = False
-        self._dlg.fontSize = 20
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг")
-
-    def testFontSize_03(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.setShapeSelection(1)
-        self._dlg.isFontSizeChanged = True
-        self._dlg.fontSize = 20
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [shape = actor, fontsize = 20];")
-
-    def testWidth_01(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isWidthChanged = True
-        self._dlg.width = 200
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [width = 200];")
-
-    def testWidth_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isWidthChanged = False
-        self._dlg.width = 200
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг")
-
-    def testWidth_03(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.setShapeSelection(1)
-        self._dlg.isWidthChanged = True
-        self._dlg.width = 200
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [shape = actor, width = 200];")
-
-    def testHeight_01(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isHeightChanged = True
-        self._dlg.height = 200
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [height = 200];")
-
-    def testHeight_02(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.isHeightChanged = False
-        self._dlg.height = 200
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг")
-
-    def testHeight_03(self):
-        Tester.dialogTester.appendOk()
-        self._dlg.name = "Абырвалг"
-        self._dlg.setShapeSelection(1)
-        self._dlg.isHeightChanged = True
-        self._dlg.height = 200
-
-        result = self._controller.getResult()
-        self.assertEqual(result, "Абырвалг [shape = actor, height = 200];")
+    assert controller.getResult() == "Абырвалг [shape = actor, stacked];"
+
+
+def test_label(controller, dialog):
+    dialog.label = "Превед"
+
+    assert controller.getResult() == 'Абырвалг [label = "Превед"];'
+
+
+def test_label_with_shape(controller, dialog):
+    dialog.setShapeSelection(1)
+    dialog.label = "Превед"
+
+    assert controller.getResult() == 'Абырвалг [shape = actor, label = "Превед"];'
+
+
+def test_label_equal_to_name(controller, dialog):
+    dialog.label = "Абырвалг"
+
+    assert controller.getResult() == "Абырвалг"
+
+
+@pytest.mark.parametrize(
+    "is_changed, color, selection, expected",
+    [
+        pytest.param(True, "white", 0, 'Абырвалг [color = "white"];', id="color_name"),
+        pytest.param(
+            True, "#AAAAAA", 0, 'Абырвалг [color = "#AAAAAA"];', id="color_code"
+        ),
+        pytest.param(False, "#AAAAAA", 0, "Абырвалг", id="color_not_changed"),
+        pytest.param(
+            True,
+            "#AAAAAA",
+            1,
+            'Абырвалг [shape = actor, color = "#AAAAAA"];',
+            id="color_code_with_shape",
+        ),
+    ],
+)
+def test_back_color(controller, dialog, is_changed, color, selection, expected):
+    dialog.isBackColorChanged = is_changed
+    dialog.backColor = color
+    dialog.setShapeSelection(selection)
+
+    assert controller.getResult() == expected
+
+
+@pytest.mark.parametrize(
+    "is_changed, color, selection, expected",
+    [
+        pytest.param(
+            True, "black", 0, 'Абырвалг [textcolor = "black"];', id="color_name"
+        ),
+        pytest.param(
+            True, "#AAAAAA", 0, 'Абырвалг [textcolor = "#AAAAAA"];', id="color_code"
+        ),
+        pytest.param(False, "#AAAAAA", 0, "Абырвалг", id="color_not_changed"),
+        pytest.param(
+            True,
+            "#AAAAAA",
+            1,
+            'Абырвалг [shape = actor, textcolor = "#AAAAAA"];',
+            id="color_code_with_shape",
+        ),
+    ],
+)
+def test_text_color(controller, dialog, is_changed, color, selection, expected):
+    dialog.isTextColorChanged = is_changed
+    dialog.textColor = color
+    dialog.setShapeSelection(selection)
+
+    assert controller.getResult() == expected
+
+
+@pytest.mark.parametrize(
+    "is_changed, selection, expected",
+    [
+        pytest.param(True, 0, "Абырвалг [fontsize = 20];", id="size_changed"),
+        pytest.param(False, 0, "Абырвалг", id="size_not_changed"),
+        pytest.param(
+            True,
+            1,
+            "Абырвалг [shape = actor, fontsize = 20];",
+            id="size_changed_with_shape",
+        ),
+    ],
+)
+def test_font_size(controller, dialog, is_changed, selection, expected):
+    dialog.isFontSizeChanged = is_changed
+    dialog.fontSize = 20
+    dialog.setShapeSelection(selection)
+
+    assert controller.getResult() == expected
+
+
+@pytest.mark.parametrize(
+    "is_changed, selection, expected",
+    [
+        pytest.param(True, 0, "Абырвалг [width = 200];", id="width_changed"),
+        pytest.param(False, 0, "Абырвалг", id="width_not_changed"),
+        pytest.param(
+            True,
+            1,
+            "Абырвалг [shape = actor, width = 200];",
+            id="width_changed_with_shape",
+        ),
+    ],
+)
+def test_width(controller, dialog, is_changed, selection, expected):
+    dialog.isWidthChanged = is_changed
+    dialog.width = 200
+    dialog.setShapeSelection(selection)
+
+    assert controller.getResult() == expected
+
+
+@pytest.mark.parametrize(
+    "is_changed, selection, expected",
+    [
+        pytest.param(True, 0, "Абырвалг [height = 200];", id="height_changed"),
+        pytest.param(False, 0, "Абырвалг", id="height_not_changed"),
+        pytest.param(
+            True,
+            1,
+            "Абырвалг [shape = actor, height = 200];",
+            id="height_changed_with_shape",
+        ),
+    ],
+)
+def test_height(controller, dialog, is_changed, selection, expected):
+    dialog.isHeightChanged = is_changed
+    dialog.height = 200
+    dialog.setShapeSelection(selection)
+
+    assert controller.getResult() == expected
