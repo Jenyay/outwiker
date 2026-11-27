@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
+"""Loading tests for the HackPage plugin."""
 
-import unittest
-
-from outwiker.tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.plugins.basepluginloading import BasePluginLoadingTests
 
 
-class HackPage_LoadingTest(PluginLoadingMixin, unittest.TestCase):
-    def getPluginDir(self):
+class TestHackPageLoading(BasePluginLoadingTests):
+    def get_plugin_dir(self) -> str:
         return "plugins/hackpage"
 
-    def getPluginName(self):
+    def get_plugin_name(self) -> str:
         return "HackPage"

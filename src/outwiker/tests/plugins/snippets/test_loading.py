@@ -1,19 +1,11 @@
-# -*- coding: utf-8 -*-
+"""Loading tests for the Snippets plugin."""
 
-import unittest
-
-from outwiker.tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.plugins.basepluginloading import BasePluginLoadingTests
 
 
-class SnippetsLoadingTest(PluginLoadingMixin, unittest.TestCase):
-    def getPluginDir(self):
-        """
-        Must return path to plugin
-        """
+class TestSnippetsLoading(BasePluginLoadingTests):
+    def get_plugin_dir(self) -> str:
         return "plugins/snippets"
 
-    def getPluginName(self):
-        """
-        Must return plugin name
-        """
+    def get_plugin_name(self) -> str:
         return "Snippets"

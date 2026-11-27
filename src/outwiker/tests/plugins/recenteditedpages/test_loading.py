@@ -1,19 +1,11 @@
-# -*- coding: utf-8 -*-
+"""Loading tests for the RecentEditedPages plugin."""
 
-import unittest
-
-from outwiker.tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.plugins.basepluginloading import BasePluginLoadingTests
 
 
-class PluginNameLoadingTest(PluginLoadingMixin, unittest.TestCase):
-    def getPluginDir(self):
-        """
-        Must return path to plugin
-        """
+class TestRecentEditedPagesLoading(BasePluginLoadingTests):
+    def get_plugin_dir(self) -> str:
         return "plugins/recenteditedpages"
 
-    def getPluginName(self):
-        """
-        Must return plugin name
-        """
+    def get_plugin_name(self) -> str:
         return "RecentEditedPages"

@@ -1,19 +1,11 @@
-# -*- coding: utf-8 -*-
+"""Loading tests for the PageTypeColor plugin."""
 
-import unittest
-
-from outwiker.tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.plugins.basepluginloading import BasePluginLoadingTests
 
 
-class PageTypeColor_LoadingTest(PluginLoadingMixin, unittest.TestCase):
-    def getPluginDir(self):
-        """
-        Must return path to plugin
-        """
+class TestPageTypeColorLoading(BasePluginLoadingTests):
+    def get_plugin_dir(self) -> str:
         return "plugins/pagetypecolor"
 
-    def getPluginName(self):
-        """
-        Must return plugin name
-        """
+    def get_plugin_name(self) -> str:
         return "PageTypeColor"

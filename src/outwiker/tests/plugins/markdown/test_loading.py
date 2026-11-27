@@ -1,19 +1,11 @@
-# -*- coding: utf-8 -*-
+"""Loading tests for the Markdown plugin."""
 
-import unittest
-
-from outwiker.tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.plugins.basepluginloading import BasePluginLoadingTests
 
 
-class MarkdownLoadingTest(PluginLoadingMixin, unittest.TestCase):
-    def getPluginDir(self):
-        """
-        Must return path to plugin
-        """
+class TestMarkdownLoading(BasePluginLoadingTests):
+    def get_plugin_dir(self) -> str:
         return "plugins/markdown"
 
-    def getPluginName(self):
-        """
-        Must return plugin name
-        """
+    def get_plugin_name(self) -> str:
         return "Markdown"

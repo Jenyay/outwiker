@@ -1,19 +1,11 @@
-# -*- coding: utf-8 -*-
+"""Loading tests for the HtmlHeads plugin."""
 
-import unittest
-
-from outwiker.tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.plugins.basepluginloading import BasePluginLoadingTests
 
 
-class HtmlHeadsLoadingTest(PluginLoadingMixin, unittest.TestCase):
-    def getPluginDir(self):
-        """
-        Должен возвращать путь до папки с тестируемым плагином
-        """
+class TestHtmlHeadsLoading(BasePluginLoadingTests):
+    def get_plugin_dir(self) -> str:
         return "plugins/htmlheads"
 
-    def getPluginName(self):
-        """
-        Должен возвращать имя плагина, по которому его можно найти в PluginsLoader
-        """
+    def get_plugin_name(self) -> str:
         return "HtmlHeads"

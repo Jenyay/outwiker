@@ -1,19 +1,11 @@
+"""Loading tests for the Diagrammer plugin."""
 
-import unittest
-
-from outwiker.tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.plugins.basepluginloading import BasePluginLoadingTests
 
 
-class DiagrammerLoadingTest(PluginLoadingMixin, unittest.TestCase):
-    def getPluginDir(self):
-        """
-        Должен возвращать путь до папки с тестируемым плагином
-        """
+class TestDiagrammerLoading(BasePluginLoadingTests):
+    def get_plugin_dir(self) -> str:
         return "plugins/diagrammer"
 
-    def getPluginName(self):
-        """
-        Должен возвращать имя плагина,
-        по которому его можно найти в PluginsLoader
-        """
+    def get_plugin_name(self) -> str:
         return "Diagrammer"

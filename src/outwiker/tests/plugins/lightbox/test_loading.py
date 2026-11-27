@@ -1,19 +1,11 @@
-# -*- coding: utf-8 -*-
+"""Loading tests for the Lightbox plugin."""
 
-import unittest
-
-from outwiker.tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.plugins.basepluginloading import BasePluginLoadingTests
 
 
-class LightboxLoadingTest(PluginLoadingMixin, unittest.TestCase):
-    def getPluginDir(self):
-        """
-        Должен возвращать путь до папки с тестируемым плагином
-        """
+class TestLightboxLoading(BasePluginLoadingTests):
+    def get_plugin_dir(self) -> str:
         return "plugins/lightbox"
 
-    def getPluginName(self):
-        """
-        Должен возвращать имя плагина, по которому его можно найти в PluginsLoader
-        """
+    def get_plugin_name(self) -> str:
         return "Lightbox"
