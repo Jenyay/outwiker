@@ -15,9 +15,9 @@ STYLES_COUNT = 50
 
 
 @pytest.fixture
-def config(source_loader: PluginsLoader, application: Application):
+def config(plugin_loader: PluginsLoader, application: Application):
     """Source plugin configuration with an empty config section."""
-    plugin_config = source_loader["Source"].config
+    plugin_config = plugin_loader["Source"].config
 
     application.config.remove_section(plugin_config.section)
 
@@ -27,7 +27,7 @@ def config(source_loader: PluginsLoader, application: Application):
 
 
 @pytest.fixture
-def dialog(source_loader: PluginsLoader, application: Application, main_window):
+def dialog(plugin_loader: PluginsLoader, application: Application, main_window):
     """Dialog for inserting the (:source:) command."""
     from source.insertdialog import InsertDialog
 

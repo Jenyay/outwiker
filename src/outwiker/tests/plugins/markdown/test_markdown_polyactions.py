@@ -17,7 +17,7 @@ def editor(
     application: Application,
     wikiroot: WikiDocument,
     main_window: MainWindow,
-    markdown_loader: PluginsLoader,
+    plugin_loader: PluginsLoader,
 ) -> Iterator[TextEditor]:
     from markdown.markdownpage import MarkdownPageFactory
 

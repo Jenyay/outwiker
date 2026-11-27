@@ -1,4 +1,3 @@
-
 """Tests for the dialog inserting a node into a diagram."""
 
 import pytest
@@ -8,7 +7,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 
 
 @pytest.fixture
-def dialog(diagrammer_loader: PluginsLoader, main_window: MainWindow):
+def dialog(plugin_loader: PluginsLoader, main_window: MainWindow):
     """Dialog for inserting a node with the filled node name."""
     from diagrammer.gui.insertnodedialog import InsertNodeDialog
 

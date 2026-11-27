@@ -1,4 +1,3 @@
-
 """Tests for the dialog inserting a diagram."""
 
 import pytest
@@ -8,7 +7,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 
 
 @pytest.fixture
-def dialog(diagrammer_loader: PluginsLoader, main_window: MainWindow):
+def dialog(plugin_loader: PluginsLoader, main_window: MainWindow):
     """Dialog for inserting a diagram with the default parameters."""
     from diagrammer.gui.insertdiagramdialog import InsertDiagramDialog
 

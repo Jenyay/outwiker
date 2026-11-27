@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Tests for the (:thumbgallery:) wiki command of the Thumb Gallery plugin."""
 
 import os.path
@@ -7,12 +5,12 @@ from pathlib import Path
 
 import pytest
 
+from outwiker.api.core.tree import WikiPage
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.api.core.tree import WikiPage
 
 
 @pytest.fixture
@@ -25,15 +23,15 @@ def test_page(wikiroot) -> WikiPage:
 def parser(
     test_page: WikiPage,
     application,
-    thumbgallery_loader: PluginsLoader,
+    plugin_loader: PluginsLoader,
 ) -> Parser:
     """Wiki parser with the commands added by the Thumb Gallery plugin."""
     factory = ParserFactory()
     return factory.make(test_page, application)
 
 
-def test_plugin_load(thumbgallery_loader: PluginsLoader):
-    assert len(thumbgallery_loader) == 1
+def test_plugin_load(plugin_loader: PluginsLoader):
+    assert len(plugin_loader) == 1
 
 
 def test_content_parse_empty(parser):
@@ -1163,7 +1161,9 @@ def test_subdir_attach_backslash_double_quotes(test_page, parser, samplefiles_pa
     assert Path(attach.getAttachPath(), "__thumb", subdir).exists()
 
 
-def test_subdir_attach_forwardslash_single_quotes_comment(test_page, parser, samplefiles_path):
+def test_subdir_attach_forwardslash_single_quotes_comment(
+    test_page, parser, samplefiles_path
+):
     subdir = "subdir"
 
     text = """Бла-бла-бла
@@ -1256,7 +1256,9 @@ def test_subdir_attach_forwardslash_double_quotes(test_page, parser, samplefiles
     assert Path(attach.getAttachPath(), "__thumb", subdir).exists()
 
 
-def test_subdir_attach_forwardslash_double_quotes_comments(test_page, parser, samplefiles_path):
+def test_subdir_attach_forwardslash_double_quotes_comments(
+    test_page, parser, samplefiles_path
+):
     subdir = "subdir"
 
     text = """Бла-бла-бла
@@ -1347,7 +1349,9 @@ def test_mask_all_root_single_star_attach(test_page, parser, samplefiles_path):
     assert Path(attach.getAttachPath(), "__thumb").exists()
 
 
-def test_mask_all_root_single_star_attach_single_quotes(test_page, parser, samplefiles_path):
+def test_mask_all_root_single_star_attach_single_quotes(
+    test_page, parser, samplefiles_path
+):
     files = [
         "first.jpg",
         "particle_01.PNG",
@@ -1377,7 +1381,9 @@ def test_mask_all_root_single_star_attach_single_quotes(test_page, parser, sampl
     assert Path(attach.getAttachPath(), "__thumb").exists()
 
 
-def test_mask_all_root_single_star_attach_double_quotes(test_page, parser, samplefiles_path):
+def test_mask_all_root_single_star_attach_double_quotes(
+    test_page, parser, samplefiles_path
+):
     files = [
         "first.jpg",
         "particle_01.PNG",
@@ -1842,11 +1848,7 @@ def test_mask_with_comments(test_page, parser, samplefiles_path):
     assert (
         result.count('<div class="thumbgallery-table-comment">Comment 1</div>') == 2
     ), result
-    assert (
-        result.count('<div class="thumbgallery-table-comment">Comment 2</div>') == 1
-    )
-    assert (
-        result.count('<div class="thumbgallery-table-comment">Comment 3</div>') == 1
-    )
+    assert result.count('<div class="thumbgallery-table-comment">Comment 2</div>') == 1
+    assert result.count('<div class="thumbgallery-table-comment">Comment 3</div>') == 1
 
     assert Path(attach.getAttachPath(), "__thumb").exists()

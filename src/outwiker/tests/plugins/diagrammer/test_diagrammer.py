@@ -1,4 +1,3 @@
-
 """Tests for the (:diagram:) wiki command of the Diagrammer plugin."""
 
 from pathlib import Path
@@ -23,7 +22,7 @@ def test_page(wikiroot) -> WikiPage:
 def parser(
     test_page: WikiPage,
     application,
-    diagrammer_loader: PluginsLoader,
+    plugin_loader: PluginsLoader,
 ) -> Parser:
     """Wiki parser with the commands added by the Diagrammer plugin."""
     factory = ParserFactory()
@@ -136,7 +135,7 @@ def test_all_shapes(parser, all_shapes):
     assert "<b>" not in result
 
 
-def test_shapes_list(diagrammer_loader: PluginsLoader, all_shapes):
+def test_shapes_list(plugin_loader: PluginsLoader, all_shapes):
     from diagrammer.diagramrender import DiagramRender
 
     assert DiagramRender.shapes == sorted(all_shapes)

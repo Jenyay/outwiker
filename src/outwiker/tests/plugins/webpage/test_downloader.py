@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Tests for downloading web pages by the WebPage plugin."""
 
 import urllib.request
@@ -75,7 +73,7 @@ def download_dir(temp_dir: Path) -> Path:
 
 
 @pytest.fixture
-def controller(temp_dir: Path, webpage_loader: PluginsLoader):
+def controller(temp_dir: Path, plugin_loader: PluginsLoader):
     from webpage.downloader import DownloadController
 
     return DownloadController(str(temp_dir), STATIC_DIR_NAME)
@@ -259,10 +257,10 @@ def test_downloading_img_srcset_content(download_page):
     downloader = download_page("example3", "example3.html")
 
     sample = (
-        'srcset="{path}/image_02.png 2x, '
-        '{path}/image_03.png w600, '
-        '{path}/image_04.png"'
-    ).format(path=STATIC_DIR_NAME)
+        f'srcset="{STATIC_DIR_NAME}/image_02.png 2x, '
+        f"{STATIC_DIR_NAME}/image_03.png w600, "
+        f'{STATIC_DIR_NAME}/image_04.png"'
+    )
 
     assert sample in downloader.contentResult
 

@@ -62,7 +62,7 @@ def other_wiki_path() -> Iterator[str]:
 
 
 @pytest.fixture
-def make_storage(sessions_loader: PluginsLoader, application):
+def make_storage(plugin_loader_gui: PluginsLoader, application):
     """Factory for the SessionStorage instances reloaded from the config."""
     from sessions.sessionstorage import SessionStorage
 
@@ -70,7 +70,7 @@ def make_storage(sessions_loader: PluginsLoader, application):
 
 
 @pytest.fixture
-def controller(sessions_loader: PluginsLoader, application):
+def controller(plugin_loader_gui: PluginsLoader, application):
     """Sessions controller working with the current application state."""
     from sessions.sessioncontroller import SessionController
 
@@ -82,8 +82,8 @@ def _get_page_link(page) -> str:
     return "page://" + page.getUid(generate=True)
 
 
-def test_plugin_load(sessions_loader: PluginsLoader):
-    assert len(sessions_loader) == 1
+def test_plugin_load(plugin_loader_gui: PluginsLoader):
+    assert len(plugin_loader_gui) == 1
 
 
 def test_empty_sessions(make_storage):
