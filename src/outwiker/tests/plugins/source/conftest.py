@@ -7,7 +7,7 @@ import pytest
 from outwiker.core.pluginsloader import PluginsLoader
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def source_loader(
     ow_application,
     plugins_loader: Callable[..., PluginsLoader],
